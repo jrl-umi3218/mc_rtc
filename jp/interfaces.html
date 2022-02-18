@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>インターフェイス - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/interfaces.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+    <div class="row">
+
+<div class="col-12 offset-lg-2 col-lg-8">
+
+<h1>インターフェイス</h1>
+
+<p>このページでは、現在利用可能なシミュレーター/ミドルウェアとmc_rtcとのインターフェイスの一覧を示します。</p>
+
+</div>
+
+<div class="offset-1 col-10 offset-lg-3 col-lg-6">
+
+
+<div class="media features">
+  <a href="https://openrtm.org/openrtm/" target="blank_"><img class="mr-3 img-fluid" src="/mc_rtc/assets/interfaces/openrtm.png" alt="OpenRTM" width="75" height="75"/></a>
+  <div class="media-body">
+    <h5 class="mt-0">OpenRTM</h5>
+    <p>OpenRTMは、コンポーネントベースでロボットシステムを開発するためのソフトウェアプラットフォームです。HRPロボットやChoreonoidシミュレータで使用されています。インターフェースはOpenRTMのコンポーネントであり、制御システムに組み込むことができます。</p>
+    <dl class="row">
+      <dt class="col">インターフェイスパッケージ</dt>
+      <dd class="col-8"><a href="https://github.com/jrl-umi3218/mc_openrtm" target="blank_"><svg class="octicon octicon-globe" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M1.543 7.25h2.733c.144-2.074.866-3.756 1.58-4.948.12-.197.237-.381.353-.552a6.506 6.506 0 00-4.666 5.5zm2.733 1.5H1.543a6.506 6.506 0 004.666 5.5 11.13 11.13 0 01-.352-.552c-.715-1.192-1.437-2.874-1.581-4.948zm1.504 0h4.44a9.637 9.637 0 01-1.363 4.177c-.306.51-.612.919-.857 1.215a9.978 9.978 0 01-.857-1.215A9.637 9.637 0 015.78 8.75zm4.44-1.5H5.78a9.637 9.637 0 011.363-4.177c.306-.51.612-.919.857-1.215.245.296.55.705.857 1.215A9.638 9.638 0 0110.22 7.25zm1.504 1.5c-.144 2.074-.866 3.756-1.58 4.948-.12.197-.237.381-.353.552a6.506 6.506 0 004.666-5.5h-2.733zm2.733-1.5h-2.733c-.144-2.074-.866-3.756-1.58-4.948a11.738 11.738 0 00-.353-.552 6.506 6.506 0 014.666 5.5zM8 0a8 8 0 100 16A8 8 0 008 0z"></path></svg> <span class="d-none d-sm-inline">mc_openrtm</span><span class="d-inline d-sm-none">Link</span></a></dd>
+    </dl>
+  </div>
+</div>
+
+<div class="media features">
+  <a href="https://www.ros.org/" target="blank_"><img class="mr-3 img-fluid" src="/mc_rtc/assets/interfaces/ros.png" alt="ROS" width="75" height="75"/></a>
+  <div class="media-body">
+    <h5 class="mt-0">ROS</h5>
+    <p>ROS（Robot Operating System）は、ロボットアプリケーションの構築を支援するソフトウェアライブラリおよびツール群です。mc_rtc_rosは、ROS環境と統合し、シミュレーション不要のインターフェースと各種GUIツールを提供するツール群です。</p>
+    <dl class="row">
+      <dt class="col">インターフェイスパッケージ</dt>
+      <dd class="col-8"><a href="https://github.com/jrl-umi3218/mc_rtc_ros" target="blank_"><svg class="octicon octicon-globe" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M1.543 7.25h2.733c.144-2.074.866-3.756 1.58-4.948.12-.197.237-.381.353-.552a6.506 6.506 0 00-4.666 5.5zm2.733 1.5H1.543a6.506 6.506 0 004.666 5.5 11.13 11.13 0 01-.352-.552c-.715-1.192-1.437-2.874-1.581-4.948zm1.504 0h4.44a9.637 9.637 0 01-1.363 4.177c-.306.51-.612.919-.857 1.215a9.978 9.978 0 01-.857-1.215A9.637 9.637 0 015.78 8.75zm4.44-1.5H5.78a9.637 9.637 0 011.363-4.177c.306-.51.612-.919.857-1.215.245.296.55.705.857 1.215A9.638 9.638 0 0110.22 7.25zm1.504 1.5c-.144 2.074-.866 3.756-1.58 4.948-.12.197-.237.381-.353.552a6.506 6.506 0 004.666-5.5h-2.733zm2.733-1.5h-2.733c-.144-2.074-.866-3.756-1.58-4.948a11.738 11.738 0 00-.353-.552 6.506 6.506 0 014.666 5.5zM8 0a8 8 0 100 16A8 8 0 008 0z"></path></svg> <span class="d-none d-sm-inline">mc_rtc_ros</span><span class="d-inline d-sm-none">Link</span></a></dd>
+    </dl>
+  </div>
+</div>
+
+<div class="media features">
+  <a href="http://coppeliarobotics.com/" target="blank_"><img class="mr-3 img-fluid" src="/mc_rtc/assets/interfaces/vrep.png" alt="V-REP" width="75" height="75"/></a>
+  <div class="media-body">
+    <h5 class="mt-0">V-REP</h5>
+    <p>V-REPは、Coppelia Robotics社のロボットシミュレータです。mc_vrepは、V-REPシミュレータ環境において、mc_rtcをロボットのコントローラとして使用することができます。</p>
+    <dl class="row">
+      <dt class="col">インターフェイスパッケージ</dt>
+      <dd class="col-8"><a href="https://github.com/jrl-umi3218/mc_vrep" target="blank_"><svg class="octicon octicon-globe" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M1.543 7.25h2.733c.144-2.074.866-3.756 1.58-4.948.12-.197.237-.381.353-.552a6.506 6.506 0 00-4.666 5.5zm2.733 1.5H1.543a6.506 6.506 0 004.666 5.5 11.13 11.13 0 01-.352-.552c-.715-1.192-1.437-2.874-1.581-4.948zm1.504 0h4.44a9.637 9.637 0 01-1.363 4.177c-.306.51-.612.919-.857 1.215a9.978 9.978 0 01-.857-1.215A9.637 9.637 0 015.78 8.75zm4.44-1.5H5.78a9.637 9.637 0 011.363-4.177c.306-.51.612-.919.857-1.215.245.296.55.705.857 1.215A9.638 9.638 0 0110.22 7.25zm1.504 1.5c-.144 2.074-.866 3.756-1.58 4.948-.12.197-.237.381-.353.552a6.506 6.506 0 004.666-5.5h-2.733zm2.733-1.5h-2.733c-.144-2.074-.866-3.756-1.58-4.948a11.738 11.738 0 00-.353-.552 6.506 6.506 0 014.666 5.5zM8 0a8 8 0 100 16A8 8 0 008 0z"></path></svg> <span class="d-none d-sm-inline">mc_vrep</span><span class="d-inline d-sm-none">Link</span></a></dd>
+    </dl>
+  </div>
+</div>
+
+<div class="media features">
+  <a href="http://doc.aldebaran.com/2-5/index_dev_guide.html" target="blank_"><img class="mr-3 img-fluid" src="/mc_rtc/assets/interfaces/naoqi.png" alt="NAOqi" width="75" height="75"/></a>
+  <div class="media-body">
+    <h5 class="mt-0">NAOqi</h5>
+    <p>NAOqiは、ソフトバンクロボティクスのロボットをプログラミングするために使用されるプログラミングフレームワークです。mc_naoqiインターフェースは、NAOとPepperロボットの全身制御にmc_rtcを使用することを可能にしています。</p>
+    <dl class="row">
+      <dt class="col">インターフェイスパッケージ</dt>
+      <dd class="col-8"><a href="https://github.com/jrl-umi3218/mc_naoqi" target="blank_"><svg class="octicon octicon-globe" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M1.543 7.25h2.733c.144-2.074.866-3.756 1.58-4.948.12-.197.237-.381.353-.552a6.506 6.506 0 00-4.666 5.5zm2.733 1.5H1.543a6.506 6.506 0 004.666 5.5 11.13 11.13 0 01-.352-.552c-.715-1.192-1.437-2.874-1.581-4.948zm1.504 0h4.44a9.637 9.637 0 01-1.363 4.177c-.306.51-.612.919-.857 1.215a9.978 9.978 0 01-.857-1.215A9.637 9.637 0 015.78 8.75zm4.44-1.5H5.78a9.637 9.637 0 011.363-4.177c.306-.51.612-.919.857-1.215.245.296.55.705.857 1.215A9.638 9.638 0 0110.22 7.25zm1.504 1.5c-.144 2.074-.866 3.756-1.58 4.948-.12.197-.237.381-.353.552a6.506 6.506 0 004.666-5.5h-2.733zm2.733-1.5h-2.733c-.144-2.074-.866-3.756-1.58-4.948a11.738 11.738 0 00-.353-.552 6.506 6.506 0 014.666 5.5zM8 0a8 8 0 100 16A8 8 0 008 0z"></path></svg> <span class="d-none d-sm-inline">mc_naoqi</span><span class="d-inline d-sm-none">Link</span></a></dd>
+    </dl>
+  </div>
+</div>
+
+<div class="media features">
+  <a href="https://github.com/frankaemika/libfranka" target="blank_"><img class="mr-3 img-fluid" src="/mc_rtc/assets/interfaces/mc_franka.png" alt="libfranka" width="75" height="75"/></a>
+  <div class="media-body">
+    <h5 class="mt-0">libfranka</h5>
+    <p>libfrankaはFranka Emikaのロボットを制御するためのインタフェースです。mc_franka インターフェースにより、mc_rtc を使用してこれらのロボットを制御することができます。全ての動作モード（位置、速度、トルク）に対して複数のロボットをサポートし、パンダポンプデバイスとの統合も可能です。</p>
+    <dl class="row">
+      <dt class="col">インターフェイスパッケージ</dt>
+      <dd class="col-8"><a href="https://github.com/jrl-umi3218/mc_franka" target="blank_"><svg class="octicon octicon-globe" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M1.543 7.25h2.733c.144-2.074.866-3.756 1.58-4.948.12-.197.237-.381.353-.552a6.506 6.506 0 00-4.666 5.5zm2.733 1.5H1.543a6.506 6.506 0 004.666 5.5 11.13 11.13 0 01-.352-.552c-.715-1.192-1.437-2.874-1.581-4.948zm1.504 0h4.44a9.637 9.637 0 01-1.363 4.177c-.306.51-.612.919-.857 1.215a9.978 9.978 0 01-.857-1.215A9.637 9.637 0 015.78 8.75zm4.44-1.5H5.78a9.637 9.637 0 011.363-4.177c.306-.51.612-.919.857-1.215.245.296.55.705.857 1.215A9.638 9.638 0 0110.22 7.25zm1.504 1.5c-.144 2.074-.866 3.756-1.58 4.948-.12.197-.237.381-.353.552a6.506 6.506 0 004.666-5.5h-2.733zm2.733-1.5h-2.733c-.144-2.074-.866-3.756-1.58-4.948a11.738 11.738 0 00-.353-.552 6.506 6.506 0 014.666 5.5zM8 0a8 8 0 100 16A8 8 0 008 0z"></path></svg> <span class="d-none d-sm-inline">mc_franka</span><span class="d-inline d-sm-none">Link</span></a></dd>
+    </dl>
+  </div>
+</div>
+
+<div class="media features">
+  <a href="https://openrtm.org/openrtm/" target="blank_"><img class="mr-3 img-fluid" src="/mc_rtc/assets/interfaces/mc_udp.png" alt="UDP Communication" width="75" height="75"/></a>
+  <div class="media-body">
+    <h5 class="mt-0">UDP Communication</h5>
+    <p>UDPベースのクライアント/サーバーインターフェースの汎用実装。クライアントは通常のmc_rtcインターフェースで、UDPソケットを通してデータを取得します。サーバーは独自のロボットとのインターフェイスとして簡単に実装することができます。<br />現在、以下のサーバー実装が利用可能です。<ul><li>OpenRTMサーバーが提供され、HRPロボットで使用することができます。</li><li>また、<a href="https://hal.archives-ouvertes.fr/hal-02101562">BAZAR</a>ロボット用のサーバー実装も用意されています。</li></ul></p>
+    <dl class="row">
+      <dt class="col">インターフェイスパッケージ</dt>
+      <dd class="col-8"><a href="https://github.com/jrl-umi3218/mc_udp" target="blank_"><svg class="octicon octicon-globe" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M1.543 7.25h2.733c.144-2.074.866-3.756 1.58-4.948.12-.197.237-.381.353-.552a6.506 6.506 0 00-4.666 5.5zm2.733 1.5H1.543a6.506 6.506 0 004.666 5.5 11.13 11.13 0 01-.352-.552c-.715-1.192-1.437-2.874-1.581-4.948zm1.504 0h4.44a9.637 9.637 0 01-1.363 4.177c-.306.51-.612.919-.857 1.215a9.978 9.978 0 01-.857-1.215A9.637 9.637 0 015.78 8.75zm4.44-1.5H5.78a9.637 9.637 0 011.363-4.177c.306-.51.612-.919.857-1.215.245.296.55.705.857 1.215A9.638 9.638 0 0110.22 7.25zm1.504 1.5c-.144 2.074-.866 3.756-1.58 4.948-.12.197-.237.381-.353.552a6.506 6.506 0 004.666-5.5h-2.733zm2.733-1.5h-2.733c-.144-2.074-.866-3.756-1.58-4.948a11.738 11.738 0 00-.353-.552 6.506 6.506 0 014.666 5.5zM8 0a8 8 0 100 16A8 8 0 008 0z"></path></svg> <span class="d-none d-sm-inline">mc_udp</span><span class="d-inline d-sm-none">Link</span></a></dd>
+    </dl>
+  </div>
+</div>
+
+
+
+</div>
+
+<div class="col-12 offset-lg-2 col-lg-8">
+
+<h3>新しいインターフェイスの追加</h3>
+
+<p>C++またはPythonを使用して、mc_rtc用の新しいインターフェイスを簡単にプログラミングできます。詳細についてはこちらの<a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">チュートリアル</a>を参照してください。</p>
+
+</div>
+
+</div>
+
+
+
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

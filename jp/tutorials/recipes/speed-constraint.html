@@ -1,0 +1,488 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - 物体速度の拘束 - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/recipes/speed-constraint.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><strong>物体速度の拘束</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#オブジェクトを作成して速度制約条件を追加する">オブジェクトを作成して速度制約条件を追加する</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#自由度行列について">自由度行列について</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#例">例</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>物体速度の拘束</h1>
+        
+
+        
+<p>このページでは、制約条件<code class="language-plaintext highlighter-rouge">mc_solver::BoundedSpeedConstr</code>について説明します。この制約条件は、その名前とこのページのタイトルが示すように、速度と方向を厳密に指定してボディを動かす必要がある場合に使用します。より「緩やかな」条件を適用する場合については、以下の記事を参照してください。</p>
+
+<ul>
+  <li><a href="dim-weight.html">タスク空間内の各軸に異なる重みを適用する</a></li>
+  <li><a href="contact-dof.html">接触面の自由度制約条件を変更する</a></li>
+</ul>
+
+<h2 id="オブジェクトを作成して速度制約条件を追加する">オブジェクトを作成して速度制約条件を追加する</h2>
+
+<p>まず、制約条件オブジェクトを作成します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Assume bSpeedCstr type is:</span>
+<span class="c1">// std::shared_ptr&lt;mc_solver::BoundedSpeedConstr&gt;</span>
+<span class="n">bSpeedCstr</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">BoundedSpeedConstr</span><span class="o">&gt;</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span>
+                                                             <span class="n">robots</span><span class="p">().</span><span class="n">robotIndex</span><span class="p">(),</span>
+                                                             <span class="n">timeStep</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>これらのパラメーターのうち、変更する必要があるのは、制約条件を適用するロボットを指定する<code class="language-plaintext highlighter-rouge">robotIndex</code>だけです。</p>
+
+<p>次に、これをソルバーに追加します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="o">*</span><span class="n">bSpeedCstr</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>衝突制約条件と同様に、この時点ではこの制約条件を有効にする仕組みが設定されただけで、この制約条件は実際には何の効果もありません。</p>
+
+<p>最後に、速度制約条件をソルバーに追加します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bSpeedCstr</span><span class="o">-&gt;</span><span class="n">addBoundedSpeed</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span>
+                            <span class="n">bodyName</span><span class="p">,</span>
+                            <span class="n">bodyPoint</span><span class="p">,</span>
+                            <span class="n">dof</span><span class="p">,</span>
+                            <span class="n">speed</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>上記のコードにおいて、</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">bodyName</code>は、制約条件を適用するボディの名前</li>
+  <li><code class="language-plaintext highlighter-rouge">bodyPoint</code>は、ボディフレーム内で回転の基準として使用する点（<code class="language-plaintext highlighter-rouge">Eigen::Vector3d</code>）。<code class="language-plaintext highlighter-rouge">bodyPoint</code>が0の場合、ボディの原点が使用されます。</li>
+  <li><code class="language-plaintext highlighter-rouge">dof</code>は、自由度選択行列（詳細については下記を参照）</li>
+  <li><code class="language-plaintext highlighter-rouge">speed</code>は、6次元の速度制約条件</li>
+</ul>
+
+<p>なお、<code class="language-plaintext highlighter-rouge">speed</code>はボディフレーム内で表されます。</p>
+
+<h4 id="自由度行列について">自由度行列について</h4>
+
+<p>自由度行列に関する要件は、<a href="contact-dof.html">接触面自由度</a>に関する要件と非常に似ています。その要件は以下のとおりです。</p>
+<ul>
+  <li>6行6列の正方行列とする</li>
+  <li>対角要素のみを設定する</li>
+  <li>値が0の要素は制約条件が適用されない自由度を表し、値が1の要素は制約条件が適用される自由度を表す</li>
+  <li>最初の3つの要素が (x, y, z) 軸周りの回転を表し、次の3つの要素が (x, y, z) 軸方向の平行移動を表す</li>
+</ul>
+
+<p>また、上限と下限を指定して以下のように速度制限条件を構築することもできます。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bSpeedCstr</span><span class="o">-&gt;</span><span class="n">addBoundedSpeed</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span>
+                            <span class="n">bodyName</span><span class="p">,</span>
+                            <span class="n">bodyPoint</span><span class="p">,</span>
+                            <span class="n">dof</span><span class="p">,</span>
+                            <span class="n">lowerSpeed</span><span class="p">,</span>
+                            <span class="n">upperSpeed</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>引数は前記の場合とほぼ同じですが、速度の制限を固定値で指定するのではなく、<code class="language-plaintext highlighter-rouge">lowerSpeed</code>と<code class="language-plaintext highlighter-rouge">upperSpeed</code>の間の値として指定する点が異なります。</p>
+
+<h2 id="例">例</h2>
+
+<p>この最初の例では、法線軸に沿って手を一定の速度で動かすという制約条件のみを適用します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">dof</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">::</span><span class="n">Identity</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">spd</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+<span class="n">spd</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>  <span class="c1">// Move r_wrist in the z direction at constant speed 0.1 m/s</span>
+<span class="n">bSpeedConstr</span><span class="o">-&gt;</span><span class="n">addBoundedSpeed</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="s">"r_wrist"</span><span class="p">,</span>
+                              <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(),</span>
+                              <span class="n">dof</span><span class="p">,</span> <span class="n">spd</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>これを実行すると、ロボットの手があるポイントまで持ち上がりますが、それ以上持ち上げることはできないため、ソルバーはこれを正しく処理できないのが分かります。このような場合はこの制約条件を部分的に適用する必要があります。</p>
+
+<p>より実用的な例として、この制約条件を使用してボディの速度を制限することが挙げられます。今度は、この制約条件を削除し、<code class="language-plaintext highlighter-rouge">efTask</code>という名前の<code class="language-plaintext highlighter-rouge">mc_tasks::EndEffectorTask</code>をソルバーに追加し、非常に高い剛性を指定します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">efTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"r_wrist"</span><span class="p">,</span> <span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">efTask</span><span class="o">-&gt;</span><span class="n">set_ef_pose</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">RotY</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="o">-</span><span class="n">M_PI</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>
+                                     <span class="n">efTask</span><span class="o">-&gt;</span><span class="n">get_ef_pose</span><span class="p">().</span><span class="n">translation</span><span class="p">()</span> <span class="o">+</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)));</span>
+<span class="n">efTask</span><span class="o">-&gt;</span><span class="n">positionTask</span><span class="o">-&gt;</span><span class="n">stiffness</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+<span class="n">efTask</span><span class="o">-&gt;</span><span class="n">orientationTask</span><span class="o">-&gt;</span><span class="n">stiffness</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+<span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">efTask</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>これを実行すると、ロボットの手が非常にぎくしゃく動くのが分かります。もちろん、この動きを実現するための他の制約条件が設定されているため、この動きは実際のロボットで完全に実行可能ですが、ここでは、速度制約条件を使用して動作速度を制限してみましょう。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">dof</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">::</span><span class="n">Identity</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">spd</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+<span class="c1">// Apply a different scaling for linear and angular velocities</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="n">spd</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">M_PI</span><span class="o">*</span><span class="mf">0.1</span><span class="p">;</span> <span class="p">}</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="n">spd</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span> <span class="p">}</span>
+<span class="n">bSpeedConstr</span><span class="o">-&gt;</span><span class="n">addBoundedSpeed</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="s">"r_wrist"</span><span class="p">,</span>
+                              <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(),</span>
+                              <span class="n">dof</span><span class="p">,</span> <span class="o">-</span><span class="n">spd</span><span class="p">,</span> <span class="n">spd</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>これを実行すると、動きがはるかにスムーズになったことが分かります。</p>
+
+<p><strong>注:</strong> 上記の例は非常に作為的であり、剛性が高いタスクや動きが遅いタスクを構築するためのよい方法とはいえません。</p>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">次のチュートリアル: 接触の移動</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

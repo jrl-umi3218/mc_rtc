@@ -232,31 +232,37 @@ body
 {
   padding-top: 58px;
   margin-top: -58px;
+  pointer-events: none;
 }
 #tutorial-content h2
 {
   padding-top: 58px;
   margin-top: -58px;
+  pointer-events: none;
 }
 #tutorial-content h3
 {
   padding-top: 58px;
   margin-top: -58px;
+  pointer-events: none;
 }
 #tutorial-content h4
 {
   padding-top: 58px;
   margin-top: -58px;
+  pointer-events: none;
 }
 #tutorial-content h5
 {
   padding-top: 58px;
   margin-top: -58px;
+  pointer-events: none;
 }
 #tutorial-content h6
 {
   padding-top: 58px;
   margin-top: -58px;
+  pointer-events: none;
 }
 .embed-responsive
 {
@@ -269,4 +275,8 @@ body
   vertical-align: text-top;
   fill: currentColor;
   overflow: visible;
+}
+#toc
+{
+  margin-top: 20px;
 }

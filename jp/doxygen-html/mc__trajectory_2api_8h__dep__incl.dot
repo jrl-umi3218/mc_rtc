@@ -1,0 +1,28 @@
+digraph "include/mc_trajectory/api.h"
+{
+ // INTERACTIVE_SVG=YES
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="include/mc_trajectory\l/api.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="include/mc_trajectory\l/Spline.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Spline_8h.html"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="include/mc_trajectory\l/InterpolatedRotation.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$InterpolatedRotation_8h.html"];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="include/mc_tasks/SplineTrajectory\lTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$SplineTrajectoryTask_8h.html"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="include/mc_tasks/BSpline\lTrajectoryTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$BSplineTrajectoryTask_8h.html"];
+  Node4 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="include/mc_tasks/ExactCubic\lTrajectoryTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ExactCubicTrajectoryTask_8h.html"];
+  Node2 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="include/mc_trajectory\l/BSpline.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$BSpline_8h.html"];
+  Node7 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="include/mc_trajectory\l/ExactCubic.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ExactCubic_8h.html"];
+  Node8 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="include/mc_trajectory\l/spline_utils.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$spline__utils_8h.html"];
+}

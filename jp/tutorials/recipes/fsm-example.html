@@ -1,0 +1,797 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - FSMコントローラの例 - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/recipes/fsm-example.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><strong>FSMコントローラの例</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#有限オートマトンをセットアップする">有限オートマトンをセットアップする</a></li>
+<li class="toc-entry toc-h1"><a href="#追加のロボットを読み込む">追加のロボットを読み込む</a></li>
+<li class="toc-entry toc-h1"><a href="#グローバルな接触面と制約条件を追加する">グローバルな接触面と制約条件を追加する</a></li>
+<li class="toc-entry toc-h1"><a href="#制約条件">制約条件</a></li>
+<li class="toc-entry toc-h1"><a href="#接触面">接触面</a></li>
+<li class="toc-entry toc-h1"><a href="#衝突メッシュ">衝突メッシュ</a></li>
+<li class="toc-entry toc-h1"><a href="#有限オートマトンの状態を作成する">有限オートマトンの状態を作成する</a></li>
+<li class="toc-entry toc-h1"><a href="#初期状態-状態遷移をトリガーするボタンを追加する">初期状態: 状態遷移をトリガーするボタンを追加する</a></li>
+<li class="toc-entry toc-h1"><a href="#ドアを開けるための有限オートマトン">ドアを開けるための有限オートマトン</a></li>
+<li class="toc-entry toc-h1"><a href="#まとめ">まとめ</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>FSMコントローラの例</h1>
+        
+
+        
+<p>このチュートリアルでは、<a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラー</a>のチュートリアルで実装したのと同じコントローラーを、有限オートマトンの設定のみを使用して実装します。このチュートリアルでは、フレームワークで用意されている<code class="language-plaintext highlighter-rouge">DoorSample</code>コントローラーをゼロから再現するのに必要な各手順について、ひとつずつ説明していきます。</p>
+
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/GAtDC79G1zA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+</div>
+
+<h1 id="有限オートマトンをセットアップする">有限オートマトンをセットアップする</h1>
+
+<div class="no_toc_section">
+
+<ul class="nav nav-tabs" id="createTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="cppCreateTab" data-toggle="tab" href="#cppCreateTabContent" role="tab" aria-controls="cppCreateTabContent" aria-selected="true">C++</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pythonCreateTab" data-toggle="tab" href="#pythonCreateTabContent" role="tab" aria-controls="pythonCreateTabContent" aria-selected="false">Python</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="githubCreateTab" data-toggle="tab" href="#githubCreateTabContent" role="tab" aria-controls="githubCreateTabContent" aria-selected="false">GitHub</a>
+  </li>
+</ul>
+<div class="tab-content" id="interfaceTabContent">
+  <div class="tab-pane show active" id="cppCreateTabContent" role="tabpanel" arial-labelledby="cppCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>mc_rtcで用意されている<code>mc_rtc_new_fsm_controller</code>を使用して新しい有限オートマトンコントローラープロジェクトをセットアップします。</p>
+
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mc_rtc_new_fsm_controller <span class="nt">--help</span>
+usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</span><span class="o">]</span>
+                             <span class="o">[</span>プロジェクトディレクトリ] <span class="o">[</span>コントローラークラス名]
+                             <span class="o">[[</span>コントローラー名]]
+
+新しいmc_rtcコントローラープロジェクトを作成します。 
+
+位置指定引数:
+  <span class="o">[</span>プロジェクトディレクトリ]   プロジェクトのパス
+  <span class="o">[</span>コントローラークラス名]
+                        コントローラークラスの名前
+  <span class="o">[</span>コントローラー名]     コントローラーの名前。デフォルトではコントローラークラス名が使用されます。
+
+オプションの引数:
+  <span class="nt">-h</span>, <span class="nt">--help</span>            このヘルプメッセージを表示して終了します。</code></pre></figure>
+
+
+<p><em>注: このツールを使用するには、Debian系のシステムで用意されているGit for PythonとpipのGitPythonが必要です。</em></p>
+
+<p>このチュートリアルでは、以下のコマンドを実行し、<code>MyFirstFSMController</code>という名前のチュートリアル用コントローラーを作成します。</p>
+
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mc_rtc_new_fsm_controller my_first_fsm_controller MyFirstFSMController</code></pre></figure>
+
+
+<p>新たに作成された<code>my_first_fsm_controller</code>フォルダーに移動します。このフォルダーには以下のファイルが自動生成されています。</p>
+
+<dl class="row">
+  <dt class="col-3">CMakeLists.txt</dt>
+  <dd class="col-9">コントローラーをビルドするのに必要な最低限のCMakeファイル</dd>
+
+  <dt class="col-3">etc/MyFirstFSMController.in.yaml</dt>
+  <dd class="col-9">コントローラーの有限オートマトン設定ファイル</dd>
+
+  <dt class="col-3">src/CMakeLists.txt</dt>
+  <dd class="col-9">コントローラーをビルドするのに必要なソースファイルの説明</dd>
+
+  <dt class="col-3">src/api.h</dt>
+  <dd class="col-9">コントローラーを各プラットフォームに読み込めるようにするための宣言</dd>
+
+  <dt class="col-3">src/MyFirstFSMController.h</dt>
+  <dd class="col-9">コントローラークラスの宣言。<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1Controller" target="blank_"><code>mc_control::fsm::Controller</code></a>から継承する必要があります。また、少なくともrun関数とreset関数を置き換える必要があります。</dd>
+
+  <dt class="col-3">src/MyFirstFSMController.cpp</dt>
+  <dd class="col-9">独自に作成したコントローラーを実装します。これについては次のセクションで詳しく説明します。</dd>
+
+  <dt class="col-3">src/states/</dt>
+  <dd class="col-9">コントローラーの状態を定義する（C++またはYAML）</dd>
+
+  <dt class="col-3">src/states/CMakeLists.txt</dt>
+  <dd class="col-9">コントローラーの状態をビルドしてエクスポートする</dd>
+
+  <dt class="col-3">src/states/Door_Initial.h</dt>
+  <dd class="col-9">新しいC++状態の宣言</dd>
+
+  <dt class="col-3">src/states/Door_Initial.cpp</dt>
+  <dd class="col-9">状態の実装。このチュートリアルでは、「ドアを開く」という状態遷移をトリガーするボタンを追加するシンプルな状態を実装します。</dd>
+
+  <dt class="col-3">src/states/data</dt>
+  <dd class="col-9">有限オートマトンの状態に関する追加のYAML設定。状態を宣言するには、このフォルダーにあるYAML/JSONファイルにその宣言を追加します。</dd>
+</dl>
+
+<h4>コントローラーをビルドする</h4>
+
+<p>コントローラーをビルドするには、CMakeといつものツールを使用してCMakeを実行し、コードをビルドしてインストールします。LinuxまたはMacOSの場合、一般に以下のように実行します。</p>
+
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> build
+<span class="nv">$ </span><span class="nb">cd </span>build
+<span class="c"># このビルドタイプは、デバッグ可能かつパフォーマンスに優れたコードを生成します</span>
+<span class="nv">$ </span>cmake ../ <span class="nt">-DCMAKE_BUILD_TYPE</span><span class="o">=</span>RelWithDebInfo
+<span class="nv">$ </span>make
+<span class="nv">$ </span><span class="nb">sudo </span>make <span class="nb">install</span></code></pre></figure>
+
+
+<p><em>注: <code>sudo</code>は、mc_rtcが特権ディレクトリにインストールされている場合のみ実行する必要があります。</em></p>
+
+<h4>コントローラーを実行する</h4>
+
+<p>JVRC1ロボットと新たにインストールされたコントローラーを使用できるように、mc_rtcの設定ファイルを編集します。</p>
+
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">MyFirstFSMController</span></code></pre></figure>
+
+
+<p>さらに、<a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">Running a controller</a> コントローラーを実行する&lt;/a&gt;セクションの説明に従ってコントローラーを実行します。お疲れ様でした。これで、有限オートマトンコントローラーのビルドと実行ができました。</p>
+
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>roslaunch mc_rtc_ticker display.launch
+<span class="nv">$ </span>rosrun mc_rtc_ticker mc_rtc_ticker</code></pre></figure>
+
+
+
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="pythonCreateTabContent" role="tabpanel" arial-labelledby="pythonCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>近日公開</p>
+
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="githubCreateTabContent" role="tabpanel" arial-labelledby="githubCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>Use the <a href="https://github.com/mc-rtc/new-fsm-controller">mc-rtc/new-fsm-controller</a> template project. This is equivalent to using the <code>mc_rtc_new_fsm_controller</code> tool with extra goodies.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<p>JVRC1ロボットがRViz内で立っているのが分かると思います。それでは、<a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラー</a>のチュートリアルで実装したのと同じコントローラーを、有限オートマトンの機能を使って実装してみましょう。それには、有限オートマトンの設定<code class="language-plaintext highlighter-rouge">etc/MyFirstFSMController.yaml</code>を編集する必要があります。</p>
+
+<h1 id="追加のロボットを読み込む">追加のロボットを読み込む</h1>
+
+<p>まず、メインロボット以外にどのロボットをこのコントローラーで使用するかを宣言します。本フレームワークでは、デフォルトでさまざまなロボットと環境が用意されており、ロボットの別名を使って簡単に読み込むことができます。ロボットの別名は、各ロボットを短い名前で表したり、ロボットを読み込むのに必要な情報（ロボット記述パッケージへのパスなど）をmc_rtcに渡すのに使用できます。コントローラーを起動すると、利用可能なロボットの別名の全リストが見られます。あるいは、<code>/usr/local/lib/mc_robots/aliases/</code>でロボットの別名を確認することもできます。今回のコントローラーでは、地面を表す固定の平面を<code class="language-plaintext highlighter-rouge">env/ground</code>として指定し、ハンドルを備えたドアを表す多関節ロボットを<code class="language-plaintext highlighter-rouge">env/door</code>として指定します。独自の環境を作成する方法について詳しくは、<a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">環境作成のチュートリアル</a>を参照してください。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">robots</span><span class="pi">:</span>
+  <span class="na">ground</span><span class="pi">:</span>
+    <span class="na">module</span><span class="pi">:</span> <span class="s">env/ground</span>
+  <span class="na">door</span><span class="pi">:</span>
+    <span class="na">module</span><span class="pi">:</span> <span class="s">env/door</span>
+    <span class="na">init_pos</span><span class="pi">:</span>
+      <span class="na">translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.70</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
+      <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">1.57</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<h1 id="グローバルな接触面と制約条件を追加する">グローバルな接触面と制約条件を追加する</h1>
+
+<h1 id="制約条件">制約条件</h1>
+
+<p>有限オートマトンにグローバルな制約条件を追加できます。フレームワークで用意されている制約条件の詳細については、<a href="/mc_rtc/jp/json-full.html#ConstraintSet/ContactConstraint">ConstraintSet JSONスキーマ</a>のドキュメントを参照してください。独自の制約条件を宣言してここに読み込むこともできます。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">constraints</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">contact</span>
+<span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">dynamics</span>
+  <span class="na">damper</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.01</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">compoundJoint</span>
+</code></pre></div></div>
+
+<p>ここでは3つの制約条件を宣言します。</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">contact</code>: <a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1ContactConstraint" target="blank_"><code>mc_solver::ContactConstraint</code></a>を追加します。これは、接触面の位置を固定するとともに、生成された力が摩擦円錐の内部に収まるように制限します（力学モードのみ）。</li>
+  <li><code class="language-plaintext highlighter-rouge">dynamics</code>: <a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1DynamicsConstraint" target="blank_"><code>mc_solver::DynamicsConstraint</code></a>を追加します。これは、キネマティクスの制約条件と関節可動範囲の制約条件を適用するとともに、関節のトルクを計算します。</li>
+  <li><code class="language-plaintext highlighter-rouge">compoundJoint</code>: <a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1CompoundJointConstraint" target="blank_"><code>mc_solver::CompoundJointConstraint</code></a>を追加します。これは、相互に関連している関節の可動範囲を処理します（例えば、くるぶしの関節のロール方向の可動範囲は、現在のヨー角度によって決まります）。</li>
+</ul>
+
+<h1 id="接触面">接触面</h1>
+
+<p>次に、接触面の初期セットをコントローラーに追加する方法について見ていきましょう。なお、状態を使用して接触面を後で追加・削除できます。<code class="language-plaintext highlighter-rouge">contacts</code>要素は、接触面のプロパティが記述された<a href="/mc_rtc/jp/json-full.html#mc_rbdyn/Contact">Contact</a>の配列で構成されます。この要素が、上で定義した<code class="language-plaintext highlighter-rouge">contact</code>制約条件に追加されます。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Initial set of contacts</span>
+<span class="na">contacts</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">r1</span><span class="pi">:</span> <span class="s">jvrc1</span>
+  <span class="na">r1Surface</span><span class="pi">:</span> <span class="s">LeftFoot</span>
+  <span class="na">r2</span><span class="pi">:</span> <span class="s">ground</span>
+  <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">AllGround</span>
+<span class="pi">-</span> <span class="na">r1</span><span class="pi">:</span> <span class="s">jvrc1</span>
+  <span class="na">r1Surface</span><span class="pi">:</span> <span class="s">RightFoot</span>
+  <span class="na">r2</span><span class="pi">:</span> <span class="s">ground</span>
+  <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">AllGround</span>
+</code></pre></div></div>
+
+<p>この場合、左足と右足の裏が地面と接触しているとみなされます。また、足の裏が動かないように制限され、二次計画法によって生成された力が線形化された摩擦円錐の内部に収まるように制限されています。</p>
+
+<h1 id="衝突メッシュ">衝突メッシュ</h1>
+
+<p>次に、衝突メッシュの初期セットを追加する方法について見ていきましょう。接触面の場合と同様に、状態を使用して衝突メッシュを後で追加・削除できます。<code class="language-plaintext highlighter-rouge">collisions</code>要素は、<a href="/mc_rtc/jp/json-full.html#ConstraintSet/CollisionsConstraint">CollisionConstraint</a>オブジェクトの配列で構成されます。<code class="language-plaintext highlighter-rouge">MainRobot</code>については、自己衝突メッシュのデフォルトのリストが<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1RobotModule" target="blank_"><code>mc_rbdyn::RobotModule</code></a>で定義されており、それらをここで使用できます。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Collision constraint</span>
+<span class="na">collisions</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">collision</span>
+  <span class="na">useMinimal</span><span class="pi">:</span> <span class="no">true</span>  <span class="c1"># The set of minimal self-collisions is defined in the robot module</span>
+<span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">collision</span>
+  <span class="na">r1</span><span class="pi">:</span> <span class="s">jvrc1</span>
+  <span class="na">r2</span><span class="pi">:</span> <span class="s">door</span>
+  <span class="na">collisions</span><span class="pi">:</span> <span class="c1"># array of collisions to add for this pair of robots</span>
+    <span class="pi">-</span> <span class="na">body1</span><span class="pi">:</span> <span class="s">L_WRIST_Y_S</span>
+      <span class="na">body2</span><span class="pi">:</span> <span class="s">door</span>
+      <span class="na">iDist</span><span class="pi">:</span> <span class="m">0.5</span>  <span class="c1"># interaction distance: minimal distance below which the constraint becomes active</span>
+      <span class="na">sDist</span><span class="pi">:</span> <span class="m">0.02</span> <span class="c1"># safety distance: minimal allowed distance</span>
+      <span class="na">damping</span><span class="pi">:</span> <span class="m">0.0</span>
+</code></pre></div></div>
+
+<h1 id="有限オートマトンの状態を作成する">有限オートマトンの状態を作成する</h1>
+
+<p>このセクションでは、ドアを開けるのに必要な状態を定義する方法について見ていきます。ここでは、本フレームワークで用意されている<code class="language-plaintext highlighter-rouge">C++</code>状態を最大限活用し、コードを1行も書かずに複雑な動作を行わせる方法について説明します。このコントローラーでは、以下に示す（非常に一般的な）状態を使用します。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">MetaTasks</code>: 設定からタスクを読み込んでソルバーに追加します。また、タスクが完了したかどうかをチェックします。
+    <ul>
+      <li>API: <a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1MetaTasksState" target="blank_"><code>mc_control::fsm::MetaTasksState</code></a></li>
+      <li>YAML: <a href="/mc_rtc/jp/json.html#State/MetaTasks">JSONスキーマのドキュメント</a></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Parallel</code>: 複数の状態を実行する
+    <ul>
+      <li>API: <a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1ParallelState" target="blank_"><code>mc_control::fsm::ParallelState</code></a></li>
+      <li>YAML: <a href="/mc_rtc/jp/json.html#State/Parallel">JSONスキーマのドキュメント</a></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Meta</code>: 状態内に有限オートマトンを作成する
+    <ul>
+      <li>API: <a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1MetaState" target="blank_"><code>mc_control::fsm::MetaState</code></a></li>
+      <li>YAML: <a href="/mc_rtc/jp/json.html#State/Meta">JSONスキーマのドキュメント</a></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Posture</code>: グローバルな姿勢制御タスクのゲインと目標を処理します。
+    <ul>
+      <li>API: <a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1PostureState" target="blank_"><code>mc_control::fsm::PostureState</code></a></li>
+      <li>YAML: <a href="/mc_rtc/jp/json.html#State/Posture">JSONスキーマのドキュメント</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>状態は、設定の<code class="language-plaintext highlighter-rouge">states</code>セクションで宣言されています。または、状態の宣言が記述された<code class="language-plaintext highlighter-rouge">.yaml</code>ファイルを<code class="language-plaintext highlighter-rouge">src/states/data</code>に作成することもできます。これは、大規模な有限オートマトンの場合に特に便利です。</p>
+
+<p>ここでは、以下のように有限オートマトンを構成します。</p>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">Door_Initial</code>: 「ドアを開く」動作をトリガーするボタンを追加するシンプルなC++状態</li>
+  <li><code class="language-plaintext highlighter-rouge">Door::OpenDoorFSM</code>: 手を動かし、ハンドルを開き、ドアを動かすロジックのみで構成される下位の有限オートマトン</li>
+  <li><code class="language-plaintext highlighter-rouge">Door::Standing</code>: <code class="language-plaintext highlighter-rouge">CoM</code>タスクと胸部を垂直に保つための正規化タスクを追加する状態</li>
+  <li><code class="language-plaintext highlighter-rouge">Door::OpenDoorDemo</code>: ドアを開けるときに質量中心と胸部の目標が同時に処理されるように、状態<code class="language-plaintext highlighter-rouge">2</code>と<code class="language-plaintext highlighter-rouge">3</code>を組み合わせます。</li>
+</ol>
+
+<p>ここでは、マルチロボットの概念を最大限活用します。すなわち、ハンドルに手を接触させ、ハンドルの関節角度とドアの蝶番の関節角度を制御することで、ドアを動かしますこの動きを実現するのに必要な動作は、接触面の制約条件に基づき二次計画法によって自動的に生成されます。</p>
+
+<h1 id="初期状態-状態遷移をトリガーするボタンを追加する">初期状態: 状態遷移をトリガーするボタンを追加する</h1>
+
+<p>この状態は、以下の内容に関する簡単な例を説明することを目的としています。</p>
+
+<ol>
+  <li>C++状態を作成する方法</li>
+  <li>状態内にGUI要素を追加する方法</li>
+  <li>状態内から状態遷移の流れを制御する方法</li>
+</ol>
+
+<p>この状態は<code class="language-plaintext highlighter-rouge">src/states/Door_Initial.cpp</code>で定義されており、この処理で必要とされる仮想関数<code class="language-plaintext highlighter-rouge">configure</code>、<code class="language-plaintext highlighter-rouge">start</code>、<code class="language-plaintext highlighter-rouge">run</code>と関数<code class="language-plaintext highlighter-rouge">teardown</code>を置き換えます（<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1State" target="blank_"><code>mc_control::fsm::State</code></a>のAPIのドキュメントを参照）。ここでは、状態開始時にGUIにボタンを追加します。そして、このボタンがクリックされたときに、bool型の状態<code class="language-plaintext highlighter-rouge">openDoor_</code>を変化させます（後で「OpenDoor」状態に遷移するのに使用します）。これを実現するには、<code class="language-plaintext highlighter-rouge">output("OpenDoor")</code>を呼び出し、<code class="language-plaintext highlighter-rouge">bool Door_Initial::run</code>関数で<code class="language-plaintext highlighter-rouge">true</code>を返します。これは、この状態の処理が完了して次の状態に遷移できることを表します。なお、この状態遷移がどのように起こるかは、状態遷移マップの設定によって定義されています（<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1TransitionMap" target="blank_"><code>mc_control::fsm::TransitionMap</code></a>を参照）。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;mc_control/fsm/Controller.h&gt;
+</span>
+<span class="cp">#include "Door_Initial.h"
+</span>
+<span class="kt">void</span> <span class="n">Door_Initial</span><span class="o">::</span><span class="n">configure</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="kt">void</span> <span class="n">Door_Initial</span><span class="o">::</span><span class="n">start</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">ctl</span><span class="p">.</span><span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addElement</span><span class="p">({},</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Open door"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="n">openDoor_</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}));</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">Door_Initial</span><span class="o">::</span><span class="n">run</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">openDoor_</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">output</span><span class="p">(</span><span class="s">"OpenDoor"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Door_Initial</span><span class="o">::</span><span class="n">teardown</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="n">EXPORT_SINGLE_STATE</span><span class="p">(</span><span class="s">"Door_Initial"</span><span class="p">,</span> <span class="n">Door_Initial</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>EXPORT_SINGLE_STATE<code class="language-plaintext highlighter-rouge">マクロを使って、mc_rtcがライブラリから状態を読み込む際に使用されるシンボルを宣言しています。また、ここで指定した</code>“Door_Initial”`という名前は、有限オートマトン内でこの状態を識別するのに使用します。</p>
+
+<p>なお、ここでは、この状態をあえて非常にシンプルにしています。実際には、状態内ではもっと複雑な処理が行われます。例えば、タスクの追加と目標の処理、プランナーからのデータの読み取り、ロボットの状態の監視、状態遷移のトリガーといった処理が行われます。そのような状態の例として、今回のサンプルで使用されている<code class="language-plaintext highlighter-rouge">MetaTasks</code>タスク、<code class="language-plaintext highlighter-rouge">Parallel</code>タスク、<code class="language-plaintext highlighter-rouge">Meta</code>タスク、<code class="language-plaintext highlighter-rouge">Posture</code>タスクがあります。</p>
+
+<h1 id="ドアを開けるための有限オートマトン">ドアを開けるための有限オートマトン</h1>
+
+<p>ドアを開けるには、下位の有限オートマトン、すなわち、ドアのハンドルに向かって手を動かし、ドアのハンドルに手を接触させ、ドアのハンドルと蝶番を回してドアを開ける処理を行う有限オートマトンを状態内で実行します。</p>
+
+<p>まず、この動作の状態遷移マップを見てみましょう。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::OpenDoorFSM:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">Meta</span>
+  <span class="s">transitions</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="pi">[</span><span class="nv">Door_Initial</span><span class="pi">,</span> <span class="nv">OpenDoor</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">ReachHandle</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+    <span class="pi">-</span> <span class="pi">[</span><span class="nv">Door</span><span class="pi">::</span><span class="nv">ReachHandle</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">MoveHandle</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+    <span class="pi">-</span> <span class="pi">[</span><span class="nv">Door</span><span class="pi">::</span><span class="nv">MoveHandle</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">OpenDoor</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>ユーザーがGUIのボタンをクリックすると、上記の<code class="language-plaintext highlighter-rouge">Door_Initial</code>というC++状態によって<code class="language-plaintext highlighter-rouge">OpenDoor</code>という状態遷移がトリガーされます。すると、有限オートマトンは次の状態である<code class="language-plaintext highlighter-rouge">Door::ReachHandle</code>に遷移します。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::ReachHandle:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
+  <span class="s">tasks</span><span class="pi">:</span>
+    <span class="na">RightHandTrajectory</span><span class="pi">:</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">surfaceTransform</span>
+      <span class="na">surface</span><span class="pi">:</span> <span class="s">RightGripper</span>
+      <span class="na">weight</span><span class="pi">:</span> <span class="m">1000</span>
+      <span class="na">stiffness</span><span class="pi">:</span> <span class="m">5</span>
+      <span class="c1"># Target relative to the door's handle surface</span>
+      <span class="na">targetSurface</span><span class="pi">:</span>
+        <span class="na">robot</span><span class="pi">:</span> <span class="s">door</span>
+        <span class="na">surface</span><span class="pi">:</span> <span class="s">Handle</span>
+        <span class="na">offset_translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">-0.025</span><span class="pi">]</span>
+        <span class="na">offset_rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">]</span>
+      <span class="na">completion</span><span class="pi">:</span>
+        <span class="na">AND</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">eval</span><span class="pi">:</span> <span class="m">0.05</span>
+          <span class="pi">-</span> <span class="na">speed</span><span class="pi">:</span> <span class="s">1e-4</span>
+</code></pre></div></div>
+
+<p>この状態では、フレームワークで用意されている<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1MetaTasksState" target="blank_"><code>mc_control::fsm::MetaTasksState</code></a>というC++状態が使用され、YAMLの記述から一連のタスクが読み込まれます。ここでは、<code class="language-plaintext highlighter-rouge">RightHandTrajectory</code>という名前の<code class="language-plaintext highlighter-rouge">surfaceTransform</code>型（<a href="/mc_rtc/jp/json.html#MetaTask/SurfaceTransformTask">YAMLのドキュメントを参照</a>）のタスクが読み込まれます。これにより、<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1SurfaceTransformTask" target="blank_"><code>mc_tasks::SurfaceTransformTask</code></a>がソルバーに追加され、ドアのハンドル表面を基準として定義された目標がこのタスクに設定されます。また、<code class="language-plaintext highlighter-rouge">completion</code>要素によって<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1CompletionCriteria" target="blank_"><code>mc_control::CompletionCriteria</code></a>が作成され、タスクの実行が完了したとみなしてよいかどうかをチェックする論理関数が構築されます。デフォルトでは、タスクの完了基準が満たされると<code class="language-plaintext highlighter-rouge">MetaTasks</code>状態によって<code class="language-plaintext highlighter-rouge">"OK"</code>が出力されます。</p>
+
+<p>すると、<code class="language-plaintext highlighter-rouge">OpenDoorFSM</code>は次の状態である<code class="language-plaintext highlighter-rouge">[Door::ReachHandle, OK, Door::MoveHandle, Auto]</code>に遷移します。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::MoveHandle:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">Posture</span>
+  <span class="s">robot</span><span class="pi">:</span> <span class="s">door</span>
+  <span class="s">completion</span><span class="pi">:</span>
+    <span class="na">eval</span><span class="pi">:</span> <span class="m">0.01</span>
+<span class="err">  </span><span class="na">postureTask</span><span class="pi">:</span>
+    <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
+    <span class="na">jointGains</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">jointName</span><span class="pi">:</span> <span class="s">handle</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="m">50</span>
+    <span class="na">target</span><span class="pi">:</span>
+      <span class="na">handle</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">-1.0</span><span class="pi">]</span>
+  <span class="na">AddContacts</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">r1</span><span class="pi">:</span> <span class="s">jvrc1</span>
+    <span class="na">r1Surface</span><span class="pi">:</span> <span class="s">RightGripper</span>
+    <span class="na">r2</span><span class="pi">:</span> <span class="s">door</span>
+    <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">Handle</span>
+</code></pre></div></div>
+
+<p>この状態は、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1PostureState" target="blank_"><code>mc_control::fsm::PostureState</code></a>（<a href="/mc_rtc/jp/json.html#States/Posture">JSONのドキュメントを参照</a>）がベースとなっています。この状態では、フレームワークによって各ロボットに自動的に追加されたグローバルな姿勢制御タスクのゲインと目標が変更されます。まず、二次計画法によってロボットの<code class="language-plaintext highlighter-rouge">RightGripper</code>とドアの<code class="language-plaintext highlighter-rouge">Handle</code>の表面の相対位置がずれるのを防ぐため、これらの表面を接触させます。また、ロボットとドアを相互作用させる動的な力を計算するための摩擦円錐制約条件を追加します。これにより、ハンドルの関節が回転すると、JVRC1ロボットの関節も回転するようになります。</p>
+
+<p>この状態の処理が完了したら、次の状態である<code class="language-plaintext highlighter-rouge">[Door::MoveHandle, OK, Door::OpenDoor, Auto]</code>に遷移します。この状態は、先の状態と非常によく似ています。この状態では、ロボットがドアを開けられるように、ドアの蝶番の目標関節角度を変更します。この状態が先の状態（<code class="language-plaintext highlighter-rouge">base: Door::MoveHandle</code>）をどのように継承しているかに注目してください。この状態は、新しい目標を再定義している点だけが先の状態と異なります。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::OpenDoor:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">Door::MoveHandle</span>
+  <span class="s">postureTask</span><span class="pi">:</span>
+    <span class="na">jointGains</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">jointName</span><span class="pi">:</span> <span class="s">handle</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="m">50</span>
+      <span class="pi">-</span> <span class="na">jointName</span><span class="pi">:</span> <span class="s">door</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="m">50</span>
+    <span class="na">target</span><span class="pi">:</span>
+      <span class="na">handle</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">-1.0</span><span class="pi">]</span>
+      <span class="na">door</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">-0.3</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>現時点では、この有限オートマトンはドアを開く動作のみが考慮されています。ロボットのバランスについては考慮されていません。それでは、左足と右足の中点の真上に質量中心を置いてみましょう。これを実現するには、<code class="language-plaintext highlighter-rouge">Door::Standing</code>状態を前述の<code class="language-plaintext highlighter-rouge">Door::OpenDoorFSM</code>と同じ場所に置きます。厳密にいうと、これらの状態はタイムステップごとに交互に実行されます。.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::OpenDoorDemo:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">Parallel</span>
+  <span class="s">states</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Door</span><span class="pi">::</span><span class="nv">Standing</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">OpenDoorFSM</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>立位状態は以下のように定義されます。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::Standing:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
+  <span class="s">tasks</span><span class="pi">:</span>
+    <span class="na">CoM</span><span class="pi">:</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">com</span>
+      <span class="na">above</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">LeftFoot</span><span class="pi">,</span> <span class="nv">RightFoot</span><span class="pi">]</span>
+      <span class="na">weight</span><span class="pi">:</span> <span class="m">2000</span>
+      <span class="na">stiffness</span><span class="pi">:</span> <span class="m">5</span>
+    <span class="na">KeepChest</span><span class="pi">:</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">orientation</span>
+      <span class="na">body</span><span class="pi">:</span> <span class="s">WAIST_R_S</span>
+      <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
+      <span class="na">stiffness</span><span class="pi">:</span> <span class="m">1</span>
+</code></pre></div></div>
+
+<p>このチュートリアルの完全なソースは、<a href="https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Door">こちら</a>から入手できます。</p>
+
+<h1 id="まとめ">まとめ</h1>
+
+<p>このチュートリアルでは、有限オートマトンをゼロから作成する方法のほか、本フレームワークで用意されている主要な有限オートマトン状態と、マルチロボットでタスク空間を制御するという概念を用いて、やや複雑なマルチロボットの動作を実現する方法について見てきました。ここではYAMLの機能を使用しましたが、YAMLの使用は必須ではありません。本フレームワークでは、独自の状態を記述してより複雑な動作の定義と抽象化を簡単に行えます。</p>
+
+<p>以下も参照してください。</p>
+<ul>
+  <li>同様の有限オートマトンに力の制御も加えた<a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンス制御のサンプルチュートリアル</a></li>
+</ul>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">次のチュートリアル: FSMコントローラの継承</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

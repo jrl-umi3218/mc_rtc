@@ -1,0 +1,1033 @@
+
+
+
+
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - マルチロボットコントローラ - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><strong>マルチロボットコントローラ</strong></li>
+                          
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#なぜ複数のロボットを使用するのか">なぜ複数のロボットを使用するのか</a></li>
+<li class="toc-entry toc-h3"><a href="#例">例</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#ロボットのインデックス">ロボットのインデックス</a></li>
+<li class="toc-entry toc-h4"><a href="#ドアの初期位置">ドアの初期位置</a></li>
+<li class="toc-entry toc-h4"><a href="#ドアのタスクと制約条件">ドアのタスクと制約条件</a></li>
+<li class="toc-entry toc-h4"><a href="#コントローラーのロジックを定義する">コントローラーのロジックを定義する</a></li>
+<li class="toc-entry toc-h4"><a href="#フェーズ1-ハンドルに手を伸ばす">フェーズ1: ハンドルに手を伸ばす</a></li>
+<li class="toc-entry toc-h4"><a href="#フェーズ2-ハンドルを動かす">フェーズ2: ハンドルを動かす</a></li>
+<li class="toc-entry toc-h4"><a href="#フェーズ3-ドアを開く">フェーズ3: ドアを開く</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#いろいろ試してみよう">いろいろ試してみよう</a></li>
+<li class="toc-entry toc-h3"><a href="#有限オートマトン機能の紹介">有限オートマトン機能の紹介</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>マルチロボットコントローラ</h1>
+        
+
+        <h3 id="なぜ複数のロボットを使用するのか">なぜ複数のロボットを使用するのか</h3>
+
+
+<p>このセクションでは、1台のロボットだけでなく複数のロボットを同時に制御します。この手法を使用すると、数多くの自由度を制御する際に計算負荷が非常に高くなりますが、以下のことが可能となります。</p>
+
+<ul>
+  <li>ロボット間の制約条件（接触面や衝突メッシュなど）を指定する</li>
+  <li>連携してタスクを実行する</li>
+  <li>多関節オブジェクトを操作する</li>
+</ul>
+
+<p>これらすべてを、インバースキネマティクスを明示的に行わずに実現できます。</p>
+
+<p>これを実現するため、本フレームワークの二次計画法コントローラーは、一定の制約条件の下で、ロボットのシステム全体が考慮された目的関数の値を最小にします。</p>
+
+<p>今回の例では、自由度2のシンプルなオブジェクト（ドア）の操作について見ていきます。ここでは、ドアのハンドルに向けてロボットの手を伸ばし、ハンドルを回してドアを開くという動作を実現します。</p>
+
+<p><em>注: この記事では、読者がROSを使用してコントローラを実行・可視化できることを前提として説明します。</em></p>
+
+
+<h3 id="例">例</h3>
+
+
+<p>ここでは、JVRC1とドアを読み込むシンプルなコントローラーを構築します。このドアは、既にインストールされている<a href="https://github.com/jrl-umi3218/mc_rtc_data" target="blank_">mc_rtc_data</a>パッケージに含まれています。</p>
+
+<p>では、複数のロボットを入力として受け取るコントローラーを構築しましょう。</p>
+
+<ul>
+  <li>JVRC1</li>
+  <li>ドア</li>
+  <li>地面</li>
+</ul>
+
+<p>これを実現するには、コンストラクターを以下のように編集します。</p>
+
+<ul class="nav nav-tabs" id="constructorTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="constructorc-cppTab" data-toggle="tab" href="#constructorc-cppTabContent" role="tab" aria-controls="constructorc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="constructorpythonpythonTab" data-toggle="tab" href="#constructorpythonpythonTabContent" role="tab" aria-controls="constructorpythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="constructorTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="constructorc-cppTabContent" role="tabpanel" arial-labelledby="constructorc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include &lt;mc_rbdyn/RobotLoader.h&gt;
+</span>
+<span class="n">MyFirstController</span><span class="o">::</span><span class="n">MyFirstController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">)</span>
+<span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="p">({</span><span class="n">rm</span><span class="p">,</span>
+    <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">)</span> <span class="o">+</span> <span class="s">"/../mc_int_obj_description"</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">"door"</span><span class="p">)),</span>
+    <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">"ground"</span><span class="p">))},</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="constructorpythonpythonTabContent" role="tabpanel" arial-labelledby="constructorpythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">@</span><span class="nb">staticmethod</span>
+<span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="n">door</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="p">.</span><span class="n">MC_ENV_DESCRIPTION_PATH</span> <span class="o">+</span> <span class="s">"/../mc_int_obj_description"</span><span class="p">,</span> <span class="s">"door"</span><span class="p">)</span>
+    <span class="n">ground</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="p">.</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">,</span> <span class="s">"ground"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MyFirstController</span><span class="p">([</span><span class="n">robot</span><span class="p">,</span> <span class="n">door</span><span class="p">,</span> <span class="n">ground</span><span class="p">],</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<h4 id="ロボットのインデックス">ロボットのインデックス</h4>
+
+
+<p>今回の新しい例では、追加のロボット（ドア）を読み込みました。その際、読み込むべきロボットモジュールのリストを指定しました。読み込まれたロボットには、モジュールを指定した順にインデックスが付けられています。すなわち、メインロボットのインデックスは0のままですが、ドアにはインデックス1が、地面にはインデックス2が付けられています。そのため、接触面の設定を以下のように変更する必要があります。</p>
+
+<ul class="nav nav-tabs" id="set_contactTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="set-contactc-cppTab" data-toggle="tab" href="#set-contactc-cppTabContent" role="tab" aria-controls="set-contactc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="set-contactpythonpythonTab" data-toggle="tab" href="#set-contactpythonpythonTabContent" role="tab" aria-controls="set-contactpythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="set_contactTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="set-contactc-cppTabContent" role="tabpanel" arial-labelledby="set-contactc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">({</span>
+  <span class="p">{</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">},</span>
+  <span class="p">{</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">}</span>
+<span class="p">});</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="set-contactpythonpythonTabContent" role="tabpanel" arial-labelledby="set-contactpythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">setContacts</span><span class="p">([</span>
+  <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">Contact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">),</span>
+  <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">Contact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
+<span class="p">])</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<h4 id="ドアの初期位置">ドアの初期位置</h4>
+
+
+<p>この状態でコントローラーを起動すると、ドアとロボットが同じ場所に表示されるのが分かります。今回のチュートリアルの目的を達成するには、ドアの位置を手動で変更する必要があります。</p>
+
+<ul class="nav nav-tabs" id="reposition_doorTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="reposition-doorc-cppTab" data-toggle="tab" href="#reposition-doorc-cppTabContent" role="tab" aria-controls="reposition-doorc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="reposition-doorpythonpythonTab" data-toggle="tab" href="#reposition-doorpythonpythonTabContent" role="tab" aria-controls="reposition-doorpythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="reposition_doorTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="reposition-doorc-cppTabContent" role="tabpanel" arial-labelledby="reposition-doorc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// reset関数内</span>
+<span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">RotZ</span><span class="p">(</span><span class="n">M_PI</span><span class="p">),</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)));</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="reposition-doorpythonpythonTabContent" role="tabpanel" arial-labelledby="reposition-doorpythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># resetコールバック関数内
+</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">RotZ</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="n">pi</span><span class="p">),</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<h4 id="ドアのタスクと制約条件">ドアのタスクと制約条件</h4>
+
+
+<p>新しい多関節ロボットを追加したため、このロボットにいくつかの制約条件を追加する必要があります。今回は、キネマティクス制約条件と姿勢制御タスクのみを追加します。</p>
+
+<ul class="nav nav-tabs" id="add_door_tasksTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="add-door-tasksc-cppTab" data-toggle="tab" href="#add-door-tasksc-cppTabContent" role="tab" aria-controls="add-door-tasksc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="add-door-taskspythonpythonTab" data-toggle="tab" href="#add-door-taskspythonpythonTabContent" role="tab" aria-controls="add-door-taskspythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="add_door_tasksTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="add-door-tasksc-cppTabContent" role="tabpanel" arial-labelledby="add-door-tasksc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// ヘッダー内</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">KinematicsConstraint</span><span class="o">&gt;</span> <span class="n">doorKinematics</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">PostureTask</span><span class="o">&gt;</span> <span class="n">doorPosture</span><span class="p">;</span>
+<span class="c1">// reset関数内</span>
+<span class="n">doorKinematics</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">KinematicsConstraint</span><span class="o">&gt;</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">solver</span><span class="p">().</span><span class="n">dt</span><span class="p">());</span>
+<span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="o">*</span><span class="n">doorKinematics</span><span class="p">);</span>
+<span class="n">doorPosture</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">PostureTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">);</span>
+<span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">doorPosture</span><span class="p">)</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="add-door-taskspythonpythonTabContent" role="tabpanel" arial-labelledby="add-door-taskspythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># resetコールバック関数内
+</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">RotZ</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="n">pi</span><span class="p">),</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">doorKinematics</span> <span class="o">=</span> <span class="n">mc_solver</span><span class="p">.</span><span class="n">KinematicsConstraint</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">timeStep</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">doorKinematics</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">doorPosture</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="p">.</span><span class="n">PostureTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">doorPosture</span><span class="p">)</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<p><em>注: ドアは土台が固定されているため、この段階ではドアに接触面を追加しません。ただし、コントローラーに読み込まれているすべてのロボットに対して接触面制約条件を直接適用できます。</em>
+
+<h4 id="コントローラーのロジックを定義する">コントローラーのロジックを定義する</h4>
+
+
+<p>ここでは、コントローラーのロジックを以下のように定義します。</p>
+
+<ol>
+  <li>ドアのハンドルに向けてロボットの手を伸ばす</li>
+  <li>ドアのハンドルを回す</li>
+  <li>ドアを開く</li>
+</ol>
+
+<p>これらを反映したコードは以下のようになります。</p>
+
+<ul class="nav nav-tabs" id="logic_setupTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="logic-setupc-cppTab" data-toggle="tab" href="#logic-setupc-cppTabContent" role="tab" aria-controls="logic-setupc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="logic-setuppythonpythonTab" data-toggle="tab" href="#logic-setuppythonpythonTabContent" role="tab" aria-controls="logic-setuppythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="logic_setupTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="logic-setupc-cppTabContent" role="tabpanel" arial-labelledby="logic-setupc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// ヘッダー内</span>
+<span class="k">enum</span> <span class="n">DoorPhase</span>
+<span class="p">{</span>
+      <span class="n">APPROACH</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="n">HANDLE</span><span class="p">,</span>
+      <span class="n">OPEN</span>
+<span class="p">};</span>
+<span class="c1">// コントローラーのプライベートプロパティ</span>
+<span class="n">DoorPhase</span> <span class="n">phase</span> <span class="o">=</span> <span class="n">APPROACH</span><span class="p">;</span>
+<span class="c1">// コントローラーの新しいメソッド</span>
+<span class="kt">void</span> <span class="nf">switch_phase</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">phase</span> <span class="o">==</span> <span class="n">APPROACH</span> <span class="o">&amp;&amp;</span> <span class="mi">0</span> <span class="cm">/** この条件は後で記述する */</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="cm">/** HANDLEフェーズをセットアップする */</span>
+    <span class="n">phase</span> <span class="o">=</span> <span class="n">HANDLE</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">phase</span> <span class="o">==</span> <span class="n">HANDLE</span> <span class="o">&amp;&amp;</span> <span class="mi">0</span> <span class="cm">/** この条件は後で記述する */</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="cm">/** OPENフェーズをセットアップする */</span>
+    <span class="n">phase</span> <span class="o">=</span> <span class="n">OPEN</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// run関数内でこれを呼び出す</span>
+<span class="kt">bool</span> <span class="n">MyFirstController</span><span class="o">::</span><span class="n">run</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">switch_phase</span><span class="p">();</span>
+  <span class="k">return</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="o">::</span><span class="n">run</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="logic-setuppythonpythonTabContent" role="tabpanel" arial-labelledby="logic-setuppythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># 定数を宣言する
+</span><span class="n">APPROACH</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">HANDLE</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">OPEN</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="c1"># コンストラクター内
+</span><span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">APPROACH</span>
+<span class="c1"># コントローラーの新しいメソッド
+</span><span class="k">def</span> <span class="nf">switch_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+  <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">==</span> <span class="n">APPROACH</span> <span class="ow">and</span> <span class="bp">False</span><span class="p">:</span> <span class="c1"># この条件は後で記述する
+</span>    <span class="c1"># HANDLEフェーズをセットアップする
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">HANDLE</span>
+  <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">==</span> <span class="n">HANDLE</span> <span class="ow">and</span> <span class="bp">False</span><span class="p">:</span> <span class="c1"># この条件は後で記述する
+</span>    <span class="c1"># OPENフェーズをセットアップする
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">OPEN</span>
+<span class="c1"># runコールバック関数内でこれを呼び出す
+</span><span class="k">def</span> <span class="nf">run_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">switch_phase</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">True</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<h4 id="フェーズ1-ハンドルに手を伸ばす">フェーズ1: ハンドルに手を伸ばす</h4>
+
+
+<p>このフェーズでは、<code>SurfaceTransformTask</code>を導入します。これは、以前に使用した<code>EndEffectorTask</code>と非常によく似ていますが、このタスクはエンドエフェクターではなくロボットの表面を制御します。このタスクでは通常、目標を表すのが簡単になります。さらに、ドアの位置を動かしたり手を変更したりする際にコードを編集しなくて済むように、ドアのハンドルの位置を用いて目標を定義します。</p>
+
+<ul class="nav nav-tabs" id="p1Tab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="p1c-cppTab" data-toggle="tab" href="#p1c-cppTabContent" role="tab" aria-controls="p1c-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="p1pythonpythonTab" data-toggle="tab" href="#p1pythonpythonTabContent" role="tab" aria-controls="p1pythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="p1TabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="p1c-cppTabContent" role="tabpanel" arial-labelledby="p1c-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// ヘッダー内</span>
+<span class="cp">#include &lt;mc_tasks/SurfaceTransformTask.h&gt;
+</span><span class="c1">// プライベートメンバー内</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">SurfaceTransformTask</span><span class="o">&gt;</span> <span class="n">handTask</span><span class="p">;</span>
+<span class="c1">// reset関数内</span>
+<span class="c1">// タスクを作成してソルバーに追加する</span>
+<span class="n">handTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">SurfaceTransformTask</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"RightGripper"</span><span class="p">,</span> <span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">);</span>
+<span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">handTask</span><span class="p">);</span>
+<span class="c1">// ハンドルの位置を基準とした目標を設定する</span>
+<span class="n">handTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.025</span><span class="p">))</span> <span class="o">*</span> <span class="nf">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"Handle"</span><span class="p">));</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="p1pythonpythonTabContent" role="tabpanel" arial-labelledby="p1pythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># resetコールバック関数内
+# タスクを作成してソルバーに追加する
+</span><span class="bp">self</span><span class="p">.</span><span class="n">handTask</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="p">.</span><span class="n">SurfaceTransformTask</span><span class="p">(</span><span class="s">"RightGripper"</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">)</span>
+<span class="c1"># ハンドルの位置を基準とした目標を設定する
+</span><span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">.</span><span class="n">target</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.025</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"Handle"</span><span class="p">))</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<h4 id="フェーズ2-ハンドルを動かす">フェーズ2: ハンドルを動かす</h4>
+
+
+<p>Wフェーズ2では以下の2つの項目を設定します。</p>
+
+<ol>
+ <li>フェーズ2をいつトリガーするか</li>
+  <li>何を実行するか</li>
+</ol>
+
+<p>最初の項目については、<code>SurfaceTransformTask</code>の実行を監視します。2番目の項目については、ドアとロボットのグリッパーとの間に接触面を追加し、ロボットのグリッパーに関するタスクを削除し（これは現在、接触面によって処理されています）、ハンドルの位置に関する目標を変更します。</p>
+
+<ul class="nav nav-tabs" id="p2Tab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="p2c-cppTab" data-toggle="tab" href="#p2c-cppTabContent" role="tab" aria-controls="p2c-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="p2pythonpythonTab" data-toggle="tab" href="#p2pythonpythonTabContent" role="tab" aria-controls="p2pythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="p2TabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="p2c-cppTabContent" role="tabpanel" arial-labelledby="p2c-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// MyFirstController::switch_phase()を編集する</span>
+<span class="k">if</span><span class="p">(</span><span class="n">phase</span> <span class="o">==</span> <span class="n">APPROACH</span> <span class="o">&amp;&amp;</span> <span class="n">handTask</span><span class="o">-&gt;</span><span class="n">eval</span><span class="p">().</span><span class="n">norm</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="o">&amp;&amp;</span> <span class="n">handTask</span><span class="o">-&gt;</span><span class="n">speed</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-4</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// 新しい接触面を追加する</span>
+  <span class="k">auto</span> <span class="n">contacts</span> <span class="o">=</span> <span class="n">solver</span><span class="p">().</span><span class="n">contacts</span><span class="p">();</span>
+  <span class="n">contacts</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"RightGripper"</span><span class="p">,</span> <span class="s">"Handle"</span><span class="p">);</span>
+  <span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">(</span><span class="n">contacts</span><span class="p">);</span>
+  <span class="c1">// 面変換タスクを削除する</span>
+  <span class="n">solver</span><span class="p">().</span><span class="n">removeTask</span><span class="p">(</span><span class="n">handTask</span><span class="p">);</span>
+  <span class="c1">// ロボットの現在の姿勢を維持する</span>
+  <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
+  <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
+  <span class="c1">// 新しいハンドル位置を目標とする</span>
+  <span class="n">doorPosture</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">handle</span><span class="p">});</span>
+  <span class="c1">// フェーズを切り替える</span>
+  <span class="n">phase</span> <span class="o">=</span> <span class="n">HANDLE</span><span class="p">;</span>
+<span class="err">}</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="p2pythonpythonTabContent" role="tabpanel" arial-labelledby="p2pythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># switch_phase(self)を編集する
+</span><span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">==</span> <span class="n">APPROACH</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">.</span><span class="nb">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">.</span><span class="n">speed</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-4</span><span class="p">:</span>
+  <span class="c1"># 新しい接触面を追加する
+</span>  <span class="n">contacts</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">contacts</span><span class="p">()</span>
+  <span class="n">contacts</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">Contact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"RightGripper"</span><span class="p">,</span> <span class="s">"Handle"</span><span class="p">))</span>
+  <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">setContacts</span><span class="p">(</span><span class="n">contacts</span><span class="p">)</span>
+  <span class="c1"># 面変換タスクを削除する
+</span>  <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">removeTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">)</span>
+  <span class="c1"># ロボットの現在の姿勢を維持する
+</span>  <span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
+  <span class="bp">self</span><span class="p">.</span><span class="n">comTask</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
+  <span class="c1"># 新しいハンドル位置を目標とする
+</span>  <span class="bp">self</span><span class="p">.</span><span class="n">doorPosture</span><span class="p">.</span><span class="n">target</span><span class="p">({</span><span class="s">"handle"</span><span class="p">:</span> <span class="p">{</span><span class="o">-</span><span class="mf">1.0</span><span class="p">}})</span>
+  <span class="c1"># フェーズを切り替える
+</span>  <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">HANDLE</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<h4 id="フェーズ3-ドアを開く">フェーズ3: ドアを開く</h4>
+
+
+<p>このフェーズは、前のフェーズと非常によく似ています。ロボットの手が接触して遷移が引き起こされたハンドルの位置をチェックし、ドアを開く動作に関する目標を設定します。</p>
+
+<ul class="nav nav-tabs" id="p3Tab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="p3c-cppTab" data-toggle="tab" href="#p3c-cppTabContent" role="tab" aria-controls="p3c-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="p3pythonpythonTab" data-toggle="tab" href="#p3pythonpythonTabContent" role="tab" aria-controls="p3pythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="p3TabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="p3c-cppTabContent" role="tabpanel" arial-labelledby="p3c-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="k">else</span> <span class="nf">if</span><span class="p">(</span><span class="n">phase</span> <span class="o">==</span> <span class="n">HANDLE</span> <span class="o">&amp;&amp;</span> <span class="n">doorPosture</span><span class="o">-&gt;</span><span class="n">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// ドア開の目標を更新する</span>
+  <span class="n">doorPosture</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">door</span><span class="p">});</span>
+  <span class="c1">// Switch phase</span>
+  <span class="n">phase</span> <span class="o">=</span> <span class="n">OPEN</span><span class="p">;</span>
+<span class="err">}</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="p3pythonpythonTabContent" role="tabpanel" arial-labelledby="p3pythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">==</span> <span class="n">HANDLE</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">doorPosture</span><span class="p">.</span><span class="nb">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">:</span>
+  <span class="c1"># ドア開の目標を更新する
+</span>  <span class="bp">self</span><span class="p">.</span><span class="n">doorPosture</span><span class="p">.</span><span class="n">target</span><span class="p">({</span><span class="s">"door"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">]})</span>
+  <span class="c1"># フェーズを切り替える
+</span>  <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">OPEN</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<h3 id="いろいろ試してみよう">いろいろ試してみよう</h3>
+
+
+<p>ここで、いくつかのパラメーターをいろいろと変更し、マルチロボットのアプローチのメリットを確認してみましょう。他のパラメーターは変更せずに、以下の項目を試してみてください。</p>
+
+<ul>
+ <li>ドアの位置を変更する</li>
+  <li>ドアのハンドルを回す角度を変更する</li>
+  <li>ドアを開く角度を変更する</li>
+  <li>ドアを開くのに使用するロボットの手を変更する</li>
+</ul>
+
+<p><em>注: 当然ながら、設定したとおりに実行できない場合もあります。例えば、ロボットから10m離れた場所にドアを置けば、ドアのハンドルにロボットの手が届かなくなります。</em></p>
+
+<h3 id="有限オートマトン機能の紹介">有限オートマトン機能の紹介</h3>
+
+
+<p>このチュートリアルでは、mc_rtcのコントローラーについて紹介しました。次のチュートリアルでは、本フレームワークで用意されている高度なツールを使用して複雑なコントローラーのプログラミングとデバッグの仕方について説明します。これまでの説明では、非常に初歩的な方法でコントローラーのロジックをプログラミングしてきました。本フレームワークでは、<a href="/mc_rtc/jp/tutorials/recipes/fsm.html">有限オートマトン機能を紹介するチュートリアル</a>や <a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">実用的な有限オートマトンのチュートリアル</a>で紹介されているようなシナリオを扱うための、大変強力な手段が用意されています。後者のチュートリアルでは、有限オートマトン機能を使って、今回のチュートリアルと同じ内容をプログラミングします。</p>
+
+<p>このコントローラーの完全なソースは、<a href="sources/multi-robot-controller.html">こちら</a>から入手できます。</p>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html">次のチュートリアル: <code>mc_rtc::Configuration</code> 設定</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

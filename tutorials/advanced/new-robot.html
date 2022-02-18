@@ -23,75 +23,94 @@
 
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
 
     <title>Tutorials - Integrate a new robot in mc_rtc - mc_rtc</title>
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
-    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
-
-    
-
-    
-
-    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
   </head>
 
   <body>
     <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
-      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <div class="navbar-nav mr-auto">
-          
-          
-          
-          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
-          
-          
-          
-          
-          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
-          
-          
-          
-          
-          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
-          
-          
-          
-          
-          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
-          
-          
-          
-          
-          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
-          
-          
-        </div>
-        <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
-      </div>
-    </header>
+  <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">Online demonstration</a>
+    </div>
+    
+      
+      
+      
+      EN
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+        <a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">
+      
+      JP
+      
+        </a>
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
 
     <div class="container-fluid">
       <div class="row">
@@ -306,7 +325,8 @@
                   </ul>
                 </div>
               </div>
-              <ul id="toc" class="section-nav">
+              
+                <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#using-the-code-env-code-code-object-code-loader">Using the env/object loader</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#organization-of-your-robot-description-package">Organization of your robot description package</a></li>
@@ -320,12 +340,15 @@
 <li class="toc-entry toc-h2"><a href="#implementing-your-own-code-robotmodule-code">Implementing your own RobotModule</a></li>
 <li class="toc-entry toc-h2"><a href="#get-started">Get started</a></li>
 </ul>
+              
             </div>
           </div>
         </div>
       </div>
       <div class="col-9" id="tutorial-content">
+        
         <h1>Integrate a new robot in mc_rtc</h1>
+        
 
         <p>There is three ways to integrate your robot to mc_rtc:</p>
 
@@ -379,10 +402,11 @@
     
     <div class="tab-pane show active" id="env-object-examplec-cppTabContent" role="tabpanel" arial-labelledby="env-object-examplec-cppTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include &lt;mc_rbdyn/RobotLoader.h&gt;
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include &lt;mc_rbdyn/RobotLoader.h&gt;
 </span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">path</span> <span class="o">=</span> <span class="s">"/path/to/description"</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span> <span class="o">=</span> <span class="s">"name"</span><span class="p">;</span>
@@ -401,10 +425,11 @@
     
     <div class="tab-pane" id="env-object-examplepythonpythonTabContent" role="tabpanel" arial-labelledby="env-object-examplepythonpythonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">mc_rbdyn</span>
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">mc_rbdyn</span>
 
 <span class="n">path</span> <span class="o">=</span> <span class="s">"/path/to/description"</span>
 <span class="n">name</span> <span class="o">=</span> <span class="s">"name"</span>
@@ -423,10 +448,11 @@
     
     <div class="tab-pane" id="env-object-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="env-object-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span><span class="s2">"env"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/path/to/description"</span><span class="p">,</span><span class="w"> </span><span class="s2">"name"</span><span class="p">]</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span><span class="s2">"env"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/path/to/description"</span><span class="p">,</span><span class="w"> </span><span class="s2">"name"</span><span class="p">]</span><span class="w">
 
 </span><span class="err">//</span><span class="w"> </span><span class="err">object</span><span class="w"> </span><span class="err">will</span><span class="w"> </span><span class="err">load</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">robot</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">floating</span><span class="w"> </span><span class="err">base</span><span class="w">
 </span><span class="p">[</span><span class="s2">"object"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/path/to/description"</span><span class="p">,</span><span class="w"> </span><span class="s2">"name"</span><span class="p">]</span></code></pre></figure>
@@ -441,10 +467,11 @@
     
     <div class="tab-pane" id="env-object-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="env-object-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="pi">[</span><span class="nv">env</span><span class="pi">,</span> <span class="nv">/path/to/description</span><span class="pi">,</span> <span class="nv">name</span><span class="pi">]</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="pi">[</span><span class="nv">env</span><span class="pi">,</span> <span class="nv">/path/to/description</span><span class="pi">,</span> <span class="nv">name</span><span class="pi">]</span>
 
 <span class="c1"># object will load the robot with a floating base</span>
 <span class="pi">[</span><span class="nv">object</span><span class="pi">,</span> <span class="nv">/path/to/description</span><span class="pi">,</span> <span class="nv">name</span><span class="pi">]</span></code></pre></figure>
@@ -515,10 +542,11 @@
     
     <div class="tab-pane show active" id="json-examplec-cppTabContent" role="tabpanel" arial-labelledby="json-examplec-cppTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include &lt;mc_rbdyn/RobotLoader.h&gt;
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include &lt;mc_rbdyn/RobotLoader.h&gt;
 </span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">json_path</span> <span class="o">=</span> <span class="s">"/path/to/file.json"</span><span class="p">;</span>
 <span class="k">auto</span> <span class="n">rm_json</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"json"</span><span class="p">,</span> <span class="n">json_path</span><span class="p">);</span>
@@ -536,10 +564,11 @@
     
     <div class="tab-pane" id="json-examplepythonpythonTabContent" role="tabpanel" arial-labelledby="json-examplepythonpythonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">mc_rbdyn</span>
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">mc_rbdyn</span>
 
 <span class="n">json_path</span> <span class="o">=</span> <span class="s">"/path/to/file.json"</span>
 <span class="n">rm_json</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"json"</span><span class="p">,</span> <span class="n">json_path</span><span class="p">)</span>
@@ -557,10 +586,11 @@
     
     <div class="tab-pane" id="json-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="json-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span><span class="s2">"json"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/path/to/file.json"</span><span class="p">]</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span><span class="s2">"json"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/path/to/file.json"</span><span class="p">]</span><span class="w">
 
 </span><span class="p">[</span><span class="s2">"json"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/path/to/file.yaml"</span><span class="p">]</span></code></pre></figure>
 
@@ -574,10 +604,11 @@
     
     <div class="tab-pane" id="json-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="json-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="pi">[</span><span class="nv">json</span><span class="pi">,</span> <span class="nv">/path/to/file.json</span><span class="pi">]</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="pi">[</span><span class="nv">json</span><span class="pi">,</span> <span class="nv">/path/to/file.json</span><span class="pi">]</span>
 
 <span class="pi">[</span><span class="nv">json</span><span class="pi">,</span> <span class="nv">/path/to/file.yaml</span><span class="pi">]</span></code></pre></figure>
 
@@ -629,10 +660,11 @@
     
     <div class="tab-pane show active" id="robot-module-examplecmakelists-txtcmakeTabContent" role="tabpanel" arial-labelledby="robot-module-examplecmakelists-txtcmakeTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-cmake" data-lang="cmake"><span class="nb">cmake_minimum_required</span><span class="p">(</span>VERSION 3.1<span class="p">)</span>
+  <figure class="highlight"><pre><code class="language-cmake" data-lang="cmake"><span class="nb">cmake_minimum_required</span><span class="p">(</span>VERSION 3.1<span class="p">)</span>
 
 <span class="nb">find_package</span><span class="p">(</span>mc_rtc REQUIRED<span class="p">)</span>
 
@@ -650,10 +682,11 @@
     
     <div class="tab-pane" id="robot-module-examplemyrobot-hcppTabContent" role="tabpanel" arial-labelledby="robot-module-examplemyrobot-hcppTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#pragma once
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#pragma once
 </span>
 <span class="cp">#include &lt;mc_rbdyn/RobotModule.h&gt;
 #include &lt;mc_robots/api.h&gt;
@@ -699,10 +732,11 @@
     
     <div class="tab-pane" id="robot-module-examplemyrobot-cppcppTabContent" role="tabpanel" arial-labelledby="robot-module-examplemyrobot-cppcppTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include "MyRobot.h"
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include "MyRobot.h"
 </span>
 <span class="cp">#include &lt;RBDyn/parsers/urdf.h&gt;
 </span>
@@ -754,10 +788,11 @@
 <p>Use the <a href="https://github.com/mc-rtc/new-robot-module/">mc-rtc/new-robot-module</a> template project to get started quickly. This template provides the barebone structure for a C++ <code>RobotModule</code> or a YAML <code>RobotModule</code></p>
 
 
+
         <hr/>
         
         <div class="text-right">
-        <a href="/mc_rtc/tutorials/advanced/support-mc-rtc-build-static.html">Next tutorial: Supporting MC_RTC_BUILD_STATIC in your code</a>
+          <a href="/mc_rtc/tutorials/advanced/support-mc-rtc-build-static.html">Next tutorial: Supporting MC_RTC_BUILD_STATIC in your code</a>
         </div>
         
       </div>
@@ -765,25 +800,27 @@
     </div>
 
     <div class="container-fluid">
-      <footer>
-        <hr>
-        <div class="row">
-          <div class="col-8 offset-lg-2 col-lg-6">
-            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
-          </div>
-          <div class="col-4 col-lg-2 text-right">
-            <a href="/mc_rtc/credits.html">Credits</a>
-          </div>
-        </div>
-      </footer>
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/credits.html">Credits</a>
+      </div>
     </div>
+  </footer>
+</div>
+
   </body>
 
   <script type="text/javascript">
-  $(document).ready(function()
-  {
-    new ClipboardJS('.copy-button');
-  });
-  </script>
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
 
 </html>

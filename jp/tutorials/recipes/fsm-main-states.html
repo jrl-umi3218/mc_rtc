@@ -1,0 +1,590 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - 主なFSMの状態 - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/recipes/fsm-main-states.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><strong>主なFSMの状態</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#metatasks状態">MetaTasks状態</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#完了基準">完了基準</a></li>
+<li class="toc-entry toc-h3"><a href="#状態出力">状態出力</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#parallel状態">Parallel状態</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#同時に実行されている状態間で情報をやり取りする">同時に実行されている状態間で情報をやり取りする</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#meta-有限オートマトン内の有限オートマトン">Meta: 有限オートマトン内の有限オートマトン</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>主なFSMの状態</h1>
+        
+
+        
+<p>本フレームワークでは、<code class="language-plaintext highlighter-rouge">JSON/YAML</code>の設定機能を最大限活用して有限オートマトンを簡単に構成できるように、実装済みの状態がデフォルトでいくつか用意されています。これらの状態を使用すると、ロボットの複雑な動作を実現する有限オートマトンを簡単に記述でき、<code class="language-plaintext highlighter-rouge">C++/Python</code>状態を手作業で記述する必要はほとんど（または全く）ありません。実現したいことのほとんどすべてを有限オートマトンの設定で直接記述できます。このチュートリアルでは、最も役に立つ3つの状態について詳しく見ていきます。</p>
+
+<ul>
+  <li><a href="/mc_rtc/jp/json.html#State/MetaTasks">MetaTasks</a>: <code class="language-plaintext highlighter-rouge">JSON/YAML</code>で記述された設定から一連のタスクを読み込む</li>
+  <li><a href="/mc_rtc/jp/json.html#State/Parallel">Parallel</a>: 複数の状態を「同時に」実行する</li>
+  <li><a href="/mc_rtc/jp/json.html#State/Meta">Meta</a>: 有限オートマトン内に有限オートマトンをネストさせる</li>
+</ul>
+
+<p>このチュートリアルの残りの部分では、これらの状態の使い方について見ていきます。ここでは<code class="language-plaintext highlighter-rouge">YAML</code>の例のみが示されていますが、もちろん<code class="language-plaintext highlighter-rouge">JSON</code>もサポートされています。類似の例についてはドキュメントを参照してください。利用可能な状態の詳細については、JSON/YAMLのドキュメントの<a href="/mc_rtc/jp/json.html#State">状態オブジェクト</a>のセクションを参照してください。.</p>
+
+<h2 id="metatasks状態">MetaTasks状態</h2>
+
+<p><code class="language-plaintext highlighter-rouge">MetaTasks</code>状態（<a href="/mc_rtc/jp/json.html#State/MetaTasks">こちらのドキュメント</a>を参照)を使用すると、<code class="language-plaintext highlighter-rouge">JSON/YAML</code>で記述された設定から一連のタスクを読み込むことができます。利用可能なタスクの詳細については、<a href="/mc_rtc/jp/json.html#MetaTask">JSON/YAMLのドキュメント</a>を参照してください。</p>
+
+<p>それでは例を見てみましょう。ここでは、<code class="language-plaintext highlighter-rouge">FSM</code>の設定の<code class="language-plaintext highlighter-rouge">states:</code>セクションに新しい<code class="language-plaintext highlighter-rouge">MetaTasks</code>状態を追加します。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">states</span><span class="pi">:</span>
+  <span class="na">ExampleState</span><span class="pi">:</span>
+    <span class="na">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
+    <span class="c1"># optional: uses the output criteria of the tasks as the string output for the next transition</span>
+    <span class="na">outputs</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">CoM</span><span class="pi">]</span>
+    <span class="na">tasks</span><span class="pi">:</span>
+      <span class="c1"># create a CoM task</span>
+      <span class="na">CoM</span><span class="pi">:</span>
+        <span class="na">type</span><span class="pi">:</span> <span class="s">com</span>
+        <span class="na">move_com</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">-0.05</span><span class="pi">]</span>
+        <span class="na">completion</span><span class="pi">:</span>
+          <span class="na">OR</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">timeout</span><span class="pi">:</span> <span class="m">3</span>
+            <span class="pi">-</span> <span class="na">AND</span><span class="pi">:</span>
+              <span class="pi">-</span> <span class="na">eval</span><span class="pi">:</span> <span class="m">0.01</span>
+              <span class="pi">-</span> <span class="na">speed</span><span class="pi">:</span> <span class="m">0.005</span>
+
+      <span class="c1"># create a bspline_trajectory task</span>
+      <span class="na">HandTrajectory</span><span class="pi">:</span>
+        <span class="na">type</span><span class="pi">:</span> <span class="s">bspline_trajectory</span>
+        <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftHand</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="m">10000.0</span>
+        <span class="na">duration</span><span class="pi">:</span> <span class="m">15.0</span>
+        <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
+        <span class="na">targetSurface</span><span class="pi">:</span>
+          <span class="c1"># assumes that the additional object/box robot was loaded in the global fsm configuration</span>
+          <span class="na">robot</span><span class="pi">:</span> <span class="s">box</span>
+          <span class="na">surface</span><span class="pi">:</span> <span class="s">Left</span>
+        <span class="na">completion</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">timeElapsed</span><span class="pi">:</span> <span class="no">true</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">ExampleState</code>という名前の新しい状態が作成され、以下のものが読み込まれます。</p>
+<ul>
+  <li>質量中心を<code class="language-plaintext highlighter-rouge">5cm</code>下げる<code class="language-plaintext highlighter-rouge">CoM</code>という名前の<code class="language-plaintext highlighter-rouge">CoM</code>タスク</li>
+  <li>ロボットの左のグリッパーを他のロボットで定義された<code class="language-plaintext highlighter-rouge">Left</code>という表面まで動かす<code class="language-plaintext highlighter-rouge">LeftHandTrajectory</code>という名前の<code class="language-plaintext highlighter-rouge">BSplineTrajectory</code>タスク</li>
+</ul>
+
+<h3 id="完了基準">完了基準</h3>
+
+<p>上記の例の<code class="language-plaintext highlighter-rouge">completion</code>要素に注目してください。「完了基準」と呼ばれるもので、タスクが完了したかどうかを判断する条件文を生成します。詳細については、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1CompletionCriteria" target="blank_"><code>mc_control::CompletionCriteria</code></a>のAPIのドキュメントを参照してください。</p>
+
+<p>デフォルトでは、各タスクに以下のエントリが定義されています。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">eval</code>: MetaTask::eval()のノルムが指定された値より低いときにtrueになる</li>
+  <li><code class="language-plaintext highlighter-rouge">speed</code>: MetaTask::speed()のノルムが指定された値より低いときにtrueになる</li>
+  <li><code class="language-plaintext highlighter-rouge">timeout</code>: 指定された時間（単位: 秒）より長い時間にわたりタスクがソルバーに残っているときにtrueになる</li>
+</ul>
+
+<p>タスクによっては、以下のような追加の完了基準が定義されています。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">SplineTrajectoryTask</code>のバリエーション（<code class="language-plaintext highlighter-rouge">bspline_trajectory</code>、<code class="language-plaintext highlighter-rouge">exact_cubic_trajectory</code>）では、以下の基準が追加で定義されています。
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">timeElapsed: true</code>: タスクの<code class="language-plaintext highlighter-rouge">duration</code>が経過したときにtrueになる</li>
+      <li><code class="language-plaintext highlighter-rouge">wrench</code>: ロボットの表面に加わった力が指定されたしきい値より大きいときにtrueになる（6次元のベクトル。値がNaNの場合は測定値が無視される。値が負の場合は条件が反転する）。表面に力覚センサーが取り付けられていない場合は無視される</li>
+    </ul>
+  </li>
+</ul>
+
+<p>タスクに<code class="language-plaintext highlighter-rouge">mc_task::MetaTask::buildCompletionCriteria</code>を実装することで、独自の完了基準を追加できます。また、下記のように、条件構成体<code class="language-plaintext highlighter-rouge">AND</code>と<code class="language-plaintext highlighter-rouge">OR</code>を使用してこれらの完了基準を組み合わせることができます。さらに、通常の遅延評価が適用されます。例えば、トータルの処理時間が規定の時間を超えたとき、あるいは3秒の遅延後に手の表面の法線方向（<code class="language-plaintext highlighter-rouge">z</code>方向）に15Nを超える力が加わったときに手の移動経路タスクが完了しているかチェックするには、以下のように記述します。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># completion criteria that checks whether a trajectory task has been active for at least its specified duration</span>
+<span class="c1"># or whether more than 15N apply along the `z` direction of the hand surface after 3 seconds of delay.</span>
+<span class="na">completion</span><span class="pi">:</span>
+  <span class="na">OR</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">timeElapsed</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="pi">-</span> <span class="na">AND</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">timeout</span><span class="pi">:</span> <span class="m">3</span>
+      <span class="pi">-</span> <span class="na">wrench</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">15</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>完了したかどうかを判断する必要がないタスクについては、完了基準<code class="language-plaintext highlighter-rouge">completion</code>を省略できます。その場合、有限オートマトンはそのタスクが必ず完了するものとみなします。</p>
+
+<h3 id="状態出力">状態出力</h3>
+
+<p>先のチュートリアルで述べたように、各状態は<code class="language-plaintext highlighter-rouge">State::output("output value")</code>を呼び出して出力文字列を返します。この出力値は、状態遷移マップで次にどの状態を実行すべきかを判断するのに使用されます。<code class="language-plaintext highlighter-rouge">MetaTasks</code>状態は、状態内のすべてのタスクが完了すると、デフォルトで<code class="language-plaintext highlighter-rouge">"OK"</code>を返します。タスクの出力に基づいて分岐を判断する必要がない場合、以下のように状態遷移マップを記述します。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">transtions</span><span class="pi">:</span>
+<span class="nn">...</span>
+<span class="c1"># transition to the next state automatically when all tasks have completed</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">ExampleState</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">NextState</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+<span class="nn">...</span>
+</code></pre></div></div>
+
+<p>一方、より複雑な分岐判断、すなわち、タスクが完了した理由に基づく分岐判断を行いたい場合があります。その場合、<code class="language-plaintext highlighter-rouge">MetaTasks</code>状態の<code class="language-plaintext highlighter-rouge">output</code>設定で、完了基準の文字列出力に基づき状態出力を生成させたいタスクの名前のリストを記述します。例:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">ExampleState</span><span class="pi">:</span>
+  <span class="na">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
+  <span class="c1"># optional: uses the output criteria of the tasks as the string output for the next transition</span>
+  <span class="na">outputs</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">CoM</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>そうすると、状態遷移マップで<code class="language-plaintext highlighter-rouge">CoM</code>完了基準に基づき分岐が判断されるようになります。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Reminder: the CoM completion criteria is defined as:</span>
+<span class="c1"># CoM:</span>
+<span class="c1">#   completion:</span>
+<span class="c1">#     OR:</span>
+<span class="c1">#       - timeout: 3</span>
+<span class="c1">#       - AND:</span>
+<span class="c1">#         - eval: 0.01</span>
+<span class="c1">#         - speed: 0.005</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">ExampleState</span><span class="pi">,</span> <span class="s2">"</span><span class="s">CoM=timeout"</span><span class="pi">,</span> <span class="nv">CoMHasNotConvergedState</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">ExampleState</span><span class="pi">,</span> <span class="s2">"</span><span class="s">CoM=eval</span><span class="nv"> </span><span class="s">AND</span><span class="nv"> </span><span class="s">speed"</span><span class="pi">,</span> <span class="nv">NextMotionState</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+<span class="c1"># state to execute by default if none of the completion patterns are matched in the transition map</span>
+<span class="c1"># This allows to define non-exhaustive matching patterns in the transition map</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">ExampleState</span><span class="pi">,</span> <span class="s2">"</span><span class="s">DEFAULT"</span><span class="pi">,</span> <span class="nv">DefaultState</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>この例の場合、以下に示す3つの新しい状態を定義します。</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">CoMHasNotConvergedState</code>: 規定時間内に質量中心タスクが収束しなかった場合に実行される</li>
+  <li><code class="language-plaintext highlighter-rouge">NextMotionState</code>: 質量中心タスクが収束した場合に実行される</li>
+  <li><code class="language-plaintext highlighter-rouge">DefaultState</code>: 生成された出力パターンに一致する状態遷移が存在しない場合に実行される。この例では、出力パターンは必ずいずれかの状態遷移と一致するため、この状態が実行されることはありません。</li>
+</ul>
+
+<h2 id="parallel状態">Parallel状態</h2>
+
+<p>Parallel状態（<a href="/mc_rtc/jp/json.html#State/Parallel">こちらのドキュメント</a>を参照）では、複数の状態を同時に実行させることができます。有限オートマトンは実際にはシングルスレッドで実行されるため、実際にはコントローラーの処理ループ内で各状態がシーケンシャルに実行されます。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Define an additional MetaTasks state that moves the right hand</span>
+<span class="na">RightHandState</span><span class="pi">:</span>
+  <span class="na">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
+  <span class="na">HandTrajectory</span><span class="pi">:</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s">bspline_trajectory</span>
+    <span class="na">surface</span><span class="pi">:</span> <span class="s">RightHand</span>
+    <span class="na">stiffness</span><span class="pi">:</span> <span class="m">10000.0</span>
+    <span class="na">duration</span><span class="pi">:</span> <span class="m">15.0</span>
+    <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
+    <span class="na">targetSurface</span><span class="pi">:</span>
+      <span class="na">robot</span><span class="pi">:</span> <span class="s">box</span>
+      <span class="na">surface</span><span class="pi">:</span> <span class="s">Left</span>
+    <span class="na">completion</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">timeElapsed</span><span class="pi">:</span> <span class="no">true</span>
+
+<span class="c1"># Now say we want to move both the left and right hand and move the CoM down?</span>
+<span class="c1"># Easy, simply put the two states in parallel:</span>
+<span class="na">ExampleParallelState</span><span class="pi">:</span>
+  <span class="na">base</span><span class="pi">:</span> <span class="s">Parallel</span>
+  <span class="c1"># At each iteration, the ExampleState will be executed, followed by the RightHandState</span>
+  <span class="na">states</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">ExampleState</span><span class="pi">,</span> <span class="nv">RightHandState</span><span class="pi">]</span>
+  <span class="c1"># optional defines which state to use as the output criteria</span>
+  <span class="c1"># By default the last state's output in the states list above is used</span>
+  <span class="na">outputs</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">ExampleState</span><span class="pi">,</span> <span class="nv">RightHandState</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>Parallel状態は、同時に実行されているすべての状態が完了したときに完了したとみなされます。また、<code class="language-plaintext highlighter-rouge">MetaTasks</code>と同様に、状態出力をどのように生成するかを指定できます。</p>
+<ul>
+  <li>デフォルトでは、<code class="language-plaintext highlighter-rouge">states</code>リスト内の最後の状態の出力が使用されます。</li>
+  <li><code class="language-plaintext highlighter-rouge">outputs</code>が指定されている場合、</li>
+</ul>
+
+<p>例:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">[</span><span class="nv">ExampleParallelState</span><span class="pi">,</span> <span class="s2">"</span><span class="s">ExampleState:</span><span class="nv"> </span><span class="s">(CoM=timeout),</span><span class="nv"> </span><span class="s">RightHandState:</span><span class="nv"> </span><span class="s">(timeElapsed)"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">StateA"</span><span class="pi">]</span>
+<span class="pi">[</span><span class="nv">ExampleParallelState</span><span class="pi">,</span> <span class="s2">"</span><span class="s">ExampleState:</span><span class="nv"> </span><span class="s">(CoM=eval</span><span class="nv"> </span><span class="s">AND</span><span class="nv"> </span><span class="s">speed),</span><span class="nv"> </span><span class="s">RightHandState:</span><span class="nv"> </span><span class="s">(timeElapsed)"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">StateB"</span><span class="pi">]</span>
+<span class="c1"># Here the interest of having a default state becomes apparent,</span>
+<span class="c1"># as for complex condition criterias it might be cumbersome to create an exhaustive list of possible outputs.</span>
+<span class="pi">[</span><span class="nv">ExampleParallelState</span><span class="pi">,</span> <span class="s2">"</span><span class="s">DEFAULT"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">DefaultState"</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<h3 id="同時に実行されている状態間で情報をやり取りする">同時に実行されている状態間で情報をやり取りする</h3>
+
+<p>複数の状態間で情報をやり取りすると便利な場合があります。例えば、床の上の物を拾う処理を行う<code class="language-plaintext highlighter-rouge">Pickup</code>状態が<code class="language-plaintext highlighter-rouge">StabilizerStandingState</code>と同時に実行されている場合を考えます。この場合、ロボットが床の上の物を拾えるように、このような場合、状態間で情報をやり取りするには、<a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データストア</a>を使用します。</p>
+
+<h2 id="meta-有限オートマトン内の有限オートマトン">Meta: 有限オートマトン内の有限オートマトン</h2>
+
+<p>複雑なシナリオでは、複数の有限オートマトンを同じコントローラーに実装すると便利な場合がよくあります。そのような場合のために、<code class="language-plaintext highlighter-rouge">Meta</code>状態が用意されています（<a href="/mc_rtc/jp/json.html#State/Meta">こちらのドキュメント</a>を参照）。この状態を使用すると、</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">ExampleMetaState</span><span class="pi">:</span>
+  <span class="na">base</span><span class="pi">:</span> <span class="s">Meta</span>
+  <span class="na">transitions</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="pi">[</span><span class="nv">StateA</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">StateB</span><span class="pi">]</span>
+  <span class="pi">-</span> <span class="pi">[</span><span class="nv">StateB</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">StateC</span><span class="pi">]</span>
+  <span class="pi">-</span> <span class="s">...</span>
+</code></pre></div></div>
+
+<p>そして、この状態を別の有限オートマトンの一部としてや、別の<code class="language-plaintext highlighter-rouge">Meta</code>状態の一部として実行することができます。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">transtions</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">ExampleParallelState</span><span class="pi">,</span> <span class="nv">DEFAULT</span><span class="pi">,</span> <span class="nv">ExampleMetaState</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">ExampleMetaState</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">LastStateOutput</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>なお、Meta有限オートマトンの出力には、Meta有限オートマトン内で状態遷移しない最後の状態（この例では<code class="language-plaintext highlighter-rouge">LastStateOutput</code>）の出力が使用されます。</p>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">次のチュートリアル: FSMコントローラの例</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

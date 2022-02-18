@@ -1,0 +1,511 @@
+
+
+
+
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - ログの可視化 - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/tools/mc_log_ui.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><strong>ログの可視化</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#プロットモード">プロットモード</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#時系列プロット">時系列プロット</a></li>
+<li class="toc-entry toc-h4"><a href="#xyプロット">X/Yプロット</a></li>
+<li class="toc-entry toc-h4"><a href="#3次元プロット">3次元プロット</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#時間範囲の選択範囲の作成軸のロック">時間範囲の選択、範囲の作成、軸のロック</a></li>
+<li class="toc-entry toc-h3"><a href="#アニメーション">アニメーション</a></li>
+<li class="toc-entry toc-h3"><a href="#common-plotsよく使うプロットメニュー">[Common plots（よく使うプロット）]メニュー</a></li>
+<li class="toc-entry toc-h3"><a href="#user-plotsユーザープロットメニュー">[User plots（ユーザープロット）]メニュー</a></li>
+<li class="toc-entry toc-h3"><a href="#robotロボットメニュー">[Robot（ロボット）]メニュー</a></li>
+<li class="toc-entry toc-h3"><a href="#styleスタイルメニュー">[Style（スタイル）]メニュー</a></li>
+<li class="toc-entry toc-h3"><a href="#ショートカット">ショートカット</a></li>
+<li class="toc-entry toc-h3"><a href="#図の保存">図の保存</a></li>
+<li class="toc-entry toc-h3"><a href="#図の自動プロット">図の自動プロット</a></li>
+<li class="toc-entry toc-h3"><a href="#複数のログの読み込み">複数のログの読み込み</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>ログの可視化</h1>
+        
+
+        <p>mc_rtcには、実験を行った後にログを読み取るためのシンプルなGUIが用意されています。このツールは<code class="language-plaintext highlighter-rouge">mc_log_ui</code>としてインストールされています。</p>
+
+<p><code class="language-plaintext highlighter-rouge">~/my_log.bin</code>などにログを記録した後、以下のコマンドを実行することで、そのログをGUIで開くことができます。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_log_ui ~/my_log.bin
+</code></pre></div></div>
+
+<p>以下のように表示されます。</p>
+
+<p><img src="/mc_rtc/assets/tutorials/tools/img/mc_log_ui.png" class="img-fluid" alt="mc_log_ui default" /></p>
+
+<p><em>注: 以下のセクションで説明する一部のメニューと操作は、mc_rtcのPythonバインディングがインストールされている場合にのみ使用できます。</em></p>
+
+<h3 id="プロットモード">プロットモード</h3>
+
+<p>インターフェイスの左下にあるセレクターで、3つのプロットモードを切り替えることができます。</p>
+
+<h4 id="時系列プロット">時系列プロット</h4>
+
+<p>このモードでは、同じ横軸（一般に、このプロットの名前の由来である時間軸）を共有するデータを選択し、プロットの左右にあるパネルから表示したいデータを選択します。グループ化された項目（<code class="language-plaintext highlighter-rouge">LeftFootForceSensor</code>など）や単独の項目（<code class="language-plaintext highlighter-rouge">LeftFootForceSensor -&gt; fz</code>など）を選択できます。</p>
+
+<p>プロットを削除するには、削除したいデータ項目を再度クリックします。</p>
+
+<p>このモードでは、文字列データ項目（通常、有限オートマトンの現在の状態出力）を選択すると、その文字列の現在の値に応じた色で描画された背景の上に文字列が表示されます。指定した時間に対して文字列を一度に1つだけ表示できます。</p>
+
+<h4 id="xyプロット">X/Yプロット</h4>
+
+<p>このモードでは、プロットの左右にある<code class="language-plaintext highlighter-rouge">Add XY plots</code>（XYプロットの追加）ボタンを使用して、X軸とY軸にそれぞれプロットする2つのデータ項目を選択できます。データ項目がちょうど2つある場合は、グループ化された項目を選択できます（<code class="language-plaintext highlighter-rouge">LeftFoot -&gt; CoP</code>を選択する操作は、<code class="language-plaintext highlighter-rouge">LeftFoot -&gt; CoP -&gt; x</code>と<code class="language-plaintext highlighter-rouge">LeftFoot -&gt; CoP -&gt; y</code>を個別に選択する操作と同じです）。データ選択時にラベルを設定できますが、後でスタイルメニューからラベルを設定することも可能です。</p>
+
+<p>プロットを削除するには、プロットの左右にある<code class="language-plaintext highlighter-rouge">Remove XY plot(s)</code>（XYプロットの削除）をクリックしてから、削除したいプロットを選択します。</p>
+
+<h4 id="3次元プロット">3次元プロット</h4>
+
+<p>このモードでは、プロットの左側にある<code class="language-plaintext highlighter-rouge">Add 3D plot</code>（3次元プロットの追加）ボタンをクリックすると、X軸、Y軸、Z軸にそれぞれプロットする3つのデータ項目を選択するメニューが開きます。データ項目がちょうど3つある場合は、グループ化された項目を選択できます（<code class="language-plaintext highlighter-rouge">CoM</code>を選択する操作は、<code class="language-plaintext highlighter-rouge">CoM -&gt; x</code>、<code class="language-plaintext highlighter-rouge">CoM -&gt; y</code>、<code class="language-plaintext highlighter-rouge">CoM -&gt; z</code>を個別に選択する操作と同じです）。データ選択時にラベルを設定できますが、後でスタイルメニューからラベルを設定することも可能です。</p>
+
+<p>プロットを削除するには、<code class="language-plaintext highlighter-rouge">Remove 3D plot(s)</code>（3次元プロットの削除）をクリックしてから、削除したいプロットを選択します。</p>
+
+<p>3次元モードでは、マウスを使用してプロットの視点を変えることができます。</p>
+
+<h3 id="時間範囲の選択範囲の作成軸のロック">時間範囲の選択、範囲の作成、軸のロック</h3>
+
+<p>プロットの下にあるセレクターを用いて、ログを表示したい時間範囲を選択できます。時系列プロットモードの場合、グラフの横軸の範囲が選択されます。X/Yプロットモードと3次元プロットモードの場合、データがフィルタリングされます（表示範囲を有効にすると、その範囲のデータが表示されます）。</p>
+
+<p>TMake range<code class="language-plaintext highlighter-rouge">（範囲の作成）ボタンを用いて、選択した任意のデータから時間範囲を作成できます（選択したデータがログに記録されている場合）。例えば、</code>5 &lt; t &lt; 10<code class="language-plaintext highlighter-rouge">と</code>15 &lt; t &lt; 20<code class="language-plaintext highlighter-rouge">の時間範囲に</code>com_x<code class="language-plaintext highlighter-rouge">というデータがログに記録されている場合、これらの時間範囲に対応した</code>t_com_x_1<code class="language-plaintext highlighter-rouge">と</code>t_com_x_2<code class="language-plaintext highlighter-rouge">という時間範囲が生成されます。文字列の場合（通常、有限オートマトンの</code>Executor_*`）、文字列に含まれる特定の値に応じて選択範囲を絞り込むことができます（これにより、特定の状態に対応した表示範囲を生成できます）。</p>
+
+<p>最後に、<code class="language-plaintext highlighter-rouge">Make range</code>（範囲の作成）ボタンの隣にある3つのボタンを用いて、X軸、左側のY軸、右側のY軸（3次元モードのZ軸）をそれぞれロックできます。そうしない場合は、選択したデータに応じて表示範囲が設定されます。なお、このGUIでは、表示範囲が似通っている場合でも、左側と右側のY軸の範囲を揃えるように調整されることはありません。</p>
+
+<h3 id="アニメーション">アニメーション</h3>
+
+<p>範囲セレクターの下には、アニメーションに関する3つのボタンが用意されています。</p>
+
+<p><code class="language-plaintext highlighter-rouge">Start animation</code>（アニメーションの開始）をクリックすると、現在選択されている時間範囲に基づいてアニメーションの実行が開始されます。デフォルトでは、アニメーションの表示内容に合わせて軸の範囲が調整されます。</p>
+
+<p>アニメーションが実行されていないときに<code class="language-plaintext highlighter-rouge">Lock axes</code>（軸のロック）をクリックすると、アニメーション停止時に表示されたグラフの全体が表示されるように軸がロックされます。そうしない場合は、現在の表示に合わせて軸がロックされます。</p>
+
+<p><code class="language-plaintext highlighter-rouge">Save animation</code>（アニメーションの保存）をクリックすると、アニメーションがMP4ファイルにエクスポートされます。なお、エクスポート中にプログレスバーは表示されません。また、アニメーションの保存が完了するまでしばらく時間がかかる場合があります。</p>
+
+<h3 id="common-plotsよく使うプロットメニュー">[Common plots（よく使うプロット）]メニュー</h3>
+
+<p>このメニューでは、関節レベルの入出力と力覚センサーに関してよく使う便利なプロットを選択できます。また、項目によっては、どの関節を表示するか、範囲を表示するかどうか、関節ごとにプロットを1つずつ表示するかどうかを選択するためのサブメニューが表示されます。</p>
+
+<h3 id="user-plotsユーザープロットメニュー">[User plots（ユーザープロット）]メニュー</h3>
+
+<p>コントローラーを開発する際、コントローラーの処理をいろいろ試しながら同じグラフを何度もプロットする場合があると思います。そのような場合、プロットしたいデータ項目をあらかじめ保存しておけば、時間を節約できます。そのようなプロットは「ユーザープロット」と呼ばれます。</p>
+
+<p>ユーザープロットを作成する場合、最初に1度だけ手動でプロットを設定する必要があります。その後、<code class="language-plaintext highlighter-rouge">User plots</code>（ユーザープロット）メニューで<code class="language-plaintext highlighter-rouge">Save current plot</code>（現在のプロットの保存）をクリックします。すると、名前を入力するよう求められます。名前を入力すると、<code class="language-plaintext highlighter-rouge">User plots</code>（ユーザープロット）メニューにこの名前で新しい項目が作成されます。</p>
+
+<p>新しいログを読み込み、<code class="language-plaintext highlighter-rouge">User plots</code>（ユーザープロット）に新たに追加された項目を選択すると、プロットを保存したときと同じデータ項目とスタイルでプロットが表示されます（軸の範囲または横軸の選択は頻繁に変更される可能性があるため、これらについては保存されません）。</p>
+
+<p>これらのプロットは、<code class="language-plaintext highlighter-rouge">$HOME/.config/mc_log_ui/custom_plots.json</code>にJSON形式で保存されます。このファイルをコントローラーのリポジトリに保存することで、新しいマシンにログのUIを素早くセットアップできます。また、このファイルを<code class="language-plaintext highlighter-rouge">mc_plot_logs</code>ツールに渡すこともできます（下記を参照）。</p>
+
+<h3 id="robotロボットメニュー">[Robot（ロボット）]メニュー</h3>
+
+<p>このメニューでは、ログがどのロボットで作成されたかを選択できます。この機能を使用すると、関節に関する項目をユーザーに分かりやすい名前で表示できます（例えば、<code class="language-plaintext highlighter-rouge">qIn_0</code>という項目は、JVRC1を選択すると<code class="language-plaintext highlighter-rouge">qIn_R_HIP_P</code>と表示され、HRP2DRCを選択すると<code class="language-plaintext highlighter-rouge">qIn_RLEG_JOINT0</code>と表示されます）。</p>
+
+<p>このロボットの選択は、設定変更時に自動的に保存され、次にUIを起動したときに自動的に復元されます。この項目を1度設定した後は、複数のロボットを使用する場合を除き、設定を変更する必要はありません。</p>
+
+<h3 id="styleスタイルメニュー">[Style（スタイル）]メニュー</h3>
+
+<p>このメニューでは、グラフのスタイルに関する各種オプションを設定できます。このメニューには以下の項目が用意されています。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Graph</code>: プロットごとにラインの色とスタイルを選択できます。</li>
+  <li><code class="language-plaintext highlighter-rouge">Grid</code>: 左右の軸に合わせてグリッドを調整できます。</li>
+  <li><code class="language-plaintext highlighter-rouge">Labels/Title/Fonts</code>: 軸のラベルとグラフのタイトルを追加し、それぞれのフォントサイズを選択できます。</li>
+  <li><code class="language-plaintext highlighter-rouge">Colors selection</code>: 曲線の描画色を選択できます。既存のカラーセットを使用するか、独自のカラーセットを作成することができます（既存のカラーセットで使用できる色は限られています）。</li>
+  <li><code class="language-plaintext highlighter-rouge">Polygons colors selection</code>: 時系列プロットモードで表示する文字列データ項目の表示に使用する色を選択できます。</li>
+</ul>
+
+<p><em>注: プロットを保存すると、スタイルのオプションも保存されます。</em></p>
+
+<h3 id="ショートカット">ショートカット</h3>
+
+<p>このインターフェイスでは以下のショートカットを使用できます。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Ctrl+T</code>: 新しいタブを作成する</li>
+  <li><code class="language-plaintext highlighter-rouge">Ctrl+W</code>: 現在のタブを閉じる</li>
+  <li><code class="language-plaintext highlighter-rouge">Ctrl+PageDown</code>: 次のタブに移動する</li>
+  <li><code class="language-plaintext highlighter-rouge">Ctrl+PageUp</code>: 前のタブに移動する</li>
+  <li><code class="language-plaintext highlighter-rouge">Ctrl+A</code>: 軸範囲設定メニューを開く</li>
+</ul>
+
+<h3 id="図の保存">図の保存</h3>
+
+<p>表示したいデータ項目を選択し、グラフの表示方法を設定した後に、[Save（保存）]ボタンをクリックして図をエクスポートできます。</p>
+
+<p><img src="/mc_rtc/assets/tutorials/tools/img/mc_log_ui_save.png" class="img-fluid" alt="mc_log_ui save button" />
+その際、各種形式で図を保存できます。SVG（Scalable Vector Graphics: スケーラブルベクターグラフィックス）形式で保存した場合、<a href="https://inkscape.org">Inkscape</a>などのベクター画像エディターを使用して、保存したファイルをさらに編集できます。</p>
+
+<h3 id="図の自動プロット">図の自動プロット</h3>
+
+<p>最後に、<code class="language-plaintext highlighter-rouge">mc_plot_logs</code>ツールについて説明します。このツールを使用するには、バイナリ形式のログファイルと、プロットしたいログについて記述されたJSONファイルを指定する必要があります（形式は<code class="language-plaintext highlighter-rouge">mc_log_ui</code>のユーザープロットを同じです）。このツールは、指定したファイルにプロットを出力します。</p>
+
+<h3 id="複数のログの読み込み">複数のログの読み込み</h3>
+
+<p>複数の結果を比較したい場合、複数のログを読み込むと便利です。複数のログを読み込むには、以下のコマンドを実行します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_log_ui log-1.bin log-2.bin <span class="o">[</span>...] log-N.bin
+</code></pre></div></div>
+
+<p>あるいは、メニューから<code class="language-plaintext highlighter-rouge">File -&gt; Compare...</code>（[ファイル]-&gt;[比較…]）を選択してファイルを読み込みます。</p>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">次のチュートリアル: ログの再生</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

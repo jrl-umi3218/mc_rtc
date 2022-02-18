@@ -1,0 +1,502 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - データ共有機能"DataStore" - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/recipes/datastore.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><strong>データ共有機能"DataStore"</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#使用方法">使用方法</a></li>
+<li class="toc-entry toc-h2"><a href="#高度な使用方法">高度な使用方法</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>データ共有機能"DataStore"</h1>
+        
+
+        
+<p><code class="language-plaintext highlighter-rouge">DataStore</code>は、任意のC++オブジェクトを効率的に保存・取得し、任意のオブジェクトをフレームワーク内で簡単かつ効率的に共有できるようにします。この機能では、型が厳しくチェックされ（保存時と同じ型のオブジェクトのみ取得できます）、C++の標準メカニズムのみを使用できます。</p>
+
+<p><code class="language-plaintext highlighter-rouge">DataStore</code>は、例えば以下の用途に使用できます。</p>
+
+<ul>
+  <li>
+    <p><strong>有限オートマトンの<code class="language-plaintext highlighter-rouge">States</code>間でデータを共有する</strong>。</p>
+
+    <ul>
+      <li>例えば、既存の有限オートマトンと<code class="language-plaintext highlighter-rouge">StabilizerStandingState</code>（<a href="lipm-stabilizer.html">LIPMスタビライザーのチュートリアル</a>を参照）を同じ場所に置くだけで、有限オートマトンを簡単に安定させることができます。また、<code class="language-plaintext highlighter-rouge">DataStore</code>を使用して<code class="language-plaintext highlighter-rouge">StabilizerStandingState</code>の目標を指定できます。例えば、<code class="language-plaintext highlighter-rouge">StabilizerStandingState::com</code>プロパティを設定するだけで、質量中心の目標を変更できます。</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>追加の情報を<a href="observers.html">観測器</a>に与える</strong>（<code class="language-plaintext highlighter-rouge">KinematicInertial</code>観測器が必要とする<code class="language-plaintext highlighter-rouge">anchorFrame</code>など）。</p>
+  </li>
+  <li>
+    <p><strong>プラグインとコントローラーとの間でデータを共有する</strong>。例として、歩行コントローラーと歩容プランナープラグインとの間で情報をやり取りする場合について考えてみます。歩容プランナーは、入力として、<em>(i) 現在の足の接触面</em>と<em>(ii) 目標地点</em>に関する情報を必要とし、場合によっては追加の情報（障害物など）を必要とします。また、戻り値として、歩行コントローラーが従うべき<em>(iii) 次の歩容</em>を出力する必要があります。さらに、オンラインの歩容プランナーの場合、最新の歩容計画を取得する必要があります（目標やロボットの状態が変化したときや、新たな障害物が検出されたときなど）。</p>
+
+    <ul>
+      <li>(i) の情報はコントローラーあるいはロボットの状態を推定する他のビジョンプラグインから取得可能</li>
+      <li>(ii) の情報はコントローラーあるいは物体検出などの他のプラグインから取得可能</li>
+      <li>(iii) の歩容計画はコントローラーによって使用される</li>
+    </ul>
+  </li>
+</ul>
+
+<p>もちろん、他にもいくつかの使用例が考えられます。この機能は、フレームワーク内でデータを簡単に共有できるようにすることを目的としています。データストアにオブジェクトを追加すると、そのオブジェクトが事実上グローバルになり、外部のプラグイン等を使用してどこからでも編集できるようになるため、この機能は慎重に使用してください。</p>
+
+<h2 id="使用方法">使用方法</h2>
+
+<p><code class="language-plaintext highlighter-rouge">mc_control::MCController</code>クラスにデフォルトの<code class="language-plaintext highlighter-rouge">DataStore</code>インスタンスが用意されており、<code class="language-plaintext highlighter-rouge">mc_control::MCController::datastore()</code>を使ってアクセスできます。コントローラーのインスタンスにアクセスできるあらゆる場所から、この<code class="language-plaintext highlighter-rouge">DataStore</code>インスタンスに任意の<code class="language-plaintext highlighter-rouge">c++</code>オブジェクトを作成したり、このインスタンスからオブジェクトを取得することがきます。</p>
+
+<ul>
+  <li>
+    <p>以下のように、<code class="language-plaintext highlighter-rouge">make</code>あるいは<code class="language-plaintext highlighter-rouge">make_initializer</code>を使用してデータストア上にオブジェクトを直接作成できます。</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a vector of double of size 4 initialized with value 42</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">make</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">"key"</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">42.0</span><span class="p">);</span>
+<span class="c1">// Create a vector of double of size 2 initialized with value {4, 42} (using list initialization)</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">make_initializer</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">"key"</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">42.0</span><span class="p">);</span>
+</code></pre></div>    </div>
+  </li>
+  <li>同じ名前のオブジェクトが既に存在する場合は例外が発生します。これを回避するには、そのような要素がデータストアに既に存在するかどうかを以下のようにチェックします。
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">datastore</span><span class="p">().</span><span class="n">has</span><span class="p">(</span><span class="s">"key"</span><span class="p">))</span>
+<span class="p">{</span>
+  <span class="n">datastore</span><span class="p">().</span><span class="n">make</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"key"</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+
+    <p>なお、これらの関数は、作成したオブジェクトへの参照も返すため、その参照を使ってオブジェクトへのアクセスや編集が行えます。</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="o">&amp;</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">datastore</span><span class="p">().</span><span class="n">make</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"EigenVector"</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">Zero</span><span class="p">());</span>
+<span class="n">vec</span><span class="p">.</span><span class="n">x</span><span class="p">()</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// vec is now: 42, 0, 0</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>保存されている値への参照は、<code class="language-plaintext highlighter-rouge">get&lt;Type&gt;</code>を使用していつでも取得できます。</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="o">&amp;</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"EigenVector"</span><span class="p">);</span>
+<span class="c1">// vec: 42, 0, 0</span>
+</code></pre></div>    </div>
+
+    <p>指定したキーがデータストアに存在しない場合や作成時と異なる型を<code class="language-plaintext highlighter-rouge">Type</code>に指定した場合は、例外がスローされます。<code class="language-plaintext highlighter-rouge">get</code>のオーバーロードを使用すると、<code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>オブジェクトの場合と同様に、キーが存在しない場合のデフォルト値を指定できます。</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">vec</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"NotAKey"</span><span class="p">,</span> <span class="n">vec</span><span class="p">);</span> <span class="c1">// vec remains unchanged: 1, 2, 3</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"EigenVector"</span><span class="p">,</span> <span class="n">vec</span><span class="p">);</span> <span class="c1">// vec is now 42, 0, 0</span>
+
+<span class="kt">bool</span> <span class="n">hasFeature</span> <span class="o">=</span> <span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"HasFeature"</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span> <span class="c1">// hasFeature will be assigned the value of "HasFeature" if that key exists, false otherwise</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="高度な使用方法">高度な使用方法</h2>
+
+<ul>
+  <li>
+    <p><strong>継承</strong>もサポートされています。ただし、後でオブジェクトを取得するには、オブジェクトの親クラスを明示的に指定する必要があります。以下に、継承とメンバー関数の派生を使用してオブジェクトの保存と取得を行う非常に簡単な例を示します。</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">A</span>
+<span class="p">{</span>
+  <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">hello</span><span class="p">()</span> <span class="k">const</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="s">"A"</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">type</span><span class="p">()</span> <span class="k">const</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="s">"A"</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">B</span> <span class="o">:</span> <span class="k">public</span> <span class="n">A</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">hello</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="s">"B"</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">type</span><span class="p">()</span> <span class="k">const</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="s">"B"</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">make</span><span class="o">&lt;</span><span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"ObjectB"</span><span class="p">);</span>
+<span class="k">auto</span> <span class="o">&amp;</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">store</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"ObjectB"</span><span class="p">);</span>
+<span class="k">auto</span> <span class="o">&amp;</span> <span class="n">derived</span> <span class="o">=</span> <span class="n">store</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"ObjectB"</span><span class="p">);</span>
+<span class="n">parent</span><span class="p">.</span><span class="n">type</span><span class="p">();</span>   <span class="c1">// "A"</span>
+<span class="n">parent</span><span class="p">.</span><span class="n">hello</span><span class="p">();</span>  <span class="c1">// "B" because hello is virtual</span>
+<span class="n">derived</span><span class="p">.</span><span class="n">type</span><span class="p">();</span>  <span class="c1">// "B"</span>
+<span class="n">derived</span><span class="p">.</span><span class="n">hello</span><span class="p">();</span> <span class="c1">// "B"</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>ラムダ関数</strong>も保存できますが、特殊な<code class="language-plaintext highlighter-rouge">make_call</code>を使用する必要があります。</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a lambda function and store it as an std::function</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">make_call</span><span class="p">(</span><span class="s">"lambda"</span><span class="p">,</span> <span class="p">[](</span><span class="kt">double</span> <span class="n">t</span><span class="p">)</span> <span class="p">{});</span>
+<span class="c1">// Retrieve the lambda</span>
+<span class="k">auto</span> <span class="o">&amp;</span> <span class="n">lambdaFun</span> <span class="o">=</span> <span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"lambda"</span><span class="p">);</span>
+<span class="c1">// Call function</span>
+<span class="n">lambdaFun</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
+<span class="c1">// Call directly through the datastore (the function return type and arguments type must be repeated)</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">call</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"lambda"</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/recipes/observers.html">次のチュートリアル: ステートオブザベーションパイプライン</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

@@ -1,0 +1,567 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - コントローラのリスト - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/samples/list-of-samples.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><strong>コントローラのリスト</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#posture">Posture</a></li>
+<li class="toc-entry toc-h1"><a href="#com">CoM</a></li>
+<li class="toc-entry toc-h1"><a href="#endeffector">EndEffector</a></li>
+<li class="toc-entry toc-h1"><a href="#text">Text</a></li>
+<li class="toc-entry toc-h1"><a href="#admittance">Admittance</a></li>
+<li class="toc-entry toc-h1"><a href="#impedance">Impedance</a></li>
+<li class="toc-entry toc-h1"><a href="#lipmstabilizer">LIPMStabilizer</a></li>
+<li class="toc-entry toc-h1"><a href="#externalforces">ExternalForces</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>コントローラのリスト</h1>
+        
+
+        <p>このページでは、本フレームワークで用意されているサンプルコントローラーのリストに加えて、各コントローラーの実行方法と各コントローラーで実現できる内容について概説します。より複雑なコントローラーについては、各コントローラーのチュートリアルのページで詳しく説明されています。</p>
+
+<h1 id="posture">Posture</h1>
+
+<p><code class="language-plaintext highlighter-rouge">Posture</code>（姿勢制御）コントローラー（<a href="https://mc-rtc-demo.netlify.app/#robot=JVRC1&amp;controller=EndEffector">オンラインデモ</a>を参照）は、本フレームワーク内で最もシンプルなコントローラーです。このコントローラーは、以下のタスクと制約条件を二次計画法ソルバーに追加します。</p>
+
+<p><strong>タスク</strong></p>
+<ul>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1PostureTask" target="blank_"><code>mc_tasks::PostureTask</code></a>:
+指定された関節の位置を、ロボットの各目標自由度として設定します。このコントローラーは、デフォルトでは、エンコーダー値を利用できる場合はロボットの現在のエンコーダー値を目標として設定し、そうでない場合はデフォルトの姿勢（mc_rbdyn::RobotModule::stance()）を目標として設定します。また、GUIのスライダーを使用して関節を動かすことができます（<code class="language-plaintext highlighter-rouge">Tasks -&gt; posture_jvrc1 -&gt; Target</code>）。</li>
+</ul>
+
+<p><strong>制約条件</strong></p>
+<ul>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1ContactConstraint" target="blank_"><code>mc_solver::ContactConstraint</code></a>: このコントローラーには、必ず接触面制約条件を設定する必要があります。ただし、接触面セットが空でも構いません。</li>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1KinematicsConstraint" target="blank_"><code>mc_solver::KinematicsConstraint</code></a>: ジョイントの可動範囲に関する制約条件</li>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1CollisionsConstraint" target="blank_"><code>mc_solver::CollisionsConstraint</code></a>: 自己衝突回避に関する制約条件</li>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1CompoundJointConstraint" target="blank_"><code>mc_solver::CompoundJointConstraint</code></a>: 複合関節（ある関節の可動範囲が別の関節の値によって決まる関節）の関節可動範囲を処理します。</li>
+</ul>
+
+<p><strong>サポートされているロボット</strong>:
+本フレームワークでサポートされているすべての<a href="/mc_rtc/jp/robots.html">ロボット</a>。カスタムロボットの場合は、必要に応じて、<code class="language-plaintext highlighter-rouge">CompoundJointConstraint</code>に関する衝突メッシュのペアと可動範囲から成るデフォルトのセットを定義する必要があります（<a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新しいロボットの組み込み</a>に関するチュートリアルを参照）。</p>
+
+<p><strong>実行方法</strong>:
+このコントローラーを実行するには、<a href="/mc_rtc/jp/tutorials/introduction/configuration.html">mc_rtcの設定</a>でこのコントローラーを指定し、任意のインターフェイスを使用して<a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラーを実行</a>します。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">Posture</span>
+</code></pre></div></div>
+
+<h1 id="com">CoM</h1>
+
+<p><code class="language-plaintext highlighter-rouge">CoM</code>（質量中心）サンプルコントローラー（<a href="https://mc-rtc-demo.netlify.app/#robot=JVRC1&amp;controller=CoM">オンラインデモ</a>を参照）は、前述の<code class="language-plaintext highlighter-rouge">Posture</code>コントローラーと同様のタスクと制約条件が定義されています。</p>
+
+<p><strong>タスク</strong></p>
+<ul>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1PostureTask" target="blank_"><code>mc_tasks::PostureTask</code></a>: すべての関節にデフォルトの目標を設定するための姿勢制御タスク（このタスクには低い重みが設定されています）</li>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1CoMTask" target="blank_"><code>mc_tasks::CoMTask</code></a>: ロボットの質量中心を制御するタスク。デフォルトでは、このコントローラーは現在のタスクの位置を目標として設定します。GUI（RViz）の対話形式のマーカーを使用して、この目標を動かすことができます。</li>
+</ul>
+
+<p><strong>*制約条件</strong></p>
+<ul>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1ContactConstraint" target="blank_"><code>mc_solver::ContactConstraint</code></a>: 左右の足の裏と地面の環境との間に接触面を追加します。</li>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1DynamicsConstraint" target="blank_"><code>mc_solver::DynamicsConstraint</code></a>: この制約条件を使用すると、<a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1KinematicsConstraint" target="blank_"><code>mc_solver::KinematicsConstraint</code></a>で指定された関節可動範囲の制約条件に加え、関節のトルクと摩擦円錐の計算が可能となります。</li>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1CollisionsConstraint" target="blank_"><code>mc_solver::CollisionsConstraint</code></a>: 自己衝突回避に関する制約条件</li>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1CompoundJointConstraint" target="blank_"><code>mc_solver::CompoundJointConstraint</code></a>: 複合関節（ある関節の可動範囲が別の関節の値によって決まる関節）の関節可動範囲を処理します。</li>
+</ul>
+
+<p><strong>サポートされているロボット</strong>:
+本フレームワークでサポートされているすべての二足歩行<a href="/mc_rtc/jp/robots.html">ロボット</a>。カスタムロボットの場合は、<a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">ロボットの記述</a>において<code class="language-plaintext highlighter-rouge">LeftFoot</code>（左足）と<code class="language-plaintext highlighter-rouge">RightFoot</code>（右足）の裏の面を定義する必要があります。</p>
+
+<p><strong>実行方法</strong>:
+このコントローラーを実行するには、<a href="/mc_rtc/jp/tutorials/introduction/configuration.html">mc_rtcの設定</a>でこのコントローラーを指定し、任意のインターフェイスを使用して<a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラーを実行</a>します。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">CoM</span>
+</code></pre></div></div>
+
+<h1 id="endeffector">EndEffector</h1>
+
+<p><code class="language-plaintext highlighter-rouge">EndEffector</code>（エンドエフェクター）コントローラー（<a href="https://mc-rtc-demo.netlify.app/#robot=JVRC1&amp;controller=EndEffector">オンラインデモ</a>を参照）は、前述の<code class="language-plaintext highlighter-rouge">CoM</code>コントローラーと同じタスクと制約条件が定義されています。このコントローラーでは、質量中心の位置の制御に加えて、ロボットのエンドエフェクターの位置と向きを制御するためのmc_tasks::EndEffectorTaskが追加されています。</p>
+
+<p><strong>サポートされているロボット</strong>:
+本フレームワークでサポートされているすべての二足歩行<a href="/mc_rtc/jp/robots.html">ロボット</a>。カスタムロボットの場合は、<a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">ロボットの記述</a>において<code class="language-plaintext highlighter-rouge">LeftFoot</code>と<code class="language-plaintext highlighter-rouge">RightFoot</code>の裏と<code class="language-plaintext highlighter-rouge">r_wrist</code>ボディを定義する必要があります。</p>
+
+<p><strong>実行方法</strong>:
+このコントローラーを実行するには、<a href="/mc_rtc/jp/tutorials/introduction/configuration.html">mc_rtcの設定</a>でこのコントローラーを指定し、任意のインターフェイスを使用して<a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラーを実行</a>します。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">EndEffector</span>
+</code></pre></div></div>
+
+<h1 id="text">Text</h1>
+
+<p><code class="language-plaintext highlighter-rouge">Text</code>（テキスト）サンプルコントローラーでは、YAMLで記述された設定から<a href="/mc_rtc/jp/json.html#MetaTask">タスク</a>と<a href="/mc_rtc/jp/json.html#ConstraintSet">制約条件</a>を読み込むための<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1MetaTaskLoader" target="blank_"><code>mc_tasks::MetaTaskLoader</code></a>と<a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1ConstraintSetLoader" target="blank_"><code>mc_solver::ConstraintSetLoader</code></a>の使い方が示されています。</p>
+
+<p><strong>実行方法</strong>: 
+このコントローラーを実行するには、<a href="/mc_rtc/jp/tutorials/introduction/configuration.html">mc_rtcの設定</a>でこのコントローラーを指定し、任意のインターフェイスを使用して<a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラーを実行</a>します。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">Text</span>
+</code></pre></div></div>
+
+<p>このコントローラーのデフォルトの設定は、<code class="language-plaintext highlighter-rouge">EndEffector</code>コントローラーと似ています。また、<code class="language-plaintext highlighter-rouge">~/.config/mc_rtc/controllers/Text.yaml</code>に独自の設定を記述できます。例えば以下の設定は、<code class="language-plaintext highlighter-rouge">CoM</code>コントローラーを再度構成して</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Text</span><span class="pi">:</span>
+  <span class="na">constraints</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">dynamics</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">contact</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">collision</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">compoundJoint</span>
+  <span class="na">tasks</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">com</span>
+    <span class="na">weight</span><span class="pi">:</span> <span class="m">1000</span>
+    <span class="na">above</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">LeftFoot</span><span class="pi">]</span>
+  <span class="na">contacts</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">r1Surface</span><span class="pi">:</span> <span class="s">LeftFoot</span>
+    <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">AllGround</span>
+    <span class="na">isFixed</span><span class="pi">:</span> <span class="no">false</span>
+  <span class="pi">-</span> <span class="na">r1Surface</span><span class="pi">:</span> <span class="s">RightFoot</span>
+    <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">AllGround</span>
+    <span class="na">isFixed</span><span class="pi">:</span> <span class="no">false</span>
+</code></pre></div></div>
+
+<h1 id="admittance">Admittance</h1>
+
+<p><code class="language-plaintext highlighter-rouge">Admittance</code>（アドミッタンス制御）サンプルコントローラーでは、所定の力で<code class="language-plaintext highlighter-rouge">JVRC1</code>ロボットを壁に押し付けるシンプルな有限オートマトンの例を使用して、<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1force_1_1AdmittanceTask" target="blank_"><code>mc_tasks::force::AdmittanceTask</code></a>の使い方が示されています。</p>
+
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/B_L_xPynhvU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+</div>
+
+<p><strong>詳しい説明</strong>: <a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンス制御のサンプルコントローラーのチュートリアル</a>を参照してください。</p>
+
+<p><strong>サポートされているロボット</strong>: <code class="language-plaintext highlighter-rouge">JVRC1</code>に遷移します。</p>
+
+<p><strong>前提条件</strong>: <a href="https://github.com/jrl-umi3218/mc_force_sensor_calibration_controller">ForceSensorCalibrationコントローラー</a>を使用して手の力覚センサーが事前に較正されているか確認してください。</p>
+
+<p><strong>実行方法</strong></p>
+
+<p>このコントローラーを実行するには、<a href="/mc_rtc/jp/tutorials/introduction/configuration.html">mc_rtcの設定</a>でこのコントローラーを指定し、任意の動力学的シミュレーション（Choreonoidなど）使用して<a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラーを実行</a>します。</p>
+
+<p><strong>参考</strong></p>
+
+<p>より高度な例については、<a href="#externalforces">ExternalForces</a>のサンプルを参照してください。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">AdmittanceSample</span>
+</code></pre></div></div>
+
+<h1 id="impedance">Impedance</h1>
+
+<p><code class="language-plaintext highlighter-rouge">Impedance</code>（インピーダンス制御）サンプルコントローラーでは、ロボットのエンドエフェクターの位置と力を同時に制御するための<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1force_1_1ImpedanceTask" target="blank_"><code>mc_tasks::force::ImpedanceTask</code></a>の使い方が示されています。</p>
+
+<p><strong>サポートされているロボット</strong>: <code class="language-plaintext highlighter-rouge">JVRC1Fixed</code>に遷移します。</p>
+
+<p><strong>前提条件</strong>: <a href="https://github.com/jrl-umi3218/mc_force_sensor_calibration_controller">ForceSensorCalibrationコントローラー</a>を使用して手の力覚センサーが事前に較正されているか確認してください。</p>
+
+<p><strong>実行方法</strong></p>
+
+<p>このコントローラーを実行するには、<a href="/mc_rtc/jp/tutorials/introduction/configuration.html">mc_rtcの設定</a>でこのコントローラーを指定し、任意の動力学的シミュレーション（Choreonoidなど）使用して<a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラーを実行</a>します。Choreonoidでは、動いている手をクリックしてドラッグすることで、外力を加えることができます。このとき、外力を加えられた手は、所定の範囲内でユーザーの操作に追従します。その後、外力を解放すると、それまでの移動経路をたどって所定の位置に手が戻ります。なお、GUIを使用して、フリーな状態のエンドエフェクターに<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1force_1_1ImpedanceTask" target="blank_"><code>mc_tasks::force::ImpedanceTask</code></a>を追加できます（<code class="language-plaintext highlighter-rouge">Global -&gt; Add Tasks -&gt; ImpedanceTask</code>）。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1Fixed</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">Impedance</span>
+</code></pre></div></div>
+
+<h1 id="lipmstabilizer">LIPMStabilizer</h1>
+
+<p><code class="language-plaintext highlighter-rouge">LIPMStabilizer</code>（LIPMスタビライザー）サンプルコントローラーでは、バランスを取りながら立って前進するロボットを実現するシンプルな準静的有限オートマトンの例を使用して、mc_tasks::StabilizerTaskとこのタスクの実現に役立つ有限オートマトン状態mc_state::StabilizerStandingStateの使い方が示されています。</p>
+
+<p><strong>詳しい説明</strong>: <a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザーのチュートリアル</a>を参照してください。</p>
+
+<p><strong>サポートされているロボット</strong>:  本フレームワークでサポートされているすべての二足歩行<a href="/mc_rtc/jp/robots.html">ロボット</a>。</p>
+
+<p><strong>実行方法</strong></p>
+
+<p>このコントローラーを実行するには、<a href="/mc_rtc/jp/tutorials/introduction/configuration.html">mc_rtcの設定</a>でこのコントローラーを指定し、任意の動力学的シミュレーション（Choreonoidなど）使用して<a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラーを実行</a>します。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">LIPMStabilizer</span>
+</code></pre></div></div>
+
+<h1 id="externalforces">ExternalForces</h1>
+
+<p><code class="language-plaintext highlighter-rouge">ExternalForces</code>（外力）サンプルコントローラーでは、所定の力で壁を押す<code class="language-plaintext highlighter-rouge">JVRC1</code>ロボットを実現するシンプルな有限オートマトンの例を使用して、指定された外力を行使する二足歩行ロボットをmc_tasks::lipm_stabilizer::StabilizerTaskと<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1force_1_1ImpedanceTask" target="blank_"><code>mc_tasks::force::ImpedanceTask</code></a>で実現する方法が示されています。</p>
+
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/in3cUozkU-A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+</div>
+
+<p><strong>サポートされているロボット</strong>: <code class="language-plaintext highlighter-rouge">JVRC1</code>に遷移します。</p>
+
+<p><strong>前提条件</strong>: <a href="https://github.com/jrl-umi3218/mc_force_sensor_calibration_controller">ForceSensorCalibrationコントローラー</a>を使用して手の力覚センサーが事前に較正されているか確認してください。</p>
+
+<p><strong>実行方法</strong></p>
+
+<p>このサンプルを実行するには、力覚センサーをシミュレート可能な動力学的シミュレーターが必要です。このチュートリアルは、<a href="https://github.com/jrl-umi3218/mc_openrtm" target="blank_">mc_openrtm</a>、<a href="https://choreonoid.org/en/" target="blank_">Choreonoid</a>、それに本フレームワークで用意されたシミュレーションファイル<code class="language-plaintext highlighter-rouge">sim_mc_wall.cnoid</code>を使用することを前提としています。他のシミュレーターを使用する場合は、必要に応じて命令を変更し、ロボットと壁が<code class="language-plaintext highlighter-rouge">55cm</code>離れて配置されているシーンを作成してください。</p>
+
+<p><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">mc_rtcの設定</a>でこのコントローラーを指定し、Choreonoidで<a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラーを実行</a>してください。このロボットは、両手を壁に触れた後、前に倒れながら、指定された正弦波状の外力を壁に行使します。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">ExternalForces</span>
+</code></pre></div></div>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">次のチュートリアル: アドミッタンスコントローラ</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

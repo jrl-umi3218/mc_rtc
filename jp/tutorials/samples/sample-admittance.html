@@ -1,0 +1,591 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - アドミッタンスコントローラ - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/samples/sample-admittance.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><strong>アドミッタンスコントローラ</strong></li>
+                          
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#コントローラーを実行する">コントローラーを実行する</a></li>
+<li class="toc-entry toc-h2"><a href="#説明">説明</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#standingbase-質量中心と胸部を管理する">StandingBase: 質量中心と胸部を管理する</a></li>
+<li class="toc-entry toc-h3"><a href="#righthandtowall-手の移動経路">RightHandToWall: 手の移動経路</a></li>
+<li class="toc-entry toc-h3"><a href="#admittance-力の制御">Admittance: 力の制御</a></li>
+<li class="toc-entry toc-h3"><a href="#キネマティクスに基づいて壁の位置を更新する">キネマティクスに基づいて壁の位置を更新する</a></li>
+<li class="toc-entry toc-h3"><a href="#最初の姿勢に戻す">最初の姿勢に戻す</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#参考">参考</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>アドミッタンスコントローラ</h1>
+        
+
+        
+<p>このチュートリアルでは、本フレームワークで用意されている<code class="language-plaintext highlighter-rouge">AdmittanceSample</code>サンプルコントローラーの使い方と概念について説明します。このサンプルでは、<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1force_1_1AdmittanceTask" target="blank_"><code>mc_tasks::force::AdmittanceTask</code></a>を使用して、壁を押しながら<code class="language-plaintext highlighter-rouge">JVRC1</code>の手に加わる力を調節する方法を示します。</p>
+
+<p>このコントローラーでは、以下の手順で処理を実行します。</p>
+
+<ol>
+  <li>壁の前に手を移動させる</li>
+  <li><code class="language-plaintext highlighter-rouge">AdmittanceTask</code>を使用して、手と壁を接触させる</li>
+  <li>法線方向の力を<code class="language-plaintext highlighter-rouge">20N</code>に調節する</li>
+  <li>キネマティクスに基づいて壁の位置を更新する</li>
+  <li>力を弱めて手を離す準備をする</li>
+  <li>手を後ろに引く</li>
+  <li>（手と壁が衝突しないように制御しながら）中腰の姿勢に戻す</li>
+</ol>
+
+<h2 id="コントローラーを実行する">コントローラーを実行する</h2>
+
+<p>このサンプルのソースは<a href="https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance">src/mc_control/samples/Admittance</a>にあります。ここには、主に以下のファイルが格納されています。</p>
+<ul>
+  <li><a href="https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/etc/AdmittanceSample.in.yaml">etc/AdmittanceSample.in.yaml</a>: YAMLで記述された有限オートマトンの設定（こちらの<a href="/mc_rtc/jp/tutorials/recipes/fsm.html">チュートリアル</a>を参照）</li>
+  <li><a href="https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/src/states/UpdateWall.h">src/states/UpdateWall.h</a>, <a href="https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/src/states/UpdateWall.cpp">src/states/UpdateWall.cpp</a>: ロボットのグリッパーの位置に基づいて壁の位置を更新するC++状態</li>
+</ul>
+
+<p>このサンプルを実行するには、力覚センサーをシミュレート可能な動力学的シミュレーターが必要です。このチュートリアルは、<a href="https://github.com/jrl-umi3218/mc_openrtm" target="blank_">mc_openrtm</a>、<a href="https://choreonoid.org/en/" target="blank_">Choreonoid</a>、それに本フレームワークで用意されたシミュレーションファイル<code class="language-plaintext highlighter-rouge">sim_mc_wall.cnoid</code>を使用することを前提としています。他のシミュレーターを使用する場合は、必要に応じて命令を変更し、ロボットと壁が<code class="language-plaintext highlighter-rouge">55cm</code>離れて配置されているシーンを作成してください。</p>
+
+<p>まず、以下の<code class="language-plaintext highlighter-rouge">~/.config/mc_rtc/mc_rtc.yaml</code>ファイルを用意します。:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">AdmittanceSample</span>
+<span class="na">Timestep</span><span class="pi">:</span> <span class="m">0.005</span>
+</code></pre></div></div>
+
+<p>次に、以下のようにサンプルを実行します。</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="o">(</span>roscore &amp;<span class="o">)</span> <span class="c"># Ensure you have a roscore running (for rviz visualization)</span>
+<span class="nv">$ </span><span class="nb">cd</span> /usr/local/share/hrpsys/samples/JVRC1
+<span class="nv">$ </span>choreonoid sim_mc_wall.cnoid
+<span class="nv">$ </span>roslaunch mc_rtc_ticker controler_display.launch
+</code></pre></div></div>
+
+<p>次に、Choreonoidのインターフェイスにある緑の矢印をクリックしてシミュレーションを開始します。出力は以下のようになります。</p>
+
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/B_L_xPynhvU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+</div>
+
+<p>グリッパーの<code class="language-plaintext highlighter-rouge">z</code>軸に沿って力がどのように加えられたかを以下のグラフに示します。<code class="language-plaintext highlighter-rouge">t=6s</code>の場所にあるスパイクは、グリッパーと壁が衝突したタイミングに対応します。その<code class="language-plaintext highlighter-rouge">1s</code>後、力の目標値が<code class="language-plaintext highlighter-rouge">-20N</code>に変更され、その後数秒間この状態が維持されます。その後、圧力が解放されます。</p>
+
+<p><img src="/mc_rtc/assets/tutorials/samples/img/admittance.svg" alt="admittance results" class="img-fluid" /></p>
+
+<h2 id="説明">説明</h2>
+
+<p>このサンプルのほとんどは、有限オートマトンの設定<code class="language-plaintext highlighter-rouge">etc/AdmittanceSample.in.yaml</code>で状態とタスクの目標を記述することにより実現されています。まず、状態遷移マップを見てみましょう。ここには、状態をどのように遷移させるかが記述されています。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">transitions</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">RightHandToWall</span><span class="pi">,</span>            <span class="nv">OK</span><span class="pi">,</span> <span class="nv">RightHandPushAdmittance</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">RightHandPushAdmittance</span><span class="pi">,</span>    <span class="nv">OK</span><span class="pi">,</span> <span class="nv">RightHandKeepAdmittance</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">RightHandKeepAdmittance</span><span class="pi">,</span>    <span class="nv">OK</span><span class="pi">,</span> <span class="nv">UpdateWallFromKinematics</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">UpdateWallFromKinematics</span><span class="pi">,</span>   <span class="nv">OK</span><span class="pi">,</span> <span class="nv">RightHandReleaseAdmittance</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">RightHandReleaseAdmittance</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">RightHandMoveBack</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">RightHandMoveBack</span><span class="pi">,</span>          <span class="nv">OK</span><span class="pi">,</span> <span class="nv">StandingHalfSitting</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+
+<span class="c1"># Initial state</span>
+<span class="na">init</span><span class="pi">:</span> <span class="s">RightHandToWall</span> 
+</code></pre></div></div>
+
+<p>この状態遷移マップを見れば、このサンプルの手順を簡単に理解できます。次に、主な状態が何を実行するかを見てみましょう。</p>
+
+<h3 id="standingbase-質量中心と胸部を管理する">StandingBase: 質量中心と胸部を管理する</h3>
+
+<p>この実験全体を通じて、ロボットの質量中心を両足の中点の真上に維持します。これを実現するには、<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1CoMTask" target="blank_"><code>mc_tasks::CoMTask</code></a>を使用します。また、胸部の過度な動きを抑えてより人間らしい動きとなるように、ロボットの胸部に<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1OrientationTask" target="blank_"><code>mc_tasks::OrientationTask</code></a>を追加します。この状態は、この有限オートマトン内にある他のすべての状態の基準状態として使用され、すべての状態がこの状態の動作を継承します。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Keep the CoM centered between the feet, and the chest upright</span>
+  <span class="na">StandingBase</span><span class="pi">:</span>
+    <span class="na">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
+    <span class="na">tasks</span><span class="pi">:</span>
+      <span class="na">CoM</span><span class="pi">:</span>
+        <span class="na">type</span><span class="pi">:</span> <span class="s">com</span>
+        <span class="na">above</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">LeftFoot</span><span class="pi">,</span> <span class="nv">RightFoot</span><span class="pi">]</span>
+        <span class="na">weight</span><span class="pi">:</span> <span class="m">2000</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="m">5</span>
+      <span class="na">KeepChest</span><span class="pi">:</span>
+        <span class="na">type</span><span class="pi">:</span> <span class="s">orientation</span>
+        <span class="na">body</span><span class="pi">:</span> <span class="s">WAIST_R_S</span>
+        <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="m">1</span>
+</code></pre></div></div>
+
+<h3 id="righthandtowall-手の移動経路">RightHandToWall: 手の移動経路</h3>
+
+<p>次に、ロボットの手を壁の近くまで前に動かします。これを行うには、<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1BSplineTrajectoryTask" target="blank_"><code>mc_tasks::BSplineTrajectoryTask</code></a>を使用します。このタスクでは、中間点の情報に基づいて、位置と向きがパラメーター化されたBスプライン曲線の移動経路が出力されます。このタスクでは、指定されたロボットの表面がこの移動経路に沿って制御されます。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Trajectory to bring hand close to the wall</span>
+  <span class="na">RightHandToWall</span><span class="pi">:</span>
+    <span class="na">base</span><span class="pi">:</span> <span class="s">StandingBase</span>
+    <span class="na">tasks</span><span class="pi">:</span>
+      <span class="c1"># inherits CoM and KeepChest tasks from StandingBase state</span>
+      <span class="c1"># and adds a bspline_trajectory task</span>
+      <span class="na">RightHandTrajectory</span><span class="pi">:</span>
+        <span class="na">type</span><span class="pi">:</span> <span class="s">bspline_trajectory</span>
+        <span class="na">surface</span><span class="pi">:</span> <span class="s">RightGripper</span>
+        <span class="na">weight</span><span class="pi">:</span> <span class="m">1000</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="m">50</span>
+        <span class="na">duration</span><span class="pi">:</span> <span class="m">4</span>
+        <span class="na">dimWeight</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1</span><span class="pi">,</span><span class="nv">1</span><span class="pi">,</span><span class="nv">1</span><span class="pi">,</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">]</span>
+        <span class="na">displaySamples</span><span class="pi">:</span> <span class="m">100</span>
+        <span class="na">target</span><span class="pi">:</span>
+          <span class="na">translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.45</span><span class="pi">,</span> <span class="nv">-0.4</span><span class="pi">,</span> <span class="nv">1.1</span><span class="pi">]</span>
+          <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.57</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">1.57</span><span class="pi">]</span>
+        <span class="na">controlPoints</span><span class="pi">:</span> <span class="pi">[[</span><span class="nv">0.17</span><span class="pi">,</span> <span class="nv">-0.5</span><span class="pi">,</span> <span class="nv">0.85</span><span class="pi">]]</span>
+        <span class="na">completion</span><span class="pi">:</span>
+          <span class="na">timeElapsed</span><span class="pi">:</span> <span class="no">true</span>
+</code></pre></div></div>
+
+<h3 id="admittance-力の制御">Admittance: 力の制御</h3>
+
+<p>次に、<code class="language-plaintext highlighter-rouge">RightHandPushAdmittance</code>状態において、mc_tasks::AdmittanceTaskを使用して手の法線方向の力を調節し、手と壁を接触させます。アドミッタンス制御タスクでは、レンチの測定値（フォーストルクセンサーから得られた測定値）と目標値との誤差に基づいて、エンドエフェクターの目標移動速度が計算されます。係数<code class="language-plaintext highlighter-rouge">admittance</code>によって、移動方向の軸に沿った誤差の大きさに基づきエンドエフェクターの移動速度が調節されます。なお、このタスクに速度を追跡させるには、力を追跡させたい方向に沿って、位置制御の剛性を低くし、速度制御の減衰を高くする必要があります。また、すべてのレンチは表面フレーム内で表されます（今回の例では<code class="language-plaintext highlighter-rouge">RightGripper</code>表面フレーム）。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Increase applied force until we reach 20N</span>
+  <span class="na">RightHandPushAdmittance</span><span class="pi">:</span>
+    <span class="na">base</span><span class="pi">:</span> <span class="s">StandingBase</span>
+    <span class="na">tasks</span><span class="pi">:</span>
+      <span class="na">RightHandAdmittance</span><span class="pi">:</span>
+        <span class="na">type</span><span class="pi">:</span> <span class="s">admittance</span>
+        <span class="na">surface</span><span class="pi">:</span> <span class="s">RightGripper</span> 
+        <span class="c1"># Tracks the forces along the normal axis of the gripper surface with an admittance coefficient of 0.001</span>
+        <span class="c1"># Note the high-damping and low stiffness on that axis.</span>
+        <span class="c1"># All other axis are position controlled and will keep the current gripper position as much as possible </span>
+        <span class="na">admittance</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0.001</span><span class="pi">]</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">10</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">,</span> <span class="nv">1</span><span class="pi">]</span>
+        <span class="na">damping</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">6.3</span><span class="pi">,</span> <span class="nv">6.3</span><span class="pi">,</span> <span class="nv">6.3</span><span class="pi">,</span> <span class="nv">6.3</span><span class="pi">,</span> <span class="nv">6.3</span><span class="pi">,</span> <span class="nv">300</span><span class="pi">]</span>
+        <span class="na">maxVel</span><span class="pi">:</span>
+          <span class="na">linear</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.2</span><span class="pi">,</span> <span class="nv">0.2</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">]</span>
+          <span class="na">angular</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.2</span><span class="pi">,</span> <span class="nv">0.2</span><span class="pi">,</span> <span class="nv">0.2</span><span class="pi">]</span>
+        <span class="c1"># Target a desired force of 20N along the Z axis of the gripper surface</span>
+        <span class="na">wrench</span><span class="pi">:</span>
+         <span class="na">force</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">-20</span><span class="pi">]</span>
+         <span class="na">couple</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">]</span>
+        <span class="c1"># Rotate the gripper such that the fingers point towards the wall  </span>
+        <span class="na">targetRotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.57</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">1.57</span><span class="pi">]</span>
+        <span class="c1"># The task will complete one a force of -20N has been reached. All other axes are ignored.</span>
+        <span class="na">completion</span><span class="pi">:</span>
+          <span class="na">wrench</span><span class="pi">:</span>
+            <span class="na">force</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">.nan</span><span class="pi">,</span> <span class="nv">.nan</span><span class="pi">,</span> <span class="nv">-20</span><span class="pi">]</span>
+            <span class="na">couple</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">.nan</span><span class="pi">,</span> <span class="nv">.nan</span><span class="pi">,</span> <span class="nv">.nan</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>次の<code class="language-plaintext highlighter-rouge">RightHandKeepAdmittance</code>状態では、ParallelState（<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1ParallelState" target="blank_"><code>mc_control::fsm::ParallelState</code></a>）を使用して、先の状態を所定の時間だけ実行します。さらに、この状態を実行しつつ、壁に加わる力が一定となるように制御します。そのため、ロボットを前に押すと、手が後ろに動いて壁に加わる力が減少し、ロボットを後ろに引くと、それと反対の動作が行われます。</p>
+
+<h3 id="キネマティクスに基づいて壁の位置を更新する">キネマティクスに基づいて壁の位置を更新する</h3>
+
+<p>上記のアドミッタンス制御タスクでは、力が目標値に達するまでグリッパーを前に動かします。このコントローラーでは、壁の位置が以下のように定義されていると仮定しています。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">robots</span><span class="pi">:</span>
+  <span class="na">wall</span><span class="pi">:</span>
+    <span class="na">module</span><span class="pi">:</span> <span class="s">env/ground</span> <span class="c1"># reuse the ground model, but rotate it vertically to simulate a wall</span>
+    <span class="na">init_pos</span><span class="pi">:</span>
+      <span class="c1"># The wall position is put 5cm in front of choreonoid's one</span>
+      <span class="na">translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.50</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
+      <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">-1.57</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>ただし、ロボットの動作開始位置が想定された開始位置とわずかに異なる場合があるため、想定された壁の位置が実際の壁の位置と異なる場合があります。しかし、先のアドミッタンス制御状態を使用することで、ロボットのグリッパーが壁に到達したかどうかがわかります。この情報に加えて、ロボットのキネマティクス情報を使用して（さらには、接触面が滑らないものと仮定して）、今回のモデルにおける壁の位置を更新します。これは、C++で実装された<code class="language-plaintext highlighter-rouge">UpdateWall</code>状態で実行します。この状態は、ロボットの指先の現在の推定位置を読み取り、指先が壁に触れるように壁の位置を更新します。</p>
+
+<p>なお、この状態では、<a href="/mc_rtc/jp/doxygen.html#structmc__observers_1_1KinematicInertialObserver" target="blank_"><code>mc_observers::KinematicInertialObserver</code></a>によって観測されたロボットの状態を使用して、実際のロボットにおける実際の手の位置が判定されます（<a href="/mc_rtc/jp/tutorials/recipes/observers.html">観測器のチュートリアル</a>を参照）。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">UpdateWall</span><span class="o">::</span><span class="n">start</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// [...] read YAML configuration parameters</span>
+
+  <span class="c1">// Get the estimated pose of the fingers of the JVRC1 robot</span>
+  <span class="c1">// As estimated by the state observation pipeline </span>
+  <span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">bodyPose</span> <span class="o">=</span> <span class="n">ctl</span><span class="p">.</span><span class="n">realRobots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="n">rName</span><span class="p">).</span><span class="n">bodyPosW</span><span class="p">(</span><span class="n">bName</span><span class="p">);</span>
+  <span class="c1">// Move the wall position along the x axis to match the fingertip's position</span>
+  <span class="k">auto</span> <span class="n">posW</span> <span class="o">=</span> <span class="n">ctl</span><span class="p">.</span><span class="n">robot</span><span class="p">(</span><span class="n">moveRobotName</span><span class="p">).</span><span class="n">posW</span><span class="p">();</span>
+  <span class="n">posW</span><span class="p">.</span><span class="n">translation</span><span class="p">().</span><span class="n">x</span><span class="p">()</span> <span class="o">=</span> <span class="n">bodyPose</span><span class="p">.</span><span class="n">translation</span><span class="p">().</span><span class="n">x</span><span class="p">();</span>
+  <span class="n">ctl</span><span class="p">.</span><span class="n">robot</span><span class="p">(</span><span class="n">moveRobotName</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span><span class="n">posW</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>次の状態では、更新された壁の位置を使用して、手と壁が衝突しないように制御しながら最初の姿勢に戻します。</p>
+
+<h3 id="最初の姿勢に戻す">最初の姿勢に戻す</h3>
+
+<p>この有限オートマトンの残りの部分では、ロボットを最初の姿勢に戻します。まず、スムーズに遷移できるように、<code class="language-plaintext highlighter-rouge">RightHandReleaseAdmittance</code>を使用して手の圧力を解放し、手の圧力をほぼ0にします。次に、現在の位置から<code class="language-plaintext highlighter-rouge">10cm</code>後方に手を動かします。最後に、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1HalfSittingState" target="blank_"><code>mc_control::fsm::HalfSittingState</code></a>状態を使用して、最初の中腰の姿勢に戻します。今回は手の動きを明示的に指定していないため、中腰の姿勢に戻るまでに手と壁が衝突するおそれがあります。それを防ぐため、手と壁との間に衝突制約条件を追加します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nl">RightHandMoveBack:</span>
+    <span class="n">base</span><span class="o">:</span> <span class="n">StandingBase</span>
+    <span class="n">AddCollisionsAfter</span><span class="o">:</span>
+      <span class="o">-</span> <span class="n">r1</span><span class="o">:</span> <span class="n">jvrc1</span>
+        <span class="n">r2</span><span class="o">:</span> <span class="n">wall</span>
+        <span class="n">collisions</span><span class="o">:</span>
+          <span class="o">-</span> <span class="n">body1</span><span class="o">:</span> <span class="n">R_WRIST_Y_S</span>
+            <span class="n">body2</span><span class="o">:</span> <span class="n">ground</span>
+            <span class="n">iDist</span><span class="o">:</span> <span class="mf">0.15</span>
+            <span class="n">sDist</span><span class="o">:</span> <span class="mf">0.05</span>
+            <span class="n">damping</span><span class="o">:</span> <span class="mf">0.0</span>
+    <span class="n">tasks</span><span class="o">:</span>
+    <span class="cp"># [...]
+</span></code></pre></div></div>
+
+<h2 id="参考">参考</h2>
+
+<p>線形倒立振子モデルと外力補正に基づく安定化制御のより高度な例については、<a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html#externalforces">ExternalForces</a>サンプルコントローラーを参照してください。</p>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">次のチュートリアル: mc_rtc用の新しいプラグインの実装方法</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

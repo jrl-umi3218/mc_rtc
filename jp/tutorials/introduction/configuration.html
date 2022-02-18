@@ -1,0 +1,603 @@
+
+
+
+
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - 設定 - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/introduction/configuration.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><strong>設定</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#possible-locations-for-mc-rtc-configuration">Possible locations for mc_rtc configuration</a></li>
+<li class="toc-entry toc-h2"><a href="#configuration-entries">Configuration entries</a>
+<ul>
+<li class="toc-entry toc-h6"><a href="#main-nbsp-entries">Main entries</a></li>
+<li class="toc-entry toc-h6"><a href="#ロギングオプション">ロギングオプション</a></li>
+<li class="toc-entry toc-h6"><a href="#モジュール読み込みオプション">モジュール読み込みオプション</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#rosプラグインの設定">ROSプラグインの設定</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#設定の読み取り元">設定の読み取り元</a></li>
+<li class="toc-entry toc-h4"><a href="#設定エントリ">設定エントリ</a>
+<ul>
+<li class="toc-entry toc-h6"><a href="#パブリッシュに関するエントリ">パブリッシュに関するエントリ</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h4"><a href="#設定例">設定例</a></li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>設定</h1>
+        
+
+        <p>mc_rtcの全般オプションは、使用するインターフェイスにかかわらず、お使いのシステム内にある設定ファイルで定義されています。また、インターフェイスによっては、別の設定ファイルを指定することもできます（通常、コマンドラインで指定）。</p>
+
+<p>このセクションでは、設定ファイルの読み込み元と、このファイルで使用可能な主なオプションについて説明します。</p>
+
+<!-- FIXME Translate title -->
+<h2 id="possible-locations-for-mc-rtc-configuration">Possible locations for mc_rtc configuration</h2>
+
+
+<p>mc_rtcによって、以下の2つのファイルが系統的に読み取られます（ファイルが存在する場合）。</p>
+
+<ol>
+  <li><code class="highlight language-bash" data-lang="bash"><span class="nv">$INSTALL_PREFIX</span>/etc/mc_rtc.yaml</code></li>
+  <li><ul><li>Linux/MacOS: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_rtc.yaml</code></li><li>Windows: <code class="highlight language-msshell" data-lang="msshell"><span class="o">%</span><span class="n">APPDATA</span><span class="o">%</span><span class="nx">/mc_rtc/mc_rtc.yaml</span></code></li></ul></li>
+</ol>
+
+<p>インターフェイスによっては、追加の設定ファイルが読み込まれる場合があります。詳細については、インターフェイスのドキュメントを参照してください。</p>
+
+<!-- FIXME Translate title -->
+<h2 id="configuration-entries">Configuration entries</h2>
+
+
+<table class="table">
+  <thead>
+    <tr>
+       <th scope="col">エントリ</th>
+      <th scope="col">説明</th>
+      <th scope="col">例/デフォルト</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">
+        <h6 id="main-nbsp-entries">Main&nbsp;entries</h6>
+
+      </th>
+      <td colspan="2">このエントリは、通常考えられるほとんどのニーズをカバーします。</td>
+    </tr>
+    <tr>
+  <th scope="row">MainRobot</th>
+  <td>このエントリは、すべてのコントローラーで使用されるメインロボットを指定します。ほとんどのインターフェイスは、どのモジュールを使用すべきかをシミュレーション環境に基づいて推測することはできません。そのため、シミュレーション環境に応じてユーザーがモジュールを指定する必要があります。</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+      <th scope="row">Enabled</th>
+      <td>有効なコントローラーのリストを提供します。<a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">利用可能なサンプルコントローラーのリスト</a>を参照してください。</a>.</td>
+      <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Enabled</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Posture</span><span class="pi">,</span> <span class="nv">EndEffector</span><span class="pi">,</span> <span class="nv">CoM</span><span class="pi">]</span></code></pre></figure></td>
+    </tr>
+    <tr>
+  <th scope="row">Default</th>
+  <td>有効なコントローラーのうちどれを最初に起動するかを選択します。なお、デフォルトとして指定されたコントローラーが有効になっていない場合や、デフォルトのコントローラーが指定されていない場合は、リスト内で最初に登場する有効なコントローラーがデフォルトコントローラーとして選択されます。</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Default</span><span class="pi">:</span> <span class="s">Posture</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">Timestep</th>
+  <td>コントローラーのタイムステップ</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Timestep</span><span class="pi">:</span> <span class="s">0.005</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">Log</th>
+  <td>コントローラーの出力をログに記録するかどうかを指定します。</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Log</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">InitAttitudeFromSensor</th>
+  <td>センサーとロボットモジュールのどちらでロボットの姿勢を初期化するかを指定します。</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">InitAttitudeFromSensor</span><span class="pi">:</span> <span class="no">false</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">InitAttitudeSensor</th>
+  <td>ロボットの姿勢の初期化に使用されるボディセンサーの名前。名前が空の場合、デフォルトのボディセンサーが使用されます。このエントリは、<pre>InitAttitudeFromSensor=true</pre>の場合にだけ使用されます。</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">InitAttitudeSensor</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span></code></pre></figure></td>
+</tr>
+
+    <tr class="table-active">
+      <th scope="row">
+        <h6 id="ロギングオプション">ロギングオプション</h6>
+
+      </th>
+      <td colspan="2">T以下のオプションは、mc_rtcによってコントローラーのアクティビティがどのようにログに記録されるかを規定します。ロギングが無効の場合は効果がありません。</td>
+    </tr>
+    <tr>
+  <th scope="row">LogDirectory</th>
+  <td>このオプションは、ログファイルをどこに保存するかを指定します。デフォルトではシステムの一時ディレクトリに保存されます。</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogDirectory</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/tmp"</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">LogTemplate</th>
+  <td>このオプションは、ログのプレフィックスを指定します。ログファイルには以下のように名前が付けられます。 <pre>[LogTemplate]-[ControllerName]-[date].log</pre></td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogTemplate</span><span class="pi">:</span> <span class="s2">"</span><span class="s">mc-control"</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">LogPolicy</th>
+  <td>このオプションは、ロギング関連のディスク操作を別スレッドで実行するか("threaded")）、run()ループと同じスレッドで実行するか("non-threaded")を指定します。デフォルトではnon-threadedポリシーが使用されます。リアルタイムシステムではthreadedポリシーの使用を強く推奨します。</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogPolicy</span><span class="pi">:</span> <span class="s2">"</span><span class="s">non-threaded"</span></code></pre></figure></td>
+</tr>
+
+    <tr class="table-active">
+      <th scope="row">
+        <h6 id="モジュール読み込みオプション">モジュール読み込みオプション</h6>
+
+      </th>
+      <td colspan="2">
+以下のオプションは、mc_rtcによって追加モジュール（コントローラー、ロボットモジュール、観測器、プラグインの追加モジュール）がライブラリからどのように読み込まれるかを規定します。
+      </td>
+    </tr>
+    <tr>
+  <th scope="row">ControllerModulePaths</th>
+  <td>このオプションは、mc_rtcにコントローラーモジュールを検索させる<strong>追加の</strong>ディレクトリを指定します。</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">ControllerModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/controller/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">RobotModulePaths</th>
+  <td>このオプションは、mc_rtcにロボットモジュールを検索させる<strong>追加の</strong>ディレクトリを指定します。</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">RobotModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/robot/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">ObserverModulePaths</th>
+  <td>このオプションは、mc_rtcに状態観測モジュールを検索させる<strong>追加の</strong>ディレクトリを指定します。</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">ObserverModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/observer/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">GlobalPluginPaths</th>
+  <td>このオプションは、mc_rtcにグローバルプラグインを検索させる<strong>追加の</strong>ディレクトリを指定します。</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">GlobalPluginPaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/global/plugin/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
+</tr>
+
+  </tbody>
+</table>
+
+<h2 id="rosプラグインの設定">ROSプラグインの設定</h2>
+
+
+<h4 id="設定の読み取り元">設定の読み取り元</h4>
+
+
+<p>mc_rtcによって、以下の2つのファイルが系統的に読み取られます（ファイルが存在する場合）。</p>
+
+<ol>
+  <li><code class="highlight language-bash" data-lang="bash"><span class="k">${</span><span class="nv">MC_PLUGINS_RUNTIME_INSTALL_PREFIX</span><span class="k">}</span>/etc/ROS.yaml</code></li>
+  <li><ul><li>Linux/MacOS: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/plugins/ROS.yaml</code></li><li>Windows: <code class="highlight language-msshell" data-lang="msshell"><span class="o">%</span><span class="n">APPDATA</span><span class="o">%</span><span class="nx">/mc_rtc/plugins/ROS.yaml</span></code></li></ul></li>
+</ol>
+
+<h4 id="設定エントリ">設定エントリ</h4>
+
+
+<p>ROSプラグインの設定の各セクションとそのエントリを以下の表に示します。</p>
+
+<table class="table">
+  <thead>
+    <tr>
+     <th scope="col">エントリ</th>
+      <th scope="col">説明</th>
+      <th scope="col">例/デフォルト</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">
+        <h6 id="パブリッシュに関するエントリ">パブリッシュに関するエントリ</h6>
+
+      </th>
+      <td colspan="2">以下のオプションは、ROS内におけるロボットの状態のパブリッシュにのみ影響します。</td>
+    </tr>
+    <tr>
+  <th scope="row">control</th>
+  <td>ロボットの制御状態（mc_rtcのコントローラー出力）をパブリッシュするかどうか</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">control</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">env</th>
+  <td>他のロボットの制御状態（メインロボット以外のロボットに関するmc_rtcのコントローラー出力）をパブリッシュするかどうか</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">env</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">real</th>
+  <td>ロボットの観測状態（観測器パイプラインから得られたロボットの状態）をパブリッシュするかどうか</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">real</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">timestep</th>
+  <td>ロボットの制御状態と実際の状態をパブリッシュする頻度</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">timestep</span><span class="pi">:</span> <span class="s">0.01</span></code></pre></figure></td>
+</tr>
+
+  </tbody>
+</table>
+
+<h4 id="設定例">設定例</h4>
+
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># パブリッシュするデータと頻度を制御する:</span>
+  <span class="c1"># 制御対象ロボットの状態をパブリッシュする（ROS）</span>
+  <span class="na">control</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="c1"># 他のロボットの状態をパブリッシュする（ROS）</span>
+  <span class="na">env</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="c1"># ロボットの実際の状態をパブリッシュする（ROS）</span>
+  <span class="na">real</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="c1"># パブリッシュのタイムステップ（ROS）</span>
+  <span class="na">timestep</span><span class="pi">:</span> <span class="s">0.01</span></code></pre></figure>
+  </div>
+</div>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">次のチュートリアル: コントローラの実行</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

@@ -1,0 +1,466 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - 重心位置の存在可能な領域の拘束 - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/recipes/com-constraint.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><strong>重心位置の存在可能な領域の拘束</strong></li>
+                          
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#平面の設定方法">平面の設定方法</a></li>
+<li class="toc-entry toc-h2"><a href="#例">例</a></li>
+<li class="toc-entry toc-h2"><a href="#追加パラメーター">追加パラメーター</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>重心位置の存在可能な領域の拘束</h1>
+        
+
+        
+<p>多くの場合、質量中心が移動できる領域を制限することが推奨されます。これを実現するため、質量中心の移動範囲を凸領域内に制限する新たな制約条件<code class="language-plaintext highlighter-rouge">CoMIncPlaneConstr</code>を導入します。</p>
+
+<p>この制約条件のAPIを以下に示します。</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CoMIncPlaneConstr</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Robots</span> <span class="o">&amp;</span> <span class="n">robots</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">robotIndex</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">set_planes</span><span class="p">(</span><span class="n">QPSolver</span> <span class="o">&amp;</span> <span class="n">solver</span><span class="p">,</span>
+                <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Plane</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">planes</span><span class="p">,</span>
+                <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">speeds</span> <span class="o">=</span> <span class="p">{},</span>
+                <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">normalsDots</span> <span class="o">=</span> <span class="p">{},</span>
+                <span class="kt">double</span> <span class="n">iDist</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+                <span class="kt">double</span> <span class="n">sDist</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+                <span class="kt">double</span> <span class="n">damping</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                <span class="kt">double</span> <span class="n">dampingOff</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">);</span>
+</code></pre></div></div>
+<p>このAPIでは以下のことが行えます。</p>
+<ul>
+  <li>指定されたロボットとタイムステップに適用する制約条件を構築する</li>
+  <li>制約面を設定する（すなわち、質量中心が実際に移動できる領域を更新する）</li>
+</ul>
+
+<h2 id="平面の設定方法">平面の設定方法</h2>
+<p>まず、凸集合について簡単に説明します。凸集合は、頂点、または一連の1次不等式で等価的に表すことができます。すなわち、凸集合の内部にある任意の点pは、各頂点の重みを<code class="language-plaintext highlighter-rouge">\lambda_i</code>としたときの頂点の重心として表すことができます。</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>p = \sum_i \lambda_i v_i
+\sum_i \lambda_i = 0
+\forall i \lambda_i \geq 0
+</code></pre></div></div>
+<p>ただしこの方法は、基本的に線形計画問題を解く必要があるため、頂点が内部にあるかどうかをテストする方法としてはあまり効率的ではありません。凸集合に含まれるかどうかをテストする実用的な方法としては、超平面表現を使用するほうがはるかに便利です。この方法であれば、1回の行列演算でテストできます。</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A p + b \geq 0
+</code></pre></div></div>
+<p>ここで、Aは各平面の法線ベクトルを縦に積み重ねて構築した行列、bはオフセットのベクトルです。</p>
+
+<p>したがって、静的領域の質量中心を制限するには、法線ベクトルとオフセットをいくつか構築し、それらを制約条件に含めればよいことになります。</p>
+
+<h2 id="例">例</h2>
+<p>ここで、<a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">先に構築した</a>質量中心コントローラーを振り返ってみましょう。このときの動的シミュレーションでは、平面の端に向かってどこまでも進むようにロボットに命令したため、ロボットが落下してしまいました。それでは、ロボットの移動範囲を一辺が8cmの正方形に制限しましょう。これは以下のように表されます。</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-0.08 \leq x \leq 0.08
+-0.08 \leq y \leq 0.08
+</code></pre></div></div>
+
+<p>行列を使用すると以下のように表されます。</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>⎡ -1 0 0 ⎤ ⎡ x ⎤   ⎡ 0.08 ⎤
+⎢ 1  0 0 ⎥ ⎢ y ⎥ + ⎢ 0.08 ⎥ \leq 0
+⎢ 0 -1 0 ⎥ ⎣ z ⎦   ⎢ 0.08 ⎥
+⎣ 0  1 0 ⎦         ⎣ 0.08 ⎦
+</code></pre></div></div>
+
+<p>これを制約条件に含めれば完成です。</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">//In the header:</span>
+<span class="cp"># include &lt;mc_solver/CoMIncPlaneConstr.h&gt;
+</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">CoMIncPlaneConstr</span><span class="o">&gt;</span> <span class="n">comIncPlaneConstraintPtr_</span><span class="p">;</span>
+
+
+<span class="c1">//In the cpp, in the controller's initializer list:</span>
+<span class="n">comIncPlaneConstraintPtr_</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span> <span class="n">mc_solver</span><span class="o">::</span><span class="n">CoMIncPlaneConstr</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="n">robots</span><span class="p">().</span><span class="n">robotIndex</span><span class="p">(),</span> <span class="n">dt</span><span class="p">)</span> <span class="p">);</span>
+
+<span class="c1">//In the constructor itself:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Plane</span><span class="o">&gt;</span> <span class="n">planes</span> <span class="o">=</span>
+    <span class="p">{{{</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span> <span class="mf">0.08</span><span class="p">},</span>
+     <span class="p">{{</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span> <span class="mf">0.08</span><span class="p">},</span>
+     <span class="p">{{</span><span class="mf">0.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span> <span class="mf">0.08</span><span class="p">},</span>
+     <span class="p">{{</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span> <span class="mf">0.08</span><span class="p">},</span>
+    <span class="p">};</span>
+ <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="o">*</span><span class="n">comIncPlaneConstraintPtr_</span><span class="p">);</span>
+ <span class="n">comIncPlaneConstraintPtr_</span><span class="o">-&gt;</span><span class="n">set_planes</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="n">planes</span><span class="p">);</span>
+
+</code></pre></div></div>
+
+<p>コントローラーを起動すると、ロボットが見えない「壁」に突き当たり、与えられたタスクを実行できないことが分かります。</p>
+
+<h2 id="追加パラメーター">追加パラメーター</h2>
+
+<p><code class="language-plaintext highlighter-rouge">set_planes</code>に渡す追加パラメーターは、以下の2つのカテゴリに分類されます。</p>
+
+<ul>
+  <li>動く平面を扱う</li>
+  <li>相互作用の挙動を変更する</li>
+</ul>
+
+<p>1番目のカテゴリーについては、追加情報を与える追加パラメーターとして、平面の速度と平面の法線の時間微分を渡すことができます。なお、軌跡を追跡する場合は、各タイムステップについて平面とその微分係数を設定する必要があります。</p>
+
+<p>以下のパラメーターを調整することができます。</p>
+
+<ul>
+  <li>相互作用の距離: 質量中心と平面との距離がこの距離より小さくなったとき、平面によって質量中心が押し返される</li>
+  <li>安全距離: 質量中心と平面がそれ以上近づくことができない距離</li>
+  <li>反発時の挙動を規定する減衰値とそのオフセット</li>
+</ul>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">次のチュートリアル: コントローラのリスト</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

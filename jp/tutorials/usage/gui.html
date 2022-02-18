@@ -1,0 +1,674 @@
+
+
+
+
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - グラフィカルユーザインタフェース (GUI) - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/usage/gui.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><strong>グラフィカルユーザインタフェース (GUI)</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#guiにアクセスする">GUIにアクセスする</a></li>
+<li class="toc-entry toc-h3"><a href="#guiに要素を追加する">GUIに要素を追加する</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#データに関する注記">データに関する注記</a></li>
+<li class="toc-entry toc-h4"><a href="#シンプルな要素">シンプルな要素</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#labelarraylabel">Label/ArrayLabel</a></li>
+<li class="toc-entry toc-h5"><a href="#button">Button</a></li>
+<li class="toc-entry toc-h5"><a href="#checkbox">Checkbox</a></li>
+<li class="toc-entry toc-h5"><a href="#stringinputintegerinputnumberinputarrayinput">StringInput/IntegerInput/NumberInput/ArrayInput</a></li>
+<li class="toc-entry toc-h5"><a href="#comboinputdatacomboinput">ComboInput/DataComboInput</a></li>
+<li class="toc-entry toc-h5"><a href="#point3drotationtransform">Point3D/Rotation/Transform</a></li>
+<li class="toc-entry toc-h5"><a href="#trajectory">Trajectory</a></li>
+<li class="toc-entry toc-h5"><a href="#polygon">Polygon</a></li>
+<li class="toc-entry toc-h5"><a href="#force">Force</a></li>
+<li class="toc-entry toc-h5"><a href="#arrow">Arrow</a></li>
+<li class="toc-entry toc-h5"><a href="#xytheta">XYTheta</a></li>
+<li class="toc-entry toc-h5"><a href="#table">Table</a></li>
+<li class="toc-entry toc-h5"><a href="#form">Form</a></li>
+<li class="toc-entry toc-h5"><a href="#コールバック関数に関する注記">コールバック関数に関する注記</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#guiから要素を削除する">GUIから要素を削除する</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>グラフィカルユーザインタフェース (GUI)</h1>
+        
+
+        
+<p>GUI機能では、コントローラーをリモートで操作するための動的なグラフィカルインターフェイスを構築することができます。この機能をコントローラーに実装して使用する方法は、<a href="/mc_rtc/jp/tutorials/usage/logging.html">ロギング</a>の手法と似ています。</p>
+
+<p>このページでは以下のトピックについて説明します。</p>
+
+<ul>
+  <li>コントローラーからGUIにアクセスする</li>
+  <li>GUIに要素を追加する</li>
+  <li>GUIから要素を削除する</li>
+</ul>
+
+<h3 id="guiにアクセスする">GUIにアクセスする</h3>
+
+<p>GUIはサーバー/クライアントモデルで動作します。コントローラーがサーバーとなり、リモートインターフェイスがクライアントとなります。そのため、コントローラー側のコードでは、GUIサーバーからクライアントに送信されるデータのみが出力されます。このデータは、<code class="language-plaintext highlighter-rouge">mc_rtc::gui::StateBuilder</code>インターフェイスを通じて追加されます。</p>
+
+<p>GUIビルダーにアクセスするには、コントローラーのコードから<code class="language-plaintext highlighter-rouge">gui()</code>を呼び出します。ロギングインターフェイスと同様に、GUIビルダーインターフェイスは常に有効になっているため、この機能を使用できるかどうかを気にする必要はありません。</p>
+
+<h3 id="guiに要素を追加する">GUIに要素を追加する</h3>
+
+<p>GUIはカテゴリーごとに整理されているため、同じカテゴリーに複数の要素を追加すると、それらの要素はGUI上で一緒に表示されます。</p>
+
+<p>カテゴリーは、文字列ベクトル（Pythonの場合は文字列リスト）で表されます。要素は、要素の型とアクセサー（コントローラーが提供するデータへのアクセサー）が記述されたシンプルなオブジェクトで表されます。</p>
+
+<p>要素を追加するには、カテゴリーと1つ以上の要素を指定して<code class="language-plaintext highlighter-rouge">gui()-&gt;addElement(...)</code>を呼び出します。例:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add a single button named "Push" in the a/b category</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addElement</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Push"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello!"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="p">})</span>
+<span class="p">);</span>
+
+<span class="c1">// Add multiple elements at once, they will appear in the order they are added in the function</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addElement</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 1"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 2"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 3"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">})</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<h5 id="データに関する注記">データに関する注記</h5>
+
+<p>状態ビルダーには、よく使用する要素への参照用に、いくつかの「静的な」データが用意されています。デフォルトでは、以下のデータ参照エントリを使用できます。</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">robots</code>: コントローラー内で参照されるロボット名のリスト</li>
+  <li><code class="language-plaintext highlighter-rouge">surfaces</code>: ロボットの名前と表面のマップ</li>
+  <li><code class="language-plaintext highlighter-rouge">bodies</code>: ロボットの名前とボディのマップ</li>
+</ul>
+
+<p>データにアクセスするには、<code class="language-plaintext highlighter-rouge">gui()-&gt;data()</code>を呼び出して変更します。デフォルトのデータは、GUIクライアントでいくつかの要素をきれいに表示するのに使用されるため、それらのデータを変更しないことを強く推奨します。</p>
+
+<h4 id="シンプルな要素">シンプルな要素</h4>
+
+<p>このセクションでは、GUIに追加可能な各要素について説明します。ここで示す例はいずれも、<code class="language-plaintext highlighter-rouge">gui()-&gt;addElement(...)</code>の呼び出しによってGUIに追加されることを想定しています。コントローラーとデータをやり取りする機能をGUIに追加する場合、形式を指定してデータをインポート・エクスポートする必要はありません。それらの処理はGUIによって行われます。</p>
+
+<h5 id="labelarraylabel"><code class="language-plaintext highlighter-rouge">Label</code>/<code class="language-plaintext highlighter-rouge">ArrayLabel</code></h5>
+
+<p>これらの要素は、シンプルなテキストや数値データを表示するのに使用します。</p>
+
+<p>例</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// String label</span>
+<span class="n">Label</span><span class="p">(</span><span class="s">"LabelText"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="s">"some text"</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Display a value</span>
+<span class="n">Label</span><span class="p">(</span><span class="s">"Some value"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">value_</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Display a vector of strings</span>
+<span class="n">ArrayLabel</span><span class="p">(</span><span class="s">"Some strings"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">,</span> <span class="s">"c"</span><span class="p">};</span> <span class="p">});</span>
+
+<span class="c1">// Display a vector with labels</span>
+<span class="n">ArrayLabel</span><span class="p">(</span><span class="s">"Vector"</span><span class="p">,</span> <span class="p">{</span><span class="s">"x"</span><span class="p">,</span> <span class="s">"y"</span><span class="p">,</span> <span class="s">"z"</span><span class="p">},</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span> <span class="p">});</span>
+
+<span class="c1">// Some elements have associated labels, e.g. Force also adds an ArrayLabel</span>
+<span class="n">Force</span><span class="p">(</span><span class="s">"LeftFoot"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"LFullSole"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LFullSole"</span><span class="p">);</span> <span class="p">}),</span>
+<span class="n">Force</span><span class="p">(</span><span class="s">"RightFoot"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"RFullSole"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"RFullSole"</span><span class="p">);</span> <span class="p">}),</span>
+<span class="n">Force</span><span class="p">(</span><span class="s">"LeftHand"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"LeftFingers"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LeftFingers"</span><span class="p">);</span> <span class="p">}),</span>
+<span class="n">Force</span><span class="p">(</span><span class="s">"RightHand"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"RightFingers"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"RightFingers"</span><span class="p">);</span> <span class="p">})</span>
+</code></pre></div></div>
+
+<p>Pythonの場合、パラメーターリストの末尾にラベルを記述します。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ArrayLabel</span><span class="p">(</span><span class="s">"Vector"</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">v3d</span><span class="p">,</span> <span class="p">[</span><span class="s">"x"</span><span class="p">,</span> <span class="s">"y"</span><span class="p">,</span> <span class="s">"z"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h5 id="button"><code class="language-plaintext highlighter-rouge">Button</code></h5>
+
+<p>この要素は、単純にボタンを表示します。ボタンをクリックすると、指定したコールバック関数が呼び出されます。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Button</span><span class="p">(</span><span class="s">"Push me"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello!"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="checkbox"><code class="language-plaintext highlighter-rouge">Checkbox</code></h5>
+
+<p>この要素はチェックボックスを表示します。表示される状態は指定した値により決まります。チェックボックスをクリックすると、値が反転します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Checkbox</span><span class="p">(</span><span class="s">"Check me"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">status_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="n">status_</span> <span class="o">=</span> <span class="o">!</span><span class="n">status_</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="stringinputintegerinputnumberinputarrayinput"><code class="language-plaintext highlighter-rouge">StringInput</code>/<code class="language-plaintext highlighter-rouge">IntegerInput</code>/<code class="language-plaintext highlighter-rouge">NumberInput</code>/<code class="language-plaintext highlighter-rouge">ArrayInput</code></h5>
+
+<p>これらの要素は、データを入力する手段をユーザーに提供します。データに最も適した記述を使用してください。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">StringInput</span><span class="p">(</span><span class="s">"Your name"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">n</span><span class="p">){</span> <span class="n">name_</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="n">NumberInput</span><span class="p">(</span><span class="s">"Weight"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">w_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="kt">double</span> <span class="n">w</span><span class="p">){</span> <span class="n">w_</span> <span class="o">=</span> <span class="n">w</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">ArrayInput</code>では、データにラベルを追加するためのパラメーターも指定できます。また、配列サイズは固定されているとみなされます。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ArrayInput</span><span class="p">(</span><span class="s">"Your array"</span><span class="p">,</span> <span class="p">{</span><span class="s">"x"</span><span class="p">,</span> <span class="s">"y"</span><span class="p">,</span> <span class="s">"z"</span><span class="p">},</span>
+           <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">v3_</span><span class="p">;</span> <span class="p">},</span>
+           <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&amp;</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">v3_</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<p>Pythonの場合、パラメーターリストの末尾にラベルを記述します。</p>
+
+<h5 id="comboinputdatacomboinput"><code class="language-plaintext highlighter-rouge">ComboInput</code>/<code class="language-plaintext highlighter-rouge">DataComboInput</code></h5>
+
+<p>これらの要素は、文字列のリストから値を選択するためのダイアログを作成します。<code class="language-plaintext highlighter-rouge">ComboInput</code>では、ユーザーに選択させる文字列のリストを指定し、<code class="language-plaintext highlighter-rouge">DataComboInput</code>では、GUI状態データマップのエントリへの参照を指定します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ComboInput</span><span class="p">(</span><span class="s">"Choose from list"</span><span class="p">,</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">,</span> <span class="s">"c"</span><span class="p">},</span>
+           <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">choice_</span><span class="p">;</span> <span class="p">},</span>
+           <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span> <span class="n">choice_</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="n">DataComboInput</span><span class="p">(</span><span class="s">"Choose a robot"</span><span class="p">,</span> <span class="p">{</span><span class="s">"robots"</span><span class="p">},</span>
+               <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">robot_</span><span class="p">;</span> <span class="p">}</span>
+               <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span> <span class="n">robot_</span> <span class="o">=</span> <span class="n">r</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="n">DataComboInput</span><span class="p">(</span><span class="s">"Choose a surface"</span><span class="p">,</span> <span class="p">{</span><span class="s">"surfaces"</span><span class="p">,</span> <span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">()},</span>
+               <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">surface_</span><span class="p">;</span> <span class="p">}</span>
+               <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span> <span class="n">surface_</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="point3drotationtransform"><code class="language-plaintext highlighter-rouge">Point3D</code>/<code class="language-plaintext highlighter-rouge">Rotation</code>/<code class="language-plaintext highlighter-rouge">Transform</code></h5>
+
+<p>これらの要素は、以下の2つの項目を表示します。</p>
+<ul>
+  <li>追加する要素に適した<code class="language-plaintext highlighter-rouge">ArrayInput</code></li>
+  <li>（オプション）RVizなどの3次元環境でデータを表示するための、対話形式の要素</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Read-only variant does not provide a callback to set the data</span>
+<span class="n">Point3D</span><span class="p">(</span><span class="s">"Point"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">v3_</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Read-write variant</span>
+
+<span class="c1">// Note that even though we want to display a rotation, we need to provide a</span>
+<span class="c1">// full transform otherwise the GUI could not guess where to display the element</span>
+<span class="n">Rotation</span><span class="p">(</span><span class="s">"Rot"</span><span class="p">,</span>
+         <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">{</span><span class="n">rot_</span><span class="p">,</span> <span class="n">pos_</span><span class="p">}</span> <span class="p">},</span>
+         <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span> <span class="o">&amp;</span> <span class="n">rot</span><span class="p">)</span> <span class="p">{</span> <span class="n">rot_</span> <span class="o">=</span> <span class="n">rot</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="trajectory"><code class="language-plaintext highlighter-rouge">Trajectory</code></h5>
+
+<p>この要素は、3次元環境に移動経路を表示します。リアルタイムの移動経路として表示するか（表面がたどった経路の表示など）、あらかじめ計画された移動経路として表示するかは、返されるデータの種類に応じて決定してください。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Real-time trajectory, returns a single point (either Eigen::Vector3d or sva::PTransformd)</span>
+<span class="n">Trajectory</span><span class="p">(</span><span class="s">"RealTimeTrajectory"</span><span class="p">,</span>
+           <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LeftGripper"</span><span class="p">);</span> <span class="p">});</span>
+
+<span class="c1">// Pre-planned trajectory returns a vector of points</span>
+<span class="n">Trajectory</span><span class="p">(</span><span class="s">"Trajectory"</span><span class="p">,</span>
+           <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">traj_</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="polygon"><code class="language-plaintext highlighter-rouge">Polygon</code></h5>
+
+<p>この要素は、単一のポリゴン（1つの平面など）またはポリゴンのリスト（歩容計画など）を表示します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// A single polygon is a vector of Eigen::Vector3d</span>
+<span class="n">Polygon</span><span class="p">(</span><span class="s">"Polygon"</span>
+        <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">};</span> <span class="p">});</span>
+
+<span class="c1">// A list of polygon is a vector of vector of Eigen::Vector3d</span>
+<span class="n">Polygon</span><span class="p">(</span><span class="s">"Step plan"</span><span class="p">,</span>
+        <span class="p">[</span><span class="k">this</span><span class="p">]]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">step_plan_display_</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="force"><code class="language-plaintext highlighter-rouge">Force</code></h5>
+
+<p>この要素は、3次元環境に力ベクトルを表示します。力の値を<code class="language-plaintext highlighter-rouge">sva::ForceVecd</code>として指定し、力を適用する対象となるフレームを<code class="language-plaintext highlighter-rouge">sva::PTransformd</code>として指定する必要があります。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Force</span><span class="p">(</span><span class="s">"LeftFoot"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"LFullSole"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LFullSole"</span><span class="p">);</span> <span class="p">}),</span>
+</code></pre></div></div>
+
+<h5 id="arrow"><code class="language-plaintext highlighter-rouge">Arrow</code></h5>
+
+<p>この要素は、3次元環境に矢印を表示します。矢印の始点と終点を指定する必要があります。編集可能な矢印を指定することもできます。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Read-only</span>
+<span class="n">Arrow</span><span class="p">(</span><span class="s">"ArrowRO"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">start_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">end_</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Editable arrow</span>
+<span class="n">Arrow</span><span class="p">(</span><span class="s">"Arrow"</span><span class="p">,</span>
+      <span class="p">[</span><span class="k">this</span><span class="p">](){</span> <span class="k">return</span> <span class="n">start_</span><span class="p">;</span> <span class="p">},</span>
+      <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&amp;</span> <span class="n">start</span><span class="p">)</span> <span class="p">{</span> <span class="n">start_</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span> <span class="p">},</span>
+      <span class="p">[</span><span class="k">this</span><span class="p">](){</span> <span class="k">return</span> <span class="n">end_</span><span class="p">;</span> <span class="p">},</span>
+      <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&amp;</span> <span class="n">end</span><span class="p">)</span> <span class="p">{</span> <span class="n">end_</span> <span class="o">=</span> <span class="n">end</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="xytheta"><code class="language-plaintext highlighter-rouge">XYTheta</code></h5>
+
+<p>この要素は、<code class="language-plaintext highlighter-rouge">Transform</code>要素と同様ですが、X/Y軸方向の平行移動とZ軸周りの回転のみを編集できる点が異なります。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Returns a vector with 3 elements representing the X/Y position and the theta angle</span>
+<span class="n">XYTheta</span><span class="p">(</span><span class="s">"XYThetaOnGround"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">theta</span><span class="p">};</span> <span class="p">});</span>
+
+<span class="c1">// Specify the height with a 4th element</span>
+<span class="n">XYTheta</span><span class="p">(</span><span class="s">"XYTheta"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">4</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">z</span><span class="p">};</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="table"><code class="language-plaintext highlighter-rouge">Table</code></h5>
+
+<p>この要素では、任意のデータが格納された表を3次元環境に表示できます。データのコールバック関数は、<code class="language-plaintext highlighter-rouge">std::vector&lt;std::vector&lt;double&gt;&gt;</code>や<code class="language-plaintext highlighter-rouge">std::vector&lt;std::tuple&lt;X, Y, Z&gt;&gt;</code>のように配列の配列として表されたオブジェクトを返す必要があります。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Table with a fixed header</span>
+<span class="n">Table</span><span class="p">(</span><span class="s">"Simple table"</span><span class="p">,</span> <span class="p">{</span><span class="s">"X"</span><span class="p">,</span> <span class="s">"Y"</span><span class="p">,</span> <span class="s">"Z"</span><span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="p">{</span> <span class="k">return</span> <span class="n">points_</span><span class="p">;</span> <span class="p">});</span>
+<span class="c1">// Table with a fixed header and formatting information</span>
+<span class="n">Table</span><span class="p">(</span><span class="s">"Simple with format"</span><span class="p">,</span> <span class="p">{</span><span class="s">"X"</span><span class="p">,</span> <span class="s">"Y"</span><span class="p">,</span> <span class="s">"Z"</span><span class="p">},</span> <span class="p">{</span><span class="s">"{:0.3f}"</span><span class="p">,</span> <span class="s">"{:0.3f}"</span><span class="p">,</span> <span class="s">"{:0.3f}"</span><span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">data_</span><span class="p">;</span> <span class="p">});</span>
+<span class="c1">// Table with a dynamic header</span>
+<span class="n">Table</span><span class="p">(</span><span class="s">"Dynamic table"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">header_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">data_</span><span class="p">;</span> <span class="p">});</span>
+<span class="c1">// Table with a dynamic header + formatting</span>
+<span class="n">Table</span><span class="p">(</span><span class="s">"Dynamic with format"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">header_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">format_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">data_</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<p>見出し、書式、データサイズの一貫性については、ユーザーが保証する必要がありますが、一貫性がなくても、ある程度まではクライアント側で正しく処理されます。書式指定文字列は、<a href="https://fmt.dev/latest/syntax.html">{書式}</a>の規則に従って記述する必要があります。</p>
+
+<h5 id="form"><code class="language-plaintext highlighter-rouge">Form</code></h5>
+
+<p><code class="language-plaintext highlighter-rouge">Form</code>要素を使用すると、より複雑な対話形式のダイアログを構築できます。フォーム自体は他の要素で構成されます。<code class="language-plaintext highlighter-rouge">Form</code>は以下のように作成します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Form</span><span class="p">(</span><span class="s">"Push to send"</span><span class="p">,</span> <span class="c1">// This will be shown on the "send" button for the form</span>
+     <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span> <span class="p">{},</span>
+     <span class="p">...</span> <span class="c1">// list of element</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p>以下の要素を使用できます。</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">FormCheckbox(name, required, default)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FormIntegerInput(name, required, default)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FormNumberInput(name, required, default)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FormStringInput(name, required, default)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FormArrayInput(name, required, default, fixed_size (true))</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FormComboInput(name, required, values)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FormDataComboInput(name, required, reference)</code></li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">name</code>は、要素名の表示とコールバック関数によるデータの取得で使用されます。<code class="language-plaintext highlighter-rouge">required</code>は、このフィールドが必須フィールドかどうかを表します。<code class="language-plaintext highlighter-rouge">default</code>は、このフィールドのデフォルト値を表します（省略可）。</p>
+
+<p><code class="language-plaintext highlighter-rouge">default</code>にデフォルト値を指定する代わりに、互換性のある型を返すコールバック関数を指定できます。</p>
+
+<p><code class="language-plaintext highlighter-rouge">FormArrayInput</code>の<code class="language-plaintext highlighter-rouge">fixed_size</code>は、指定されたデフォルト値のサイズが固定であるか、ユーザーがサイズを拡大・縮小できるかを表します。</p>
+
+<p><code class="language-plaintext highlighter-rouge">FormComboInput</code>の<code class="language-plaintext highlighter-rouge">values</code>は、コンボボックスに表示する値のリストを表します。</p>
+
+<p><code class="language-plaintext highlighter-rouge">FormDataComboInput</code>の<code class="language-plaintext highlighter-rouge">reference</code>は、データエントリへの参照を表します。また、<code class="language-plaintext highlighter-rouge">$</code>記号を使ってフォーム内の他のフィールドを参照できます。例:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Form</span><span class="p">(</span><span class="s">"Button name"</span><span class="p">,</span>
+     <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span> <span class="p">{},</span>
+     <span class="n">FormDataComboInput</span><span class="p">(</span><span class="s">"Robot"</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="p">{</span><span class="s">"robots"</span><span class="p">}),</span>
+     <span class="n">FormDataComboInput</span><span class="p">(</span><span class="s">"Surface"</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="p">{</span><span class="s">"surfaces"</span><span class="p">,</span> <span class="s">"$Robot"</span><span class="p">})</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p>この例では、<code class="language-plaintext highlighter-rouge">Robot</code>でユーザーが選択した項目に応じて<code class="language-plaintext highlighter-rouge">Surface</code>コンボボックスの表示内容が変わります。</p>
+
+<h5 id="コールバック関数に関する注記">コールバック関数に関する注記</h5>
+
+<p>ユーザーの操作によって呼び出されたコールバック関数は、コントローラーの現在のループ処理が完了し、次のループ処理が開始される前に実行されます。並列処理についてユーザーが気にする必要はありません。</p>
+
+<h3 id="guiから要素を削除する">GUIから要素を削除する</h3>
+
+<p>GUIから要素を削除するための2つの関数が用意されています。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Remove a single element by name</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeElement</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span> <span class="s">"element"</span><span class="p">);</span>
+<span class="c1">// Remove a category and all its sub-categories</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeCategory</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">});</span>
+</code></pre></div></div>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">次のチュートリアル: コントローラからの情報のオンライン表示</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

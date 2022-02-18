@@ -1,0 +1,1184 @@
+
+
+
+
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - mc_rtcを用いた最初のコントローラ - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/introduction/first-controller.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><strong>mc_rtcを用いた最初のコントローラ</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#コントローラーのスケルトンを作成して実行する">コントローラーのスケルトンを作成して実行する</a></li>
+<li class="toc-entry toc-h3"><a href="#スケルトンコードをひとつずつ理解する">スケルトンコードをひとつずつ理解する</a></li>
+<li class="toc-entry toc-h3"><a href="#首を左右に振る">首を左右に振る</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#ロボット内の使用可能な関節を見つける">ロボット内の使用可能な関節を見つける</a></li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>mc_rtcを用いた最初のコントローラ</h1>
+        
+
+        <p>このチュートリアルでは、mc_rtc用の新しいコントローラを作成する方法について説明します。今回の例では、JVRC1ロボットの首を左右に振るという簡単な動作にトライします。</p>
+
+<h3 id="コントローラーのスケルトンを作成して実行する">コントローラーのスケルトンを作成して実行する</h3>
+
+
+<p><em>注:</em> mc_rtcのコントローラーは、すべて<code>MCController</code>クラスから派生しています。シンプルなコントローラーを記述する場合も、このクラスから派生させて必要な機能を記述してください。このチュートリアルでもその方法を使用します。ただし、より複雑なコントローラーを作成する場合は、<a href="/mc_rtc/jp/tutorials/recipes/fsm.html">有限オートマトン機能</a>を使用することを推奨します。</p>
+
+<div class="no_toc_section">
+
+<ul class="nav nav-tabs" id="make_new_controllerTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="make-new-controllerc-rawTab" data-toggle="tab" href="#make-new-controllerc-rawTabContent" role="tab" aria-controls="make-new-controllerc-rawTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="make-new-controllerpythonrawTab" data-toggle="tab" href="#make-new-controllerpythonrawTabContent" role="tab" aria-controls="make-new-controllerpythonrawTabContent" aria-selected="false">Python</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="make-new-controllergithubrawTab" data-toggle="tab" href="#make-new-controllergithubrawTabContent" role="tab" aria-controls="make-new-controllergithubrawTabContent" aria-selected="false">GitHub</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="make_new_controllerTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="make-new-controllerc-rawTabContent" role="tabpanel" arial-labelledby="make-new-controllerc-rawTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <p>mc_rtcで用意されている<code>mc_rtc_new_controller</code>を使用して新しいコントローラープロジェクトをセットアップします。</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mc_rtc_new_controller <span class="nt">--help</span>
+使用方法: mc_rtc_new_controller <span class="o">[</span><span class="nt">-h</span><span class="o">]</span>
+                             <span class="o">[</span>プロジェクトディレクトリ] <span class="o">[</span>コントローラークラス名]
+                             <span class="o">[[</span>コントローラー名]]
+
+新しいmc_rtcコントローラープロジェクトを作成します。
+
+位置指定引数:
+   <span class="o">[</span>プロジェクトディレクトリ]   プロジェクトのパス
+  <span class="o">[</span>コントローラークラス名] 
+                        コントローラークラスの名前
+  <span class="o">[</span>コントローラー名]     コントローラーの名前。デフォルトではコントローラークラス名が使用されます。
+                        
+
+オプションの引数:
+  <span class="nt">-h</span>, <span class="nt">--help</span>            このヘルプメッセージを表示して終了します。</code></pre></figure>
+
+<p><em>注: このツールを使用するには、Debian系のシステムで用意されているGit for PythonとpipのGitPythonが必要です。</em></p>
+
+<p>このチュートリアルでは、以下のコマンドを実行し、<code>MyFirstController</code>という名前のチュートリアル用コントローラーを作成します。</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mc_rtc_new_controller my_first_controller MyFirstController</code></pre></figure>
+
+<p>新たに作成された<code>my_first_controller</code>フォルダーに移動します。このフォルダーには以下のファイルが自動生成されています。</p>
+
+<dl class="row">
+  <dt class="col-3">CMakeLists.txt</dt>
+  <dd class="col-9">コントローラーをビルドするのに必要な最低限のCMakeファイル</dd>
+
+  <dt class="col-3">etc/MyFirstController.yaml</dt>
+  <dd class="col-9">コントローラー設定ファイル。詳細についてはこちらの<a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html">チュートリアル</a>を参照してください。</dd>
+
+  <dt class="col-3">src/CMakeLists.txt</dt>
+  <dd class="col-9">コントローラーをビルドするのに必要なソースファイルの説明</dd>
+
+  <dt class="col-3">src/api.h</dt>
+  <dd class="col-9">コントローラーを各プラットフォームに読み込めるようにするための宣言</dd>
+
+  <dt class="col-3">src/MyFirstController.h</dt>
+  <dd class="col-9">コントローラークラスの宣言。mc_control::Controllerから継承する必要があります。また、少なくともrun関数とreset関数を置き換える必要があります。</dd>
+
+  <dt class="col-3">src/MyFirstController.cpp</dt>
+  <dd class="col-9">独自に作成したコントローラーを実装します。これについては次のセクションで詳しく説明します。</dd>
+</dl>
+
+<h4>コントローラーをビルドする</h4>
+
+<p>コントローラーをビルドするには、CMakeといつものツールを使用してCMakeを実行し、コードをビルドしてインストールします。LinuxまたはMacOSの場合、一般に以下のように実行します。</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> build
+<span class="nv">$ </span><span class="nb">cd </span>build
+<span class="c"># このビルドタイプは、デバッグ可能かつパフォーマンスに優れたコードを生成します</span>
+<span class="nv">$ </span>cmake ../ <span class="nt">-DCMAKE_BUILD_TYPE</span><span class="o">=</span>RelWithDebInfo
+<span class="nv">$ </span>make
+<span class="nv">$ </span><span class="nb">sudo </span>make <span class="nb">install</span></code></pre></figure>
+
+<p><em>注: <code>sudo</code>は、mc_rtcが特権ディレクトリにインストールされている場合のみ実行する必要があります。</em></p>
+
+<h4>コントローラーを実行する</h4>
+
+<p>JVRC1ロボットと新たにインストールされたコントローラーを使用できるように、mc_rtcの設定ファイルを編集します。</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"MainRobot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JVRC1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"Enabled"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"MyFirstController"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<p>さらに、前のセクションの説明に従ってコントローラーを実行します。お疲れ様でした。これで、最初のコントローラーのビルドと実行ができました。</p>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="make-new-controllerpythonrawTabContent" role="tabpanel" arial-labelledby="make-new-controllerpythonrawTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <p>まず、新しいPythonパッケージを作成します。</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> my_first_controller
+<span class="nv">$ </span><span class="nb">touch </span>my_first_controller/__init__.py</code></pre></figure>
+
+<p><em>注: ここではposixシェルを使用していることを前提とします。</em></p>
+
+<p>次に、<code>my_first_controller.py</code>フォルダーに<code>my_first_controller</code>というファイルを作成します。</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="code"><pre><span class="kn">import</span> <span class="nn">mc_control</span>
+<span class="kn">import</span> <span class="nn">mc_rbdyn</span>
+<span class="kn">import</span> <span class="nn">mc_rtc</span>
+
+<span class="k">class</span> <span class="nc">MyFirstController</span><span class="p">(</span><span class="n">mc_control</span><span class="p">.</span><span class="n">MCPythonController</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rm</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">kinematicsConstraint</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">contactConstraint</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">setContacts</span><span class="p">([])</span>
+    <span class="k">def</span> <span class="nf">run_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">def</span> <span class="nf">reset_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="o">@</span><span class="nb">staticmethod</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="p">.</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">,</span> <span class="s">"ground"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">MyFirstController</span><span class="p">([</span><span class="n">robot</span><span class="p">,</span><span class="n">env</span><span class="p">],</span> <span class="n">dt</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>また、モジュール内でコントローラーを使用できるように、<code>__init__.py</code>を編集します。</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">.my_first_controller</span> <span class="kn">import</span> <span class="n">MyFirstController</span></code></pre></figure>
+
+<h4>コントローラーを実行する</h4>
+
+<p>JVRC1ロボットと新しいコントローラーを使用できるように、mc_rtcの設定ファイルを編集します。</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"MainRobot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JVRC1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"Enabled"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Python#my_first_controller.MyFirstController"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<p><em>Python 2とPython 3のどちらかを強制的に使用したい場合や、この両方がインストールされている場合は、<code>Python2</codeまたは<code>Python3</code>を明示的に指定する必要があります。</em></p>
+
+<p>これを行うには、<code>my_first_controller</code>フォルダーがPythonのパス上に存在している必要があります。実際、この設定を使用すると、mc_rtcによってコントローラーが以下のように作成されます。</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">my_first_controller</span> <span class="kn">import</span> <span class="n">MyFirstController</span>
+<span class="n">controller</span> <span class="o">=</span> <span class="n">MyFirstController</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">rm</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="k">return</span> <span class="n">controller</span></code></pre></figure>
+
+<p>通常、<code>my_first_controller</code>フォルダーが<code>$HOME/my_python_controllers</code>にある場合、<code>mc_rtc_ticker</code>を以下のように実行します。</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ PYTHONPATH</span><span class="o">=</span><span class="nv">$HOME</span>/my_python_controllers:<span class="nv">$PYTHONPATH</span> rosrun mc_rtc_ticker mc_rtc_ticker</code></pre></figure>
+
+<h4>C++との主な違い</h4>
+
+<p>C++のコントローラーでは、必要に応じて<code>mc_control::MCController::run()</code>関数と<code>mc_control::MCController::reset()</code>関数の呼び出しをバイパスできます。一方、Pythonのコントローラーでは、C++と同様の処理が実行された<strong>後</strong>に、<code>run_callback(self)</code>と<code>reset_callback(self, data)</code>が常に呼び出されます。</p>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="make-new-controllergithubrawTabContent" role="tabpanel" arial-labelledby="make-new-controllergithubrawTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <p>Use the <a href="https://github.com/mc-rtc/new-controller">mc-rtc/new-controller</a> template project. This is equivalent to using the <code>mc_rtc_new_controller</code> tool with extra goodies.</p>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+</div>
+
+<h3 id="スケルトンコードをひとつずつ理解する">スケルトンコードをひとつずつ理解する</h3>
+
+
+<p>まず、コンストラクターを見てみましょう。</p>
+
+<ul class="nav nav-tabs" id="constructorTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="constructorc-cppTab" data-toggle="tab" href="#constructorc-cppTabContent" role="tab" aria-controls="constructorc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="constructorpythonpythonTab" data-toggle="tab" href="#constructorpythonpythonTabContent" role="tab" aria-controls="constructorpythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="constructorTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="constructorc-cppTabContent" role="tabpanel" arial-labelledby="constructorc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">contactConstraint</span><span class="p">);</span>
+<span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">kinematicsConstraint</span><span class="p">);</span>
+<span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">postureTask</span><span class="p">);</span>
+<span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">({{}});</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="constructorpythonpythonTabContent" role="tabpanel" arial-labelledby="constructorpythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">kinematicsConstraint</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">contactConstraint</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">setContacts</span><span class="p">([])</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<p>これらは非常に似ています。ここでは、基底クラスの既存のオブジェクトを使用して、基本的なコントローラーをセットアップします。</p>
+
+<ol>
+  <li>接触面制約条件を追加します。これで、接触面を設定した後にその接触面が動かなくなります。</li>
+  <li>キネマティクス制約条件を追加します。これで、関節の位置と速度の制限に従ってロボットが動くようになります。</li>
+  <li>ロボットの姿勢を制御するための姿勢制御タスクを追加します。</li>
+  <li>接触面を設定します。今回は力学的制御は行わないため、空の接触面セットを設定します。</li>
+</ol>
+
+<p>次に、<code>reset</code>関数を見てみましょう。この関数は、コントローラーの起動時（インターフェイスによって起動されたときや、コントローラーがオンラインになったとき）に呼び出されます。</p>
+
+<ul class="nav nav-tabs" id="resetTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="resetc-cppTab" data-toggle="tab" href="#resetc-cppTabContent" role="tab" aria-controls="resetc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="resetpythonpythonTab" data-toggle="tab" href="#resetpythonpythonTabContent" role="tab" aria-controls="resetpythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="resetTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="resetc-cppTabContent" role="tabpanel" arial-labelledby="resetc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="n">MyFirstController</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">ControllerResetData</span> <span class="o">&amp;</span> <span class="n">reset_data</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="n">reset_data</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="resetpythonpythonTabContent" role="tabpanel" arial-labelledby="resetpythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">reset_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">pass</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<p>ここでは、単純に<code>MCController</code>クラスにデリゲートします（Pythonの場合は暗黙的にデリゲートされます）。 <code>reset_data</code> reset_dataには、インターフェイスによって与えられたロボットの初期状態が格納されています。デフォルトの実装では、ロボットが正しく初期化されたかどうかが確認され、姿勢制御タスクの目標として現在のロボットの姿勢が正しく設定されたかどうかが確認されます。</p>
+
+<p>次に、<code>run</code>関数が定義されています。この関数は、コントローラーのループ処理が実行されるたびに呼び出されます。</p>
+
+<ul class="nav nav-tabs" id="runTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="runc-cppTab" data-toggle="tab" href="#runc-cppTabContent" role="tab" aria-controls="runc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="runpythonpythonTab" data-toggle="tab" href="#runpythonpythonTabContent" role="tab" aria-controls="runpythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="runTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="runc-cppTabContent" role="tabpanel" arial-labelledby="runc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="kt">bool</span> <span class="n">MyFirstController</span><span class="o">::</span><span class="n">run</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="o">::</span><span class="n">run</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="runpythonpythonTabContent" role="tabpanel" arial-labelledby="runpythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">run_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">True</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<p>ここでも、<code>MCController</code>クラスにデリゲートしています（先ほどと同じく、Pythonの場合は暗黙的にデリゲートされます）。この関数は、すべての処理が正しく実行された場合はtrueを返し、制御が中断された場合はfalseを返します。デフォルトの実装では、ユーザーのプログラムによって指定されたタスクと制約条件と共に二次計画法ソルバーが実行され、処理の結果得られた加速度を使用してロボットの目標状態が更新されます。</p>
+
+<p>そして、コードの最後でコントローラーがmc_rtcに読み込まれます。</p>
+
+<ul class="nav nav-tabs" id="createControllerTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="createcontrollerc-cppTab" data-toggle="tab" href="#createcontrollerc-cppTabContent" role="tab" aria-controls="createcontrollerc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="createcontrollerpythonpythonTab" data-toggle="tab" href="#createcontrollerpythonpythonTabContent" role="tab" aria-controls="createcontrollerpythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="createControllerTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="createcontrollerc-cppTabContent" role="tabpanel" arial-labelledby="createcontrollerc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// いかなる名前空間にも属さない</span>
+<span class="n">CONTROLLER_CONSTRUCTOR</span><span class="p">(</span><span class="s">"MyFirstController"</span><span class="p">,</span> <span class="n">MyFirstController</span><span class="p">)</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="createcontrollerpythonpythonTabContent" role="tabpanel" arial-labelledby="createcontrollerpythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">@</span><span class="nb">staticmethod</span>
+<span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="p">.</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">,</span> <span class="s">"ground"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MyFirstController</span><span class="p">([</span><span class="n">robot</span><span class="p">,</span><span class="n">env</span><span class="p">],</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<p>この部分を修正する必要はおそらくありませんが、コメントに記載された点に注意してください。</p>
+
+<h3 id="首を左右に振る">首を左右に振る</h3>
+
+
+<p>まず、2つのプロパティをコントローラーに追加します。一つは、動かそうとしている首関節のインデックスを保持するプロパティ、もう一つは、首をどの方向に動かそうとしているかを示すプロパティです。</p>
+
+<ul class="nav nav-tabs" id="propertiesTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="propertiesc-cppTab" data-toggle="tab" href="#propertiesc-cppTabContent" role="tab" aria-controls="propertiesc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="propertiespythonpythonTab" data-toggle="tab" href="#propertiespythonpythonTabContent" role="tab" aria-controls="propertiespythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="propertiesTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="propertiesc-cppTabContent" role="tabpanel" arial-labelledby="propertiesc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// MyFirstController.hのプライベートメンバーに追加する</span>
+<span class="kt">int</span> <span class="n">jointIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">bool</span> <span class="n">goingLeft</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="propertiespythonpythonTabContent" role="tabpanel" arial-labelledby="propertiespythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># MyFirstControllerの__init__メソッド内に追加する
+</span><span class="bp">self</span><span class="p">.</span><span class="n">jointIndex</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">goingLeft</span> <span class="o">=</span> <span class="bp">True</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<p>関節のインデックスを初期化するには、ロボットのクラスを調べる必要があります。JVRC1では、首のヨー方向の関節名は<code>NECK_Y</code>となっています。そこで、コントローラーのコンストラクターで以下のコードを実行します。</p>
+
+<ul class="nav nav-tabs" id="init_jindexTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="init-jindexc-cppTab" data-toggle="tab" href="#init-jindexc-cppTabContent" role="tab" aria-controls="init-jindexc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="init-jindexpythonpythonTab" data-toggle="tab" href="#init-jindexpythonpythonTabContent" role="tab" aria-controls="init-jindexpythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="init_jindexTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="init-jindexc-cppTabContent" role="tabpanel" arial-labelledby="init-jindexc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">jointIndex</span> <span class="o">=</span> <span class="n">robot</span><span class="p">().</span><span class="n">jointIndexByName</span><span class="p">(</span><span class="s">"NECK_Y"</span><span class="p">);</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="init-jindexpythonpythonTabContent" role="tabpanel" arial-labelledby="init-jindexpythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="bp">self</span><span class="p">.</span><span class="n">jointIndex</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">jointIndexByName</span><span class="p">(</span><span class="s">"NECK_Y"</span><span class="p">)</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<p>次に、ロボットの顔を左と右のどちらに向かせるかに応じて目標を更新する関数を記述します。</p>
+
+<ul class="nav nav-tabs" id="switch_targetTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="switch-targetc-cppTab" data-toggle="tab" href="#switch-targetc-cppTabContent" role="tab" aria-controls="switch-targetc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="switch-targetpythonpythonTab" data-toggle="tab" href="#switch-targetpythonpythonTabContent" role="tab" aria-controls="switch-targetpythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="switch_targetTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="switch-targetc-cppTabContent" role="tabpanel" arial-labelledby="switch-targetc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="n">MyFirstController</span><span class="o">::</span><span class="n">switch_target</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">goingLeft</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">({{</span><span class="s">"NECK_Y"</span><span class="p">,</span> <span class="n">robot</span><span class="p">().</span><span class="n">qu</span><span class="p">()[</span><span class="n">jointIndex</span><span class="p">]}});</span>
+  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">({{</span><span class="s">"NECK_Y"</span><span class="p">,</span> <span class="n">robot</span><span class="p">().</span><span class="n">ql</span><span class="p">()[</span><span class="n">jointIndex</span><span class="p">]}});</span>
+  <span class="p">}</span>
+  <span class="n">goingLeft</span> <span class="o">=</span> <span class="o">!</span><span class="n">goingLeft</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="switch-targetpythonpythonTabContent" role="tabpanel" arial-labelledby="switch-targetpythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">switch_target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">goingLeft</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">target</span><span class="p">({</span><span class="s">"NECK_Y"</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">qu</span><span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">jointIndex</span><span class="p">]})</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">target</span><span class="p">({</span><span class="s">"NECK_Y"</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">ql</span><span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">jointIndex</span><span class="p">]})</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">goingLeft</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">.</span><span class="n">goingLeft</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<p><em>注: <code>postureTask->posture()</code>で現在の目標を取得し、<code>postureTask->posture(new_posture)</code>でその目標を変更して全身の姿勢の目標を更新することもできます。ただし、ここでは人間にとってより読みやすいバージョンを使用しました。</em></p>
+
+<p最後に、現在のタスクの誤差に応じてロボットの動作が更新されるように、<code>run</code>関数を編集します。</p>
+
+<ul class="nav nav-tabs" id="update_targetTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="update-targetc-cppTab" data-toggle="tab" href="#update-targetc-cppTabContent" role="tab" aria-controls="update-targetc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="update-targetpythonpythonTab" data-toggle="tab" href="#update-targetpythonpythonTabContent" role="tab" aria-controls="update-targetpythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="update_targetTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="update-targetc-cppTabContent" role="tabpanel" arial-labelledby="update-targetc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="kt">bool</span> <span class="n">MyFirstController</span><span class="o">::</span><span class="n">run</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">posture</span><span class="p">()[</span><span class="n">jointIndex</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">robot</span><span class="p">().</span><span class="n">mbc</span><span class="p">().</span><span class="n">q</span><span class="p">[</span><span class="n">jointIndex</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">switch_target</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="o">::</span><span class="n">run</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="update-targetpythonpythonTabContent" role="tabpanel" arial-labelledby="update-targetpythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">run_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">posture</span><span class="p">()[</span><span class="bp">self</span><span class="p">.</span><span class="n">jointIndex</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">mbc</span><span class="p">.</span><span class="n">q</span><span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">jointIndex</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">switch_target</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">True</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<p><em>注: <code>postureTask->eval().norm()</code>を監視して、タスクのトータルの誤差を取得することもできます。ただし、今回は首のヨー方向の関節のみに着目します。</em></p>
+
+<p>このコントローラーを実行すると、ロボットが首を左右に振るのが分かります。次のチュートリアルでも、引き続きこのコントローラーを使用します。ただし、次回のサンプルコードでは、首を左右に振る今回のコードは使用しません。</p>
+
+<p>このコントローラーの完全なソースは、<a href="sources/first-controller.html">こちら</a>から入手できます。</p>
+
+<h4 id="ロボット内の使用可能な関節を見つける">ロボット内の使用可能な関節を見つける</h4>
+
+
+<p>このコントローラーを別のロボットで使いたくなったものの、ロボットのどの関節を使用できるかが分からない場合があると思います。そのような場合は、以下のスニペットにより、今回のサンプルコード内で<code>NECK_Y</code>の代わりに使用できる自由度1の関節のリストが出力されます。</p>
+
+<ul class="nav nav-tabs" id="show_jointsTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="show-jointspythonpythonTab" data-toggle="tab" href="#show-jointspythonpythonTabContent" role="tab" aria-controls="show-jointspythonpythonTabContent" aria-selected="true">Python</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="show-jointsc-cppTab" data-toggle="tab" href="#show-jointsc-cppTabContent" role="tab" aria-controls="show-jointsc-cppTabContent" aria-selected="false">C++</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="show_jointsTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="show-jointspythonpythonTabContent" role="tabpanel" arial-labelledby="show-jointspythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">mc_rbdyn</span>
+<span class="c1"># Here you can change the robot module name with your own robot
+</span><span class="n">rm</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"JVRC1"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="s">"- {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">j</span><span class="p">.</span><span class="n">name</span><span class="p">())</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">rm</span><span class="p">.</span><span class="n">mb</span><span class="p">.</span><span class="n">joints</span><span class="p">()</span> <span class="k">if</span> <span class="n">j</span><span class="p">.</span><span class="n">dof</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]))</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="show-jointsc-cppTabContent" role="tabpanel" arial-labelledby="show-jointsc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include &lt;mc_rbdyn/RobotLoader.h&gt;
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="c1">// Here you can change the robot module name with your own robot</span>
+  <span class="k">auto</span> <span class="n">rm</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"JVRC1"</span><span class="p">);</span>
+  <span class="k">for</span><span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">j</span> <span class="o">:</span> <span class="n">rm</span><span class="o">-&gt;</span><span class="n">mb</span><span class="p">.</span><span class="n">joints</span><span class="p">())</span>
+  <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">j</span><span class="p">.</span><span class="n">dof</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">j</span><span class="p">.</span><span class="n">isMimic</span><span class="p">())</span>
+    <span class="p">{</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"- "</span> <span class="o">&lt;&lt;</span> <span class="n">j</span><span class="p">.</span><span class="n">name</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">次のチュートリアル: 重心の制御</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

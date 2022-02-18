@@ -1,0 +1,442 @@
+
+
+
+
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - ログの操作 - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/tools/mc_log_utils.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><strong>ログの操作</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#mc_bin_utils-汎用操作ツール">mc_bin_utils: 汎用操作ツール</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#mc_bin_utils-extract">mc_bin_utils extract</a></li>
+<li class="toc-entry toc-h4"><a href="#mc_bin_utils-convert">mc_bin_utils convert</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#pythonでログを開く">Pythonでログを開く</a></li>
+<li class="toc-entry toc-h3"><a href="#mc_rtcflatlogクラス">mc_rtc::FlatLogクラス</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>ログの操作</h1>
+        
+
+        
+<p>このドキュメントでは、<code class="language-plaintext highlighter-rouge">~/my_log.bin</code>にログを記録することを前提として説明します。</p>
+
+<h3 id="mc_bin_utils-汎用操作ツール"><code class="language-plaintext highlighter-rouge">mc_bin_utils</code>: 汎用操作ツール</h3>
+
+<p><code class="language-plaintext highlighter-rouge">mc_bin_utils</code>では、バイナリログに対してさまざまな操作が行えます。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils <span class="nt">--help</span>
+mc_bin_utils is a command-line tool to work with mc_rtc bin logs
+
+Available commands:
+    show      Display information about the log
+    <span class="nb">split     </span>Split a log into N part
+    extract   Extra part of a log
+    convert   Convert binary logs to various formats
+
+Use mc_bin_utils &lt;<span class="nb">command</span><span class="o">&gt;</span> <span class="nt">--help</span> <span class="k">for </span>usage of each <span class="nb">command</span>
+</code></pre></div></div>
+
+<p>ここでは、<code class="language-plaintext highlighter-rouge">extract</code>コマンドと<code class="language-plaintext highlighter-rouge">convert</code>コマンドについて説明します。<code class="language-plaintext highlighter-rouge">show</code>と<code class="language-plaintext highlighter-rouge">split</code>については、説明の必要はないためここでは割愛します。</p>
+
+<h4 id="mc_bin_utils-extract"><code class="language-plaintext highlighter-rouge">mc_bin_utils extract</code></h4>
+
+<p><code class="language-plaintext highlighter-rouge">mc_bin_utils extract</code>には2つの操作モードが用意されています。</p>
+
+<p>最初の形式は、ログ内において指定したキーが存在する箇所をすべて抽出します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils extract ~/my_log.bin my_log_out <span class="nt">--key</span> com_task_target
+</code></pre></div></div>
+
+<p>上記のコマンドを実行すると、<code class="language-plaintext highlighter-rouge">com_task_target</code>というキーが存在するセクションごとにログが生成されます。例えば、5秒のマークから15秒のマークの間にこのキーが存在し、30秒のマークから60秒のマークの間にもこのキーが存在する場合、<code class="language-plaintext highlighter-rouge">my_log_out_1.bin</code>と<code class="language-plaintext highlighter-rouge">my_log_out_2.bin</code>が生成されます。</p>
+
+<p>2番目の形式は、時間<code class="language-plaintext highlighter-rouge">t</code>の入力に基づいて、指定された時間範囲を直接抽出します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils extract ~/my_log.bin my_log_out <span class="nt">--from</span> 50 <span class="nt">--to</span> 100
+</code></pre></div></div>
+
+<p>この例では、時間<code class="language-plaintext highlighter-rouge">t</code>が50秒から100秒の間のログが<code class="language-plaintext highlighter-rouge">my_log_out.bin</code>として生成されます。<code class="language-plaintext highlighter-rouge">from</code>あるいは<code class="language-plaintext highlighter-rouge">to</code>のいずれかを省略できます。その場合、出力されるログは、0秒から始まり（前者を省略した場合）、ログの最後で終了します（後者を省略した場合）。</p>
+
+<h4 id="mc_bin_utils-convert"><code class="language-plaintext highlighter-rouge">mc_bin_utils convert</code></h4>
+
+<p>このツールでは、<code class="language-plaintext highlighter-rouge">.bin</code>ログを以下に示す3つの形式のいずれかに変換できます（このうちの2つについては、ROSではサポートされていません）。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">.flat</code>は、<code class="language-plaintext highlighter-rouge">mc_log_ui</code>で使用される実際の形式です。同じログを頻繁に開く場合、この形式に変換しておくと時間を節約できます。</li>
+  <li><code class="language-plaintext highlighter-rouge">.csv</code>は、よく知られたデータ形式で、数多くのツール（特に、MATLABやExcel）に読み込むことができ、外部の共同作業者にデータを共有するのに便利です。</li>
+  <li><code class="language-plaintext highlighter-rouge">.bag</code>は、<code class="language-plaintext highlighter-rouge">rosbag</code>で使用される形式です。</li>
+</ul>
+
+<h3 id="pythonでログを開く">Pythonでログを開く</h3>
+
+<p>Pythonでログを開くこともできます。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">mc_log_ui</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">mc_log_ui</span><span class="p">.</span><span class="n">read_log</span><span class="p">(</span><span class="s">'/tmp/mylog.bin'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">log</code>は、mc_log_uiのツリーに表示されるエントリをキーとして持ち（例えば、<code class="language-plaintext highlighter-rouge">v3d</code>という名前の<code class="language-plaintext highlighter-rouge">Eigen::Vector3d</code>をログに記録した場合、<code class="language-plaintext highlighter-rouge">v3d_x</code>、<code class="language-plaintext highlighter-rouge">v3d_y</code>、<code class="language-plaintext highlighter-rouge">v3d_z</code>がキーとなります）、Numpy配列を値として持つPythonの辞書であり、これを使えばさまざまなことが行えます。　　</p>
+
+<h3 id="mc_rtcflatlogクラス"><code class="language-plaintext highlighter-rouge">mc_rtc::FlatLog</code>クラス</h3>
+
+<p><code class="language-plaintext highlighter-rouge">mc_rtc::FlatLog</code>クラスは、<code class="language-plaintext highlighter-rouge">mc_rtc_utils</code>ライブラリで定義されています。このクラスでは、ログを開き、元の型でデータを操作することができます。例えば、力覚センサーの測定値を<code class="language-plaintext highlighter-rouge">sva::ForceVecd</code>オブジェクトとして記録した場合、<code class="language-plaintext highlighter-rouge">mc_rtc::FlatLog</code>を使用してこの値をその形式のまま取得できます。使用方法とAPIの詳細については、クラスのドキュメントを参照してください。C++でのみ使用できます。.</p>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">次のチュートリアル: ログの可視化</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

@@ -1,0 +1,693 @@
+
+
+
+
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - インストールガイド - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/introduction/installation-guide.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><strong>インストールガイド</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#概要">概要</a></li>
+<li class="toc-entry toc-h2"><a href="#インストール手順">インストール手順</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#ubuntu-lts-1804-2004">Ubuntu LTS (18.04, 20.04)</a></li>
+<li class="toc-entry toc-h3"><a href="#homebrew-macos">Homebrew (macOS)</a></li>
+<li class="toc-entry toc-h3"><a href="#vcpkg">vcpkg</a></li>
+<li class="toc-entry toc-h3"><a href="#ソースからビルドするスクリプトを使用する場合">ソースからビルドする（スクリプトを使用する場合）</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#windowsの場合の前提条件">Windowsの場合の前提条件</a></li>
+<li class="toc-entry toc-h4"><a href="#ビルド">ビルド</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#ソースからビルドするスクリプトを使用しない場合">ソースからビルドする（スクリプトを使用しない場合）</a></li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>インストールガイド</h1>
+        
+
+        <h2 id="概要">概要</h2>
+
+<p>mc_rtcは、シミュレーションシステムやロボット制御システムとデータをやり取りするインターフェイスです。これらのシステムは、指定されたロボットの状態（関節の値やセンサーの測定値など）を出力します。一方、mc_rtcは、ロボットの目標状態（コマンド）を出力します。この処理は、<code class="language-plaintext highlighter-rouge">mc_control::MCGlobalController</code>クラスを通じて実行されます。このクラス自体は制御を行わず、このタスクを<code class="language-plaintext highlighter-rouge">mc_control::MCController</code>クラスの派生オブジェクトにデリゲートします。mc_rtcフレームワーク内でコントローラーを記述するには、<code class="language-plaintext highlighter-rouge">mc_control::MCController</code>基底クラスから派生したクラスを記述し、必要な機能をそのクラスに実装します。後で説明するチュートリアルでは、そうしたコントローラーを実装します。このページのチュートリアルでは、お使いのマシンに本フレームワークをビルド・インストールする方法について説明します。</p>
+
+<p><img src="/mc_rtc/assets/tutorials/introduction/img/mc_rtc_architecture.jpg" alt="architecture_overview" class="img-fluid" /></p>
+
+<h2 id="インストール手順">インストール手順</h2>
+
+<p><a href="https://brew.sh/">Homebrew</a>から、最新のUbuntu LTSとmacOSのバイナリ版を提供しています。また、簡単に使用できるUbuntu、macOS、Windows用のソースコード版と<a href="https://vcpkg.io/en/index.html">vcpkg</a>のレジストリも提供しています。</p>
+
+<p>UbuntuユーザーとmacOSユーザーにはバイナリ版を推奨します。Windowsユーザーにはvcpkgを推奨します。</p>
+
+<h3 id="ubuntu-lts-1804-2004">Ubuntu LTS (18.04, 20.04)</h3>
+
+<ul class="nav nav-tabs" id="install_aptTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="install-apt安定版のインストールbashTab" data-toggle="tab" href="#install-apt安定版のインストールbashTabContent" role="tab" aria-controls="install-apt安定版のインストールbashTabContent" aria-selected="true">安定版のインストール</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="install-apt最新版のインストールbashTab" data-toggle="tab" href="#install-apt最新版のインストールbashTabContent" role="tab" aria-controls="install-apt最新版のインストールbashTabContent" aria-selected="false">最新版のインストール</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="install_aptTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="install-apt安定版のインストールbashTabContent" role="tabpanel" arial-labelledby="install-apt安定版のインストールbashTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># ミラーをセットアップする</span>
+curl <span class="nt">-1sLf</span> <span class="s1">'https://dl.cloudsmith.io/public/mc-rtc/stable/setup.deb.sh'</span> | <span class="nb">sudo</span> <span class="nt">-E</span> bash
+<span class="c"># パッケージをインストールする</span>
+<span class="nb">sudo </span>apt <span class="nb">install </span>libmc-rtc-dev mc-rtc-utils
+<span class="c"># ROSディストリビューションのミラーがセットアップされているものと仮定</span>
+<span class="nb">sudo </span>apt <span class="nb">install </span>ros-<span class="k">${</span><span class="nv">ROS_DISTRO</span><span class="k">}</span><span class="nt">-mc-rtc-plugin</span> ros-<span class="k">${</span><span class="nv">ROS_DISTRO</span><span class="k">}</span><span class="nt">-mc-rtc-tools</span></code></pre></figure>
+
+
+  
+    
+    <div class="text-right">
+      <pre id="install_aptbashCopySource" class="offscreen" aria-hidden="true"># ミラーをセットアップする
+curl -1sLf 'https://dl.cloudsmith.io/public/mc-rtc/stable/setup.deb.sh' | sudo -E bash
+# パッケージをインストールする
+sudo apt install libmc-rtc-dev mc-rtc-utils
+# ROSディストリビューションのミラーがセットアップされているものと仮定
+sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools</pre>
+      <button class="btn btn-primary copy-button" data-clipboard-target="#install_aptbashCopySource"><svg class="octicon octicon-copy" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg></button>
+    </div>
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="install-apt最新版のインストールbashTabContent" role="tabpanel" arial-labelledby="install-apt最新版のインストールbashTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># ミラーをセットアップする</span>
+curl <span class="nt">-1sLf</span> <span class="s1">'https://dl.cloudsmith.io/public/mc-rtc/head/setup.deb.sh'</span> | <span class="nb">sudo</span> <span class="nt">-E</span> bash
+<span class="c"># パッケージをインストールする</span>
+<span class="nb">sudo </span>apt <span class="nb">install </span>libmc-rtc-dev mc-rtc-utils
+<span class="c"># ROSディストリビューションのミラーがセットアップされているものと仮定</span>
+<span class="nb">sudo </span>apt <span class="nb">install </span>ros-<span class="k">${</span><span class="nv">ROS_DISTRO</span><span class="k">}</span><span class="nt">-mc-rtc-plugin</span> ros-<span class="k">${</span><span class="nv">ROS_DISTRO</span><span class="k">}</span><span class="nt">-mc-rtc-tools</span></code></pre></figure>
+
+
+  
+    
+    <div class="text-right">
+      <pre id="install_aptbashCopySource" class="offscreen" aria-hidden="true"># ミラーをセットアップする
+curl -1sLf 'https://dl.cloudsmith.io/public/mc-rtc/head/setup.deb.sh' | sudo -E bash
+# パッケージをインストールする
+sudo apt install libmc-rtc-dev mc-rtc-utils
+# ROSディストリビューションのミラーがセットアップされているものと仮定
+sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools</pre>
+      <button class="btn btn-primary copy-button" data-clipboard-target="#install_aptbashCopySource"><svg class="octicon octicon-copy" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg></button>
+    </div>
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+<p><em>注: mc_rtcのディストリビューション版では、<a href="https://github.com/jrl-umi3218/eigen-qld">eigen-qld</a>を介してQLD QPソルバー（線形二次計画法ソルバー）を使用できます。LSSOLへのアクセス権があり、<a href="https://gite.lirmm.fr/multi-contact/eigen-lssol">eigen-lssol</a>をインストールできる場合、LSSOLのサポート付きで<a href="https://github.com/jrl-umi3218/Tasks">Tasks</a>をビルドして<code class="language-plaintext highlighter-rouge">/usr</code>にインストールできます。この2つのバージョンはバイナリレベルで互換性があります。</em></p>
+
+<h3 id="homebrew-macos">Homebrew (macOS)</h3>
+
+<p>公式のインストール手順に従って<a href="https://brew.sh/">Homebrew</a>をインストールしてください。その後、以下のコマンドを実行してください。</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">brew tap mc-rtc/mc-rtc
+brew <span class="nb">install </span>mc_rtc</code></pre></figure>
+
+
+  
+    
+    <div class="text-right">
+      <pre id="brewbashCopySource" class="offscreen" aria-hidden="true">brew tap mc-rtc/mc-rtc
+brew install mc_rtc</pre>
+      <button class="btn btn-primary copy-button" data-clipboard-target="#brewbashCopySource"><svg class="octicon octicon-copy" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg></button>
+    </div>
+  
+  </div>
+</div>
+
+<h3 id="vcpkg">vcpkg</h3>
+
+<p><a href="https://vcpkg.io/">vcpkg</a>のインストール手順に従って、お使いのシステムにvcpkgをインストールしてください。</p>
+
+<p>その後、<code class="language-plaintext highlighter-rouge">vcpkg</code>のバイナリまたは<code class="language-plaintext highlighter-rouge">vcpkg.json</code>マニフェストと共に<code class="language-plaintext highlighter-rouge">vcpkg-configuration.json</code>ファイルを作成し、レジストリをセットアップしてください。</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"registries"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"git"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"baseline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{下記を参照}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"repository"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://github.com/mc-rtc/vcpkg-registry"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"packages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"spacevecalg"</span><span class="p">,</span><span class="w"> </span><span class="s2">"rbdyn"</span><span class="p">,</span><span class="w"> </span><span class="s2">"eigen-qld"</span><span class="p">,</span><span class="w"> </span><span class="s2">"sch-core"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tasks"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"mc-rbdyn-urdf"</span><span class="p">,</span><span class="w"> </span><span class="s2">"mc-rtc-data"</span><span class="p">,</span><span class="w"> </span><span class="s2">"eigen-quadprog"</span><span class="p">,</span><span class="w"> </span><span class="s2">"state-observation"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"hpp-spline"</span><span class="p">,</span><span class="w"> </span><span class="s2">"mc-rtc"</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+
+  
+    
+    <div class="text-right">
+      <pre id="vcpkg-configurationjsonCopySource" class="offscreen" aria-hidden="true">{
+  "registries": [
+    {
+      "kind": "git",
+      "baseline": "{下記を参照}",
+      "repository": "https://github.com/mc-rtc/vcpkg-registry",
+      "packages": [ "spacevecalg", "rbdyn", "eigen-qld", "sch-core", "tasks",
+                    "mc-rbdyn-urdf", "mc-rtc-data", "eigen-quadprog", "state-observation",
+                    "hpp-spline", "mc-rtc" ]
+    }
+  ]
+}</pre>
+      <button class="btn btn-primary copy-button" data-clipboard-target="#vcpkg-configurationjsonCopySource"><svg class="octicon octicon-copy" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg></button>
+    </div>
+  
+  </div>
+</div>
+
+<p>ここで、<code class="language-plaintext highlighter-rouge">baseline</code>には、<a href="https://github.com/mc-rtc/vcpkg-registry/">mc-rtc/vcpkg-registry</a>の最新のコミットハッシュを指定してください。</p>
+
+<p>以下のいずれかの方法を選択できます。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">vcpkg</code>コマンドを使用してmc_rtcをインストールする: <code class="language-plaintext highlighter-rouge">vcpkg install mc_rtc</code></li>
+  <li>以下のように、マニフェスト（<code class="language-plaintext highlighter-rouge">vcpkg.json</code>ファイル）内でmc_rtcパッケージを指定する</li>
+</ul>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-package"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"version-string"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"homepage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://my.home"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"パッケージの説明"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"mc-rtc"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+
+  
+    
+    <div class="text-right">
+      <pre id="vcpkg-jsonjsonCopySource" class="offscreen" aria-hidden="true">{
+  "name": "my-package",
+  "version-string": "1.0.0",
+  "homepage": "https://my.home",
+  "description": "パッケージの説明",
+  "dependencies": [
+    "mc-rtc"
+  ]
+}</pre>
+      <button class="btn btn-primary copy-button" data-clipboard-target="#vcpkg-jsonjsonCopySource"><svg class="octicon octicon-copy" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg></button>
+    </div>
+  
+  </div>
+</div>
+
+<h3 id="ソースからビルドするスクリプトを使用する場合">ソースからビルドする（スクリプトを使用する場合）</h3>
+
+<p>LinuxまたはmacOSでビルドする場合は、「ビルド」のセクションに進んでください。Windowsユーザーの場合は以下に示す追加の指示に従ってください。</p>
+
+<h4 id="windowsの場合の前提条件">Windowsの場合の前提条件</h4>
+
+<ul>
+  <li><a href="https://visualstudio.microsoft.com/vs/">Visual Studio 2019</a> - Pythonバインディングをビルドする場合は、インストール時にPython拡張機能を選択してください。また、Visual Studioの<code class="language-plaintext highlighter-rouge">python</code>と<code class="language-plaintext highlighter-rouge">pip</code>の実行可能ファイルを環境変数<code class="language-plaintext highlighter-rouge">PATH</code>で指定された場所に置いてください。</li>
+  <li><a href="https://git-scm.com/download/win">Git Bash</a> - このツールは、mc_rtcのコピーとインストールスクリプトの実行で使用します。</li>
+  <li><a href="https://cmake.org/download/">CMake</a> - 入手可能な最新版をインストールしてください。</li>
+  <li><a href="https://www.boost.org/">Boost</a> - <a href="https://sourceforge.net/projects/boost/files/boost-binaries/">sourceforce</a>で入手可能な最新のバイナリをインストールしてください。お使いのコンピューターとVisual Studioのバージョンに適したバージョンを選択してください。例えば、64ビットコンピューターでBoost 1.72とVisual Studio 2019を使用する場合、<a href="https://sourceforge.net/projects/boost/files/boost-binaries/1.72.0/boost_1_72_0-msvc-14.2-64.exe/download">boost_1_72_0-msvc-14.2-64.exe</a>を選択してください。インストール後、Boostをインストールした場所を環境変数<code class="language-plaintext highlighter-rouge">BOOST_ROOT</code>に設定し、Boost DLLへのパスを環境変数<code class="language-plaintext highlighter-rouge">PATH</code>に設定してください。例えば、<code class="language-plaintext highlighter-rouge">C:\local\boost_1_72_0</code>にインストールした場合、<code class="language-plaintext highlighter-rouge">C:\local\boost_1_72_0</code>を<code class="language-plaintext highlighter-rouge">BOOST_ROOT</code>に設定し、<code class="language-plaintext highlighter-rouge">%BOOST_ROOT%\lib64-msvc-14.2</code>を<code class="language-plaintext highlighter-rouge">PATH</code>に設定してください。</li>
+  <li><a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download">mingw-w64</a> - WindowsでFortranコードをコンパイルするのに使用します。ダウンロード後、実行可能ファイルを実行してください。すると、バージョン、アーキテクチャー、スレッド、例外、ビルドバージョンを選択するよう求められます。バージョンは最新版（デフォルト）を選択してください。アーキテクチャーは、現在最も一般的な64ビット版Windowsでビルドする場合はx86_64を選択してください。スレッドはwin32を選択してください。例外はseh（デフォルト）を選択してください。インストール後、インストール先の<code class="language-plaintext highlighter-rouge">bin</code>フォルダーへのパスが環境変数<code class="language-plaintext highlighter-rouge">PATH</code>に設定されていることを確認してください（例: <code class="language-plaintext highlighter-rouge">C:\mingw-w64\x86_64-8.1.0-release-win32-seh-rt_v6-rev0\mingw64\bin</code>）。</li>
+</ul>
+
+<p>注: Visual Studio 2017で作業してコンパイルすることもできます。ただし、定期的なテストはVisual Studio 2019でのみ行っています。</p>
+
+<h4 id="ビルド">ビルド</h4>
+
+<ol>
+  <li><a href="https://github.com/jrl-umi3218/mc_rtc">mc_rtc</a>のリポジトリをコピーします。</li>
+  <li>mc_rtcのディレクトリに移動し、サブモジュールを更新します: <code class="language-plaintext highlighter-rouge">git submodule update --init</code></li>
+  <li><code class="language-plaintext highlighter-rouge">utils</code>ディレクトリに移動し、<code class="language-plaintext highlighter-rouge">build_and_install.sh</code>という名前のファイルを探します。</li>
+  <li>（オプション）カスタム設定ファイル<code class="language-plaintext highlighter-rouge">build_and_install_user_config.sh</code>を作成します（デフォルトの設定ファイル<code class="language-plaintext highlighter-rouge">build_and_install_default_config.sh</code>に含まれる変数よりも、カスタム設定ファイルに含まれる変数のほうが優先されます）。
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>build_and_install_user_config.sample.sh build_and_install_user_config.sh
+</code></pre></div>    </div>
+  </li>
+  <li>（オプション）<code class="language-plaintext highlighter-rouge">build_and_install_user_config.sh</code>を編集し、目的に応じて次のオプションを選択します: <code class="language-plaintext highlighter-rouge">INSTALL_PREFIX</code>、<code class="language-plaintext highlighter-rouge">WITH_ROS_SUPPORT</code>、<code class="language-plaintext highlighter-rouge">ROS_DISTRO</code>。Ubuntuの場合、ROSのサポートを有効にした場合にのみROSがインストールされます（事前にインストールされていません）。そうでない場合、ROSのサポート付きでmc_rtcをインストールする前に、ご自身でROSをインストールする必要があります。</li>
+  <li><code class="language-plaintext highlighter-rouge">./build_and_install.sh</code>を実行します。</li>
+</ol>
+
+<p>このスクリプトによって、必要な依存パッケージがインストールされ、必要なソースコードがすべてコピーされ、ビルドとインストールが実行されます。処理が完了するまでしばらくかかります。</p>
+
+<p>スクリプトの処理が失敗した場合は、mc_rtcの課題トラッカーを開いて以下の情報を提供してください。</p>
+
+<ul>
+  <li>システム（コンパイラー、ディストリビューション/OSXのバージョン）</li>
+  <li>スクリプトの出力</li>
+  <li>関連すると思われる詳細情報</li>
+</ul>
+
+<p>スクリプトの処理が成功すれば、作業は完了です。<a href="/mc_rtc/jp/tutorials/introduction/configuration.html">次のセクション</a>に進んでください。</p>
+
+<h3 id="ソースからビルドするスクリプトを使用しない場合">ソースからビルドする（スクリプトを使用しない場合）</h3>
+
+<p>現在、他のプラットフォームでソースからビルドする方法についてドキュメント化されたものがあまりありません。この方法にチャレンジする場合、mc_rtcをビルドするのに以下のパッケージが必要となります。</p>
+<ul>
+  <li><a href="https://cmake.org/">CMake</a> 3.1以降</li>
+  <li><a href="https://www.boost.org/">Boost</a> 1.49以降</li>
+  <li><a href="http://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a> 3.2以降</li>
+  <li><a href="https://github.com/leethomason/tinyxml2">tinyxml2</a></li>
+  <li><a href="https://trac.osgeo.org/geos">GEOS</a>（C++バインディングが付属）</li>
+  <li><a href="https://www.gnu.org/software/libtool/manual/html_node/Libltdl-interface.html">LTDL</a> （Windowsユーザーの場合は不要）</li>
+  <li><a href="https://github.com/nanomsg/nanomsg">nanomsg</a></li>
+  <li><a href="https://github.com/jbeder/yaml-cpp">yaml-cpp</a></li>
+  <li><a href="https://github.com/gabime/spdlog/">spdlog</a> 1.6.1以降</li>
+  <li><a href="https://github.com/humanoid-path-planner/hpp-spline">hpp-spline</a></li>
+  <li><a href="https://github.com/jrl-umi3218/SpaceVecAlg">SpaceVecAlg</a></li>
+  <li><a href="https://github.com/jrl-umi3218/RBDyn">RBDyn</a></li>
+  <li><a href="https://github.com/jrl-umi3218/eigen-qld">eigen-qld</a></li>
+  <li><a href="https://github.com/jrl-umi3218/eigen-quadprog">eigen-quadprog</a></li>
+  <li><a href="https://gite.lirmm.fr/multi-contact/eigen-lssol">eigen-lssol</a> （オプション）</li>
+  <li><a href="https://github.com/jrl-umi3218/sch-core">sch-core</a></li>
+  <li><a href="https://github.com/jrl-umi3218/Tasks">Tasks</a></li>
+  <li><a href="https://github.com/jrl-umi3218/mc_rtc_data">mc_rtc_data</a></li>
+  <li><a href="https://github.com/jrl-umi3218/state-observation">state-observation</a></li>
+</ul>
+
+<p>mc_rtcには、ロボットの状態をROSトピックとしてパブリッシュすることを可能にし、ROSのツール（RVizなど）との統合を容易にするためのROSプラグインも用意されています。これをビルドするには以下のものが必要です。</p>
+
+<ul>
+  <li><a href="https://github.com/jrl-umi3218/mc_rtc_msgs">mc_rtc_msgs</a></li>
+</ul>
+
+<p>Pythonバインディングを取得したい場合、以下のものが必要です。</p>
+<ul>
+  <li><a href="http://cython.org/">Cython</a> 0.2以降</li>
+  <li><a href="">python-pip</a></li>
+  <li><a href="">python-numpy</a></li>
+  <li><a href="">python-nose</a></li>
+  <li><a href="">python-coverage</a></li>
+  <li><a href="https://github.com/jrl-umi3218/Eigen3ToPython">Eigen3ToPython</a></li>
+  <li><a href="https://github.com/jrl-umi3218/sch-core-python">sch-core-python</a></li>
+</ul>
+
+<p>mc_rtcのツールを実行するには、さらに以下のPythonライブラリが必要です。</p>
+<ul>
+  <li><a href="">python-git</a> (pip name: <code class="language-plaintext highlighter-rouge">GitPython</code>)</li>
+  <li><a href="">python-pyqt5</a></li>
+</ul>
+
+<p>以下のパッケージは必須ではありませんが、追加の機能が使用できるようになります。</p>
+<ul>
+  <li><a href="http://www.ros.org/">ROS</a></li>
+  <li><a href="https://github.com/jrl-umi3218/mc_rtc_ros">mc_rtc_ros</a></li>
+</ul>
+
+<p>ビルド時に<code class="language-plaintext highlighter-rouge">roscpp</code>を使用できる場合、<code class="language-plaintext highlighter-rouge">tf2_ros</code>と<code class="language-plaintext highlighter-rouge">sensor_msgs</code>も必要になります。これを使用すると、<code class="language-plaintext highlighter-rouge">ROS</code>フレームワークと<code class="language-plaintext highlighter-rouge">mc_rtc</code>がさらに統合され（ロボットの状態のパブリッシュなど）、コントローラーでROSの機能を使用できるようになります（<code class="language-plaintext highlighter-rouge">mc_rtc</code>内のどこでも使える<code class="language-plaintext highlighter-rouge">ros::NodeHandle</code>インスタンスが提供されます）。</p>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/introduction/configuration.html">次のチュートリアル: 設定</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

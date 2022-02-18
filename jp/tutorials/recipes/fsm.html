@@ -1,0 +1,891 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - FSM機能の利用 - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/recipes/fsm.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><strong>FSM機能の利用</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#状態状態遷移有限オートマトンの実行">状態、状態遷移、有限オートマトンの実行</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#状態">状態</a></li>
+<li class="toc-entry toc-h3"><a href="#状態遷移">状態遷移</a></li>
+<li class="toc-entry toc-h3"><a href="#有限オートマトンの実行">有限オートマトンの実行</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#非マネージドモード">非マネージドモード</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#アイドル状態について">アイドル状態について</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h4"><a href="#マネージドモード">マネージドモード</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#テキストベースの継承">テキストベースの継承</a></li>
+<li class="toc-entry toc-h2"><a href="#mc_rtcに既に実装されている状態">mc_rtcに既に実装されている状態</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#共通のオプション">共通のオプション</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#new-state-creation">New state creation</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#void-configuremc_rtcconfiguration-">void configure(mc_rtc::Configuration &amp;)</a></li>
+<li class="toc-entry toc-h3"><a href="#void-startcontroller-">void start(Controller &amp;)</a></li>
+<li class="toc-entry toc-h3"><a href="#bool-runcontroller-">bool run(Controller &amp;)</a></li>
+<li class="toc-entry toc-h3"><a href="#void-teardowncontroller-">void teardown(Controller &amp;)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#有限オートマトンコントローラーに特有の内容">有限オートマトンコントローラーに特有の内容</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#接触面">接触面</a></li>
+<li class="toc-entry toc-h4"><a href="#衝突メッシュ">衝突メッシュ</a></li>
+<li class="toc-entry toc-h4"><a href="#姿勢制御タスク">姿勢制御タスク</a></li>
+<li class="toc-entry toc-h3"><a href="#その他のメソッド">その他のメソッド</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#void-stopcontroller-">void stop(Controller &amp;)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#有限オートマトンの設定">有限オートマトンの設定</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>FSM機能の利用</h1>
+        
+
+        
+<p>有限オートマトン（FSM: Finite State Machine）は、有限個の状態のいずれかの状態を取る抽象機械です。この機械の状態は、現在の状態における内部または外部の条件に基づき変化します。そのような変化は状態遷移と呼ばれます。こうした機械は、プログラミングの世界では至る所で使用されています。また、構造が簡単でさまざまな構成が可能であるため、特にロボットに関するシナリオを実現するのに非常に適しています。</p>
+
+<p>状態遷移図の概念を拡張したものが有限オートマトンです。有限オートマトンでは2つの主要な原則が導入されています。</p>
+
+<ul>
+  <li><strong>階層構造</strong>: 状態遷移図内に状態遷移図をネストさせることができる</li>
+  <li><strong>並行性</strong>（または直交性）: 2つ以上の状態を同時に実行することができる</li>
+</ul>
+
+<p>mc_rtcのコントローラーでは、状態遷移図の概念を実装できます。このページでは、有限オートマトンの実装に関する詳細について説明します。</p>
+
+<h2 id="状態状態遷移有限オートマトンの実行">状態、状態遷移、有限オートマトンの実行</h2>
+
+<h3 id="状態">状態</h3>
+
+<p>状態の実装については後ほど説明します。ここでは、状態に関する4つの主なメソッドについて説明します。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">configure</code>は、状態を設定するのに使用します。なお、有限オートマトンの実装では、既存の状態と異なる設定を指定することで、新しい状態を作成することができます。そのため、この関数は複数回呼び出されます。</li>
+  <li><code class="language-plaintext highlighter-rouge">start</code>は、初期化を実行するのに使用します。1度だけ呼び出されます。</li>
+  <li><code class="language-plaintext highlighter-rouge">run</code>は、状態で実装されるメインの関数です。その状態の処理が終了するか、状態が変化するまで、ループ処理が実行されるたびに1回ずつ呼び出されます。runの処理が完了したときに、状態の出力として任意の値を設定できます。この値は状態内で明確に定義する必要があります。</li>
+  <li><code class="language-plaintext highlighter-rouge">teardown</code>は、クリーンアップ関数です。状態が変化したときに呼び出されます。</li>
+</ul>
+
+<h3 id="状態遷移">状態遷移</h3>
+
+<p>状態遷移は、以下の内容を表す4つの属性で構成されます。</p>
+
+<ol>
+  <li>状態からの遷移</li>
+  <li>状態の出力</li>
+  <li>状態への遷移</li>
+  <li>有限オートマトンが状態遷移をどのように処理するかに関するオプションのパラメーターこれらは、<code class="language-plaintext highlighter-rouge">StepByStep</code>（デフォルト）、<code class="language-plaintext highlighter-rouge">Auto</code>、<code class="language-plaintext highlighter-rouge">Strict</code>のいずれかの値を取ります。それぞれの意味については後ほど説明します。</li>
+</ol>
+
+<h3 id="有限オートマトンの実行">有限オートマトンの実行</h3>
+
+<p>有限オートマトンコントローラーは、マネージドモードまたは非マネージドモードで実行されます。はじめに、非マネージドモードについて見ていきます。</p>
+
+<h4 id="非マネージドモード">非マネージドモード</h4>
+
+<p>このモードでは、状態の作成・実行と状態間の遷移は有限オートマトンによって処理されます。</p>
+
+<p>有限オートマトンでは、ループ処理内で以下のロジックが実行されます。</p>
+
+<ul>
+  <li>状態が既に実行されている場合
+    <ul>
+      <li>状態のrunメソッドを実行する</li>
+      <li>trueが返された場合は、状態の出力をチェックし、該当する状態遷移を見つける
+        <ul>
+          <li>状態をクリーンアップする</li>
+          <li>状態遷移の種類が<code class="language-plaintext highlighter-rouge">Auto</code>の場合、あるいは状態遷移の種類が<code class="language-plaintext highlighter-rouge">StepByStep</code>かつ有限オートマトンの<code class="language-plaintext highlighter-rouge">StepByStep</code>の設定が<code class="language-plaintext highlighter-rouge">false</code>の場合
+            <ul>
+              <li>次の状態の設定と初期化を行う</li>
+            </ul>
+          </li>
+          <li>そうでない場合
+            <ul>
+              <li>アイドル状態を設定する</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>状態が実行されていない場合
+    <ul>
+      <li>状態遷移がトリガーされた場合
+        <ul>
+          <li>アイドル状態を解除し、次の状態の設定と初期化を行う</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>上記の概要では、ロジックの流れを簡単にするためにいくつかの点が省略されています。</p>
+
+<ol>
+  <li>外部のトリガーによって状態の実行が中断される場合があります。この場合、最初にその状態がクリーンアップされます。その後、有限オートマトンは、状態遷移コマンドが実行されるのを待ちます。</li>
+  <li>状態と出力のペアに対応する遷移先が存在しない場合、有限オートマトンは自らの処理が完了したとみなします。この場合、状態遷移コマンドを送信することで有限オートマトンの処理を再開できます。</li>
+  <li>アイドル状態は必須ではありません。アイドル状態を開始しようとしたときにアイドル状態が無効になっていた場合、状態遷移がトリガーされるまで、その前の状態のrunメソッドが引き続き呼び出されます。</li>
+</ol>
+
+<h5 id="アイドル状態について">アイドル状態について</h5>
+
+<p>アイドル状態は、それまで実行されていた状態によって実現されていたロボットの状態を維持しようと試みます（アイドル状態が有効の場合）。これは、2つのタスクによって実現されます。</p>
+
+<ul>
+  <li>現在の姿勢を目標として設定する姿勢制御タスク</li>
+  <li>現在の傾きを目標として設定するエンドエフェクタータスク（フリーフライヤーの場合）土台が固定されているロボットの場合、このタスクは実行されません。</li>
+</ul>
+
+<p>処理の中断がトリガーされた場合、この「状態」は常に実行されます。</p>
+
+<h4 id="マネージドモード">マネージドモード</h4>
+
+<p>このモードに関して説明することはそれほどありません。マネージドモードでは、有限オートマトンは状態遷移を処理しません。この場合、状態遷移は外部のツールによって完全に処理されます。状態の存続期間は上記の場合と同様ですが、状態遷移は<strong>すべて</strong>外部のツールによってトリガーされます。</p>
+
+<h2 id="テキストベースの継承">テキストベースの継承</h2>
+
+<p>ここでは、C++オブジェクトとして記述された状態について説明します。このオブジェクトには、さまざまな設定オプションが用意されています。しかし、わずかな違いしかない2つ以上の状態を定義したい場合、すべてのオプションを毎回設定するのは大変です。そこで、本インターフェイスでは、一連の設定を継承する仕組みが用意されています。</p>
+
+<p>以下の処理を実行する、<code class="language-plaintext highlighter-rouge">StateBase</code>という名前のC++状態があるとします。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MyFirstState</span><span class="pi">:</span> <span class="c1"># &lt;-- Name of the new state</span>
+  <span class="na">base</span><span class="pi">:</span> <span class="s">StateBase</span> <span class="c1"># &lt;-- Name of the C++ state we are based on</span>
+  <span class="c1"># other options</span>
+<span class="na">MySecondState</span><span class="pi">:</span> <span class="c1"># &lt;-- Name of the new state</span>
+  <span class="na">base</span><span class="pi">:</span> <span class="s">MyFirstState</span> <span class="c1"># &lt;-- This time we use a state we defined before only in text form</span>
+  <span class="c1"># other options</span>
+</code></pre></div></div>
+
+<p>オプションがどのように組み合わされるかは、C++状態の実装方法により異なるため、状態内で明確に定義する必要があります。ただし、mc_rtcで用意されている状態については、一般的な規則が当てはまります。これらの状態については、基本的に<code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>オブジェクトのデフォルトの読み込み規則が適用されます。</p>
+
+<ul>
+  <li>「生」の値（bool値、数値、文字列）とベクトルは上書きされる</li>
+  <li>オブジェクトは以下の規則に従って結合される:
+    <ul>
+      <li>読み込み先オブジェクトにキーが存在しない場合、読み込み元オブジェクトの値が使用される</li>
+      <li>どちらのオブジェクトにもキーが存在し、型も一致する場合、この規則が適用される（オブジェクトの場合は再帰的に適用される）</li>
+      <li>それ以外の場合、読み込み元オブジェクトの値によって読み込み先オブジェクトの値が上書きされる</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="mc_rtcに既に実装されている状態">mc_rtcに既に実装されている状態</h2>
+
+<p>このセクションでは、mc_rtcで用意されている主な状態について説明します。利用可能な状態とその設定に関する詳細については、<a href="/mc_rtc/jp/json.html#State-objects">状態に関するJSONスキーマ</a>を参照してください。</p>
+
+<div class="no_toc_section">
+
+<ul class="nav nav-tabs" id="statesTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="PauseTab" data-toggle="tab" href="#PauseTabContent" role="tab" aria-controls="PauseTabContent" aria-selected="true">Pause</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="MetaTasksTab" data-toggle="tab" href="#MetaTasksTabContent" role="tab" aria-controls="MetaTasksTabContent" aria-selected="false">MetaTasks</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="AddRemoveContactTab" data-toggle="tab" href="#AddRemoveContactTabContent" role="tab" aria-controls="AddRemoveContactTabContent" aria-selected="false">AddRemoveContact</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="ParallelTab" data-toggle="tab" href="#ParallelTabContent" role="tab" aria-controls="ParallelTabContent" aria-selected="false">Parallel</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="MetaTab" data-toggle="tab" href="#MetaTabContent" role="tab" aria-controls="MetaTabContent" aria-selected="false">Meta</a>
+  </li>
+</ul>
+<div class="tab-content" id="statesTabContent">
+  <div class="tab-pane show active" id="PauseTabContent" role="tabpanel" arial-labelledby="PauseTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>この状態では、しばらく待ってから<code>OK</code>が出力されます。</p>
+
+        <h5>オプション</h5>
+
+        <ul>
+          <li><code>duration</code>: 一時停止する期間（単位: 秒）を浮動小数点数の値で指定します。デフォルトは0です。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="MetaTasksTabContent" role="tabpanel" arial-labelledby="MetaTasksTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>この状態では、任意の数のMetaTasksが作成され、各タスクの完了基準が満たされるまでそれらのタスクが実行されます。</p>
+
+        <p>この状態に含まれるタスクは、JSONオブジェクトである<code>tasks</code>エントリを使用して設定します。</p>
+
+        <p>タスクの名前をキーとして指定し、MetaTaskLoaderで必要とされるMetaTaskオブジェクトを値として指定します。また、オプションとして、1つ以上の完了基準を"completion"エントリで指定することもできます。</p>
+
+        <p>タスクの名前はこの状態でのみ有効です。タスクの設定でnameエントリを使用することで、実際のタスク名を変更できます。</p>
+
+        <p>タスクの<code>completion</code>エントリが存在せず、関連するタスクのcompletionエントリが存在しない場合、このタスクは追加されますが、このタスクの完了基準は考慮されません（例えば、CoMTaskとEndEffectorTaskを追加した場合、後者の完了基準のみが考慮されます）。</p>
+
+        <p><code>tasks</code>エントリが複数回読み込まれた場合の動作は以下のようになります。</p>
+        <ul>
+        <li>新しいタスクが読み込まれた場合、そのタスクが追加されます。</li>
+        <li>既存のタスクが再度読み込まれなかった場合、そのタスクについては何も起こりません。</li>
+        <li>既存のタスクが読み込まれた場合、既存の設定エントリが新しいエントリに置き換えられます。既存の設定エントリが存在しない場合は、新たに読み込まれた設定エントリが既存の設定に追加されます。</li>
+        </ul>
+
+        <h5>例</h5>
+
+        
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml">        <span class="c1"># We simplify task entries for the sake of the example</span>
+
+        <span class="c1"># First pass</span>
+        <span class="na">tasks</span><span class="pi">:</span>
+          <span class="na">t1</span><span class="pi">:</span>
+            <span class="na">objectiveA</span><span class="pi">:</span> <span class="s">0.5,</span>
+            <span class="na">objectiveB</span><span class="pi">:</span> <span class="s">1.0,</span>
+            <span class="na">completion</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">timeout</span><span class="pi">:</span> <span class="nv">5.0</span> <span class="pi">}</span>
+
+        <span class="c1"># After this pass, one task is considered</span>
+
+        <span class="c1"># Second pass</span>
+        <span class="na">tasks</span><span class="pi">:</span>
+          <span class="na">t1</span><span class="pi">:</span>
+            <span class="na">objectiveA</span><span class="pi">:</span> <span class="s">1.0,</span>
+            <span class="na">completion</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">eval</span><span class="pi">:</span> <span class="nv">1e-6</span> <span class="pi">}</span>
+          <span class="na">t2</span><span class="pi">:</span>
+            <span class="na">objective</span><span class="pi">:</span> <span class="m">0.5</span>
+
+        <span class="c1"># We now have two tasks, and:</span>
+        <span class="c1"># - t1's objectiveA is changed to 1.0, objectiveB is the same</span>
+        <span class="c1"># - t1 completion criteria is replaced</span>
+
+        <span class="c1"># Third pass</span>
+        <span class="na">tasks</span><span class="pi">:</span>
+          <span class="na">t1</span><span class="pi">:</span>
+            <span class="na">completion</span><span class="pi">:</span> <span class="pi">{}</span>
+          <span class="na">t2</span><span class="pi">:</span>
+            <span class="na">completion</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">eval</span><span class="pi">:</span> <span class="nv">1e-6</span> <span class="pi">}</span>
+
+        <span class="c1"># We still have two tasks, objectives are unchanged but:</span>
+        <span class="c1"># - t1 has no more completion criteria</span>
+        <span class="c1"># - t2 has a completion criteria</span>
+        </code></pre></figure>
+
+
+        <h5>オプション</h5>
+
+        <ul>
+          <li><code>tasks</code>: コントローラーのこの状態に追加するタスクが記述されたオブジェクト</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="AddRemoveContactTabContent" role="tabpanel" arial-labelledby="AddRemoveContactTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>接触面を削除または追加できる状態を実装します。</p>
+
+        <h5>オプション</h5>
+
+        <p>この状態を設定するには、以下の2つのエントリを定義する必要があります。</p>
+
+        <ul>
+          <li><code>type</code>: [<code>addContact</code>、<code>removeContact</code>、 <code>compliance</code>]のいずれか</li>
+          <li><code>contact</code>: 削除または追加する接触面</li>
+        </ul>
+
+        <h5>接触面の削除に関するオプション</h5>
+
+        <ul>
+          <li><code>distance</code>: 接触面とボディがこの距離だけ離れると、この状態が終了します。デフォルトは0.1（10cm）です。</li>
+        </ul>
+
+        <h5>コンプライアンス制御における接触面の追加に関するオプション</h5>
+
+        <ul>
+          <li><code>velocity</code>: ComplianceTaskの速度のしきい値。デフォルトは1e-4です。</li>
+        </ul>
+
+        &lt;pその他のオプションは、接触面を追加・削除するタスクの種類によって異なります。コンプライアンス制御タスクの場合、接触面の値に基づいて <code>body</code>エントリが上書きされます。&lt;/p&gt;
+
+        <p>力覚センサーが取り付けられていない接触面をコンプライアンス制御タスクで削除した場合、この状態は自動的に<code>addContact</code>にフォールバックします。</p>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="ParallelTabContent" role="tabpanel" arial-labelledby="ParallelTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>Parallel状態を実装します。</p>
+
+        <p>Tこの状態では、複数の状態が同時に実行されます。厳密に言うと、これらの状態は並列ではなくシーケンシャルに実行されます。</p>
+
+        <p>この状態によって<code>{state_1, ..., state_N}</code>という状態が実行された場合、この状態は、すべての<code>state_i::run()</code>関数がtrueを返したときに完了します。このとき、この状態は<code>state_N</code>を出力します。</p>
+
+        <h5>オプション</h5>
+
+        <ul>
+          <li><code>states</code>: この状態によって実行される状態のリスト</li>
+          <li><code>configs</code>:　各状態に含まれる状態の設定。このconfigs（state）は、各状態をさらに細かく設定するのに使用します。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="MetaTabContent" role="tabpanel" arial-labelledby="MetaTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>「メタ」状態を実装します。</p>
+
+        <p>この状態は、自分自身の有限オートマトンを実行します。</p>
+
+        <h5>オプション</h5>
+
+        <ul>
+          <li><code>Managed</code>: trueに設定した場合、状態遷移は処理されません。</li>
+          <li><code>transitions</code>: 有限オートマトンコントローラーと同様の状態遷移マップ（Managedをfalseに設定した場合、このオプションを設定する必要があります）。</li>
+          <li><code>StepByStep</code>: 内部有限オートマトンの場合、有限オートマトンの設定と同じになります（デフォルトでは親有限オートマトンの<code>StepByStep</code>設定と同じになります）。</li>
+
+          <li><code>configs</code>: 有限オートマトンに含まれる状態に関する追加の設定を記述できます。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<h3 id="共通のオプション">共通のオプション</h3>
+
+<p>一部のオプションはすべての状態に共通です。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">AddContacts</code>/<code class="language-plaintext highlighter-rouge">RemoveContacts</code>: 状態が<strong>実行される前</strong>に、接触面を追加・削除できます。<code class="language-plaintext highlighter-rouge">fsm::Contact</code>オブジェクトのベクトルとして指定します。</li>
+  <li><code class="language-plaintext highlighter-rouge">AddContactsAfter</code>/<code class="language-plaintext highlighter-rouge">RemoveContactsAfter</code>: 状態が<strong>実行された後</strong>に、接触面を追加・削除できます。<code class="language-plaintext highlighter-rouge">fsm::Contact</code>オブジェクトのベクトルとして指定します。</li>
+  <li><code class="language-plaintext highlighter-rouge">RemovePostureTask</code>: trueに設定すると、デフォルトの姿勢制御タスクが削除されます。</li>
+</ul>
+
+<h2 id="new-state-creation">New state creation</h2>
+
+<p>状態を作成するには、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1State" target="blank_"><code>mc_control::fsm::State</code></a>から継承します。最低限のインターフェイスを以下に示します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span>
+<span class="p">{</span>
+  <span class="k">struct</span> <span class="nc">MyState</span> <span class="o">:</span> <span class="k">public</span> <span class="n">State</span>
+  <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">configure</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="n">start</span><span class="p">(</span><span class="n">Controller</span> <span class="o">&amp;</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+
+    <span class="kt">bool</span> <span class="n">run</span><span class="p">(</span><span class="n">Controller</span> <span class="o">&amp;</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="n">teardown</span><span class="p">(</span><span class="n">Controller</span> <span class="o">&amp;</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="n">EXPORT_SINGLE_STATE</span><span class="p">(</span><span class="s">"MyState"</span><span class="p">,</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">MyState</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>関数内で<code class="language-plaintext highlighter-rouge">Controller</code>インスタンスを渡す場合、 <a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1Controller" target="blank_"><code>mc_control::fsm::Controller</code></a>インスタンスとして渡します。</p>
+
+<h3 id="void-configuremc_rtcconfiguration-"><code class="language-plaintext highlighter-rouge">void configure(mc_rtc::Configuration &amp;)</code></h3>
+
+<p>この関数は<strong>複数回</strong>呼び出されます。この関数では、設定エントリを「定義」するだけとし、タスクは作成しないでください。</p>
+
+<h3 id="void-startcontroller-"><code class="language-plaintext highlighter-rouge">void start(Controller &amp;)</code></h3>
+
+<p>この関数は状態の初期化時に1度だけ呼び出されます。ここでは、定義した設定が実行可能な状態に変換されます。</p>
+
+<h3 id="bool-runcontroller-"><code class="language-plaintext highlighter-rouge">bool run(Controller &amp;)</code></h3>
+
+<p>この関数は、<code class="language-plaintext highlighter-rouge">start</code>ループの実行に続き、ループ処理が実行されるたびに1回ずつ呼び出されます（<code class="language-plaintext highlighter-rouge">start</code>ループから<code class="language-plaintext highlighter-rouge">run</code>を明示的に呼び出さない限り、<code class="language-plaintext highlighter-rouge">start</code>と同じループ内では<code class="language-plaintext highlighter-rouge">run</code>は呼び出されません）。</p>
+
+<p>状態の処理が完了すると、この関数は<code class="language-plaintext highlighter-rouge">true</code>を返します。このとき、<code class="language-plaintext highlighter-rouge">output(const std::string &amp;)</code>を呼び出して状態の出力を設定するようにしてください。</p>
+
+<h3 id="void-teardowncontroller-"><code class="language-plaintext highlighter-rouge">void teardown(Controller &amp;)</code></h3>
+
+<p>この関数は、状態が破棄される前に1度だけ呼び出されます。この関数を使用して、状態がコントローラーに影響を与えないようにしてください。</p>
+
+<h2 id="有限オートマトンコントローラーに特有の内容">有限オートマトンコントローラーに特有の内容</h2>
+
+<p>有限オートマトンは、いくつかの点で通常のmc_rtcコントローラーと異なります。</p>
+
+<h4 id="接触面">接触面</h4>
+
+<p>有限オートマトンでは、接触面構造の簡易版が使用されています。これは以下のように定義されています。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Contact</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">r1</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">r2</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">r1Surface</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">r2Surface</span><span class="p">;</span>
+  <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">dof</span><span class="p">;</span> <span class="c1">// defaults to Eigen::Vector6d::Ones()</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">dof</code>ベクトルは対角行列に変換され、<a href="contact-dof.html">自由度制約条件</a>として追加されます</p>
+
+<p>有限オートマトンコントローラーで接触面を追加・削除するには、以下の関数を呼び出します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">addContact</span><span class="p">(</span><span class="k">const</span> <span class="n">Contact</span> <span class="o">&amp;</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">removeContact</span><span class="p">(</span><span class="k">const</span> <span class="n">Contact</span> <span class="o">&amp;</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="衝突メッシュ">衝突メッシュ</h4>
+
+<p>衝突メッシュを追加・削除するには、以下の関数を呼び出します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">addCollisions</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r1</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r2</span><span class="p">,</span>
+                   <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Collision</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">collisions</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">removeCollisions</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r1</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r2</span><span class="p">,</span>
+                   <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Collision</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">collisions</span><span class="p">);</span>
+
+<span class="c1">// Remove all collisions between r1 and r2</span>
+<span class="kt">void</span> <span class="nf">removeCollisions</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r1</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r2</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>有限オートマトンによって、必要に応じて衝突制約条件が作成されて追加されます。</p>
+
+<h4 id="姿勢制御タスク">姿勢制御タスク</h4>
+
+<p>有限オートマトンによって、多関節ロボットの姿勢制御タスクが作成されます。このタスクにアクセスするには、以下の関数を呼び出します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">PostureTask</span><span class="o">&gt;</span> <span class="n">getPostureTask</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">robot</span><span class="p">);</span>
+</code></pre></div></div>
+<p>このタスクは、通常、状態が存在している間はソルバー内に保持されます。そのようにしたくない場合は、<code class="language-plaintext highlighter-rouge">teardown</code>の呼び出し時にこのタスクをソルバーから取り出して元の場所に戻すことができます。</p>
+
+<h3 id="その他のメソッド">その他のメソッド</h3>
+
+<p>以下のメソッドは、<code class="language-plaintext highlighter-rouge">State</code>インターフェイス内の仮想メソッドで、ユーザーが定義したメソッドで上書きすることができます。</p>
+
+<h4 id="void-stopcontroller-"><code class="language-plaintext highlighter-rouge">void stop(Controller &amp;)</code></h4>
+
+<p>Tこれは、状態の処理が中断されたときに呼び出されます。</p>
+
+<h2 id="有限オートマトンの設定">有限オートマトンの設定</h2>
+
+<p>以下のオプションを使用して有限オートマトンを設定できます。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Managed</code>: trueの場合、有限オートマトンはマネージド型で、そうでない場合は非マネージド型です。</li>
+  <li><code class="language-plaintext highlighter-rouge">StepByStep</code>: trueの場合、<code class="language-plaintext highlighter-rouge">StepByStep</code>とタグ付けされた状態遷移は<code class="language-plaintext highlighter-rouge">Strict</code>の状態遷移として動作します。falseの場合、状態遷移は<code class="language-plaintext highlighter-rouge">Auto</code>の状態遷移として動作します。</li>
+  <li><code class="language-plaintext highlighter-rouge">IdleKeepState</code>: trueの場合、ユーザーによって状態遷移がトリガーされるまで同じ状態が維持されます。</li>
+  <li><code class="language-plaintext highlighter-rouge">StatesLibraries</code>: 状態ライブラリの参照先</li>
+  <li><code class="language-plaintext highlighter-rouge">StatesFiles</code>: 状態設定ファイルの参照先</li>
+  <li><code class="language-plaintext highlighter-rouge">VerboseStateFactory</code>: trueの場合、ライブラリの読み込み中に状態ファクトリによって詳細情報が出力されます。これはデバッグに役立ちます。</li>
+  <li><code class="language-plaintext highlighter-rouge">robots</code>: JSONオブジェクト。各キーはロボットの名前を表します。値は、メインロボットモジュールのほかに追加で読み込むロボットモジュールを表すオブジェクトです。</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">robots</span><span class="w"> </span><span class="err">entry</span><span class="w">
+</span><span class="nl">"robots"</span><span class="p">:</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"ground"</span><span class="p">:</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"module"</span><span class="p">:</span><span class="w"> </span><span class="s2">"env"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"@MC_ENV_DESCRIPTION@"</span><span class="p">,</span><span class="w"> </span><span class="s2">"ground"</span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">constraints</code>: 制約条件の配列。各オブジェクトは、JSONスキーマに基づきJSON形式で記述された<code class="language-plaintext highlighter-rouge">mc_solver::ConstraintSet</code>オブジェクトです。</li>
+  <li><code class="language-plaintext highlighter-rouge">collisions</code>: <code class="language-plaintext highlighter-rouge">mc_solver::CollisionConstraint</code>JSONスキーマに基づき定義された衝突制約条件の配列</li>
+  <li><code class="language-plaintext highlighter-rouge">contacts</code>: 初期接触面の配列</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">contacts</span><span class="w"> </span><span class="err">entry</span><span class="w">
+</span><span class="nl">"contacts"</span><span class="p">:</span><span class="w">
+</span><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"r1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ground"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r1Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftFoot"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r2Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AllGround"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"r1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ground"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r1Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RightFoot"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r2Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AllGround"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<p>– 各ロボットには<code>r</code>で始まる名前が付けられています。<code>r</code>で始まるエントリを使用して、アイドル状態で使用される姿勢制御タスクとフリーフライヤータスクを設定できます。</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">states</code>: オブジェクト。各キーは状態の名前を表します。値はこの状態の設定を表します。</li>
+  <li><code class="language-plaintext highlighter-rouge">configs</code>: オブジェクト。各キーは状態の名前を表します。値は、状態がメインの有限オートマトンで実行されたときにその状態に渡される追加の設定値を表します。</li>
+  <li><code class="language-plaintext highlighter-rouge">transitions</code>: 配列。配列の各要素は状態遷移を表します。</li>
+  <li><code class="language-plaintext highlighter-rouge">init</code>: 有限オートマトンを起動したときの初期状態</li>
+  <li><code class="language-plaintext highlighter-rouge">init_pos</code>: メインロボットの初期位置（7次元の配列）</li>
+</ul>
+
+<p>次のチュートリアルでは、有限オートマトンを使用した実用的な例を実装します。</p>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">次のチュートリアル: 主なFSMの状態</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

@@ -1,0 +1,505 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - MC_RTC_BUILD_STATICをプログラムでサポートする方法 - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/advanced/support-mc-rtc-build-static.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><strong>MC_RTC_BUILD_STATICをプログラムでサポートする方法</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#プロジェクトを修正する">プロジェクトを修正する</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#mc_rtcのソースツリー内に移動しているか調べる">mc_rtcのソースツリー内に移動しているか調べる</a></li>
+<li class="toc-entry toc-h3"><a href="#依存関係を調べる">依存関係を調べる</a></li>
+<li class="toc-entry toc-h3"><a href="#mc_rtcのコンポーネントを追加する">mc_rtcのコンポーネントを追加する</a></li>
+<li class="toc-entry toc-h3"><a href="#例">例</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#mc_rtcのデモをwebに公開する">mc_rtcのデモをWebに公開する</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#emscriptenに関する一般的な制約事項">emscriptenに関する一般的な制約事項</a></li>
+<li class="toc-entry toc-h3"><a href="#オンラインデモをビルドする">オンラインデモをビルドする</a></li>
+<li class="toc-entry toc-h3"><a href="#firefoxとgithubページに関する注意点">FirefoxとGitHubページに関する注意点</a></li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>MC_RTC_BUILD_STATICをプログラムでサポートする方法</h1>
+        
+
+        
+<p><code class="language-plaintext highlighter-rouge">MC_RTC_BUILD_STATIC</code>は、mc_rtcのビルドオプションです。主に、[オンラインデモ]<a href="https://mc-rtc-demo.netlify.app/">online demonstration</a>を実現するために使用されます。このオプションを使用すると、コントローラー、有限オートマトンの状態、ロボットモジュール、観測器、プラグインを動的に読み込めなくなります。そのため、これらのコンポーネントをmc_rtcのライブラリに組み込む必要があります。</p>
+
+<p>このページでは、まず、このオプションを使用してプロジェクトをコンパイルする際に必要な作業について説明します。次に、デモをWebに公開するためのガイドラインについて説明します。</p>
+
+<h2 id="プロジェクトを修正する">プロジェクトを修正する</h2>
+
+<p>まず、コントローラーその他の必要なコンポーネントをmc_rtcのソースツリー内でビルドする必要があります。といっても、mc_rtcの<code class="language-plaintext highlighter-rouge">controllers</code>フォルダー、<code class="language-plaintext highlighter-rouge">observers</code>フォルダー、<code class="language-plaintext highlighter-rouge">plugins</code>フォルダー、<code class="language-plaintext highlighter-rouge">robots</code>フォルダーのいずれかにプロジェクトを置いてビルドするだけです。各フォルダーは、単にプロジェクトを整理する手段として用意されているだけで、どのフォルダーも機能的には同じです。</p>
+
+<h3 id="mc_rtcのソースツリー内に移動しているか調べる">mc_rtcのソースツリー内に移動しているか調べる</h3>
+
+<p>通常、mc_rtcのパッケージを見つけるには以下のようにします。</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">find_package</span><span class="p">(</span>mc_rtc REQUIRED<span class="p">)</span>
+</code></pre></div></div>
+
+<p>mc_rtcのソースツリー内に移動しているか調べるには、mc_rtcのパッケージを別の場所から探す必要があるかどうかで判断します。</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">if</span><span class="p">(</span>NOT TARGET mc_rtc::mc_control<span class="p">)</span>
+  <span class="nb">find_package</span><span class="p">(</span>mc_rtc REQUIRED<span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><a href="https://github.com/jrl-umi3218/jrl-cmakemodules">jrl-cmakemodules</a> を使用している場合、mc_rtc内でビルドするにはこれをインクルードする必要があります（いずれにせよmc_rtcを介してすべての機能を使用できます）。</p>
+
+<h3 id="依存関係を調べる">依存関係を調べる</h3>
+
+<p>例えば、コントローラーで<a href="https://github.com/jrl-umi3218/copra">copra</a>パッケージが必要であったとします。この場合、一般に以下のCMakeコードを使用して依存関係を調べます。</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">find_package</span><span class="p">(</span>copra REQUIRED<span class="p">)</span>
+</code></pre></div></div>
+
+<p>このコントローラーをmc_rtcでビルドすると、<code class="language-plaintext highlighter-rouge">copra</code>は<code class="language-plaintext highlighter-rouge">mc_rtc</code>と依存関係を持つようになります。したがって依存関係を調べるコードは以下のようになります。</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">if</span><span class="p">(</span>NOT MC_RTC_BUILD_STATIC<span class="p">)</span>
+  <span class="nf">add_required_dependency</span><span class="p">(</span>copra REQUIRED<span class="p">)</span>
+<span class="nb">else</span><span class="p">()</span>
+  <span class="nb">find_package</span><span class="p">(</span>copra REQUIRED<span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="mc_rtcのコンポーネントを追加する">mc_rtcのコンポーネントを追加する</h3>
+
+<p><code class="language-plaintext highlighter-rouge">find_package(mc_rtc)</code>によって提供されているマクロ（<code class="language-plaintext highlighter-rouge">add_controller(NAME ...)</code>、<code class="language-plaintext highlighter-rouge">add_robot(NAME ...) and so-on) then most of the hard-work is done for you. Otherwise, you are advised to look into</code>など）を使用する場合、面倒な作業を行う必要はほとんどありません。そうでない場合は、mc_rtcのソースツリー内にあるsrc/CMakeLists.txtを参照し、どのように変更すべきかを理解してください。主な違いは、ソースのパスを相対パスではなく絶対パスで与える必要があるという点にあります。</p>
+
+<p>これに関して注意すべき点が1つあります。コントローラーを<code class="language-plaintext highlighter-rouge">mc_control::fsm::Controller</code>から派生させる場合、<code class="language-plaintext highlighter-rouge">add_fsm_controller(NAME ...)</code>を使用する必要があります。</p>
+
+<p>また、使用するコンポーネントを外部のライブラリとリンクさせる場合、そのライブラリを関連するmc_rtcのライブラリとリンクさせる必要があります。</p>
+
+<p>例:</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">add_controller</span><span class="p">(</span>myController <span class="s2">"</span><span class="si">${</span><span class="nv">myController_SRC</span><span class="si">}</span><span class="s2">"</span> <span class="s2">"</span><span class="si">${</span><span class="nv">myController_HDR</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span>myController PUBLIC copra::copra<span class="p">)</span>
+</code></pre></div></div>
+
+<p>これは以下のようになります。</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">if</span><span class="p">(</span>NOT MC_RTC_BUILD_STATIC<span class="p">)</span>
+  <span class="nf">add_controller</span><span class="p">(</span>myController <span class="s2">"</span><span class="si">${</span><span class="nv">myController_SRC</span><span class="si">}</span><span class="s2">"</span> <span class="s2">"</span><span class="si">${</span><span class="nv">myController_HDR</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+  <span class="nb">target_link_libraries</span><span class="p">(</span>myController PUBLIC copra::copra<span class="p">)</span>
+<span class="nb">else</span><span class="p">()</span>
+  <span class="nf">add_fsm_controller</span><span class="p">(</span>myController <span class="s2">"</span><span class="si">${</span><span class="nv">myController_SRC</span><span class="si">}</span><span class="s2">"</span> <span class="s2">"</span><span class="si">${</span><span class="nv">myController_HDR</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+  <span class="nb">target_link_libraries</span><span class="p">(</span>mc_control_fsm PUBLIC copra::copra<span class="p">)</span>
+  <span class="c1"># Would be:</span>
+  <span class="c1"># - mc_control for a non-FSM controller</span>
+  <span class="c1"># - mc_rbdyn for a RobotModule</span>
+  <span class="c1"># - mc_observers for an Observer</span>
+  <span class="c1"># - mc_control for a plugin</span>
+<span class="nb">endif</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="例">例</h3>
+
+<p>この<a href="https://github.com/gergondet/lipm_walking_controller/commit/f507f63de378a9d80917d9b3f1280a5843bb2b56">パッチ</a> を適用すると、<a href="https://github.com/jrl-umi3218/lipm_walking_controller">lipm_walking_controller</a>で<code class="language-plaintext highlighter-rouge">MC_RTC_BUILD_STATIC</code>を使用できるようになります。</p>
+
+<h2 id="mc_rtcのデモをwebに公開する">mc_rtcのデモをWebに公開する</h2>
+
+<p>デモをWebに公開するには、<a href="https://emscripten.org/index.html">emscripten</a>プロジェクトを使用します。このプロジェクトを使用すると、C++のコードをコンパイルして<a href="http://webassembly.org/">WebAssembly</a>を作成し、互換性のある任意のブラウザーでWebAssemblyを実行させることができます。なお、私たちの知る限りでは、mc_rtcのすべてのAPIを使用できます。</p>
+
+<div class="row">
+  <div class="offset-2 col-8">
+    <div class="alert alert-warning" role="alert">
+      コントローラーのオンラインデモをデプロイする場合、事実上、（コンパイル済みの）コードとデータが一般に公開される点に注意してください。 機密性が問題になる場合は、オンラインデモをデプロイすることはお控えください。
+    </div>
+  </div>
+</div>
+
+<h3 id="emscriptenに関する一般的な制約事項">emscriptenに関する一般的な制約事項</h3>
+
+<p>emscriptenに関する一般的な制約事項の詳細については、<a href="https://emscripten.org/docs/porting/index.html">emscriptenポーティングガイド</a>を参照してください。通常、この制約事項はそれほど大きな影響はありません。</p>
+
+<p>最も大きな制約事項は、ファイルシステムの問題に関するものです。仮想ファイルシステムを使ってWebアプリケーションにアクセスする場合、以下のいずれかで対処する必要があります。</p>
+
+<ol>
+  <li>ビルドシステムのファイルシステム階層構造と同じ構造を仮想ファイルシステム内に構築する</li>
+  <li>オンラインデモ用に作成された「ダミー」パスでビルドされるように設定する</li>
+</ol>
+
+<p>下記のリンクで示されたmc_rtcオンラインデモは、2番目の方法で公開されています（2番目の方法のほうが、何をデモとして公開するかを管理するのが少し簡単になります）。</p>
+
+<h3 id="オンラインデモをビルドする">オンラインデモをビルドする</h3>
+
+<p>とりあえず、既存の<a href="https://github.com/mc-rtc/demo/">mc-rtcオンラインデモ</a>を自分のプロジェクトに合わせて変更した上で使用することを推奨します。このビルドスクリプトを使って、オンラインホストにデプロイする前にデモをローカルでビルドすることができます。</p>
+
+<h3 id="firefoxとgithubページに関する注意点">FirefoxとGitHubページに関する注意点</h3>
+
+<p>GitHubのページにデモを公開した場合、このデモはFirefoxでは動作しません（このチュートリアルを書いた2020年11月27日時点）。Firefoxを使用する場合、Webサーバーから特定のHTTPヘッダーを与える必要がありますが、GitHubのページではそのヘッダーが提供されません（現在、このヘッダーをカスタマイズする方法はありません）。</p>
+
+<p>そのヘッダーを以下に示します。</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Cross-Origin-Opener-Policy</span><span class="pi">:</span> <span class="s">same-origin</span>
+<span class="na">Cross-Origin-Embedder-Policy</span><span class="pi">:</span> <span class="s">require-corp</span>
+</code></pre></div></div>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">次のチュートリアル: Debugging LSSOL output 6</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

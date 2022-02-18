@@ -1,0 +1,9 @@
+digraph "mc_control::Gripper"
+{
+ // INTERACTIVE_SVG=YES
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="mc_control::Gripper",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" savedConfig_\ndefaultConfig_\nconfig_" ,fontname="Helvetica"];
+  Node2 [label="mc_rbdyn::RobotModule\l::Gripper::Safety",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety.html"];
+}

@@ -1,0 +1,743 @@
+
+
+
+
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - コントローラからの情報のオンライン表示 - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/usage/live-plotting.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><strong>コントローラからの情報のオンライン表示</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#入門用の2つの簡単な例">入門用の2つの簡単な例</a></li>
+<li class="toc-entry toc-h2"><a href="#mc_rtcguiplotaxisconfiguration">mc_rtc::gui::plot::AxisConfiguration</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#横軸の設定x軸">横軸の設定（X軸）</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#標準プロットの場合">標準プロットの場合</a></li>
+<li class="toc-entry toc-h4"><a href="#xyプロットの場合">XYプロットの場合</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#縦軸の設定左右のy軸">縦軸の設定（左右のY軸）</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#左側のy軸">左側のY軸</a></li>
+<li class="toc-entry toc-h4"><a href="#右側のy軸">右側のY軸</a></li>
+<li class="toc-entry toc-h4"><a href="#例">例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#mc_rtcguiplotx">mc_rtc::gui::plot::X</a></li>
+<li class="toc-entry toc-h2"><a href="#mc_rtcguiploty">mc_rtc::gui::plot::Y</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#mc_rtcguiplotstyleについて">mc_rtc::gui::plot::Styleについて</a></li>
+<li class="toc-entry toc-h4"><a href="#例-1">例</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#mc_rtcguiplotxy">mc_rtc::gui::plot::XY</a></li>
+<li class="toc-entry toc-h2"><a href="#mc_rtcguiplotpolygon">mc_rtc::gui::plot::Polygon</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#mc_rtcguiplotpolygondescription">mc_rtc::gui::plot::PolygonDescription</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#例-2">例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#mc_rtcguiplotpolygons">mc_rtc::gui::plot::Polygons</a></li>
+<li class="toc-entry toc-h2"><a href="#実行中にグラフを作成する">実行中にグラフを作成する</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>コントローラからの情報のオンライン表示</h1>
+        
+
+        
+<p>コントローラーを実行させながらグラフを表示したい場合があると思います（スタビライザーのゲインを調整する場合など）。それを実現する方法の一つが、現在記録中のログを開き、見たいデータをプロットすることです。しかし、実験が長時間にわたる場合、この方法ではログのサイズが大きくなり、ログを開いて処理するのに時間がかかるため、作業が煩わしくなります。</p>
+
+<p>よりよい方法は、このチュートリアルで説明するように、現在記録中のログをコントローラーに表示させることです。</p>
+
+<h5 class="no_toc">注記</h5>
+
+<p>このページの例では、説明を簡単にするために、以下のコードスニペットが用意されているものとします</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// 必要なすべての型宣言をインクルードする</span>
+<span class="cp">#include &lt;mc_rtc/gui/plot.h&gt;
+</span>
+<span class="c1">// 頻繁に使用する型の略称を定義する</span>
+<span class="k">using</span> <span class="n">Color</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Color</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">PolygonDescription</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">PolygonDescription</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">Range</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Range</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">Style</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Style</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">Side</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Side</span><span class="p">;</span></code></pre></figure>
+
+
+  
+  </div>
+</div>
+
+<h2 id="入門用の2つの簡単な例">入門用の2つの簡単な例</h2>
+
+<p>以下の2つの例では、横軸を共有するグラフと横軸を共有しないグラフを作成する方法について説明します。</p>
+
+<p>最初の例では、<code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::X</code>によって生成された横軸と、<code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Y</code>、<code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::XY</code>、 <code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Polygon(s)</code>のいずれかによって生成されたプロットデータを指定します。このページでは、以下、この種類のプロットを「標準プロット」と呼ぶことにします。</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addPlot</span><span class="p">(</span>
+  <span class="s">"sin(t)"</span><span class="p">,</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">X</span><span class="p">(</span><span class="s">"t"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Y</span><span class="p">(</span><span class="s">"sin(t)"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">)</span>
+<span class="p">);</span></code></pre></figure>
+
+
+  
+  </div>
+</div>
+
+<p>2番目の例では、<code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::XY</code>または<code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Polygon(s)</code>によって生成されたデータのみを指定します。このページでは、以下、この種類のプロットを「XYプロット」と呼ぶことにします。</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addXYPlot</span><span class="p">(</span>
+  <span class="s">"Circle in a square"</span><span class="p">,</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">XY</span><span class="p">(</span><span class="s">"Circle"</span><span class="p">,</span>
+                        <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span>
+                        <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Polygon</span><span class="p">(</span><span class="s">"Square"</span><span class="p">,</span>
+                             <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">PolygonDescription</span><span class="p">({{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">}},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Blue</span><span class="p">);</span> <span class="p">})</span>
+<span class="p">);</span></code></pre></figure>
+
+
+  
+  </div>
+</div>
+
+<p>どちらの種類のプロットも同じ方法で削除できます。</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removePlot</span><span class="p">(</span><span class="s">"sin(t)"</span><span class="p">);</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removePlot</span><span class="p">(</span><span class="s">"Circle in a square"</span><span class="p">);</span></code></pre></figure>
+
+
+  
+  </div>
+</div>
+
+<p>概要は以上です。次のセクションでは、例で使用されている各要素について詳しく見ていきます。</p>
+
+<h2 id="mc_rtcguiplotaxisconfiguration"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::AxisConfiguration</code></h2>
+
+<p>このクラスを使用すると、指定した軸の名前と範囲を変更できます。デフォルトでは、範囲は<code class="language-plaintext highlighter-rouge">[-inf, +inf]</code>に設定されています。この場合、GUIクライアントは範囲を自動的に推測します。</p>
+
+<h3 id="横軸の設定x軸">横軸の設定（X軸）</h3>
+
+<h4 id="標準プロットの場合">標準プロットの場合</h4>
+
+<p>標準プロットの場合、横軸の設定は<code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::X</code>で指定します。最初の例では第1引数で名前を指定しただけでしたが、この関数ではすべての設定を指定できます。例:</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="kt">double</span> <span class="n">t0</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addPlot</span><span class="p">(</span>
+  <span class="s">"sin(t)"</span><span class="p">,</span>
+  <span class="c1">// 軸の最小値をt0に設定する</span>
+  <span class="c1">// 軸の最大値をt0 + 10に設定する</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">X</span><span class="p">({</span><span class="s">"t"</span><span class="p">,</span> <span class="p">{</span><span class="n">t</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">10</span><span class="p">}},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Y</span><span class="p">(</span><span class="s">"sin(t)"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">)</span>
+<span class="p">);</span></code></pre></figure>
+
+
+  
+  </div>
+</div>
+
+<h4 id="xyプロットの場合">XYプロットの場合</h4>
+
+<p>XYプロットの場合、横軸の設定は省略できます。横軸を設定する場合は、<code class="language-plaintext highlighter-rouge">addXYPlot</code>の第1引数に<code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::AxisConfiguration</code>を指定する必要があります。例:</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addXYPlot</span><span class="p">(</span>
+  <span class="s">"Circle"</span><span class="p">,</span>
+  <span class="c1">// 範囲を設定するもう一つの方法</span>
+  <span class="n">AxisConfiguration</span><span class="p">(</span><span class="s">"X"</span><span class="p">).</span><span class="n">min</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">XY</span><span class="p">(</span><span class="s">"Circle"</span><span class="p">,</span>
+                        <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span>
+                        <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">)</span>
+<span class="p">);</span></code></pre></figure>
+
+
+  
+  </div>
+</div>
+
+<h3 id="縦軸の設定左右のy軸">縦軸の設定（左右のY軸）</h3>
+
+<p><code class="language-plaintext highlighter-rouge">AxisConfiguration</code>オブジェクトを指定することで、左右の縦軸を設定できます。</p>
+
+<h4 id="左側のy軸">左側のY軸</h4>
+
+<ul>
+  <li>標準プロットの場合、横軸の設定を指定した後にY軸の設定を指定します。</li>
+  <li>XYプロットの場合、X軸の設定を指定した後に左側のY軸の設定を指定します。</li>
+</ul>
+
+<h4 id="右側のy軸">右側のY軸</h4>
+
+<p>どちらのプロットの場合も、左側のY軸の設定を指定した後に右側のY軸の設定を指定します。</p>
+
+<h4 id="例">例</h4>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// Providing only the left Y axis configuration</span>
+<span class="kt">double</span> <span class="n">t0</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addPlot</span><span class="p">(</span>
+  <span class="s">"sin(t)"</span><span class="p">,</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">X</span><span class="p">({</span><span class="s">"t"</span><span class="p">,</span> <span class="p">{</span><span class="n">t</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">10</span><span class="p">}},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">AxisConfiguration</span><span class="p">(</span><span class="s">"Y"</span><span class="p">,</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Y</span><span class="p">(</span><span class="s">"sin(t)"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">// Providing both</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addXYPlot</span><span class="p">(</span>
+  <span class="s">"Circle"</span><span class="p">,</span>
+  <span class="c1">// Shows an alternative way to set the limits</span>
+  <span class="n">AxisConfiguration</span><span class="p">(</span><span class="s">"X"</span><span class="p">).</span><span class="n">min</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="n">AxisConfiguration</span><span class="p">(</span><span class="s">"Left Y"</span><span class="p">),</span>
+  <span class="n">AxisConfiguration</span><span class="p">(</span><span class="s">"Right Y"</span><span class="p">).</span><span class="n">max</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">XY</span><span class="p">(</span><span class="s">"Circle"</span><span class="p">,</span>
+                        <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span>
+                        <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">)</span>
+<span class="p">);</span></code></pre></figure>
+
+
+  
+  </div>
+</div>
+
+<h2 id="mc_rtcguiplotx"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::X</code></h2>
+
+<p>指定すべき項目はそれほどありません。以下の2つの要素を指定します。</p>
+<ol>
+  <li>横軸の名前または<code class="language-plaintext highlighter-rouge">AxisConfiguration</code></li>
+  <li><code class="language-plaintext highlighter-rouge">double</code>型の値を返すコールバック関数</li>
+</ol>
+
+<h2 id="mc_rtcguiploty"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Y</code></h2>
+
+<p>必須の引数として3つの引数を指定し、オプションの引数として2つの引数を指定します。</p>
+
+<ol>
+  <li>プロットの凡例に使用する名前（<strong>必須</strong>）</li>
+  <li><code class="language-plaintext highlighter-rouge">double</code>型の値を返すコールバック関数（<strong>必須</strong>）</li>
+  <li><code class="language-plaintext highlighter-rouge">Color</code>（色）、または<code class="language-plaintext highlighter-rouge">Color</code>（色）を返すコールバック関数（<strong>必須</strong>）</li>
+  <li>ラインの<code class="language-plaintext highlighter-rouge">Style</code>（スタイル）。デフォルトは<code class="language-plaintext highlighter-rouge">Style::Solid</code>（実線）</li>
+  <li>データを左側と右側のどちらのY軸に表示するかを指定する<code class="language-plaintext highlighter-rouge">Side</code>（左右の位置）。デフォルトは<code class="language-plaintext highlighter-rouge">Side::Left</code>（左側）</li>
+</ol>
+
+<p>オブジェクトを生成した後に<code class="language-plaintext highlighter-rouge">Style</code>（スタイル）と<code class="language-plaintext highlighter-rouge">Side</code>（左右の位置）を簡単に指定できる便利な関数が用意されています。</p>
+
+<h4 id="mc_rtcguiplotstyleについて"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Style</code>について</h4>
+
+<p>4つのラインスタイルを指定できます。</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">Style::Solid</code>: 実線</li>
+  <li><code class="language-plaintext highlighter-rouge">Style::Dashed</code>: 破線</li>
+  <li><code class="language-plaintext highlighter-rouge">Style::Dotted</code>: 点線</li>
+  <li><code class="language-plaintext highlighter-rouge">Style::Point</code>: 線を1つの点に置き換える</li>
+</ol>
+
+<h4 id="例-1">例</h4>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addPlot</span><span class="p">(</span>
+  <span class="s">"cos(t)/sin(t)"</span><span class="p">,</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">X</span><span class="p">(</span><span class="s">"t"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Y</span><span class="p">(</span><span class="s">"cos(t)"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">,</span> <span class="n">Style</span><span class="o">::</span><span class="n">Dotted</span><span class="p">),</span>
+  <span class="c1">// デフォルトのスタイルを変更せずに、左右のどちらのY軸を使用するかを指定する</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Y</span><span class="p">(</span><span class="s">"sin(t)"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Blue</span><span class="p">).</span><span class="n">side</span><span class="p">(</span><span class="n">Side</span><span class="o">::</span><span class="n">Right</span><span class="p">)</span>
+<span class="p">);</span></code></pre></figure>
+
+
+  
+  </div>
+</div>
+
+<h2 id="mc_rtcguiplotxy"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::XY</code></h2>
+
+<p>必須の引数として4つの引数を指定し、オプションの引数として2つの引数を指定します。</p>
+
+<ol>
+  <li>プロットの凡例に使用する名前（<strong>必須</strong>）</li>
+  <li><code class="language-plaintext highlighter-rouge">double</code>型の横軸の値（x）を返すコールバック関数（<strong>必須</strong>）</li>
+  <li><code class="language-plaintext highlighter-rouge">double</code>型の縦軸の値（y）を返すコールバック関数（<strong>必須</strong>）</li>
+  <li><code class="language-plaintext highlighter-rouge">Color</code>（色）、または<code class="language-plaintext highlighter-rouge">Color</code>（色）を返すコールバック関数（<strong>必須</strong>）</li>
+  <li>ラインの<code class="language-plaintext highlighter-rouge">Style</code>（スタイル）。デフォルトは<code class="language-plaintext highlighter-rouge">Style::Solid</code>（実線）</li>
+  <li>データを左側と右側のどちらのY軸に表示するかを指定する<code class="language-plaintext highlighter-rouge">Side</code>（左右の位置）。デフォルトは<code class="language-plaintext highlighter-rouge">Side::Left</code>（左側）</li>
+</ol>
+
+<p>オブジェクトを生成した後に<code class="language-plaintext highlighter-rouge">Style</code>（スタイル）と<code class="language-plaintext highlighter-rouge">Side</code>（左右の位置）を簡単に指定できる便利な関数が用意されています。</p>
+
+<h2 id="mc_rtcguiplotpolygon"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Polygon</code></h2>
+
+<p>必須の引数として2つの引数を指定し、オプションの引数として1つの引数を指定します。</p>
+
+<ol>
+  <li>プロットの凡例に使用する名前（<strong>必須</strong>）</li>
+  <li>次に説明する<code class="language-plaintext highlighter-rouge">PolygonDescription</code>を返すコールバック関数（<strong>必須</strong>）</li>
+  <li>データを左側と右側のどちらのY軸に表示するかを指定する<code class="language-plaintext highlighter-rouge">Side</code>（左右の位置）。デフォルトは<code class="language-plaintext highlighter-rouge">Side::Left</code>（左側）</li>
+</ol>
+
+<p>オブジェクトを生成した後に<code class="language-plaintext highlighter-rouge">Side</code>（左右の位置）を簡単に指定できる便利な関数が用意されています。</p>
+
+<h3 id="mc_rtcguiplotpolygondescription"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::PolygonDescription</code></h3>
+
+<p>このオブジェクトは以下の情報を保持します。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">points()</code>: 点のリスト（<code class="language-plaintext highlighter-rouge">std::vector&lt;std::array&lt;double, 2&gt;&gt;</code>）</li>
+  <li><code class="language-plaintext highlighter-rouge">outline()</code>: 多角形の輪郭の<code class="language-plaintext highlighter-rouge">Color</code>（色）</li>
+  <li><code class="language-plaintext highlighter-rouge">style()</code>: 多角形の輪郭の<code class="language-plaintext highlighter-rouge">Style</code>（スタイル）（デフォルトは<code class="language-plaintext highlighter-rouge">Style::Solid</code>（実線））</li>
+  <li><code class="language-plaintext highlighter-rouge">fill()</code>: 閉じた多角形を塗りつぶす<code class="language-plaintext highlighter-rouge">Color</code>（色）（デフォルトは透明（塗りつぶしなし））</li>
+  <li><code class="language-plaintext highlighter-rouge">closed()</code>: 多角形が閉じているかどうか（デフォルトはtrue）</li>
+</ul>
+
+<p><em>注: 多角形が閉じている場合、<code class="language-plaintext highlighter-rouge">points()</code>の最後に始点を改めて指定する必要はありません（これはクライアントによって処理されます）。</em></p>
+
+<h4 id="例-2">例</h4>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="k">auto</span> <span class="n">redSquareBlueFill</span> <span class="o">=</span>
+  <span class="n">PolygonDescription</span><span class="p">({{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">}},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">).</span><span class="n">fill</span><span class="p">(</span><span class="n">Color</span><span class="o">::</span><span class="n">Blue</span><span class="p">);</span>
+<span class="k">auto</span> <span class="n">purpleTriangleYellowFill</span> <span class="o">=</span>
+  <span class="n">PolygonDescription</span><span class="p">({{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">}},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Magenta</span><span class="p">).</span><span class="n">fill</span><span class="p">(</span><span class="n">Color</span><span class="o">::</span><span class="n">Yellow</span><span class="p">);</span>
+<span class="k">auto</span> <span class="n">cyanRectangle</span> <span class="o">=</span>
+  <span class="n">PolygonDescription</span><span class="p">({{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">},</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">}},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Cyan</span><span class="p">);</span></code></pre></figure>
+
+
+  
+  </div>
+</div>
+
+<p><em>注: コールバック関数<code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Polygon</code>によって<code class="language-plaintext highlighter-rouge">PolygonDescription</code>が返されるため、アクティブなプロットの多角形の表示スタイルを自由に変更できます。</em></p>
+
+<h2 id="mc_rtcguiplotpolygons"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Polygons</code></h2>
+
+<p>これは<code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Polygon</code>と似ていますが、このコールバック関数は<code class="language-plaintext highlighter-rouge">std::vector&lt;PolygonDescription&gt;</code>を返します。そのため、アクティブなプロットの多角形を時系列的に変化させて、シンプルなアニメーションを作成できます。</p>
+
+<h2 id="実行中にグラフを作成する">実行中にグラフを作成する</h2>
+
+<p>実行中にデータを選択してグラフを作成したい場合、イントロダクションで紹介したAPIではうまくいかない場合があります。その場合、以下に示すように<a href="/mc_rtc/jp/doxygen.html#structmc__rtc_1_1gui_1_1StateBuilder#a9b0cc50c6146449aaa359f2f8a346b44" target="blank_"><code>mc_rtc::gui::StateBuilder::addPlotData</code></a>メソッドを使用します。</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// この例ではコールバック関数のマップを使用する。マップのキーによって、ラベルとデータが指定される</span>
+<span class="c1">// コールバック関数ごとにスタイルを変えることで、処理をカスタマイズできる</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">()</span><span class="o">&gt;&gt;</span> <span class="n">callbacks</span><span class="p">;</span>
+
+<span class="c1">// Y軸のデータなしでプロットを作成する</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addPlot</span><span class="p">(</span>
+  <span class="s">"MyPlot"</span><span class="p">,</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">X</span><span class="p">(</span><span class="s">"t"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">;</span> <span class="p">}));</span>
+
+<span class="c1">// N実行時の入力に基づきデータを追加する</span>
+<span class="k">for</span><span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">it</span> <span class="o">:</span> <span class="n">callbacks</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">label</span> <span class="o">=</span> <span class="n">it</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+  <span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">it</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+  <span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addPlotData</span><span class="p">(</span><span class="s">"MyPlot"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Y</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">callback</span><span class="p">));</span>
+<span class="p">}</span></code></pre></figure>
+
+
+  
+  </div>
+</div>
+
+<blockquote>
+  <p>注: この処理では実行時に以下のチェックが行われます。</p>
+  <ol>
+    <li>指定されたプロットが存在しない場合、この呼び出しは何の効果もありません。</li>
+    <li>データとして1次元データが指定され、グラフとしてXYプロットが指定された場合、この呼び出しは何の効果もありません。</li>
+  </ol>
+</blockquote>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/usage/ros.html">次のチュートリアル: ROS統合</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

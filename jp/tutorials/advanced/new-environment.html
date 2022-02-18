@@ -1,0 +1,577 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - mc_rtcにおける環境データの作成 - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/advanced/new-environment.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><strong>mc_rtcにおける環境データの作成</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#作業を始める前の準備">作業を始める前の準備</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#必要なソフトウェア">必要なソフトウェア</a></li>
+<li class="toc-entry toc-h2"><a href="#blenderのアドオンをインストールする">Blenderのアドオンをインストールする</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#環境モデルを取得する">環境モデルを取得する</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#スケールに関する注記">スケールに関する注記</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#平面を作成する">平面を作成する</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#地面を作成する">地面を作成する</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#命名規則に関する注記">命名規則に関する注記</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#groundside面を作成する">GroundSide面を作成する</a></li>
+<li class="toc-entry toc-h2"><a href="#平面の作成に関する注意事項">平面の作成に関する注意事項</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#円筒面を作成する">円筒面を作成する</a></li>
+<li class="toc-entry toc-h1"><a href="#衝突メッシュを追加する">衝突メッシュを追加する</a></li>
+<li class="toc-entry toc-h1"><a href="#環境を作成する">環境を作成する</a></li>
+<li class="toc-entry toc-h1"><a href="#環境をテストする">環境をテストする</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#よくある問題">よくある問題</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#面の位置が正しくない">面の位置が正しくない</a></li>
+<li class="toc-entry toc-h4"><a href="#面の向きが正しくない">面の向きが正しくない</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ロボットに面を追加する">ロボットに面を追加する</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>mc_rtcにおける環境データの作成</h1>
+        
+
+        <p>本ガイドでは、mc_rtcその他のJRL/LIRMMソフトウェアに対応した環境を作成する方法について説明します。</p>
+
+<p>本ガイド内のスクリーンショットは、Blender 2.78から取り込んだものですが、最近のバージョンのBlenderでも内容は同じです。</p>
+
+<h1 id="作業を始める前の準備">作業を始める前の準備</h1>
+
+<h2 id="必要なソフトウェア">必要なソフトウェア</h2>
+
+<ol>
+  <li>Blender</li>
+  <li><a href="https://gite.lirmm.fr/multi-contact/robot_script">robot_script</a></li>
+</ol>
+
+<p>BlenderをUbuntuシステムにインストールする場合、Blenderの機能をフル活用できるように、<a href="https://launchpad.net/~thomas-schiex/+archive/ubuntu/blender">Thomas SchiexのPPA</a> を使用することを推奨します。特に、リポジトリ版のBlenderでは、COLLADA形式ファイル（<code class="language-plaintext highlighter-rouge">.dae</code>ファイル）のインポートはサポートされていません。</p>
+
+<p><code class="language-plaintext highlighter-rouge">robot_script</code>は、Blenderスクリプトとシェルスクリプトの集まりです。本ガイドでは、これを使用して、完全に機能するmc_rtc環境をBlenderファイルから作成します。</p>
+
+<h2 id="blenderのアドオンをインストールする">Blenderのアドオンをインストールする</h2>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">mkdir -p $HOME/.config/blender/$(blender -v|awk '{print $2}')/scripts/addons</code></li>
+  <li><code class="language-plaintext highlighter-rouge">robot_script</code>をコピーして<code class="language-plaintext highlighter-rouge">robot_script</code>フォルダーに移動します。</li>
+  <li><code class="language-plaintext highlighter-rouge">cp -r blender_addons/io_qconvex/ $HOME/.config/blender/$(blender -v|awk '{print $2}')/scripts/addons</code></li>
+  <li>Blenderを起動します。</li>
+  <li>以下の図のように、 “Import-Export: qconvex cloud format（インポートとエクスポート: qconvex点群形式）”チェックボックスをオンにし、アドオンを有効にします。</li>
+</ol>
+
+<p><img src="/mc_rtc/assets/tutorials/advanced/img/blender_addon_activation.gif" alt="blender_addon_activation" class="img-fluid" /></p>
+
+<p>手順1で、アドオンを格納する空のフォルダーが作成され、手順3で、アドオンがそのフォルダーにコピーされます。</p>
+
+<h1 id="環境モデルを取得する">環境モデルを取得する</h1>
+
+<p>ここでは、3次元環境のモデリングについて詳しく説明します。このページの残りの部分では、<a href="/mc_rtc/assets/tutorials/advanced/data/blender_model_start.blend">こちら</a>で用意されているモデルを使用して作業します。このモデルをBlenderで開くと、”ground”（地面）という名前の大きな平面が表示され、その中央に”pole”（柱）という名前の円筒が垂直に立っているのが見えます。</p>
+
+<p><img src="/mc_rtc/assets/tutorials/advanced/img/blender_model_start.png" alt="blender_model_start" class="img-fluid" /></p>
+
+<h2 id="スケールに関する注記">スケールに関する注記</h2>
+
+<p>モデルのメッシュに単一変数のスケールが設定されていることを確認してください。これを設定するには、シーン内の各オブジェクトにスケールパラメーターを適用します。</p>
+
+<ol>
+  <li>シーン内のオブジェクトを選択します（ショートカット: A）</li>
+  <li>[Apply（適用）]をクリックします（ショートカット: Ctrl + A）</li>
+  <li>スケールを選択します。</li>
+</ol>
+
+<h1 id="平面を作成する">平面を作成する</h1>
+
+<p>このセクションでは、2つの面を作成します。まず、面を作成する基本について説明し、次に、向きに関する重要な問題について説明します。</p>
+
+<h2 id="地面を作成する">地面を作成する</h2>
+
+<p>はじめに、地面に相当する面を作成します。</p>
+
+<ol>
+  <li>“ground”オブジェクトを選択します（地面のメッシュ上で右クリック）。</li>
+  <li>Edit（編集）モードに切り替えます（ショートカット: Tab）。</li>
+  <li>上面を選択します（面選択ツールをクリックし、上面を右クリック）。</li>
+  <li>選択した面をコピーします（ショートカット: Shift + D）。さらに、Escを押して、選択した面を元の位置に戻します。</li>
+  <li>選択した面を”ground”オブジェクトから切り離します（ショートカット: P。さらに、[Selection（選択）]を選択）。</li>
+  <li>“ground.001”（地面.001）という名前の新しいオブジェクトが作成されます。このオブジェクトの名前を”Ground”（地面）に変更します。</li>
+  <li>“Ground”オブジェクトの原点をこの形状内に設定します。</li>
+  <li>“Ground”オブジェクトを選択してから、”ground”オブジェクトを選択します（シーンの階層内で”Ground”をクリックしてから、Shiftを押しながら”ground”をクリック）。</li>
+  <li>“ground”を”Ground”の親として設定します（ショートカット: Ctrl + P。さらに、[Keep transform（変換を維持）]を選択）。</li>
+  <li>値が何も設定されていない”surface”（表面）という名前のカスタムプロパティを、”Ground”オブジェクトに追加します。</li>
+</ol>
+
+<p>お疲れ様でした。これで、最初の面が作成されました。</p>
+
+<p>この手順については、こちらの<a href="https://gite.lirmm.fr/multi-contact/mc_rtc/wikis/videos/blender_planar_surface.mp4">動画</a>を参照してください。</p>
+
+<h4 id="命名規則に関する注記">命名規則に関する注記</h4>
+
+<p>mc_rtc内のほとんどの環境では、以下の命名規則に基づいて名前が付けられています。ユーザーが名前を付ける場合もこの規則に従うことを推奨します。</p>
+
+<ol>
+  <li>ボディの名前は小文字で表す（例: “ground”、”stair_step_1”）</li>
+  <li>面の名前はキャメルケース（各構成語の先頭を大文字にする記法）で表す（例: “Ground”、”StairStep1”）</li>
+  <li>衝突メッシュは小文字で表し、末尾に”_hull”を付ける（例: “ground_hull”、”stair_step_1_hull”）</li>
+</ol>
+
+<h2 id="groundside面を作成する">GroundSide面を作成する</h2>
+
+<p>2番目の面として、地面のいずれかの側面に対応する面を作成します。これは実用的な意味はありませんが、この手順を通じて、向きの重要性と向きの変更方法について説明します。まず、前述の手順を再度実行しますが、今度は、地面メッシュの側面を使用して”GroundSide”面を作成します。</p>
+
+<p>環境を作成したとき、この側面が期待した方向を向いていないことに気付くと思います。これは、オブジェクトのローカルフレームが正しくないためです。Z軸（Blenderでは青で表示）を面の法線と一致させる必要があります。</p>
+
+<ol>
+  <li>“GroundSide”オブジェクトを選択します。</li>
+  <li>グローバルフレームではなくローカルフレームの表示が有効になっていることを確認します。</li>
+  <li>Y軸周りにオブジェクトを90°回転させます（ショートカット: R。さらに、Yを押してY軸をロックし、キーボードのテンキーで”90”と入力してEnterを押す）。</li>
+  <li>Edit（編集）モードに切り替えます（ショートカット: Tab）。</li>
+  <li>メッシュ内のすべての点を選択します（ショートカット: A）</li>
+  <li>Y軸周りにオブジェクトを-90°回転させます。</li>
+</ol>
+
+<p>お疲れ様でした。これで、向きに関する問題が解決されました。</p>
+
+<p>この手順については、こちらの<a href="https://gite.lirmm.fr/multi-contact/mc_rtc/wikis/videos/blender_rotate_surface.mp4">動画</a> を参照してください。</p>
+
+<h2 id="平面の作成に関する注意事項">平面の作成に関する注意事項</h2>
+
+<p>平面の作成に関する注意事項</p>
+
+<p>自分が設計した面と他の面との間に接触面を作成すると、自分が設計した面上の点に接触力が発生します。これは、面に含まれる点の数が多いほど、より多くの変数が問題に追加されることを意味します。そのため、面をできるだけシンプルに設計するように（すなわち、単一の四角形で構成するように）してください。特に、ロボットの表面を設計する際は、この点に注意してください。</p>
+
+<p>また、面を構成する点は、同一平面上になければなりません。そうでない場合、環境を正しく生成できません。</p>
+
+<h1 id="円筒面を作成する">円筒面を作成する</h1>
+
+<p>このセクションでは、単一の円筒面を作成します。この場合も、平面の場合と同じく向きの問題が発生します。ここでは、Z軸を円筒の円筒軸とし、X軸を円筒の極軸とします。</p>
+
+<ol>
+  <li>“pole”オブジェクトを選択します。</li>
+  <li>オブジェクトの原点にカーソルをスナップさせます（ショートカット: Shift + S。さらに、カーソルを選択します）。</li>
+  <li>十字（Plain Axes）オブジェクトを選択し、名前を”Pole”（柱）に変更します。</li>
+  <li>“pole”を”Pole”の親として設定します。</li>
+  <li>“cylindrical”という値が設定された”surface”という名前のカスタムプロパティを追加します。</li>
+  <li>円筒の半径が設定された”radius”（半径）という名前のカスタムプロパティを追加します。</li>
+  <li>円筒の長さが設定された”width”（幅）という名前のカスタムプロパティを追加します。</li>
+</ol>
+
+<p>お疲れ様でした。これで、最初の円筒面が作成されました。</p>
+
+<p>この手順については、こちらの<a href="https://gite.lirmm.fr/multi-contact/mc_rtc/wikis/videos/blender_create_cylindrical.mp4">動画</a>を参照してください。</p>
+
+<p>デフォルトでは、Blenderのカスタムプロパティの値は[0, 1]の範囲に制限されています。円筒の”width”プロパティを正しく設定しないと問題が発生する可能性があるため、このプロパティを設定する際は注意してください。</p>
+
+<h1 id="衝突メッシュを追加する">衝突メッシュを追加する</h1>
+
+<p>衝突メッシュを追加するには、新しいメッシュを追加し、”hull”という名前の空のプロパティを追加します。</p>
+
+<p>モデル内の各ボディについては、生成スクリプトによって凸メッシュが作成されるため、それらについてはメッシュを作成する必要はありません。</p>
+
+<p>次の手順に移る前に、<a href="/mc_rtc/assets/tutorials/advanced/data/blender_model_final.blend">こちら</a>からチュートリアルの結果を入手できます。</p>
+
+<h1 id="環境を作成する">環境を作成する</h1>
+
+<p>robot_scriptフォルダーに移動し、以下のようにdo_all.shスクリプトを実行します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./do_all.sh my_file.blend /path/to/ros/package env_name package_name
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">mc_env_description</code>パッケージに環境を追加する場合は、package_name（パッケージ名）を省略しても構いません。</p>
+
+<h1 id="環境をテストする">環境をテストする</h1>
+
+<p><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">表面の可視化</a>に関するチュートリアルを参照してください。</p>
+
+<h2 id="よくある問題">よくある問題</h2>
+
+<h4 id="面の位置が正しくない">面の位置が正しくない</h4>
+
+<p>Blenderプロジェクト内で、面オブジェクトの原点が意図したとおりに設定されているか確認してください。</p>
+
+<h4 id="面の向きが正しくない">面の向きが正しくない</h4>
+
+<p>Blenderプロジェクト内で、面の法線が正しい方向を向いているか確認してください。オブジェクトのローカルフレームが表示されているか確認してください。</p>
+
+<h1 id="ロボットに面を追加する">ロボットに面を追加する</h1>
+
+<p>ロボットに面を追加するには、環境作成時と同じ手順を実行します。ただし、この場合は面を追加したいロボットのボディが環境モデルとなります。さらに、一時ディレクトリ内に「環境」を作成し、生成されたRSDFファイルを元のロボット記述フォルダーで使用します。</p>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">次のチュートリアル: 新たなロボットをmc_rtcでサポートする方法</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

@@ -3,78 +3,97 @@
 
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
 
     <title>Schema documentation - mc_rtc</title>
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
-    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
-
-    
-
-    
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
-    
-
-    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
   </head>
 
   <body>
     <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
-      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <div class="navbar-nav mr-auto">
-          
-          
-          
-          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
-          
-          
-          
-          
-          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
-          
-          
-          
-          
-          <a class="nav-item nav-link " href="/mc_rtc/tutorials.html">Tutorials</a>
-          
-          
-          
-          
-          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
-          
-          
-          
-          
-          <a class="nav-item nav-link active" href="/mc_rtc/json.html">JSON/YAML documentation</a>
-          
-          
-          <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">Online demonstration</a>
-        </div>
-        <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
-      </div>
-    </header>
+  <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/tutorials.html">Tutorials</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/json.html">JSON/YAML documentation</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">Online demonstration</a>
+    </div>
+    
+      
+      
+      
+      EN
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+        <a href="/mc_rtc/jp/json.html">
+      
+      JP
+      
+        </a>
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
 
     <div class="container-fluid">
     <div class="row">
@@ -672,10 +691,11 @@
     
     <div class="tab-pane show active" id="constraintset-dynamicsconstraint-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="constraintset-dynamicsconstraint-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dynamics"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"damper"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">],</span><span class="w">
   </span><span class="nl">"velocityPercent"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w">
@@ -703,10 +723,11 @@
     
     <div class="tab-pane" id="constraintset-dynamicsconstraint-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="constraintset-dynamicsconstraint-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">dynamics</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">dynamics</span>
 <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">damper</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.01</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">]</span>
 <span class="na">velocityPercent</span><span class="pi">:</span> <span class="m">0.5</span>
@@ -910,10 +931,11 @@ infTorque: false</pre>
     
     <div class="tab-pane show active" id="constraintset-contactconstraint-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="constraintset-contactconstraint-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contact"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"contactType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"position"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"dynamics"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
@@ -939,10 +961,11 @@ infTorque: false</pre>
     
     <div class="tab-pane" id="constraintset-contactconstraint-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="constraintset-contactconstraint-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">contact</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">contact</span>
 <span class="na">contactType</span><span class="pi">:</span> <span class="s">position</span>
 <span class="na">dynamics</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure>
 
@@ -1101,10 +1124,11 @@ dynamics: true</pre>
     
     <div class="tab-pane show active" id="constraintset-comincplaneconstr-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="constraintset-comincplaneconstr-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CoMIncPlane"</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
@@ -1126,10 +1150,11 @@ dynamics: true</pre>
     
     <div class="tab-pane" id="constraintset-comincplaneconstr-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="constraintset-comincplaneconstr-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">CoMIncPlane</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">CoMIncPlane</span>
 <span class="na">robotIndex</span><span class="pi">:</span> <span class="s">0</span></code></pre></figure>
 
   
@@ -1286,10 +1311,11 @@ robotIndex: 0</pre>
     
     <div class="tab-pane show active" id="constraintset-compoundjointconstraint-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="constraintset-compoundjointconstraint-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"compoundJoint"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
@@ -1313,10 +1339,11 @@ robotIndex: 0</pre>
     
     <div class="tab-pane" id="constraintset-compoundjointconstraint-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="constraintset-compoundjointconstraint-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="na">type</span><span class="pi">:</span> <span class="s">compoundJoint</span>
 <span class="na">robot</span><span class="pi">:</span> <span class="s">jvrc1</span></code></pre></figure>
 
@@ -1940,10 +1967,11 @@ robot: jvrc1</pre>
     
     <div class="tab-pane show active" id="constraintset-boundedspeedconstr-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="constraintset-boundedspeedconstr-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"boundedSpeed"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"constraints"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
@@ -1987,10 +2015,11 @@ robot: jvrc1</pre>
     
     <div class="tab-pane" id="constraintset-boundedspeedconstr-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="constraintset-boundedspeedconstr-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">boundedSpeed</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">boundedSpeed</span>
 <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">constraints</span><span class="pi">:</span>
   <span class="pi">-</span> <span class="na">body</span><span class="pi">:</span> <span class="s">body0</span>
@@ -2241,10 +2270,11 @@ constraints:
     
     <div class="tab-pane show active" id="constraintset-kinematicsconstraint-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="constraintset-kinematicsconstraint-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kinematics"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"damper"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">],</span><span class="w">
   </span><span class="nl">"velocityPercent"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="w">
@@ -2270,10 +2300,11 @@ constraints:
     
     <div class="tab-pane" id="constraintset-kinematicsconstraint-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="constraintset-kinematicsconstraint-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">kinematics</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">kinematics</span>
 <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">damper</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.01</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">]</span>
 <span class="na">velocityPercent</span><span class="pi">:</span> <span class="s">0.5</span></code></pre></figure>
@@ -2807,10 +2838,11 @@ velocityPercent: 0.5</pre>
     
     <div class="tab-pane show active" id="constraintset-collisionsconstraint-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="constraintset-collisionsconstraint-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"collision"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"r1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"r2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"otherRobot"</span><span class="p">,</span><span class="w">
@@ -2868,10 +2900,11 @@ velocityPercent: 0.5</pre>
     
     <div class="tab-pane" id="constraintset-collisionsconstraint-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="constraintset-collisionsconstraint-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">collision</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">collision</span>
 <span class="na">r1Index</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">r2Index</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">collisions</span><span class="pi">:</span>
@@ -12491,10 +12524,11 @@ collisions:
     
     <div class="tab-pane show active" id="metatask-lipmstabilizertask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-lipmstabilizertask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lipm_stabilizer"</span><span class="p">,</span><span class="w">
    </span><span class="nl">"contacts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Left"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Right"</span><span class="w"> </span><span class="p">],</span><span class="w">
    </span><span class="nl">"Left"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -12562,10 +12596,11 @@ collisions:
     
     <div class="tab-pane" id="metatask-lipmstabilizertask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-lipmstabilizertask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1">###</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1">###</span>
 <span class="c1"># Stabilizer MetaTask configuration</span>
 <span class="c1">#</span>
 <span class="c1"># This task is initialized in the following order:</span>
@@ -16296,10 +16331,11 @@ other_robot:
     
     <div class="tab-pane show active" id="metatask-admittancetask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-admittancetask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admittance"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftFootCenter"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"target"</span><span class="p">:</span><span class="w">
@@ -16357,10 +16393,11 @@ other_robot:
     
     <div class="tab-pane" id="metatask-admittancetask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-admittancetask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">admittance</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">admittance</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftFootCenter</span>
 <span class="na">targetSurface</span><span class="pi">:</span>
   <span class="na">robot</span><span class="pi">:</span> <span class="s">ground</span>
@@ -18334,10 +18371,11 @@ admittance:
     
     <div class="tab-pane show active" id="metatask-coptask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-coptask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cop"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftFootCenter"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"pose"</span><span class="p">:</span><span class="w">
@@ -18389,10 +18427,11 @@ admittance:
     
     <div class="tab-pane" id="metatask-coptask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-coptask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">cop</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">cop</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftFootCenter</span>
 <span class="na">cop</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">2.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
 <span class="na">targetSurface</span><span class="pi">:</span>
@@ -19881,10 +19920,11 @@ admittance:
     
     <div class="tab-pane show active" id="metatask-addcontacttask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-addcontacttask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"addContact"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"contact"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
@@ -19928,10 +19968,11 @@ admittance:
     
     <div class="tab-pane" id="metatask-addcontacttask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-addcontacttask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">addContact</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">addContact</span>
 <span class="na">contact</span><span class="pi">:</span>
   <span class="na">r1Surface</span><span class="pi">:</span> <span class="s">LeftFoot</span>
   <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">AllGround</span>
@@ -20973,10 +21014,11 @@ weight: 100.0</pre>
     
     <div class="tab-pane show active" id="metatask-comtask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-comtask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"com"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"com"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.71</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
@@ -21000,10 +21042,11 @@ weight: 100.0</pre>
     
     <div class="tab-pane" id="metatask-comtask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-comtask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">com</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">com</span>
 <span class="na">com</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.71</span><span class="pi">]</span></code></pre></figure>
 
   
@@ -22193,10 +22236,11 @@ com: [0.0, 0.0, 0.71]</pre>
     
     <div class="tab-pane show active" id="metatask-orientationtask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-orientationtask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"orientation"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"r_wrist"</span><span class="p">,</span><span class="w">
   </span><span class="err">//</span><span class="w"> </span><span class="err">Rotation</span><span class="w"> </span><span class="err">expressed</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">RPY</span><span class="w"> </span><span class="err">(in</span><span class="w"> </span><span class="err">radian)</span><span class="w">
@@ -22226,10 +22270,11 @@ com: [0.0, 0.0, 0.71]</pre>
     
     <div class="tab-pane" id="metatask-orientationtask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-orientationtask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">orientation</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">orientation</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">r_wrist</span>
 <span class="c1"># Rotation expressed as RPY (in radian)</span>
 <span class="c1"># May also be expressed as quaternion or rotation matrix</span>
@@ -23770,10 +23815,11 @@ orientation: [0.0, 0.0, 0.0]</pre>
     
     <div class="tab-pane show active" id="metatask-endeffectortask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-endeffectortask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"body6d"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"r_wrist"</span><span class="p">,</span><span class="w">
   </span><span class="err">//</span><span class="w"> </span><span class="err">Rotation</span><span class="w"> </span><span class="err">expressed</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">RPY</span><span class="w"> </span><span class="err">(in</span><span class="w"> </span><span class="err">radian)</span><span class="w">
@@ -23805,10 +23851,11 @@ orientation: [0.0, 0.0, 0.0]</pre>
     
     <div class="tab-pane" id="metatask-endeffectortask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-endeffectortask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">body6d</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">body6d</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">r_wrist</span>
 <span class="c1"># Rotation expressed as RPY (in radian)</span>
 <span class="c1"># May also be expressed as quaternion or rotation matrix</span>
@@ -27407,10 +27454,11 @@ position: [0.0, 0.0, 0.0]</pre>
     
     <div class="tab-pane show active" id="metatask-impedancetask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-impedancetask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"impedance"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RightGripper"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"target"</span><span class="p">:</span><span class="w">
@@ -27468,10 +27516,11 @@ position: [0.0, 0.0, 0.0]</pre>
     
     <div class="tab-pane" id="metatask-impedancetask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-impedancetask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">impedance</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">impedance</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">RightGripper</span>
 <span class="na">targetSurface</span><span class="pi">:</span>
   <span class="na">robot</span><span class="pi">:</span> <span class="s">ground</span>
@@ -28617,10 +28666,11 @@ wrenchGain:
     
     <div class="tab-pane show active" id="metatask-gazetask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-gazetask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gaze"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dcamera"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"X_b_gaze"</span><span class="p">:</span><span class="w">
@@ -28658,10 +28708,11 @@ wrenchGain:
     
     <div class="tab-pane" id="metatask-gazetask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-gazetask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">gaze</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">gaze</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">dcamera</span>
 <span class="na">X_b_gaze</span><span class="pi">:</span>
   <span class="c1"># Rotation expressed as RPY (in radian)</span>
@@ -30140,10 +30191,11 @@ X_b_gaze:
     
     <div class="tab-pane show active" id="metatask-removecontacttask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-removecontacttask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"removeContact"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"contact"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
@@ -30187,10 +30239,11 @@ X_b_gaze:
     
     <div class="tab-pane" id="metatask-removecontacttask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-removecontacttask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">removeContact</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">removeContact</span>
 <span class="na">contact</span><span class="pi">:</span>
   <span class="na">r1Surface</span><span class="pi">:</span> <span class="s">LeftFoot</span>
   <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">AllGround</span>
@@ -31263,10 +31316,11 @@ weight: 100.0</pre>
     
     <div class="tab-pane show active" id="metatask-lookattftask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-lookattftask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lookAtTF"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dcamera"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"bodyVector"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w">
@@ -31296,10 +31350,11 @@ weight: 100.0</pre>
     
     <div class="tab-pane" id="metatask-lookattftask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-lookattftask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">lookAtTF</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">lookAtTF</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">bodyName</span>
 <span class="na">bodyVector</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">]</span>
 <span class="na">sourceFrame</span><span class="pi">:</span> <span class="s">robot_map</span>
@@ -32367,10 +32422,11 @@ targetFrame: target_name</pre>
     
     <div class="tab-pane show active" id="metatask-vectororientationtask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-vectororientationtask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vectorOrientation"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dcamera"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"bodyVector"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w">
@@ -32398,10 +32454,11 @@ targetFrame: target_name</pre>
     
     <div class="tab-pane" id="metatask-vectororientationtask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-vectororientationtask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">vectorOrientation</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">vectorOrientation</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">dcamera</span>
 <span class="na">bodyVector</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
 <span class="na">targetVector</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span></code></pre></figure>
@@ -33752,10 +33809,11 @@ targetVector: [0.0, 0.0, 0.0]</pre>
     
     <div class="tab-pane show active" id="metatask-compliancetask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-compliancetask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"compliance"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"R_WRIST_Y_S"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"wrench"</span><span class="p">:</span><span class="w">
@@ -33789,10 +33847,11 @@ targetVector: [0.0, 0.0, 0.0]</pre>
     
     <div class="tab-pane" id="metatask-compliancetask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-compliancetask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">compliance</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">compliance</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">L_WRIST_Y_S</span>
 <span class="na">wrench</span><span class="pi">:</span>
   <span class="na">couple</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
@@ -34886,10 +34945,11 @@ wrench:
     
     <div class="tab-pane show active" id="metatask-momentumtask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-momentumtask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"momentum"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"momentum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">]</span><span class="w">
@@ -34915,10 +34975,11 @@ wrench:
     
     <div class="tab-pane" id="metatask-momentumtask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-momentumtask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">momentum</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">momentum</span>
 <span class="na">robot</span><span class="pi">:</span> <span class="s">jvrc1</span>
 <span class="na">momentum</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">]</span></code></pre></figure>
 
@@ -36189,10 +36250,11 @@ momentum: [0, 0, 0, 0, 0, 10]</pre>
     
     <div class="tab-pane show active" id="metatask-lookatsurfacetask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-lookatsurfacetask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lookAtSurface"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dcamera"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"bodyVector"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w">
@@ -36222,10 +36284,11 @@ momentum: [0, 0, 0, 0, 0, 10]</pre>
     
     <div class="tab-pane" id="metatask-lookatsurfacetask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-lookatsurfacetask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">lookAtSurface</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">lookAtSurface</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">dcamera</span>
 <span class="na">bodyVector</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
 <span class="na">surfaceRobot</span><span class="pi">:</span> <span class="s">ground</span>
@@ -37436,10 +37499,11 @@ surface: AllGround</pre>
     
     <div class="tab-pane show active" id="metatask-posturetask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-posturetask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"posture"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"stiffness"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">
@@ -37477,10 +37541,11 @@ surface: AllGround</pre>
     
     <div class="tab-pane" id="metatask-posturetask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-posturetask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">posture</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">posture</span>
 <span class="na">stiffness</span><span class="pi">:</span> <span class="m">1.0</span>
 <span class="na">weight</span><span class="pi">:</span> <span class="m">1.0</span>
 <span class="na">posture</span><span class="pi">:</span>
@@ -39063,10 +39128,11 @@ posture:
     
     <div class="tab-pane show active" id="metatask-relativeendeffectortask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-relativeendeffectortask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"relBody6d"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"r_wrist"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"relBody"</span><span class="p">:</span><span class="w"> </span><span class="s2">"l_wrist"</span><span class="p">,</span><span class="w">
@@ -39100,10 +39166,11 @@ posture:
     
     <div class="tab-pane" id="metatask-relativeendeffectortask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-relativeendeffectortask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">relBody6d</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">relBody6d</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">r_wrist</span>
 <span class="na">relBody</span><span class="pi">:</span> <span class="s">l_wrist</span>
 <span class="c1"># Rotation expressed as RPY (in radian)</span>
@@ -40275,10 +40342,11 @@ position: [0.0, 0.0, 0.0]</pre>
     
     <div class="tab-pane show active" id="metatask-pbvstask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-pbvstask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pbvs"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftFoot"</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
@@ -40302,10 +40370,11 @@ position: [0.0, 0.0, 0.0]</pre>
     
     <div class="tab-pane" id="metatask-pbvstask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-pbvstask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">pbvs</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">pbvs</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftFoot</span></code></pre></figure>
 
   
@@ -42960,10 +43029,11 @@ surface: LeftFoot</pre>
     
     <div class="tab-pane show active" id="metatask-surfacetransformtask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-surfacetransformtask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surfaceTransform"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftFoot"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"target"</span><span class="p">:</span><span class="w">
@@ -43001,10 +43071,11 @@ surface: LeftFoot</pre>
     
     <div class="tab-pane" id="metatask-surfacetransformtask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-surfacetransformtask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">surfaceTransform</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">surfaceTransform</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftFoot</span>
 <span class="na">targetSurface</span><span class="pi">:</span>
   <span class="na">robot</span><span class="pi">:</span> <span class="s">ground</span>
@@ -45360,10 +45431,11 @@ targetSurface:
     
     <div class="tab-pane show active" id="metatask-bsplinetrajectorytask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-bsplinetrajectorytask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bspline_trajectory"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftFoot"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"stiffness"</span><span class="p">:</span><span class="w"> </span><span class="mf">10000.0</span><span class="p">,</span><span class="w">
@@ -45433,10 +45505,11 @@ targetSurface:
     
     <div class="tab-pane" id="metatask-bsplinetrajectorytask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-bsplinetrajectorytask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">bspline_trajectory</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">bspline_trajectory</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftFoot</span>
 <span class="na">stiffness</span><span class="pi">:</span> <span class="m">10000.0</span>
 <span class="na">duration</span><span class="pi">:</span> <span class="m">15.0</span>
@@ -48154,10 +48227,11 @@ targetSurface:
     
     <div class="tab-pane show active" id="metatask-exactcubictrajectorytask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-exactcubictrajectorytask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exact_cubic_trajectory"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftFoot"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"stiffness"</span><span class="p">:</span><span class="w"> </span><span class="mf">10000.0</span><span class="p">,</span><span class="w">
@@ -48235,10 +48309,11 @@ targetSurface:
     
     <div class="tab-pane" id="metatask-exactcubictrajectorytask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-exactcubictrajectorytask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">exact_cubic_trajectory</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">exact_cubic_trajectory</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftFoot</span>
 <span class="na">stiffness</span><span class="pi">:</span> <span class="m">10000.0</span>
 <span class="na">duration</span><span class="pi">:</span> <span class="m">15.0</span>
@@ -49559,10 +49634,11 @@ targetSurface:
     
     <div class="tab-pane show active" id="metatask-positiontask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-positiontask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"position"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"r_wrist"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"position"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span><span class="w">
@@ -49588,10 +49664,11 @@ targetSurface:
     
     <div class="tab-pane" id="metatask-positiontask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-positiontask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">position</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">position</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">r_wrist</span>
 <span class="na">position</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span></code></pre></figure>
 
@@ -50799,10 +50876,11 @@ position: [0.0, 0.0, 0.0]</pre>
     
     <div class="tab-pane show active" id="metatask-lookattask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-lookattask-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lookAt"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dcamera"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"bodyVector"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w">
@@ -50830,10 +50908,11 @@ position: [0.0, 0.0, 0.0]</pre>
     
     <div class="tab-pane" id="metatask-lookattask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-lookattask-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">lookAt</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">lookAt</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">dcamera</span>
 <span class="na">bodyVector</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
 <span class="na">targetPos</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span></code></pre></figure>
@@ -51980,10 +52059,11 @@ targetPos: [0.0, 0.0, 0.0]</pre>
     
     <div class="tab-pane show active" id="observers-kinematicinertial-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="observers-kinematicinertial-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"updateRobot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"imuBodySensor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Accelerometer"</span><span class="p">,</span><span class="w">
@@ -52051,10 +52131,11 @@ targetPos: [0.0, 0.0, 0.0]</pre>
     
     <div class="tab-pane" id="observers-kinematicinertial-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="observers-kinematicinertial-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="na">robot</span><span class="pi">:</span> <span class="s">jvrc1</span>
 <span class="na">updateRobot</span><span class="pi">:</span> <span class="s">jvrc1</span>
 <span class="na">imuBodySensor</span><span class="pi">:</span> <span class="s">Accelerometer</span>
@@ -52762,10 +52843,11 @@ gui:
     
     <div class="tab-pane show active" id="observers-observerpipeline-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="observers-observerpipeline-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MainPipeline"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"gui"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="nl">"observers"</span><span class="p">:</span><span class="w">
@@ -52831,10 +52913,11 @@ gui:
     
     <div class="tab-pane" id="observers-observerpipeline-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="observers-observerpipeline-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="c1">##</span>
 <span class="c1"># This sample provides a reasonable default pipeline for observing the state (position and velocity) of a floating-base robot.</span>
 <span class="c1"># This pipeline does the following:</span>
@@ -53000,10 +53083,11 @@ observers:
     
     <div class="tab-pane show active" id="observers-observerpipelines-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="observers-observerpipelines-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MainRobotGroundTruth"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"gui"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
@@ -53083,10 +53167,11 @@ observers:
     
     <div class="tab-pane" id="observers-observerpipelines-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="observers-observerpipelines-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="c1"># Declare a first pipeline that estimates the main real robot state</span>
 <span class="c1"># from encoder values and a ground truth floating base sensor</span>
 <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">MainRobotGroundTruth</span>
@@ -54490,10 +54575,11 @@ observers:
     
     <div class="tab-pane show active" id="observers-bodysensor-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="observers-bodysensor-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"updateRobot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sensor"</span><span class="p">,</span><span class="w">
@@ -54561,10 +54647,11 @@ observers:
     
     <div class="tab-pane" id="observers-bodysensor-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="observers-bodysensor-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="na">robot</span><span class="pi">:</span> <span class="s">jvrc1</span>
 <span class="na">updateRobot</span><span class="pi">:</span> <span class="s">jvrc1</span>
 <span class="na">method</span><span class="pi">:</span> <span class="s">sensor</span>
@@ -55057,10 +55144,11 @@ gui:
     
     <div class="tab-pane show active" id="observers-encoder-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="observers-encoder-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"updateRobot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"position"</span><span class="p">:</span><span class="w"> </span><span class="s2">"encoderValues"</span><span class="p">,</span><span class="w">
@@ -55098,10 +55186,11 @@ gui:
     
     <div class="tab-pane" id="observers-encoder-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="observers-encoder-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="na">robot</span><span class="pi">:</span> <span class="s">jvrc1</span>
 <span class="na">updateRobot</span><span class="pi">:</span> <span class="s">jvrc1</span>
 <span class="na">position</span><span class="pi">:</span> <span class="s">encoderValues</span>
@@ -58514,10 +58603,11 @@ log:
     
     <div class="tab-pane show active" id="state-message-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="state-message-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
  </span><span class="nl">"WarningDebugMessage"</span><span class="p">:</span><span class="w">
  </span><span class="p">{</span><span class="w">
    </span><span class="nl">"base"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Message"</span><span class="p">,</span><span class="w">
@@ -58565,10 +58655,11 @@ log:
     
     <div class="tab-pane" id="state-message-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="state-message-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="na">WarningDebugMessage</span><span class="pi">:</span>
   <span class="na">base</span><span class="pi">:</span> <span class="s">Message</span>
   <span class="na">log</span><span class="pi">:</span> <span class="s">warning</span>
@@ -63092,10 +63183,11 @@ GUIMessage:
     
     <div class="tab-pane show active" id="state-addremovecontact-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="state-addremovecontact-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="err">//</span><span class="w"> </span><span class="err">Define</span><span class="w"> </span><span class="err">Add/RemoveContact</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">reasonable</span><span class="w"> </span><span class="err">default</span><span class="w"> </span><span class="err">values</span><span class="w">
 
   </span><span class="nl">"AddContact"</span><span class="p">:</span><span class="w">
@@ -63155,10 +63247,11 @@ GUIMessage:
     
     <div class="tab-pane" id="state-addremovecontact-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="state-addremovecontact-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="na">AddContact</span><span class="pi">:</span>
   <span class="na">base</span><span class="pi">:</span> <span class="s">AddRemoveContact</span>
   <span class="na">type</span><span class="pi">:</span> <span class="s">addContact</span>
@@ -76336,10 +76429,11 @@ AddContactCompliant:
     
     <div class="tab-pane show active" id="state-stabilizerstandingstate-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="state-stabilizerstandingstate-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"Stabilizer::Standing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"base"</span><span class="p">:</span><span class="w"> </span><span class="s2">"StabilizerStandingState"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"stiffness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
@@ -76481,10 +76575,11 @@ AddContactCompliant:
     
     <div class="tab-pane" id="state-stabilizerstandingstate-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="state-stabilizerstandingstate-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1">############################################</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1">############################################</span>
 <span class="c1"># Example use of the StabilizerStandingState</span>
 <span class="c1"># See also mc_control/fsm/states/data/StabilizerStanding.yaml for useful default states configuration</span>
 <span class="c1"># See also mc_control/samples/LIPMStabilizer/etc/LIPMStabilizer.in.yaml for a full FSM sample</span>
@@ -79901,10 +79996,11 @@ Stabilizer::GoHalfSitting:
     
     <div class="tab-pane show active" id="state-pause-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="state-pause-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
 
   </span><span class="err">//</span><span class="w"> </span><span class="err">Pause</span><span class="w"> </span><span class="mi">1</span><span class="err">s</span><span class="w">
   </span><span class="nl">"Pause_1s"</span><span class="p">:</span><span class="w">
@@ -79962,10 +80058,11 @@ Stabilizer::GoHalfSitting:
     
     <div class="tab-pane" id="state-pause-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="state-pause-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="na">Pause_1s</span><span class="pi">:</span>
   <span class="na">base</span><span class="pi">:</span> <span class="s">Pause</span>
   <span class="na">duration</span><span class="pi">:</span> <span class="m">1</span>
@@ -83911,10 +84008,11 @@ Pause_5s:
     
     <div class="tab-pane show active" id="state-grippers-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="state-grippers-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"base"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Grippers"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"grippers"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
@@ -83946,10 +84044,11 @@ Pause_5s:
     
     <div class="tab-pane" id="state-grippers-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="state-grippers-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">base</span><span class="pi">:</span> <span class="s">Grippers</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">base</span><span class="pi">:</span> <span class="s">Grippers</span>
 <span class="na">grippers</span><span class="pi">:</span>
   <span class="na">l_gripper</span><span class="pi">:</span>
     <span class="na">target</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.7</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">]</span>
@@ -87298,10 +87397,11 @@ grippers:
     
     <div class="tab-pane show active" id="state-halfsitting-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="state-halfsitting-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"base"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HalfSitting"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"stiffness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
   </span><span class="nl">"eval"</span><span class="p">:</span><span class="w"> </span><span class="mi">1e-3</span><span class="w">
@@ -87327,10 +87427,11 @@ grippers:
     
     <div class="tab-pane" id="state-halfsitting-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="state-halfsitting-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">base</span><span class="pi">:</span> <span class="s">HalfSitting</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">base</span><span class="pi">:</span> <span class="s">HalfSitting</span>
 <span class="na">stiffness</span><span class="pi">:</span> <span class="m">10</span>
 <span class="na">eval</span><span class="pi">:</span> <span class="s">0.001</span></code></pre></figure>
 
@@ -90608,10 +90709,11 @@ eval: 0.001</pre>
     
     <div class="tab-pane show active" id="state-metatasks-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="state-metatasks-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="err">//</span><span class="w"> </span><span class="err">First</span><span class="w"> </span><span class="err">example,</span><span class="w"> </span><span class="err">we</span><span class="w"> </span><span class="err">simplify</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">entries</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">sake</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">example</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="err">//</span><span class="w"> </span><span class="err">First</span><span class="w"> </span><span class="err">example,</span><span class="w"> </span><span class="err">we</span><span class="w"> </span><span class="err">simplify</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">entries</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">sake</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">example</span><span class="w">
 </span><span class="nl">"Example1"</span><span class="p">:</span><span class="w">
 </span><span class="p">{</span><span class="w">
   </span><span class="nl">"base"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MetaTasks"</span><span class="p">,</span><span class="w">
@@ -90813,10 +90915,11 @@ eval: 0.001</pre>
     
     <div class="tab-pane" id="state-metatasks-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="state-metatasks-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># First example, we simplify task entries for the sake of the example</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># First example, we simplify task entries for the sake of the example</span>
 <span class="na">Example1</span><span class="pi">:</span>
   <span class="na">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
   <span class="na">tasks</span><span class="pi">:</span>
@@ -94387,10 +94490,11 @@ Example4:
     
     <div class="tab-pane show active" id="state-parallel-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="state-parallel-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"base"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Parallel"</span><span class="p">,</span><span class="w">
   </span><span class="err">//</span><span class="w"> </span><span class="err">This</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">runs</span><span class="w"> </span><span class="err">StateA</span><span class="p">,</span><span class="w"> </span><span class="err">StateB</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">StateC</span><span class="w"> </span><span class="err">until</span><span class="w"> </span><span class="err">they</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">all</span><span class="w"> </span><span class="err">completed</span><span class="w">
   </span><span class="err">//</span><span class="w"> </span><span class="err">Its</span><span class="w"> </span><span class="err">output</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">StateC's</span><span class="w"> </span><span class="err">output</span><span class="w">
@@ -94442,10 +94546,11 @@ Example4:
     
     <div class="tab-pane" id="state-parallel-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="state-parallel-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">base</span><span class="pi">:</span> <span class="s">Parallel</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">base</span><span class="pi">:</span> <span class="s">Parallel</span>
 <span class="c1"># This state runs StateA, StateB and StateC until they are all completed</span>
 <span class="c1"># Its output is StateC's output</span>
 <span class="na">states</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">StateA</span><span class="pi">,</span> <span class="nv">StateB</span><span class="pi">,</span> <span class="nv">StateC</span><span class="pi">]</span>
@@ -98605,10 +98710,11 @@ configs:
     
     <div class="tab-pane show active" id="state-posture-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="state-posture-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"door"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"completion"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"eval"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="w">
@@ -98678,10 +98784,11 @@ configs:
     
     <div class="tab-pane" id="state-posture-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="state-posture-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="na">robot</span><span class="pi">:</span> <span class="s">door</span>
 <span class="na">completion</span><span class="pi">:</span>
   <span class="na">eval</span><span class="pi">:</span> <span class="m">0.01</span>
@@ -102179,10 +102286,11 @@ postureTask:
     
     <div class="tab-pane show active" id="state-meta-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="state-meta-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"base"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Meta"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"Managed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="nl">"StepByStep"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
@@ -102232,10 +102340,11 @@ postureTask:
     
     <div class="tab-pane" id="state-meta-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="state-meta-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">base</span><span class="pi">:</span> <span class="s">Meta</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">base</span><span class="pi">:</span> <span class="s">Meta</span>
 <span class="na">Managed</span><span class="pi">:</span> <span class="no">false</span>
 <span class="na">StepByStep</span><span class="pi">:</span> <span class="no">true</span>
 <span class="na">transitions</span><span class="pi">:</span>
@@ -102837,10 +102946,11 @@ configs:
     
     <div class="tab-pane show active" id="mc-control-generic-gripper-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-control-generic-gripper-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"opening"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w">
   </span><span class="nl">"safety"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
@@ -102874,10 +102984,11 @@ configs:
     
     <div class="tab-pane" id="mc-control-generic-gripper-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-control-generic-gripper-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">opening</span><span class="pi">:</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">opening</span><span class="pi">:</span>
   <span class="na">L_UTHUMB</span><span class="pi">:</span> <span class="m">0.3</span>
 <span class="na">safety</span><span class="pi">:</span>
   <span class="na">overCommandLimitIterN</span><span class="pi">:</span> <span class="m">5</span>
@@ -103104,10 +103215,11 @@ safety:
     
     <div class="tab-pane show active" id="mc-rbdyn-springs-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-springs-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"springsBodies"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"b0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"b1"</span><span class="p">],</span><span class="w">
   </span><span class="nl">"afterSpringsBodies"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"aB0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"aB1"</span><span class="p">],</span><span class="w">
   </span><span class="nl">"springsJoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"j0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"j1"</span><span class="p">]</span><span class="w">
@@ -103133,10 +103245,11 @@ safety:
     
     <div class="tab-pane" id="mc-rbdyn-springs-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-springs-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">springsBodies</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">b0</span><span class="pi">,</span> <span class="nv">b1</span><span class="pi">]</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">springsBodies</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">b0</span><span class="pi">,</span> <span class="nv">b1</span><span class="pi">]</span>
 <span class="na">afterSpringsBodies</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">aB0</span><span class="pi">,</span> <span class="nv">aB1</span><span class="pi">]</span>
 <span class="na">springsJoints</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">j0</span><span class="pi">,</span> <span class="nv">j1</span><span class="pi">]</span></code></pre></figure>
 
@@ -107044,10 +107157,11 @@ springsJoints: [j0, j1]</pre>
     
     <div class="tab-pane show active" id="mc-rbdyn-stabilizerconfiguration-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-stabilizerconfiguration-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"leftFootSurface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftFoot"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"rightFootSurface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RightFoot"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"friction"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span><span class="w">
@@ -107177,10 +107291,11 @@ springsJoints: [j0, j1]</pre>
     
     <div class="tab-pane" id="mc-rbdyn-stabilizerconfiguration-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-stabilizerconfiguration-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="na">leftFootSurface</span><span class="pi">:</span> <span class="s">LeftFoot</span>
 <span class="na">rightFootSurface</span><span class="pi">:</span> <span class="s">RightFoot</span>
 <span class="na">friction</span><span class="pi">:</span> <span class="m">0.7</span>
@@ -108117,10 +108232,11 @@ dcm_tracking:
     
     <div class="tab-pane show active" id="mc-rbdyn-grippersurface-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-grippersurface-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"planar"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surface"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"bodyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"body"</span><span class="p">,</span><span class="w">
@@ -108230,10 +108346,11 @@ dcm_tracking:
     
     <div class="tab-pane" id="mc-rbdyn-grippersurface-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-grippersurface-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">planar</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">planar</span>
 <span class="na">name</span><span class="pi">:</span> <span class="s">surface</span>
 <span class="na">bodyName</span><span class="pi">:</span> <span class="s">body</span>
 <span class="na">X_b_s</span><span class="pi">:</span>
@@ -120544,10 +120661,11 @@ motorMaxTorque: 5.0</pre>
     
     <div class="tab-pane show active" id="mc-rbdyn-robotmodule-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-robotmodule-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/path/to/robot"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"robot"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"urdf_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"urdf/robot.urdf"</span><span class="w">
@@ -120573,10 +120691,11 @@ motorMaxTorque: 5.0</pre>
     
     <div class="tab-pane" id="mc-rbdyn-robotmodule-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-robotmodule-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">path</span><span class="pi">:</span> <span class="s">/path/to/robot</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">path</span><span class="pi">:</span> <span class="s">/path/to/robot</span>
 <span class="na">name</span><span class="pi">:</span> <span class="s">robot</span>
 <span class="na">urdf_path</span><span class="pi">:</span> <span class="s">urdf/robot.urdf</span></code></pre></figure>
 
@@ -121316,10 +121435,11 @@ urdf_path: urdf/robot.urdf</pre>
     
     <div class="tab-pane show active" id="mc-rbdyn-contact-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-contact-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"r1Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surf1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"r2Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surf2"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"r1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
@@ -121351,10 +121471,11 @@ urdf_path: urdf/robot.urdf</pre>
     
     <div class="tab-pane" id="mc-rbdyn-contact-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-contact-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">r1Surface</span><span class="pi">:</span> <span class="s">surf1</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">r1Surface</span><span class="pi">:</span> <span class="s">surf1</span>
 <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">surf2</span>
 <span class="na">r1Index</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">r2Index</span><span class="pi">:</span> <span class="m">1</span>
@@ -121633,10 +121754,11 @@ isFixed: false</pre>
     
     <div class="tab-pane show active" id="mc-rbdyn-collision-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-collision-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"body1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b1"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"body2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"b2"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"iDist"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w">
@@ -121666,10 +121788,11 @@ isFixed: false</pre>
     
     <div class="tab-pane" id="mc-rbdyn-collision-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-collision-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">body1</span><span class="pi">:</span> <span class="s">b1</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">body1</span><span class="pi">:</span> <span class="s">b1</span>
 <span class="s">body2, b2</span>
 <span class="na">iDist</span><span class="pi">:</span> <span class="m">0.05</span>
 <span class="na">sDist</span><span class="pi">:</span> <span class="m">0.01</span>
@@ -122290,10 +122413,11 @@ damping: 0</pre>
     
     <div class="tab-pane show active" id="mc-rbdyn-robotmodulegripper-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-robotmodulegripper-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"l_gripper"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"joints"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"j0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"j1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"j2"</span><span class="p">],</span><span class="w">
   </span><span class="nl">"reverse_limits"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -122319,10 +122443,11 @@ damping: 0</pre>
     
     <div class="tab-pane" id="mc-rbdyn-robotmodulegripper-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-robotmodulegripper-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">name</span><span class="pi">:</span> <span class="s">l_gripper</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">name</span><span class="pi">:</span> <span class="s">l_gripper</span>
 <span class="na">joints</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">j0</span><span class="pi">,</span> <span class="nv">j1</span><span class="pi">,</span> <span class="nv">j2</span><span class="pi">]</span>
 <span class="na">reverse_limits</span><span class="pi">:</span> <span class="no">false</span></code></pre></figure>
 
@@ -122804,10 +122929,11 @@ reverse_limits: false</pre>
     
     <div class="tab-pane show active" id="mc-rbdyn-planarsurface-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-planarsurface-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"planar"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surface"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"bodyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"body"</span><span class="p">,</span><span class="w">
@@ -122861,10 +122987,11 @@ reverse_limits: false</pre>
     
     <div class="tab-pane" id="mc-rbdyn-planarsurface-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-planarsurface-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">planar</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">planar</span>
 <span class="na">name</span><span class="pi">:</span> <span class="s">surface</span>
 <span class="na">bodyName</span><span class="pi">:</span> <span class="s">body</span>
 <span class="na">X_b_s</span><span class="pi">:</span>
@@ -123243,10 +123370,11 @@ planarPoints:
     
     <div class="tab-pane show active" id="mc-rbdyn-forcesensor-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-forcesensor-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RightFootForceSensor"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"parentBody"</span><span class="p">:</span><span class="w"> </span><span class="s2">"r_foot"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"X_p_f"</span><span class="p">:</span><span class="w">
@@ -123284,10 +123412,11 @@ planarPoints:
     
     <div class="tab-pane" id="mc-rbdyn-forcesensor-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-forcesensor-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">name</span><span class="pi">:</span> <span class="s">RightFootForceSensor</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">name</span><span class="pi">:</span> <span class="s">RightFootForceSensor</span>
 <span class="na">parentBody</span><span class="pi">:</span> <span class="s">r_foot</span>
 <span class="na">X_p_f</span><span class="pi">:</span>
   <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span>
@@ -123518,10 +123647,11 @@ X_p_f:
     
     <div class="tab-pane show active" id="mc-rbdyn-mimic-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-mimic-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LHAND_J0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"joint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LARM_J7"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"multiplier"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
@@ -123549,10 +123679,11 @@ X_p_f:
     
     <div class="tab-pane" id="mc-rbdyn-mimic-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-mimic-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">name</span><span class="pi">:</span> <span class="s">LHAND_J0</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">name</span><span class="pi">:</span> <span class="s">LHAND_J0</span>
 <span class="na">joint</span><span class="pi">:</span> <span class="s">LARM_J7</span>
 <span class="na">multiplier</span><span class="pi">:</span> <span class="s">-1</span>
 <span class="na">offset</span><span class="pi">:</span> <span class="s">0</span></code></pre></figure>
@@ -123793,10 +123924,11 @@ offset: 0</pre>
     
     <div class="tab-pane show active" id="mc-rbdyn-robotmodulegrippersafety-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-robotmodulegrippersafety-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"percentVMax"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.25</span><span class="p">,</span><span class="w">
   </span><span class="nl">"actualCommandDiffTrigger"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.14</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="err">deg.</span><span class="w">
   </span><span class="nl">"releaseSafetyOffset"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.034</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="err">deg.</span><span class="w">
@@ -123824,10 +123956,11 @@ offset: 0</pre>
     
     <div class="tab-pane" id="mc-rbdyn-robotmodulegrippersafety-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-robotmodulegrippersafety-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">percentVMax</span><span class="pi">:</span> <span class="m">0.25</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">percentVMax</span><span class="pi">:</span> <span class="m">0.25</span>
 <span class="na">actualCommandDiffTrigger</span><span class="pi">:</span> <span class="m">0.14</span> <span class="c1"># 8 deg.</span>
 <span class="na">releaseSafetyOffset</span><span class="pi">:</span> <span class="m">0.034</span> <span class="c1"># 2 deg.</span>
 <span class="na">overCommandLimitIterN</span><span class="pi">:</span> <span class="s">5</span></code></pre></figure>
@@ -124048,10 +124181,11 @@ overCommandLimitIterN: 5</pre>
     
     <div class="tab-pane show active" id="mc-rbdyn-flexibility-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-flexibility-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"jointName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"flexJ"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"K"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"C"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
@@ -124079,10 +124213,11 @@ overCommandLimitIterN: 5</pre>
     
     <div class="tab-pane" id="mc-rbdyn-flexibility-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-flexibility-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">jointName</span><span class="pi">:</span> <span class="s">flexJ</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">jointName</span><span class="pi">:</span> <span class="s">flexJ</span>
 <span class="na">K</span><span class="pi">:</span> <span class="m">0.0</span>
 <span class="na">C</span><span class="pi">:</span> <span class="m">0.0</span>
 <span class="na">O</span><span class="pi">:</span> <span class="s">0.0</span></code></pre></figure>
@@ -124441,10 +124576,11 @@ O: 0.0</pre>
     
     <div class="tab-pane show active" id="mc-rbdyn-bodysensor-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-bodysensor-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accelerometer"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"parentBody"</span><span class="p">:</span><span class="w"> </span><span class="s2">"root"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"X_b_s"</span><span class="p">:</span><span class="w">
@@ -124482,10 +124618,11 @@ O: 0.0</pre>
     
     <div class="tab-pane" id="mc-rbdyn-bodysensor-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-bodysensor-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">name</span><span class="pi">:</span> <span class="s">accelerometer</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">name</span><span class="pi">:</span> <span class="s">accelerometer</span>
 <span class="na">parentBody</span><span class="pi">:</span> <span class="s">root</span>
 <span class="na">X_b_s</span><span class="pi">:</span>
   <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span>
@@ -124983,10 +125120,11 @@ X_b_s:
     
     <div class="tab-pane show active" id="mc-rbdyn-cylindricalsurface-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-cylindricalsurface-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"planar"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surface"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"bodyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"body"</span><span class="p">,</span><span class="w">
@@ -125032,10 +125170,11 @@ X_b_s:
     
     <div class="tab-pane" id="mc-rbdyn-cylindricalsurface-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-cylindricalsurface-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">planar</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">planar</span>
 <span class="na">name</span><span class="pi">:</span> <span class="s">surface</span>
 <span class="na">bodyName</span><span class="pi">:</span> <span class="s">body</span>
 <span class="na">X_b_s</span><span class="pi">:</span>
@@ -125204,10 +125343,11 @@ width: 1.0</pre>
     
     <div class="tab-pane show active" id="mc-rbdyn-polygoninterpolator-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-polygoninterpolator-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"tuple_pairs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span><span class="w"> </span><span class="p">],</span><span class="w">
     </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span><span class="w"> </span><span class="p">],</span><span class="w">
@@ -125239,10 +125379,11 @@ width: 1.0</pre>
     
     <div class="tab-pane" id="mc-rbdyn-polygoninterpolator-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-polygoninterpolator-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">tuple_pairs</span><span class="pi">:</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">tuple_pairs</span><span class="pi">:</span>
   <span class="pi">-</span> <span class="pi">[</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">],</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span> <span class="pi">]</span>
   <span class="pi">-</span> <span class="pi">[</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">],</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span> <span class="pi">]</span>
   <span class="pi">-</span> <span class="pi">[</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">],</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span> <span class="pi">]</span>
@@ -125437,10 +125578,11 @@ width: 1.0</pre>
     
     <div class="tab-pane show active" id="mc-rbdyn-plane-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-plane-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"normal"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span><span class="w">
   </span><span class="nl">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
@@ -125464,10 +125606,11 @@ width: 1.0</pre>
     
     <div class="tab-pane" id="mc-rbdyn-plane-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-plane-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">normal</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">1.0</span><span class="pi">]</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">normal</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">1.0</span><span class="pi">]</span>
 <span class="na">offset</span><span class="pi">:</span> <span class="s">0.0</span></code></pre></figure>
 
   
@@ -126097,10 +126240,11 @@ offset: 0.0</pre>
     
     <div class="tab-pane show active" id="mc-rbdyn-s-objectptr-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-s-objectptr-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="err">//</span><span class="w"> </span><span class="err">Box</span><span class="w"> </span><span class="err">example</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="err">//</span><span class="w"> </span><span class="err">Box</span><span class="w"> </span><span class="err">example</span><span class="w">
 </span><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"box"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"width"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w">
@@ -126154,10 +126298,11 @@ offset: 0.0</pre>
     
     <div class="tab-pane" id="mc-rbdyn-s-objectptr-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-s-objectptr-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># Box example</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># Box example</span>
 <span class="na">type</span><span class="pi">:</span> <span class="s">box</span>
 <span class="na">width</span><span class="pi">:</span> <span class="m">0.1</span>
 <span class="na">height</span><span class="pi">:</span> <span class="m">0.2</span>
@@ -126812,10 +126957,11 @@ radius: 0.1</pre>
     
     <div class="tab-pane show active" id="mc-rbdyn-base-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-base-examplejsonjsonTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"root"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"X_0_s"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
@@ -126867,10 +127013,11 @@ radius: 0.1</pre>
     
     <div class="tab-pane" id="mc-rbdyn-base-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-base-exampleyamlyamlTab">
       
+
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">name</span><span class="pi">:</span> <span class="s">root</span>
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">name</span><span class="pi">:</span> <span class="s">root</span>
 <span class="na">X_0_s</span><span class="pi">:</span>
   <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span>
              <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span>
@@ -127180,25 +127327,27 @@ $(document).ready(function()
     </div>
 
     <div class="container-fluid">
-      <footer>
-        <hr>
-        <div class="row">
-          <div class="col-8 offset-lg-2 col-lg-6">
-            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
-          </div>
-          <div class="col-4 col-lg-2 text-right">
-            <a href="/mc_rtc/credits.html">Credits</a>
-          </div>
-        </div>
-      </footer>
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/credits.html">Credits</a>
+      </div>
     </div>
+  </footer>
+</div>
+
   </body>
 
   <script type="text/javascript">
-  $(document).ready(function()
-  {
-    new ClipboardJS('.copy-button');
-  });
-  </script>
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
 
 </html>

@@ -1,0 +1,770 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - LIPMスタビライザの利用 - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/recipes/lipm-stabilizer.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><strong>LIPMスタビライザの利用</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#概要">概要</a></li>
+<li class="toc-entry toc-h2"><a href="#スタビライザーの概要">スタビライザーの概要</a></li>
+<li class="toc-entry toc-h2"><a href="#状態の観測">状態の観測</a></li>
+<li class="toc-entry toc-h2"><a href="#ゲインの設定">ゲインの設定</a></li>
+<li class="toc-entry toc-h2"><a href="#スタビライザーを使用するユーザーが定義する場合">スタビライザーを使用する（ユーザーが定義する場合）</a></li>
+<li class="toc-entry toc-h2"><a href="#スタビライザーを使用する有限オートマトンを使用する場合">スタビライザーを使用する（有限オートマトンを使用する場合）</a></li>
+<li class="toc-entry toc-h2"><a href="#lipmstabilizerを使用した有限オートマトンの例">LIPMStabilizerを使用した有限オートマトンの例</a></li>
+<li class="toc-entry toc-h2"><a href="#他の有限オートマトン状態によるスタビライザーの操作">他の有限オートマトン状態によるスタビライザーの操作</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>LIPMスタビライザの利用</h1>
+        
+
+        
+<h2 id="概要">概要</h2>
+
+<p>このチュートリアルで示すスタビライザイーは、元々、Stéphane Caron博士の<a href="https://github.com/stephane-caron/lipm_walking_controller">LIPM歩行コントローラー</a>に実装されたものです。この実装は、階段上りや荒れ地での移動などの歩行制御で重点的に利用されています。特に、エアバスの工場の製造現場で利用されている事例は注目に値します。<code class="language-plaintext highlighter-rouge">mc_tasks::lipm_stabilizer::StabilizerTask</code>で記述されている実装では、Caron博士のオリジナルの実装で記述されているメソッドが組み込まれています。この安定化アルゴリズムは、概念的にはオリジナルのアルゴリズムと比べて大きな違いはありません。現在、歩行制御は別の<a href="https://github.com/jrl-umi3218/lipm_walking_controller">コントローラー</a>で提供されています。</p>
+
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/vFCFKAunsYM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+</div>
+
+<h2 id="スタビライザーの概要">スタビライザーの概要</h2>
+
+<p>安定化アルゴリズムの詳細については、2019年3月にカナダのモントリオールで開催されたICRAにおいてStéphane Caron、Abderrahmane Kheddar、Olivier Tempierによって発表されたオリジナルの論文<a href="https://scaron.info/publications/icra-2019.html">Stair Climbing Stabilization of the HRP-4 Humanoid Robot using Whole-body Admittance Control（全身のアドミッタンス制御を用いたHRP-4ヒューマノイドロボットの階段上昇動作の安定化）</a>を参照してください。</p>
+
+<p>ここで説明するスタビライザーは、<code class="language-plaintext highlighter-rouge">mc_tasks::lipm_stabilizer::StabilizerTask</code>に<code class="language-plaintext highlighter-rouge">MetaTask</code>として実装されています。すなわち、以下のタスクを管理するタスクとして実装されています。</p>
+
+<ul>
+  <li>スタビライザーによって計算された質量中心目標位置に追従する<code class="language-plaintext highlighter-rouge">CoMTask</code></li>
+  <li>ロボットの左右の足の下における目標レンチに追従する2つの<code class="language-plaintext highlighter-rouge">CoPTask</code></li>
+  <li>上体の挙動を正規化するために腰と胴体をそれぞれ制御する2つの<code class="language-plaintext highlighter-rouge">OrientationTasks</code></li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">StabilizerTask</code>は、実際のロボットシステムが線形倒立振子モデルに基づき可能な限り最適な動作を行えるように、目標を計算してこれらのタスクに与えます。したがって、動的な移動経路を安定させるには、以下の入力をスタビライザーに与える必要があります。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">CoM</code>の目標位置</li>
+  <li><code class="language-plaintext highlighter-rouge">CoM</code>の目標速度</li>
+  <li><code class="language-plaintext highlighter-rouge">CoM</code>の目標加速度</li>
+  <li><code class="language-plaintext highlighter-rouge">ZMP</code>の目標位置</li>
+</ul>
+
+<p>これらをすべて参照する場合、以下のように記述されます。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">StabilizerTask</span><span class="o">::</span><span class="n">target</span><span class="p">(</span>
+            <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&amp;</span> <span class="n">com</span><span class="p">,</span>
+            <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&amp;</span> <span class="n">comd</span><span class="p">,</span>
+            <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&amp;</span> <span class="n">comdd</span><span class="p">,</span>
+            <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&amp;</span> <span class="n">zmp</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>本フレームワークでは、振子の静的な目標位置を与えるための便利な補助関数が用意されています。なお、この補助関数は、ロボットを所定の姿勢で安定させる場合にのみ有効に機能することに注意してください。質量中心を動的に動かす場合はこの補助関数を使用しないでください。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">StabilizerTask</span><span class="o">::</span><span class="n">staticTarget</span><span class="p">(</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&amp;</span> <span class="n">com</span><span class="p">,</span> <span class="kt">double</span> <span class="n">zmpHeight</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Iこの場合、有効な基準状態はユーザーが与える必要があります。歩行の場合、動的な質量中心の位置は、一般にモデル予測コントローラー（MPC）によって計算されます。これにより、足を踏み出している間の動的な安定性が確保されます。</p>
+
+<h2 id="状態の観測">状態の観測</h2>
+
+<p>スタビライザーの目的は、基準となる振子の目標状態を追いかけるように実システムを制御することです。これを実現するには、以下に示す実ロボットの状態を観測する必要があります。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">CoM</code>の位置</li>
+  <li><code class="language-plaintext highlighter-rouge">CoM</code>の速度</li>
+  <li>接触面のレンチ</li>
+</ul>
+
+<p>必要な物理量を推定するには、適切な<a href="observers.html">観測器パイプライン</a>をセットアップする必要があります。以下のパイプラインを使用することができます。これらはオリジナルの実装と同じ機能を実現しています。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Observes real robot state</span>
+<span class="na">RunObservers</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Encoder</span><span class="pi">,</span> <span class="nv">KinematicInertial</span><span class="pi">]</span>
+<span class="c1"># Updates the Controller::realRobot() instance from the observed state</span>
+<span class="na">UpdateObservers</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Encoder</span><span class="pi">,</span> <span class="nv">KinematicInertial</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Encoder</code>観測器は、エンコーダーの測定値に基づいて、ボディの位置と速度を計算します。</li>
+  <li><code class="language-plaintext highlighter-rouge">KinematicInertial</code>は、IMUの測定値と、ロボットの両足の間にある基準アンカーフレームに基づいて、浮遊ベースの姿勢と速度を計算します。</li>
+</ul>
+
+<p><strong>注:</strong> 有効な連続アンカーフレームはユーザーが与える必要があります。このスタビライザーの実装では、以下の関数を使用して簡単にアンカーフレームを設定できます。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span> <span class="n">anchorFrame</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span> <span class="n">anchorFrameReal</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>今のところ、ループ処理が実行されるたびに、以下の関数を呼び出してこれらの値を明示的に<code class="language-plaintext highlighter-rouge">KinematicInertial</code>観測器に渡す必要があります。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mc_controller</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// Controller's instance</span>
+<span class="n">mc_tasks</span><span class="o">::</span><span class="n">lipm_stabilizer</span><span class="o">::</span><span class="n">StabilizerTask</span> <span class="o">&amp;</span> <span class="n">stabilizer</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// Stabilizer instance</span>
+<span class="n">ctl</span><span class="p">.</span><span class="n">anchorFrame</span><span class="p">(</span><span class="n">stabilizer</span><span class="p">.</span><span class="n">anchorFrame</span><span class="p">());</span>
+<span class="n">ctl</span><span class="p">.</span><span class="n">anchorFrameReal</span><span class="p">(</span><span class="n">stabilizer</span><span class="p">.</span><span class="n">anchorFrameReal</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>観測器パイプラインは、これらの値が渡されると、<code class="language-plaintext highlighter-rouge">realRobot()</code>の予測状態を自動的に更新します。スタビライザータスクは、更新された予測状態を使用して、タスクの目標を計算します。</p>
+
+<h2 id="ゲインの設定">ゲインの設定</h2>
+
+<p>以下のパラメーターによって、振子の目標状態と観測状態とのずれに対してスタビライザーがどのように応答するかが決定されます。これらのゲインの調整方法については、<a href="https://jrl-umi3218.github.io/lipm_walking_controller/doxygen/HEAD/stabilizer.html">Stephaneのドキュメント</a>を参照してください。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####</span>
+<span class="c1"># Sample stabilizer configuration for the JVRC robot</span>
+<span class="c1"># The most important entries are the</span>
+<span class="c1"># - dcm_tracking: controls how the stabilizer reacts to perturbation of the DCM</span>
+<span class="c1"># - admittance: controls the contact admittance</span>
+<span class="c1">###</span>
+<span class="c1"># Sole-floor friction coefficient</span>
+<span class="na">friction</span><span class="pi">:</span> <span class="m">0.7</span>
+<span class="c1"># Configuration of the tasks managed by the stabilizer</span>
+<span class="na">tasks</span><span class="pi">:</span>
+  <span class="na">com</span><span class="pi">:</span>
+    <span class="na">stiffness</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1000</span><span class="pi">,</span> <span class="nv">1000</span><span class="pi">,</span> <span class="nv">100</span><span class="pi">]</span>
+    <span class="na">weight</span><span class="pi">:</span> <span class="m">1000</span>
+    <span class="na">active_joints</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Root</span><span class="pi">,</span>
+                    <span class="nv">R_HIP_Y</span><span class="pi">,</span> <span class="nv">R_HIP_R</span><span class="pi">,</span> <span class="nv">R_HIP_P</span><span class="pi">,</span> <span class="nv">R_KNEE</span><span class="pi">,</span> <span class="nv">R_ANKLE_P</span><span class="pi">,</span> <span class="nv">R_ANKLE_R</span><span class="pi">,</span>
+                    <span class="nv">L_HIP_Y</span><span class="pi">,</span> <span class="nv">L_HIP_R</span><span class="pi">,</span> <span class="nv">L_HIP_P</span><span class="pi">,</span> <span class="nv">L_KNEE</span><span class="pi">,</span> <span class="nv">L_ANKLE_P</span><span class="pi">,</span> <span class="nv">L_ANKLE_R</span><span class="pi">]</span>
+    <span class="na">height</span><span class="pi">:</span> <span class="m">0.85</span>
+  <span class="na">contact</span><span class="pi">:</span>
+    <span class="na">damping</span><span class="pi">:</span> <span class="m">300</span>
+    <span class="na">stiffness</span><span class="pi">:</span> <span class="m">1</span>
+    <span class="na">weight</span><span class="pi">:</span> <span class="m">10000</span>
+  <span class="na">pelvis</span><span class="pi">:</span>
+    <span class="na">stiffness</span><span class="pi">:</span> <span class="m">10</span>
+    <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
+  <span class="na">torso</span><span class="pi">:</span>
+    <span class="na">stiffness</span><span class="pi">:</span> <span class="m">10</span>
+    <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
+    <span class="na">pitch</span><span class="pi">:</span> <span class="m">0</span>
+<span class="na">fdqp_weights</span><span class="pi">:</span>
+  <span class="na">net_wrench</span><span class="pi">:</span> <span class="m">10000</span>
+  <span class="na">ankle_torque</span><span class="pi">:</span> <span class="m">100</span>
+  <span class="na">pressure</span><span class="pi">:</span> <span class="m">1</span>
+<span class="na">vdc</span><span class="pi">:</span>
+  <span class="na">frequency</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">stiffness</span><span class="pi">:</span> <span class="m">1000</span>
+<span class="na">admittance</span><span class="pi">:</span>
+  <span class="na">cop</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.01</span><span class="pi">,</span> <span class="nv">0.01</span><span class="pi">]</span>
+  <span class="na">dfz</span><span class="pi">:</span> <span class="m">0.0001</span>
+  <span class="na">dfz_damping</span><span class="pi">:</span> <span class="m">0</span>
+<span class="na">dcm_tracking</span><span class="pi">:</span>
+  <span class="na">gains</span><span class="pi">:</span>
+    <span class="na">prop</span><span class="pi">:</span> <span class="m">5.0</span>
+    <span class="na">integral</span><span class="pi">:</span> <span class="m">10</span>
+    <span class="na">deriv</span><span class="pi">:</span> <span class="m">0.5</span>
+  <span class="na">derivator_time_constant</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">integrator_time_constant</span><span class="pi">:</span> <span class="m">10</span>
+
+<span class="c1"># If you are using the same configuration file with different robots, you can provide per-robot configuration as well</span>
+<span class="na">jvrc1</span><span class="pi">:</span>
+  <span class="na">admittance</span><span class="pi">:</span>
+    <span class="na">cop</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.02</span><span class="pi">,</span> <span class="nv">0.02</span><span class="pi">]</span>
+
+</code></pre></div></div>
+
+<p>これは難しく見えるかもしれません。でも心配は要りません。通常、新しいロボットのスタビライザーを調整するとき以外は、これらのゲインを明示的に指定する必要はありません。<code class="language-plaintext highlighter-rouge">RobotModule</code>にはデフォルトのスタビライザーの設定が用意されており、コントローラーから以下のようにアクセスできます。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">lipm_stabilizer</span><span class="o">::</span><span class="n">StabilizerConfiguration</span> <span class="n">stabiConf</span> <span class="o">=</span> <span class="n">robot</span><span class="p">().</span><span class="n">module</span><span class="p">().</span><span class="n">defaultLIPMStabilizerConfiguration</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>また、設定からタスクを簡単に読み込むことができます</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="n">stabilizerTask</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="o">::</span><span class="n">MetaTaskLoader</span><span class="o">::</span><span class="n">load</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">lipm_stabilizer</span><span class="o">::</span><span class="n">StabilizerTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ctl</span><span class="p">.</span><span class="n">solver</span><span class="p">(),</span> <span class="n">config</span><span class="p">);</span>
+<span class="n">ctl</span><span class="p">.</span><span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">stabilizerTask</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>このとき、スタビライザーは以下のように設定されます。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">RobotModule::defaultLIPMStabilizerConfiguration()</code>で定義されているデフォルトの設定。<code class="language-plaintext highlighter-rouge">mc_rtc</code>でサポートされているすべての<a href="/mc_rtc/jp/robots.html">ロボット</a>について、有効な設定が用意されています。</li>
+  <li>YAMLで記述されたタスクの設定</li>
+  <li>特定のロボットについて、ロボット固有の設定をYAMLで記述することで、これらの値を変更することができます。</li>
+</ul>
+
+<p>YAML形式の設定の詳細については、<a href="../../json.html#MetaTask/LIPMStabilizerTask">JSONスキーマ</a>を参照してください。</p>
+
+<h2 id="スタビライザーを使用するユーザーが定義する場合">スタビライザーを使用する（ユーザーが定義する場合）</h2>
+
+<p>独自のコントローラー内にスタビライザータスクを作成するには、<code class="language-plaintext highlighter-rouge">mc_tasks::lipm_stabilizer::StabilizerTask</code>を実体化して以下のように記述する必要があります。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Load default configuration from robot module</span>
+<span class="k">auto</span> <span class="n">stabiConf</span> <span class="o">=</span> <span class="n">robot</span><span class="p">().</span><span class="n">module</span><span class="p">().</span><span class="n">defaultLIPMStabilizerConfiguration</span><span class="p">();</span>
+<span class="c1">// Create the stabilizer task</span>
+<span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">lipm_stabilizer</span><span class="o">::</span><span class="n">StabilizerTask</span><span class="o">&gt;</span><span class="p">(</span>
+          <span class="n">solver</span><span class="p">().</span><span class="n">robots</span><span class="p">(),</span>
+          <span class="n">solver</span><span class="p">().</span><span class="n">realRobots</span><span class="p">(),</span>
+          <span class="n">robotIndex</span><span class="p">,</span>
+          <span class="n">stabiConf</span><span class="p">.</span><span class="n">leftFootSurface</span><span class="p">,</span>
+          <span class="n">stabiConf</span><span class="p">.</span><span class="n">rightFootSurface</span><span class="p">,</span>
+          <span class="n">stabiConf</span><span class="p">.</span><span class="n">torsoBodyName</span><span class="p">,</span>
+          <span class="n">solver</span><span class="p">().</span><span class="n">dt</span><span class="p">());</span>
+<span class="c1">// Reset the task targets and default configuration</span>
+<span class="n">t</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
+<span class="c1">// Apply stabilizer configuration (optional, if not provided the default configuration from the RobotModule will be used)</span>
+<span class="n">t</span><span class="o">-&gt;</span><span class="n">configure</span><span class="p">(</span><span class="n">stabiConf</span><span class="p">);</span>
+<span class="c1">// Set contacts (optional, the stabilizer will be configured in double support using the current foot pose as target for each contact by default)</span>
+<span class="n">t</span><span class="o">-&gt;</span><span class="n">setContacts</span><span class="p">({</span><span class="n">ContactState</span><span class="o">::</span><span class="n">Left</span><span class="p">,</span> <span class="n">ContactState</span><span class="o">::</span><span class="n">Right</span><span class="p">});</span>
+</code></pre></div></div>
+
+<p>また、必要に応じて<code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>オブジェクトから追加の設定と目標を読み込みます。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Load default configuration from robot module</span>
+<span class="k">auto</span> <span class="n">stabiConf</span> <span class="o">=</span> <span class="n">robot</span><span class="p">().</span><span class="n">module</span><span class="p">().</span><span class="n">defaultLIPMStabilizerConfiguration</span><span class="p">();</span>
+<span class="c1">// mc_rtc::Configuration object containing valid stabilizer configuration (see JSON schema documentation)</span>
+<span class="k">auto</span> <span class="n">conf</span> <span class="o">=</span> <span class="p">...</span>
+<span class="c1">// Optional: Load additional configuration from an mc_rtc::Configuration object</span>
+<span class="n">stabiConf</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
+<span class="c1">// Create the stabilizer task</span>
+<span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">lipm_stabilizer</span><span class="o">::</span><span class="n">StabilizerTask</span><span class="o">&gt;</span><span class="p">(</span>
+          <span class="n">solver</span><span class="p">().</span><span class="n">robots</span><span class="p">(),</span>
+          <span class="n">solver</span><span class="p">().</span><span class="n">realRobots</span><span class="p">(),</span>
+          <span class="n">robotIndex</span><span class="p">,</span>
+          <span class="n">stabiConf</span><span class="p">.</span><span class="n">leftFootSurface</span><span class="p">,</span>
+          <span class="n">stabiConf</span><span class="p">.</span><span class="n">rightFootSurface</span><span class="p">,</span>
+          <span class="n">stabiConf</span><span class="p">.</span><span class="n">torsoBodyName</span><span class="p">,</span>
+          <span class="n">solver</span><span class="p">().</span><span class="n">dt</span><span class="p">());</span>
+<span class="c1">// Reset the task</span>
+<span class="n">t</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
+<span class="c1">// Apply stabilizer configuration</span>
+<span class="n">t</span><span class="o">-&gt;</span><span class="n">configure</span><span class="p">(</span><span class="n">stabiConf</span><span class="p">);</span>
+<span class="c1">// Load additional properties from configuration (contact targets, com target, etc)</span>
+<span class="n">t</span><span class="o">-&gt;</span><span class="n">load</span><span class="p">(</span><span class="n">solver</span><span class="p">,</span> <span class="n">config</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>接触面と目標が指定されていない場合、デフォルトでは、両足支持の状態でタスクが起動し、制御対象ロボットの現在の足の姿勢と質量中心の位置を維持するように制御されます。<code class="language-plaintext highlighter-rouge">StabilizerTask::target(com, comd, comdd, zmp)</code>を使用することで、スタビライザーに目標を与えることができます（上記を参照）。</p>
+
+<h2 id="スタビライザーを使用する有限オートマトンを使用する場合">スタビライザーを使用する（有限オートマトンを使用する場合）</h2>
+
+<p>先のセクションでは、スタビライザーの概要、スタビライザーの作成方法、スタビライザーのゲインの設定方法について説明しました。スタビライザーを使用するには、適切な接触面モード（左足支持、右足支持、両足支持）を選択し、有効な基準状態を与えます。また、スタビライザーをサポートする機能として、ほとんどの事例に対応可能な<code class="language-plaintext highlighter-rouge">FSM</code>機能が用意されています。</p>
+
+<p>デフォルトの有限オートマトン状態<code class="language-plaintext highlighter-rouge">StabilizerStandingState</code>が用意されています。この状態を実行すると、設定に基づきスタビライザータスクが自動的に生成され、<code class="language-plaintext highlighter-rouge">CoM</code>と<code class="language-plaintext highlighter-rouge">Contacts</code>に関するシンプルな目標が与えられます。また、シンプルなばね・ダンパーモデルに基づき質量中心の移動経路が計算され、LIPMモデルに基づき振子の動的な基準状態が計算されます。この基準状態は、タイムステップごとにスタビライザーに与えられます。</p>
+
+<p><code class="language-plaintext highlighter-rouge">YAML</code>を使用して、以下のように状態を設定できます。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">##</span>
+<span class="c1"># This state keeps the robot standing at it's current position in double support</span>
+<span class="c1">##</span>
+<span class="s">Stabilizer::Standing:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">StabilizerStandingState</span>
+  <span class="s"># This stiffness controls the spring-damper computation of the reference CoM position</span>
+  <span class="s"># damping is automatically computed as 2*sqrt(stiffness)</span>
+  <span class="s">stiffness</span><span class="pi">:</span> <span class="m">5</span>
+  <span class="c1"># StabilizerTask configuration (see previous section)</span>
+  <span class="na">StabilizerConfig</span><span class="pi">:</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s">lipm_stabilizer</span>
+    <span class="na">leftFootSurface</span><span class="pi">:</span> <span class="s">LeftFootCenter</span>
+    <span class="na">rightFootSurface</span><span class="pi">:</span> <span class="s">RightFootCenter</span>
+    <span class="na">enabled</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">contacts</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Left</span><span class="pi">,</span> <span class="nv">Right</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>この状態を使用すると、質量中心の移動（または所定の位置への質量中心の固定）が非常に簡単に行えます。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">##</span>
+<span class="c1"># Make the CoM move to a point centered above both of the robot's feet contact</span>
+<span class="c1">#</span>
+<span class="c1"># Completion:</span>
+<span class="c1"># - OK when the dcm reaches the provided threshold</span>
+<span class="c1">##</span>
+<span class="s">Stabilizer::GoCenter:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">Stabilizer::Standing</span>
+  <span class="s">above</span><span class="pi">:</span> <span class="s">Center</span>
+  <span class="s">completion</span><span class="pi">:</span>
+    <span class="na">dcmEval</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.005</span><span class="pi">,</span> <span class="nv">0.005</span><span class="pi">,</span> <span class="nv">0.05</span><span class="pi">]</span>
+
+<span class="c1">##</span>
+<span class="c1"># Make the CoM move to a point above the left foot ankle</span>
+<span class="c1">##</span>
+<span class="s">Stabilizer::GoLeft:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">Stabilizer::GoCenter</span>
+  <span class="s">above</span><span class="pi">:</span> <span class="s">LeftAnkle</span>
+
+<span class="c1">##</span>
+<span class="c1"># Make the CoM move to a point above the right foot ankle</span>
+<span class="c1">##</span>
+<span class="s">Stabilizer::GoRight:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">Stabilizer::GoLeft</span>
+  <span class="s">above</span><span class="pi">:</span> <span class="s">RightAnkle</span>
+</code></pre></div></div>
+
+<p>よく使われる動作に関する状態（上記の状態も含む）が定義されたシンプルなライブラリが、<code class="language-plaintext highlighter-rouge">mc_control/fsm/states/data/StabilizerStanding.yaml</code>に用意されています。これらの状態を他の状態と同時に実行することで、次のセクションで説明するようなより複雑な動作を行わせることができます。</p>
+
+<h2 id="lipmstabilizerを使用した有限オートマトンの例">LIPMStabilizerを使用した有限オートマトンの例</h2>
+
+<p>スタビライザーを実際にお使いになる前に、サンプルコントローラー<code class="language-plaintext highlighter-rouge">LIPMStabilizer</code>を参照することを推奨します。このコントローラーをテストするには、<code class="language-plaintext highlighter-rouge">mc_rtc.yaml</code>設定ファイルに以下の記述を追加します。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Enabled</span><span class="pi">:</span> <span class="s">LIPMStabilizer</span>
+</code></pre></div></div>
+
+<p>そして、動力学的シミュレーションをサポートしているインターフェイス（<code class="language-plaintext highlighter-rouge">mc_vrep</code>や<code class="language-plaintext highlighter-rouge">choreonoid</code>など）を実行します。デフォルトの有限オートマトンでは、質量中心を左右に動かすことができます。また、以下の有限オートマトンが用意されています。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Stabilizer::Standing</code> : 現在観測されている位置に質量中心を固定します。この状態が実行されている間、GUIを使用して、<code class="language-plaintext highlighter-rouge">Left</code>（左足）のくるぶしと<code class="language-plaintext highlighter-rouge">Right</code>（右足）のくるぶしの間や他の位置に質量中心を動かすことができます。[Tasks（タスク）]の[Stabilizer（スタビライザー）]タブを開くと、スタビライザーのゲインの確認や変更が行えます。また、[Debug（デバッグ）]タブでは、スタビライザーの動作を可視化するライブプロットを追加できます。</li>
+  <li><code class="language-plaintext highlighter-rouge">AlternateFeetLifting</code> : 左右の足を交互に持ち上げます。この有限オートマトンでは、基本的に、<code class="language-plaintext highlighter-rouge">StabilizerStandingState</code>による準静的動作が行われます。まず、左足（または右足）のくるぶしの上に質量中心が移され、片足で立つようにスタビライザーが設定されます。それと同時に、右足（または左足）をスイングするタスクが実行されます（足を上げるときには<code class="language-plaintext highlighter-rouge">SurfaceTransform</code>が実行され、足を下ろすときには<code class="language-plaintext highlighter-rouge">AdmittanceTask</code>が実行されます）。</li>
+  <li><code class="language-plaintext highlighter-rouge">AlternateFeetLiftingManual</code>: 上記と同じ動作を行いますが、状態遷移はユーザーによってトリガーされます。これは、スタビライザーの動作を調整するのに便利です。</li>
+  <li><code class="language-plaintext highlighter-rouge">StepForward</code>: 準静的動作を使用して、前方<code class="language-plaintext highlighter-rouge">20cm</code>の地点に足を一歩踏み出します。実際のロボットで使用する場合、スイングする足の移動経路は単にスプライン曲線となり、スイング前後の衝撃に対する処理は行われないことに注意してください。</li>
+  <li><code class="language-plaintext highlighter-rouge">StepBackward</code>: 準静的動作を使用して、後方<code class="language-plaintext highlighter-rouge">10cm</code>の地点に足を一歩踏み出します。</li>
+</ul>
+
+<h2 id="他の有限オートマトン状態によるスタビライザーの操作">他の有限オートマトン状態によるスタビライザーの操作</h2>
+
+<p>スタビライザーの状態には、<a href="datastore.html">データストア</a>を使用して他の状態を設定するためのさまざまなコールバック関数が用意されています。以下の表に、利用可能なコールバックを示します。</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">名前</th>
+      <th scope="col">型</th>
+      <th scope="col">説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>StabilizerStandingState::getCoMTarget</td>
+      <td><pre>const Eigen::Vector3d &amp; ()</pre></td>
+      <td>スタビライザーによって使用される質量中心ターゲットを返す</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::setCoMTarget</td>
+      <td><pre>void (const Eigen::Vector3d &amp;)</pre></td>
+      <td>スタビライザーによって使用される質量中心ターゲットを変更する</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::getStiffness</td>
+      <td><pre>double ()</pre></td>
+      <td>質量中心の追従剛性を返す</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::setStiffness</td>
+      <td><pre>void (double)</pre></td>
+      <td>質量中心の追従剛性を変更する。<br />また、減衰値を2×(剛性の平方根)に設定する</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::getDamping</td>
+      <td><pre>double ()</pre></td>
+      <td>質量中心の追従減衰値を返す</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::setDamping</td>
+      <td><pre>void (double)</pre></td>
+      <td>質量中心の追従減衰値を変更する</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::setCoMWeight</td>
+      <td><pre>void (double)</pre></td>
+      <td>質量中心タスクの重みを変更する</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::setCoMStiffness</td>
+      <td><pre>void (const Eigen::Vector3d &amp;)</pre></td>
+      <td>質量中心タスクの剛性を変更する</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::setPelvisWeight</td>
+      <td><pre>void (double)</pre></td>
+      <td>骨盤制御タスクの重みを変更する</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::setPelvisStiffness</td>
+      <td><pre>void (double)</pre></td>
+      <td>骨盤制御タスクの剛性を変更する</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::setTorsoWeight</td>
+      <td><pre>void (double)</pre></td>
+      <td>胴体制御タスクの重みを変更する</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::setTorsoStiffness</td>
+      <td><pre>void (double)</pre></td>
+      <td>胴体制御タスクの剛性を変更する</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::getConfiguration</td>
+      <td><pre>lipm_stabilizer::StabilizerConfiguration ()</pre></td>
+      <td>スタビライザーの設定を返す</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::setConfiguration</td>
+      <td><pre>void (const lipm_stabilizer::StabilizerConfiguration &amp;)</pre></td>
+      <td>スタビライザーの設定を定義する</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>例:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Adds a GUI element to the controller instance ctl, providing the ability to read and modify the stiffness of the stabilizer</span>
+<span class="c1">// This may for instance be used from another FSM state running in parallel with the StabilizerStandingState.</span>
+<span class="n">ctl</span><span class="p">.</span><span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addElement</span><span class="p">({</span><span class="s">"DatastoreExample"</span><span class="p">},</span>
+    <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">NumberInput</span><span class="p">(</span><span class="s">"Stiffness"</span><span class="p">,</span>
+      <span class="p">[</span><span class="o">&amp;</span><span class="n">ctl</span><span class="p">]()</span>
+      <span class="p">{</span>
+        <span class="k">return</span> <span class="n">ctl</span><span class="p">.</span><span class="n">datastore</span><span class="p">().</span><span class="n">call</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"StabilizerStandingState::getStiffness"</span><span class="p">);</span>
+      <span class="p">},</span>
+      <span class="p">[</span><span class="o">&amp;</span><span class="n">ctl</span><span class="p">](</span><span class="kt">double</span> <span class="n">K</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">ctl</span><span class="p">.</span><span class="n">datastore</span><span class="p">().</span><span class="n">call</span><span class="p">(</span><span class="s">"StabilizerStandingState::setStiffness"</span><span class="p">,</span> <span class="n">K</span><span class="p">);</span>
+      <span class="p">}));</span>
+</code></pre></div></div>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">次のチュートリアル: 物体速度の拘束</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

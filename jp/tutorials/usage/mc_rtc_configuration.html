@@ -1,0 +1,643 @@
+
+
+
+
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - <code>mc_rtc::Configuration</code> 設定 - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><strong><code>mc_rtc::Configuration</code> 設定</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#設定からデータを読み取る">設定からデータを読み取る</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#厳格なアクセス">厳格なアクセス</a></li>
+<li class="toc-entry toc-h4"><a href="#条件付きの厳格なアクセス">条件付きの厳格なアクセス</a></li>
+<li class="toc-entry toc-h4"><a href="#デフォルトのアクセス">デフォルトのアクセス</a></li>
+<li class="toc-entry toc-h4"><a href="#サブセクションへのアクセス">サブセクションへのアクセス</a></li>
+<li class="toc-entry toc-h4"><a href="#pythonの場合の相違点">Pythonの場合の相違点</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#mc_rtcconfigurationオブジェクトにデータを書き込む">mc_rtc::Configurationオブジェクトにデータを書き込む</a></li>
+<li class="toc-entry toc-h3"><a href="#サポートされている型">サポートされている型</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#型の組み合わせ">型の組み合わせ</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#独自の型のサポート">独自の型のサポート</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1><code>mc_rtc::Configuration</code> 設定</h1>
+        
+
+        
+<p>このページでは以下の情報を提供します。</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>オブジェクトからデータを読み取る方法</li>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>オブジェクトにデータを書き込む方法</li>
+  <li>デフォルトでC++/Pythonのどの型がサポートされているか</li>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>との間でC++オブジェクトの読み込み・保存を行う独自の関数を記述する方法</li>
+</ol>
+
+<p>このページの例で使用されている<code class="language-plaintext highlighter-rouge">config</code>は、C++の例では<code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>型のC++オブジェクト、Pythonの例では<code class="language-plaintext highlighter-rouge">mc_rtc.Configuration</code>型のPythonオブジェクトであると仮定しています。</p>
+
+<p>###データソース</p>
+
+<p><code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>は、JSONオブジェクトまたはYAMLオブジェクトを抽象化したもので、これを使用すると、オブジェクトの操作と、オブジェクトからのC++/Pythonデータの取得が簡単に行えます。.</p>
+
+<p>設定オブジェクトにデータを読み込むには、以下のようにします。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Load from a file, assume it's JSON data</span>
+<span class="k">auto</span> <span class="n">config</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="p">(</span><span class="s">"myfile.conf"</span><span class="p">);</span>
+<span class="c1">// Load from a YAML file, the extension must be yml or yaml</span>
+<span class="k">auto</span> <span class="n">config</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="p">(</span><span class="s">"myfile.yaml"</span><span class="p">);</span>
+<span class="c1">// Load from already loaded JSON data</span>
+<span class="k">auto</span> <span class="n">config</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="o">::</span><span class="n">fromData</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="c1">// Load from already loaded YAML data</span>
+<span class="k">auto</span> <span class="n">config</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="o">::</span><span class="n">fromYAMLData</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="設定からデータを読み取る">設定からデータを読み取る</h3>
+
+<p>設定内のデータにアクセスする方法がいくつか用意されています。状況に応じて最も適したものを組み合わせて使用することがきます。以下の3つの方法が用意されています。</p>
+
+<ol>
+  <li>厳格なアクセス: 取得するデータの型と同じ型のキーが存在しなければなりません。</li>
+  <li>条件付きの厳格なアクセス: 厳格なアクセスにおけるキーの存在要件を回避したい場合に使用します。</li>
+  <li>デフォルトのアクセス: 厳格なアクセスの制約条件は全く適用されません。</li>
+</ol>
+
+<h4 id="厳格なアクセス">厳格なアクセス</h4>
+
+<p>最初の方法では、アクセスしたい設定エントリが読み込み済みの設定ファイル内に存在しない場合や、取得したい値の型と保存されている値の型が一致しない場合には、例外がスローされます。</p>
+
+<p>以下のようにエントリにアクセスします。</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">v</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"MyVector3d"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>設定のサブセクションにアクセスすることもできます。</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">v</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"section"</span><span class="p">)(</span><span class="s">"MyVectorXd"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>また、これらをネストさせることもできます。</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"section"</span><span class="p">)(</span><span class="s">"sub1"</span><span class="p">)(</span><span class="s">"sub2"</span><span class="p">)(</span><span class="s">"SomeStrings"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="条件付きの厳格なアクセス">条件付きの厳格なアクセス</h4>
+
+<p>以下のようにします。</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span><span class="p">(</span><span class="n">conf</span><span class="p">.</span><span class="n">has</span><span class="p">(</span><span class="s">"MyQuaternion"</span><span class="p">))</span>
+<span class="p">{</span>
+  <span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span> <span class="n">q</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"MyQuaternion"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>上記のコードでは、設定に<code class="language-plaintext highlighter-rouge">MyQuaternion</code>エントリが存在するものの、<code class="language-plaintext highlighter-rouge">Eigen::Quaterniond</code>オブジェクトを取得するのに必要なデータが含まれていない場合にのみ例外がスローされます（先のセクションを参照）。</p>
+
+<h4 id="デフォルトのアクセス">デフォルトのアクセス</h4>
+<p>この方法を使用すると、設定エントリを安全に取得できます。設定エントリが存在しない場合や、要求した型と実際の型が異なる場合でも、例外はスローされません。</p>
+
+<p>以下のようにエントリにアクセスします。</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<span class="n">config</span><span class="p">(</span><span class="s">"MyBool"</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>また、上記のコードを以下のように簡潔に記述することもできます。</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">b</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"MyBool"</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>エントリが存在しない場合や、要求した型と実際の型が異なる場合は、指定した変数を変更できません。そうでない場合は、設定に格納されている値が指定した変数にコピーされます。特に、ベクトルを取得する場合はこの点を十分理解してください。</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">};</span>
+<span class="n">config</span><span class="p">(</span><span class="s">"MyVector"</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span> <span class="c1">// if MyVector is a valid entry, the initial content of v is lost</span>
+</code></pre></div></div>
+
+<p>先の方法と同様に、設定のサブセクションにアクセスすることもできます。</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+<span class="n">config</span><span class="p">(</span><span class="s">"section"</span><span class="p">)(</span><span class="s">"sub1"</span><span class="p">)(</span><span class="s">"sub2"</span><span class="p">)(</span><span class="s">"MyDouble"</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>ただし、先の方法のコードでは、設定ファイル内にセクションやサブセクションが1つも存在しない場合、<strong>例外がスローされます</strong>。</p>
+
+<h4 id="サブセクションへのアクセス">サブセクションへのアクセス</h4>
+
+<p>上記の厳格なアクセスとデフォルトのアクセス方法は、<code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>オブジェクトのサブセクションへのアクセスに適用できます。例:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// throws if conf is not an object or section does not exist in conf</span>
+<span class="k">auto</span> <span class="n">sub</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"section"</span><span class="p">);</span>
+
+<span class="c1">// returns an empty object if the call above would fail</span>
+<span class="k">auto</span> <span class="n">sub</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"section"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="p">{});</span>
+</code></pre></div></div>
+
+<p>なお、コピーは浅い階層で行われるため、サブセクションへの変更は親セクションから見えます。</p>
+
+<h4 id="pythonの場合の相違点">Pythonの場合の相違点</h4>
+
+<p>Pythonの場合、ユーザーが要求した要素の型をPythonに推測させることはできません。そのため、データを取得する際はPythonの型または値を指定する必要があります。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># c is an mc_rtc.Configuration object
+</span><span class="n">c</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"key"</span><span class="p">)</span>
+<span class="c1"># retrieve a bool
+</span><span class="n">b</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"b"</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+<span class="c1"># v is an eigen.Vector3d object
+</span><span class="n">v</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"v"</span><span class="p">,</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">)</span>
+<span class="c1"># retrieve a bool with a default value of False
+</span><span class="n">b</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"b"</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+<span class="c1"># retrieve a list of eigen.Vector3d objects
+</span><span class="n">vlist</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"vlist"</span><span class="p">,</span> <span class="p">[</span><span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">])</span>
+<span class="c1"># retrieve a list of float with a default value
+</span><span class="n">flist</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"flist"</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h3 id="mc_rtcconfigurationオブジェクトにデータを書き込む"><code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>オブジェクトにデータを書き込む</h3>
+
+<p>以下に、オブジェクトAPIと配列APIの違いを示す記述の例を示します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// -- Objects --</span>
+
+<span class="c1">// Create a new empty object with the section key</span>
+<span class="k">auto</span> <span class="n">section</span> <span class="o">=</span> <span class="n">conf</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">"section"</span><span class="p">);</span>
+
+<span class="c1">// Add data to the section</span>
+<span class="n">section</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">"v1"</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">});</span>
+<span class="n">section</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">"isFixed"</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+<span class="c1">// Here data is of a type supported by mc_rtc::Configuration</span>
+<span class="n">section</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">"data"</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+
+<span class="c1">// -- Arrays --</span>
+
+<span class="c1">// Creates a new empty array</span>
+<span class="k">auto</span> <span class="n">array</span> <span class="o">=</span> <span class="n">conf</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="s">"array"</span><span class="p">);</span>
+<span class="c1">// Creates a new empty array and reserves memory for 10 elements</span>
+<span class="k">auto</span> <span class="n">array10</span> <span class="o">=</span> <span class="n">conf</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="s">"array10"</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+
+<span class="c1">// Add data to the array</span>
+<span class="n">array</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">});</span>
+<span class="n">array</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+<span class="n">array</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>PythonのAPIもこれと全く同じです。</p>
+
+<h3 id="サポートされている型">サポートされている型</h3>
+
+<p>上記の例で見たように、<code class="language-plaintext highlighter-rouge">Configuration</code>オブジェクトを使用してさまざまな型のオブジェクトを取得できます。以下の表に、サポートされている型とJSONの要件を示します。</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">型</th>
+      <th scope="col">JSONの要件</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"><code>bool</code></th>
+      <td>bool型（<code>true</code>/<code>false</code>）または整数（0がfalseに対応し、その他の値がtrueに対応）</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>int</code></th>
+      <td>整数</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>unsigned int</code></th>
+      <td>符号なし整数、または0以上の整数</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>double</code></th>
+      <td>数値エントリ</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>std::string</code></th>
+      <td>文字列エントリ</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>Eigen::Vector3d</code></th>
+      <td>数値要素から成る3次元配列</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>Eigen::Quaterniond</code></th>
+      <td>数値要素から成る4次元配列。正規化された四元数が返されます。</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>Eigen::Vector6d</code></th>
+      <td>数値要素から成る6次元配列</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>Eigen::VectorXd</code></th>
+      <td>数値要素から成る任意の次元の配列</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>Eigen::Matrix3d</code></th>
+      <td>数値要素から成る9次元配列。回転をサポートするため、2種類の代替表現がサポートされています。RPY角度を表す3次元配列、または四元数を表す4次元配列として指定することもできます。</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>std::vector&lt;T&gt;</code> <code>T</code>には上記のいずれかの型を指定できます。</th>
+      <td>各要素が型<code>T</code>の要件を満たす配列</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>std::array&lt;T, N&gt;</code> <code>T</code>には上記のいずれかの型を指定できます。`N`は固定のサイズです。</th>
+      <td>各要素が型<code>T</code>の要件を満たす<code>N</code>次元配列</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>std::pair&lt;U, V&gt;</code> <code>U</code>と<code>V</code> には上記のいずれかの型を指定できます。</th>
+      <td>各次元の要素がそれぞれ型<code>U</code> と`V`の要件を満たす2次元配列</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>std::map&lt;std::string, T&gt;</code> <code>T</code> には上記のいずれかの型を指定できます。</th>
+      <td>文字列によってインデックスが付けられ、型<code>T</code>の要件を満たす要素から成るマップ</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>ほかにも、タスクや制約条件といったさまざまな型がサポートされています。mc_rtcに読み込み可能なオブジェクトについては、<a href="/mc_rtc/jp/json.html">こちらのWebサイト</a>にあるドキュメントを参照してください。</p>
+
+<h4 id="型の組み合わせ">型の組み合わせ</h4>
+
+<p>設定でサポートされている一般型を、自由に組み合わせて使うことができます。例えば、以下の記述は完全に有効です。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span> <span class="n">inequalities</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"inequalities"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="独自の型のサポート">独自の型のサポート</h3>
+
+<p>この機能では、独自の型を持つデータの読み込みや保存を行えるように<code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>を特殊化することができます。現在、この機能はC++でのみサポートされています。</p>
+
+<p>この機能を使用するには、<code class="language-plaintext highlighter-rouge">mc_rtc</code>名前空間に以下の形式で特殊化テンプレートを追加します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="p">&gt;</span>
+<span class="k">struct</span> <span class="nc">ConfigurationLoader</span><span class="o">&lt;</span><span class="n">MyType</span><span class="o">&gt;</span>
+<span class="p">{</span>
+  <span class="k">static</span> <span class="n">MyType</span> <span class="n">load</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">);</span>
+
+  <span class="k">static</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="n">save</span><span class="p">(</span><span class="k">const</span> <span class="n">MyType</span> <span class="o">&amp;</span> <span class="n">object</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>この機能は、数多くの<code class="language-plaintext highlighter-rouge">SpaceVecAlg</code>型、<code class="language-plaintext highlighter-rouge">RBDyn</code>型、<code class="language-plaintext highlighter-rouge">mc_rbdyn</code>型をサポートするために<code class="language-plaintext highlighter-rouge">mc_rtc</code>内で広く使用されています。　　 宣言については<code class="language-plaintext highlighter-rouge">mc_rbdyn/configuration_io.h</code>を参照してください。</p>
+
+<p>保存関数ではオプションの引数がサポートされているため、以下のような特殊化が可能です。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="p">&gt;</span>
+<span class="k">struct</span> <span class="nc">ConfigurationLoader</span><span class="o">&lt;</span><span class="n">MyType</span><span class="o">&gt;</span>
+<span class="p">{</span>
+  <span class="k">static</span> <span class="n">MyType</span> <span class="n">load</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">);</span>
+
+  <span class="k">static</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="n">save</span><span class="p">(</span><span class="k">const</span> <span class="n">MyType</span> <span class="o">&amp;</span> <span class="n">object</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">verbose</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/usage/logging.html">次のチュートリアル: データのロギング</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>
