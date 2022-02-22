@@ -1,34 +1,34 @@
 {% comment %}FIXME Not translated at all{% endcomment %}
 
-In mc_rtc, every interface uses the {% doxygen mc_control::MCGlobalController %} class to initialize and run the controllers in the framework. In particular, they will run the {% doxygen mc_control::MCGlobalController::run() %} function on every iteration.
+mc_rtcでは、すべてのインタフェースは {% doxygen mc_control::MCGlobalController %} クラスをコントローラの初期化及び実行に使用します。より詳細には、{% doxygen mc_control::MCGlobalController::run() %} が実行周期毎に実行されます。
 
-The plugin system allows one to write a component that will run at the start and/or end of this run function.
+プラグインシステムはこのrun関数の最初と最後の両方または一方で実行されるコンポーネントを追加する機能を提供します。
 
-These plugins can be used for a variety of purpose:
+これらのプラグインは以下のような様々な用途で利用が可能です。
 
-- Publish data using a 3rd-party middleware (for example, the ROS plugin);
-- Provide sensor data that is obtained with a different interface than the one where mc_rtc is running;
-- Provide high-level functionalities that are above a single controller scope;
+- サードパーティのミドルウェアを用いてデータを出力する (例：ROSプラグイン)
+- mc_rtcとは別のインタフェースを用いて取得されたセンサ情報をmc_rtcに取り込む
+- 単一のコントローラよりもより上位の機能を提供する
 
-The [new plugin tutorial]({{site.baseurl}}/tutorials/advanced/new-plugin.html) provides more information on writing plugins for mc_rtc.
+mc_rtcでのプラグイン実装方法の詳細は [new plugin tutorial]({{site.baseurl}}/tutorials/advanced/new-plugin.html) で確認できます。
 
-The plugins' documentation should provide information about available options and usage. This tutorial is focused on enabling and configuring these plugins.
+プラグインで利用可能なオプションやプラグインの利用方法は各プラグインのドキュメントで確認できます。このチュートリアルではこれらのプラグインの設定方法や有効化の方法を説明します。
 
-## Enabling plugins at the global level
+## 大域的にプラグインを有効化する方法
 
-Plugins can be added to the `Plugins` list in [mc_rtc configuration]({{site.baseurl}}/tutorials/introduction/configuration.html#possible-locations-for-mc-rtc-configuration). For example:
+プラグインは [mc_rtc configuration]({{site.baseurl}}/tutorials/introduction/configuration.html#possible-locations-for-mc-rtc-configuration) の `Plugins` リストに追加することで有効化できます。例えば以下のように記述します。
 
 ```yaml
 Plugins: [Joystick, OculusVR]
 ```
 
-The plugins listed in this configuration are enabled regardless of the controller that is selected.
+ここにリストアップされたプラグインは指定されているコントローラに関係なく有効化されます。
 
-<div class="alert alert-info">When installing a plugin, an option can be provided to enable automatic loading. Such plugins are loaded regarldess of their presence in the `Plugins` entry.</div>
+<div class="alert alert-info">プラグインをインストールする際に自動ロードのオプションが提供されている場合があります。このようなプラグインは `Plugins` リストに記載があるか否かにかかわらず自動でロードされます。</div>
 
-### Configuration locations considered in this case
+### 参照される設定ファイル
 
-The following two files will be read by mc_rtc (if they exist):
+以下の2つのファイルがmc_rtcによって読み込まれます（存在する場合）。
 
 <ol>
   <li>{% ihighlight bash %}${PLUGIN_RUNTIME_INSTALL_PREFIX}/etc/${PLUGIN_NAME}.yaml{% endihighlight %}</li>
@@ -38,17 +38,17 @@ The following two files will be read by mc_rtc (if they exist):
   </li>
 </ol>
 
-Where `${PLUGIN_RUNTIME_INSTALL_PREFIX}` is `${INSTALL_PREFIX}/lib/mc_plugins` on Linux/macOS and `${INSTALL_PREFIX}/bin/mc_plugins` on Windows.
+ここで `${PLUGIN_RUNTIME_INSTALL_PREFIX}` はLinux/macOSにおいては `${INSTALL_PREFIX}/lib/mc_plugins` であり、Windowsにおいては `${INSTALL_PREFIX}/bin/mc_plugins` を意味します。
 
-## Enabling plugins at the controller level
+## コントローラレベルでのプラグインの有効化
 
-Plugins can be enabled for a given controller by adding a `Plugins` entry in the controller's configuration.
+プラグインをコントローラレベルで有効化するにはコントローラの設定に `Plugins` エントリを追加します。
 
-### Configuration locations considered in this case
+### 参照される設定ファイル
 
-<div class="alert alert-warning">Those files are only considered for the plugin configuration if the plugin is enabled at the controller level.</div>
+<div class="alert alert-warning">これらのファイルはプラグインがコントローラレベルで有効化された場合にのみ参照されます。</div>
 
-In addition to the global configuration files, the following files are also considered for the plugin configuration when it is enabled by a controller (if they exist):
+大域的な設定ファイルに加えて、以下のファイルが存在する場合プラグインの設定に使用されます。
 
 <ol>
   <li>{% ihighlight bash %}${CONTROLLER_RUNTIME_INSTALL_PREFIX}/etc/${CONTROLLER_NAME}/plugins/${PLUGIN_NAME}.yaml{% endihighlight %}</li>
@@ -58,6 +58,6 @@ In addition to the global configuration files, the following files are also cons
   </li>
 </ol>
 
-Where `${CONTROLLER_RUNTIME_INSTALL_PREFIX}` is `${INSTALL_PREFIX}/lib/mc_controllers` on Linux/macOS and `${INSTALL_PREFIX}/bin/mc_controllers` on Windows.
+ここで `${CONTROLLER_RUNTIME_INSTALL_PREFIX}` はLinux/macOSにおいては `${INSTALL_PREFIX}/lib/mc_controllers` でありWindowsにおいては `${INSTALL_PREFIX}/bin/mc_controllers` を指します。
 
-<div class="alert alert-warning">When multiple controllers are enabled, if they use the same plugin then all these files are loaded together in the order the controllers appear in mc_rtc `Enabled` configuration entry.</div>
+<div class="alert alert-warning">複数のコントローラが有効化され、かつそれらが同じプラグインを使用している場合、全ての設定ファイルがmc_rtcの`Enabled`エントリに記述されたコントローラの順番で参照されます。</div>
