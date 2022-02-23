@@ -1305,7 +1305,9 @@ void Robot::posW(const sva::PTransformd & pt)
   }
   else if(mb().joint(0).type() == rbd::Joint::Type::Fixed)
   {
-    mb().transform(0, pt);
+    sva::PTransformd pt_ = pt;
+    pt_.rotation() = Eigen::Quaterniond(pt.rotation()).normalized().toRotationMatrix();
+    mb().transform(0, pt_);
     forwardKinematics();
     fixSCH(*this, this->convexes_, this->collisionTransforms_);
   }
