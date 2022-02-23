@@ -24,6 +24,7 @@ var structmc__tasks_1_1PostureTask =
     [ "resetJointsSelector", "structmc__tasks_1_1PostureTask.html#a53ab7fdbe90e3b309a618bec3bb69859", null ],
     [ "selectActiveJoints", "structmc__tasks_1_1PostureTask.html#af3d5a7f71a7bfbc3cd92a40a8b5d432b", null ],
     [ "selectUnactiveJoints", "structmc__tasks_1_1PostureTask.html#afda9cd7d8bab32bc0644da110f06a4e3", null ],
+    [ "setGains", "structmc__tasks_1_1PostureTask.html#abefc10be93897ca14825c9124ec415e9", null ],
     [ "speed", "structmc__tasks_1_1PostureTask.html#ab3327552ee53d6f191b04208baafd9a9", null ],
     [ "stiffness", "structmc__tasks_1_1PostureTask.html#a15a1e19481a9a67cc4c0a9db183f7463", null ],
     [ "stiffness", "structmc__tasks_1_1PostureTask.html#a5110734784d263558b2ae937f2f74705", null ],

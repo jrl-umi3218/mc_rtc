@@ -151,6 +151,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a46a7f613e697f5f5f1ad7db24d108649"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d4d5b303516826dac52c0177ac8f505"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PostureTask.html#a0d4d5b303516826dac52c0177ac8f505">damping</a> () const</td></tr>
 <tr class="separator:a0d4d5b303516826dac52c0177ac8f505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abefc10be93897ca14825c9124ec415e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PostureTask.html#abefc10be93897ca14825c9124ec415e9">setGains</a> (double <a class="el" href="structmc__tasks_1_1PostureTask.html#a15a1e19481a9a67cc4c0a9db183f7463">stiffness</a>, double <a class="el" href="structmc__tasks_1_1PostureTask.html#a46a7f613e697f5f5f1ad7db24d108649">damping</a>)</td></tr>
+<tr class="separator:abefc10be93897ca14825c9124ec415e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4725eea7614be3d2bcb54e16aa0f15c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PostureTask.html#aa4725eea7614be3d2bcb54e16aa0f15c">weight</a> (double w)</td></tr>
 <tr class="separator:aa4725eea7614be3d2bcb54e16aa0f15c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c8b2d553a214e9c07c1f51a4eaa4962"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PostureTask.html#a0c8b2d553a214e9c07c1f51a4eaa4962">weight</a> () const</td></tr>
@@ -383,7 +385,13 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set task's damping </p>
+<p>Set the task damping, leaving its stiffness unchanged</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">damping</td><td>Task stiffness </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -401,7 +409,7 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get task's damping </p>
+<p>Get the task's current damping </p>
 
 </div>
 </div>
@@ -946,6 +954,42 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="abefc10be93897ca14825c9124ec415e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abefc10be93897ca14825c9124ec415e9">&#9670;&nbsp;</a></span>setGains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::setGains </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>stiffness</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>damping</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set both stiffness and damping</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stiffness</td><td>Task stiffness</td></tr>
+    <tr><td class="paramname">damping</td><td>Task damping </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ab3327552ee53d6f191b04208baafd9a9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab3327552ee53d6f191b04208baafd9a9">&#9670;&nbsp;</a></span>speed()</h2>
 
@@ -991,7 +1035,14 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set task's stiffness </p>
+<p>Set the task stiffness/damping</p>
+<p>Damping is automatically set to 2*sqrt(stiffness)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stiffness</td><td>Task stiffness </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1009,7 +1060,7 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get task's stiffness </p>
+<p>Get the current task's stiffness </p>
 
 </div>
 </div>
