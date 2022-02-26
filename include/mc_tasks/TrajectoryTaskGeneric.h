@@ -259,7 +259,7 @@ protected:
   std::shared_ptr<tasks::qp::TrajectoryTask> trajectoryT_ = nullptr;
 
 protected:
-  void addToSolver(mc_solver::QPSolver & solver) override;
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
 
 private:
   Eigen::VectorXd stiffness_;
