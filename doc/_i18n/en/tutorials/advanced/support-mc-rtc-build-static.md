@@ -44,7 +44,7 @@ endif()
 
 ### Adding mc_rtc components
 
-If you are using the macros provided by `find_package(mc_rtc)` (e.g. `add_controller(NAME ...)`, `add_robot(NAME ...) and so-on) then most of the hard-work is done for you. Otherwise, you are advised to look into `src/CMakeLists.txt` in mc_rtc source tree to understand what you should modify. The main difference is that source paths should be provided as absolute paths instead of relative paths.
+If you are using the macros provided by `find_package(mc_rtc)` (e.g. `add_controller(NAME ...)`, `add_robot(NAME ...)` and so-on) then most of the hard-work is done for you. Otherwise, you are advised to look into `src/CMakeLists.txt` in mc_rtc source tree to understand what you should modify. The main difference is that source paths should be provided as absolute paths instead of relative paths.
 
 There is one caveat to this. If your controller derives from `mc_control::fsm::Controller` then you should use `add_fsm_controller(NAME ...)` instead.
 
