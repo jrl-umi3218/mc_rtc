@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 有限オートマトンをさらに活用する一般的なレシピとして、有限オートマトンコントローラーの派生が挙げられます。これにより以下のことが可能となります。
 
 - データ（タスク、制約条件、パラメーターなど）を状態間で簡単に共有できる
@@ -17,7 +15,7 @@
 bool MyState::run(mc_control::fsm::Controller & ctl_)
 {
   auto & ctl = static_cast<MyController&>(ctl_);
-  // Now you can access ctl as your controller
+  // 以降ctlを使って個別のコントローラにアクセスできるようになる
 }
 ```
 
@@ -75,7 +73,7 @@ struct State : mc_control::fsm::State
     return *controller_;
   }
 
-  // frequently-used shorthand functions can be added here
+  // 頻繁に利用されるショートカット関数を以下に追加
   mc_rtc::Logger & logger()
   {
     return controller_->logger();

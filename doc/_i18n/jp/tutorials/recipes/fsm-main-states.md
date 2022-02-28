@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 本フレームワークでは、`JSON/YAML`の設定機能を最大限活用して有限オートマトンを簡単に構成できるように、実装済みの状態がデフォルトでいくつか用意されています。これらの状態を使用すると、ロボットの複雑な動作を実現する有限オートマトンを簡単に記述でき、`C++/Python`状態を手作業で記述する必要はほとんど（または全く）ありません。実現したいことのほとんどすべてを有限オートマトンの設定で直接記述できます。このチュートリアルでは、最も役に立つ3つの状態について詳しく見ていきます。
 
 - [MetaTasks]({{site.baseurl}}/json.html#State/MetaTasks): `JSON/YAML`で記述された設定から一連のタスクを読み込む
@@ -18,10 +16,10 @@
 states:
   ExampleState:
     base: MetaTasks
-    # optional: uses the output criteria of the tasks as the string output for the next transition
+    # 任意：タスクの出力を次の遷移に対する文字列出力として用いる
     outputs: [CoM]
     tasks:
-      # create a CoM task
+      # CoMタスクの生成
       CoM:
         type: com
         move_com: [0, 0, -0.05]
@@ -32,7 +30,7 @@ states:
               - eval: 0.01
               - speed: 0.005
 
-      # create a bspline_trajectory task
+      # bspline_trajectoryタスクを生成する
       HandTrajectory:
         type: bspline_trajectory
         surface: LeftHand
@@ -40,7 +38,7 @@ states:
         duration: 15.0
         weight: 100
         targetSurface:
-          # assumes that the additional object/box robot was loaded in the global fsm configuration
+          # 追加のオブジェクトである、boxロボットはFSMのグローバル設定で読み込まれていると仮定
           robot: box
           surface: Left
         completion:
@@ -70,8 +68,7 @@ states:
 タスクに`mc_task::MetaTask::buildCompletionCriteria`を実装することで、独自の完了基準を追加できます。また、下記のように、条件構成体`AND`と`OR`を使用してこれらの完了基準を組み合わせることができます。さらに、通常の遅延評価が適用されます。例えば、トータルの処理時間が規定の時間を超えたとき、あるいは3秒の遅延後に手の表面の法線方向（`z`方向）に15Nを超える力が加わったときに手の移動経路タスクが完了しているかチェックするには、以下のように記述します。
 
 ```yaml
-# completion criteria that checks whether a trajectory task has been active for at least its specified duration
-# or whether more than 15N apply along the `z` direction of the hand surface after 3 seconds of delay.
+# タスクが設定された時間以上アクティブである場合、または15N以上の力がハンドサーフェスの`z`方向に3秒以上の遅延の後に作用した場合を終了と判定する
 completion:
   OR:
     - timeElapsed: true
@@ -89,7 +86,7 @@ completion:
 ```yaml
 transtions:
 ...
-# transition to the next state automatically when all tasks have completed
+# 次の状態への遷移は全てのタスクが完了した時に起きる
 - [ExampleState, OK, NextState, Auto]
 ...
 ```
@@ -99,14 +96,14 @@ transtions:
 ```yaml
 ExampleState:
   base: MetaTasks
-  # optional: uses the output criteria of the tasks as the string output for the next transition
+  # 任意：タスクの出力を次の遷移に対する文字列出力として用いる
   outputs: [CoM]
 ```
 
 そうすると、状態遷移マップで`CoM`完了基準に基づき分岐が判断されるようになります。
 
 ```yaml
-# Reminder: the CoM completion criteria is defined as:
+# CoMの終了判定は以下のように定義されている
 # CoM:
 #   completion:
 #     OR:
@@ -116,8 +113,8 @@ ExampleState:
 #         - speed: 0.005
 - [ExampleState, "CoM=timeout", CoMHasNotConvergedState, Auto]
 - [ExampleState, "CoM=eval AND speed", NextMotionState, Auto]
-# state to execute by default if none of the completion patterns are matched in the transition map
-# This allows to define non-exhaustive matching patterns in the transition map
+# 完了パターンが状態遷移マップのいずれも当てはまらない場合に実行する状態を定義
+# これによって全てのパターンを定義する必要がなくなる
 - [ExampleState, "DEFAULT", DefaultState, Auto]
 ```
 
@@ -131,7 +128,7 @@ ExampleState:
 Parallel状態（[こちらのドキュメント]({{site.baseurl}}/json.html#State/Parallel)を参照）では、複数の状態を同時に実行させることができます。有限オートマトンは実際にはシングルスレッドで実行されるため、実際にはコントローラーの処理ループ内で各状態がシーケンシャルに実行されます。
 
 ```yaml
-# Define an additional MetaTasks state that moves the right hand
+# 右手を動かすための追加のMetaTasks状態を作成
 RightHandState:
   base: MetaTasks
   HandTrajectory:
@@ -146,14 +143,14 @@ RightHandState:
     completion:
       - timeElapsed: true
 
-# Now say we want to move both the left and right hand and move the CoM down?
-# Easy, simply put the two states in parallel:
+# 例えば右手、左手と重心の下方向への移動を行いたい場合、
+# 2つの状態を並列実行すればよい
 ExampleParallelState:
   base: Parallel
-  # At each iteration, the ExampleState will be executed, followed by the RightHandState
+  # 実行周期毎にまず ExampleState が実行され、続いて RightHandState が実行される
   states: [ExampleState, RightHandState]
-  # optional defines which state to use as the output criteria
-  # By default the last state's output in the states list above is used
+  # どちらの状態を出力判定に用いるか指定することも可能
+  # デフォルトでは最後の状態の出力が使用される
   outputs: [ExampleState, RightHandState]
 ```
 
@@ -167,8 +164,8 @@ Parallel状態は、同時に実行されているすべての状態が完了し
 ```yaml
 [ExampleParallelState, "ExampleState: (CoM=timeout), RightHandState: (timeElapsed)", "StateA"]
 [ExampleParallelState, "ExampleState: (CoM=eval AND speed), RightHandState: (timeElapsed)", "StateB"]
-# Here the interest of having a default state becomes apparent,
-# as for complex condition criterias it might be cumbersome to create an exhaustive list of possible outputs.
+# 複雑な状態遷移が起こりうる場合に、全ての出力の組み合わせを記述することは大変です。
+# このような場合に特にデフォルト状態の利用は有効です
 [ExampleParallelState, "DEFAULT", "DefaultState"]
 ```
 

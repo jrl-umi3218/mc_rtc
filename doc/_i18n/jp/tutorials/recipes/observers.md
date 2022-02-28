@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 一般に、制御されているロボットの実際の状態を知る必要があります。しかし、ロボットに組み込まれているセンサーから十分な情報を得られることはまれであるため、残念ながら、実際の状態を完全に把握できることはめったにありません。その代わり、各種センサー（関節エンコーダー、フォーストルクセンサー、IMU（慣性計測装置、カメラなど）の測定値と、コントローラーの制御対象（接触面など）に関する追加の情報から、コントローラーに関するシステムの状態を推測する必要があります。例えば、浮遊ベースロボットの場合、通常、浮遊ベースの状態（位置、向き、速度など）を完全に把握できるセンサーは搭載されていないため、入手できる情報を活用してその状態を推定する必要があります。これを実現する方法として、例えば、IMUやカルマンフィルターの情報を、ロボットのキネマティクスに関する既知の情報と組み合わせるというやり方があります。また、ビジュアルオドメトリを使用する方法や、モーションキャプチャーシステムからグラウンドトゥルース測定値を取得する方法のほか、これらを組み合わせる方法もあります。このようなプロセスは状態観測と呼ばれます。
 
 ロボットに関してどのような状態を観測すべきか、その要件はコントローラーによって異なります。ヒューマノイドロボットの歩行コントローラーでは、ロボットの質量中心の状態を確実に推定することが重要であるため、ロボットのキネマティクス状態（浮遊ベースを含むボディ各部の位置と速度）を完全に把握する必要があります。一方、マニピュレーターアームでは、関節の位置と速度の情報しか必要としません。また、どのような方法で状態を取得するかも重要です（グラウンドトゥルース情報と推定値のどちらを使用するのか、どのようなセンサーやアルゴリズムを使用するのかなど）。
@@ -31,34 +29,34 @@
 ```yaml
 ---
 ObserverPipelines:
-- name: MainPipeline                     # - Create a new pipeline
-  gui: true                              #   diplay the pipeline in the GUI (default = false)
-  log: true                              #   log observers (default)
+- name: MainPipeline                     # - 新たなパイプラインを生成
+  gui: true                              #   このパイプラインをGUIに表示 (デフォルトは非表示)
+  log: true                              #   ログを取る (デフォルト)
 
-  observers:                             #   declare which observers to use
-  - type: Encoder                        # - Use an EncoderObserver
+  observers:                             #   使用するオブザーバを宣言
+  - type: Encoder                        # - EncoderObserverを使用
     config:                              #
-      position: encoderValues            #    - Sets joint position from encoder sensor values (default)
-      velocity: encoderFiniteDifferences #    - Computes joint velocities by finite differences  (default)
-                                         # We now have the estimation of each joint position and velocity and the corresponding
-                                         # body positions and velocities, but we are still missing the floating base
+      position: encoderValues            #    - エンコーダ値から関節位置を設定 (デフォルト)
+      velocity: encoderFiniteDifferences #    - 関節速度を有限差分により計算  (デフォルト)
+                                         # ここまでの設定で関節の位置・速度、対応するボディの位置・速度が推定できるが、
+                                         # フローティングベースの情報が欠けている
 
-  - type: BodySensor                     # - Use a BodySensor observer
-    update: false                        #   Do not update the real robot state
-    gui: false                           #   Do not display in the gui
+  - type: BodySensor                     # - BodySensor オブザーバを使用
+    update: false                        #   出力を実ロボットの状態に設定しない
+    gui: false                           #   GUIに表示しない
     config:                              #
-      bodySensor: FloatingBase           #   In simulation, the interface will fill this sensor with ground truth values
-                                         #   The observer computes the position and velocity of the floating base
-                                         #   by transforming the sensor measurements to the floating base frame
+      bodySensor: FloatingBase           #   シミュレーション時はインタフェースが真値をこのセンサ出力として設定する
+                                         #   オブザーバはフローティングベースの位置及び速度を
+                                         #   センサの計測値を変換することで計算する
 
-  - type: KinematicInertial              # - Estimates the floating base state using the KinematicInertial observer
-    update: true                         #   update the real robot instance from its results
-    gui: true                            #   Displays the estimated velocity as an arrow (default)
+  - type: KinematicInertial              # - フローティングベースの状態をKinematicsInertialオブザーバを用いて推定する
+    update: true                         #   出力を実ロボットの状態に設定する
+    gui: true                            #   推定された速度を矢印で表示する (デフォルト)
     config:
-      imuBodySensor: Accelerometer       # This observer only uses roll and pitch rotation information from this sensor
-                                         # along with a kinematic anchor point and the robot kinematics between the anchor
-                                         # frame and the floating base frame. The anchor frame is expected to be provided
-                                         # through a datastore callback (see below for details)
+      imuBodySensor: Accelerometer       # このオブザーバはセンサからのロールとピッチの情報、
+                                         # アンカーポイント、ロボットのキネマティクスを利用して
+                                         # アンカーポイントはデータストアのコールバックを用いて
+                                         # 提供されることが想定されている（詳細は以下を参照）。
 ```
 
 使用できるオプションの詳細については、該当するJSONスキーマを参照してください。
@@ -169,7 +167,7 @@ TF Prefix: /real
 追加のロボットをパブリッシュするには以下のようにします。
 
 ```yaml
-# robots published as env_1, env_2, etc
+# ロボットはenv_1, env_2等としてパブリッシュされる
 Robot Description path: /real/env_*/robot_description
 TF Prefix: /real/env_*
 ```
@@ -196,19 +194,19 @@ bool checkObserverPipeline(const std::string & observerPipelineName)
     return false;
   }
   const auto & observerp = observerPipeline(observerPipelineName);
-  if(!observerp.success()) // Check if the pipeline failed
+  if(!observerp.success()) // パイプラインが失敗していないか確認
   {
     mc_rtc::log::error("Required pipeline \"{}\" for real robot observation failed to run!", observerPipelineName);
-    // Check which observer failed
+    // どのオブザーバが失敗したかチェック
     for(const auto & observer : observerp.observers())
     {
       if(!observer.success())
       {
-        // Display failure error
+        // エラーメッセージを表示
         mc_rtc::log::error("Observer \"{}\" failed with error \"{}\"", observer.observer().name(), observer.observer().error());
         if(observer.observer().name() == "MyObserver")
         {
-          // do something specific if this observer failed
+          // このオブザーバが失敗した場合に特有の処理を実行
         }
       }
     }
@@ -237,7 +235,7 @@ void update(mc_control::MCController &ctl) override
 ```cpp
 // YourObserver.cpp
 #include <mc_observers/ObserverMacros.h>
-// Observer implementation (configure, reset, run and update functions)
+// オブザーバの実装 (configure, reset, run, update 関数)
 EXPORT_OBSERVER_MODULE("YourObserver", your_namespace::YourObserverClassName)
 ```
 

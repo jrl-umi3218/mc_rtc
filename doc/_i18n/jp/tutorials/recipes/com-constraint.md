@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 多くの場合、質量中心が移動できる領域を制限することが推奨されます。これを実現するため、質量中心の移動範囲を凸領域内に制限する新たな制約条件`CoMIncPlaneConstr`を導入します。
 
 この制約条件のAPIを以下に示します。
@@ -53,16 +51,16 @@ A p + b \geq 0
 これを制約条件に含めれば完成です。
 ```cpp
 {% raw %}
-//In the header:
+//以下をヘッダファイルに追加
 # include <mc_solver/CoMIncPlaneConstr.h>
 
 std::shared_ptr<mc_solver::CoMIncPlaneConstr> comIncPlaneConstraintPtr_;
 
 
-//In the cpp, in the controller's initializer list:
+//cppファイルのコントローラの初期化リストに以下を追加
 comIncPlaneConstraintPtr_.reset(new mc_solver::CoMIncPlaneConstr(robots(), robots().robotIndex(), dt) );
 
-//In the constructor itself:
+//コンストラクタ本体に以下を追加
     std::vector<mc_rbdyn::Plane> planes =
     {{{-1., 0., 0.}, 0.08},
      {{1., 0., 0.}, 0.08},

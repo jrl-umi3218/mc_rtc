@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 GUI機能では、コントローラーをリモートで操作するための動的なグラフィカルインターフェイスを構築することができます。この機能をコントローラーに実装して使用する方法は、[ロギング]({{site.baseurl}}/tutorials/usage/logging.html)の手法と似ています。
 
 このページでは以下のトピックについて説明します。
@@ -23,12 +21,12 @@ GUIはカテゴリーごとに整理されているため、同じカテゴリ�
 要素を追加するには、カテゴリーと1つ以上の要素を指定して`gui()->addElement(...)`を呼び出します。例:
 
 ```cpp
-// Add a single button named "Push" in the a/b category
+// a/bカテゴリに"Push"と名付けられたボタンを追加
 gui()->addElement({"a", "b"},
   mc_rtc::gui::Button("Push", []() { std::cout << "Hello!" << std::endl; })
 );
 
-// Add multiple elements at once, they will appear in the order they are added in the function
+// 複数の要素を一括で追加することも可能。この場合、追加された要素は追加された順番に表示される
 gui()->addElement({"a", "b"},
   mc_rtc::gui::Button("Button 1", []() { return; }),
   mc_rtc::gui::Button("Button 2", []() { return; }),
@@ -56,19 +54,19 @@ gui()->addElement({"a", "b"},
 例
 
 ```cpp
-// String label
+// 文字列ラベル
 Label("LabelText", []() { return "some text"; });
 
-// Display a value
+// 値を表示
 Label("Some value", [this]() { return this->value_; });
 
-// Display a vector of strings
+// 文字列のベクトルを表示
 ArrayLabel("Some strings", []() { return {"a", "b", "c"}; });
 
-// Display a vector with labels
+// ベクトルをラベルをつけて表示
 ArrayLabel("Vector", {"x", "y", "z"}, []() { return Eigen::Vector3d::Zero(); });
 
-// Some elements have associated labels, e.g. Force also adds an ArrayLabel
+// いくつかの要素は関連付けられたラベルを持っている。例えばForceはArrayLabelも追加する。
 Force("LeftFoot", [this]() { return this->robot().surfaceWrench("LFullSole"); }, [this]() { return this->robot().surfacePose("LFullSole"); }),
 Force("RightFoot", [this]() { return this->robot().surfaceWrench("RFullSole"); }, [this]() { return this->robot().surfacePose("RFullSole"); }),
 Force("LeftHand", [this]() { return this->robot().surfaceWrench("LeftFingers"); }, [this]() { return this->robot().surfacePose("LeftFingers"); }),
@@ -141,13 +139,13 @@ DataComboInput("Choose a surface", {"surfaces", robot().name()},
 - （オプション）RVizなどの3次元環境でデータを表示するための、対話形式の要素
 
 ```cpp
-// Read-only variant does not provide a callback to set the data
+// 読み出し専用のものは値設定のためのコールバックを持ちません
 Point3D("Point", [this]() { return v3_; });
 
-// Read-write variant
+// 読み出し・書き込み両用
 
-// Note that even though we want to display a rotation, we need to provide a
-// full transform otherwise the GUI could not guess where to display the element
+// 注意：回転を表示したい場合でも変換全体を渡す必要があります。
+// そうしないとGUIがどこに表示してよいのか判断できないためです。
 Rotation("Rot",
          [this]() { return sva::PTransformd{rot_, pos_} },
          [this](const Eigen::Matrix3d & rot) { rot_ = rot; });
@@ -159,11 +157,11 @@ Rotation("Rot",
 
 
 ```cpp
-// Real-time trajectory, returns a single point (either Eigen::Vector3d or sva::PTransformd)
+// リアルタイム軌道は点を返す (型はEigen::Vector3d 又は sva::PTransformd)
 Trajectory("RealTimeTrajectory",
            [this]() { return robot().surfacePose("LeftGripper"); });
 
-// Pre-planned trajectory returns a vector of points
+// 予め計画された軌道は点のベクトルを返す
 Trajectory("Trajectory",
            [this]() { return traj_; });
 ```
@@ -173,11 +171,11 @@ Trajectory("Trajectory",
 この要素は、単一のポリゴン（1つの平面など）またはポリゴンのリスト（歩容計画など）を表示します。
 
 ```cpp
-// A single polygon is a vector of Eigen::Vector3d
+// 単一のポリゴンはEigen::Vector3d型のベクトル
 Polygon("Polygon"
         [this]() -> std::vector<Eigen::Vector3d> { return {p0, p1, p2, p3}; });
 
-// A list of polygon is a vector of vector of Eigen::Vector3d
+// ポリゴンのリストはEigen::Vector3dのベクトルのベクトル
 Polygon("Step plan",
         [this]]() { return step_plan_display_; });
 ```
@@ -195,10 +193,10 @@ Force("LeftFoot", [this]() { return this->robot().surfaceWrench("LFullSole"); },
 この要素は、3次元環境に矢印を表示します。矢印の始点と終点を指定する必要があります。編集可能な矢印を指定することもできます。
 
 ```cpp
-// Read-only
+// 読み出し専用
 Arrow("ArrowRO", [this]() { return start_; }, [this]() { return end_; });
 
-// Editable arrow
+// 編集可能な矢印
 Arrow("Arrow",
       [this](){ return start_; },
       [this](const Eigen::Vector3d & start) { start_ = start; },
@@ -211,10 +209,10 @@ Arrow("Arrow",
 この要素は、`Transform`要素と同様ですが、X/Y軸方向の平行移動とZ軸周りの回転のみを編集できる点が異なります。
 
 ```cpp
-// Returns a vector with 3 elements representing the X/Y position and the theta angle
+// X/Yの位置と回転角度を表す3つの要素からなるベクトルを返す
 XYTheta("XYThetaOnGround", [this]() -> std::array<double, 3> { return {x, y, theta}; });
 
-// Specify the height with a 4th element
+// 4つ目の要素で高さを指定可能
 XYTheta("XYTheta", [this]() -> std::array<double, 4> { return {x, y, theta, z}; });
 ```
 
@@ -223,13 +221,13 @@ XYTheta("XYTheta", [this]() -> std::array<double, 4> { return {x, y, theta, z}; 
 この要素では、任意のデータが格納された表を3次元環境に表示できます。データのコールバック関数は、`std::vector<std::vector<double>>`や`std::vector<std::tuple<X, Y, Z>>`のように配列の配列として表されたオブジェクトを返す必要があります。
 
 ```cpp
-// Table with a fixed header
+// 固定されたヘッダを持つテーブル
 Table("Simple table", {"X", "Y", "Z"}, [this]() -> const std::vector<Eigen::Vector3d> & { return points_; });
-// Table with a fixed header and formatting information
+// 固定されたヘッダとフォーマットの情報を持つテーブル
 Table("Simple with format", {"X", "Y", "Z"}, {"{:0.3f}", "{:0.3f}", "{:0.3f}"}, [this]() { return data_; });
-// Table with a dynamic header
+// 動的なヘッダを持つテーブル
 Table("Dynamic table", [this]() { return header_; }, [this]() { return data_; });
-// Table with a dynamic header + formatting
+// 動的なヘッダとフォーマットの情報を持つテーブル
 Table("Dynamic with format", [this]() { return header_; }, [this]() { return format_; }, [this]() { return data_; });
 ```
 
@@ -240,9 +238,9 @@ Table("Dynamic with format", [this]() { return header_; }, [this]() { return for
 `Form`要素を使用すると、より複雑な対話形式のダイアログを構築できます。フォーム自体は他の要素で構成されます。`Form`は以下のように作成します。
 
 ```cpp
-Form("Push to send", // This will be shown on the "send" button for the form
+Form("Push to send", // "send" ボタンの上に表示される文字列
      [this](const mc_rtc::Configuration & data) {},
-     ... // list of element
+     ... // 要素のリスト
 );
 ```
 
@@ -284,8 +282,8 @@ Form("Button name",
 GUIから要素を削除するための2つの関数が用意されています。
 
 ```cpp
-// Remove a single element by name
+// 単一の要素を名前で指定して削除
 gui()->removeElement({"a", "b"}, "element");
-// Remove a category and all its sub-categories
+// あるカテゴリ及びその全ての子カテゴリを削除
 gui()->removeCategory({"a", "b"});
 ```

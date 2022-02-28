@@ -1,5 +1,3 @@
-{% comment %}FIXME Not translated at all{% endcomment %}
-
 mc_rtcでは、すべてのインタフェースは {% doxygen mc_control::MCGlobalController %} クラスをコントローラの初期化及び実行に使用します。より詳細には、{% doxygen mc_control::MCGlobalController::run() %} が実行周期毎に実行されます。
 
 プラグインシステムはこのrun関数の最初と最後の両方または一方で実行されるコンポーネントを追加する機能を提供します。

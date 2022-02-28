@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 ## 概要
 
 このチュートリアルで示すスタビライザイーは、元々、Stéphane Caron博士の[LIPM歩行コントローラー](https://github.com/stephane-caron/lipm_walking_controller)に実装されたものです。この実装は、階段上りや荒れ地での移動などの歩行制御で重点的に利用されています。特に、エアバスの工場の製造現場で利用されている事例は注目に値します。`mc_tasks::lipm_stabilizer::StabilizerTask`で記述されている実装では、Caron博士のオリジナルの実装で記述されているメソッドが組み込まれています。この安定化アルゴリズムは、概念的にはオリジナルのアルゴリズムと比べて大きな違いはありません。現在、歩行制御は別の[コントローラー](https://github.com/jrl-umi3218/lipm_walking_controller)で提供されています。
@@ -55,9 +53,9 @@ Iこの場合、有効な基準状態はユーザーが与える必要があり�
 必要な物理量を推定するには、適切な[観測器パイプライン](observers.html)をセットアップする必要があります。以下のパイプラインを使用することができます。これらはオリジナルの実装と同じ機能を実現しています。
 
 ```yaml
-# Observes real robot state
+# 実ロボットの状態の観測
 RunObservers: [Encoder, KinematicInertial]
-# Updates the Controller::realRobot() instance from the observed state
+# 観測された情報を用いて Controller::realRobot() の状態を更新
 UpdateObservers: [Encoder, KinematicInertial]
 ```
 
@@ -74,8 +72,8 @@ sva::PTransformd anchorFrameReal() const;
 今のところ、ループ処理が実行されるたびに、以下の関数を呼び出してこれらの値を明示的に`KinematicInertial`観測器に渡す必要があります。
 
 ```cpp
-mc_controller::Controller & ctl = ...; // Controller's instance
-mc_tasks::lipm_stabilizer::StabilizerTask & stabilizer = ...; // Stabilizer instance
+mc_controller::Controller & ctl = ...; // コントローラのインスタンス
+mc_tasks::lipm_stabilizer::StabilizerTask & stabilizer = ...; // スタビライザのインスタンス
 ctl.anchorFrame(stabilizer.anchorFrame());
 ctl.anchorFrameReal(stabilizer.anchorFrameReal());
 ```
@@ -88,14 +86,14 @@ ctl.anchorFrameReal(stabilizer.anchorFrameReal());
 
 ```yaml
 ####
-# Sample stabilizer configuration for the JVRC robot
-# The most important entries are the
-# - dcm_tracking: controls how the stabilizer reacts to perturbation of the DCM
-# - admittance: controls the contact admittance
+# JVRCロボットのスタビライザ設定の例
+# 最もな重要な項目は以下の通り。
+# - dcm_tracking: DCMの動きに対してスタビライザがどのように対応するか
+# - admittance: 接触に対するアドミッタンス制御
 ###
-# Sole-floor friction coefficient
+# 足裏と床との間の摩擦係数
 friction: 0.7
-# Configuration of the tasks managed by the stabilizer
+# スタビライザが管理するタスクの設定
 tasks:
   com:
     stiffness: [1000, 1000, 100]
@@ -134,7 +132,7 @@ dcm_tracking:
   derivator_time_constant: 1
   integrator_time_constant: 10
 
-# If you are using the same configuration file with different robots, you can provide per-robot configuration as well
+# 異なるロボットで同一の設定ファイルを共有する場合、ロボット固有の設定を定義することもできる
 jvrc1:
   admittance:
     cop: [0.02, 0.02]
@@ -167,9 +165,9 @@ YAML形式の設定の詳細については、[JSONスキーマ](../../json.html
 独自のコントローラー内にスタビライザータスクを作成するには、`mc_tasks::lipm_stabilizer::StabilizerTask`を実体化して以下のように記述する必要があります。
 
 ```cpp
-// Load default configuration from robot module
+// ロボットモジュールからデフォルト設定をロード
 auto stabiConf = robot().module().defaultLIPMStabilizerConfiguration();
-// Create the stabilizer task
+// スタビライザタスクを生成
 auto t = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
           solver().robots(),
           solver().realRobots(),
@@ -178,24 +176,24 @@ auto t = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
           stabiConf.rightFootSurface,
           stabiConf.torsoBodyName,
           solver().dt());
-// Reset the task targets and default configuration
+// タスクのターゲットや設定をリセット
 t->reset();
-// Apply stabilizer configuration (optional, if not provided the default configuration from the RobotModule will be used)
+// スタビライザ設定を適用（任意、設定されない場合はロボットモジュールから取得したデフォルト設定が使用される）
 t->configure(stabiConf);
-// Set contacts (optional, the stabilizer will be configured in double support using the current foot pose as target for each contact by default)
+// 接触を設定 (任意、スタビライザは現在の足の位置で両脚接地しているとして設定される)
 t->setContacts({ContactState::Left, ContactState::Right});
 ```
 
 また、必要に応じて`mc_rtc::Configuration`オブジェクトから追加の設定と目標を読み込みます。
 
 ```cpp
-// Load default configuration from robot module
+// ロボットモジュールからデフォルト設定をロード
 auto stabiConf = robot().module().defaultLIPMStabilizerConfiguration();
-// mc_rtc::Configuration object containing valid stabilizer configuration (see JSON schema documentation)
+// 適切なスタビライザ設定を含むmc_rtc::Configurationオブジェクト (JSONスキーマのドキュメントを参照のこと)
 auto conf = ...
-// Optional: Load additional configuration from an mc_rtc::Configuration object
+// 任意：追加の設定を mc_rtc::Configuration オブジェクトから読み込む
 stabiConf.load(config);
-// Create the stabilizer task
+// スタビライザタスクの生成
 auto t = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
           solver().robots(),
           solver().realRobots(),
@@ -204,11 +202,11 @@ auto t = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
           stabiConf.rightFootSurface,
           stabiConf.torsoBodyName,
           solver().dt());
-// Reset the task
+// タスクのリセット
 t->reset();
-// Apply stabilizer configuration
+// スタビライザ設定の適用
 t->configure(stabiConf);
-// Load additional properties from configuration (contact targets, com target, etc)
+// 設定から追加属性をロード (接触目標、重心目標等)
 t->load(solver, config);
 ```
 
@@ -224,14 +222,14 @@ t->load(solver, config);
 
 ```yaml
 ##
-# This state keeps the robot standing at it's current position in double support
+# この状態は現在位置で両脚接地で立っている状態を維持する
 ##
 Stabilizer::Standing:
   base: StabilizerStandingState
-  # This stiffness controls the spring-damper computation of the reference CoM position
-  # damping is automatically computed as 2*sqrt(stiffness)
+  # この stiffness は目標重心位置のバネダンパ計算に用いられる
+  # ダンピングは自動的に2*sqrt(stiffness)として計算される
   stiffness: 5
-  # StabilizerTask configuration (see previous section)
+  # スタビライザ設定 (前節を参照)
   StabilizerConfig:
     type: lipm_stabilizer
     leftFootSurface: LeftFootCenter
@@ -244,10 +242,10 @@ Stabilizer::Standing:
 
 ```yaml
 ##
-# Make the CoM move to a point centered above both of the robot's feet contact
+# 重心を両足の中間点上に移動させる
 #
-# Completion:
-# - OK when the dcm reaches the provided threshold
+# 完了条件:
+# - OK dcmが事前に定義されたしきい値に到達した場合
 ##
 Stabilizer::GoCenter:
   base: Stabilizer::Standing
@@ -256,14 +254,14 @@ Stabilizer::GoCenter:
     dcmEval: [0.005, 0.005, 0.05]
 
 ##
-# Make the CoM move to a point above the left foot ankle
+# 重心を左足首の上に移動させる
 ##
 Stabilizer::GoLeft:
   base: Stabilizer::GoCenter
   above: LeftAnkle
 
 ##
-# Make the CoM move to a point above the right foot ankle
+# 重心を右足首の上に移動させる
 ##
 Stabilizer::GoRight:
   base: Stabilizer::GoLeft
@@ -379,8 +377,8 @@ Enabled: LIPMStabilizer
 例:
 
 ```cpp
-// Adds a GUI element to the controller instance ctl, providing the ability to read and modify the stiffness of the stabilizer
-// This may for instance be used from another FSM state running in parallel with the StabilizerStandingState.
+// コントローラのインスタンスにGUI要素を追加し、スタビライザのstiffnessパラメータの読み出し、変更を可能にする
+// これはStabilizerStandingStateと並列で実行される他のFSM状態からも利用が可能
 ctl.gui()->addElement({"DatastoreExample"},
     mc_rtc::gui::NumberInput("Stiffness",
       [&ctl]()

@@ -1,6 +1,6 @@
-// エンドエフェクタータスクのヘッダーをインクルードする（ヘッダー） 
+// エンドエフェクタータスクのヘッダーをインクルードする（ヘッダファイル） 
 #include <mc_tasks/EndEffectorTask.h>
-// In the class private members (header)
+// クラスのプライベートメンバーを追加 (ヘッダファイル)
 std::shared_ptr<mc_tasks::EndEffectorTask> efTask;
 // コンストラクター内でタスクを作成して問題に追加する
 efTask = std::make_shared<mc_tasks::EndEffectorTask>("l_wrist", robots(), 0, 5.0, 500.0);

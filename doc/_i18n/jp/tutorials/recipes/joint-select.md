@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 特定のタスク（下半身のみを使用して姿勢を安定させるタスクなど）を実行する際に、関節のサブセットを指定できます。
 
 `MetaTask`インターフェイスでは、一連の3つの関数によってこの機能が実装されています。
@@ -34,7 +32,7 @@ std::vector<std::string> inactiveJoints = {"LARM_JOINT0", "LARM_JOINT1", "LARM_J
                                            "LARM_JOINT6", "LARM_JOINT7"};
 auto posTask = std::make_shared<mc_tasks::PositionTask>("r_wrist", robots(), 0);
 solver().addTask(posTask);
-// You can activate the selection after adding the taks as well
+// タスクを追加した後でも同様に選択を有効化できます
 posTaks->selectUnactiveJoints(solver(), inactiveJoints);
 ```
 

@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 ## 接触面自由度とは
 
 接触面自由度は、接触面上で特定の自由度を持った動きを可能にする機能です。具体的には、接触面上で1つ以上の軸に沿った自由な動き（平行移動または回転）を可能にする機能です。
@@ -94,7 +92,7 @@ tasks::qp::contactId cId = contact.contactId(robots());
 では、右足を垂直に動かしてみます。
 
 ```cpp
-//In reset
+// reset()で以下を実行
 Eigen::Matrix6d dof = Eigen::Matrix6d::Identity();
 dof(5,5) = 0;
  
@@ -106,15 +104,15 @@ contactConstraint().contactConstr->updateDofContacts();
 次に、足が垂直に動くのを*制限*するため、EndEffectorTaskを追加し、この制約条件が正しく機能するか確認します。
 
 ```cpp
-//In header
+//ヘッダファイルに以下を追加
 std::shared_ptr<mc_tasks::EndEffectorTask> efTask;
 
-//In .cpp
-// In constructor
+//cppファイルに以下を追加
+// コンストラクタ部分
 efTask = std::make_shared<mc_tasks::EndEffectorTask>("R_FOOT", robots(), 0, 5.0, 100);
 efTask->addToSolver(solver());
 
-//In reset
+// reset()関数部分
 efTask->resetTask(robots(), 0);
 efTask->add_ef_pose(sva::PTransformd(Eigen::Vector3d(0.2, 0., 0.2)));
 ```

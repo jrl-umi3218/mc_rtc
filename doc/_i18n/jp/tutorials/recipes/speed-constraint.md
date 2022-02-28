@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 このページでは、制約条件`mc_solver::BoundedSpeedConstr`について説明します。この制約条件は、その名前とこのページのタイトルが示すように、速度と方向を厳密に指定してボディを動かす必要がある場合に使用します。より「緩やかな」条件を適用する場合については、以下の記事を参照してください。
 
 - [タスク空間内の各軸に異なる重みを適用する](dim-weight.html)
@@ -10,7 +8,7 @@
 まず、制約条件オブジェクトを作成します。
 
 ```cpp
-// Assume bSpeedCstr type is:
+// bSpeedCstrは以下の型であると仮定
 // std::shared_ptr<mc_solver::BoundedSpeedConstr>
 bSpeedCstr = std::make_shared<mc_solver::BoundedSpeedConstr>(robots(),
                                                              robots().robotIndex(),
@@ -74,7 +72,7 @@ bSpeedCstr->addBoundedSpeed(solver(),
 ```cpp
 Eigen::MatrixXd dof = Eigen::MatrixXd::Identity(6,6);
 Eigen::VectorXd spd = Eigen::VectorXd::Zero(6);
-spd(5) = 0.1;  // Move r_wrist in the z direction at constant speed 0.1 m/s
+spd(5) = 0.1;  // r_wrist をz方向に一定の速度 0.1 m/s で動かす
 bSpeedConstr->addBoundedSpeed(solver(), "r_wrist",
                               Eigen::Vector3d::Zero(),
                               dof, spd);
@@ -98,7 +96,7 @@ solver().addTask(efTask);
 ```cpp
 Eigen::MatrixXd dof = Eigen::MatrixXd::Identity(6,6);
 Eigen::VectorXd spd = Eigen::VectorXd::Zero(6);
-// Apply a different scaling for linear and angular velocities
+// 並進速度と回転速度に異なるスケーリングを施す
 for(size_t i = 0; i < 3; ++i) { spd(i) = M_PI*0.1; }
 for(size_t i = 3; i < 6; ++i) { spd(i) = 0.1; }
 bSpeedConstr->addBoundedSpeed(solver(), "r_wrist",

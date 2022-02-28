@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 このページでは以下の情報を提供します。
 
 1. `mc_rtc::Configuration`オブジェクトからデータを読み取る方法
@@ -9,20 +7,20 @@
 
 このページの例で使用されている`config`は、C++の例では`mc_rtc::Configuration`型のC++オブジェクト、Pythonの例では`mc_rtc.Configuration`型のPythonオブジェクトであると仮定しています。
 
-###データソース
+### データソース
 
 `mc_rtc::Configuration`は、JSONオブジェクトまたはYAMLオブジェクトを抽象化したもので、これを使用すると、オブジェクトの操作と、オブジェクトからのC++/Pythonデータの取得が簡単に行えます。.
 
 設定オブジェクトにデータを読み込むには、以下のようにします。
 
 ```cpp
-// Load from a file, assume it's JSON data
+// ファイルから読み込む、JSONデータであることを想定
 auto config = mc_rtc::Configuration("myfile.conf");
-// Load from a YAML file, the extension must be yml or yaml
+// YAMLファイルから読み込む、拡張子はymlかyaml
 auto config = mc_rtc::Configuration("myfile.yaml");
-// Load from already loaded JSON data
+// すでに読み込まれているJSONデータから読み込む
 auto config = mc_rtc::Configuration::fromData(data);
-// Load from already loaded YAML data
+// すでに読み込まれているYAMLデータから読み込む
 auto config = mc_rtc::Configuration::fromYAMLData(data);
 ```
 
@@ -82,7 +80,7 @@ bool b = config("MyBool", false);
 エントリが存在しない場合や、要求した型と実際の型が異なる場合は、指定した変数を変更できません。そうでない場合は、設定に格納されている値が指定した変数にコピーされます。特に、ベクトルを取得する場合はこの点を十分理解してください。
 ```cpp
 std::vector<double> v = {1., 2., 3.};
-config("MyVector", v); // if MyVector is a valid entry, the initial content of v is lost
+config("MyVector", v); // MyVector が有効なエントリである場合、vの初期値は失われる
 ```
 
 先の方法と同様に、設定のサブセクションにアクセスすることもできます。
@@ -98,10 +96,10 @@ config("section")("sub1")("sub2")("MyDouble", d);
 上記の厳格なアクセスとデフォルトのアクセス方法は、`mc_rtc::Configuration`オブジェクトのサブセクションへのアクセスに適用できます。例:
 
 ```cpp
-// throws if conf is not an object or section does not exist in conf
+// 引数がconfigに存在するオブジェクトやセクションで無い場合はthrowする
 auto sub = config("section");
 
-// returns an empty object if the call above would fail
+// 引数がconfigに存在しない場合、空のオブジェクトを返す
 auto sub = config("section", mc_rtc::Configuration{});
 ```
 
@@ -112,17 +110,17 @@ auto sub = config("section", mc_rtc::Configuration{});
 Pythonの場合、ユーザーが要求した要素の型をPythonに推測させることはできません。そのため、データを取得する際はPythonの型または値を指定する必要があります。
 
 ```python
-# c is an mc_rtc.Configuration object
+# c は mc_rtc.Configuration オブジェクト
 c = config("key")
-# retrieve a bool
+# ブーリアン型を取得
 b = config("b", bool)
-# v is an eigen.Vector3d object
+# v は eigen.Vector3d オブジェクト
 v = config("v", eigen.Vector3d)
-# retrieve a bool with a default value of False
+# ブーリアン型をデフォルト値Falseとして取得
 b = config("b", False)
-# retrieve a list of eigen.Vector3d objects
+# eigen.Vector3d のリストを取得
 vlist = config("vlist", [eigen.Vector3d])
-# retrieve a list of float with a default value
+# floatのリストをデフォルト値を指定して取得
 flist = config("flist", [0., 1., 2.])
 ```
 
@@ -131,25 +129,25 @@ flist = config("flist", [0., 1., 2.])
 以下に、オブジェクトAPIと配列APIの違いを示す記述の例を示します。
 
 ```cpp
-// -- Objects --
+// -- オブジェクト --
 
-// Create a new empty object with the section key
+// セクションキーを指定して新たしい空のオブジェクトを生成
 auto section = conf.add("section");
 
-// Add data to the section
+// セクションにデータを追加
 section.add("v1", Eigen::Vector3d{1,2,3});
 section.add("isFixed", true);
-// Here data is of a type supported by mc_rtc::Configuration
+// ここでdataは mc_rtc::Configuration でサポートされている型のデータ
 section.add("data", data);
 
-// -- Arrays --
+// -- 配列 --
 
-// Creates a new empty array
+// 新しい空の配列を生成
 auto array = conf.array("array");
-// Creates a new empty array and reserves memory for 10 elements
+// 新しい空の配列を生成し、10要素分のメモリを確保
 auto array10 = conf.array("array10", 10);
 
-// Add data to the array
+// データを配列に追加
 array.push(Eigen::Vector3d{1,2,3});
 array.push(true);
 array.push(data);
