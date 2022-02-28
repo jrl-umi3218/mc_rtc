@@ -21,7 +21,7 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
                              unsigned int robotIndex,
                              double stiffness,
                              double weight)
-: SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight), lowPass_(0.005, 0.05)
+: SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight), lowPass_(0.005, cutoffPeriod_)
 {
   const auto & robot = robots.robot(robotIndex);
   type_ = "impedance";
@@ -187,6 +187,7 @@ void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
 void ImpedanceTask::addToSolver(mc_solver::QPSolver & solver)
 {
   lowPass_.dt(solver.dt());
+  cutoffPeriod(cutoffPeriod_);
   SurfaceTransformTask::addToSolver(solver);
 }
 

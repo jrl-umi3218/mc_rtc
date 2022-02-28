@@ -193,7 +193,8 @@ public:
   /*! \brief Set the cutoff period for the low-pass filter of measured wrench. */
   void cutoffPeriod(double cutoffPeriod)
   {
-    lowPass_.cutoffPeriod(cutoffPeriod);
+    cutoffPeriod_ = cutoffPeriod;
+    lowPass_.cutoffPeriod(cutoffPeriod_);
   }
 
   /*! \brief Get whether hold mode is enabled. */
@@ -252,6 +253,7 @@ protected:
   sva::ForceVecd filteredMeasuredWrench_ = sva::ForceVecd::Zero();
 
   mc_filter::LowPass<sva::ForceVecd> lowPass_;
+  double cutoffPeriod_ = 0.05;
 
   // Hold mode
   bool hold_ = false;
