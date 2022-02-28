@@ -307,7 +307,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -361,9 +361,9 @@
 <div class="card bg-light card-source">
   <div class="card-body">
 
-  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// エンドエフェクタータスクのヘッダーをインクルードする（ヘッダー） </span>
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// エンドエフェクタータスクのヘッダーをインクルードする（ヘッダファイル） </span>
 <span class="cp">#include &lt;mc_tasks/EndEffectorTask.h&gt;
-</span><span class="c1">// In the class private members (header)</span>
+</span><span class="c1">// クラスのプライベートメンバーを追加 (ヘッダファイル)</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span> <span class="n">efTask</span><span class="p">;</span>
 <span class="c1">// コンストラクター内でタスクを作成して問題に追加する</span>
 <span class="n">efTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"l_wrist"</span><span class="p">,</span> <span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">500.0</span><span class="p">);</span>

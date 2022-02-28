@@ -313,7 +313,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -344,8 +344,7 @@
         <h1>FSMコントローラの例</h1>
         
 
-        
-<p>このチュートリアルでは、<a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラー</a>のチュートリアルで実装したのと同じコントローラーを、有限オートマトンの設定のみを使用して実装します。このチュートリアルでは、フレームワークで用意されている<code class="language-plaintext highlighter-rouge">DoorSample</code>コントローラーをゼロから再現するのに必要な各手順について、ひとつずつ説明していきます。</p>
+        <p>このチュートリアルでは、<a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラー</a>のチュートリアルで実装したのと同じコントローラーを、有限オートマトンの設定のみを使用して実装します。このチュートリアルでは、フレームワークで用意されている<code class="language-plaintext highlighter-rouge">DoorSample</code>コントローラーをゼロから再現するのに必要な各手順について、ひとつずつ説明していきます。</p>
 
 <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/GAtDC79G1zA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
@@ -481,7 +480,7 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
   <div class="tab-pane" id="githubCreateTabContent" role="tabpanel" arial-labelledby="githubCreateTab">
     <div class="card bg-light">
       <div class="card-body">
-        <p>Use the <a href="https://github.com/mc-rtc/new-fsm-controller">mc-rtc/new-fsm-controller</a> template project. This is equivalent to using the <code>mc_rtc_new_fsm_controller</code> tool with extra goodies.</p>
+        <p><a href="https://github.com/mc-rtc/new-fsm-controller">mc-rtc/new-fsm-controller</a>をテンプレートとして使用して下さい。これは<code>mc_rtc_new_fsm_controller</code> ツールを用いて生成されたコードとほぼ同じです。</p>
       </div>
     </div>
   </div>
@@ -529,7 +528,7 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
 
 <p>次に、接触面の初期セットをコントローラーに追加する方法について見ていきましょう。なお、状態を使用して接触面を後で追加・削除できます。<code class="language-plaintext highlighter-rouge">contacts</code>要素は、接触面のプロパティが記述された<a href="/mc_rtc/jp/json-full.html#mc_rbdyn/Contact">Contact</a>の配列で構成されます。この要素が、上で定義した<code class="language-plaintext highlighter-rouge">contact</code>制約条件に追加されます。</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Initial set of contacts</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 接触集合の初期値</span>
 <span class="na">contacts</span><span class="pi">:</span>
 <span class="pi">-</span> <span class="na">r1</span><span class="pi">:</span> <span class="s">jvrc1</span>
   <span class="na">r1Surface</span><span class="pi">:</span> <span class="s">LeftFoot</span>
@@ -547,18 +546,18 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
 
 <p>次に、衝突メッシュの初期セットを追加する方法について見ていきましょう。接触面の場合と同様に、状態を使用して衝突メッシュを後で追加・削除できます。<code class="language-plaintext highlighter-rouge">collisions</code>要素は、<a href="/mc_rtc/jp/json-full.html#ConstraintSet/CollisionsConstraint">CollisionConstraint</a>オブジェクトの配列で構成されます。<code class="language-plaintext highlighter-rouge">MainRobot</code>については、自己衝突メッシュのデフォルトのリストが<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1RobotModule" target="blank_"><code>mc_rbdyn::RobotModule</code></a>で定義されており、それらをここで使用できます。</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Collision constraint</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 干渉回避制約</span>
 <span class="na">collisions</span><span class="pi">:</span>
 <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">collision</span>
-  <span class="na">useMinimal</span><span class="pi">:</span> <span class="no">true</span>  <span class="c1"># The set of minimal self-collisions is defined in the robot module</span>
+  <span class="na">useMinimal</span><span class="pi">:</span> <span class="no">true</span>  <span class="c1"># 最小限の自己干渉回避セットはロボットモジュールに定義されている</span>
 <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">collision</span>
   <span class="na">r1</span><span class="pi">:</span> <span class="s">jvrc1</span>
   <span class="na">r2</span><span class="pi">:</span> <span class="s">door</span>
-  <span class="na">collisions</span><span class="pi">:</span> <span class="c1"># array of collisions to add for this pair of robots</span>
+  <span class="na">collisions</span><span class="pi">:</span> <span class="c1"># このロボットの組み合わせに対する干渉回避拘束のリスト</span>
     <span class="pi">-</span> <span class="na">body1</span><span class="pi">:</span> <span class="s">L_WRIST_Y_S</span>
       <span class="na">body2</span><span class="pi">:</span> <span class="s">door</span>
-      <span class="na">iDist</span><span class="pi">:</span> <span class="m">0.5</span>  <span class="c1"># interaction distance: minimal distance below which the constraint becomes active</span>
-      <span class="na">sDist</span><span class="pi">:</span> <span class="m">0.02</span> <span class="c1"># safety distance: minimal allowed distance</span>
+      <span class="na">iDist</span><span class="pi">:</span> <span class="m">0.5</span>  <span class="c1"># インタラクション距離：物体間の距離がこの値を下回ると拘束が有効になる</span>
+      <span class="na">sDist</span><span class="pi">:</span> <span class="m">0.02</span> <span class="c1"># 安全距離：物体間の距離がこの値以下にならないように拘束される</span>
       <span class="na">damping</span><span class="pi">:</span> <span class="m">0.0</span>
 </code></pre></div></div>
 

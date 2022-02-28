@@ -313,7 +313,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -336,8 +336,7 @@
         <h1>データ共有機能"DataStore"</h1>
         
 
-        
-<p><code class="language-plaintext highlighter-rouge">DataStore</code>は、任意のC++オブジェクトを効率的に保存・取得し、任意のオブジェクトをフレームワーク内で簡単かつ効率的に共有できるようにします。この機能では、型が厳しくチェックされ（保存時と同じ型のオブジェクトのみ取得できます）、C++の標準メカニズムのみを使用できます。</p>
+        <p><code class="language-plaintext highlighter-rouge">DataStore</code>は、任意のC++オブジェクトを効率的に保存・取得し、任意のオブジェクトをフレームワーク内で簡単かつ効率的に共有できるようにします。この機能では、型が厳しくチェックされ（保存時と同じ型のオブジェクトのみ取得できます）、C++の標準メカニズムのみを使用できます。</p>
 
 <p><code class="language-plaintext highlighter-rouge">DataStore</code>は、例えば以下の用途に使用できます。</p>
 
@@ -373,9 +372,9 @@
   <li>
     <p>以下のように、<code class="language-plaintext highlighter-rouge">make</code>あるいは<code class="language-plaintext highlighter-rouge">make_initializer</code>を使用してデータストア上にオブジェクトを直接作成できます。</p>
 
-    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a vector of double of size 4 initialized with value 42</span>
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 長さ4、初期値として42.0が入ったdouble型のベクトルを生成</span>
 <span class="n">datastore</span><span class="p">().</span><span class="n">make</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">"key"</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">42.0</span><span class="p">);</span>
-<span class="c1">// Create a vector of double of size 2 initialized with value {4, 42} (using list initialization)</span>
+<span class="c1">// 長さ2、初期値として4と42が入ったdouble型のベクトルを生成</span>
 <span class="n">datastore</span><span class="p">().</span><span class="n">make_initializer</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">"key"</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">42.0</span><span class="p">);</span>
 </code></pre></div>    </div>
   </li>
@@ -389,23 +388,23 @@
     <p>なお、これらの関数は、作成したオブジェクトへの参照も返すため、その参照を使ってオブジェクトへのアクセスや編集が行えます。</p>
 
     <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="o">&amp;</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">datastore</span><span class="p">().</span><span class="n">make</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"EigenVector"</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">Zero</span><span class="p">());</span>
-<span class="n">vec</span><span class="p">.</span><span class="n">x</span><span class="p">()</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// vec is now: 42, 0, 0</span>
+<span class="n">vec</span><span class="p">.</span><span class="n">x</span><span class="p">()</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// ベクトルの中身は42, 0, 0となる</span>
 </code></pre></div>    </div>
   </li>
   <li>
     <p>保存されている値への参照は、<code class="language-plaintext highlighter-rouge">get&lt;Type&gt;</code>を使用していつでも取得できます。</p>
 
     <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="o">&amp;</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"EigenVector"</span><span class="p">);</span>
-<span class="c1">// vec: 42, 0, 0</span>
+<span class="c1">// ベクトルの中身は42, 0, 0</span>
 </code></pre></div>    </div>
 
     <p>指定したキーがデータストアに存在しない場合や作成時と異なる型を<code class="language-plaintext highlighter-rouge">Type</code>に指定した場合は、例外がスローされます。<code class="language-plaintext highlighter-rouge">get</code>のオーバーロードを使用すると、<code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>オブジェクトの場合と同様に、キーが存在しない場合のデフォルト値を指定できます。</p>
 
     <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">vec</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
-<span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"NotAKey"</span><span class="p">,</span> <span class="n">vec</span><span class="p">);</span> <span class="c1">// vec remains unchanged: 1, 2, 3</span>
-<span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"EigenVector"</span><span class="p">,</span> <span class="n">vec</span><span class="p">);</span> <span class="c1">// vec is now 42, 0, 0</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"NotAKey"</span><span class="p">,</span> <span class="n">vec</span><span class="p">);</span> <span class="c1">// ベクトルの中身は1, 2, 3のまま</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"EigenVector"</span><span class="p">,</span> <span class="n">vec</span><span class="p">);</span> <span class="c1">// ベクトルの中身は42, 0, 0になる</span>
 
-<span class="kt">bool</span> <span class="n">hasFeature</span> <span class="o">=</span> <span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"HasFeature"</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span> <span class="c1">// hasFeature will be assigned the value of "HasFeature" if that key exists, false otherwise</span>
+<span class="kt">bool</span> <span class="n">hasFeature</span> <span class="o">=</span> <span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"HasFeature"</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span> <span class="c1">// hasFeatureには"HasFeature"キーに対応する値が存在する場合はその値が、それ以外の場合はfalseが格納される。</span>
 </code></pre></div>    </div>
   </li>
 </ul>
@@ -443,7 +442,7 @@
 <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">store</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"ObjectB"</span><span class="p">);</span>
 <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">derived</span> <span class="o">=</span> <span class="n">store</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"ObjectB"</span><span class="p">);</span>
 <span class="n">parent</span><span class="p">.</span><span class="n">type</span><span class="p">();</span>   <span class="c1">// "A"</span>
-<span class="n">parent</span><span class="p">.</span><span class="n">hello</span><span class="p">();</span>  <span class="c1">// "B" because hello is virtual</span>
+<span class="n">parent</span><span class="p">.</span><span class="n">hello</span><span class="p">();</span>  <span class="c1">// "B" （hello()は仮想関数であるため）</span>
 <span class="n">derived</span><span class="p">.</span><span class="n">type</span><span class="p">();</span>  <span class="c1">// "B"</span>
 <span class="n">derived</span><span class="p">.</span><span class="n">hello</span><span class="p">();</span> <span class="c1">// "B"</span>
 </code></pre></div>    </div>
@@ -451,13 +450,13 @@
   <li>
     <p><strong>ラムダ関数</strong>も保存できますが、特殊な<code class="language-plaintext highlighter-rouge">make_call</code>を使用する必要があります。</p>
 
-    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a lambda function and store it as an std::function</span>
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ラムダ関数を生成し、std::functionとして格納する</span>
 <span class="n">datastore</span><span class="p">().</span><span class="n">make_call</span><span class="p">(</span><span class="s">"lambda"</span><span class="p">,</span> <span class="p">[](</span><span class="kt">double</span> <span class="n">t</span><span class="p">)</span> <span class="p">{});</span>
-<span class="c1">// Retrieve the lambda</span>
+<span class="c1">// ラムダ関数の取得</span>
 <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">lambdaFun</span> <span class="o">=</span> <span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"lambda"</span><span class="p">);</span>
-<span class="c1">// Call function</span>
+<span class="c1">// 関数の呼び出し</span>
 <span class="n">lambdaFun</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
-<span class="c1">// Call directly through the datastore (the function return type and arguments type must be repeated)</span>
+<span class="c1">// データストアからの直接呼び出し (関数の返り値と引数の型を繰り返す必要がある)</span>
 <span class="n">datastore</span><span class="p">().</span><span class="n">call</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"lambda"</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span>
 </code></pre></div>    </div>
   </li>

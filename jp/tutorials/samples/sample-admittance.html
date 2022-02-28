@@ -315,7 +315,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -347,8 +347,7 @@
         <h1>アドミッタンスコントローラ</h1>
         
 
-        
-<p>このチュートリアルでは、本フレームワークで用意されている<code class="language-plaintext highlighter-rouge">AdmittanceSample</code>サンプルコントローラーの使い方と概念について説明します。このサンプルでは、<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1force_1_1AdmittanceTask" target="blank_"><code>mc_tasks::force::AdmittanceTask</code></a>を使用して、壁を押しながら<code class="language-plaintext highlighter-rouge">JVRC1</code>の手に加わる力を調節する方法を示します。</p>
+        <p>このチュートリアルでは、本フレームワークで用意されている<code class="language-plaintext highlighter-rouge">AdmittanceSample</code>サンプルコントローラーの使い方と概念について説明します。このサンプルでは、<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1force_1_1AdmittanceTask" target="blank_"><code>mc_tasks::force::AdmittanceTask</code></a>を使用して、壁を押しながら<code class="language-plaintext highlighter-rouge">JVRC1</code>の手に加わる力を調節する方法を示します。</p>
 
 <p>このコントローラーでは、以下の手順で処理を実行します。</p>
 
@@ -381,7 +380,7 @@
 
 <p>次に、以下のようにサンプルを実行します。</p>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="o">(</span>roscore &amp;<span class="o">)</span> <span class="c"># Ensure you have a roscore running (for rviz visualization)</span>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="o">(</span>roscore &amp;<span class="o">)</span> <span class="c"># roscoreが走っていることを確認 (rvizを用いた可視化のため)</span>
 <span class="nv">$ </span><span class="nb">cd</span> /usr/local/share/hrpsys/samples/JVRC1
 <span class="nv">$ </span>choreonoid sim_mc_wall.cnoid
 <span class="nv">$ </span>roslaunch mc_rtc_ticker controler_display.launch
@@ -409,7 +408,7 @@
 <span class="pi">-</span> <span class="pi">[</span><span class="nv">RightHandReleaseAdmittance</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">RightHandMoveBack</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
 <span class="pi">-</span> <span class="pi">[</span><span class="nv">RightHandMoveBack</span><span class="pi">,</span>          <span class="nv">OK</span><span class="pi">,</span> <span class="nv">StandingHalfSitting</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
 
-<span class="c1"># Initial state</span>
+<span class="c1"># 初期状態</span>
 <span class="na">init</span><span class="pi">:</span> <span class="s">RightHandToWall</span> 
 </code></pre></div></div>
 
@@ -419,7 +418,7 @@
 
 <p>この実験全体を通じて、ロボットの質量中心を両足の中点の真上に維持します。これを実現するには、<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1CoMTask" target="blank_"><code>mc_tasks::CoMTask</code></a>を使用します。また、胸部の過度な動きを抑えてより人間らしい動きとなるように、ロボットの胸部に<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1OrientationTask" target="blank_"><code>mc_tasks::OrientationTask</code></a>を追加します。この状態は、この有限オートマトン内にある他のすべての状態の基準状態として使用され、すべての状態がこの状態の動作を継承します。</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Keep the CoM centered between the feet, and the chest upright</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 重心位置を足の中間に、胴体をまっすぐに保つ</span>
   <span class="na">StandingBase</span><span class="pi">:</span>
     <span class="na">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
     <span class="na">tasks</span><span class="pi">:</span>
@@ -439,12 +438,12 @@
 
 <p>次に、ロボットの手を壁の近くまで前に動かします。これを行うには、<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1BSplineTrajectoryTask" target="blank_"><code>mc_tasks::BSplineTrajectoryTask</code></a>を使用します。このタスクでは、中間点の情報に基づいて、位置と向きがパラメーター化されたBスプライン曲線の移動経路が出力されます。このタスクでは、指定されたロボットの表面がこの移動経路に沿って制御されます。</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Trajectory to bring hand close to the wall</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 手先を壁近くに移動させる軌道</span>
   <span class="na">RightHandToWall</span><span class="pi">:</span>
     <span class="na">base</span><span class="pi">:</span> <span class="s">StandingBase</span>
     <span class="na">tasks</span><span class="pi">:</span>
-      <span class="c1"># inherits CoM and KeepChest tasks from StandingBase state</span>
-      <span class="c1"># and adds a bspline_trajectory task</span>
+      <span class="c1"># StandingBase状態からCoMとKeepChestタスクを継承し</span>
+      <span class="c1"># bspline_trajectoryタスクを追加</span>
       <span class="na">RightHandTrajectory</span><span class="pi">:</span>
         <span class="na">type</span><span class="pi">:</span> <span class="s">bspline_trajectory</span>
         <span class="na">surface</span><span class="pi">:</span> <span class="s">RightGripper</span>
@@ -465,29 +464,29 @@
 
 <p>次に、<code class="language-plaintext highlighter-rouge">RightHandPushAdmittance</code>状態において、mc_tasks::AdmittanceTaskを使用して手の法線方向の力を調節し、手と壁を接触させます。アドミッタンス制御タスクでは、レンチの測定値（フォーストルクセンサーから得られた測定値）と目標値との誤差に基づいて、エンドエフェクターの目標移動速度が計算されます。係数<code class="language-plaintext highlighter-rouge">admittance</code>によって、移動方向の軸に沿った誤差の大きさに基づきエンドエフェクターの移動速度が調節されます。なお、このタスクに速度を追跡させるには、力を追跡させたい方向に沿って、位置制御の剛性を低くし、速度制御の減衰を高くする必要があります。また、すべてのレンチは表面フレーム内で表されます（今回の例では<code class="language-plaintext highlighter-rouge">RightGripper</code>表面フレーム）。</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Increase applied force until we reach 20N</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 20Nに達するまで作用させる力を増大させる</span>
   <span class="na">RightHandPushAdmittance</span><span class="pi">:</span>
     <span class="na">base</span><span class="pi">:</span> <span class="s">StandingBase</span>
     <span class="na">tasks</span><span class="pi">:</span>
       <span class="na">RightHandAdmittance</span><span class="pi">:</span>
         <span class="na">type</span><span class="pi">:</span> <span class="s">admittance</span>
         <span class="na">surface</span><span class="pi">:</span> <span class="s">RightGripper</span> 
-        <span class="c1"># Tracks the forces along the normal axis of the gripper surface with an admittance coefficient of 0.001</span>
-        <span class="c1"># Note the high-damping and low stiffness on that axis.</span>
-        <span class="c1"># All other axis are position controlled and will keep the current gripper position as much as possible </span>
+        <span class="c1"># グリッパサーフェスの法線方向の力をアドミッタンス係数0.001で追従させる</span>
+        <span class="c1"># 注意：この軸方向のダンピングは高く、剛性は低い</span>
+        <span class="c1"># 他の軸は位置制御されており現在のグリッパの位置を可能な限り維持する</span>
         <span class="na">admittance</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0.001</span><span class="pi">]</span>
         <span class="na">stiffness</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">10</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">,</span> <span class="nv">1</span><span class="pi">]</span>
         <span class="na">damping</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">6.3</span><span class="pi">,</span> <span class="nv">6.3</span><span class="pi">,</span> <span class="nv">6.3</span><span class="pi">,</span> <span class="nv">6.3</span><span class="pi">,</span> <span class="nv">6.3</span><span class="pi">,</span> <span class="nv">300</span><span class="pi">]</span>
         <span class="na">maxVel</span><span class="pi">:</span>
           <span class="na">linear</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.2</span><span class="pi">,</span> <span class="nv">0.2</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">]</span>
           <span class="na">angular</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.2</span><span class="pi">,</span> <span class="nv">0.2</span><span class="pi">,</span> <span class="nv">0.2</span><span class="pi">]</span>
-        <span class="c1"># Target a desired force of 20N along the Z axis of the gripper surface</span>
+        <span class="c1"># グリッパサーフェスのz軸方向の力の目標値を20Nに設定</span>
         <span class="na">wrench</span><span class="pi">:</span>
          <span class="na">force</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">-20</span><span class="pi">]</span>
          <span class="na">couple</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">]</span>
-        <span class="c1"># Rotate the gripper such that the fingers point towards the wall  </span>
+        <span class="c1"># グリッパが壁の方向を向くように回転</span>
         <span class="na">targetRotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.57</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">1.57</span><span class="pi">]</span>
-        <span class="c1"># The task will complete one a force of -20N has been reached. All other axes are ignored.</span>
+        <span class="c1"># このタスクは-20Nの力が達成されたら終了する。他の全ての軸は無視される。</span>
         <span class="na">completion</span><span class="pi">:</span>
           <span class="na">wrench</span><span class="pi">:</span>
             <span class="na">force</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">.nan</span><span class="pi">,</span> <span class="nv">.nan</span><span class="pi">,</span> <span class="nv">-20</span><span class="pi">]</span>
@@ -502,9 +501,9 @@
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">robots</span><span class="pi">:</span>
   <span class="na">wall</span><span class="pi">:</span>
-    <span class="na">module</span><span class="pi">:</span> <span class="s">env/ground</span> <span class="c1"># reuse the ground model, but rotate it vertically to simulate a wall</span>
+    <span class="na">module</span><span class="pi">:</span> <span class="s">env/ground</span> <span class="c1"># 地面のモデルを再利用するが垂直方向に回転して壁を模擬</span>
     <span class="na">init_pos</span><span class="pi">:</span>
-      <span class="c1"># The wall position is put 5cm in front of choreonoid's one</span>
+      <span class="c1"># 壁の位置はChoreonoid上の位置よりも5cm前</span>
       <span class="na">translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.50</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
       <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">-1.57</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
 </code></pre></div></div>
@@ -515,12 +514,12 @@
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">UpdateWall</span><span class="o">::</span><span class="n">start</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="c1">// [...] read YAML configuration parameters</span>
+  <span class="c1">// [...] YAML 設定パラメータを読み込む</span>
 
-  <span class="c1">// Get the estimated pose of the fingers of the JVRC1 robot</span>
-  <span class="c1">// As estimated by the state observation pipeline </span>
+  <span class="c1">// JVRC1の推定された指のポーズを取得</span>
+  <span class="c1">// ステートオブザベーションパイプラインで推定されたもの</span>
   <span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">bodyPose</span> <span class="o">=</span> <span class="n">ctl</span><span class="p">.</span><span class="n">realRobots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="n">rName</span><span class="p">).</span><span class="n">bodyPosW</span><span class="p">(</span><span class="n">bName</span><span class="p">);</span>
-  <span class="c1">// Move the wall position along the x axis to match the fingertip's position</span>
+  <span class="c1">// 壁の位置を指先の位置と合うようにx軸方向に移動する</span>
   <span class="k">auto</span> <span class="n">posW</span> <span class="o">=</span> <span class="n">ctl</span><span class="p">.</span><span class="n">robot</span><span class="p">(</span><span class="n">moveRobotName</span><span class="p">).</span><span class="n">posW</span><span class="p">();</span>
   <span class="n">posW</span><span class="p">.</span><span class="n">translation</span><span class="p">().</span><span class="n">x</span><span class="p">()</span> <span class="o">=</span> <span class="n">bodyPose</span><span class="p">.</span><span class="n">translation</span><span class="p">().</span><span class="n">x</span><span class="p">();</span>
   <span class="n">ctl</span><span class="p">.</span><span class="n">robot</span><span class="p">(</span><span class="n">moveRobotName</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span><span class="n">posW</span><span class="p">);</span>

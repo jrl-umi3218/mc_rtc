@@ -313,7 +313,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -337,8 +337,7 @@
         <h1>接触の拘束自由度の変更</h1>
         
 
-        
-<h2 id="接触面自由度とは">接触面自由度とは</h2>
+        <h2 id="接触面自由度とは">接触面自由度とは</h2>
 
 <p>接触面自由度は、接触面上で特定の自由度を持った動きを可能にする機能です。具体的には、接触面上で1つ以上の軸に沿った自由な動き（平行移動または回転）を可能にする機能です。</p>
 
@@ -432,7 +431,7 @@
 
 <p>では、右足を垂直に動かしてみます。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//In reset</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// reset()で以下を実行</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix6d</span> <span class="n">dof</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix6d</span><span class="o">::</span><span class="n">Identity</span><span class="p">();</span>
 <span class="n">dof</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
  
@@ -443,15 +442,15 @@
 
 <p>次に、足が垂直に動くのを<em>制限</em>するため、EndEffectorTaskを追加し、この制約条件が正しく機能するか確認します。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//In header</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//ヘッダファイルに以下を追加</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span> <span class="n">efTask</span><span class="p">;</span>
 
-<span class="c1">//In .cpp</span>
-<span class="c1">// In constructor</span>
+<span class="c1">//cppファイルに以下を追加</span>
+<span class="c1">// コンストラクタ部分</span>
 <span class="n">efTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"R_FOOT"</span><span class="p">,</span> <span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
 <span class="n">efTask</span><span class="o">-&gt;</span><span class="n">addToSolver</span><span class="p">(</span><span class="n">solver</span><span class="p">());</span>
 
-<span class="c1">//In reset</span>
+<span class="c1">// reset()関数部分</span>
 <span class="n">efTask</span><span class="o">-&gt;</span><span class="n">resetTask</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
 <span class="n">efTask</span><span class="o">-&gt;</span><span class="n">add_ef_pose</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)));</span>
 </code></pre></div></div>

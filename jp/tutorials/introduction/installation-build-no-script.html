@@ -306,7 +306,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -316,8 +316,8 @@
               </div>
               
                 <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#building-from-source-without-a-script">Building from source without a script</a></li>
-<li class="toc-entry toc-h2"><a href="#getting-started">Getting started</a></li>
+<li class="toc-entry toc-h2"><a href="#ソースからビルドするスクリプトを使用しない場合">ソースからビルドする（スクリプトを使用しない場合）</a></li>
+<li class="toc-entry toc-h2"><a href="#はじめましょう">はじめましょう</a></li>
 </ul>
               
             </div>
@@ -327,40 +327,40 @@
       <div class="col-9" id="tutorial-content">
         
 
-        <h2 id="building-from-source-without-a-script">Building from source without a script</h2>
+        <h2 id="ソースからビルドするスクリプトを使用しない場合">ソースからビルドする（スクリプトを使用しない場合）</h2>
 
-<p>Building from sources on other platforms is not well documented at the moment. If you wish to embark on this adventure, the following packages are required to build mc_rtc:</p>
+<p>現在、他のプラットフォームでソースからビルドする方法についてドキュメント化されたものがあまりありません。この方法にチャレンジする場合、mc_rtcをビルドするのに以下のパッケージが必要となります。</p>
 <ul>
-  <li><a href="https://cmake.org/">CMake</a> &gt;= 3.1</li>
-  <li><a href="https://www.boost.org/">Boost</a> &gt;= 1.49</li>
-  <li><a href="http://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a> &gt;= 3.2</li>
+  <li><a href="https://cmake.org/">CMake</a> 3.1以降</li>
+  <li><a href="https://www.boost.org/">Boost</a> 1.49以降</li>
+  <li><a href="http://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a> 3.2以降</li>
   <li><a href="https://github.com/leethomason/tinyxml2">tinyxml2</a></li>
-  <li><a href="https://trac.osgeo.org/geos">GEOS</a> (With C++ bindings)</li>
-  <li><a href="https://www.gnu.org/software/libtool/manual/html_node/Libltdl-interface.html">LTDL</a> (Not required for Windows users)</li>
+  <li><a href="https://trac.osgeo.org/geos">GEOS</a>（C++バインディングが付属）</li>
+  <li><a href="https://www.gnu.org/software/libtool/manual/html_node/Libltdl-interface.html">LTDL</a> （Windowsユーザーの場合は不要）</li>
   <li><a href="https://github.com/nanomsg/nanomsg">nanomsg</a></li>
   <li><a href="https://github.com/jbeder/yaml-cpp">yaml-cpp</a></li>
-  <li><a href="https://github.com/gabime/spdlog/">spdlog</a> &gt;= 1.6.1</li>
+  <li><a href="https://github.com/gabime/spdlog/">spdlog</a> 1.6.1以降</li>
   <li><a href="https://github.com/humanoid-path-planner/hpp-spline">hpp-spline</a></li>
   <li><a href="https://github.com/jrl-umi3218/SpaceVecAlg">SpaceVecAlg</a></li>
   <li><a href="https://github.com/jrl-umi3218/RBDyn">RBDyn</a></li>
   <li><a href="https://github.com/jrl-umi3218/eigen-qld">eigen-qld</a></li>
   <li><a href="https://github.com/jrl-umi3218/eigen-quadprog">eigen-quadprog</a></li>
-  <li><a href="https://gite.lirmm.fr/multi-contact/eigen-lssol">eigen-lssol</a> (Optional)</li>
+  <li><a href="https://gite.lirmm.fr/multi-contact/eigen-lssol">eigen-lssol</a> （オプション）</li>
   <li><a href="https://github.com/jrl-umi3218/sch-core">sch-core</a></li>
   <li><a href="https://github.com/jrl-umi3218/Tasks">Tasks</a></li>
   <li><a href="https://github.com/jrl-umi3218/mc_rtc_data">mc_rtc_data</a></li>
   <li><a href="https://github.com/jrl-umi3218/state-observation">state-observation</a></li>
 </ul>
 
-<p>mc_rtc also has a ROS plugin that enables automated robot’s status publication as ROS topics and facilitate the integration with ROS tools (e.g. RViZ), to build this you will need:</p>
+<p>mc_rtcには、ロボットの状態をROSトピックとしてパブリッシュすることを可能にし、ROSのツール（RVizなど）との統合を容易にするためのROSプラグインも用意されています。これをビルドするには以下のものが必要です。</p>
 
 <ul>
   <li><a href="https://github.com/jrl-umi3218/mc_rtc_msgs">mc_rtc_msgs</a></li>
 </ul>
 
-<p>If you wish to get Python bindings you will also need the following:</p>
+<p>Pythonバインディングを取得したい場合、以下のものが必要です。</p>
 <ul>
-  <li><a href="http://cython.org/">Cython</a> &gt;= 0.2</li>
+  <li><a href="http://cython.org/">Cython</a> 0.2以降</li>
   <li><a href="">python-pip</a></li>
   <li><a href="">python-numpy</a></li>
   <li><a href="">python-nose</a></li>
@@ -369,23 +369,24 @@
   <li><a href="https://github.com/jrl-umi3218/sch-core-python">sch-core-python</a></li>
 </ul>
 
-<p>Additional Python libraries are required to run mc_rtc tools:</p>
+<p>mc_rtcのツールを実行するには、さらに以下のPythonライブラリが必要です。</p>
 <ul>
   <li><a href="">python-git</a> (pip name: <code class="language-plaintext highlighter-rouge">GitPython</code>)</li>
   <li><a href="">python-pyqt5</a></li>
 </ul>
 
-<p>The following packages are not required but bring additionnal features:</p>
+<p>以下のパッケージは必須ではありませんが、追加の機能が使用できるようになります。</p>
 <ul>
   <li><a href="http://www.ros.org/">ROS</a></li>
   <li><a href="https://github.com/jrl-umi3218/mc_rtc_ros">mc_rtc_ros</a></li>
 </ul>
 
-<p>If <code class="language-plaintext highlighter-rouge">roscpp</code> is available during build then <code class="language-plaintext highlighter-rouge">tf2_ros</code> and <code class="language-plaintext highlighter-rouge">sensor_msgs</code> are also required. This will add some integration between the <code class="language-plaintext highlighter-rouge">ROS</code> framework and <code class="language-plaintext highlighter-rouge">mc_rtc</code> (e.g. robot’s state publication) and allow controllers to use ROS functionnalities (provides a <code class="language-plaintext highlighter-rouge">ros::NodeHandle</code> instance that can be used anywhere in <code class="language-plaintext highlighter-rouge">mc_rtc</code>).</p>
+<p>ビルド時に<code class="language-plaintext highlighter-rouge">roscpp</code>を使用できる場合、<code class="language-plaintext highlighter-rouge">tf2_ros</code>と<code class="language-plaintext highlighter-rouge">sensor_msgs</code>も必要になります。これを使用すると、<code class="language-plaintext highlighter-rouge">ROS</code>フレームワークと<code class="language-plaintext highlighter-rouge">mc_rtc</code>がさらに統合され（ロボットの状態のパブリッシュなど）、コントローラーでROSの機能を使用できるようになります（<code class="language-plaintext highlighter-rouge">mc_rtc</code>内のどこでも使える<code class="language-plaintext highlighter-rouge">ros::NodeHandle</code>インスタンスが提供されます）。</p>
 
-<h2 id="getting-started">Getting started</h2>
+<h2 id="はじめましょう">はじめましょう</h2>
 
-<p>Once mc_rtc has been installed, you can jump to the next <a href="/mc_rtc/jp/tutorials/introduction/configuration.html">section</a>.</p>
+<p>mc_rtcのインストールが完了したら、<a href="/mc_rtc/jp/tutorials/introduction/configuration.html">次のセクション</a>に進んでください。</p>
+
 
 
         <hr/>

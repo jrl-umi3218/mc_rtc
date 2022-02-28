@@ -309,7 +309,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -355,8 +355,7 @@
         <h1>グラフィカルユーザインタフェース (GUI)</h1>
         
 
-        
-<p>GUI機能では、コントローラーをリモートで操作するための動的なグラフィカルインターフェイスを構築することができます。この機能をコントローラーに実装して使用する方法は、<a href="/mc_rtc/jp/tutorials/usage/logging.html">ロギング</a>の手法と似ています。</p>
+        <p>GUI機能では、コントローラーをリモートで操作するための動的なグラフィカルインターフェイスを構築することができます。この機能をコントローラーに実装して使用する方法は、<a href="/mc_rtc/jp/tutorials/usage/logging.html">ロギング</a>の手法と似ています。</p>
 
 <p>このページでは以下のトピックについて説明します。</p>
 
@@ -380,12 +379,12 @@
 
 <p>要素を追加するには、カテゴリーと1つ以上の要素を指定して<code class="language-plaintext highlighter-rouge">gui()-&gt;addElement(...)</code>を呼び出します。例:</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add a single button named "Push" in the a/b category</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// a/bカテゴリに"Push"と名付けられたボタンを追加</span>
 <span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addElement</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span>
   <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Push"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello!"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="p">})</span>
 <span class="p">);</span>
 
-<span class="c1">// Add multiple elements at once, they will appear in the order they are added in the function</span>
+<span class="c1">// 複数の要素を一括で追加することも可能。この場合、追加された要素は追加された順番に表示される</span>
 <span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addElement</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span>
   <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 1"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}),</span>
   <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 2"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}),</span>
@@ -414,19 +413,19 @@
 
 <p>例</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// String label</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 文字列ラベル</span>
 <span class="n">Label</span><span class="p">(</span><span class="s">"LabelText"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="s">"some text"</span><span class="p">;</span> <span class="p">});</span>
 
-<span class="c1">// Display a value</span>
+<span class="c1">// 値を表示</span>
 <span class="n">Label</span><span class="p">(</span><span class="s">"Some value"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">value_</span><span class="p">;</span> <span class="p">});</span>
 
-<span class="c1">// Display a vector of strings</span>
+<span class="c1">// 文字列のベクトルを表示</span>
 <span class="n">ArrayLabel</span><span class="p">(</span><span class="s">"Some strings"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">,</span> <span class="s">"c"</span><span class="p">};</span> <span class="p">});</span>
 
-<span class="c1">// Display a vector with labels</span>
+<span class="c1">// ベクトルをラベルをつけて表示</span>
 <span class="n">ArrayLabel</span><span class="p">(</span><span class="s">"Vector"</span><span class="p">,</span> <span class="p">{</span><span class="s">"x"</span><span class="p">,</span> <span class="s">"y"</span><span class="p">,</span> <span class="s">"z"</span><span class="p">},</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span> <span class="p">});</span>
 
-<span class="c1">// Some elements have associated labels, e.g. Force also adds an ArrayLabel</span>
+<span class="c1">// いくつかの要素は関連付けられたラベルを持っている。例えばForceはArrayLabelも追加する。</span>
 <span class="n">Force</span><span class="p">(</span><span class="s">"LeftFoot"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"LFullSole"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LFullSole"</span><span class="p">);</span> <span class="p">}),</span>
 <span class="n">Force</span><span class="p">(</span><span class="s">"RightFoot"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"RFullSole"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"RFullSole"</span><span class="p">);</span> <span class="p">}),</span>
 <span class="n">Force</span><span class="p">(</span><span class="s">"LeftHand"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"LeftFingers"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LeftFingers"</span><span class="p">);</span> <span class="p">}),</span>
@@ -494,13 +493,13 @@
   <li>（オプション）RVizなどの3次元環境でデータを表示するための、対話形式の要素</li>
 </ul>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Read-only variant does not provide a callback to set the data</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 読み出し専用のものは値設定のためのコールバックを持ちません</span>
 <span class="n">Point3D</span><span class="p">(</span><span class="s">"Point"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">v3_</span><span class="p">;</span> <span class="p">});</span>
 
-<span class="c1">// Read-write variant</span>
+<span class="c1">// 読み出し・書き込み両用</span>
 
-<span class="c1">// Note that even though we want to display a rotation, we need to provide a</span>
-<span class="c1">// full transform otherwise the GUI could not guess where to display the element</span>
+<span class="c1">// 注意：回転を表示したい場合でも変換全体を渡す必要があります。</span>
+<span class="c1">// そうしないとGUIがどこに表示してよいのか判断できないためです。</span>
 <span class="n">Rotation</span><span class="p">(</span><span class="s">"Rot"</span><span class="p">,</span>
          <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">{</span><span class="n">rot_</span><span class="p">,</span> <span class="n">pos_</span><span class="p">}</span> <span class="p">},</span>
          <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span> <span class="o">&amp;</span> <span class="n">rot</span><span class="p">)</span> <span class="p">{</span> <span class="n">rot_</span> <span class="o">=</span> <span class="n">rot</span><span class="p">;</span> <span class="p">});</span>
@@ -510,11 +509,11 @@
 
 <p>この要素は、3次元環境に移動経路を表示します。リアルタイムの移動経路として表示するか（表面がたどった経路の表示など）、あらかじめ計画された移動経路として表示するかは、返されるデータの種類に応じて決定してください。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Real-time trajectory, returns a single point (either Eigen::Vector3d or sva::PTransformd)</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// リアルタイム軌道は点を返す (型はEigen::Vector3d 又は sva::PTransformd)</span>
 <span class="n">Trajectory</span><span class="p">(</span><span class="s">"RealTimeTrajectory"</span><span class="p">,</span>
            <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LeftGripper"</span><span class="p">);</span> <span class="p">});</span>
 
-<span class="c1">// Pre-planned trajectory returns a vector of points</span>
+<span class="c1">// 予め計画された軌道は点のベクトルを返す</span>
 <span class="n">Trajectory</span><span class="p">(</span><span class="s">"Trajectory"</span><span class="p">,</span>
            <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">traj_</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
@@ -523,11 +522,11 @@
 
 <p>この要素は、単一のポリゴン（1つの平面など）またはポリゴンのリスト（歩容計画など）を表示します。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// A single polygon is a vector of Eigen::Vector3d</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 単一のポリゴンはEigen::Vector3d型のベクトル</span>
 <span class="n">Polygon</span><span class="p">(</span><span class="s">"Polygon"</span>
         <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">};</span> <span class="p">});</span>
 
-<span class="c1">// A list of polygon is a vector of vector of Eigen::Vector3d</span>
+<span class="c1">// ポリゴンのリストはEigen::Vector3dのベクトルのベクトル</span>
 <span class="n">Polygon</span><span class="p">(</span><span class="s">"Step plan"</span><span class="p">,</span>
         <span class="p">[</span><span class="k">this</span><span class="p">]]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">step_plan_display_</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
@@ -543,10 +542,10 @@
 
 <p>この要素は、3次元環境に矢印を表示します。矢印の始点と終点を指定する必要があります。編集可能な矢印を指定することもできます。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Read-only</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 読み出し専用</span>
 <span class="n">Arrow</span><span class="p">(</span><span class="s">"ArrowRO"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">start_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">end_</span><span class="p">;</span> <span class="p">});</span>
 
-<span class="c1">// Editable arrow</span>
+<span class="c1">// 編集可能な矢印</span>
 <span class="n">Arrow</span><span class="p">(</span><span class="s">"Arrow"</span><span class="p">,</span>
       <span class="p">[</span><span class="k">this</span><span class="p">](){</span> <span class="k">return</span> <span class="n">start_</span><span class="p">;</span> <span class="p">},</span>
       <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&amp;</span> <span class="n">start</span><span class="p">)</span> <span class="p">{</span> <span class="n">start_</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span> <span class="p">},</span>
@@ -558,10 +557,10 @@
 
 <p>この要素は、<code class="language-plaintext highlighter-rouge">Transform</code>要素と同様ですが、X/Y軸方向の平行移動とZ軸周りの回転のみを編集できる点が異なります。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Returns a vector with 3 elements representing the X/Y position and the theta angle</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// X/Yの位置と回転角度を表す3つの要素からなるベクトルを返す</span>
 <span class="n">XYTheta</span><span class="p">(</span><span class="s">"XYThetaOnGround"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">theta</span><span class="p">};</span> <span class="p">});</span>
 
-<span class="c1">// Specify the height with a 4th element</span>
+<span class="c1">// 4つ目の要素で高さを指定可能</span>
 <span class="n">XYTheta</span><span class="p">(</span><span class="s">"XYTheta"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">4</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">z</span><span class="p">};</span> <span class="p">});</span>
 </code></pre></div></div>
 
@@ -569,13 +568,13 @@
 
 <p>この要素では、任意のデータが格納された表を3次元環境に表示できます。データのコールバック関数は、<code class="language-plaintext highlighter-rouge">std::vector&lt;std::vector&lt;double&gt;&gt;</code>や<code class="language-plaintext highlighter-rouge">std::vector&lt;std::tuple&lt;X, Y, Z&gt;&gt;</code>のように配列の配列として表されたオブジェクトを返す必要があります。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Table with a fixed header</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 固定されたヘッダを持つテーブル</span>
 <span class="n">Table</span><span class="p">(</span><span class="s">"Simple table"</span><span class="p">,</span> <span class="p">{</span><span class="s">"X"</span><span class="p">,</span> <span class="s">"Y"</span><span class="p">,</span> <span class="s">"Z"</span><span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="p">{</span> <span class="k">return</span> <span class="n">points_</span><span class="p">;</span> <span class="p">});</span>
-<span class="c1">// Table with a fixed header and formatting information</span>
+<span class="c1">// 固定されたヘッダとフォーマットの情報を持つテーブル</span>
 <span class="n">Table</span><span class="p">(</span><span class="s">"Simple with format"</span><span class="p">,</span> <span class="p">{</span><span class="s">"X"</span><span class="p">,</span> <span class="s">"Y"</span><span class="p">,</span> <span class="s">"Z"</span><span class="p">},</span> <span class="p">{</span><span class="s">"{:0.3f}"</span><span class="p">,</span> <span class="s">"{:0.3f}"</span><span class="p">,</span> <span class="s">"{:0.3f}"</span><span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">data_</span><span class="p">;</span> <span class="p">});</span>
-<span class="c1">// Table with a dynamic header</span>
+<span class="c1">// 動的なヘッダを持つテーブル</span>
 <span class="n">Table</span><span class="p">(</span><span class="s">"Dynamic table"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">header_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">data_</span><span class="p">;</span> <span class="p">});</span>
-<span class="c1">// Table with a dynamic header + formatting</span>
+<span class="c1">// 動的なヘッダとフォーマットの情報を持つテーブル</span>
 <span class="n">Table</span><span class="p">(</span><span class="s">"Dynamic with format"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">header_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">format_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">data_</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
 
@@ -585,9 +584,9 @@
 
 <p><code class="language-plaintext highlighter-rouge">Form</code>要素を使用すると、より複雑な対話形式のダイアログを構築できます。フォーム自体は他の要素で構成されます。<code class="language-plaintext highlighter-rouge">Form</code>は以下のように作成します。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Form</span><span class="p">(</span><span class="s">"Push to send"</span><span class="p">,</span> <span class="c1">// This will be shown on the "send" button for the form</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Form</span><span class="p">(</span><span class="s">"Push to send"</span><span class="p">,</span> <span class="c1">// "send" ボタンの上に表示される文字列</span>
      <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span> <span class="p">{},</span>
-     <span class="p">...</span> <span class="c1">// list of element</span>
+     <span class="p">...</span> <span class="c1">// 要素のリスト</span>
 <span class="p">);</span>
 </code></pre></div></div>
 
@@ -629,9 +628,9 @@
 
 <p>GUIから要素を削除するための2つの関数が用意されています。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Remove a single element by name</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 単一の要素を名前で指定して削除</span>
 <span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeElement</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span> <span class="s">"element"</span><span class="p">);</span>
-<span class="c1">// Remove a category and all its sub-categories</span>
+<span class="c1">// あるカテゴリ及びその全ての子カテゴリを削除</span>
 <span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeCategory</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">});</span>
 </code></pre></div></div>
 

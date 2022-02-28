@@ -313,7 +313,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -340,8 +340,7 @@
         <h1>物体速度の拘束</h1>
         
 
-        
-<p>このページでは、制約条件<code class="language-plaintext highlighter-rouge">mc_solver::BoundedSpeedConstr</code>について説明します。この制約条件は、その名前とこのページのタイトルが示すように、速度と方向を厳密に指定してボディを動かす必要がある場合に使用します。より「緩やかな」条件を適用する場合については、以下の記事を参照してください。</p>
+        <p>このページでは、制約条件<code class="language-plaintext highlighter-rouge">mc_solver::BoundedSpeedConstr</code>について説明します。この制約条件は、その名前とこのページのタイトルが示すように、速度と方向を厳密に指定してボディを動かす必要がある場合に使用します。より「緩やかな」条件を適用する場合については、以下の記事を参照してください。</p>
 
 <ul>
   <li><a href="dim-weight.html">タスク空間内の各軸に異なる重みを適用する</a></li>
@@ -352,7 +351,7 @@
 
 <p>まず、制約条件オブジェクトを作成します。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Assume bSpeedCstr type is:</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// bSpeedCstrは以下の型であると仮定</span>
 <span class="c1">// std::shared_ptr&lt;mc_solver::BoundedSpeedConstr&gt;</span>
 <span class="n">bSpeedCstr</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">BoundedSpeedConstr</span><span class="o">&gt;</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span>
                                                              <span class="n">robots</span><span class="p">().</span><span class="n">robotIndex</span><span class="p">(),</span>
@@ -415,7 +414,7 @@
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">dof</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">::</span><span class="n">Identity</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">spd</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
-<span class="n">spd</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>  <span class="c1">// Move r_wrist in the z direction at constant speed 0.1 m/s</span>
+<span class="n">spd</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>  <span class="c1">// r_wrist をz方向に一定の速度 0.1 m/s で動かす</span>
 <span class="n">bSpeedConstr</span><span class="o">-&gt;</span><span class="n">addBoundedSpeed</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="s">"r_wrist"</span><span class="p">,</span>
                               <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">Zero</span><span class="p">(),</span>
                               <span class="n">dof</span><span class="p">,</span> <span class="n">spd</span><span class="p">);</span>
@@ -437,7 +436,7 @@
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">dof</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">::</span><span class="n">Identity</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span>
 <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">spd</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="o">::</span><span class="n">Zero</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
-<span class="c1">// Apply a different scaling for linear and angular velocities</span>
+<span class="c1">// 並進速度と回転速度に異なるスケーリングを施す</span>
 <span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="n">spd</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">M_PI</span><span class="o">*</span><span class="mf">0.1</span><span class="p">;</span> <span class="p">}</span>
 <span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="n">spd</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span> <span class="p">}</span>
 <span class="n">bSpeedConstr</span><span class="o">-&gt;</span><span class="n">addBoundedSpeed</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="s">"r_wrist"</span><span class="p">,</span>

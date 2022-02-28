@@ -307,7 +307,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -1103,7 +1103,7 @@
   <div class="card-body">
 
   <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">mc_rbdyn</span>
-<span class="c1"># Here you can change the robot module name with your own robot
+<span class="c1"># 以下のロボットモジュールの名前を自分のロボットのものに変える
 </span><span class="n">rm</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"JVRC1"</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="s">"- {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">j</span><span class="p">.</span><span class="n">name</span><span class="p">())</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">rm</span><span class="p">.</span><span class="n">mb</span><span class="p">.</span><span class="n">joints</span><span class="p">()</span> <span class="k">if</span> <span class="n">j</span><span class="p">.</span><span class="n">dof</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]))</span></code></pre></figure>
 
@@ -1124,7 +1124,7 @@
   <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include &lt;mc_rbdyn/RobotLoader.h&gt;
 </span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
 <span class="p">{</span>
-  <span class="c1">// Here you can change the robot module name with your own robot</span>
+  <span class="c1">// 以下のロボットモジュールの名前を自分のロボットのものに変える</span>
   <span class="k">auto</span> <span class="n">rm</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"JVRC1"</span><span class="p">);</span>
   <span class="k">for</span><span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">j</span> <span class="o">:</span> <span class="n">rm</span><span class="o">-&gt;</span><span class="n">mb</span><span class="p">.</span><span class="n">joints</span><span class="p">())</span>
   <span class="p">{</span>

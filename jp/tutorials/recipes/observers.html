@@ -313,7 +313,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -349,8 +349,7 @@
         <h1>ステートオブザベーションパイプライン</h1>
         
 
-        
-<p>一般に、制御されているロボットの実際の状態を知る必要があります。しかし、ロボットに組み込まれているセンサーから十分な情報を得られることはまれであるため、残念ながら、実際の状態を完全に把握できることはめったにありません。その代わり、各種センサー（関節エンコーダー、フォーストルクセンサー、IMU（慣性計測装置、カメラなど）の測定値と、コントローラーの制御対象（接触面など）に関する追加の情報から、コントローラーに関するシステムの状態を推測する必要があります。例えば、浮遊ベースロボットの場合、通常、浮遊ベースの状態（位置、向き、速度など）を完全に把握できるセンサーは搭載されていないため、入手できる情報を活用してその状態を推定する必要があります。これを実現する方法として、例えば、IMUやカルマンフィルターの情報を、ロボットのキネマティクスに関する既知の情報と組み合わせるというやり方があります。また、ビジュアルオドメトリを使用する方法や、モーションキャプチャーシステムからグラウンドトゥルース測定値を取得する方法のほか、これらを組み合わせる方法もあります。このようなプロセスは状態観測と呼ばれます。</p>
+        <p>一般に、制御されているロボットの実際の状態を知る必要があります。しかし、ロボットに組み込まれているセンサーから十分な情報を得られることはまれであるため、残念ながら、実際の状態を完全に把握できることはめったにありません。その代わり、各種センサー（関節エンコーダー、フォーストルクセンサー、IMU（慣性計測装置、カメラなど）の測定値と、コントローラーの制御対象（接触面など）に関する追加の情報から、コントローラーに関するシステムの状態を推測する必要があります。例えば、浮遊ベースロボットの場合、通常、浮遊ベースの状態（位置、向き、速度など）を完全に把握できるセンサーは搭載されていないため、入手できる情報を活用してその状態を推定する必要があります。これを実現する方法として、例えば、IMUやカルマンフィルターの情報を、ロボットのキネマティクスに関する既知の情報と組み合わせるというやり方があります。また、ビジュアルオドメトリを使用する方法や、モーションキャプチャーシステムからグラウンドトゥルース測定値を取得する方法のほか、これらを組み合わせる方法もあります。このようなプロセスは状態観測と呼ばれます。</p>
 
 <p>ロボットに関してどのような状態を観測すべきか、その要件はコントローラーによって異なります。ヒューマノイドロボットの歩行コントローラーでは、ロボットの質量中心の状態を確実に推定することが重要であるため、ロボットのキネマティクス状態（浮遊ベースを含むボディ各部の位置と速度）を完全に把握する必要があります。一方、マニピュレーターアームでは、関節の位置と速度の情報しか必要としません。また、どのような方法で状態を取得するかも重要です（グラウンドトゥルース情報と推定値のどちらを使用するのか、どのようなセンサーやアルゴリズムを使用するのかなど）。</p>
 
@@ -384,34 +383,34 @@
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
 <span class="na">ObserverPipelines</span><span class="pi">:</span>
-<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">MainPipeline</span>                     <span class="c1"># - Create a new pipeline</span>
-  <span class="na">gui</span><span class="pi">:</span> <span class="no">true</span>                              <span class="c1">#   diplay the pipeline in the GUI (default = false)</span>
-  <span class="na">log</span><span class="pi">:</span> <span class="no">true</span>                              <span class="c1">#   log observers (default)</span>
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">MainPipeline</span>                     <span class="c1"># - 新たなパイプラインを生成</span>
+  <span class="na">gui</span><span class="pi">:</span> <span class="no">true</span>                              <span class="c1">#   このパイプラインをGUIに表示 (デフォルトは非表示)</span>
+  <span class="na">log</span><span class="pi">:</span> <span class="no">true</span>                              <span class="c1">#   ログを取る (デフォルト)</span>
 
-  <span class="na">observers</span><span class="pi">:</span>                             <span class="c1">#   declare which observers to use</span>
-  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">Encoder</span>                        <span class="c1"># - Use an EncoderObserver</span>
+  <span class="na">observers</span><span class="pi">:</span>                             <span class="c1">#   使用するオブザーバを宣言</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">Encoder</span>                        <span class="c1"># - EncoderObserverを使用</span>
     <span class="na">config</span><span class="pi">:</span>                              <span class="c1">#</span>
-      <span class="na">position</span><span class="pi">:</span> <span class="s">encoderValues</span>            <span class="c1">#    - Sets joint position from encoder sensor values (default)</span>
-      <span class="na">velocity</span><span class="pi">:</span> <span class="s">encoderFiniteDifferences</span> <span class="c1">#    - Computes joint velocities by finite differences  (default)</span>
-                                         <span class="c1"># We now have the estimation of each joint position and velocity and the corresponding</span>
-                                         <span class="c1"># body positions and velocities, but we are still missing the floating base</span>
+      <span class="na">position</span><span class="pi">:</span> <span class="s">encoderValues</span>            <span class="c1">#    - エンコーダ値から関節位置を設定 (デフォルト)</span>
+      <span class="na">velocity</span><span class="pi">:</span> <span class="s">encoderFiniteDifferences</span> <span class="c1">#    - 関節速度を有限差分により計算  (デフォルト)</span>
+                                         <span class="c1"># ここまでの設定で関節の位置・速度、対応するボディの位置・速度が推定できるが、</span>
+                                         <span class="c1"># フローティングベースの情報が欠けている</span>
 
-  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">BodySensor</span>                     <span class="c1"># - Use a BodySensor observer</span>
-    <span class="na">update</span><span class="pi">:</span> <span class="no">false</span>                        <span class="c1">#   Do not update the real robot state</span>
-    <span class="na">gui</span><span class="pi">:</span> <span class="no">false</span>                           <span class="c1">#   Do not display in the gui</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">BodySensor</span>                     <span class="c1"># - BodySensor オブザーバを使用</span>
+    <span class="na">update</span><span class="pi">:</span> <span class="no">false</span>                        <span class="c1">#   出力を実ロボットの状態に設定しない</span>
+    <span class="na">gui</span><span class="pi">:</span> <span class="no">false</span>                           <span class="c1">#   GUIに表示しない</span>
     <span class="na">config</span><span class="pi">:</span>                              <span class="c1">#</span>
-      <span class="na">bodySensor</span><span class="pi">:</span> <span class="s">FloatingBase</span>           <span class="c1">#   In simulation, the interface will fill this sensor with ground truth values</span>
-                                         <span class="c1">#   The observer computes the position and velocity of the floating base</span>
-                                         <span class="c1">#   by transforming the sensor measurements to the floating base frame</span>
+      <span class="na">bodySensor</span><span class="pi">:</span> <span class="s">FloatingBase</span>           <span class="c1">#   シミュレーション時はインタフェースが真値をこのセンサ出力として設定する</span>
+                                         <span class="c1">#   オブザーバはフローティングベースの位置及び速度を</span>
+                                         <span class="c1">#   センサの計測値を変換することで計算する</span>
 
-  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">KinematicInertial</span>              <span class="c1"># - Estimates the floating base state using the KinematicInertial observer</span>
-    <span class="na">update</span><span class="pi">:</span> <span class="no">true</span>                         <span class="c1">#   update the real robot instance from its results</span>
-    <span class="na">gui</span><span class="pi">:</span> <span class="no">true</span>                            <span class="c1">#   Displays the estimated velocity as an arrow (default)</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">KinematicInertial</span>              <span class="c1"># - フローティングベースの状態をKinematicsInertialオブザーバを用いて推定する</span>
+    <span class="na">update</span><span class="pi">:</span> <span class="no">true</span>                         <span class="c1">#   出力を実ロボットの状態に設定する</span>
+    <span class="na">gui</span><span class="pi">:</span> <span class="no">true</span>                            <span class="c1">#   推定された速度を矢印で表示する (デフォルト)</span>
     <span class="na">config</span><span class="pi">:</span>
-      <span class="na">imuBodySensor</span><span class="pi">:</span> <span class="s">Accelerometer</span>       <span class="c1"># This observer only uses roll and pitch rotation information from this sensor</span>
-                                         <span class="c1"># along with a kinematic anchor point and the robot kinematics between the anchor</span>
-                                         <span class="c1"># frame and the floating base frame. The anchor frame is expected to be provided</span>
-                                         <span class="c1"># through a datastore callback (see below for details)</span>
+      <span class="na">imuBodySensor</span><span class="pi">:</span> <span class="s">Accelerometer</span>       <span class="c1"># このオブザーバはセンサからのロールとピッチの情報、</span>
+                                         <span class="c1"># アンカーポイント、ロボットのキネマティクスを利用して</span>
+                                         <span class="c1"># アンカーポイントはデータストアのコールバックを用いて</span>
+                                         <span class="c1"># 提供されることが想定されている（詳細は以下を参照）。</span>
 </code></pre></div></div>
 
 <p>使用できるオプションの詳細については、該当するJSONスキーマを参照してください。</p>
@@ -532,7 +531,7 @@
 
 <p>追加のロボットをパブリッシュするには以下のようにします。</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># robots published as env_1, env_2, etc</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ロボットはenv_1, env_2等としてパブリッシュされる</span>
 <span class="na">Robot Description path</span><span class="pi">:</span> <span class="s">/real/env_*/robot_description</span>
 <span class="na">TF Prefix</span><span class="pi">:</span> <span class="s">/real/env_*</span>
 </code></pre></div></div>
@@ -560,19 +559,19 @@
     <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
   <span class="p">}</span>
   <span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">observerp</span> <span class="o">=</span> <span class="n">observerPipeline</span><span class="p">(</span><span class="n">observerPipelineName</span><span class="p">);</span>
-  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">observerp</span><span class="p">.</span><span class="n">success</span><span class="p">())</span> <span class="c1">// Check if the pipeline failed</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">observerp</span><span class="p">.</span><span class="n">success</span><span class="p">())</span> <span class="c1">// パイプラインが失敗していないか確認</span>
   <span class="p">{</span>
     <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">"Required pipeline </span><span class="se">\"</span><span class="s">{}</span><span class="se">\"</span><span class="s"> for real robot observation failed to run!"</span><span class="p">,</span> <span class="n">observerPipelineName</span><span class="p">);</span>
-    <span class="c1">// Check which observer failed</span>
+    <span class="c1">// どのオブザーバが失敗したかチェック</span>
     <span class="k">for</span><span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">observer</span> <span class="o">:</span> <span class="n">observerp</span><span class="p">.</span><span class="n">observers</span><span class="p">())</span>
     <span class="p">{</span>
       <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">observer</span><span class="p">.</span><span class="n">success</span><span class="p">())</span>
       <span class="p">{</span>
-        <span class="c1">// Display failure error</span>
+        <span class="c1">// エラーメッセージを表示</span>
         <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">"Observer </span><span class="se">\"</span><span class="s">{}</span><span class="se">\"</span><span class="s"> failed with error </span><span class="se">\"</span><span class="s">{}</span><span class="se">\"</span><span class="s">"</span><span class="p">,</span> <span class="n">observer</span><span class="p">.</span><span class="n">observer</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="n">observer</span><span class="p">.</span><span class="n">observer</span><span class="p">().</span><span class="n">error</span><span class="p">());</span>
         <span class="k">if</span><span class="p">(</span><span class="n">observer</span><span class="p">.</span><span class="n">observer</span><span class="p">().</span><span class="n">name</span><span class="p">()</span> <span class="o">==</span> <span class="s">"MyObserver"</span><span class="p">)</span>
         <span class="p">{</span>
-          <span class="c1">// do something specific if this observer failed</span>
+          <span class="c1">// このオブザーバが失敗した場合に特有の処理を実行</span>
         <span class="p">}</span>
       <span class="p">}</span>
     <span class="p">}</span>
@@ -599,7 +598,7 @@
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// YourObserver.cpp</span>
 <span class="cp">#include &lt;mc_observers/ObserverMacros.h&gt;
-</span><span class="c1">// Observer implementation (configure, reset, run and update functions)</span>
+</span><span class="c1">// オブザーバの実装 (configure, reset, run, update 関数)</span>
 <span class="n">EXPORT_OBSERVER_MODULE</span><span class="p">(</span><span class="s">"YourObserver"</span><span class="p">,</span> <span class="n">your_namespace</span><span class="o">::</span><span class="n">YourObserverClassName</span><span class="p">)</span>
 </code></pre></div></div>
 

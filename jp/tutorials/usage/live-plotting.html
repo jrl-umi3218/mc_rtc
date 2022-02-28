@@ -309,7 +309,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -367,8 +367,7 @@
         <h1>コントローラからの情報のオンライン表示</h1>
         
 
-        
-<p>コントローラーを実行させながらグラフを表示したい場合があると思います（スタビライザーのゲインを調整する場合など）。それを実現する方法の一つが、現在記録中のログを開き、見たいデータをプロットすることです。しかし、実験が長時間にわたる場合、この方法ではログのサイズが大きくなり、ログを開いて処理するのに時間がかかるため、作業が煩わしくなります。</p>
+        <p>コントローラーを実行させながらグラフを表示したい場合があると思います（スタビライザーのゲインを調整する場合など）。それを実現する方法の一つが、現在記録中のログを開き、見たいデータをプロットすることです。しかし、実験が長時間にわたる場合、この方法ではログのサイズが大きくなり、ログを開いて処理するのに時間がかかるため、作業が煩わしくなります。</p>
 
 <p>よりよい方法は、このチュートリアルで説明するように、現在記録中のログをコントローラーに表示させることです。</p>
 
@@ -523,7 +522,7 @@
   <div class="card-body">
 
   
-<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// Providing only the left Y axis configuration</span>
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// 左のY軸のみ設定</span>
 <span class="kt">double</span> <span class="n">t0</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
 <span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addPlot</span><span class="p">(</span>
   <span class="s">"sin(t)"</span><span class="p">,</span>
@@ -532,10 +531,10 @@
   <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Y</span><span class="p">(</span><span class="s">"sin(t)"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">)</span>
 <span class="p">);</span>
 
-<span class="c1">// Providing both</span>
+<span class="c1">// 両方のY軸を設定</span>
 <span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addXYPlot</span><span class="p">(</span>
   <span class="s">"Circle"</span><span class="p">,</span>
-  <span class="c1">// Shows an alternative way to set the limits</span>
+  <span class="c1">// 上下限を設定する別の方法</span>
   <span class="n">AxisConfiguration</span><span class="p">(</span><span class="s">"X"</span><span class="p">).</span><span class="n">min</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
   <span class="n">AxisConfiguration</span><span class="p">(</span><span class="s">"Left Y"</span><span class="p">),</span>
   <span class="n">AxisConfiguration</span><span class="p">(</span><span class="s">"Right Y"</span><span class="p">).</span><span class="n">max</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>

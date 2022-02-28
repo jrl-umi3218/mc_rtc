@@ -317,7 +317,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -353,8 +353,7 @@
         <h1>MC_RTC_BUILD_STATICをプログラムでサポートする方法</h1>
         
 
-        
-<p><code class="language-plaintext highlighter-rouge">MC_RTC_BUILD_STATIC</code>は、mc_rtcのビルドオプションです。主に、[オンラインデモ]<a href="https://mc-rtc-demo.netlify.app/">online demonstration</a>を実現するために使用されます。このオプションを使用すると、コントローラー、有限オートマトンの状態、ロボットモジュール、観測器、プラグインを動的に読み込めなくなります。そのため、これらのコンポーネントをmc_rtcのライブラリに組み込む必要があります。</p>
+        <p><code class="language-plaintext highlighter-rouge">MC_RTC_BUILD_STATIC</code>は、mc_rtcのビルドオプションです。主に、<a href="https://mc-rtc-demo.netlify.app/">オンラインデモ</a>を実現するために使用されます。このオプションを使用すると、コントローラー、有限オートマトンの状態、ロボットモジュール、観測器、プラグインを動的に読み込めなくなります。そのため、これらのコンポーネントをmc_rtcのライブラリに組み込む必要があります。</p>
 
 <p>このページでは、まず、このオプションを使用してプロジェクトをコンパイルする際に必要な作業について説明します。次に、デモをWebに公開するためのガイドラインについて説明します。</p>
 
@@ -396,7 +395,7 @@
 
 <h3 id="mc_rtcのコンポーネントを追加する">mc_rtcのコンポーネントを追加する</h3>
 
-<p><code class="language-plaintext highlighter-rouge">find_package(mc_rtc)</code>によって提供されているマクロ（<code class="language-plaintext highlighter-rouge">add_controller(NAME ...)</code>、<code class="language-plaintext highlighter-rouge">add_robot(NAME ...) and so-on) then most of the hard-work is done for you. Otherwise, you are advised to look into</code>など）を使用する場合、面倒な作業を行う必要はほとんどありません。そうでない場合は、mc_rtcのソースツリー内にあるsrc/CMakeLists.txtを参照し、どのように変更すべきかを理解してください。主な違いは、ソースのパスを相対パスではなく絶対パスで与える必要があるという点にあります。</p>
+<p><code class="language-plaintext highlighter-rouge">find_package(mc_rtc)</code>によって提供されているマクロ（<code class="language-plaintext highlighter-rouge">add_controller(NAME ...)</code>, <code class="language-plaintext highlighter-rouge">add_robot(NAME ...)</code> 等) を使用すれば、面倒な作業を行う必要はほとんどありません。そうでない場合は、mc_rtcのソースツリー内にあるsrc/CMakeLists.txtを参照し、どのように変更すべきかを理解してください。主な違いは、ソースのパスを相対パスではなく絶対パスで与える必要があるという点にあります。</p>
 
 <p>これに関して注意すべき点が1つあります。コントローラーを<code class="language-plaintext highlighter-rouge">mc_control::fsm::Controller</code>から派生させる場合、<code class="language-plaintext highlighter-rouge">add_fsm_controller(NAME ...)</code>を使用する必要があります。</p>
 
@@ -416,11 +415,11 @@
 <span class="nb">else</span><span class="p">()</span>
   <span class="nf">add_fsm_controller</span><span class="p">(</span>myController <span class="s2">"</span><span class="si">${</span><span class="nv">myController_SRC</span><span class="si">}</span><span class="s2">"</span> <span class="s2">"</span><span class="si">${</span><span class="nv">myController_HDR</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
   <span class="nb">target_link_libraries</span><span class="p">(</span>mc_control_fsm PUBLIC copra::copra<span class="p">)</span>
-  <span class="c1"># Would be:</span>
-  <span class="c1"># - mc_control for a non-FSM controller</span>
-  <span class="c1"># - mc_rbdyn for a RobotModule</span>
-  <span class="c1"># - mc_observers for an Observer</span>
-  <span class="c1"># - mc_control for a plugin</span>
+  <span class="c1"># コンポーネントの種類に応じて以下のライブラリを使用します</span>
+  <span class="c1"># - mc_control （FSMを使用しないコントローラ）</span>
+  <span class="c1"># - mc_rbdyn （ロボットモジュール）</span>
+  <span class="c1"># - mc_observers （オブザーバ）</span>
+  <span class="c1"># - mc_control （プラグイン）</span>
 <span class="nb">endif</span><span class="p">()</span>
 </code></pre></div></div>
 
@@ -471,7 +470,7 @@
         <hr/>
         
         <div class="text-right">
-          <a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">次のチュートリアル: Debugging LSSOL output 6</a>
+          <a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">次のチュートリアル: LSSOL output 6のデバッグ</a>
         </div>
         
       </div>

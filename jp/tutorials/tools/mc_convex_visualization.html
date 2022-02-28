@@ -311,7 +311,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -333,8 +333,7 @@
         <h1>凸形状の可視化</h1>
         
 
-        
-<p><code class="language-plaintext highlighter-rouge">mc_convex_visualization</code>は、ロボットの凸領域をRVizで表示するツールです。<a href="https://github.com/jrl-umi3218/mc_rtc_ros" target="blank_">mc_rtc_ros</a>パッケージに含まれています。</p>
+        <p><code class="language-plaintext highlighter-rouge">mc_convex_visualization</code>は、ロボットの凸領域をRVizで表示するツールです。<a href="https://github.com/jrl-umi3218/mc_rtc_ros" target="blank_">mc_rtc_ros</a>パッケージに含まれています。</p>
 
 <h3 id="可視化ツールを起動する">可視化ツールを起動する</h3>
 
@@ -345,9 +344,9 @@
 
 <p>引数<code class="language-plaintext highlighter-rouge">robot</code>には、<code class="language-plaintext highlighter-rouge">mc_rbdyn::RobotLoader::get_robot_module</code>関数に渡すのと同じものを指定する必要があります。なお、この引数ではロボットの別名を使用できます。例:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Specify a vector of arguments</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 引数のベクトルとして与える方法</span>
 <span class="nv">$ </span>roslaunch mc_convex_visualization display.launch robot:<span class="o">=</span><span class="s2">"[env, </span><span class="sb">`</span>rospack find mc_env_description<span class="sb">`</span><span class="s2">, ground]"</span>
-<span class="c"># Or an alias</span>
+<span class="c"># エイリアスを使用する方法</span>
 <span class="nv">$ </span>roslaunch mc_convex_visualization display.launch robot:<span class="o">=</span><span class="nb">env</span>/ground
 </code></pre></div></div>
 

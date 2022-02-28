@@ -313,7 +313,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -336,8 +336,7 @@
         <h1>接触の移動</h1>
         
 
-        
-<p>各チュートリアルを通じて、接触面とは何か、コントローラーで接触面がどのように処理されるか、接触面をどのように動かしたらよいのかが理解できたと思います。それでは、左足を開始位置から動かして少し前に進めてみましょう。</p>
+        <p>各チュートリアルを通じて、接触面とは何か、コントローラーで接触面がどのように処理されるか、接触面をどのように動かしたらよいのかが理解できたと思います。それでは、左足を開始位置から動かして少し前に進めてみましょう。</p>
 
 <p>基本的な手順は以下のようになります。</p>
 
@@ -367,7 +366,7 @@
 <span class="cp">#pragma once
 #include &lt;mc_control/mc_controller.h&gt;
 #include "api.h"
-</span><span class="c1">// If we want to use elements in mc_tasks or mc_solver we first must include their header file</span>
+</span><span class="c1">// mc_tasks や mc_solver の機能を使うにはまずヘッダファイルをインクルードすることが必要</span>
 <span class="cp">#include &lt;mc_tasks/CoMTask.h&gt;
 #include &lt;mc_tasks/SurfaceTransformTask.h&gt;
 </span>
@@ -452,12 +451,12 @@
 <span class="kt">void</span> <span class="n">MyController</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">ControllerResetData</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">MCController</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="cm">/* Create the task */</span>
+  <span class="cm">/* タスクの生成 */</span>
   <span class="n">comTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">CoMTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
   <span class="n">footTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">SurfaceTransformTask</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"LeftFoot"</span><span class="p">,</span> <span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
-  <span class="cm">/* Move the CoM above the right foot */</span>
+  <span class="cm">/* 重心を右足の上に移動 */</span>
   <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">()</span> <span class="o">+</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">footTask</span><span class="o">-&gt;</span><span class="n">surfacePose</span><span class="p">().</span><span class="n">translation</span><span class="p">().</span><span class="n">y</span><span class="p">(),</span> <span class="mi">0</span><span class="p">));</span>
-  <span class="cm">/* Add the CoM task to the solver */</span>
+  <span class="cm">/* 重心タスクをソルバに追加 */</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">comTask</span><span class="p">);</span>
 <span class="p">}</span>
 
@@ -475,7 +474,7 @@
 
 <p><code class="language-plaintext highlighter-rouge">AddRemoveContactTask</code>を使用するには、ソルバーの<a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">速度制約条件</a>が必要となります。また、タスクそのものを作成する必要があります。さらに、2つの補助ステップを使って、左足を離して元に戻す必要があります。では、コントローラーのヘッダーと<code class="language-plaintext highlighter-rouge">reset()</code>関数をそのように変更してみましょう。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// In the header</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ヘッダファイルに以下を追加</span>
 <span class="cp">#include &lt;mc_solver/BoundedSpeedConstr.h&gt;
 #include &lt;mc_tasks/AddRemoveContactTask.h&gt;
 </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">BoundedSpeedConstr</span><span class="o">&gt;</span> <span class="n">bSpeedConstr</span><span class="p">;</span>
@@ -484,7 +483,8 @@
 <span class="kt">bool</span> <span class="n">added_left_foot</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 </code></pre></div></div>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// In reset</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// reset()関数に以下を追加</span>
+
 <span class="n">bSpeedConstr</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">BoundedSpeedConstr</span><span class="o">&gt;</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">timeStep</span><span class="p">);</span>
 <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="o">*</span><span class="n">bSpeedConstr</span><span class="p">);</span>
 </code></pre></div></div>
@@ -537,7 +537,7 @@
   <span class="p">}</span>
   <span class="k">if</span><span class="p">(</span><span class="n">moved_com</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">removed_left_foot</span><span class="p">)</span>
   <span class="p">{</span>
-    <span class="cm">/* Monitor the foot altitude */</span>
+    <span class="cm">/* 足の姿勢を監視 */</span>
     <span class="kt">double</span> <span class="n">lf_z</span> <span class="o">=</span> <span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LeftFoot"</span><span class="p">).</span><span class="n">translation</span><span class="p">().</span><span class="n">z</span><span class="p">();</span>
     <span class="kt">double</span> <span class="n">rf_z</span> <span class="o">=</span> <span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"RightFoot"</span><span class="p">).</span><span class="n">translation</span><span class="p">().</span><span class="n">z</span><span class="p">();</span>
     <span class="k">if</span><span class="p">(</span><span class="n">lf_z</span> <span class="o">&gt;</span> <span class="n">rf_z</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">)</span>
@@ -569,7 +569,7 @@
   <span class="p">}</span>
   <span class="k">if</span><span class="p">(</span><span class="n">moved_left_foot</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">added_left_foot</span><span class="p">)</span>
   <span class="p">{</span>
-    <span class="cm">/* Monitor the foot altitude */</span>
+    <span class="cm">/* 足の姿勢を監視 */</span>
     <span class="kt">double</span> <span class="n">lf_z</span> <span class="o">=</span> <span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LeftFoot"</span><span class="p">).</span><span class="n">translation</span><span class="p">().</span><span class="n">z</span><span class="p">();</span>
     <span class="kt">double</span> <span class="n">rf_z</span> <span class="o">=</span> <span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"RightFoot"</span><span class="p">).</span><span class="n">translation</span><span class="p">().</span><span class="n">z</span><span class="p">();</span>
     <span class="k">if</span><span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">lf_z</span> <span class="o">-</span> <span class="n">rf_z</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-4</span><span class="p">)</span>

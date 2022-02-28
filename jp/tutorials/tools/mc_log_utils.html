@@ -311,7 +311,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -321,14 +321,21 @@
               </div>
               
                 <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h3"><a href="#mc_bin_utils-汎用操作ツール">mc_bin_utils: 汎用操作ツール</a>
+<li class="toc-entry toc-h2"><a href="#mc_bin_utils-汎用操作ツール">mc_bin_utils: 汎用操作ツール</a>
 <ul>
-<li class="toc-entry toc-h4"><a href="#mc_bin_utils-extract">mc_bin_utils extract</a></li>
-<li class="toc-entry toc-h4"><a href="#mc_bin_utils-convert">mc_bin_utils convert</a></li>
+<li class="toc-entry toc-h3"><a href="#mc_bin_utils-extract">mc_bin_utils extract</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#抽出するデータのキーを---key-で指定する操作モード">抽出するデータのキーを --key で指定する操作モード</a></li>
+<li class="toc-entry toc-h4"><a href="#時間範囲を---from---to-で指定する操作モード">時間範囲を --from --to で指定する操作モード</a></li>
+<li class="toc-entry toc-h4"><a href="#抽出する複数のデータを---keys-で指定する操作モード">抽出する複数のデータを --keys で指定する操作モード</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h3"><a href="#pythonでログを開く">Pythonでログを開く</a></li>
-<li class="toc-entry toc-h3"><a href="#mc_rtcflatlogクラス">mc_rtc::FlatLogクラス</a></li>
+<li class="toc-entry toc-h3"><a href="#mc_bin_utils-convert">mc_bin_utils convert</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#mc_bin_perf-を用いたパフォーマンスの確認">mc_bin_perf を用いたパフォーマンスの確認</a></li>
+<li class="toc-entry toc-h2"><a href="#pythonでログを開く">Pythonでログを開く</a></li>
+<li class="toc-entry toc-h2"><a href="#mc_rtcflatlogクラス">mc_rtc::FlatLogクラス</a></li>
 </ul>
               
             </div>
@@ -340,10 +347,9 @@
         <h1>ログの操作</h1>
         
 
-        
-<p>このドキュメントでは、<code class="language-plaintext highlighter-rouge">~/my_log.bin</code>にログを記録することを前提として説明します。</p>
+        <p>このドキュメントでは、<code class="language-plaintext highlighter-rouge">~/my_log.bin</code>にログを記録することを前提として説明します。</p>
 
-<h3 id="mc_bin_utils-汎用操作ツール"><code class="language-plaintext highlighter-rouge">mc_bin_utils</code>: 汎用操作ツール</h3>
+<h2 id="mc_bin_utils-汎用操作ツール"><code class="language-plaintext highlighter-rouge">mc_bin_utils</code>: 汎用操作ツール</h2>
 
 <p><code class="language-plaintext highlighter-rouge">mc_bin_utils</code>では、バイナリログに対してさまざまな操作が行えます。</p>
 
@@ -361,27 +367,47 @@ Use mc_bin_utils &lt;<span class="nb">command</span><span class="o">&gt;</span> 
 
 <p>ここでは、<code class="language-plaintext highlighter-rouge">extract</code>コマンドと<code class="language-plaintext highlighter-rouge">convert</code>コマンドについて説明します。<code class="language-plaintext highlighter-rouge">show</code>と<code class="language-plaintext highlighter-rouge">split</code>については、説明の必要はないためここでは割愛します。</p>
 
-<h4 id="mc_bin_utils-extract"><code class="language-plaintext highlighter-rouge">mc_bin_utils extract</code></h4>
+<h3 id="mc_bin_utils-extract"><code class="language-plaintext highlighter-rouge">mc_bin_utils extract</code></h3>
 
-<p><code class="language-plaintext highlighter-rouge">mc_bin_utils extract</code>には2つの操作モードが用意されています。</p>
+<p><code class="language-plaintext highlighter-rouge">mc_bin_utils extract</code>には3つの操作モードが用意されています。</p>
 
-<p>最初の形式は、ログ内において指定したキーが存在する箇所をすべて抽出します。</p>
+<h4 id="抽出するデータのキーを---key-で指定する操作モード">抽出するデータのキーを <code class="language-plaintext highlighter-rouge">--key</code> で指定する操作モード</h4>
+
+<p>最初の操作モードは、ログ内において指定したキーが存在する箇所をすべて抽出するモードです。</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils extract ~/my_log.bin my_log_out <span class="nt">--key</span> com_task_target
 </code></pre></div></div>
 
 <p>上記のコマンドを実行すると、<code class="language-plaintext highlighter-rouge">com_task_target</code>というキーが存在するセクションごとにログが生成されます。例えば、5秒のマークから15秒のマークの間にこのキーが存在し、30秒のマークから60秒のマークの間にもこのキーが存在する場合、<code class="language-plaintext highlighter-rouge">my_log_out_1.bin</code>と<code class="language-plaintext highlighter-rouge">my_log_out_2.bin</code>が生成されます。</p>
 
-<p>2番目の形式は、時間<code class="language-plaintext highlighter-rouge">t</code>の入力に基づいて、指定された時間範囲を直接抽出します。</p>
+<h4 id="時間範囲を---from---to-で指定する操作モード">時間範囲を <code class="language-plaintext highlighter-rouge">--from --to</code> で指定する操作モード</h4>
+
+<p>2番目の操作モードは、時間<code class="language-plaintext highlighter-rouge">t</code>の入力に基づいて、指定された時間範囲を直接抽出します。</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils extract ~/my_log.bin my_log_out <span class="nt">--from</span> 50 <span class="nt">--to</span> 100
 </code></pre></div></div>
 
 <p>この例では、時間<code class="language-plaintext highlighter-rouge">t</code>が50秒から100秒の間のログが<code class="language-plaintext highlighter-rouge">my_log_out.bin</code>として生成されます。<code class="language-plaintext highlighter-rouge">from</code>あるいは<code class="language-plaintext highlighter-rouge">to</code>のいずれかを省略できます。その場合、出力されるログは、0秒から始まり（前者を省略した場合）、ログの最後で終了します（後者を省略した場合）。</p>
 
-<h4 id="mc_bin_utils-convert"><code class="language-plaintext highlighter-rouge">mc_bin_utils convert</code></h4>
+<h4 id="抽出する複数のデータを---keys-で指定する操作モード">抽出する複数のデータを <code class="language-plaintext highlighter-rouge">--keys</code> で指定する操作モード</h4>
 
-<p>このツールでは、<code class="language-plaintext highlighter-rouge">.bin</code>ログを以下に示す3つの形式のいずれかに変換できます（このうちの2つについては、ROSではサポートされていません）。</p>
+<p>3つ目の操作モードは指定した複数のキーを用いてデータを抽出するモードです。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils extract ~/my_log.bin my_log_out <span class="nt">--keys</span> RightFootForceSensor com_target com_eval
+</code></pre></div></div>
+
+<p>この例では、指定したキーに対応するデータのみを含む <code class="language-plaintext highlighter-rouge">.bin</code> ファイルが生成されます。なお <code class="language-plaintext highlighter-rouge">t</code> キーに対応するデータは常に含まれます。ログファイルに指定したキーに対応するデータがいずれも存在しない範囲がある場合、複数のファイルが生成されます。</p>
+
+<p>このコマンドではワイルドカードも使用することができます。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils extract ~/my_log.bin my_log_out <span class="nt">--keys</span> com_<span class="k">*</span>
+</code></pre></div></div>
+
+<p>この例では <code class="language-plaintext highlighter-rouge">com_</code> で始まる全てのキーに対応するデータが抽出されます。</p>
+
+<h3 id="mc_bin_utils-convert"><code class="language-plaintext highlighter-rouge">mc_bin_utils convert</code></h3>
+
+<p>このツールでは、<code class="language-plaintext highlighter-rouge">.bin</code>ログを以下に示す3つの形式のいずれかに変換できます（ROSサポートが無効になっている場合は2つの形式のみ）。</p>
 
 <ul>
   <li><code class="language-plaintext highlighter-rouge">.flat</code>は、<code class="language-plaintext highlighter-rouge">mc_log_ui</code>で使用される実際の形式です。同じログを頻繁に開く場合、この形式に変換しておくと時間を節約できます。</li>
@@ -389,7 +415,48 @@ Use mc_bin_utils &lt;<span class="nb">command</span><span class="o">&gt;</span> 
   <li><code class="language-plaintext highlighter-rouge">.bag</code>は、<code class="language-plaintext highlighter-rouge">rosbag</code>で使用される形式です。</li>
 </ul>
 
-<h3 id="pythonでログを開く">Pythonでログを開く</h3>
+<p>以下のスタンドアロンツールは決まったファイル形式間の変換に利用できます。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">mc_bin_to_flat</code> は <code class="language-plaintext highlighter-rouge">.bin</code> ファイルを <code class="language-plaintext highlighter-rouge">.flat</code> ファイルに変換します。</li>
+  <li><code class="language-plaintext highlighter-rouge">mc_bin_to_log</code> は <code class="language-plaintext highlighter-rouge">.bin</code> ファイルを <code class="language-plaintext highlighter-rouge">.csv</code> ファイルに変換します。</li>
+  <li><code class="language-plaintext highlighter-rouge">mc_bin_to_rosbag</code> は <code class="language-plaintext highlighter-rouge">.bin</code> ファイルを <code class="language-plaintext highlighter-rouge">.bag</code> ファイルに変換します。</li>
+</ul>
+
+<h2 id="mc_bin_perf-を用いたパフォーマンスの確認"><code class="language-plaintext highlighter-rouge">mc_bin_perf</code> を用いたパフォーマンスの確認</h2>
+
+<p><code class="language-plaintext highlighter-rouge">mc_bin_perf</code> を使ってmc_rtcのパフォーマンスに関する簡単な統計的データを確認することができます。このコマンドはログファイルから <code class="language-plaintext highlighter-rouge">perf_</code> で始まるデータを抽出し、それらの平均値や標準偏差、最大値、最小値を計算、表示します。</p>
+
+<p>実行例</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_perf /tmp/mc-control-CoM-latest.bin
+<span class="nt">----------------------------------------------------------------</span>
+|                     |  Average |    StdEv |      Min |   Max |
+<span class="nt">----------------------------------------------------------------</span>
+|       ControllerRun |    0.451 |   0.0639 |    0.378 |  1.14 |
+|       FrameworkCost |     7.64 |     2.81 |     2.55 |  52.8 |
+|           GlobalRun |    0.488 |   0.0703 |    0.401 |  1.18 |
+|                 Gui |   0.0035 |  0.00941 | 0.000543 | 0.322 |
+|                 Log |  0.00732 |  0.00476 |  0.00563 | 0.163 |
+|        ObserversRun | 6.79e-05 | 0.000215 |  2.4e-05 | 0.014 |
+|   Plugins_ROS_after |   0.0137 |   0.0124 |  0.00202 | 0.172 |
+| SolverBuildAndSolve |    0.422 |   0.0607 |    0.354 |  1.11 |
+|         SolverSolve |     0.32 |   0.0498 |    0.268 |     1 |
+<span class="nt">----------------------------------------------------------------</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">FrameworkCost</code> を除く全ての時間の単位はミリ秒です。</p>
+
+<p>表示されるエントリに関する簡単な説明は以下の通りです。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">GlobalRun</code> は <code class="language-plaintext highlighter-rouge">mc_control::MCGlobalController::run()</code> の実行にかかった総時間を表します。すなわち、mc_rtc内部のグローバルプラグイン、オブザーバーパイプライン、コントローラ、ロガー、GUIの全ての実行にかかった時間です。これは<code class="language-plaintext highlighter-rouge">Plugins_* + ObserversRun + ControllerRun + Gui + Log</code>とほぼ同じ値になります。</li>
+  <li><code class="language-plaintext highlighter-rouge">ControllerRun</code> はコントローラの実行にかかった時間です。これは<code class="language-plaintext highlighter-rouge">SolverBuildAndSolve + コントローラ内部のコード実行に要した時間</code> とほぼ同じ時間になります。</li>
+  <li><code class="language-plaintext highlighter-rouge">SolverBuildAndSolve</code> と <code class="language-plaintext highlighter-rouge">SolverSolve</code> は <code class="language-plaintext highlighter-rouge">Tasks</code> の実行に要した時間です。<code class="language-plaintext highlighter-rouge">SolverSolve</code> は <code class="language-plaintext highlighter-rouge">SolverBuildAndSolve</code> に含まれ、QP問題を解くのにかかった時間を測っていることになります。</li>
+  <li><code class="language-plaintext highlighter-rouge">FrameworkCost</code> は <code class="language-plaintext highlighter-rouge">Tasks</code> 外でかかった時間の比率、すなわち <code class="language-plaintext highlighter-rouge">(GlobalRun - SolverBuildAndSolve) / GlobalRun</code> です。</li>
+</ul>
+
+<h2 id="pythonでログを開く">Pythonでログを開く</h2>
 
 <p>Pythonでログを開くこともできます。</p>
 
@@ -399,7 +466,7 @@ Use mc_bin_utils &lt;<span class="nb">command</span><span class="o">&gt;</span> 
 
 <p><code class="language-plaintext highlighter-rouge">log</code>は、mc_log_uiのツリーに表示されるエントリをキーとして持ち（例えば、<code class="language-plaintext highlighter-rouge">v3d</code>という名前の<code class="language-plaintext highlighter-rouge">Eigen::Vector3d</code>をログに記録した場合、<code class="language-plaintext highlighter-rouge">v3d_x</code>、<code class="language-plaintext highlighter-rouge">v3d_y</code>、<code class="language-plaintext highlighter-rouge">v3d_z</code>がキーとなります）、Numpy配列を値として持つPythonの辞書であり、これを使えばさまざまなことが行えます。　　</p>
 
-<h3 id="mc_rtcflatlogクラス"><code class="language-plaintext highlighter-rouge">mc_rtc::FlatLog</code>クラス</h3>
+<h2 id="mc_rtcflatlogクラス"><code class="language-plaintext highlighter-rouge">mc_rtc::FlatLog</code>クラス</h2>
 
 <p><code class="language-plaintext highlighter-rouge">mc_rtc::FlatLog</code>クラスは、<code class="language-plaintext highlighter-rouge">mc_rtc_utils</code>ライブラリで定義されています。このクラスでは、ログを開き、元の型でデータを操作することができます。例えば、力覚センサーの測定値を<code class="language-plaintext highlighter-rouge">sva::ForceVecd</code>オブジェクトとして記録した場合、<code class="language-plaintext highlighter-rouge">mc_rtc::FlatLog</code>を使用してこの値をその形式のまま取得できます。使用方法とAPIの詳細については、クラスのドキュメントを参照してください。C++でのみ使用できます。.</p>
 

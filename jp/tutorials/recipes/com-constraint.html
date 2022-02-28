@@ -313,7 +313,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -337,8 +337,7 @@
         <h1>重心位置の存在可能な領域の拘束</h1>
         
 
-        
-<p>多くの場合、質量中心が移動できる領域を制限することが推奨されます。これを実現するため、質量中心の移動範囲を凸領域内に制限する新たな制約条件<code class="language-plaintext highlighter-rouge">CoMIncPlaneConstr</code>を導入します。</p>
+        <p>多くの場合、質量中心が移動できる領域を制限することが推奨されます。これを実現するため、質量中心の移動範囲を凸領域内に制限する新たな制約条件<code class="language-plaintext highlighter-rouge">CoMIncPlaneConstr</code>を導入します。</p>
 
 <p>この制約条件のAPIを以下に示します。</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CoMIncPlaneConstr</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Robots</span> <span class="o">&amp;</span> <span class="n">robots</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">robotIndex</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">);</span>
@@ -385,16 +384,16 @@
 
 <p>これを制約条件に含めれば完成です。</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="c1">//In the header:</span>
+<span class="c1">//以下をヘッダファイルに追加</span>
 <span class="cp"># include &lt;mc_solver/CoMIncPlaneConstr.h&gt;
 </span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">CoMIncPlaneConstr</span><span class="o">&gt;</span> <span class="n">comIncPlaneConstraintPtr_</span><span class="p">;</span>
 
 
-<span class="c1">//In the cpp, in the controller's initializer list:</span>
+<span class="c1">//cppファイルのコントローラの初期化リストに以下を追加</span>
 <span class="n">comIncPlaneConstraintPtr_</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span> <span class="n">mc_solver</span><span class="o">::</span><span class="n">CoMIncPlaneConstr</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="n">robots</span><span class="p">().</span><span class="n">robotIndex</span><span class="p">(),</span> <span class="n">dt</span><span class="p">)</span> <span class="p">);</span>
 
-<span class="c1">//In the constructor itself:</span>
+<span class="c1">//コンストラクタ本体に以下を追加</span>
     <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Plane</span><span class="o">&gt;</span> <span class="n">planes</span> <span class="o">=</span>
     <span class="p">{{{</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span> <span class="mf">0.08</span><span class="p">},</span>
      <span class="p">{{</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span> <span class="mf">0.08</span><span class="p">},</span>

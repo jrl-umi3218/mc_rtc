@@ -309,7 +309,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -319,6 +319,7 @@
               </div>
               
                 <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#データソース">データソース</a></li>
 <li class="toc-entry toc-h3"><a href="#設定からデータを読み取る">設定からデータを読み取る</a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#厳格なアクセス">厳格なアクセス</a></li>
@@ -346,8 +347,7 @@
         <h1><code>mc_rtc::Configuration</code> 設定</h1>
         
 
-        
-<p>このページでは以下の情報を提供します。</p>
+        <p>このページでは以下の情報を提供します。</p>
 
 <ol>
   <li><code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>オブジェクトからデータを読み取る方法</li>
@@ -358,19 +358,19 @@
 
 <p>このページの例で使用されている<code class="language-plaintext highlighter-rouge">config</code>は、C++の例では<code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>型のC++オブジェクト、Pythonの例では<code class="language-plaintext highlighter-rouge">mc_rtc.Configuration</code>型のPythonオブジェクトであると仮定しています。</p>
 
-<p>###データソース</p>
+<h3 id="データソース">データソース</h3>
 
 <p><code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>は、JSONオブジェクトまたはYAMLオブジェクトを抽象化したもので、これを使用すると、オブジェクトの操作と、オブジェクトからのC++/Pythonデータの取得が簡単に行えます。.</p>
 
 <p>設定オブジェクトにデータを読み込むには、以下のようにします。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Load from a file, assume it's JSON data</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ファイルから読み込む、JSONデータであることを想定</span>
 <span class="k">auto</span> <span class="n">config</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="p">(</span><span class="s">"myfile.conf"</span><span class="p">);</span>
-<span class="c1">// Load from a YAML file, the extension must be yml or yaml</span>
+<span class="c1">// YAMLファイルから読み込む、拡張子はymlかyaml</span>
 <span class="k">auto</span> <span class="n">config</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="p">(</span><span class="s">"myfile.yaml"</span><span class="p">);</span>
-<span class="c1">// Load from already loaded JSON data</span>
+<span class="c1">// すでに読み込まれているJSONデータから読み込む</span>
 <span class="k">auto</span> <span class="n">config</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="o">::</span><span class="n">fromData</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<span class="c1">// Load from already loaded YAML data</span>
+<span class="c1">// すでに読み込まれているYAMLデータから読み込む</span>
 <span class="k">auto</span> <span class="n">config</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="o">::</span><span class="n">fromYAMLData</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
 </code></pre></div></div>
 
@@ -425,7 +425,7 @@
 
 <p>エントリが存在しない場合や、要求した型と実際の型が異なる場合は、指定した変数を変更できません。そうでない場合は、設定に格納されている値が指定した変数にコピーされます。特に、ベクトルを取得する場合はこの点を十分理解してください。</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">};</span>
-<span class="n">config</span><span class="p">(</span><span class="s">"MyVector"</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span> <span class="c1">// if MyVector is a valid entry, the initial content of v is lost</span>
+<span class="n">config</span><span class="p">(</span><span class="s">"MyVector"</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span> <span class="c1">// MyVector が有効なエントリである場合、vの初期値は失われる</span>
 </code></pre></div></div>
 
 <p>先の方法と同様に、設定のサブセクションにアクセスすることもできます。</p>
@@ -439,10 +439,10 @@
 
 <p>上記の厳格なアクセスとデフォルトのアクセス方法は、<code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>オブジェクトのサブセクションへのアクセスに適用できます。例:</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// throws if conf is not an object or section does not exist in conf</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 引数がconfigに存在するオブジェクトやセクションで無い場合はthrowする</span>
 <span class="k">auto</span> <span class="n">sub</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"section"</span><span class="p">);</span>
 
-<span class="c1">// returns an empty object if the call above would fail</span>
+<span class="c1">// 引数がconfigに存在しない場合、空のオブジェクトを返す</span>
 <span class="k">auto</span> <span class="n">sub</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"section"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="p">{});</span>
 </code></pre></div></div>
 
@@ -452,17 +452,17 @@
 
 <p>Pythonの場合、ユーザーが要求した要素の型をPythonに推測させることはできません。そのため、データを取得する際はPythonの型または値を指定する必要があります。</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># c is an mc_rtc.Configuration object
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># c は mc_rtc.Configuration オブジェクト
 </span><span class="n">c</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"key"</span><span class="p">)</span>
-<span class="c1"># retrieve a bool
+<span class="c1"># ブーリアン型を取得
 </span><span class="n">b</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"b"</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
-<span class="c1"># v is an eigen.Vector3d object
+<span class="c1"># v は eigen.Vector3d オブジェクト
 </span><span class="n">v</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"v"</span><span class="p">,</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">)</span>
-<span class="c1"># retrieve a bool with a default value of False
+<span class="c1"># ブーリアン型をデフォルト値Falseとして取得
 </span><span class="n">b</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"b"</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
-<span class="c1"># retrieve a list of eigen.Vector3d objects
+<span class="c1"># eigen.Vector3d のリストを取得
 </span><span class="n">vlist</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"vlist"</span><span class="p">,</span> <span class="p">[</span><span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">])</span>
-<span class="c1"># retrieve a list of float with a default value
+<span class="c1"># floatのリストをデフォルト値を指定して取得
 </span><span class="n">flist</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"flist"</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">])</span>
 </code></pre></div></div>
 
@@ -470,25 +470,25 @@
 
 <p>以下に、オブジェクトAPIと配列APIの違いを示す記述の例を示します。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// -- Objects --</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// -- オブジェクト --</span>
 
-<span class="c1">// Create a new empty object with the section key</span>
+<span class="c1">// セクションキーを指定して新たしい空のオブジェクトを生成</span>
 <span class="k">auto</span> <span class="n">section</span> <span class="o">=</span> <span class="n">conf</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">"section"</span><span class="p">);</span>
 
-<span class="c1">// Add data to the section</span>
+<span class="c1">// セクションにデータを追加</span>
 <span class="n">section</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">"v1"</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">});</span>
 <span class="n">section</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">"isFixed"</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
-<span class="c1">// Here data is of a type supported by mc_rtc::Configuration</span>
+<span class="c1">// ここでdataは mc_rtc::Configuration でサポートされている型のデータ</span>
 <span class="n">section</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">"data"</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
 
-<span class="c1">// -- Arrays --</span>
+<span class="c1">// -- 配列 --</span>
 
-<span class="c1">// Creates a new empty array</span>
+<span class="c1">// 新しい空の配列を生成</span>
 <span class="k">auto</span> <span class="n">array</span> <span class="o">=</span> <span class="n">conf</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="s">"array"</span><span class="p">);</span>
-<span class="c1">// Creates a new empty array and reserves memory for 10 elements</span>
+<span class="c1">// 新しい空の配列を生成し、10要素分のメモリを確保</span>
 <span class="k">auto</span> <span class="n">array10</span> <span class="o">=</span> <span class="n">conf</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="s">"array10"</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
 
-<span class="c1">// Add data to the array</span>
+<span class="c1">// データを配列に追加</span>
 <span class="n">array</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">});</span>
 <span class="n">array</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
 <span class="n">array</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>

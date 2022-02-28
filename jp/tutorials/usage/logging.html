@@ -309,7 +309,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -340,8 +340,7 @@
         <h1>データのロギング</h1>
         
 
-        
-<p><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">全般的な設定</a>でファイルのロギングを有効あるいは無効にできます。ただし、コントローラーの実装ではロギングオプションについて気にする必要はありません。コントローラーでは、単一のインターフェイスからファイルのロギング操作を行えます。各コントローラーは専用のログを使用し、コンロトーラーが切り替わると新しいログが作成されます。シンボリックリンクをサポートするプラットフォームでは、使い勝手の観点から、最後に作成されたログを指すように<code class="language-plaintext highlighter-rouge">latest</code>ログファイルが作成されます。</p>
+        <p><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">全般的な設定</a>でファイルのロギングを有効あるいは無効にできます。ただし、コントローラーの実装ではロギングオプションについて気にする必要はありません。コントローラーでは、単一のインターフェイスからファイルのロギング操作を行えます。各コントローラーは専用のログを使用し、コンロトーラーが切り替わると新しいログが作成されます。シンボリックリンクをサポートするプラットフォームでは、使い勝手の観点から、最後に作成されたログを指すように<code class="language-plaintext highlighter-rouge">latest</code>ログファイルが作成されます。</p>
 
 <p>デフォルトでは、どのコントローラーでも以下の情報がロギングされます。</p>
 <ul>
@@ -362,7 +361,7 @@
 
 <p>コードにログエントリを追加するには、以下のようにします。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"entry_name"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="cm">/* compute, say x; */</span> <span class="k">return</span> <span class="n">x</span><span class="p">;</span> <span class="p">});</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"entry_name"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="cm">/* 例えばxを計算; */</span> <span class="k">return</span> <span class="n">x</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
 
 <p>コントローラーで<code class="language-plaintext highlighter-rouge">run()</code>メソッドが実行されると、用意されたコールバック関数が実行されます。</p>
@@ -378,12 +377,12 @@
 
 <p>以下のようにロギングソースを指定できます。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// In this example, "this" is the source</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// この例では "this" がソース</span>
 <span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"entry_A"</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span><span class="p">;</span> <span class="p">});</span>
 <span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"entry_B"</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">b</span><span class="p">;</span> <span class="p">});</span>
 <span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"entry_C"</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">c</span><span class="p">;</span> <span class="p">});</span>
 
-<span class="c1">// You can also group calls with the same source</span>
+<span class="c1">// 同じソースに対する呼び出しをまとめることもできます</span>
 <span class="n">logger</span><span class="p">().</span><span class="n">addLogEntries</span><span class="p">(</span><span class="k">this</span><span class="p">,</span>
                        <span class="s">"entry_A"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span><span class="p">;</span> <span class="p">},</span>
                        <span class="s">"entry_B"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">b</span><span class="p">;</span> <span class="p">},</span>
@@ -394,7 +393,7 @@
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">().</span><span class="n">removeLogEntries</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 
-<span class="c1">// This would yield the same result but you would need to keep the addLogEntry and removeLogEntry call in sync</span>
+<span class="c1">// こうしても結果は同じですが、addLogEntry と removeLogEntry が対応するように注意する必要があります</span>
 <span class="n">logger</span><span class="p">().</span><span class="n">removeLogEntry</span><span class="p">(</span><span class="s">"entry_A"</span><span class="p">);</span>
 <span class="n">logger</span><span class="p">().</span><span class="n">removeLogEntry</span><span class="p">(</span><span class="s">"entry_B"</span><span class="p">);</span>
 <span class="n">logger</span><span class="p">().</span><span class="n">removeLogEntry</span><span class="p">(</span><span class="s">"entry_C"</span><span class="p">);</span>
@@ -416,13 +415,13 @@
 
   <span class="kt">void</span> <span class="n">addToLogger</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">Logger</span> <span class="o">&amp;</span> <span class="n">logger</span><span class="p">)</span>
   <span class="p">{</span>
-    <span class="c1">// This is the actual syntax required in C++11</span>
+    <span class="c1">// C++11で求められる実際の文法はこのようになります</span>
     <span class="n">logger</span><span class="p">.</span><span class="n">addLogEntry</span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="o">&amp;</span><span class="n">MyObject</span><span class="o">::</span><span class="n">data_</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">MyObject</span><span class="o">::</span><span class="n">data_</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"data"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-    <span class="c1">// We have the following macro helper</span>
+    <span class="c1">// 記述を簡単化するマクロがあります</span>
     <span class="n">MC_RTC_LOG_HELPER</span><span class="p">(</span><span class="s">"something"</span><span class="p">,</span> <span class="n">something_</span><span class="p">);</span>
-    <span class="c1">// Also works with methods</span>
+    <span class="c1">// メソッドも利用可能です</span>
     <span class="n">MC_RTC_LOG_HELPER</span><span class="p">(</span><span class="s">"computeVector"</span><span class="p">,</span> <span class="n">computeVector</span><span class="p">);</span>
-    <span class="c1">// But for overloaded methods we must use another macro to work-around ambiguity issues</span>
+    <span class="c1">// ただしオーバーロードされたメソッドの場合、こちらのマクロを使用する必要があります</span>
     <span class="n">MC_RTC_LOG_GETTER</span><span class="p">(</span><span class="s">"referenceBody"</span><span class="p">,</span> <span class="n">referenceBody</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">};</span>
@@ -439,11 +438,11 @@
 
 <p>Pythonインターフェイスも非常によく似ています。</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Add a log entry
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ログのエントリを追加
 </span><span class="bp">self</span><span class="p">.</span><span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"my_entry"</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
-<span class="c1"># Remove data
+<span class="c1"># データを削除
 </span><span class="bp">self</span><span class="p">.</span><span class="n">logger</span><span class="p">().</span><span class="n">removeLogEntry</span><span class="p">(</span><span class="s">"my_entry"</span><span class="p">)</span>
-<span class="c1"># Using partial to invoke a controller method
+<span class="c1"># コントローラのメソッドを呼ぶためにpartialを使用
 </span><span class="bp">self</span><span class="p">.</span><span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"my_entry"</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">get_data</span><span class="p">))</span>
 </code></pre></div></div>
 

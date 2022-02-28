@@ -313,7 +313,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -335,8 +335,7 @@
         <h1>タスクで特定の関節を利用する方法</h1>
         
 
-        
-<p>特定のタスク（下半身のみを使用して姿勢を安定させるタスクなど）を実行する際に、関節のサブセットを指定できます。</p>
+        <p>特定のタスク（下半身のみを使用して姿勢を安定させるタスクなど）を実行する際に、関節のサブセットを指定できます。</p>
 
 <p><code class="language-plaintext highlighter-rouge">MetaTask</code>インターフェイスでは、一連の3つの関数によってこの機能が実装されています。</p>
 
@@ -367,7 +366,7 @@
                                            <span class="s">"LARM_JOINT6"</span><span class="p">,</span> <span class="s">"LARM_JOINT7"</span><span class="p">};</span>
 <span class="k">auto</span> <span class="n">posTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">PositionTask</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"r_wrist"</span><span class="p">,</span> <span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
 <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">posTask</span><span class="p">);</span>
-<span class="c1">// You can activate the selection after adding the taks as well</span>
+<span class="c1">// タスクを追加した後でも同様に選択を有効化できます</span>
 <span class="n">posTaks</span><span class="o">-&gt;</span><span class="n">selectUnactiveJoints</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="n">inactiveJoints</span><span class="p">);</span>
 </code></pre></div></div>
 

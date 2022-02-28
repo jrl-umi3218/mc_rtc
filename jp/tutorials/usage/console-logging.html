@@ -309,7 +309,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -329,14 +329,13 @@
         <h1>画面への情報の表示</h1>
         
 
-        
-<p>mc_rtcでは、いくつかのロギングユーティリティも用意されています。これらのユーティリティは、 <code class="language-plaintext highlighter-rouge">&lt;mc_rtc/logging.h&gt;</code>で定義されています。これらは、コンソールに特定の情報を表示するシンプルなマクロで、プラットフォームにかかわらず使用できます。以下のマクロが用意されています。</p>
+        <p>mc_rtcでは、いくつかのロギングユーティリティも用意されています。これらのユーティリティは、 <code class="language-plaintext highlighter-rouge">&lt;mc_rtc/logging.h&gt;</code>で定義されています。これらは、コンソールに特定の情報を表示するシンプルなマクロで、プラットフォームにかかわらず使用できます。以下のマクロが用意されています。</p>
 <ul>
   <li><code class="language-plaintext highlighter-rouge">mc_rtc::log::success(...)</code>は、成功を示すメッセージを<code class="language-plaintext highlighter-rouge">std::cout</code>に表示します。</li>
   <li><code class="language-plaintext highlighter-rouge">mc_rtc::log::info(...)</code>は、ユーザーへの情報を<code class="language-plaintext highlighter-rouge">std::cout</code>に表示します。</li>
   <li><code class="language-plaintext highlighter-rouge">mc_rtc::log::warning(...)</code>は、致命的ではないエラーが発生したことを示す警告を<code class="language-plaintext highlighter-rouge">std::cerr</code>に表示します。</li>
   <li><code class="language-plaintext highlighter-rouge">mc_rtc::log::error(...)</code>は、エラーメッセージを<code class="language-plaintext highlighter-rouge">std::cerr</code>に表示します。</li>
-  <li><code class="language-plaintext highlighter-rouge">mc_rtc::log::error_and_throw&lt;T&gt;(...)</code>は、致命的なエラーが発生してタイプ<code class="language-plaintext highlighter-rouge">T</code>の例外がスローされたことを示すメッセージを<code class="language-plaintext highlighter-rouge">std::cerr</code>に表示します。</li>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc::log::error_and_throw&lt;T = std::runtime_errror&gt;(...)</code>は<code class="language-plaintext highlighter-rouge">std::cerr</code>に致命的なエラーが発生した旨のメッセージを表示し、<code class="language-plaintext highlighter-rouge">T</code>型 (デフォルトは <code class="language-plaintext highlighter-rouge">std::runtime_error</code>)の例外を発生させます。</li>
 </ul>
 
 <p>これらの関数では<code class="language-plaintext highlighter-rouge">std::cout</code>と<code class="language-plaintext highlighter-rouge">std::cerr</code>以外も使用できますが、重要なメッセージをコンソールに表示する際はこれらを使用すると便利です。</p>
@@ -346,7 +345,10 @@
 <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">"You don't need a ; after those instructions"</span><span class="p">);</span>
 <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">warning</span><span class="p">(</span><span class="s">"The value of d is greater than expected: {} (d_limit: {})"</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">d_limit</span><span class="p">);</span>
 <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">"This is very wrong"</span><span class="p">);</span>
-<span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">error_and_throw</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">runtime_exception</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"Abort"</span><span class="p">);</span>
+<span class="c1">//  std::runtime_error("Abort")を発生させる</span>
+<span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">error_and_throw</span><span class="p">(</span><span class="s">"Abort"</span><span class="p">);</span>
+<span class="c1">// std::domain_error("Abort")を発生させる</span>
+<span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">error_and_throw</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">domain_error</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"Abort"</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p><a href="https://fmt.dev/dev/syntax.html">{fmt}ライブラリ</a>でサポートされている書式設定構文を使用できます。</p>

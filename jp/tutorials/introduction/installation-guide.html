@@ -307,7 +307,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -323,15 +323,11 @@
 <li class="toc-entry toc-h3"><a href="#ubuntu-lts-1804-2004">Ubuntu LTS (18.04, 20.04)</a></li>
 <li class="toc-entry toc-h3"><a href="#homebrew-macos">Homebrew (macOS)</a></li>
 <li class="toc-entry toc-h3"><a href="#vcpkg">vcpkg</a></li>
-<li class="toc-entry toc-h3"><a href="#ソースからビルドするスクリプトを使用する場合">ソースからビルドする（スクリプトを使用する場合）</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#windowsの場合の前提条件">Windowsの場合の前提条件</a></li>
-<li class="toc-entry toc-h4"><a href="#ビルド">ビルド</a></li>
+<li class="toc-entry toc-h3"><a href="#mc-rtc-superbuildを使用したインストール">mc-rtc-superbuildを使用したインストール</a></li>
+<li class="toc-entry toc-h3"><a href="#古いインストール方法">古いインストール方法</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h3"><a href="#ソースからビルドするスクリプトを使用しない場合">ソースからビルドする（スクリプトを使用しない場合）</a></li>
-</ul>
-</li>
+<li class="toc-entry toc-h2"><a href="#はじめましょう">はじめましょう</a></li>
 </ul>
               
             </div>
@@ -556,103 +552,23 @@ brew install mc_rtc</pre>
   </div>
 </div>
 
-<h3 id="ソースからビルドするスクリプトを使用する場合">ソースからビルドする（スクリプトを使用する場合）</h3>
+<h3 id="mc-rtc-superbuildを使用したインストール">mc-rtc-superbuildを使用したインストール</h3>
 
-<p>LinuxまたはmacOSでビルドする場合は、「ビルド」のセクションに進んでください。Windowsユーザーの場合は以下に示す追加の指示に従ってください。</p>
+<p><a href="https://github.com/mc-rtc/mc-rtc-superbuild/">mc-rtc-superbuild</a> はCMakeを用いて作られたmc_rtcのインストールに必要なソフトウェア及びmc_rtcをインストールするためのツールです。加えて、mc_rtcを必要とするプロジェクトをビルドできるようにするための拡張機能も備えています。</p>
 
-<h4 id="windowsの場合の前提条件">Windowsの場合の前提条件</h4>
+<p>使用方法についてはプロジェクトのホームページを参照して下さい。</p>
 
+<h3 id="古いインストール方法">古いインストール方法</h3>
+
+<p>以下のインストール方法も利用可能ですが、これらは現在サポートされていません。</p>
 <ul>
-  <li><a href="https://visualstudio.microsoft.com/vs/">Visual Studio 2019</a> - Pythonバインディングをビルドする場合は、インストール時にPython拡張機能を選択してください。また、Visual Studioの<code class="language-plaintext highlighter-rouge">python</code>と<code class="language-plaintext highlighter-rouge">pip</code>の実行可能ファイルを環境変数<code class="language-plaintext highlighter-rouge">PATH</code>で指定された場所に置いてください。</li>
-  <li><a href="https://git-scm.com/download/win">Git Bash</a> - このツールは、mc_rtcのコピーとインストールスクリプトの実行で使用します。</li>
-  <li><a href="https://cmake.org/download/">CMake</a> - 入手可能な最新版をインストールしてください。</li>
-  <li><a href="https://www.boost.org/">Boost</a> - <a href="https://sourceforge.net/projects/boost/files/boost-binaries/">sourceforce</a>で入手可能な最新のバイナリをインストールしてください。お使いのコンピューターとVisual Studioのバージョンに適したバージョンを選択してください。例えば、64ビットコンピューターでBoost 1.72とVisual Studio 2019を使用する場合、<a href="https://sourceforge.net/projects/boost/files/boost-binaries/1.72.0/boost_1_72_0-msvc-14.2-64.exe/download">boost_1_72_0-msvc-14.2-64.exe</a>を選択してください。インストール後、Boostをインストールした場所を環境変数<code class="language-plaintext highlighter-rouge">BOOST_ROOT</code>に設定し、Boost DLLへのパスを環境変数<code class="language-plaintext highlighter-rouge">PATH</code>に設定してください。例えば、<code class="language-plaintext highlighter-rouge">C:\local\boost_1_72_0</code>にインストールした場合、<code class="language-plaintext highlighter-rouge">C:\local\boost_1_72_0</code>を<code class="language-plaintext highlighter-rouge">BOOST_ROOT</code>に設定し、<code class="language-plaintext highlighter-rouge">%BOOST_ROOT%\lib64-msvc-14.2</code>を<code class="language-plaintext highlighter-rouge">PATH</code>に設定してください。</li>
-  <li><a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download">mingw-w64</a> - WindowsでFortranコードをコンパイルするのに使用します。ダウンロード後、実行可能ファイルを実行してください。すると、バージョン、アーキテクチャー、スレッド、例外、ビルドバージョンを選択するよう求められます。バージョンは最新版（デフォルト）を選択してください。アーキテクチャーは、現在最も一般的な64ビット版Windowsでビルドする場合はx86_64を選択してください。スレッドはwin32を選択してください。例外はseh（デフォルト）を選択してください。インストール後、インストール先の<code class="language-plaintext highlighter-rouge">bin</code>フォルダーへのパスが環境変数<code class="language-plaintext highlighter-rouge">PATH</code>に設定されていることを確認してください（例: <code class="language-plaintext highlighter-rouge">C:\mingw-w64\x86_64-8.1.0-release-win32-seh-rt_v6-rev0\mingw64\bin</code>）。</li>
+  <li><a href="/mc_rtc/jp/tutorials/introduction/installation-build-and-install.html">build_and_install.sh スクリプトを用いてソースからビルドする方法</a></li>
+  <li><a href="/mc_rtc/jp/tutorials/introduction/installation-build-no-script.html">スクリプトを用いずにソースからビルドする方法</a></li>
 </ul>
 
-<p>注: Visual Studio 2017で作業してコンパイルすることもできます。ただし、定期的なテストはVisual Studio 2019でのみ行っています。</p>
+<h2 id="はじめましょう">はじめましょう</h2>
 
-<h4 id="ビルド">ビルド</h4>
-
-<ol>
-  <li><a href="https://github.com/jrl-umi3218/mc_rtc">mc_rtc</a>のリポジトリをコピーします。</li>
-  <li>mc_rtcのディレクトリに移動し、サブモジュールを更新します: <code class="language-plaintext highlighter-rouge">git submodule update --init</code></li>
-  <li><code class="language-plaintext highlighter-rouge">utils</code>ディレクトリに移動し、<code class="language-plaintext highlighter-rouge">build_and_install.sh</code>という名前のファイルを探します。</li>
-  <li>（オプション）カスタム設定ファイル<code class="language-plaintext highlighter-rouge">build_and_install_user_config.sh</code>を作成します（デフォルトの設定ファイル<code class="language-plaintext highlighter-rouge">build_and_install_default_config.sh</code>に含まれる変数よりも、カスタム設定ファイルに含まれる変数のほうが優先されます）。
-    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>build_and_install_user_config.sample.sh build_and_install_user_config.sh
-</code></pre></div>    </div>
-  </li>
-  <li>（オプション）<code class="language-plaintext highlighter-rouge">build_and_install_user_config.sh</code>を編集し、目的に応じて次のオプションを選択します: <code class="language-plaintext highlighter-rouge">INSTALL_PREFIX</code>、<code class="language-plaintext highlighter-rouge">WITH_ROS_SUPPORT</code>、<code class="language-plaintext highlighter-rouge">ROS_DISTRO</code>。Ubuntuの場合、ROSのサポートを有効にした場合にのみROSがインストールされます（事前にインストールされていません）。そうでない場合、ROSのサポート付きでmc_rtcをインストールする前に、ご自身でROSをインストールする必要があります。</li>
-  <li><code class="language-plaintext highlighter-rouge">./build_and_install.sh</code>を実行します。</li>
-</ol>
-
-<p>このスクリプトによって、必要な依存パッケージがインストールされ、必要なソースコードがすべてコピーされ、ビルドとインストールが実行されます。処理が完了するまでしばらくかかります。</p>
-
-<p>スクリプトの処理が失敗した場合は、mc_rtcの課題トラッカーを開いて以下の情報を提供してください。</p>
-
-<ul>
-  <li>システム（コンパイラー、ディストリビューション/OSXのバージョン）</li>
-  <li>スクリプトの出力</li>
-  <li>関連すると思われる詳細情報</li>
-</ul>
-
-<p>スクリプトの処理が成功すれば、作業は完了です。<a href="/mc_rtc/jp/tutorials/introduction/configuration.html">次のセクション</a>に進んでください。</p>
-
-<h3 id="ソースからビルドするスクリプトを使用しない場合">ソースからビルドする（スクリプトを使用しない場合）</h3>
-
-<p>現在、他のプラットフォームでソースからビルドする方法についてドキュメント化されたものがあまりありません。この方法にチャレンジする場合、mc_rtcをビルドするのに以下のパッケージが必要となります。</p>
-<ul>
-  <li><a href="https://cmake.org/">CMake</a> 3.1以降</li>
-  <li><a href="https://www.boost.org/">Boost</a> 1.49以降</li>
-  <li><a href="http://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a> 3.2以降</li>
-  <li><a href="https://github.com/leethomason/tinyxml2">tinyxml2</a></li>
-  <li><a href="https://trac.osgeo.org/geos">GEOS</a>（C++バインディングが付属）</li>
-  <li><a href="https://www.gnu.org/software/libtool/manual/html_node/Libltdl-interface.html">LTDL</a> （Windowsユーザーの場合は不要）</li>
-  <li><a href="https://github.com/nanomsg/nanomsg">nanomsg</a></li>
-  <li><a href="https://github.com/jbeder/yaml-cpp">yaml-cpp</a></li>
-  <li><a href="https://github.com/gabime/spdlog/">spdlog</a> 1.6.1以降</li>
-  <li><a href="https://github.com/humanoid-path-planner/hpp-spline">hpp-spline</a></li>
-  <li><a href="https://github.com/jrl-umi3218/SpaceVecAlg">SpaceVecAlg</a></li>
-  <li><a href="https://github.com/jrl-umi3218/RBDyn">RBDyn</a></li>
-  <li><a href="https://github.com/jrl-umi3218/eigen-qld">eigen-qld</a></li>
-  <li><a href="https://github.com/jrl-umi3218/eigen-quadprog">eigen-quadprog</a></li>
-  <li><a href="https://gite.lirmm.fr/multi-contact/eigen-lssol">eigen-lssol</a> （オプション）</li>
-  <li><a href="https://github.com/jrl-umi3218/sch-core">sch-core</a></li>
-  <li><a href="https://github.com/jrl-umi3218/Tasks">Tasks</a></li>
-  <li><a href="https://github.com/jrl-umi3218/mc_rtc_data">mc_rtc_data</a></li>
-  <li><a href="https://github.com/jrl-umi3218/state-observation">state-observation</a></li>
-</ul>
-
-<p>mc_rtcには、ロボットの状態をROSトピックとしてパブリッシュすることを可能にし、ROSのツール（RVizなど）との統合を容易にするためのROSプラグインも用意されています。これをビルドするには以下のものが必要です。</p>
-
-<ul>
-  <li><a href="https://github.com/jrl-umi3218/mc_rtc_msgs">mc_rtc_msgs</a></li>
-</ul>
-
-<p>Pythonバインディングを取得したい場合、以下のものが必要です。</p>
-<ul>
-  <li><a href="http://cython.org/">Cython</a> 0.2以降</li>
-  <li><a href="">python-pip</a></li>
-  <li><a href="">python-numpy</a></li>
-  <li><a href="">python-nose</a></li>
-  <li><a href="">python-coverage</a></li>
-  <li><a href="https://github.com/jrl-umi3218/Eigen3ToPython">Eigen3ToPython</a></li>
-  <li><a href="https://github.com/jrl-umi3218/sch-core-python">sch-core-python</a></li>
-</ul>
-
-<p>mc_rtcのツールを実行するには、さらに以下のPythonライブラリが必要です。</p>
-<ul>
-  <li><a href="">python-git</a> (pip name: <code class="language-plaintext highlighter-rouge">GitPython</code>)</li>
-  <li><a href="">python-pyqt5</a></li>
-</ul>
-
-<p>以下のパッケージは必須ではありませんが、追加の機能が使用できるようになります。</p>
-<ul>
-  <li><a href="http://www.ros.org/">ROS</a></li>
-  <li><a href="https://github.com/jrl-umi3218/mc_rtc_ros">mc_rtc_ros</a></li>
-</ul>
-
-<p>ビルド時に<code class="language-plaintext highlighter-rouge">roscpp</code>を使用できる場合、<code class="language-plaintext highlighter-rouge">tf2_ros</code>と<code class="language-plaintext highlighter-rouge">sensor_msgs</code>も必要になります。これを使用すると、<code class="language-plaintext highlighter-rouge">ROS</code>フレームワークと<code class="language-plaintext highlighter-rouge">mc_rtc</code>がさらに統合され（ロボットの状態のパブリッシュなど）、コントローラーでROSの機能を使用できるようになります（<code class="language-plaintext highlighter-rouge">mc_rtc</code>内のどこでも使える<code class="language-plaintext highlighter-rouge">ros::NodeHandle</code>インスタンスが提供されます）。</p>
+<p>mc_rtcのインストールが完了したら、<a href="/mc_rtc/jp/tutorials/introduction/configuration.html">次のセクション</a>に進んでください。</p>
 
 
 

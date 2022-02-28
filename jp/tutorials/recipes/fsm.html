@@ -313,7 +313,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -345,7 +345,7 @@
 <li class="toc-entry toc-h3"><a href="#共通のオプション">共通のオプション</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#new-state-creation">New state creation</a>
+<li class="toc-entry toc-h2"><a href="#新しい状態の生成">新しい状態の生成</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#void-configuremc_rtcconfiguration-">void configure(mc_rtc::Configuration &amp;)</a></li>
 <li class="toc-entry toc-h3"><a href="#void-startcontroller-">void start(Controller &amp;)</a></li>
@@ -377,8 +377,7 @@
         <h1>FSM機能の利用</h1>
         
 
-        
-<p>有限オートマトン（FSM: Finite State Machine）は、有限個の状態のいずれかの状態を取る抽象機械です。この機械の状態は、現在の状態における内部または外部の条件に基づき変化します。そのような変化は状態遷移と呼ばれます。こうした機械は、プログラミングの世界では至る所で使用されています。また、構造が簡単でさまざまな構成が可能であるため、特にロボットに関するシナリオを実現するのに非常に適しています。</p>
+        <p>有限オートマトン（FSM: Finite State Machine）は、有限個の状態のいずれかの状態を取る抽象機械です。この機械の状態は、現在の状態における内部または外部の条件に基づき変化します。そのような変化は状態遷移と呼ばれます。こうした機械は、プログラミングの世界では至る所で使用されています。また、構造が簡単でさまざまな構成が可能であるため、特にロボットに関するシナリオを実現するのに非常に適しています。</p>
 
 <p>状態遷移図の概念を拡張したものが有限オートマトンです。有限オートマトンでは2つの主要な原則が導入されています。</p>
 
@@ -484,12 +483,12 @@
 
 <p>以下の処理を実行する、<code class="language-plaintext highlighter-rouge">StateBase</code>という名前のC++状態があるとします。</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MyFirstState</span><span class="pi">:</span> <span class="c1"># &lt;-- Name of the new state</span>
-  <span class="na">base</span><span class="pi">:</span> <span class="s">StateBase</span> <span class="c1"># &lt;-- Name of the C++ state we are based on</span>
-  <span class="c1"># other options</span>
-<span class="na">MySecondState</span><span class="pi">:</span> <span class="c1"># &lt;-- Name of the new state</span>
-  <span class="na">base</span><span class="pi">:</span> <span class="s">MyFirstState</span> <span class="c1"># &lt;-- This time we use a state we defined before only in text form</span>
-  <span class="c1"># other options</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MyFirstState</span><span class="pi">:</span> <span class="c1"># &lt;-- 新しい状態の名称</span>
+  <span class="na">base</span><span class="pi">:</span> <span class="s">StateBase</span> <span class="c1"># &lt;-- 基底となる状態のC++クラスの名称</span>
+  <span class="c1"># 他のオプション</span>
+<span class="na">MySecondState</span><span class="pi">:</span> <span class="c1"># &lt;-- 新しい状態名称</span>
+  <span class="na">base</span><span class="pi">:</span> <span class="s">MyFirstState</span> <span class="c1"># &lt;-- テキストで定義した状態を基底として使用することも可能</span>
+  <span class="c1"># 他のオプション</span>
 </code></pre></div></div>
 
 <p>オプションがどのように組み合わされるかは、C++状態の実装方法により異なるため、状態内で明確に定義する必要があります。ただし、mc_rtcで用意されている状態については、一般的な規則が当てはまります。これらの状態については、基本的に<code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>オブジェクトのデフォルトの読み込み規則が適用されます。</p>
@@ -565,18 +564,18 @@
         <h5>例</h5>
 
         
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml">        <span class="c1"># We simplify task entries for the sake of the example</span>
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml">        <span class="c1"># わかりやすい例とするためタスクの定義を簡略化しています</span>
 
-        <span class="c1"># First pass</span>
+        <span class="c1"># 1つ目のパス</span>
         <span class="na">tasks</span><span class="pi">:</span>
           <span class="na">t1</span><span class="pi">:</span>
             <span class="na">objectiveA</span><span class="pi">:</span> <span class="s">0.5,</span>
             <span class="na">objectiveB</span><span class="pi">:</span> <span class="s">1.0,</span>
             <span class="na">completion</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">timeout</span><span class="pi">:</span> <span class="nv">5.0</span> <span class="pi">}</span>
 
-        <span class="c1"># After this pass, one task is considered</span>
+        <span class="c1"># このパスには1つのタスク</span>
 
-        <span class="c1"># Second pass</span>
+        <span class="c1"># 2つ目のパス</span>
         <span class="na">tasks</span><span class="pi">:</span>
           <span class="na">t1</span><span class="pi">:</span>
             <span class="na">objectiveA</span><span class="pi">:</span> <span class="s">1.0,</span>
@@ -584,20 +583,20 @@
           <span class="na">t2</span><span class="pi">:</span>
             <span class="na">objective</span><span class="pi">:</span> <span class="m">0.5</span>
 
-        <span class="c1"># We now have two tasks, and:</span>
-        <span class="c1"># - t1's objectiveA is changed to 1.0, objectiveB is the same</span>
-        <span class="c1"># - t1 completion criteria is replaced</span>
+        <span class="c1"># このパスには2つのタスクがあり、</span>
+        <span class="c1"># - t1 の objectiveA は 1.0 に変更、objectiveB は同じ</span>
+        <span class="c1"># - t1 の完了判定は置き換え</span>
 
-        <span class="c1"># Third pass</span>
+        <span class="c1"># 3つ目のパス</span>
         <span class="na">tasks</span><span class="pi">:</span>
           <span class="na">t1</span><span class="pi">:</span>
             <span class="na">completion</span><span class="pi">:</span> <span class="pi">{}</span>
           <span class="na">t2</span><span class="pi">:</span>
             <span class="na">completion</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">eval</span><span class="pi">:</span> <span class="nv">1e-6</span> <span class="pi">}</span>
 
-        <span class="c1"># We still have two tasks, objectives are unchanged but:</span>
-        <span class="c1"># - t1 has no more completion criteria</span>
-        <span class="c1"># - t2 has a completion criteria</span>
+        <span class="c1"># 上と同じように2つのタスクがあり、objective は同じだが、</span>
+        <span class="c1"># - t1 は完了判定なし</span>
+        <span class="c1"># - t2 は完了判定あり</span>
         </code></pre></figure>
 
 
@@ -692,7 +691,7 @@
   <li><code class="language-plaintext highlighter-rouge">RemovePostureTask</code>: trueに設定すると、デフォルトの姿勢制御タスクが削除されます。</li>
 </ul>
 
-<h2 id="new-state-creation">New state creation</h2>
+<h2 id="新しい状態の生成">新しい状態の生成</h2>
 
 <p>状態を作成するには、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1State" target="blank_"><code>mc_control::fsm::State</code></a>から継承します。最低限のインターフェイスを以下に示します。</p>
 
@@ -747,7 +746,7 @@
   <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">r2</span><span class="p">;</span>
   <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">r1Surface</span><span class="p">;</span>
   <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">r2Surface</span><span class="p">;</span>
-  <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">dof</span><span class="p">;</span> <span class="c1">// defaults to Eigen::Vector6d::Ones()</span>
+  <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">dof</span><span class="p">;</span> <span class="c1">// Eigen::Vector6d::Ones()がデフォルト</span>
 <span class="p">};</span>
 </code></pre></div></div>
 
@@ -770,7 +769,7 @@
 <span class="kt">void</span> <span class="nf">removeCollisions</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r1</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r2</span><span class="p">,</span>
                    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Collision</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">collisions</span><span class="p">);</span>
 
-<span class="c1">// Remove all collisions between r1 and r2</span>
+<span class="c1">// r1 と r2 の間の全ての干渉回避拘束を削除</span>
 <span class="kt">void</span> <span class="nf">removeCollisions</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r1</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r2</span><span class="p">);</span>
 </code></pre></div></div>
 
@@ -823,7 +822,7 @@
   <li><code class="language-plaintext highlighter-rouge">contacts</code>: 初期接触面の配列</li>
 </ul>
 
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">contacts</span><span class="w"> </span><span class="err">entry</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">contactsエントリの例</span><span class="w">
 </span><span class="nl">"contacts"</span><span class="p">:</span><span class="w">
 </span><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">

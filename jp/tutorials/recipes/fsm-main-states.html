@@ -313,7 +313,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -346,8 +346,7 @@
         <h1>主なFSMの状態</h1>
         
 
-        
-<p>本フレームワークでは、<code class="language-plaintext highlighter-rouge">JSON/YAML</code>の設定機能を最大限活用して有限オートマトンを簡単に構成できるように、実装済みの状態がデフォルトでいくつか用意されています。これらの状態を使用すると、ロボットの複雑な動作を実現する有限オートマトンを簡単に記述でき、<code class="language-plaintext highlighter-rouge">C++/Python</code>状態を手作業で記述する必要はほとんど（または全く）ありません。実現したいことのほとんどすべてを有限オートマトンの設定で直接記述できます。このチュートリアルでは、最も役に立つ3つの状態について詳しく見ていきます。</p>
+        <p>本フレームワークでは、<code class="language-plaintext highlighter-rouge">JSON/YAML</code>の設定機能を最大限活用して有限オートマトンを簡単に構成できるように、実装済みの状態がデフォルトでいくつか用意されています。これらの状態を使用すると、ロボットの複雑な動作を実現する有限オートマトンを簡単に記述でき、<code class="language-plaintext highlighter-rouge">C++/Python</code>状態を手作業で記述する必要はほとんど（または全く）ありません。実現したいことのほとんどすべてを有限オートマトンの設定で直接記述できます。このチュートリアルでは、最も役に立つ3つの状態について詳しく見ていきます。</p>
 
 <ul>
   <li><a href="/mc_rtc/jp/json.html#State/MetaTasks">MetaTasks</a>: <code class="language-plaintext highlighter-rouge">JSON/YAML</code>で記述された設定から一連のタスクを読み込む</li>
@@ -366,10 +365,10 @@
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">states</span><span class="pi">:</span>
   <span class="na">ExampleState</span><span class="pi">:</span>
     <span class="na">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
-    <span class="c1"># optional: uses the output criteria of the tasks as the string output for the next transition</span>
+    <span class="c1"># 任意：タスクの出力を次の遷移に対する文字列出力として用いる</span>
     <span class="na">outputs</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">CoM</span><span class="pi">]</span>
     <span class="na">tasks</span><span class="pi">:</span>
-      <span class="c1"># create a CoM task</span>
+      <span class="c1"># CoMタスクの生成</span>
       <span class="na">CoM</span><span class="pi">:</span>
         <span class="na">type</span><span class="pi">:</span> <span class="s">com</span>
         <span class="na">move_com</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">-0.05</span><span class="pi">]</span>
@@ -380,7 +379,7 @@
               <span class="pi">-</span> <span class="na">eval</span><span class="pi">:</span> <span class="m">0.01</span>
               <span class="pi">-</span> <span class="na">speed</span><span class="pi">:</span> <span class="m">0.005</span>
 
-      <span class="c1"># create a bspline_trajectory task</span>
+      <span class="c1"># bspline_trajectoryタスクを生成する</span>
       <span class="na">HandTrajectory</span><span class="pi">:</span>
         <span class="na">type</span><span class="pi">:</span> <span class="s">bspline_trajectory</span>
         <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftHand</span>
@@ -388,7 +387,7 @@
         <span class="na">duration</span><span class="pi">:</span> <span class="m">15.0</span>
         <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
         <span class="na">targetSurface</span><span class="pi">:</span>
-          <span class="c1"># assumes that the additional object/box robot was loaded in the global fsm configuration</span>
+          <span class="c1"># 追加のオブジェクトである、boxロボットはFSMのグローバル設定で読み込まれていると仮定</span>
           <span class="na">robot</span><span class="pi">:</span> <span class="s">box</span>
           <span class="na">surface</span><span class="pi">:</span> <span class="s">Left</span>
         <span class="na">completion</span><span class="pi">:</span>
@@ -426,8 +425,7 @@
 
 <p>タスクに<code class="language-plaintext highlighter-rouge">mc_task::MetaTask::buildCompletionCriteria</code>を実装することで、独自の完了基準を追加できます。また、下記のように、条件構成体<code class="language-plaintext highlighter-rouge">AND</code>と<code class="language-plaintext highlighter-rouge">OR</code>を使用してこれらの完了基準を組み合わせることができます。さらに、通常の遅延評価が適用されます。例えば、トータルの処理時間が規定の時間を超えたとき、あるいは3秒の遅延後に手の表面の法線方向（<code class="language-plaintext highlighter-rouge">z</code>方向）に15Nを超える力が加わったときに手の移動経路タスクが完了しているかチェックするには、以下のように記述します。</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># completion criteria that checks whether a trajectory task has been active for at least its specified duration</span>
-<span class="c1"># or whether more than 15N apply along the `z` direction of the hand surface after 3 seconds of delay.</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># タスクが設定された時間以上アクティブである場合、または15N以上の力がハンドサーフェスの`z`方向に3秒以上の遅延の後に作用した場合を終了と判定する</span>
 <span class="na">completion</span><span class="pi">:</span>
   <span class="na">OR</span><span class="pi">:</span>
     <span class="pi">-</span> <span class="na">timeElapsed</span><span class="pi">:</span> <span class="no">true</span>
@@ -444,7 +442,7 @@
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">transtions</span><span class="pi">:</span>
 <span class="nn">...</span>
-<span class="c1"># transition to the next state automatically when all tasks have completed</span>
+<span class="c1"># 次の状態への遷移は全てのタスクが完了した時に起きる</span>
 <span class="pi">-</span> <span class="pi">[</span><span class="nv">ExampleState</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">NextState</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
 <span class="nn">...</span>
 </code></pre></div></div>
@@ -453,13 +451,13 @@
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">ExampleState</span><span class="pi">:</span>
   <span class="na">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
-  <span class="c1"># optional: uses the output criteria of the tasks as the string output for the next transition</span>
+  <span class="c1"># 任意：タスクの出力を次の遷移に対する文字列出力として用いる</span>
   <span class="na">outputs</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">CoM</span><span class="pi">]</span>
 </code></pre></div></div>
 
 <p>そうすると、状態遷移マップで<code class="language-plaintext highlighter-rouge">CoM</code>完了基準に基づき分岐が判断されるようになります。</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Reminder: the CoM completion criteria is defined as:</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># CoMの終了判定は以下のように定義されている</span>
 <span class="c1"># CoM:</span>
 <span class="c1">#   completion:</span>
 <span class="c1">#     OR:</span>
@@ -469,8 +467,8 @@
 <span class="c1">#         - speed: 0.005</span>
 <span class="pi">-</span> <span class="pi">[</span><span class="nv">ExampleState</span><span class="pi">,</span> <span class="s2">"</span><span class="s">CoM=timeout"</span><span class="pi">,</span> <span class="nv">CoMHasNotConvergedState</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
 <span class="pi">-</span> <span class="pi">[</span><span class="nv">ExampleState</span><span class="pi">,</span> <span class="s2">"</span><span class="s">CoM=eval</span><span class="nv"> </span><span class="s">AND</span><span class="nv"> </span><span class="s">speed"</span><span class="pi">,</span> <span class="nv">NextMotionState</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
-<span class="c1"># state to execute by default if none of the completion patterns are matched in the transition map</span>
-<span class="c1"># This allows to define non-exhaustive matching patterns in the transition map</span>
+<span class="c1"># 完了パターンが状態遷移マップのいずれも当てはまらない場合に実行する状態を定義</span>
+<span class="c1"># これによって全てのパターンを定義する必要がなくなる</span>
 <span class="pi">-</span> <span class="pi">[</span><span class="nv">ExampleState</span><span class="pi">,</span> <span class="s2">"</span><span class="s">DEFAULT"</span><span class="pi">,</span> <span class="nv">DefaultState</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
 </code></pre></div></div>
 
@@ -485,7 +483,7 @@
 
 <p>Parallel状態（<a href="/mc_rtc/jp/json.html#State/Parallel">こちらのドキュメント</a>を参照）では、複数の状態を同時に実行させることができます。有限オートマトンは実際にはシングルスレッドで実行されるため、実際にはコントローラーの処理ループ内で各状態がシーケンシャルに実行されます。</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Define an additional MetaTasks state that moves the right hand</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 右手を動かすための追加のMetaTasks状態を作成</span>
 <span class="na">RightHandState</span><span class="pi">:</span>
   <span class="na">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
   <span class="na">HandTrajectory</span><span class="pi">:</span>
@@ -500,14 +498,14 @@
     <span class="na">completion</span><span class="pi">:</span>
       <span class="pi">-</span> <span class="na">timeElapsed</span><span class="pi">:</span> <span class="no">true</span>
 
-<span class="c1"># Now say we want to move both the left and right hand and move the CoM down?</span>
-<span class="c1"># Easy, simply put the two states in parallel:</span>
+<span class="c1"># 例えば右手、左手と重心の下方向への移動を行いたい場合、</span>
+<span class="c1"># 2つの状態を並列実行すればよい</span>
 <span class="na">ExampleParallelState</span><span class="pi">:</span>
   <span class="na">base</span><span class="pi">:</span> <span class="s">Parallel</span>
-  <span class="c1"># At each iteration, the ExampleState will be executed, followed by the RightHandState</span>
+  <span class="c1"># 実行周期毎にまず ExampleState が実行され、続いて RightHandState が実行される</span>
   <span class="na">states</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">ExampleState</span><span class="pi">,</span> <span class="nv">RightHandState</span><span class="pi">]</span>
-  <span class="c1"># optional defines which state to use as the output criteria</span>
-  <span class="c1"># By default the last state's output in the states list above is used</span>
+  <span class="c1"># どちらの状態を出力判定に用いるか指定することも可能</span>
+  <span class="c1"># デフォルトでは最後の状態の出力が使用される</span>
   <span class="na">outputs</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">ExampleState</span><span class="pi">,</span> <span class="nv">RightHandState</span><span class="pi">]</span>
 </code></pre></div></div>
 
@@ -521,8 +519,8 @@
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">[</span><span class="nv">ExampleParallelState</span><span class="pi">,</span> <span class="s2">"</span><span class="s">ExampleState:</span><span class="nv"> </span><span class="s">(CoM=timeout),</span><span class="nv"> </span><span class="s">RightHandState:</span><span class="nv"> </span><span class="s">(timeElapsed)"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">StateA"</span><span class="pi">]</span>
 <span class="pi">[</span><span class="nv">ExampleParallelState</span><span class="pi">,</span> <span class="s2">"</span><span class="s">ExampleState:</span><span class="nv"> </span><span class="s">(CoM=eval</span><span class="nv"> </span><span class="s">AND</span><span class="nv"> </span><span class="s">speed),</span><span class="nv"> </span><span class="s">RightHandState:</span><span class="nv"> </span><span class="s">(timeElapsed)"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">StateB"</span><span class="pi">]</span>
-<span class="c1"># Here the interest of having a default state becomes apparent,</span>
-<span class="c1"># as for complex condition criterias it might be cumbersome to create an exhaustive list of possible outputs.</span>
+<span class="c1"># 複雑な状態遷移が起こりうる場合に、全ての出力の組み合わせを記述することは大変です。</span>
+<span class="c1"># このような場合に特にデフォルト状態の利用は有効です</span>
 <span class="pi">[</span><span class="nv">ExampleParallelState</span><span class="pi">,</span> <span class="s2">"</span><span class="s">DEFAULT"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">DefaultState"</span><span class="pi">]</span>
 </code></pre></div></div>
 

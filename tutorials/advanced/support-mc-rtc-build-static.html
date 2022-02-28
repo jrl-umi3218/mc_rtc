@@ -395,7 +395,7 @@
 
 <h3 id="adding-mc_rtc-components">Adding mc_rtc components</h3>
 
-<p>If you are using the macros provided by <code class="language-plaintext highlighter-rouge">find_package(mc_rtc)</code> (e.g. <code class="language-plaintext highlighter-rouge">add_controller(NAME ...)</code>, <code class="language-plaintext highlighter-rouge">add_robot(NAME ...) and so-on) then most of the hard-work is done for you. Otherwise, you are advised to look into </code>src/CMakeLists.txt` in mc_rtc source tree to understand what you should modify. The main difference is that source paths should be provided as absolute paths instead of relative paths.</p>
+<p>If you are using the macros provided by <code class="language-plaintext highlighter-rouge">find_package(mc_rtc)</code> (e.g. <code class="language-plaintext highlighter-rouge">add_controller(NAME ...)</code>, <code class="language-plaintext highlighter-rouge">add_robot(NAME ...)</code> and so-on) then most of the hard-work is done for you. Otherwise, you are advised to look into <code class="language-plaintext highlighter-rouge">src/CMakeLists.txt</code> in mc_rtc source tree to understand what you should modify. The main difference is that source paths should be provided as absolute paths instead of relative paths.</p>
 
 <p>There is one caveat to this. If your controller derives from <code class="language-plaintext highlighter-rouge">mc_control::fsm::Controller</code> then you should use <code class="language-plaintext highlighter-rouge">add_fsm_controller(NAME ...)</code> instead.</p>
 

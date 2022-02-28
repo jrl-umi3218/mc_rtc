@@ -309,7 +309,7 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
                         
                       
                     </ul>
@@ -319,14 +319,14 @@
               </div>
               
                 <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#enabling-plugins-at-the-global-level">Enabling plugins at the global level</a>
+<li class="toc-entry toc-h2"><a href="#大域的にプラグインを有効化する方法">大域的にプラグインを有効化する方法</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#configuration-locations-considered-in-this-case">Configuration locations considered in this case</a></li>
+<li class="toc-entry toc-h3"><a href="#参照される設定ファイル">参照される設定ファイル</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#enabling-plugins-at-the-controller-level">Enabling plugins at the controller level</a>
+<li class="toc-entry toc-h2"><a href="#コントローラレベルでのプラグインの有効化">コントローラレベルでのプラグインの有効化</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#configuration-locations-considered-in-this-case-1">Configuration locations considered in this case</a></li>
+<li class="toc-entry toc-h3"><a href="#参照される設定ファイル-1">参照される設定ファイル</a></li>
 </ul>
 </li>
 </ul>
@@ -340,37 +340,36 @@
         <h1>グローバルプラグインの利用</h1>
         
 
-        
-<p>In mc_rtc, every interface uses the <a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController" target="blank_"><code>mc_control::MCGlobalController</code></a> class to initialize and run the controllers in the framework. In particular, they will run the <a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController#a153432b8c6ebfc4f9484deb1439ca3ee" target="blank_"><code>mc_control::MCGlobalController::run()</code></a> function on every iteration.</p>
+        <p>mc_rtcでは、すべてのインタフェースは <a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController" target="blank_"><code>mc_control::MCGlobalController</code></a> クラスをコントローラの初期化及び実行に使用します。より詳細には、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController#a153432b8c6ebfc4f9484deb1439ca3ee" target="blank_"><code>mc_control::MCGlobalController::run()</code></a> が実行周期毎に実行されます。</p>
 
-<p>The plugin system allows one to write a component that will run at the start and/or end of this run function.</p>
+<p>プラグインシステムはこのrun関数の最初と最後の両方または一方で実行されるコンポーネントを追加する機能を提供します。</p>
 
-<p>These plugins can be used for a variety of purpose:</p>
+<p>これらのプラグインは以下のような様々な用途で利用が可能です。</p>
 
 <ul>
-  <li>Publish data using a 3rd-party middleware (for example, the ROS plugin);</li>
-  <li>Provide sensor data that is obtained with a different interface than the one where mc_rtc is running;</li>
-  <li>Provide high-level functionalities that are above a single controller scope;</li>
+  <li>サードパーティのミドルウェアを用いてデータを出力する (例：ROSプラグイン)</li>
+  <li>mc_rtcとは別のインタフェースを用いて取得されたセンサ情報をmc_rtcに取り込む</li>
+  <li>単一のコントローラよりもより上位の機能を提供する</li>
 </ul>
 
-<p>The <a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">new plugin tutorial</a> provides more information on writing plugins for mc_rtc.</p>
+<p>mc_rtcでのプラグイン実装方法の詳細は <a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">new plugin tutorial</a> で確認できます。</p>
 
-<p>The plugins’ documentation should provide information about available options and usage. This tutorial is focused on enabling and configuring these plugins.</p>
+<p>プラグインで利用可能なオプションやプラグインの利用方法は各プラグインのドキュメントで確認できます。このチュートリアルではこれらのプラグインの設定方法や有効化の方法を説明します。</p>
 
-<h2 id="enabling-plugins-at-the-global-level">Enabling plugins at the global level</h2>
+<h2 id="大域的にプラグインを有効化する方法">大域的にプラグインを有効化する方法</h2>
 
-<p>Plugins can be added to the <code class="language-plaintext highlighter-rouge">Plugins</code> list in <a href="/mc_rtc/jp/tutorials/introduction/configuration.html#possible-locations-for-mc-rtc-configuration">mc_rtc configuration</a>. For example:</p>
+<p>プラグインは <a href="/mc_rtc/jp/tutorials/introduction/configuration.html#possible-locations-for-mc-rtc-configuration">mc_rtc configuration</a> の <code class="language-plaintext highlighter-rouge">Plugins</code> リストに追加することで有効化できます。例えば以下のように記述します。</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Plugins</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Joystick</span><span class="pi">,</span> <span class="nv">OculusVR</span><span class="pi">]</span>
 </code></pre></div></div>
 
-<p>The plugins listed in this configuration are enabled regardless of the controller that is selected.</p>
+<p>ここにリストアップされたプラグインは指定されているコントローラに関係なく有効化されます。</p>
 
-<div class="alert alert-info">When installing a plugin, an option can be provided to enable automatic loading. Such plugins are loaded regarldess of their presence in the `Plugins` entry.</div>
+<div class="alert alert-info">プラグインをインストールする際に自動ロードのオプションが提供されている場合があります。このようなプラグインは `Plugins` リストに記載があるか否かにかかわらず自動でロードされます。</div>
 
-<h3 id="configuration-locations-considered-in-this-case">Configuration locations considered in this case</h3>
+<h3 id="参照される設定ファイル">参照される設定ファイル</h3>
 
-<p>The following two files will be read by mc_rtc (if they exist):</p>
+<p>以下の2つのファイルがmc_rtcによって読み込まれます（存在する場合）。</p>
 
 <ol>
   <li><code class="highlight language-bash" data-lang="bash"><span class="k">${</span><span class="nv">PLUGIN_RUNTIME_INSTALL_PREFIX</span><span class="k">}</span>/etc/<span class="k">${</span><span class="nv">PLUGIN_NAME</span><span class="k">}</span>.yaml</code></li>
@@ -380,17 +379,17 @@
   </li>
 </ol>
 
-<p>Where <code class="language-plaintext highlighter-rouge">${PLUGIN_RUNTIME_INSTALL_PREFIX}</code> is <code class="language-plaintext highlighter-rouge">${INSTALL_PREFIX}/lib/mc_plugins</code> on Linux/macOS and <code class="language-plaintext highlighter-rouge">${INSTALL_PREFIX}/bin/mc_plugins</code> on Windows.</p>
+<p>ここで <code class="language-plaintext highlighter-rouge">${PLUGIN_RUNTIME_INSTALL_PREFIX}</code> はLinux/macOSにおいては <code class="language-plaintext highlighter-rouge">${INSTALL_PREFIX}/lib/mc_plugins</code> であり、Windowsにおいては <code class="language-plaintext highlighter-rouge">${INSTALL_PREFIX}/bin/mc_plugins</code> を意味します。</p>
 
-<h2 id="enabling-plugins-at-the-controller-level">Enabling plugins at the controller level</h2>
+<h2 id="コントローラレベルでのプラグインの有効化">コントローラレベルでのプラグインの有効化</h2>
 
-<p>Plugins can be enabled for a given controller by adding a <code class="language-plaintext highlighter-rouge">Plugins</code> entry in the controller’s configuration.</p>
+<p>プラグインをコントローラレベルで有効化するにはコントローラの設定に <code class="language-plaintext highlighter-rouge">Plugins</code> エントリを追加します。</p>
 
-<h3 id="configuration-locations-considered-in-this-case-1">Configuration locations considered in this case</h3>
+<h3 id="参照される設定ファイル-1">参照される設定ファイル</h3>
 
-<div class="alert alert-warning">Those files are only considered for the plugin configuration if the plugin is enabled at the controller level.</div>
+<div class="alert alert-warning">これらのファイルはプラグインがコントローラレベルで有効化された場合にのみ参照されます。</div>
 
-<p>In addition to the global configuration files, the following files are also considered for the plugin configuration when it is enabled by a controller (if they exist):</p>
+<p>大域的な設定ファイルに加えて、以下のファイルが存在する場合プラグインの設定に使用されます。</p>
 
 <ol>
   <li><code class="highlight language-bash" data-lang="bash"><span class="k">${</span><span class="nv">CONTROLLER_RUNTIME_INSTALL_PREFIX</span><span class="k">}</span>/etc/<span class="k">${</span><span class="nv">CONTROLLER_NAME</span><span class="k">}</span>/plugins/<span class="k">${</span><span class="nv">PLUGIN_NAME</span><span class="k">}</span>.yaml</code></li>
@@ -400,9 +399,9 @@
   </li>
 </ol>
 
-<p>Where <code class="language-plaintext highlighter-rouge">${CONTROLLER_RUNTIME_INSTALL_PREFIX}</code> is <code class="language-plaintext highlighter-rouge">${INSTALL_PREFIX}/lib/mc_controllers</code> on Linux/macOS and <code class="language-plaintext highlighter-rouge">${INSTALL_PREFIX}/bin/mc_controllers</code> on Windows.</p>
+<p>ここで <code class="language-plaintext highlighter-rouge">${CONTROLLER_RUNTIME_INSTALL_PREFIX}</code> はLinux/macOSにおいては <code class="language-plaintext highlighter-rouge">${INSTALL_PREFIX}/lib/mc_controllers</code> でありWindowsにおいては <code class="language-plaintext highlighter-rouge">${INSTALL_PREFIX}/bin/mc_controllers</code> を指します。</p>
 
-<div class="alert alert-warning">When multiple controllers are enabled, if they use the same plugin then all these files are loaded together in the order the controllers appear in mc_rtc `Enabled` configuration entry.</div>
+<div class="alert alert-warning">複数のコントローラが有効化され、かつそれらが同じプラグインを使用している場合、全ての設定ファイルがmc_rtcの`Enabled`エントリに記述されたコントローラの順番で参照されます。</div>
 
 
 
