@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 [全般的な設定]({{site.baseurl}}/tutorials/introduction/configuration.html)でファイルのロギングを有効あるいは無効にできます。ただし、コントローラーの実装ではロギングオプションについて気にする必要はありません。コントローラーでは、単一のインターフェイスからファイルのロギング操作を行えます。各コントローラーは専用のログを使用し、コンロトーラーが切り替わると新しいログが作成されます。シンボリックリンクをサポートするプラットフォームでは、使い勝手の観点から、最後に作成されたログを指すように`latest`ログファイルが作成されます。
 
 デフォルトでは、どのコントローラーでも以下の情報がロギングされます。
@@ -20,7 +18,7 @@
 コードにログエントリを追加するには、以下のようにします。
 
 ```cpp
-logger().addLogEntry("entry_name", [this]() { /* compute, say x; */ return x; });
+logger().addLogEntry("entry_name", [this]() { /* 例えばxを計算; */ return x; });
 ```
 
 コントローラーで`run()`メソッドが実行されると、用意されたコールバック関数が実行されます。
@@ -38,12 +36,12 @@ logger().removeLogEntry("entry_name");
 以下のようにロギングソースを指定できます。
 
 ```cpp
-// In this example, "this" is the source
+// この例では "this" がソース
 logger().addLogEntry("entry_A", this, [this]() { return a; });
 logger().addLogEntry("entry_B", this, [this]() { return b; });
 logger().addLogEntry("entry_C", this, [this]() { return c; });
 
-// You can also group calls with the same source
+// 同じソースに対する呼び出しをまとめることもできます
 logger().addLogEntries(this,
                        "entry_A", [this]() { return a; },
                        "entry_B", [this]() { return b; },
@@ -55,7 +53,7 @@ logger().addLogEntries(this,
 ```cpp
 logger().removeLogEntries(this);
 
-// This would yield the same result but you would need to keep the addLogEntry and removeLogEntry call in sync
+// こうしても結果は同じですが、addLogEntry と removeLogEntry が対応するように注意する必要があります
 logger().removeLogEntry("entry_A");
 logger().removeLogEntry("entry_B");
 logger().removeLogEntry("entry_C");
@@ -78,13 +76,13 @@ struct MyObject
 
   void addToLogger(mc_rtc::Logger & logger)
   {
-    // This is the actual syntax required in C++11
+    // C++11で求められる実際の文法はこのようになります
     logger.addLogEntry<decltype(&MyObject::data_), &MyObject::data_>("data", this);
-    // We have the following macro helper
+    // 記述を簡単化するマクロがあります
     MC_RTC_LOG_HELPER("something", something_);
-    // Also works with methods
+    // メソッドも利用可能です
     MC_RTC_LOG_HELPER("computeVector", computeVector);
-    // But for overloaded methods we must use another macro to work-around ambiguity issues
+    // ただしオーバーロードされたメソッドの場合、こちらのマクロを使用する必要があります
     MC_RTC_LOG_GETTER("referenceBody", referenceBody);
   }
 };
@@ -100,11 +98,11 @@ struct MyObject
 Pythonインターフェイスも非常によく似ています。
 
 ```python
-# Add a log entry
+# ログのエントリを追加
 self.logger().addLogEntry("my_entry", lambda: self.data)
-# Remove data
+# データを削除
 self.logger().removeLogEntry("my_entry")
-# Using partial to invoke a controller method
+# コントローラのメソッドを呼ぶためにpartialを使用
 self.logger().addLogEntry("my_entry", partial(self.get_data))
 ```
 

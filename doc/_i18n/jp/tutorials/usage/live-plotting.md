@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 コントローラーを実行させながらグラフを表示したい場合があると思います（スタビライザーのゲインを調整する場合など）。それを実現する方法の一つが、現在記録中のログを開き、見たいデータをプロットすることです。しかし、実験が長時間にわたる場合、この方法ではログのサイズが大きくなり、ログを開いて処理するのに時間がかかるため、作業が煩わしくなります。
 
 よりよい方法は、このチュートリアルで説明するように、現在記録中のログをコントローラーに表示させることです。
@@ -116,7 +114,7 @@ gui()->addXYPlot(
 #### 例
 
 {% capture source %}
-// Providing only the left Y axis configuration
+// 左のY軸のみ設定
 double t0 = t;
 gui()->addPlot(
   "sin(t)",
@@ -125,10 +123,10 @@ gui()->addPlot(
   mc_rtc::gui::plot::Y("sin(t)", [this]() { return sin(t); }, Color::Red)
 );
 
-// Providing both
+// 両方のY軸を設定
 gui()->addXYPlot(
   "Circle",
-  // Shows an alternative way to set the limits
+  // 上下限を設定する別の方法
   AxisConfiguration("X").min(-1).max(1),
   AxisConfiguration("Left Y"),
   AxisConfiguration("Right Y").max(10),

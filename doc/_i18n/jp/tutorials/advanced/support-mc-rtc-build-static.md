@@ -1,6 +1,4 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
-`MC_RTC_BUILD_STATIC`は、mc_rtcのビルドオプションです。主に、[オンラインデモ][online demonstration](https://mc-rtc-demo.netlify.app/)を実現するために使用されます。このオプションを使用すると、コントローラー、有限オートマトンの状態、ロボットモジュール、観測器、プラグインを動的に読み込めなくなります。そのため、これらのコンポーネントをmc_rtcのライブラリに組み込む必要があります。
+`MC_RTC_BUILD_STATIC`は、mc_rtcのビルドオプションです。主に、[オンラインデモ](https://mc-rtc-demo.netlify.app/)を実現するために使用されます。このオプションを使用すると、コントローラー、有限オートマトンの状態、ロボットモジュール、観測器、プラグインを動的に読み込めなくなります。そのため、これらのコンポーネントをmc_rtcのライブラリに組み込む必要があります。
 
 このページでは、まず、このオプションを使用してプロジェクトをコンパイルする際に必要な作業について説明します。次に、デモをWebに公開するためのガイドラインについて説明します。
 
@@ -46,7 +44,7 @@ endif()
 
 ### mc_rtcのコンポーネントを追加する
 
-`find_package(mc_rtc)`によって提供されているマクロ（`add_controller(NAME ...)`、`add_robot(NAME ...) and so-on) then most of the hard-work is done for you. Otherwise, you are advised to look into`など）を使用する場合、面倒な作業を行う必要はほとんどありません。そうでない場合は、mc_rtcのソースツリー内にあるsrc/CMakeLists.txtを参照し、どのように変更すべきかを理解してください。主な違いは、ソースのパスを相対パスではなく絶対パスで与える必要があるという点にあります。
+`find_package(mc_rtc)`によって提供されているマクロ（`add_controller(NAME ...)`, `add_robot(NAME ...)` 等) を使用すれば、面倒な作業を行う必要はほとんどありません。そうでない場合は、mc_rtcのソースツリー内にあるsrc/CMakeLists.txtを参照し、どのように変更すべきかを理解してください。主な違いは、ソースのパスを相対パスではなく絶対パスで与える必要があるという点にあります。
 
 これに関して注意すべき点が1つあります。コントローラーを`mc_control::fsm::Controller`から派生させる場合、`add_fsm_controller(NAME ...)`を使用する必要があります。
 
@@ -68,11 +66,11 @@ if(NOT MC_RTC_BUILD_STATIC)
 else()
   add_fsm_controller(myController "${myController_SRC}" "${myController_HDR}")
   target_link_libraries(mc_control_fsm PUBLIC copra::copra)
-  # Would be:
-  # - mc_control for a non-FSM controller
-  # - mc_rbdyn for a RobotModule
-  # - mc_observers for an Observer
-  # - mc_control for a plugin
+  # コンポーネントの種類に応じて以下のライブラリを使用します
+  # - mc_control （FSMを使用しないコントローラ）
+  # - mc_rbdyn （ロボットモジュール）
+  # - mc_observers （オブザーバ）
+  # - mc_control （プラグイン）
 endif()
 ```
 

@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 各チュートリアルを通じて、接触面とは何か、コントローラーで接触面がどのように処理されるか、接触面をどのように動かしたらよいのかが理解できたと思います。それでは、左足を開始位置から動かして少し前に進めてみましょう。
 
 基本的な手順は以下のようになります。
@@ -28,7 +26,7 @@ $ mc_rtc_new_controller MyController MyController
 #pragma once
 #include <mc_control/mc_controller.h>
 #include "api.h"
-// If we want to use elements in mc_tasks or mc_solver we first must include their header file
+// mc_tasks や mc_solver の機能を使うにはまずヘッダファイルをインクルードすることが必要
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/SurfaceTransformTask.h>
 
@@ -112,12 +110,12 @@ bool MyController::run()
 void MyController::reset(const mc_control::ControllerResetData & data)
 {
   MCController::reset(data);
-  /* Create the task */
+  /* タスクの生成 */
   comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0);
   footTask = std::make_shared<mc_tasks::SurfaceTransformTask>("LeftFoot", robots(), 0);
-  /* Move the CoM above the right foot */
+  /* 重心を右足の上に移動 */
   comTask->com(comTask->com() + Eigen::Vector3d(0, -1*footTask->surfacePose().translation().y(), 0));
-  /* Add the CoM task to the solver */
+  /* 重心タスクをソルバに追加 */
   solver().addTask(comTask);
 }
 
@@ -134,7 +132,7 @@ CONTROLLER_CONSTRUCTOR("MyController", MyController)
 `AddRemoveContactTask`を使用するには、ソルバーの[速度制約条件]({{site.baseurl}}/tutorials/recipes/speed-constraint.html)が必要となります。また、タスクそのものを作成する必要があります。さらに、2つの補助ステップを使って、左足を離して元に戻す必要があります。では、コントローラーのヘッダーと`reset()`関数をそのように変更してみましょう。
 
 ```cpp
-// In the header
+// ヘッダファイルに以下を追加
 #include <mc_solver/BoundedSpeedConstr.h>
 #include <mc_tasks/AddRemoveContactTask.h>
 std::shared_ptr<mc_solver::BoundedSpeedConstr> bSpeedConstr;
@@ -144,7 +142,8 @@ bool added_left_foot = false;
 ```
 
 ```cpp
-// In reset
+// reset()関数に以下を追加
+
 bSpeedConstr = std::make_shared<mc_solver::BoundedSpeedConstr>(robots(), 0, timeStep);
 solver().addConstraintSet(*bSpeedConstr);
 ```
@@ -198,7 +197,7 @@ bool MyController::run()
   }
   if(moved_com && !removed_left_foot)
   {
-    /* Monitor the foot altitude */
+    /* 足の姿勢を監視 */
     double lf_z = robot().surfacePose("LeftFoot").translation().z();
     double rf_z = robot().surfacePose("RightFoot").translation().z();
     if(lf_z > rf_z + 0.05)
@@ -230,7 +229,7 @@ bool MyController::run()
   }
   if(moved_left_foot && !added_left_foot)
   {
-    /* Monitor the foot altitude */
+    /* 足の姿勢を監視 */
     double lf_z = robot().surfacePose("LeftFoot").translation().z();
     double rf_z = robot().surfacePose("RightFoot").translation().z();
     if(fabs(lf_z - rf_z) < 1e-4)

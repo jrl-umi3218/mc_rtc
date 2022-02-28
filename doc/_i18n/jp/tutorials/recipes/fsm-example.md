@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated and GItHub creation is not translated {% endcomment %}
-
 このチュートリアルでは、[マルチロボットコントローラー]({{site.baseurl}}/tutorials/introduction/multi-robot-controller.html)のチュートリアルで実装したのと同じコントローラーを、有限オートマトンの設定のみを使用して実装します。このチュートリアルでは、フレームワークで用意されている`DoorSample`コントローラーをゼロから再現するのに必要な各手順について、ひとつずつ説明していきます。
 
 <div class="embed-responsive embed-responsive-16by9">
@@ -40,7 +38,7 @@
   <div class="tab-pane" id="githubCreateTabContent" role="tabpanel" arial-labelledby="githubCreateTab">
     <div class="card bg-light">
       <div class="card-body">
-        <p>Use the <a href="https://github.com/mc-rtc/new-fsm-controller">mc-rtc/new-fsm-controller</a> template project. This is equivalent to using the <code>mc_rtc_new_fsm_controller</code> tool with extra goodies.</p>
+        <p><a href="https://github.com/mc-rtc/new-fsm-controller">mc-rtc/new-fsm-controller</a>をテンプレートとして使用して下さい。これは<code>mc_rtc_new_fsm_controller</code> ツールを用いて生成されたコードとほぼ同じです。</p>
       </div>
     </div>
   </div>
@@ -94,7 +92,7 @@ constraints:
 次に、接触面の初期セットをコントローラーに追加する方法について見ていきましょう。なお、状態を使用して接触面を後で追加・削除できます。`contacts`要素は、接触面のプロパティが記述された[Contact]({{site.baseurl}}/json-full.html#mc_rbdyn/Contact)の配列で構成されます。この要素が、上で定義した`contact`制約条件に追加されます。
 
 ```yaml
-# Initial set of contacts
+# 接触集合の初期値
 contacts:
 - r1: jvrc1
   r1Surface: LeftFoot
@@ -114,18 +112,18 @@ contacts:
 次に、衝突メッシュの初期セットを追加する方法について見ていきましょう。接触面の場合と同様に、状態を使用して衝突メッシュを後で追加・削除できます。`collisions`要素は、[CollisionConstraint]({{site.baseurl}}/json-full.html#ConstraintSet/CollisionsConstraint)オブジェクトの配列で構成されます。`MainRobot`については、自己衝突メッシュのデフォルトのリストが{% doxygen mc_rbdyn::RobotModule %}で定義されており、それらをここで使用できます。
 
 ```yaml
-# Collision constraint
+# 干渉回避制約
 collisions:
 - type: collision
-  useMinimal: true  # The set of minimal self-collisions is defined in the robot module
+  useMinimal: true  # 最小限の自己干渉回避セットはロボットモジュールに定義されている
 - type: collision
   r1: jvrc1
   r2: door
-  collisions: # array of collisions to add for this pair of robots
+  collisions: # このロボットの組み合わせに対する干渉回避拘束のリスト
     - body1: L_WRIST_Y_S
       body2: door
-      iDist: 0.5  # interaction distance: minimal distance below which the constraint becomes active
-      sDist: 0.02 # safety distance: minimal allowed distance
+      iDist: 0.5  # インタラクション距離：物体間の距離がこの値を下回ると拘束が有効になる
+      sDist: 0.02 # 安全距離：物体間の距離がこの値以下にならないように拘束される
       damping: 0.0
 ```
 

@@ -124,7 +124,6 @@ update_target_sources:
           if abs(self.postureTask.posture()[self.jointIndex][0] - self.robot().mbc.q[self.jointIndex][0]) < 0.05:
               self.switch_target()
           return True
-# FIXME Translate comments in these sources
 show_joints_sources:
   - name: Python
     lang: python

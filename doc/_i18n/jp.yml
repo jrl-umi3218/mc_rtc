@@ -170,6 +170,5 @@ tutorials:
       title: 新たなロボットをmc_rtcでサポートする方法
     support-mc-rtc-build-static:
       title: MC_RTC_BUILD_STATICをプログラムでサポートする方法
-    # FIXME Missing translation
     debug-lssol-output-6:
-      title: Debugging LSSOL output 6
+      title: LSSOL output 6のデバッグ

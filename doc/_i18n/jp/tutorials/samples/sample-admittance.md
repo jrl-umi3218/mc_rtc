@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 このチュートリアルでは、本フレームワークで用意されている`AdmittanceSample`サンプルコントローラーの使い方と概念について説明します。このサンプルでは、{% doxygen mc_tasks::force::AdmittanceTask %}を使用して、壁を押しながら`JVRC1`の手に加わる力を調節する方法を示します。
 
 このコントローラーでは、以下の手順で処理を実行します。
@@ -31,7 +29,7 @@ Timestep: 0.005
 次に、以下のようにサンプルを実行します。
 
 ```sh
-$ (roscore &) # Ensure you have a roscore running (for rviz visualization)
+$ (roscore &) # roscoreが走っていることを確認 (rvizを用いた可視化のため)
 $ cd /usr/local/share/hrpsys/samples/JVRC1
 $ choreonoid sim_mc_wall.cnoid
 $ roslaunch mc_rtc_ticker controler_display.launch
@@ -61,7 +59,7 @@ transitions:
 - [RightHandReleaseAdmittance, OK, RightHandMoveBack, Auto]
 - [RightHandMoveBack,          OK, StandingHalfSitting, Auto]
 
-# Initial state
+# 初期状態
 init: RightHandToWall 
 ```
 
@@ -72,7 +70,7 @@ init: RightHandToWall
 この実験全体を通じて、ロボットの質量中心を両足の中点の真上に維持します。これを実現するには、{% doxygen mc_tasks::CoMTask %}を使用します。また、胸部の過度な動きを抑えてより人間らしい動きとなるように、ロボットの胸部に{% doxygen mc_tasks::OrientationTask %}を追加します。この状態は、この有限オートマトン内にある他のすべての状態の基準状態として使用され、すべての状態がこの状態の動作を継承します。
 
 ```yaml
-  # Keep the CoM centered between the feet, and the chest upright
+  # 重心位置を足の中間に、胴体をまっすぐに保つ
   StandingBase:
     base: MetaTasks
     tasks:
@@ -93,12 +91,12 @@ init: RightHandToWall
 次に、ロボットの手を壁の近くまで前に動かします。これを行うには、{% doxygen mc_tasks::BSplineTrajectoryTask %}を使用します。このタスクでは、中間点の情報に基づいて、位置と向きがパラメーター化されたBスプライン曲線の移動経路が出力されます。このタスクでは、指定されたロボットの表面がこの移動経路に沿って制御されます。
 
 ```yaml
-  # Trajectory to bring hand close to the wall
+  # 手先を壁近くに移動させる軌道
   RightHandToWall:
     base: StandingBase
     tasks:
-      # inherits CoM and KeepChest tasks from StandingBase state
-      # and adds a bspline_trajectory task
+      # StandingBase状態からCoMとKeepChestタスクを継承し
+      # bspline_trajectoryタスクを追加
       RightHandTrajectory:
         type: bspline_trajectory
         surface: RightGripper
@@ -120,29 +118,29 @@ init: RightHandToWall
 次に、`RightHandPushAdmittance`状態において、{% doxygen mc_tasks::AdmittanceTask %}を使用して手の法線方向の力を調節し、手と壁を接触させます。アドミッタンス制御タスクでは、レンチの測定値（フォーストルクセンサーから得られた測定値）と目標値との誤差に基づいて、エンドエフェクターの目標移動速度が計算されます。係数`admittance`によって、移動方向の軸に沿った誤差の大きさに基づきエンドエフェクターの移動速度が調節されます。なお、このタスクに速度を追跡させるには、力を追跡させたい方向に沿って、位置制御の剛性を低くし、速度制御の減衰を高くする必要があります。また、すべてのレンチは表面フレーム内で表されます（今回の例では`RightGripper`表面フレーム）。
 
 ```yaml
-  # Increase applied force until we reach 20N
+  # 20Nに達するまで作用させる力を増大させる
   RightHandPushAdmittance:
     base: StandingBase
     tasks:
       RightHandAdmittance:
         type: admittance
         surface: RightGripper 
-        # Tracks the forces along the normal axis of the gripper surface with an admittance coefficient of 0.001
-        # Note the high-damping and low stiffness on that axis.
-        # All other axis are position controlled and will keep the current gripper position as much as possible 
+        # グリッパサーフェスの法線方向の力をアドミッタンス係数0.001で追従させる
+        # 注意：この軸方向のダンピングは高く、剛性は低い
+        # 他の軸は位置制御されており現在のグリッパの位置を可能な限り維持する
         admittance: [0,0,0,0,0,0.001]
         stiffness: [10, 10, 10, 10, 10, 1]
         damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
         maxVel:
           linear: [0.2, 0.2, 0.5]
           angular: [0.2, 0.2, 0.2]
-        # Target a desired force of 20N along the Z axis of the gripper surface
+        # グリッパサーフェスのz軸方向の力の目標値を20Nに設定
         wrench:
          force: [0, 0, -20]
          couple: [0, 0, 0]
-        # Rotate the gripper such that the fingers point towards the wall  
+        # グリッパが壁の方向を向くように回転
         targetRotation: [1.57, 0, 1.57]
-        # The task will complete one a force of -20N has been reached. All other axes are ignored.
+        # このタスクは-20Nの力が達成されたら終了する。他の全ての軸は無視される。
         completion:
           wrench:
             force: [.nan, .nan, -20]
@@ -158,9 +156,9 @@ init: RightHandToWall
 ```yaml
 robots:
   wall:
-    module: env/ground # reuse the ground model, but rotate it vertically to simulate a wall
+    module: env/ground # 地面のモデルを再利用するが垂直方向に回転して壁を模擬
     init_pos:
-      # The wall position is put 5cm in front of choreonoid's one
+      # 壁の位置はChoreonoid上の位置よりも5cm前
       translation: [0.50, 0.0, 0.0]
       rotation: [0.0, -1.57, 0.0]
 ```
@@ -172,12 +170,12 @@ robots:
 ```cpp
 void UpdateWall::start(mc_control::fsm::Controller & ctl)
 {
-  // [...] read YAML configuration parameters
+  // [...] YAML 設定パラメータを読み込む
 
-  // Get the estimated pose of the fingers of the JVRC1 robot
-  // As estimated by the state observation pipeline 
+  // JVRC1の推定された指のポーズを取得
+  // ステートオブザベーションパイプラインで推定されたもの
   const auto & bodyPose = ctl.realRobots().robot(rName).bodyPosW(bName);
-  // Move the wall position along the x axis to match the fingertip's position
+  // 壁の位置を指先の位置と合うようにx軸方向に移動する
   auto posW = ctl.robot(moveRobotName).posW();
   posW.translation().x() = bodyPose.translation().x();
   ctl.robot(moveRobotName).posW(posW);

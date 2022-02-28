@@ -1,5 +1,3 @@
-{% comment %}FIXME Some comments are not translated {% endcomment %}
-
 有限オートマトン（FSM: Finite State Machine）は、有限個の状態のいずれかの状態を取る抽象機械です。この機械の状態は、現在の状態における内部または外部の条件に基づき変化します。そのような変化は状態遷移と呼ばれます。こうした機械は、プログラミングの世界では至る所で使用されています。また、構造が簡単でさまざまな構成が可能であるため、特にロボットに関するシナリオを実現するのに非常に適しています。
 
 状態遷移図の概念を拡張したものが有限オートマトンです。有限オートマトンでは2つの主要な原則が導入されています。
@@ -77,12 +75,12 @@ mc\_rtcのコントローラーでは、状態遷移図の概念を実装でき�
 以下の処理を実行する、`StateBase`という名前のC++状態があるとします。
 
 ```yaml
-MyFirstState: # <-- Name of the new state
-  base: StateBase # <-- Name of the C++ state we are based on
-  # other options
-MySecondState: # <-- Name of the new state
-  base: MyFirstState # <-- This time we use a state we defined before only in text form
-  # other options
+MyFirstState: # <-- 新しい状態の名称
+  base: StateBase # <-- 基底となる状態のC++クラスの名称
+  # 他のオプション
+MySecondState: # <-- 新しい状態名称
+  base: MyFirstState # <-- テキストで定義した状態を基底として使用することも可能
+  # 他のオプション
 ```
 
 オプションがどのように組み合わされるかは、C++状態の実装方法により異なるため、状態内で明確に定義する必要があります。ただし、mc_rtcで用意されている状態については、一般的な規則が当てはまります。これらの状態については、基本的に`mc_rtc::Configuration`オブジェクトのデフォルトの読み込み規則が適用されます。
@@ -154,18 +152,18 @@ MySecondState: # <-- Name of the new state
         <h5>例</h5>
 
         {% highlight yaml %}
-        # We simplify task entries for the sake of the example
+        # わかりやすい例とするためタスクの定義を簡略化しています
 
-        # First pass
+        # 1つ目のパス
         tasks:
           t1:
             objectiveA: 0.5,
             objectiveB: 1.0,
             completion: { timeout: 5.0 }
 
-        # After this pass, one task is considered
+        # このパスには1つのタスク
 
-        # Second pass
+        # 2つ目のパス
         tasks:
           t1:
             objectiveA: 1.0,
@@ -173,20 +171,20 @@ MySecondState: # <-- Name of the new state
           t2:
             objective: 0.5
 
-        # We now have two tasks, and:
-        # - t1's objectiveA is changed to 1.0, objectiveB is the same
-        # - t1 completion criteria is replaced
+        # このパスには2つのタスクがあり、
+        # - t1 の objectiveA は 1.0 に変更、objectiveB は同じ
+        # - t1 の完了判定は置き換え
 
-        # Third pass
+        # 3つ目のパス
         tasks:
           t1:
             completion: {}
           t2:
             completion: { eval: 1e-6 }
 
-        # We still have two tasks, objectives are unchanged but:
-        # - t1 has no more completion criteria
-        # - t2 has a completion criteria
+        # 上と同じように2つのタスクがあり、objective は同じだが、
+        # - t1 は完了判定なし
+        # - t2 は完了判定あり
         {% endhighlight %}
 
         <h5>オプション</h5>
@@ -279,7 +277,7 @@ MySecondState: # <-- Name of the new state
 - `RemovePostureTask`: trueに設定すると、デフォルトの姿勢制御タスクが削除されます。
 
 
-## New state creation
+## 新しい状態の生成
 
 状態を作成するには、{% doxygen mc_control::fsm::State %}から継承します。最低限のインターフェイスを以下に示します。
 
@@ -336,7 +334,7 @@ struct Contact
   std::string r2;
   std::string r1Surface;
   std::string r2Surface;
-  Eigen::Vector6d dof; // defaults to Eigen::Vector6d::Ones()
+  Eigen::Vector6d dof; // Eigen::Vector6d::Ones()がデフォルト
 };
 ```
 
@@ -361,7 +359,7 @@ void addCollisions(const std::string & r1, const std::string & r2,
 void removeCollisions(const std::string & r1, const std::string & r2,
                    const std::vector<mc_rbdyn::Collision> & collisions);
 
-// Remove all collisions between r1 and r2
+// r1 と r2 の間の全ての干渉回避拘束を削除
 void removeCollisions(const std::string & r1, const std::string & r2);
 ```
 
@@ -413,7 +411,7 @@ Tこれは、状態の処理が中断されたときに呼び出されます。
 - `contacts`: 初期接触面の配列
 
 ```json
-// Example contacts entry
+// contactsエントリの例
 "contacts":
 [
   {
