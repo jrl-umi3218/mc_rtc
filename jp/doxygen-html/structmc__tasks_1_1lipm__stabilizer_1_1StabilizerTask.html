@@ -355,8 +355,11 @@ Setters to reconfigure the stabilizer online</h2></td></tr>
 <tr class="memitem:a2747ce4f19500c9313bd38400d6c4c3a"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a2747ce4f19500c9313bd38400d6c4c3a">measuredDCMUnbiased_</a> = Eigen::Vector3d::Zero()</td></tr>
 <tr class="memdesc:a2747ce4f19500c9313bd38400d6c4c3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Measured DCM (only used for logging)  <a href="#a2747ce4f19500c9313bd38400d6c4c3a">More...</a><br /></td></tr>
 <tr class="separator:a2747ce4f19500c9313bd38400d6c4c3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35e9e734fe506e426a866ccbb5b790f5"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a35e9e734fe506e426a866ccbb5b790f5">measuredCoMUnbiased_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="memdesc:a35e9e734fe506e426a866ccbb5b790f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCM unbiased (only used for logging)  <a href="#a35e9e734fe506e426a866ccbb5b790f5">More...</a><br /></td></tr>
+<tr class="separator:a35e9e734fe506e426a866ccbb5b790f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d3d079514e89bcafe3d35b1ea2c1018"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1d3d079514e89bcafe3d35b1ea2c1018">measuredNetWrench_</a> = sva::ForceVecd::Zero()</td></tr>
-<tr class="memdesc:a1d3d079514e89bcafe3d35b1ea2c1018"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCM unbiased (only used for logging)  <a href="#a1d3d079514e89bcafe3d35b1ea2c1018">More...</a><br /></td></tr>
+<tr class="memdesc:a1d3d079514e89bcafe3d35b1ea2c1018"><td class="mdescLeft">&#160;</td><td class="mdescRight">CoM unbiased (only used for logging)  <a href="#a1d3d079514e89bcafe3d35b1ea2c1018">More...</a><br /></td></tr>
 <tr class="separator:a1d3d079514e89bcafe3d35b1ea2c1018"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafe66416fe947aab7f6de7cd369df88f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aafe66416fe947aab7f6de7cd369df88f">zmpccOnlyDS_</a> = true</td></tr>
 <tr class="separator:aafe66416fe947aab7f6de7cd369df88f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3692,6 +3695,30 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a35e9e734fe506e426a866ccbb5b790f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35e9e734fe506e426a866ccbb5b790f5">&#9670;&nbsp;</a></span>measuredCoMUnbiased_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::measuredCoMUnbiased_ = Eigen::Vector3d::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>DCM unbiased (only used for logging) </p>
+
+</div>
+</div>
 <a id="a0b4b1c28b4e34a2f4c4600b4f2ec2245"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0b4b1c28b4e34a2f4c4600b4f2ec2245">&#9670;&nbsp;</a></span>measuredDCM_</h2>
 
@@ -3758,7 +3785,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>DCM unbiased (only used for logging) </p>
+<p>CoM unbiased (only used for logging) </p>
 
 </div>
 </div>

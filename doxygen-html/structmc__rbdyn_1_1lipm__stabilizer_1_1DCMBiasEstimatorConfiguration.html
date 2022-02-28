@@ -101,12 +101,18 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a35f46c04420cf9d3936ebeb71a2ad0de"><td class="memItemLeft" align="right" valign="top">Eigen::Vector2d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a35f46c04420cf9d3936ebeb71a2ad0de">biasLimit</a> = {0.02, 0.02}</td></tr>
 <tr class="memdesc:a35f46c04420cf9d3936ebeb71a2ad0de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum bias in the sagital and lateral directions [m].  <a href="#a35f46c04420cf9d3936ebeb71a2ad0de">More...</a><br /></td></tr>
 <tr class="separator:a35f46c04420cf9d3936ebeb71a2ad0de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac67cc4752eab92b73ae51747966b7e8b"><td class="memItemLeft" align="right" valign="top">Eigen::Vector2d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#ac67cc4752eab92b73ae51747966b7e8b">comBiasLimit</a> = <a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a35f46c04420cf9d3936ebeb71a2ad0de">biasLimit</a></td></tr>
+<tr class="memdesc:ac67cc4752eab92b73ae51747966b7e8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum bias in the sagital and lateral directions used to correct the CoM, should be smaller than bisaLimit [m].  <a href="#ac67cc4752eab92b73ae51747966b7e8b">More...</a><br /></td></tr>
+<tr class="separator:ac67cc4752eab92b73ae51747966b7e8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b344157591037726e435994165d846c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a7b344157591037726e435994165d846c">withDCMBias</a> = false</td></tr>
 <tr class="memdesc:a7b344157591037726e435994165d846c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the DCM bias estimator is enabled (default: false for backwards compatibility)  <a href="#a7b344157591037726e435994165d846c">More...</a><br /></td></tr>
 <tr class="separator:a7b344157591037726e435994165d846c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41a4ad61ac746f632ece2ef93aa59b09"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a41a4ad61ac746f632ece2ef93aa59b09">withDCMFilter</a> = false</td></tr>
 <tr class="memdesc:a41a4ad61ac746f632ece2ef93aa59b09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the DCM filter is enabled.  <a href="#a41a4ad61ac746f632ece2ef93aa59b09">More...</a><br /></td></tr>
 <tr class="separator:a41a4ad61ac746f632ece2ef93aa59b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a447ab7af04c97c1b2ee54db7ec0b3835"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a447ab7af04c97c1b2ee54db7ec0b3835">correctCoMPos</a> = false</td></tr>
+<tr class="memdesc:a447ab7af04c97c1b2ee54db7ec0b3835"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the absolution CoM position gets unbiased.  <a href="#a447ab7af04c97c1b2ee54db7ec0b3835">More...</a><br /></td></tr>
+<tr class="separator:a447ab7af04c97c1b2ee54db7ec0b3835"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Parameters for the DCM bias estimator </p>
@@ -192,6 +198,38 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Maximum bias in the sagital and lateral directions [m]. </p>
+
+</div>
+</div>
+<a id="ac67cc4752eab92b73ae51747966b7e8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac67cc4752eab92b73ae51747966b7e8b">&#9670;&nbsp;</a></span>comBiasLimit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector2d mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration::comBiasLimit = <a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a35f46c04420cf9d3936ebeb71a2ad0de">biasLimit</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Maximum bias in the sagital and lateral directions used to correct the CoM, should be smaller than bisaLimit [m]. </p>
+
+</div>
+</div>
+<a id="a447ab7af04c97c1b2ee54db7ec0b3835"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a447ab7af04c97c1b2ee54db7ec0b3835">&#9670;&nbsp;</a></span>correctCoMPos</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration::correctCoMPos = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Whether the absolution CoM position gets unbiased. </p>
 
 </div>
 </div>

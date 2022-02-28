@@ -11881,6 +11881,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
+      <type>Eigen::Vector2d</type>
+      <name>comBiasLimit</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html</anchorfile>
+      <anchor>ac67cc4752eab92b73ae51747966b7e8b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
       <type>bool</type>
       <name>withDCMBias</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html</anchorfile>
@@ -11892,6 +11899,13 @@
       <name>withDCMFilter</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html</anchorfile>
       <anchor>a41a4ad61ac746f632ece2ef93aa59b09</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>correctCoMPos</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html</anchorfile>
+      <anchor>a447ab7af04c97c1b2ee54db7ec0b3835</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -32006,6 +32020,13 @@
       <name>measuredDCMUnbiased_</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>a2747ce4f19500c9313bd38400d6c4c3a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>measuredCoMUnbiased_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a35e9e734fe506e426a866ccbb5b790f5</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">

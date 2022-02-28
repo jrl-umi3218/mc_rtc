@@ -121,6 +121,7 @@ var structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask =
     [ "mass_", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aadea2267fb6365e262900d3da4e40d98", null ],
     [ "measuredCoM_", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a5ba652e24e17842a3a0e7d00157a0416", null ],
     [ "measuredCoMd_", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa44333b1b7aa2db2ae3f82162fe00536", null ],
+    [ "measuredCoMUnbiased_", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a35e9e734fe506e426a866ccbb5b790f5", null ],
     [ "measuredDCM_", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a0b4b1c28b4e34a2f4c4600b4f2ec2245", null ],
     [ "measuredDCMUnbiased_", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a2747ce4f19500c9313bd38400d6c4c3a", null ],
     [ "measuredNetWrench_", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1d3d079514e89bcafe3d35b1ea2c1018", null ],

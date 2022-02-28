@@ -45,12 +45,14 @@ var NAVTREEINDEX10 =
 "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html":[3,0,6,1,0],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a10955f1ae31122a5b54cfe04a51a3613":[3,0,6,1,0,0],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a35f46c04420cf9d3936ebeb71a2ad0de":[3,0,6,1,0,3],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a41a4ad61ac746f632ece2ef93aa59b09":[3,0,6,1,0,6],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a7b344157591037726e435994165d846c":[3,0,6,1,0,5],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a41a4ad61ac746f632ece2ef93aa59b09":[3,0,6,1,0,8],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a447ab7af04c97c1b2ee54db7ec0b3835":[3,0,6,1,0,5],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a7b344157591037726e435994165d846c":[3,0,6,1,0,7],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a949d57cc11d53d999682457a22896c34":[3,0,6,1,0,1],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#ab704ebb1e1630afd326b0643c2ebeecb":[3,0,6,1,0,2],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#abbfe11529cd8bed15f419ef28f84c05a":[3,0,6,1,0,4],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#ad377affc6265727ec1d5939522ff053a":[3,0,6,1,0,7],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#abbfe11529cd8bed15f419ef28f84c05a":[3,0,6,1,0,6],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#ac67cc4752eab92b73ae51747966b7e8b":[3,0,6,1,0,4],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#ad377affc6265727ec1d5939522ff053a":[3,0,6,1,0,9],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html":[3,0,6,1,1],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a07f7e6178872a0fba9b61975b707b1c4":[3,0,6,1,1,10],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a0c30e8b5d771f6d5ca4e80fc73c785f4":[3,0,6,1,1,3],
@@ -247,7 +249,5 @@ var NAVTREEINDEX10 =
 "structmc__rtc_1_1Configuration.html#ae763761b200b9af74836a7d99a9fa169":[3,0,7,3,89],
 "structmc__rtc_1_1Configuration.html#ae9a11fd79001b161cac33cd8e6e08935":[3,0,7,3,37],
 "structmc__rtc_1_1Configuration.html#aec19d5037e1fead68093f2f2edee4592":[3,0,7,3,65],
-"structmc__rtc_1_1Configuration.html#aeee0a378708fce3e3330972f04812801":[3,0,7,3,111],
-"structmc__rtc_1_1Configuration.html#af2bae551aad627ee177f6897c7258eb0":[3,0,7,3,2],
-"structmc__rtc_1_1Configuration.html#af362005c9e4f3f3afc28dee4b8f6fc5e":[3,0,7,3,88]
+"structmc__rtc_1_1Configuration.html#aeee0a378708fce3e3330972f04812801":[3,0,7,3,111]
 };

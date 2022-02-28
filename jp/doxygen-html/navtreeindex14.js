@@ -1,5 +1,7 @@
 var NAVTREEINDEX14 =
 {
+"structmc__solver_1_1QPSolver.html#acac203b080dfbd7dbc680e4d9e8aaa3c":[3,0,8,25,22],
+"structmc__solver_1_1QPSolver.html#acd57fb80048c2f364bc216334ed148a8":[3,0,8,25,43],
 "structmc__solver_1_1QPSolver.html#adb5af970ec8d5b46ddcf8af19bd205be":[3,0,8,25,1],
 "structmc__solver_1_1QPSolver.html#ae04be5acbc6d5470efc60889e4024290":[3,0,8,25,41],
 "structmc__solver_1_1QPSolver.html#ae35ec2765a45413bcfebae5e57bcea5f":[3,0,8,25,14],
@@ -247,7 +249,5 @@ var NAVTREEINDEX14 =
 "structmc__tasks_1_1MetaTask.html#aea3e513dfe137830b38272336451b8cc":[3,0,9,12,0],
 "structmc__tasks_1_1MetaTask.html#afa7c055d8cef8f4a8bb1e76689445130":[3,0,9,12,15],
 "structmc__tasks_1_1MetaTaskLoader.html":[3,0,9,13],
-"structmc__tasks_1_1MomentumTask.html":[3,0,9,14],
-"structmc__tasks_1_1MomentumTask.html#a288104247dc5c93a7915300458da2f06":[3,0,9,14,6],
-"structmc__tasks_1_1MomentumTask.html#a6ba0b4c9ecf9da4571b8c052b325c5d3":[3,0,9,14,5]
+"structmc__tasks_1_1MomentumTask.html":[3,0,9,14]
 };
