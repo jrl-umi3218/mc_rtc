@@ -26,6 +26,7 @@ var structmc__tasks_1_1force_1_1ImpedanceTask =
     [ "targetWrench", "structmc__tasks_1_1force_1_1ImpedanceTask.html#ad9dcb8ef222560d520f4822adf3fe3e2", null ],
     [ "targetWrenchW", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a61a7f7ed47d98c51238404e7791d7357", null ],
     [ "update", "structmc__tasks_1_1force_1_1ImpedanceTask.html#ae6312131c165e96ff3e7cf4e1bf2e6c4", null ],
+    [ "cutoffPeriod_", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a8e2f70a02937c5f41ddec3183ecaf924", null ],
     [ "deltaCompAccelAngLimit_", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a1cd3a8cd8dd8633b86b784cab515f5f0", null ],
     [ "deltaCompAccelLinLimit_", "structmc__tasks_1_1force_1_1ImpedanceTask.html#aa034a1be6d85da9b895931ac5d55e38f", null ],
     [ "deltaCompAccelW_", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a3ef2ca726f8b8257f21d8aefd636ea66", null ],

@@ -282,6 +282,7 @@ var searchData=
   ['currtime_5f',['currTime_',['../structmc__tasks_1_1SplineTrajectoryTask.html#a221a83c509eb1b24df8a96a6eb4ac7da',1,'mc_tasks::SplineTrajectoryTask']]],
   ['curtransform',['curTransform',['../structmc__tasks_1_1EndEffectorTask.html#a0df1bdc1275d182569ec4e306ba6c395',1,'mc_tasks::EndEffectorTask']]],
   ['cutoffperiod',['cutoffPeriod',['../structmc__filter_1_1LowPass.html#ac48741a383af10509d4678c5a0673f3a',1,'mc_filter::LowPass::cutoffPeriod() const'],['../structmc__filter_1_1LowPass.html#ac3c92851291e84d2347271125877dc0c',1,'mc_filter::LowPass::cutoffPeriod(double period)'],['../structmc__tasks_1_1force_1_1ImpedanceTask.html#aea22f399012aa8a105df6d8fd4b8364c',1,'mc_tasks::force::ImpedanceTask::cutoffPeriod() const'],['../structmc__tasks_1_1force_1_1ImpedanceTask.html#a1e77e2a302a4cf27533adc9f2da8a293',1,'mc_tasks::force::ImpedanceTask::cutoffPeriod(double cutoffPeriod)']]],
+  ['cutoffperiod_5f',['cutoffPeriod_',['../structmc__tasks_1_1force_1_1ImpedanceTask.html#a8e2f70a02937c5f41ddec3183ecaf924',1,'mc_tasks::force::ImpedanceTask']]],
   ['cyan',['Cyan',['../structmc__rtc_1_1gui_1_1Color.html#af871b9eafcbda49196e2fceeae7333f8',1,'mc_rtc::gui::Color']]],
   ['cylindrical',['cylindrical',['../namespacemc__rbdyn.html#a44fdec158ad0a6005388d1f2296b154f',1,'mc_rbdyn']]],
   ['cylindrical_5fhull',['cylindrical_hull',['../namespacemc__rbdyn.html#adcd59f0c2e8c9cd94a6f9800c164e723',1,'mc_rbdyn']]],

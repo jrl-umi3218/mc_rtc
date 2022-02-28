@@ -99,5 +99,6 @@ var searchData=
   ['ctl_5f',['ctl_',['../structmc__observers_1_1ObserverPipeline.html#a37430f05658ebc329bb44d1408606ecd',1,'mc_observers::ObserverPipeline']]],
   ['currtime_5f',['currTime_',['../structmc__tasks_1_1SplineTrajectoryTask.html#a221a83c509eb1b24df8a96a6eb4ac7da',1,'mc_tasks::SplineTrajectoryTask']]],
   ['curtransform',['curTransform',['../structmc__tasks_1_1EndEffectorTask.html#a0df1bdc1275d182569ec4e306ba6c395',1,'mc_tasks::EndEffectorTask']]],
+  ['cutoffperiod_5f',['cutoffPeriod_',['../structmc__tasks_1_1force_1_1ImpedanceTask.html#a8e2f70a02937c5f41ddec3183ecaf924',1,'mc_tasks::force::ImpedanceTask']]],
   ['cyan',['Cyan',['../structmc__rtc_1_1gui_1_1Color.html#af871b9eafcbda49196e2fceeae7333f8',1,'mc_rtc::gui::Color']]]
 ];

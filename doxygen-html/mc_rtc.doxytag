@@ -16843,6 +16843,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>cutoffPeriod_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a8e2f70a02937c5f41ddec3183ecaf924</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
       <type>bool</type>
       <name>hold_</name>
       <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
