@@ -331,18 +331,16 @@ private:
 
   /** Get a category
    *
-   * Returns false and parent category if the category does
-   * not exist, true and the request category otherwise
+   * Returns nullptr if the category does not exist
    *
    * \p category Requested category
    *
-   * \p getParent If true returns the parent category,
-   * otherwise returns the category
+   * \p depth Only consider the first \p depth elements in \p category (up-to category's size)
    */
-  std::pair<bool, Category &> getCategory(const std::vector<std::string> & category, bool getParent);
+  Category * getCategory(const std::vector<std::string> & category, size_t depth = std::numeric_limits<size_t>::max());
 
   /** Get a category, creates it if does not exist */
-  Category & getCategory(const std::vector<std::string> & category);
+  Category & getOrCreateCategory(const std::vector<std::string> & category);
 
   /** Update the GUI data state for a given category */
   void update(mc_rtc::MessagePackBuilder & builder, Category & category);

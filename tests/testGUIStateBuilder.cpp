@@ -18,11 +18,18 @@ BOOST_AUTO_TEST_CASE(TestGUIStateBuilder)
 {
   DummyProvider provider;
   mc_rtc::gui::StateBuilder builder;
+  std::vector<char> buffer;
+  auto empty_size = builder.update(buffer);
   builder.addElement({"dummy", "provider"}, mc_rtc::gui::Label("value", [&provider] { return provider.value; }));
   builder.addElement({"dummy", "provider"}, mc_rtc::gui::ArrayLabel("point", [&provider] { return provider.point; }));
-  std::vector<char> buffer;
-  auto s = builder.update(buffer);
-  std::cout << "state size " << s << "\n";
-  auto state = mc_rtc::Configuration::fromMessagePack(buffer.data(), s);
-  std::cout << state.dump(true) << "\n";
+  {
+    auto s = builder.update(buffer);
+    BOOST_REQUIRE(s != empty_size);
+  }
+  builder.removeElement({"dummy", "provider"}, "value");
+  builder.removeElement({"dummy", "provider"}, "point");
+  {
+    auto s = builder.update(buffer);
+    BOOST_REQUIRE(s == empty_size);
+  }
 }

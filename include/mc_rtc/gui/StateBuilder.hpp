@@ -32,7 +32,7 @@ void StateBuilder::addElementImpl(const std::vector<std::string> & category,
                                   size_t rem)
 {
   static_assert(std::is_base_of<Element, T>::value, "You can only add elements that derive from the Element class");
-  Category & cat = getCategory(category);
+  Category & cat = getOrCreateCategory(category);
   auto it = std::find_if(cat.elements.begin(), cat.elements.end(),
                          [&element](const ElementStore & el) { return el().name() == element.name(); });
   if(it != cat.elements.end())
