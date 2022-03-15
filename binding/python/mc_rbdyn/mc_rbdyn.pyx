@@ -1408,3 +1408,27 @@ def robotCopy(robots, robot_idx = None):
   else:
     raise TypeError("Wrong arguments passed to robotCopy")
   return ret
+
+def rpyToMat(*args):
+  if len(args) == 1:
+    assert len(args[0]) == 3, "Sequence argument must be of length 3"
+    return eigen.Matrix3dFromC(c_mc_rbdyn.rpyToMat(args[0][0], args[0][1], args[0][2]))
+  elif len(args) == 3:
+    return eigen.Matrix3dFromC(c_mc_rbdyn.rpyToMat(args[0], args[1], args[2]))
+  else:
+    raise TypeError("rpyToMat expect one argument of length 3 or 3 arguments")
+
+def rpyToPT(*args):
+  if len(args) == 1:
+    assert len(args[0]) == 3, "Sequence argument must be of length 3"
+    return sva.PTransformdFromC(c_mc_rbdyn.rpyToPT(args[0][0], args[0][1], args[0][2]))
+  elif len(args) == 3:
+    return sva.PTransformdFromC(c_mc_rbdyn.rpyToPT(args[0], args[1], args[2]))
+  else:
+    raise TypeError("rpyToPT expect one argument of length 3 or 3 arguments")
+
+def rpyFromMat(eigen.Matrix3d mat):
+  return eigen.Vector3dFromC(c_mc_rbdyn.rpyFromMat(mat.impl))
+
+def rpyFromQuat(eigen.Quaterniond quat):
+  return eigen.Vector3dFromC(c_mc_rbdyn.rpyFromQuat(quat.impl))
