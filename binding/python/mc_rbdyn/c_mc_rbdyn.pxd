@@ -376,6 +376,12 @@ cdef extern from "<mc_rbdyn/contact_transform.h>" namespace "mc_rbdyn":
   void cylindricalParam(const PTransformd&, double&, double&)
   vector[double] jointParam(const Surface&, const Surface&, const PTransformd&)
 
+cdef extern from "<mc_rbdyn/rpy_utils.h>" namespace "mc_rbdyn":
+  Matrix3d rpyToMat(const double &, const double &, const double &)
+  PTransformd rpyToPT(const double &, const double &, const double &)
+  Vector3d rpyFromMat(const Matrix3d &)
+  Vector3d rpyFromQuat(const Quaterniond &)
+
 cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
   string CollisionToString(const Collision &)
   #FIXME Work-around the lack of variadic template support
