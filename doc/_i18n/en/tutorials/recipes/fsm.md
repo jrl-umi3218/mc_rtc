@@ -12,7 +12,10 @@ mc\_rtc provides a controller implementation to implement the state chart formal
 
 We will discuss the state implementation later. For now we will simply describe the four main methods of a state:
 
-- `configure` is used to configure the state; one important feature to consider and understand with the FSM implementation is that new states can be created by specifying a different configuration of an existing state. This function will thus be called multiple times;
+- `configure` is used to configure the state; it is called multiple times
+  - once for every level of inheritance in the state hierarchy;
+  - once with the executor configuration, i.e. from the `configs` entry in the global FSM or a state that manages other state (e.g. `Meta` or `Parallel`);
+  - the default implementation simply loads the successive configuration passed to the function into a `config_` object that can be accessed in your state implementation; you can override this function if you want to implement a more complex loading scheme;
 - `start` is used to perform initialization; it is called only once;
 - `run` is the main function implemented by a state; it is called once per iteration loop until the state is over or until the state changes. When the run is completed, the state will set an output to an arbitrary value that must be documented by the state;
 - `teardown` is a cleanup function that is called when the state changes.
@@ -93,6 +96,7 @@ The way options are combined depends on the C++ state implementation and should 
 This section covers the main states that are provided as part of mc_rtc. A complete description of all available states and their configuration can be found in the [States JSON Schema]({{site.baseurl}}/json.html#State-objects).
 
 <div class="no_toc_section">
+
 
 <ul class="nav nav-tabs" id="statesTab" role="tablist">
   <li class="nav-item">

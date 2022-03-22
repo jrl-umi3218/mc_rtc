@@ -125,10 +125,19 @@ protected:
 
   /** Called to configure the state.
    *
-   * This might be called multiple times.
+   * This is called multiple times:
+   * - once for every level of state inheritance
+   * - once with the executor configuration, this is the FSM global executor,
+   *   the Meta state executor, the Parallel state or any state that handle
+   *   other states
    *
+   * The default implementation simply loads the provided configuration into
+   * the `config_` protected members. You can override this behavior to
+   * implement a more complex loading logic.
+   *
+   * You can access this configuration either via the `config_` variable
    */
-  virtual void configure(const mc_rtc::Configuration & config) = 0;
+  virtual void configure(const mc_rtc::Configuration & config);
 
   /** Called before the state starts being run
    *
@@ -163,6 +172,8 @@ protected:
   mc_rtc::Configuration tasks_config_;
   /** RemovePostureTask in the configuration */
   mc_rtc::Configuration remove_posture_task_;
+  /** Configuration obtained through several calls */
+  mc_rtc::Configuration config_;
 
   /** Constraints managed by the state if any */
   std::vector<mc_solver::ConstraintSetPtr> constraints_;

@@ -73,6 +73,11 @@ void State::configure_(const mc_rtc::Configuration & config)
   configure(config);
 }
 
+void State::configure(const mc_rtc::Configuration & config)
+{
+  config_.load(config);
+}
+
 void State::start_(Controller & ctl)
 {
   if(remove_contacts_config_.size())
