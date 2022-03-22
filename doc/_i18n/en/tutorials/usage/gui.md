@@ -31,6 +31,13 @@ gui()->addElement({"a", "b"},
   mc_rtc::gui::Button("Button 2", []() { return; }),
   mc_rtc::gui::Button("Button 3", []() { return; })
 );
+
+// A source can also be specified when adding elements to tag the added elements
+gui()->addElement(this, {"a", "b"},
+  mc_rtc::gui::Button("Button 1", []() { return; }),
+  mc_rtc::gui::Button("Button 2", []() { return; }),
+  mc_rtc::gui::Button("Button 3", []() { return; })
+);
 ```
 
 ##### A note on data
@@ -285,4 +292,10 @@ Two functions are provided to remove elements from the GUI:
 gui()->removeElement({"a", "b"}, "element");
 // Remove a category and all its sub-categories
 gui()->removeCategory({"a", "b"});
+// Remove all elements added by source pointer this
+gui()->removeElements(this);
+// Remove all elements added by source pointer this in, and only in, the provided category
+gui()->removeElements({"a", "b"}, this);
+// Remove all elements added by source pointer this in the provided category and its sub categories
+gui()->removeElements({"a", "b"}, this, true);
 ```

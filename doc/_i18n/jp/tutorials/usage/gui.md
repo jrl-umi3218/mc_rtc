@@ -20,6 +20,8 @@ GUIはカテゴリーごとに整理されているため、同じカテゴリ�
 
 要素を追加するには、カテゴリーと1つ以上の要素を指定して`gui()->addElement(...)`を呼び出します。例:
 
+{% comment %}FIXME Comment is not translated{% endcomment %}
+
 ```cpp
 // a/bカテゴリに"Push"と名付けられたボタンを追加
 gui()->addElement({"a", "b"},
@@ -28,6 +30,13 @@ gui()->addElement({"a", "b"},
 
 // 複数の要素を一括で追加することも可能。この場合、追加された要素は追加された順番に表示される
 gui()->addElement({"a", "b"},
+  mc_rtc::gui::Button("Button 1", []() { return; }),
+  mc_rtc::gui::Button("Button 2", []() { return; }),
+  mc_rtc::gui::Button("Button 3", []() { return; })
+);
+
+// A source can also be specified when adding elements to tag the added elements
+gui()->addElement(this, {"a", "b"},
   mc_rtc::gui::Button("Button 1", []() { return; }),
   mc_rtc::gui::Button("Button 2", []() { return; }),
   mc_rtc::gui::Button("Button 3", []() { return; })
@@ -281,9 +290,15 @@ Form("Button name",
 
 GUIから要素を削除するための2つの関数が用意されています。
 
+{% comment %}FIXME Comment is not translated{% endcomment %}
+
 ```cpp
 // 単一の要素を名前で指定して削除
 gui()->removeElement({"a", "b"}, "element");
 // あるカテゴリ及びその全ての子カテゴリを削除
 gui()->removeCategory({"a", "b"});
+// Remove all elements added by source pointer this in, and only in, the provided category
+gui()->removeElements({"a", "b"}, this);
+// Remove all elements added by source pointer this in the provided category and its sub categories
+gui()->removeElements({"a", "b"}, this, true);
 ```
