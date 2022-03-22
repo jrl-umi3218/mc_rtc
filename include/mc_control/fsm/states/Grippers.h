@@ -50,8 +50,6 @@ namespace fsm
 
 struct MC_CONTROL_FSM_STATE_DLLAPI Grippers : State
 {
-  void configure(const mc_rtc::Configuration & config) override;
-
   void start(Controller &) override;
 
   bool run(Controller &) override;
@@ -59,7 +57,6 @@ struct MC_CONTROL_FSM_STATE_DLLAPI Grippers : State
   void teardown(Controller &) override;
 
 protected:
-  mc_rtc::Configuration config_;
   std::vector<mc_control::GripperRef> grippers_;
   bool keepSafetyConfig_ = false; /// When true, keep the gripper safety configuration after the state is destroyed
 };

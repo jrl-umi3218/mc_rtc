@@ -36,11 +36,8 @@ namespace fsm
  * }
  *
  */
-
 struct MC_CONTROL_FSM_STATE_DLLAPI ParallelState : State
 {
-  void configure(const mc_rtc::Configuration & config) override;
-
   void start(Controller &) override;
 
   bool run(Controller &) override;

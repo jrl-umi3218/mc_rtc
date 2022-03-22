@@ -11,37 +11,12 @@ namespace mc_control
 namespace fsm
 {
 
-void HalfSittingState::configure(const mc_rtc::Configuration & config)
-{
-  if(config.has("robot"))
-  {
-    has_robot_ = true;
-    robot_ = static_cast<std::string>(config("robot"));
-  }
-  if(config.has("stiffness"))
-  {
-    has_stiffness_ = true;
-    stiffness_ = config("stiffness");
-  }
-  if(config.has("eval"))
-  {
-    has_eval_ = true;
-    eval_threshold_ = config("eval");
-  }
-}
-
 void HalfSittingState::start(Controller & ctl)
 {
-  if(!has_robot_)
-  {
-    robot_ = ctl.robot().name();
-  }
+  robot_ = config_("robot", ctl.robot().name());
   auto postureTask = ctl.getPostureTask(robot_);
   default_stiffness_ = postureTask->stiffness();
-  if(has_stiffness_)
-  {
-    postureTask->stiffness(stiffness_);
-  }
+  postureTask->stiffness(config_("stiffness", static_cast<const double &>(default_stiffness_)));
   /* Set the halfSitPose in posture Task */
   const auto & halfSit = ctl.robot().module().stance();
   const auto & ref_joint_order = ctl.robot().refJointOrder();
@@ -54,12 +29,14 @@ void HalfSittingState::start(Controller & ctl)
     }
   }
   postureTask->posture(posture);
+  /** If eval is not provided we want the exit condition to be immediately valid */
+  eval_threshold_ = config_("eval", std::numeric_limits<double>::infinity());
 }
 
 bool HalfSittingState::run(Controller & ctl)
 {
   auto postureTask = ctl.getPostureTask(robot_);
-  if(!has_eval_ || postureTask->eval().norm() < eval_threshold_)
+  if(postureTask->eval().norm() < eval_threshold_)
   {
     postureTask->stiffness(default_stiffness_);
     output("OK");

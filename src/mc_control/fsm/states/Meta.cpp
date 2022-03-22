@@ -11,11 +11,6 @@ namespace mc_control
 namespace fsm
 {
 
-void MetaState::configure(const mc_rtc::Configuration & config)
-{
-  config_.load(config);
-}
-
 void MetaState::start(Controller & ctl)
 {
   if(!config_.has("StepByStep"))

@@ -48,11 +48,6 @@ void ParallelState::DelayedState::createState(Controller & ctl)
   state_ = ctl.factory().create(name_, ctl, config_);
 }
 
-void ParallelState::configure(const mc_rtc::Configuration & config)
-{
-  config_.load(config);
-}
-
 void ParallelState::start(Controller & ctl)
 {
   std::vector<std::string> states = config_("states");

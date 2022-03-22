@@ -13,11 +13,6 @@ namespace mc_control
 namespace fsm
 {
 
-void Grippers::configure(const mc_rtc::Configuration & config)
-{
-  config_.load(config);
-}
-
 void Grippers::start(Controller & ctl)
 {
   unsigned int rIndex = 0;
