@@ -138,6 +138,58 @@ void StateBuilder::removeElement(const std::vector<std::string> & category, cons
   }
 }
 
+void StateBuilder::removeElements(const std::vector<std::string> & category, void * source, bool recurse)
+{
+  if(source == nullptr)
+  {
+    return;
+  }
+  auto cat_ = getCategory(category);
+  if(!cat_)
+  {
+    return;
+  }
+  auto & elements = cat_->elements;
+  if(recurse)
+  {
+    removeElements(*cat_, source);
+  }
+  else
+  {
+    elements.erase(std::remove_if(elements.begin(), elements.end(),
+                                  [source](const ElementStore & elem) { return elem.source == source; }),
+                   elements.end());
+  }
+  if(elements.size() == 0 && cat_->sub.size() == 0)
+  {
+    removeCategory(category);
+  }
+}
+
+void StateBuilder::removeElements(void * source)
+{
+  if(source == nullptr)
+  {
+    return;
+  }
+  removeElements(elements_, source);
+}
+
+void StateBuilder::removeElements(Category & category, void * source)
+{
+  auto & sub = category.sub;
+  sub.erase(std::remove_if(sub.begin(), sub.end(),
+                           [this, source](Category & cat) {
+                             removeElements(cat, source);
+                             return cat.elements.size() == 0 && cat.sub.size() == 0;
+                           }),
+            sub.end());
+  auto & elements = category.elements;
+  elements.erase(std::remove_if(elements.begin(), elements.end(),
+                                [source](const ElementStore & elem) { return elem.source == source; }),
+                 elements.end());
+}
+
 size_t StateBuilder::update(std::vector<char> & buffer)
 {
   mc_rtc::MessagePackBuilder builder(buffer);

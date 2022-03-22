@@ -19,14 +19,30 @@ void StateBuilder::addElement(const std::vector<std::string> & category, T eleme
   addElement(category, ElementsStacking::Vertical, element);
 }
 
-template<typename T>
-void StateBuilder::addElement(const std::vector<std::string> & category, ElementsStacking stacking, T element)
+template<typename SourceT, typename T>
+void StateBuilder::addElement(SourceT * source, const std::vector<std::string> & category, T element)
 {
-  addElementImpl(category, stacking, element);
+  addElement(source, category, ElementsStacking::Vertical, element);
 }
 
 template<typename T>
-void StateBuilder::addElementImpl(const std::vector<std::string> & category,
+void StateBuilder::addElement(const std::vector<std::string> & category, ElementsStacking stacking, T element)
+{
+  addElementImpl(nullptr, category, stacking, element);
+}
+
+template<typename SourceT, typename T>
+void StateBuilder::addElement(SourceT * source,
+                              const std::vector<std::string> & category,
+                              ElementsStacking stacking,
+                              T element)
+{
+  addElementImpl(source, category, stacking, element);
+}
+
+template<typename T>
+void StateBuilder::addElementImpl(void * source,
+                                  const std::vector<std::string> & category,
                                   ElementsStacking stacking,
                                   T element,
                                   size_t rem)
@@ -41,7 +57,7 @@ void StateBuilder::addElementImpl(const std::vector<std::string> & category,
     log::warning("Discarding request to add this element");
     return;
   }
-  cat.elements.emplace_back(element, cat, stacking);
+  cat.elements.emplace_back(element, cat, stacking, source);
   if(rem == 0)
   {
     cat.id += 1;
@@ -54,6 +70,12 @@ void StateBuilder::addElement(const std::vector<std::string> & category, T eleme
   addElement(category, ElementsStacking::Vertical, element, args...);
 }
 
+template<typename SourceT, typename T, typename... Args>
+void StateBuilder::addElement(SourceT * source, const std::vector<std::string> & category, T element, Args... args)
+{
+  addElement(source, category, ElementsStacking::Vertical, element, args...);
+}
+
 template<typename T, typename... Args>
 void StateBuilder::addElement(const std::vector<std::string> & category,
                               ElementsStacking stacking,
@@ -61,12 +83,24 @@ void StateBuilder::addElement(const std::vector<std::string> & category,
                               Args... args)
 {
   size_t rem = stacking == ElementsStacking::Vertical ? 0 : sizeof...(args);
-  addElementImpl(category, stacking, element, rem);
+  addElementImpl(nullptr, category, stacking, element, rem);
+  addElement(category, stacking, args...);
+}
+
+template<typename SourceT, typename T, typename... Args>
+void StateBuilder::addElement(SourceT * source,
+                              const std::vector<std::string> & category,
+                              ElementsStacking stacking,
+                              T element,
+                              Args... args)
+{
+  size_t rem = stacking == ElementsStacking::Vertical ? 0 : sizeof...(args);
+  addElementImpl(source, category, stacking, element, rem);
   addElement(category, stacking, args...);
 }
 
 template<typename T>
-StateBuilder::ElementStore::ElementStore(T self, const Category & category, ElementsStacking stacking)
+StateBuilder::ElementStore::ElementStore(T self, const Category & category, ElementsStacking stacking, void * source)
 {
   self.id(category.id);
   // FIXME In C++14 we could have T && self and move it into the lambda
@@ -97,6 +131,7 @@ StateBuilder::ElementStore::ElementStore(T self, const Category & category, Elem
     T & el_ = static_cast<T &>(el);
     return el_.handleRequest(data);
   };
+  this->source = source;
 }
 
 template<typename... Args>
