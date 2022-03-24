@@ -25,11 +25,8 @@ namespace fsm
  * - configs: can contain additional configuration for the states in the FSM
  *
  */
-
 struct MC_CONTROL_FSM_STATE_DLLAPI MetaState : State
 {
-  void configure(const mc_rtc::Configuration & config) override;
-
   void start(Controller &) override;
 
   bool run(Controller &) override;
@@ -45,7 +42,6 @@ struct MC_CONTROL_FSM_STATE_DLLAPI MetaState : State
   std::map<std::string, mc_rtc::Configuration> configs() const;
 
 protected:
-  mc_rtc::Configuration config_;
   Executor executor_;
 };
 

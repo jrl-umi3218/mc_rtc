@@ -53,8 +53,6 @@ struct AddRemoveContactState : State
 
   virtual ~AddRemoveContactState();
 
-  void configure(const mc_rtc::Configuration & config) override;
-
   void start(Controller &) override;
 
   bool run(Controller &) override;

@@ -36,11 +36,8 @@ namespace fsm
  * }
  *
  */
-
 struct MC_CONTROL_FSM_STATE_DLLAPI ParallelState : State
 {
-  void configure(const mc_rtc::Configuration & config) override;
-
   void start(Controller &) override;
 
   bool run(Controller &) override;
@@ -58,7 +55,6 @@ struct MC_CONTROL_FSM_STATE_DLLAPI ParallelState : State
   std::map<std::string, mc_rtc::Configuration> configs() const;
 
 protected:
-  mc_rtc::Configuration config_;
   double time_ = 0;
   struct DelayedState
   {
