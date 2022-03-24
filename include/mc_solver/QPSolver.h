@@ -43,13 +43,20 @@ enum class MC_SOLVER_DLLAPI FeedbackType
 {
   /** No feedback, i.e. open-loop control */
   None,
+  /** Synonyn for None */
+  OpenLoop = None,
   /** Use encoder values for actuated joints */
   Joints,
   /** Joints + encoder velocity obtained from numerical differentiation */
   JointsWVelocity,
-  /** Run in closed loop w.r.t realRobots. The user is responsible for ensuring
-   * that the observed state of the real robots is valid */
-  ObservedRobots
+  /** Run in closed loop w.r.t realRobots using the observation pipeline and integrate over the control state of the
+     system */
+  ObservedRobots,
+  /** Synonym for ObservedRobots */
+  ClosedLoop = ObservedRobots,
+  /** Run in closed loop w.r.t realRobots using the observation pipeline and integrate over the real state of the system
+   */
+  ClosedLoopIntegrateReal
 };
 
 MC_RTC_diagnostic_pop
@@ -368,9 +375,12 @@ private:
    * UpdateObservers: [Encoder, KinematicInertial]
    * \endcode
    *
+   * @param integrateControlState If true, integration is performed over the control state, otherwise over the observed
+   * state
+   *
    * @return True if successful, false otherwise
    */
-  bool runClosedLoop();
+  bool runClosedLoop(bool integrateControlState);
 
   /** Feedback data */
   std::vector<std::vector<double>> prev_encoders_{};
