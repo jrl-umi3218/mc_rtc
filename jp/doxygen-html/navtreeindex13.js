@@ -1,11 +1,5 @@
 var NAVTREEINDEX13 =
 {
-"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#ac412c96504ea09d32b3f19e18e0fca0b":[3,0,7,0,2,0,1,1],
-"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#ad56c269ffbd0cbf144af4b4ff066bd59":[3,0,7,0,2,0,1,9],
-"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#ade656f6138f2fd579ad5670c5afac13b":[3,0,7,0,2,0,1,6],
-"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#ae33beeb0efca412dd64fcbad5e984c48":[3,0,7,0,2,0,1,8],
-"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#af7bfde3739ae017ceb6db526762ca6aa":[3,0,7,0,2,0,1,7],
-"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html":[3,0,7,0,2,0,2],
 "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html#a3d6f033510ac8d8a5a05b56adf3c19e2":[3,0,7,0,2,0,2,1],
 "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html#abd61cc0d2ea75882f75a5f54f9047a0f":[3,0,7,0,2,0,2,0],
 "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html":[3,0,7,0,2,0,3],
@@ -249,5 +243,11 @@ var NAVTREEINDEX13 =
 "structmc__solver_1_1QPSolver.html#acd57fb80048c2f364bc216334ed148a8":[3,0,8,25,43],
 "structmc__solver_1_1QPSolver.html#adb5af970ec8d5b46ddcf8af19bd205be":[3,0,8,25,1],
 "structmc__solver_1_1QPSolver.html#ae04be5acbc6d5470efc60889e4024290":[3,0,8,25,41],
-"structmc__solver_1_1QPSolver.html#ae35ec2765a45413bcfebae5e57bcea5f":[3,0,8,25,14]
+"structmc__solver_1_1QPSolver.html#ae35ec2765a45413bcfebae5e57bcea5f":[3,0,8,25,14],
+"structmc__solver_1_1QPSolver.html#ae628e7f079f7ec8dd5ba2818ffe27adc":[3,0,8,25,38],
+"structmc__solver_1_1QPSolver.html#ae805619eed38900664c15a1f3be7921f":[3,0,8,25,20],
+"structmc__solver_1_1QPSolver.html#af48a56a36d044fa4077f1c9e0ad69936":[3,0,8,25,13],
+"structmc__solver_1_1QPSolver.html#afadc51df1ed896ae8e1546bfb7443ffb":[3,0,8,25,35],
+"structmc__solver_1_1QPSolver.html#aff107d95b504492274cf0499aa4ddfa0":[3,0,8,25,42],
+"structmc__solver_1_1RobotEnvCollisionsConstraint.html":[3,0,8,26]
 };

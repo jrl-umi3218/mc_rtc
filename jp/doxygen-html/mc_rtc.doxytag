@@ -32587,22 +32587,8 @@
       <type>void</type>
       <name>addElement</name>
       <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
-      <anchor>ab91c91de88282e9b1e43c4bcdd8ced0c</anchor>
-      <arglist>(SourceT *source, const std::vector&lt; std::string &gt; &amp;category, T element)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>addElement</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
       <anchor>a34dca1ccbd1c170433f4265d4952d89c</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;category, T element, Args... args)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>addElement</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
-      <anchor>a510b430a96f175e4bf69ce9787f048cb</anchor>
-      <arglist>(SourceT *source, const std::vector&lt; std::string &gt; &amp;category, T element, Args... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -32615,22 +32601,8 @@
       <type>void</type>
       <name>addElement</name>
       <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
-      <anchor>a3ca6eb8eab44ca9889a0f3a4a5e2a7dd</anchor>
-      <arglist>(SourceT *source, const std::vector&lt; std::string &gt; &amp;category, ElementsStacking stacking, T element)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>addElement</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
       <anchor>a78762a4504185f92715143948ddd37e5</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;category, ElementsStacking stacking, T element, Args... args)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>addElement</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
-      <anchor>aec5f7783c5a99f73ae1275f372cdfc6e</anchor>
-      <arglist>(SourceT *source, const std::vector&lt; std::string &gt; &amp;category, ElementsStacking stacking, T element, Args... args)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -32659,20 +32631,6 @@
       <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
       <anchor>a1b626d1b71f63fe2741232e8e3881db8</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;category, const std::string &amp;name)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>removeElements</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
-      <anchor>a0317b43c046301a1d5cbb5b272b7a3c7</anchor>
-      <arglist>(void *source)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>removeElements</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
-      <anchor>a1d108b4d3259d72574aa1e95400e32ce</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;category, void *source, bool recurse=false)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
