@@ -48,6 +48,7 @@ interfaces:
   NAOqi: NAOqi is the programming framework used to program SoftBank Robotics robots. The mc_naoqi interface allows to use mc_rtc for the whole-body control of the NAO and Pepper robots.
   libfranka: libfranka is the interface used to control Franka Emika robots. The mc_franka interface allows to use mc_rtc to control these robots. It provides multiple robot support for all operation modes (position, velocity and torques) as well as integration with the panda pump device.
   UDP Communication: A generic UDP-based client/server interface implementation. The client is a regular mc_rtc interface that gets data through UDP sockets. The server can easily be implemented to interface with your own robot.<br />The following server implementations are currently available&#58; <ul><li>An OpenRTM server is provided and may be used with HRP robots.</li><li>A server implementation is also available for the <a href="https://hal.archives-ouvertes.fr/hal-02101562">BAZAR</a> robot.</li></ul>
+  MuJoCo: MuJoCo is a fast and accurate physics engine used widely in robotics, biomechanics, and animations. mc_mujoco enables simulation of <i>any</i> robot in MuJoCo controlled with <i>any</i> mc-rtc controller.
 robots:
   description: Description
   module: Module
