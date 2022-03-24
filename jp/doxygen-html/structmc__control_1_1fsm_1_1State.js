@@ -1,7 +1,7 @@
 var structmc__control_1_1fsm_1_1State =
 [
     [ "~State", "structmc__control_1_1fsm_1_1State.html#a361292f4c1af52fb11fb081142832e06", null ],
-    [ "configure", "structmc__control_1_1fsm_1_1State.html#a8eb8bdd1c15a9dc5f5aed402e4dc885d", null ],
+    [ "configure", "structmc__control_1_1fsm_1_1State.html#ad091fd2b869127470275f0c0555e350c", null ],
     [ "configure_", "structmc__control_1_1fsm_1_1State.html#a32a8ea03359d52b9c7b096c3b9c6a890", null ],
     [ "name", "structmc__control_1_1fsm_1_1State.html#a6a5b441d6b4c08f462903b243484e02e", null ],
     [ "name", "structmc__control_1_1fsm_1_1State.html#af62e0496fbbe60350808ba3cfe574fd1", null ],
@@ -19,6 +19,7 @@ var structmc__control_1_1fsm_1_1State =
     [ "add_collisions_config_", "structmc__control_1_1fsm_1_1State.html#a6f84b8e24821763df3524fa551df0875", null ],
     [ "add_contacts_after_config_", "structmc__control_1_1fsm_1_1State.html#a57c8d5de04fd74feef0699a82a72123f", null ],
     [ "add_contacts_config_", "structmc__control_1_1fsm_1_1State.html#ad5e8acab9275900efb0a32ffaf155bed", null ],
+    [ "config_", "structmc__control_1_1fsm_1_1State.html#a8ad9f237c2c99f289f10a883a00e4c50", null ],
     [ "constraints_", "structmc__control_1_1fsm_1_1State.html#a4989c66932df4eec55273c47f2f1e706", null ],
     [ "constraints_config_", "structmc__control_1_1fsm_1_1State.html#adfd0f7b25b1e6041c0d0a9b808b3b205", null ],
     [ "postures_", "structmc__control_1_1fsm_1_1State.html#a03a05dd1fc9942911d73ea2cdb28478f", null ],

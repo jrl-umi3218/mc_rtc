@@ -5073,13 +5073,6 @@
     </member>
     <member kind="function">
       <type>void</type>
-      <name>configure</name>
-      <anchorfile>structmc__control_1_1fsm_1_1AddRemoveContactState.html</anchorfile>
-      <anchor>af0432348ace1dfdbcf46acca4c53c859</anchor>
-      <arglist>(const mc_rtc::Configuration &amp;config) override</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
       <name>start</name>
       <anchorfile>structmc__control_1_1fsm_1_1AddRemoveContactState.html</anchorfile>
       <anchor>a2e3305b90c679d3f53a5d1473dd557f3</anchor>
@@ -16148,13 +16141,6 @@
     <base>mc_control::fsm::State</base>
     <member kind="function">
       <type>void</type>
-      <name>configure</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Grippers.html</anchorfile>
-      <anchor>a6feb7d14cdd9ac944f2311e83a786cbc</anchor>
-      <arglist>(const mc_rtc::Configuration &amp;config) override</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
       <name>start</name>
       <anchorfile>structmc__control_1_1fsm_1_1Grippers.html</anchorfile>
       <anchor>a6ba0f75a698bceabed668835046d382f</anchor>
@@ -16173,13 +16159,6 @@
       <anchorfile>structmc__control_1_1fsm_1_1Grippers.html</anchorfile>
       <anchor>ae05d422fa90c06b058c890323d792581</anchor>
       <arglist>(Controller &amp;) override</arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>mc_rtc::Configuration</type>
-      <name>config_</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Grippers.html</anchorfile>
-      <anchor>ab4479382513e35667a4c0e3fd6d08d5f</anchor>
-      <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
       <type>std::vector&lt; mc_control::GripperRef &gt;</type>
@@ -16270,13 +16249,6 @@
     <base>mc_control::fsm::State</base>
     <member kind="function">
       <type>void</type>
-      <name>configure</name>
-      <anchorfile>structmc__control_1_1fsm_1_1HalfSittingState.html</anchorfile>
-      <anchor>a2ff194443c33a0194c2235726eb91624</anchor>
-      <arglist>(const mc_rtc::Configuration &amp;config) override</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
       <name>start</name>
       <anchorfile>structmc__control_1_1fsm_1_1HalfSittingState.html</anchorfile>
       <anchor>abde9259e5f3759b0266294abbad8c40b</anchor>
@@ -16297,13 +16269,6 @@
       <arglist>(Controller &amp;) override</arglist>
     </member>
     <member kind="variable" protection="protected">
-      <type>bool</type>
-      <name>has_robot_</name>
-      <anchorfile>structmc__control_1_1fsm_1_1HalfSittingState.html</anchorfile>
-      <anchor>ae0a89538e5ffe2cf6613a8870aa60e8d</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
       <type>std::string</type>
       <name>robot_</name>
       <anchorfile>structmc__control_1_1fsm_1_1HalfSittingState.html</anchorfile>
@@ -16311,31 +16276,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
-      <type>bool</type>
-      <name>has_stiffness_</name>
-      <anchorfile>structmc__control_1_1fsm_1_1HalfSittingState.html</anchorfile>
-      <anchor>a51cc3872c0fa57d4f65d0e3b2dc45687</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>double</type>
-      <name>stiffness_</name>
-      <anchorfile>structmc__control_1_1fsm_1_1HalfSittingState.html</anchorfile>
-      <anchor>abb6c686695985c1e5d79e8c966d33b0d</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
       <type>double</type>
       <name>eval_threshold_</name>
       <anchorfile>structmc__control_1_1fsm_1_1HalfSittingState.html</anchorfile>
       <anchor>a93bf204a6601aa3294f2759817dc71e0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>bool</type>
-      <name>has_eval_</name>
-      <anchorfile>structmc__control_1_1fsm_1_1HalfSittingState.html</anchorfile>
-      <anchor>a02976f70bd545c5e8a2a461f854fd616</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -20980,13 +20924,6 @@
     <base>mc_control::fsm::State</base>
     <member kind="function">
       <type>void</type>
-      <name>configure</name>
-      <anchorfile>structmc__control_1_1fsm_1_1MetaState.html</anchorfile>
-      <anchor>a9568343c27495f95dcf538d8fc71539e</anchor>
-      <arglist>(const mc_rtc::Configuration &amp;config) override</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
       <name>start</name>
       <anchorfile>structmc__control_1_1fsm_1_1MetaState.html</anchorfile>
       <anchor>aa9271d4d0cc82bf5dee97093242f2a30</anchor>
@@ -21033,13 +20970,6 @@
       <anchorfile>structmc__control_1_1fsm_1_1MetaState.html</anchorfile>
       <anchor>ade4cc463d4a5a20bbd32b642e81831f2</anchor>
       <arglist>() const</arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>mc_rtc::Configuration</type>
-      <name>config_</name>
-      <anchorfile>structmc__control_1_1fsm_1_1MetaState.html</anchorfile>
-      <anchor>a807d3ec145ef893dd722fedf1f53c1af</anchor>
-      <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
       <type>Executor</type>
@@ -22465,13 +22395,6 @@
     <class kind="struct">mc_control::fsm::ParallelState::DelayedState</class>
     <member kind="function">
       <type>void</type>
-      <name>configure</name>
-      <anchorfile>structmc__control_1_1fsm_1_1ParallelState.html</anchorfile>
-      <anchor>a316daa83c00819ee3be0940c4ec914a0</anchor>
-      <arglist>(const mc_rtc::Configuration &amp;config) override</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
       <name>start</name>
       <anchorfile>structmc__control_1_1fsm_1_1ParallelState.html</anchorfile>
       <anchor>ab27ac95ced42364760d35649de387b76</anchor>
@@ -22525,13 +22448,6 @@
       <anchorfile>structmc__control_1_1fsm_1_1ParallelState.html</anchorfile>
       <anchor>a34b8736a576a150109c9bbd8234ca8d7</anchor>
       <arglist>() const</arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>mc_rtc::Configuration</type>
-      <name>config_</name>
-      <anchorfile>structmc__control_1_1fsm_1_1ParallelState.html</anchorfile>
-      <anchor>a67ae8a4821674427caf996bdf72989b6</anchor>
-      <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
       <type>double</type>
@@ -32523,12 +32439,12 @@
       <anchor>a1e115a009309410f0eadabf118a6fb49</anchor>
       <arglist>(const std::string &amp;o)</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="pure">
+    <member kind="function" protection="protected" virtualness="virtual">
       <type>virtual void</type>
       <name>configure</name>
       <anchorfile>structmc__control_1_1fsm_1_1State.html</anchorfile>
-      <anchor>a8eb8bdd1c15a9dc5f5aed402e4dc885d</anchor>
-      <arglist>(const mc_rtc::Configuration &amp;config)=0</arglist>
+      <anchor>ad091fd2b869127470275f0c0555e350c</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="pure">
       <type>virtual void</type>
@@ -32622,6 +32538,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
+      <type>mc_rtc::Configuration</type>
+      <name>config_</name>
+      <anchorfile>structmc__control_1_1fsm_1_1State.html</anchorfile>
+      <anchor>a8ad9f237c2c99f289f10a883a00e4c50</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
       <type>std::vector&lt; mc_solver::ConstraintSetPtr &gt;</type>
       <name>constraints_</name>
       <anchorfile>structmc__control_1_1fsm_1_1State.html</anchorfile>
@@ -32664,8 +32587,22 @@
       <type>void</type>
       <name>addElement</name>
       <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
+      <anchor>ab91c91de88282e9b1e43c4bcdd8ced0c</anchor>
+      <arglist>(SourceT *source, const std::vector&lt; std::string &gt; &amp;category, T element)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>addElement</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
       <anchor>a34dca1ccbd1c170433f4265d4952d89c</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;category, T element, Args... args)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>addElement</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
+      <anchor>a510b430a96f175e4bf69ce9787f048cb</anchor>
+      <arglist>(SourceT *source, const std::vector&lt; std::string &gt; &amp;category, T element, Args... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -32678,8 +32615,22 @@
       <type>void</type>
       <name>addElement</name>
       <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
+      <anchor>a3ca6eb8eab44ca9889a0f3a4a5e2a7dd</anchor>
+      <arglist>(SourceT *source, const std::vector&lt; std::string &gt; &amp;category, ElementsStacking stacking, T element)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>addElement</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
       <anchor>a78762a4504185f92715143948ddd37e5</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;category, ElementsStacking stacking, T element, Args... args)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>addElement</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
+      <anchor>aec5f7783c5a99f73ae1275f372cdfc6e</anchor>
+      <arglist>(SourceT *source, const std::vector&lt; std::string &gt; &amp;category, ElementsStacking stacking, T element, Args... args)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -32708,6 +32659,20 @@
       <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
       <anchor>a1b626d1b71f63fe2741232e8e3881db8</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;category, const std::string &amp;name)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>removeElements</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
+      <anchor>a0317b43c046301a1d5cbb5b272b7a3c7</anchor>
+      <arglist>(void *source)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>removeElements</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
+      <anchor>a1d108b4d3259d72574aa1e95400e32ce</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;category, void *source, bool recurse=false)</arglist>
     </member>
     <member kind="function">
       <type>void</type>

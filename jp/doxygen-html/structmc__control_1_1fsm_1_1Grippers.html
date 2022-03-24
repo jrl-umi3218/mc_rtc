@@ -96,8 +96,6 @@ Collaboration diagram for mc_control::fsm::Grippers:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6feb7d14cdd9ac944f2311e83a786cbc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Grippers.html#a6feb7d14cdd9ac944f2311e83a786cbc">configure</a> (const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config) override</td></tr>
-<tr class="separator:a6feb7d14cdd9ac944f2311e83a786cbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ba0f75a698bceabed668835046d382f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Grippers.html#a6ba0f75a698bceabed668835046d382f">start</a> (<a class="el" href="structmc__control_1_1fsm_1_1Controller.html">Controller</a> &amp;) override</td></tr>
 <tr class="separator:a6ba0f75a698bceabed668835046d382f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62babf4e58b81ce358e6cb43779c564b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Grippers.html#a62babf4e58b81ce358e6cb43779c564b">run</a> (<a class="el" href="structmc__control_1_1fsm_1_1Controller.html">Controller</a> &amp;) override</td></tr>
@@ -128,8 +126,6 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:ab4479382513e35667a4c0e3fd6d08d5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Grippers.html#ab4479382513e35667a4c0e3fd6d08d5f">config_</a></td></tr>
-<tr class="separator:ab4479382513e35667a4c0e3fd6d08d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd9bd9863a30fad30f940c0a6baeecab"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="namespacemc__control.html#a39b3dee4f4017bab0f389d9bfd7877dc">mc_control::GripperRef</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Grippers.html#abd9bd9863a30fad30f940c0a6baeecab">grippers_</a></td></tr>
 <tr class="separator:abd9bd9863a30fad30f940c0a6baeecab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60f24c6e8135e2439b521ed1d8797df7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Grippers.html#a60f24c6e8135e2439b521ed1d8797df7">keepSafetyConfig_</a> = false</td></tr>
@@ -157,6 +153,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:abb1470d64de00e33e117399d032be2f6 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8e6561d454f213d28affc5c6df51238 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#ae8e6561d454f213d28affc5c6df51238">remove_posture_task_</a></td></tr>
 <tr class="separator:ae8e6561d454f213d28affc5c6df51238 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ad9f237c2c99f289f10a883a00e4c50 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#a8ad9f237c2c99f289f10a883a00e4c50">config_</a></td></tr>
+<tr class="separator:a8ad9f237c2c99f289f10a883a00e4c50 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4989c66932df4eec55273c47f2f1e706 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="namespacemc__solver.html#a9bce96d8d352ebedfffce2e42e0300ab">mc_solver::ConstraintSetPtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#a4989c66932df4eec55273c47f2f1e706">constraints_</a></td></tr>
 <tr class="separator:a4989c66932df4eec55273c47f2f1e706 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a511405fda381c0a02ed23cf0475b1128 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; <a class="el" href="namespacemc__tasks.html#a3ce36af538f25151dc006eb3d50e8b3d">mc_tasks::MetaTaskPtr</a>, <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#a511405fda381c0a02ed23cf0475b1128">tasks_</a></td></tr>
@@ -169,6 +167,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_structmc__control_1_1fsm_1_1State"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_structmc__control_1_1fsm_1_1State')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="structmc__control_1_1fsm_1_1State.html">mc_control::fsm::State</a></td></tr>
 <tr class="memitem:a1e115a009309410f0eadabf118a6fb49 inherit pro_methods_structmc__control_1_1fsm_1_1State"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#a1e115a009309410f0eadabf118a6fb49">output</a> (const std::string &amp;o)</td></tr>
 <tr class="separator:a1e115a009309410f0eadabf118a6fb49 inherit pro_methods_structmc__control_1_1fsm_1_1State"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad091fd2b869127470275f0c0555e350c inherit pro_methods_structmc__control_1_1fsm_1_1State"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#ad091fd2b869127470275f0c0555e350c">configure</a> (const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
+<tr class="separator:ad091fd2b869127470275f0c0555e350c inherit pro_methods_structmc__control_1_1fsm_1_1State"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Controls the gripper of a robot</p>
@@ -185,36 +185,6 @@ Additional Inherited Members</h2></td></tr>
 <p>Example:</p>
 <p>The following configuration sets a joint target for "l_gripper" (0.7 for the first joint in the gripper and 0.5 for the second joint in the gripper) and a target opening percentage of 0.5 for "r_gripper".</p>
 <div class="fragment"><div class="line">{</div><div class="line"> &quot;robot&quot;: &quot;jvrc1&quot;,</div><div class="line"> &quot;grippers&quot;:</div><div class="line"> {</div><div class="line">   &quot;l_gripper&quot;: { &quot;target&quot;: [0.7, 0.5] },</div><div class="line">   &quot;r_gripper&quot;: { &quot;opening&quot;: 0.5 }</div><div class="line"> }</div><div class="line">}</div></div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6feb7d14cdd9ac944f2311e83a786cbc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6feb7d14cdd9ac944f2311e83a786cbc">&#9670;&nbsp;</a></span>configure()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_control::fsm::Grippers::configure </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Called to configure the state.</p>
-<p>This might be called multiple times. </p>
-
-<p>Implements <a class="el" href="structmc__control_1_1fsm_1_1State.html#a8eb8bdd1c15a9dc5f5aed402e4dc885d">mc_control::fsm::State</a>.</p>
-
-</div>
-</div>
 <a id="a62babf4e58b81ce358e6cb43779c564b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a62babf4e58b81ce358e6cb43779c564b">&#9670;&nbsp;</a></span>run()</h2>
 
@@ -304,28 +274,6 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="ab4479382513e35667a4c0e3fd6d08d5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4479382513e35667a4c0e3fd6d08d5f">&#9670;&nbsp;</a></span>config_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> mc_control::fsm::Grippers::config_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="abd9bd9863a30fad30f940c0a6baeecab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abd9bd9863a30fad30f940c0a6baeecab">&#9670;&nbsp;</a></span>grippers_</h2>
 

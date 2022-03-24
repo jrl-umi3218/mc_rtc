@@ -34,7 +34,7 @@ var searchData=
   ['states_5f',['states_',['../structmc__control_1_1fsm_1_1ParallelState.html#ac2033713e5e43d503b3eac997bd4f36b',1,'mc_control::fsm::ParallelState']]],
   ['stepo',['stepO',['../structmc__tasks_1_1SmoothTask.html#aade06f21c4fbdee53fc75491a02c7db4',1,'mc_tasks::SmoothTask']]],
   ['stepw',['stepW',['../structmc__tasks_1_1SmoothTask.html#a28924d882b21a72fe7998f0ed7ab9d6c',1,'mc_tasks::SmoothTask']]],
-  ['stiffness_5f',['stiffness_',['../structmc__control_1_1fsm_1_1HalfSittingState.html#abb6c686695985c1e5d79e8c966d33b0d',1,'mc_control::fsm::HalfSittingState::stiffness_()'],['../structmc__tasks_1_1AddRemoveContactTask.html#ad4c4be286affbb126d787a5356e7bf96',1,'mc_tasks::AddRemoveContactTask::stiffness_()']]],
+  ['stiffness_5f',['stiffness_',['../structmc__tasks_1_1AddRemoveContactTask.html#ad4c4be286affbb126d787a5356e7bf96',1,'mc_tasks::AddRemoveContactTask']]],
   ['stiffnessinterpolator_5f',['stiffnessInterpolator_',['../structmc__tasks_1_1SplineTrajectoryTask.html#a7584b0ee675b53361e1efe97f3069543',1,'mc_tasks::SplineTrajectoryTask']]],
   ['stop_5f',['stop_',['../structmc__control_1_1fsm_1_1PythonState.html#a181b94b4ed108722e7433849cc08184d',1,'mc_control::fsm::PythonState']]],
   ['style',['style',['../structmc__rtc_1_1gui_1_1LineConfig.html#a2678eadbdc5908c80e0dcc9c39941a14',1,'mc_rtc::gui::LineConfig']]],

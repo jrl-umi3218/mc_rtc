@@ -250,6 +250,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:abb1470d64de00e33e117399d032be2f6 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8e6561d454f213d28affc5c6df51238 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#ae8e6561d454f213d28affc5c6df51238">remove_posture_task_</a></td></tr>
 <tr class="separator:ae8e6561d454f213d28affc5c6df51238 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ad9f237c2c99f289f10a883a00e4c50 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#a8ad9f237c2c99f289f10a883a00e4c50">config_</a></td></tr>
+<tr class="separator:a8ad9f237c2c99f289f10a883a00e4c50 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4989c66932df4eec55273c47f2f1e706 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="namespacemc__solver.html#a9bce96d8d352ebedfffce2e42e0300ab">mc_solver::ConstraintSetPtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#a4989c66932df4eec55273c47f2f1e706">constraints_</a></td></tr>
 <tr class="separator:a4989c66932df4eec55273c47f2f1e706 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a511405fda381c0a02ed23cf0475b1128 inherit pro_attribs_structmc__control_1_1fsm_1_1State"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; <a class="el" href="namespacemc__tasks.html#a3ce36af538f25151dc006eb3d50e8b3d">mc_tasks::MetaTaskPtr</a>, <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#a511405fda381c0a02ed23cf0475b1128">tasks_</a></td></tr>
@@ -341,9 +343,14 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Called to configure the state.</p>
-<p>This might be called multiple times. </p>
+<p>This is called multiple times:</p><ul>
+<li>once for every level of state inheritance</li>
+<li>once with the executor configuration, this is the FSM global executor, the Meta state executor, the Parallel state or any state that handle other states</li>
+</ul>
+<p>The default implementation simply loads the provided configuration into the <code>config_</code> protected members. You can override this behavior to implement a more complex loading logic.</p>
+<p>You can access this configuration either via the <code>config_</code> variable </p>
 
-<p>Implements <a class="el" href="structmc__control_1_1fsm_1_1State.html#a8eb8bdd1c15a9dc5f5aed402e4dc885d">mc_control::fsm::State</a>.</p>
+<p>Reimplemented from <a class="el" href="structmc__control_1_1fsm_1_1State.html#ad091fd2b869127470275f0c0555e350c">mc_control::fsm::State</a>.</p>
 
 </div>
 </div>

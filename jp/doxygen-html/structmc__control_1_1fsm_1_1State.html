@@ -124,8 +124,8 @@ Public Member Functions</h2></td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a1e115a009309410f0eadabf118a6fb49"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#a1e115a009309410f0eadabf118a6fb49">output</a> (const std::string &amp;o)</td></tr>
 <tr class="separator:a1e115a009309410f0eadabf118a6fb49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8eb8bdd1c15a9dc5f5aed402e4dc885d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#a8eb8bdd1c15a9dc5f5aed402e4dc885d">configure</a> (const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config)=0</td></tr>
-<tr class="separator:a8eb8bdd1c15a9dc5f5aed402e4dc885d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad091fd2b869127470275f0c0555e350c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#ad091fd2b869127470275f0c0555e350c">configure</a> (const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
+<tr class="separator:ad091fd2b869127470275f0c0555e350c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabbb5ad8636a504d50d0fe5a6b4b6267"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#aabbb5ad8636a504d50d0fe5a6b4b6267">start</a> (<a class="el" href="structmc__control_1_1fsm_1_1Controller.html">Controller</a> &amp;ctl)=0</td></tr>
 <tr class="separator:aabbb5ad8636a504d50d0fe5a6b4b6267"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0feca48f8402f89d6e453d7739b7dab3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#a0feca48f8402f89d6e453d7739b7dab3">teardown</a> (<a class="el" href="structmc__control_1_1fsm_1_1Controller.html">Controller</a> &amp;ctl)=0</td></tr>
@@ -155,6 +155,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:abb1470d64de00e33e117399d032be2f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8e6561d454f213d28affc5c6df51238"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#ae8e6561d454f213d28affc5c6df51238">remove_posture_task_</a></td></tr>
 <tr class="separator:ae8e6561d454f213d28affc5c6df51238"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ad9f237c2c99f289f10a883a00e4c50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#a8ad9f237c2c99f289f10a883a00e4c50">config_</a></td></tr>
+<tr class="separator:a8ad9f237c2c99f289f10a883a00e4c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4989c66932df4eec55273c47f2f1e706"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="namespacemc__solver.html#a9bce96d8d352ebedfffce2e42e0300ab">mc_solver::ConstraintSetPtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#a4989c66932df4eec55273c47f2f1e706">constraints_</a></td></tr>
 <tr class="separator:a4989c66932df4eec55273c47f2f1e706"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a511405fda381c0a02ed23cf0475b1128"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; <a class="el" href="namespacemc__tasks.html#a3ce36af538f25151dc006eb3d50e8b3d">mc_tasks::MetaTaskPtr</a>, <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1State.html#a511405fda381c0a02ed23cf0475b1128">tasks_</a></td></tr>
@@ -205,8 +207,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8eb8bdd1c15a9dc5f5aed402e4dc885d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8eb8bdd1c15a9dc5f5aed402e4dc885d">&#9670;&nbsp;</a></span>configure()</h2>
+<a id="ad091fd2b869127470275f0c0555e350c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad091fd2b869127470275f0c0555e350c">&#9670;&nbsp;</a></span>configure()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -224,14 +226,19 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>Called to configure the state.</p>
-<p>This might be called multiple times. </p>
+<p>This is called multiple times:</p><ul>
+<li>once for every level of state inheritance</li>
+<li>once with the executor configuration, this is the FSM global executor, the Meta state executor, the Parallel state or any state that handle other states</li>
+</ul>
+<p>The default implementation simply loads the provided configuration into the <code>config_</code> protected members. You can override this behavior to implement a more complex loading logic.</p>
+<p>You can access this configuration either via the <code>config_</code> variable </p>
 
-<p>Implemented in <a class="el" href="structmc__control_1_1fsm_1_1MetaTasksState.html#a7ea26c3c3626ad237567cd0bb4d8c077">mc_control::fsm::MetaTasksState</a>, <a class="el" href="structmc__control_1_1fsm_1_1AddRemoveContactState.html#af0432348ace1dfdbcf46acca4c53c859">mc_control::fsm::AddRemoveContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1Grippers.html#a6feb7d14cdd9ac944f2311e83a786cbc">mc_control::fsm::Grippers</a>, <a class="el" href="structmc__control_1_1fsm_1_1ParallelState.html#a316daa83c00819ee3be0940c4ec914a0">mc_control::fsm::ParallelState</a>, <a class="el" href="structmc__control_1_1fsm_1_1StabilizerStandingState.html#a4ae65ee8eda22d7e926e2d9aecbbbfb8">mc_control::fsm::StabilizerStandingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MetaState.html#a9568343c27495f95dcf538d8fc71539e">mc_control::fsm::MetaState</a>, <a class="el" href="structmc__control_1_1fsm_1_1HalfSittingState.html#a2ff194443c33a0194c2235726eb91624">mc_control::fsm::HalfSittingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1SlidingFootContactState.html#af3760a5193d09c9fc906f5b5dd487109">mc_control::fsm::SlidingFootContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PauseState.html#ae794e4997ff266a2e709b3a9cf2ba687">mc_control::fsm::PauseState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MessageState.html#a803539f968b698dc20c1e393072a8328">mc_control::fsm::MessageState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PostureState.html#ae535f27ff78363840512f7850f51a17e">mc_control::fsm::PostureState</a>, and <a class="el" href="structmc__control_1_1fsm_1_1PythonState.html#a7dc8a970df12a3389c02a09c3e8958b9">mc_control::fsm::PythonState</a>.</p>
+<p>Reimplemented in <a class="el" href="structmc__control_1_1fsm_1_1MetaTasksState.html#a7ea26c3c3626ad237567cd0bb4d8c077">mc_control::fsm::MetaTasksState</a>, <a class="el" href="structmc__control_1_1fsm_1_1StabilizerStandingState.html#a4ae65ee8eda22d7e926e2d9aecbbbfb8">mc_control::fsm::StabilizerStandingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1SlidingFootContactState.html#af3760a5193d09c9fc906f5b5dd487109">mc_control::fsm::SlidingFootContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PauseState.html#ae794e4997ff266a2e709b3a9cf2ba687">mc_control::fsm::PauseState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MessageState.html#a803539f968b698dc20c1e393072a8328">mc_control::fsm::MessageState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PostureState.html#ae535f27ff78363840512f7850f51a17e">mc_control::fsm::PostureState</a>, and <a class="el" href="structmc__control_1_1fsm_1_1PythonState.html#a7dc8a970df12a3389c02a09c3e8958b9">mc_control::fsm::PythonState</a>.</p>
 
 </div>
 </div>
@@ -459,7 +466,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Called every iteration until it returns true </p>
 
-<p>Implemented in <a class="el" href="structmc__control_1_1fsm_1_1MetaTasksState.html#aa58d3f76e1bdcee77b08b1786765e5aa">mc_control::fsm::MetaTasksState</a>, <a class="el" href="structmc__control_1_1fsm_1_1AddRemoveContactState.html#a88a669bde8f5bcdfb31560b7f4e3d39c">mc_control::fsm::AddRemoveContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1Grippers.html#a62babf4e58b81ce358e6cb43779c564b">mc_control::fsm::Grippers</a>, <a class="el" href="structmc__control_1_1fsm_1_1ParallelState.html#af63e05b0d225688c5483a4ccd27a28f1">mc_control::fsm::ParallelState</a>, <a class="el" href="structmc__control_1_1fsm_1_1StabilizerStandingState.html#a57fdd73a5287a112295a179b3dc3a834">mc_control::fsm::StabilizerStandingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MetaState.html#a9b808dc76539033d70da8117b889a71e">mc_control::fsm::MetaState</a>, <a class="el" href="structmc__control_1_1fsm_1_1HalfSittingState.html#a8a8b45fdafd6e8b70d81a48ec20357c0">mc_control::fsm::HalfSittingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1SlidingFootContactState.html#a1ce5fc9378b92615e5ba504f5b8a5e4d">mc_control::fsm::SlidingFootContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PauseState.html#a21910e5c2ee0eb49560345113ae9b6be">mc_control::fsm::PauseState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MessageState.html#a32d7b135708d46a0f671cb656e142b28">mc_control::fsm::MessageState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PostureState.html#afbc73c24d06a1ef95a85235200d8261b">mc_control::fsm::PostureState</a>, and <a class="el" href="structmc__control_1_1fsm_1_1PythonState.html#ace20a4b8937c36e5fb3e70af6a2caf91">mc_control::fsm::PythonState</a>.</p>
+<p>Implemented in <a class="el" href="structmc__control_1_1fsm_1_1MetaTasksState.html#aa58d3f76e1bdcee77b08b1786765e5aa">mc_control::fsm::MetaTasksState</a>, <a class="el" href="structmc__control_1_1fsm_1_1AddRemoveContactState.html#a88a669bde8f5bcdfb31560b7f4e3d39c">mc_control::fsm::AddRemoveContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1Grippers.html#a62babf4e58b81ce358e6cb43779c564b">mc_control::fsm::Grippers</a>, <a class="el" href="structmc__control_1_1fsm_1_1StabilizerStandingState.html#a57fdd73a5287a112295a179b3dc3a834">mc_control::fsm::StabilizerStandingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1ParallelState.html#af63e05b0d225688c5483a4ccd27a28f1">mc_control::fsm::ParallelState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MetaState.html#a9b808dc76539033d70da8117b889a71e">mc_control::fsm::MetaState</a>, <a class="el" href="structmc__control_1_1fsm_1_1SlidingFootContactState.html#a1ce5fc9378b92615e5ba504f5b8a5e4d">mc_control::fsm::SlidingFootContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1HalfSittingState.html#a8a8b45fdafd6e8b70d81a48ec20357c0">mc_control::fsm::HalfSittingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PauseState.html#a21910e5c2ee0eb49560345113ae9b6be">mc_control::fsm::PauseState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MessageState.html#a32d7b135708d46a0f671cb656e142b28">mc_control::fsm::MessageState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PostureState.html#afbc73c24d06a1ef95a85235200d8261b">mc_control::fsm::PostureState</a>, and <a class="el" href="structmc__control_1_1fsm_1_1PythonState.html#ace20a4b8937c36e5fb3e70af6a2caf91">mc_control::fsm::PythonState</a>.</p>
 
 </div>
 </div>
@@ -489,7 +496,7 @@ Protected Attributes</h2></td></tr>
 <p>Called before the state starts being run</p>
 <p>This will be called only once with the state fully configured. </p>
 
-<p>Implemented in <a class="el" href="structmc__control_1_1fsm_1_1MetaTasksState.html#ab76034ae6d2f04688543a13a49c15493">mc_control::fsm::MetaTasksState</a>, <a class="el" href="structmc__control_1_1fsm_1_1AddRemoveContactState.html#a2e3305b90c679d3f53a5d1473dd557f3">mc_control::fsm::AddRemoveContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1Grippers.html#a6ba0f75a698bceabed668835046d382f">mc_control::fsm::Grippers</a>, <a class="el" href="structmc__control_1_1fsm_1_1ParallelState.html#ab27ac95ced42364760d35649de387b76">mc_control::fsm::ParallelState</a>, <a class="el" href="structmc__control_1_1fsm_1_1StabilizerStandingState.html#a6e8df7ef63d968bdfe366e5c12d224e7">mc_control::fsm::StabilizerStandingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MetaState.html#aa9271d4d0cc82bf5dee97093242f2a30">mc_control::fsm::MetaState</a>, <a class="el" href="structmc__control_1_1fsm_1_1HalfSittingState.html#abde9259e5f3759b0266294abbad8c40b">mc_control::fsm::HalfSittingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1SlidingFootContactState.html#a04910ba585bee970e1d7da7de06a3f23">mc_control::fsm::SlidingFootContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PauseState.html#a21cbe60a2692a0eede28cd09a0510084">mc_control::fsm::PauseState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MessageState.html#a19bb59f7d7f27358310774e0cee836c7">mc_control::fsm::MessageState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PostureState.html#ab68cbf75a3beb22126658a57ca72aef7">mc_control::fsm::PostureState</a>, and <a class="el" href="structmc__control_1_1fsm_1_1PythonState.html#a3b21dcf4de9b50dbbbbfeb474a7f68fd">mc_control::fsm::PythonState</a>.</p>
+<p>Implemented in <a class="el" href="structmc__control_1_1fsm_1_1MetaTasksState.html#ab76034ae6d2f04688543a13a49c15493">mc_control::fsm::MetaTasksState</a>, <a class="el" href="structmc__control_1_1fsm_1_1AddRemoveContactState.html#a2e3305b90c679d3f53a5d1473dd557f3">mc_control::fsm::AddRemoveContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1Grippers.html#a6ba0f75a698bceabed668835046d382f">mc_control::fsm::Grippers</a>, <a class="el" href="structmc__control_1_1fsm_1_1StabilizerStandingState.html#a6e8df7ef63d968bdfe366e5c12d224e7">mc_control::fsm::StabilizerStandingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1ParallelState.html#ab27ac95ced42364760d35649de387b76">mc_control::fsm::ParallelState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MetaState.html#aa9271d4d0cc82bf5dee97093242f2a30">mc_control::fsm::MetaState</a>, <a class="el" href="structmc__control_1_1fsm_1_1SlidingFootContactState.html#a04910ba585bee970e1d7da7de06a3f23">mc_control::fsm::SlidingFootContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1HalfSittingState.html#abde9259e5f3759b0266294abbad8c40b">mc_control::fsm::HalfSittingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PauseState.html#a21cbe60a2692a0eede28cd09a0510084">mc_control::fsm::PauseState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MessageState.html#a19bb59f7d7f27358310774e0cee836c7">mc_control::fsm::MessageState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PostureState.html#ab68cbf75a3beb22126658a57ca72aef7">mc_control::fsm::PostureState</a>, and <a class="el" href="structmc__control_1_1fsm_1_1PythonState.html#a3b21dcf4de9b50dbbbbfeb474a7f68fd">mc_control::fsm::PythonState</a>.</p>
 
 </div>
 </div>
@@ -566,7 +573,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Called right before destruction </p>
 
-<p>Implemented in <a class="el" href="structmc__control_1_1fsm_1_1MetaTasksState.html#a60321fa59012d49604c9e38d760aa7db">mc_control::fsm::MetaTasksState</a>, <a class="el" href="structmc__control_1_1fsm_1_1AddRemoveContactState.html#a40c9854b8c479f9a572ef9c1795eb516">mc_control::fsm::AddRemoveContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1Grippers.html#ae05d422fa90c06b058c890323d792581">mc_control::fsm::Grippers</a>, <a class="el" href="structmc__control_1_1fsm_1_1ParallelState.html#a39756b383a4f8993bcbd92d04c048b8f">mc_control::fsm::ParallelState</a>, <a class="el" href="structmc__control_1_1fsm_1_1StabilizerStandingState.html#a398141d42554616c96b06784c46e1c1e">mc_control::fsm::StabilizerStandingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MetaState.html#a53ae3a72e0ae0eb99d74025e11a55686">mc_control::fsm::MetaState</a>, <a class="el" href="structmc__control_1_1fsm_1_1HalfSittingState.html#a653b1d0395c408a264a954a4d8ba77be">mc_control::fsm::HalfSittingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1SlidingFootContactState.html#a2c0f8dade39902329f9976df85f7329b">mc_control::fsm::SlidingFootContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PauseState.html#a15a4573c025bf929bd7416b132b8a5c4">mc_control::fsm::PauseState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MessageState.html#a13aaf77e6c79a2dc709e4951499ec36f">mc_control::fsm::MessageState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PostureState.html#aa410943e2e016eda0929852cf14dc771">mc_control::fsm::PostureState</a>, and <a class="el" href="structmc__control_1_1fsm_1_1PythonState.html#ace45bc755a28523756c72678b5a794da">mc_control::fsm::PythonState</a>.</p>
+<p>Implemented in <a class="el" href="structmc__control_1_1fsm_1_1MetaTasksState.html#a60321fa59012d49604c9e38d760aa7db">mc_control::fsm::MetaTasksState</a>, <a class="el" href="structmc__control_1_1fsm_1_1AddRemoveContactState.html#a40c9854b8c479f9a572ef9c1795eb516">mc_control::fsm::AddRemoveContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1Grippers.html#ae05d422fa90c06b058c890323d792581">mc_control::fsm::Grippers</a>, <a class="el" href="structmc__control_1_1fsm_1_1ParallelState.html#a39756b383a4f8993bcbd92d04c048b8f">mc_control::fsm::ParallelState</a>, <a class="el" href="structmc__control_1_1fsm_1_1StabilizerStandingState.html#a398141d42554616c96b06784c46e1c1e">mc_control::fsm::StabilizerStandingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MetaState.html#a53ae3a72e0ae0eb99d74025e11a55686">mc_control::fsm::MetaState</a>, <a class="el" href="structmc__control_1_1fsm_1_1SlidingFootContactState.html#a2c0f8dade39902329f9976df85f7329b">mc_control::fsm::SlidingFootContactState</a>, <a class="el" href="structmc__control_1_1fsm_1_1HalfSittingState.html#a653b1d0395c408a264a954a4d8ba77be">mc_control::fsm::HalfSittingState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PauseState.html#a15a4573c025bf929bd7416b132b8a5c4">mc_control::fsm::PauseState</a>, <a class="el" href="structmc__control_1_1fsm_1_1MessageState.html#a13aaf77e6c79a2dc709e4951499ec36f">mc_control::fsm::MessageState</a>, <a class="el" href="structmc__control_1_1fsm_1_1PostureState.html#aa410943e2e016eda0929852cf14dc771">mc_control::fsm::PostureState</a>, and <a class="el" href="structmc__control_1_1fsm_1_1PythonState.html#ace45bc755a28523756c72678b5a794da">mc_control::fsm::PythonState</a>.</p>
 
 </div>
 </div>
@@ -679,6 +686,29 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>AddContacts in the configuration </p>
+
+</div>
+</div>
+<a id="a8ad9f237c2c99f289f10a883a00e4c50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ad9f237c2c99f289f10a883a00e4c50">&#9670;&nbsp;</a></span>config_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> mc_control::fsm::State::config_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Configuration obtained through several calls </p>
 
 </div>
 </div>

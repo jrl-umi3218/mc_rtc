@@ -8,5 +8,4 @@ digraph "mc_control::fsm::Grippers"
   Node3 [label="mc_control::fsm::State",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1fsm_1_1State.html"];
   Node4 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" add_collisions_config\l_\nremove_contacts\l_after_config_\nadd_contacts_config\l_\nremove_collisions\l_after_config_\nremove_posture_task\l_\nremove_collisions\l_config_\ntasks_config_\nadd_contacts_after\l_config_\nremove_contacts\l_config_\nadd_collisions\l_after_config_\n..." ,fontname="Helvetica"];
   Node4 [label="mc_rtc::Configuration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1Configuration.html",tooltip="Simplify access to values hold within a JSON file. "];
-  Node4 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" config_" ,fontname="Helvetica"];
 }

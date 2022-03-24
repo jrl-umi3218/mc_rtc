@@ -394,7 +394,13 @@
 <p>We will discuss the state implementation later. For now we will simply describe the four main methods of a state:</p>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">configure</code> is used to configure the state; one important feature to consider and understand with the FSM implementation is that new states can be created by specifying a different configuration of an existing state. This function will thus be called multiple times;</li>
+  <li><code class="language-plaintext highlighter-rouge">configure</code> is used to configure the state; it is called multiple times
+    <ul>
+      <li>once for every level of inheritance in the state hierarchy;</li>
+      <li>once with the executor configuration, i.e. from the <code class="language-plaintext highlighter-rouge">configs</code> entry in the global FSM or a state that manages other state (e.g. <code class="language-plaintext highlighter-rouge">Meta</code> or <code class="language-plaintext highlighter-rouge">Parallel</code>);</li>
+      <li>the default implementation simply loads the successive configuration passed to the function into a <code class="language-plaintext highlighter-rouge">config_</code> object that can be accessed in your state implementation; you can override this function if you want to implement a more complex loading scheme;</li>
+    </ul>
+  </li>
   <li><code class="language-plaintext highlighter-rouge">start</code> is used to perform initialization; it is called only once;</li>
   <li><code class="language-plaintext highlighter-rouge">run</code> is the main function implemented by a state; it is called once per iteration loop until the state is over or until the state changes. When the run is completed, the state will set an output to an arbitrary value that must be documented by the state;</li>
   <li><code class="language-plaintext highlighter-rouge">teardown</code> is a cleanup function that is called when the state changes.</li>
@@ -505,6 +511,7 @@
 <p>This section covers the main states that are provided as part of mc_rtc. A complete description of all available states and their configuration can be found in the <a href="/mc_rtc/json.html#State-objects">States JSON Schema</a>.</p>
 
 <div class="no_toc_section">
+
 
 <ul class="nav nav-tabs" id="statesTab" role="tablist">
   <li class="nav-item">

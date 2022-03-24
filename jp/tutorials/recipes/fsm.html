@@ -395,7 +395,17 @@
 <p>状態の実装については後ほど説明します。ここでは、状態に関する4つの主なメソッドについて説明します。</p>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">configure</code>は、状態を設定するのに使用します。なお、有限オートマトンの実装では、既存の状態と異なる設定を指定することで、新しい状態を作成することができます。そのため、この関数は複数回呼び出されます。</li>
+  <li><code class="language-plaintext highlighter-rouge">configure</code>は、状態を設定するのに使用します。このメソッドは複数回呼ばれます。
+    <ul>
+      <li>状態が継承している各階層の状態について一度ずつ呼ばれます。</li>
+      <li>実行器の設定について一度呼ばれます。つまり、グローバルな有限オートマトンまたは他の状態を管理する状態（例えば<code class="language-plaintext highlighter-rouge">Meta</code>や<code class="language-plaintext highlighter-rouge">Parallel</code>）の<code class="language-plaintext highlighter-rouge">configs</code>エントリから呼ばれます。</li>
+      <li>デフォルトの実装では単にメソッドに渡された設定を、順に状態の実装からアクセス可能な<code class="language-plaintext highlighter-rouge">config_</code>オブジェクトにロードします。より複雑なロード機能を実現するために、このメソッドをオーバーライドすることができます。</li>
+    </ul>
+  </li>
+</ul>
+
+<p>なお、有限オートマトンの実装では、既存の状態と異なる設定を指定することで、新しい状態を作成することができます。そのため、この関数は複数回呼び出されます。</p>
+<ul>
   <li><code class="language-plaintext highlighter-rouge">start</code>は、初期化を実行するのに使用します。1度だけ呼び出されます。</li>
   <li><code class="language-plaintext highlighter-rouge">run</code>は、状態で実装されるメインの関数です。その状態の処理が終了するか、状態が変化するまで、ループ処理が実行されるたびに1回ずつ呼び出されます。runの処理が完了したときに、状態の出力として任意の値を設定できます。この値は状態内で明確に定義する必要があります。</li>
   <li><code class="language-plaintext highlighter-rouge">teardown</code>は、クリーンアップ関数です。状態が変化したときに呼び出されます。</li>
