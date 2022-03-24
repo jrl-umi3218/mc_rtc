@@ -83,26 +83,36 @@ void StateBuilder::removeCategory(const std::vector<std::string> & category)
     mc_rtc::log::warning("Call clear() if this was your intent");
     return;
   }
-  std::pair<bool, Category &> cat = getCategory(category, true);
-  if(cat.first)
+  size_t depth = category.size() - 1;
+  auto cat = getCategory(category, depth);
+  while(cat)
   {
-    auto it = cat.second.find(category.back());
-    if(it == cat.second.sub.end())
+    auto it = cat->find(category[depth]);
+    if(it == cat->sub.end())
     {
       return;
     }
-    cat.second.sub.erase(it);
+    cat->sub.erase(it);
+    if(cat->elements.size() == 0 && cat->sub.size() == 0 && depth > 0)
+    {
+      depth -= 1;
+      cat = getCategory(category, depth);
+    }
+    else
+    {
+      cat = nullptr;
+    }
   }
 }
 
 bool StateBuilder::hasElement(const std::vector<std::string> & category, const std::string & name)
 {
-  auto cat_ = getCategory(category, false);
-  if(!cat_.first)
+  auto cat_ = getCategory(category);
+  if(!cat_)
   {
     return false;
   }
-  const auto & cat = cat_.second;
+  const auto & cat = *cat_;
   auto it = std::find_if(cat.elements.begin(), cat.elements.end(),
                          [&name](const ElementStore & el) { return el().name() == name; });
   return it != cat.elements.end();
@@ -110,19 +120,74 @@ bool StateBuilder::hasElement(const std::vector<std::string> & category, const s
 
 void StateBuilder::removeElement(const std::vector<std::string> & category, const std::string & name)
 {
-  bool found;
-  std::reference_wrapper<Category> cat_(elements_);
-  std::tie(found, cat_) = getCategory(category, false);
-  Category & cat = cat_;
-  if(found)
+  auto cat_ = getCategory(category);
+  if(!cat_)
   {
-    auto it = std::find_if(cat.elements.begin(), cat.elements.end(),
-                           [&name](const ElementStore & el) { return el().name() == name; });
-    if(it != cat.elements.end())
-    {
-      cat.elements.erase(it);
-    }
+    return;
   }
+  auto & cat = *cat_;
+  auto it = std::find_if(cat.elements.begin(), cat.elements.end(),
+                         [&name](const ElementStore & el) { return el().name() == name; });
+  if(it != cat.elements.end())
+  {
+    cat.elements.erase(it);
+  }
+  if(cat.elements.size() == 0 && cat.sub.size() == 0)
+  {
+    removeCategory(category);
+  }
+}
+
+void StateBuilder::removeElements(const std::vector<std::string> & category, void * source, bool recurse)
+{
+  if(source == nullptr)
+  {
+    return;
+  }
+  auto cat_ = getCategory(category);
+  if(!cat_)
+  {
+    return;
+  }
+  auto & elements = cat_->elements;
+  if(recurse)
+  {
+    removeElements(*cat_, source);
+  }
+  else
+  {
+    elements.erase(std::remove_if(elements.begin(), elements.end(),
+                                  [source](const ElementStore & elem) { return elem.source == source; }),
+                   elements.end());
+  }
+  if(elements.size() == 0 && cat_->sub.size() == 0)
+  {
+    removeCategory(category);
+  }
+}
+
+void StateBuilder::removeElements(void * source)
+{
+  if(source == nullptr)
+  {
+    return;
+  }
+  removeElements(elements_, source);
+}
+
+void StateBuilder::removeElements(Category & category, void * source)
+{
+  auto & sub = category.sub;
+  sub.erase(std::remove_if(sub.begin(), sub.end(),
+                           [this, source](Category & cat) {
+                             removeElements(cat, source);
+                             return cat.elements.size() == 0 && cat.sub.size() == 0;
+                           }),
+            sub.end());
+  auto & elements = category.elements;
+  elements.erase(std::remove_if(elements.begin(), elements.end(),
+                                [source](const ElementStore & elem) { return elem.source == source; }),
+                 elements.end());
 }
 
 size_t StateBuilder::update(std::vector<char> & buffer)
@@ -179,15 +244,13 @@ bool StateBuilder::handleRequest(const std::vector<std::string> & category,
                                  const std::string & name,
                                  const mc_rtc::Configuration & data)
 {
-  bool found;
-  std::reference_wrapper<Category> cat_(elements_);
-  std::tie(found, cat_) = getCategory(category, false);
-  if(!found)
+  auto cat_ = getCategory(category);
+  if(!cat_)
   {
     mc_rtc::log::error("No category {}", cat2str(category));
     return false;
   }
-  Category & cat = cat_;
+  Category & cat = *cat_;
   auto it = std::find_if(cat.elements.begin(), cat.elements.end(),
                          [&name](const ElementStore & el) { return el().name() == name; });
   if(it == cat.elements.end())
@@ -215,31 +278,24 @@ mc_rtc::Configuration StateBuilder::data()
   return data_;
 }
 
-std::pair<bool, StateBuilder::Category &> StateBuilder::getCategory(const std::vector<std::string> & category,
-                                                                    bool getParent)
+auto StateBuilder::getCategory(const std::vector<std::string> & category, size_t depth) -> Category *
 {
-  std::reference_wrapper<Category> cat_(elements_);
-  size_t limit = category.size();
-  if(getParent)
-  {
-    assert(limit > 0);
-    limit -= 1;
-  }
+  Category * cat_ = &elements_;
+  size_t limit = std::min(depth, category.size());
   for(size_t i = 0; i < limit; ++i)
   {
     const auto & c = category[i];
-    Category & cat = cat_;
-    auto it = cat.find(c);
-    if(it == cat.sub.end())
+    auto it = cat_->find(c);
+    if(it == cat_->sub.end())
     {
-      return {false, cat_};
+      return nullptr;
     }
-    cat_ = *it;
+    cat_ = &(*it);
   }
-  return {true, cat_};
+  return cat_;
 }
 
-StateBuilder::Category & StateBuilder::getCategory(const std::vector<std::string> & category)
+StateBuilder::Category & StateBuilder::getOrCreateCategory(const std::vector<std::string> & category)
 {
   std::reference_wrapper<Category> cat_(elements_);
   for(const auto & c : category)
