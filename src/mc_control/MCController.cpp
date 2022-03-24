@@ -30,11 +30,7 @@ MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double 
 MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot,
                            double dt,
                            const mc_rtc::Configuration & config)
-: MCController({robot, mc_rbdyn::RobotLoader::get_robot_module("env",
-                                                               std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
-                                                               std::string("ground"))},
-               dt,
-               config)
+: MCController({robot, mc_rbdyn::RobotLoader::get_robot_module("env/ground")}, dt, config)
 {
 }
 
