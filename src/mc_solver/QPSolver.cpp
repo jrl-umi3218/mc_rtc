@@ -338,7 +338,10 @@ bool QPSolver::run(FeedbackType fType)
       success = runJointsFeedback(true);
       break;
     case FeedbackType::ObservedRobots:
-      success = runClosedLoop();
+      success = runClosedLoop(true);
+      break;
+    case FeedbackType::ClosedLoopIntegrateReal:
+      success = runClosedLoop(false);
       break;
     default:
       mc_rtc::log::error("FeedbackType set to unknown value");
@@ -454,7 +457,7 @@ bool QPSolver::runJointsFeedback(bool wVelocity)
   return false;
 }
 
-bool QPSolver::runClosedLoop()
+bool QPSolver::runClosedLoop(bool integrateControlState)
 {
   if(control_q_.size() < robots().size())
   {
@@ -468,8 +471,11 @@ bool QPSolver::runClosedLoop()
     const auto & realRobot = realRobots().robot(i);
 
     // Save old integrator state
-    control_q_[i] = robot.mbc().q;
-    control_alpha_[i] = robot.mbc().alpha;
+    if(integrateControlState)
+    {
+      control_q_[i] = robot.mbc().q;
+      control_alpha_[i] = robot.mbc().alpha;
+    }
 
     // Set robot state from estimator
     robot.mbc().q = realRobot.mbc().q;
@@ -492,8 +498,11 @@ bool QPSolver::runClosedLoop()
     for(size_t i = 0; i < robots_p->mbs().size(); ++i)
     {
       auto & robot = robots().robot(i);
-      robot.mbc().q = control_q_[i];
-      robot.mbc().alpha = control_alpha_[i];
+      if(integrateControlState)
+      {
+        robot.mbc().q = control_q_[i];
+        robot.mbc().alpha = control_alpha_[i];
+      }
       if(robot.mb().nrDof() > 0)
       {
         solver.updateMbc(robot.mbc(), static_cast<int>(i));
