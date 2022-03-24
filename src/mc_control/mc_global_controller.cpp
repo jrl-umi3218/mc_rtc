@@ -1090,6 +1090,8 @@ void MCGlobalController::setup_log()
   controller->logger().addLogEntry(
       "qIn", [controller]() -> const std::vector<double> & { return controller->robot().encoderValues(); });
   controller->logger().addLogEntry(
+      "alphaIn", [controller]() -> const std::vector<double> & { return controller->robot().encoderVelocities(); });
+  controller->logger().addLogEntry(
       "ff", [controller]() -> const sva::PTransformd & { return controller->robot().mbc().bodyPosW[0]; });
   // Convert reference order to mbc.q, -1 if the joint does not exist
   std::vector<int> refToQ;
@@ -1172,18 +1174,6 @@ void MCGlobalController::setup_log()
     });
     controller->logger().addLogEntry(name + "_angularAcceleration", [controller, name]() -> const Eigen::Vector3d & {
       return controller->robot().bodySensor(name).angularAcceleration();
-    });
-  }
-
-  if(config.log_real)
-  {
-    controller->logger().addLogEntry("realRobot_ff", [controller]() -> const sva::PTransformd & {
-      return controller->realRobots().robot().mbc().bodyPosW[0];
-    });
-    controller->logger().addLogEntry(
-        "realRobot_q", [controller]() -> const std::vector<double> & { return controller->robot().encoderValues(); });
-    controller->logger().addLogEntry("realRobot_alpha", [controller]() -> const std::vector<double> & {
-      return controller->robot().encoderVelocities();
     });
   }
 

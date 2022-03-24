@@ -813,8 +813,6 @@ public:
     double timestep = 0.002;
     bool include_halfsit_controller = true;
 
-    bool log_real = false;
-
     bool enable_log = true;
     mc_rtc::Logger::Policy log_policy = mc_rtc::Logger::Policy::NON_THREADED;
     std::string log_directory;
