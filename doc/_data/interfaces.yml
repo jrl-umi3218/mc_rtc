@@ -34,3 +34,9 @@
   pkg:
     name: mc_udp
     url: https://github.com/jrl-umi3218/mc_udp
+- name: MuJoCo
+  url: https://mujoco.org/
+  icon: mujoco.png
+  pkg:
+    name: mc_mujoco
+    url: https://github.com/rohanpsingh/mc_mujoco

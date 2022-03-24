@@ -48,6 +48,7 @@ interfaces:
   V-REP: V-REPは、Coppelia Robotics社のロボットシミュレータです。mc_vrepは、V-REPシミュレータ環境において、mc_rtcをロボットのコントローラとして使用することができます。
   libfranka: libfrankaはFranka Emikaのロボットを制御するためのインタフェースです。mc_franka インターフェースにより、mc_rtc を使用してこれらのロボットを制御することができます。全ての動作モード（位置、速度、トルク）に対して複数のロボットをサポートし、パンダポンプデバイスとの統合も可能です。
   UDP Communication: UDPベースのクライアント/サーバーインターフェースの汎用実装。クライアントは通常のmc_rtcインターフェースで、UDPソケットを通してデータを取得します。サーバーは独自のロボットとのインターフェイスとして簡単に実装することができます。<br />現在、以下のサーバー実装が利用可能です。<ul><li>OpenRTMサーバーが提供され、HRPロボットで使用することができます。</li><li>また、<a href="https://hal.archives-ouvertes.fr/hal-02101562">BAZAR</a>ロボット用のサーバー実装も用意されています。</li></ul>
+  MuJoCo: MuJoCoはロボット工学, バイオメカニクス及びアニメーション分野において広く用いられている高速で高精度な物理シミュレータです. mc_mojucoは任意のmc_rtcのコントローラを用いたロボットのシミュレーションをMuJoCoにおいて実行することを可能にします.
 robots:
   description: 説明
   module: モジュール
