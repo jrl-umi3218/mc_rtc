@@ -54,11 +54,11 @@ var NAVTREEINDEX =
 "structmc__rbdyn_1_1Surface.html",
 "structmc__rtc_1_1ConfigurationArrayIterator.html#a0a701ce8020231cfab82a35bc49a4ba6",
 "structmc__rtc_1_1gui_1_1Element.html#a00f7fa6be59c8cc61304d35e7dd2a914",
-"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html#a3d6f033510ac8d8a5a05b56adf3c19e2",
-"structmc__solver_1_1RobotEnvCollisionsConstraint.html#a1a2afa771fb34c646081db42ea78f549",
-"structmc__tasks_1_1OrientationTask.html#a97da00bdf087f04a99473553efaa6390",
-"structmc__tasks_1_1force_1_1AdmittanceTask.html#ae8a55ef8c9d0173de5004c2dc8c3f1d3",
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ab459d6ba167857323daefe6a3fbef750"
+"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#ac412c96504ea09d32b3f19e18e0fca0b",
+"structmc__solver_1_1QPSolver.html#ae628e7f079f7ec8dd5ba2818ffe27adc",
+"structmc__tasks_1_1MomentumTask.html#ac09760de5c209d12568dac6817e79395",
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#ac887e6bd95fbafc40c1c4e4465b95b7e",
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa9ae12de4d5a45e87630efb9c45c7121"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

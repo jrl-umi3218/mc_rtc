@@ -390,6 +390,13 @@
   <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 2"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}),</span>
   <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 3"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">})</span>
 <span class="p">);</span>
+
+<span class="c1">// 要素を追加する際に、追加された要素をタグするためにソースを追加することもできる</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addElement</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 1"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 2"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 3"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">})</span>
+<span class="p">);</span>
 </code></pre></div></div>
 
 <h5 id="データに関する注記">データに関する注記</h5>
@@ -632,6 +639,10 @@
 <span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeElement</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span> <span class="s">"element"</span><span class="p">);</span>
 <span class="c1">// あるカテゴリ及びその全ての子カテゴリを削除</span>
 <span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeCategory</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">});</span>
+<span class="c1">// 指定されたカテゴリ内でのみ、ソースポインタthisにより追加された全ての要素を削除する</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeElements</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span> <span class="k">this</span><span class="p">);</span>
+<span class="c1">// 指定されたカテゴリとその子カテゴリで、ソースポインタthisにより追加された全ての要素を削除する</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeElements</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span> <span class="k">this</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
 </code></pre></div></div>
 
 

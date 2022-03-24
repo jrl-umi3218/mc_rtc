@@ -389,6 +389,13 @@
   <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 2"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}),</span>
   <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 3"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">})</span>
 <span class="p">);</span>
+
+<span class="c1">// A source can also be specified when adding elements to tag the added elements</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addElement</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 1"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 2"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 3"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">})</span>
+<span class="p">);</span>
 </code></pre></div></div>
 
 <h5 id="a-note-on-data">A note on data</h5>
@@ -631,6 +638,12 @@
 <span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeElement</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span> <span class="s">"element"</span><span class="p">);</span>
 <span class="c1">// Remove a category and all its sub-categories</span>
 <span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeCategory</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">});</span>
+<span class="c1">// Remove all elements added by source pointer this</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeElements</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="c1">// Remove all elements added by source pointer this in, and only in, the provided category</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeElements</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span> <span class="k">this</span><span class="p">);</span>
+<span class="c1">// Remove all elements added by source pointer this in the provided category and its sub categories</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeElements</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span> <span class="k">this</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
 </code></pre></div></div>
 
 

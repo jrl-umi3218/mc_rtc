@@ -233,9 +233,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Describe the type of feedback used to control the robot </p>
 <p>No feedback, i.e. open-loop control</p>
+<p>Synonyn for None</p>
 <p>Use encoder values for actuated joints</p>
 <p>Joints + encoder velocity obtained from numerical differentiation</p>
-<p>Run in closed loop w.r.t realRobots. The user is responsible for ensuring that the observed state of the real robots is valid </p>
+<p>Run in closed loop w.r.t realRobots using the observation pipeline and integrate over the control state of the system</p>
+<p>Synonym for ObservedRobots</p>
+<p>Run in closed loop w.r.t realRobots using the observation pipeline and integrate over the real state of the system</p>
 
 </div>
 </div>
