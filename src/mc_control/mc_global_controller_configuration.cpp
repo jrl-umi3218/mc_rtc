@@ -245,7 +245,6 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   //  Logging  //
   ///////////////
   config("Log", enable_log);
-  config("LogReal", log_real);
   {
     std::string log_policy_str = "non-threaded";
     config("LogPolicy", log_policy_str);
