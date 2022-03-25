@@ -61,7 +61,6 @@ var searchData=
   ['log_5ferror_5fand_5fthrow',['LOG_ERROR_AND_THROW',['../logging_8h.html#ae0e43eaf4d638a83e59084a107b3b62f',1,'logging.h']]],
   ['log_5finfo',['LOG_INFO',['../logging_8h.html#a63a6359b81688166256710bf0ea161df',1,'logging.h']]],
   ['log_5fpolicy',['log_policy',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#acbde34fb861228455a925e57f38b2e6d',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
-  ['log_5freal',['log_real',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a7594f385b7a26375665cfe2b4b7624c1',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['log_5fsuccess',['LOG_SUCCESS',['../logging_8h.html#ada5a572b2a8b25bcd9f471bc5c3c0787',1,'logging.h']]],
   ['log_5ftemplate',['log_template',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a0ca07c26b98991be2e1036a78c5f9702',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['log_5fwarning',['LOG_WARNING',['../logging_8h.html#ad8493c09711c1562481e104d334694db',1,'logging.h']]],

@@ -13,7 +13,6 @@ var searchData=
   ['log_5f',['log_',['../structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html#aba73be3150abc3f17e20c9f6d638ae19',1,'mc_observers::ObserverPipeline::PipelineObserver']]],
   ['log_5fdirectory',['log_directory',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a8eedde988acfcfba5942a52d69f2b1b8',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['log_5fpolicy',['log_policy',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#acbde34fb861228455a925e57f38b2e6d',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
-  ['log_5freal',['log_real',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a7594f385b7a26375665cfe2b4b7624c1',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['log_5ftemplate',['log_template',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a0ca07c26b98991be2e1036a78c5f9702',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['logacc_5f',['logAcc_',['../structmc__observers_1_1BodySensorObserver.html#a8237ffd181f9918f0db8c7ab1489b217',1,'mc_observers::BodySensorObserver']]],
   ['logger_5f',['logger_',['../structmc__control_1_1MCController.html#a5de6a08cbbe04ccc032bc4ebbd2773dc',1,'mc_control::MCController']]],

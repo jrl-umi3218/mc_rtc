@@ -15456,13 +15456,6 @@
     </member>
     <member kind="variable">
       <type>bool</type>
-      <name>log_real</name>
-      <anchorfile>structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html</anchorfile>
-      <anchor>a7594f385b7a26375665cfe2b4b7624c1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>bool</type>
       <name>enable_log</name>
       <anchorfile>structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html</anchorfile>
       <anchor>a1fa58d70b7f6aea1d24376d1e2263adc</anchor>

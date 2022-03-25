@@ -23,7 +23,6 @@ var structmc__control_1_1MCGlobalController_1_1GlobalConfiguration =
     [ "initial_controller", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a160c16f13781fc249731c80cb25b9dad", null ],
     [ "log_directory", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a8eedde988acfcfba5942a52d69f2b1b8", null ],
     [ "log_policy", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#acbde34fb861228455a925e57f38b2e6d", null ],
-    [ "log_real", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a7594f385b7a26375665cfe2b4b7624c1", null ],
     [ "log_template", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a0ca07c26b98991be2e1036a78c5f9702", null ],
     [ "main_robot_module", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a0f8466a2f2e104ed4fd266c5d50a1390", null ],
     [ "observer_module_paths", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#aa294a1ad2731835821d3669f7bd770ed", null ],

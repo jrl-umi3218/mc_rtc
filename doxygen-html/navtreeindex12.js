@@ -1,6 +1,5 @@
 var NAVTREEINDEX12 =
 {
-"structmc__rtc_1_1gui_1_1Element.html#a00f7fa6be59c8cc61304d35e7dd2a914":[3,0,7,0,16,2],
 "structmc__rtc_1_1gui_1_1Element.html#a086e5b72ef29fb83ebba494135f0f579":[3,0,7,0,16,0],
 "structmc__rtc_1_1gui_1_1Element.html#a208ba439700a31e9ff94abc76a466472":[3,0,7,0,16,7],
 "structmc__rtc_1_1gui_1_1Element.html#a4f1f84cbf9bafb94cd41824712565f5a":[3,0,7,0,16,5],
@@ -249,5 +248,6 @@ var NAVTREEINDEX12 =
 "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#a3356c8e13777a41231e4a53f60a0e14c":[3,0,7,0,2,0,1,3],
 "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#a59782a8bb1c04dbaf888856985d7273d":[3,0,7,0,2,0,1,0],
 "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#a86c83c91843a11a26a3404ddb7b4437b":[3,0,7,0,2,0,1,4],
-"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#a9298450fcf5a9549db2df14dc6223e4a":[3,0,7,0,2,0,1,2]
+"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#a9298450fcf5a9549db2df14dc6223e4a":[3,0,7,0,2,0,1,2],
+"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#ac412c96504ea09d32b3f19e18e0fca0b":[3,0,7,0,2,0,1,1]
 };
