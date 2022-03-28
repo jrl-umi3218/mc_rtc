@@ -1,6 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"mc__control_2fsm_2api_8h.html#abb5c53c99c37c6ca870d1838f76228ef":[4,0,0,0,0,1,0],
 "mc__control_2fsm_2api_8h_source.html":[4,0,0,0,0,1],
 "mc__control_2fsm_2states_2api_8h.html":[4,0,0,0,0,0,1],
 "mc__control_2fsm_2states_2api_8h.html#a113188e6b7bc199d59abd8a7f463d9f9":[4,0,0,0,0,0,1,3],
@@ -155,8 +154,8 @@ var NAVTREEINDEX3 =
 "namespacemc__rbdyn_1_1detail.html":[2,0,6,0],
 "namespacemc__rbdyn_1_1details.html":[2,0,6,1],
 "namespacemc__rbdyn_1_1details.html":[3,0,6,0],
-"namespacemc__rbdyn_1_1lipm__stabilizer.html":[3,0,6,1],
 "namespacemc__rbdyn_1_1lipm__stabilizer.html":[2,0,6,2],
+"namespacemc__rbdyn_1_1lipm__stabilizer.html":[3,0,6,1],
 "namespacemc__rtc.html":[2,0,7],
 "namespacemc__rtc.html":[3,0,7],
 "namespacemc__rtc_1_1constants.html":[2,0,7,0],
@@ -170,11 +169,11 @@ var NAVTREEINDEX3 =
 "namespacemc__rtc_1_1gui_1_1plot.html":[2,0,7,1,2],
 "namespacemc__rtc_1_1gui_1_1plot_1_1impl.html":[3,0,7,0,2,0],
 "namespacemc__rtc_1_1gui_1_1plot_1_1impl.html":[2,0,7,1,2,0],
-"namespacemc__rtc_1_1internal.html":[3,0,7,1],
 "namespacemc__rtc_1_1internal.html":[2,0,7,2],
+"namespacemc__rtc_1_1internal.html":[3,0,7,1],
 "namespacemc__rtc_1_1io.html":[2,0,7,3],
-"namespacemc__rtc_1_1log.html":[3,0,7,2],
 "namespacemc__rtc_1_1log.html":[2,0,7,4],
+"namespacemc__rtc_1_1log.html":[3,0,7,2],
 "namespacemc__rtc_1_1log_1_1details.html":[2,0,7,4,0],
 "namespacemc__solver.html":[2,0,8],
 "namespacemc__solver.html":[3,0,8],
@@ -249,5 +248,6 @@ var NAVTREEINDEX3 =
 "plot_2types_8h.html#aa149c1d1da2ae1c94f1ae91f4919625a":[4,0,0,6,0,1,5,12],
 "plot_2types_8h.html#ad9dd006fddf621ad45bc2ed39819cb7b":[4,0,0,6,0,1,5,8],
 "plot_2types_8h.html#ae070f931bda093c33a301115abc450b1":[4,0,0,6,0,1,5,13],
-"plot_2types_8h.html#ae8d436e1212bee55dfdb14d50b0d6be9":[4,0,0,6,0,1,5,3]
+"plot_2types_8h.html#ae8d436e1212bee55dfdb14d50b0d6be9":[4,0,0,6,0,1,5,3],
+"plot_2types_8h.html#ae8d436e1212bee55dfdb14d50b0d6be9a74c53bcd3dcb2bb79993b2fec37d362a":[4,0,0,6,0,1,5,3,1]
 };

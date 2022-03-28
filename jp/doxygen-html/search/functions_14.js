@@ -14,5 +14,5 @@ var searchData=
   ['updatenrvarslambda',['UpdateNrVarsLambda',['../structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html#a9d6f46e4b6e93b51903495758aecd406',1,'mc_solver::utils::UpdateNrVarsLambda']]],
   ['updatenrvarsrobot',['UpdateNrVarsRobot',['../structmc__solver_1_1utils_1_1UpdateNrVarsRobot.html#a31e4270c070674e663da7513abcec55d',1,'mc_solver::utils::UpdateNrVarsRobot']]],
   ['updateobservers',['updateObservers',['../structmc__observers_1_1ObserverPipeline.html#a006ac6ed54fdedf365bb56f3e17d1c83',1,'mc_observers::ObserverPipeline::updateObservers() const'],['../structmc__observers_1_1ObserverPipeline.html#a4c1159cf43b722d4b625136a30bf632c',1,'mc_observers::ObserverPipeline::updateObservers(bool status)']]],
-  ['urdf_5flimits_5fto_5fbounds',['urdf_limits_to_bounds',['../namespacemc__rbdyn.html#aa4f40fc0642de7f1debd053f9c5d393f',1,'mc_rbdyn::urdf_limits_to_bounds(const rbd::parsers::Limits &amp;limits)'],['../namespacemc__rbdyn.html#a44d55a51f42d585c340944099985fa8e',1,'mc_rbdyn::urdf_limits_to_bounds(const mc_rbdyn_urdf::Limits &amp;limits)']]]
+  ['urdf_5flimits_5fto_5fbounds',['urdf_limits_to_bounds',['../namespacemc__rbdyn.html#aa4f40fc0642de7f1debd053f9c5d393f',1,'mc_rbdyn']]]
 ];

@@ -1821,13 +1821,6 @@
       <anchor>aa4f40fc0642de7f1debd053f9c5d393f</anchor>
       <arglist>(const rbd::parsers::Limits &amp;limits)</arglist>
     </member>
-    <member kind="function">
-      <type>RobotModule::bounds_t MC_RTC_DEPRECATED MC_RBDYN_DLLAPI</type>
-      <name>urdf_limits_to_bounds</name>
-      <anchorfile>namespacemc__rbdyn.html</anchorfile>
-      <anchor>a44d55a51f42d585c340944099985fa8e</anchor>
-      <arglist>(const mc_rbdyn_urdf::Limits &amp;limits)</arglist>
-    </member>
   </compound>
   <compound kind="file">
     <name>RobotModuleMacros.h</name>
@@ -26738,13 +26731,6 @@
       <arglist>(const std::string &amp;name, const rbd::parsers::ParserResult &amp;res)</arglist>
     </member>
     <member kind="function">
-      <type>MC_RTC_DEPRECATED</type>
-      <name>RobotModule</name>
-      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
-      <anchor>a0077211acf3f9d4c52aa43a23eb01943</anchor>
-      <arglist>(const std::string &amp;name, const mc_rbdyn_urdf::URDFParserResult &amp;res)</arglist>
-    </member>
-    <member kind="function">
       <type>void</type>
       <name>init</name>
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
@@ -26897,13 +26883,6 @@
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
       <anchor>a7cf89fa63c77693092f774540a00838a</anchor>
       <arglist>(const rbd::parsers::Limits &amp;limits)</arglist>
-    </member>
-    <member kind="function">
-      <type>MC_RTC_DEPRECATED void</type>
-      <name>boundsFromURDF</name>
-      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
-      <anchor>a53377fc73020723d47b5af09b942cf0c</anchor>
-      <arglist>(const mc_rbdyn_urdf::Limits &amp;limits)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -37191,20 +37170,6 @@
       <anchor>a12a6994b9750a77e0543846be016a263</anchor>
       <arglist>(VisualMap &amp;&amp;v)=default</arglist>
     </member>
-    <member kind="function">
-      <type>MC_RTC_DEPRECATED MC_RBDYN_DLLAPI</type>
-      <name>VisualMap</name>
-      <anchorfile>structmc__rbdyn_1_1VisualMap.html</anchorfile>
-      <anchor>a5a7913eda1566657722387ae559127ab</anchor>
-      <arglist>(const std::map&lt; std::string, std::vector&lt; mc_rbdyn_urdf::Visual &gt;&gt; &amp;rhs)</arglist>
-    </member>
-    <member kind="function">
-      <type>MC_RTC_DEPRECATED MC_RBDYN_DLLAPI VisualMap &amp;</type>
-      <name>operator=</name>
-      <anchorfile>structmc__rbdyn_1_1VisualMap.html</anchorfile>
-      <anchor>aace9203b0cf03c1813dbb51060a1681d</anchor>
-      <arglist>(const std::map&lt; std::string, std::vector&lt; mc_rbdyn_urdf::Visual &gt;&gt; &amp;rhs)</arglist>
-    </member>
   </compound>
   <compound kind="struct">
     <name>mc_rtc::gui::VoidCallbackElement</name>
@@ -37978,13 +37943,6 @@
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
       <anchor>aa4f40fc0642de7f1debd053f9c5d393f</anchor>
       <arglist>(const rbd::parsers::Limits &amp;limits)</arglist>
-    </member>
-    <member kind="function">
-      <type>RobotModule::bounds_t MC_RTC_DEPRECATED MC_RBDYN_DLLAPI</type>
-      <name>urdf_limits_to_bounds</name>
-      <anchorfile>namespacemc__rbdyn.html</anchorfile>
-      <anchor>a44d55a51f42d585c340944099985fa8e</anchor>
-      <arglist>(const mc_rbdyn_urdf::Limits &amp;limits)</arglist>
     </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI std::shared_ptr&lt; Robots &gt;</type>

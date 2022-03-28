@@ -52,7 +52,7 @@ var searchData=
   ['boundedspeedconstr_2eh',['BoundedSpeedConstr.h',['../BoundedSpeedConstr_8h.html',1,'']]],
   ['bounds',['bounds',['../structmc__rbdyn_1_1RobotModule.html#ae05a5aab8f1a3edbecad4e4c7b29380d',1,'mc_rbdyn::RobotModule']]],
   ['bounds_5ft',['bounds_t',['../structmc__rbdyn_1_1RobotModule.html#a5b8304a1ea905fa0378a31dcf65b1460',1,'mc_rbdyn::RobotModule']]],
-  ['boundsfromurdf',['boundsFromURDF',['../structmc__rbdyn_1_1RobotModule.html#a7cf89fa63c77693092f774540a00838a',1,'mc_rbdyn::RobotModule::boundsFromURDF(const rbd::parsers::Limits &amp;limits)'],['../structmc__rbdyn_1_1RobotModule.html#a53377fc73020723d47b5af09b942cf0c',1,'mc_rbdyn::RobotModule::boundsFromURDF(const mc_rbdyn_urdf::Limits &amp;limits)']]],
+  ['boundsfromurdf',['boundsFromURDF',['../structmc__rbdyn_1_1RobotModule.html#a7cf89fa63c77693092f774540a00838a',1,'mc_rbdyn::RobotModule']]],
   ['bspline',['BSpline',['../structmc__trajectory_1_1BSpline.html',1,'mc_trajectory::BSpline'],['../structmc__tasks_1_1BSplineTrajectoryTask.html#ac881b5b505b63c5e89bec2e598c767e0',1,'mc_tasks::BSplineTrajectoryTask::bspline()'],['../structmc__tasks_1_1ExactCubicTrajectoryTask.html#a825212a1055ad43955b8284562905f13',1,'mc_tasks::ExactCubicTrajectoryTask::bspline()'],['../structmc__trajectory_1_1BSpline.html#a905828c45debcac32ddbd35718a138a1',1,'mc_trajectory::BSpline::BSpline()']]],
   ['bspline_2eh',['BSpline.h',['../BSpline_8h.html',1,'']]],
   ['bsplinetrajectorytask',['BSplineTrajectoryTask',['../structmc__tasks_1_1BSplineTrajectoryTask.html',1,'mc_tasks::BSplineTrajectoryTask'],['../structmc__tasks_1_1BSplineTrajectoryTask.html#aeb967476c50f3838e13951e0f3d9527c',1,'mc_tasks::BSplineTrajectoryTask::BSplineTrajectoryTask()']]],
