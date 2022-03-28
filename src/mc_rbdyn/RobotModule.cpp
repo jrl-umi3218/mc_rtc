@@ -274,7 +274,7 @@ void RobotModule::expand_stance()
 {
   for(const auto & j : mb.joints())
   {
-    if(!_stance.count(j.name()))
+    if(!_stance.count(j.name()) && j.name() != "Root")
     {
       _stance[j.name()] = j.zeroParam();
     }
