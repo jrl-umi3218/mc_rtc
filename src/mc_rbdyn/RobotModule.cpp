@@ -154,7 +154,10 @@ void RobotModule::init(const rbd::parsers::ParserResult & res)
   boundsFromURDF(res.limits);
   _visual = res.visual;
   _collision = res.collision;
-  make_default_ref_joint_order();
+  if(_ref_joint_order.size() == 0)
+  {
+    make_default_ref_joint_order();
+  }
   expand_stance();
 }
 
