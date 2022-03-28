@@ -85,7 +85,6 @@ endif()
 
 add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer ${BOOST_STACKTRACE})
 add_project_dependency(Tasks REQUIRED)
-add_project_dependency(mc_rbdyn_urdf REQUIRED)
 if(NOT TARGET RBDyn::Parsers)
   message(FATAL_ERROR "RBDyn must be built with parsers support")
 endif()

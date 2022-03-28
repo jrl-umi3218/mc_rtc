@@ -18,8 +18,6 @@
 
 #include <mc_rtc/constants.h>
 
-#include <mc_rbdyn_urdf/urdf.h>
-
 #include <RBDyn/parsers/common.h>
 
 #include <sch/S_Object/S_Object.h>
@@ -65,10 +63,6 @@ struct VisualMap : public std::map<std::string, std::vector<rbd::parsers::Visual
   inline VisualMap & operator=(VisualMap && v) = default;
 
   using std::map<std::string, std::vector<rbd::parsers::Visual>>::operator=;
-
-  MC_RTC_DEPRECATED MC_RBDYN_DLLAPI VisualMap(const std::map<std::string, std::vector<mc_rbdyn_urdf::Visual>> & rhs);
-  MC_RTC_DEPRECATED MC_RBDYN_DLLAPI VisualMap & operator=(
-      const std::map<std::string, std::vector<mc_rbdyn_urdf::Visual>> & rhs);
 };
 
 struct MC_RBDYN_DLLAPI RobotModule
@@ -248,9 +242,6 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   /** Construct from a parser result */
   RobotModule(const std::string & name, const rbd::parsers::ParserResult & res);
-
-  /** \deprecated{Use rbd::parsers version instead } */
-  MC_RTC_DEPRECATED RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFParserResult & res);
 
   /** Initialize the module from a parser result
    *
@@ -514,9 +505,6 @@ struct MC_RBDYN_DLLAPI RobotModule
    */
   void boundsFromURDF(const rbd::parsers::Limits & limits);
 
-  /** \deprecated{Use rbd::parsers version instead} */
-  MC_RTC_DEPRECATED void boundsFromURDF(const mc_rbdyn_urdf::Limits & limits);
-
   /** Add missing elements to the current module stance
    *
    * If joints are present in the MultiBody but absent from the default stance,
@@ -645,9 +633,6 @@ typedef std::shared_ptr<RobotModule> RobotModulePtr;
  *
  */
 RobotModule::bounds_t MC_RBDYN_DLLAPI urdf_limits_to_bounds(const rbd::parsers::Limits & limits);
-
-/** \deprecated{Use rbd::parsers version instead} */
-RobotModule::bounds_t MC_RTC_DEPRECATED MC_RBDYN_DLLAPI urdf_limits_to_bounds(const mc_rbdyn_urdf::Limits & limits);
 
 using RobotModuleVector = std::vector<RobotModule, Eigen::aligned_allocator<RobotModule>>;
 
