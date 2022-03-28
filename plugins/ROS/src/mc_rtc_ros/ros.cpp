@@ -36,6 +36,7 @@ inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X,
   msg.child_frame_id = to;
 
   Eigen::Vector4d q = Eigen::Quaterniond(X.rotation()).inverse().coeffs();
+  q.normalize();
   const Eigen::Vector3d & t = X.translation();
 
   msg.transform.translation.x = t.x();
