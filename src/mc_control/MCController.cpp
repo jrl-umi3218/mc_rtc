@@ -224,22 +224,23 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
     for(size_t i = 0; i < bodySensors.size(); ++i)
     {
       const auto & bs_name = bodySensors[i].name();
-      logger().addLogEntry(entry_str(name + "_position"), [this, name, bs_name]() -> const Eigen::Vector3d & {
+      logger().addLogEntry(entry_str(bs_name + "_position"), [this, name, bs_name]() -> const Eigen::Vector3d & {
         return robot(name).bodySensor(bs_name).position();
       });
-      logger().addLogEntry(entry_str(name + "_orientation"), [this, name, bs_name]() -> const Eigen::Quaterniond & {
+      logger().addLogEntry(entry_str(bs_name + "_orientation"), [this, name, bs_name]() -> const Eigen::Quaterniond & {
         return robot(name).bodySensor(bs_name).orientation();
       });
-      logger().addLogEntry(entry_str(name + "_linearVelocity"), [this, name, bs_name]() -> const Eigen::Vector3d & {
+      logger().addLogEntry(entry_str(bs_name + "_linearVelocity"), [this, name, bs_name]() -> const Eigen::Vector3d & {
         return robot(name).bodySensor(bs_name).linearVelocity();
       });
-      logger().addLogEntry(entry_str(name + "_angularVelocity"), [this, name, bs_name]() -> const Eigen::Vector3d & {
+      logger().addLogEntry(entry_str(bs_name + "_angularVelocity"), [this, name, bs_name]() -> const Eigen::Vector3d & {
         return robot(name).bodySensor(bs_name).angularVelocity();
       });
-      logger().addLogEntry(entry_str(name + "_linearAcceleration"), [this, name, bs_name]() -> const Eigen::Vector3d & {
-        return robot(name).bodySensor(bs_name).linearAcceleration();
-      });
-      logger().addLogEntry(entry_str(name + "_angularAcceleration"),
+      logger().addLogEntry(entry_str(bs_name + "_linearAcceleration"),
+                           [this, name, bs_name]() -> const Eigen::Vector3d & {
+                             return robot(name).bodySensor(bs_name).linearAcceleration();
+                           });
+      logger().addLogEntry(entry_str(bs_name + "_angularAcceleration"),
                            [this, name, bs_name]() -> const Eigen::Vector3d & {
                              return robot(name).bodySensor(bs_name).angularAcceleration();
                            });
