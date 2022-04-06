@@ -20,7 +20,6 @@ Build-Depends: debhelper (>= 9),
                libboost-timer-dev,
                libtasks-qld-dev|libtasks-dev,
                libeigen-quadprog-dev,
-               libmc-rbdyn-urdf-dev,
                libstate-observation-dev,
                libgeos++-dev,
                mc-rtc-data,
@@ -38,8 +37,6 @@ Build-Depends: debhelper (>= 9),
                cython3,
                python-tasks,
                python3-tasks,
-               python-mc-rbdyn-urdf,
-               python3-mc-rbdyn-urdf,
                libnanomsg-dev,
                libndcurves-dev,
                libyaml-cpp-dev,
@@ -64,7 +61,6 @@ Depends: cmake,
          libboost-timer-dev,
          libtasks-qld-dev|libtasks-dev,
          libeigen-quadprog-dev,
-         libmc-rbdyn-urdf-dev,
          libstate-observation-dev,
          libgeos++-dev,
          libnanomsg-dev,
@@ -135,7 +131,7 @@ Description: mc-rtc - API documentation
 Package: python-mc-rtc
 Section: python
 Architecture: any
-Depends: ${python:Depends}, ${misc:Depends}, ${shlibs:Depends}, python-all, python-tasks, python-mc-rbdyn-urdf
+Depends: ${python:Depends}, ${misc:Depends}, ${shlibs:Depends}, python-all, python-tasks
 Description: mc_rtc - Python bindings
  mc_rtc is an interface for simulated and real robotic systems suitable for
  real-time control.  It provides programmers with a simple interface to build
@@ -147,7 +143,7 @@ Description: mc_rtc - Python bindings
 Package: python3-mc-rtc
 Section: python
 Architecture: any
-Depends: ${python3:Depends}, ${misc:Depends}, ${shlibs:Depends}, python3-all, python3-tasks, python3-mc-rbdyn-urdf
+Depends: ${python3:Depends}, ${misc:Depends}, ${shlibs:Depends}, python3-all, python3-tasks
 Description: mc_rtc - Python bindings
  mc_rtc is an interface for simulated and real robotic systems suitable for
  real-time control.  It provides programmers with a simple interface to build

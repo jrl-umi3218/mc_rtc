@@ -2,6 +2,41 @@
 
 ## [Unreleased]
 
+## [1.10.0] - 2022-04-06
+
+### Tutorials translation
+
+mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218.github.io/mc_rtc/jp/) (#225/#231)
+
+### Removed
+
+- mc_rbdyn_urdf is no longer used by mc_rtc, all related APIs that were deprecated have been removed in this release (#243)
+
+### Added
+
+- [mc_tasks/Stabilizer] Add CoM correction using bias estimation (#227)
+- [mc_rtc] A source can be provided when adding GUI elements to simplify cleanup code (#237)
+- [mc_solver] Added `FeedbackType::ClosedLoopIntegrateReal` (#240)
+- [bindings] RPY utils are now available in mc_rbdyn bindings (#236)
+
+### Changes
+
+- [mc_control] Improve handling of metric grippers
+- [mc_control] `mc_control::fsm::State::configure` now has a reasonable default implementation based on existing practice (#238)
+- [mc_control] Data is now logged for all active robots in the controller automatically (#241)
+- [mc_rtc] `log_error_and_throw` now defaults to `std::runtime_error` and includes a stacktrace (#224)
+
+### Fixes
+
+- [mc_control] `env/ground` is used as the new default environment module
+- [mc_rbdyn] Normalize the rotation provided to `posW` for fixed base robots
+- [mc_rbdyn] `RobotModule::init(rbd::parsers::ParserResult)` does not overwrite the reference joint order if it was already provided
+- [mc_rbdyn] `RobotModule::expand_stance` does not include the `Root` joint
+- [mc_tasks] Align posture task gains' GUI with other tasks
+- [mc_tasks] Avoid cutoff period overwrite in impedance tasks (#227)
+- [mc_tasks] Conserve `dimWeight` value when joints' selection is changed
+- [ROS] Ensure all published quaternions are normalized (#242)
+
 ## [1.9.0] - 2022-02-10
 
 ### New build tool
@@ -391,7 +426,8 @@
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.9.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.10.0...HEAD
+[1.10.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.10.0
 [1.9.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.9.0
 [1.8.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.2
 [1.8.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.1
