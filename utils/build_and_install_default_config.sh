@@ -3,6 +3,7 @@ export SOURCE_DIR=`cd $(dirname $0)/../../; pwd`
 export BUILD_SUBDIR=build
 export INSTALL_PREFIX="/usr/local"
 export WITH_ROS_SUPPORT="true"
+export $ROS_FROM_APT="true"
 export WITH_PYTHON_SUPPORT="true"
 export PYTHON_USER_INSTALL="false"
 export PYTHON_FORCE_PYTHON2="false"

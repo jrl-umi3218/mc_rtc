@@ -6,7 +6,7 @@ then
 fi
 
 export PIP_DEPENDENCIES="Cython coverage nose numpy matplotlib"
-if $WITH_ROS_SUPPORT && [ -z $ROS_DISTRO ]
+if $WITH_ROS_SUPPORT && [ -z $MC_ROS_DISTRO ]
 then
   echo "ROS support is disabled as ROS was not detected. If you have ROS, please source the setup script before running this script."
   export WITH_ROS_SUPPORT="false"
