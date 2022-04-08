@@ -69,6 +69,11 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
   idle_keep_state_ = config("IdleKeepState", false);
   /** Load additional robots from the configuration */
   {
+    if(config.has("init_pos"))
+    {
+      robot().posW(config("init_pos"));
+      realRobot().posW(robot().posW());
+    }
     auto config_robots = config("robots", std::map<std::string, mc_rtc::Configuration>{});
     for(const auto & cr : config_robots)
     {
@@ -236,11 +241,6 @@ bool Controller::run(mc_solver::FeedbackType fType)
 void Controller::reset(const ControllerResetData & data)
 {
   MCController::reset(data);
-  if(config().has("init_pos"))
-  {
-    robot().posW(config()("init_pos"));
-    realRobot().posW(robot().posW());
-  }
   auto startUpdateContacts = clock::now();
   updateContacts();
   updateContacts_dt_ = clock::now() - startUpdateContacts;
