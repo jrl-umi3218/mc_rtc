@@ -61,19 +61,10 @@ void Robots::copy(Robots & out) const
   out.envIndex_ = envIndex_;
   for(unsigned int i = 0; i < robots_.size(); ++i)
   {
-    const Robot & robot = robots_[i];
-    out.robots_.emplace_back(Robot(robot.name(), out, i, false));
-    robot.copyLoadedData(out.robots_.back());
+    const Robot & robot = *robots_[i];
+    out.robots_.push_back(std::make_shared<Robot>(Robot::NewRobotToken{}, robot.name(), out, i, false));
+    robot.copyLoadedData(*out.robots_.back());
   }
-}
-
-std::vector<Robot> & Robots::robots()
-{
-  return robots_;
-}
-const std::vector<Robot> & Robots::robots() const
-{
-  return robots_;
 }
 
 std::vector<rbd::MultiBody> & Robots::mbs()
@@ -115,20 +106,20 @@ unsigned int Robots::robotIndex(const std::string & name) const
 
 Robot & Robots::robot()
 {
-  return robots_[robotIndex_];
+  return *robots_[robotIndex_];
 }
 const Robot & Robots::robot() const
 {
-  return robots_[robotIndex_];
+  return *robots_[robotIndex_];
 }
 
 Robot & Robots::env()
 {
-  return robots_[envIndex_];
+  return *robots_[envIndex_];
 }
 const Robot & Robots::env() const
 {
-  return robots_[envIndex_];
+  return *robots_[envIndex_];
 }
 
 bool Robots::hasRobot(const std::string & name) const
@@ -146,7 +137,7 @@ const Robot & Robots::robot(size_t idx) const
   {
     mc_rtc::log::error_and_throw("No robot with index {} ({} robots loaded)", idx, robots_.size());
   }
-  return robots_[idx];
+  return *robots_[idx];
 }
 
 Robot & Robots::robot(const std::string & name)
@@ -161,7 +152,7 @@ const Robot & Robots::robot(const std::string & name) const
   {
     mc_rtc::log::error_and_throw("No robot named {}", name);
   }
-  return robots_[key->second];
+  return *robots_[key->second];
 }
 
 void Robots::createRobotWithBase(const std::string & name,
@@ -171,7 +162,7 @@ void Robots::createRobotWithBase(const std::string & name,
                                  const Eigen::Vector3d & baseAxis)
 {
   {
-    const auto & robot = robots.robots_[robots_idx];
+    const auto & robot = *robots.robots_[robots_idx];
     if(hasRobot(name))
     {
       mc_rtc::log::error_and_throw("Cannot copy robot {} with a new base as a robot named {} already exists",
@@ -183,10 +174,10 @@ void Robots::createRobotWithBase(const std::string & name,
     this->mbgs_.push_back(robot.mbg());
   }
   auto robotIndex = static_cast<unsigned int>(this->mbs_.size()) - 1;
-  robots_.emplace_back(Robot(name, *this, robotIndex, false));
+  robots_.push_back(std::make_shared<Robot>(Robot::NewRobotToken{}, name, *this, robotIndex, false));
   // emplace_back might have invalidated the reference we formed before
-  const auto & robot = robots.robots_[robots_idx];
-  robot.copyLoadedData(robots_.back());
+  const auto & robot = *robots.robots_[robots_idx];
+  robot.copyLoadedData(*robots_.back());
   robotNameToIndex_[name] = robotIndex;
 }
 
@@ -215,7 +206,7 @@ void Robots::removeRobot(unsigned int idx)
     mc_rtc::log::error("Cannot remove a robot at index {} because there is {} robots loaded", idx, robots_.size());
     return;
   }
-  const auto & robotName = robots_[idx].name();
+  const auto & robotName = robots_[idx]->name();
   robotNameToIndex_.erase(robotName);
   robot_modules_.erase(robot_modules_.begin() + idx);
   robots_.erase(robots_.begin() + idx);
@@ -224,7 +215,7 @@ void Robots::removeRobot(unsigned int idx)
   mbgs_.erase(mbgs_.begin() + idx);
   for(unsigned int i = idx; i < robots_.size(); ++i)
   {
-    auto & r = robots_[i];
+    auto & r = *robots_[i];
     r.robots_idx_--;
     robotNameToIndex_[r.name()] = r.robots_idx_;
   }
@@ -244,10 +235,10 @@ void Robots::robotCopy(const Robot & robot, const std::string & copyName)
   auto referenceRobots = robot.robots_;
   auto referenceIndex = robot.robots_idx_;
   auto copyRobotIndex = static_cast<unsigned int>(this->mbs_.size()) - 1;
-  robots_.emplace_back(Robot(copyName, *this, copyRobotIndex, false));
+  robots_.push_back(std::make_shared<Robot>(Robot::NewRobotToken{}, copyName, *this, copyRobotIndex, false));
   // emplace_back might have invalidated the reference we were given
-  const auto & refRobot = referenceRobots->robots_[referenceIndex];
-  refRobot.copyLoadedData(robots_.back());
+  const auto & refRobot = *referenceRobots->robots_[referenceIndex];
+  refRobot.copyLoadedData(*robots_.back());
   robotNameToIndex_[copyName] = copyRobotIndex;
 }
 
@@ -269,11 +260,11 @@ Robot & Robots::load(const std::string & name,
   mbs_.emplace_back(module.mb);
   mbcs_.emplace_back(module.mbc);
   mbgs_.emplace_back(module.mbg);
-  mc_rbdyn::Robot robot{name, *this, static_cast<unsigned int>(mbs_.size() - 1), true, base, bName};
-  robots_.emplace_back(std::move(robot));
-  robotNameToIndex_[name] = robot.robotIndex();
+  robots_.push_back(std::make_shared<Robot>(Robot::NewRobotToken{}, name, *this,
+                                            static_cast<unsigned int>(mbs_.size() - 1), true, base, bName));
+  robotNameToIndex_[name] = robots_.back()->robotIndex();
   updateIndexes();
-  return robots_.back();
+  return *robots_.back();
 }
 
 /*void loadPolyTorqueBoundsData(const std::string & file, Robot & robot)
@@ -362,7 +353,7 @@ void Robots::rename(const std::string & oldName, const std::string & newName)
   auto index = robotNameToIndex_[oldName];
   robotNameToIndex_.erase(oldName);
   robotNameToIndex_[newName] = index;
-  robots_[index].name(newName);
+  robots_[index]->name(newName);
 }
 
 void Robots::updateIndexes()
@@ -371,7 +362,7 @@ void Robots::updateIndexes()
    * last robot with dof == 0 OR the last robot */
   for(unsigned int i = 0; i < robots_.size(); ++i)
   {
-    if(robots_[i].mb().nrDof())
+    if(robots_[i]->mb().nrDof())
     {
       robotIndex_ = i;
       break;
@@ -380,7 +371,7 @@ void Robots::updateIndexes()
   envIndex_ = static_cast<unsigned int>(robots_.size()) - 1;
   for(size_t i = robots_.size(); i > 0; --i)
   {
-    if(robots_[i - 1].mb().nrDof() == 0)
+    if(robots_[i - 1]->mb().nrDof() == 0)
     {
       envIndex_ = static_cast<unsigned int>(i) - 1;
       break;

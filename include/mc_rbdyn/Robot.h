@@ -942,19 +942,26 @@ private:
   std::unordered_map<std::string, size_t> devicesIndex_;
 
 protected:
+  struct NewRobotToken
+  {
+  };
+
+public:
   /** Invoked by Robots parent instance after mb/mbc/mbg/RobotModule are stored
    *
    * When loadFiles is set to false, the convex and surfaces files are not
    * loaded. This is used when copying one robot into another.
    *
    */
-  Robot(const std::string & name,
+  Robot(NewRobotToken,
+        const std::string & name,
         Robots & robots,
         unsigned int robots_idx,
         bool loadFiles,
         const sva::PTransformd * base = nullptr,
         const std::string & baseName = "");
 
+protected:
   /** Copy loaded data from this robot to a new robot **/
   void copyLoadedData(Robot & destination) const;
 

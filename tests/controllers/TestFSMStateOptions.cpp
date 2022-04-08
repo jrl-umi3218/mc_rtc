@@ -26,7 +26,7 @@ public:
   : fsm::Controller(rm, dt, conf)
   {
     // Check that the default constructor loads the robot + ground environment
-    BOOST_CHECK_EQUAL(robots().robots().size(), 2);
+    BOOST_CHECK_EQUAL(robots().size(), 2);
     // Check that JVRC-1 was loaded
     BOOST_CHECK_EQUAL(robot().name(), "jvrc1");
     BOOST_REQUIRE(hasRobot("ground"));

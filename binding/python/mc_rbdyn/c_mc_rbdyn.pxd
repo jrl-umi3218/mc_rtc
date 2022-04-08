@@ -126,8 +126,6 @@ cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
 
 cdef extern from "<mc_rbdyn/Robots.h>" namespace "mc_rbdyn":
   cdef cppclass Robots:
-    const vector[Robot] & robots()
-
     const vector[MultiBody] & mbs()
 
     const vector[MultiBodyConfig] & mbcs()
@@ -141,6 +139,8 @@ cdef extern from "<mc_rbdyn/Robots.h>" namespace "mc_rbdyn":
     Robot & load(const RobotModule&, PTransformd*, const string&)
 
     const Robot & robot(unsigned int)
+
+    unsigned int size()
 
     void createRobotWithBase(const string&, Robots&, unsigned int, const Base&, const Vector3d&)
 

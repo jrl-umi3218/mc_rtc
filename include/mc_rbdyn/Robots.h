@@ -6,6 +6,7 @@
 
 #include <mc_rbdyn/Robot.h>
 
+#include <mc_rtc/iterators.h>
 #include <mc_rtc/shared.h>
 
 namespace mc_rbdyn
@@ -23,20 +24,15 @@ public:
    *
    * @{
    */
-  typedef typename std::vector<mc_rbdyn::Robot>::iterator iterator;
-  typedef typename std::vector<mc_rbdyn::Robot>::const_iterator const_iterator;
-  typedef typename std::vector<mc_rbdyn::Robot>::reverse_iterator reverse_iterator;
-  typedef typename std::vector<mc_rbdyn::Robot>::const_reverse_iterator const_reverse_iterator;
-  typedef typename std::vector<mc_rbdyn::Robot>::size_type size_type;
+  using iterator = mc_rtc::SharedPtrVectorIterator<Robot>;
+  using const_iterator = mc_rtc::SharedPtrVectorConstIterator<Robot>;
+  using reverse_iterator = std::reverse_iterator<iterator>;
+  using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+  using size_type = std::vector<RobotPtr>::size_type;
   /** @} */
 
   /** Give access to the underlying list of RobotModule objects */
   const std::vector<mc_rbdyn::RobotModule> & robotModules() const;
-
-  /** Give access to the underlying list of Robot objects */
-  std::vector<Robot> & robots();
-  /** Give access to the underlying list of Robot objects (const) */
-  const std::vector<Robot> & robots() const;
 
   /** Give access to the underlying list of rbd::MultiBody objects */
   std::vector<rbd::MultiBody> & mbs();
@@ -237,7 +233,7 @@ protected:
   Robots & operator=(Robots && robots) = delete;
 
   RobotModuleVector robot_modules_;
-  std::vector<Robot> robots_;
+  std::vector<RobotPtr> robots_;
   std::vector<rbd::MultiBody> mbs_;
   std::vector<rbd::MultiBodyConfig> mbcs_;
   std::vector<rbd::MultiBodyGraph> mbgs_;

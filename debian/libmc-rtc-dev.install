@@ -13,6 +13,7 @@ usr/include/mc_rtc/DataStore.h
 usr/include/mc_rtc/debug.h
 usr/include/mc_rtc/gui.h
 usr/include/mc_rtc/io_utils.h
+usr/include/mc_rtc/iterators.h
 usr/include/mc_rtc/loader.h
 usr/include/mc_rtc/loader.hpp
 usr/include/mc_rtc/loader_api.h

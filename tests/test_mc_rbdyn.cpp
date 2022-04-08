@@ -52,11 +52,11 @@ void TestRobotLoadingCommon(mc_rbdyn::RobotModulePtr rm, mc_rbdyn::RobotModulePt
   }
 
   BOOST_REQUIRE(robots_ptr->hasRobot("robotCopy"));
-  auto & robotCopy = robots_ptr->robots().back();
+  auto & robotCopy = robots_ptr->robot(robots_ptr->size() - 1);
   BOOST_REQUIRE(robotCopy.name() != rm->name);
   BOOST_REQUIRE_EQUAL(robots_ptr->robot("robotCopy").name(), "robotCopy");
   BOOST_REQUIRE_EQUAL(robotCopy.robotIndex(), 2);
-  BOOST_REQUIRE_EQUAL(robots_ptr->robots().back().name(), "robotCopy");
+  BOOST_REQUIRE_EQUAL(robotCopy.name(), "robotCopy");
   auto & robot = robots_ptr->robot("renamed");
   for(const auto & c : robot.convexes())
   {

@@ -514,12 +514,9 @@ cdef class Robots(object):
       raise TypeError("Wrong arguments passed to Robots ctor")
 
   def robots(self):
-    end = deref(self.impl).robots().end()
-    it = deref(self.impl).robots().begin()
     ret = []
-    while it != end:
-      ret.append(RobotFromC(deref(it)))
-      preinc(it)
+    for i in range(deref(self.impl).size()):
+      ret.append(self.Robot(i))
     return ret
 
   def load(self, RobotModule module, *args):

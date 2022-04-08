@@ -253,7 +253,8 @@ namespace mc_rbdyn
 MC_RTC_diagnostic_push
 MC_RTC_diagnostic_ignored(GCC, "-Wsign-conversion", ClangOnly, "-Wshorten-64-to-32")
 
-Robot::Robot(const std::string & name,
+Robot::Robot(NewRobotToken,
+             const std::string & name,
              Robots & robots,
              unsigned int robots_idx,
              bool loadFiles,
