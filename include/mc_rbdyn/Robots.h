@@ -6,8 +6,6 @@
 
 #include <mc_rbdyn/Robot.h>
 
-#include <mc/rtc/deprecated.hh>
-
 #include <mc_rtc/shared.h>
 
 namespace mc_rbdyn
@@ -150,29 +148,6 @@ public:
 
   void removeRobot(unsigned int idx);
 
-  /** @name Deprecated
-   *
-   * These loading functions are deprecated, do not use them in your code
-   *
-   * @{
-   */
-  MC_RTC_DEPRECATED Robot & load(const RobotModule & module,
-                                 const std::string & surfaceDir,
-                                 sva::PTransformd * base = nullptr,
-                                 const std::string & bName = "");
-
-  MC_RTC_DEPRECATED void load(const RobotModule & module,
-                              const std::string & surfaceDir,
-                              const RobotModule & envModule,
-                              const std::string & envSurfaceDir,
-                              sva::PTransformd * base = nullptr,
-                              const std::string & baseName = "");
-
-  MC_RTC_DEPRECATED void load(const std::vector<std::shared_ptr<RobotModule>> & modules,
-                              const std::vector<std::string> & surfaceDirs);
-  /** @} */
-  /* End of deprecated loading functions */
-
   /** @} */
   /* End of Robot(s) loading/unloading functions group */
 
@@ -262,7 +237,7 @@ protected:
   Robots & operator=(Robots && robots) = delete;
 
   RobotModuleVector robot_modules_;
-  std::vector<mc_rbdyn::Robot> robots_;
+  std::vector<Robot> robots_;
   std::vector<rbd::MultiBody> mbs_;
   std::vector<rbd::MultiBodyConfig> mbcs_;
   std::vector<rbd::MultiBodyGraph> mbgs_;
@@ -277,27 +252,12 @@ MC_RBDYN_DLLAPI RobotsPtr loadRobot(const RobotModule & module,
                                     sva::PTransformd * base = nullptr,
                                     const std::string & baseName = "");
 
-MC_RBDYN_DLLAPI MC_RTC_DEPRECATED RobotsPtr loadRobot(const RobotModule & module,
-                                                      const std::string & surfaceDir,
-                                                      sva::PTransformd * base = nullptr,
-                                                      const std::string & baseName = "");
-
 MC_RBDYN_DLLAPI RobotsPtr loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules);
-
-MC_RBDYN_DLLAPI MC_RTC_DEPRECATED RobotsPtr loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules,
-                                                       const std::vector<std::string> & surfaceDirs);
 
 MC_RBDYN_DLLAPI RobotsPtr loadRobotAndEnv(const RobotModule & module,
                                           const RobotModule & envModule,
                                           sva::PTransformd * base = nullptr,
                                           const std::string & baseName = "");
-
-MC_RBDYN_DLLAPI MC_RTC_DEPRECATED RobotsPtr loadRobotAndEnv(const RobotModule & module,
-                                                            const std::string & surfaceDir,
-                                                            const RobotModule & envModule,
-                                                            const std::string & envSurfaceDir,
-                                                            sva::PTransformd * base = nullptr,
-                                                            const std::string & baseName = "");
 
 MC_RBDYN_DLLAPI RobotsPtr loadRobotFromUrdf(const std::string & name,
                                             const std::string & urdf,

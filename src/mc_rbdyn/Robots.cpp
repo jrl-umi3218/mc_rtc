@@ -251,15 +251,6 @@ void Robots::robotCopy(const Robot & robot, const std::string & copyName)
   robotNameToIndex_[copyName] = copyRobotIndex;
 }
 
-// deprecated
-Robot & Robots::load(const RobotModule & module,
-                     const std::string &,
-                     sva::PTransformd * base,
-                     const std::string & bName)
-{
-  return load(module.name, module, base, bName);
-}
-
 Robot & Robots::load(const RobotModule & module, sva::PTransformd * base, const std::string & bName)
 {
   return load(module.name, module, base, bName);
@@ -289,30 +280,11 @@ Robot & Robots::load(const std::string & name,
 {
 }*/
 
-RobotsPtr loadRobot(const RobotModule & module,
-                    const std::string &,
-                    sva::PTransformd * base,
-                    const std::string & baseName)
-{
-  return loadRobot(module, base, baseName);
-}
-
 RobotsPtr loadRobot(const RobotModule & module, sva::PTransformd * base, const std::string & baseName)
 {
   auto robots = Robots::make();
   robots->load(module.name, module, base, baseName);
   return robots;
-}
-
-// deprecated
-void Robots::load(const RobotModule & module,
-                  const std::string &,
-                  const RobotModule & envModule,
-                  const std::string &,
-                  sva::PTransformd * base,
-                  const std::string & baseName)
-{
-  load(module, envModule, base, baseName);
 }
 
 void Robots::load(const RobotModule & module,
@@ -322,17 +294,6 @@ void Robots::load(const RobotModule & module,
 {
   load(module.name, module, base, baseName);
   load(envModule.name, envModule);
-}
-
-// deprecated
-RobotsPtr loadRobotAndEnv(const RobotModule & module,
-                          const std::string &,
-                          const RobotModule & envModule,
-                          const std::string &,
-                          sva::PTransformd * base,
-                          const std::string & baseName)
-{
-  return loadRobotAndEnv(module, envModule, base, baseName);
 }
 
 RobotsPtr loadRobotAndEnv(const RobotModule & module,
@@ -345,22 +306,12 @@ RobotsPtr loadRobotAndEnv(const RobotModule & module,
   return robots;
 }
 
-void Robots::load(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> &)
-{
-  load(modules);
-}
-
 void Robots::load(const std::vector<std::shared_ptr<RobotModule>> & modules)
 {
   for(size_t i = 0; i < modules.size(); ++i)
   {
     load(*modules[i]);
   }
-}
-
-RobotsPtr loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> &)
-{
-  return loadRobots(modules);
 }
 
 RobotsPtr loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules)
