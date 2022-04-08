@@ -2,17 +2,16 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
+#include <mc_rbdyn/Base.h>
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/SCHAddon.h>
+
 #include <mc_rtc/logging.h>
 #include <mc_rtc/pragma.h>
 
 #include <RBDyn/FK.h>
 #include <RBDyn/parsers/urdf.h>
-
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
 
 namespace
 {
@@ -45,40 +44,27 @@ namespace mc_rbdyn
 MC_RTC_diagnostic_push
 MC_RTC_diagnostic_ignored(GCC, "-Wsign-conversion", ClangOnly, "-Wshorten-64-to-32")
 
-Robots::Robots() : robots_(), mbs_(), mbcs_(), robotIndex_(0), envIndex_(0) {}
+Robots::Robots(NewRobotsToken) : robots_(), mbs_(), mbcs_(), robotIndex_(0), envIndex_(0) {}
 
-Robots::Robots(const Robots & rhs)
-: robot_modules_(rhs.robot_modules_), robots_(), mbs_(rhs.mbs_), mbcs_(rhs.mbcs_), mbgs_(rhs.mbgs_),
-  robotIndex_(rhs.robotIndex_), envIndex_(rhs.envIndex_)
+void Robots::copy(Robots & out) const
 {
-  for(unsigned int i = 0; i < rhs.robots_.size(); ++i)
+  if(&out == this)
   {
-    const Robot & robot = rhs.robots_[i];
-    robots_.emplace_back(Robot(robot.name(), *this, i, false));
-    robot.copyLoadedData(robots_.back());
+    return;
   }
-}
-
-Robots & Robots::operator=(const Robots & rhs)
-{
-  if(&rhs == this)
+  out.robots_.clear();
+  out.robot_modules_ = robot_modules_;
+  out.mbs_ = mbs_;
+  out.mbcs_ = mbcs_;
+  out.mbgs_ = mbgs_;
+  out.robotIndex_ = robotIndex_;
+  out.envIndex_ = envIndex_;
+  for(unsigned int i = 0; i < robots_.size(); ++i)
   {
-    return *this;
+    const Robot & robot = robots_[i];
+    out.robots_.emplace_back(Robot(robot.name(), out, i, false));
+    robot.copyLoadedData(out.robots_.back());
   }
-  robots_.clear();
-  robot_modules_ = rhs.robot_modules_;
-  mbs_ = rhs.mbs_;
-  mbcs_ = rhs.mbcs_;
-  mbgs_ = rhs.mbgs_;
-  robotIndex_ = rhs.robotIndex_;
-  envIndex_ = rhs.envIndex_;
-  for(unsigned int i = 0; i < rhs.robots_.size(); ++i)
-  {
-    const Robot & robot = rhs.robots_[i];
-    robots_.emplace_back(Robot(robot.name(), *this, i, false));
-    robot.copyLoadedData(robots_.back());
-  }
-  return *this;
 }
 
 std::vector<Robot> & Robots::robots()
@@ -303,17 +289,17 @@ Robot & Robots::load(const std::string & name,
 {
 }*/
 
-std::shared_ptr<Robots> loadRobot(const RobotModule & module,
-                                  const std::string &,
-                                  sva::PTransformd * base,
-                                  const std::string & baseName)
+RobotsPtr loadRobot(const RobotModule & module,
+                    const std::string &,
+                    sva::PTransformd * base,
+                    const std::string & baseName)
 {
   return loadRobot(module, base, baseName);
 }
 
-std::shared_ptr<Robots> loadRobot(const RobotModule & module, sva::PTransformd * base, const std::string & baseName)
+RobotsPtr loadRobot(const RobotModule & module, sva::PTransformd * base, const std::string & baseName)
 {
-  auto robots = std::make_shared<Robots>();
+  auto robots = Robots::make();
   robots->load(module.name, module, base, baseName);
   return robots;
 }
@@ -339,22 +325,22 @@ void Robots::load(const RobotModule & module,
 }
 
 // deprecated
-std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module,
-                                        const std::string &,
-                                        const RobotModule & envModule,
-                                        const std::string &,
-                                        sva::PTransformd * base,
-                                        const std::string & baseName)
+RobotsPtr loadRobotAndEnv(const RobotModule & module,
+                          const std::string &,
+                          const RobotModule & envModule,
+                          const std::string &,
+                          sva::PTransformd * base,
+                          const std::string & baseName)
 {
   return loadRobotAndEnv(module, envModule, base, baseName);
 }
 
-std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module,
-                                        const RobotModule & envModule,
-                                        sva::PTransformd * base,
-                                        const std::string & baseName)
+RobotsPtr loadRobotAndEnv(const RobotModule & module,
+                          const RobotModule & envModule,
+                          sva::PTransformd * base,
+                          const std::string & baseName)
 {
-  auto robots = std::make_shared<Robots>();
+  auto robots = Robots::make();
   robots->load(module, envModule, base, baseName);
   return robots;
 }
@@ -372,15 +358,14 @@ void Robots::load(const std::vector<std::shared_ptr<RobotModule>> & modules)
   }
 }
 
-std::shared_ptr<Robots> loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules,
-                                   const std::vector<std::string> &)
+RobotsPtr loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> &)
 {
   return loadRobots(modules);
 }
 
-std::shared_ptr<Robots> loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules)
+RobotsPtr loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules)
 {
-  auto robots = std::make_shared<Robots>();
+  auto robots = Robots::make();
   robots->load(modules);
   return robots;
 }
@@ -400,15 +385,15 @@ Robot & Robots::loadFromUrdf(const std::string & name,
   return load(module, base, baseName);
 }
 
-std::shared_ptr<Robots> loadRobotFromUrdf(const std::string & name,
-                                          const std::string & urdf,
-                                          bool withVirtualLinks,
-                                          const std::vector<std::string> & filteredLinks,
-                                          bool fixed,
-                                          sva::PTransformd * base,
-                                          const std::string & baseName)
+RobotsPtr loadRobotFromUrdf(const std::string & name,
+                            const std::string & urdf,
+                            bool withVirtualLinks,
+                            const std::vector<std::string> & filteredLinks,
+                            bool fixed,
+                            sva::PTransformd * base,
+                            const std::string & baseName)
 {
-  auto robots = std::make_shared<Robots>();
+  auto robots = Robots::make();
   robots->loadFromUrdf(name, urdf, withVirtualLinks, filteredLinks, fixed, base, baseName);
   return robots;
 }

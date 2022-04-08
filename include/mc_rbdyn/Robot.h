@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <mc_rbdyn/Base.h>
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn/Surface.h>
+#include <mc_rbdyn/fwd.h>
 
 #include <mc_control/generic_gripper.h>
 

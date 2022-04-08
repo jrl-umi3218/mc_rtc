@@ -62,7 +62,7 @@ cdef class MCController(object):
   def env(self):
     return mc_rbdyn.RobotFromC(self.base.env())
   def robots(self):
-    return mc_rbdyn.RobotsFromRawPtr(&(self.base.robots()))
+    return mc_rbdyn.RobotsFromRef(self.base.robots())
   def supported_robots(self):
     supported = []
     self.base.supported_robots(supported)

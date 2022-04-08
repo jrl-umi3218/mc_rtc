@@ -35,7 +35,7 @@ public:
     return *robots_;
   }
 
-  std::shared_ptr<mc_rbdyn::Robots> robots_;
+  mc_rbdyn::RobotsPtr robots_;
 };
 
 BENCHMARK_DEFINE_F(SimulationContactPairFixture, Creation)(benchmark::State & state)

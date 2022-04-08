@@ -19,6 +19,7 @@ usr/include/mc_rtc/loader_api.h
 usr/include/mc_rtc/logging.h
 usr/include/mc_rtc/MessagePackBuilder.h
 usr/include/mc_rtc/pragma.h
+usr/include/mc_rtc/shared.h
 usr/include/mc_rtc/type_name.h
 usr/include/mc_rtc/utils.h
 usr/include/mc_rtc/utils_api.h

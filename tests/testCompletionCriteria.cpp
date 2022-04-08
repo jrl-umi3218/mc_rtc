@@ -15,7 +15,7 @@ const double dt = 0.005;
 
 mc_rbdyn::Robots & get_robots()
 {
-  static std::shared_ptr<mc_rbdyn::Robots> robots_ptr = nullptr;
+  static mc_rbdyn::RobotsPtr robots_ptr = nullptr;
   if(robots_ptr)
   {
     return *robots_ptr;

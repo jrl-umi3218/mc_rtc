@@ -503,11 +503,11 @@ def get_robot_module(name, *args):
 
 cdef class Robots(object):
   def __copyctor__(self, Robots other):
-    self.impl = shared_ptr[c_mc_rbdyn.Robots](new c_mc_rbdyn.Robots(deref(other.impl.get())))
+    self.impl = c_mc_rbdyn.robots_copy(other.impl)
   def __cinit__(self, *args, skip_alloc = False):
     if len(args) == 0:
       if not skip_alloc:
-        self.impl = shared_ptr[c_mc_rbdyn.Robots](new c_mc_rbdyn.Robots())
+        self.impl = c_mc_rbdyn.robots_make()
     elif len(args) == 1 and isinstance(args[0], Robots):
       self.__copyctor__(args[0])
     else:
@@ -561,13 +561,8 @@ cdef Robots RobotsFromPtr(shared_ptr[c_mc_rbdyn.Robots] p):
     ret.impl = p
     return ret
 
-cdef Robots RobotsFromRawPtr(c_mc_rbdyn.Robots * p):
-    cdef Robots ret = Robots(skip_alloc = True)
-    ret.impl = c_mc_rbdyn.robots_fake_shared(p)
-    return ret
-
 cdef Robots RobotsFromRef(c_mc_rbdyn.Robots & p):
-    return RobotsFromRawPtr(&p)
+    return RobotsFromPtr(c_mc_rbdyn.robots_shared_from_ref(p))
 
 cdef class Robot(object):
   def __is_valid(self):

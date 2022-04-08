@@ -10,7 +10,7 @@
 
 mc_rbdyn::Robots & get_robots()
 {
-  static std::shared_ptr<mc_rbdyn::Robots> robots_ptr = nullptr;
+  static mc_rbdyn::RobotsPtr robots_ptr = nullptr;
   if(robots_ptr)
   {
     return *robots_ptr;
@@ -27,7 +27,7 @@ void TestRobotLoadingCommon(mc_rbdyn::RobotModulePtr rm, mc_rbdyn::RobotModulePt
 {
   // Non-unique names
   BOOST_REQUIRE_THROW(mc_rbdyn::loadRobots({rm, rm}), std::runtime_error);
-  std::shared_ptr<mc_rbdyn::Robots> robots_ptr = nullptr;
+  mc_rbdyn::RobotsPtr robots_ptr = nullptr;
   BOOST_REQUIRE_NO_THROW(robots_ptr = mc_rbdyn::loadRobots({rm, envrm}));
   BOOST_REQUIRE(robots_ptr->hasRobot(rm->name));
   BOOST_REQUIRE(robots_ptr->hasRobot(envrm->name));
@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE(TestRobotLoadingWithCollisionObjects)
 
 BOOST_AUTO_TEST_CASE(TestRobotPosWVelWAccW)
 {
-  auto robots = get_robots();
+  auto & robots = get_robots();
 
   for(int i = 0; i < 100; ++i)
   {
@@ -136,7 +136,7 @@ BOOST_AUTO_TEST_CASE(TestRobotPosWVelWAccW)
 
 BOOST_AUTO_TEST_CASE(TestRobotZMPSimple)
 {
-  auto robots = get_robots();
+  auto & robots = get_robots();
   auto & robot = robots.robot();
 
   // Put all mass on the left foot, ZMP should be under the sensor

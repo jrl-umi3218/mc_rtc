@@ -61,20 +61,20 @@ std::vector<mc_solver::ContactMsg> contactsMsgFromContacts(const mc_rbdyn::Robot
 
 namespace mc_solver
 {
-QPSolver::QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep) : robots_p(robots), timeStep(timeStep)
+QPSolver::QPSolver(mc_rbdyn::RobotsPtr robots, double timeStep) : robots_p(robots), timeStep(timeStep)
 {
   if(timeStep <= 0)
   {
     mc_rtc::log::error_and_throw<std::invalid_argument>("timeStep has to be > 0! timeStep = {}", timeStep);
   }
-  realRobots_p = std::make_shared<mc_rbdyn::Robots>();
+  realRobots_p = mc_rbdyn::Robots::make();
   for(const auto & robot : robots->robots())
   {
     realRobots_p->robotCopy(robot, robot.name());
   }
 }
 
-QPSolver::QPSolver(double timeStep) : QPSolver{std::make_shared<mc_rbdyn::Robots>(), timeStep} {}
+QPSolver::QPSolver(double timeStep) : QPSolver{mc_rbdyn::Robots::make(), timeStep} {}
 
 void QPSolver::addConstraintSet(ConstraintSet & cs)
 {

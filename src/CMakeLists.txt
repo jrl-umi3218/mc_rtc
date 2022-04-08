@@ -118,13 +118,14 @@ set(mc_rtc_utils_HDR
   ../include/mc_rtc/type_name.h
   ../include/mc_rtc/debug.h
   ../include/mc_rtc/pragma.h
+  ../include/mc_rtc/shared.h
 )
 
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
 set_target_properties(mc_rtc_utils PROPERTIES COMPILE_FLAGS "-DMC_RTC_UTILS_EXPORTS")
 target_include_directories(mc_rtc_utils PRIVATE "${PROJECT_BINARY_DIR}/include/mc_rtc")
 target_compile_definitions(mc_rtc_utils PUBLIC ${BOOST_USE_STACKTRACE_DEFINE})
-target_link_libraries(mc_rtc_utils PUBLIC SpaceVecAlg::SpaceVecAlg Boost::${BOOST_STACKTRACE} Boost::filesystem Boost::disable_autolinking yaml-cpp spdlog::spdlog PRIVATE $<BUILD_INTERFACE:mc_rtc_3rd_party::RapidJSON>)
+target_link_libraries(mc_rtc_utils PUBLIC SpaceVecAlg::SpaceVecAlg Boost::${BOOST_STACKTRACE} Boost::filesystem Boost::disable_autolinking yaml-cpp spdlog::spdlog ${CMAKE_DL_LIBS} PRIVATE $<BUILD_INTERFACE:mc_rtc_3rd_party::RapidJSON>)
 if(NOT Boost_USE_STATIC_LIBS)
   target_link_libraries(mc_rtc_utils PUBLIC Boost::dynamic_linking)
 endif()
@@ -186,6 +187,7 @@ mc_rbdyn/BodySensor.cpp
 
 set(mc_rbdyn_HDR
 ../include/mc_rbdyn/api.h
+../include/mc_rbdyn/fwd.h
 ../include/mc_rbdyn/Contact.h
 ../include/mc_rbdyn/contact_transform.h
 ../include/mc_rbdyn/CylindricalSurface.h

@@ -9,6 +9,7 @@
 #include <mc_rbdyn/PolygonInterpolator.h>
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/RobotModule.h>
+#include <mc_rbdyn/Robots.h>
 
 #include <Eigen/Core>
 #include <memory>
@@ -98,9 +99,21 @@ void contact_vector_set_item(std::vector<Contact> & v, unsigned int idx, const C
   v[idx] = c;
 }
 
-std::shared_ptr<Robots> robots_fake_shared(Robots * p)
+std::shared_ptr<Robots> robots_shared_from_ref(Robots & p)
 {
-  return std::shared_ptr<Robots>(p, NoOpDeleter<Robots>());
+  return p;
+}
+
+std::shared_ptr<Robots> robots_make()
+{
+  return mc_rbdyn::Robots::make();
+}
+
+std::shared_ptr<Robots> robots_copy(std::shared_ptr<Robots> robots)
+{
+  auto ret = mc_rbdyn::Robots::make();
+  ret->copy(*robots);
+  return ret;
 }
 
 PolygonInterpolator * polygonInterpolatorFromTuplePairs(
