@@ -8,7 +8,18 @@ fi
 
 mc_rtc_extra_steps()
 {
-  curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py && sudo python2 get-pip.py && rm -f get-pip.py
-  sudo pip install matplotlib
-  export MC_LOG_UI_PYTHON_EXECUTABLE=python3
+  if [ "x$PYTHON_FORCE_PYTHON2" == xON || "x$PYTHON_BUILD_PYTHON2_AND_PYTHON3" == xON]
+    curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py && sudo python2 get-pip.py && rm -f get-pip.py
+    sudo pip install matplotlib
+    # pip3 gets overwritten by the get-pip.py script, but the python3-pip package remains installed. This usures that pip3 remains cleanly installed.
+    sudo apt-get install --reinstall -y python3-pip
+  fi
+
+  if [ "x$PYTHON_FORCE_PYTHON2" == xON ]
+  then
+    export MC_LOG_UI_PYTHON_EXECUTABLE=python2
+  else
+    export MC_LOG_UI_PYTHON_EXECUTABLE=python3
+  fi
+
 }
