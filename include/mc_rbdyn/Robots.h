@@ -47,6 +47,18 @@ public:
   /** True if the given robot is part of this intance */
   bool hasRobot(const std::string & name) const;
 
+  /** Give access to self for backward compatibility */
+  inline mc_rbdyn::Robots & robots() noexcept
+  {
+    return *this;
+  }
+
+  /** Give access to self for backward compatibility (const) */
+  inline const mc_rbdyn::Robots & robots() const noexcept
+  {
+    return *this;
+  }
+
   /** Index of the main robot */
   unsigned int robotIndex() const;
   /** Index of the first non-actuated robot (or the last actuated robot if no unactuated robot are loaded) */
@@ -198,6 +210,46 @@ public:
    * Has no effect if size > new_cap
    */
   void reserve(size_type new_cap);
+
+  /** Access via operator[]
+   *
+   * Provided for backward compatibility
+   */
+  inline mc_rbdyn::Robot & operator[](size_t idx)
+  {
+    assert(idx < robots_.size());
+    return *robots_[idx];
+  }
+
+  /** Access via operator[] (const)
+   *
+   * Provided for backward compatibility
+   */
+  inline const mc_rbdyn::Robot & operator[](size_t idx) const
+  {
+    assert(idx < robots_.size());
+    return *robots_[idx];
+  }
+
+  /** Access the robot at provided index
+   *
+   * Provided for backward compatibility
+   */
+  inline mc_rbdyn::Robot & at(size_t idx)
+  {
+    assert(idx < robots_.size());
+    return *robots_.at(idx);
+  }
+
+  /** Access the robot at provided index (const)
+   *
+   * Provided for backward compatibility
+   */
+  inline const mc_rbdyn::Robot & at(size_t idx) const
+  {
+    assert(idx < robots_.size());
+    return *robots_.at(idx);
+  }
 
   /** Create a new Robots instance */
   inline static RobotsPtr make() noexcept
