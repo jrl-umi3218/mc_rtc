@@ -690,7 +690,7 @@ then
   fi
   CATKIN_DATA_WORKSPACE=$SOURCE_DIR/catkin_data_ws
   CATKIN_DATA_WORKSPACE_SRC=${CATKIN_DATA_WORKSPACE}/src
-  if [[ ! -f $CATKIN_DATA_WORKSPACE_SRC/devel/setup.bash ]]
+  if [[ ! -f $CATKIN_DATA_WORKSPACE/devel/setup.bash ]]
   then
     mkdir -p ${CATKIN_DATA_WORKSPACE_SRC}
     if $NOT_CLONE_ONLY
@@ -706,7 +706,7 @@ then
   fi
   CATKIN_WORKSPACE=$SOURCE_DIR/catkin_ws
   CATKIN_WORKSPACE_SRC=${CATKIN_WORKSPACE}/src
-  if [[ ! -f $CATKIN_WORKSPACE_SRC/devel/setup.bash ]]
+  if [[ ! -f $CATKIN_WORKSPACE/devel/setup.bash ]]
   then
     mkdir -p ${CATKIN_WORKSPACE_SRC}
     if $NOT_CLONE_ONLY
