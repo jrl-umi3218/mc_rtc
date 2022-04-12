@@ -18,6 +18,13 @@ using RobotsPtr = std::shared_ptr<Robots>;
 
 struct Robot;
 using RobotPtr = std::shared_ptr<Robot>;
-using ConstRobotPtr = std::shared_ptr<const Robot>;
+
+struct RobotFrame;
+using RobotFramePtr = std::shared_ptr<RobotFrame>;
+using ConstRobotFramePtr = std::shared_ptr<const RobotFrame>;
+
+struct Frame;
+using FramePtr = std::shared_ptr<Frame>;
+using ConstFramePtr = std::shared_ptr<const Frame>;
 
 } // namespace mc_rbdyn

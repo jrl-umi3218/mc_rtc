@@ -797,6 +797,18 @@ public:
   /** Return the robot's default stance (e.g. half-sitting for humanoid) */
   std::map<std::string, std::vector<double>> stance() const;
 
+  /** Access Robots instance this instance belongs to */
+  inline mc_rbdyn::Robots & robots() noexcept
+  {
+    return *robots_;
+  }
+
+  /** Access Robots instance this instance belongs to (const) */
+  inline const mc_rbdyn::Robots & robots() const noexcept
+  {
+    return *robots_;
+  }
+
   /** Access the robot's index in robots() */
   unsigned int robotIndex() const;
 
