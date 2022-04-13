@@ -37,6 +37,11 @@ struct shared : public std::conditional<std::is_same<BaseT, void>::value, std::e
   {
     return std::static_pointer_cast<const T>(static_cast<const T *>(this)->shared_from_this());
   }
+
+  /** Inherit constructors from the base */
+  using ActualBase =
+      typename std::conditional<std::is_same<BaseT, void>::value, std::enable_shared_from_this<T>, BaseT>::type;
+  using ActualBase::ActualBase;
 };
 
 } // namespace mc_rtc

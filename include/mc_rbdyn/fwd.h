@@ -27,4 +27,6 @@ struct Frame;
 using FramePtr = std::shared_ptr<Frame>;
 using ConstFramePtr = std::shared_ptr<const Frame>;
 
+struct ForceSensor;
+
 } // namespace mc_rbdyn

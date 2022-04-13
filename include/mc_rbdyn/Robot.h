@@ -4,9 +4,9 @@
 
 #pragma once
 
+#include <mc_rbdyn/RobotFrame.h>
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn/Surface.h>
-#include <mc_rbdyn/fwd.h>
 
 #include <mc_control/generic_gripper.h>
 
@@ -114,6 +114,54 @@ public:
 
   /** Returns true if the robot has a body named \p name */
   bool hasBody(const std::string & name) const;
+
+  /** Returns true if the robot has a frame named \p name */
+  inline bool hasFrame(const std::string & name) const noexcept
+  {
+    return frames_.count(name) != 0;
+  }
+
+  /** Access the frame named \p name
+   *
+   * \throws If the frame does not exist
+   */
+  inline const RobotFrame & frame(const std::string & name) const
+  {
+    auto it = frames_.find(name);
+    if(it != frames_.end())
+    {
+      return *it->second;
+    }
+    mc_rtc::log::error_and_throw("No frame named {} in {}", name, name_);
+  }
+
+  /** Access the frame named \p name (non-const)
+   *
+   * \throws If the frame does not exist
+   */
+  inline RobotFrame & frame(const std::string & name)
+  {
+    return const_cast<RobotFrame &>(static_cast<const Robot *>(this)->frame(name));
+  }
+
+  /** Returns the list of available frames in this robot */
+  std::vector<std::string> frames() const;
+
+  /** Create a new frame attached to this robot
+   *
+   * \param name Name of the frame
+   *
+   * \param frame Parent frame of this frame
+   *
+   * \param X_p_f Transformation from the parent frame to the frame
+   *
+   * \param baked Attach the newly created frame to \p parent parent's body rather than \p parent if true
+   *
+   * \returns The newly created frame
+   *
+   * \throws If \p parent does not belong to this robot or if \p name already exists in this robot
+   */
+  RobotFrame & makeFrame(const std::string & name, RobotFrame & parent, sva::PTransformd X_p_f, bool baked = false);
 
   /** Returns the joint index of joint named \name
    *
@@ -560,6 +608,12 @@ public:
   /** Const variant */
   const ForceSensor & bodyForceSensor(const std::string & body) const;
 
+  /** Return a force sensor attached (directly or indirectly) to the given body
+   *
+   * Returns a null pointer if no such sensor exists
+   */
+  const ForceSensor * findBodyForceSensor(const std::string & body) const;
+
   /** Return a force sensor attached to the provided surface
    *
    * @param surface Name of the surface to which the sensor is attached
@@ -607,11 +661,11 @@ public:
   /** Const variant */
   const ForceSensor & indirectSurfaceForceSensor(const std::string & surface) const;
 
-  /** Returns all force sensors */
-  std::vector<ForceSensor> & forceSensors();
-
   /** Returns all force sensors (const) */
   const std::vector<ForceSensor> & forceSensors() const;
+
+  /** Returns all force sensors (const) */
+  std::vector<ForceSensor> & forceSensors();
 
   /** @} */
   /* End of Force sensors group */
@@ -952,6 +1006,8 @@ private:
   DevicePtrVector devices_;
   /** Correspondance between a device's name and a device index */
   std::unordered_map<std::string, size_t> devicesIndex_;
+  /** Frames in this robot */
+  std::unordered_map<std::string, RobotFramePtr> frames_;
 
 protected:
   struct NewRobotToken

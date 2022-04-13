@@ -33,7 +33,15 @@ public:
   Frame(NewFrameToken, const std::string & name) noexcept;
 
   /** Constructor for a frame with a parent */
-  Frame(NewFrameToken, const std::string & name, Frame & parent, const sva::PTransformd & X_p_f, bool bake) noexcept;
+  Frame(NewFrameToken, const std::string & name, Frame & parent, sva::PTransformd X_p_f, bool bake) noexcept;
+
+  virtual ~Frame() = default;
+
+  /* Prevent copy and move */
+  Frame(const Frame &) = delete;
+  Frame(Frame &&) = delete;
+  Frame & operator=(const Frame &) = delete;
+  Frame & operator=(Frame &&) = delete;
 
   /** Creates a new frame with no parent
    *
@@ -53,14 +61,12 @@ public:
    * \param X_p_f Transformation from the parent to the frame
    *
    * \param baked If true, don't keep track of the parent in the newly created frame
+   *
+   * \throws If \p parent is actually a \ref RobotFrame this creates a new frame \p name in \ref RoboyFrame, this throws
+   * if \p name is alredy a frame in the robot
+   *
    */
-  inline static FramePtr make(const std::string & name,
-                              Frame & parent,
-                              const sva::PTransformd & X_p_f,
-                              bool baked) noexcept
-  {
-    return std::make_shared<Frame>(NewFrameToken{}, name, parent, X_p_f, baked);
-  }
+  static FramePtr make(const std::string & name, Frame & parent, sva::PTransformd X_p_f, bool baked);
 
   /** Return the frame's name */
   inline const std::string & name() const noexcept
@@ -86,7 +92,7 @@ public:
    *
    * Othewise, it sets the relative transformation from it's parent to itself
    */
-  inline Frame & position(const sva::PTransformd & pos) noexcept
+  inline Frame & position(sva::PTransformd pos) noexcept
   {
     position_ = pos;
     return *this;
@@ -98,7 +104,7 @@ public:
    *
    * Otherwise this is a no-op
    */
-  inline Frame & velocity(const sva::MotionVecd & velocity) noexcept
+  inline Frame & velocity(sva::MotionVecd velocity) noexcept
   {
     velocity_ = velocity;
     return *this;
