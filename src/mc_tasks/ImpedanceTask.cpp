@@ -36,7 +36,7 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
 void ImpedanceTask::update(mc_solver::QPSolver & solver)
 {
   // 1. Filter the measured wrench
-  measuredWrench_ = robots.robot(rIndex).surfaceWrench(surfaceName);
+  measuredWrench_ = frame_->wrench();
   lowPass_.update(measuredWrench_);
   filteredMeasuredWrench_ = lowPass_.eval();
 

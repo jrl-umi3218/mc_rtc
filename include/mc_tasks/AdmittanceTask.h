@@ -94,7 +94,7 @@ public:
    */
   sva::PTransformd surfacePose() const
   {
-    return robots_.robot(rIndex_).surface(surfaceName).X_0_s(robots_.robot(rIndex_));
+    return frame_->position();
   }
 
   /*! \brief Get the target pose of the surface in the world frame.

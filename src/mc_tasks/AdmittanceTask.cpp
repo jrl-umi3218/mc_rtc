@@ -125,8 +125,7 @@ void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
       mc_rtc::gui::Transform(
           "pos_target", [this]() { return this->targetPose(); },
           [this](const sva::PTransformd & pos) { this->targetPose(pos); }),
-      mc_rtc::gui::Transform(
-          "pos", [this]() { return robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex)); }),
+      mc_rtc::gui::Transform("pos", [this]() { return frame_->position(); }),
       mc_rtc::gui::ArrayInput(
           "admittance", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() { return this->admittance().vector(); },
           [this](const Eigen::Vector6d & a) { this->admittance(a); }),

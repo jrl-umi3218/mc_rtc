@@ -36,6 +36,7 @@ usr/include/mc_tasks/AddRemoveContactTask.h
 usr/include/mc_tasks/GazeTask.h
 usr/include/mc_tasks/EndEffectorTask.h
 usr/include/mc_tasks/SurfaceTransformTask.h
+usr/include/mc_tasks/TransformTask.h
 usr/include/mc_tasks/BSplineTrajectoryTask.h
 usr/include/mc_tasks/ExactCubicTrajectoryTask.h
 usr/include/mc_tasks/LookAtTask.h

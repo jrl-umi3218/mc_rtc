@@ -24,7 +24,7 @@ namespace bfs = boost::filesystem;
 #include <mc_tasks/PositionTask.h>
 #include <mc_tasks/PostureTask.h>
 #include <mc_tasks/RelativeEndEffectorTask.h>
-#include <mc_tasks/SurfaceTransformTask.h>
+#include <mc_tasks/TransformTask.h>
 #include <mc_tasks/VectorOrientationTask.h>
 #include <mc_tasks/lipm_stabilizer/StabilizerTask.h>
 
@@ -109,5 +109,5 @@ TEST_TASK(mc_tasks::PositionBasedVisServoTask, PBVSTask)
 TEST_TASK(mc_tasks::PositionTask, PositionTask)
 TEST_TASK(mc_tasks::PostureTask, PostureTask)
 TEST_TASK(mc_tasks::RelativeEndEffectorTask, RelativeEndEffectorTask)
-TEST_TASK(mc_tasks::SurfaceTransformTask, SurfaceTransformTask)
+TEST_TASK(mc_tasks::TransformTask, TransformTask)
 TEST_TASK(mc_tasks::VectorOrientationTask, VectorOrientationTask)

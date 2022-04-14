@@ -1,0 +1,8 @@
+type: transform
+frame: LeftFoot
+targetFrame:
+  robot: ground
+  frame: AllGround
+  offset:
+    translation: [0.0, 0.0, 0.1]
+    rotation: [3.14, 0.0, 0.0]
