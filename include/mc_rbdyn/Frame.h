@@ -54,6 +54,8 @@ public:
 
   /** Creates a new frame with a parent. The frame is fixed relative to its parent
    *
+   * If \p parent is a \ref RobotFrame then this function returns a \ref RobotFrame
+   *
    * \param name Name of the new frame
    *
    * \param parent Parent frame
@@ -74,14 +76,14 @@ public:
     return name_;
   }
 
-  /** Compute the current frame's position */
-  inline sva::PTransformd position() const noexcept
+  /** Compute the current frame's position in inertial frame */
+  virtual inline sva::PTransformd position() const noexcept
   {
     return parent_ ? position_ * parent_->position() : position_;
   }
 
-  /** Compute the current frame's velocity */
-  inline sva::MotionVecd velocity() const noexcept
+  /** Compute the current frame's velocity in inertial frame */
+  virtual inline sva::MotionVecd velocity() const noexcept
   {
     return parent_ ? position_ * parent_->velocity() : velocity_;
   }

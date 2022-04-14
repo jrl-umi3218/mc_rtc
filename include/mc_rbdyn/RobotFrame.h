@@ -13,6 +13,10 @@ namespace mc_rbdyn
  *
  * The frame quantities are deduced from the robot's state
  *
+ * Every RobotFrame has either an explicit parent RobotFrame or an implicit parent (the robot's body it is attached to).
+ * Hence setting its position via the \ref Frame interface only sets relative position and settings its velocity through
+ * the same interface never has any effect.
+ *
  */
 struct MC_RBDYN_DLLAPI RobotFrame : public mc_rtc::shared<RobotFrame, Frame>
 {
@@ -69,16 +73,19 @@ public:
   const std::string & body() const noexcept;
 
   /** Computes the frame position */
-  sva::PTransformd position() const noexcept;
+  sva::PTransformd position() const noexcept final;
 
   /** Computes the frame velocity */
-  sva::MotionVecd velocity() const noexcept;
+  sva::MotionVecd velocity() const noexcept final;
 
   /** Returns the transformation from the parent's frame/body to the frame */
   inline const sva::PTransformd & X_p_f() const noexcept
   {
     return position_;
   }
+
+  /** Compute the transformation from the body to this frame */
+  sva::PTransformd X_b_f() const noexcept;
 
   /** Set the transformation from the parent's frame/body to this frame
    *

@@ -34,7 +34,7 @@ const std::string & RobotFrame::body() const noexcept
 
 sva::PTransformd RobotFrame::position() const noexcept
 {
-  if(parent_)
+  if(!parent_)
   {
     return position_ * robot_.mbc().bodyPosW[bodyMbcIdx_];
   }
@@ -43,7 +43,7 @@ sva::PTransformd RobotFrame::position() const noexcept
 
 sva::MotionVecd RobotFrame::velocity() const noexcept
 {
-  if(parent_)
+  if(!parent_)
   {
     return position_ * robot_.mbc().bodyVelW[bodyMbcIdx_];
   }
@@ -92,6 +92,15 @@ sva::ForceVecd RobotFrame::wrench() const
 RobotFramePtr RobotFrame::makeFrame(const std::string & name, const sva::PTransformd & X_p_f, bool baked)
 {
   return robot_.makeFrame(name, *this, X_p_f, baked);
+}
+
+sva::PTransformd RobotFrame::X_b_f() const noexcept
+{
+  if(parent_)
+  {
+    return position_ * static_cast<RobotFrame *>(parent_.get())->X_b_f();
+  }
+  return position_;
 }
 
 } // namespace mc_rbdyn

@@ -12,8 +12,8 @@ Frame::Frame(NewFrameToken tkn, const std::string & name, Frame & parent, sva::P
 {
   if(bake)
   {
-    position_ = X_p_f * parent.position();
-    velocity_ = X_p_f * parent.velocity();
+    position_ = X_p_f * parent.position_;
+    velocity_ = X_p_f * parent.velocity_;
   }
   else
   {
