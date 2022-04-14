@@ -32,6 +32,31 @@ public:
 
   /*! \brief Initialize a new CoP task.
    *
+   * \param frame Control frame
+   *
+   * \param stiffness Stiffness of the underlying Transform task
+   *
+   * \param weight Weight of the underlying Transform task
+   *
+   * \throws If the frame does not have a force sensor attached
+   *
+   */
+  CoPTask(const mc_rbdyn::RobotFrame & frame, double stiffness = 5.0, double weight = 1000.0);
+
+  /*! \brief Initialize a new CoP task.
+   *
+   * \param frame Control frame
+   *
+   * \param stiffness Stiffness of the underlying Transform task
+   *
+   * \param weight Weight of the underlying Transform task
+   *
+   * \throws If the frame does not have a force sensor attached
+   *
+   */
+
+  /*! \brief Initialize a new CoP task.
+   *
    * \param robotSurface Name of the surface frame to control, in which the
    * desired wrench will also be expressed
    *
@@ -39,9 +64,9 @@ public:
    *
    * \param robotIndex Which robot among the robots
    *
-   * \param stiffness Stiffness of the underlying SurfaceTransform task
+   * \param stiffness Stiffness of the underlying Transform task
    *
-   * \param weight Weight of the underlying SurfaceTransform task
+   * \param weight Weight of the underlying Transform task
    *
    * \throws If the body the task is attempting to control does not have a
    * sensor attached to it
@@ -72,12 +97,12 @@ public:
       double dt,
       const mc_rtc::Configuration & config) const override;
 
-  /*! \brief Measured CoP in surface frame.
+  /*! \brief Measured CoP in target frame.
    *
    */
   Eigen::Vector2d measuredCoP() const
   {
-    return robots_.robot(rIndex_).cop(surface_.name());
+    return frame_->cop();
   }
 
   /*! \brief Measured CoP in world frame.
@@ -85,7 +110,7 @@ public:
    */
   Eigen::Vector3d measuredCoPW() const
   {
-    return robots_.robot(rIndex_).copW(surface_.name());
+    return frame_->copW();
   }
 
   /*! \brief Set targent wrench to zero.
@@ -97,28 +122,24 @@ public:
     targetCoP(Eigen::Vector2d::Zero());
   }
 
-  /*! \brief Get target CoP in the surface frame.
-   *
-   */
+  /*! \brief Get target CoP in the control frame. */
   const Eigen::Vector2d & targetCoP() const
   {
     return targetCoP_;
   }
 
-  /*! \brief Get target CoP in the world frame.
-   *
-   */
+  /*! \brief Get target CoP in the world frame. */
   Eigen::Vector3d targetCoPW() const
   {
     Eigen::Vector3d cop_s;
     cop_s << targetCoP_, 0.;
-    sva::PTransformd X_0_s = robots_.robot(rIndex_).surfacePose(surface_.name());
+    sva::PTransformd X_0_s = frame_->position();
     return X_0_s.translation() + X_0_s.rotation().transpose() * cop_s;
   }
 
-  /*! \brief Set target CoP in the surface frame.
+  /*! \brief Set target CoP in the control frame.
    *
-   * \param targetCoP 2D vector of CoP coordinates in the surface frame
+   * \param targetCoP 2D vector of CoP coordinates in the control frame
    *
    */
   void targetCoP(const Eigen::Vector2d & targetCoP)
@@ -126,17 +147,15 @@ public:
     targetCoP_ = targetCoP;
   }
 
-  /*! \brief Get target force in the surface frame
-   *
-   */
+  /*! \brief Get target force in the control frame */
   const Eigen::Vector3d & targetForce() const
   {
     return targetForce_;
   }
 
-  /*! \brief Set target force in the surface frame
+  /*! \brief Set target force in the control frame
    *
-   * \param targetForce 3D vector of target force in the surface frame
+   * \param targetForce 3D vector of target force in the control frame
    *
    */
   void targetForce(const Eigen::Vector3d & targetForce)
@@ -150,17 +169,20 @@ public:
    */
   void targetForceW(const Eigen::Vector3d & targetForceW)
   {
-    const auto & X_0_rh = robots_.robot(rIndex_).surface(surface_.name()).X_0_s(robots_.robot(rIndex_));
+    const auto & X_0_rh = frame_->position();
     targetForce(X_0_rh.dualMul(sva::ForceVecd(Eigen::Vector3d::Zero(), targetForceW)).force());
   }
 
-  /*! \brief Get target wrench in the surface frame
+  /*! \brief Get target wrench in the control frame
    *
    */
   const sva::ForceVecd & targetWrench() const
   {
     return AdmittanceTask::targetWrench();
   }
+
+  /*! \brief Load parameters from a Configuration object */
+  void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 
 protected:
   void addToLogger(mc_rtc::Logger & logger) override;

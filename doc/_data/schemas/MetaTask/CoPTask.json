@@ -8,7 +8,7 @@
       "$ref": "/../../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_surface.json"
+      "$ref": "/../../common/MetaTask_frame.json"
     },
     {
       "properties":
@@ -19,8 +19,12 @@
         "force": { "$ref": "/../../Eigen/Vector3d.json", "description": "Desired force in controlled surface frame"},
         "targetPose":
         {
-          "description": "Ignored if targetSurface is specified. Provides a reference world pose for the controlled surface",
+          "description": "Ignored if targetSurface or targetFrame is specified. Provides a reference world pose for the controlled surface",
           "$ref": "/../../SpaceVecAlg/PTransformd.json"
+        },
+        "targetFrame":
+        {
+          "$ref" : "/../../common/targetFrame.json"
         },
         "targetSurface":
         {

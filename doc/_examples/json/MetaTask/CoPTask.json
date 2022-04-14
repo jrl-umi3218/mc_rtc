@@ -1,6 +1,6 @@
 {
   "type": "cop",
-  "surface": "LeftFootCenter",
+  "frame": "LeftFootCenter",
   "pose":
   {
     // Rotation expressed as RPY (in radian)

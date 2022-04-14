@@ -1,6 +1,6 @@
 {
   "type": "admittance",
-  "surface": "LeftFootCenter",
+  "frame": "LeftFootCenter",
   "target":
   {
     // Rotation expressed as RPY (in radian)
