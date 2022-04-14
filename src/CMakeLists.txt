@@ -93,6 +93,7 @@ set(mc_rtc_utils_SRC
   mc_rtc/iterate_binary_log.cpp
   mc_rtc/Logger.cpp
   mc_rtc/MessagePackBuilder.cpp
+  mc_rtc/deprecated.cpp
   mc_rtc/logging.cpp
   mc_rtc/version.cpp
   ${DEBUG_SOURCE}
@@ -117,6 +118,7 @@ set(mc_rtc_utils_HDR
   ../include/mc_rtc/DataStore.h
   ../include/mc_rtc/type_name.h
   ../include/mc_rtc/debug.h
+  ../include/mc_rtc/deprecated.h
   ../include/mc_rtc/pragma.h
   ../include/mc_rtc/shared.h
 )

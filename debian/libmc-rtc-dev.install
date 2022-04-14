@@ -11,6 +11,7 @@ usr/include/mc_rtc/ConfigurationHelpers.h
 usr/include/mc_rtc/constants.h
 usr/include/mc_rtc/DataStore.h
 usr/include/mc_rtc/debug.h
+usr/include/mc_rtc/deprecated.h
 usr/include/mc_rtc/gui.h
 usr/include/mc_rtc/io_utils.h
 usr/include/mc_rtc/iterators.h
