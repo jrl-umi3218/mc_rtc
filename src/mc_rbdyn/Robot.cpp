@@ -396,19 +396,6 @@ Robot::Robot(NewRobotToken,
     fixCollisionTransforms();
   }
 
-  if(loadFiles)
-  {
-    if(bfs::exists(module_.rsdf_dir))
-    {
-      loadRSDFFromDir(module_.rsdf_dir);
-    }
-    else if(module_.rsdf_dir.size())
-    {
-      mc_rtc::log::error("RSDF directory ({}) specified by RobotModule for {} does not exist.", module_.rsdf_dir,
-                         module_.name);
-    }
-  }
-
   forceSensors_ = module_.forceSensors();
   if(loadFiles)
   {
@@ -428,6 +415,19 @@ Robot::Robot(NewRobotToken,
   for(const auto & b : mb().bodies())
   {
     frames_[b.name()] = std::make_shared<RobotFrame>(RobotFrame::NewRobotFrameToken{}, b.name(), *this, b.name());
+  }
+
+  if(loadFiles)
+  {
+    if(bfs::exists(module_.rsdf_dir))
+    {
+      loadRSDFFromDir(module_.rsdf_dir);
+    }
+    else if(module_.rsdf_dir.size())
+    {
+      mc_rtc::log::error("RSDF directory ({}) specified by RobotModule for {} does not exist.", module_.rsdf_dir,
+                         module_.name);
+    }
   }
 
   stance_ = module_.stance();
