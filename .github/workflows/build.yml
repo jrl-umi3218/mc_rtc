@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04, macos-latest, windows-latest]
+        os: [ubuntu-20.04, ubuntu-18.04, macos-latest, windows-latest]
         build-type: [Debug, RelWithDebInfo, script]
         compiler: [gcc, clang]
         exclude:
@@ -71,7 +71,7 @@ jobs:
         fi
     - name: Install dependencies
       uses: jrl-umi3218/github-actions/install-dependencies@master
-      if: matrix.build-type != 'script'
+      if: matrix.build-type != 'script' && matrix.os != 'ubuntu-20.04'
       with:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
@@ -116,14 +116,14 @@ jobs:
           - path: jrl-umi3218/eigen-quadprog
           - path: jrl-umi3218/state-observation
     - name: Build and test
-      if: matrix.build-type == 'RelWithDebInfo' || (matrix.build-type == 'Debug' && github.ref == 'refs/heads/master')
+      if: matrix.os != 'ubuntu-20.04' && matrix.build-type == 'RelWithDebInfo' || (matrix.build-type == 'Debug' && github.ref == 'refs/heads/master')
       uses: jrl-umi3218/github-actions/build-cmake-project@master
       with:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
         windows-options: -DPYTHON_BINDING:BOOL=OFF
     - name: Build and test (Debug/Fast tests)
-      if: matrix.build-type == 'Debug' && github.ref != 'refs/heads/master'
+      if: matrix.os != 'ubuntu-20.04' && matrix.build-type == 'Debug' && github.ref != 'refs/heads/master'
       uses: jrl-umi3218/github-actions/build-cmake-project@master
       with:
         compiler: ${{ matrix.compiler }}
