@@ -89,6 +89,28 @@ sva::ForceVecd RobotFrame::wrench() const
   }
 }
 
+Eigen::Vector2d RobotFrame::cop(double min_pressure) const
+{
+  // We don't check if the force sensor is attached, this will be done when we get the wrench and the stack will tell
+  // the rest of the story
+  const sva::ForceVecd w_surf = wrench();
+  const double pressure = w_surf.force()(2);
+  if(pressure < min_pressure)
+  {
+    return Eigen::Vector2d::Zero();
+  }
+  const Eigen::Vector3d & tau_surf = w_surf.couple();
+  return Eigen::Vector2d(-tau_surf(1) / pressure, +tau_surf(0) / pressure);
+}
+
+Eigen::Vector3d RobotFrame::copW(double min_pressure) const
+{
+  Eigen::Vector3d cop_s;
+  cop_s << cop(min_pressure), 0.;
+  const sva::PTransformd X_0_s = position();
+  return X_0_s.translation() + X_0_s.rotation().transpose() * cop_s;
+}
+
 RobotFramePtr RobotFrame::makeFrame(const std::string & name, const sva::PTransformd & X_p_f, bool baked)
 {
   return robot_.makeFrame(name, *this, X_p_f, baked);

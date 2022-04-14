@@ -306,32 +306,31 @@ public:
    */
   sva::ForceVecd bodyWrench(const std::string & bodyName) const;
 
-  /** Compute the cop in surface frame computed from gravity-free force
-   * measurements
+  /** Compute the cop in a given frame computed from gravity-free force measurements
    *
-   * @param surfaceName A surface attached to a force sensor
+   * @param frame A frame attached to a force sensor
    * @param min_pressure Minimum pressure in N (default 0.5N).
    *
-   * @return Measured cop in surface frame
+   * @return Measured cop in provided frame
    *  - CoP if pressure >= min_pressure
    *  - Zero otherwise
    *
-   * @throws If no sensor is attached to this surface
+   * @throws If the frame does not exist or no sensor is attached to this frame
    */
-  Eigen::Vector2d cop(const std::string & surfaceName, double min_pressure = 0.5) const;
-  /** Compute the cop in inertial frame compute from gravity-free force
-   * measurements
+  Eigen::Vector2d cop(const std::string & frame, double min_pressure = 0.5) const;
+
+  /** Compute the cop in inertial frame compute from gravity-free force measurements
    *
-   * @param surfaceName A surface attached to a force sensor
+   * @param frame A frame attached to a force sensor
    * @param min_pressure Minimum pressure in N (default 0.5N).
    *
    * @return Measured cop in inertial frame
    *  - CoP if pressure >= min_pressure
    *  - Zero otherwise
    *
-   * @throws If no sensor is attached to this surface
+   * @throws If the frame does not exist or no sensor is attached to this frame
    */
-  Eigen::Vector3d copW(const std::string & surfaceName, double min_pressure = 0.5) const;
+  Eigen::Vector3d copW(const std::string & frame, double min_pressure = 0.5) const;
 
   /**
    * @brief Computes net total wrench from a list of sensors

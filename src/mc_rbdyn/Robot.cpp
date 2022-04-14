@@ -746,24 +746,14 @@ sva::ForceVecd Robot::surfaceWrench(const std::string & surfaceName) const
   return frame(surfaceName).wrench();
 }
 
-Eigen::Vector2d Robot::cop(const std::string & surfaceName, double min_pressure) const
+Eigen::Vector2d Robot::cop(const std::string & name, double min_pressure) const
 {
-  const sva::ForceVecd w_surf = surfaceWrench(surfaceName);
-  const double pressure = w_surf.force()(2);
-  if(pressure < min_pressure)
-  {
-    return Eigen::Vector2d::Zero();
-  }
-  const Eigen::Vector3d & tau_surf = w_surf.couple();
-  return Eigen::Vector2d(-tau_surf(1) / pressure, +tau_surf(0) / pressure);
+  return frame(name).cop(min_pressure);
 }
 
-Eigen::Vector3d Robot::copW(const std::string & surfaceName, double min_pressure) const
+Eigen::Vector3d Robot::copW(const std::string & name, double min_pressure) const
 {
-  Eigen::Vector3d cop_s;
-  cop_s << cop(surfaceName, min_pressure), 0.;
-  const sva::PTransformd X_0_s = surfacePose(surfaceName);
-  return X_0_s.translation() + X_0_s.rotation().transpose() * cop_s;
+  return frame(name).copW(min_pressure);
 }
 
 sva::ForceVecd Robot::netWrench(const std::vector<std::string> & sensorNames) const

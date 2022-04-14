@@ -118,6 +118,26 @@ public:
    */
   sva::ForceVecd wrench() const;
 
+  /** Compute the CoP in frame coordinates from gravity free measurements
+   *
+   * \param min_pressure Minimum pressure in N (default: 0.5N)
+   *
+   * \return Measured CoP in frame coordinates if pressure >= min_pressure, zero otherwise
+   *
+   * \throws if \ref hasForceSensor() is false
+   */
+  Eigen::Vector2d cop(double min_pressure = 0.5) const;
+
+  /** Compute the CoP in inertial frame from gravity free measurements
+   *
+   * \param min_pressure Minimum pressure in N (default: 0.5N)
+   *
+   * \return Measured CoP in inertial frame if pressure >= min_pressure, zero otherwise
+   *
+   * \throws if \ref hasForceSensor() is false
+   */
+  Eigen::Vector3d copW(double min_pressure = 0.5) const;
+
   /** Create a frame whose parent is this frame
    *
    * \param name Name of the new frame
