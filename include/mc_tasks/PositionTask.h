@@ -9,7 +9,7 @@
 namespace mc_tasks
 {
 
-/*! \brief Control the position of a body
+/*! \brief Control the position of a frame
 
  * This task is thin wrapper around the appropriate tasks in Tasks.
  *
@@ -18,6 +18,16 @@ struct MC_TASKS_DLLAPI PositionTask : public TrajectoryTaskGeneric<tasks::qp::Po
 {
 public:
   friend struct EndEffectorTask;
+
+  /*! \brief Constructor
+   *
+   * \param frame Control frame
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param weight Task weight
+   */
+  PositionTask(const mc_rbdyn::RobotFrame & frame, double stiffness = 2.0, double weight = 500.0);
 
   /*! \brief Constructor
    *
@@ -38,20 +48,6 @@ public:
                double stiffness = 2.0,
                double weight = 500);
 
-  /*! \brief Constructor
-   *
-   * @see PositionTask
-   *
-   * \param bodyPoint Point on the body being controlled, in body coordinates
-   *
-   */
-  PositionTask(const std::string & bodyName,
-               const Eigen::Vector3d & bodyPoint,
-               const mc_rbdyn::Robots & robots,
-               unsigned int robotIndex,
-               double stiffness = 2.0,
-               double weight = 500);
-
   virtual ~PositionTask() = default;
 
   /*! \brief Reset the task
@@ -60,32 +56,33 @@ public:
    */
   void reset() override;
 
-  /*! \brief Get the body position target */
-  Eigen::Vector3d position();
+  /*! \brief Get the position target */
+  inline const Eigen::Vector3d & position() const noexcept
+  {
+    return errorT->position();
+  }
 
-  /*! \brief Set the body position target
+  /*! \brief Set the position target
    *
    * \param pos Body position in world frame
    *
    */
-  void position(const Eigen::Vector3d & pos);
+  inline void position(const Eigen::Vector3d & pos) noexcept
+  {
+    errorT->position(pos);
+  }
 
   /*! \brief Get the body point being controlled
    */
-  Eigen::Vector3d bodyPoint() const;
-
-  /*! \brief Set the body point being controlled
-   *
-   * \param bodyPoint point position in body frame
-   *
-   */
-  void bodyPoint(const Eigen::Vector3d & bodyPoint);
+  inline const Eigen::Vector3d & bodyPoint() const noexcept
+  {
+    return errorT->bodyPoint();
+  }
 
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 
 protected:
-  std::string bodyName;
-  unsigned int bIndex;
+  mc_rbdyn::ConstRobotFramePtr frame_;
   void addToLogger(mc_rtc::Logger & logger) override;
 };
 

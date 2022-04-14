@@ -14,45 +14,25 @@ EndEffectorTask::EndEffectorTask(const std::string & bodyName,
                                  unsigned int robotIndex,
                                  double stiffness,
                                  double weight)
-: EndEffectorTask(bodyName, Eigen::Vector3d::Zero(), robots, robotIndex, stiffness, weight)
+: EndEffectorTask(robots.robot(robotIndex).frame(bodyName), stiffness, weight)
 {
 }
 
-EndEffectorTask::EndEffectorTask(const std::string & bodyName,
-                                 const Eigen::Vector3d & bodyPoint,
-                                 const mc_rbdyn::Robots & robots,
-                                 unsigned int robotIndex,
-                                 double stiffness,
-                                 double weight)
-: robots(robots), robotIndex(robotIndex), bodyName(bodyName)
+EndEffectorTask::EndEffectorTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
 {
-  if(robotIndex >= robots.size())
-  {
-    mc_rtc::log::error_and_throw("[mc_tasks::EndEffectorTask] No robot with index {}, robots.size() {}", robotIndex,
-                                 robots.size());
-  }
-  const auto & robot = robots.robot(robotIndex);
-  if(!robot.hasBody(bodyName))
-  {
-    mc_rtc::log::error_and_throw("[mc_tasks::EndEffectorTask] No body named {} in {}", bodyName, robot.name());
-  }
-  bodyIndex = robot.bodyIndexByName(bodyName);
-  sva::PTransformd bpw = robot.mbc().bodyPosW[bodyIndex];
+  curTransform = frame.position();
 
-  curTransform = sva::PTransformd{bodyPoint} * bpw;
-
-  positionTask.reset(new mc_tasks::PositionTask(bodyName, bodyPoint, robots, robotIndex, stiffness, weight));
-  orientationTask.reset(new mc_tasks::OrientationTask(bodyName, robots, robotIndex, stiffness, weight));
+  positionTask = std::make_shared<mc_tasks::PositionTask>(frame, stiffness, weight);
+  orientationTask = std::make_shared<mc_tasks::OrientationTask>(frame, stiffness, weight);
 
   type_ = "body6d";
-  name_ = "body6d_" + robot.name() + "_" + bodyName;
+  name_ = "body6d_" + frame.robot().name() + "_" + frame.name();
   name(name_);
 }
 
 void EndEffectorTask::reset()
 {
-  const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
-  curTransform = sva::PTransformd{positionTask->bodyPoint()} * robot.mbc().bodyPosW[bodyIndex];
+  curTransform = frame().position();
   positionTask->position(curTransform.translation());
   orientationTask->orientation(curTransform.rotation());
 }
@@ -114,7 +94,7 @@ void EndEffectorTask::selectActiveJoints(mc_solver::QPSolver & solver,
                                          const std::vector<std::string> & activeJointsName,
                                          const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs)
 {
-  ensureHasJoints(robots.robot(robotIndex), activeJointsName, "[" + name() + "::selectActiveJoints]");
+  ensureHasJoints(frame().robot(), activeJointsName, "[" + name() + "::selectActiveJoints]");
   positionTask->selectActiveJoints(solver, activeJointsName, activeDofs);
   orientationTask->selectActiveJoints(solver, activeJointsName, activeDofs);
 }
@@ -123,7 +103,7 @@ void EndEffectorTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
                                            const std::vector<std::string> & unactiveJointsName,
                                            const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs)
 {
-  ensureHasJoints(robots.robot(robotIndex), unactiveJointsName, "[" + name() + "::selectUnActiveJoints]");
+  ensureHasJoints(frame().robot(), unactiveJointsName, "[" + name() + "::selectUnActiveJoints]");
   positionTask->selectUnactiveJoints(solver, unactiveJointsName, unactiveDofs);
   orientationTask->selectUnactiveJoints(solver, unactiveJointsName, unactiveDofs);
 }
@@ -194,8 +174,7 @@ void EndEffectorTask::addToLogger(mc_rtc::Logger & logger)
   positionTask->addToLogger(logger);
   orientationTask->addToLogger(logger);
   MC_RTC_LOG_HELPER(name_ + "_target", curTransform);
-  logger.addLogEntry(
-      name_, this, [this]() -> const sva::PTransformd & { return robots.robot(robotIndex).mbc().bodyPosW[bodyIndex]; });
+  logger.addLogEntry(name_, this, [this]() { return frame().position(); });
 }
 
 void EndEffectorTask::removeFromLogger(mc_rtc::Logger & logger)
@@ -208,12 +187,11 @@ void EndEffectorTask::removeFromLogger(mc_rtc::Logger & logger)
 void EndEffectorTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   MetaTask::addToGUI(gui);
-  gui.addElement(
-      {"Tasks", name_},
-      mc_rtc::gui::Transform(
-          "pos_target", [this]() { return this->get_ef_pose(); },
-          [this](const sva::PTransformd & pos) { this->set_ef_pose(pos); }),
-      mc_rtc::gui::Transform("pos", [this]() { return robots.robot(robotIndex).mbc().bodyPosW[bodyIndex]; }));
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::Transform(
+                     "pos_target", [this]() { return this->get_ef_pose(); },
+                     [this](const sva::PTransformd & pos) { this->set_ef_pose(pos); }),
+                 mc_rtc::gui::Transform("pos", [this]() { return frame().position(); }));
   gui.addElement({"Tasks", name_, "Gains", "Position"},
                  mc_rtc::gui::NumberInput(
                      "stiffness", [this]() { return this->positionTask->stiffness(); },

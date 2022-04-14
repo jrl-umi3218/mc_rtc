@@ -42,6 +42,23 @@ struct TrajectoryTaskGeneric : public MetaTask
    */
   TrajectoryTaskGeneric(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness, double weight);
 
+  /*! \brief Constructor (auto damping)
+   *
+   * This is a simple constructor alternative. Damping is set to
+   * 2*sqrt(stiffness). This is the most appropriate constructor to use
+   * TrajectoryTask as a SetPointTask
+   *
+   * It is a useful shortcut when the task is controlling a frame
+   *
+   * \param frame Frame used in the task
+   *
+   * \param stiffness Stiffness of the task
+   *
+   * \param weight Weight of the task
+   *
+   */
+  TrajectoryTaskGeneric(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight);
+
   virtual ~TrajectoryTaskGeneric();
 
   /*! \brief Reset task target velocity and acceleration to zero

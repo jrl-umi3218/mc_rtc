@@ -1,6 +1,7 @@
 type: relBody6d
-body: r_wrist
-relBody: l_wrist
+frame: r_wrist
+relativeFrame:
+  frame: l_wrist
 # Rotation expressed as RPY (in radian)
 # May also be expressed as quaternion or rotation matrix
 orientation: [0.0, 0.0, 0.0]

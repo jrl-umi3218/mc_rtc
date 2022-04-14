@@ -9,7 +9,7 @@
 namespace mc_tasks
 {
 
-/*! \brief Control the orientation of a body
+/*! \brief Control the orientation of a frame
  *
  * This task is thin wrapper around the appropriate tasks in Tasks.
  *
@@ -18,6 +18,16 @@ struct MC_TASKS_DLLAPI OrientationTask : public TrajectoryTaskGeneric<tasks::qp:
 {
 public:
   friend struct EndEffectorTask;
+
+  /*! \brief Constructor
+   *
+   * \param frame Control frame
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param weight Task weight
+   */
+  OrientationTask(const mc_rbdyn::RobotFrame & frame, double stiffness = 2.0, double weight = 500.0);
 
   /*! \brief Constructor
    *
@@ -40,18 +50,18 @@ public:
 
   /*! \brief Reset the task
    *
-   * Set the task objective to the current body orientation
+   * Set the task objective to the current frame orientation
    */
   void reset() override;
 
-  /*! \brief Set the body orientation target
+  /*! \brief Set the frame orientation target
    *
    * \param ori Body orientation in world frame
    *
    */
   void orientation(const Eigen::Matrix3d & ori);
 
-  /*! \brief Get the current body orientation target
+  /*! \brief Get the current frame orientation target
    *
    * \returns The body orientation target in world frame
    *
@@ -62,8 +72,7 @@ protected:
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 
 public:
-  std::string bodyName;
-  unsigned int bIndex;
+  mc_rbdyn::ConstRobotFramePtr frame_;
   void addToLogger(mc_rtc::Logger & logger) override;
 };
 
