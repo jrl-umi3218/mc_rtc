@@ -23,7 +23,7 @@ RobotFrame::RobotFrame(NewRobotFrameToken tkn,
                        sva::PTransformd X_p_f,
                        bool baked)
 : mc_rtc::shared<RobotFrame, Frame>(tkn, name, parent, X_p_f, baked), robot_(parent.robot()),
-  bodyMbcIdx_(parent.bodyMbcIdx_)
+  bodyMbcIdx_(parent.bodyMbcIdx_), sensor_(parent.sensor_)
 {
 }
 
