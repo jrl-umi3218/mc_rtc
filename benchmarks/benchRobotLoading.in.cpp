@@ -55,7 +55,11 @@ BENCHMARK_DEFINE_F(RobotLoadingFixture, RobotCopy)(benchmark::State & state)
   const auto & robots = *robots_ptr;
   while(state.KeepRunning())
   {
-    auto robots_copy = robots;
+    auto robots_copy = mc_rbdyn::Robots::make();
+    for(const auto & r : robots)
+    {
+      robots_copy->robotCopy(r, r.name());
+    }
   }
 }
 BENCHMARK_REGISTER_F(RobotLoadingFixture, RobotCopy)->Unit(benchmark::kMicrosecond);
