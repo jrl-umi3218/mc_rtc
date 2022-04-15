@@ -23,7 +23,7 @@
             {
               "type": "string",
               "default": "MainRobot",
-              "description": "Name of robot to which this surface is attached"
+              "description": "Name of robot to which the frame is attached"
             },
             "frame" : { "type": "string" }
           },

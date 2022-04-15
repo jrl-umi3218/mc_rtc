@@ -177,13 +177,6 @@ cdef class VectorOrientationTask(_VectorOrientationTrajectoryTask):
   def __cinit__(self, *args, **kwargs):
     genericInit[VectorOrientationTask](self, 5, 'VectorOrientationTask', *args, **kwargs)
 
-  def bodyVector(self, eigen.Vector3d ori = None):
-    assert(self.impl)
-    if ori is None:
-      return eigen.Vector3dFromC(self.impl.bodyVector())
-    else:
-      self.impl.bodyVector(ori.impl)
-
 cdef class SurfaceTransformTask(_SurfaceTransformTask):
   def __dealloc__(self):
     if self.__own_impl:

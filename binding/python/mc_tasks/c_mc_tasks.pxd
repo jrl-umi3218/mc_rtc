@@ -87,8 +87,6 @@ cdef extern from "<mc_tasks/VectorOrientationTask.h>" namespace "mc_tasks":
     VectorOrientationTask(const string &, const c_eigen.Vector3d &,
                           const c_eigen.Vector3d &, const c_mc_rbdyn.Robots &,
                           unsigned int, double, double)
-    void bodyVector(const c_eigen.Vector3d&)
-    c_eigen.Vector3d bodyVector()
 
 cdef extern from "<mc_tasks/EndEffectorTask.h>" namespace "mc_tasks":
   cdef cppclass EndEffectorTask(MetaTask):

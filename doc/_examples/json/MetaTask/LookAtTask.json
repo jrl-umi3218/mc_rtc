@@ -1,6 +1,6 @@
 {
   "type": "lookAt",
-  "body": "dcamera",
-  "bodyVector": [1.0, 0.0, 0.0],
+  "frame": "dcamera",
+  "frameVector": [1.0, 0.0, 0.0],
   "targetPos": [0.0, 0.0, 0.0]
 }

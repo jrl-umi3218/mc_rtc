@@ -1,5 +1,0 @@
-type: lookAtSurface
-body: dcamera
-bodyVector: [1.0, 0.0, 0.0]
-surfaceRobot: ground
-surface: AllGround

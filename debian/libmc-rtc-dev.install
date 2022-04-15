@@ -50,6 +50,7 @@ usr/include/mc_tasks/TrajectoryTaskGeneric.hpp
 usr/include/mc_tasks/TrajectoryTaskGeneric.h
 usr/include/mc_tasks/AdmittanceTask.h
 usr/include/mc_tasks/ComplianceTask.h
+usr/include/mc_tasks/LookAtFrameTask.h
 usr/include/mc_tasks/LookAtSurfaceTask.h
 usr/include/mc_tasks/PositionTask.h
 usr/include/mc_tasks/api.h
