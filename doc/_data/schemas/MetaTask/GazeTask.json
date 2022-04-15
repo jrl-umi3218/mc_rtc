@@ -7,19 +7,14 @@
       "$ref": "/../../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_body.json"
+      "$ref": "/../../common/MetaTask_frame.json"
     },
     {
       "properties":
       {
         "type": { "enum": ["gaze"] },
         "weight": { "default": 500 },
-        "stiffness": { "default": 2 },
-        "X_b_gaze": { 
-          "$ref": "/../../SpaceVecAlg/PTransformd.json",
-          "default": "Identity",
-          "description": "Transformation between the camera link and the parent body."
-        }
+        "stiffness": { "default": 2 }
       }
     },
     {
@@ -32,5 +27,5 @@
       }
     }
   ],
-  "required": ["type", "body"]
+  "required": ["type", "frame"]
 }
