@@ -1,5 +1,5 @@
 type: exact_cubic_trajectory
-surface: LeftFoot
+frame: LeftFoot
 stiffness: 10000.0
 duration: 15.0
 weight: 100
@@ -12,9 +12,9 @@ completion:
   OR:
     - timeElapsed: true
     - wrench: [.NaN, .NaN, .NaN, .NaN, .NaN, 20]
-targetSurface:
+targetFrame:
   robot: ground
-  surface: AllGround
+  frame: AllGround
   translation: [0.05, -0.05, -0.025]
   rotation: [0.0, -1.57, 0.0]
   # control points in target surface frame

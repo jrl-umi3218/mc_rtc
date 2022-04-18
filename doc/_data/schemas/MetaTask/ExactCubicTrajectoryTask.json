@@ -1,6 +1,6 @@
 {
   "title": "mc_tasks::ExactCubicTrajectoryTask",
-  "description": "Follow an exact cubic curve (passing exactly through waypoints with initial/final velocity and acceleration constraints)<br/>All targets and waypoints are defined in world frame, except when using \"targetSurface\". In that case they are defined in target surface frame.",
+  "description": "Follow an exact cubic curve (passing exactly through waypoints with initial/final velocity and acceleration constraints)<br/>All targets and waypoints are defined in world frame, except when using \"targetFrame\". In that case they are defined in target surface frame.",
   "type": "object",
   "allOf":
   [
@@ -14,7 +14,7 @@
       "$ref": "/../../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_surface.json"
+      "$ref": "/../../common/MetaTask_frame.json"
     },
     {
       "$ref": "/../../common/TrajectoryTaskGeneric.json"
@@ -26,5 +26,5 @@
       "$ref": "/../../common/ExactCubicTrajectoryTask_targets.json"
     }
   ],
-  "required": ["type", "surface"]
+  "required": ["type", "frame"]
 }

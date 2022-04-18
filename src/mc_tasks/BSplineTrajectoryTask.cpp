@@ -9,6 +9,8 @@
 #include <mc_trajectory/BSpline.h>
 #include <mc_trajectory/InterpolatedRotation.h>
 
+#include <mc_rtc/deprecated.h>
+
 namespace mc_tasks
 {
 
@@ -23,22 +25,22 @@ BSplineTrajectoryTask::BSplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                                              const sva::PTransformd & target,
                                              const waypoints_t & posWp,
                                              const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
-: SplineTrajectoryTask<BSplineTrajectoryTask>(robots,
-                                              robotIndex,
-                                              surfaceName,
-                                              duration,
-                                              stiffness,
-                                              weight,
-                                              target.rotation(),
-                                              oriWp),
-  bspline(duration,
-          robots.robot(robotIndex).surface(surfaceName_).X_0_s(robots.robot(robotIndex)).translation(),
-          target.translation(),
-          posWp)
+: BSplineTrajectoryTask(robots.robot(robotIndex).frame(surfaceName), duration, stiffness, weight, target, posWp, oriWp)
 {
-  const auto & robot = robots.robot(robotIndex);
+}
+
+BSplineTrajectoryTask::BSplineTrajectoryTask(const mc_rbdyn::RobotFrame & frame,
+                                             double duration,
+                                             double stiffness,
+                                             double weight,
+                                             const sva::PTransformd & target,
+                                             const waypoints_t & posWp,
+                                             const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
+: SplineTrajectoryTask<BSplineTrajectoryTask>(frame, duration, stiffness, weight, target.rotation(), oriWp),
+  bspline(duration, frame.position().translation(), target.translation(), posWp)
+{
   type_ = "bspline_trajectory";
-  name_ = "bspline_trajectory_" + robot.name() + "_" + surfaceName_;
+  name_ = "bspline_trajectory_" + frame.robot().name() + "_" + frame.name();
 }
 
 void BSplineTrajectoryTask::posWaypoints(const BSpline::waypoints_t & posWp)
@@ -74,12 +76,19 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
       const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "bspline_trajectory");
 
-      if(config.has("targetSurface"))
+      bool has_targetSurface = config.has("targetSurface");
+      bool has_targetFrame = config.has("targetFrame");
+
+      if(has_targetSurface || has_targetFrame)
       { // Target defined from a target surface, with an offset defined
         // in the surface coordinates
-        const auto & c = config("targetSurface");
-        const auto & targetSurfaceName = c("surface");
-        const auto & robot = robotFromConfig(c, solver.robots(), "bspline_trajectory::targetSurface");
+        if(has_targetSurface)
+        {
+          mc_rtc::log::deprecated("ExactCubicTrajectoryTaskLoading", "targetSurface", "targetFrame");
+        }
+        const auto & c = config(has_targetSurface ? "targetSurface" : "targetFrame");
+        const auto & targetSurfaceName = c(has_targetSurface ? "surface" : "frame");
+        const auto & robot = robotFromConfig(c, solver.robots(), "bspline_trajectory::targetFrame");
 
         const sva::PTransformd & targetSurface = robot.surface(targetSurfaceName).X_0_s(robot);
         const Eigen::Vector3d trans = c("translation", Eigen::Vector3d::Zero().eval());
@@ -130,9 +139,18 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
         oriWp = config("oriWaypoints", std::vector<std::pair<double, Eigen::Matrix3d>>{});
       }
 
-      std::shared_ptr<mc_tasks::BSplineTrajectoryTask> t = std::make_shared<mc_tasks::BSplineTrajectoryTask>(
-          solver.robots(), robotIndex, config("surface"), config("duration", 10.), config("stiffness", 100.),
-          config("weight", 500.), finalTarget_, waypoints, oriWp);
+      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+        if(config.has("surface"))
+        {
+          mc_rtc::log::deprecated("ExactCubicTrajectoryTask", "surface", "frame");
+          return solver.robots().robot(robotIndex).frame(config("surface"));
+        }
+        return solver.robots().robot(robotIndex).frame(config("frame"));
+      }();
+
+      auto t =
+          std::make_shared<mc_tasks::BSplineTrajectoryTask>(frame, config("duration", 10.), config("stiffness", 100.),
+                                                            config("weight", 500.), finalTarget_, waypoints, oriWp);
       t->load(solver, config);
       const auto displaySamples = config("displaySamples", t->displaySamples());
       t->displaySamples(displaySamples);

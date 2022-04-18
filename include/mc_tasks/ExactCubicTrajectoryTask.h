@@ -30,6 +30,37 @@ struct MC_TASKS_DLLAPI ExactCubicTrajectoryTask : public SplineTrajectoryTask<Ex
    * between orientation waypoints. Initial and final acceleration/velocity will
    * also be enforced.
    *
+   * \param frame Control frame
+   * \param duration Duration of motion (eg time it takes to go from the current
+   * \param stiffness Task stiffness
+   * \param weight Task weight
+   * \param target Final world pose to reach
+   * \param posWp Waypoints in position specified as pairs of [time, position]
+   * \param init_vel Initial velocity of the curve (default: Zero)
+   * \param init_acc Initial acceleration of the curve (default: Zero)
+   * \param end_vel Final velocity of the curve (default: Zero)
+   * \param enc_acc Final acceleration of the curve (default: Zero)
+   * \param oriWp Waypoints in orientation, specified as pairs of [time, orientation].
+   */
+  ExactCubicTrajectoryTask(const mc_rbdyn::RobotFrame & frame,
+                           double duration,
+                           double stiffness,
+                           double weight,
+                           const sva::PTransformd & target,
+                           const std::vector<std::pair<double, Eigen::Vector3d>> & posWp = {},
+                           const Eigen::Vector3d & init_vel = Eigen::Vector3d::Zero(),
+                           const Eigen::Vector3d & init_acc = Eigen::Vector3d::Zero(),
+                           const Eigen::Vector3d & end_vel = Eigen::Vector3d::Zero(),
+                           const Eigen::Vector3d & end_acc = Eigen::Vector3d::Zero(),
+                           const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});
+
+  /**
+   * \brief Trajectory following an exact cubic spline with given initial and
+   * final acceleration/velocity. The curve will pass exactly through the
+   * specified position waypoints (see posWaypoints) and will interpolate
+   * between orientation waypoints. Initial and final acceleration/velocity will
+   * also be enforced.
+   *
    * \param robots Robots controlled by the task
    * \param robotIndex  Which robot is controlled
    * \param surfaceName Surface controlled by the task, should belong to the controlled robot
