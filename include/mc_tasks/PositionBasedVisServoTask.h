@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -15,13 +15,28 @@ namespace mc_tasks
 struct MC_TASKS_DLLAPI PositionBasedVisServoTask : public TrajectoryTaskGeneric<tasks::qp::PositionBasedVisServoTask>
 {
 public:
+  /*! \brief Constructor (from frame)
+   *
+   * \param frame Control frame
+   *
+   * \param X_t_s Transformation from the target to the control frame
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param weight Task weight
+   */
+  PositionBasedVisServoTask(const mc_rbdyn::RobotFrame & frame,
+                            const sva::PTransformd & X_t_s,
+                            double stiffness = 2.0,
+                            double weight = 500.0);
+
   /*! \brief Constructor
    *
    * \param bodyName Name of the body to control
    *
    * \param X_b_s Transformation from the controlled body to the surface being controlled
    *
-   * \param X_t_s Transformation from the surface to the target
+   * \param X_t_s Transformation from the target to the surface
    *
    * \param robots Robots controlled by this task
    *
@@ -30,7 +45,6 @@ public:
    * \param stiffness Task stiffness
    *
    * \param weight Task weight
-   *
    */
   PositionBasedVisServoTask(const std::string & bodyName,
                             const sva::PTransformd & X_t_s,
@@ -44,7 +58,7 @@ public:
    *
    * \param surfaceName Name of the surface the control
    *
-   * \param X_t_s Transformation from the surface to the target
+   * \param X_t_s Transformation from the target to the surface
    *
    * \param robots Robots controlled by this task
    *
@@ -70,7 +84,7 @@ public:
 
   /*! \brief Set the current error
    *
-   * \param sva::PTransformd Desired configuration in camera frame
+   * \param X_t_s Transformation from the target frame to the control frame
    *
    */
   void error(const sva::PTransformd & X_t_s);

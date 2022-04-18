@@ -3,8 +3,11 @@
  */
 
 #include <mc_rbdyn/configuration_io.h>
+
 #include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/PositionBasedVisServoTask.h>
+
+#include <mc_rtc/deprecated.h>
 
 #include <Eigen/Geometry>
 
@@ -18,7 +21,7 @@ PositionBasedVisServoTask::PositionBasedVisServoTask(const std::string & bodyNam
                                                      unsigned int robotIndex,
                                                      double stiffness,
                                                      double weight)
-: TrajectoryTaskGeneric<tasks::qp::PositionBasedVisServoTask>(robots, robotIndex, stiffness, weight)
+: TrajectoryTaskGeneric<tasks::qp::PositionBasedVisServoTask>(robots, robotIndex, stiffness, weight), X_t_s_(X_t_s)
 {
   finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, X_t_s, X_b_s);
   type_ = "pbvs";
@@ -31,14 +34,19 @@ PositionBasedVisServoTask::PositionBasedVisServoTask(const std::string & surface
                                                      unsigned int robotIndex,
                                                      double stiffness,
                                                      double weight)
-: PositionBasedVisServoTask(robots.robot(robotIndex).surface(surfaceName).bodyName(),
-                            X_t_s,
-                            robots.robot(robotIndex).surface(surfaceName).X_b_s(),
-                            robots,
-                            robotIndex,
-                            stiffness,
-                            weight)
+: PositionBasedVisServoTask(robots.robot(robotIndex).frame(surfaceName), X_t_s, stiffness, weight)
 {
+}
+
+PositionBasedVisServoTask::PositionBasedVisServoTask(const mc_rbdyn::RobotFrame & frame,
+                                                     const sva::PTransformd & X_t_s,
+                                                     double stiffness,
+                                                     double weight)
+: TrajectoryBase(frame, stiffness, weight), X_t_s_(X_t_s)
+{
+  finalize(robots.mbs(), static_cast<int>(rIndex), frame.body(), X_t_s_, frame.X_b_f());
+  type_ = "pbvs";
+  name_ = "pbvs_" + frame.robot().name() + "_" + frame.name();
 }
 
 void PositionBasedVisServoTask::reset()
@@ -78,13 +86,21 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       std::shared_ptr<mc_tasks::PositionBasedVisServoTask> t;
       auto robotIndex = robotIndexFromConfig(config, solver.robots(), "pbvs");
-      if(config.has("surface"))
+      if(config.has("frame"))
       {
+        const auto & robot = solver.robots().robot(robotIndex);
+        t = std::make_shared<mc_tasks::PositionBasedVisServoTask>(robot.frame(config("frame")),
+                                                                  sva::PTransformd::Identity());
+      }
+      else if(config.has("surface"))
+      {
+        mc_rtc::log::deprecated("PositionBasedVisServoTask", "surface", "frame");
         t = std::make_shared<mc_tasks::PositionBasedVisServoTask>(config("surface"), sva::PTransformd::Identity(),
                                                                   solver.robots(), robotIndex);
       }
       else if(config.has("body"))
       {
+        mc_rtc::log::deprecated("PositionBasedVisServoTask", "body", "frame");
         t = std::make_shared<mc_tasks::PositionBasedVisServoTask>(config("body"), sva::PTransformd::Identity(),
                                                                   config("X_b_s", sva::PTransformd::Identity()),
                                                                   solver.robots(), robotIndex);

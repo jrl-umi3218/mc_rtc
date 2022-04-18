@@ -7,24 +7,12 @@
       "$ref": "/../../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_surface.json"
+      "$ref": "/../../common/MetaTask_frame.json"
     },
     {
       "properties":
       {
-        "type": { "enum": ["pbvs"] },
-        "body":
-        {
-          "type": "string",
-          "default": "MainRobot",
-          "description": "Ignored if surface is specified"
-        },
-        "X_b_s":
-        {
-          "$ref": "/../../SpaceVecAlg/PTransformd.json",
-          "default": "Identity",
-          "description": "Transformation from the controlled body to the surface being controlled. Only used if the \"body\" property is specified."
-        }
+        "type": { "enum": ["pbvs"] }
       }
     },
     {
@@ -39,5 +27,5 @@
       }
     }
   ],
-  "required": ["type"]
+  "required": ["type", "frame"]
 }
