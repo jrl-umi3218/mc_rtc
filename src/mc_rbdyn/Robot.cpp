@@ -1375,6 +1375,7 @@ mc_rbdyn::Surface & Robot::copySurface(const std::string & sName, const std::str
   const Surface & surf = surface(sName);
   SurfacePtr nSurf = surf.copy();
   nSurf->name(name);
+  makeFrame(name, frame(surf.bodyName()), surf.X_b_s());
   surfaces_[name] = nSurf;
   return *nSurf;
 }
@@ -1387,11 +1388,17 @@ void mc_rbdyn::Robot::addSurface(SurfacePtr surface, bool doNotReplace)
                          surface->bodyName(), name());
     return;
   }
-  if(hasSurface(surface->name()) && doNotReplace)
+  bool has_surface = hasSurface(surface->name());
+  if(has_surface && doNotReplace)
   {
     mc_rtc::log::warning("Surface {} already exists for the robot {}.", surface->name(), name());
     return;
   }
+  if(has_surface)
+  {
+    frames_.erase(frames_.find(surface->name()));
+  }
+  makeFrame(surface->name(), frame(surface->bodyName()), surface->X_b_s());
   surfaces_[surface->name()] = std::move(surface);
 }
 
