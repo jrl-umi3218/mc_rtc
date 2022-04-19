@@ -86,6 +86,7 @@ DECLARE_IO(mc_rbdyn::Springs)
 DECLARE_IO(mc_rbdyn::Mimic)
 DECLARE_IO(mc_rbdyn::RobotModule::Gripper)
 DECLARE_IO(mc_rbdyn::RobotModule::Gripper::Safety)
+DECLARE_IO(mc_rbdyn::RobotModule::FrameDescription)
 
 #undef DECLARE_IO
 

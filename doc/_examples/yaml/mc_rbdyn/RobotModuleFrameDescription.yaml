@@ -1,0 +1,5 @@
+name: camera
+parent: HEAD_LINK1
+transform:
+  position: [0, 0, 0.1]
+  rotation: [3.14, 0.0, 3.14]

@@ -1032,7 +1032,7 @@ protected:
   /** Copy loaded data from this robot to a new robot **/
   void copyLoadedData(Robot & destination) const;
 
-  /** Used to set the surfaces' X_b_s correctly */
+  /** Used to set the surfaces' X_b_s correctly and create frames from RobotModule */
   void fixSurfaces();
 
   /** Used to set the collision transforms correctly */

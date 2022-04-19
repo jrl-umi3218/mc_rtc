@@ -597,6 +597,23 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::Gripper::Safety
   return safety.save();
 }
 
+mc_rbdyn::RobotModule::FrameDescription ConfigurationLoader<mc_rbdyn::RobotModule::FrameDescription>::load(
+    const mc_rtc::Configuration & config)
+{
+  return {config("name"), config("parent"), config("X_p_f"), config("baked", false)};
+}
+
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::FrameDescription>::save(
+    const mc_rbdyn::RobotModule::FrameDescription & frame)
+{
+  mc_rtc::Configuration config;
+  config.add("name", frame.name);
+  config.add("parent", frame.parent);
+  config.add("X_p_f", frame.X_p_f);
+  config.add("baked", frame.baked);
+  return config;
+}
+
 rbd::parsers::Geometry::Box ConfigurationLoader<rbd::parsers::Geometry::Box>::load(const mc_rtc::Configuration & config)
 {
   rbd::parsers::Geometry::Box b;
@@ -1130,6 +1147,8 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
     rm._lipmStabilizerConfig.load(config("lipmStabilizer"));
   }
 
+  rm._frames = config("frames", std::vector<mc_rbdyn::RobotModule::FrameDescription>{});
+
   return rm;
 }
 
@@ -1156,6 +1175,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
     config.add("filteredLinks", filteredLinks);
     config.add("fixed", fixed);
   }
+  config.add("frames", rm._frames);
   if(rm._bounds.size() != 6)
   {
     mc_rtc::log::error_and_throw("Wrong number ({}) of _bounds entries in RobotModule", rm._bounds.size());

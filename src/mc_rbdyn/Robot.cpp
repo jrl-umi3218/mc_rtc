@@ -1180,6 +1180,36 @@ void Robot::fixSurfaces()
     s.second->X_b_s(s.second->X_b_s() * trans);
     makeFrame(s.first, frame(s.second->bodyName()), s.second->X_b_s());
   }
+  auto frames = module().frames();
+  size_t added_frames = 0;
+  do
+  {
+    added_frames = 0;
+    for(auto it = frames.begin(); it != frames.end();)
+    {
+      const auto & desc = *it;
+      auto frame_it = frames_.find(desc.parent);
+      if(frame_it != frames_.end())
+      {
+        makeFrame(desc.name, *frame_it->second, desc.X_p_f, desc.baked);
+        it = frames.erase(it);
+        added_frames++;
+      }
+      else
+      {
+        ++it;
+      }
+    }
+  } while(added_frames != 0);
+  if(frames.size())
+  {
+    mc_rtc::log::error("{} frames could not be loaded from their description (parent missing or cycles)",
+                       frames.size());
+    for(const auto & desc : frames)
+    {
+      mc_rtc::log::warning("- {} (parent: {})", desc.name, desc.parent);
+    }
+  }
 }
 
 void Robot::fixCollisionTransforms()

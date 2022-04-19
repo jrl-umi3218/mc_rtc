@@ -135,6 +135,14 @@
         "*": { "$ref": "#/definitions/string_pair" }
       }
     },
+    "frames":
+    {
+      "type": "array",
+      "items":
+      {
+        "$ref": "/../../mc_rbdyn/RobotModule.FrameDescription.json"
+      }
+    },
     "flexibilities":
     {
       "type": "array",
