@@ -12,7 +12,8 @@
     "urdf_path":
     {
       "type": "string",
-      "description": "Path to the URDF file, relative to \"path\""
+      "default": "${path}/urdf/${name}.urdf",
+      "description": "Path to the URDF file, can be relative to \"path\""
     },
     "mb":
     {
@@ -224,7 +225,7 @@
       "description": "Default configuration for {% doxygen mc_tasks::lipm_stabilizer::StabilizerTask %}"
     }
   },
-  "required": ["path", "name", "urdf_path"],
+  "required": ["path", "name"],
   "additionalProperties": false,
   "definitions":
   {

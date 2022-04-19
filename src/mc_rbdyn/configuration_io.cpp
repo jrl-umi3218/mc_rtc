@@ -1012,12 +1012,20 @@ failed_cast:
 mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_rtc::Configuration & config)
 {
   bfs::path path((std::string)config("path"));
-  bfs::path urdf_path((std::string)config("urdf_path"));
-  if(!urdf_path.is_absolute())
-  {
-    urdf_path = path / urdf_path;
-  }
-  mc_rbdyn::RobotModule rm(path.string(), config("name"), urdf_path.string());
+  std::string name = config("name");
+  bfs::path urdf_path = [&]() {
+    if(config.has("urdf_path"))
+    {
+      bfs::path out(static_cast<std::string>(config("urdf_path")));
+      if(!out.is_absolute())
+      {
+        return path / out;
+      }
+      return out;
+    }
+    return path / "urdf" / fmt::format("{}.urdf", name);
+  }();
+  mc_rbdyn::RobotModule rm(path.string(), name, urdf_path.string());
   if(config.has("mb"))
   {
     rm.mb = config("mb");
