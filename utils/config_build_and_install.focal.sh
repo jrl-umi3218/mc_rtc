@@ -14,12 +14,4 @@ mc_rtc_extra_steps()
     # pip3 gets overwritten by the get-pip.py script, but the python3-pip package remains installed. This usures that pip3 remains cleanly installed.
     sudo apt-get install --reinstall -y python3-pip
   fi
-
-  if [ "x$PYTHON_FORCE_PYTHON2" == xON ]
-  then
-    export MC_LOG_UI_PYTHON_EXECUTABLE=python2
-  else
-    export MC_LOG_UI_PYTHON_EXECUTABLE=python3
-  fi
-
 }
