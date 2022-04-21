@@ -51,6 +51,12 @@ jobs:
       run: |
         sudo rm '/usr/local/bin/2to3'
       if: startsWith(runner.os, 'macOS')
+    - name: Install pip for Python 2 (Ubuntu 20.04)
+      run: |
+        curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
+        sudo python2 get-pip.py
+        rm -f get-pip.py
+      if: matrix.os == 'ubuntu-20.04' && matrix.build-type != 'script'
     - name: Clear environment (script)
       uses: jrl-umi3218/github-actions/install-dependencies@master
       if: matrix.build-type == 'script'
