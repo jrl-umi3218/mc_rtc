@@ -385,7 +385,7 @@ install_apt()
   if [ "${TO_INSTALL}" != "" ]
   then
     exec_log sudo apt-get update
-    exec_log sudo apt-get -y install ${TO_INSTALL}
+    exec_log sudo apt-get -y install $*
   fi
   exit_if_error "-- [ERROR] Could not install one of the following packages ${TO_INSTALL}."
 }
