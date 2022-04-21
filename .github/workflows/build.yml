@@ -43,7 +43,7 @@ jobs:
       with:
         submodules: recursive
     - name: Linux cleanup
-      if: matrix.os == 'ubuntu-18.04'
+      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
       run: |
         set -e
         echo "LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib/x86_64-linux-gnu/:${LD_LIBRARY_PATH}" >> $GITHUB_ENV
