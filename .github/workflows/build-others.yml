@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["debian:buster", "ubuntu:focal"]
+        os: ["debian:buster"]
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2

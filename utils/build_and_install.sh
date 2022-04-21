@@ -24,7 +24,7 @@ fi
 
 readonly this_dir=`cd $(dirname $0); pwd`
 readonly mc_rtc_dir=`cd $this_dir/..; pwd`
-readonly PYTHON_VERSION=`python -c 'import sys; print("{}.{}".format(sys.version_info.major, sys.version_info.minor))'`
+PYTHON_VERSION=`python -c 'import sys; print("{}.{}".format(sys.version_info.major, sys.version_info.minor))'`
 
 . "$this_dir/build_and_install_default_config.sh"
 
@@ -385,7 +385,7 @@ install_apt()
   if [ "${TO_INSTALL}" != "" ]
   then
     exec_log sudo apt-get update
-    exec_log sudo apt-get -y install ${TO_INSTALL}
+    exec_log sudo apt-get -y install $*
   fi
   exit_if_error "-- [ERROR] Could not install one of the following packages ${TO_INSTALL}."
 }
@@ -478,11 +478,24 @@ then
   mkdir -p $SOURCE_DIR
 fi
 
+
+if [ "x$PYTHON_FORCE_PYTHON2" == xON ] ; then
+  PYTHON_VERSION=`python2 -c 'import sys; print("{}.{}".format(sys.version_info.major, sys.version_info.minor))'`
+elif [ "x$PYTHON_FORCE_PYTHON3" == xON ] ; then
+  PYTHON_VERSION=`python3 -c 'import sys; print("{}.{}".format(sys.version_info.major, sys.version_info.minor))'`
+fi
+readonly PYTHON_VERSION
+
 export PATH=$INSTALL_PREFIX/bin:$PATH
 export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH
 export DYLD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$DYLD_LIBRARY_PATH
 export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
 export PYTHONPATH=$INSTALL_PREFIX/lib/python$PYTHON_VERSION/site-packages:$PYTHONPATH
+echo_log "PATH: $PATH"
+echo_log "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
+echo_log "DYLD_LIBRARY_PATH: $DYLD_LIBRARY_PATH"
+echo_log "PKG_CONFIG_PATH: $PKG_CONFIG_PATH"
+echo_log "PYTHONPATH: $PYTHONPATH"
 
 #make settings readonly
 readonly INSTALL_PREFIX
@@ -677,7 +690,7 @@ then
   fi
   CATKIN_DATA_WORKSPACE=$SOURCE_DIR/catkin_data_ws
   CATKIN_DATA_WORKSPACE_SRC=${CATKIN_DATA_WORKSPACE}/src
-  if [[ ! -f $CATKIN_DATA_WORKSPACE_SRC/devel/setup.bash ]]
+  if [[ ! -f $CATKIN_DATA_WORKSPACE/devel/setup.bash ]]
   then
     mkdir -p ${CATKIN_DATA_WORKSPACE_SRC}
     if $NOT_CLONE_ONLY
@@ -693,7 +706,7 @@ then
   fi
   CATKIN_WORKSPACE=$SOURCE_DIR/catkin_ws
   CATKIN_WORKSPACE_SRC=${CATKIN_WORKSPACE}/src
-  if [[ ! -f $CATKIN_WORKSPACE_SRC/devel/setup.bash ]]
+  if [[ ! -f $CATKIN_WORKSPACE/devel/setup.bash ]]
   then
     mkdir -p ${CATKIN_WORKSPACE_SRC}
     if $NOT_CLONE_ONLY
