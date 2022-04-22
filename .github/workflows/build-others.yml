@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["debian:buster"]
+        os: ["debian_buster", "ubuntu_22.04"]
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
@@ -32,9 +32,8 @@ jobs:
         echo "::group::Setup Dockerfile"
         mkdir -p /tmp/mc-rtc-docker
         cp -r `pwd` /tmp/mc-rtc-docker/source
-        cp .github/workflows/docker/Dockerfile /tmp/mc-rtc-docker
+        cp .github/workflows/docker/Dockerfile.${{ matrix.os }} /tmp/mc-rtc-docker/Dockerfile
         cd /tmp/mc-rtc-docker
-        sed -i -e's/@BASE_IMAGE@/${{ matrix.os }}/' Dockerfile
         echo "::endgroup::"
         echo "::group::Dockerfile used to build mc_rtc"
         cat Dockerfile

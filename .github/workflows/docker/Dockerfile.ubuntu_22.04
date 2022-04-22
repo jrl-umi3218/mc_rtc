@@ -1,0 +1,7 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update -qq && apt-get install -qq cmake cmake-data cython3 dh-python javascript-common libarchive13 libblas3 libeigen3-dev libexpat1-dev libjs-jquery libjs-jquery-isonscreen libjs-jquery-metadata libjs-jquery-tablesorter liblapack3 liblzo2-2 libpython3-dev librhash0 libuv1 pkg-config python3-all python3-coverage python3-dev python3-pip python3-nose python3-numpy python3-setuptools devscripts build-essential equivs gfortran apt-transport-https curl lsb-release sudo
+
+COPY source /source
