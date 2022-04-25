@@ -511,6 +511,7 @@ set(mc_control_HDR
 ../include/mc_control/api.h
 ../include/mc_control/CompletionCriteria.h
 ../include/mc_control/Configuration.h
+../include/mc_control/Contact.h
 ../include/mc_control/ControllerServer.h
 ../include/mc_control/GlobalPlugin.h
 ../include/mc_control/GlobalPluginMacros.h
