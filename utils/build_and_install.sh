@@ -537,6 +537,7 @@ readonly SKIP_UPDATE
 readonly SKIP_DIRTY_UPDATE
 readonly BUILD_LOGFILE
 readonly ASK_USER_INPUT
+readonly BUILD_SUBDIR
 
 echo_log "-- Installing with the following options:"
 echo_log "   INSTALL_PREFIX=$INSTALL_PREFIX"
