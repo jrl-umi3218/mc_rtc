@@ -43,8 +43,6 @@ digraph "include/mc_tasks/ExactCubicTrajectoryTask.h"
   Node19 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node19 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node12 [label="SpaceVecAlg/SpaceVecAlg",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node19 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node21 [label="Eigen/Core",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node19 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node19 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node26 [label="vector",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
@@ -54,7 +52,6 @@ digraph "include/mc_tasks/ExactCubicTrajectoryTask.h"
   Node27 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node28 [label="mc_rtc/pragma.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$pragma_8h.html"];
   Node27 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node18 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node18 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node18 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node18 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -129,15 +126,17 @@ digraph "include/mc_tasks/ExactCubicTrajectoryTask.h"
   Node97 -> Node37 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node97 -> Node98 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node98 [label="mc_trajectory/LinearInterpolation.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$LinearInterpolation_8h.html"];
-  Node1 -> Node99 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node99 [label="mc_tasks/SplineTrajectory\lTask.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node0 -> Node100 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node100 [label="mc_trajectory/ExactCubic.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ExactCubic_8h.html"];
-  Node100 -> Node70 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node100 -> Node92 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node100 -> Node93 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node100 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node100 -> Node101 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node101 [label="ndcurves/exact_cubic.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node100 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node97 -> Node99 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node99 [label="algorithm",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node1 -> Node100 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node100 [label="mc_tasks/SplineTrajectory\lTask.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node101 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 [label="mc_trajectory/ExactCubic.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ExactCubic_8h.html"];
+  Node101 -> Node70 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 -> Node92 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 -> Node93 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 -> Node102 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node102 [label="ndcurves/exact_cubic.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node101 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }
