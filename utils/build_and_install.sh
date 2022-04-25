@@ -483,7 +483,7 @@ then
     ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
     if $WITH_PANDA
     then
-      ROS_APT_DEPENDENCIES="$ROS_APT_DEPENDENCIES ros-${ROS_DISTRO}-libfranka ros-noetic-franka-description"
+      ROS_APT_DEPENDENCIES="$ROS_APT_DEPENDENCIES ros-${ROS_DISTRO}-libfranka ros-${ROS_DISTRO}-franka-description"
     fi
   else
     ROS_DISTRO=""
