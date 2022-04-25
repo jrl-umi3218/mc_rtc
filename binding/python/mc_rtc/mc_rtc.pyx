@@ -23,7 +23,10 @@ from libcpp.string cimport string
 from libcpp cimport bool as cppbool
 from cython.operator cimport dereference as deref
 
-import collections
+try:
+    from collections.abc import Iterable
+except ImportError:
+    from collections import Iterable
 import numbers
 
 MC_ENV_DESCRIPTION_PATH = c_mc_rtc.MC_ENV_DESCRIPTION_PATH
@@ -74,7 +77,7 @@ cdef class Logger(object):
       self.impl.addLogEntry[c_mc_rtc.function[c_eigen.Vector3d]](name, <c_mc_rtc.function[c_eigen.Vector3d]>(c_mc_rtc.make_v3d_log_callback(python_log_v3d, get_fn)))
     elif isinstance(ret, numbers.Number):
       self.impl.addLogEntry[c_mc_rtc.function[double]](name, c_mc_rtc.make_double_log_callback(python_log_double, get_fn))
-    elif isinstance(ret, collections.Iterable) and len(ret) and isinstance(ret[0], numbers.Number):
+    elif isinstance(ret, Iterable) and len(ret) and isinstance(ret[0], numbers.Number):
       self.impl.addLogEntry[c_mc_rtc.function[vector[double]]](name, c_mc_rtc.make_doublev_log_callback(python_log_doublev, get_fn))
     elif isinstance(ret, eigen.Quaterniond):
       self.impl.addLogEntry[c_mc_rtc.function[c_eigen.Quaterniond]](name, c_mc_rtc.make_quat_log_callback(python_log_quat, get_fn))

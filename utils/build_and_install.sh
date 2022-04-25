@@ -69,7 +69,7 @@ fix_ninja_perms()
     owner="$(stat --format '%U' .ninja_deps)"
     if [ "x${owner}" != "x${USER}" ]
     then
-      sudo chown -R $USER .ninja_deps
+      ${REQUIRED_SUDO} chown -R $USER .ninja_deps
     fi
   fi
   if [ -f .ninja_log ]
@@ -77,7 +77,7 @@ fix_ninja_perms()
     owner="$(stat --format '%U' .ninja_log)"
     if [ "x${owner}" != "x${USER}" ]
     then
-      sudo chown -R $USER .ninja_log
+      ${REQUIRED_SUDO} chown -R $USER .ninja_log
     fi
   fi
 }
@@ -327,6 +327,13 @@ then
   exit_failure
 fi
 
+if [ $(id -u) -eq 0 ]
+then
+  export REQUIRED_SUDO=
+else
+  export REQUIRED_SUDO=sudo
+fi
+
 if $WITH_PYTHON_SUPPORT
 then
   WITH_PYTHON_SUPPORT=ON
@@ -384,8 +391,8 @@ install_apt()
   done
   if [ "${TO_INSTALL}" != "" ]
   then
-    exec_log sudo apt-get update
-    exec_log sudo apt-get -y install $*
+    exec_log ${REQUIRED_SUDO} apt-get update
+    exec_log ${REQUIRED_SUDO} apt-get -y install $*
   fi
   exit_if_error "-- [ERROR] Could not install one of the following packages ${TO_INSTALL}."
 }
@@ -435,6 +442,11 @@ echo_log "========================"
 echo_log ""
 if [[ $OSTYPE == "linux-gnu" ]]
 then
+  if ! command -v lsb_release &> /dev/null
+  then
+    echo_log "lsb_release must be installed for this script to work"
+    exit_failure
+  fi
   exec_log lsb_release -a
 fi
 exec_log cmake --version
@@ -672,9 +684,9 @@ then
   then
     if [ $OS = Ubuntu -o $OS = Debian ]
     then
-      sudo mkdir -p /etc/apt/sources.list.d/
-      sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -c -s` main" > /etc/apt/sources.list.d/ros-latest.list'
-      wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+      ${REQUIRED_SUDO} mkdir -p /etc/apt/sources.list.d/
+      ${REQUIRED_SUDO} sh -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -c -s` main" > /etc/apt/sources.list.d/ros-latest.list'
+      wget http://packages.ros.org/ros.key -O - | ${REQUIRED_SUDO} apt-key add -
     else
       echo_log "Please install ROS and the required dependencies (${ROS_APT_DEPENDENCIES}) before continuing your installation or disable ROS support"
       exit_failure

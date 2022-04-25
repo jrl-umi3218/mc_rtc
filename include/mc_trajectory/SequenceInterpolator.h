@@ -3,8 +3,11 @@
  */
 
 #pragma once
+
 #include <mc_rtc/logging.h>
 #include <mc_trajectory/LinearInterpolation.h>
+
+#include <algorithm>
 
 namespace mc_trajectory
 {
