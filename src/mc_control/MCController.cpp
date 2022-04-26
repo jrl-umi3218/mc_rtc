@@ -620,8 +620,9 @@ void MCController::reset(const ControllerResetData & reset_data)
   updateContacts();
   if(gui_)
   {
-    gui_->addElement({"Contacts"},
-                     mc_rtc::gui::Label("Contacts", [this]() -> const std::string & { return contacts_str_; }));
+    gui_->addElement({"Contacts"}, mc_rtc::gui::Table(
+                                       "Contacts", {"R1", "S1", "R2", "S2", "DoF", "Friction"},
+                                       [this]() -> const std::vector<ContactTableDataT> & { return contacts_table_; }));
     gui_->addElement({"Contacts", "Add"},
                      mc_rtc::gui::Form(
                          "Add contact",
@@ -664,7 +665,8 @@ void MCController::updateContacts()
         mc_rtc::log::error_and_throw("Failed to add contact: no surface named {} in robot {}", surfaceName, robotName);
       }
     };
-    contacts_str_ = "";
+    contacts_table_.resize(contacts_.size());
+    size_t table_idx = 0;
     for(const auto & c : contacts_)
     {
       ensureValidContact(c.r1, c.r1Surface);
@@ -674,12 +676,14 @@ void MCController::updateContacts()
       contacts.emplace_back(robots(), r1Index, r2Index, c.r1Surface, c.r2Surface, c.friction);
       auto cId = contacts.back().contactId(robots());
       contact_constraint_->contactConstr->addDofContact(cId, c.dof.asDiagonal());
-      contacts_str_ +=
-          fmt::format("{}::{}/{}::{} | {} | {}\n", c.r1, c.r1Surface, c.r2, c.r2Surface, c.dof.transpose(), c.friction);
-    }
-    if(contacts_str_.size())
-    {
-      contacts_str_.pop_back();
+      auto & table_data = contacts_table_[table_idx];
+      std::get<0>(table_data) = c.r1;
+      std::get<1>(table_data) = c.r1Surface;
+      std::get<2>(table_data) = c.r2;
+      std::get<3>(table_data) = c.r2Surface;
+      std::get<4>(table_data) = fmt::format("{}", c.dof.transpose());
+      std::get<5>(table_data) = c.friction;
+      table_idx++;
     }
     solver().setContacts(mc_solver::QPSolver::ControllerToken{}, contacts);
     if(gui_)

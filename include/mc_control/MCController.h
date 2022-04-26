@@ -526,8 +526,9 @@ protected:
   ContactSet contacts_;
   /** True if contacts were changed in the previous round */
   bool contacts_changed_;
+  using ContactTableDataT = std::tuple<std::string, std::string, std::string, std::string, std::string, double>;
   /** Used in GUI display */
-  std::string contacts_str_;
+  std::vector<ContactTableDataT> contacts_table_;
 
   using duration_ms = std::chrono::duration<double, std::milli>;
   /** Monitor updateContacts runtime */
