@@ -19,17 +19,31 @@
 
 namespace mc_tasks
 {
+
 struct MetaTask;
-}
+
+} // namespace mc_tasks
 
 namespace mc_rtc
 {
+
 struct Logger;
+
 namespace gui
 {
+
 struct StateBuilder;
-}
+
+} // namespace gui
+
 } // namespace mc_rtc
+
+namespace mc_control
+{
+
+struct MCController;
+
+} // namespace mc_control
 
 namespace mc_solver
 {
@@ -71,6 +85,16 @@ MC_RTC_diagnostic_pop
 struct MC_SOLVER_DLLAPI QPSolver
 {
 public:
+  /** This token is used to give mc_control::MCController access to some internals */
+  struct ControllerToken
+  {
+    friend struct mc_control::MCController;
+    friend struct QPSolver;
+
+  private:
+    ControllerToken() = default;
+  };
+
   /** Constructor
    * \param robots Set of robots managed by this solver
    * \param timeStep Timestep of the solver
@@ -206,6 +230,10 @@ public:
    */
   void setContacts(const std::vector<mc_rbdyn::Contact> & contacts = {});
 
+  /* Called by the owning controller to actually set the contacts or internally by QPSolver when it has no owning
+   * controller */
+  void setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts);
+
   /** Returns the current set of contacts */
   const std::vector<mc_rbdyn::Contact> & contacts() const;
 
@@ -317,6 +345,22 @@ public:
   /** Access to the gui instance */
   std::shared_ptr<mc_rtc::gui::StateBuilder> gui() const;
 
+  /** Set the controller that is owning this QPSolver instance */
+  inline void controller(mc_control::MCController * ctl) noexcept
+  {
+    controller_ = ctl;
+  }
+  /** Returns the controller owning this instance (if any) (const) */
+  inline const mc_control::MCController * controller() const noexcept
+  {
+    return controller_;
+  }
+  /** Returns the controller owning this instance (if any) */
+  inline mc_control::MCController * controller() noexcept
+  {
+    return controller_;
+  }
+
 private:
   mc_rbdyn::RobotsPtr robots_p;
   mc_rbdyn::RobotsPtr realRobots_p;
@@ -387,6 +431,9 @@ private:
   std::vector<std::vector<double>> encoders_alpha_{};
   std::vector<std::vector<std::vector<double>>> control_q_{};
   std::vector<std::vector<std::vector<double>>> control_alpha_{};
+
+  /** Can be nullptr if this not associated to any controller */
+  mc_control::MCController * controller_ = nullptr;
 
 public:
   /** \deprecated{Default constructor, not made for general usage} */

@@ -500,6 +500,7 @@ mc_control/mc_global_controller.cpp
 mc_control/mc_global_controller_configuration.cpp
 mc_control/mc_global_controller_gui.cpp
 mc_control/mc_global_controller_services.cpp
+mc_solver/QPSolver_setContacts.cpp
 )
 
 if(MC_RTC_BUILD_STATIC)

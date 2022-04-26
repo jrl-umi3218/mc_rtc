@@ -71,6 +71,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   /* Load robots */
   qpsolver->logger(logger_);
   qpsolver->gui(gui_);
+  qpsolver->controller(this);
   for(auto rm : robots_modules)
   {
     loadRobot(rm, rm->name);
@@ -198,7 +199,8 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
     }
     if(!contact_constraint_)
     {
-      mc_rtc::log::warning("No contact constraint loaded from the configuration");
+      contact_constraint_ =
+          std::shared_ptr<mc_solver::ContactConstraint>(&contactConstraint, [](mc_solver::ContactConstraint *) {});
     }
   }
   /** Load collision managers */
@@ -638,24 +640,6 @@ void MCController::reset(const ControllerResetData & reset_data)
                          mc_rtc::gui::FormDataComboInput{"R1 surface", true, {"surfaces", "$R1"}},
                          mc_rtc::gui::FormNumberInput("Friction", false, mc_rbdyn::Contact::defaultFriction),
                          mc_rtc::gui::FormArrayInput<Eigen::Vector6d>("dof", false, Eigen::Vector6d::Ones())));
-    gui_->addElement({"Contacts", "Add"},
-                     mc_rtc::gui::Form(
-                         "Add contact",
-                         [this](const mc_rtc::Configuration & data) {
-                           std::string r0 = data("R0");
-                           std::string r1 = data("R1");
-                           std::string r0Surface = data("R0 surface");
-                           std::string r1Surface = data("R1 surface");
-                           double friction = data("Friction", mc_rbdyn::Contact::defaultFriction);
-                           Eigen::Vector6d dof = data("dof", Eigen::Vector6d::Ones().eval());
-                           addContact({r0, r1, r0Surface, r1Surface, friction, dof});
-                         },
-                         mc_rtc::gui::FormDataComboInput{"R0", true, {"robots"}},
-                         mc_rtc::gui::FormDataComboInput{"R0 surface", true, {"surfaces", "$R0"}},
-                         mc_rtc::gui::FormDataComboInput{"R1", true, {"robots"}},
-                         mc_rtc::gui::FormDataComboInput{"R1 surface", true, {"surfaces", "$R1"}},
-                         mc_rtc::gui::FormNumberInput("Friction", false, mc_rbdyn::Contact::defaultFriction),
-                         mc_rtc::gui::FormArrayInput<Eigen::Vector6d>("dof", false, Eigen::Vector6d::Ones())));
   }
   logger().addLogEntry("perf_UpdateContacts", [this]() { return updateContacts_dt_.count(); });
 }
@@ -697,7 +681,7 @@ void MCController::updateContacts()
     {
       contacts_str_.pop_back();
     }
-    solver().setContacts(contacts);
+    solver().setContacts(mc_solver::QPSolver::ControllerToken{}, contacts);
     if(gui_)
     {
       gui_->removeCategory({"Contacts", "Remove"});
@@ -818,6 +802,12 @@ void MCController::removeContact(const Contact & c)
   {
     mc_rtc::log::info("Remove contact {}::{}/{}::{}", c.r1, c.r1Surface, c.r2, c.r2Surface);
   }
+}
+
+void MCController::clearContacts()
+{
+  contacts_changed_ = contacts_.size() != 0;
+  contacts_.clear();
 }
 
 const ContactSet & MCController::contacts() const

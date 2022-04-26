@@ -229,6 +229,9 @@ public:
    */
   void removeContact(const Contact & c);
 
+  /** Remove all contacts */
+  void clearContacts();
+
   /** Access the current contacts */
   const ContactSet & contacts() const;
 

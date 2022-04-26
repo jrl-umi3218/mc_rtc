@@ -173,7 +173,7 @@ Eigen::VectorXd QPSolver::lambdaVec(int cIndex) const
   return solver.lambdaVec(cIndex);
 }
 
-void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
+void QPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts)
 {
   if(logger_)
   {
