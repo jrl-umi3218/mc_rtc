@@ -55,6 +55,9 @@ var hierarchy =
     [ "mc_rtc::ConfigurationLoader< mc_tasks::force::ImpedanceGains >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_tasks::lipm_stabilizer::ContactState >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< void >", "structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html", null ],
+    [ "const_iterator", null, [
+      [ "mc_rtc::SharedPtrVectorConstIterator< T >", "structmc__rtc_1_1SharedPtrVectorConstIterator.html", null ]
+    ] ],
     [ "ConstraintFunction", null, [
       [ "mc_solver::utils::Constraint< tasks::qp::Equality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", [
         [ "mc_solver::utils::EqualityConstraint< UpdateT >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", null ]
@@ -226,6 +229,7 @@ var hierarchy =
     [ "mc_rtc::gui::FormElement< FormDataInput< T, element, DataCallback >, element >", "structmc__rtc_1_1gui_1_1FormElement.html", [
       [ "mc_rtc::gui::internal::FormDataInput< T, element, DataCallback >", "structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html", null ]
     ] ],
+    [ "mc_rbdyn::RobotModule::FrameDescription", "structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html", null ],
     [ "mc_solver::GenericLoader< Derived, T >", "structmc__solver_1_1GenericLoader.html", null ],
     [ "mc_solver::GenericLoader< ConstraintSetLoader, ConstraintSet >", "structmc__solver_1_1GenericLoader.html", [
       [ "mc_solver::ConstraintSetLoader", "structmc__solver_1_1ConstraintSetLoader.html", null ]
@@ -264,6 +268,9 @@ var hierarchy =
     [ "mc_rtc::log::is_serializable_getter< MethodRetT(T::*)() const >", "structmc__rtc_1_1log_1_1is__serializable__getter_3_01MethodRetT_07T_1_1_5_08_07_08_01const_01_4.html", null ],
     [ "mc_rtc::log::is_serializable_member< T >", "structmc__rtc_1_1log_1_1is__serializable__member.html", null ],
     [ "mc_rtc::log::is_serializable_member< MemberT T::* >", "structmc__rtc_1_1log_1_1is__serializable__member_3_01MemberT_01T_1_1_5_01_4.html", null ],
+    [ "iterator", null, [
+      [ "mc_rtc::SharedPtrVectorIterator< T >", "structmc__rtc_1_1SharedPtrVectorIterator.html", null ]
+    ] ],
     [ "mc_rtc::internal::lambda_traits< T >", "structmc__rtc_1_1internal_1_1lambda__traits.html", null ],
     [ "mc_rtc::internal::lambda_traits< RetT(C::*)(Args...) const >", "structmc__rtc_1_1internal_1_1lambda__traits_3_01RetT_07C_1_1_5_08_07Args_8_8_8_08_01const_01_4.html", null ],
     [ "mc_rtc::internal::lambda_traits< RetT(C::*)(Args...)>", "structmc__rtc_1_1internal_1_1lambda__traits_3_01RetT_07C_1_1_5_08_07Args_8_8_8_08_4.html", null ],
@@ -323,7 +330,7 @@ var hierarchy =
         [ "mc_tasks::PositionTask", "structmc__tasks_1_1PositionTask.html", null ]
       ] ],
       [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::SurfaceTransformTask >", "structmc__tasks_1_1TrajectoryTaskGeneric.html", [
-        [ "mc_tasks::SurfaceTransformTask", "structmc__tasks_1_1SurfaceTransformTask.html", [
+        [ "mc_tasks::TransformTask", "structmc__tasks_1_1TransformTask.html", [
           [ "mc_tasks::force::AdmittanceTask", "structmc__tasks_1_1force_1_1AdmittanceTask.html", [
             [ "mc_tasks::force::DampingTask", "structmc__tasks_1_1force_1_1DampingTask.html", [
               [ "mc_tasks::force::CoPTask", "structmc__tasks_1_1force_1_1CoPTask.html", null ]
@@ -344,13 +351,18 @@ var hierarchy =
       [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::VectorOrientationTask >", "structmc__tasks_1_1TrajectoryTaskGeneric.html", [
         [ "mc_tasks::VectorOrientationTask", "structmc__tasks_1_1VectorOrientationTask.html", [
           [ "mc_tasks::LookAtTask", "structmc__tasks_1_1LookAtTask.html", [
-            [ "mc_tasks::LookAtSurfaceTask", "structmc__tasks_1_1LookAtSurfaceTask.html", null ],
+            [ "mc_tasks::LookAtFrameTask", "structmc__tasks_1_1LookAtFrameTask.html", null ],
             [ "mc_tasks::LookAtTFTask", "structmc__tasks_1_1LookAtTFTask.html", null ]
           ] ]
         ] ]
       ] ]
     ] ],
     [ "mc_rbdyn::Mimic", "structmc__rbdyn_1_1Mimic.html", null ],
+    [ "mc_rbdyn::Frame::NewFrameToken", "structmc__rbdyn_1_1Frame_1_1NewFrameToken.html", [
+      [ "mc_rbdyn::RobotFrame::NewRobotFrameToken", "structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
+    ] ],
+    [ "mc_rbdyn::Robots::NewRobotsToken", "structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html", null ],
+    [ "mc_rbdyn::Robot::NewRobotToken", "structmc__rbdyn_1_1Robot_1_1NewRobotToken.html", null ],
     [ "noncopyable", null, [
       [ "mc_rtc::ObjectLoader< T >", "structmc__rtc_1_1ObjectLoader.html", null ],
       [ "mc_rtc::ObjectLoader< State >", "structmc__rtc_1_1ObjectLoader.html", [
@@ -395,7 +407,6 @@ var hierarchy =
     [ "mc_rbdyn::RobotModule", "structmc__rbdyn_1_1RobotModule.html", null ],
     [ "mc_solver::RobotMsg", "structmc__solver_1_1RobotMsg.html", null ],
     [ "mc_rtc::RobotPublisher", "structmc__rtc_1_1RobotPublisher.html", null ],
-    [ "mc_rbdyn::Robots", "structmc__rbdyn_1_1Robots.html", null ],
     [ "mc_rtc::ROSBridge", "structmc__rtc_1_1ROSBridge.html", null ],
     [ "mc_rbdyn::RobotModule::Gripper::Safety", "structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::SafetyThresholds", "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html", null ],
@@ -449,6 +460,18 @@ var hierarchy =
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],
     [ "true_type", null, [
       [ "mc_rbdyn::details::are_strings< Args >", "structmc__rbdyn_1_1details_1_1are__strings.html", null ]
+    ] ],
+    [ "type", null, [
+      [ "mc_rtc::shared< T, BaseT >", "structmc__rtc_1_1shared.html", null ],
+      [ "mc_rtc::shared< Frame >", "structmc__rtc_1_1shared.html", [
+        [ "mc_rbdyn::Frame", "structmc__rbdyn_1_1Frame.html", null ]
+      ] ],
+      [ "mc_rtc::shared< RobotFrame, Frame >", "structmc__rtc_1_1shared.html", [
+        [ "mc_rbdyn::RobotFrame", "structmc__rbdyn_1_1RobotFrame.html", null ]
+      ] ],
+      [ "mc_rtc::shared< Robots >", "structmc__rtc_1_1shared.html", [
+        [ "mc_rbdyn::Robots", "structmc__rbdyn_1_1Robots.html", null ]
+      ] ]
     ] ],
     [ "mc_solver::utils::UpdateNrVarsData", "structmc__solver_1_1utils_1_1UpdateNrVarsData.html", [
       [ "mc_solver::utils::UpdateNrVarsLambda", "structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html", [

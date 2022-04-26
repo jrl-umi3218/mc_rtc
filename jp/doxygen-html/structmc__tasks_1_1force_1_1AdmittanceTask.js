@@ -1,6 +1,7 @@
 var structmc__tasks_1_1force_1_1AdmittanceTask =
 [
-    [ "AdmittanceTask", "structmc__tasks_1_1force_1_1AdmittanceTask.html#ababaa90033e00d09b1372d4bb7f618d9", null ],
+    [ "AdmittanceTask", "structmc__tasks_1_1force_1_1AdmittanceTask.html#aeb260767d5027918e1931e5365f5ecf3", null ],
+    [ "AdmittanceTask", "structmc__tasks_1_1force_1_1AdmittanceTask.html#adc9e5dddfd6c66644832803aa5187181", null ],
     [ "addToGUI", "structmc__tasks_1_1force_1_1AdmittanceTask.html#a7340c5f14c1ba117ec60046742b3e9ad", null ],
     [ "addToLogger", "structmc__tasks_1_1force_1_1AdmittanceTask.html#ad8f353f9df118e8fc859bc5ee80a41c9", null ],
     [ "addToSolver", "structmc__tasks_1_1force_1_1AdmittanceTask.html#a9e4af3978acf95b18cb58842898ff266", null ],
@@ -29,9 +30,6 @@ var structmc__tasks_1_1force_1_1AdmittanceTask =
     [ "maxAngularVel_", "structmc__tasks_1_1force_1_1AdmittanceTask.html#afad98878cf6e7f64980a3b743ed76a7c", null ],
     [ "maxLinearVel_", "structmc__tasks_1_1force_1_1AdmittanceTask.html#af4e15b0d348fae4b9f335f30e2a077b9", null ],
     [ "refVelB_", "structmc__tasks_1_1force_1_1AdmittanceTask.html#a2eeb8d4440242d2c4526226e15efaf87", null ],
-    [ "rIndex_", "structmc__tasks_1_1force_1_1AdmittanceTask.html#a658941cdb929605537a9c8fd740138f5", null ],
-    [ "robots_", "structmc__tasks_1_1force_1_1AdmittanceTask.html#ad63efb656ede4ea8b139489cf7ed50ec", null ],
-    [ "surface_", "structmc__tasks_1_1force_1_1AdmittanceTask.html#ac854c2ff4e850e265a8b18d2e92df0ab", null ],
     [ "targetWrench_", "structmc__tasks_1_1force_1_1AdmittanceTask.html#a3433b288829da956de5f93c99dc12870", null ],
     [ "timestep_", "structmc__tasks_1_1force_1_1AdmittanceTask.html#ae1d5d0caedd77b293454ad6209ff6617", null ],
     [ "velFilterGain_", "structmc__tasks_1_1force_1_1AdmittanceTask.html#adbd26fcf85307988eedde6314fa066b9", null ],

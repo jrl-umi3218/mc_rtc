@@ -1,5 +1,6 @@
 var structmc__tasks_1_1PositionBasedVisServoTask =
 [
+    [ "PositionBasedVisServoTask", "structmc__tasks_1_1PositionBasedVisServoTask.html#a3ba2fdcd766ed360e0146d54b05f91cb", null ],
     [ "PositionBasedVisServoTask", "structmc__tasks_1_1PositionBasedVisServoTask.html#ae2cab369aedb3678ebd9b4687faa8ba9", null ],
     [ "PositionBasedVisServoTask", "structmc__tasks_1_1PositionBasedVisServoTask.html#ab210ce2c552242965b7bd04b02d91517", null ],
     [ "addToLogger", "structmc__tasks_1_1PositionBasedVisServoTask.html#a1c5a2a63cff774edab49e058c63344d6", null ],

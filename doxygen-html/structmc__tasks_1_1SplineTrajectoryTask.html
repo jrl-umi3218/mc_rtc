@@ -113,9 +113,9 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a24faf75e67bb09033e53d780455257f2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a24faf75e67bb09033e53d780455257f2">SplineTrajectoryTask</a> (const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a77260d6774cb69d24d22e53890e7fa16">robots</a>, unsigned int robotIndex, const std::string &amp;surfaceName, double <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a716f3f5f2c7db43ad8e22a49bdfd4bde">duration</a>, double <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a3754c421be82d0d654b1e3c6d6e269fe">stiffness</a>, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>, const Eigen::Matrix3d &amp;<a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a2f94ae2cfc7521582ffd1b5720bda580">target</a>, const std::vector&lt; std::pair&lt; double, Eigen::Matrix3d &gt;&gt; &amp;oriWp={})</td></tr>
-<tr class="memdesc:a24faf75e67bb09033e53d780455257f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a24faf75e67bb09033e53d780455257f2">More...</a><br /></td></tr>
-<tr class="separator:a24faf75e67bb09033e53d780455257f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac523b327dfdeff9b88aa265240099073"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#ac523b327dfdeff9b88aa265240099073">SplineTrajectoryTask</a> (const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;frame, double <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a716f3f5f2c7db43ad8e22a49bdfd4bde">duration</a>, double <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a3754c421be82d0d654b1e3c6d6e269fe">stiffness</a>, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>, const Eigen::Matrix3d &amp;<a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a2f94ae2cfc7521582ffd1b5720bda580">target</a>, const std::vector&lt; std::pair&lt; double, Eigen::Matrix3d &gt;&gt; &amp;oriWp={})</td></tr>
+<tr class="memdesc:ac523b327dfdeff9b88aa265240099073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac523b327dfdeff9b88aa265240099073">More...</a><br /></td></tr>
+<tr class="separator:ac523b327dfdeff9b88aa265240099073"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56aabae51096134f054ab31c175ba59d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a56aabae51096134f054ab31c175ba59d">load</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config) override</td></tr>
 <tr class="memdesc:a56aabae51096134f054ab31c175ba59d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load parameters from a Configuration object.  <a href="#a56aabae51096134f054ab31c175ba59d">More...</a><br /></td></tr>
 <tr class="separator:a56aabae51096134f054ab31c175ba59d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,6 +205,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3b341ee69d33864500eb7e0f68ffe599 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a3b341ee69d33864500eb7e0f68ffe599">TrajectoryTaskGeneric</a> (const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a77260d6774cb69d24d22e53890e7fa16">robots</a>, unsigned int robotIndex, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>)</td></tr>
 <tr class="memdesc:a3b341ee69d33864500eb7e0f68ffe599 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor (auto damping)  <a href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a3b341ee69d33864500eb7e0f68ffe599">More...</a><br /></td></tr>
 <tr class="separator:a3b341ee69d33864500eb7e0f68ffe599 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71e156db0979afb2969f46838ba292c2 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a71e156db0979afb2969f46838ba292c2">TrajectoryTaskGeneric</a> (const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;frame, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>)</td></tr>
+<tr class="memdesc:a71e156db0979afb2969f46838ba292c2 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor (auto damping)  <a href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a71e156db0979afb2969f46838ba292c2">More...</a><br /></td></tr>
+<tr class="separator:a71e156db0979afb2969f46838ba292c2 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a723271227584b9a8af649ce887d9c947 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a723271227584b9a8af649ce887d9c947">~TrajectoryTaskGeneric</a> ()</td></tr>
 <tr class="separator:a723271227584b9a8af649ce887d9c947 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36c813b6646d3cd1bffcdcc618807053 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a36c813b6646d3cd1bffcdcc618807053">reset</a> () override</td></tr>
@@ -352,10 +355,8 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:ab5848b8fafba3f0791e5286718cce390"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#ab5848b8fafba3f0791e5286718cce390">rIndex_</a> = 0</td></tr>
-<tr class="separator:ab5848b8fafba3f0791e5286718cce390"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc56ce5c0be70edcccba265b5a94284c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#abc56ce5c0be70edcccba265b5a94284c">surfaceName_</a></td></tr>
-<tr class="separator:abc56ce5c0be70edcccba265b5a94284c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95f8076ac69cad65a8b2ddf842a56d0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacemc__rbdyn.html#a1d750a36f101823e43d108ec5c8231cc">mc_rbdyn::ConstRobotFramePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a95f8076ac69cad65a8b2ddf842a56d0f">frame_</a></td></tr>
+<tr class="separator:a95f8076ac69cad65a8b2ddf842a56d0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47c76bbfd6ed1275bfada4c8b238af4d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a47c76bbfd6ed1275bfada4c8b238af4d">duration_</a> = 0</td></tr>
 <tr class="separator:a47c76bbfd6ed1275bfada4c8b238af4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99908fd6b6923222cd523025bd2e1c23"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__trajectory_1_1InterpolatedRotation.html">mc_trajectory::InterpolatedRotation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a99908fd6b6923222cd523025bd2e1c23">oriSpline_</a></td></tr>
@@ -485,8 +486,8 @@ template&lt;typename Derived&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a24faf75e67bb09033e53d780455257f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24faf75e67bb09033e53d780455257f2">&#9670;&nbsp;</a></span>SplineTrajectoryTask()</h2>
+<a id="ac523b327dfdeff9b88aa265240099073"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac523b327dfdeff9b88aa265240099073">&#9670;&nbsp;</a></span>SplineTrajectoryTask()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -496,20 +497,8 @@ template&lt;typename Derived&gt; </div>
         <tr>
           <td class="memname"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::<a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">SplineTrajectoryTask</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
-          <td class="paramname"><em>robots</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>robotIndex</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>surfaceName</em>, </td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;&#160;</td>
+          <td class="paramname"><em>frame</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -552,13 +541,11 @@ template&lt;typename Derived&gt; </div>
 <p>Constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">robots</td><td>Robots controlled by the task </td></tr>
-    <tr><td class="paramname">robotIndex</td><td>Which robot is controlled </td></tr>
-    <tr><td class="paramname">surfaceName</td><td>Surface controlled by the task (should belong to the controlled robot) </td></tr>
-    <tr><td class="paramname">duration</td><td>Length of the movement </td></tr>
-    <tr><td class="paramname">stiffness</td><td>Task stiffness (position and orientation) </td></tr>
-    <tr><td class="paramname">posW</td><td>Task weight (position) </td></tr>
-    <tr><td class="paramname">oriW</td><td>Task weight (orientation) </td></tr>
+    <tr><td class="paramname">frame</td><td>Control frame</td></tr>
+    <tr><td class="paramname">duration</td><td>Length of the motion</td></tr>
+    <tr><td class="paramname">stiffness</td><td>Task stiffness</td></tr>
+    <tr><td class="paramname">weight</td><td>Task weight</td></tr>
+    <tr><td class="paramname">target</td><td>Target orientation</td></tr>
     <tr><td class="paramname">oriWp</td><td>Optional orientation waypoints (pairs of [time, orientation]) </td></tr>
   </table>
   </dd>
@@ -1784,6 +1771,30 @@ template&lt;typename Derived&gt; </div>
 
 </div>
 </div>
+<a id="a95f8076ac69cad65a8b2ddf842a56d0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95f8076ac69cad65a8b2ddf842a56d0f">&#9670;&nbsp;</a></span>frame_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacemc__rbdyn.html#a1d750a36f101823e43d108ec5c8231cc">mc_rbdyn::ConstRobotFramePtr</a> <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::frame_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ab58684bba10bad5cbcbe7414e04fb6f1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab58684bba10bad5cbcbe7414e04fb6f1">&#9670;&nbsp;</a></span>inSolver_</h2>
 
@@ -1856,30 +1867,6 @@ template&lt;typename Derived&gt; </div>
 
 </div>
 </div>
-<a id="ab5848b8fafba3f0791e5286718cce390"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5848b8fafba3f0791e5286718cce390">&#9670;&nbsp;</a></span>rIndex_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Derived&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::rIndex_ = 0</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a55ddc08175e2c18024ba3aba28c9caa7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a55ddc08175e2c18024ba3aba28c9caa7">&#9670;&nbsp;</a></span>samples_</h2>
 
@@ -1917,30 +1904,6 @@ template&lt;typename Derived&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a8d2ac7fd3779da3324969baf637212bf">SequenceInterpolator6d</a> <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::stiffnessInterpolator_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="abc56ce5c0be70edcccba265b5a94284c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc56ce5c0be70edcccba265b5a94284c">&#9670;&nbsp;</a></span>surfaceName_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Derived&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::surfaceName_</td>
         </tr>
       </table>
   </td>

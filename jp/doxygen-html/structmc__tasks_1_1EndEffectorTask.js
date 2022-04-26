@@ -1,7 +1,7 @@
 var structmc__tasks_1_1EndEffectorTask =
 [
+    [ "EndEffectorTask", "structmc__tasks_1_1EndEffectorTask.html#abbe5297b7d097f9713fa8b3445f610c4", null ],
     [ "EndEffectorTask", "structmc__tasks_1_1EndEffectorTask.html#a10e9ffa606532e24dc2be4c5561abfeb", null ],
-    [ "EndEffectorTask", "structmc__tasks_1_1EndEffectorTask.html#a972b369490a2a1ded5f627ee669e255b", null ],
     [ "add_ef_pose", "structmc__tasks_1_1EndEffectorTask.html#a01f1c5053c8e6a7b8fa1cbd30936bd3b", null ],
     [ "addToGUI", "structmc__tasks_1_1EndEffectorTask.html#a445bf38376823f52f538c7dcce64fb98", null ],
     [ "addToLogger", "structmc__tasks_1_1EndEffectorTask.html#a2f2a05a42cb073ee71e2783b2a232ee6", null ],
@@ -9,6 +9,7 @@ var structmc__tasks_1_1EndEffectorTask =
     [ "dimWeight", "structmc__tasks_1_1EndEffectorTask.html#a566c97665b6d80c1d5e035bf13b74d3a", null ],
     [ "dimWeight", "structmc__tasks_1_1EndEffectorTask.html#abe6e3496c8f51c563f75b6507aa4676a", null ],
     [ "eval", "structmc__tasks_1_1EndEffectorTask.html#afd9eb745f23f22752530d3b86329ac61", null ],
+    [ "frame", "structmc__tasks_1_1EndEffectorTask.html#abc4d692ec2c4f8e958874c3fd5613468", null ],
     [ "get_ef_pose", "structmc__tasks_1_1EndEffectorTask.html#a849f1bb907b638b0a2d3513630095155", null ],
     [ "load", "structmc__tasks_1_1EndEffectorTask.html#ad54a271a90a4ac60b338e5f50d24b743", null ],
     [ "name", "structmc__tasks_1_1EndEffectorTask.html#ad666274c6712c5362271417f8b030ec4", null ],
@@ -21,11 +22,7 @@ var structmc__tasks_1_1EndEffectorTask =
     [ "set_ef_pose", "structmc__tasks_1_1EndEffectorTask.html#a943ad2fc928accf735ce459f57b7c122", null ],
     [ "speed", "structmc__tasks_1_1EndEffectorTask.html#a1f32884c9cd511e180e1a9d5399766e4", null ],
     [ "update", "structmc__tasks_1_1EndEffectorTask.html#af4fae4001f175768e25f77903af44ecc", null ],
-    [ "bodyIndex", "structmc__tasks_1_1EndEffectorTask.html#aab6f5903d901833f87f887c1285e7f98", null ],
-    [ "bodyName", "structmc__tasks_1_1EndEffectorTask.html#af41ef875b2819415282f6e416345e992", null ],
     [ "curTransform", "structmc__tasks_1_1EndEffectorTask.html#a0df1bdc1275d182569ec4e306ba6c395", null ],
     [ "orientationTask", "structmc__tasks_1_1EndEffectorTask.html#ac426513e9c556336e75a09cd690ee30a", null ],
-    [ "positionTask", "structmc__tasks_1_1EndEffectorTask.html#a9d4cf0afca9af76d232b408275e3b9b9", null ],
-    [ "robotIndex", "structmc__tasks_1_1EndEffectorTask.html#a0e692c5560525128f88961376cc6272f", null ],
-    [ "robots", "structmc__tasks_1_1EndEffectorTask.html#a5faa0d85f0343702e3917d74b831dad7", null ]
+    [ "positionTask", "structmc__tasks_1_1EndEffectorTask.html#a9d4cf0afca9af76d232b408275e3b9b9", null ]
 ];

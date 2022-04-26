@@ -11,7 +11,7 @@ digraph "mc_tasks::VectorOrientationTask"
   Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 [label="mc_tasks::LookAtTask",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1LookAtTask.html",tooltip="Orient a \"gaze\" vector defined on a body to look towards a world position. This task is a convenience..."];
   Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="mc_tasks::LookAtSurfaceTask",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1LookAtSurfaceTask.html",tooltip="Track a surface position with a \"gaze\" vector. This task is a convenience wrapper for LookAtTask that..."];
+  Node4 [label="mc_tasks::LookAtFrameTask",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1LookAtFrameTask.html",tooltip="Track a frame position with a \"gaze\" vector. This task is a convenience wrapper for LookAtTask that t..."];
   Node3 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 [label="mc_tasks::LookAtTFTask",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1LookAtTFTask.html",tooltip="Control the gaze vector of a body to look towards a world position updated at each iteration from a R..."];
 }

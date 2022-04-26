@@ -11,6 +11,7 @@ var searchData=
   ['second',['second',['../structmc__tasks_1_1lipm__stabilizer_1_1ContactDescription.html#a8dad298937c721041146a906fdbddb68',1,'mc_tasks::lipm_stabilizer::ContactDescription']]],
   ['selfcollconstrmng',['selfCollConstrMng',['../structmc__solver_1_1RobotEnvCollisionsConstraint.html#af4e19d19f4f444ec1597600ea3fb43ea',1,'mc_solver::RobotEnvCollisionsConstraint']]],
   ['selfcollisionconstraint',['selfCollisionConstraint',['../structmc__control_1_1MCController.html#ad67e0621398628a6b8f4f700a7455b67',1,'mc_control::MCController']]],
+  ['sensor_5f',['sensor_',['../structmc__rbdyn_1_1RobotFrame.html#a4cb8f9a941f66cbe0a2bccc17a6155e0',1,'mc_rbdyn::RobotFrame']]],
   ['server_5f',['server_',['../structmc__control_1_1ControllerClient.html#a623d95e96630e3bb80d8a61349a98094',1,'mc_control::ControllerClient']]],
   ['shaft_5fdiam',['shaft_diam',['../structmc__rtc_1_1gui_1_1ArrowConfig.html#a863ad38d78a492d921944bd9093a8f83',1,'mc_rtc::gui::ArrowConfig']]],
   ['should_5falways_5frun',['should_always_run',['../structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html#a4acbf002781aa0c45fbd43c8829c0bbd',1,'mc_control::GlobalPlugin::GlobalPluginConfiguration']]],
@@ -49,8 +50,5 @@ var searchData=
   ['supportmax_5f',['supportMax_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae1133e256a909367f839ecef2528c7be',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['supportmin_5f',['supportMin_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a37b5b7e6f2acd693711f6b1e8c7310db',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['supportpolygons_5f',['supportPolygons_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad55b59e574799dcf11bc7598b8a6cea9',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
-  ['supportsurface_5f',['supportSurface_',['../structmc__control_1_1fsm_1_1SlidingFootContactState.html#a6b5b93da636466144e8c964dee5400f4',1,'mc_control::fsm::SlidingFootContactState']]],
-  ['surface_5f',['surface_',['../structmc__tasks_1_1force_1_1AdmittanceTask.html#ac854c2ff4e850e265a8b18d2e92df0ab',1,'mc_tasks::force::AdmittanceTask']]],
-  ['surfacename',['surfaceName',['../structmc__tasks_1_1SurfaceTransformTask.html#a9f9f378bfa6b2f92ec99af3cff7d450a',1,'mc_tasks::SurfaceTransformTask']]],
-  ['surfacename_5f',['surfaceName_',['../structmc__tasks_1_1SplineTrajectoryTask.html#abc56ce5c0be70edcccba265b5a94284c',1,'mc_tasks::SplineTrajectoryTask']]]
+  ['supportsurface_5f',['supportSurface_',['../structmc__control_1_1fsm_1_1SlidingFootContactState.html#a6b5b93da636466144e8c964dee5400f4',1,'mc_control::fsm::SlidingFootContactState']]]
 ];

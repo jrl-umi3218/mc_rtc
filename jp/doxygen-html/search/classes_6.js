@@ -18,5 +18,7 @@ var searchData=
   ['formelement_3c_20formcomboinput_2c_20elements_3a_3acomboinput_20_3e',['FormElement&lt; FormComboInput, Elements::ComboInput &gt;',['../structmc__rtc_1_1gui_1_1FormElement.html',1,'mc_rtc::gui']]],
   ['formelement_3c_20formdatacomboinput_2c_20elements_3a_3adatacomboinput_20_3e',['FormElement&lt; FormDataComboInput, Elements::DataComboInput &gt;',['../structmc__rtc_1_1gui_1_1FormElement.html',1,'mc_rtc::gui']]],
   ['formelement_3c_20formdatainput_3c_20t_2c_20element_2c_20datacallback_20_3e_2c_20element_20_3e',['FormElement&lt; FormDataInput&lt; T, element, DataCallback &gt;, element &gt;',['../structmc__rtc_1_1gui_1_1FormElement.html',1,'mc_rtc::gui']]],
-  ['formimpl',['FormImpl',['../structmc__rtc_1_1gui_1_1FormImpl.html',1,'mc_rtc::gui']]]
+  ['formimpl',['FormImpl',['../structmc__rtc_1_1gui_1_1FormImpl.html',1,'mc_rtc::gui']]],
+  ['frame',['Frame',['../structmc__rbdyn_1_1Frame.html',1,'mc_rbdyn']]],
+  ['framedescription',['FrameDescription',['../structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html',1,'mc_rbdyn::RobotModule']]]
 ];

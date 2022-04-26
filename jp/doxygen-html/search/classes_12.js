@@ -5,6 +5,12 @@ var searchData=
   ['schemaimpl',['SchemaImpl',['../structmc__rtc_1_1gui_1_1SchemaImpl.html',1,'mc_rtc::gui']]],
   ['sequenceinterpolator',['SequenceInterpolator',['../structmc__trajectory_1_1SequenceInterpolator.html',1,'mc_trajectory']]],
   ['sequenceinterpolator_3c_20eigen_3a_3avector6d_2c_20mc_5ftrajectory_3a_3alinearinterpolation_3c_20eigen_3a_3avector6d_20_3e_20_3e',['SequenceInterpolator&lt; Eigen::Vector6d, mc_trajectory::LinearInterpolation&lt; Eigen::Vector6d &gt; &gt;',['../structmc__trajectory_1_1SequenceInterpolator.html',1,'mc_trajectory']]],
+  ['shared',['shared',['../structmc__rtc_1_1shared.html',1,'mc_rtc']]],
+  ['shared_3c_20frame_20_3e',['shared&lt; Frame &gt;',['../structmc__rtc_1_1shared.html',1,'mc_rtc']]],
+  ['shared_3c_20robotframe_2c_20frame_20_3e',['shared&lt; RobotFrame, Frame &gt;',['../structmc__rtc_1_1shared.html',1,'mc_rtc']]],
+  ['shared_3c_20robots_20_3e',['shared&lt; Robots &gt;',['../structmc__rtc_1_1shared.html',1,'mc_rtc']]],
+  ['sharedptrvectorconstiterator',['SharedPtrVectorConstIterator',['../structmc__rtc_1_1SharedPtrVectorConstIterator.html',1,'mc_rtc']]],
+  ['sharedptrvectoriterator',['SharedPtrVectorIterator',['../structmc__rtc_1_1SharedPtrVectorIterator.html',1,'mc_rtc']]],
   ['simulationcontactpair',['SimulationContactPair',['../structmc__control_1_1SimulationContactPair.html',1,'mc_control']]],
   ['slidingfootcontactstate',['SlidingFootContactState',['../structmc__control_1_1fsm_1_1SlidingFootContactState.html',1,'mc_control::fsm']]],
   ['smoothtask',['SmoothTask',['../structmc__tasks_1_1SmoothTask.html',1,'mc_tasks']]],
@@ -27,6 +33,5 @@ var searchData=
   ['stationaryoffset',['StationaryOffset',['../structmc__filter_1_1StationaryOffset.html',1,'mc_filter']]],
   ['stationaryoffset_3c_20eigen_3a_3avector3d_20_3e',['StationaryOffset&lt; Eigen::Vector3d &gt;',['../structmc__filter_1_1StationaryOffset.html',1,'mc_filter']]],
   ['stringinputimpl',['StringInputImpl',['../structmc__rtc_1_1gui_1_1StringInputImpl.html',1,'mc_rtc::gui']]],
-  ['surface',['Surface',['../structmc__rbdyn_1_1Surface.html',1,'mc_rbdyn']]],
-  ['surfacetransformtask',['SurfaceTransformTask',['../structmc__tasks_1_1SurfaceTransformTask.html',1,'mc_tasks']]]
+  ['surface',['Surface',['../structmc__rbdyn_1_1Surface.html',1,'mc_rbdyn']]]
 ];

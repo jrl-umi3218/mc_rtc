@@ -8,6 +8,7 @@ var searchData=
   ['observer_5fmodule_5fpaths',['observer_module_paths',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#aa294a1ad2731835821d3669f7bd770ed',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['observerpipelines_5f',['observerPipelines_',['../structmc__control_1_1MCController.html#ab3eedc56410fb67db9057a766686243a',1,'mc_control::MCController']]],
   ['offset',['offset',['../structmc__control_1_1Gripper.html#a3d7cfa4cecffe109ec06217fa5e7ad8f',1,'mc_control::Gripper::offset()'],['../structmc__rbdyn_1_1Mimic.html#a07938e029fb7d951388c0b1ad64642b5',1,'mc_rbdyn::Mimic::offset()'],['../structmc__rbdyn_1_1Plane.html#a8c864cca3648d188ffc463ee9cdb2fc6',1,'mc_rbdyn::Plane::offset()']]],
+  ['offset_5f',['offset_',['../structmc__tasks_1_1LookAtFrameTask.html#a2cfd76aef2c88a3c411eaeef9e50fdb7',1,'mc_tasks::LookAtFrameTask']]],
   ['omega_5f',['omega_',['../structmc__planning_1_1Pendulum.html#a63859c8fe63cfe27200d7464dab43f21',1,'mc_planning::Pendulum::omega_()'],['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a9eccc2bdf062ef36fc1f2647bc87f6d5',1,'mc_tasks::lipm_stabilizer::StabilizerTask::omega_()']]],
   ['openp',['openP',['../structmc__control_1_1Gripper.html#aa6a495f7018cd71dcc4d366df8807cf2',1,'mc_control::Gripper']]],
   ['optionalgui_5f',['optionalGUI_',['../structmc__control_1_1fsm_1_1StabilizerStandingState.html#a9d66966f079f819c302800335ed8aeaa',1,'mc_control::fsm::StabilizerStandingState']]],

@@ -110,6 +110,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1ForceSensor.html">ForceSensor</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Frame.html">Frame</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1GripperSurface.html">GripperSurface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Mimic.html">Mimic</a></td></tr>
@@ -124,6 +126,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1QuadraticGenerator.html">QuadraticGenerator</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html">Robot</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotLoader.html">RobotLoader</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> instances from shared libraries.  <a href="structmc__rbdyn_1_1RobotLoader.html#details">More...</a><br /></td></tr>
@@ -151,6 +155,18 @@ Typedefs</h2></td></tr>
 <tr class="separator:a243aca157f29f1aebb2c1210ac166a83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1e86054c466a23bfdcb3470f71c8aad"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#aa1e86054c466a23bfdcb3470f71c8aad">SensorPtr</a> = <a class="el" href="namespacemc__rbdyn.html#a356f67585abd89ae94368d4644d6e865">DevicePtr</a></td></tr>
 <tr class="separator:aa1e86054c466a23bfdcb3470f71c8aad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac024daf249dfc12f828218d5c2410b4c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#ac024daf249dfc12f828218d5c2410b4c">RobotsPtr</a> = std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &gt;</td></tr>
+<tr class="separator:ac024daf249dfc12f828218d5c2410b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae201c3229c7e6f97eebcda8db1d4233d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#ae201c3229c7e6f97eebcda8db1d4233d">RobotPtr</a> = std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Robot.html">Robot</a> &gt;</td></tr>
+<tr class="separator:ae201c3229c7e6f97eebcda8db1d4233d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a52a2394099019321a0411da30ea5f4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a5a52a2394099019321a0411da30ea5f4">RobotFramePtr</a> = std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a> &gt;</td></tr>
+<tr class="separator:a5a52a2394099019321a0411da30ea5f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d750a36f101823e43d108ec5c8231cc"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a1d750a36f101823e43d108ec5c8231cc">ConstRobotFramePtr</a> = std::shared_ptr&lt; const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a> &gt;</td></tr>
+<tr class="separator:a1d750a36f101823e43d108ec5c8231cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6124c67ac9b136813eae7227f70c17cc"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a6124c67ac9b136813eae7227f70c17cc">FramePtr</a> = std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Frame.html">Frame</a> &gt;</td></tr>
+<tr class="separator:a6124c67ac9b136813eae7227f70c17cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dbebe10445fe21fb342ac391a10ba24"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a2dbebe10445fe21fb342ac391a10ba24">ConstFramePtr</a> = std::shared_ptr&lt; const <a class="el" href="structmc__rbdyn_1_1Frame.html">Frame</a> &gt;</td></tr>
+<tr class="separator:a2dbebe10445fe21fb342ac391a10ba24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3517607389b845ee6ffdee65cbc8a63"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#ac3517607389b845ee6ffdee65cbc8a63">S_ObjectPtr</a> = std::shared_ptr&lt; sch::S_Object &gt;</td></tr>
 <tr class="separator:ac3517607389b845ee6ffdee65cbc8a63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af67e459a90b9a864418fca7d55d959a3"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#af67e459a90b9a864418fca7d55d959a3">RobotModulePtr</a></td></tr>
@@ -192,20 +208,14 @@ Functions</h2></td></tr>
 <tr class="memitem:aa4f40fc0642de7f1debd053f9c5d393f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a5b8304a1ea905fa0378a31dcf65b1460">RobotModule::bounds_t</a> <a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#aa4f40fc0642de7f1debd053f9c5d393f">urdf_limits_to_bounds</a> (const rbd::parsers::Limits &amp;limits)</td></tr>
 <tr class="memdesc:aa4f40fc0642de7f1debd053f9c5d393f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts limits provided by RBDyn parsers to bounds.  <a href="#aa4f40fc0642de7f1debd053f9c5d393f">More...</a><br /></td></tr>
 <tr class="separator:aa4f40fc0642de7f1debd053f9c5d393f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acaac690d2e96da3b8254fecefe1cccf9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#acaac690d2e96da3b8254fecefe1cccf9">loadRobot</a> (const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;module, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:acaac690d2e96da3b8254fecefe1cccf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f3fbf6971706876454da1142aadb193"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a7f3fbf6971706876454da1142aadb193">loadRobot</a> (const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;module, const std::string &amp;surfaceDir, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:a7f3fbf6971706876454da1142aadb193"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90beb4c07fba317439956363ae429538"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a90beb4c07fba317439956363ae429538">loadRobots</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &gt;&gt; &amp;modules)</td></tr>
-<tr class="separator:a90beb4c07fba317439956363ae429538"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1506cb6d1d95f69cae2f1a6c072fa406"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a1506cb6d1d95f69cae2f1a6c072fa406">loadRobots</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &gt;&gt; &amp;modules, const std::vector&lt; std::string &gt; &amp;surfaceDirs)</td></tr>
-<tr class="separator:a1506cb6d1d95f69cae2f1a6c072fa406"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afad00246a5238eb31795027c0acad7a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#afad00246a5238eb31795027c0acad7a9">loadRobotAndEnv</a> (const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;module, const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;envModule, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:afad00246a5238eb31795027c0acad7a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21e283b3c61bc0db909f2a950bf4384a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a21e283b3c61bc0db909f2a950bf4384a">loadRobotAndEnv</a> (const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;module, const std::string &amp;surfaceDir, const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;envModule, const std::string &amp;envSurfaceDir, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:a21e283b3c61bc0db909f2a950bf4384a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e415d422767b48828fbf2e282b66041"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a8e415d422767b48828fbf2e282b66041">loadRobotFromUrdf</a> (const std::string &amp;name, const std::string &amp;urdf, bool withVirtualLinks=true, const std::vector&lt; std::string &gt; &amp;filteredLinks={}, bool fixed=false, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:a8e415d422767b48828fbf2e282b66041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21b38aae31d7154631b41aafcec98326"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#ac024daf249dfc12f828218d5c2410b4c">RobotsPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a21b38aae31d7154631b41aafcec98326">loadRobot</a> (const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;module, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
+<tr class="separator:a21b38aae31d7154631b41aafcec98326"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4db76cbebcf7d350a4b7182cccfbe399"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#ac024daf249dfc12f828218d5c2410b4c">RobotsPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a4db76cbebcf7d350a4b7182cccfbe399">loadRobots</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &gt;&gt; &amp;modules)</td></tr>
+<tr class="separator:a4db76cbebcf7d350a4b7182cccfbe399"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4fd3f7bf8df752d0d8260c0e55ed1cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#ac024daf249dfc12f828218d5c2410b4c">RobotsPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#ab4fd3f7bf8df752d0d8260c0e55ed1cc">loadRobotAndEnv</a> (const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;module, const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;envModule, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
+<tr class="separator:ab4fd3f7bf8df752d0d8260c0e55ed1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca0f0b796b6f6ff8c4a9b27222c73e77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#ac024daf249dfc12f828218d5c2410b4c">RobotsPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#aca0f0b796b6f6ff8c4a9b27222c73e77">loadRobotFromUrdf</a> (const std::string &amp;name, const std::string &amp;urdf, bool withVirtualLinks=true, const std::vector&lt; std::string &gt; &amp;filteredLinks={}, bool fixed=false, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
+<tr class="separator:aca0f0b796b6f6ff8c4a9b27222c73e77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f178afee4c03533ae15c4dc04c143e2"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a5f178afee4c03533ae15c4dc04c143e2">rpyToMat</a> (const double &amp;r, const double &amp;p, const double &amp;y)</td></tr>
 <tr class="separator:a5f178afee4c03533ae15c4dc04c143e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04f15be86a9827b0d076764f344406ab"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a04f15be86a9827b0d076764f344406ab">rpyToMat</a> (const Eigen::Vector3d &amp;rpy)</td></tr>
@@ -238,7 +248,8 @@ Functions</h2></td></tr>
 <tr class="separator:aa9d4155584b04e51fdb5c24f5739fc24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Interface used to load robots </p>
+<div class="textblock"><p>Forward declarations for the <a class="el" href="namespacemc__rbdyn.html">mc_rbdyn</a> library</p>
+<p>Interface used to load robots </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
 <a id="a728d731db2806e7673f67b958970e558"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a728d731db2806e7673f67b958970e558">&#9670;&nbsp;</a></span>BodySensorVector</h2>
@@ -268,6 +279,34 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a2dbebe10445fe21fb342ac391a10ba24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dbebe10445fe21fb342ac391a10ba24">&#9670;&nbsp;</a></span>ConstFramePtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacemc__rbdyn.html#a2dbebe10445fe21fb342ac391a10ba24">mc_rbdyn::ConstFramePtr</a> = typedef std::shared_ptr&lt;const <a class="el" href="structmc__rbdyn_1_1Frame.html">Frame</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1d750a36f101823e43d108ec5c8231cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d750a36f101823e43d108ec5c8231cc">&#9670;&nbsp;</a></span>ConstRobotFramePtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacemc__rbdyn.html#a1d750a36f101823e43d108ec5c8231cc">mc_rbdyn::ConstRobotFramePtr</a> = typedef std::shared_ptr&lt;const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a356f67585abd89ae94368d4644d6e865"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a356f67585abd89ae94368d4644d6e865">&#9670;&nbsp;</a></span>DevicePtr</h2>
 
@@ -276,6 +315,34 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="namespacemc__rbdyn.html#a356f67585abd89ae94368d4644d6e865">mc_rbdyn::DevicePtr</a> = typedef std::unique_ptr&lt;<a class="el" href="structmc__rbdyn_1_1Device.html">Device</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6124c67ac9b136813eae7227f70c17cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6124c67ac9b136813eae7227f70c17cc">&#9670;&nbsp;</a></span>FramePtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacemc__rbdyn.html#a6124c67ac9b136813eae7227f70c17cc">mc_rbdyn::FramePtr</a> = typedef std::shared_ptr&lt;<a class="el" href="structmc__rbdyn_1_1Frame.html">Frame</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5a52a2394099019321a0411da30ea5f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a52a2394099019321a0411da30ea5f4">&#9670;&nbsp;</a></span>RobotFramePtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacemc__rbdyn.html#a5a52a2394099019321a0411da30ea5f4">mc_rbdyn::RobotFramePtr</a> = typedef std::shared_ptr&lt;<a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -304,6 +371,34 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="namespacemc__rbdyn.html#a95605f5cb57b7c5b39027072bedbbc04">mc_rbdyn::RobotModuleVector</a> = typedef std::vector&lt;<a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a>, Eigen::aligned_allocator&lt;<a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a>&gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae201c3229c7e6f97eebcda8db1d4233d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae201c3229c7e6f97eebcda8db1d4233d">&#9670;&nbsp;</a></span>RobotPtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacemc__rbdyn.html#ae201c3229c7e6f97eebcda8db1d4233d">mc_rbdyn::RobotPtr</a> = typedef std::shared_ptr&lt;<a class="el" href="structmc__rbdyn_1_1Robot.html">Robot</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac024daf249dfc12f828218d5c2410b4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac024daf249dfc12f828218d5c2410b4c">&#9670;&nbsp;</a></span>RobotsPtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacemc__rbdyn.html#ac024daf249dfc12f828218d5c2410b4c">mc_rbdyn::RobotsPtr</a> = typedef std::shared_ptr&lt;<a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -553,14 +648,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="acaac690d2e96da3b8254fecefe1cccf9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acaac690d2e96da3b8254fecefe1cccf9">&#9670;&nbsp;</a></span>loadRobot() <span class="overload">[1/2]</span></h2>
+<a id="a21b38aae31d7154631b41aafcec98326"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21b38aae31d7154631b41aafcec98326">&#9670;&nbsp;</a></span>loadRobot()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt;<a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a>&gt; mc_rbdyn::loadRobot </td>
+          <td class="memname"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#ac024daf249dfc12f828218d5c2410b4c">RobotsPtr</a> mc_rbdyn::loadRobot </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;&#160;</td>
           <td class="paramname"><em>module</em>, </td>
@@ -587,54 +682,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7f3fbf6971706876454da1142aadb193"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f3fbf6971706876454da1142aadb193">&#9670;&nbsp;</a></span>loadRobot() <span class="overload">[2/2]</span></h2>
+<a id="ab4fd3f7bf8df752d0d8260c0e55ed1cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4fd3f7bf8df752d0d8260c0e55ed1cc">&#9670;&nbsp;</a></span>loadRobotAndEnv()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt;<a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a>&gt; mc_rbdyn::loadRobot </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;&#160;</td>
-          <td class="paramname"><em>module</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>surfaceDir</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">sva::PTransformd *&#160;</td>
-          <td class="paramname"><em>base</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>baseName</em> = <code>&quot;&quot;</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="afad00246a5238eb31795027c0acad7a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afad00246a5238eb31795027c0acad7a9">&#9670;&nbsp;</a></span>loadRobotAndEnv() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt;<a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a>&gt; mc_rbdyn::loadRobotAndEnv </td>
+          <td class="memname"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#ac024daf249dfc12f828218d5c2410b4c">RobotsPtr</a> mc_rbdyn::loadRobotAndEnv </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;&#160;</td>
           <td class="paramname"><em>module</em>, </td>
@@ -667,66 +722,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a21e283b3c61bc0db909f2a950bf4384a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21e283b3c61bc0db909f2a950bf4384a">&#9670;&nbsp;</a></span>loadRobotAndEnv() <span class="overload">[2/2]</span></h2>
+<a id="aca0f0b796b6f6ff8c4a9b27222c73e77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca0f0b796b6f6ff8c4a9b27222c73e77">&#9670;&nbsp;</a></span>loadRobotFromUrdf()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt;<a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a>&gt; mc_rbdyn::loadRobotAndEnv </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;&#160;</td>
-          <td class="paramname"><em>module</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>surfaceDir</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;&#160;</td>
-          <td class="paramname"><em>envModule</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>envSurfaceDir</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">sva::PTransformd *&#160;</td>
-          <td class="paramname"><em>base</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>baseName</em> = <code>&quot;&quot;</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8e415d422767b48828fbf2e282b66041"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e415d422767b48828fbf2e282b66041">&#9670;&nbsp;</a></span>loadRobotFromUrdf()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt;<a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a>&gt; mc_rbdyn::loadRobotFromUrdf </td>
+          <td class="memname"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#ac024daf249dfc12f828218d5c2410b4c">RobotsPtr</a> mc_rbdyn::loadRobotFromUrdf </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em>, </td>
@@ -777,46 +780,18 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a90beb4c07fba317439956363ae429538"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90beb4c07fba317439956363ae429538">&#9670;&nbsp;</a></span>loadRobots() <span class="overload">[1/2]</span></h2>
+<a id="a4db76cbebcf7d350a4b7182cccfbe399"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4db76cbebcf7d350a4b7182cccfbe399">&#9670;&nbsp;</a></span>loadRobots()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt;<a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a>&gt; mc_rbdyn::loadRobots </td>
+          <td class="memname"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#ac024daf249dfc12f828218d5c2410b4c">RobotsPtr</a> mc_rbdyn::loadRobots </td>
           <td>(</td>
           <td class="paramtype">const std::vector&lt; std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &gt;&gt; &amp;&#160;</td>
           <td class="paramname"><em>modules</em></td><td>)</td>
           <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1506cb6d1d95f69cae2f1a6c072fa406"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1506cb6d1d95f69cae2f1a6c072fa406">&#9670;&nbsp;</a></span>loadRobots() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt;<a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a>&gt; mc_rbdyn::loadRobots </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>modules</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>surfaceDirs</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1425,7 +1400,7 @@ rotation vectors", i.e. we need to transpose/flip signs from Equation (290) of t
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">netTotalWrench</td><td></td></tr>
-    <tr><td class="paramname">zmpFrame</td><td>Frame used for ZMP computation. The convention here is that the contact frame should have its z-axis pointing in the normal direction of the contact towards the robot.</td></tr>
+    <tr><td class="paramname">zmpFrame</td><td><a class="el" href="structmc__rbdyn_1_1Frame.html">Frame</a> used for ZMP computation. The convention here is that the contact frame should have its z-axis pointing in the normal direction of the contact towards the robot.</td></tr>
   </table>
   </dd>
 </dl>

@@ -108,8 +108,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:abcd47fff771a0c7357bd5b682398b3df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff11f05b8b3f2139db8ae2d95ce4afee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#aff11f05b8b3f2139db8ae2d95ce4afee">addBoundedSpeed</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver, const std::string &amp;bodyName, const Eigen::Vector3d &amp;bodyPoint, const Eigen::MatrixXd &amp;dof, const Eigen::VectorXd &amp;lowerSpeed, const Eigen::VectorXd &amp;upperSpeed)</td></tr>
 <tr class="separator:aff11f05b8b3f2139db8ae2d95ce4afee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa687c05b49f7f9e74ce03aae501bf6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#afa687c05b49f7f9e74ce03aae501bf6c">addBoundedSpeed</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver, const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;frame, const Eigen::MatrixXd &amp;dof, const Eigen::VectorXd &amp;speed)</td></tr>
+<tr class="separator:afa687c05b49f7f9e74ce03aae501bf6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a668d2463b1d9a83acabf416f584b685c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#a668d2463b1d9a83acabf416f584b685c">addBoundedSpeed</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver, const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;frame, const Eigen::MatrixXd &amp;dof, const Eigen::VectorXd &amp;lowerSpeed, const Eigen::VectorXd &amp;upperSpeed)</td></tr>
+<tr class="separator:a668d2463b1d9a83acabf416f584b685c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b85799a5bb8df9c5344cd9d3f630708"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#a5b85799a5bb8df9c5344cd9d3f630708">removeBoundedSpeed</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver, const std::string &amp;bodyName)</td></tr>
 <tr class="separator:a5b85799a5bb8df9c5344cd9d3f630708"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e22d561dc863cc8d50cb47ce8ba53b2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#a4e22d561dc863cc8d50cb47ce8ba53b2">removeBoundedSpeed</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver, const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;frame)</td></tr>
+<tr class="separator:a4e22d561dc863cc8d50cb47ce8ba53b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70c84d6defba583690d9175ca4cf192d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#a70c84d6defba583690d9175ca4cf192d">nrBoundedSpeeds</a> () const</td></tr>
 <tr class="separator:a70c84d6defba583690d9175ca4cf192d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0fffcd8e01c61ced64cf5371999acb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#ab0fffcd8e01c61ced64cf5371999acb7">reset</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver)</td></tr>
@@ -157,10 +163,13 @@ Public Member Functions</h2></td></tr>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="abcd47fff771a0c7357bd5b682398b3df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abcd47fff771a0c7357bd5b682398b3df">&#9670;&nbsp;</a></span>addBoundedSpeed() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abcd47fff771a0c7357bd5b682398b3df">&#9670;&nbsp;</a></span>addBoundedSpeed() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void mc_solver::BoundedSpeedConstr::addBoundedSpeed </td>
@@ -198,12 +207,28 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+<p>Add a fixed speed constraint on the given body</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solver</td><td>Solver where this constraint exists</td></tr>
+    <tr><td class="paramname">bodyName</td><td>Body affected by this constraint</td></tr>
+    <tr><td class="paramname">bodyPoint</td><td>Point on the given body to affect</td></tr>
+    <tr><td class="paramname">dof</td><td>Can select degrees of freedom, must be of size (6, n), 1 &lt;= n &lt;= 6</td></tr>
+    <tr><td class="paramname">speed</td><td>Target speed on the selected dof, must of be of size n </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 <a id="aff11f05b8b3f2139db8ae2d95ce4afee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff11f05b8b3f2139db8ae2d95ce4afee">&#9670;&nbsp;</a></span>addBoundedSpeed() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aff11f05b8b3f2139db8ae2d95ce4afee">&#9670;&nbsp;</a></span>addBoundedSpeed() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -251,6 +276,133 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Add a bounded speed constraint on the given body</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solver</td><td>Solver where this constraint exists</td></tr>
+    <tr><td class="paramname">bodyName</td><td>Body affected by this constraint</td></tr>
+    <tr><td class="paramname">bodyPoint</td><td>Point on the given body to affect</td></tr>
+    <tr><td class="paramname">dof</td><td>Can select degrees of freedom, must be of size (6, n), 1 &lt;= n &lt;= 6</td></tr>
+    <tr><td class="paramname">lowerSpeed</td><td>Lower bound speed on the selected dof, must of be of size n</td></tr>
+    <tr><td class="paramname">upperSpeed</td><td>Upper bound speed on the selected dof, must of be of size n </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afa687c05b49f7f9e74ce03aae501bf6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa687c05b49f7f9e74ce03aae501bf6c">&#9670;&nbsp;</a></span>addBoundedSpeed() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::BoundedSpeedConstr::addBoundedSpeed </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;&#160;</td>
+          <td class="paramname"><em>frame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::MatrixXd &amp;&#160;</td>
+          <td class="paramname"><em>dof</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
+          <td class="paramname"><em>speed</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Add a fixed speed constraint on the given frame</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solver</td><td>Solver where this constraint exists</td></tr>
+    <tr><td class="paramname">frame</td><td>Frame affected by this constraint</td></tr>
+    <tr><td class="paramname">dof</td><td>Can select degrees of freedom, must be of size (6, n), 1 &lt;= n &lt;= 6</td></tr>
+    <tr><td class="paramname">speed</td><td>Target speed on the selected dof, must of be of size n </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a668d2463b1d9a83acabf416f584b685c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a668d2463b1d9a83acabf416f584b685c">&#9670;&nbsp;</a></span>addBoundedSpeed() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::BoundedSpeedConstr::addBoundedSpeed </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;&#160;</td>
+          <td class="paramname"><em>frame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::MatrixXd &amp;&#160;</td>
+          <td class="paramname"><em>dof</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
+          <td class="paramname"><em>lowerSpeed</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
+          <td class="paramname"><em>upperSpeed</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Add a fixed speed constraint on the given frame</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solver</td><td>Solver where this constraint exists</td></tr>
+    <tr><td class="paramname">frame</td><td>Frame affected by this constraint</td></tr>
+    <tr><td class="paramname">dof</td><td>Can select degrees of freedom, must be of size (6, n), 1 &lt;= n &lt;= 6</td></tr>
+    <tr><td class="paramname">lowerSpeed</td><td>Lower bound speed on the selected dof, must of be of size n</td></tr>
+    <tr><td class="paramname">upperSpeed</td><td>Upper bound speed on the selected dof, must of be of size n </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -318,7 +470,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a5b85799a5bb8df9c5344cd9d3f630708"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b85799a5bb8df9c5344cd9d3f630708">&#9670;&nbsp;</a></span>removeBoundedSpeed()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b85799a5bb8df9c5344cd9d3f630708">&#9670;&nbsp;</a></span>removeBoundedSpeed() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -342,6 +494,36 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Remove all constraints associated to a body </p>
+
+</div>
+</div>
+<a id="a4e22d561dc863cc8d50cb47ce8ba53b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e22d561dc863cc8d50cb47ce8ba53b2">&#9670;&nbsp;</a></span>removeBoundedSpeed() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_solver::BoundedSpeedConstr::removeBoundedSpeed </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;&#160;</td>
+          <td class="paramname"><em>frame</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Remove all constraints associated to a frame </p>
 
 </div>
 </div>

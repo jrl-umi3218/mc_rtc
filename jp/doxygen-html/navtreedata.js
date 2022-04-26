@@ -42,23 +42,24 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AbscissaOrdinate_8h.html",
-"Observer_8h.html#a721e422633105cbc8e8e38736212705c",
-"dir_e6b7f2c290ec347c099e5f45d81956a4.html",
-"mc__control_2fsm_2api_8h_source.html",
-"plot_2types_8h.html#ae8d436e1212bee55dfdb14d50b0d6be9aeb6d8ae6f20283755b339c0dc273988b",
-"structmc__control_1_1MCController.html#a1ac3cbc244e98473e90b06e4c187aec0",
-"structmc__control_1_1fsm_1_1Controller.html#afc21d62af737dc80c7b62b1fbc9c742e",
-"structmc__filter_1_1ExponentialMovingAverage.html#a59a37436a454f4caa5d9ba49ab85b2e8",
-"structmc__rbdyn_1_1BodySensor.html#aaf978a01b2013293156e3a825b58f868",
-"structmc__rbdyn_1_1Robot.html#a81e766814295ca73b3bf6da8e90f4421",
-"structmc__rbdyn_1_1Surface.html#a3f8d3cd62afe2e13709b86f5b027a699",
-"structmc__rtc_1_1ConfigurationArrayIterator.html#a5beff7f5439023c5c17f8a0008413c49",
-"structmc__rtc_1_1gui_1_1Element.html#ab8e71ecce7dab695777a1a11faf119f7",
-"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html#a3d6f033510ac8d8a5a05b56adf3c19e2",
-"structmc__solver_1_1RobotEnvCollisionsConstraint.html#a1a2afa771fb34c646081db42ea78f549",
-"structmc__tasks_1_1OrientationTask.html#a97da00bdf087f04a99473553efaa6390",
-"structmc__tasks_1_1force_1_1AdmittanceTask.html#ae8a55ef8c9d0173de5004c2dc8c3f1d3",
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ab459d6ba167857323daefe6a3fbef750"
+"ObserverMacros_8h_source.html",
+"dir_8608c29ce9c2a26c1a7ea06a049e1e26.html",
+"logging_8h.html#aeb1d99e566cb5c454074579fcfa712f4",
+"plot_2Polygon_8h.html",
+"structmc__control_1_1Gripper.html#ad45a2f57cc804d0a072e98b61946de48",
+"structmc__control_1_1fsm_1_1Controller.html#a622f191e03407a8b93421523d8fed961",
+"structmc__control_1_1fsm_1_1StateFactory_1_1StateConfiguration.html#a7abaa51726b1ebe2a43e495e98efb7ac",
+"structmc__rbdyn_1_1Base.html",
+"structmc__rbdyn_1_1Robot.html#a472551d6b434e3e5a2239b35cffc639b",
+"structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety.html#abc220529be43405fe7ce241a436568ce",
+"structmc__rtc_1_1Configuration.html#a548367a2c7a77ee3e9a8fae5dd955767",
+"structmc__rtc_1_1RobotPublisher.html#a848a9be5477c8e775ec83f546aab552d",
+"structmc__rtc_1_1gui_1_1details_1_1CheckReturnType.html",
+"structmc__solver_1_1DynamicsConstraint.html",
+"structmc__tasks_1_1CoMTask.html#ad673a413597c928fe6b631c7d778e650",
+"structmc__tasks_1_1SplineTrajectoryTask.html#afa99dd9c136ee9039a844a4ffb814640",
+"structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html#adcec6e04f8a148a886ddc9612de460c3",
+"structmc__trajectory_1_1Spline.html#a0eccc7db9edfd9fe6691b380ae4b3f1c"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

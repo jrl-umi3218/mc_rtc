@@ -91,6 +91,8 @@ Collaboration diagram for mc_rbdyn::RobotModule:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html">FrameDescription</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule_1_1Gripper.html">Gripper</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -169,6 +171,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aacf9d200189fd184ab6fe0b88cf16fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bbfe1ae62d9e98aa1bbbc1c518623f4"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1DevicePtrVector.html">DevicePtrVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a3bbfe1ae62d9e98aa1bbbc1c518623f4">devices</a> () const</td></tr>
 <tr class="separator:a3bbfe1ae62d9e98aa1bbbc1c518623f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d603f118a4a09c26a287320b3d6f212"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html">FrameDescription</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a7d603f118a4a09c26a287320b3d6f212">frames</a> () const noexcept</td></tr>
+<tr class="separator:a7d603f118a4a09c26a287320b3d6f212"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -240,6 +244,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a581c9d2efa5a52e3850b8858ac0b58c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6b79da885f0935ee568f416025466e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1DevicePtrVector.html">DevicePtrVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#ab6b79da885f0935ee568f416025466e0">_devices</a></td></tr>
 <tr class="separator:ab6b79da885f0935ee568f416025466e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72ac49d4249ad8b6d66d85e4d35a2755"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html">FrameDescription</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a72ac49d4249ad8b6d66d85e4d35a2755">_frames</a></td></tr>
+<tr class="separator:a72ac49d4249ad8b6d66d85e4d35a2755"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a10b7fc984b3fa946f5c59a4174a366b8"></a>
@@ -868,6 +874,32 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a7d603f118a4a09c26a287320b3d6f212"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d603f118a4a09c26a287320b3d6f212">&#9670;&nbsp;</a></span>frames()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;<a class="el" href="structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html">FrameDescription</a>&gt;&amp; mc_rbdyn::RobotModule::frames </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns a list of robot frames supported by this module </p>
+
+</div>
+</div>
 <a id="a10f22df2fe618e1d7ee0db3edec87f72"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a10f22df2fe618e1d7ee0db3edec87f72">&#9670;&nbsp;</a></span>grippers()</h2>
 
@@ -1421,6 +1453,21 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a17aa1885f3db7c16c3e06b2525be82d4">forceSensors()</a> </dd></dl>
+
+</div>
+</div>
+<a id="a72ac49d4249ad8b6d66d85e4d35a2755"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72ac49d4249ad8b6d66d85e4d35a2755">&#9670;&nbsp;</a></span>_frames</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html">FrameDescription</a>&gt; mc_rbdyn::RobotModule::_frames</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a7d603f118a4a09c26a287320b3d6f212">frames()</a> </dd></dl>
 
 </div>
 </div>

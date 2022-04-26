@@ -35,5 +35,8 @@ var namespacemc__rtc =
     [ "MessagePackBuilder", "structmc__rtc_1_1MessagePackBuilder.html", "structmc__rtc_1_1MessagePackBuilder" ],
     [ "ObjectLoader", "structmc__rtc_1_1ObjectLoader.html", "structmc__rtc_1_1ObjectLoader" ],
     [ "RobotPublisher", "structmc__rtc_1_1RobotPublisher.html", "structmc__rtc_1_1RobotPublisher" ],
-    [ "ROSBridge", "structmc__rtc_1_1ROSBridge.html", null ]
+    [ "ROSBridge", "structmc__rtc_1_1ROSBridge.html", null ],
+    [ "shared", "structmc__rtc_1_1shared.html", "structmc__rtc_1_1shared" ],
+    [ "SharedPtrVectorConstIterator", "structmc__rtc_1_1SharedPtrVectorConstIterator.html", "structmc__rtc_1_1SharedPtrVectorConstIterator" ],
+    [ "SharedPtrVectorIterator", "structmc__rtc_1_1SharedPtrVectorIterator.html", "structmc__rtc_1_1SharedPtrVectorIterator" ]
 ];

@@ -3,6 +3,7 @@ digraph "mc_tasks::VectorOrientationTask"
  // INTERACTIVE_SVG=YES
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
   Node6 [label="mc_tasks::VectorOrientationTask",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node7 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 [label="mc_tasks::TrajectoryTask\lGeneric\< tasks::qp::VectorOrientation\lTask \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1TrajectoryTaskGeneric.html"];
@@ -10,4 +11,8 @@ digraph "mc_tasks::VectorOrientationTask"
   Node8 [label="mc_tasks::MetaTask",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1MetaTask.html",tooltip="Represents a generic task. "];
   Node9 -> Node7 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" robots" ,fontname="Helvetica"];
   Node9 [label="mc_rbdyn::Robots",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1Robots.html"];
+  Node10 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="mc_rtc::shared\< Robots \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1shared.html"];
+  Node11 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="std::conditional\< std\l::is_same\< void , void\l \>::value, std::enable\l_shared_from_this\< Robots\l  \>, void  \>::type",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

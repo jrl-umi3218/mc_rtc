@@ -1,9 +1,11 @@
 var structmc__tasks_1_1force_1_1CoPTask =
 [
-    [ "CoPTask", "structmc__tasks_1_1force_1_1CoPTask.html#a3dedcf002fe1b00d9245ebfa8991e203", null ],
+    [ "CoPTask", "structmc__tasks_1_1force_1_1CoPTask.html#a675434671210a61d2ae96517010543ba", null ],
+    [ "CoPTask", "structmc__tasks_1_1force_1_1CoPTask.html#aae9653f9ecdd305a178c895cc4710d81", null ],
     [ "addToGUI", "structmc__tasks_1_1force_1_1CoPTask.html#a29acffdd2df70a8ec753054414951586", null ],
     [ "addToLogger", "structmc__tasks_1_1force_1_1CoPTask.html#a88921c026455b21462952325fe1a0737", null ],
     [ "buildCompletionCriteria", "structmc__tasks_1_1force_1_1CoPTask.html#a7467766fa42546e99c0d253aac7af98d", null ],
+    [ "load", "structmc__tasks_1_1force_1_1CoPTask.html#ade36a58f912236a75c7aa33bdf3551b1", null ],
     [ "measuredCoP", "structmc__tasks_1_1force_1_1CoPTask.html#acf756c0e7e6aa1fbb60feb6491427411", null ],
     [ "measuredCoPW", "structmc__tasks_1_1force_1_1CoPTask.html#a16f95e7ea6a037950ea6b8eb5e57b58d", null ],
     [ "reset", "structmc__tasks_1_1force_1_1CoPTask.html#a08e79c703fb2f70db56a7c64e27acd02", null ],

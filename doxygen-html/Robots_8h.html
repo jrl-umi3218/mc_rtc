@@ -78,7 +78,8 @@ $(document).ready(function(){initNavTree('Robots_8h.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="mc__rbdyn_2Robot_8h_source.html">mc_rbdyn/Robot.h</a>&gt;</code><br />
-<code>#include &lt;mc/rtc/deprecated.hh&gt;</code><br />
+<code>#include &lt;<a class="el" href="iterators_8h_source.html">mc_rtc/iterators.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="shared_8h_source.html">mc_rtc/shared.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Robots.h:</div>
 <div class="dyncontent">
@@ -100,6 +101,8 @@ This graph shows which files directly or indirectly include this file:</div>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html">mc_rbdyn::Robots::NewRobotsToken</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -108,20 +111,14 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acaac690d2e96da3b8254fecefe1cccf9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; Robots &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#acaac690d2e96da3b8254fecefe1cccf9">mc_rbdyn::loadRobot</a> (const RobotModule &amp;module, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:acaac690d2e96da3b8254fecefe1cccf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f3fbf6971706876454da1142aadb193"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt; Robots &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a7f3fbf6971706876454da1142aadb193">mc_rbdyn::loadRobot</a> (const RobotModule &amp;module, const std::string &amp;surfaceDir, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:a7f3fbf6971706876454da1142aadb193"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90beb4c07fba317439956363ae429538"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; Robots &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a90beb4c07fba317439956363ae429538">mc_rbdyn::loadRobots</a> (const std::vector&lt; std::shared_ptr&lt; RobotModule &gt;&gt; &amp;modules)</td></tr>
-<tr class="separator:a90beb4c07fba317439956363ae429538"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1506cb6d1d95f69cae2f1a6c072fa406"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt; Robots &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a1506cb6d1d95f69cae2f1a6c072fa406">mc_rbdyn::loadRobots</a> (const std::vector&lt; std::shared_ptr&lt; RobotModule &gt;&gt; &amp;modules, const std::vector&lt; std::string &gt; &amp;surfaceDirs)</td></tr>
-<tr class="separator:a1506cb6d1d95f69cae2f1a6c072fa406"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afad00246a5238eb31795027c0acad7a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; Robots &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#afad00246a5238eb31795027c0acad7a9">mc_rbdyn::loadRobotAndEnv</a> (const RobotModule &amp;module, const RobotModule &amp;envModule, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:afad00246a5238eb31795027c0acad7a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21e283b3c61bc0db909f2a950bf4384a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt; Robots &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a21e283b3c61bc0db909f2a950bf4384a">mc_rbdyn::loadRobotAndEnv</a> (const RobotModule &amp;module, const std::string &amp;surfaceDir, const RobotModule &amp;envModule, const std::string &amp;envSurfaceDir, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:a21e283b3c61bc0db909f2a950bf4384a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e415d422767b48828fbf2e282b66041"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; Robots &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a8e415d422767b48828fbf2e282b66041">mc_rbdyn::loadRobotFromUrdf</a> (const std::string &amp;name, const std::string &amp;urdf, bool withVirtualLinks=true, const std::vector&lt; std::string &gt; &amp;filteredLinks={}, bool fixed=false, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:a8e415d422767b48828fbf2e282b66041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21b38aae31d7154631b41aafcec98326"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> RobotsPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a21b38aae31d7154631b41aafcec98326">mc_rbdyn::loadRobot</a> (const RobotModule &amp;module, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
+<tr class="separator:a21b38aae31d7154631b41aafcec98326"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4db76cbebcf7d350a4b7182cccfbe399"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> RobotsPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a4db76cbebcf7d350a4b7182cccfbe399">mc_rbdyn::loadRobots</a> (const std::vector&lt; std::shared_ptr&lt; RobotModule &gt;&gt; &amp;modules)</td></tr>
+<tr class="separator:a4db76cbebcf7d350a4b7182cccfbe399"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4fd3f7bf8df752d0d8260c0e55ed1cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> RobotsPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#ab4fd3f7bf8df752d0d8260c0e55ed1cc">mc_rbdyn::loadRobotAndEnv</a> (const RobotModule &amp;module, const RobotModule &amp;envModule, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
+<tr class="separator:ab4fd3f7bf8df752d0d8260c0e55ed1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca0f0b796b6f6ff8c4a9b27222c73e77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> RobotsPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#aca0f0b796b6f6ff8c4a9b27222c73e77">mc_rbdyn::loadRobotFromUrdf</a> (const std::string &amp;name, const std::string &amp;urdf, bool withVirtualLinks=true, const std::vector&lt; std::string &gt; &amp;filteredLinks={}, bool fixed=false, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
+<tr class="separator:aca0f0b796b6f6ff8c4a9b27222c73e77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

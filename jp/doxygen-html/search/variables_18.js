@@ -6,5 +6,6 @@ var searchData=
   ['x_5f0_5fs',['X_0_s',['../structmc__rbdyn_1_1Base.html#ae50130e4a7f74e88220617d3080c65ec',1,'mc_rbdyn::Base']]],
   ['x_5fb0_5fs',['X_b0_s',['../structmc__rbdyn_1_1Base.html#a4fed34226bcc4165ddc6f39fab4dfacb',1,'mc_rbdyn::Base']]],
   ['x_5fb1_5fb2',['X_b1_b2',['../structmc__solver_1_1ContactMsg.html#a0c97419447f414150d56fb8cc8ea791e',1,'mc_solver::ContactMsg']]],
+  ['x_5fp_5ff',['X_p_f',['../structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html#a7c03e4cbce742f33818afd2b8930632a',1,'mc_rbdyn::RobotModule::FrameDescription']]],
   ['x_5fp_5fs_5f',['X_p_s_',['../structmc__rbdyn_1_1Device.html#a6a5a93f9a1e463e41da680695aca29c7',1,'mc_rbdyn::Device']]]
 ];

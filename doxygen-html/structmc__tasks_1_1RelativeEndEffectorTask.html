@@ -78,7 +78,7 @@ $(document).ready(function(){initNavTree('structmc__tasks_1_1RelativeEndEffector
 </div><!--header-->
 <div class="contents">
 
-<p>Controls an end-effector relatively to another body.  
+<p>Controls an end-effector relatively to another frame.  
  <a href="structmc__tasks_1_1RelativeEndEffectorTask.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="RelativeEndEffectorTask_8h_source.html">mc_tasks/RelativeEndEffectorTask.h</a>&gt;</code></p>
@@ -99,12 +99,12 @@ Collaboration diagram for mc_tasks::RelativeEndEffectorTask:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0158f37c233bf4855f02a8fdacd90729"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1RelativeEndEffectorTask.html#a0158f37c233bf4855f02a8fdacd90729">RelativeEndEffectorTask</a> (const std::string &amp;<a class="el" href="structmc__tasks_1_1EndEffectorTask.html#af41ef875b2819415282f6e416345e992">bodyName</a>, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a5faa0d85f0343702e3917d74b831dad7">robots</a>, unsigned int <a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a0e692c5560525128f88961376cc6272f">robotIndex</a>, const std::string &amp;relBodyName=&quot;&quot;, double stiffness=10.0, double weight=1000.0)</td></tr>
+<tr class="memitem:a942d75993cc492b3f7dc5d70b23447bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1RelativeEndEffectorTask.html#a942d75993cc492b3f7dc5d70b23447bd">RelativeEndEffectorTask</a> (const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;<a class="el" href="structmc__tasks_1_1EndEffectorTask.html#abc4d692ec2c4f8e958874c3fd5613468">frame</a>, const <a class="el" href="structmc__rbdyn_1_1Frame.html">mc_rbdyn::Frame</a> &amp;relative, double stiffness=10.0, double weight=1000.0)</td></tr>
+<tr class="memdesc:a942d75993cc492b3f7dc5d70b23447bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a942d75993cc492b3f7dc5d70b23447bd">More...</a><br /></td></tr>
+<tr class="separator:a942d75993cc492b3f7dc5d70b23447bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0158f37c233bf4855f02a8fdacd90729"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1RelativeEndEffectorTask.html#a0158f37c233bf4855f02a8fdacd90729">RelativeEndEffectorTask</a> (const std::string &amp;bodyName, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;robots, unsigned int robotIndex, const std::string &amp;relBodyName=&quot;&quot;, double stiffness=10.0, double weight=1000.0)</td></tr>
 <tr class="memdesc:a0158f37c233bf4855f02a8fdacd90729"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a0158f37c233bf4855f02a8fdacd90729">More...</a><br /></td></tr>
 <tr class="separator:a0158f37c233bf4855f02a8fdacd90729"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ebaa7565ec3bdd72adfa57cff39702a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1RelativeEndEffectorTask.html#a8ebaa7565ec3bdd72adfa57cff39702a">RelativeEndEffectorTask</a> (const std::string &amp;<a class="el" href="structmc__tasks_1_1EndEffectorTask.html#af41ef875b2819415282f6e416345e992">bodyName</a>, const Eigen::Vector3d &amp;bodyPoint, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a5faa0d85f0343702e3917d74b831dad7">robots</a>, unsigned int <a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a0e692c5560525128f88961376cc6272f">robotIndex</a>, const std::string &amp;relBodyName, double stiffness=10.0, double weight=1000.0)</td></tr>
-<tr class="memdesc:a8ebaa7565ec3bdd72adfa57cff39702a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with bodyPoint.  <a href="#a8ebaa7565ec3bdd72adfa57cff39702a">More...</a><br /></td></tr>
-<tr class="separator:a8ebaa7565ec3bdd72adfa57cff39702a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a793bf82d0b0f17d0e9c72cfdd131fa67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1RelativeEndEffectorTask.html#a793bf82d0b0f17d0e9c72cfdd131fa67">reset</a> () override</td></tr>
 <tr class="memdesc:a793bf82d0b0f17d0e9c72cfdd131fa67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the task.  <a href="#a793bf82d0b0f17d0e9c72cfdd131fa67">More...</a><br /></td></tr>
 <tr class="separator:a793bf82d0b0f17d0e9c72cfdd131fa67"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,12 +118,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a0566da4a9b213b3beda917e35cfb9ad2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current target positions.  <a href="#a0566da4a9b213b3beda917e35cfb9ad2">More...</a><br /></td></tr>
 <tr class="separator:a0566da4a9b213b3beda917e35cfb9ad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_structmc__tasks_1_1EndEffectorTask"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_structmc__tasks_1_1EndEffectorTask')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="structmc__tasks_1_1EndEffectorTask.html">mc_tasks::EndEffectorTask</a></td></tr>
-<tr class="memitem:a10e9ffa606532e24dc2be4c5561abfeb inherit pub_methods_structmc__tasks_1_1EndEffectorTask"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a10e9ffa606532e24dc2be4c5561abfeb">EndEffectorTask</a> (const std::string &amp;<a class="el" href="structmc__tasks_1_1EndEffectorTask.html#af41ef875b2819415282f6e416345e992">bodyName</a>, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a5faa0d85f0343702e3917d74b831dad7">robots</a>, unsigned int <a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a0e692c5560525128f88961376cc6272f">robotIndex</a>, double stiffness=2.0, double weight=1000.0)</td></tr>
+<tr class="memitem:abbe5297b7d097f9713fa8b3445f610c4 inherit pub_methods_structmc__tasks_1_1EndEffectorTask"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#abbe5297b7d097f9713fa8b3445f610c4">EndEffectorTask</a> (const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;<a class="el" href="structmc__tasks_1_1EndEffectorTask.html#abc4d692ec2c4f8e958874c3fd5613468">frame</a>, double stiffness=2.0, double weight=1000.0)</td></tr>
+<tr class="memdesc:abbe5297b7d097f9713fa8b3445f610c4 inherit pub_methods_structmc__tasks_1_1EndEffectorTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="structmc__tasks_1_1EndEffectorTask.html#abbe5297b7d097f9713fa8b3445f610c4">More...</a><br /></td></tr>
+<tr class="separator:abbe5297b7d097f9713fa8b3445f610c4 inherit pub_methods_structmc__tasks_1_1EndEffectorTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10e9ffa606532e24dc2be4c5561abfeb inherit pub_methods_structmc__tasks_1_1EndEffectorTask"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a10e9ffa606532e24dc2be4c5561abfeb">EndEffectorTask</a> (const std::string &amp;bodyName, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;robots, unsigned int robotIndex, double stiffness=2.0, double weight=1000.0)</td></tr>
 <tr class="memdesc:a10e9ffa606532e24dc2be4c5561abfeb inherit pub_methods_structmc__tasks_1_1EndEffectorTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="structmc__tasks_1_1EndEffectorTask.html#a10e9ffa606532e24dc2be4c5561abfeb">More...</a><br /></td></tr>
 <tr class="separator:a10e9ffa606532e24dc2be4c5561abfeb inherit pub_methods_structmc__tasks_1_1EndEffectorTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a972b369490a2a1ded5f627ee669e255b inherit pub_methods_structmc__tasks_1_1EndEffectorTask"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a972b369490a2a1ded5f627ee669e255b">EndEffectorTask</a> (const std::string &amp;<a class="el" href="structmc__tasks_1_1EndEffectorTask.html#af41ef875b2819415282f6e416345e992">bodyName</a>, const Eigen::Vector3d &amp;bodyPoint, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a5faa0d85f0343702e3917d74b831dad7">robots</a>, unsigned int <a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a0e692c5560525128f88961376cc6272f">robotIndex</a>, double stiffness=2.0, double weight=1000.0)</td></tr>
-<tr class="memdesc:a972b369490a2a1ded5f627ee669e255b inherit pub_methods_structmc__tasks_1_1EndEffectorTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with bodyPoint.  <a href="structmc__tasks_1_1EndEffectorTask.html#a972b369490a2a1ded5f627ee669e255b">More...</a><br /></td></tr>
-<tr class="separator:a972b369490a2a1ded5f627ee669e255b inherit pub_methods_structmc__tasks_1_1EndEffectorTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a566c97665b6d80c1d5e035bf13b74d3a inherit pub_methods_structmc__tasks_1_1EndEffectorTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a566c97665b6d80c1d5e035bf13b74d3a">dimWeight</a> (const Eigen::VectorXd &amp;dimW) override</td></tr>
 <tr class="memdesc:a566c97665b6d80c1d5e035bf13b74d3a inherit pub_methods_structmc__tasks_1_1EndEffectorTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the task's dimension weight vector.  <a href="structmc__tasks_1_1EndEffectorTask.html#a566c97665b6d80c1d5e035bf13b74d3a">More...</a><br /></td></tr>
 <tr class="separator:a566c97665b6d80c1d5e035bf13b74d3a inherit pub_methods_structmc__tasks_1_1EndEffectorTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -182,6 +182,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a2f2a05a42cb073ee71e2783b2a232ee6 inherit pro_methods_structmc__tasks_1_1EndEffectorTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac22521542e7b290629884352f9014f78 inherit pro_methods_structmc__tasks_1_1EndEffectorTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#ac22521542e7b290629884352f9014f78">removeFromLogger</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
 <tr class="separator:ac22521542e7b290629884352f9014f78 inherit pro_methods_structmc__tasks_1_1EndEffectorTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc4d692ec2c4f8e958874c3fd5613468 inherit pro_methods_structmc__tasks_1_1EndEffectorTask"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#abc4d692ec2c4f8e958874c3fd5613468">frame</a> () const noexcept</td></tr>
+<tr class="separator:abc4d692ec2c4f8e958874c3fd5613468 inherit pro_methods_structmc__tasks_1_1EndEffectorTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_structmc__tasks_1_1MetaTask"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_structmc__tasks_1_1MetaTask')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="structmc__tasks_1_1MetaTask.html">mc_tasks::MetaTask</a></td></tr>
 <tr class="memitem:a44d85f3f65abc8a5f8965efec40ebe7d inherit pro_methods_structmc__tasks_1_1MetaTask"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#a44d85f3f65abc8a5f8965efec40ebe7d">removeFromGUI</a> (<a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
 <tr class="separator:a44d85f3f65abc8a5f8965efec40ebe7d inherit pro_methods_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -191,18 +193,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_attribs_structmc__tasks_1_1EndEffectorTask"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_structmc__tasks_1_1EndEffectorTask')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="structmc__tasks_1_1EndEffectorTask.html">mc_tasks::EndEffectorTask</a></td></tr>
-<tr class="memitem:a5faa0d85f0343702e3917d74b831dad7 inherit pub_attribs_structmc__tasks_1_1EndEffectorTask"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a5faa0d85f0343702e3917d74b831dad7">robots</a></td></tr>
-<tr class="separator:a5faa0d85f0343702e3917d74b831dad7 inherit pub_attribs_structmc__tasks_1_1EndEffectorTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e692c5560525128f88961376cc6272f inherit pub_attribs_structmc__tasks_1_1EndEffectorTask"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a0e692c5560525128f88961376cc6272f">robotIndex</a></td></tr>
-<tr class="separator:a0e692c5560525128f88961376cc6272f inherit pub_attribs_structmc__tasks_1_1EndEffectorTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab6f5903d901833f87f887c1285e7f98 inherit pub_attribs_structmc__tasks_1_1EndEffectorTask"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#aab6f5903d901833f87f887c1285e7f98">bodyIndex</a></td></tr>
-<tr class="separator:aab6f5903d901833f87f887c1285e7f98 inherit pub_attribs_structmc__tasks_1_1EndEffectorTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d4cf0afca9af76d232b408275e3b9b9 inherit pub_attribs_structmc__tasks_1_1EndEffectorTask"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="structmc__tasks_1_1PositionTask.html">mc_tasks::PositionTask</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a9d4cf0afca9af76d232b408275e3b9b9">positionTask</a></td></tr>
 <tr class="separator:a9d4cf0afca9af76d232b408275e3b9b9 inherit pub_attribs_structmc__tasks_1_1EndEffectorTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac426513e9c556336e75a09cd690ee30a inherit pub_attribs_structmc__tasks_1_1EndEffectorTask"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="structmc__tasks_1_1OrientationTask.html">mc_tasks::OrientationTask</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#ac426513e9c556336e75a09cd690ee30a">orientationTask</a></td></tr>
 <tr class="separator:ac426513e9c556336e75a09cd690ee30a inherit pub_attribs_structmc__tasks_1_1EndEffectorTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af41ef875b2819415282f6e416345e992 inherit pub_attribs_structmc__tasks_1_1EndEffectorTask"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#af41ef875b2819415282f6e416345e992">bodyName</a></td></tr>
-<tr class="separator:af41ef875b2819415282f6e416345e992 inherit pub_attribs_structmc__tasks_1_1EndEffectorTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0df1bdc1275d182569ec4e306ba6c395 inherit pub_attribs_structmc__tasks_1_1EndEffectorTask"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a0df1bdc1275d182569ec4e306ba6c395">curTransform</a></td></tr>
 <tr class="separator:a0df1bdc1275d182569ec4e306ba6c395 inherit pub_attribs_structmc__tasks_1_1EndEffectorTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_static_methods_structmc__tasks_1_1MetaTask"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_structmc__tasks_1_1MetaTask')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="structmc__tasks_1_1MetaTask.html">mc_tasks::MetaTask</a></td></tr>
@@ -231,11 +225,62 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a5bf5a9f30f1497e15abc33faf7a97e5c inherit pro_attribs_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Controls an end-effector relatively to another body. </p>
-<p>This task is the relative counter-part to <a class="el" href="structmc__tasks_1_1EndEffectorTask.html" title="Controls an end-effector. ">mc_tasks::EndEffectorTask</a>. The difference is that the control is done relatively to a body of the robot rather than the world frame. </p>
+<div class="textblock"><p>Controls an end-effector relatively to another frame. </p>
+<p>This task is the relative counter-part to <a class="el" href="structmc__tasks_1_1EndEffectorTask.html" title="Controls an end-effector. ">mc_tasks::EndEffectorTask</a>. The difference is that the control is done relatively to a given frame rather than the world frame. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a942d75993cc492b3f7dc5d70b23447bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a942d75993cc492b3f7dc5d70b23447bd">&#9670;&nbsp;</a></span>RelativeEndEffectorTask() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_tasks::RelativeEndEffectorTask::RelativeEndEffectorTask </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;&#160;</td>
+          <td class="paramname"><em>frame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Frame.html">mc_rbdyn::Frame</a> &amp;&#160;</td>
+          <td class="paramname"><em>relative</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>stiffness</em> = <code>10.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>weight</em> = <code>1000.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame</td><td>Control frame</td></tr>
+    <tr><td class="paramname">relative</td><td>Relative frame</td></tr>
+    <tr><td class="paramname">stiffness</td><td>Task stiffness</td></tr>
+    <tr><td class="paramname">weight</td><td>Task weight </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a0158f37c233bf4855f02a8fdacd90729"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0158f37c233bf4855f02a8fdacd90729">&#9670;&nbsp;</a></span>RelativeEndEffectorTask() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0158f37c233bf4855f02a8fdacd90729">&#9670;&nbsp;</a></span>RelativeEndEffectorTask() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -296,73 +341,6 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a8ebaa7565ec3bdd72adfa57cff39702a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ebaa7565ec3bdd72adfa57cff39702a">&#9670;&nbsp;</a></span>RelativeEndEffectorTask() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_tasks::RelativeEndEffectorTask::RelativeEndEffectorTask </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>bodyName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>bodyPoint</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
-          <td class="paramname"><em>robots</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>robotIndex</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>relBodyName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>stiffness</em> = <code>10.0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>weight</em> = <code>1000.0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor with bodyPoint. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">bodyPoint</td><td>Point to be controlled in body coordinates</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="structmc__tasks_1_1RelativeEndEffectorTask.html" title="Controls an end-effector relatively to another body. ">RelativeEndEffectorTask</a> </dd></dl>
 
 </div>
 </div>

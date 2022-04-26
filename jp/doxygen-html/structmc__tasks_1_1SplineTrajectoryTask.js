@@ -3,7 +3,7 @@ var structmc__tasks_1_1SplineTrajectoryTask =
     [ "SequenceInterpolator6d", "structmc__tasks_1_1SplineTrajectoryTask.html#a8d2ac7fd3779da3324969baf637212bf", null ],
     [ "SplineTrajectoryBase", "structmc__tasks_1_1SplineTrajectoryTask.html#a649052a5fbf326990d2b3d20ec66ab19", null ],
     [ "TrajectoryTask", "structmc__tasks_1_1SplineTrajectoryTask.html#a8a14f83ca09f800540bae6ce5b29c376", null ],
-    [ "SplineTrajectoryTask", "structmc__tasks_1_1SplineTrajectoryTask.html#a24faf75e67bb09033e53d780455257f2", null ],
+    [ "SplineTrajectoryTask", "structmc__tasks_1_1SplineTrajectoryTask.html#ac523b327dfdeff9b88aa265240099073", null ],
     [ "addToGUI", "structmc__tasks_1_1SplineTrajectoryTask.html#afa99dd9c136ee9039a844a4ffb814640", null ],
     [ "addToLogger", "structmc__tasks_1_1SplineTrajectoryTask.html#aa7147dba544550aa616caa164a40209a", null ],
     [ "buildCompletionCriteria", "structmc__tasks_1_1SplineTrajectoryTask.html#a552e7c8b7ef80649a462476c30ef6cc6", null ],
@@ -43,11 +43,10 @@ var structmc__tasks_1_1SplineTrajectoryTask =
     [ "dampingInterpolator_", "structmc__tasks_1_1SplineTrajectoryTask.html#af0049ec3a334ea0db2ae5c05779e865a", null ],
     [ "dimWeightInterpolator_", "structmc__tasks_1_1SplineTrajectoryTask.html#ac3865e50155128dd9178c4504fcf908e", null ],
     [ "duration_", "structmc__tasks_1_1SplineTrajectoryTask.html#a47c76bbfd6ed1275bfada4c8b238af4d", null ],
+    [ "frame_", "structmc__tasks_1_1SplineTrajectoryTask.html#a95f8076ac69cad65a8b2ddf842a56d0f", null ],
     [ "inSolver_", "structmc__tasks_1_1SplineTrajectoryTask.html#ab58684bba10bad5cbcbe7414e04fb6f1", null ],
     [ "oriSpline_", "structmc__tasks_1_1SplineTrajectoryTask.html#a99908fd6b6923222cd523025bd2e1c23", null ],
     [ "paused_", "structmc__tasks_1_1SplineTrajectoryTask.html#af5a5ee124caa955429dbe83416c8b8d3", null ],
-    [ "rIndex_", "structmc__tasks_1_1SplineTrajectoryTask.html#ab5848b8fafba3f0791e5286718cce390", null ],
     [ "samples_", "structmc__tasks_1_1SplineTrajectoryTask.html#a55ddc08175e2c18024ba3aba28c9caa7", null ],
-    [ "stiffnessInterpolator_", "structmc__tasks_1_1SplineTrajectoryTask.html#a7584b0ee675b53361e1efe97f3069543", null ],
-    [ "surfaceName_", "structmc__tasks_1_1SplineTrajectoryTask.html#abc56ce5c0be70edcccba265b5a94284c", null ]
+    [ "stiffnessInterpolator_", "structmc__tasks_1_1SplineTrajectoryTask.html#a7584b0ee675b53361e1efe97f3069543", null ]
 ];

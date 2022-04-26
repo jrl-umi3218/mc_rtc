@@ -2,6 +2,7 @@ var structmc__tasks_1_1TrajectoryTaskGeneric =
 [
     [ "TrajectoryBase", "structmc__tasks_1_1TrajectoryTaskGeneric.html#a477fb8de593f7ccaaea505e9e11229f7", null ],
     [ "TrajectoryTaskGeneric", "structmc__tasks_1_1TrajectoryTaskGeneric.html#a3b341ee69d33864500eb7e0f68ffe599", null ],
+    [ "TrajectoryTaskGeneric", "structmc__tasks_1_1TrajectoryTaskGeneric.html#a71e156db0979afb2969f46838ba292c2", null ],
     [ "~TrajectoryTaskGeneric", "structmc__tasks_1_1TrajectoryTaskGeneric.html#a723271227584b9a8af649ce887d9c947", null ],
     [ "addToGUI", "structmc__tasks_1_1TrajectoryTaskGeneric.html#a28ff909c35eac08fad9710f9eb03251a", null ],
     [ "addToLogger", "structmc__tasks_1_1TrajectoryTaskGeneric.html#ab04252eb80e09da19eb1a0919998d3f1", null ],

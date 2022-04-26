@@ -1,6 +1,6 @@
 var structmc__solver_1_1QPSolver =
 [
-    [ "QPSolver", "structmc__solver_1_1QPSolver.html#a6f0c3211feb7722f0316b8808b61f6d1", null ],
+    [ "QPSolver", "structmc__solver_1_1QPSolver.html#a17eb05fe304c3013b50c5020a546b6bd", null ],
     [ "QPSolver", "structmc__solver_1_1QPSolver.html#adb5af970ec8d5b46ddcf8af19bd205be", null ],
     [ "QPSolver", "structmc__solver_1_1QPSolver.html#a4f91d1d6ce556366149d3d947182e5f3", null ],
     [ "addConstraint", "structmc__solver_1_1QPSolver.html#a8508225c35f55cef193bf45adb17ebce", null ],

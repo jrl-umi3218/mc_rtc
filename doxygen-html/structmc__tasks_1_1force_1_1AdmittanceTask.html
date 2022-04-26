@@ -100,9 +100,12 @@ Collaboration diagram for mc_tasks::force::AdmittanceTask:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ababaa90033e00d09b1372d4bb7f618d9"><td class="memItemLeft" align="right" valign="top">EIGEN_MAKE_ALIGNED_OPERATOR_NEW&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#ababaa90033e00d09b1372d4bb7f618d9">AdmittanceTask</a> (const std::string &amp;robotSurface, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a77260d6774cb69d24d22e53890e7fa16">robots</a>, unsigned robotIndex, double <a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a8a87753605a11f7a552bfa86d6bf0cc7">stiffness</a>=5.0, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>=1000.0)</td></tr>
-<tr class="memdesc:ababaa90033e00d09b1372d4bb7f618d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a new admittance task.  <a href="#ababaa90033e00d09b1372d4bb7f618d9">More...</a><br /></td></tr>
-<tr class="separator:ababaa90033e00d09b1372d4bb7f618d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb260767d5027918e1931e5365f5ecf3"><td class="memItemLeft" align="right" valign="top">EIGEN_MAKE_ALIGNED_OPERATOR_NEW&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#aeb260767d5027918e1931e5365f5ecf3">AdmittanceTask</a> (const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;<a class="el" href="structmc__tasks_1_1TransformTask.html#aed8a30b4cb0b2efefdfcfb7c5c88e1c7">frame</a>, double <a class="el" href="structmc__tasks_1_1TransformTask.html#aed51021240e5eda4c056af715968efb3">stiffness</a>=5.0, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>=1000.0)</td></tr>
+<tr class="memdesc:aeb260767d5027918e1931e5365f5ecf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a new admittance task.  <a href="#aeb260767d5027918e1931e5365f5ecf3">More...</a><br /></td></tr>
+<tr class="separator:aeb260767d5027918e1931e5365f5ecf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc9e5dddfd6c66644832803aa5187181"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#adc9e5dddfd6c66644832803aa5187181">AdmittanceTask</a> (const std::string &amp;robotSurface, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a77260d6774cb69d24d22e53890e7fa16">robots</a>, unsigned robotIndex, double <a class="el" href="structmc__tasks_1_1TransformTask.html#aed51021240e5eda4c056af715968efb3">stiffness</a>=5.0, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>=1000.0)</td></tr>
+<tr class="memdesc:adc9e5dddfd6c66644832803aa5187181"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a new admittance task.  <a href="#adc9e5dddfd6c66644832803aa5187181">More...</a><br /></td></tr>
+<tr class="separator:adc9e5dddfd6c66644832803aa5187181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a052349477335695173c7765bbac00210"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#a052349477335695173c7765bbac00210">reset</a> () override</td></tr>
 <tr class="memdesc:a052349477335695173c7765bbac00210"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the task.  <a href="#a052349477335695173c7765bbac00210">More...</a><br /></td></tr>
 <tr class="separator:a052349477335695173c7765bbac00210"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -113,28 +116,28 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a856da07a6437955a17e20b42ef8de0d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the admittance coefficients of the task.  <a href="#a856da07a6437955a17e20b42ef8de0d0">More...</a><br /></td></tr>
 <tr class="separator:a856da07a6437955a17e20b42ef8de0d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3958c43db37f34168e7b0b370d8edf23"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#a3958c43db37f34168e7b0b370d8edf23">surfacePose</a> () const</td></tr>
-<tr class="memdesc:a3958c43db37f34168e7b0b370d8edf23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current pose of the robot surface in the inertial frame.  <a href="#a3958c43db37f34168e7b0b370d8edf23">More...</a><br /></td></tr>
+<tr class="memdesc:a3958c43db37f34168e7b0b370d8edf23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current pose of the control frame in the inertial frame.  <a href="#a3958c43db37f34168e7b0b370d8edf23">More...</a><br /></td></tr>
 <tr class="separator:a3958c43db37f34168e7b0b370d8edf23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78745a07e09888ac0774f99fb5e82041"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#a78745a07e09888ac0774f99fb5e82041">targetPose</a> ()</td></tr>
-<tr class="memdesc:a78745a07e09888ac0774f99fb5e82041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the target pose of the surface in the world frame.  <a href="#a78745a07e09888ac0774f99fb5e82041">More...</a><br /></td></tr>
+<tr class="memdesc:a78745a07e09888ac0774f99fb5e82041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the target pose of the control frame in the world frame.  <a href="#a78745a07e09888ac0774f99fb5e82041">More...</a><br /></td></tr>
 <tr class="separator:a78745a07e09888ac0774f99fb5e82041"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafc8ff52e25c57da0c710ef842cdd6a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#aafc8ff52e25c57da0c710ef842cdd6a0">targetPose</a> (const sva::PTransformd &amp;X_0_target)</td></tr>
-<tr class="memdesc:aafc8ff52e25c57da0c710ef842cdd6a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set target pose (position and orientation) of the surface in the world frame.  <a href="#aafc8ff52e25c57da0c710ef842cdd6a0">More...</a><br /></td></tr>
+<tr class="memdesc:aafc8ff52e25c57da0c710ef842cdd6a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set target pose (position and orientation) of the frame in the world frame.  <a href="#aafc8ff52e25c57da0c710ef842cdd6a0">More...</a><br /></td></tr>
 <tr class="separator:aafc8ff52e25c57da0c710ef842cdd6a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe93dbf1a3b1401e71ba92c861d55aa5"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#abe93dbf1a3b1401e71ba92c861d55aa5">poseError</a> ()</td></tr>
-<tr class="memdesc:abe93dbf1a3b1401e71ba92c861d55aa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform from current surface pose to target.  <a href="#abe93dbf1a3b1401e71ba92c861d55aa5">More...</a><br /></td></tr>
+<tr class="memdesc:abe93dbf1a3b1401e71ba92c861d55aa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform from current frame pose to target.  <a href="#abe93dbf1a3b1401e71ba92c861d55aa5">More...</a><br /></td></tr>
 <tr class="separator:abe93dbf1a3b1401e71ba92c861d55aa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8a55ef8c9d0173de5004c2dc8c3f1d3"><td class="memItemLeft" align="right" valign="top">const sva::ForceVecd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#ae8a55ef8c9d0173de5004c2dc8c3f1d3">targetWrench</a> () const</td></tr>
-<tr class="memdesc:ae8a55ef8c9d0173de5004c2dc8c3f1d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the target wrench in the surface frame.  <a href="#ae8a55ef8c9d0173de5004c2dc8c3f1d3">More...</a><br /></td></tr>
+<tr class="memdesc:ae8a55ef8c9d0173de5004c2dc8c3f1d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the target wrench in the control frame.  <a href="#ae8a55ef8c9d0173de5004c2dc8c3f1d3">More...</a><br /></td></tr>
 <tr class="separator:ae8a55ef8c9d0173de5004c2dc8c3f1d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef645fa9420f6fbef7e29b6bf3d15888"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#aef645fa9420f6fbef7e29b6bf3d15888">targetWrenchW</a> (const sva::ForceVecd &amp;wrenchW)</td></tr>
-<tr class="memdesc:aef645fa9420f6fbef7e29b6bf3d15888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the target wrench in world frame. This function will convert the world wrench to surface frame, and call <a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#ae8a55ef8c9d0173de5004c2dc8c3f1d3" title="Get the target wrench in the surface frame. ">targetWrench()</a>  <a href="#aef645fa9420f6fbef7e29b6bf3d15888">More...</a><br /></td></tr>
+<tr class="memdesc:aef645fa9420f6fbef7e29b6bf3d15888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the target wrench in world frame.  <a href="#aef645fa9420f6fbef7e29b6bf3d15888">More...</a><br /></td></tr>
 <tr class="separator:aef645fa9420f6fbef7e29b6bf3d15888"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0d0b00e2dea87d27d130d2c88f1361c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#ab0d0b00e2dea87d27d130d2c88f1361c">targetWrench</a> (const sva::ForceVecd &amp;wrench)</td></tr>
-<tr class="memdesc:ab0d0b00e2dea87d27d130d2c88f1361c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the target wrench in the surface frame.  <a href="#ab0d0b00e2dea87d27d130d2c88f1361c">More...</a><br /></td></tr>
+<tr class="memdesc:ab0d0b00e2dea87d27d130d2c88f1361c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the target wrench in the control frame.  <a href="#ab0d0b00e2dea87d27d130d2c88f1361c">More...</a><br /></td></tr>
 <tr class="separator:ab0d0b00e2dea87d27d130d2c88f1361c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac887e6bd95fbafc40c1c4e4465b95b7e"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#ac887e6bd95fbafc40c1c4e4465b95b7e">measuredWrench</a> () const</td></tr>
-<tr class="memdesc:ac887e6bd95fbafc40c1c4e4465b95b7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the measured wrench in the surface frame.  <a href="#ac887e6bd95fbafc40c1c4e4465b95b7e">More...</a><br /></td></tr>
+<tr class="memdesc:ac887e6bd95fbafc40c1c4e4465b95b7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the measured wrench in the control frame.  <a href="#ac887e6bd95fbafc40c1c4e4465b95b7e">More...</a><br /></td></tr>
 <tr class="separator:ac887e6bd95fbafc40c1c4e4465b95b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99d636ebeb1f79aa4cc09409cb1456a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#a99d636ebeb1f79aa4cc09409cb1456a1">maxLinearVel</a> (const Eigen::Vector3d &amp;maxLinearVel)</td></tr>
 <tr class="memdesc:a99d636ebeb1f79aa4cc09409cb1456a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum translation velocity of the task.  <a href="#a99d636ebeb1f79aa4cc09409cb1456a1">More...</a><br /></td></tr>
@@ -158,62 +161,74 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a11f68c4af2082ba57141752b3036e0f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#a11f68c4af2082ba57141752b3036e0f1">load</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config) override</td></tr>
 <tr class="memdesc:a11f68c4af2082ba57141752b3036e0f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load parameters from a Configuration object.  <a href="#a11f68c4af2082ba57141752b3036e0f1">More...</a><br /></td></tr>
 <tr class="separator:a11f68c4af2082ba57141752b3036e0f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_structmc__tasks_1_1SurfaceTransformTask')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html">mc_tasks::SurfaceTransformTask</a></td></tr>
-<tr class="memitem:a11dcb669bfded6027ba8d80f9a79a58c inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a11dcb669bfded6027ba8d80f9a79a58c">SurfaceTransformTask</a> (const std::string &amp;<a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a9f9f378bfa6b2f92ec99af3cff7d450a">surfaceName</a>, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a77260d6774cb69d24d22e53890e7fa16">robots</a>, unsigned int robotIndex, double <a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a8a87753605a11f7a552bfa86d6bf0cc7">stiffness</a>=2.0, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>=500)</td></tr>
-<tr class="memdesc:a11dcb669bfded6027ba8d80f9a79a58c inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#a11dcb669bfded6027ba8d80f9a79a58c">More...</a><br /></td></tr>
-<tr class="separator:a11dcb669bfded6027ba8d80f9a79a58c inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae52f8b8a4108c6bd4df462cfd724791b inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#ae52f8b8a4108c6bd4df462cfd724791b">reset</a> () override</td></tr>
-<tr class="memdesc:ae52f8b8a4108c6bd4df462cfd724791b inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the task.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#ae52f8b8a4108c6bd4df462cfd724791b">More...</a><br /></td></tr>
-<tr class="separator:ae52f8b8a4108c6bd4df462cfd724791b inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a486a21e87c98de6f9edd93c5b8f4bf12 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a486a21e87c98de6f9edd93c5b8f4bf12">target</a> () const</td></tr>
-<tr class="memdesc:a486a21e87c98de6f9edd93c5b8f4bf12 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the body Surface target.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#a486a21e87c98de6f9edd93c5b8f4bf12">More...</a><br /></td></tr>
-<tr class="separator:a486a21e87c98de6f9edd93c5b8f4bf12 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec2befb7f10e1aaeaeb43a877e7cc877 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#aec2befb7f10e1aaeaeb43a877e7cc877">target</a> (const sva::PTransformd &amp;pos)</td></tr>
-<tr class="memdesc:aec2befb7f10e1aaeaeb43a877e7cc877 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the body Surface target.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#aec2befb7f10e1aaeaeb43a877e7cc877">More...</a><br /></td></tr>
-<tr class="separator:aec2befb7f10e1aaeaeb43a877e7cc877 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cf828fa175ab56a7d7c4b774bda7296 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a5cf828fa175ab56a7d7c4b774bda7296">targetSurface</a> (unsigned int robotIndex, const std::string &amp;<a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a9f9f378bfa6b2f92ec99af3cff7d450a">surfaceName</a>, const sva::PTransformd &amp;offset)</td></tr>
-<tr class="memdesc:a5cf828fa175ab56a7d7c4b774bda7296 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Targets a robot surface with an optional offset. The offset is expressed in the target contact frame.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#a5cf828fa175ab56a7d7c4b774bda7296">More...</a><br /></td></tr>
-<tr class="separator:a5cf828fa175ab56a7d7c4b774bda7296 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a564f6ac88615f5bf2abcd1defc0c6d57 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a564f6ac88615f5bf2abcd1defc0c6d57">surface</a> () const</td></tr>
-<tr class="memdesc:a564f6ac88615f5bf2abcd1defc0c6d57 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the controlled surface name.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#a564f6ac88615f5bf2abcd1defc0c6d57">More...</a><br /></td></tr>
-<tr class="separator:a564f6ac88615f5bf2abcd1defc0c6d57 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f8efaafe91d5f6504a8b2e6c7b2dda1 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">const sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a3f8efaafe91d5f6504a8b2e6c7b2dda1">surfacePose</a> () const</td></tr>
-<tr class="separator:a3f8efaafe91d5f6504a8b2e6c7b2dda1 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb9c86d5f18e39374a8b501187f5d449 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">std::function&lt; bool(const <a class="el" href="structmc__tasks_1_1MetaTask.html">mc_tasks::MetaTask</a> &amp;task, std::string &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#aeb9c86d5f18e39374a8b501187f5d449">buildCompletionCriteria</a> (double dt, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config) const override</td></tr>
-<tr class="separator:aeb9c86d5f18e39374a8b501187f5d449 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71392150c13f91caba0fcc4e6ecdacdf inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a71392150c13f91caba0fcc4e6ecdacdf">addToLogger</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
-<tr class="separator:a71392150c13f91caba0fcc4e6ecdacdf inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac29bc12be1a65a9d5315be15d6667a36 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#ac29bc12be1a65a9d5315be15d6667a36">setGains</a> (const sva::MotionVecd &amp;<a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a8a87753605a11f7a552bfa86d6bf0cc7">stiffness</a>, const sva::MotionVecd &amp;<a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#abeea24142cd101aeb8308950b145e875">damping</a>)</td></tr>
-<tr class="memdesc:ac29bc12be1a65a9d5315be15d6667a36 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set dimensional stiffness and damping.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#ac29bc12be1a65a9d5315be15d6667a36">More...</a><br /></td></tr>
-<tr class="separator:ac29bc12be1a65a9d5315be15d6667a36 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a87753605a11f7a552bfa86d6bf0cc7 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a8a87753605a11f7a552bfa86d6bf0cc7">stiffness</a> (const sva::MotionVecd &amp;stiffness)</td></tr>
-<tr class="memdesc:a8a87753605a11f7a552bfa86d6bf0cc7 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set dimensional stiffness.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#a8a87753605a11f7a552bfa86d6bf0cc7">More...</a><br /></td></tr>
-<tr class="separator:a8a87753605a11f7a552bfa86d6bf0cc7 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae93b59f50cc0e9733bbc7551f4c7d294 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">sva::MotionVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#ae93b59f50cc0e9733bbc7551f4c7d294">mvStiffness</a> ()</td></tr>
-<tr class="memdesc:ae93b59f50cc0e9733bbc7551f4c7d294 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get dimensional stiffness as a motion vector.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#ae93b59f50cc0e9733bbc7551f4c7d294">More...</a><br /></td></tr>
-<tr class="separator:ae93b59f50cc0e9733bbc7551f4c7d294 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abeea24142cd101aeb8308950b145e875 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#abeea24142cd101aeb8308950b145e875">damping</a> (const sva::MotionVecd &amp;damping)</td></tr>
-<tr class="memdesc:abeea24142cd101aeb8308950b145e875 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set dimensional damping.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#abeea24142cd101aeb8308950b145e875">More...</a><br /></td></tr>
-<tr class="separator:abeea24142cd101aeb8308950b145e875 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93f19fb156ea70632d753c7a461b98b5 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">sva::MotionVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a93f19fb156ea70632d753c7a461b98b5">mvDamping</a> ()</td></tr>
-<tr class="memdesc:a93f19fb156ea70632d753c7a461b98b5 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get dimensional damping as a motion vector.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#a93f19fb156ea70632d753c7a461b98b5">More...</a><br /></td></tr>
-<tr class="separator:a93f19fb156ea70632d753c7a461b98b5 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54085b38c073b75186447157a232ede5 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a54085b38c073b75186447157a232ede5">refVelB</a> (const sva::MotionVecd &amp;velB)</td></tr>
-<tr class="memdesc:a54085b38c073b75186447157a232ede5 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set trajectory task's reference velocity from motion vector in body coordinates.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#a54085b38c073b75186447157a232ede5">More...</a><br /></td></tr>
-<tr class="separator:a54085b38c073b75186447157a232ede5 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3fa4281d33fd5fb846a9863aa27798e inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">sva::MotionVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#af3fa4281d33fd5fb846a9863aa27798e">refVelB</a> () const</td></tr>
-<tr class="memdesc:af3fa4281d33fd5fb846a9863aa27798e inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get reference velocity in body coordinates as a motion vector.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#af3fa4281d33fd5fb846a9863aa27798e">More...</a><br /></td></tr>
-<tr class="separator:af3fa4281d33fd5fb846a9863aa27798e inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a336aa38ae2eda15f73c3a606427e5188 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a336aa38ae2eda15f73c3a606427e5188">refAccel</a> (const sva::MotionVecd &amp;accel)</td></tr>
-<tr class="memdesc:a336aa38ae2eda15f73c3a606427e5188 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set trajectory task's reference acceleration from motion vector.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#a336aa38ae2eda15f73c3a606427e5188">More...</a><br /></td></tr>
-<tr class="separator:a336aa38ae2eda15f73c3a606427e5188 inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ff367856026ec4e3adf4db88aab281b inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a9ff367856026ec4e3adf4db88aab281b">load</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config) override</td></tr>
-<tr class="memdesc:a9ff367856026ec4e3adf4db88aab281b inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load parameters from a Configuration object.  <a href="structmc__tasks_1_1SurfaceTransformTask.html#a9ff367856026ec4e3adf4db88aab281b">More...</a><br /></td></tr>
-<tr class="separator:a9ff367856026ec4e3adf4db88aab281b inherit pub_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_structmc__tasks_1_1TransformTask"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_structmc__tasks_1_1TransformTask')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="structmc__tasks_1_1TransformTask.html">mc_tasks::TransformTask</a></td></tr>
+<tr class="memitem:af76f18eb60ebc27c1e8b7612535aecc9 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#af76f18eb60ebc27c1e8b7612535aecc9">TransformTask</a> (const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;<a class="el" href="structmc__tasks_1_1TransformTask.html#aed8a30b4cb0b2efefdfcfb7c5c88e1c7">frame</a>, double <a class="el" href="structmc__tasks_1_1TransformTask.html#aed51021240e5eda4c056af715968efb3">stiffness</a>=2.0, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>=500.0)</td></tr>
+<tr class="memdesc:af76f18eb60ebc27c1e8b7612535aecc9 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="structmc__tasks_1_1TransformTask.html#af76f18eb60ebc27c1e8b7612535aecc9">More...</a><br /></td></tr>
+<tr class="separator:af76f18eb60ebc27c1e8b7612535aecc9 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d566e2a0f59e9b4ed91c9a5849e31af inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a9d566e2a0f59e9b4ed91c9a5849e31af">TransformTask</a> (const std::string &amp;surfaceName, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a77260d6774cb69d24d22e53890e7fa16">robots</a>, unsigned int robotIndex, double <a class="el" href="structmc__tasks_1_1TransformTask.html#aed51021240e5eda4c056af715968efb3">stiffness</a>=2.0, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>=500)</td></tr>
+<tr class="memdesc:a9d566e2a0f59e9b4ed91c9a5849e31af inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="structmc__tasks_1_1TransformTask.html#a9d566e2a0f59e9b4ed91c9a5849e31af">More...</a><br /></td></tr>
+<tr class="separator:a9d566e2a0f59e9b4ed91c9a5849e31af inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a982e5360a5e5b068b6f4bf6180bce3ee inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a982e5360a5e5b068b6f4bf6180bce3ee">reset</a> () override</td></tr>
+<tr class="memdesc:a982e5360a5e5b068b6f4bf6180bce3ee inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the task.  <a href="structmc__tasks_1_1TransformTask.html#a982e5360a5e5b068b6f4bf6180bce3ee">More...</a><br /></td></tr>
+<tr class="separator:a982e5360a5e5b068b6f4bf6180bce3ee inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8f62ed47730c972c5bab0d287bef086 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#ae8f62ed47730c972c5bab0d287bef086">target</a> () const</td></tr>
+<tr class="memdesc:ae8f62ed47730c972c5bab0d287bef086 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the task's target.  <a href="structmc__tasks_1_1TransformTask.html#ae8f62ed47730c972c5bab0d287bef086">More...</a><br /></td></tr>
+<tr class="separator:ae8f62ed47730c972c5bab0d287bef086 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad23f8cbe9682a6fdc48fb1f98aa6fa94 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#ad23f8cbe9682a6fdc48fb1f98aa6fa94">target</a> (const sva::PTransformd &amp;pos)</td></tr>
+<tr class="memdesc:ad23f8cbe9682a6fdc48fb1f98aa6fa94 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the task's target.  <a href="structmc__tasks_1_1TransformTask.html#ad23f8cbe9682a6fdc48fb1f98aa6fa94">More...</a><br /></td></tr>
+<tr class="separator:ad23f8cbe9682a6fdc48fb1f98aa6fa94 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49d3421e1859d9b36e4bc64ca6c29490 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a49d3421e1859d9b36e4bc64ca6c29490">targetSurface</a> (unsigned int robotIndex, const std::string &amp;surfaceName, const sva::PTransformd &amp;offset)</td></tr>
+<tr class="memdesc:a49d3421e1859d9b36e4bc64ca6c29490 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Targets a robot surface with an optional offset. The offset is expressed in the target contact frame.  <a href="structmc__tasks_1_1TransformTask.html#a49d3421e1859d9b36e4bc64ca6c29490">More...</a><br /></td></tr>
+<tr class="separator:a49d3421e1859d9b36e4bc64ca6c29490 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50134b1f1bbb68f93e3b1235da3f15bd inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a50134b1f1bbb68f93e3b1235da3f15bd">target</a> (const <a class="el" href="structmc__rbdyn_1_1Frame.html">mc_rbdyn::Frame</a> &amp;<a class="el" href="structmc__tasks_1_1TransformTask.html#aed8a30b4cb0b2efefdfcfb7c5c88e1c7">frame</a>, const sva::PTransformd &amp;offset)</td></tr>
+<tr class="memdesc:a50134b1f1bbb68f93e3b1235da3f15bd inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Targets a given frame with an optional offset.  <a href="structmc__tasks_1_1TransformTask.html#a50134b1f1bbb68f93e3b1235da3f15bd">More...</a><br /></td></tr>
+<tr class="separator:a50134b1f1bbb68f93e3b1235da3f15bd inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab059f811cfba21cdc35c8109c1ffa05a inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#ab059f811cfba21cdc35c8109c1ffa05a">surface</a> () const noexcept</td></tr>
+<tr class="memdesc:ab059f811cfba21cdc35c8109c1ffa05a inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the controlled frame name.  <a href="structmc__tasks_1_1TransformTask.html#ab059f811cfba21cdc35c8109c1ffa05a">More...</a><br /></td></tr>
+<tr class="separator:ab059f811cfba21cdc35c8109c1ffa05a inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed8a30b4cb0b2efefdfcfb7c5c88e1c7 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#aed8a30b4cb0b2efefdfcfb7c5c88e1c7">frame</a> () const noexcept</td></tr>
+<tr class="memdesc:aed8a30b4cb0b2efefdfcfb7c5c88e1c7 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the controlled frame (const)  <a href="structmc__tasks_1_1TransformTask.html#aed8a30b4cb0b2efefdfcfb7c5c88e1c7">More...</a><br /></td></tr>
+<tr class="separator:aed8a30b4cb0b2efefdfcfb7c5c88e1c7 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91855af37722789f0d3a33b884db17ca inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a91855af37722789f0d3a33b884db17ca">surfacePose</a> () const noexcept</td></tr>
+<tr class="separator:a91855af37722789f0d3a33b884db17ca inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02daab9367d54190e6a5151d194504b2 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">std::function&lt; bool(const <a class="el" href="structmc__tasks_1_1MetaTask.html">mc_tasks::MetaTask</a> &amp;task, std::string &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a02daab9367d54190e6a5151d194504b2">buildCompletionCriteria</a> (double dt, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config) const override</td></tr>
+<tr class="separator:a02daab9367d54190e6a5151d194504b2 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5022750a20f51ed0943833faa9b29ed inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#ac5022750a20f51ed0943833faa9b29ed">addToLogger</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
+<tr class="separator:ac5022750a20f51ed0943833faa9b29ed inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a910e8284e4e8d29f5099f2a4105e1ac4 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a910e8284e4e8d29f5099f2a4105e1ac4">setGains</a> (const sva::MotionVecd &amp;<a class="el" href="structmc__tasks_1_1TransformTask.html#aed51021240e5eda4c056af715968efb3">stiffness</a>, const sva::MotionVecd &amp;<a class="el" href="structmc__tasks_1_1TransformTask.html#ade15f0fe552c48b84e75d8f3fd408d40">damping</a>)</td></tr>
+<tr class="memdesc:a910e8284e4e8d29f5099f2a4105e1ac4 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set dimensional stiffness and damping.  <a href="structmc__tasks_1_1TransformTask.html#a910e8284e4e8d29f5099f2a4105e1ac4">More...</a><br /></td></tr>
+<tr class="separator:a910e8284e4e8d29f5099f2a4105e1ac4 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed51021240e5eda4c056af715968efb3 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#aed51021240e5eda4c056af715968efb3">stiffness</a> (const sva::MotionVecd &amp;stiffness)</td></tr>
+<tr class="memdesc:aed51021240e5eda4c056af715968efb3 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set dimensional stiffness.  <a href="structmc__tasks_1_1TransformTask.html#aed51021240e5eda4c056af715968efb3">More...</a><br /></td></tr>
+<tr class="separator:aed51021240e5eda4c056af715968efb3 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7521819d429bcd89c4e22af6c482479 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">sva::MotionVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#af7521819d429bcd89c4e22af6c482479">mvStiffness</a> ()</td></tr>
+<tr class="memdesc:af7521819d429bcd89c4e22af6c482479 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get dimensional stiffness as a motion vector.  <a href="structmc__tasks_1_1TransformTask.html#af7521819d429bcd89c4e22af6c482479">More...</a><br /></td></tr>
+<tr class="separator:af7521819d429bcd89c4e22af6c482479 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade15f0fe552c48b84e75d8f3fd408d40 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#ade15f0fe552c48b84e75d8f3fd408d40">damping</a> (const sva::MotionVecd &amp;damping)</td></tr>
+<tr class="memdesc:ade15f0fe552c48b84e75d8f3fd408d40 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set dimensional damping.  <a href="structmc__tasks_1_1TransformTask.html#ade15f0fe552c48b84e75d8f3fd408d40">More...</a><br /></td></tr>
+<tr class="separator:ade15f0fe552c48b84e75d8f3fd408d40 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4eaed1d9f5b6eefc1da74cd7a76d562 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">sva::MotionVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#af4eaed1d9f5b6eefc1da74cd7a76d562">mvDamping</a> ()</td></tr>
+<tr class="memdesc:af4eaed1d9f5b6eefc1da74cd7a76d562 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get dimensional damping as a motion vector.  <a href="structmc__tasks_1_1TransformTask.html#af4eaed1d9f5b6eefc1da74cd7a76d562">More...</a><br /></td></tr>
+<tr class="separator:af4eaed1d9f5b6eefc1da74cd7a76d562 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefda5e3d07a3c146371b74cfe0f58326 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#aefda5e3d07a3c146371b74cfe0f58326">refVelB</a> (const sva::MotionVecd &amp;velB)</td></tr>
+<tr class="memdesc:aefda5e3d07a3c146371b74cfe0f58326 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set trajectory task's reference velocity from motion vector in frame coordinates.  <a href="structmc__tasks_1_1TransformTask.html#aefda5e3d07a3c146371b74cfe0f58326">More...</a><br /></td></tr>
+<tr class="separator:aefda5e3d07a3c146371b74cfe0f58326 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23ad3f774d74e81633461ffe28c9335f inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">sva::MotionVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a23ad3f774d74e81633461ffe28c9335f">refVelB</a> () const</td></tr>
+<tr class="memdesc:a23ad3f774d74e81633461ffe28c9335f inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get reference velocity in frame coordinates as a motion vector.  <a href="structmc__tasks_1_1TransformTask.html#a23ad3f774d74e81633461ffe28c9335f">More...</a><br /></td></tr>
+<tr class="separator:a23ad3f774d74e81633461ffe28c9335f inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a144e87a49044adc220d50cba33a84c47 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a144e87a49044adc220d50cba33a84c47">refAccel</a> (const sva::MotionVecd &amp;accel)</td></tr>
+<tr class="memdesc:a144e87a49044adc220d50cba33a84c47 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set trajectory task's reference acceleration from motion vector.  <a href="structmc__tasks_1_1TransformTask.html#a144e87a49044adc220d50cba33a84c47">More...</a><br /></td></tr>
+<tr class="separator:a144e87a49044adc220d50cba33a84c47 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a609b6aade63c3e65c3dfca82c7bcced4 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a609b6aade63c3e65c3dfca82c7bcced4">load</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config) override</td></tr>
+<tr class="memdesc:a609b6aade63c3e65c3dfca82c7bcced4 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load parameters from a Configuration object.  <a href="structmc__tasks_1_1TransformTask.html#a609b6aade63c3e65c3dfca82c7bcced4">More...</a><br /></td></tr>
+<tr class="separator:a609b6aade63c3e65c3dfca82c7bcced4 inherit pub_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::SurfaceTransformTask &gt;</a></td></tr>
 <tr class="memitem:a3b341ee69d33864500eb7e0f68ffe599 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a3b341ee69d33864500eb7e0f68ffe599">TrajectoryTaskGeneric</a> (const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a77260d6774cb69d24d22e53890e7fa16">robots</a>, unsigned int robotIndex, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>)</td></tr>
 <tr class="memdesc:a3b341ee69d33864500eb7e0f68ffe599 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor (auto damping)  <a href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a3b341ee69d33864500eb7e0f68ffe599">More...</a><br /></td></tr>
 <tr class="separator:a3b341ee69d33864500eb7e0f68ffe599 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71e156db0979afb2969f46838ba292c2 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a71e156db0979afb2969f46838ba292c2">TrajectoryTaskGeneric</a> (const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;frame, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>)</td></tr>
+<tr class="memdesc:a71e156db0979afb2969f46838ba292c2 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor (auto damping)  <a href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a71e156db0979afb2969f46838ba292c2">More...</a><br /></td></tr>
+<tr class="separator:a71e156db0979afb2969f46838ba292c2 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a723271227584b9a8af649ce887d9c947 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a723271227584b9a8af649ce887d9c947">~TrajectoryTaskGeneric</a> ()</td></tr>
 <tr class="separator:a723271227584b9a8af649ce887d9c947 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36c813b6646d3cd1bffcdcc618807053 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a36c813b6646d3cd1bffcdcc618807053">reset</a> () override</td></tr>
@@ -333,9 +348,9 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:ad8f353f9df118e8fc859bc5ee80a41c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e4af3978acf95b18cb58842898ff266"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#a9e4af3978acf95b18cb58842898ff266">addToSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
 <tr class="separator:a9e4af3978acf95b18cb58842898ff266"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_structmc__tasks_1_1SurfaceTransformTask"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_structmc__tasks_1_1SurfaceTransformTask')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html">mc_tasks::SurfaceTransformTask</a></td></tr>
-<tr class="memitem:a1dcacdc717af669648c0d06ff0b29e11 inherit pro_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a1dcacdc717af669648c0d06ff0b29e11">addToGUI</a> (<a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">mc_rtc::gui::StateBuilder</a> &amp;gui) override</td></tr>
-<tr class="separator:a1dcacdc717af669648c0d06ff0b29e11 inherit pro_methods_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_structmc__tasks_1_1TransformTask"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_structmc__tasks_1_1TransformTask')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="structmc__tasks_1_1TransformTask.html">mc_tasks::TransformTask</a></td></tr>
+<tr class="memitem:abc682d060a6d0815896f02614c0f1014 inherit pro_methods_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#abc682d060a6d0815896f02614c0f1014">addToGUI</a> (<a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">mc_rtc::gui::StateBuilder</a> &amp;gui) override</td></tr>
+<tr class="separator:abc682d060a6d0815896f02614c0f1014 inherit pro_methods_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_structmc__tasks_1_1TrajectoryTaskGeneric')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::SurfaceTransformTask &gt;</a></td></tr>
 <tr class="memitem:a57652be181ca173ac4a7fa8e8fa33509 inherit pro_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a57652be181ca173ac4a7fa8e8fa33509">finalize</a> (Args &amp;&amp;... args)</td></tr>
 <tr class="separator:a57652be181ca173ac4a7fa8e8fa33509 inherit pro_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -360,16 +375,10 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:afad98878cf6e7f64980a3b743ed76a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4e15b0d348fae4b9f335f30e2a077b9"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#af4e15b0d348fae4b9f335f30e2a077b9">maxLinearVel_</a> = {0.1, 0.1, 0.1}</td></tr>
 <tr class="separator:af4e15b0d348fae4b9f335f30e2a077b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad63efb656ede4ea8b139489cf7ed50ec"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#ad63efb656ede4ea8b139489cf7ed50ec">robots_</a></td></tr>
-<tr class="separator:ad63efb656ede4ea8b139489cf7ed50ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a658941cdb929605537a9c8fd740138f5"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#a658941cdb929605537a9c8fd740138f5">rIndex_</a></td></tr>
-<tr class="separator:a658941cdb929605537a9c8fd740138f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1d5d0caedd77b293454ad6209ff6617"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#ae1d5d0caedd77b293454ad6209ff6617">timestep_</a></td></tr>
 <tr class="separator:ae1d5d0caedd77b293454ad6209ff6617"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbd26fcf85307988eedde6314fa066b9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#adbd26fcf85307988eedde6314fa066b9">velFilterGain_</a> = 0.8</td></tr>
 <tr class="separator:adbd26fcf85307988eedde6314fa066b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac854c2ff4e850e265a8b18d2e92df0ab"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1Surface.html">mc_rbdyn::Surface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#ac854c2ff4e850e265a8b18d2e92df0ab">surface_</a></td></tr>
-<tr class="separator:ac854c2ff4e850e265a8b18d2e92df0ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afec1507c00f7ab6e535c856c4e6c258e"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#afec1507c00f7ab6e535c856c4e6c258e">admittance_</a> = sva::ForceVecd(Eigen::Vector6d::Zero())</td></tr>
 <tr class="separator:afec1507c00f7ab6e535c856c4e6c258e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3433b288829da956de5f93c99dc12870"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#a3433b288829da956de5f93c99dc12870">targetWrench_</a> = sva::ForceVecd(Eigen::Vector6d::Zero())</td></tr>
@@ -380,9 +389,9 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a626218531c0140a6ce6b3efa2c2b840b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2eeb8d4440242d2c4526226e15efaf87"><td class="memItemLeft" align="right" valign="top">sva::MotionVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#a2eeb8d4440242d2c4526226e15efaf87">refVelB_</a> = sva::MotionVecd(Eigen::Vector6d::Zero())</td></tr>
 <tr class="separator:a2eeb8d4440242d2c4526226e15efaf87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_structmc__tasks_1_1SurfaceTransformTask"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_structmc__tasks_1_1SurfaceTransformTask')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html">mc_tasks::SurfaceTransformTask</a></td></tr>
-<tr class="memitem:a9f9f378bfa6b2f92ec99af3cff7d450a inherit pro_attribs_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a9f9f378bfa6b2f92ec99af3cff7d450a">surfaceName</a></td></tr>
-<tr class="separator:a9f9f378bfa6b2f92ec99af3cff7d450a inherit pro_attribs_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_structmc__tasks_1_1TransformTask"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_structmc__tasks_1_1TransformTask')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="structmc__tasks_1_1TransformTask.html">mc_tasks::TransformTask</a></td></tr>
+<tr class="memitem:a078d35f229cfe10dfa0e4672cb3304d9 inherit pro_attribs_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacemc__rbdyn.html#a1d750a36f101823e43d108ec5c8231cc">mc_rbdyn::ConstRobotFramePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a078d35f229cfe10dfa0e4672cb3304d9">frame_</a></td></tr>
+<tr class="separator:a078d35f229cfe10dfa0e4672cb3304d9 inherit pro_attribs_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_structmc__tasks_1_1TrajectoryTaskGeneric"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_structmc__tasks_1_1TrajectoryTaskGeneric')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::SurfaceTransformTask &gt;</a></td></tr>
 <tr class="memitem:a77260d6774cb69d24d22e53890e7fa16 inherit pro_attribs_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a77260d6774cb69d24d22e53890e7fa16">robots</a></td></tr>
 <tr class="separator:a77260d6774cb69d24d22e53890e7fa16 inherit pro_attribs_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -408,9 +417,9 @@ Protected Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pub_types_structmc__tasks_1_1SurfaceTransformTask"><td colspan="2" onclick="javascript:toggleInherit('pub_types_structmc__tasks_1_1SurfaceTransformTask')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html">mc_tasks::SurfaceTransformTask</a></td></tr>
-<tr class="memitem:a6373dca6e354783c884576662960c10d inherit pub_types_structmc__tasks_1_1SurfaceTransformTask"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a6373dca6e354783c884576662960c10d">TrajectoryBase</a> = <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html">TrajectoryTaskGeneric</a>&lt; tasks::qp::SurfaceTransformTask &gt;</td></tr>
-<tr class="separator:a6373dca6e354783c884576662960c10d inherit pub_types_structmc__tasks_1_1SurfaceTransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_types_structmc__tasks_1_1TransformTask"><td colspan="2" onclick="javascript:toggleInherit('pub_types_structmc__tasks_1_1TransformTask')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="structmc__tasks_1_1TransformTask.html">mc_tasks::TransformTask</a></td></tr>
+<tr class="memitem:afc07a09fa745dd322cb17e9b21b2547b inherit pub_types_structmc__tasks_1_1TransformTask"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#afc07a09fa745dd322cb17e9b21b2547b">TrajectoryBase</a> = <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html">TrajectoryTaskGeneric</a>&lt; tasks::qp::SurfaceTransformTask &gt;</td></tr>
+<tr class="separator:afc07a09fa745dd322cb17e9b21b2547b inherit pub_types_structmc__tasks_1_1TransformTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_types_structmc__tasks_1_1TrajectoryTaskGeneric"><td colspan="2" onclick="javascript:toggleInherit('pub_types_structmc__tasks_1_1TrajectoryTaskGeneric')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::SurfaceTransformTask &gt;</a></td></tr>
 <tr class="memitem:a477fb8de593f7ccaaea505e9e11229f7 inherit pub_types_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a477fb8de593f7ccaaea505e9e11229f7">TrajectoryBase</a> = <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html">TrajectoryTaskGeneric</a>&lt; tasks::qp::SurfaceTransformTask &gt;</td></tr>
 <tr class="separator:a477fb8de593f7ccaaea505e9e11229f7 inherit pub_types_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -434,19 +443,69 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Hybrid position-force control on a contacting end-effector. </p>
-<p>The <a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html" title="Hybrid position-force control on a contacting end-effector. ">AdmittanceTask</a> is by default a <a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html" title="Control the Surface of a body. ">SurfaceTransformTask</a>, i.e. pure position control of a surface frame. Admittance coefficients that map force errors to displacements (see [1] and [2]) are initially set to zero.</p>
-<p>When the admittance along one axis (Fx, Fy, Fz, Tx, Ty or Tz) is set to a non-zero positive value, this axis switches from position to force control. The goal is then to realize the prescribed target wrench at the surface frame (bis repetita placent: wrenches are expressed in the surface frame of the task, not in the sensor frame of the corresponding body). The force control law applied is damping control [3].</p>
+<p>The <a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html" title="Hybrid position-force control on a contacting end-effector. ">AdmittanceTask</a> is by default a <a class="el" href="structmc__tasks_1_1TransformTask.html" title="Control a frame 6D pose. ">TransformTask</a>, i.e. pure position control of a frame. Admittance coefficients that map force errors to displacements (see [1] and [2]) are initially set to zero.</p>
+<p>When the admittance along one axis (Fx, Fy, Fz, Tx, Ty or Tz) is set to a non-zero positive value, this axis switches from position to force control. The goal is then to realize the prescribed target wrench at the control frame (bis repetita placent: wrenches are expressed in the control frame of the task, not in the sensor frame of the corresponding body). The force control law applied is damping control [3].</p>
 <p>See the discussion in [4] for a comparison with the <a class="el" href="structmc__tasks_1_1force_1_1ComplianceTask.html" title="Add a contact in a compliant manner. ">ComplianceTask</a>.</p>
 <p>[1] <a href="https://en.wikipedia.org/wiki/Mechanical_impedance">https://en.wikipedia.org/wiki/Mechanical_impedance</a> [2] <a href="https://en.wikipedia.org/wiki/Impedance_analogy">https://en.wikipedia.org/wiki/Impedance_analogy</a> [3] <a href="https://doi.org/10.1109/IROS.2010.5651082">https://doi.org/10.1109/IROS.2010.5651082</a> [4] <a href="https://gite.lirmm.fr/multi-contact/mc_rtc/issues/34">https://gite.lirmm.fr/multi-contact/mc_rtc/issues/34</a> </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ababaa90033e00d09b1372d4bb7f618d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ababaa90033e00d09b1372d4bb7f618d9">&#9670;&nbsp;</a></span>AdmittanceTask()</h2>
+<a id="aeb260767d5027918e1931e5365f5ecf3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb260767d5027918e1931e5365f5ecf3">&#9670;&nbsp;</a></span>AdmittanceTask() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">EIGEN_MAKE_ALIGNED_OPERATOR_NEW mc_tasks::force::AdmittanceTask::AdmittanceTask </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;&#160;</td>
+          <td class="paramname"><em>frame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>stiffness</em> = <code>5.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>weight</em> = <code>1000.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize a new admittance task. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame</td><td>Control frame</td></tr>
+    <tr><td class="paramname">stiffness</td><td>Stiffness of the underlying Transform task</td></tr>
+    <tr><td class="paramname">weight</td><td>Weight of the underlying Transform task</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>the frame does not have a force sensor attached </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="adc9e5dddfd6c66644832803aa5187181"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc9e5dddfd6c66644832803aa5187181">&#9670;&nbsp;</a></span>AdmittanceTask() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_tasks::force::AdmittanceTask::AdmittanceTask </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>robotSurface</em>, </td>
@@ -489,8 +548,8 @@ Additional Inherited Members</h2></td></tr>
     <tr><td class="paramname">robotSurface</td><td>Name of the surface frame to control, in which the desired wrench will also be expressed</td></tr>
     <tr><td class="paramname">robots</td><td>Robots where the task will be applied</td></tr>
     <tr><td class="paramname">robotIndex</td><td>Which robot among the robots</td></tr>
-    <tr><td class="paramname">stiffness</td><td>Stiffness of the underlying SurfaceTransform task</td></tr>
-    <tr><td class="paramname">weight</td><td>Weight of the underlying SurfaceTransform task</td></tr>
+    <tr><td class="paramname">stiffness</td><td>Stiffness of the underlying Transform task</td></tr>
+    <tr><td class="paramname">weight</td><td>Weight of the underlying Transform task</td></tr>
   </table>
   </dd>
 </dl>
@@ -698,6 +757,8 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="structmc__tasks_1_1MetaTask.html#a27dbee0df32ae7f803184cb6222fc427">mc_tasks::MetaTask</a>.</p>
 
+<p>Reimplemented in <a class="el" href="structmc__tasks_1_1force_1_1CoPTask.html#ade36a58f912236a75c7aa33bdf3551b1">mc_tasks::force::CoPTask</a>.</p>
+
 </div>
 </div>
 <a id="a1a82a23ac354e6e380ecd7803e790d27"></a>
@@ -831,7 +892,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get the measured wrench in the surface frame. </p>
+<p>Get the measured wrench in the control frame. </p>
 
 </div>
 </div>
@@ -858,7 +919,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Transform from current surface pose to target. </p>
+<p>Transform from current frame pose to target. </p>
 
 </div>
 </div>
@@ -893,7 +954,7 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>Body velocity means that velB is the velocity of the surface frame expressed in the surface frame itself. See e.g. (Murray et al., 1994, CRC Press).</p>
+<p>Body velocity means that velB is the velocity of the control frame expressed in the control frame itself. See e.g. (Murray et al., 1994, CRC Press).</p>
 <dl class="section note"><dt>Note</dt><dd>The refVelB body velocity ultimately set as task target to the QP is the sum of this feedforward velocity and a feedback term for force control. </dd></dl>
 
 </div>
@@ -953,7 +1014,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get the current pose of the robot surface in the inertial frame. </p>
+<p>Get the current pose of the control frame in the inertial frame. </p>
 
 </div>
 </div>
@@ -980,7 +1041,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get the target pose of the surface in the world frame. </p>
+<p>Get the target pose of the control frame in the world frame. </p>
 
 </div>
 </div>
@@ -1008,7 +1069,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Set target pose (position and orientation) of the surface in the world frame. </p>
+<p>Set target pose (position and orientation) of the frame in the world frame. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">X_0_target</td><td>Plucker transform to the target frame. </td></tr>
@@ -1041,7 +1102,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get the target wrench in the surface frame. </p>
+<p>Get the target wrench in the control frame. </p>
 
 </div>
 </div>
@@ -1069,10 +1130,10 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Set the target wrench in the surface frame. </p>
+<p>Set the target wrench in the control frame. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">wrench</td><td>Target wrench in the surface frame </td></tr>
+    <tr><td class="paramname">wrench</td><td>Target wrench in the control frame </td></tr>
   </table>
   </dd>
 </dl>
@@ -1103,7 +1164,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Set the target wrench in world frame. This function will convert the world wrench to surface frame, and call <a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#ae8a55ef8c9d0173de5004c2dc8c3f1d3" title="Get the target wrench in the surface frame. ">targetWrench()</a> </p>
+<p>Set the target wrench in world frame. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">wrench</td><td>Target wrench in world frame </td></tr>
@@ -1313,72 +1374,6 @@ Additional Inherited Members</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">sva::MotionVecd mc_tasks::force::AdmittanceTask::refVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero())</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a658941cdb929605537a9c8fd740138f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a658941cdb929605537a9c8fd740138f5">&#9670;&nbsp;</a></span>rIndex_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int mc_tasks::force::AdmittanceTask::rIndex_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad63efb656ede4ea8b139489cf7ed50ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad63efb656ede4ea8b139489cf7ed50ec">&#9670;&nbsp;</a></span>robots_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a>&amp; mc_tasks::force::AdmittanceTask::robots_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac854c2ff4e850e265a8b18d2e92df0ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac854c2ff4e850e265a8b18d2e92df0ab">&#9670;&nbsp;</a></span>surface_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="structmc__rbdyn_1_1Surface.html">mc_rbdyn::Surface</a>&amp; mc_tasks::force::AdmittanceTask::surface_</td>
         </tr>
       </table>
   </td>

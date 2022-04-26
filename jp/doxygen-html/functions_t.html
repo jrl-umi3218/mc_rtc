@@ -98,11 +98,12 @@ $(document).ready(function(){initNavTree('functions_t.html','');});
 , <a class="el" href="structmc__tasks_1_1LookAtTask.html#a99e4cc8d6d381936d58bc7675dea901a">mc_tasks::LookAtTask</a>
 , <a class="el" href="structmc__tasks_1_1PostureTask.html#acb550b5465420b15d564c8df277b849a">mc_tasks::PostureTask</a>
 , <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a2f94ae2cfc7521582ffd1b5720bda580">mc_tasks::SplineTrajectoryTask&lt; Derived &gt;</a>
-, <a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a486a21e87c98de6f9edd93c5b8f4bf12">mc_tasks::SurfaceTransformTask</a>
+, <a class="el" href="structmc__tasks_1_1TransformTask.html#a50134b1f1bbb68f93e3b1235da3f15bd">mc_tasks::TransformTask</a>
 , <a class="el" href="structmc__trajectory_1_1Spline.html#a45494f7a53e0aca7460a61422267a6e3">mc_trajectory::Spline&lt; T, WaypointsT &gt;</a>
 </li>
 <li>target_
-: <a class="el" href="structmc__trajectory_1_1Spline.html#a02ba52495ba023e463cd553403881343">mc_trajectory::Spline&lt; T, WaypointsT &gt;</a>
+: <a class="el" href="structmc__tasks_1_1LookAtFrameTask.html#a49f0fece5eb474b86986e9d59c01300c">mc_tasks::LookAtFrameTask</a>
+, <a class="el" href="structmc__trajectory_1_1Spline.html#a02ba52495ba023e463cd553403881343">mc_trajectory::Spline&lt; T, WaypointsT &gt;</a>
 </li>
 <li>targetAccel()
 : <a class="el" href="structmc__tasks_1_1force_1_1ImpedanceTask.html#a9fd6bbf9a5f6fbc67431ab603f946ac3">mc_tasks::force::ImpedanceTask</a>
@@ -130,7 +131,7 @@ $(document).ready(function(){initNavTree('functions_t.html','');});
 : <a class="el" href="structmc__control_1_1Gripper.html#a4561c4e1bc0a57bc1b2537f787fb9334">mc_control::Gripper</a>
 </li>
 <li>targetPos()
-: <a class="el" href="structmc__tasks_1_1BSplineTrajectoryTask.html#a9c6b5bc01bbaa882d10178076867265e">mc_tasks::BSplineTrajectoryTask</a>
+: <a class="el" href="structmc__tasks_1_1BSplineTrajectoryTask.html#a559bf605e5d3ee712f3beb4ca867daf0">mc_tasks::BSplineTrajectoryTask</a>
 , <a class="el" href="structmc__tasks_1_1ExactCubicTrajectoryTask.html#a80741d234899b3571a97e48ac9fb2407">mc_tasks::ExactCubicTrajectoryTask</a>
 </li>
 <li>targetPose()
@@ -150,7 +151,7 @@ $(document).ready(function(){initNavTree('functions_t.html','');});
 : <a class="el" href="structmc__tasks_1_1AddRemoveContactTask.html#acdd2290d6e07d8778d1bb92feb96d973">mc_tasks::AddRemoveContactTask</a>
 </li>
 <li>targetSurface()
-: <a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a5cf828fa175ab56a7d7c4b774bda7296">mc_tasks::SurfaceTransformTask</a>
+: <a class="el" href="structmc__tasks_1_1TransformTask.html#a49d3421e1859d9b36e4bc64ca6c29490">mc_tasks::TransformTask</a>
 </li>
 <li>targetTf
 : <a class="el" href="structmc__tasks_1_1AddRemoveContactTask.html#a7dac96a0da2ff21be423cc30af924827">mc_tasks::AddRemoveContactTask</a>
@@ -319,11 +320,11 @@ $(document).ready(function(){initNavTree('functions_t.html','');});
 <li>TrajectoryBase
 : <a class="el" href="structmc__tasks_1_1CoMTask.html#a51467f7e3f362d7aaa1b6ddb48b5d41a">mc_tasks::CoMTask</a>
 , <a class="el" href="structmc__tasks_1_1MomentumTask.html#ab8b59fbe836201537d6a5d4616a845f2">mc_tasks::MomentumTask</a>
-, <a class="el" href="structmc__tasks_1_1SurfaceTransformTask.html#a6373dca6e354783c884576662960c10d">mc_tasks::SurfaceTransformTask</a>
 , <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a477fb8de593f7ccaaea505e9e11229f7">mc_tasks::TrajectoryTaskGeneric&lt; T &gt;</a>
+, <a class="el" href="structmc__tasks_1_1TransformTask.html#afc07a09fa745dd322cb17e9b21b2547b">mc_tasks::TransformTask</a>
 </li>
 <li>TrajectoryImpl()
-: <a class="el" href="structmc__rtc_1_1gui_1_1TrajectoryImpl.html#ad07155be02930a5f4ca5ad25527f5180">mc_rtc::gui::TrajectoryImpl&lt; GetT &gt;</a>
+: <a class="el" href="structmc__rtc_1_1gui_1_1TrajectoryImpl.html#aa5739c5b73ee002d3bd0857c1daf5695">mc_rtc::gui::TrajectoryImpl&lt; GetT &gt;</a>
 </li>
 <li>trajectoryT_
 : <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a779f644750cc4acd6692681dd255ea06">mc_tasks::TrajectoryTaskGeneric&lt; T &gt;</a>
@@ -336,13 +337,16 @@ $(document).ready(function(){initNavTree('functions_t.html','');});
 </li>
 <li>transform()
 : <a class="el" href="structmc__control_1_1ControllerClient.html#ae0c7c17c332c1d82f8dae1db99d587bb">mc_control::ControllerClient</a>
-, <a class="el" href="structmc__solver_1_1utils_1_1ContactWrenchMatrixToLambdaMatrix.html#a3024b20e8f098756d24cd2082469c055">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix</a>
+, <a class="el" href="structmc__solver_1_1utils_1_1ContactWrenchMatrixToLambdaMatrix.html#ae56a8607e4c339c9a345155ec613032d">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix</a>
 </li>
 <li>TransformImpl()
 : <a class="el" href="structmc__rtc_1_1gui_1_1TransformImpl.html#a1483ccb550b761697c786f561b11e970">mc_rtc::gui::TransformImpl&lt; GetT, SetT &gt;</a>
 </li>
 <li>TransformROImpl()
 : <a class="el" href="structmc__rtc_1_1gui_1_1TransformROImpl.html#ad88471593f6707749be38dc161ba68d3">mc_rtc::gui::TransformROImpl&lt; GetT &gt;</a>
+</li>
+<li>TransformTask()
+: <a class="el" href="structmc__tasks_1_1TransformTask.html#af76f18eb60ebc27c1e8b7612535aecc9">mc_tasks::TransformTask</a>
 </li>
 <li>transition()
 : <a class="el" href="structmc__control_1_1fsm_1_1TransitionMap.html#ae22a9f786f98b01fe50849d23d690c93">mc_control::fsm::TransitionMap</a>
@@ -418,7 +422,7 @@ $(document).ready(function(){initNavTree('functions_t.html','');});
 , <a class="el" href="structmc__rtc_1_1gui_1_1XYThetaROImpl.html#aff70a2c515c79366813abd70e1d09996">mc_rtc::gui::XYThetaROImpl&lt; GetT &gt;</a>
 , <a class="el" href="structmc__rtc_1_1internal_1_1args__t.html#a0b4ee875f9490a7d6bef544143160904">mc_rtc::internal::args_t&lt; T &gt;</a>
 , <a class="el" href="structmc__rtc_1_1log_1_1FlatLog_1_1record.html#a0796a1bb292299608b539563b87a8610">mc_rtc::log::FlatLog::record</a>
-, <a class="el" href="structmc__rtc_1_1log_1_1FlatLog.html#adce27a288263487f7d87a6ed76db3f48">mc_rtc::log::FlatLog</a>
+, <a class="el" href="structmc__rtc_1_1log_1_1FlatLog.html#a9a306a5082bbe5eeef9e6aeb6ecf0fe8">mc_rtc::log::FlatLog</a>
 , <a class="el" href="structmc__rtc_1_1log_1_1GetLogType.html#a7b718d634332b545266bbe2298a624d4">mc_rtc::log::GetLogType&lt; T &gt;</a>
 , <a class="el" href="structmc__rtc_1_1log_1_1GetLogType_3_01Eigen_1_1Ref_3_01Type_00_01Options_00_01StrideType_01_4_01_4.html#a398a7ff87a94fb2329f34dcbb78d79e9">mc_rtc::log::GetLogType&lt; Eigen::Ref&lt; Type, Options, StrideType &gt; &gt;</a>
 , <a class="el" href="structmc__rtc_1_1log_1_1GetLogType_3_01std_1_1array_3_01double_00_01N_01_4_01_4.html#abb810ed56b47cc1072dd33f1f40ca8a5">mc_rtc::log::GetLogType&lt; std::array&lt; double, N &gt; &gt;</a>

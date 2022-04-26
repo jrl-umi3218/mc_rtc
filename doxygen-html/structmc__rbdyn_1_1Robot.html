@@ -70,6 +70,7 @@ $(document).ready(function(){initNavTree('structmc__rbdyn_1_1Robot.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
@@ -82,6 +83,11 @@ $(document).ready(function(){initNavTree('structmc__rbdyn_1_1Robot.html','');});
 
 <p><code>#include &lt;<a class="el" href="mc__rbdyn_2Robot_8h_source.html">mc_rbdyn/Robot.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot_1_1NewRobotToken.html">NewRobotToken</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:aeaf56b7bf79a4e2be37e3c8615d156ad"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#aeaf56b7bf79a4e2be37e3c8615d156ad">convex_pair_t</a> = std::pair&lt; std::string, <a class="el" href="namespacemc__rbdyn.html#ac3517607389b845ee6ffdee65cbc8a63">S_ObjectPtr</a> &gt;</td></tr>
@@ -101,6 +107,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aafb78a38ec8b2037519f030140a95976"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8353aa6a66630a85c9249298ed960c6a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a8353aa6a66630a85c9249298ed960c6a">hasBody</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>) const</td></tr>
 <tr class="separator:a8353aa6a66630a85c9249298ed960c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dce036249f32a7cd0f0257956be990e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a4dce036249f32a7cd0f0257956be990e">hasFrame</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>) const noexcept</td></tr>
+<tr class="separator:a4dce036249f32a7cd0f0257956be990e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac68ae766d6de9d5f8740001ac10a62db"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ac68ae766d6de9d5f8740001ac10a62db">frame</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>) const</td></tr>
+<tr class="separator:ac68ae766d6de9d5f8740001ac10a62db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3d92cb0d6c4ba8c42ee9a35a7d56bab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ad3d92cb0d6c4ba8c42ee9a35a7d56bab">frame</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>)</td></tr>
+<tr class="separator:ad3d92cb0d6c4ba8c42ee9a35a7d56bab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c6c471776005048105c48791df73ea5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a8c6c471776005048105c48791df73ea5">frames</a> () const</td></tr>
+<tr class="separator:a8c6c471776005048105c48791df73ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4db0746e4af259c63c288695f72beac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ad4db0746e4af259c63c288695f72beac">makeFrame</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>, <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a> &amp;parent, sva::PTransformd X_p_f, bool baked=false)</td></tr>
+<tr class="separator:ad4db0746e4af259c63c288695f72beac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47874ad9d5abdcd85701b02e2c85cefb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a47874ad9d5abdcd85701b02e2c85cefb">hasSurface</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#aa4b724e51881215dd4293f9578656755">surface</a>) const</td></tr>
 <tr class="separator:a47874ad9d5abdcd85701b02e2c85cefb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4b724e51881215dd4293f9578656755"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1Surface.html">mc_rbdyn::Surface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#aa4b724e51881215dd4293f9578656755">surface</a> (const std::string &amp;sName)</td></tr>
@@ -141,6 +157,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1554209253be449c1fb4cdd7e3d2478d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4b932fc4c4956b16490006dd8591d0e"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::vector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ac4b932fc4c4956b16490006dd8591d0e">stance</a> () const</td></tr>
 <tr class="separator:ac4b932fc4c4956b16490006dd8591d0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a2161c1f89c0b9e3a812ca390ff7666"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a4a2161c1f89c0b9e3a812ca390ff7666">robots</a> () noexcept</td></tr>
+<tr class="separator:a4a2161c1f89c0b9e3a812ca390ff7666"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c413ebff3be3f588eff569106ba4426"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a6c413ebff3be3f588eff569106ba4426">robots</a> () const noexcept</td></tr>
+<tr class="separator:a6c413ebff3be3f588eff569106ba4426"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af110c909887516af9f6758118978b643"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#af110c909887516af9f6758118978b643">robotIndex</a> () const</td></tr>
 <tr class="separator:af110c909887516af9f6758118978b643"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae46b693d4431e61db9f1d4a05f66dd5e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ae46b693d4431e61db9f1d4a05f66dd5e">forwardKinematics</a> ()</td></tr>
@@ -179,6 +199,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6b0c83dbee42dff616909c21b90825b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa96f71ad7e9c085d622c4885c15f1bb"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="namespacemc__control.html#a39b3dee4f4017bab0f389d9bfd7877dc">mc_control::GripperRef</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#afa96f71ad7e9c085d622c4885c15f1bb">grippers</a> () const</td></tr>
 <tr class="separator:afa96f71ad7e9c085d622c4885c15f1bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67d08992e4533e60f597d33c9da1b9f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a67d08992e4533e60f597d33c9da1b9f0">Robot</a> (<a class="el" href="structmc__rbdyn_1_1Robot_1_1NewRobotToken.html">NewRobotToken</a>, const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>, <a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a4a2161c1f89c0b9e3a812ca390ff7666">robots</a>, unsigned int robots_idx, bool loadFiles, const sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
+<tr class="separator:a67d08992e4533e60f597d33c9da1b9f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Body sensors</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>These functions are related to force sensors </p>
 </div></td></tr>
@@ -290,10 +312,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a928b9370f7643511d1ec80892245fb88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a207f3ea22bce722a3d68ac37aed8ca03"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a207f3ea22bce722a3d68ac37aed8ca03">bodyWrench</a> (const std::string &amp;bodyName) const</td></tr>
 <tr class="separator:a207f3ea22bce722a3d68ac37aed8ca03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a411485264496b268c8ace71adcc3e75e"><td class="memItemLeft" align="right" valign="top">Eigen::Vector2d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a411485264496b268c8ace71adcc3e75e">cop</a> (const std::string &amp;surfaceName, double min_pressure=0.5) const</td></tr>
-<tr class="separator:a411485264496b268c8ace71adcc3e75e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2042bcdb8f612347b16e72c1853d0f1a"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a2042bcdb8f612347b16e72c1853d0f1a">copW</a> (const std::string &amp;surfaceName, double min_pressure=0.5) const</td></tr>
-<tr class="separator:a2042bcdb8f612347b16e72c1853d0f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4679daa562a23a753a3f5f77daa9861"><td class="memItemLeft" align="right" valign="top">Eigen::Vector2d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#aa4679daa562a23a753a3f5f77daa9861">cop</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#ac68ae766d6de9d5f8740001ac10a62db">frame</a>, double min_pressure=0.5) const</td></tr>
+<tr class="separator:aa4679daa562a23a753a3f5f77daa9861"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b7aa66da24521f280bbc2d9c16cdda7"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a2b7aa66da24521f280bbc2d9c16cdda7">copW</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#ac68ae766d6de9d5f8740001ac10a62db">frame</a>, double min_pressure=0.5) const</td></tr>
+<tr class="separator:a2b7aa66da24521f280bbc2d9c16cdda7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a117494f13e48578a752a102e322189b0"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a117494f13e48578a752a102e322189b0">netWrench</a> (const std::vector&lt; std::string &gt; &amp;sensorNames) const</td></tr>
 <tr class="memdesc:a117494f13e48578a752a102e322189b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes net total wrench from a list of sensors.  <a href="#a117494f13e48578a752a102e322189b0">More...</a><br /></td></tr>
 <tr class="separator:a117494f13e48578a752a102e322189b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -409,6 +431,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a49efc5c9284a39c13647ff5500138d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d8ac9af47c038fda22f721e9c1d3a89"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1ForceSensor.html">ForceSensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a7d8ac9af47c038fda22f721e9c1d3a89">bodyForceSensor</a> (const std::string &amp;body) const</td></tr>
 <tr class="separator:a7d8ac9af47c038fda22f721e9c1d3a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affafbe491eaf05a4cc9aba0a371beac1"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1ForceSensor.html">ForceSensor</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#affafbe491eaf05a4cc9aba0a371beac1">findBodyForceSensor</a> (const std::string &amp;body) const</td></tr>
+<tr class="separator:affafbe491eaf05a4cc9aba0a371beac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4bfab32c0f157b828a70134f1ffe985"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1ForceSensor.html">ForceSensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ac4bfab32c0f157b828a70134f1ffe985">surfaceForceSensor</a> (const std::string &amp;surfaceName)</td></tr>
 <tr class="separator:ac4bfab32c0f157b828a70134f1ffe985"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace64ab0161e9b00e262b408733d19629"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1ForceSensor.html">ForceSensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ace64ab0161e9b00e262b408733d19629">surfaceForceSensor</a> (const std::string &amp;surfaceName) const</td></tr>
@@ -423,10 +447,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4733eee02a2b700c1e5ab9796f92b26b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77d7387d7242da1e7c42420583dce311"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1ForceSensor.html">ForceSensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a77d7387d7242da1e7c42420583dce311">indirectSurfaceForceSensor</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#aa4b724e51881215dd4293f9578656755">surface</a>) const</td></tr>
 <tr class="separator:a77d7387d7242da1e7c42420583dce311"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9ece4044d66c5fb62667f7dc91dd6d4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structmc__rbdyn_1_1ForceSensor.html">ForceSensor</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#aa9ece4044d66c5fb62667f7dc91dd6d4">forceSensors</a> ()</td></tr>
-<tr class="separator:aa9ece4044d66c5fb62667f7dc91dd6d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3fe91912f91e71eaff0a67af81b4ca0"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="structmc__rbdyn_1_1ForceSensor.html">ForceSensor</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ad3fe91912f91e71eaff0a67af81b4ca0">forceSensors</a> () const</td></tr>
 <tr class="separator:ad3fe91912f91e71eaff0a67af81b4ca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9ece4044d66c5fb62667f7dc91dd6d4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structmc__rbdyn_1_1ForceSensor.html">ForceSensor</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#aa9ece4044d66c5fb62667f7dc91dd6d4">forceSensors</a> ()</td></tr>
+<tr class="separator:aa9ece4044d66c5fb62667f7dc91dd6d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Devices</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>These functions are related to generic devices handling </p>
 </div></td></tr>
@@ -457,8 +481,6 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a51de36111dee056232ab11ac45067d62"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a51de36111dee056232ab11ac45067d62">Robot</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>, <a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &amp;robots, unsigned int robots_idx, bool loadFiles, const sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:a51de36111dee056232ab11ac45067d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2c28ca834c5d81e66f581425c2d7f16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ae2c28ca834c5d81e66f581425c2d7f16">copyLoadedData</a> (<a class="el" href="structmc__rbdyn_1_1Robot.html">Robot</a> &amp;destination) const</td></tr>
 <tr class="separator:ae2c28ca834c5d81e66f581425c2d7f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a218dfb7dbc50f94466e30871869b967d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a218dfb7dbc50f94466e30871869b967d">fixSurfaces</a> ()</td></tr>
@@ -516,18 +538,21 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="a51de36111dee056232ab11ac45067d62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51de36111dee056232ab11ac45067d62">&#9670;&nbsp;</a></span>Robot() <span class="overload">[2/2]</span></h2>
+<a id="a67d08992e4533e60f597d33c9da1b9f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67d08992e4533e60f597d33c9da1b9f0">&#9670;&nbsp;</a></span>Robot() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">mc_rbdyn::Robot::Robot </td>
           <td>(</td>
+          <td class="paramtype"><a class="el" href="structmc__rbdyn_1_1Robot_1_1NewRobotToken.html">NewRobotToken</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em>, </td>
         </tr>
@@ -567,11 +592,6 @@ Friends</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Invoked by <a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> parent instance after mb/mbc/mbg/RobotModule are stored</p>
 <p>When loadFiles is set to false, the convex and surfaces files are not loaded. This is used when copying one robot into another. </p>
@@ -1697,8 +1717,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="a411485264496b268c8ace71adcc3e75e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a411485264496b268c8ace71adcc3e75e">&#9670;&nbsp;</a></span>cop()</h2>
+<a id="aa4679daa562a23a753a3f5f77daa9861"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4679daa562a23a753a3f5f77daa9861">&#9670;&nbsp;</a></span>cop()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1707,7 +1727,7 @@ Friends</h2></td></tr>
           <td class="memname">Eigen::Vector2d mc_rbdyn::Robot::cop </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>surfaceName</em>, </td>
+          <td class="paramname"><em>frame</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1722,30 +1742,30 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Compute the cop in surface frame computed from gravity-free force measurements</p>
+<p>Compute the cop in a given frame computed from gravity-free force measurements</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">surfaceName</td><td>A surface attached to a force sensor </td></tr>
+    <tr><td class="paramname">frame</td><td>A frame attached to a force sensor </td></tr>
     <tr><td class="paramname">min_pressure</td><td>Minimum pressure in N (default 0.5N).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Measured cop in surface frame<ul>
+<dl class="section return"><dt>Returns</dt><dd>Measured cop in provided frame<ul>
 <li>CoP if pressure &gt;= min_pressure</li>
 <li>Zero otherwise</li>
 </ul>
 </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">If</td><td>no sensor is attached to this surface </td></tr>
+    <tr><td class="paramname">If</td><td>the frame does not exist or no sensor is attached to this frame </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a2042bcdb8f612347b16e72c1853d0f1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2042bcdb8f612347b16e72c1853d0f1a">&#9670;&nbsp;</a></span>copW()</h2>
+<a id="a2b7aa66da24521f280bbc2d9c16cdda7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b7aa66da24521f280bbc2d9c16cdda7">&#9670;&nbsp;</a></span>copW()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1754,7 +1774,7 @@ Friends</h2></td></tr>
           <td class="memname">Eigen::Vector3d mc_rbdyn::Robot::copW </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>surfaceName</em>, </td>
+          <td class="paramname"><em>frame</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1772,7 +1792,7 @@ Friends</h2></td></tr>
 <p>Compute the cop in inertial frame compute from gravity-free force measurements</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">surfaceName</td><td>A surface attached to a force sensor </td></tr>
+    <tr><td class="paramname">frame</td><td>A frame attached to a force sensor </td></tr>
     <tr><td class="paramname">min_pressure</td><td>Minimum pressure in N (default 0.5N).</td></tr>
   </table>
   </dd>
@@ -1784,7 +1804,7 @@ Friends</h2></td></tr>
 </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">If</td><td>no sensor is attached to this surface </td></tr>
+    <tr><td class="paramname">If</td><td>the frame does not exist or no sensor is attached to this frame </td></tr>
   </table>
   </dd>
 </dl>
@@ -2064,6 +2084,26 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="affafbe491eaf05a4cc9aba0a371beac1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affafbe491eaf05a4cc9aba0a371beac1">&#9670;&nbsp;</a></span>findBodyForceSensor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structmc__rbdyn_1_1ForceSensor.html">ForceSensor</a>* mc_rbdyn::Robot::findBodyForceSensor </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>body</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return a force sensor attached (directly or indirectly) to the given body</p>
+<p>Returns a null pointer if no such sensor exists </p>
+
+</div>
+</div>
 <a id="adec9236c7e0a6848e0fb76704ea64372"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adec9236c7e0a6848e0fb76704ea64372">&#9670;&nbsp;</a></span>findIndirectForceSensorBodyName()</h2>
 
@@ -2147,7 +2187,7 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Used to set the surfaces' X_b_s correctly </p>
+<p>Used to set the surfaces' X_b_s correctly and create frames from <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> </p>
 
 </div>
 </div>
@@ -2275,26 +2315,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aa9ece4044d66c5fb62667f7dc91dd6d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9ece4044d66c5fb62667f7dc91dd6d4">&#9670;&nbsp;</a></span>forceSensors() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="structmc__rbdyn_1_1ForceSensor.html">ForceSensor</a>&gt;&amp; mc_rbdyn::Robot::forceSensors </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Returns all force sensors </p>
-
-</div>
-</div>
 <a id="ad3fe91912f91e71eaff0a67af81b4ca0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3fe91912f91e71eaff0a67af81b4ca0">&#9670;&nbsp;</a></span>forceSensors() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3fe91912f91e71eaff0a67af81b4ca0">&#9670;&nbsp;</a></span>forceSensors() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2304,6 +2326,24 @@ template&lt;typename T &gt; </div>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns all force sensors (const) </p>
+
+</div>
+</div>
+<a id="aa9ece4044d66c5fb62667f7dc91dd6d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9ece4044d66c5fb62667f7dc91dd6d4">&#9670;&nbsp;</a></span>forceSensors() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structmc__rbdyn_1_1ForceSensor.html">ForceSensor</a>&gt;&amp; mc_rbdyn::Robot::forceSensors </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2430,6 +2470,90 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Apply forward velocity to <code>mbc</code> using the robot's <a class="el" href="structmc__rbdyn_1_1Robot.html#a79bdab3efcd9ada4d2b3aefa53374af1">mb()</a> </p>
+
+</div>
+</div>
+<a id="ac68ae766d6de9d5f8740001ac10a62db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac68ae766d6de9d5f8740001ac10a62db">&#9670;&nbsp;</a></span>frame() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a>&amp; mc_rbdyn::Robot::frame </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Access the frame named <code>name</code> </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>the frame does not exist </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad3d92cb0d6c4ba8c42ee9a35a7d56bab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3d92cb0d6c4ba8c42ee9a35a7d56bab">&#9670;&nbsp;</a></span>frame() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a>&amp; mc_rbdyn::Robot::frame </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Access the frame named <code>name</code> (non-const)</p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>the frame does not exist </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8c6c471776005048105c48791df73ea5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c6c471776005048105c48791df73ea5">&#9670;&nbsp;</a></span>frames()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; mc_rbdyn::Robot::frames </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the list of available frames in this robot </p>
 
 </div>
 </div>
@@ -2635,6 +2759,33 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the sensor exists, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a4dce036249f32a7cd0f0257956be990e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dce036249f32a7cd0f0257956be990e">&#9670;&nbsp;</a></span>hasFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rbdyn::Robot::hasFrame </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns true if the robot has a frame named <code>name</code> </p>
 
 </div>
 </div>
@@ -3037,6 +3188,63 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Load surfaces from the directory <code>surfaceDir</code> </p>
+
+</div>
+</div>
+<a id="ad4db0746e4af259c63c288695f72beac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4db0746e4af259c63c288695f72beac">&#9670;&nbsp;</a></span>makeFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a>&amp; mc_rbdyn::Robot::makeFrame </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a> &amp;&#160;</td>
+          <td class="paramname"><em>parent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sva::PTransformd&#160;</td>
+          <td class="paramname"><em>X_p_f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>baked</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create a new frame attached to this robot</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name of the frame</td></tr>
+    <tr><td class="paramname">frame</td><td>Parent frame of this frame</td></tr>
+    <tr><td class="paramname">X_p_f</td><td>Transformation from the parent frame to the frame</td></tr>
+    <tr><td class="paramname">baked</td><td>Attach the newly created frame to <code>parent</code> parent's body rather than <code>parent</code> if true</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The newly created frame</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td><code>parent</code> does not belong to this robot or if <code>name</code> already exists in this robot </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -3473,7 +3681,59 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Access the robot's index in robots() </p>
+<p>Access the robot's index in <a class="el" href="structmc__rbdyn_1_1Robot.html#a4a2161c1f89c0b9e3a812ca390ff7666">robots()</a> </p>
+
+</div>
+</div>
+<a id="a4a2161c1f89c0b9e3a812ca390ff7666"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a2161c1f89c0b9e3a812ca390ff7666">&#9670;&nbsp;</a></span>robots() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a>&amp; mc_rbdyn::Robot::robots </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Access <a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> instance this instance belongs to </p>
+
+</div>
+</div>
+<a id="a6c413ebff3be3f588eff569106ba4426"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c413ebff3be3f588eff569106ba4426">&#9670;&nbsp;</a></span>robots() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a>&amp; mc_rbdyn::Robot::robots </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Access <a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> instance this instance belongs to (const) </p>
 
 </div>
 </div>
@@ -4172,7 +4432,7 @@ template&lt;typename T &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">netTotalWrench</td><td></td></tr>
-    <tr><td class="paramname">zmpFrame</td><td>Frame used for ZMP computation. The convention here is that the contact frame should have its z-axis pointing in the normal direction of the contact towards the robot.</td></tr>
+    <tr><td class="paramname">zmpFrame</td><td><a class="el" href="structmc__rbdyn_1_1Frame.html">Frame</a> used for ZMP computation. The convention here is that the contact frame should have its z-axis pointing in the normal direction of the contact towards the robot.</td></tr>
   </table>
   </dd>
 </dl>

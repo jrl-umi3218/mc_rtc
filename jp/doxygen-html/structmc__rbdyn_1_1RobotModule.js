@@ -1,5 +1,6 @@
 var structmc__rbdyn_1_1RobotModule =
 [
+    [ "FrameDescription", "structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html", "structmc__rbdyn_1_1RobotModule_1_1FrameDescription" ],
     [ "Gripper", "structmc__rbdyn_1_1RobotModule_1_1Gripper.html", "structmc__rbdyn_1_1RobotModule_1_1Gripper" ],
     [ "accelerationBounds_t", "structmc__rbdyn_1_1RobotModule.html#a10b7fc984b3fa946f5c59a4174a366b8", null ],
     [ "bounds_t", "structmc__rbdyn_1_1RobotModule.html#a5b8304a1ea905fa0378a31dcf65b1460", null ],
@@ -23,6 +24,7 @@ var structmc__rbdyn_1_1RobotModule =
     [ "expand_stance", "structmc__rbdyn_1_1RobotModule.html#aa6f2c53b2567e6fbd62f8694db311a9d", null ],
     [ "flexibility", "structmc__rbdyn_1_1RobotModule.html#a0f2e303e32aeb00e4928808dc3e0760a", null ],
     [ "forceSensors", "structmc__rbdyn_1_1RobotModule.html#a17aa1885f3db7c16c3e06b2525be82d4", null ],
+    [ "frames", "structmc__rbdyn_1_1RobotModule.html#a7d603f118a4a09c26a287320b3d6f212", null ],
     [ "grippers", "structmc__rbdyn_1_1RobotModule.html#a10f22df2fe618e1d7ee0db3edec87f72", null ],
     [ "gripperSafety", "structmc__rbdyn_1_1RobotModule.html#ae7ae59c52568b7bee2919530e97631fc", null ],
     [ "init", "structmc__rbdyn_1_1RobotModule.html#a33637f65346a81c078c9c04de9e4be0e", null ],
@@ -49,6 +51,7 @@ var structmc__rbdyn_1_1RobotModule =
     [ "_devices", "structmc__rbdyn_1_1RobotModule.html#ab6b79da885f0935ee568f416025466e0", null ],
     [ "_flexibility", "structmc__rbdyn_1_1RobotModule.html#a664972f2b2163e90aab92a3903385b28", null ],
     [ "_forceSensors", "structmc__rbdyn_1_1RobotModule.html#a0c1a839a89c823bd31ca95f6caa371b0", null ],
+    [ "_frames", "structmc__rbdyn_1_1RobotModule.html#a72ac49d4249ad8b6d66d85e4d35a2755", null ],
     [ "_grippers", "structmc__rbdyn_1_1RobotModule.html#aff92408eda408fe95d5320918db67674", null ],
     [ "_gripperSafety", "structmc__rbdyn_1_1RobotModule.html#a58c75925a8766c6148fbb6a1385e61c5", null ],
     [ "_jerkBounds", "structmc__rbdyn_1_1RobotModule.html#aea1ceebb2d15dc034da0cad4033cacdf", null ],

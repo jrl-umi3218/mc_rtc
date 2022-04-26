@@ -80,7 +80,7 @@ $(document).ready(function(){initNavTree('structmc__tasks_1_1OrientationTask.htm
 </div><!--header-->
 <div class="contents">
 
-<p>Control the orientation of a body.  
+<p>Control the orientation of a frame.  
  <a href="structmc__tasks_1_1OrientationTask.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="OrientationTask_8h_source.html">mc_tasks/OrientationTask.h</a>&gt;</code></p>
@@ -101,17 +101,20 @@ Collaboration diagram for mc_tasks::OrientationTask:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aed570ad6882e85529777864cc33d58ed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1OrientationTask.html#aed570ad6882e85529777864cc33d58ed">OrientationTask</a> (const std::string &amp;<a class="el" href="structmc__tasks_1_1OrientationTask.html#a97da00bdf087f04a99473553efaa6390">bodyName</a>, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a77260d6774cb69d24d22e53890e7fa16">robots</a>, unsigned int robotIndex, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>=2.0, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>=500)</td></tr>
+<tr class="memitem:acf5a79a834e5413f572c556a972c858f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1OrientationTask.html#acf5a79a834e5413f572c556a972c858f">OrientationTask</a> (const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;frame, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>=2.0, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>=500.0)</td></tr>
+<tr class="memdesc:acf5a79a834e5413f572c556a972c858f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#acf5a79a834e5413f572c556a972c858f">More...</a><br /></td></tr>
+<tr class="separator:acf5a79a834e5413f572c556a972c858f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed570ad6882e85529777864cc33d58ed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1OrientationTask.html#aed570ad6882e85529777864cc33d58ed">OrientationTask</a> (const std::string &amp;bodyName, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a77260d6774cb69d24d22e53890e7fa16">robots</a>, unsigned int robotIndex, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>=2.0, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>=500)</td></tr>
 <tr class="memdesc:aed570ad6882e85529777864cc33d58ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aed570ad6882e85529777864cc33d58ed">More...</a><br /></td></tr>
 <tr class="separator:aed570ad6882e85529777864cc33d58ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae68bb89e360bfbc1d9f2be05fcaad936"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1OrientationTask.html#ae68bb89e360bfbc1d9f2be05fcaad936">reset</a> () override</td></tr>
 <tr class="memdesc:ae68bb89e360bfbc1d9f2be05fcaad936"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the task.  <a href="#ae68bb89e360bfbc1d9f2be05fcaad936">More...</a><br /></td></tr>
 <tr class="separator:ae68bb89e360bfbc1d9f2be05fcaad936"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b10f7f275eec4a245cf826c90f9aca7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1OrientationTask.html#a8b10f7f275eec4a245cf826c90f9aca7">orientation</a> (const Eigen::Matrix3d &amp;ori)</td></tr>
-<tr class="memdesc:a8b10f7f275eec4a245cf826c90f9aca7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the body orientation target.  <a href="#a8b10f7f275eec4a245cf826c90f9aca7">More...</a><br /></td></tr>
+<tr class="memdesc:a8b10f7f275eec4a245cf826c90f9aca7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the frame orientation target.  <a href="#a8b10f7f275eec4a245cf826c90f9aca7">More...</a><br /></td></tr>
 <tr class="separator:a8b10f7f275eec4a245cf826c90f9aca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada80fbd5aaf53369618630495e92a175"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1OrientationTask.html#ada80fbd5aaf53369618630495e92a175">orientation</a> ()</td></tr>
-<tr class="memdesc:ada80fbd5aaf53369618630495e92a175"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current body orientation target.  <a href="#ada80fbd5aaf53369618630495e92a175">More...</a><br /></td></tr>
+<tr class="memdesc:ada80fbd5aaf53369618630495e92a175"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current frame orientation target.  <a href="#ada80fbd5aaf53369618630495e92a175">More...</a><br /></td></tr>
 <tr class="separator:ada80fbd5aaf53369618630495e92a175"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40b1231973621ed5718acb5451c81462"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1OrientationTask.html#a40b1231973621ed5718acb5451c81462">addToLogger</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
 <tr class="separator:a40b1231973621ed5718acb5451c81462"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,6 +122,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3b341ee69d33864500eb7e0f68ffe599 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a3b341ee69d33864500eb7e0f68ffe599">TrajectoryTaskGeneric</a> (const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a77260d6774cb69d24d22e53890e7fa16">robots</a>, unsigned int robotIndex, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>)</td></tr>
 <tr class="memdesc:a3b341ee69d33864500eb7e0f68ffe599 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor (auto damping)  <a href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a3b341ee69d33864500eb7e0f68ffe599">More...</a><br /></td></tr>
 <tr class="separator:a3b341ee69d33864500eb7e0f68ffe599 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71e156db0979afb2969f46838ba292c2 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a71e156db0979afb2969f46838ba292c2">TrajectoryTaskGeneric</a> (const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;frame, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>)</td></tr>
+<tr class="memdesc:a71e156db0979afb2969f46838ba292c2 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor (auto damping)  <a href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a71e156db0979afb2969f46838ba292c2">More...</a><br /></td></tr>
+<tr class="separator:a71e156db0979afb2969f46838ba292c2 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a723271227584b9a8af649ce887d9c947 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a723271227584b9a8af649ce887d9c947">~TrajectoryTaskGeneric</a> ()</td></tr>
 <tr class="separator:a723271227584b9a8af649ce887d9c947 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36c813b6646d3cd1bffcdcc618807053 inherit pub_methods_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a36c813b6646d3cd1bffcdcc618807053">reset</a> () override</td></tr>
@@ -229,10 +235,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a97da00bdf087f04a99473553efaa6390"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1OrientationTask.html#a97da00bdf087f04a99473553efaa6390">bodyName</a></td></tr>
-<tr class="separator:a97da00bdf087f04a99473553efaa6390"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfd25888b1dc814b280d5443506fe258"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1OrientationTask.html#abfd25888b1dc814b280d5443506fe258">bIndex</a></td></tr>
-<tr class="separator:abfd25888b1dc814b280d5443506fe258"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e23c4fff6c441061b64ee5109c78955"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacemc__rbdyn.html#a1d750a36f101823e43d108ec5c8231cc">mc_rbdyn::ConstRobotFramePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1OrientationTask.html#a3e23c4fff6c441061b64ee5109c78955">frame_</a></td></tr>
+<tr class="separator:a3e23c4fff6c441061b64ee5109c78955"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -307,11 +311,55 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a5bf5a9f30f1497e15abc33faf7a97e5c inherit pro_attribs_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Control the orientation of a body. </p>
+<div class="textblock"><p>Control the orientation of a frame. </p>
 <p>This task is thin wrapper around the appropriate tasks in Tasks. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="acf5a79a834e5413f572c556a972c858f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf5a79a834e5413f572c556a972c858f">&#9670;&nbsp;</a></span>OrientationTask() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_tasks::OrientationTask::OrientationTask </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;&#160;</td>
+          <td class="paramname"><em>frame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>stiffness</em> = <code>2.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>weight</em> = <code>500.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame</td><td>Control frame</td></tr>
+    <tr><td class="paramname">stiffness</td><td>Task stiffness</td></tr>
+    <tr><td class="paramname">weight</td><td>Task weight </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aed570ad6882e85529777864cc33d58ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed570ad6882e85529777864cc33d58ed">&#9670;&nbsp;</a></span>OrientationTask()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aed570ad6882e85529777864cc33d58ed">&#9670;&nbsp;</a></span>OrientationTask() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -447,7 +495,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set the body orientation target. </p>
+<p>Set the frame orientation target. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ori</td><td>Body orientation in world frame </td></tr>
@@ -472,7 +520,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get the current body orientation target. </p>
+<p>Get the current frame orientation target. </p>
 <dl class="section return"><dt>Returns</dt><dd>The body orientation target in world frame </dd></dl>
 
 </div>
@@ -501,7 +549,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reset the task. </p>
-<p>Set the task objective to the current body orientation </p>
+<p>Set the task objective to the current frame orientation </p>
 
 <p>Implements <a class="el" href="structmc__tasks_1_1MetaTask.html#a7821083f6def1d54f22ea7c0e223e21a">mc_tasks::MetaTask</a>.</p>
 
@@ -531,28 +579,14 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="abfd25888b1dc814b280d5443506fe258"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfd25888b1dc814b280d5443506fe258">&#9670;&nbsp;</a></span>bIndex</h2>
+<a id="a3e23c4fff6c441061b64ee5109c78955"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e23c4fff6c441061b64ee5109c78955">&#9670;&nbsp;</a></span>frame_</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int mc_tasks::OrientationTask::bIndex</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a97da00bdf087f04a99473553efaa6390"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a97da00bdf087f04a99473553efaa6390">&#9670;&nbsp;</a></span>bodyName</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string mc_tasks::OrientationTask::bodyName</td>
+          <td class="memname"><a class="el" href="namespacemc__rbdyn.html#a1d750a36f101823e43d108ec5c8231cc">mc_rbdyn::ConstRobotFramePtr</a> mc_tasks::OrientationTask::frame_</td>
         </tr>
       </table>
 </div><div class="memdoc">

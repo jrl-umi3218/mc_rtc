@@ -1,5 +1,6 @@
 var structmc__tasks_1_1ExactCubicTrajectoryTask =
 [
+    [ "ExactCubicTrajectoryTask", "structmc__tasks_1_1ExactCubicTrajectoryTask.html#a5baa4e6ec467049164423b9a249fe265", null ],
     [ "ExactCubicTrajectoryTask", "structmc__tasks_1_1ExactCubicTrajectoryTask.html#ad27477a0f30c373765213f5e8288963e", null ],
     [ "addToGUI", "structmc__tasks_1_1ExactCubicTrajectoryTask.html#a1f68add7b8b70b9b6878bb0d72c0c6e7", null ],
     [ "constraints", "structmc__tasks_1_1ExactCubicTrajectoryTask.html#a14e12359f28675ec224ec009ae75b174", null ],

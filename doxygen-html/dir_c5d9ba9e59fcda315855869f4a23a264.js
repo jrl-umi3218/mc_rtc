@@ -42,9 +42,10 @@ var dir_c5d9ba9e59fcda315855869f4a23a264 =
     [ "ImpedanceTask.h", "ImpedanceTask_8h.html", [
       [ "ImpedanceTask", "structmc__tasks_1_1force_1_1ImpedanceTask.html", "structmc__tasks_1_1force_1_1ImpedanceTask" ]
     ] ],
-    [ "LookAtSurfaceTask.h", "LookAtSurfaceTask_8h.html", [
-      [ "LookAtSurfaceTask", "structmc__tasks_1_1LookAtSurfaceTask.html", "structmc__tasks_1_1LookAtSurfaceTask" ]
+    [ "LookAtFrameTask.h", "LookAtFrameTask_8h.html", [
+      [ "LookAtFrameTask", "structmc__tasks_1_1LookAtFrameTask.html", "structmc__tasks_1_1LookAtFrameTask" ]
     ] ],
+    [ "LookAtSurfaceTask.h", "LookAtSurfaceTask_8h.html", "LookAtSurfaceTask_8h" ],
     [ "LookAtTask.h", "LookAtTask_8h.html", [
       [ "LookAtTask", "structmc__tasks_1_1LookAtTask.html", "structmc__tasks_1_1LookAtTask" ]
     ] ],
@@ -74,11 +75,12 @@ var dir_c5d9ba9e59fcda315855869f4a23a264 =
     [ "SplineTrajectoryTask.h", "SplineTrajectoryTask_8h.html", [
       [ "SplineTrajectoryTask", "structmc__tasks_1_1SplineTrajectoryTask.html", "structmc__tasks_1_1SplineTrajectoryTask" ]
     ] ],
-    [ "SurfaceTransformTask.h", "SurfaceTransformTask_8h.html", [
-      [ "SurfaceTransformTask", "structmc__tasks_1_1SurfaceTransformTask.html", "structmc__tasks_1_1SurfaceTransformTask" ]
-    ] ],
+    [ "SurfaceTransformTask.h", "SurfaceTransformTask_8h.html", "SurfaceTransformTask_8h" ],
     [ "TrajectoryTaskGeneric.h", "TrajectoryTaskGeneric_8h.html", [
       [ "TrajectoryTaskGeneric", "structmc__tasks_1_1TrajectoryTaskGeneric.html", "structmc__tasks_1_1TrajectoryTaskGeneric" ]
+    ] ],
+    [ "TransformTask.h", "TransformTask_8h.html", [
+      [ "TransformTask", "structmc__tasks_1_1TransformTask.html", "structmc__tasks_1_1TransformTask" ]
     ] ],
     [ "VectorOrientationTask.h", "VectorOrientationTask_8h.html", [
       [ "VectorOrientationTask", "structmc__tasks_1_1VectorOrientationTask.html", "structmc__tasks_1_1VectorOrientationTask" ]

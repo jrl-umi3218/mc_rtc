@@ -9,7 +9,7 @@ var namespacemc__tasks =
     [ "EndEffectorTask", "structmc__tasks_1_1EndEffectorTask.html", "structmc__tasks_1_1EndEffectorTask" ],
     [ "ExactCubicTrajectoryTask", "structmc__tasks_1_1ExactCubicTrajectoryTask.html", "structmc__tasks_1_1ExactCubicTrajectoryTask" ],
     [ "GazeTask", "structmc__tasks_1_1GazeTask.html", "structmc__tasks_1_1GazeTask" ],
-    [ "LookAtSurfaceTask", "structmc__tasks_1_1LookAtSurfaceTask.html", "structmc__tasks_1_1LookAtSurfaceTask" ],
+    [ "LookAtFrameTask", "structmc__tasks_1_1LookAtFrameTask.html", "structmc__tasks_1_1LookAtFrameTask" ],
     [ "LookAtTask", "structmc__tasks_1_1LookAtTask.html", "structmc__tasks_1_1LookAtTask" ],
     [ "LookAtTFTask", "structmc__tasks_1_1LookAtTFTask.html", "structmc__tasks_1_1LookAtTFTask" ],
     [ "MetaTask", "structmc__tasks_1_1MetaTask.html", "structmc__tasks_1_1MetaTask" ],
@@ -23,7 +23,7 @@ var namespacemc__tasks =
     [ "RemoveContactTask", "structmc__tasks_1_1RemoveContactTask.html", "structmc__tasks_1_1RemoveContactTask" ],
     [ "SmoothTask", "structmc__tasks_1_1SmoothTask.html", "structmc__tasks_1_1SmoothTask" ],
     [ "SplineTrajectoryTask", "structmc__tasks_1_1SplineTrajectoryTask.html", "structmc__tasks_1_1SplineTrajectoryTask" ],
-    [ "SurfaceTransformTask", "structmc__tasks_1_1SurfaceTransformTask.html", "structmc__tasks_1_1SurfaceTransformTask" ],
     [ "TrajectoryTaskGeneric", "structmc__tasks_1_1TrajectoryTaskGeneric.html", "structmc__tasks_1_1TrajectoryTaskGeneric" ],
+    [ "TransformTask", "structmc__tasks_1_1TransformTask.html", "structmc__tasks_1_1TransformTask" ],
     [ "VectorOrientationTask", "structmc__tasks_1_1VectorOrientationTask.html", "structmc__tasks_1_1VectorOrientationTask" ]
 ];

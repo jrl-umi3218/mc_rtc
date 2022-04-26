@@ -109,6 +109,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3b341ee69d33864500eb7e0f68ffe599"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a3b341ee69d33864500eb7e0f68ffe599">TrajectoryTaskGeneric</a> (const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a77260d6774cb69d24d22e53890e7fa16">robots</a>, unsigned int robotIndex, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>)</td></tr>
 <tr class="memdesc:a3b341ee69d33864500eb7e0f68ffe599"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor (auto damping)  <a href="#a3b341ee69d33864500eb7e0f68ffe599">More...</a><br /></td></tr>
 <tr class="separator:a3b341ee69d33864500eb7e0f68ffe599"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71e156db0979afb2969f46838ba292c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a71e156db0979afb2969f46838ba292c2">TrajectoryTaskGeneric</a> (const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;frame, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>)</td></tr>
+<tr class="memdesc:a71e156db0979afb2969f46838ba292c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor (auto damping)  <a href="#a71e156db0979afb2969f46838ba292c2">More...</a><br /></td></tr>
+<tr class="separator:a71e156db0979afb2969f46838ba292c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a723271227584b9a8af649ce887d9c947"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a723271227584b9a8af649ce887d9c947">~TrajectoryTaskGeneric</a> ()</td></tr>
 <tr class="separator:a723271227584b9a8af649ce887d9c947"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36c813b6646d3cd1bffcdcc618807053"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a36c813b6646d3cd1bffcdcc618807053">reset</a> () override</td></tr>
@@ -306,7 +309,7 @@ template&lt;typename T&gt; </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3b341ee69d33864500eb7e0f68ffe599"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b341ee69d33864500eb7e0f68ffe599">&#9670;&nbsp;</a></span>TrajectoryTaskGeneric()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b341ee69d33864500eb7e0f68ffe599">&#9670;&nbsp;</a></span>TrajectoryTaskGeneric() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -351,6 +354,54 @@ template&lt;typename T&gt; </div>
   <table class="params">
     <tr><td class="paramname">robots</td><td>Robots used in the task</td></tr>
     <tr><td class="paramname">robotIndex</td><td>Index of the robot controlled by the task</td></tr>
+    <tr><td class="paramname">stiffness</td><td>Stiffness of the task</td></tr>
+    <tr><td class="paramname">weight</td><td>Weight of the task </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a71e156db0979afb2969f46838ba292c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71e156db0979afb2969f46838ba292c2">&#9670;&nbsp;</a></span>TrajectoryTaskGeneric() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html">mc_tasks::TrajectoryTaskGeneric</a>&lt; T &gt;::<a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html">TrajectoryTaskGeneric</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;&#160;</td>
+          <td class="paramname"><em>frame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>stiffness</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>weight</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor (auto damping) </p>
+<p>This is a simple constructor alternative. Damping is set to 2*sqrt(stiffness). This is the most appropriate constructor to use TrajectoryTask as a SetPointTask</p>
+<p>It is a useful shortcut when the task is controlling a frame</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame</td><td>Frame used in the task</td></tr>
     <tr><td class="paramname">stiffness</td><td>Stiffness of the task</td></tr>
     <tr><td class="paramname">weight</td><td>Weight of the task </td></tr>
   </table>

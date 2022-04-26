@@ -2,6 +2,7 @@ var structmc__tasks_1_1BSplineTrajectoryTask =
 [
     [ "SplineTrajectoryBase", "structmc__tasks_1_1BSplineTrajectoryTask.html#a81d5a557b19cceddeb5fe7911db9dceb", null ],
     [ "waypoints_t", "structmc__tasks_1_1BSplineTrajectoryTask.html#a669d5fdec2578c135db701bba1727403", null ],
+    [ "BSplineTrajectoryTask", "structmc__tasks_1_1BSplineTrajectoryTask.html#ae178d7681e5746a9ba423a9eb3ecbf6e", null ],
     [ "BSplineTrajectoryTask", "structmc__tasks_1_1BSplineTrajectoryTask.html#aeb967476c50f3838e13951e0f3d9527c", null ],
     [ "addToGUI", "structmc__tasks_1_1BSplineTrajectoryTask.html#a5c4c24081d3cfc9ba7d61097f97c968e", null ],
     [ "posWaypoints", "structmc__tasks_1_1BSplineTrajectoryTask.html#a60f2ef40ea951b8d1b9235dbfda346ca", null ],

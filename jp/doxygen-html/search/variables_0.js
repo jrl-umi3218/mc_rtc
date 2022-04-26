@@ -13,6 +13,7 @@ var searchData=
   ['_5fdevices',['_devices',['../structmc__rbdyn_1_1RobotModule.html#ab6b79da885f0935ee568f416025466e0',1,'mc_rbdyn::RobotModule']]],
   ['_5fflexibility',['_flexibility',['../structmc__rbdyn_1_1RobotModule.html#a664972f2b2163e90aab92a3903385b28',1,'mc_rbdyn::RobotModule']]],
   ['_5fforcesensors',['_forceSensors',['../structmc__rbdyn_1_1RobotModule.html#a0c1a839a89c823bd31ca95f6caa371b0',1,'mc_rbdyn::RobotModule']]],
+  ['_5fframes',['_frames',['../structmc__rbdyn_1_1RobotModule.html#a72ac49d4249ad8b6d66d85e4d35a2755',1,'mc_rbdyn::RobotModule']]],
   ['_5fgrippers',['_grippers',['../structmc__rbdyn_1_1RobotModule.html#aff92408eda408fe95d5320918db67674',1,'mc_rbdyn::RobotModule']]],
   ['_5fgrippersafety',['_gripperSafety',['../structmc__rbdyn_1_1RobotModule.html#a58c75925a8766c6148fbb6a1385e61c5',1,'mc_rbdyn::RobotModule']]],
   ['_5fjerkbounds',['_jerkBounds',['../structmc__rbdyn_1_1RobotModule.html#aea1ceebb2d15dc034da0cad4033cacdf',1,'mc_rbdyn::RobotModule']]],

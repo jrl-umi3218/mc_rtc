@@ -137,7 +137,10 @@ $(document).ready(function(){initNavTree('functions_o.html','');});
 , <a class="el" href="structmc__rbdyn_1_1ForceSensor.html#ab4a0bd19850840f9cd46301553b4d7a2">mc_rbdyn::ForceSensor</a>
 , <a class="el" href="structmc__rbdyn_1_1Mimic.html#a07938e029fb7d951388c0b1ad64642b5">mc_rbdyn::Mimic</a>
 , <a class="el" href="structmc__rbdyn_1_1Plane.html#a8c864cca3648d188ffc463ee9cdb2fc6">mc_rbdyn::Plane</a>
-, <a class="el" href="structmc__tasks_1_1LookAtSurfaceTask.html#a7210671b2e64840382d3ed5116b41481">mc_tasks::LookAtSurfaceTask</a>
+, <a class="el" href="structmc__tasks_1_1LookAtFrameTask.html#ac4aeca4b3300bd4484051bf041f69efa">mc_tasks::LookAtFrameTask</a>
+</li>
+<li>offset_
+: <a class="el" href="structmc__tasks_1_1LookAtFrameTask.html#a2cfd76aef2c88a3c411eaeef9e50fdb7">mc_tasks::LookAtFrameTask</a>
 </li>
 <li>omega()
 : <a class="el" href="structmc__planning_1_1Pendulum.html#aac99dd2365ccea15652f7fe8f5e95d04">mc_planning::Pendulum</a>
@@ -203,6 +206,12 @@ $(document).ready(function(){initNavTree('functions_o.html','');});
 <li>operator std::set&lt; T, C, A &gt;()
 : <a class="el" href="structmc__rtc_1_1Configuration.html#a7cb85c50202da3906f0af969eb4af6d9">mc_rtc::Configuration</a>
 </li>
+<li>operator std::shared_ptr&lt; const T &gt;()
+: <a class="el" href="structmc__rtc_1_1shared.html#a04c6954393d7340e76c5464804cea8ed">mc_rtc::shared&lt; T, BaseT &gt;</a>
+</li>
+<li>operator std::shared_ptr&lt; T &gt;()
+: <a class="el" href="structmc__rtc_1_1shared.html#a2ea904ee7adda9689987f23396920de8">mc_rtc::shared&lt; T, BaseT &gt;</a>
+</li>
 <li>operator std::string()
 : <a class="el" href="structmc__rtc_1_1Configuration.html#aec19d5037e1fead68093f2f2edee4592">mc_rtc::Configuration</a>
 </li>
@@ -250,27 +259,34 @@ $(document).ready(function(){initNavTree('functions_o.html','');});
 , <a class="el" href="structstd_1_1hash_3_01mc__control_1_1fsm_1_1Contact_01_4.html#a89728f7933300611b7ec997e4803bb6d">std::hash&lt; mc_control::fsm::Contact &gt;</a>
 </li>
 <li>operator*()
-: <a class="el" href="structmc__rtc_1_1ConfigurationArrayIterator.html#a0b8813d6778dd6b8a25c658917a4216f">mc_rtc::ConfigurationArrayIterator</a>
+: <a class="el" href="structmc__rtc_1_1ConfigurationArrayIterator.html#a5beff7f5439023c5c17f8a0008413c49">mc_rtc::ConfigurationArrayIterator</a>
+, <a class="el" href="structmc__rtc_1_1SharedPtrVectorConstIterator.html#adc526b21486113bc2e10e04e4790e03b">mc_rtc::SharedPtrVectorConstIterator&lt; T &gt;</a>
+, <a class="el" href="structmc__rtc_1_1SharedPtrVectorIterator.html#a859c21ddb6c9ed3ef4cc9ca93900f712">mc_rtc::SharedPtrVectorIterator&lt; T &gt;</a>
 </li>
 <li>operator++()
 : <a class="el" href="structmc__rtc_1_1ConfigurationArrayIterator.html#a0ef6f1e296111a90e6341b22f3c307a6">mc_rtc::ConfigurationArrayIterator</a>
 </li>
+<li>operator-&gt;()
+: <a class="el" href="structmc__rtc_1_1SharedPtrVectorConstIterator.html#aea59fdc9d8c99cc5e313166c9007d7b7">mc_rtc::SharedPtrVectorConstIterator&lt; T &gt;</a>
+, <a class="el" href="structmc__rtc_1_1SharedPtrVectorIterator.html#af26d7741c500150ed0b313ba4aab6dd0">mc_rtc::SharedPtrVectorIterator&lt; T &gt;</a>
+</li>
 <li>operator=()
 : <a class="el" href="structmc__control_1_1ControllerClient.html#a074db2a5771b6afe795da5d04967254c">mc_control::ControllerClient</a>
-, <a class="el" href="structmc__control_1_1ElementId.html#a24f027cf01658b8e6c701bab7d33f728">mc_control::ElementId</a>
+, <a class="el" href="structmc__control_1_1ElementId.html#a781c1eac4041ede096f3fae9b0c775b2">mc_control::ElementId</a>
 , <a class="el" href="structmc__rbdyn_1_1BodySensor.html#a464df9c5722e155018cebbb60edbbe1a">mc_rbdyn::BodySensor</a>
 , <a class="el" href="structmc__rbdyn_1_1Contact.html#a5b1021e931c554bd7aea2f6e3823a814">mc_rbdyn::Contact</a>
 , <a class="el" href="structmc__rbdyn_1_1Device.html#acb0d4de20d18c168d3069f170dd568f5">mc_rbdyn::Device</a>
 , <a class="el" href="structmc__rbdyn_1_1DevicePtrVector.html#af28db08209588618e620a65c4187f34b">mc_rbdyn::DevicePtrVector</a>
 , <a class="el" href="structmc__rbdyn_1_1ForceSensor.html#ab4c7269c90f201bee45fda93ec7d88e3">mc_rbdyn::ForceSensor</a>
+, <a class="el" href="structmc__rbdyn_1_1Frame.html#a150c05d63d02bfc88542cf5f808a4412">mc_rbdyn::Frame</a>
 , <a class="el" href="structmc__rbdyn_1_1Robot.html#a2e0f6aac369cb793546b62a13809a897">mc_rbdyn::Robot</a>
-, <a class="el" href="structmc__rbdyn_1_1Robots.html#a3090013b978cf1dd68e0b4ca5279cc18">mc_rbdyn::Robots</a>
-, <a class="el" href="structmc__rbdyn_1_1VisualMap.html#a12a6994b9750a77e0543846be016a263">mc_rbdyn::VisualMap</a>
+, <a class="el" href="structmc__rbdyn_1_1Robots.html#a96840789462d9c4230a1267430f0584d">mc_rbdyn::Robots</a>
+, <a class="el" href="structmc__rbdyn_1_1VisualMap.html#a7b4d1a9917b3bc796db270228d699411">mc_rbdyn::VisualMap</a>
 , <a class="el" href="structmc__rtc_1_1DataStore.html#a0add9317df9a0f9617a17b935f9032dd">mc_rtc::DataStore</a>
 , <a class="el" href="structmc__rtc_1_1log_1_1FlatLog.html#aa0fad213fcaf514450b79d1710e78bbe">mc_rtc::log::FlatLog</a>
-, <a class="el" href="structmc__rtc_1_1log_1_1FlatLog_1_1record.html#af03a9665af14ae1a3a0545ea86d94804">mc_rtc::log::FlatLog::record</a>
+, <a class="el" href="structmc__rtc_1_1log_1_1FlatLog_1_1record.html#a447e5c16c3e286bb51a0a90b0f4ef182">mc_rtc::log::FlatLog::record</a>
 , <a class="el" href="structmc__rtc_1_1LTDLHandle.html#ab5ad49d16629787bd61589dbf4924c4e">mc_rtc::LTDLHandle</a>
-, <a class="el" href="structmc__solver_1_1GenericLoader_1_1Handle.html#a1002f0272ae3957fe636d3b06dc34148">mc_solver::GenericLoader&lt; Derived, T &gt;::Handle</a>
+, <a class="el" href="structmc__solver_1_1GenericLoader_1_1Handle.html#a7bcd67bfff206e0063212e99dca891bc">mc_solver::GenericLoader&lt; Derived, T &gt;::Handle</a>
 , <a class="el" href="structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html#a81d3d27c6a974f550c916f464f59bcd4">mc_tasks::force::details::ImpedanceVecd&lt; StrictlyPositive &gt;</a>
 </li>
 <li>operator==()
@@ -278,12 +294,13 @@ $(document).ready(function(){initNavTree('functions_o.html','');});
 , <a class="el" href="structmc__rbdyn_1_1Collision.html#aab32d2891597a9ec0d7f76e3dd0723a9">mc_rbdyn::Collision</a>
 , <a class="el" href="structmc__rbdyn_1_1Contact.html#aaea8d15b3e88d845a98fc010459e69b1">mc_rbdyn::Contact</a>
 , <a class="el" href="structmc__rbdyn_1_1Surface.html#ac98cc668051445fd3b94aaac36c4db58">mc_rbdyn::Surface</a>
-, <a class="el" href="structmc__rtc_1_1Configuration.html#ab40bcb05918c9fea3ea53ecd4c8d5d85">mc_rtc::Configuration</a>
+, <a class="el" href="structmc__rtc_1_1Configuration.html#a8b8525da90c67972b332d4ee13c6111f">mc_rtc::Configuration</a>
 , <a class="el" href="structmc__rtc_1_1gui_1_1Color.html#a88f0c62ce52e458e2b1e43df4b276cee">mc_rtc::gui::Color</a>
 , <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#a986eec4f659dde33b1f088dcd6eb6a76">mc_rtc::gui::plot::PolygonDescription</a>
 </li>
 <li>operator[]()
-: <a class="el" href="structmc__rtc_1_1Configuration.html#af63d0b9fe005fd5fea2078a17c62b2e7">mc_rtc::Configuration</a>
+: <a class="el" href="structmc__rbdyn_1_1Robots.html#a6c22a10bae494b5c49a151d0c179aeee">mc_rbdyn::Robots</a>
+, <a class="el" href="structmc__rtc_1_1Configuration.html#af63d0b9fe005fd5fea2078a17c62b2e7">mc_rtc::Configuration</a>
 </li>
 <li>optionalGUI_
 : <a class="el" href="structmc__control_1_1fsm_1_1StabilizerStandingState.html#a9d66966f079f819c302800335ed8aeaa">mc_control::fsm::StabilizerStandingState</a>
@@ -302,7 +319,7 @@ $(document).ready(function(){initNavTree('functions_o.html','');});
 : <a class="el" href="structmc__tasks_1_1EndEffectorTask.html#ac426513e9c556336e75a09cd690ee30a">mc_tasks::EndEffectorTask</a>
 </li>
 <li>OrientationTask()
-: <a class="el" href="structmc__tasks_1_1OrientationTask.html#aed570ad6882e85529777864cc33d58ed">mc_tasks::OrientationTask</a>
+: <a class="el" href="structmc__tasks_1_1OrientationTask.html#acf5a79a834e5413f572c556a972c858f">mc_tasks::OrientationTask</a>
 </li>
 <li>origin_t
 : <a class="el" href="structmc__control_1_1fsm_1_1TransitionMap.html#ae92ec157ad130676dc1caff84eebae94">mc_control::fsm::TransitionMap</a>
@@ -320,12 +337,12 @@ $(document).ready(function(){initNavTree('functions_o.html','');});
 : <a class="el" href="structmc__control_1_1PythonRWCallback.html#a2f171792f487d5b8b30aa5cad17305fc">mc_control::PythonRWCallback</a>
 </li>
 <li>outline()
-: <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#affe6dfc002b26a7d843a7d38d820e6ae">mc_rtc::gui::plot::PolygonDescription</a>
+: <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#a11b53d1bd311213f34519625ef36294c">mc_rtc::gui::plot::PolygonDescription</a>
 </li>
 <li>output()
 : <a class="el" href="structmc__control_1_1CompletionCriteria.html#a2485b806e905c84cd087fb47287f2240">mc_control::CompletionCriteria</a>
 , <a class="el" href="structmc__control_1_1fsm_1_1Executor.html#ab6b37334d736a1b7fdec12bc2fbad29c">mc_control::fsm::Executor</a>
-, <a class="el" href="structmc__control_1_1fsm_1_1State.html#a1e115a009309410f0eadabf118a6fb49">mc_control::fsm::State</a>
+, <a class="el" href="structmc__control_1_1fsm_1_1State.html#a0a94b4c21887b3bc710d040a31c5a2dc">mc_control::fsm::State</a>
 </li>
 <li>outputCrit_
 : <a class="el" href="structmc__control_1_1fsm_1_1MetaTasksState.html#a15385e3dba9c3a9ceacf9aa32ee4d0b5">mc_control::fsm::MetaTasksState</a>
@@ -340,7 +357,7 @@ $(document).ready(function(){initNavTree('functions_o.html','');});
 : <a class="el" href="structmc__control_1_1Gripper.html#acd2dade357fca9fa8f2261a8f29fc6b7">mc_control::Gripper</a>
 </li>
 <li>overCommandLimitIterN()
-: <a class="el" href="structmc__control_1_1Gripper.html#a852a2f31c98679c44ab5548976412a65">mc_control::Gripper</a>
+: <a class="el" href="structmc__control_1_1Gripper.html#a6e41d5e49c7dd4eb8e72abea2897eb58">mc_control::Gripper</a>
 , <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety.html#abc220529be43405fe7ce241a436568ce">mc_rbdyn::RobotModule::Gripper::Safety</a>
 </li>
 <li>ownsAnchorFrameCallback_

@@ -13,7 +13,7 @@ var searchData=
   ['loaderexception',['LoaderException',['../structmc__rtc_1_1LoaderException.html',1,'mc_rtc']]],
   ['logger',['Logger',['../structmc__rtc_1_1Logger.html',1,'mc_rtc']]],
   ['logwriter',['LogWriter',['../structmc__rtc_1_1log_1_1LogWriter.html',1,'mc_rtc::log']]],
-  ['lookatsurfacetask',['LookAtSurfaceTask',['../structmc__tasks_1_1LookAtSurfaceTask.html',1,'mc_tasks']]],
+  ['lookatframetask',['LookAtFrameTask',['../structmc__tasks_1_1LookAtFrameTask.html',1,'mc_tasks']]],
   ['lookattask',['LookAtTask',['../structmc__tasks_1_1LookAtTask.html',1,'mc_tasks']]],
   ['lookattftask',['LookAtTFTask',['../structmc__tasks_1_1LookAtTFTask.html',1,'mc_tasks']]],
   ['lowpass',['LowPass',['../structmc__filter_1_1LowPass.html',1,'mc_filter']]],

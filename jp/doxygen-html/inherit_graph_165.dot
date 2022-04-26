@@ -4,5 +4,21 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_solver::QPContactPtr",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1QPContactPtr.html"];
+  Node0 [label="mc_solver::ConstraintSet",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1ConstraintSet.html",tooltip="This class is a basis to wrap Constraint functions from Tasks. The aim of such wrappers should be two..."];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="mc_solver::BoundedSpeedConstr",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1BoundedSpeedConstr.html",tooltip="Wrapper around tasks::qp::BoundedSpeedConstr. "];
+  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="mc_solver::CollisionsConstraint",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1CollisionsConstraint.html",tooltip="Create a collision constraint between two robots. If the two robots are the same, this effectivly cre..."];
+  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="mc_solver::CoMIncPlaneConstr",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1CoMIncPlaneConstr.html",tooltip="Wrapper around tasks::qp::CoMIncPlaneConstr. "];
+  Node0 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="mc_solver::CompoundJoint\lConstraint",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1CompoundJointConstraint.html"];
+  Node0 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="mc_solver::ContactConstraint",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1ContactConstraint.html",tooltip="Wraps multiple constraints related to Contact. "];
+  Node0 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="mc_solver::KinematicsConstraint",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1KinematicsConstraint.html"];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="mc_solver::DynamicsConstraint",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1DynamicsConstraint.html"];
+  Node0 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="mc_solver::RobotEnvCollisions\lConstraint",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1RobotEnvCollisionsConstraint.html"];
 }

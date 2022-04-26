@@ -21,6 +21,11 @@ var dir_314ec80f2fc36a4630429f4d5408038e =
     [ "ForceSensor.h", "ForceSensor_8h.html", [
       [ "ForceSensor", "structmc__rbdyn_1_1ForceSensor.html", "structmc__rbdyn_1_1ForceSensor" ]
     ] ],
+    [ "Frame.h", "Frame_8h.html", [
+      [ "Frame", "structmc__rbdyn_1_1Frame.html", "structmc__rbdyn_1_1Frame" ],
+      [ "NewFrameToken", "structmc__rbdyn_1_1Frame_1_1NewFrameToken.html", null ]
+    ] ],
+    [ "fwd.h", "fwd_8h.html", "fwd_8h" ],
     [ "GripperSurface.h", "GripperSurface_8h.html", [
       [ "GripperSurface", "structmc__rbdyn_1_1GripperSurface.html", "structmc__rbdyn_1_1GripperSurface" ]
     ] ],
@@ -35,6 +40,10 @@ var dir_314ec80f2fc36a4630429f4d5408038e =
       [ "PolygonInterpolator", "structmc__rbdyn_1_1PolygonInterpolator.html", "structmc__rbdyn_1_1PolygonInterpolator" ]
     ] ],
     [ "Robot.h", "mc__rbdyn_2Robot_8h.html", "mc__rbdyn_2Robot_8h" ],
+    [ "RobotFrame.h", "RobotFrame_8h.html", [
+      [ "RobotFrame", "structmc__rbdyn_1_1RobotFrame.html", "structmc__rbdyn_1_1RobotFrame" ],
+      [ "NewRobotFrameToken", "structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
+    ] ],
     [ "RobotLoader.h", "RobotLoader_8h.html", "RobotLoader_8h" ],
     [ "RobotModule.h", "RobotModule_8h.html", "RobotModule_8h" ],
     [ "RobotModuleMacros.h", "RobotModuleMacros_8h.html", "RobotModuleMacros_8h" ],

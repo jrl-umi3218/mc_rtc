@@ -1,10 +1,11 @@
 var searchData=
 [
   ['m',['M',['../structmc__tasks_1_1force_1_1ImpedanceGains.html#a6b88536a57828978dc2877d83b65001d',1,'mc_tasks::force::ImpedanceGains::M() const noexcept'],['../structmc__tasks_1_1force_1_1ImpedanceGains.html#a898e2a2ca110dfe75e95402f78cd739f',1,'mc_tasks::force::ImpedanceGains::M() noexcept']]],
-  ['make',['make',['../structmc__rtc_1_1DataStore.html#a96e901b0b2a651aec1c6ffda2948a422',1,'mc_rtc::DataStore']]],
+  ['make',['make',['../structmc__rbdyn_1_1Frame.html#a731d62537dfcb6b1c5d76825222e8d08',1,'mc_rbdyn::Frame::make(const std::string &amp;name) noexcept'],['../structmc__rbdyn_1_1Frame.html#acaff2a81ba1671c7bce8d3c843a6e4da',1,'mc_rbdyn::Frame::make(const std::string &amp;name, Frame &amp;parent, sva::PTransformd X_p_f, bool baked)'],['../structmc__rbdyn_1_1Robots.html#ac2d7d411adafe4515c29682062f5e787',1,'mc_rbdyn::Robots::make() noexcept'],['../structmc__rbdyn_1_1Robots.html#a14d1fef580012d037f642a0457bb0cb8',1,'mc_rbdyn::Robots::make(Deleter deleter) noexcept'],['../structmc__rtc_1_1DataStore.html#a96e901b0b2a651aec1c6ffda2948a422',1,'mc_rtc::DataStore::make()']]],
   ['make_5fcall',['make_call',['../structmc__rtc_1_1DataStore.html#acad8593d08b3abccddafadb6fe588645',1,'mc_rtc::DataStore']]],
   ['make_5fdefault_5fref_5fjoint_5forder',['make_default_ref_joint_order',['../structmc__rbdyn_1_1RobotModule.html#a1e78a7743c7a0b1c9b32b1acd727565e',1,'mc_rbdyn::RobotModule']]],
   ['make_5finitializer',['make_initializer',['../structmc__rtc_1_1DataStore.html#ac02a9ef47c3c352094d032f0fc487a81',1,'mc_rtc::DataStore']]],
+  ['makeframe',['makeFrame',['../structmc__rbdyn_1_1Robot.html#ad4db0746e4af259c63c288695f72beac',1,'mc_rbdyn::Robot::makeFrame()'],['../structmc__rbdyn_1_1RobotFrame.html#aee21dea39cadcfdf5c0c7734d27a156d',1,'mc_rbdyn::RobotFrame::makeFrame()']]],
   ['mass',['mass',['../structmc__rbdyn_1_1ForceSensor.html#ae8a09d7e1c2a1989c205d8a589c4aa59',1,'mc_rbdyn::ForceSensor::mass()'],['../structmc__rbdyn_1_1Robot.html#a357a8bb518ee6ce00d8b25c5437b79c5',1,'mc_rbdyn::Robot::mass()'],['../structmc__tasks_1_1force_1_1ImpedanceGains.html#af439de9cd741d581b292c2cfc8d8b289',1,'mc_tasks::force::ImpedanceGains::mass() const noexcept'],['../structmc__tasks_1_1force_1_1ImpedanceGains.html#a32892f4c1d6ca689541dbd2fc97a1d30',1,'mc_tasks::force::ImpedanceGains::mass() noexcept']]],
   ['materialname',['materialName',['../structmc__rbdyn_1_1Surface.html#a6a83f90ee05eb45299d239c701a40f99',1,'mc_rbdyn::Surface']]],
   ['max',['max',['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Abscissa.html#a190355057411d2e31f821dbb45afcf96',1,'mc_rtc::gui::plot::impl::Abscissa::max()'],['../structmc__rtc_1_1gui_1_1plot_1_1AxisConfiguration.html#a57dec2715d846f093cfdd059378880f9',1,'mc_rtc::gui::plot::AxisConfiguration::max()']]],
@@ -39,6 +40,6 @@ var searchData=
   ['motormaxtorque',['motorMaxTorque',['../structmc__rbdyn_1_1GripperSurface.html#a88a3339b86716f672000736fefbb267a',1,'mc_rbdyn::GripperSurface']]],
   ['move_5fcom',['move_com',['../structmc__tasks_1_1CoMTask.html#ad6a83e7e89cbae657665c8815c558f4d',1,'mc_tasks::CoMTask']]],
   ['msg',['msg',['../structmc__rtc_1_1Configuration_1_1Exception.html#a2a9ce02ed46c689d66f0dd5c2ccc7524',1,'mc_rtc::Configuration::Exception']]],
-  ['mvdamping',['mvDamping',['../structmc__tasks_1_1SurfaceTransformTask.html#a93f19fb156ea70632d753c7a461b98b5',1,'mc_tasks::SurfaceTransformTask']]],
-  ['mvstiffness',['mvStiffness',['../structmc__tasks_1_1SurfaceTransformTask.html#ae93b59f50cc0e9733bbc7551f4c7d294',1,'mc_tasks::SurfaceTransformTask']]]
+  ['mvdamping',['mvDamping',['../structmc__tasks_1_1TransformTask.html#af4eaed1d9f5b6eefc1da74cd7a76d562',1,'mc_tasks::TransformTask']]],
+  ['mvstiffness',['mvStiffness',['../structmc__tasks_1_1TransformTask.html#af7521819d429bcd89c4e22af6c482479',1,'mc_tasks::TransformTask']]]
 ];
