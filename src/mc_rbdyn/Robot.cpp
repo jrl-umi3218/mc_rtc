@@ -1249,12 +1249,23 @@ void Robot::fixCollisionTransforms()
 void Robot::loadRSDFFromDir(const std::string & surfaceDir)
 {
   std::vector<SurfacePtr> surfacesIn = readRSDFFromDir(surfaceDir);
+  std::vector<SurfacePtr> loadedSurfaces;
+  loadedSurfaces.reserve(surfacesIn.size());
   for(const auto & sp : surfacesIn)
   {
     /* Check coherence of surface with mb */
     if(hasBody(sp->bodyName()))
     {
-      surfaces_[sp->name()] = sp;
+      if(hasSurface(sp->name()))
+      {
+        mc_rtc::log::warning("This robot already has a surface named {}, ignoring loading from {}", sp->name(),
+                             surfaceDir);
+      }
+      else
+      {
+        surfaces_[sp->name()] = sp;
+        loadedSurfaces.push_back(sp);
+      }
     }
     else
     {
@@ -1263,7 +1274,7 @@ void Robot::loadRSDFFromDir(const std::string & surfaceDir)
                            sp->name(), sp->bodyName(), name());
     }
   }
-  fixSurfaces(surfacesIn);
+  fixSurfaces(loadedSurfaces);
 }
 
 std::map<std::string, std::vector<double>> Robot::stance() const
