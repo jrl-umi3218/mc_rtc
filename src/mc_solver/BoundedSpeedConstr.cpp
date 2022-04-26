@@ -58,7 +58,7 @@ void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver,
   if(frame.robot().robotIndex() != robotIndex)
   {
     mc_rtc::log::error(
-        "Could not added bounded speed constraint for frame {} since it belongs to {} while this constraint acts on {}",
+        "Could not add bounded speed constraint for frame {} since it belongs to {} while this constraint acts on {}",
         frame.name(), frame.robot().name(), solver.robot(robotIndex).name());
     return;
   }

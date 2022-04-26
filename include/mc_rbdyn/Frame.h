@@ -76,7 +76,7 @@ public:
     return name_;
   }
 
-  /** Compute the current frame's position in inertial frame */
+  /** Compute the current (6D) frame's position in inertial frame */
   virtual inline sva::PTransformd position() const noexcept
   {
     return parent_ ? position_ * parent_->position() : position_;

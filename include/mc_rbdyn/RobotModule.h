@@ -204,7 +204,7 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   /*! A lightweight frame description
    *
-   * This will be used when the robot is create extra frames in the robot
+   * This will be used when creating extra frames in the robot
    *
    * These frames shouldn't:
    * - share a name with bodies in the robot
