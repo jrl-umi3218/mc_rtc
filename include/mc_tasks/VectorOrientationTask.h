@@ -9,13 +9,28 @@
 namespace mc_tasks
 {
 
-/*! \brief Control the orientation of a body
+/*! \brief Control the orientation of a vector attached to a frame
  *
  * This task is thin wrapper around the appropriate tasks in Tasks.
  *
  */
 struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<tasks::qp::VectorOrientationTask>
 {
+  /*! \brief Constructor from a robot frame
+   *
+   * \param frame Control frame
+   *
+   * \param framveVector Vector to be controlled, experessed in the control frame
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param weight Task weight
+   */
+  VectorOrientationTask(const mc_rbdyn::RobotFrame & frame,
+                        const Eigen::Vector3d & frameVector,
+                        double stiffness = 2.0,
+                        double weight = 500.0);
+
   /*! \brief Constructor with user-specified target
    *
    * \param bodyName Name of the body to control
@@ -32,7 +47,6 @@ struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<task
    * \param stiffness Task stiffness
    *
    * \param weight Task weight
-   *
    */
   VectorOrientationTask(const std::string & bodyName,
                         const Eigen::Vector3d & bodyVector,
@@ -57,20 +71,6 @@ struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<task
    */
   void reset() override;
 
-  /*! \brief Set the body vector to be controlled
-   *
-   * \param vector Vector to be controlled in the body frame
-   *
-   */
-  void bodyVector(const Eigen::Vector3d & vector);
-
-  /*! \brief Get the current controlled vector in the body frame
-   *
-   * \returns The body orientation target in world frame
-   *
-   */
-  const Eigen::Vector3d & bodyVector() const;
-
   /*! \brief Set world target for the controlled vector
    *
    * \param vector Target vector in the world frame
@@ -83,28 +83,29 @@ struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<task
    *
    * @return The target orientation in world frame
    */
-  const Eigen::Vector3d & targetVector() const;
+  Eigen::Vector3d targetVector() const;
 
   /**
    * @brief Get the current body orientation
    *
    * @return The current body orientation vector in world frame
    */
-  const Eigen::Vector3d & actual() const;
+  Eigen::Vector3d actual() const;
 
   /*! \brief Return the controlled body */
   std::string body()
   {
-    return bodyName;
+    return frame_->body();
   }
+
+  void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 
 protected:
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
   void addToLogger(mc_rtc::Logger & logger) override;
 
 protected:
-  std::string bodyName;
-  unsigned int bIndex;
+  mc_rbdyn::ConstRobotFramePtr frame_;
 };
 
 } // namespace mc_tasks

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -19,6 +19,21 @@ struct MC_TASKS_DLLAPI GazeTask : public TrajectoryTaskGeneric<tasks::qp::GazeTa
 public:
   /*! \brief Constructor
    *
+   * \param frame Control frame that should be attached to the camera frame where estimates are provided
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param weight Task weight
+   *
+   * \param error Initial error value, error.z() must be > 0
+   */
+  GazeTask(const mc_rbdyn::RobotFrame & frame,
+           double stiffness = 2.0,
+           double weight = 500.0,
+           const Eigen::Vector3d & error = Eigen::Vector3d::UnitZ());
+
+  /*! \brief Constructor
+   *
    * \param bodyName Name of the body to control
    *
    * \param point2d Position of the point in image frame
@@ -34,7 +49,6 @@ public:
    * \param stiffness Task stiffness
    *
    * \param weight Task weight
-   *
    */
   GazeTask(const std::string & bodyName,
            const Eigen::Vector2d & point2d,

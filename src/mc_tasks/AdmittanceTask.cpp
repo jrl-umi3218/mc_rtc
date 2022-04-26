@@ -12,6 +12,8 @@
 #include <mc_rtc/gui/ArrayLabel.h>
 #include <mc_rtc/gui/Transform.h>
 
+#include <mc_rtc/deprecated.h>
+
 namespace mc_tasks
 {
 
@@ -25,16 +27,19 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
                                unsigned int robotIndex,
                                double stiffness,
                                double weight)
-: SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight), robots_(robots), rIndex_(robotIndex),
-  surface_(robots.robot(robotIndex).surface(surfaceName))
+: AdmittanceTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight)
 {
-  const auto & robot = robots.robot(robotIndex);
-  if(!robot.surfaceHasIndirectForceSensor(surfaceName))
+}
+
+AdmittanceTask::AdmittanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+: TransformTask(frame, stiffness, weight)
+{
+  if(!frame.hasForceSensor())
   {
-    mc_rtc::log::error_and_throw("[mc_tasks::AdmittanceTask] Surface {} does not have a force sensor attached",
-                                 surfaceName);
+    mc_rtc::log::error_and_throw("[mc_tasks::AdmittanceTask] Frame {} does not have a force sensor attached",
+                                 frame.name());
   }
-  name_ = "admittance_" + robots_.robot(rIndex_).name() + "_" + surfaceName;
+  name_ = "admittance_" + frame.robot().name() + "_" + frame.name();
   reset();
 }
 
@@ -61,10 +66,10 @@ void AdmittanceTask::update(mc_solver::QPSolver &)
   refVelB_ += feedforwardVelB_;
 
   // Acceleration
-  SurfaceTransformTask::refAccel((refVelB_ - SurfaceTransformTask::refVelB()) / timestep_);
+  TransformTask::refAccel((refVelB_ - TransformTask::refVelB()) / timestep_);
 
   // Velocity
-  SurfaceTransformTask::refVelB(refVelB_);
+  TransformTask::refVelB(refVelB_);
 
   // Position
   target(delta * target());
@@ -72,7 +77,7 @@ void AdmittanceTask::update(mc_solver::QPSolver &)
 
 void AdmittanceTask::reset()
 {
-  SurfaceTransformTask::reset();
+  TransformTask::reset();
   admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   feedforwardVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
   targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
@@ -105,12 +110,12 @@ void AdmittanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurat
     maxLinearVel(maxVel.linear());
     maxAngularVel(maxVel.angular());
   }
-  SurfaceTransformTask::load(solver, config);
+  TransformTask::load(solver, config);
 }
 
 void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
 {
-  SurfaceTransformTask::addToLogger(logger);
+  TransformTask::addToLogger(logger);
   MC_RTC_LOG_HELPER(name_ + "_admittance", admittance_);
   MC_RTC_LOG_HELPER(name_ + "_measured_wrench", measuredWrench);
   MC_RTC_LOG_HELPER(name_ + "_target_body_vel", feedforwardVelB_);
@@ -125,8 +130,7 @@ void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
       mc_rtc::gui::Transform(
           "pos_target", [this]() { return this->targetPose(); },
           [this](const sva::PTransformd & pos) { this->targetPose(pos); }),
-      mc_rtc::gui::Transform(
-          "pos", [this]() { return robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex)); }),
+      mc_rtc::gui::Transform("pos", [this]() { return frame_->position(); }),
       mc_rtc::gui::ArrayInput(
           "admittance", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() { return this->admittance().vector(); },
           [this](const Eigen::Vector6d & a) { this->admittance(a); }),
@@ -137,14 +141,14 @@ void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               [this]() { return this->measuredWrench().vector(); }),
       mc_rtc::gui::NumberInput(
           "Velocity filter gain", [this]() { return velFilterGain_; }, [this](double g) { velFilterGain(g); }));
-  // Don't add SurfaceTransformTask as target configuration is different
+  // Don't add TransformTask as target configuration is different
   TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::addToGUI(gui);
 }
 
 void AdmittanceTask::addToSolver(mc_solver::QPSolver & solver)
 {
   timestep_ = solver.dt();
-  SurfaceTransformTask::addToSolver(solver);
+  TransformTask::addToSolver(solver);
 }
 
 } // namespace force
@@ -157,9 +161,16 @@ namespace
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "admittance",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = std::make_shared<mc_tasks::force::AdmittanceTask>(
-          config("surface"), solver.robots(), robotIndexFromConfig(config, solver.robots(), "admittance"));
-
+      auto frame = [&]() -> std::string {
+        if(config.has("surface"))
+        {
+          mc_rtc::log::deprecated("AdmittanceTaskLoader", "surface", "frame");
+          return config("surface");
+        }
+        return config("frame");
+      }();
+      auto rIndex = robotIndexFromConfig(config, solver.robots(), "admittance");
+      auto t = std::make_shared<mc_tasks::force::AdmittanceTask>(solver.robots().robot(rIndex).frame(frame));
       t->reset();
       t->load(solver, config);
       return t;

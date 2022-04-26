@@ -77,7 +77,7 @@ public:
    *
    * \note The real robots will be created by copying the provided robots
    */
-  QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep);
+  QPSolver(mc_rbdyn::RobotsPtr robots, double timeStep);
 
   /** Constructor (the solver creates its own Robots instance)
    * \param timeStep Timestep of the solver
@@ -318,8 +318,8 @@ public:
   std::shared_ptr<mc_rtc::gui::StateBuilder> gui() const;
 
 private:
-  std::shared_ptr<mc_rbdyn::Robots> robots_p;
-  std::shared_ptr<mc_rbdyn::Robots> realRobots_p;
+  mc_rbdyn::RobotsPtr robots_p;
+  mc_rbdyn::RobotsPtr realRobots_p;
   double timeStep;
 
   /** Holds mc_rbdyn::Contact in the solver */

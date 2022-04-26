@@ -24,10 +24,10 @@ public:
   TestObserverController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt) : MCController(rm, dt)
   {
     // Check that the default constructor loads the robot + ground environment
-    BOOST_CHECK_EQUAL(robots().robots().size(), 2);
+    BOOST_CHECK_EQUAL(robots().size(), 2);
     // Load an additional main robot for the second pipeline
     loadRobot(rm, "jvrc1_2");
-    BOOST_CHECK_EQUAL(robots().robots().size(), 3);
+    BOOST_CHECK_EQUAL(robots().size(), 3);
     // Check that JVRC-1 was loaded
     BOOST_CHECK_EQUAL(robot().name(), "jvrc1");
     solver().addConstraintSet(contactConstraint);
@@ -79,7 +79,7 @@ public:
     // Check that the second pipeline BodySensor observer works as expected
     checkPose("Second pipeline", robot().posW(), realRobot("jvrc1_2").posW());
 
-    for(const auto joint : robot().refJointOrder())
+    for(const auto & joint : robot().refJointOrder())
     {
       auto j = robot().jointIndexByName(joint);
       BOOST_CHECK_CLOSE(robot().mbc().q[j][0], realRobot().mbc().q[j][0], 1e-6);

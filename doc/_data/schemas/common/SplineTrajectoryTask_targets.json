@@ -1,17 +1,17 @@
 {
   "properties":
   {
-    "targetSurface":
+    "targetFrame":
     {
       "title": "Relative Target",
-      "description": "Target and waypoints defined in target surface frame",
+      "description": "Target and waypoints defined in target frame",
       "type": "object",
       "properties":
       {
-        "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot on which this surface is defined"},
-        "surface" : { "type": "string", "description": "Surface on the robot." },
-        "translation": { "$ref": "/../../Eigen/Vector3d.json", "description": "Offset in translation wrt to the target robot's surface"  },
-        "rotation": { "$ref": "/../../Eigen/Matrix3d.json", "description": "Offset in rotation wrt to the target robot's surface"   },
+        "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot on which this frame is defined"},
+        "frame" : { "type": "string", "description": "Frame on the robot." },
+        "translation": { "$ref": "/../../Eigen/Vector3d.json", "description": "Offset in translation wrt to the target robot's frame"  },
+        "rotation": { "$ref": "/../../Eigen/Matrix3d.json", "description": "Offset in rotation wrt to the target robot's frame"   },
         "controlPoints":
         {
           "type": "array",
@@ -37,18 +37,18 @@
     "target":
     {
       "$ref": "/../../SpaceVecAlg/PTransformd.json",
-      "description": "Target relative to world. <i>Ignored if targetSurface is specified, required otherwise</i>"
+      "description": "Target relative to world. <i>Ignored if targetFrame is specified, required otherwise</i>"
     },
     "controlPoints":
     {
       "type": "array",
-      "description": "Control points relative to world. <i>Ignored if targetSurface is specified</i>",
+      "description": "Control points relative to world. <i>Ignored if targetFrame is specified</i>",
       "items": { "$ref": "/../../Eigen/Vector3d.json" }
     },
     "oriWaypoints":
     {
       "type": "array",
-      "description": "Orientation waypoints relative to world (pairs of time and orientation) relative to the world. <i>Ignored if targetSurface is specified</i>",
+      "description": "Orientation waypoints relative to world (pairs of time and orientation) relative to the world. <i>Ignored if targetFrame is specified</i>",
       "items":
       [
         {

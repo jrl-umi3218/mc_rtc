@@ -40,7 +40,7 @@ void ROSPlugin::reset(mc_control::MCGlobalController & controller)
   if(publish_env)
   {
     auto publish_env = [&controller](const std::string & prefix, mc_rbdyn::Robots & robots, bool use_real) {
-      for(size_t i = 1; i < robots.robots().size(); ++i)
+      for(size_t i = 1; i < robots.size(); ++i)
       {
         mc_rtc::ROSBridge::init_robot_publisher(prefix + "_" + std::to_string(i), controller.timestep(),
                                                 robots.robot(i), use_real);
@@ -69,12 +69,12 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
   if(publish_env)
   {
     auto update_env = [this, &controller](const std::string & prefix, mc_rbdyn::Robots & robots) {
-      for(size_t i = 1; i < robots.robots().size(); ++i)
+      for(size_t i = 1; i < robots.size(); ++i)
       {
         mc_rtc::ROSBridge::update_robot_publisher(prefix + "_" + std::to_string(i), controller.timestep(),
                                                   robots.robot(i));
       }
-      published_env = std::max<size_t>(publish_env, robots.robots().size() - 1);
+      published_env = std::max<size_t>(publish_env, robots.size() - 1);
     };
     update_env("control/env", controller.controller().robots());
     if(publish_real)

@@ -1,14 +1,14 @@
 {
   "type": "object",
   "title": "mc_tasks::force::AdmittanceTask",
-  "description": "This task tracks a desired wrench with an admittance control law (converts wrench-error to a desired surface velocity).<br/>- Force measurements are used in an admittance control law to compute the velocity of the surface to bring the measured wrench towards its desired target.<br/>- Only axes where the admittance gains are non null will be affected by force control. Along all other axes, the reference position and velocity will be tracked.<br/>- High stiffness/Low damping will favor position control (targetPose/targetSurface)<br/>- Low stiffness/High damping will favour velocity control.<br />- Use [low-stiffness/high-damping/non-zero admittance gains] to achieve force control along the desired surface axes.<br />See the API documentation {% doxygen mc_tasks::force::AdmittanceTask %}, and the <a href=\"{{site.baseurl}}/tutorials/samples/sample-admittance.html\">admittance sample</a> tutorial for futher information.",
+  "description": "This task tracks a desired wrench with an admittance control law (converts wrench-error to a desired surface velocity).<br/>- Force measurements are used in an admittance control law to compute the velocity of the surface to bring the measured wrench towards its desired target.<br/>- Only axes where the admittance gains are non null will be affected by force control. Along all other axes, the reference position and velocity will be tracked.<br/>- High stiffness/Low damping will favor position control (targetPose/targetFrame)<br/>- Low stiffness/High damping will favour velocity control.<br />- Use [low-stiffness/high-damping/non-zero admittance gains] to achieve force control along the desired surface axes.<br />See the API documentation {% doxygen mc_tasks::force::AdmittanceTask %}, and the <a href=\"{{site.baseurl}}/tutorials/samples/sample-admittance.html\">admittance sample</a> tutorial for futher information.",
   "allOf":
   [
     {
       "$ref": "/../../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_surface.json"
+      "$ref": "/../../common/MetaTask_frame.json"
     },
     {
       "$ref": "/../../common/SurfaceTransformTask.json"
@@ -23,6 +23,7 @@
         "weight": { "default": 1000},
         "stiffness": { "default": 5 },
         "targetSurface": { "$ref" : "/../../common/targetSurface.json" },
+        "targetFrame": { "$ref" : "/../../common/targetFrame.json" },
         "targetPose": { "$ref": "/../../SpaceVecAlg/PTransformd.json", "description": "[deprecated] Same as \"target\"" },
         "wrench": { "$ref": "/../../SpaceVecAlg/ForceVecd.json", "description": "<b>Wrench target</b> (desired force-torque)" },
         "refVelB": { "$ref": "/../../SpaceVecAlg/MotionVecd.json", "description": "Feedforward reference body velocity" },

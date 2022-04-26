@@ -7,13 +7,28 @@
       "$ref": "/../../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_body.json"
+      "$ref": "/../../common/MetaTask_frame.json"
     },
     {
       "properties":
       {
         "type": { "enum": ["relBody6d"] },
-        "relBody": { "type": "string", "description": "Body relative to which this task's target is applied" },
+        "relativeFrame":
+        {
+          "type": "object",
+          "description": "Relative frame tracked by this task",
+          "properties":
+          {
+            "robot":
+            {
+              "type": "string",
+              "default": "MainRobot",
+              "description": "Name of robot to which the frame is attached"
+            },
+            "frame" : { "type": "string" }
+          },
+          "required": ["frame"]
+        },
         "bodyPoint": { "$ref": "/../../Eigen/Vector3d.json" },
         "orientation": { "$ref": "/../../Eigen/Matrix3d.json" },
         "position": { "$ref": "/../../Eigen/Vector3d.json" },

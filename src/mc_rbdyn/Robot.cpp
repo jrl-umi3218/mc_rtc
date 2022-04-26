@@ -253,7 +253,8 @@ namespace mc_rbdyn
 MC_RTC_diagnostic_push
 MC_RTC_diagnostic_ignored(GCC, "-Wsign-conversion", ClangOnly, "-Wshorten-64-to-32")
 
-Robot::Robot(const std::string & name,
+Robot::Robot(NewRobotToken,
+             const std::string & name,
              Robots & robots,
              unsigned int robots_idx,
              bool loadFiles,
@@ -395,19 +396,6 @@ Robot::Robot(const std::string & name,
     fixCollisionTransforms();
   }
 
-  if(loadFiles)
-  {
-    if(bfs::exists(module_.rsdf_dir))
-    {
-      loadRSDFFromDir(module_.rsdf_dir);
-    }
-    else if(module_.rsdf_dir.size())
-    {
-      mc_rtc::log::error("RSDF directory ({}) specified by RobotModule for {} does not exist.", module_.rsdf_dir,
-                         module_.name);
-    }
-  }
-
   forceSensors_ = module_.forceSensors();
   if(loadFiles)
   {
@@ -422,6 +410,24 @@ Robot::Robot(const std::string & name,
     const auto & fs = forceSensors_[i];
     forceSensorsIndex_[fs.name()] = i;
     bodyForceSensors_[fs.parentBody()] = i;
+  }
+
+  for(const auto & b : mb().bodies())
+  {
+    frames_[b.name()] = std::make_shared<RobotFrame>(RobotFrame::NewRobotFrameToken{}, b.name(), *this, b.name());
+  }
+
+  if(loadFiles)
+  {
+    if(bfs::exists(module_.rsdf_dir))
+    {
+      loadRSDFFromDir(module_.rsdf_dir);
+    }
+    else if(module_.rsdf_dir.size())
+    {
+      mc_rtc::log::error("RSDF directory ({}) specified by RobotModule for {} does not exist.", module_.rsdf_dir,
+                         module_.name);
+    }
   }
 
   stance_ = module_.stance();
@@ -732,51 +738,22 @@ Eigen::Vector3d Robot::comAcceleration() const
 
 sva::ForceVecd Robot::bodyWrench(const std::string & bodyName) const
 {
-  if(bodyHasForceSensor(bodyName))
-  { // Faster computation when there is a force sensor directly attached to the body
-    const auto & fs = bodyForceSensor(bodyName);
-    sva::ForceVecd w_fsactual = fs.wrenchWithoutGravity(*this);
-    sva::PTransformd X_fsactual_body = fs.X_fsactual_parent();
-    return X_fsactual_body.dualMul(w_fsactual);
-  }
-  else
-  { /* If a force sensor is not directly attached to the body,
-       attempt to find it up the kinematic tree */
-    const auto & fs = indirectBodyForceSensor(bodyName);
-    sva::ForceVecd w_fsactual = fs.wrenchWithoutGravity(*this);
-    const auto & X_0_body = bodyPosW(bodyName);
-    const auto & X_0_parent = bodyPosW(fs.parentBody());
-    const auto X_parent_body = X_0_body * X_0_parent.inv();
-    sva::PTransformd X_fsactual_body = X_parent_body * fs.X_fsactual_parent();
-    return X_fsactual_body.dualMul(w_fsactual);
-  }
+  return frame(bodyName).wrench();
 }
 
 sva::ForceVecd Robot::surfaceWrench(const std::string & surfaceName) const
 {
-  const auto & surface = this->surface(surfaceName);
-  const auto & bodyName = surface.bodyName();
-  return surface.X_b_s().dualMul(bodyWrench(bodyName));
+  return frame(surfaceName).wrench();
 }
 
-Eigen::Vector2d Robot::cop(const std::string & surfaceName, double min_pressure) const
+Eigen::Vector2d Robot::cop(const std::string & name, double min_pressure) const
 {
-  const sva::ForceVecd w_surf = surfaceWrench(surfaceName);
-  const double pressure = w_surf.force()(2);
-  if(pressure < min_pressure)
-  {
-    return Eigen::Vector2d::Zero();
-  }
-  const Eigen::Vector3d & tau_surf = w_surf.couple();
-  return Eigen::Vector2d(-tau_surf(1) / pressure, +tau_surf(0) / pressure);
+  return frame(name).cop(min_pressure);
 }
 
-Eigen::Vector3d Robot::copW(const std::string & surfaceName, double min_pressure) const
+Eigen::Vector3d Robot::copW(const std::string & name, double min_pressure) const
 {
-  Eigen::Vector3d cop_s;
-  cop_s << cop(surfaceName, min_pressure), 0.;
-  const sva::PTransformd X_0_s = surfacePose(surfaceName);
-  return X_0_s.translation() + X_0_s.rotation().transpose() * cop_s;
+  return frame(name).copW(min_pressure);
 }
 
 sva::ForceVecd Robot::netWrench(const std::vector<std::string> & sensorNames) const
@@ -1075,12 +1052,12 @@ bool Robot::hasSurface(const std::string & surface) const
   return surfaces_.count(surface) != 0;
 }
 
-std::vector<ForceSensor> & Robot::forceSensors()
+const std::vector<ForceSensor> & Robot::forceSensors() const
 {
   return forceSensors_;
 }
 
-const std::vector<ForceSensor> & Robot::forceSensors() const
+std::vector<ForceSensor> & Robot::forceSensors()
 {
   return forceSensors_;
 }
@@ -1201,6 +1178,37 @@ void Robot::fixSurfaces()
   {
     const sva::PTransformd & trans = bodyTransform(s.second->bodyName());
     s.second->X_b_s(s.second->X_b_s() * trans);
+    makeFrame(s.first, frame(s.second->bodyName()), s.second->X_b_s());
+  }
+  auto frames = module().frames();
+  size_t added_frames = 0;
+  do
+  {
+    added_frames = 0;
+    for(auto it = frames.begin(); it != frames.end();)
+    {
+      const auto & desc = *it;
+      auto frame_it = frames_.find(desc.parent);
+      if(frame_it != frames_.end())
+      {
+        makeFrame(desc.name, *frame_it->second, desc.X_p_f, desc.baked);
+        it = frames.erase(it);
+        added_frames++;
+      }
+      else
+      {
+        ++it;
+      }
+    }
+  } while(added_frames != 0);
+  if(frames.size())
+  {
+    mc_rtc::log::error("{} frames could not be loaded from their description (parent missing or cycles)",
+                       frames.size());
+    for(const auto & desc : frames)
+    {
+      mc_rtc::log::warning("- {} (parent: {})", desc.name, desc.parent);
+    }
   }
 }
 
@@ -1397,6 +1405,7 @@ mc_rbdyn::Surface & Robot::copySurface(const std::string & sName, const std::str
   const Surface & surf = surface(sName);
   SurfacePtr nSurf = surf.copy();
   nSurf->name(name);
+  makeFrame(name, frame(surf.bodyName()), surf.X_b_s());
   surfaces_[name] = nSurf;
   return *nSurf;
 }
@@ -1409,11 +1418,17 @@ void mc_rbdyn::Robot::addSurface(SurfacePtr surface, bool doNotReplace)
                          surface->bodyName(), name());
     return;
   }
-  if(hasSurface(surface->name()) && doNotReplace)
+  bool has_surface = hasSurface(surface->name());
+  if(has_surface && doNotReplace)
   {
     mc_rtc::log::warning("Surface {} already exists for the robot {}.", surface->name(), name());
     return;
   }
+  if(has_surface)
+  {
+    frames_.erase(frames_.find(surface->name()));
+  }
+  makeFrame(surface->name(), frame(surface->bodyName()), surface->X_b_s());
   surfaces_[surface->name()] = std::move(surface);
 }
 
@@ -1544,6 +1559,43 @@ void Robot::addDevice(DevicePtr device)
     d->parent(mb().body(0).name());
   }
   devicesIndex_[device->name()] = devices_.size() - 1;
+}
+
+std::vector<std::string> Robot::frames() const
+{
+  std::vector<std::string> ret;
+  ret.reserve(frames_.size());
+  for(const auto & f : frames_)
+  {
+    ret.push_back(f.first);
+  }
+  return ret;
+}
+
+RobotFrame & Robot::makeFrame(const std::string & name, RobotFrame & parent, sva::PTransformd X_p_f, bool baked)
+{
+  if(hasFrame(name))
+  {
+    mc_rtc::log::error_and_throw("{} already has a frame named {}", name_, name);
+  }
+  auto frame = std::make_shared<RobotFrame>(RobotFrame::NewRobotFrameToken{}, name, parent, X_p_f, baked);
+  frames_[name] = frame;
+  return *frame;
+}
+
+const ForceSensor * Robot::findBodyForceSensor(const std::string & body) const
+{
+  auto it = bodyForceSensors_.find(body);
+  if(it != bodyForceSensors_.end())
+  {
+    return &forceSensors_[it->second];
+  }
+  auto bodyName = findIndirectForceSensorBodyName(body);
+  if(bodyName.size())
+  {
+    return &forceSensors_[bodyForceSensors_.find(bodyName)->second];
+  }
+  return nullptr;
 }
 
 } // namespace mc_rbdyn

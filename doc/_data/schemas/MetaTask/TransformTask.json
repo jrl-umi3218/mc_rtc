@@ -1,5 +1,5 @@
 {
-  "title": "mc_tasks::SurfaceTransformTask",
+  "title": "mc_tasks::TransformTask",
   "type": "object",
   "allOf":
   [
@@ -7,12 +7,12 @@
       "$ref": "/../../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_surface.json"
+      "$ref": "/../../common/MetaTask_frame.json"
     },
     {
       "properties":
       {
-        "type": { "enum": ["surfaceTransform"] }
+        "type": { "enum": ["transform"] }
       }
     },
     {
@@ -33,5 +33,5 @@
       }
     }
   ],
-  "required": ["type", "surface"]
+  "required": ["type", "frame"]
 }

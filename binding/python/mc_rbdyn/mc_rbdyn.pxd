@@ -60,8 +60,6 @@ cdef class Robots(object):
 
 cdef Robots RobotsFromPtr(shared_ptr[c_mc_rbdyn.Robots])
 
-cdef Robots RobotsFromRawPtr(c_mc_rbdyn.Robots *)
-
 cdef Robots RobotsFromRef(c_mc_rbdyn.Robots &)
 
 # Robot cannot be copied and will never own their pointer

@@ -1,6 +1,6 @@
 {
-  "type": "surfaceTransform",
-  "surface": "LeftFoot",
+  "type": "transform",
+  "frame": "LeftFoot",
   "target":
   {
     // Rotation expressed as RPY (in radian)

@@ -11,6 +11,8 @@
 
 #include <mc_rtc/gui/ArrayLabel.h>
 
+#include <mc_rtc/deprecated.h>
+
 namespace mc_tasks
 {
 
@@ -22,9 +24,14 @@ CoPTask::CoPTask(const std::string & surfaceName,
                  unsigned int robotIndex,
                  double stiffness,
                  double weight)
-: DampingTask(surfaceName, robots, robotIndex, stiffness, weight)
+: CoPTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight)
 {
-  name_ = "cop_" + robots_.robot(rIndex_).name() + "_" + surfaceName;
+}
+
+CoPTask::CoPTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+: DampingTask(frame, stiffness, weight)
+{
+  name_ = "cop_" + frame_->robot().name() + "_" + frame_->name();
 }
 
 void CoPTask::reset()
@@ -112,6 +119,19 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCom
   return DampingTask::buildCompletionCriteria(dt, config);
 }
 
+void CoPTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+{
+  DampingTask::load(solver, config);
+  if(config.has("cop"))
+  {
+    targetCoP(config("cop"));
+  }
+  if(config.has("force"))
+  {
+    targetForce(config("force"));
+  }
+}
+
 } // namespace force
 
 } // namespace mc_tasks
@@ -122,36 +142,18 @@ namespace
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "cop",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = std::allocate_shared<mc_tasks::force::CoPTask>(Eigen::aligned_allocator<mc_tasks::force::CoPTask>{},
-                                                              config("surface"), solver.robots(),
-                                                              robotIndexFromConfig(config, solver.robots(), "cop"));
-      if(config.has("admittance"))
-      {
-        t->admittance(config("admittance"));
-      }
-      if(config.has("cop"))
-      {
-        t->targetCoP(config("cop"));
-      }
-      if(config.has("force"))
-      {
-        t->targetForce(config("force"));
-      }
-      if(config.has("targetSurface"))
-      {
-        const auto & c = config("targetSurface");
-        t->targetSurface(robotIndexFromConfig(c, solver.robots(), t->name() + "::targetSurface"), c("surface"),
-                         {c("offset_rotation", Eigen::Matrix3d::Identity().eval()),
-                          c("offset_translation", Eigen::Vector3d::Zero().eval())});
-      }
-      else if(config.has("targetPose"))
-      {
-        t->targetPose(config("targetPose"));
-      }
-      if(config.has("weight"))
-      {
-        t->weight(config("weight"));
-      }
+      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+        auto rIndex = robotIndexFromConfig(config, solver.robots(), "cop");
+        const auto & robot = solver.robots().robot(rIndex);
+        if(config.has("surface"))
+        {
+          mc_rtc::log::deprecated("AdmittanceTaskLoader", "surface", "frame");
+          return robot.frame(config("surface"));
+        }
+        return robot.frame(config("frame"));
+      }();
+      auto t =
+          std::allocate_shared<mc_tasks::force::CoPTask>(Eigen::aligned_allocator<mc_tasks::force::CoPTask>{}, frame);
       t->load(solver, config);
       return t;
     });

@@ -5,47 +5,46 @@
 #include <mc_rbdyn/rpy_utils.h>
 #include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_tasks/MetaTaskLoader.h>
-#include <mc_tasks/SurfaceTransformTask.h>
+#include <mc_tasks/TransformTask.h>
 
 #include <mc_rtc/gui/Transform.h>
+
+#include <mc_rtc/deprecated.h>
 
 namespace mc_tasks
 {
 
-SurfaceTransformTask::SurfaceTransformTask(const std::string & surfaceName,
-                                           const mc_rbdyn::Robots & robots,
-                                           unsigned int robotIndex,
-                                           double stiffness,
-                                           double weight)
-: TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>(robots, robotIndex, stiffness, weight),
-  surfaceName(surfaceName)
+TransformTask::TransformTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+: TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>(frame.robot().robots(),
+                                                         frame.robot().robotIndex(),
+                                                         stiffness,
+                                                         weight),
+  frame_(frame)
 {
-  const mc_rbdyn::Robot & robot = robots.robot(rIndex);
-  if(!robot.hasSurface(surfaceName))
-  {
-    mc_rtc::log::error_and_throw("[mc_tasks::SurfaceTransformTask] No surface named {} in {}", surfaceName,
-                                 robot.name());
-  }
-  std::string bodyName = robot.surface(surfaceName).bodyName();
-  sva::PTransformd curPos = robot.surface(surfaceName).X_0_s(robot);
-  finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, curPos, robot.surface(surfaceName).X_b_s());
+  finalize(robots.mbs(), static_cast<int>(rIndex), frame.body(), frame.position(), frame.X_b_f());
 
-  type_ = "surfaceTransform";
-  name_ = "surface_transform_" + robot.name() + "_" + surfaceName;
+  type_ = "transform";
+  name_ = "transform_" + frame.robot().name() + "_" + frame.name();
 }
 
-void SurfaceTransformTask::reset()
+TransformTask::TransformTask(const std::string & surfaceName,
+                             const mc_rbdyn::Robots & robots,
+                             unsigned int robotIndex,
+                             double stiffness,
+                             double weight)
+: TransformTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight)
+{
+}
+
+void TransformTask::reset()
 {
   TrajectoryTaskGeneric::reset();
-  const auto & robot = robots.robot(rIndex);
-  sva::PTransformd curPos = robot.surfacePose(surfaceName);
-  errorT->target(curPos);
+  errorT->target(frame_->position());
 }
 
 /*! \brief Load parameters from a Configuration object */
-void SurfaceTransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+void TransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
-
   // Current surface position
   sva::PTransformd X_0_t = surfacePose();
 
@@ -58,6 +57,12 @@ void SurfaceTransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Conf
                   {c("offset_rotation", Eigen::Matrix3d::Identity().eval()),
                    c("offset_translation", Eigen::Vector3d::Zero().eval())});
     X_0_t = this->target();
+  }
+  else if(config.has("targetFrame"))
+  {
+    const auto & c = config("targetFrame");
+    const auto robotIndex = robotIndexFromConfig(c, solver.robots(), name());
+    target(robots.robot(robotIndex).frame(c("frame")), c("offset", sva::PTransformd::Identity()));
   }
   else if(config.has("target"))
   {
@@ -111,52 +116,46 @@ void SurfaceTransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Conf
   TrajectoryBase::load(solver, config);
 }
 
-sva::PTransformd SurfaceTransformTask::target() const
+sva::PTransformd TransformTask::target() const
 {
   return errorT->target();
 }
 
-const sva::PTransformd SurfaceTransformTask::surfacePose() const
-{
-  return robots.robot(rIndex).surfacePose(surfaceName);
-}
-
-void SurfaceTransformTask::target(const sva::PTransformd & pose)
+void TransformTask::target(const sva::PTransformd & pose)
 {
   errorT->target(pose);
 }
 
-void SurfaceTransformTask::targetSurface(unsigned int robotIndex,
-                                         const std::string & surfaceName,
-                                         const sva::PTransformd & offset)
+void TransformTask::targetSurface(unsigned int robotIndex,
+                                  const std::string & surfaceName,
+                                  const sva::PTransformd & offset)
 {
-  const auto & robot = robots.robot(robotIndex);
-  sva::PTransformd targetSurface = robot.surface(surfaceName).X_0_s(robot);
-  sva::PTransformd targetPos = offset * targetSurface;
-  target(targetPos);
+  target(robots.robot(robotIndex).frame(surfaceName), offset);
 }
 
-void SurfaceTransformTask::addToLogger(mc_rtc::Logger & logger)
+void TransformTask::target(const mc_rbdyn::Frame & frame, const sva::PTransformd & offset)
+{
+  target(offset * frame.position());
+}
+
+void TransformTask::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
-  logger.addLogEntry(name_ + "_surface_pose", this, [this]() {
-    const auto & robot = robots.robot(rIndex);
-    return robot.surface(surfaceName).X_0_s(robot);
-  });
+  logger.addLogEntry(name_ + "_pose", this, [this]() { return frame_->position(); });
   logger.addLogEntry(name_ + "_target_pose", this, [this]() { return target(); });
 }
 
-std::function<bool(const mc_tasks::MetaTask &, std::string &)> SurfaceTransformTask::buildCompletionCriteria(
+std::function<bool(const mc_tasks::MetaTask &, std::string &)> TransformTask::buildCompletionCriteria(
     double dt,
     const mc_rtc::Configuration & config) const
 {
   if(config.has("wrench"))
   {
-    if(!robots.robot(rIndex).surfaceHasIndirectForceSensor(surfaceName))
+    if(!frame_->hasForceSensor())
     {
       mc_rtc::log::error_and_throw<std::invalid_argument>("[{}] Attempted to use \"wrench\" as completion criteria but "
-                                                          "surface \"{}\" is not attached to a force sensor",
-                                                          name(), surfaceName);
+                                                          "frame \"{}\" is not attached to a force sensor",
+                                                          name(), frame_->name());
     }
     sva::ForceVecd target_w = config("wrench");
     Eigen::Vector6d target = target_w.vector();
@@ -174,7 +173,7 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> SurfaceTransformT
       }
     }
     return [dof, target](const mc_tasks::MetaTask & t, std::string & out) {
-      const auto & self = static_cast<const mc_tasks::SurfaceTransformTask &>(t);
+      const auto & self = static_cast<const mc_tasks::TransformTask &>(t);
       Eigen::Vector6d w = self.robots.robot(self.rIndex).surfaceWrench(self.surface()).vector();
       for(int i = 0; i < 6; ++i)
       {
@@ -190,16 +189,14 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> SurfaceTransformT
   return MetaTask::buildCompletionCriteria(dt, config);
 }
 
-void SurfaceTransformTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
+void TransformTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::addToGUI(gui);
   gui.addElement({"Tasks", name_},
                  mc_rtc::gui::Transform(
                      "pos_target", [this]() { return this->target(); },
                      [this](const sva::PTransformd & pos) { this->target(pos); }),
-                 mc_rtc::gui::Transform("pos", [this]() {
-                   return robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex));
-                 }));
+                 mc_rtc::gui::Transform("pos", [this]() { return frame_->position(); }));
 }
 
 } // namespace mc_tasks
@@ -207,12 +204,32 @@ void SurfaceTransformTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 namespace
 {
 
-static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
+static mc_tasks::MetaTaskPtr loadTransformTask(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+{
+  const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "transform");
+  const auto & robot = solver.robots().robot(robotIndex);
+  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+    if(config.has("surface"))
+    {
+      mc_rtc::log::deprecated("TransformTask", "surface", "frame");
+      return robot.frame(config("surface"));
+    }
+    else
+    {
+      return robot.frame(config("frame"));
+    }
+  }();
+  auto t = std::make_shared<mc_tasks::TransformTask>(frame);
+  t->load(solver, config);
+  return t;
+}
+
+static auto reg_dep = mc_tasks::MetaTaskLoader::register_load_function(
     "surfaceTransform",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "surfaceTransform");
-      auto t = std::make_shared<mc_tasks::SurfaceTransformTask>(config("surface"), solver.robots(), robotIndex);
-      t->load(solver, config);
-      return t;
+      mc_rtc::log::deprecated("TaskLoading", "surfaceTransform", "transform");
+      return loadTransformTask(solver, config);
     });
-}
+static auto reg = mc_tasks::MetaTaskLoader::register_load_function("transform", &loadTransformTask);
+
+} // namespace

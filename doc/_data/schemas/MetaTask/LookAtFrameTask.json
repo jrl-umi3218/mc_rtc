@@ -1,0 +1,54 @@
+{
+  "title": "mc_tasks::LookAtFrameTask",
+  "description": "Aligns a unit vector expressed in frame coordinates with a target frame.<br/>Example: Align a camera's viewing direction with a frame on a desired object to look at it.",
+  "type": "object",
+  "allOf":
+  [
+    {
+      "$ref": "/../../common/MetaTask_common.json"
+    },
+    {
+      "$ref": "/../../common/MetaTask_frame.json"
+    },
+    {
+      "properties":
+      {
+        "type": { "enum": ["lookAtFrame"] },
+        "frameVector":
+        {
+          "$ref": "/../../Eigen/Vector3d.json",
+          "description": "Unit vector in control frame representing the direction that will be aligned with the target vector"
+        },
+        "target":
+        {
+          "type": "object",
+          "description": "Frame tracked by this task",
+          "properties":
+          {
+            "robot":
+            {
+              "type": "string",
+              "default": "Same robot as the task",
+              "description": "Name of robot to which the frame is attached"
+            },
+            "frame" : { "type": "string" }
+          },
+          "required": ["frame"]
+        },
+        "offset": { "$ref": "/../../SpaceVecAlg/PTransformd.json" }
+      }
+    },
+    {
+      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+    },
+    {
+      "properties":
+      {
+        "weight": { "default": 200 },
+        "stiffness": { "default": 0.5 },
+        "dimWeight": { "$ref": "/../../Eigen/Vector3d.json" }
+      }
+    }
+  ],
+  "required": ["type", "frame", "frameVector", "target" ]
+}

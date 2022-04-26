@@ -25,6 +25,12 @@ TrajectoryTaskGeneric<T>::TrajectoryTaskGeneric(const mc_rbdyn::Robots & robots,
 }
 
 template<typename T>
+TrajectoryTaskGeneric<T>::TrajectoryTaskGeneric(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+: TrajectoryTaskGeneric(frame.robot().robots(), frame.robot().robotIndex(), stiffness, weight)
+{
+}
+
+template<typename T>
 TrajectoryTaskGeneric<T>::~TrajectoryTaskGeneric()
 {
 }

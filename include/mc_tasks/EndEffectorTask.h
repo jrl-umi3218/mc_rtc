@@ -21,6 +21,16 @@ struct MC_TASKS_DLLAPI EndEffectorTask : public MetaTask
 public:
   /*! \brief Constructor
    *
+   * \pararm frame Control frame
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param weight Task weight
+   */
+  EndEffectorTask(const mc_rbdyn::RobotFrame & frame, double stiffness = 2.0, double weight = 1000.0);
+
+  /*! \brief Constructor
+   *
    * \param bodyName Name of the body to control
    *
    * \param robots Robots controlled by this task
@@ -33,20 +43,6 @@ public:
    *
    */
   EndEffectorTask(const std::string & bodyName,
-                  const mc_rbdyn::Robots & robots,
-                  unsigned int robotIndex,
-                  double stiffness = 2.0,
-                  double weight = 1000.0);
-
-  /*! \brief Constructor with bodyPoint
-   *
-   * \param bodyPoint Point to be controlled in body coordinates
-   *
-   * @see EndEffectorTask
-   *
-   */
-  EndEffectorTask(const std::string & bodyName,
-                  const Eigen::Vector3d & bodyPoint,
                   const mc_rbdyn::Robots & robots,
                   unsigned int robotIndex,
                   double stiffness = 2.0,
@@ -104,14 +100,9 @@ public:
   void name(const std::string & name) override;
 
 public:
-  const mc_rbdyn::Robots & robots;
-  unsigned int robotIndex;
-  unsigned int bodyIndex;
-
   std::shared_ptr<mc_tasks::PositionTask> positionTask;
   std::shared_ptr<mc_tasks::OrientationTask> orientationTask;
 
-  std::string bodyName;
   sva::PTransformd curTransform;
 
 protected:
@@ -126,6 +117,11 @@ protected:
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
+
+  inline const mc_rbdyn::RobotFrame & frame() const noexcept
+  {
+    return *positionTask->frame_;
+  }
 };
 
 } // namespace mc_tasks

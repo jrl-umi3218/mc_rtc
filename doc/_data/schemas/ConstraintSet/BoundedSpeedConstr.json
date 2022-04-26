@@ -14,14 +14,13 @@
         "type": "object",
         "properties":
         {
-          "body": { "type": "string" },
-          "bodyPoint": { "$ref": "/../../Eigen/Vector3d.json", "description": "Defaults to zero" },
+          "frame": { "type": "string" },
           "dof": { "$ref": "/../../Eigen/Vector6d.json", "description": "Defaults to identity" },
           "speed": { "$ref": "/../../Eigen/Vector6d.json" },
           "lowerSpeed": { "$ref": "/../../Eigen/Vector6d.json", "description": "Ignored if speed is present" },
           "upperSpeed": { "$ref": "/../../Eigen/Vector6d.json", "description": "Required if lowerSpeed is present and speed is absent" }
         },
-        "required": ["body"]
+        "required": ["frame"]
       }
     }
   },

@@ -5,6 +5,7 @@
 #pragma once
 
 #include <mc_filter/utils/clamp.h>
+
 #include <mc_tasks/SurfaceTransformTask.h>
 
 namespace mc_tasks
@@ -15,14 +16,14 @@ namespace force
 
 /*! \brief Hybrid position-force control on a contacting end-effector.
  *
- * The AdmittanceTask is by default a SurfaceTransformTask, i.e. pure position
- * control of a surface frame. Admittance coefficients that map force errors to
+ * The AdmittanceTask is by default a TransformTask, i.e. pure position
+ * control of a frame. Admittance coefficients that map force errors to
  * displacements (see [1] and [2]) are initially set to zero.
  *
  * When the admittance along one axis (Fx, Fy, Fz, Tx, Ty or Tz) is set to a
  * non-zero positive value, this axis switches from position to force control.
- * The goal is then to realize the prescribed target wrench at the surface
- * frame (bis repetita placent: wrenches are expressed in the surface frame of
+ * The goal is then to realize the prescribed target wrench at the control
+ * frame (bis repetita placent: wrenches are expressed in the control frame of
  * the task, not in the sensor frame of the corresponding body). The force
  * control law applied is damping control [3].
  *
@@ -34,10 +35,23 @@ namespace force
  * [4] https://gite.lirmm.fr/multi-contact/mc_rtc/issues/34
  *
  */
-struct MC_TASKS_DLLAPI AdmittanceTask : SurfaceTransformTask
+struct MC_TASKS_DLLAPI AdmittanceTask : TransformTask
 {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+  /*! \brief Initialize a new admittance task.
+   *
+   * \param frame Control frame
+   *
+   * \param stiffness Stiffness of the underlying Transform task
+   *
+   * \param weight Weight of the underlying Transform task
+   *
+   * \throws If the frame does not have a force sensor attached
+   *
+   */
+  AdmittanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness = 5.0, double weight = 1000.0);
 
   /*! \brief Initialize a new admittance task.
    *
@@ -48,9 +62,9 @@ public:
    *
    * \param robotIndex Which robot among the robots
    *
-   * \param stiffness Stiffness of the underlying SurfaceTransform task
+   * \param stiffness Stiffness of the underlying Transform task
    *
-   * \param weight Weight of the underlying SurfaceTransform task
+   * \param weight Weight of the underlying Transform task
    *
    * \throws If the body the task is attempting to control does not have a
    * sensor attached to it
@@ -89,24 +103,19 @@ public:
     admittance_ = admittance;
   }
 
-  /*! \brief Get the current pose of the robot surface in the inertial frame
-   *
-   */
+  /*! \brief Get the current pose of the control frame in the inertial frame */
   sva::PTransformd surfacePose() const
   {
-    return robots_.robot(rIndex_).surface(surfaceName).X_0_s(robots_.robot(rIndex_));
+    return frame_->position();
   }
 
-  /*! \brief Get the target pose of the surface in the world frame.
-   *
-   */
+  /*! \brief Get the target pose of the control frame in the world frame. */
   sva::PTransformd targetPose()
   {
     return this->target();
   }
 
-  /*! \brief Set target pose (position and orientation) of the surface in the
-   * world frame.
+  /*! \brief Set target pose (position and orientation) of the frame in the world frame.
    *
    * \param X_0_target Plucker transform to the target frame.
    *
@@ -116,37 +125,30 @@ public:
     this->target(X_0_target);
   }
 
-  /*! \brief Transform from current surface pose to target.
-   *
-   */
+  /*! \brief Transform from current frame pose to target. */
   sva::PTransformd poseError()
   {
     return targetPose() * surfacePose().inv();
   }
 
-  /*! \brief Get the target wrench in the surface frame
-   *
-   */
+  /*! \brief Get the target wrench in the control frame */
   const sva::ForceVecd & targetWrench() const
   {
     return targetWrench_;
   }
 
   /*! \brief Set the target wrench in world frame.
-   * This function will convert the world wrench to surface frame, and call
-   * targetWrench()
    *
    * \param wrench Target wrench in world frame
    */
   void targetWrenchW(const sva::ForceVecd & wrenchW)
   {
-    const auto & X_0_rh = robots_.robot(rIndex_).surface(surface_.name()).X_0_s(robots_.robot(rIndex_));
-    targetWrench(X_0_rh.dualMul(wrenchW));
+    targetWrench(frame_->position().dualMul(wrenchW));
   }
 
-  /*! \brief Set the target wrench in the surface frame
+  /*! \brief Set the target wrench in the control frame
    *
-   * \param wrench Target wrench in the surface frame
+   * \param wrench Target wrench in the control frame
    *
    */
   void targetWrench(const sva::ForceVecd & wrench)
@@ -154,12 +156,10 @@ public:
     targetWrench_ = wrench;
   }
 
-  /*! \brief Get the measured wrench in the surface frame
-   *
-   */
+  /*! \brief Get the measured wrench in the control frame */
   sva::ForceVecd measuredWrench() const
   {
-    return robots_.robot(rIndex_).surfaceWrench(surface_.name());
+    return frame_->wrench();
   }
 
   /*! \brief Set the maximum translation velocity of the task */
@@ -217,8 +217,8 @@ public:
    *
    * \param velB Feedforward body velocity
    *
-   * Body velocity means that velB is the velocity of the surface frame
-   * expressed in the surface frame itself. See e.g. (Murray et al., 1994, CRC
+   * Body velocity means that velB is the velocity of the control frame
+   * expressed in the control frame itself. See e.g. (Murray et al., 1994, CRC
    * Press).
    *
    * \note The refVelB body velocity ultimately set as task target to the QP is
@@ -237,11 +237,8 @@ public:
 protected:
   Eigen::Vector3d maxAngularVel_ = {0.1, 0.1, 0.1}; // [rad] / [s]
   Eigen::Vector3d maxLinearVel_ = {0.1, 0.1, 0.1}; // [m] / [s]
-  const mc_rbdyn::Robots & robots_;
-  unsigned int rIndex_;
   double timestep_;
   double velFilterGain_ = 0.8; //< Gain for the low-pass filter on reference velocity [0..1]
-  const mc_rbdyn::Surface & surface_;
   sva::ForceVecd admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::ForceVecd targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
@@ -253,15 +250,10 @@ protected:
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
   void addToLogger(mc_rtc::Logger & logger) override;
 
-  /** Surface transform's refVelB() becomes internal to the task.
-   *
-   */
+  /** Transform's refVelB() becomes internal to the task. */
   using SurfaceTransformTask::refVelB;
 
-  /** Surface transform's target becomes internal to the task. Its setter is
-   * now targetPose().
-   *
-   */
+  /** Surface transform's target becomes internal to the task. Its setter is now targetPose(). */
   using SurfaceTransformTask::target;
 
   /** Override addToSolver in order to get the timestep's solver automatically

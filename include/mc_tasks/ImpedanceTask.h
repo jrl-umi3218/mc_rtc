@@ -162,8 +162,7 @@ public:
    */
   void targetWrenchW(const sva::ForceVecd & wrenchW)
   {
-    const auto & X_0_s = robots.robot(rIndex).surfacePose(surfaceName);
-    targetWrench(X_0_s.dualMul(wrenchW));
+    targetWrench(frame_->position().dualMul(wrenchW));
   }
 
   /*! \brief Set the target wrench in the surface frame. */

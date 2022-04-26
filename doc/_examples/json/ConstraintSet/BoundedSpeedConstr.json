@@ -2,13 +2,13 @@
   "type": "boundedSpeed",
   "constraints": [
   {
-    "body": "body0",
-    "speed": [0, 0, 0.1]
+    "frame": "body0",
+    "speed": [0, 0, 0, 0, 0, 0.1]
   },
   {
-    "body": "body1",
-    "lowerSpeed": [0, 0, 0.05],
-    "upperSpeed": [0, 0, 0.1]
+    "frame": "body1",
+    "lowerSpeed": [0, 0, 0, 0, 0, 0.05],
+    "upperSpeed": [0, 0, 0, 0, 0, 0.1]
   }
   ]
 }

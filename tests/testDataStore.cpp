@@ -132,21 +132,21 @@ BOOST_AUTO_TEST_CASE(TestRobotDataStore)
                                                      std::string("ground"));
 
   DataStore store;
-  auto & robots = store.make<mc_rbdyn::Robots>("robots");
-  robots.load({rm, env});
-  BOOST_REQUIRE(robots.size() == 2);
+  auto & robots = store.make<mc_rbdyn::RobotsPtr>("robots", mc_rbdyn::Robots::make());
+  robots->load({rm, env});
+  BOOST_REQUIRE(robots->size() == 2);
 
   // Get another reference to robots
-  auto & robots2 = store.get<mc_rbdyn::Robots>("robots");
-  BOOST_REQUIRE(robots2.size() == 2);
+  auto & robots2 = store.get<mc_rbdyn::RobotsPtr>("robots");
+  BOOST_REQUIRE(robots2->size() == 2);
 
-  robots.robot().posW(sva::PTransformd(Eigen::Vector3d{42, 42, 42}));
-  BOOST_CHECK_CLOSE(robots.robot().posW().translation().x(), 42, 1e-10);
-  BOOST_CHECK_CLOSE(robots.robot().posW().translation().y(), 42, 1e-10);
-  BOOST_CHECK_CLOSE(robots.robot().posW().translation().z(), 42, 1e-10);
-  BOOST_CHECK_CLOSE(robots2.robot().posW().translation().x(), 42, 1e-10);
-  BOOST_CHECK_CLOSE(robots2.robot().posW().translation().y(), 42, 1e-10);
-  BOOST_CHECK_CLOSE(robots2.robot().posW().translation().z(), 42, 1e-10);
+  robots->robot().posW(sva::PTransformd(Eigen::Vector3d{42, 42, 42}));
+  BOOST_CHECK_CLOSE(robots->robot().posW().translation().x(), 42, 1e-10);
+  BOOST_CHECK_CLOSE(robots->robot().posW().translation().y(), 42, 1e-10);
+  BOOST_CHECK_CLOSE(robots->robot().posW().translation().z(), 42, 1e-10);
+  BOOST_CHECK_CLOSE(robots2->robot().posW().translation().x(), 42, 1e-10);
+  BOOST_CHECK_CLOSE(robots2->robot().posW().translation().y(), 42, 1e-10);
+  BOOST_CHECK_CLOSE(robots2->robot().posW().translation().z(), 42, 1e-10);
 }
 
 BOOST_AUTO_TEST_CASE(Lambda)

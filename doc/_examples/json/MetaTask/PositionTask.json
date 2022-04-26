@@ -1,5 +1,5 @@
 {
   "type": "position",
-  "body": "r_wrist",
+  "frame": "r_wrist",
   "position": [0.0, 0.0, 0.0]
 }

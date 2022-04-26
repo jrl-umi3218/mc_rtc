@@ -7,7 +7,7 @@
       "$ref": "/../../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_body.json"
+      "$ref": "/../../common/MetaTask_frame.json"
     },
     {
       "properties":
@@ -41,5 +41,5 @@
       }
     }
   ],
-  "required": ["type", "body"]
+  "required": ["type", "frame"]
 }

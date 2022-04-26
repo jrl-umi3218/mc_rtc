@@ -2,7 +2,7 @@
   "type": "object",
   "properties":
   {
-    "targetSurface":
+    "targetFrame":
     {
       "title": "Relative Target",
       "description": "Targets and waypoints defined in target surface frame",
@@ -10,7 +10,7 @@
       "properties":
       {
         "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot on which this surface is defined"},
-        "surface" : { "type": "string", "description": "Surface on the robot." },
+        "frame" : { "type": "string", "description": "Frame on the robot." },
         "translation": { "$ref": "/../../Eigen/Vector3d.json", "description": "Offset in translation wrt to the target robot's surface" },
         "rotation": { "$ref": "/../../Eigen/Matrix3d.json", "description": "Offset in rotation wrt to the target robot's surface"  },
         "controlPoints":
@@ -40,22 +40,22 @@
               "$ref": "/../../Eigen/Matrix3d.json"
             }
           ]
-        }
-      },
-      "init_vel": { "$ref": "/../../Eigen/Vector3d.json", "default": "[0,0,0]", "description": "Initial velocity" },
-      "init_acc": { "$ref": "/../../Eigen/Vector3d.json", "default": "[0,0,0]", "description": "Initial acceleration" },
-      "end_vel": { "$ref": "/../../Eigen/Vector3d.json", "default":  "[0,0,0]", "description": "Final velocity" },
-      "end_acc": { "$ref": "/../../Eigen/Vector3d.json", "default":  "[0,0,0]", "description": "Final acceleration" }
+        },
+        "init_vel": { "$ref": "/../../Eigen/Vector3d.json", "default": "[0,0,0]", "description": "Initial velocity" },
+        "init_acc": { "$ref": "/../../Eigen/Vector3d.json", "default": "[0,0,0]", "description": "Initial acceleration" },
+        "end_vel": { "$ref": "/../../Eigen/Vector3d.json", "default":  "[0,0,0]", "description": "Final velocity" },
+        "end_acc": { "$ref": "/../../Eigen/Vector3d.json", "default":  "[0,0,0]", "description": "Final acceleration" }
+      }
     },
     "target":
     {
       "$ref": "/../../SpaceVecAlg/PTransformd.json",
-      "description": "Target relative to world. <i>Ignored if targetSurface is specified, required otherwise</i>"
+      "description": "Target relative to world. <i>Ignored if targetFrame is specified, required otherwise</i>"
     },
     "controlPoints":
     {
       "type": "array",
-      "description": "Position waypoints relative to world (pairs of time and position). <i>Ignored if targetSurface is specified</i>",
+      "description": "Position waypoints relative to world (pairs of time and position). <i>Ignored if targetFrame is specified</i>",
       "items":
       [
         {
@@ -69,7 +69,7 @@
     "oriWaypoints":
     {
       "type": "array",
-      "description": "Orientation waypoints relative to world (pairs of time and orientation) relative to the world. <i>Ignored if targetSurface is specified</i>",
+      "description": "Orientation waypoints relative to world (pairs of time and orientation) relative to the world. <i>Ignored if targetFrame is specified</i>",
       "items":
       [
         {
@@ -80,9 +80,9 @@
         }
       ]
     },
-    "init_vel": { "$ref": "/../../Eigen/Vector3d.json", "default": "[0,0,0]", "description": "Initial velocity (world). <i>Ignored if targetSurface is specified</i>" },
-    "init_acc": { "$ref": "/../../Eigen/Vector3d.json", "default": "[0,0,0]", "description": "Initial acceleration (world). <i>Ignored if targetSurface is specified</i>" },
-    "end_vel": { "$ref": "/../../Eigen/Vector3d.json", "default":  "[0,0,0]", "description": "Final velocity (world). <i>Ignored if targetSurface is specified</i>" },
-    "end_acc": { "$ref": "/../../Eigen/Vector3d.json", "default":  "[0,0,0]", "description": "Final acceleration (world). <i>Ignored if targetSurface is specified</i>" }
+    "init_vel": { "$ref": "/../../Eigen/Vector3d.json", "default": "[0,0,0]", "description": "Initial velocity (world). <i>Ignored if targetFrame is specified</i>" },
+    "init_acc": { "$ref": "/../../Eigen/Vector3d.json", "default": "[0,0,0]", "description": "Initial acceleration (world). <i>Ignored if targetFrame is specified</i>" },
+    "end_vel": { "$ref": "/../../Eigen/Vector3d.json", "default":  "[0,0,0]", "description": "Final velocity (world). <i>Ignored if targetFrame is specified</i>" },
+    "end_acc": { "$ref": "/../../Eigen/Vector3d.json", "default":  "[0,0,0]", "description": "Final acceleration (world). <i>Ignored if targetFrame is specified</i>" }
   }
 }

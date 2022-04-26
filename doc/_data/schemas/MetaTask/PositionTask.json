@@ -7,13 +7,12 @@
       "$ref": "/../../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_body.json"
+      "$ref": "/../../common/MetaTask_frame.json"
     },
     {
       "properties":
       {
         "type": { "enum": ["position"] },
-        "bodyPoint": { "$ref": "/../../Eigen/Vector3d.json" },
         "position": { "$ref": "/../../Eigen/Vector3d.json" },
         "relative":
         {
@@ -42,5 +41,5 @@
       }
     }
   ],
-  "required": ["type", "body"]
+  "required": ["type", "frame"]
 }

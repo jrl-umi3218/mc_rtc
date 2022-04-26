@@ -72,7 +72,7 @@ public:
    */
   inline void refVel(const Eigen::VectorXd & refVel) noexcept
   {
-    assert(refVel.size() == robots_.robots()[rIndex_].mb().nrDof());
+    assert(refVel.size() == robots_.robot(rIndex_).mb().nrDof());
     pt_.refVel(refVel);
   }
 
@@ -88,7 +88,7 @@ public:
    */
   inline void refAccel(const Eigen::VectorXd & refAccel) noexcept
   {
-    assert(refAccel.size() == robots_.robots()[rIndex_].mb().nrDof());
+    assert(refAccel.size() == robots_.robot(rIndex_).mb().nrDof());
     pt_.refAccel(refAccel);
   }
 

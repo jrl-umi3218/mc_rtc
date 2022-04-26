@@ -1,0 +1,14 @@
+{
+  "title": "mc_rbdyn::RobotModule::FrameDescription",
+  "type": "object",
+  "description": "Describe an additional frame for this robot",
+  "properties":
+  {
+    "name": { "type": "string", "description": "Name of the frame" },
+    "parent": { "type": "string", "description": "Parent frame" },
+    "X_p_f": { "$ref": "/../../SpaceVecAlg/PTransformd.json", "description": "Transform from parent frame to this frame" },
+    "baked": { "type": "boolean", "default": false, "description": "If true, remove parent when loaded into the robot" }
+  },
+  "required": ["name", "parent", "X_p_f"],
+  "additionalProperties": false
+}

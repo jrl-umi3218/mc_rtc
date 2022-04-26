@@ -14,43 +14,32 @@ OrientationTask::OrientationTask(const std::string & bodyName,
                                  unsigned int robotIndex,
                                  double stiffness,
                                  double weight)
-: TrajectoryTaskGeneric<tasks::qp::OrientationTask>(robots, robotIndex, stiffness, weight), bodyName(bodyName),
-  bIndex(0)
+: OrientationTask(robots.robot(robotIndex).frame(bodyName), stiffness, weight)
 {
-  if(robotIndex >= robots.size())
-  {
-    mc_rtc::log::error_and_throw("[mc_tasks::OrientationTask] No robot with index {}, robots.size() {}", robotIndex,
-                                 robots.size());
-  }
-  const auto & robot = robots.robot(robotIndex);
-  if(!robot.hasBody(bodyName))
-  {
-    mc_rtc::log::error_and_throw("[mc_tasks::OrientationTask] No body named {} in {}", bodyName, robot.name());
-  }
-  bIndex = robot.bodyIndexByName(bodyName);
+}
 
-  Eigen::Matrix3d curOri = robot.mbc().bodyPosW[bIndex].rotation();
-  finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, curOri);
+OrientationTask::OrientationTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+: TrajectoryTaskGeneric<tasks::qp::OrientationTask>(frame, stiffness, weight), frame_(frame)
+{
+  finalize(robots.mbs(), static_cast<int>(rIndex), frame.body(), (frame.X_b_f().inv() * frame.position()).rotation());
   type_ = "orientation";
-  name_ = "orientation_" + robot.name() + "_" + bodyName;
+  name_ = "orientation_" + frame.robot().name() + "_" + frame.name();
 }
 
 void OrientationTask::reset()
 {
   TrajectoryTaskGeneric::reset();
-  const auto & robot = robots.robot(rIndex);
-  auto curOri = robot.mbc().bodyPosW[bIndex].rotation();
-  errorT->orientation(curOri);
+  errorT->orientation((frame_->X_b_f().inv() * frame_->position()).rotation());
 }
 
 void OrientationTask::orientation(const Eigen::Matrix3d & ori)
 {
-  errorT->orientation(ori);
+  errorT->orientation((frame_->X_b_f() * sva::PTransformd{ori}).rotation());
 }
 
 Eigen::Matrix3d OrientationTask::orientation()
 {
-  return errorT->orientation();
+  return (frame_->X_b_f().inv() * errorT->orientation()).rotation();
 }
 
 void OrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
@@ -60,22 +49,17 @@ void OrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  mc_rtc::gui::Rotation(
                      "ori_target",
                      [this]() -> sva::PTransformd {
-                       const auto & curPos = robots.robot(rIndex).mbc().bodyPosW[bIndex];
-                       return sva::PTransformd(this->orientation(), curPos.translation());
+                       return sva::PTransformd(this->orientation(), frame_->position().translation());
                      },
                      [this](const Eigen::Quaterniond & ori) { this->orientation(ori.toRotationMatrix()); }),
-                 mc_rtc::gui::Rotation("ori", [this]() -> sva::PTransformd {
-                   const auto & curPos = robots.robot(rIndex).mbc().bodyPosW[bIndex];
-                   return curPos;
-                 }));
+                 mc_rtc::gui::Rotation("ori", [this]() -> sva::PTransformd { return frame_->position(); }));
 }
 
 void OrientationTask::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
   logger.addLogEntry(name_ + "_target", this, [this]() { return Eigen::Quaterniond(orientation()); });
-  logger.addLogEntry(name_, this,
-                     [this]() { return Eigen::Quaterniond(robots.robot(rIndex).mbc().bodyPosW[bIndex].rotation()); });
+  logger.addLogEntry(name_, this, [this]() { return Eigen::Quaterniond(frame_->position().rotation()); });
 }
 
 } // namespace mc_tasks

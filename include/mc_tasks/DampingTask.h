@@ -14,14 +14,14 @@ namespace force
 
 /*! \brief Hybrid position-force control on a contacting end-effector.
  *
- * The DampingTask is by default a SurfaceTransformTask, i.e. pure position
- * control of a surface frame. Admittance coefficients that map force errors to
+ * The DampingTask is by default a TransformTask, i.e. pure position
+ * control of a frame. Admittance coefficients that map force errors to
  * displacements (see [1] and [2]) are initially set to zero.
  *
  * When the admittance along one axis (Fx, Fy, Fz, Tx, Ty or Tz) is set to a
  * non-zero positive value, this axis switches from position to force control.
- * The goal is then to realize the prescribed target wrench at the surface
- * frame (bis repetita placent: wrenches are expressed in the surface frame of
+ * The goal is then to realize the prescribed target wrench at the control
+ * frame (bis repetita placent: wrenches are expressed in the control frame of
  * the task, not in the sensor frame of the corresponding body). The force
  * control law applied is damping control [3].
  *
@@ -38,7 +38,20 @@ struct MC_TASKS_DLLAPI DampingTask : AdmittanceTask
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  /*! \brief Initialize a new admittance task.
+  /*! \brief Initialize a new damping task.
+   *
+   * \param frame Control frame
+   *
+   * \param stiffness Stiffness of the underlying Transform task
+   *
+   * \param weight Weight of the underlying Transform task
+   *
+   * \throws If the frame does not have a force sensor attached
+   *
+   */
+  DampingTask(const mc_rbdyn::RobotFrame & frame, double stiffness = 5.0, double weight = 1000.0);
+
+  /*! \brief Initialize a new damping task.
    *
    * \param robotSurface Name of the surface frame to control, in which the
    * desired wrench will also be expressed
@@ -47,9 +60,9 @@ public:
    *
    * \param robotIndex Which robot among the robots
    *
-   * \param stiffness Stiffness of the underlying SurfaceTransform task
+   * \param stiffness Stiffness of the underlying Transform task
    *
-   * \param weight Weight of the underlying SurfaceTransform task
+   * \param weight Weight of the underlying Transform task
    *
    * \throws If the body the task is attempting to control does not have a
    * sensor attached to it

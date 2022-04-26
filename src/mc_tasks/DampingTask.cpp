@@ -1,12 +1,17 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
+#include <mc_tasks/DampingTask.h>
+
+#include <mc_tasks/MetaTaskLoader.h>
+
 #include <mc_filter/utils/clamp.h>
+
 #include <mc_rbdyn/configuration_io.h>
 #include <mc_rbdyn/rpy_utils.h>
-#include <mc_tasks/DampingTask.h>
-#include <mc_tasks/MetaTaskLoader.h>
+
+#include <mc_rtc/deprecated.h>
 
 namespace mc_tasks
 {
@@ -21,9 +26,14 @@ DampingTask::DampingTask(const std::string & surfaceName,
                          unsigned int robotIndex,
                          double stiffness,
                          double weight)
-: AdmittanceTask(surfaceName, robots, robotIndex, stiffness, weight)
+: DampingTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight)
 {
-  name_ = "damping_" + robots_.robot(robotIndex).name() + "_" + surfaceName;
+}
+
+DampingTask::DampingTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+: AdmittanceTask(frame, stiffness, weight)
+{
+  name_ = "damping_" + frame_->robot().name() + "_" + frame_->name();
   reset();
 }
 
@@ -54,38 +64,17 @@ namespace
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "damping",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = std::make_shared<mc_tasks::force::DampingTask>(config("surface"), solver.robots(),
-                                                              robotIndexFromConfig(config, solver.robots(), "damping"));
-
-      if(config.has("admittance"))
-      {
-        t->admittance(config("admittance"));
-      }
-      if(config.has("damping"))
-      {
-        double d = config("damping");
-        t->damping(d);
-      }
-
-      if(config.has("targetSurface"))
-      {
-        const auto & c = config("targetSurface");
-        t->targetSurface(robotIndexFromConfig(c, solver.robots(), t->name() + "::targetSurface"), c("surface"),
-                         {c("offset_rotation", Eigen::Matrix3d::Identity().eval()),
-                          c("offset_translation", Eigen::Vector3d::Zero().eval())});
-      }
-      else if(config.has("targetPose"))
-      {
-        t->targetPose(config("targetPose"));
-      }
-      if(config.has("weight"))
-      {
-        t->weight(config("weight"));
-      }
-      if(config.has("wrench"))
-      {
-        t->targetWrench(config("wrench"));
-      }
+      auto frame = [&]() -> std::string {
+        if(config.has("surface"))
+        {
+          mc_rtc::log::deprecated("DampingTaskLoader", "surface", "frame");
+          return config("surface");
+        }
+        return config("frame");
+      }();
+      auto rIndex = robotIndexFromConfig(config, solver.robots(), "damping");
+      auto t = std::make_shared<mc_tasks::force::DampingTask>(solver.robots().robot(rIndex).frame(frame));
+      t->reset();
       t->load(solver, config);
       return t;
     });

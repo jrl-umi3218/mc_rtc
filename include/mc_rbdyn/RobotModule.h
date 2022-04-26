@@ -202,6 +202,32 @@ struct MC_RBDYN_DLLAPI RobotModule
             const std::vector<Mimic> * mimics);
   };
 
+  /*! A lightweight frame description
+   *
+   * This will be used when creating extra frames in the robot
+   *
+   * These frames shouldn't:
+   * - share a name with bodies in the robot
+   * - share a name with surfaces in the robot
+   */
+  struct MC_RBDYN_DLLAPI FrameDescription
+  {
+    /** Constructor */
+    FrameDescription(const std::string & n, const std::string & p, const sva::PTransformd & pt, bool baked = false)
+    : name(n), parent(p), X_p_f(pt), baked(baked)
+    {
+    }
+
+    /** Name of the frame */
+    std::string name;
+    /** Frame's parent */
+    std::string parent;
+    /** Transformation from the parent frame to this one */
+    sva::PTransformd X_p_f;
+    /** If true the frame is baked */
+    bool baked = false;
+  };
+
   /** Construct from a provided path and name
    *
    * As a result:
@@ -555,6 +581,12 @@ struct MC_RBDYN_DLLAPI RobotModule
     return _devices;
   }
 
+  /** Returns a list of robot frames supported by this module */
+  inline const std::vector<FrameDescription> & frames() const noexcept
+  {
+    return _frames;
+  }
+
   /** Path to the robot's description package */
   std::string path;
   /** (default) Name of the robot */
@@ -623,6 +655,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::string _real_urdf;
   /** \see sensors() */
   DevicePtrVector _devices;
+  /** \see frames() */
+  std::vector<FrameDescription> _frames;
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;

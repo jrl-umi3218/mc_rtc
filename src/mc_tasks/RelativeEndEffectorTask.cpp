@@ -2,10 +2,13 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/RelativeEndEffectorTask.h>
 
+#include <mc_tasks/MetaTaskLoader.h>
+
 #include <mc_rtc/gui/Transform.h>
+
+#include <mc_rtc/deprecated.h>
 
 namespace mc_tasks
 {
@@ -16,33 +19,38 @@ RelativeEndEffectorTask::RelativeEndEffectorTask(const std::string & bodyName,
                                                  const std::string & relBodyName,
                                                  double stiffness,
                                                  double weight)
-: RelativeEndEffectorTask(bodyName, Eigen::Vector3d::Zero(), robots, robotIndex, relBodyName, stiffness, weight)
+: RelativeEndEffectorTask(
+    robots.robot(robotIndex).frame(bodyName),
+    robots.robot(robotIndex).frame(relBodyName.size() ? relBodyName : robots.robot(robotIndex).mb().body(0).name()),
+    stiffness,
+    weight)
 {
 }
 
-RelativeEndEffectorTask::RelativeEndEffectorTask(const std::string & bodyName,
-                                                 const Eigen::Vector3d & bodyPoint,
-                                                 const mc_rbdyn::Robots & robots,
-                                                 unsigned int robotIndex,
-                                                 const std::string & relBodyName,
+RelativeEndEffectorTask::RelativeEndEffectorTask(const mc_rbdyn::RobotFrame & frame,
+                                                 const mc_rbdyn::Frame & relative,
                                                  double stiffness,
                                                  double weight)
-: EndEffectorTask(bodyName, bodyPoint, robots, robotIndex, stiffness, weight),
-  relBodyIdx(
-      robots.robot().bodyIndexByName(relBodyName.size() ? relBodyName : robots.robot(robotIndex).mb().body(0).name()))
+: EndEffectorTask(frame, stiffness, weight), relative_(relative)
 {
   reset();
-  const auto & robot = robots.robot(robotIndex);
   type_ = "relBody6d";
-  name_ = "body6d_" + robot.name() + "_" + bodyName + "_rel_" + relBodyName;
+  auto relative_as_robot = dynamic_cast<const mc_rbdyn::RobotFrame *>(&relative);
+  if(relative_as_robot)
+  {
+    name_ = fmt::format("body6d_{}_{}_rel_{}_{}", frame.robot().name(), frame.name(), relative_as_robot->robot().name(),
+                        relative.name());
+  }
+  else
+  {
+    name_ = fmt::format("body6d_{}_{}_rel_{}", frame.robot().name(), frame.name(), relative.name());
+  }
 }
 
 void RelativeEndEffectorTask::reset()
 {
-  const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
-  sva::PTransformd X_0_body = sva::PTransformd{positionTask->bodyPoint()} * robot.mbc().bodyPosW[bodyIndex];
-  sva::PTransformd X_0_rel = robot.mbc().bodyPosW[relBodyIdx];
-
+  sva::PTransformd X_0_body = frame().position();
+  sva::PTransformd X_0_rel = relative_->position();
   curTransform = X_0_body * (X_0_rel.inv()); /* X_rel_body = X_0_body * X_rel_0 */
 }
 
@@ -60,7 +68,7 @@ void RelativeEndEffectorTask::set_ef_pose(const sva::PTransformd & tf)
 
 void RelativeEndEffectorTask::update(mc_solver::QPSolver &)
 {
-  const sva::PTransformd & X_0_rel = robots.robot(robotIndex).mbc().bodyPosW[relBodyIdx];
+  const sva::PTransformd & X_0_rel = relative_->position();
   sva::PTransformd X_0_bodyDes = curTransform * X_0_rel; /* X_0_body = X_rel_body * X_0_rel */
   positionTask->position(X_0_bodyDes.translation());
   orientationTask->orientation(X_0_bodyDes.rotation());
@@ -75,13 +83,11 @@ void RelativeEndEffectorTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   EndEffectorTask::addToGUI(gui);
   gui.removeElement({"Tasks", name_}, "pos_target");
-  gui.addElement({"Tasks", name_},
-                 mc_rtc::gui::Transform(
-                     "pos_target",
-                     [this]() { return curTransform * robots.robot(robotIndex).mbc().bodyPosW[relBodyIdx]; },
-                     [this](const sva::PTransformd & X_0_target) {
-                       set_ef_pose(X_0_target * robots.robot(robotIndex).mbc().bodyPosW[relBodyIdx].inv());
-                     }));
+  gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform(
+                                       "pos_target", [this]() { return curTransform * relative_->position(); },
+                                       [this](const sva::PTransformd & X_0_target) {
+                                         set_ef_pose(X_0_target * relative_->position().inv());
+                                       }));
 }
 
 } // namespace mc_tasks
@@ -179,8 +185,16 @@ void configure_ori_task(std::shared_ptr<mc_tasks::OrientationTask> & t,
 
 mc_tasks::MetaTaskPtr load_orientation_task(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
-  auto t = std::make_shared<mc_tasks::OrientationTask>(config("body"), solver.robots(),
-                                                       robotIndexFromConfig(config, solver.robots(), "orientation"));
+  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+    const auto & robot = robotFromConfig(config, solver.robots(), "orientation");
+    if(config.has("body"))
+    {
+      mc_rtc::log::deprecated("OrientationTaskLoader", "body", "frame");
+      return robot.frame(config("body"));
+    }
+    return robot.frame(config("frame"));
+  }();
+  auto t = std::make_shared<mc_tasks::OrientationTask>(frame);
   configure_ori_task(t, solver, config, true);
   t->load(solver, config);
   return t;
@@ -188,16 +202,21 @@ mc_tasks::MetaTaskPtr load_orientation_task(mc_solver::QPSolver & solver, const 
 
 mc_tasks::MetaTaskPtr load_position_task(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
-  const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "position");
-  std::shared_ptr<mc_tasks::PositionTask> t = nullptr;
   if(config.has("bodyPoint"))
   {
-    t = std::make_shared<mc_tasks::PositionTask>(config("body"), config("bodyPoint"), solver.robots(), robotIndex);
+    mc_rtc::log::error_and_throw("[PositionTaskLoader] bodyPoint is not supported anymore.\nYou can create a frame "
+                                 "with the corresponding body point instead");
   }
-  else
-  {
-    t = std::make_shared<mc_tasks::PositionTask>(config("body"), solver.robots(), robotIndex);
-  }
+  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+    const auto & robot = robotFromConfig(config, solver.robots(), "position");
+    if(config.has("body"))
+    {
+      mc_rtc::log::deprecated("PositionTaskLoader", "body", "frame");
+      return robot.frame(config("body"));
+    }
+    return robot.frame(config("frame"));
+  }();
+  auto t = std::make_shared<mc_tasks::PositionTask>(frame);
   configure_pos_task(t, solver, config, true);
   t->load(solver, config);
   return t;
@@ -205,16 +224,21 @@ mc_tasks::MetaTaskPtr load_position_task(mc_solver::QPSolver & solver, const mc_
 
 mc_tasks::MetaTaskPtr load_ef_task(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
-  const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "body6d");
-  std::shared_ptr<mc_tasks::EndEffectorTask> t = nullptr;
   if(config.has("bodyPoint"))
   {
-    t = std::make_shared<mc_tasks::EndEffectorTask>(config("body"), config("bodyPoint"), solver.robots(), robotIndex);
+    mc_rtc::log::error_and_throw("[EndEffectorTaskLoader] bodyPoint is not supported anymore.\nYou can create a frame "
+                                 "with the corresponding body point instead");
   }
-  else
-  {
-    t = std::make_shared<mc_tasks::EndEffectorTask>(config("body"), solver.robots(), robotIndex);
-  }
+  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+    const auto & robot = robotFromConfig(config, solver.robots(), "endEffector");
+    if(config.has("body"))
+    {
+      mc_rtc::log::deprecated("EndEffectorTaskLoader", "body", "frame");
+      return robot.frame(config("body"));
+    }
+    return robot.frame(config("frame"));
+  }();
+  auto t = std::make_shared<mc_tasks::EndEffectorTask>(frame);
   configure_pos_task(t->positionTask, solver, config, false);
   configure_ori_task(t->orientationTask, solver, config, false);
   t->load(solver, config);
@@ -223,18 +247,31 @@ mc_tasks::MetaTaskPtr load_ef_task(mc_solver::QPSolver & solver, const mc_rtc::C
 
 mc_tasks::MetaTaskPtr load_relef_task(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
-  const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "relBody6d");
-  std::shared_ptr<mc_tasks::RelativeEndEffectorTask> t = nullptr;
   if(config.has("bodyPoint"))
   {
-    t = std::make_shared<mc_tasks::RelativeEndEffectorTask>(config("body"), config("bodyPoint"), solver.robots(),
-                                                            robotIndex, config("relBody"));
+    mc_rtc::log::error_and_throw("[RelativeEndEffectorTaskLoader] bodyPoint is not supported anymore.\nYou can create "
+                                 "a frame with the corresponding body point instead");
   }
-  else
-  {
-    t = std::make_shared<mc_tasks::RelativeEndEffectorTask>(config("body"), solver.robots(), robotIndex,
-                                                            config("relBody"));
-  }
+  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+    const auto & robot = robotFromConfig(config, solver.robots(), "relativeEndEffector");
+    if(config.has("body"))
+    {
+      mc_rtc::log::deprecated("RelativeEndEffectorTaskLoader", "body", "frame");
+      return robot.frame(config("body"));
+    }
+    return robot.frame(config("frame"));
+  }();
+  const auto & relFrame = [&]() -> const mc_rbdyn::RobotFrame & {
+    if(config.has("relBody"))
+    {
+      mc_rtc::log::deprecated("RelativeEndEffectorTaskLoader", "relBody", "relativeFrame");
+      return frame.robot().frame(config("relBody"));
+    }
+    auto c = config("relativeFrame");
+    const auto & robot = robotFromConfig(c, solver.robots(), "relativeEndEffector::relativeFrame");
+    return robot.frame(c("frame"));
+  }();
+  auto t = std::make_shared<mc_tasks::RelativeEndEffectorTask>(frame, relFrame);
   configure_pos_task(t->positionTask, solver, config, false);
   configure_ori_task(t->orientationTask, solver, config, false);
   t->set_ef_pose({t->orientationTask->orientation(), t->positionTask->position()});

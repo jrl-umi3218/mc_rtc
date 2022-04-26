@@ -1,0 +1,11 @@
+{
+  "properties":
+  {
+    "frame":
+    {
+      "type": "string",
+      "description": "Name of the frame controlled by this task"
+    }
+  }
+}
+

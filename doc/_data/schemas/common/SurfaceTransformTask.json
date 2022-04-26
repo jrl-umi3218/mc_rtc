@@ -4,6 +4,7 @@
         "move": { "$ref": "/../../SpaceVecAlg/PTransformd.json", "description": "Move relative to the current target frame" },
         "moveWorld": { "$ref": "/../../SpaceVecAlg/PTransformd.json", "description": "Move relative to world frame" },
         "target": { "$ref": "/../../SpaceVecAlg/PTransformd.json", "description": "Target a world frame pose (position and orientation)" },
+        "targetFrame": { "$ref" : "/../../common/targetFrame.json" },
         "targetSurface": { "$ref" : "/../../common/targetSurface.json" },
         "relative":
         {

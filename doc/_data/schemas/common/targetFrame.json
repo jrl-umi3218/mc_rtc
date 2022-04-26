@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "title": "targetFrame",
+  "description": "Target a robot frame",
+  "properties":
+  {
+    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this surface is attached"},
+    "frame" : { "type": "string" },
+    "offset": { "$ref": "/../../SpaceVecAlg/PTransformd.json" }
+  },
+  "required": ["targetFrame"]
+}

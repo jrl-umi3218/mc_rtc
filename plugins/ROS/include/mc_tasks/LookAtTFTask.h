@@ -19,17 +19,43 @@ struct MC_TASKS_ROS_DLLAPI LookAtTFTask : public LookAtTask
 {
   /*! \brief Constructor
    *
-   * \param bodyName Name of the body to control
-   * \param bodyVector Gaze vector for the body.
-        For instance [1., 0, 0] will try to align the x axis of the body with
-   the target direction
-   * \param sourceFrame name of the target's source tf
-   * \param targetFrame name of the target's tf
-   * \param robots Robots controlled by this task
-   * \param robotIndex Index of the robot controlled by this task
-   * \param stiffness Task stiffness
-   * \param weight Task weight
+   * \param frame Control frame
    *
+   * \param frameVector Gaze vector for the control frame
+   *
+   * \param sourceFrame name of the target's source tf
+   *
+   * \param targetFrame name of the target's tf
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param weight Task weight
+   */
+  LookAtTFTask(const mc_rbdyn::RobotFrame & frame,
+               const Eigen::Vector3d & frameVector,
+               const std::string & sourceFrame,
+               const std::string & targetFrame,
+               double stiffness = 0.5,
+               double weight = 200);
+
+  /*! \brief Constructor
+   *
+   * \param bodyName Name of the body to control
+   *
+   * \param bodyVector Gaze vector for the body.
+        For instance [1., 0, 0] will try to align the x axis of the body with the target direction
+   *
+   * \param sourceFrame name of the target's source tf
+   *
+   * \param targetFrame name of the target's tf
+   *
+   * \param robots Robots controlled by this task
+   *
+   * \param robotIndex Index of the robot controlled by this task
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param weight Task weight
    */
   LookAtTFTask(const std::string & bodyName,
                const Eigen::Vector3d & bodyVector,
@@ -48,7 +74,6 @@ private:
   tf2_ros::TransformListener tfListener;
   std::string sourceFrame;
   std::string targetFrame;
-  Eigen::Vector3d target_ori;
 };
 
 } // namespace mc_tasks

@@ -13,17 +13,38 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
 {
+  /*! \brief Constructor with a frame
+   *
+   * \param frame Control frame
+   *
+   * \param frameVector Frame vector in control frame
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param weight Task weight
+   */
+  LookAtTask(const mc_rbdyn::RobotFrame & frame,
+             const Eigen::Vector3d & frameVector,
+             double stiffness = 2.0,
+             double weight = 500.0);
+
   /*! \brief Constructor with user-specified target initialization
+   *
    * \param bodyName Name of the body to control
+   *
    * \param bodyVector Gaze vector for the body.
         For instance [1., 0, 0] will try to align the x axis of the body with
    the target direction.
-   * \param targetPos Position of target frame to look towards in world frame
-   * \param robots Robots controlled by this task
-   * \param robotIndex Index of the robot controlled by this task
-   * \param stiffness Task stiffness
-   * \param weight Task weight
    *
+   * \param targetPos Position of target frame to look towards in world frame
+   *
+   * \param robots Robots controlled by this task
+   *
+   * \param robotIndex Index of the robot controlled by this task
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param weight Task weight
    */
   LookAtTask(const std::string & bodyName,
              const Eigen::Vector3d & bodyVector,
@@ -57,6 +78,8 @@ struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
    * @return Target vector in world frame
    */
   Eigen::Vector3d target() const;
+
+  void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 
 private:
   void addToLogger(mc_rtc::Logger & logger) override;

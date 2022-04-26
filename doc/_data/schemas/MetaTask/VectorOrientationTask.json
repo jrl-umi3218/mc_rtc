@@ -7,14 +7,19 @@
       "$ref": "/../../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_body.json"
+      "$ref": "/../../common/MetaTask_frame.json"
     },
     {
       "properties":
       {
         "type": { "enum": ["vectorOrientation"] },
-        "bodyVector": { "$ref": "/../../Eigen/Vector3d.json" },
-        "targetVector": { "$ref": "/../../Eigen/Vector3d.json" }
+        "frameVector": { "$ref": "/../../Eigen/Vector3d.json" },
+        "targetVector": { "$ref": "/../../Eigen/Vector3d.json" },
+        "relativeVector":
+        {
+          "description": "Specify a target vector relative to the current orientation of the robot in the world",
+          "$ref": "/../../Eigen/Vector3d.json"
+        }
       }
     },
     {
@@ -29,5 +34,5 @@
       }
     }
   ],
-  "required": ["type", "surface", "bodyVector"]
+  "required": ["type", "frame", "frameVector"]
 }

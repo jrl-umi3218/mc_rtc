@@ -87,7 +87,7 @@ void PostureTask::selectUnactiveJoints(mc_solver::QPSolver &,
   ensureHasJoints(robots_.robot(rIndex_), unactiveJointsName, "[" + name() + "::selectUnActiveJoints]");
   Eigen::VectorXd dimW = pt_.dimWeight();
   dimW.setOnes();
-  const auto & robot = robots_.robots()[rIndex_];
+  const auto & robot = robots_.robot(rIndex_);
   for(const auto & j : unactiveJointsName)
   {
     auto jIndex = static_cast<int>(robot.jointIndexByName(j));

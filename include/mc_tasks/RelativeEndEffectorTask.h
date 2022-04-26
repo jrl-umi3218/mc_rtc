@@ -10,16 +10,29 @@
 namespace mc_tasks
 {
 
-/*! \brief Controls an end-effector relatively to another body
+/*! \brief Controls an end-effector relatively to another frame
  *
  * This task is the relative counter-part to mc_tasks::EndEffectorTask.
- * The difference is that the control is done relatively to a body of
- * the robot rather than the world frame.
- *
+ * The difference is that the control is done relatively to a given frame rather than the world frame.
  */
 struct MC_TASKS_DLLAPI RelativeEndEffectorTask : public EndEffectorTask
 {
 public:
+  /*! \brief Constructor
+   *
+   * \param frame Control frame
+   *
+   * \param relative Relative frame
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param weight Task weight
+   */
+  RelativeEndEffectorTask(const mc_rbdyn::RobotFrame & frame,
+                          const mc_rbdyn::Frame & relative,
+                          double stiffness = 10.0,
+                          double weight = 1000.0);
+
   /*! \brief Constructor
    *
    * \param bodyName Name of the body to control
@@ -34,26 +47,11 @@ public:
    * \param stiffness Task stiffness
    *
    * \param weight Task weight
-   *
    */
   RelativeEndEffectorTask(const std::string & bodyName,
                           const mc_rbdyn::Robots & robots,
                           unsigned int robotIndex,
                           const std::string & relBodyName = "",
-                          double stiffness = 10.0,
-                          double weight = 1000.0);
-  /*! \brief Constructor with bodyPoint
-   *
-   * \param bodyPoint Point to be controlled in body coordinates
-   *
-   * @see RelativeEndEffectorTask
-   *
-   */
-  RelativeEndEffectorTask(const std::string & bodyName,
-                          const Eigen::Vector3d & bodyPoint,
-                          const mc_rbdyn::Robots & robots,
-                          unsigned int robotIndex,
-                          const std::string & relBodyName,
                           double stiffness = 10.0,
                           double weight = 1000.0);
 
@@ -69,7 +67,7 @@ protected:
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 
 private:
-  unsigned int relBodyIdx;
+  mc_rbdyn::ConstFramePtr relative_;
 
   void update(mc_solver::QPSolver &) override;
 };

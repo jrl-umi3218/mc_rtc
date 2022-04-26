@@ -1,17 +1,18 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
 #include <mc_rbdyn/Robot.h>
 
-#include <mc/rtc/deprecated.hh>
+#include <mc_rtc/iterators.h>
+#include <mc_rtc/shared.h>
 
 namespace mc_rbdyn
 {
 
-struct MC_RBDYN_DLLAPI Robots
+struct MC_RBDYN_DLLAPI Robots : public mc_rtc::shared<Robots>
 {
   friend struct Robot;
   using value_type = mc_rbdyn::Robot;
@@ -23,24 +24,15 @@ public:
    *
    * @{
    */
-  typedef typename std::vector<mc_rbdyn::Robot>::iterator iterator;
-  typedef typename std::vector<mc_rbdyn::Robot>::const_iterator const_iterator;
-  typedef typename std::vector<mc_rbdyn::Robot>::reverse_iterator reverse_iterator;
-  typedef typename std::vector<mc_rbdyn::Robot>::const_reverse_iterator const_reverse_iterator;
-  typedef typename std::vector<mc_rbdyn::Robot>::size_type size_type;
+  using iterator = mc_rtc::SharedPtrVectorIterator<Robot>;
+  using const_iterator = mc_rtc::SharedPtrVectorConstIterator<Robot>;
+  using reverse_iterator = std::reverse_iterator<iterator>;
+  using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+  using size_type = std::vector<RobotPtr>::size_type;
   /** @} */
-
-  Robots();
-  Robots(const Robots & rhs);
-  Robots & operator=(const Robots & rhs);
 
   /** Give access to the underlying list of RobotModule objects */
   const std::vector<mc_rbdyn::RobotModule> & robotModules() const;
-
-  /** Give access to the underlying list of Robot objects */
-  std::vector<Robot> & robots();
-  /** Give access to the underlying list of Robot objects (const) */
-  const std::vector<Robot> & robots() const;
 
   /** Give access to the underlying list of rbd::MultiBody objects */
   std::vector<rbd::MultiBody> & mbs();
@@ -54,6 +46,18 @@ public:
 
   /** True if the given robot is part of this intance */
   bool hasRobot(const std::string & name) const;
+
+  /** Give access to self for backward compatibility */
+  inline mc_rbdyn::Robots & robots() noexcept
+  {
+    return *this;
+  }
+
+  /** Give access to self for backward compatibility (const) */
+  inline const mc_rbdyn::Robots & robots() const noexcept
+  {
+    return *this;
+  }
 
   /** Index of the main robot */
   unsigned int robotIndex() const;
@@ -152,29 +156,6 @@ public:
 
   void removeRobot(unsigned int idx);
 
-  /** @name Deprecated
-   *
-   * These loading functions are deprecated, do not use them in your code
-   *
-   * @{
-   */
-  MC_RTC_DEPRECATED Robot & load(const RobotModule & module,
-                                 const std::string & surfaceDir,
-                                 sva::PTransformd * base = nullptr,
-                                 const std::string & bName = "");
-
-  MC_RTC_DEPRECATED void load(const RobotModule & module,
-                              const std::string & surfaceDir,
-                              const RobotModule & envModule,
-                              const std::string & envSurfaceDir,
-                              sva::PTransformd * base = nullptr,
-                              const std::string & baseName = "");
-
-  MC_RTC_DEPRECATED void load(const std::vector<std::shared_ptr<RobotModule>> & modules,
-                              const std::vector<std::string> & surfaceDirs);
-  /** @} */
-  /* End of deprecated loading functions */
-
   /** @} */
   /* End of Robot(s) loading/unloading functions group */
 
@@ -230,9 +211,81 @@ public:
    */
   void reserve(size_type new_cap);
 
+  /** Access via operator[]
+   *
+   * Provided for backward compatibility
+   */
+  inline mc_rbdyn::Robot & operator[](size_t idx)
+  {
+    assert(idx < robots_.size());
+    return *robots_[idx];
+  }
+
+  /** Access via operator[] (const)
+   *
+   * Provided for backward compatibility
+   */
+  inline const mc_rbdyn::Robot & operator[](size_t idx) const
+  {
+    assert(idx < robots_.size());
+    return *robots_[idx];
+  }
+
+  /** Access the robot at provided index
+   *
+   * Provided for backward compatibility
+   */
+  inline mc_rbdyn::Robot & at(size_t idx)
+  {
+    assert(idx < robots_.size());
+    return *robots_.at(idx);
+  }
+
+  /** Access the robot at provided index (const)
+   *
+   * Provided for backward compatibility
+   */
+  inline const mc_rbdyn::Robot & at(size_t idx) const
+  {
+    assert(idx < robots_.size());
+    return *robots_.at(idx);
+  }
+
+  /** Create a new Robots instance */
+  inline static RobotsPtr make() noexcept
+  {
+    return std::make_shared<Robots>(NewRobotsToken{});
+  }
+
+  /** Create a new Robots instance with a custom deleter */
+  template<class Deleter>
+  inline static RobotsPtr make(Deleter deleter) noexcept
+  {
+    return std::shared_ptr<Robots>(new Robots{NewRobotsToken{}}, deleter);
+  }
+
+  /** Copy this instance into another instance
+   *
+   * \p out will be cleared and robots loaded in this instance will be copied into \p outt
+   */
+  void copy(mc_rbdyn::Robots & out) const;
+
 protected:
+  struct NewRobotsToken
+  {
+  };
+
+public:
+  Robots(NewRobotsToken);
+
+protected:
+  Robots(const Robots & rhs) = delete;
+  Robots & operator=(const Robots & rhs) = delete;
+  Robots(Robots && robots) = delete;
+  Robots & operator=(Robots && robots) = delete;
+
   RobotModuleVector robot_modules_;
-  std::vector<mc_rbdyn::Robot> robots_;
+  std::vector<RobotPtr> robots_;
   std::vector<rbd::MultiBody> mbs_;
   std::vector<rbd::MultiBodyConfig> mbcs_;
   std::vector<rbd::MultiBodyGraph> mbgs_;
@@ -243,39 +296,23 @@ protected:
 };
 
 /* Static pendant of the loader functions to create Robots directly */
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobot(const RobotModule & module,
-                                                  sva::PTransformd * base = nullptr,
-                                                  const std::string & baseName = "");
+MC_RBDYN_DLLAPI RobotsPtr loadRobot(const RobotModule & module,
+                                    sva::PTransformd * base = nullptr,
+                                    const std::string & baseName = "");
 
-MC_RBDYN_DLLAPI MC_RTC_DEPRECATED std::shared_ptr<Robots> loadRobot(const RobotModule & module,
-                                                                    const std::string & surfaceDir,
-                                                                    sva::PTransformd * base = nullptr,
-                                                                    const std::string & baseName = "");
+MC_RBDYN_DLLAPI RobotsPtr loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules);
 
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules);
+MC_RBDYN_DLLAPI RobotsPtr loadRobotAndEnv(const RobotModule & module,
+                                          const RobotModule & envModule,
+                                          sva::PTransformd * base = nullptr,
+                                          const std::string & baseName = "");
 
-MC_RBDYN_DLLAPI MC_RTC_DEPRECATED std::shared_ptr<Robots> loadRobots(
-    const std::vector<std::shared_ptr<RobotModule>> & modules,
-    const std::vector<std::string> & surfaceDirs);
-
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module,
-                                                        const RobotModule & envModule,
-                                                        sva::PTransformd * base = nullptr,
-                                                        const std::string & baseName = "");
-
-MC_RBDYN_DLLAPI MC_RTC_DEPRECATED std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module,
-                                                                          const std::string & surfaceDir,
-                                                                          const RobotModule & envModule,
-                                                                          const std::string & envSurfaceDir,
-                                                                          sva::PTransformd * base = nullptr,
-                                                                          const std::string & baseName = "");
-
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobotFromUrdf(const std::string & name,
-                                                          const std::string & urdf,
-                                                          bool withVirtualLinks = true,
-                                                          const std::vector<std::string> & filteredLinks = {},
-                                                          bool fixed = false,
-                                                          sva::PTransformd * base = nullptr,
-                                                          const std::string & baseName = "");
+MC_RBDYN_DLLAPI RobotsPtr loadRobotFromUrdf(const std::string & name,
+                                            const std::string & urdf,
+                                            bool withVirtualLinks = true,
+                                            const std::vector<std::string> & filteredLinks = {},
+                                            bool fixed = false,
+                                            sva::PTransformd * base = nullptr,
+                                            const std::string & baseName = "");
 
 } // namespace mc_rbdyn

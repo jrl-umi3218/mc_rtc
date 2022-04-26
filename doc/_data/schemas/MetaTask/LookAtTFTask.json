@@ -7,13 +7,13 @@
       "$ref": "/../../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_body.json"
+      "$ref": "/../../common/MetaTask_frame.json"
     },
     {
       "properties":
       {
         "type": { "enum": ["lookAtTF"] },
-        "bodyVector": { "$ref": "/../../Eigen/Vector3d.json" },
+        "frameVector": { "$ref": "/../../Eigen/Vector3d.json" },
         "sourceFrame": { "type": "string" },
         "targetFrame": { "type": "string" }
       }
@@ -30,5 +30,5 @@
       }
     }
   ],
-  "required": ["type", "body", "bodyVector", "sourceFrame", "targetFrame"]
+  "required": ["type", "frame", "frameVector", "sourceFrame", "targetFrame"]
 }

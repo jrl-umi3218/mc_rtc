@@ -1,0 +1,10 @@
+{
+  "type": "lookAtSurface",
+  "frame": "dcamera",
+  "frameVector": [1.0, 0.0, 0.0],
+  "target":
+  {
+    "robot": "ground",
+    "frame": "AllGround"
+  }
+}

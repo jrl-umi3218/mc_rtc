@@ -288,7 +288,7 @@ struct TestServer
   std::string robotVisual_ = "NECK_P_S";
   sva::PTransformd visualPos_ = sva::PTransformd::Identity();
 
-  std::shared_ptr<mc_rbdyn::Robots> robots_;
+  mc_rbdyn::RobotsPtr robots_;
 };
 
 TestServer::TestServer() : xythetaz_(4)

@@ -126,11 +126,6 @@ cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
 
 cdef extern from "<mc_rbdyn/Robots.h>" namespace "mc_rbdyn":
   cdef cppclass Robots:
-    Robots()
-    Robots(const Robots &)
-
-    const vector[Robot] & robots()
-
     const vector[MultiBody] & mbs()
 
     const vector[MultiBodyConfig] & mbcs()
@@ -144,6 +139,8 @@ cdef extern from "<mc_rbdyn/Robots.h>" namespace "mc_rbdyn":
     Robot & load(const RobotModule&, PTransformd*, const string&)
 
     const Robot & robot(unsigned int)
+
+    unsigned int size()
 
     void createRobotWithBase(const string&, Robots&, unsigned int, const Base&, const Vector3d&)
 
@@ -400,7 +397,9 @@ cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
   Contact& const_cast_contact(const Contact&)
   vector[Contact]& const_cast_contact_vector(const vector[Contact]&)
   void contact_vector_set_item(vector[Contact]&, unsigned int, const Contact&)
-  shared_ptr[Robots] robots_fake_shared(Robots*)
+  shared_ptr[Robots] robots_shared_from_ref(Robots&)
+  shared_ptr[Robots] robots_make()
+  shared_ptr[Robots] robots_copy(shared_ptr[Robots])
   PolygonInterpolator * polygonInterpolatorFromTuplePairs(const vector[pair[pair[double, double], pair[double, double]]]&)
   #FIXME Work-around lack of array support
   vector[double] robotModuleDefaultAttitude(RobotModulePtr rm)

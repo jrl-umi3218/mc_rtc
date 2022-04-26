@@ -11,14 +11,17 @@ usr/include/mc_rtc/ConfigurationHelpers.h
 usr/include/mc_rtc/constants.h
 usr/include/mc_rtc/DataStore.h
 usr/include/mc_rtc/debug.h
+usr/include/mc_rtc/deprecated.h
 usr/include/mc_rtc/gui.h
 usr/include/mc_rtc/io_utils.h
+usr/include/mc_rtc/iterators.h
 usr/include/mc_rtc/loader.h
 usr/include/mc_rtc/loader.hpp
 usr/include/mc_rtc/loader_api.h
 usr/include/mc_rtc/logging.h
 usr/include/mc_rtc/MessagePackBuilder.h
 usr/include/mc_rtc/pragma.h
+usr/include/mc_rtc/shared.h
 usr/include/mc_rtc/type_name.h
 usr/include/mc_rtc/utils.h
 usr/include/mc_rtc/utils_api.h
@@ -33,6 +36,7 @@ usr/include/mc_tasks/AddRemoveContactTask.h
 usr/include/mc_tasks/GazeTask.h
 usr/include/mc_tasks/EndEffectorTask.h
 usr/include/mc_tasks/SurfaceTransformTask.h
+usr/include/mc_tasks/TransformTask.h
 usr/include/mc_tasks/BSplineTrajectoryTask.h
 usr/include/mc_tasks/ExactCubicTrajectoryTask.h
 usr/include/mc_tasks/LookAtTask.h
@@ -46,6 +50,7 @@ usr/include/mc_tasks/TrajectoryTaskGeneric.hpp
 usr/include/mc_tasks/TrajectoryTaskGeneric.h
 usr/include/mc_tasks/AdmittanceTask.h
 usr/include/mc_tasks/ComplianceTask.h
+usr/include/mc_tasks/LookAtFrameTask.h
 usr/include/mc_tasks/LookAtSurfaceTask.h
 usr/include/mc_tasks/PositionTask.h
 usr/include/mc_tasks/api.h

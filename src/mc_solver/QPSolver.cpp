@@ -61,20 +61,20 @@ std::vector<mc_solver::ContactMsg> contactsMsgFromContacts(const mc_rbdyn::Robot
 
 namespace mc_solver
 {
-QPSolver::QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep) : robots_p(robots), timeStep(timeStep)
+QPSolver::QPSolver(mc_rbdyn::RobotsPtr robots, double timeStep) : robots_p(robots), timeStep(timeStep)
 {
   if(timeStep <= 0)
   {
     mc_rtc::log::error_and_throw<std::invalid_argument>("timeStep has to be > 0! timeStep = {}", timeStep);
   }
-  realRobots_p = std::make_shared<mc_rbdyn::Robots>();
-  for(const auto & robot : robots->robots())
+  realRobots_p = mc_rbdyn::Robots::make();
+  for(const auto & robot : *robots)
   {
     realRobots_p->robotCopy(robot, robot.name());
   }
 }
 
-QPSolver::QPSolver(double timeStep) : QPSolver{std::make_shared<mc_rbdyn::Robots>(), timeStep} {}
+QPSolver::QPSolver(double timeStep) : QPSolver{mc_rbdyn::Robots::make(), timeStep} {}
 
 void QPSolver::addConstraintSet(ConstraintSet & cs)
 {
@@ -231,7 +231,7 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
                            fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S),
                            [this, &contact]() { return desiredContactForce(contact); },
                            [this, &contact]() {
-                             return robots().robots()[contact.r1Index()].surfacePose(contact.r1Surface()->name());
+                             return robots().robot(contact.r1Index()).surfacePose(contact.r1Surface()->name());
                            }));
     }
   }
@@ -524,9 +524,9 @@ const QPResultMsg & QPSolver::send(double /*curTime*/)
 
 void QPSolver::__fillResult()
 {
-  qpRes.zmps.resize(robots().robots().size());
-  qpRes.robots_state.resize(robots().robots().size());
-  for(unsigned int i = 0; i < robots().robots().size(); ++i)
+  qpRes.zmps.resize(robots().size());
+  qpRes.robots_state.resize(robots().size());
+  for(unsigned int i = 0; i < robots().size(); ++i)
   {
     const mc_rbdyn::Robot & robot = robots().robot(i);
     auto & q = qpRes.robots_state[i].q;
