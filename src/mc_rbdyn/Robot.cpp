@@ -1197,7 +1197,11 @@ void Robot::fixSurfaces(const std::vector<SurfacePtr> & surfaces)
 
 void Robot::createModuleFrames()
 {
-  auto frames = module().frames();
+  makeFrames(module().frames());
+}
+
+void Robot::makeFrames(std::vector<mc_rbdyn::RobotModule::FrameDescription> frames)
+{
   size_t added_frames = 0;
   do
   {

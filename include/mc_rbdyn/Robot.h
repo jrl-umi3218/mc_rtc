@@ -163,6 +163,15 @@ public:
    */
   RobotFrame & makeFrame(const std::string & name, RobotFrame & parent, sva::PTransformd X_p_f, bool baked = false);
 
+  /**
+   * Create new frames attached to this robot
+   *
+   * \param frames Description of the frames
+   *
+   * \throws If any of the frames' \p parent does not belong to this robot or if \p name already exists in this robot
+   */
+  void makeFrames(std::vector<mc_rbdyn::RobotModule::FrameDescription> frames);
+
   /** Returns the joint index of joint named \name
    *
    * \throws If the joint does not exist within the robot.
