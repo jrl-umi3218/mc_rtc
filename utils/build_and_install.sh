@@ -119,6 +119,7 @@ readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --with-hrp4j                             : enable HRP4J (requires mc-hrp4 group access)            (default $WITH_HRP4J)
     --with-hrp4cr                            : enable HRP4CR (requires isri-aist group access)         (default $WITH_HRP4CR)
     --with-hrp5                              : enable HRP5 (requires mc-hrp5 group access)             (default $WITH_HRP5)
+    --with-panda                             : enable Panda (requires ROS)                             (default $WITH_PANDA)
     --with-mc_openrtm                        : enable the mc_openrtm interface (requires hrpsys-base)  (default $WITH_MC_OPENRTM)
     --with-mc_udp                            : enable the mc_udp interface (requires hrpsys-base)      (default $WITH_MC_UDP)
     --with-python-support           {true, false} : whether to build with Python support               (default $WITH_PYTHON_SUPPORT)
@@ -234,6 +235,12 @@ do
         i=$(($i+1))
         WITH_HRP5="${!i}"
         check_true_false --with-hrp5 "$WITH_HRP5"
+        ;;
+
+        --with-panda)
+        i=$(($i+1))
+        WITH_PANDA="${!i}"
+        check_true_false --with-panda "$WITH_PANDA"
         ;;
 
         --with-mc_udp)
@@ -423,6 +430,7 @@ echo_log "   WITH_HRP4=$WITH_HRP4"
 echo_log "   WITH_HRP4J=$WITH_HRP4J"
 echo_log "   WITH_HRP4CR=$WITH_HRP4CR"
 echo_log "   WITH_HRP5=$WITH_HRP5"
+echo_log "   WITH_PANDA=$WITH_PANDA"
 echo_log "   WITH_MC_UDP=$WITH_MC_UDP"
 echo_log "   MC_UDP_INSTALL_PREFIX=$MC_UDP_INSTALL_PREFIX"
 echo_log "   WITH_MC_OPENRTM=$WITH_MC_OPENRTM"
@@ -431,6 +439,14 @@ echo_log "   SKIP_UPDATE=$SKIP_UPDATE"
 echo_log "   SKIP_DIRTY_UPDATE=$SKIP_DIRTY_UPDATE"
 echo_log "   BUILD_LOGFILE=$BUILD_LOGFILE"
 echo_log "   ASK_USER_INPUT=$ASK_USER_INPUT"
+
+if $WITH_PANDA
+then
+  if ! $WITH_ROS_SUPPORT
+  then
+    exit_failure "Panda robot cannot be installed without ROS support"
+  fi
+fi
 
 ##################################################
 ## Extra OS/Distribution specific configuration ##
@@ -465,6 +481,10 @@ then
   then
     . $this_dir/config_build_and_install.`lsb_release -sc`.sh
     ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
+    if $WITH_PANDA
+    then
+      ROS_APT_DEPENDENCIES="$ROS_APT_DEPENDENCIES ros-${ROS_DISTRO}-libfranka ros-${ROS_DISTRO}-franka-description"
+    fi
   else
     ROS_DISTRO=""
     APT_DEPENDENCIES=""
@@ -529,6 +549,7 @@ readonly WITH_HRP4
 readonly WITH_HRP4J
 readonly WITH_HRP4CR
 readonly WITH_HRP5
+readonly WITH_PANDA
 readonly WITH_MC_OPENRTM
 readonly MC_OPENRTM_INSTALL_PREFIX
 readonly WITH_MC_UDP
@@ -559,6 +580,7 @@ echo_log "   WITH_HRP4=$WITH_HRP4"
 echo_log "   WITH_HRP4J=$WITH_HRP4J"
 echo_log "   WITH_HRP4CR=$WITH_HRP4CR"
 echo_log "   WITH_HRP5=$WITH_HRP5"
+echo_log "   WITH_PANDA=$WITH_PANDA"
 echo_log "   WITH_MC_UDP=$WITH_MC_UDP"
 echo_log "   MC_UDP_INSTALL_PREFIX=$MC_UDP_INSTALL_PREFIX"
 echo_log "   WITH_MC_OPENRTM=$WITH_MC_OPENRTM"
@@ -1026,6 +1048,12 @@ then
   echo_log "-- [OK] Successfully cloned and updated the robot module $git_dep to $repo_dir"
 fi
 
+if $WITH_PANDA
+then
+  check_and_clone_git_dependency jrl-umi3218/mc_panda $SOURCE_DIR
+  echo_log "-- [OK] Successfully cloned and updated the robot module $git_dep to $repo_dir"
+fi
+
 if $WITH_MC_UDP
 then
   check_and_clone_git_dependency jrl-umi3218/mc_udp $SOURCE_DIR
@@ -1437,6 +1465,13 @@ then
   echo_log "-- [OK] Successfully built the robot module $git_dep"
 fi
 
+if $WITH_PANDA
+then
+  echo_log "-- Installing with PANDA robot support"
+  build_git_dependency jrl-umi3218/mc_panda
+  echo_log "-- [OK] Successfully built the robot module $git_dep"
+fi
+
 if $WITH_MC_UDP
 then
   echo_log "-- Installing with mc_udp interface support"
@@ -1486,3 +1521,12 @@ echo_log ""
 echo_log "If you want autocompletion on the scripts add also the following to your .bashrc/.zshrc"
 echo_log "source $this_dir/autocompletion.bash"
 echo_log "If you are running zsh, replace autocompletion.bash with autocompletion.zsh in that last line"
+
+if $WITH_PANDA
+then
+  echo_log ""
+  echo_log "== Panda robot =="
+  echo_log "The Panda robot module has been installed, you will be able to run controllers and simulations."
+  echo_log "To execute controllers on the real robot you will need to install mc_franka on a real-time linux system"
+  echo_log "See https://github.com/jrl-umi3218/mc_franka for instructions"
+fi
