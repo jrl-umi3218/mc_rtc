@@ -2,6 +2,44 @@
 
 ## [Unreleased]
 
+### Highlights
+
+`mc_rbdyn::Frame` and `mc_rbdyn::RobotFrame` have been introduced. This removes
+the unnecessary distinction between bodies and surfaces that has existed in the
+framework. (#247)
+
+### API breaks
+
+- `mc_rbdyn::Robots` cannot be created directly anymore, one has to go through
+   a factory function (#247)
+- `mc_rbdyn::Robots` stores indiviual robot as pointer and in particular
+  `robots.robots()` returns a self reference instead of `vector<Robot>`,
+  `Robots` behaves a little more like a vector now to mitigate the impact of this
+  change (#247)
+- `EndEffectorTask` and co. cannot use a `bodyPoint` in their constructor anymore, proper frames should be used instead (#247)
+- `VectorOrientationTask` and co. cannot set or get the `bodyVector` after the fact anymore (#247)
+
+### Deprecations
+
+- Usage of `body` or `surface` in JSON/YAML is deprecated in favor of frame,
+  the doc will only show `frame` but it should continue to work with all old
+  JSON/YAML files (#247)
+- Idem for specifications of relative targets (#247)
+
+### Added
+
+- `mc_rtc::shared` is a wrapper around `std::enabled_shared_from_this` to allow
+  reference-style API where the data is backed by a shared pointer (#247)
+- All tasks (when it makes sense) can accept a frame at construction (#247)
+- `mc_solver::BoundedSpeedConstr` can be used to constraint a frame velocity (#247)
+- [utils] `build_and_install` now supports Ubuntu Jammy (22.04) (#248)
+- [utils] `build_and_install` can now install the Panda module (#249)
+
+### Fixes
+
+- [mc_control] Make robot position initialization consistant (#245)
+- [utils] Fix issues with pip/pip3 on Ubuntu Focal (#246)
+
 ## [1.10.0] - 2022-04-06
 
 ### Tutorials translation
