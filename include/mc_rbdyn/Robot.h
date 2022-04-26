@@ -1032,8 +1032,25 @@ protected:
   /** Copy loaded data from this robot to a new robot **/
   void copyLoadedData(Robot & destination) const;
 
-  /** Used to set the surfaces' X_b_s correctly and create frames from RobotModule */
+  /**
+   * Used to set all robot surfaces' X_b_s correctly
+   *
+   * This updates all surfaces in surfaces_ vector and should only be called
+   * once
+   */
   void fixSurfaces();
+
+  /**
+   * Used to set the specified surfaces' X_b_s correctly
+   *
+   * This function should only be called once per surface.
+   *
+   * @param surfaces Surfaces that need to be modified
+   **/
+  void fixSurfaces(const std::vector<SurfacePtr> & surfaces);
+
+  /** Used to create frames from the robot module */
+  void createModuleFrames();
 
   /** Used to set the collision transforms correctly */
   void fixCollisionTransforms();

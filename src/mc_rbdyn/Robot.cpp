@@ -430,6 +430,8 @@ Robot::Robot(NewRobotToken,
     }
   }
 
+  createModuleFrames();
+
   stance_ = module_.stance();
 
   bodySensors_ = module_.bodySensors();
@@ -1174,12 +1176,27 @@ const sva::PTransformd & Robot::collisionTransform(const std::string & cName) co
 
 void Robot::fixSurfaces()
 {
-  for(auto & s : surfaces_)
+  std::vector<SurfacePtr> surfaces;
+  surfaces.reserve(surfaces_.size());
+  for(auto & surface : surfaces_)
   {
-    const sva::PTransformd & trans = bodyTransform(s.second->bodyName());
-    s.second->X_b_s(s.second->X_b_s() * trans);
-    makeFrame(s.first, frame(s.second->bodyName()), s.second->X_b_s());
+    surfaces.push_back(surface.second);
   }
+  fixSurfaces(surfaces);
+}
+
+void Robot::fixSurfaces(const std::vector<SurfacePtr> & surfaces)
+{
+  for(auto & s : surfaces)
+  {
+    const sva::PTransformd & trans = bodyTransform(s->bodyName());
+    s->X_b_s(s->X_b_s() * trans);
+    makeFrame(s->name(), frame(s->bodyName()), s->X_b_s());
+  }
+}
+
+void Robot::createModuleFrames()
+{
   auto frames = module().frames();
   size_t added_frames = 0;
   do
@@ -1246,7 +1263,7 @@ void Robot::loadRSDFFromDir(const std::string & surfaceDir)
                            sp->name(), sp->bodyName(), name());
     }
   }
-  fixSurfaces();
+  fixSurfaces(surfacesIn);
 }
 
 std::map<std::string, std::vector<double>> Robot::stance() const
@@ -1382,6 +1399,7 @@ void Robot::copyLoadedData(Robot & robot) const
     robot.surfaces_[s.first] = s.second->copy();
   }
   robot.fixSurfaces();
+  robot.createModuleFrames();
   for(const auto & cH : convexes_)
   {
     robot.convexes_[cH.first] = {cH.second.first, S_ObjectPtr(cH.second.second->clone())};
