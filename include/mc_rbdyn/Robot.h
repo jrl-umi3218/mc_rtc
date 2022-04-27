@@ -1050,16 +1050,13 @@ protected:
   void fixSurfaces();
 
   /**
-   * Used to set the specified surfaces' X_b_s correctly
+   * Used to set the specified surface X_b_s correctly
    *
    * This function should only be called once per surface.
    *
-   * @param surfaces Surfaces that need to be modified
+   * @param surfaces Surface that need to be modified
    **/
-  void fixSurfaces(const std::vector<SurfacePtr> & surfaces);
-
-  /** Used to create frames from the robot module */
-  void createModuleFrames();
+  void fixSurface(Surface & surface);
 
   /** Used to set the collision transforms correctly */
   void fixCollisionTransforms();
