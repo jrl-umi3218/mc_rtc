@@ -1,10 +1,11 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
 #include <mc_tasks/TrajectoryTaskGeneric.h>
+
 #include <mc_trajectory/InterpolatedRotation.h>
 #include <mc_trajectory/SequenceInterpolator.h>
 
@@ -33,10 +34,10 @@ namespace mc_tasks
  *   the curve
  */
 template<typename Derived>
-struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformTask>
+struct SplineTrajectoryTask : public TrajectoryTaskGeneric
 {
   using SplineTrajectoryBase = SplineTrajectoryTask<Derived>;
-  using TrajectoryTask = TrajectoryTaskGeneric<tasks::qp::TransformTask>;
+  using TrajectoryTask = TrajectoryTaskGeneric;
   using SequenceInterpolator6d =
       mc_trajectory::SequenceInterpolator<Eigen::Vector6d, mc_trajectory::LinearInterpolation<Eigen::Vector6d>>;
 
@@ -345,8 +346,8 @@ protected:
 
   /* Hide parent's refVel and refAccel implementation as the Spline tasks
    * are overriding these at every iteration according to the underlying curve */
-  using TrajectoryTaskGeneric<tasks::qp::TransformTask>::refVel;
-  using TrajectoryTaskGeneric<tasks::qp::TransformTask>::refAccel;
+  using TrajectoryTaskGeneric::refAccel;
+  using TrajectoryTaskGeneric::refVel;
 
   /*! \brief Add task controls to the GUI.
    * Interactive controls for the trajectory waypoints and end-endpoints

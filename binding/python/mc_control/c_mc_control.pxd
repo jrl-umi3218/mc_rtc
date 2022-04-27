@@ -25,6 +25,9 @@ cdef extern from "<memory>" namespace "std" nogil:
   cdef cppclass shared_ptr[T]:
     shared_ptr(T*)
     T* get()
+  cdef cppclass unique_ptr[T]:
+    unique_ptr(T*)
+    T* get()
 
 cdef extern from "<mc_control/Contact.h>" namespace "mc_control":
   cdef cppclass Contact:
@@ -66,10 +69,10 @@ cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
     shared_ptr[c_mc_rtc_gui.StateBuilder] gui()
 
     double timeStep
-    ContactConstraint contactConstraint
-    DynamicsConstraint dynamicsConstraint
-    KinematicsConstraint kinematicsConstraint
-    CollisionsConstraint selfCollisionConstraint
+    unique_ptr[ContactConstraint] contactConstraint
+    unique_ptr[DynamicsConstraint] dynamicsConstraint
+    unique_ptr[KinematicsConstraint] kinematicsConstraint
+    unique_ptr[CollisionsConstraint] selfCollisionConstraint
     shared_ptr[c_mc_tasks.PostureTask] postureTask
     QPSolver & solver()
 

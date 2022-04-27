@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL, BIT
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 /** This test does not run anything, it merely check that new constraints can be derived the Constraint utility class */
@@ -7,6 +7,7 @@
 #include <mc_solver/EqualityConstraint.h>
 #include <mc_solver/GenInequalityConstraint.h>
 #include <mc_solver/InequalityConstraint.h>
+#include <mc_solver/TasksQPSolver.h>
 
 #define COMMON_OVERRIDE                      \
   const Eigen::MatrixXd & A() const override \
@@ -106,7 +107,7 @@ int main()
 {
   unsigned int rIndex = 0;
   tasks::qp::ContactId cid{};
-  mc_solver::QPSolver solver;
+  mc_solver::TasksQPSolver solver(0.005);
   {
     TestEqualityConstraintRobot c(rIndex);
   }

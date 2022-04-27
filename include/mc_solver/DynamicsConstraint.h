@@ -1,18 +1,16 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
 #include <mc_solver/KinematicsConstraint.h>
 
-#include <Tasks/QPMotionConstr.h>
-
 namespace mc_solver
 {
 
 /** \class DynamicsConstraint
- * Holds dynamics constraints for a robot
+ * Holds dynamics constraints (equation of motion) for a robot
  */
 
 struct MC_SOLVER_DLLAPI DynamicsConstraint : public KinematicsConstraint
@@ -48,37 +46,25 @@ public:
                      double velocityPercent = 1.0,
                      bool infTorque = false);
 
-  /** Implementation of mc_solver::ConstraintSet::addToSolver */
-  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) override;
+  /** Fill robot().jointTorque after solving the optimization problem */
+  void fillJointTorque(mc_solver::QPSolver & solver) const;
 
-  /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
-  virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
+  void addToSolverImpl(QPSolver & solver) override;
 
-  bool inSolver() const
-  {
-    return inSolver_;
-  }
+  void removeFromSolverImpl(QPSolver & solver) override;
 
-  unsigned int robotIndex() const
+  inline unsigned int robotIndex() const noexcept
   {
     return robotIndex_;
   }
 
-public:
-  /** Motion constraint: if the robot contains flexibilites, it will take them
-   * into account, else will be a classical one **/
-  std::shared_ptr<tasks::qp::MotionConstr> motionConstr;
-
-public:
-  /** \deprecated{Default constructor, not made for general usage}
+protected:
+  /** Holds the motion constraint implementation
+   *
+   * In Tasks backend:
+   * - tasks::qp::MotionConstr or a derived constraint if the robot has flexibilities
    */
-  DynamicsConstraint() {}
-
-private:
-  /** Private function to build the proper MotionConstr */
-  void build_constr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, bool infTorque, double timeStep);
-  /** Boolean: is this constraint inserted in the solver? */
-  bool inSolver_;
+  mc_rtc::void_ptr motion_constr_;
   /** Robot index for the constraint */
   unsigned int robotIndex_;
 };

@@ -1,32 +1,86 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_rtc/logging.h>
 #include <mc_solver/BoundedSpeedConstr.h>
+
 #include <mc_solver/ConstraintSetLoader.h>
+#include <mc_solver/TasksQPSolver.h>
+
+#include <mc_rtc/logging.h>
+
+#include <Tasks/QPConstr.h>
 
 namespace mc_solver
 {
 
+/** Helper to cast the constraint */
+static tasks::qp::BoundedSpeedConstr & tasks_constraint(mc_rtc::void_ptr & ptr)
+{
+  return *static_cast<tasks::qp::BoundedSpeedConstr *>(ptr.get());
+}
+
+/** Helper to cast the constraint (const) */
+static const tasks::qp::BoundedSpeedConstr & tasks_constraint(const mc_rtc::void_ptr & ptr)
+{
+  return *static_cast<const tasks::qp::BoundedSpeedConstr *>(ptr.get());
+}
+
+static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend,
+                                        const mc_rbdyn::Robots & robots,
+                                        unsigned int robotIndex,
+                                        double dt)
+{
+  switch(backend)
+  {
+    case QPSolver::Backend::Tasks:
+      return mc_rtc::make_void_ptr<tasks::qp::BoundedSpeedConstr>(robots.mbs(), static_cast<int>(robotIndex), dt);
+    default:
+      mc_rtc::log::error_and_throw("[BoundedSpeedConstr] Not implemented for solver backend: {}", backend);
+  }
+}
+
 BoundedSpeedConstr::BoundedSpeedConstr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double dt)
-: constr(new tasks::qp::BoundedSpeedConstr(robots.mbs(), static_cast<int>(robotIndex), dt)), robotIndex(robotIndex)
+: constraint_(make_constraint(backend_, robots, robotIndex, dt)), robotIndex(robotIndex)
 {
 }
 
-void BoundedSpeedConstr::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)
+void BoundedSpeedConstr::addToSolverImpl(QPSolver & solver)
 {
-  constr->addToSolver(mbs, solver);
+  switch(backend_)
+  {
+    case QPSolver::Backend::Tasks:
+    {
+      auto & qpsolver = tasks_solver(solver).solver();
+      tasks_constraint(constraint_).addToSolver(solver.robots().mbs(), qpsolver);
+    }
+    break;
+    default:
+      break;
+  }
 }
 
-void BoundedSpeedConstr::removeFromSolver(tasks::qp::QPSolver & solver)
+void BoundedSpeedConstr::removeFromSolverImpl(QPSolver & solver)
 {
-  constr->removeFromSolver(solver);
+  switch(backend_)
+  {
+    case QPSolver::Backend::Tasks:
+      tasks_constraint(constraint_).removeFromSolver(tasks_solver(solver).solver());
+      break;
+    default:
+      break;
+  }
 }
 
 size_t BoundedSpeedConstr::nrBoundedSpeeds() const
 {
-  return constr->nrBoundedSpeeds();
+  switch(backend_)
+  {
+    case QPSolver::Backend::Tasks:
+      return tasks_constraint(constraint_).nrBoundedSpeeds();
+    default:
+      return 0;
+  }
 }
 
 void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver,
@@ -38,9 +92,20 @@ void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver,
 {
   if(solver.robots().robot(robotIndex).hasBody(bodyName))
   {
-    constr->addBoundedSpeed(solver.robots().mbs(), bodyName, bodyPoint, dof, lowerSpeed, upperSpeed);
-    constr->updateBoundedSpeeds();
-    solver.updateConstrSize();
+    switch(backend_)
+    {
+      case QPSolver::Backend::Tasks:
+      {
+        auto & qpsolver = tasks_solver(solver);
+        auto & constr = tasks_constraint(constraint_);
+        constr.addBoundedSpeed(solver.robots().mbs(), bodyName, bodyPoint, dof, lowerSpeed, upperSpeed);
+        constr.updateBoundedSpeeds();
+        qpsolver.updateConstrSize();
+      }
+      break;
+      default:
+        break;
+    }
   }
   else
   {
@@ -62,10 +127,20 @@ void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver,
         frame.name(), frame.robot().name(), solver.robot(robotIndex).name());
     return;
   }
-  constr->addBoundedSpeed(solver.robots().mbs(), frame.body(), Eigen::Vector3d::Zero(), dof * frame.X_b_f().matrix(),
-                          lowerSpeed, upperSpeed);
-  constr->updateBoundedSpeeds();
-  solver.updateConstrSize();
+  switch(backend_)
+  {
+    case QPSolver::Backend::Tasks:
+    {
+      auto & constr = tasks_constraint(constraint_);
+      auto & qpsolver = tasks_solver(solver);
+      constr.addBoundedSpeed(solver.robots().mbs(), frame.body(), Eigen::Vector3d::Zero(), dof * frame.X_b_f().matrix(),
+                             lowerSpeed, upperSpeed);
+      constr.updateBoundedSpeeds();
+      qpsolver.updateConstrSize();
+    }
+    default:
+      break;
+  }
 }
 
 bool BoundedSpeedConstr::removeBoundedSpeed(QPSolver & solver, const std::string & bodyName)
@@ -73,9 +148,19 @@ bool BoundedSpeedConstr::removeBoundedSpeed(QPSolver & solver, const std::string
   bool r = false;
   if(solver.robots().robot(robotIndex).hasBody(bodyName))
   {
-    r = constr->removeBoundedSpeed(bodyName);
-    constr->updateBoundedSpeeds();
-    solver.updateConstrSize();
+    switch(backend_)
+    {
+      case QPSolver::Backend::Tasks:
+      {
+        auto & constr = tasks_constraint(constraint_);
+        auto & qpsolver = tasks_solver(solver);
+        r = constr.removeBoundedSpeed(bodyName);
+        constr.updateBoundedSpeeds();
+        qpsolver.updateConstrSize();
+      }
+      default:
+        break;
+    }
   }
   else
   {
@@ -92,9 +177,19 @@ bool BoundedSpeedConstr::removeBoundedSpeed(QPSolver & solver, const mc_rbdyn::R
 
 void BoundedSpeedConstr::reset(QPSolver & solver)
 {
-  constr->resetBoundedSpeeds();
-  constr->updateBoundedSpeeds();
-  solver.updateConstrSize();
+  switch(backend_)
+  {
+    case QPSolver::Backend::Tasks:
+    {
+      auto & constr = tasks_constraint(constraint_);
+      auto & qpsolver = tasks_solver(solver);
+      constr.resetBoundedSpeeds();
+      constr.updateBoundedSpeeds();
+      qpsolver.updateConstrSize();
+    }
+    default:
+      break;
+  }
 }
 
 } // namespace mc_solver

@@ -19,11 +19,17 @@ PositionTask::PositionTask(const std::string & bodyName,
 }
 
 PositionTask::PositionTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
-: TrajectoryTaskGeneric<tasks::qp::PositionTask>(frame.robot().robots(), frame.robot().robotIndex(), stiffness, weight),
-  frame_(frame)
+: TrajectoryTaskGeneric(frame.robot().robots(), frame.robot().robotIndex(), stiffness, weight), frame_(frame)
 {
-  finalize(robots.mbs(), static_cast<int>(rIndex), frame.body(), frame.position().translation(),
-           frame.X_b_f().translation());
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      finalize<tasks::qp::PositionTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(),
+                                        frame.position().translation(), frame.X_b_f().translation());
+      break;
+    default:
+      mc_rtc::log::error_and_throw("[PositionTask] Not implemented for backend: {}", backend_);
+  }
   type_ = "position";
   name_ = "position_" + frame.robot().name() + "_" + frame.name();
 }
@@ -31,7 +37,7 @@ PositionTask::PositionTask(const mc_rbdyn::RobotFrame & frame, double stiffness,
 void PositionTask::reset()
 {
   TrajectoryTaskGeneric::reset();
-  errorT->position(frame_->position().translation());
+  position(frame_->position().translation());
 }
 
 void PositionTask::addToLogger(mc_rtc::Logger & logger)
@@ -39,12 +45,12 @@ void PositionTask::addToLogger(mc_rtc::Logger & logger)
   TrajectoryBase::addToLogger(logger);
   logger.addLogEntry(name_ + "_target", this, [this]() { return position(); });
   logger.addLogEntry(name_ + "_curPos", this, [this]() { return frame_->position().translation(); });
-  logger.addLogEntry(name_ + "_curVel", this, [this]() -> const Eigen::VectorXd & { return errorT->speed(); });
+  logger.addLogEntry(name_ + "_curVel", this, [this]() { return frame_->velocity().linear(); });
 }
 
 void PositionTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  TrajectoryTaskGeneric<tasks::qp::PositionTask>::addToGUI(gui);
+  TrajectoryTaskGeneric::addToGUI(gui);
   gui.addElement({"Tasks", name_},
                  mc_rtc::gui::Point3D(
                      "pos_target", [this]() { return this->position(); },

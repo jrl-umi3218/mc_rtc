@@ -1,12 +1,12 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
-#include <mc_solver/api.h>
+#include <mc_solver/QPSolver.h>
 
-#include <Tasks/QPSolver.h>
+#include <memory>
 
 namespace mc_solver
 {
@@ -19,31 +19,48 @@ namespace mc_solver
 
 struct MC_SOLVER_DLLAPI ConstraintSet
 {
-public:
-  /** This function is called by mc_solver::QPSolver when
-   * mc_solver::QPSolver::addConstraintSet is called, it is expected that the
-   * implementation calls the safe variant of its wrapper constr:
-    \verbatim
-    <wrapped-type>::addToSolver(mbs, solver)
-    \endverbatim
-   * \param mbs The MultiBody vector controlled by the invoking mc_solver::QPSolver
-   * \param solver The actual solver instance used by the invoking mc_solver::QPSolver
-   */
-  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) = 0;
+  /** Constructor, register the solver backend at creation time */
+  ConstraintSet();
 
-  /** This function is called by mc_solver::QPSolver when
-   * mc_solver::QPSolver::removeConstraintSet is called, typically it would
-   * call:
-    \verbatim
-    <wrapped-type>::removeFromSolver(solver)
-    \endverbatim
-   * \param solver The actual solver instance used by the invoking mc_solver::QPSolver
-   */
-  virtual void removeFromSolver(tasks::qp::QPSolver & solver) = 0;
+  /** This is called by \ref mc_solver::QPSolver when the constraint is added to the problem */
+  void addToSolver(mc_solver::QPSolver & solver);
 
-  /** Virtual destructor
-   */
+  /** This is called by \ref mc_solver::QPSolver when the constraint is removed from the problem */
+  void removeFromSolver(mc_solver::QPSolver & solver);
+
+  /** Virtual destructor */
   virtual ~ConstraintSet() {}
+
+  inline bool inSolver() const noexcept
+  {
+    return inSolver_;
+  }
+
+  inline QPSolver::Backend backend() const noexcept
+  {
+    return backend_;
+  }
+
+protected:
+  /** Should take care of the actual insertion into a concrete solver */
+  virtual void addToSolverImpl(mc_solver::QPSolver & solver) = 0;
+
+  /** Should take care of the actual removal from a concrete solver */
+  virtual void removeFromSolverImpl(mc_solver::QPSolver & solver) = 0;
+
+  /** QPSolver backend when the constraint is created */
+  QPSolver::Backend backend_;
+
+  /** True if the constraint is in a solver already */
+  bool inSolver_ = false;
+
+private:
+  // Forbid copy of ConstraintSet objects
+  ConstraintSet(const ConstraintSet &) = delete;
+  ConstraintSet & operator=(const ConstraintSet &) = delete;
+  // Move is ok
+  ConstraintSet(ConstraintSet &&) = default;
+  ConstraintSet & operator=(ConstraintSet &&) = default;
 };
 
 using ConstraintSetPtr = std::shared_ptr<ConstraintSet>;

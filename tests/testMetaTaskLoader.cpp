@@ -1,9 +1,12 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/configuration_io.h>
+
+#include <mc_solver/TasksQPSolver.h>
+
 #include <mc_tasks/AddRemoveContactTask.h>
 #include <mc_tasks/BSplineTrajectoryTask.h>
 #include <mc_tasks/CoMTask.h>
@@ -28,7 +31,6 @@ static auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
 static auto em =
     mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"));
 static auto robots = mc_rbdyn::loadRobotAndEnv(*rm, *em);
-static mc_solver::QPSolver solver(robots, 0.005);
 
 template<typename T>
 struct fail : public std::false_type
@@ -39,7 +41,7 @@ template<typename T>
 struct TaskTester
 {
   static_assert(fail<T>::value, "This should be specialized");
-  mc_tasks::MetaTaskPtr make_ref()
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver &)
   {
     return nullptr;
   }
@@ -55,7 +57,7 @@ struct TaskTester
 template<>
 struct TaskTester<mc_tasks::CoMTask>
 {
-  mc_tasks::MetaTaskPtr make_ref()
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver &)
   {
     auto ret = std::make_shared<mc_tasks::CoMTask>(*robots, 0, stiffness, weight);
     ret->com(com);
@@ -95,7 +97,7 @@ struct TaskTester<mc_tasks::CoMTask>
   template<>                                                                                \
   struct TaskTester<T>                                                                      \
   {                                                                                         \
-    mc_tasks::MetaTaskPtr make_ref()                                                        \
+    mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver & solver)                            \
     {                                                                                       \
       auto ret = std::make_shared<T>(solver, contact, speed, stiffness, weight);            \
       return ret;                                                                           \
@@ -143,7 +145,7 @@ AddRemoveContactTaskTester(mc_tasks::AddContactTask, "addContact")
         template<>
         struct TaskTester<mc_tasks::force::ComplianceTask>
 {
-  mc_tasks::MetaTaskPtr make_ref()
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver & solver)
   {
     auto t = std::shared_ptr<mc_tasks::force::ComplianceTask>(
         new mc_tasks::force::ComplianceTask(*robots, 0, "R_WRIST_Y_S", solver.dt(), dof, stiffness, weight, forceThresh,
@@ -202,7 +204,7 @@ AddRemoveContactTaskTester(mc_tasks::AddContactTask, "addContact")
 template<>
 struct TaskTester<mc_tasks::OrientationTask>
 {
-  mc_tasks::MetaTaskPtr make_ref()
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver &)
   {
     auto t = std::make_shared<mc_tasks::OrientationTask>("R_WRIST_Y_S", *robots, 0, stiffness, weight);
     t->orientation(ori);
@@ -242,7 +244,7 @@ struct TaskTester<mc_tasks::OrientationTask>
 template<>
 struct TaskTester<mc_tasks::PositionTask>
 {
-  mc_tasks::MetaTaskPtr make_ref()
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver &)
   {
     auto t = std::make_shared<mc_tasks::PositionTask>("R_WRIST_Y_S", *robots, 0, stiffness, weight);
     t->position(pos);
@@ -282,7 +284,7 @@ struct TaskTester<mc_tasks::PositionTask>
 template<>
 struct TaskTester<mc_tasks::EndEffectorTask>
 {
-  mc_tasks::MetaTaskPtr make_ref()
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver &)
   {
     auto t = std::make_shared<mc_tasks::EndEffectorTask>("R_WRIST_Y_S", *robots, 0, stiffness, weight);
     t->set_ef_pose({ori, pos});
@@ -327,7 +329,7 @@ struct TaskTester<mc_tasks::EndEffectorTask>
 template<>
 struct TaskTester<mc_tasks::RelativeEndEffectorTask>
 {
-  mc_tasks::MetaTaskPtr make_ref()
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver &)
   {
     auto t = std::make_shared<mc_tasks::RelativeEndEffectorTask>("R_WRIST_Y_S", *robots, 0, "L_WRIST_Y_S", stiffness,
                                                                  weight);
@@ -374,7 +376,7 @@ struct TaskTester<mc_tasks::RelativeEndEffectorTask>
 template<>
 struct TaskTester<mc_tasks::GazeTask>
 {
-  mc_tasks::MetaTaskPtr make_ref()
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver &)
   {
     // If the last element of the point3d is Zero, this would cause a division
     // by zero. Checks that the constructor prevents it by throwing an
@@ -420,7 +422,7 @@ struct TaskTester<mc_tasks::GazeTask>
 template<>
 struct TaskTester<mc_tasks::PositionBasedVisServoTask>
 {
-  mc_tasks::MetaTaskPtr make_ref()
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver &)
   {
     auto ret = std::make_shared<mc_tasks::PositionBasedVisServoTask>("NECK_P_S", sva::PTransformd::Identity(), X_b_s,
                                                                      *robots, 0, stiffness, weight);
@@ -458,7 +460,7 @@ struct TaskTester<mc_tasks::PositionBasedVisServoTask>
 template<>
 struct TaskTester<mc_tasks::SurfaceTransformTask>
 {
-  mc_tasks::MetaTaskPtr make_ref()
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver &)
   {
     auto ret = std::make_shared<mc_tasks::SurfaceTransformTask>("LeftFoot", *robots, 0, stiffness, weight);
     ret->target(target);
@@ -500,7 +502,7 @@ struct TaskTester<mc_tasks::SurfaceTransformTask>
 template<>
 struct TaskTester<mc_tasks::VectorOrientationTask>
 {
-  mc_tasks::MetaTaskPtr make_ref()
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver &)
   {
     auto ret = std::make_shared<mc_tasks::VectorOrientationTask>("R_WRIST_Y_S", bodyVector, targetVector, *robots, 0,
                                                                  stiffness, weight);
@@ -542,7 +544,7 @@ struct TaskTester<mc_tasks::VectorOrientationTask>
 template<>
 struct TaskTester<mc_tasks::PostureTask>
 {
-  mc_tasks::MetaTaskPtr make_ref()
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver & solver)
   {
     auto ret = std::make_shared<mc_tasks::PostureTask>(solver, 0, stiffness, weight);
     return ret;
@@ -577,7 +579,7 @@ struct TaskTester<mc_tasks::PostureTask>
 template<>
 struct TaskTester<mc_tasks::BSplineTrajectoryTask>
 {
-  mc_tasks::MetaTaskPtr make_ref()
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver &)
   {
     auto ret = std::make_shared<mc_tasks::BSplineTrajectoryTask>(*robots, 0, "LeftFoot", d, stiffness, weight, target);
     return ret;
@@ -620,7 +622,7 @@ struct TaskTester<mc_tasks::BSplineTrajectoryTask>
 template<>
 struct TaskTester<mc_tasks::ExactCubicTrajectoryTask>
 {
-  mc_tasks::MetaTaskPtr make_ref()
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver &)
   {
     auto ret =
         std::make_shared<mc_tasks::ExactCubicTrajectoryTask>(*robots, 0, "LeftFoot", d, stiffness, weight, target);
@@ -680,8 +682,9 @@ typedef boost::mpl::list<mc_tasks::CoMTask,
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestMetaTaskLoader, T, test_types)
 {
+  static mc_solver::TasksQPSolver solver(robots, 0.005);
   auto tester = TaskTester<T>();
-  auto ref = tester.make_ref();
+  auto ref = tester.make_ref(solver);
   auto conf = tester.json();
   auto loaded = mc_tasks::MetaTaskLoader::load(solver, conf);
   tester.check(ref, loaded);

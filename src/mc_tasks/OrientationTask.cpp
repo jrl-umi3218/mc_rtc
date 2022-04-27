@@ -19,9 +19,17 @@ OrientationTask::OrientationTask(const std::string & bodyName,
 }
 
 OrientationTask::OrientationTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
-: TrajectoryTaskGeneric<tasks::qp::OrientationTask>(frame, stiffness, weight), frame_(frame)
+: TrajectoryTaskGeneric(frame, stiffness, weight), frame_(frame)
 {
-  finalize(robots.mbs(), static_cast<int>(rIndex), frame.body(), (frame.X_b_f().inv() * frame.position()).rotation());
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      finalize<tasks::qp::OrientationTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(),
+                                           (frame.X_b_f().inv() * frame.position()).rotation());
+      break;
+    default:
+      mc_rtc::log::error_and_throw("[OrientationTask] Not implemented for backend: {}", backend_);
+  }
   type_ = "orientation";
   name_ = "orientation_" + frame.robot().name() + "_" + frame.name();
 }
@@ -29,22 +37,36 @@ OrientationTask::OrientationTask(const mc_rbdyn::RobotFrame & frame, double stif
 void OrientationTask::reset()
 {
   TrajectoryTaskGeneric::reset();
-  errorT->orientation((frame_->X_b_f().inv() * frame_->position()).rotation());
+  orientation((frame_->X_b_f().inv() * frame_->position()).rotation());
 }
 
 void OrientationTask::orientation(const Eigen::Matrix3d & ori)
 {
-  errorT->orientation((frame_->X_b_f() * sva::PTransformd{ori}).rotation());
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      static_cast<tasks::qp::OrientationTask *>(errorT.get())
+          ->orientation((frame_->X_b_f().inv() * sva::PTransformd{ori}).rotation());
+      break;
+    default:
+      break;
+  }
 }
 
 Eigen::Matrix3d OrientationTask::orientation()
 {
-  return (frame_->X_b_f().inv() * errorT->orientation()).rotation();
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      return (frame_->X_b_f() * static_cast<tasks::qp::OrientationTask *>(errorT.get())->orientation()).rotation();
+    default:
+      mc_rtc::log::error_and_throw("Not implemented");
+  }
 }
 
 void OrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  TrajectoryTaskGeneric<tasks::qp::OrientationTask>::addToGUI(gui);
+  TrajectoryTaskGeneric::addToGUI(gui);
   gui.addElement({"Tasks", name_},
                  mc_rtc::gui::Rotation(
                      "ori_target",

@@ -737,8 +737,6 @@ bool MCGlobalController::run()
   using clock = typename std::conditional<std::chrono::high_resolution_clock::is_steady,
                                           std::chrono::high_resolution_clock, std::chrono::steady_clock>::type;
   /** Helper to converst Tasks' timer */
-  using boost_ms = boost::chrono::duration<double, boost::milli>;
-  using boost_ns = boost::chrono::duration<double, boost::nano>;
   auto start_run_t = clock::now();
   /* Check if we need to change the controller this time */
   if(next_controller_)
@@ -861,8 +859,8 @@ bool MCGlobalController::run()
       gui_dt = clock::now() - start_gui_t;
     }
     controller_run_dt = end_controller_run_t - start_controller_run_t;
-    solver_build_and_solve_t = boost_ms(boost_ns(controller_->solver().solveAndBuildTime().wall)).count();
-    solver_solve_t = boost_ms(boost_ns(controller_->solver().solveTime().wall)).count();
+    solver_build_and_solve_t = controller_->solver().solveAndBuildTime();
+    solver_solve_t = controller_->solver().solveTime();
     if(!r)
     {
       running = false;
@@ -905,11 +903,6 @@ ControllerServer & MCGlobalController::server()
 {
   assert(server_);
   return *server_;
-}
-
-const mc_solver::QPResultMsg & MCGlobalController::send(const double & t)
-{
-  return controller_->send(t);
 }
 
 void MCGlobalController::setGripperTargetQ(const std::string & robot,

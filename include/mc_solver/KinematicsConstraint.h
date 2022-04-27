@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -7,7 +7,7 @@
 #include <mc_rbdyn/Robots.h>
 #include <mc_solver/ConstraintSet.h>
 
-#include <Tasks/QPConstr.h>
+#include <mc_rtc/void_ptr.h>
 
 namespace mc_solver
 {
@@ -43,23 +43,22 @@ public:
                        unsigned int robotIndex,
                        double timeStep,
                        const std::array<double, 3> & damper,
-                       double velocityPercent = 1.0);
+                       double velocityPercent = 0.5);
 
+protected:
   /** Implementation of mc_solver::ConstraintSet::addToSolver */
-  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) override;
-
+  void addToSolverImpl(mc_solver::QPSolver & solver) override;
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
-  virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
-
-public:
-  /** Holds JointLimitsConstr, can be null depending on construction */
-  std::shared_ptr<tasks::qp::JointLimitsConstr> jointLimitsConstr;
-  /** Holds DamperJointLimitsConstr, can be null depending on construction */
-  std::shared_ptr<tasks::qp::DamperJointLimitsConstr> damperJointLimitsConstr;
-
-public:
-  /** \deprecated{Default constructor, not made for general usage} */
-  KinematicsConstraint() {}
+  void removeFromSolverImpl(mc_solver::QPSolver & solver) override;
+  /** Holds the constraint implementation
+   *
+   * In Tasks backend:
+   * - tasks::qp::JointLimitsConstr for non-damped constraint
+   * - tasks::qp::DampedJointLimitsConstr for damped-constraint
+   *
+   * The deleter carries the initial type of the constraint
+   */
+  mc_rtc::void_ptr constraint_;
 };
 
 } // namespace mc_solver

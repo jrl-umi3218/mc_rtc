@@ -41,23 +41,18 @@ cdef extern from "<mc_solver/ContactConstraint.h>" namespace "mc_solver":
     ContactTypePosition "mc_solver::ContactConstraint::Position"
 
   cdef cppclass ContactConstraint(ConstraintSet):
-    ContactConstraint(double, ContactConstraintContactType, cppbool)
-    #shared_ptr[c_qp.ContactConstr] contactConstr
-    shared_ptr[c_qp.PositiveLambda] posLambdaConstr
+    ContactConstraint(double, ContactConstraintContactType)
 
 cdef extern from "<mc_solver/KinematicsConstraint.h>" namespace "mc_solver":
   cdef cppclass KinematicsConstraint(ConstraintSet):
     KinematicsConstraint()
     KinematicsConstraint(const Robots&, unsigned int, double)
     KinematicsConstraint(const Robots&, unsigned int, double, const array3d&, double)
-    shared_ptr[c_qp.JointLimitsConstr] jointLimitsConstr
-    shared_ptr[c_qp.DamperJointLimitsConstr] damperJointLimitsConstr
 
 cdef extern from "<mc_solver/DynamicsConstraint.h>" namespace "mc_solver":
   cdef cppclass DynamicsConstraint(KinematicsConstraint):
     DynamicsConstraint(const Robots&, unsigned int, double, cppbool)
     DynamicsConstraint(const Robots&, unsigned int, double, const array3d&, double, cppbool)
-    shared_ptr[c_qp.MotionConstr] motionConstr
 
 cdef extern from "<mc_solver/CollisionsConstraint.h>" namespace "mc_solver":
   cdef double CollisionsConstraintDefaultDampingOffset "mc_solver::CollisionsConstraint::defaultDampingOffset"
@@ -71,55 +66,27 @@ cdef extern from "<mc_solver/CollisionsConstraint.h>" namespace "mc_solver":
     void addCollisions(const QPSolver& robots, const vector[Collision]&)
     void reset()
 
-    shared_ptr[c_qp.CollisionConstr] collConstr
     unsigned int r1Index
     unsigned int r2Index
     vector[Collision] cols
 
-  cdef cppclass RobotEnvCollisionsConstraint(ConstraintSet):
-    RobotEnvCollisionsConstraint(const Robots&, double)
-
-    cppbool removeEnvCollision(QPSolver&, string, string)
-    cppbool removeEnvCollisionByBody(QPSolver&, string, string)
-    cppbool removeSelfCollision(QPSolver&, string, string)
-    void addEnvCollision(QPSolver&, const Collision&)
-    void addSelfCollision(QPSolver&, const Collision&)
-    void setEnvCollisions(QPSolver&, const vector[c_mc_rbdyn.Contact]&, const vector[Collision]&)
-    void setSelfCollisions(QPSolver&, const vector[c_mc_rbdyn.Contact]&, const vector[Collision]&)
-
-    CollisionsConstraint selfCollConstrMng
-    CollisionsConstraint envCollConstrMng
-
-cdef extern from "<mc_solver/QPSolver.h>" namespace "mc_solver":
+cdef extern from "<mc_solver/TasksQPSolver.h>" namespace "mc_solver":
   cdef cppclass QPSolver:
-    QPSolver(shared_ptr[Robots], double)
-
     void addConstraintSet(const ConstraintSet&)
     void removeConstraintSet(const ConstraintSet&)
     const vector[c_mc_rbdyn.Contact] & contacts()
     void setContacts(const vector[c_mc_rbdyn.Contact]&)
     void addTask(c_qp.Task *)
     void addTask(c_mc_tasks.MetaTask *)
-    void removeTask(c_qp.Task *)
     void removeTask(c_mc_tasks.MetaTask *)
-    void addConstraint[T](c_qp.ConstraintFunction[T] *)
-    void removeConstraint[T](c_qp.ConstraintFunction[T] *)
-    void updateConstrSize()
-    void updateNrVars()
     cppbool run()
-
-    pair[int, const c_qp.BilateralContact&] contactById(c_qp.ContactId)
-
-    VectorXd lambdaVec(int)
 
     Robots& robots()
 
     double dt()
 
-    c_qp.QPSolver solver
-
-  cdef cppclass foo[T](QPSolver, PTransform[T]):
-    pass
+  cdef cppclass TasksQPSolver(QPSolver):
+    TasksQPSolver(shared_ptr[Robots], double)
 
 cdef extern from "mc_solver_wrapper.hpp" namespace "mc_solver":
   cdef cppclass ContactConstrCastResult:

@@ -7,12 +7,8 @@
 
 namespace mc_tasks
 {
-/*! \brief Servo an end-effector depending on position error
- *
- * This task is thin wrapper around the appropriate tasks in Tasks.
- *
- */
-struct MC_TASKS_DLLAPI PositionBasedVisServoTask : public TrajectoryTaskGeneric<tasks::qp::PositionBasedVisServoTask>
+/*! \brief Servo an end-effector depending on position error in camera frame */
+struct MC_TASKS_DLLAPI PositionBasedVisServoTask : public TrajectoryTaskGeneric
 {
 public:
   /*! \brief Constructor (from frame)

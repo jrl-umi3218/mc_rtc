@@ -19,6 +19,7 @@
 #include <mc_tasks/MetaTaskLoader.h>
 
 #include <mc_solver/ConstraintSetLoader.h>
+#include <mc_solver/TasksQPSolver.h>
 
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
@@ -45,10 +46,13 @@ Contact Contact::from_mc_rbdyn(const MCController & ctl, const mc_rbdyn::Contact
 {
 
   Eigen::Vector6d dof = Eigen::Vector6d::Ones();
-  const auto cId = contact.contactId(ctl.robots());
-  if(ctl.contactConstraint.contactConstr->hasDoFContact(cId))
+  if(ctl.solver().backend() == MCController::Backend::Tasks)
   {
-    dof = ctl.contactConstraint.contactConstr->dofContact(cId).diagonal();
+    const auto cId = contact.contactId(ctl.robots());
+    if(ctl.contactConstraint->contactConstr()->hasDoFContact(cId))
+    {
+      dof = ctl.contactConstraint->contactConstr()->dofContact(cId).diagonal();
+    }
   }
 
   return {ctl.robots().robot(contact.r1Index()).name(),
@@ -59,24 +63,42 @@ Contact Contact::from_mc_rbdyn(const MCController & ctl, const mc_rbdyn::Contact
           dof};
 }
 
-MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt) : MCController(robot, dt, {}) {}
-
-MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot,
-                           double dt,
-                           const mc_rtc::Configuration & config)
-: MCController({robot, mc_rbdyn::RobotLoader::get_robot_module("env/ground")}, dt, config)
+MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, Backend backend)
+: MCController(robot, dt, {}, backend)
 {
 }
 
-MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules, double dt)
-: MCController(robots_modules, dt, {})
+MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot,
+                           double dt,
+                           const mc_rtc::Configuration & config,
+                           Backend backend)
+: MCController({robot, mc_rbdyn::RobotLoader::get_robot_module("env/ground")}, dt, config, backend)
 {
 }
 
 MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules,
                            double dt,
-                           const mc_rtc::Configuration & config)
-: qpsolver(std::make_shared<mc_solver::QPSolver>(dt)), outputRobots_(mc_rbdyn::Robots::make()),
+                           Backend backend)
+: MCController(robots_modules, dt, {}, backend)
+{
+}
+
+static inline std::shared_ptr<mc_solver::QPSolver> make_solver(double dt, MCController::Backend backend)
+{
+  switch(backend)
+  {
+    case MCController::Backend::Tasks:
+      return std::make_shared<mc_solver::TasksQPSolver>(dt);
+    default:
+      mc_rtc::log::error_and_throw("[MCController] Backend {} is not fully supported yet", backend);
+  }
+}
+
+MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules,
+                           double dt,
+                           const mc_rtc::Configuration & config,
+                           Backend backend)
+: qpsolver(make_solver(dt, backend)), outputRobots_(mc_rbdyn::Robots::make()),
   outputRealRobots_(mc_rbdyn::Robots::make()),
   logger_(std::make_shared<mc_rtc::Logger>(mc_rtc::Logger::Policy::NON_THREADED, "", "")),
   gui_(std::make_shared<mc_rtc::gui::StateBuilder>()), config_(config), timeStep(dt)
@@ -106,12 +128,12 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
                      }));
   }
   /* Initialize constraints and tasks */
-  std::array<double, 3> damper = {0.1, 0.01, 0.5};
-  contactConstraint = mc_solver::ContactConstraint(timeStep, mc_solver::ContactConstraint::Velocity);
-  dynamicsConstraint = mc_solver::DynamicsConstraint(robots(), 0, timeStep, damper, 0.5);
-  kinematicsConstraint = mc_solver::KinematicsConstraint(robots(), 0, timeStep, damper, 0.5);
-  selfCollisionConstraint = mc_solver::CollisionsConstraint(robots(), 0, 0, timeStep);
-  selfCollisionConstraint.addCollisions(solver(), robots_modules[0]->minimalSelfCollisions());
+  contactConstraint.reset(new mc_solver::ContactConstraint(dt));
+  std::array<double, 3> damper{0.1, 0.01, 0.5};
+  dynamicsConstraint.reset(new mc_solver::DynamicsConstraint(robots(), 0, dt, damper, 0.5));
+  kinematicsConstraint.reset(new mc_solver::KinematicsConstraint(robots(), 0, dt, damper, 0.5));
+  selfCollisionConstraint.reset(new mc_solver::CollisionsConstraint(robots(), 0, 0, dt));
+  selfCollisionConstraint->addCollisions(solver(), robots_modules[0]->minimalSelfCollisions());
   compoundJointConstraint.reset(new mc_solver::CompoundJointConstraint(robots(), 0, timeStep));
   postureTask = std::make_shared<mc_tasks::PostureTask>(solver(), 0, 10.0, 5.0);
   /** Load additional robots from the configuration */
@@ -213,7 +235,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
     if(!contact_constraint_)
     {
       contact_constraint_ =
-          std::shared_ptr<mc_solver::ContactConstraint>(&contactConstraint, [](mc_solver::ContactConstraint *) {});
+          std::shared_ptr<mc_solver::ContactConstraint>(contactConstraint.get(), [](mc_solver::ContactConstraint *) {});
     }
   }
   /** Load collision managers */
@@ -314,7 +336,10 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
   loadRobot(canonicalModule, name, *outputRealRobots_, params);
   addRobotToLog(robot);
   addRobotToGUI(robot);
-  solver().updateNrVars();
+  if(solver().backend() == Backend::Tasks)
+  {
+    tasks_solver(solver()).updateNrVars();
+  }
   converters_.emplace_back(robot, outputRobot, robot.module().controlToCanonicalConfig);
   return robot;
 }
@@ -556,7 +581,10 @@ void MCController::removeRobot(const std::string & name)
   outputRobots().removeRobot(name);
   realRobots().removeRobot(name);
   robots().removeRobot(name);
-  solver().updateNrVars();
+  if(solver().backend() == Backend::Tasks)
+  {
+    tasks_solver(solver()).updateNrVars();
+  }
 }
 
 void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
@@ -699,11 +727,6 @@ bool MCController::run(mc_solver::FeedbackType fType)
   return true;
 }
 
-const mc_solver::QPResultMsg & MCController::send(const double & t)
-{
-  return qpsolver->send(t);
-}
-
 void MCController::reset(const ControllerResetData & reset_data)
 {
   std::vector<std::string> supported;
@@ -753,7 +776,10 @@ void MCController::updateContacts()
   if(contacts_changed_ && contact_constraint_)
   {
     std::vector<mc_rbdyn::Contact> contacts;
-    contact_constraint_->contactConstr->resetDofContacts();
+    if(solver().backend() == Backend::Tasks)
+    {
+      contact_constraint_->contactConstr()->resetDofContacts();
+    }
 
     auto ensureValidContact = [this](const std::string & robotName, const std::string & surfaceName) {
       if(!hasRobot(robotName))
@@ -778,7 +804,10 @@ void MCController::updateContacts()
       auto r2Index = robot(c.r2).robotIndex();
       contacts.emplace_back(robots(), r1Index, r2Index, c.r1Surface, c.r2Surface, c.friction);
       auto cId = contacts.back().contactId(robots());
-      contact_constraint_->contactConstr->addDofContact(cId, c.dof.asDiagonal());
+      if(solver().backend() == Backend::Tasks)
+      {
+        contact_constraint_->contactConstr()->addDofContact(cId, c.dof.asDiagonal());
+      }
       auto & table_data = contacts_table_[table_idx];
       std::get<0>(table_data) = c.r1;
       std::get<1>(table_data) = c.r1Surface;
@@ -798,7 +827,10 @@ void MCController::updateContacts()
         gui_->addElement({"Contacts", "Remove"}, mc_rtc::gui::Button(bName, [this, &c]() { removeContact(c); }));
       }
     }
-    contact_constraint_->contactConstr->updateDofContacts();
+    if(solver().backend() == Backend::Tasks)
+    {
+      contact_constraint_->contactConstr()->updateDofContacts();
+    }
   }
   contacts_changed_ = false;
 }

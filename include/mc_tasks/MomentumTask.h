@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -9,15 +9,9 @@
 namespace mc_tasks
 {
 
-/*! \brief Control the momentum of a robot
-
- * This task is thin wrapper around the appropriate tasks in Tasks.
- *
- */
-struct MC_TASKS_DLLAPI MomentumTask : public TrajectoryTaskGeneric<tasks::qp::MomentumTask>
+/*! \brief Control the momentum of a robot */
+struct MC_TASKS_DLLAPI MomentumTask : public TrajectoryTaskGeneric
 {
-  using TrajectoryBase = TrajectoryTaskGeneric<tasks::qp::MomentumTask>;
-
 public:
   /*! \brief Constructor
    *

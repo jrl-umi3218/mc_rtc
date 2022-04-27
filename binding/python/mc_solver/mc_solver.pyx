@@ -39,7 +39,7 @@ cdef class ContactConstraint(ConstraintSet):
     self.__own_impl = True
     if not skip_alloc:
       assert(cType >= ContactConstraint.Acceleration and cType <= ContactConstraint.Position)
-      self.impl = self.cs_base = new c_mc_solver.ContactConstraint(timeStep, <c_mc_solver.ContactConstraintContactType>cType, dynamics)
+      self.impl = self.cs_base = new c_mc_solver.ContactConstraint(timeStep, <c_mc_solver.ContactConstraintContactType>cType)
   property contactConstr:
     def __get__(self):
       cdef c_mc_solver.ContactConstrCastResult cr = c_mc_solver.get_contact_constr(deref(self.impl))
@@ -51,12 +51,6 @@ cdef class ContactConstraint(ConstraintSet):
         return qp.ContactPosConstrFromPtr(cr.pos)
       else:
         raise TypeError("Impossible (ContactConstraint)")
-  property posLambdaConstr:
-    def __get__(self):
-      if self.impl.posLambdaConstr.get() != NULL:
-        return qp.PositiveLambdaFromPtr(self.impl.posLambdaConstr.get())
-      else:
-        return None
 
 cdef ContactConstraint ContactConstraintFromPtr(c_mc_solver.ContactConstraint * p):
     cdef ContactConstraint ret = ContactConstraint(0.0, skip_alloc = True)
@@ -79,19 +73,6 @@ cdef class KinematicsConstraint(ConstraintSet):
         for i in xrange(3):
           damp[i] = damper[i]
         self.impl = self.cs_base = new c_mc_solver.KinematicsConstraint(deref(robots.impl), robotIndex, timeStep, damp, velocityPercent)
-  property jointLimitsConstr:
-    def __get__(self):
-      if self.impl.jointLimitsConstr.get() != NULL:
-        return qp.JointLimitsConstrFromPtr(self.impl.jointLimitsConstr.get())
-      else:
-        return None
-  property damperJointLimitsConstr:
-    def __get__(self):
-      cdef c_qp.DamperJointLimitsConstr * p = self.impl.damperJointLimitsConstr.get()
-      if p != NULL:
-        return qp.DamperJointLimitsConstrFromPtr(p)
-      else:
-        return None
 
 cdef KinematicsConstraint KinematicsConstraintFromPtr(c_mc_solver.KinematicsConstraint*p):
     cdef KinematicsConstraint ret = KinematicsConstraint(None, 0, 0.0, skip_alloc = True)
@@ -114,13 +95,6 @@ cdef class DynamicsConstraint(KinematicsConstraint):
         for i in xrange(3):
           damp[i] = damper[i]
         self.d_impl = self.impl = self.cs_base = new c_mc_solver.DynamicsConstraint(deref(robots.impl), robotIndex, timeStep, damp, velocityPercent, infTorque)
-  property motionConstr:
-    def __get__(self):
-      cdef c_qp.MotionConstr * p = self.d_impl.motionConstr.get()
-      if p != NULL:
-        return qp.MotionConstrFromPtr(p)
-      else:
-        return None
 
 cdef DynamicsConstraint DynamicsConstraintFromPtr(c_mc_solver.DynamicsConstraint * p):
     cdef DynamicsConstraint ret = DynamicsConstraint(None, 0, 0.0, skip_alloc = True)
@@ -156,9 +130,6 @@ cdef class CollisionsConstraint(ConstraintSet):
       self.addCollision(solver, c)
   def reset(self):
     self.impl.reset()
-  property collConstr:
-    def __get__(self):
-      return qp.CollisionConstrFromPtr(self.impl.collConstr.get())
   property r1Index:
     def __get__(self):
       return self.impl.r1Index
@@ -181,59 +152,6 @@ cdef CollisionsConstraint CollisionsConstraintFromPtr(c_mc_solver.CollisionsCons
     ret.impl = ret.cs_base = p
     return ret
 
-cdef class RobotEnvCollisionsConstraint(ConstraintSet):
-  def __dealloc__(self):
-    if self.__own_impl:
-      del self.impl
-  def __cinit__(self, mc_rbdyn.Robots robots, timeStep, skip_alloc = False):
-    self.__own_impl = True
-    if not skip_alloc:
-      self.impl = self.cs_base = new c_mc_solver.RobotEnvCollisionsConstraint(deref(robots.impl), timeStep)
-  def removeEnvCollision(self, QPSolver solver, b1, b2):
-    if isinstance(b1, unicode):
-        b1 = b1.encode(u'ascii')
-    if isinstance(b2, unicode):
-        b2 = b2.encode(u'ascii')
-    return self.impl.removeEnvCollision(deref(solver.impl), b1, b2)
-  def removeEnvCollisionByBody(self, QPSolver solver, b1, b2):
-    if isinstance(b1, unicode):
-        b1 = b1.encode(u'ascii')
-    if isinstance(b2, unicode):
-        b2 = b2.encode(u'ascii')
-    return self.impl.removeEnvCollisionByBody(deref(solver.impl), b1, b2)
-  def removeSelfCollision(self, QPSolver solver, b1, b2):
-    if isinstance(b1, unicode):
-        b1 = b1.encode(u'ascii')
-    if isinstance(b2, unicode):
-        b2 = b2.encode(u'ascii')
-    return self.impl.removeSelfCollision(deref(solver.impl), b1, b2)
-  def addEnvCollision(self, QPSolver solver, mc_rbdyn.Collision col):
-    self.impl.addEnvCollision(deref(solver.impl), col.impl)
-  def addSelfCollision(self, QPSolver solver, mc_rbdyn.Collision col):
-    self.impl.addSelfCollision(deref(solver.impl), col.impl)
-  def setEnvCollisions(self, QPSolver solver, contacts, cols_in):
-    cdef vector[c_mc_rbdyn.Collision] cols = vector[c_mc_rbdyn.Collision]()
-    for c in cols_in:
-      cols.push_back((<mc_rbdyn.Collision>(c)).impl)
-    self.impl.setEnvCollisions(deref(solver.impl), deref(mc_rbdyn.ContactVector(contacts).v), cols)
-  def setSelfCollisions(self, QPSolver solver, contacts, cols_in):
-    cdef vector[c_mc_rbdyn.Collision] cols = vector[c_mc_rbdyn.Collision]()
-    for c in cols_in:
-      cols.push_back((<mc_rbdyn.Collision>(c)).impl)
-    self.impl.setSelfCollisions(deref(solver.impl), deref(mc_rbdyn.ContactVector(contacts).v), cols)
-  property selfCollConstrMng:
-    def __get__(self):
-      return CollisionsConstraintFromPtr(&self.impl.selfCollConstrMng)
-  property envCollConstrMng:
-    def __get__(self):
-      return CollisionsConstraintFromPtr(&self.impl.envCollConstrMng)
-
-cdef RobotEnvCollisionsConstraint RobotEnvCollisionsConstraintFromPtr(c_mc_solver.RobotEnvCollisionsConstraint * p):
-    cdef RobotEnvCollisionsConstraint ret = RobotEnvCollisionsConstraint(None, 0, skip_alloc = True)
-    ret.__own_impl = False
-    ret.impl = ret.cs_base = p
-    return ret
-
 cdef qp.BilateralContact BilateralContactFromC(const c_qp.BilateralContact & bc):
   cdef qp.BilateralContact ret = qp.BilateralContact()
   ret.impl = bc
@@ -246,37 +164,11 @@ cdef class QPSolver(object):
   def __cinit__(self, mc_rbdyn.Robots robots, timeStep, skip_alloc = False):
     self.__own_impl = True
     if not skip_alloc:
-      self.impl = new c_mc_solver.QPSolver(robots.impl, timeStep)
+      self.impl = new c_mc_solver.TasksQPSolver(robots.impl, timeStep)
   def addConstraintSet(self, ConstraintSet cs):
     self.impl.addConstraintSet(deref(cs.cs_base))
-  def addConstraint(self, qp.Constraint c):
-    if isinstance(c, qp.Equality):
-      self.impl.addConstraint((<qp.Equality>c).cf_base)
-    elif isinstance(c, qp.Inequality):
-      self.impl.addConstraint((<qp.Inequality>c).cf_base)
-    elif isinstance(c, qp.GenInequality):
-      self.impl.addConstraint((<qp.GenInequality>c).cf_base)
-    elif isinstance(c, qp.Bound):
-      self.impl.addConstraint((<qp.Bound>c).cf_base)
-    else:
-      raise TypeError("Cannot handle this type of native constraint")
-  def removeConstraint(self, qp.Constraint c):
-    if isinstance(c, qp.Equality):
-      self.impl.removeConstraint((<qp.Equality>c).cf_base)
-    elif isinstance(c, qp.Inequality):
-      self.impl.removeConstraint((<qp.Inequality>c).cf_base)
-    elif isinstance(c, qp.GenInequality):
-      self.impl.removeConstraint((<qp.GenInequality>c).cf_base)
-    elif isinstance(c, qp.Bound):
-      self.impl.removeConstraint((<qp.Bound>c).cf_base)
-    else:
-      raise TypeError("Cannot handle this type of native constraint")
   def removeConstraintSet(self, ConstraintSet cs):
     self.impl.removeConstraintSet(deref(cs.cs_base))
-  def updateConstrSize(self):
-    self.impl.updateConstrSize()
-  def updateNrVars(self):
-    self.impl.updateNrVars()
   def setContacts(self, contacts):
     self.impl.setContacts(deref(mc_rbdyn.ContactVector(contacts).v))
   def contacts(self):
@@ -284,28 +176,12 @@ cdef class QPSolver(object):
     for i in range(self.impl.contacts().size()):
       ret.append(mc_rbdyn.ContactFromC(self.impl.contacts()[i]))
     return ret
-  def addTask(self, task):
-    if isinstance(task, qp.Task):
-      self.impl.addTask((<qp.Task>task).base)
-    elif isinstance(task, mc_tasks.MetaTask):
-      self.impl.addTask((<mc_tasks.MetaTask>task).mt_base)
-    else:
-      raise TypeError("Cannot add a Task of this type")
-  def removeTask(self, task):
-    if isinstance(task, qp.Task):
-      self.impl.removeTask((<qp.Task>task).base)
-    elif isinstance(task, mc_tasks.MetaTask):
-      self.impl.removeTask((<mc_tasks.MetaTask>task).mt_base)
-  def updateConstrSize(self):
-    self.impl.updateConstrSize()
-  def updateNrVars(self):
-    self.impl.updateNrVars()
+  def addTask(self, mc_tasks.MetaTask task):
+    self.impl.addTask(task.mt_base)
+  def removeTask(self, mc_tasks.MetaTask task):
+    self.impl.removeTask(task.mt_base)
   def run(self):
     return self.impl.run()
-  def contactById(self, qp.ContactId cId):
-    return BilateralContactFromC(self.impl.contactById(cId.impl).second)
-  def lambdaVec(self, cIndex):
-    return eigen.VectorXdFromC(self.impl.lambdaVec(cIndex))
   property robots:
     def __get__(self):
       return mc_rbdyn.RobotsFromRef(self.impl.robots())

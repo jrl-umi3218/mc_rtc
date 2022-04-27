@@ -1,13 +1,18 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
+
+#include <mc_tasks/AddRemoveContactTask.h>
+
+#include <mc_tasks/MetaTaskLoader.h>
+
+#include <mc_solver/TasksQPSolver.h>
 
 #include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/Surface.h>
 #include <mc_rbdyn/configuration_io.h>
+
 #include <mc_rtc/logging.h>
-#include <mc_tasks/AddRemoveContactTask.h>
-#include <mc_tasks/MetaTaskLoader.h>
 
 namespace mc_tasks
 {
@@ -26,6 +31,10 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
   bodyId(robotSurf->bodyName()), dofMat(Eigen::MatrixXd::Zero(5, 6)), speedMat(Eigen::VectorXd::Zero(5)),
   stiffness_(stiffness), weight_(weight)
 {
+  if(backend_ != Backend::Tasks)
+  {
+    mc_rtc::log::error_and_throw("[AddRemoveContactTask] Only support the Tasks backend");
+  }
   type_ = std::string(direction > 0 ? "removeContact" : "addContact");
   name_ = std::string(direction > 0 ? "remove" : "add") + "_contact_" + robot.name() + "_" + contact.r1Surface()->name()
           + "_" + env.name() + "_" + contact.r2Surface()->name();
@@ -99,7 +108,7 @@ Eigen::Vector3d AddRemoveContactTask::velError()
 
 void AddRemoveContactTask::addToSolver(mc_solver::QPSolver & solver)
 {
-  solver.addTask(linVelTaskPid.get());
+  tasks_solver(solver).addTask(linVelTaskPid.get());
   if(manageConstraint)
   {
     solver.addConstraintSet(*constSpeedConstr);
@@ -109,7 +118,7 @@ void AddRemoveContactTask::addToSolver(mc_solver::QPSolver & solver)
 
 void AddRemoveContactTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
-  solver.removeTask(linVelTaskPid.get());
+  tasks_solver(solver).removeTask(linVelTaskPid.get());
   if(manageConstraint)
   {
     solver.removeConstraintSet(*constSpeedConstr);

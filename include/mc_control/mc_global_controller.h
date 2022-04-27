@@ -643,14 +643,6 @@ public:
   /*! \brief Access the server */
   ControllerServer & server();
 
-  /*! \brief Access the result of the latest run
-   *
-   * \param t Unused
-   *
-   * \returns A reference to the latest result
-   */
-  const mc_solver::QPResultMsg & send(const double & t);
-
   /*! \brief Access the current controller */
   inline MCController & controller() noexcept
   {

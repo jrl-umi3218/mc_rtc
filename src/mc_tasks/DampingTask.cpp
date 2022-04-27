@@ -51,7 +51,7 @@ void DampingTask::update(mc_solver::QPSolver &)
   // Yet, keep in mind that our velocity bounds are artificial. Whenever
   // possible, the best is to set to gains so that they are not saturated.
 
-  SurfaceTransformTask::refVelB(refVelB_);
+  TransformTask::refVelB(refVelB_);
 }
 
 } // namespace force

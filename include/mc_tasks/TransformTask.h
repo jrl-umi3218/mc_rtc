@@ -12,10 +12,8 @@ namespace mc_tasks
 {
 
 /*! \brief Control a frame 6D pose */
-struct MC_TASKS_DLLAPI TransformTask : public TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>
+struct MC_TASKS_DLLAPI TransformTask : public TrajectoryTaskGeneric
 {
-  using TrajectoryBase = TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>;
-
 public:
   /*! \brief Constructor
    *
@@ -123,9 +121,9 @@ public:
 
   void addToLogger(mc_rtc::Logger & logger) override;
 
-  using TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::stiffness;
-  using TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::damping;
-  using TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::setGains;
+  using TrajectoryTaskGeneric::damping;
+  using TrajectoryTaskGeneric::setGains;
+  using TrajectoryTaskGeneric::stiffness;
 
   /*! \brief Set dimensional stiffness and damping
    *
@@ -136,7 +134,7 @@ public:
    */
   void setGains(const sva::MotionVecd & stiffness, const sva::MotionVecd & damping)
   {
-    return TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::setGains(stiffness.vector(), damping.vector());
+    return TrajectoryTaskGeneric::setGains(stiffness.vector(), damping.vector());
   }
 
   /*! \brief Set dimensional stiffness
@@ -148,7 +146,7 @@ public:
    */
   void stiffness(const sva::MotionVecd & stiffness)
   {
-    return TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::stiffness(stiffness.vector());
+    return TrajectoryTaskGeneric::stiffness(stiffness.vector());
   }
 
   /*! \brief Get dimensional stiffness as a motion vector */
@@ -164,7 +162,7 @@ public:
    */
   void damping(const sva::MotionVecd & damping)
   {
-    return TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::damping(damping.vector());
+    return TrajectoryTaskGeneric::damping(damping.vector());
   }
 
   /*! \brief Get dimensional damping as a motion vector */
@@ -180,13 +178,13 @@ public:
    */
   void refVelB(const sva::MotionVecd & velB)
   {
-    TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::refVel(velB.vector());
+    TrajectoryTaskGeneric::refVel(velB.vector());
   }
 
   /*! \brief Get reference velocity in frame coordinates as a motion vector */
   sva::MotionVecd refVelB() const
   {
-    return sva::MotionVecd(TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::refVel());
+    return sva::MotionVecd(TrajectoryTaskGeneric::refVel());
   }
 
   /*! \brief Set trajectory task's reference acceleration from motion vector.
@@ -196,7 +194,7 @@ public:
    */
   void refAccel(const sva::MotionVecd & accel)
   {
-    return TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::refAccel(accel.vector());
+    return TrajectoryTaskGeneric::refAccel(accel.vector());
   }
 
   /*! \brief Load parameters from a Configuration object */
@@ -209,7 +207,7 @@ protected:
 
   /* Don't use parent's refVel() as the velocity frame (spatial or body) is
    * ambiguous. */
-  using TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::refVel;
+  using TrajectoryTaskGeneric::refVel;
 };
 
 } // namespace mc_tasks

@@ -1,10 +1,13 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_control/CompletionCriteria.h>
+
 #include <mc_rbdyn/RobotLoader.h>
+
 #include <mc_rtc/pragma.h>
+
 #include <mc_tasks/CoMTask.h>
 
 #include <boost/test/unit_test.hpp>
@@ -23,6 +26,7 @@ mc_rbdyn::Robots & get_robots()
   configureRobotLoader();
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   robots_ptr = mc_rbdyn::loadRobot(*rm);
+  mc_solver::QPSolver::context_backend = mc_solver::QPSolver::Backend::Tasks;
   return *robots_ptr;
 }
 

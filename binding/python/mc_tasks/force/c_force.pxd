@@ -17,6 +17,10 @@ from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp cimport bool as cppbool
 
+cdef extern from "mc_tasks_force_wrapper.hpp" namespace "mc_tasks::force":
+  pair[double, double] defaultFGain
+  pair[double, double] defaultTGain
+
 cdef extern from "<mc_tasks/AdmittanceTask.h>" namespace "mc_tasks::force":
   cdef cppclass AdmittanceTask(c_mc_tasks.SurfaceTransformTask):
     AdmittanceTask() # Does not exist but fix an error on Cython 0.2
@@ -30,9 +34,6 @@ cdef extern from "<mc_tasks/AdmittanceTask.h>" namespace "mc_tasks::force":
 
 
 cdef extern from "<mc_tasks/ComplianceTask.h>" namespace "mc_tasks::force":
-  pair[double, double] defaultFGain
-  pair[double, double] defaultTGain
-
   cdef cppclass ComplianceTask(c_mc_tasks.MetaTask):
     ComplianceTask(const c_mc_rbdyn.Robots &,
                    unsigned int, const string &,

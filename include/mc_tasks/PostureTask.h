@@ -1,10 +1,12 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
 #include <mc_tasks/MetaTask.h>
+
+#include <mc_rtc/void_ptr.h>
 
 #include <Tasks/QPTasks.h>
 
@@ -29,12 +31,25 @@ public:
    */
   inline void dimWeight(const Eigen::VectorXd & dimW) override
   {
-    pt_.dimWeight(dimW);
+    switch(backend_)
+    {
+      case Backend::Tasks:
+        static_cast<tasks::qp::PostureTask *>(pt_.get())->dimWeight(dimW);
+        break;
+      default:
+        break;
+    }
   }
 
   Eigen::VectorXd dimWeight() const override
   {
-    return pt_.dimWeight();
+    switch(backend_)
+    {
+      case Backend::Tasks:
+        return static_cast<tasks::qp::PostureTask *>(pt_.get())->dimWeight();
+      default:
+        mc_rtc::log::error_and_throw("Not implemented");
+    }
   }
 
   /*! \brief Select active joints for this task
@@ -73,13 +88,26 @@ public:
   inline void refVel(const Eigen::VectorXd & refVel) noexcept
   {
     assert(refVel.size() == robots_.robot(rIndex_).mb().nrDof());
-    pt_.refVel(refVel);
+    switch(backend_)
+    {
+      case Backend::Tasks:
+        static_cast<tasks::qp::PostureTask *>(pt_.get())->refVel(refVel);
+        break;
+      default:
+        break;
+    }
   }
 
   /** Access the reference velocity */
   inline const Eigen::VectorXd & refVel() const noexcept
   {
-    return pt_.refVel();
+    switch(backend_)
+    {
+      case Backend::Tasks:
+        return static_cast<tasks::qp::PostureTask *>(pt_.get())->refVel();
+      default:
+        mc_rtc::log::error_and_throw("Not implemented");
+    }
   }
 
   /** Change reference acceleration
@@ -89,13 +117,26 @@ public:
   inline void refAccel(const Eigen::VectorXd & refAccel) noexcept
   {
     assert(refAccel.size() == robots_.robot(rIndex_).mb().nrDof());
-    pt_.refAccel(refAccel);
+    switch(backend_)
+    {
+      case Backend::Tasks:
+        static_cast<tasks::qp::PostureTask *>(pt_.get())->refAccel(refAccel);
+        break;
+      default:
+        break;
+    }
   }
 
   /** Access the reference acceleration */
   inline const Eigen::VectorXd & refAccel() const noexcept
   {
-    return pt_.refAccel();
+    switch(backend_)
+    {
+      case Backend::Tasks:
+        return static_cast<tasks::qp::PostureTask *>(pt_.get())->refAccel();
+      default:
+        mc_rtc::log::error_and_throw("Not implemented");
+    }
   }
 
   /** Get current posture objective */
@@ -171,8 +212,12 @@ private:
   /** Robot handled by the task */
   const mc_rbdyn::Robots & robots_;
   unsigned int rIndex_;
-  /** Actual task */
-  tasks::qp::PostureTask pt_;
+  /** Holds the constraint implementation
+   *
+   * In Tasks backend:
+   * - tasks::qp::PostureTask
+   */
+  mc_rtc::void_ptr pt_;
   /** Solver timestep */
   double dt_;
   /** Store the target posture */

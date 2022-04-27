@@ -68,6 +68,7 @@ add_cython_bindings(mc_rtc
     include/mc_rtc_wrapper.hpp
     include/mc_solver_wrapper.hpp
     include/mc_rbdyn_wrapper.hpp
+    include/mc_tasks_force_wrapper.hpp
     mc_control/fsm/fsm.pyx
     mc_control/mc_control.pyx
     mc_observers/mc_observers.pyx

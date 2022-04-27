@@ -4,28 +4,50 @@
 
 #include <mc_solver/KinematicsConstraint.h>
 
+#include <mc_solver/TasksQPSolver.h>
+
 #include <Tasks/Bounds.h>
+#include <Tasks/QPConstr.h>
 
 #include <array>
 
 namespace mc_solver
 {
 
-KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep)
+static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   tasks::QBound qBound(robot.ql(), robot.qu());
   tasks::AlphaDBound aDBound(robot.al(), robot.au());
   tasks::AlphaDDBound aDDBound(robot.jl(), robot.ju());
-  jointLimitsConstr.reset(new tasks::qp::JointLimitsConstr(robots.mbs(), static_cast<int>(robotIndex), qBound, aDBound,
-                                                           aDDBound, timeStep));
+  return mc_rtc::make_void_ptr<tasks::qp::JointLimitsConstr>(robots.mbs(), static_cast<int>(robotIndex), qBound,
+                                                             aDBound, aDDBound, timeStep);
 }
 
-KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots,
-                                           unsigned int robotIndex,
-                                           double timeStep,
-                                           const std::array<double, 3> & damper,
-                                           double velocityPercent)
+static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
+                                   const mc_rbdyn::Robots & robots,
+                                   unsigned int robotIndex,
+                                   double timeStep)
+{
+  switch(backend)
+  {
+    case QPSolver::Backend::Tasks:
+      return initialize_tasks(robots, robotIndex, timeStep);
+    default:
+      mc_rtc::log::error_and_throw("[KinematicsConstraint] Not implemented for solver backend: {}", backend);
+  }
+}
+
+KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep)
+: constraint_(initialize(backend_, robots, robotIndex, timeStep))
+{
+}
+
+static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots,
+                                         unsigned int robotIndex,
+                                         double timeStep,
+                                         const std::array<double, 3> & damper,
+                                         double velocityPercent)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   tasks::QBound qBound(robot.ql(), robot.qu());
@@ -57,32 +79,59 @@ KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots,
   tasks::AlphaDBound alphaDBound(al, au);
   tasks::AlphaDDBound alphaDDBound(jl, ju);
 
-  damperJointLimitsConstr.reset(new tasks::qp::DamperJointLimitsConstr(robots.mbs(), static_cast<int>(robotIndex),
-                                                                       qBound, alphaBound, alphaDBound, alphaDDBound,
-                                                                       percentInter, percentSecur, offset, timeStep));
+  return mc_rtc::make_void_ptr<tasks::qp::DamperJointLimitsConstr>(robots.mbs(), static_cast<int>(robotIndex), qBound,
+                                                                   alphaBound, alphaDBound, alphaDDBound, percentInter,
+                                                                   percentSecur, offset, timeStep);
 }
 
-void KinematicsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)
+static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
+                                   const mc_rbdyn::Robots & robots,
+                                   unsigned int robotIndex,
+                                   double timeStep,
+                                   const std::array<double, 3> & damper,
+                                   double velocityPercent)
 {
-  if(damperJointLimitsConstr)
+  switch(backend)
   {
-    damperJointLimitsConstr->addToSolver(mbs, solver);
-  }
-  if(jointLimitsConstr)
-  {
-    jointLimitsConstr->addToSolver(mbs, solver);
+    case QPSolver::Backend::Tasks:
+      return initialize_tasks(robots, robotIndex, timeStep, damper, velocityPercent);
+    default:
+      mc_rtc::log::error_and_throw("[KinematicsConstraint] Not implemented for solver backend: {}", backend);
   }
 }
 
-void KinematicsConstraint::removeFromSolver(tasks::qp::QPSolver & solver)
+KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots,
+                                           unsigned int robotIndex,
+                                           double timeStep,
+                                           const std::array<double, 3> & damper,
+                                           double velocityPercent)
+: constraint_(initialize(backend_, robots, robotIndex, timeStep, damper, velocityPercent))
 {
-  if(damperJointLimitsConstr)
+}
+
+void KinematicsConstraint::addToSolverImpl(mc_solver::QPSolver & solver)
+{
+  switch(backend_)
   {
-    damperJointLimitsConstr->removeFromSolver(solver);
+    case QPSolver::Backend::Tasks:
+      static_cast<tasks::qp::ConstraintFunction<tasks::qp::Bound> *>(constraint_.get())
+          ->addToSolver(solver.robots().mbs(), static_cast<mc_solver::TasksQPSolver &>(solver).solver());
+      break;
+    default:
+      break;
   }
-  if(jointLimitsConstr)
+}
+
+void KinematicsConstraint::removeFromSolverImpl(mc_solver::QPSolver & solver)
+{
+  switch(backend_)
   {
-    jointLimitsConstr->removeFromSolver(solver);
+    case QPSolver::Backend::Tasks:
+      static_cast<tasks::qp::ConstraintFunction<tasks::qp::Bound> *>(constraint_.get())
+          ->removeFromSolver(static_cast<mc_solver::TasksQPSolver &>(solver).solver());
+      break;
+    default:
+      break;
   }
 }
 

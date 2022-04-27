@@ -37,7 +37,7 @@ MCHalfSitPoseController::MCHalfSitPoseController(std::shared_ptr<mc_rbdyn::Robot
   selfCollisionConstraint.reset();
   qpsolver->addConstraintSet(selfCollisionConstraint);
   /* Get the complete collision constraint set */
-  selfCollisionConstraint.addCollisions(solver(), robot_module->commonSelfCollisions());
+  selfCollisionConstraint->addCollisions(solver(), robot_module->commonSelfCollisions());
   qpsolver->addConstraintSet(kinematicsConstraint);
   qpsolver->addTask(postureTask.get());
   qpsolver->addConstraintSet(contactConstraint);

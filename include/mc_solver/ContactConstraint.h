@@ -1,21 +1,22 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
 #include <mc_solver/ConstraintSet.h>
 
+#include <mc_rtc/void_ptr.h>
+
 #include <Tasks/QPContactConstr.h>
-#include <Tasks/QPMotionConstr.h>
 
 namespace mc_solver
 {
 
 /** \class ContactConstraint
- * \brief Wraps multiple constraints related to Contact
+ *
+ * Handle geometric constraints on contacts
  */
-
 struct MC_SOLVER_DLLAPI ContactConstraint : public ConstraintSet
 {
 public:
@@ -34,32 +35,33 @@ public:
 
 public:
   /** Constructor
-   * \param timeStep Ignored if contactType is Acceleration
-   * \param contactType Type of contact corresponding, this value dictates the
-   * type of tasks::qp::ContactConstr that will be generated
-   * \param dynamics If true, the constraint will include a
-   * tasks::qp::PositiveLambda constraint in addition to the
-   * tasks::qp::ContactConstr
+   *
+   * \param timeStep Solver timestep
+   *
+   * \param contactType Enable different geometric constraint
+   *
    */
-  ContactConstraint(double timeStep, ContactType contactType = Velocity, bool dynamics = true);
+  ContactConstraint(double timeStep, ContactType contactType = Velocity);
 
   /** Implementation of mc_solver::ConstraintSet::addToSolver */
-  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) override;
+  void addToSolverImpl(QPSolver & solver) override;
 
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
-  virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
+  void removeFromSolverImpl(QPSolver & solver) override;
 
-public:
-  /** Holds the proper type of ContactConstr based on constructor input, always
-   * holds a valid pointer */
-  std::shared_ptr<tasks::qp::ContactConstr> contactConstr;
-  /** May be a null-ptr */
-  std::shared_ptr<tasks::qp::PositiveLambda> posLambdaConstr;
-
-public:
-  /** \deprecated{Default constructor, not made for general usage}
+  /** Returns the underlying constraint in the Taks backend
+   *
+   * \throws If the backend is not Tasks backend
    */
-  ContactConstraint() {}
+  tasks::qp::ContactConstr * contactConstr();
+
+private:
+  /** Holds the contact constraint implementation
+   *
+   * In Tasks backend:
+   * - tasks::qp::ContactConstr
+   */
+  mc_rtc::void_ptr constraint_;
 };
 
 } // namespace mc_solver
