@@ -82,8 +82,6 @@ $(document).ready(function(){initNavTree('namespacemc__control_1_1fsm.html','');
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1AddRemoveContactState.html">AddRemoveContactState</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Contact.html">Contact</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Controller.html">Controller</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Executor.html">Executor</a></td></tr>
@@ -122,8 +120,10 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ad410c6443a64d561960fe4bd490154d9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__control_1_1fsm.html#ad410c6443a64d561960fe4bd490154d9">ContactSet</a> = std::unordered_set&lt; <a class="el" href="structmc__control_1_1fsm_1_1Contact.html">Contact</a>, std::hash&lt; <a class="el" href="structmc__control_1_1fsm_1_1Contact.html">Contact</a> &gt;, std::equal_to&lt; <a class="el" href="structmc__control_1_1fsm_1_1Contact.html">Contact</a> &gt;, Eigen::aligned_allocator&lt; <a class="el" href="structmc__control_1_1fsm_1_1Contact.html">Contact</a> &gt; &gt;</td></tr>
-<tr class="separator:ad410c6443a64d561960fe4bd490154d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52d7fbb8d8e312077694e5c761ddac8b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__control_1_1fsm.html#a52d7fbb8d8e312077694e5c761ddac8b">Contact</a> = <a class="el" href="structmc__control_1_1Contact.html">mc_control::Contact</a></td></tr>
+<tr class="separator:a52d7fbb8d8e312077694e5c761ddac8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae900416c9a809910247882838e0d5599"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__control_1_1fsm.html#ae900416c9a809910247882838e0d5599">ContactSet</a> = <a class="el" href="namespacemc__control.html#ac55a4e95c7c3aaab29499a0abe565e3a">mc_control::ContactSet</a></td></tr>
+<tr class="separator:ae900416c9a809910247882838e0d5599"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c42d903de4c4a1e5ad50c37bc2d547a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__control_1_1fsm.html#a4c42d903de4c4a1e5ad50c37bc2d547a">StatePtr</a> = std::shared_ptr&lt; <a class="el" href="structmc__control_1_1fsm_1_1State.html">State</a> &gt;</td></tr>
 <tr class="separator:a4c42d903de4c4a1e5ad50c37bc2d547a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -135,14 +135,28 @@ Variables</h2></td></tr>
 <tr class="separator:a2deb94750a61f8f86801bd02f4149d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="ad410c6443a64d561960fe4bd490154d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad410c6443a64d561960fe4bd490154d9">&#9670;&nbsp;</a></span>ContactSet</h2>
+<a id="a52d7fbb8d8e312077694e5c761ddac8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52d7fbb8d8e312077694e5c761ddac8b">&#9670;&nbsp;</a></span>Contact</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacemc__control_1_1fsm.html#ad410c6443a64d561960fe4bd490154d9">mc_control::fsm::ContactSet</a> = typedef std::unordered_set&lt;<a class="el" href="structmc__control_1_1fsm_1_1Contact.html">Contact</a>, std::hash&lt;<a class="el" href="structmc__control_1_1fsm_1_1Contact.html">Contact</a>&gt;, std::equal_to&lt;<a class="el" href="structmc__control_1_1fsm_1_1Contact.html">Contact</a>&gt;, Eigen::aligned_allocator&lt;<a class="el" href="structmc__control_1_1fsm_1_1Contact.html">Contact</a>&gt; &gt;</td>
+          <td class="memname">using <a class="el" href="namespacemc__control_1_1fsm.html#a52d7fbb8d8e312077694e5c761ddac8b">mc_control::fsm::Contact</a> = typedef <a class="el" href="structmc__control_1_1Contact.html">mc_control::Contact</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae900416c9a809910247882838e0d5599"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae900416c9a809910247882838e0d5599">&#9670;&nbsp;</a></span>ContactSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacemc__control_1_1fsm.html#ae900416c9a809910247882838e0d5599">mc_control::fsm::ContactSet</a> = typedef <a class="el" href="namespacemc__control.html#ac55a4e95c7c3aaab29499a0abe565e3a">mc_control::ContactSet</a></td>
         </tr>
       </table>
 </div><div class="memdoc">

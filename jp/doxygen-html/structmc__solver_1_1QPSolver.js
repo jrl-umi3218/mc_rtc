@@ -1,5 +1,6 @@
 var structmc__solver_1_1QPSolver =
 [
+    [ "ControllerToken", "structmc__solver_1_1QPSolver_1_1ControllerToken.html", "structmc__solver_1_1QPSolver_1_1ControllerToken" ],
     [ "QPSolver", "structmc__solver_1_1QPSolver.html#a17eb05fe304c3013b50c5020a546b6bd", null ],
     [ "QPSolver", "structmc__solver_1_1QPSolver.html#adb5af970ec8d5b46ddcf8af19bd205be", null ],
     [ "QPSolver", "structmc__solver_1_1QPSolver.html#a4f91d1d6ce556366149d3d947182e5f3", null ],
@@ -10,6 +11,9 @@ var structmc__solver_1_1QPSolver =
     [ "addTask", "structmc__solver_1_1QPSolver.html#a8526c038006669a9f433c94445c69338", null ],
     [ "contactById", "structmc__solver_1_1QPSolver.html#a9d3c5b0a375a038d88ebc4c0acb35afc", null ],
     [ "contacts", "structmc__solver_1_1QPSolver.html#a14141ec983c638fb3400c1ea23c19aed", null ],
+    [ "controller", "structmc__solver_1_1QPSolver.html#abf3f4a5e5e9ea19abe0470f895fd4e87", null ],
+    [ "controller", "structmc__solver_1_1QPSolver.html#ac5707d58c532fa30818d9d32fb682efd", null ],
+    [ "controller", "structmc__solver_1_1QPSolver.html#a65cd4e85c4dd975769cfabf7a46a0686", null ],
     [ "data", "structmc__solver_1_1QPSolver.html#a74f4a76c8edd444c9c903392c196be8a", null ],
     [ "desiredContactForce", "structmc__solver_1_1QPSolver.html#a12c9bbc1231db2f16cfeced583d1c213", null ],
     [ "dt", "structmc__solver_1_1QPSolver.html#aaf2cd366ed6fa6e21e9cc6833e94cd70", null ],
@@ -39,6 +43,7 @@ var structmc__solver_1_1QPSolver =
     [ "run", "structmc__solver_1_1QPSolver.html#ab8f45ed05cf2852c592659d496b2acbb", null ],
     [ "send", "structmc__solver_1_1QPSolver.html#a0b4e9a6b5015c188b1c3825f4e266bd0", null ],
     [ "setContacts", "structmc__solver_1_1QPSolver.html#ae628e7f079f7ec8dd5ba2818ffe27adc", null ],
+    [ "setContacts", "structmc__solver_1_1QPSolver.html#a02df620ab92182fa9f19fe706ecbd262", null ],
     [ "solveAndBuildTime", "structmc__solver_1_1QPSolver.html#a53c4d41439ee0e428928a7318fde3f07", null ],
     [ "solveTime", "structmc__solver_1_1QPSolver.html#a58d895e4be36ff13a42b481f28576e38", null ],
     [ "tasks", "structmc__solver_1_1QPSolver.html#ae04be5acbc6d5470efc60889e4024290", null ],

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['splinetrajectorytask_3c_20bsplinetrajectorytask_20_3e',['SplineTrajectoryTask&lt; BSplineTrajectoryTask &gt;',['../structmc__tasks_1_1BSplineTrajectoryTask.html#ac5eeec3b2af2e5d3a329daf981453a2e',1,'mc_tasks::BSplineTrajectoryTask']]],
-  ['splinetrajectorytask_3c_20exactcubictrajectorytask_20_3e',['SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;',['../structmc__tasks_1_1ExactCubicTrajectoryTask.html#a9bf87cb2f5679ce3181d696adad0a9d6',1,'mc_tasks::ExactCubicTrajectoryTask']]]
+  ['robot',['Robot',['../structmc__rbdyn_1_1RobotFrame.html#ad03b49f51df2ba1d492ced03d923fdd0',1,'mc_rbdyn::RobotFrame::Robot()'],['../structmc__rbdyn_1_1Robots.html#ad03b49f51df2ba1d492ced03d923fdd0',1,'mc_rbdyn::Robots::Robot()']]],
+  ['robots',['Robots',['../structmc__rbdyn_1_1Robot.html#a7ea6242bb22401bac23542e1db3a74ed',1,'mc_rbdyn::Robot']]]
 ];

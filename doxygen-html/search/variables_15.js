@@ -2,7 +2,7 @@ var searchData=
 [
   ['unilateralcontact',['unilateralContact',['../structmc__solver_1_1QPContactPtr.html#a8edb8058d39c00e880534c7d416819f2',1,'mc_solver::QPContactPtr']]],
   ['update_5f',['update_',['../structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html#ab3d9811b5cc8fe04066e150cbd6a4386',1,'mc_observers::ObserverPipeline::PipelineObserver']]],
-  ['updatecontacts_5fdt_5f',['updateContacts_dt_',['../structmc__control_1_1fsm_1_1Controller.html#abdab007e3ec3b8e2a097caee6a656b4e',1,'mc_control::fsm::Controller']]],
+  ['updatecontacts_5fdt_5f',['updateContacts_dt_',['../structmc__control_1_1MCController.html#a8f92d8a51bb3305bb0afdffac691b941',1,'mc_control::MCController']]],
   ['updatefrom_5f',['updateFrom_',['../structmc__observers_1_1BodySensorObserver.html#a41e24212545815c92909fc647cfd4d75',1,'mc_observers::BodySensorObserver']]],
   ['updateobservers_5f',['updateObservers_',['../structmc__observers_1_1ObserverPipeline.html#a4fd671cc39489c3b17d28cffcf7c2e77',1,'mc_observers::ObserverPipeline']]],
   ['updatepose_5f',['updatePose_',['../structmc__observers_1_1BodySensorObserver.html#a579b85620df7509e6c9b17ce6eafea8a',1,'mc_observers::BodySensorObserver']]],

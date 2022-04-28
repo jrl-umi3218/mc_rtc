@@ -658,6 +658,90 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>Contact.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/</path>
+    <filename>mc__control_2Contact_8h</filename>
+    <includes id="mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
+    <includes id="mc__rbdyn_2Contact_8h" name="Contact.h" local="no" imported="no">mc_rbdyn/Contact.h</includes>
+    <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
+    <class kind="class">mc_control::Contact</class>
+    <class kind="struct">std::hash&lt; mc_control::Contact &gt;</class>
+    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_control::Contact &gt;</class>
+    <namespace>mc_control</namespace>
+    <namespace>std</namespace>
+    <namespace>mc_rtc</namespace>
+    <member kind="typedef">
+      <type>std::unordered_set&lt; Contact, std::hash&lt; Contact &gt;, std::equal_to&lt; Contact &gt;, Eigen::aligned_allocator&lt; Contact &gt; &gt;</type>
+      <name>ContactSet</name>
+      <anchorfile>namespacemc__control.html</anchorfile>
+      <anchor>ac55a4e95c7c3aaab29499a0abe565e3a</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>Contact.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
+    <filename>mc__rbdyn_2Contact_8h</filename>
+    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
+    <class kind="struct">mc_solver::QPContactPtr</class>
+    <class kind="struct">mc_solver::QPContactPtrWPoints</class>
+    <class kind="struct">mc_rbdyn::Contact</class>
+    <namespace>mc_solver</namespace>
+    <namespace>mc_rbdyn</namespace>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI std::vector&lt; sva::PTransformd &gt;</type>
+      <name>computePoints</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a736c36f68b3eff9f08124c8b1a58cba3</anchor>
+      <arglist>(const mc_rbdyn::Surface &amp;robotSurface, const mc_rbdyn::Surface &amp;envSurface, const sva::PTransformd &amp;X_es_rs)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>Contact.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_solver/msg/</path>
+    <filename>mc__solver_2msg_2Contact_8h</filename>
+    <class kind="struct">mc_solver::ContactMsg</class>
+    <namespace>mc_solver</namespace>
+  </compound>
+  <compound kind="file">
+    <name>Contact.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_tasks/lipm_stabilizer/</path>
+    <filename>mc__tasks_2lipm__stabilizer_2Contact_8h</filename>
+    <includes id="mc__rbdyn_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rbdyn/Robot.h</includes>
+    <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
+    <includes id="logging_8h" name="logging.h" local="no" imported="no">mc_rtc/logging.h</includes>
+    <includes id="mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
+    <class kind="struct">mc_tasks::lipm_stabilizer::internal::Contact</class>
+    <class kind="struct">mc_tasks::lipm_stabilizer::ContactDescription</class>
+    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_tasks::lipm_stabilizer::ContactState &gt;</class>
+    <namespace>mc_tasks</namespace>
+    <namespace>mc_tasks::lipm_stabilizer</namespace>
+    <namespace>mc_tasks::lipm_stabilizer::internal</namespace>
+    <namespace>mc_rtc</namespace>
+    <member kind="typedef">
+      <type>std::pair&lt; Eigen::MatrixXd, Eigen::VectorXd &gt;</type>
+      <name>HrepXd</name>
+      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
+      <anchor>af644950088ef46324f20a7214021a824</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::vector&lt; ContactDescription, Eigen::aligned_allocator&lt; ContactDescription &gt; &gt;</type>
+      <name>ContactDescriptionVector</name>
+      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
+      <anchor>a4ca092c9a2df0b34b399ff21a8bc938f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type></type>
+      <name>Left</name>
+      <anchorfile>mc__tasks_2lipm__stabilizer_2Contact_8h.html</anchorfile>
+      <anchor>aa149c1d1da2ae1c94f1ae91f4919625a</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>ControllerClient.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/</path>
     <filename>ControllerClient_8h</filename>
@@ -696,19 +780,21 @@
     <includes id="Executor_8h" name="Executor.h" local="no" imported="no">mc_control/fsm/Executor.h</includes>
     <includes id="EndEffectorTask_8h" name="EndEffectorTask.h" local="no" imported="no">mc_tasks/EndEffectorTask.h</includes>
     <includes id="PostureTask_8h" name="PostureTask.h" local="no" imported="no">mc_tasks/PostureTask.h</includes>
-    <class kind="class">mc_control::fsm::Contact</class>
-    <class kind="struct">std::hash&lt; mc_control::fsm::Contact &gt;</class>
     <class kind="class">mc_control::fsm::Controller</class>
-    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_control::fsm::Contact &gt;</class>
     <namespace>mc_control</namespace>
     <namespace>mc_control::fsm</namespace>
-    <namespace>std</namespace>
-    <namespace>mc_rtc</namespace>
     <member kind="typedef">
-      <type>std::unordered_set&lt; Contact, std::hash&lt; Contact &gt;, std::equal_to&lt; Contact &gt;, Eigen::aligned_allocator&lt; Contact &gt; &gt;</type>
+      <type>mc_control::Contact</type>
+      <name>Contact</name>
+      <anchorfile>namespacemc__control_1_1fsm.html</anchorfile>
+      <anchor>a52d7fbb8d8e312077694e5c761ddac8b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>mc_control::ContactSet</type>
       <name>ContactSet</name>
       <anchorfile>namespacemc__control_1_1fsm.html</anchorfile>
-      <anchor>ad410c6443a64d561960fe4bd490154d9</anchor>
+      <anchor>ae900416c9a809910247882838e0d5599</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -1069,6 +1155,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/</path>
     <filename>MCController_8h</filename>
     <includes id="mc__control_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_control/Configuration.h</includes>
+    <includes id="mc__control_2Contact_8h" name="Contact.h" local="no" imported="no">mc_control/Contact.h</includes>
     <includes id="ObserverPipeline_8h" name="ObserverPipeline.h" local="no" imported="no">mc_observers/ObserverPipeline.h</includes>
     <includes id="Robots_8h" name="Robots.h" local="no" imported="no">mc_rbdyn/Robots.h</includes>
     <includes id="DataStore_8h" name="DataStore.h" local="no" imported="no">mc_rtc/DataStore.h</includes>
@@ -1431,69 +1518,6 @@
       <anchorfile>configuration__io_8h.html</anchorfile>
       <anchor>a839325e1d657147f6c746b3043b0b1b0</anchor>
       <arglist>(...)</arglist>
-    </member>
-  </compound>
-  <compound kind="file">
-    <name>Contact.h</name>
-    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
-    <filename>mc__rbdyn_2Contact_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
-    <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
-    <class kind="struct">mc_solver::QPContactPtr</class>
-    <class kind="struct">mc_solver::QPContactPtrWPoints</class>
-    <class kind="struct">mc_rbdyn::Contact</class>
-    <namespace>mc_solver</namespace>
-    <namespace>mc_rbdyn</namespace>
-    <member kind="function">
-      <type>MC_RBDYN_DLLAPI std::vector&lt; sva::PTransformd &gt;</type>
-      <name>computePoints</name>
-      <anchorfile>namespacemc__rbdyn.html</anchorfile>
-      <anchor>a736c36f68b3eff9f08124c8b1a58cba3</anchor>
-      <arglist>(const mc_rbdyn::Surface &amp;robotSurface, const mc_rbdyn::Surface &amp;envSurface, const sva::PTransformd &amp;X_es_rs)</arglist>
-    </member>
-  </compound>
-  <compound kind="file">
-    <name>Contact.h</name>
-    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_solver/msg/</path>
-    <filename>mc__solver_2msg_2Contact_8h</filename>
-    <class kind="struct">mc_solver::ContactMsg</class>
-    <namespace>mc_solver</namespace>
-  </compound>
-  <compound kind="file">
-    <name>Contact.h</name>
-    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_tasks/lipm_stabilizer/</path>
-    <filename>mc__tasks_2lipm__stabilizer_2Contact_8h</filename>
-    <includes id="mc__rbdyn_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rbdyn/Robot.h</includes>
-    <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
-    <includes id="logging_8h" name="logging.h" local="no" imported="no">mc_rtc/logging.h</includes>
-    <includes id="mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
-    <class kind="struct">mc_tasks::lipm_stabilizer::internal::Contact</class>
-    <class kind="struct">mc_tasks::lipm_stabilizer::ContactDescription</class>
-    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_tasks::lipm_stabilizer::ContactState &gt;</class>
-    <namespace>mc_tasks</namespace>
-    <namespace>mc_tasks::lipm_stabilizer</namespace>
-    <namespace>mc_tasks::lipm_stabilizer::internal</namespace>
-    <namespace>mc_rtc</namespace>
-    <member kind="typedef">
-      <type>std::pair&lt; Eigen::MatrixXd, Eigen::VectorXd &gt;</type>
-      <name>HrepXd</name>
-      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
-      <anchor>af644950088ef46324f20a7214021a824</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>std::vector&lt; ContactDescription, Eigen::aligned_allocator&lt; ContactDescription &gt; &gt;</type>
-      <name>ContactDescriptionVector</name>
-      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
-      <anchor>a4ca092c9a2df0b34b399ff21a8bc938f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type></type>
-      <name>Left</name>
-      <anchorfile>mc__tasks_2lipm__stabilizer_2Contact_8h.html</anchorfile>
-      <anchor>aa149c1d1da2ae1c94f1ae91f4919625a</anchor>
-      <arglist></arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -2164,6 +2188,19 @@
     <filename>mc__solver_2msg_2ZMP_8h</filename>
     <class kind="struct">mc_solver::ZMP</class>
     <namespace>mc_solver</namespace>
+  </compound>
+  <compound kind="file">
+    <name>clock.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/</path>
+    <filename>clock_8h</filename>
+    <namespace>mc_rtc</namespace>
+    <member kind="typedef">
+      <type>typename std::conditional&lt; std::chrono::high_resolution_clock::is_steady, std::chrono::high_resolution_clock, std::chrono::steady_clock &gt;::type</type>
+      <name>clock</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a5a9a29b4e1cc43e334c4ca10059ef277</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>ConfigurationHelpers.h</name>
@@ -4294,9 +4331,11 @@
     <includes id="mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
     <includes id="QPResult_8h" name="QPResult.h" local="no" imported="no">mc_solver/msg/QPResult.h</includes>
     <class kind="class">mc_solver::QPSolver</class>
+    <class kind="struct">mc_solver::QPSolver::ControllerToken</class>
     <namespace>mc_tasks</namespace>
     <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_control</namespace>
     <namespace>mc_solver</namespace>
     <member kind="function">
       <type>MC_RTC_diagnostic_push</type>
@@ -8894,13 +8933,13 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::ConfigurationLoader&lt; mc_control::fsm::Contact &gt;</name>
-    <filename>structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1fsm_1_1Contact_01_4.html</filename>
+    <name>mc_rtc::ConfigurationLoader&lt; mc_control::Contact &gt;</name>
+    <filename>structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1Contact_01_4.html</filename>
     <member kind="function" static="yes">
-      <type>static mc_control::fsm::Contact</type>
+      <type>static mc_control::Contact</type>
       <name>load</name>
-      <anchorfile>structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1fsm_1_1Contact_01_4.html</anchorfile>
-      <anchor>a268768db389141d5c9dda3f58f51a03d</anchor>
+      <anchorfile>structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1Contact_01_4.html</anchorfile>
+      <anchor>a015adc4f06a07c0ec0558ae0b8da4a6d</anchor>
       <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
     </member>
   </compound>
@@ -9874,6 +9913,87 @@
       <arglist>()</arglist>
     </member>
   </compound>
+  <compound kind="class">
+    <name>mc_control::Contact</name>
+    <filename>structmc__control_1_1Contact.html</filename>
+    <member kind="function">
+      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</type>
+      <name>Contact</name>
+      <anchorfile>structmc__control_1_1Contact.html</anchorfile>
+      <anchor>a283065dd4842ba24809e230b6ea3559d</anchor>
+      <arglist>(const std::string &amp;r1, const std::string &amp;r2, const std::string &amp;r1Surface, const std::string &amp;r2Surface, double friction=mc_rbdyn::Contact::defaultFriction, const Eigen::Vector6d &amp;dof=Eigen::Vector6d::Ones())</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>structmc__control_1_1Contact.html</anchorfile>
+      <anchor>aff7d5f60b948de7e6b1327b4544b4a5b</anchor>
+      <arglist>(const Contact &amp;rhs) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator!=</name>
+      <anchorfile>structmc__control_1_1Contact.html</anchorfile>
+      <anchor>adf4fb97372fa11af1a759a1d0b237b9b</anchor>
+      <arglist>(const Contact &amp;rhs) const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Contact</name>
+      <anchorfile>structmc__control_1_1Contact.html</anchorfile>
+      <anchor>a55602d7741637a009f1feea7e61965bf</anchor>
+      <arglist>()=default</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static Contact</type>
+      <name>from_mc_rbdyn</name>
+      <anchorfile>structmc__control_1_1Contact.html</anchorfile>
+      <anchor>a20a4e24c55a082ea7447f5fee0e68909</anchor>
+      <arglist>(const MCController &amp;, const mc_rbdyn::Contact &amp;)</arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>r1</name>
+      <anchorfile>structmc__control_1_1Contact.html</anchorfile>
+      <anchor>a01542c772433ddc699d2284e62c64d6e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>r2</name>
+      <anchorfile>structmc__control_1_1Contact.html</anchorfile>
+      <anchor>a64280f798573e84d972b579f58e74160</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>r1Surface</name>
+      <anchorfile>structmc__control_1_1Contact.html</anchorfile>
+      <anchor>aa9df2c031fd0ae28d6a4036008b83296</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>r2Surface</name>
+      <anchorfile>structmc__control_1_1Contact.html</anchorfile>
+      <anchor>a52ff892b5567c32098304acd96a91af2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>friction</name>
+      <anchorfile>structmc__control_1_1Contact.html</anchorfile>
+      <anchor>ab80b4324544da978d26ea2108195b549</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>Eigen::Vector6d</type>
+      <name>dof</name>
+      <anchorfile>structmc__control_1_1Contact.html</anchorfile>
+      <anchor>a9aebb4a6b7be2fecc5d3d745ffb239f4</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
   <compound kind="struct">
     <name>mc_rbdyn::Contact</name>
     <filename>structmc__rbdyn_1_1Contact.html</filename>
@@ -10310,87 +10430,6 @@
     </member>
   </compound>
   <compound kind="class">
-    <name>mc_control::fsm::Contact</name>
-    <filename>structmc__control_1_1fsm_1_1Contact.html</filename>
-    <member kind="function">
-      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</type>
-      <name>Contact</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Contact.html</anchorfile>
-      <anchor>a63c45626b5b52b6f6be29663c10a8613</anchor>
-      <arglist>(const std::string &amp;r1, const std::string &amp;r2, const std::string &amp;r1Surface, const std::string &amp;r2Surface, double friction=mc_rbdyn::Contact::defaultFriction, const Eigen::Vector6d &amp;dof=Eigen::Vector6d::Ones())</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator==</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Contact.html</anchorfile>
-      <anchor>a19a8a477e8c16ad944a32c12401ceb25</anchor>
-      <arglist>(const Contact &amp;rhs) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator!=</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Contact.html</anchorfile>
-      <anchor>a770914b6bd76f3cd0b4c42c950073328</anchor>
-      <arglist>(const Contact &amp;rhs) const</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Contact</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Contact.html</anchorfile>
-      <anchor>a46d54c4d75fe306846531e8c436fa6f7</anchor>
-      <arglist>()=default</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static Contact</type>
-      <name>from_mc_rbdyn</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Contact.html</anchorfile>
-      <anchor>a6936e7692e199d18b9c7906c70414313</anchor>
-      <arglist>(const Controller &amp;, const mc_rbdyn::Contact &amp;)</arglist>
-    </member>
-    <member kind="variable">
-      <type>std::string</type>
-      <name>r1</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Contact.html</anchorfile>
-      <anchor>a9984ba81a2a54cc3216911a4a7c23bb7</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>std::string</type>
-      <name>r2</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Contact.html</anchorfile>
-      <anchor>a426b803fa1191501cc273d05b2f4d7e7</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>std::string</type>
-      <name>r1Surface</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Contact.html</anchorfile>
-      <anchor>ac21f685a8adc12fb0a3015851023ae08</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>std::string</type>
-      <name>r2Surface</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Contact.html</anchorfile>
-      <anchor>a19bb1febaf343d980f6de167b004d8bb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>double</type>
-      <name>friction</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Contact.html</anchorfile>
-      <anchor>a2d8289fa5ded9a7df86e5c85d03e4435</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>Eigen::Vector6d</type>
-      <name>dof</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Contact.html</anchorfile>
-      <anchor>abf05b8825daf19dd4cff5630b7268e7e</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="class">
     <name>mc_solver::ContactConstraint</name>
     <filename>structmc__solver_1_1ContactConstraint.html</filename>
     <base>mc_solver::ConstraintSet</base>
@@ -10658,74 +10697,11 @@
       <arglist>(const std::string &amp;state)</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
-      <name>addCollisions</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>a93448016e3467364e352d87cdb0dae89</anchor>
-      <arglist>(const std::string &amp;r1, const std::string &amp;r2, const std::vector&lt; mc_rbdyn::Collision &gt; &amp;collisions)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>removeCollisions</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>a6553b3c43b65224a8aaca76784d7e9e8</anchor>
-      <arglist>(const std::string &amp;r1, const std::string &amp;r2, const std::vector&lt; mc_rbdyn::Collision &gt; &amp;collisions)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>removeCollisions</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>a470d82a6de92ac6a42d13e13a351f738</anchor>
-      <arglist>(const std::string &amp;r1, const std::string &amp;r2)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>hasRobot</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>a3efb2acf6c10576d5deb7001f9b4fdc9</anchor>
-      <arglist>(const std::string &amp;robot) const</arglist>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robot &amp;</type>
-      <name>robot</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>aa80d2de4cc6e092e1659db0135d7d6f3</anchor>
-      <arglist>(const std::string &amp;name)</arglist>
-    </member>
-    <member kind="function">
       <type>std::shared_ptr&lt; mc_tasks::PostureTask &gt;</type>
       <name>getPostureTask</name>
       <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
       <anchor>ab5db53d98290f650552bcb57a42353b5</anchor>
       <arglist>(const std::string &amp;robot)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>addContact</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>afc21d62af737dc80c7b62b1fbc9c742e</anchor>
-      <arglist>(const Contact &amp;c)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>removeContact</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>aa5141b7ae41b4378c29758a69515c7b4</anchor>
-      <arglist>(const Contact &amp;c)</arglist>
-    </member>
-    <member kind="function">
-      <type>const ContactSet &amp;</type>
-      <name>contacts</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>a95a11b1d9a3ca77f322d1ec1b7819e08</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>hasContact</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>a7a64b59e262c533dc2eeb5e9aea0e7d3</anchor>
-      <arglist>(const Contact &amp;c) const</arglist>
     </member>
     <member kind="function">
       <type>mc_solver::ContactConstraint &amp;</type>
@@ -10740,34 +10716,6 @@
       <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
       <anchor>acf6e4968c19820c0928e459dd42d0d64</anchor>
       <arglist>()</arglist>
-    </member>
-    <member kind="typedef" protection="protected">
-      <type>std::chrono::duration&lt; double, std::milli &gt;</type>
-      <name>duration_ms</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>a45584757ce247d870c90c6e8ae7e9130</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>std::vector&lt; mc_solver::ConstraintSetPtr &gt;</type>
-      <name>constraints_</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>ae65f1b863a94bfd159a9783ac46afb9f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>std::shared_ptr&lt; mc_solver::ContactConstraint &gt;</type>
-      <name>contact_constraint_</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>a622f191e03407a8b93421523d8fed961</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>std::map&lt; std::pair&lt; std::string, std::string &gt;, std::shared_ptr&lt; mc_solver::CollisionsConstraint &gt; &gt;</type>
-      <name>collision_constraints_</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>a2c8c492734896c83c79b535c3a071c3e</anchor>
-      <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
       <type>std::map&lt; std::string, std::shared_ptr&lt; mc_tasks::PostureTask &gt; &gt;</type>
@@ -10788,20 +10736,6 @@
       <name>ff_tasks_</name>
       <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
       <anchor>a72d332cebe24c4a81aa20ec2b911b0b4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>ContactSet</type>
-      <name>contacts_</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>a157e35f3da45912bcec69d32d5c92b4b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>bool</type>
-      <name>contacts_changed_</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>a1d094662d5ee3ca52d5eb16481e47ee4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -10830,13 +10764,6 @@
       <name>executor_</name>
       <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
       <anchor>af043ec138ea3eaa88da2bb920de0777e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>duration_ms</type>
-      <name>updateContacts_dt_</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>abdab007e3ec3b8e2a097caee6a656b4e</anchor>
       <arglist></arglist>
     </member>
     <member kind="friend">
@@ -11519,6 +11446,24 @@
       <anchorfile>structmc__control_1_1ControllerServer.html</anchorfile>
       <anchor>a9f21b40efd63fa7a522ef961daad027f</anchor>
       <arglist>() const</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_solver::QPSolver::ControllerToken</name>
+    <filename>structmc__solver_1_1QPSolver_1_1ControllerToken.html</filename>
+    <member kind="friend">
+      <type>friend struct</type>
+      <name>mc_control::MCController</name>
+      <anchorfile>structmc__solver_1_1QPSolver_1_1ControllerToken.html</anchorfile>
+      <anchor>a298f1e3801d3796cca804019c165aba0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="friend">
+      <type>friend struct</type>
+      <name>QPSolver</name>
+      <anchorfile>structmc__solver_1_1QPSolver_1_1ControllerToken.html</anchorfile>
+      <anchor>af09e33ccaddf0d3e770491e26fc2f671</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -16658,14 +16603,14 @@
     <templarg>Args</templarg>
   </compound>
   <compound kind="struct">
-    <name>std::hash&lt; mc_control::fsm::Contact &gt;</name>
-    <filename>structstd_1_1hash_3_01mc__control_1_1fsm_1_1Contact_01_4.html</filename>
+    <name>std::hash&lt; mc_control::Contact &gt;</name>
+    <filename>structstd_1_1hash_3_01mc__control_1_1Contact_01_4.html</filename>
     <member kind="function">
       <type>std::size_t</type>
       <name>operator()</name>
-      <anchorfile>structstd_1_1hash_3_01mc__control_1_1fsm_1_1Contact_01_4.html</anchorfile>
-      <anchor>a89728f7933300611b7ec997e4803bb6d</anchor>
-      <arglist>(const mc_control::fsm::Contact &amp;c) const noexcept</arglist>
+      <anchorfile>structstd_1_1hash_3_01mc__control_1_1Contact_01_4.html</anchorfile>
+      <anchor>a136956d43236e07a07314c0a3d24ad05</anchor>
+      <arglist>(const mc_control::Contact &amp;c) const noexcept</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -19297,6 +19242,69 @@
       <arglist>(const ControllerResetData &amp;reset_data)</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>addCollisions</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a5b18800fa1afe04bd4907d27a2115415</anchor>
+      <arglist>(const std::string &amp;r1, const std::string &amp;r2, const std::vector&lt; mc_rbdyn::Collision &gt; &amp;collisions)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>removeCollisions</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a756482ec8b98db7dc81a18e6f2c94a8a</anchor>
+      <arglist>(const std::string &amp;r1, const std::string &amp;r2, const std::vector&lt; mc_rbdyn::Collision &gt; &amp;collisions)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>removeCollisions</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a0389c011f6c7085b3c46918fa69f6dad</anchor>
+      <arglist>(const std::string &amp;r1, const std::string &amp;r2)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>addContact</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a1554bc52dc85cb3757baa7e2ee952487</anchor>
+      <arglist>(const Contact &amp;c)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>removeContact</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ae4f6a7f58f86388010999c29972dd5f4</anchor>
+      <arglist>(const Contact &amp;c)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>clearContacts</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a0ae78cb1de1f0f3e4beab180cfc0bd73</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>const ContactSet &amp;</type>
+      <name>contacts</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a518047dbed9be076844193c312dfc791</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>hasContact</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a03c94ba02ba9428b4804c6c1a221f721</anchor>
+      <arglist>(const Contact &amp;c) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>hasRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a9085d944ee5bcb87a30626a4016f3f97</anchor>
+      <arglist>(const std::string &amp;robot) const</arglist>
+    </member>
+    <member kind="function">
       <type>const mc_rbdyn::Robot &amp;</type>
       <name>robot</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
@@ -19570,6 +19578,20 @@
       <anchor>a8689fff25a5d462a080ff47e03886dfa</anchor>
       <arglist></arglist>
     </member>
+    <member kind="typedef" protection="protected">
+      <type>std::tuple&lt; std::string, std::string, std::string, std::string, std::string, double &gt;</type>
+      <name>ContactTableDataT</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a08f926e0caf69e427332ebcb95257e48</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef" protection="protected">
+      <type>std::chrono::duration&lt; double, std::milli &gt;</type>
+      <name>duration_ms</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a5bd5718a3b2acc5933161f12a03cd00d</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="function" protection="protected">
       <type></type>
       <name>MCController</name>
@@ -19604,6 +19626,13 @@
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
       <anchor>aefccad1f0ce477f1427b939f5f698d6b</anchor>
       <arglist>(mc_rbdyn::RobotModulePtr rm, const std::string &amp;name, mc_rbdyn::Robots &amp;robots, bool updateNrVars=true)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>updateContacts</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a4a26e878c32b5821c12a634114ff160a</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="variable" protection="protected">
       <type>std::shared_ptr&lt; mc_solver::QPSolver &gt;</type>
@@ -19645,6 +19674,55 @@
       <name>datastore_</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
       <anchor>a40233bd6dab6721085d266e1dc306de2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::vector&lt; mc_solver::ConstraintSetPtr &gt;</type>
+      <name>constraints_</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a22dcf52d8a93d0375a3338fa692c31b2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::shared_ptr&lt; mc_solver::ContactConstraint &gt;</type>
+      <name>contact_constraint_</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>aae17a7ca719068e77b4e1946582a5841</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::map&lt; std::pair&lt; std::string, std::string &gt;, std::shared_ptr&lt; mc_solver::CollisionsConstraint &gt; &gt;</type>
+      <name>collision_constraints_</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ae1fe9557c49461d939183a4b1f00f3a8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>ContactSet</type>
+      <name>contacts_</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>af791c0b95647f3a3a9f38851e23ea2df</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>contacts_changed_</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a5658afe35311b0458ad2a6795fa41fb1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::vector&lt; ContactTableDataT &gt;</type>
+      <name>contacts_table_</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a3a4fde3d3917343a367aa14533953be7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>duration_ms</type>
+      <name>updateContacts_dt_</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a8f92d8a51bb3305bb0afdffac691b941</anchor>
       <arglist></arglist>
     </member>
     <member kind="friend">
@@ -24319,6 +24397,7 @@
   <compound kind="class">
     <name>mc_solver::QPSolver</name>
     <filename>structmc__solver_1_1QPSolver.html</filename>
+    <class kind="struct">mc_solver::QPSolver::ControllerToken</class>
     <member kind="function">
       <type></type>
       <name>QPSolver</name>
@@ -24423,6 +24502,13 @@
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
       <anchor>ae628e7f079f7ec8dd5ba2818ffe27adc</anchor>
       <arglist>(const std::vector&lt; mc_rbdyn::Contact &gt; &amp;contacts={})</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setContacts</name>
+      <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
+      <anchor>a02df620ab92182fa9f19fe706ecbd262</anchor>
+      <arglist>(ControllerToken, const std::vector&lt; mc_rbdyn::Contact &gt; &amp;contacts)</arglist>
     </member>
     <member kind="function">
       <type>const std::vector&lt; mc_rbdyn::Contact &gt; &amp;</type>
@@ -24619,6 +24705,27 @@
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
       <anchor>aaff0d1437fd451774eb7a306b2c5d464</anchor>
       <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>controller</name>
+      <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
+      <anchor>abf3f4a5e5e9ea19abe0470f895fd4e87</anchor>
+      <arglist>(mc_control::MCController *ctl) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_control::MCController *</type>
+      <name>controller</name>
+      <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
+      <anchor>ac5707d58c532fa30818d9d32fb682efd</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_control::MCController *</type>
+      <name>controller</name>
+      <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
+      <anchor>a65cd4e85c4dd975769cfabf7a46a0686</anchor>
+      <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -38458,6 +38565,7 @@
     <filename>namespacemc__control.html</filename>
     <namespace>mc_control::fsm</namespace>
     <class kind="struct">mc_control::CompletionCriteria</class>
+    <class kind="class">mc_control::Contact</class>
     <class kind="struct">mc_control::ControllerClient</class>
     <class kind="class">mc_control::ControllerLoader</class>
     <class kind="class">mc_control::ControllerResetData</class>
@@ -38476,6 +38584,13 @@
       <name>Configuration</name>
       <anchorfile>namespacemc__control.html</anchorfile>
       <anchor>a6e724381ca619d4c38da5fd7cdbfe9c0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::unordered_set&lt; Contact, std::hash&lt; Contact &gt;, std::equal_to&lt; Contact &gt;, Eigen::aligned_allocator&lt; Contact &gt; &gt;</type>
+      <name>ContactSet</name>
+      <anchorfile>namespacemc__control.html</anchorfile>
+      <anchor>ac55a4e95c7c3aaab29499a0abe565e3a</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -38504,7 +38619,6 @@
     <name>mc_control::fsm</name>
     <filename>namespacemc__control_1_1fsm.html</filename>
     <class kind="struct">mc_control::fsm::AddRemoveContactState</class>
-    <class kind="class">mc_control::fsm::Contact</class>
     <class kind="class">mc_control::fsm::Controller</class>
     <class kind="class">mc_control::fsm::Executor</class>
     <class kind="struct">mc_control::fsm::Grippers</class>
@@ -38523,10 +38637,17 @@
     <class kind="class">mc_control::fsm::Transition</class>
     <class kind="class">mc_control::fsm::TransitionMap</class>
     <member kind="typedef">
-      <type>std::unordered_set&lt; Contact, std::hash&lt; Contact &gt;, std::equal_to&lt; Contact &gt;, Eigen::aligned_allocator&lt; Contact &gt; &gt;</type>
+      <type>mc_control::Contact</type>
+      <name>Contact</name>
+      <anchorfile>namespacemc__control_1_1fsm.html</anchorfile>
+      <anchor>a52d7fbb8d8e312077694e5c761ddac8b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>mc_control::ContactSet</type>
       <name>ContactSet</name>
       <anchorfile>namespacemc__control_1_1fsm.html</anchorfile>
-      <anchor>ad410c6443a64d561960fe4bd490154d9</anchor>
+      <anchor>ae900416c9a809910247882838e0d5599</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -39052,7 +39173,7 @@
     <class kind="struct">mc_rtc::ConfigurationArrayIterator</class>
     <class kind="struct">mc_rtc::ConfigurationFile</class>
     <class kind="struct">mc_rtc::ConfigurationLoader</class>
-    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_control::fsm::Contact &gt;</class>
+    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_control::Contact &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::CompoundJointConstraintDescription &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::Contact &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration &gt;</class>
@@ -39084,6 +39205,13 @@
     <class kind="struct">mc_rtc::shared</class>
     <class kind="struct">mc_rtc::SharedPtrVectorConstIterator</class>
     <class kind="struct">mc_rtc::SharedPtrVectorIterator</class>
+    <member kind="typedef">
+      <type>typename std::conditional&lt; std::chrono::high_resolution_clock::is_steady, std::chrono::high_resolution_clock, std::chrono::steady_clock &gt;::type</type>
+      <name>clock</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a5a9a29b4e1cc43e334c4ca10059ef277</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="typedef">
       <type>std::shared_ptr&lt; LTDLHandle &gt;</type>
       <name>LTDLHandlePtr</name>
@@ -40572,7 +40700,7 @@
   <compound kind="namespace">
     <name>std</name>
     <filename>namespacestd.html</filename>
-    <class kind="struct">std::hash&lt; mc_control::fsm::Contact &gt;</class>
+    <class kind="struct">std::hash&lt; mc_control::Contact &gt;</class>
   </compound>
   <compound kind="group">
     <name>robotFromConfig</name>

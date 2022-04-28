@@ -105,7 +105,7 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ConfigurationLoader.html">ConfigurationLoader</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1fsm_1_1Contact_01_4.html">ConfigurationLoader&lt; mc_control::fsm::Contact &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1Contact_01_4.html">ConfigurationLoader&lt; mc_control::Contact &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1CompoundJointConstraintDescription_01_4.html">ConfigurationLoader&lt; mc_rbdyn::CompoundJointConstraintDescription &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -186,6 +186,8 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a5a9a29b4e1cc43e334c4ca10059ef277"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a5a9a29b4e1cc43e334c4ca10059ef277">clock</a> = typename std::conditional&lt; std::chrono::high_resolution_clock::is_steady, std::chrono::high_resolution_clock, std::chrono::steady_clock &gt;::type</td></tr>
+<tr class="separator:a5a9a29b4e1cc43e334c4ca10059ef277"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04f4430d990b320f494b3a21112c7e3a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a04f4430d990b320f494b3a21112c7e3a">LTDLHandlePtr</a> = std::shared_ptr&lt; <a class="el" href="structmc__rtc_1_1LTDLHandle.html">LTDLHandle</a> &gt;</td></tr>
 <tr class="separator:a04f4430d990b320f494b3a21112c7e3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -228,6 +230,21 @@ Variables</h2></td></tr>
 <p>This header contains the base block of all elements in the GUI system. For the implementation details of specific elements look into their dedicated header</p>
 <p>This file contains classes that are used to configure the visual styles of various elements in the GUI </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a5a9a29b4e1cc43e334c4ca10059ef277"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a9a29b4e1cc43e334c4ca10059ef277">&#9670;&nbsp;</a></span>clock</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacemc__rtc.html#a5a9a29b4e1cc43e334c4ca10059ef277">mc_rtc::clock</a> = typedef typename std::conditional&lt;std::chrono::high_resolution_clock::is_steady, std::chrono::high_resolution_clock, std::chrono::steady_clock&gt;::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="namespacemc__rtc.html#a5a9a29b4e1cc43e334c4ca10059ef277">mc_rtc::clock</a> is a clock that is always steady and thus suitable for performance measurements </p>
+
+</div>
+</div>
 <a id="a04f4430d990b320f494b3a21112c7e3a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a04f4430d990b320f494b3a21112c7e3a">&#9670;&nbsp;</a></span>LTDLHandlePtr</h2>
 

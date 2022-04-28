@@ -2,6 +2,7 @@ var namespacemc__control =
 [
     [ "fsm", "namespacemc__control_1_1fsm.html", "namespacemc__control_1_1fsm" ],
     [ "CompletionCriteria", "structmc__control_1_1CompletionCriteria.html", "structmc__control_1_1CompletionCriteria" ],
+    [ "Contact", "structmc__control_1_1Contact.html", "structmc__control_1_1Contact" ],
     [ "ControllerClient", "structmc__control_1_1ControllerClient.html", "structmc__control_1_1ControllerClient" ],
     [ "ControllerLoader", "structmc__control_1_1ControllerLoader.html", null ],
     [ "ControllerResetData", "structmc__control_1_1ControllerResetData.html", "structmc__control_1_1ControllerResetData" ],

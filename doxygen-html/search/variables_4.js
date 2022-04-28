@@ -55,7 +55,7 @@ var searchData=
   ['disableconfig_5f',['disableConfig_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8c319bbb0af50167b9628ae561183d5a',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['distribwrench_5f',['distribWrench_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#acea47979a383c106e0eedc05a02e52bb',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['distribzmp_5f',['distribZMP_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1debc60c12375bc8ebb3dad18a4bf3a6',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
-  ['dof',['dof',['../structmc__control_1_1fsm_1_1Contact.html#abf05b8825daf19dd4cff5630b7268e7e',1,'mc_control::fsm::Contact']]],
+  ['dof',['dof',['../structmc__control_1_1Contact.html#a9aebb4a6b7be2fecc5d3d745ffb239f4',1,'mc_control::Contact']]],
   ['dofmat',['dofMat',['../structmc__tasks_1_1AddRemoveContactTask.html#ae0fae793050143ac0f684c83e8146b23',1,'mc_tasks::AddRemoveContactTask']]],
   ['dotted',['Dotted',['../plot_2types_8h.html#af050e39a625ecaa0d27537968bbeeaff',1,'types.h']]],
   ['dt_5f',['dt_',['../structmc__filter_1_1ExponentialMovingAverage.html#a6a235570200c501307ebc666fcd81e20',1,'mc_filter::ExponentialMovingAverage::dt_()'],['../structmc__filter_1_1LowPass.html#a54232494fa4fa74a08d85acf3f95ab7a',1,'mc_filter::LowPass::dt_()'],['../structmc__observers_1_1Observer.html#adde90bcccecab614f391f6d515d435fa',1,'mc_observers::Observer::dt_()'],['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a78355a7b3bb963abe0bc160f0d51bcb9',1,'mc_tasks::lipm_stabilizer::StabilizerTask::dt_()']]],

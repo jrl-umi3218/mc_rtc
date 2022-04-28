@@ -28,7 +28,7 @@ var searchData=
   ['configurationarrayiterator',['ConfigurationArrayIterator',['../structmc__rtc_1_1ConfigurationArrayIterator.html',1,'mc_rtc']]],
   ['configurationfile',['ConfigurationFile',['../structmc__rtc_1_1ConfigurationFile.html',1,'mc_rtc']]],
   ['configurationloader',['ConfigurationLoader',['../structmc__rtc_1_1ConfigurationLoader.html',1,'mc_rtc']]],
-  ['configurationloader_3c_20mc_5fcontrol_3a_3afsm_3a_3acontact_20_3e',['ConfigurationLoader&lt; mc_control::fsm::Contact &gt;',['../structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1fsm_1_1Contact_01_4.html',1,'mc_rtc']]],
+  ['configurationloader_3c_20mc_5fcontrol_3a_3acontact_20_3e',['ConfigurationLoader&lt; mc_control::Contact &gt;',['../structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1Contact_01_4.html',1,'mc_rtc']]],
   ['configurationloader_3c_20mc_5frbdyn_3a_3acompoundjointconstraintdescription_20_3e',['ConfigurationLoader&lt; mc_rbdyn::CompoundJointConstraintDescription &gt;',['../structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1CompoundJointConstraintDescription_01_4.html',1,'mc_rtc']]],
   ['configurationloader_3c_20mc_5frbdyn_3a_3acontact_20_3e',['ConfigurationLoader&lt; mc_rbdyn::Contact &gt;',['../structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1Contact_01_4.html',1,'mc_rtc']]],
   ['configurationloader_3c_20mc_5frbdyn_3a_3alipm_5fstabilizer_3a_3adcmbiasestimatorconfiguration_20_3e',['ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration &gt;',['../structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration_01_4.html',1,'mc_rtc']]],
@@ -62,7 +62,7 @@ var searchData=
   ['constraint_3c_20tasks_3a_3aqp_3a_3ainequality_2c_20utils_3a_3aupdaterobot_20_3e',['Constraint&lt; tasks::qp::Inequality, utils::UpdateRobot &gt;',['../structmc__solver_1_1utils_1_1Constraint.html',1,'mc_solver::utils']]],
   ['constraintset',['ConstraintSet',['../structmc__solver_1_1ConstraintSet.html',1,'mc_solver']]],
   ['constraintsetloader',['ConstraintSetLoader',['../structmc__solver_1_1ConstraintSetLoader.html',1,'mc_solver']]],
-  ['contact',['Contact',['../structmc__rbdyn_1_1Contact.html',1,'mc_rbdyn::Contact'],['../structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html',1,'mc_tasks::lipm_stabilizer::internal::Contact'],['../structmc__control_1_1fsm_1_1Contact.html',1,'mc_control::fsm::Contact']]],
+  ['contact',['Contact',['../structmc__control_1_1Contact.html',1,'mc_control::Contact'],['../structmc__rbdyn_1_1Contact.html',1,'mc_rbdyn::Contact'],['../structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html',1,'mc_tasks::lipm_stabilizer::internal::Contact']]],
   ['contactconstraint',['ContactConstraint',['../structmc__solver_1_1ContactConstraint.html',1,'mc_solver']]],
   ['contactdescription',['ContactDescription',['../structmc__tasks_1_1lipm__stabilizer_1_1ContactDescription.html',1,'mc_tasks::lipm_stabilizer']]],
   ['contactmsg',['ContactMsg',['../structmc__solver_1_1ContactMsg.html',1,'mc_solver']]],
@@ -72,6 +72,7 @@ var searchData=
   ['controllerloader',['ControllerLoader',['../structmc__control_1_1ControllerLoader.html',1,'mc_control']]],
   ['controllerresetdata',['ControllerResetData',['../structmc__control_1_1ControllerResetData.html',1,'mc_control']]],
   ['controllerserver',['ControllerServer',['../structmc__control_1_1ControllerServer.html',1,'mc_control']]],
+  ['controllertoken',['ControllerToken',['../structmc__solver_1_1QPSolver_1_1ControllerToken.html',1,'mc_solver::QPSolver']]],
   ['coptask',['CoPTask',['../structmc__tasks_1_1force_1_1CoPTask.html',1,'mc_tasks::force']]],
   ['cylindricalsurface',['CylindricalSurface',['../structmc__rbdyn_1_1CylindricalSurface.html',1,'mc_rbdyn']]]
 ];

@@ -2,6 +2,7 @@ var dir_379a22462e4fb075f5428ea3ff528930 =
 [
     [ "gui", "dir_dda95c61bc807ada3674ae2fc67687f0.html", "dir_dda95c61bc807ada3674ae2fc67687f0" ],
     [ "log", "dir_b6742d8caace21cd527a100fbd03062c.html", "dir_b6742d8caace21cd527a100fbd03062c" ],
+    [ "clock.h", "clock_8h.html", "clock_8h" ],
     [ "Configuration.h", "mc__rtc_2Configuration_8h.html", "mc__rtc_2Configuration_8h" ],
     [ "ConfigurationHelpers.h", "ConfigurationHelpers_8h.html", "ConfigurationHelpers_8h" ],
     [ "constants.h", "constants_8h.html", "constants_8h" ],

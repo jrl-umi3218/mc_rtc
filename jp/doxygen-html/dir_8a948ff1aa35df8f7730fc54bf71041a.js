@@ -7,6 +7,7 @@ var dir_8a948ff1aa35df8f7730fc54bf71041a =
       [ "CompletionCriteria", "structmc__control_1_1CompletionCriteria.html", "structmc__control_1_1CompletionCriteria" ]
     ] ],
     [ "Configuration.h", "mc__control_2Configuration_8h.html", "mc__control_2Configuration_8h" ],
+    [ "Contact.h", "mc__control_2Contact_8h.html", "mc__control_2Contact_8h" ],
     [ "ControllerClient.h", "ControllerClient_8h.html", [
       [ "ElementId", "structmc__control_1_1ElementId.html", "structmc__control_1_1ElementId" ],
       [ "ControllerClient", "structmc__control_1_1ControllerClient.html", "structmc__control_1_1ControllerClient" ]

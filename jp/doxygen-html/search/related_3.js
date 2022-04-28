@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['robot',['Robot',['../structmc__rbdyn_1_1RobotFrame.html#ad03b49f51df2ba1d492ced03d923fdd0',1,'mc_rbdyn::RobotFrame::Robot()'],['../structmc__rbdyn_1_1Robots.html#ad03b49f51df2ba1d492ced03d923fdd0',1,'mc_rbdyn::Robots::Robot()']]],
-  ['robots',['Robots',['../structmc__rbdyn_1_1Robot.html#a7ea6242bb22401bac23542e1db3a74ed',1,'mc_rbdyn::Robot']]]
+  ['qpsolver',['QPSolver',['../structmc__solver_1_1QPSolver_1_1ControllerToken.html#af09e33ccaddf0d3e770491e26fc2f671',1,'mc_solver::QPSolver::ControllerToken']]]
 ];

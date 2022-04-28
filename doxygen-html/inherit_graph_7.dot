@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_control::ControllerServer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1ControllerServer.html"];
+  Node0 [label="mc_control::ControllerResetData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1ControllerResetData.html",tooltip="Contains information allowing the controller to start smoothly from the current state of the robot..."];
 }

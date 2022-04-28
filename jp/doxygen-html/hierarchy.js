@@ -36,7 +36,7 @@ var hierarchy =
     ] ],
     [ "mc_rtc::ConfigurationArrayIterator", "structmc__rtc_1_1ConfigurationArrayIterator.html", null ],
     [ "mc_rtc::ConfigurationLoader< T >", "structmc__rtc_1_1ConfigurationLoader.html", null ],
-    [ "mc_rtc::ConfigurationLoader< mc_control::fsm::Contact >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1fsm_1_1Contact_01_4.html", null ],
+    [ "mc_rtc::ConfigurationLoader< mc_control::Contact >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1Contact_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::CompoundJointConstraintDescription >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1CompoundJointConstraintDescription_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::Contact >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1Contact_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration_01_4.html", null ],
@@ -127,9 +127,9 @@ var hierarchy =
       ] ],
       [ "mc_solver::RobotEnvCollisionsConstraint", "structmc__solver_1_1RobotEnvCollisionsConstraint.html", null ]
     ] ],
+    [ "mc_control::Contact", "structmc__control_1_1Contact.html", null ],
     [ "mc_rbdyn::Contact", "structmc__rbdyn_1_1Contact.html", null ],
     [ "mc_tasks::lipm_stabilizer::internal::Contact", "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html", null ],
-    [ "mc_control::fsm::Contact", "structmc__control_1_1fsm_1_1Contact.html", null ],
     [ "mc_tasks::lipm_stabilizer::ContactDescription", "structmc__tasks_1_1lipm__stabilizer_1_1ContactDescription.html", null ],
     [ "mc_solver::ContactMsg", "structmc__solver_1_1ContactMsg.html", null ],
     [ "mc_solver::utils::ContactWrenchMatrixToLambdaMatrix", "structmc__solver_1_1utils_1_1ContactWrenchMatrixToLambdaMatrix.html", null ],
@@ -137,6 +137,7 @@ var hierarchy =
     [ "mc_control::ControllerLoader", "structmc__control_1_1ControllerLoader.html", null ],
     [ "mc_control::ControllerResetData", "structmc__control_1_1ControllerResetData.html", null ],
     [ "mc_control::ControllerServer", "structmc__control_1_1ControllerServer.html", null ],
+    [ "mc_solver::QPSolver::ControllerToken", "structmc__solver_1_1QPSolver_1_1ControllerToken.html", null ],
     [ "mc_rtc::DataStore", "structmc__rtc_1_1DataStore.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html", null ],
     [ "mc_control::fsm::ParallelState::DelayedState", "structmc__control_1_1fsm_1_1ParallelState_1_1DelayedState.html", null ],
@@ -249,7 +250,7 @@ var hierarchy =
     [ "mc_rbdyn::RobotModule::Gripper", "structmc__rbdyn_1_1RobotModule_1_1Gripper.html", null ],
     [ "mc_control::Gripper", "structmc__control_1_1Gripper.html", null ],
     [ "mc_solver::GenericLoader< Derived, T >::Handle", "structmc__solver_1_1GenericLoader_1_1Handle.html", null ],
-    [ "std::hash< mc_control::fsm::Contact >", "structstd_1_1hash_3_01mc__control_1_1fsm_1_1Contact_01_4.html", null ],
+    [ "std::hash< mc_control::Contact >", "structstd_1_1hash_3_01mc__control_1_1Contact_01_4.html", null ],
     [ "mc_tasks::force::ImpedanceGains", "structmc__tasks_1_1force_1_1ImpedanceGains.html", null ],
     [ "mc_tasks::force::details::ImpedanceVecd< StrictlyPositive >", "structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html", null ],
     [ "mc_tasks::force::details::ImpedanceVecd< false >", "structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html", null ],
@@ -451,10 +452,10 @@ var hierarchy =
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html", null ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
     ] ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
     ] ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],
