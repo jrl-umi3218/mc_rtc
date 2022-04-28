@@ -163,6 +163,15 @@ public:
    */
   RobotFrame & makeFrame(const std::string & name, RobotFrame & parent, sva::PTransformd X_p_f, bool baked = false);
 
+  /**
+   * Create new frames attached to this robot
+   *
+   * \param frames Description of the frames
+   *
+   * \throws If any of the frames' \p parent does not belong to this robot or if \p name already exists in this robot
+   */
+  void makeFrames(std::vector<mc_rbdyn::RobotModule::FrameDescription> frames);
+
   /** Returns the joint index of joint named \name
    *
    * \throws If the joint does not exist within the robot.
@@ -1032,8 +1041,22 @@ protected:
   /** Copy loaded data from this robot to a new robot **/
   void copyLoadedData(Robot & destination) const;
 
-  /** Used to set the surfaces' X_b_s correctly and create frames from RobotModule */
+  /**
+   * Used to set all robot surfaces' X_b_s correctly
+   *
+   * This updates all surfaces in surfaces_ vector and should only be called
+   * once
+   */
   void fixSurfaces();
+
+  /**
+   * Used to set the specified surface X_b_s correctly
+   *
+   * This function should only be called once per surface.
+   *
+   * @param surfaces Surface that need to be modified
+   **/
+  void fixSurface(Surface & surface);
 
   /** Used to set the collision transforms correctly */
   void fixCollisionTransforms();

@@ -11,6 +11,7 @@
 
 #include <mc_tasks/MetaTaskLoader.h>
 
+#include <mc_rtc/deprecated.h>
 #include <mc_rtc/gui/Button.h>
 #include <mc_rtc/gui/Form.h>
 #include <mc_rtc/gui/Label.h>
@@ -67,50 +68,90 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
   factory_.set_verbosity(config("VerboseStateFactory", false));
 #endif
   idle_keep_state_ = config("IdleKeepState", false);
-  /** Load additional robots from the configuration */
-  {
+
+  auto init_robot = [&](const std::string & robotName, const mc_rtc::Configuration & config) {
+    if(!hasRobot(robotName)) return;
+    auto & robot = robots().robot(robotName);
+    auto & realRobot = realRobots().robot(robotName);
+    /** Set initial robot base pose */
     if(config.has("init_pos"))
     {
-      robot().posW(config("init_pos"));
-      realRobot().posW(robot().posW());
+      robot.posW(config("init_pos"));
+      realRobot.posW(robot.posW());
     }
+    /** Load additional frames */
+    {
+      auto frames = config("frames", std::vector<mc_rbdyn::RobotModule::FrameDescription>{});
+      robot.makeFrames(frames);
+      realRobot.makeFrames(frames);
+    }
+  };
+
+  if(config.has("init_pos"))
+  {
+    mc_rtc::log::deprecated("mc_control::fsm::Controller", "init_pos",
+                            fmt::format("robots/{}/init_pos", robot().name()));
+    init_robot(robot().name(), config);
+  }
+
+  /** Load additional robots from the configuration */
+  {
     auto config_robots = config("robots", std::map<std::string, mc_rtc::Configuration>{});
     for(const auto & cr : config_robots)
     {
-      const auto & name = cr.first;
-      std::string module = cr.second("module");
-      auto params = cr.second("params", std::vector<std::string>{});
-      mc_rbdyn::RobotModulePtr rm = nullptr;
-      if(params.size() == 0)
+      if(cr.first == robot().name())
       {
-        rm = mc_rbdyn::RobotLoader::get_robot_module(module);
+        if(config.has("init_pos") && cr.second.has("init_pos"))
+        {
+          mc_rtc::log::error_and_throw("You have both a global \"init_pos\" entry and a \"robots/{}/init_pos\" entry "
+                                       "in your FSM configuration. Please use \"robots/{}/init_pos\" only.",
+                                       robot().name(), robot().name());
+        }
+        init_robot(cr.first, cr.second);
       }
-      else if(params.size() == 1)
+      else if(!cr.second.has("module"))
       {
-        rm = mc_rbdyn::RobotLoader::get_robot_module(module, params.at(0));
-      }
-      else if(params.size() == 2)
-      {
-        rm = mc_rbdyn::RobotLoader::get_robot_module(module, params.at(0), params.at(1));
+        // This is not the main robot but the configuration does not have a
+        // robot module specified. This can happen if the user intended his
+        // controller to run with multiple main robots each requiring a
+        // different configuration. In this case, the configuration is simply
+        // ignored as it does not correspond to any robot currently loaded
+        // within this controller.
       }
       else
       {
-        mc_rtc::log::error_and_throw("FSM controller only handles robot modules that require two parameters at most");
+        const auto & name = cr.first;
+        std::string module = cr.second("module");
+        auto params = cr.second("params", std::vector<std::string>{});
+        mc_rbdyn::RobotModulePtr rm = nullptr;
+        if(params.size() == 0)
+        {
+          rm = mc_rbdyn::RobotLoader::get_robot_module(module);
+        }
+        else if(params.size() == 1)
+        {
+          rm = mc_rbdyn::RobotLoader::get_robot_module(module, params.at(0));
+        }
+        else if(params.size() == 2)
+        {
+          rm = mc_rbdyn::RobotLoader::get_robot_module(module, params.at(0), params.at(1));
+        }
+        else
+        {
+          mc_rtc::log::error_and_throw("FSM controller only handles robot modules that require two parameters at most");
+        }
+        if(!rm)
+        {
+          mc_rtc::log::error_and_throw("Failed to load {} as specified in configuration", name);
+        }
+        loadRobot(rm, name);
+        init_robot(name, cr.second);
       }
-      if(!rm)
+      mc_rtc::log::info("Robots loaded in FSM controller:");
+      for(const auto & r : robots())
       {
-        mc_rtc::log::error_and_throw("Failed to load {} as specified in configuration", name);
+        mc_rtc::log::info("- {}", r.name());
       }
-      loadRobot(rm, name);
-      auto & r = robots().robot(name);
-      auto & realRobot = realRobots().robot(name);
-      r.posW(cr.second("init_pos", sva::PTransformd::Identity()));
-      realRobot.posW(r.posW());
-    }
-    mc_rtc::log::info("Robots loaded in FSM controller:");
-    for(const auto & r : robots())
-    {
-      mc_rtc::log::info("- {}", r.name());
     }
   }
   /** Load global constraints (robots' kinematics/dynamics constraints and contact constraint */
