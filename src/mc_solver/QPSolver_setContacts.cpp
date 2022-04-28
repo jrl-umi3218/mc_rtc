@@ -9,7 +9,8 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
 {
   if(controller_)
   {
-    mc_rtc::log::warning("[MC_RTC_DEPRECATED] Prefer using addContact/removeContact for contacts manipulation");
+    mc_rtc::log::warning("[MC_RTC_DEPRECATED] Prefer using addContact/removeContact for contacts manipulation instead "
+                         "of QPSolver::setContacts");
     controller_->clearContacts();
     for(const auto & c : contacts)
     {

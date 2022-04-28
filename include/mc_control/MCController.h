@@ -526,6 +526,7 @@ protected:
   ContactSet contacts_;
   /** True if contacts were changed in the previous round */
   bool contacts_changed_;
+  /** Data shown in the contacts' table: R1, R1Surface, R2, R2Surface, DoF, Friction */
   using ContactTableDataT = std::tuple<std::string, std::string, std::string, std::string, std::string, double>;
   /** Used in GUI display */
   std::vector<ContactTableDataT> contacts_table_;
