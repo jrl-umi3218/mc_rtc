@@ -28,10 +28,12 @@ framework. (#247)
 
 ### Added
 
-- `mc_rtc::shared` is a wrapper around `std::enabled_shared_from_this` to allow
+- [mc_control] Controllers can specify extra frames in their configuration frame (#251)
+- [mc_control] Controllers can specify different `init_pos` for different `MainRobot` (#251)
+- [mc_rtc_utils] `mc_rtc::shared` is a wrapper around `std::enabled_shared_from_this` to allow
   reference-style API where the data is backed by a shared pointer (#247)
-- All tasks (when it makes sense) can accept a frame at construction (#247)
-- `mc_solver::BoundedSpeedConstr` can be used to constraint a frame velocity (#247)
+- [mc_tasks] All tasks (when it makes sense) can accept a frame at construction (#247)
+- [mc_solver] `mc_solver::BoundedSpeedConstr` can be used to constraint a frame velocity (#247)
 - [utils] `build_and_install` now supports Ubuntu Jammy (22.04) (#248)
 - [utils] `build_and_install` can now install the Panda module (#249)
 
