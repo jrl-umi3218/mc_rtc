@@ -1,5 +1,7 @@
 var NAVTREEINDEX13 =
 {
+"structmc__rtc_1_1gui_1_1XYThetaROImpl.html#a2a9635b525b47f997fffcf697ae4b2f5":[3,0,7,0,43,2],
+"structmc__rtc_1_1gui_1_1XYThetaROImpl.html#ac0153847ff6a36d76c47cae5292be192":[3,0,7,0,43,0],
 "structmc__rtc_1_1gui_1_1details_1_1CheckReturnType.html":[3,0,7,0,0,0],
 "structmc__rtc_1_1gui_1_1details_1_1CheckReturnType_3_01GetT_00_01T_00_01Args_8_8_8_01_4.html":[3,0,7,0,0,2],
 "structmc__rtc_1_1gui_1_1details_1_1CheckReturnType_3_01GetT_00_01T_01_4.html":[3,0,7,0,0,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX13 =
 "structmc__solver_1_1ContactMsg.html#a7d179ea79ffefc9a499c3300b4fba396":[3,0,8,9,8],
 "structmc__solver_1_1ContactMsg.html#a7ffb13c3e88fdefbdf8ad51aab184c16":[3,0,8,9,4],
 "structmc__solver_1_1ContactMsg.html#a91f4355799d2e97441538f28adf25071":[3,0,8,9,3],
-"structmc__solver_1_1ContactMsg.html#a9e1941c9323f825326c7f8d64fac14ac":[3,0,8,9,0],
-"structmc__solver_1_1ContactMsg.html#aaaa28b666db138b8073c87f0367408ea":[3,0,8,9,7],
-"structmc__solver_1_1ContactMsg.html#ad8c4a5aae685b15b8dffeddcb01aa9f7":[3,0,8,9,2]
+"structmc__solver_1_1ContactMsg.html#a9e1941c9323f825326c7f8d64fac14ac":[3,0,8,9,0]
 };

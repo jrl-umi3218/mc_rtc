@@ -117,6 +117,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8c6c471776005048105c48791df73ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4db0746e4af259c63c288695f72beac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ad4db0746e4af259c63c288695f72beac">makeFrame</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>, <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a> &amp;parent, sva::PTransformd X_p_f, bool baked=false)</td></tr>
 <tr class="separator:ad4db0746e4af259c63c288695f72beac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab70f3348aeda8560aa5740227eba3e1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ab70f3348aeda8560aa5740227eba3e1f">makeFrames</a> (std::vector&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html">mc_rbdyn::RobotModule::FrameDescription</a> &gt; <a class="el" href="structmc__rbdyn_1_1Robot.html#a8c6c471776005048105c48791df73ea5">frames</a>)</td></tr>
+<tr class="separator:ab70f3348aeda8560aa5740227eba3e1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47874ad9d5abdcd85701b02e2c85cefb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a47874ad9d5abdcd85701b02e2c85cefb">hasSurface</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#aa4b724e51881215dd4293f9578656755">surface</a>) const</td></tr>
 <tr class="separator:a47874ad9d5abdcd85701b02e2c85cefb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4b724e51881215dd4293f9578656755"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1Surface.html">mc_rbdyn::Surface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#aa4b724e51881215dd4293f9578656755">surface</a> (const std::string &amp;sName)</td></tr>
@@ -485,6 +487,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:ae2c28ca834c5d81e66f581425c2d7f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a218dfb7dbc50f94466e30871869b967d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a218dfb7dbc50f94466e30871869b967d">fixSurfaces</a> ()</td></tr>
 <tr class="separator:a218dfb7dbc50f94466e30871869b967d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d3381189f816f8871e540555a533e64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a3d3381189f816f8871e540555a533e64">fixSurface</a> (<a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#aa4b724e51881215dd4293f9578656755">surface</a>)</td></tr>
+<tr class="separator:a3d3381189f816f8871e540555a533e64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a005d9859a7272ac6dbcab9c31aef8092"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a005d9859a7272ac6dbcab9c31aef8092">fixCollisionTransforms</a> ()</td></tr>
 <tr class="separator:a005d9859a7272ac6dbcab9c31aef8092"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adec9236c7e0a6848e0fb76704ea64372"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#adec9236c7e0a6848e0fb76704ea64372">findIndirectForceSensorBodyName</a> (const std::string &amp;bodyName) const</td></tr>
@@ -2165,6 +2169,40 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="a3d3381189f816f8871e540555a533e64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d3381189f816f8871e540555a533e64">&#9670;&nbsp;</a></span>fixSurface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::Robot::fixSurface </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> &amp;&#160;</td>
+          <td class="paramname"><em>surface</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Used to set the specified surface X_b_s correctly</p>
+<p>This function should only be called once per surface.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">surfaces</td><td><a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> that need to be modified </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a218dfb7dbc50f94466e30871869b967d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a218dfb7dbc50f94466e30871869b967d">&#9670;&nbsp;</a></span>fixSurfaces()</h2>
 
@@ -2187,7 +2225,8 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Used to set the surfaces' X_b_s correctly and create frames from <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> </p>
+<p>Used to set all robot surfaces' X_b_s correctly</p>
+<p>This updates all surfaces in surfaces_ vector and should only be called once </p>
 
 </div>
 </div>
@@ -3242,6 +3281,37 @@ template&lt;typename T &gt; </div>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">If</td><td><code>parent</code> does not belong to this robot or if <code>name</code> already exists in this robot </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab70f3348aeda8560aa5740227eba3e1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab70f3348aeda8560aa5740227eba3e1f">&#9670;&nbsp;</a></span>makeFrames()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::Robot::makeFrames </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html">mc_rbdyn::RobotModule::FrameDescription</a> &gt;&#160;</td>
+          <td class="paramname"><em>frames</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create new frames attached to this robot</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frames</td><td>Description of the frames</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>any of the frames' <code>parent</code> does not belong to this robot or if <code>name</code> already exists in this robot </td></tr>
   </table>
   </dd>
 </dl>

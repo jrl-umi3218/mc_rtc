@@ -1,5 +1,7 @@
 var NAVTREEINDEX11 =
 {
+"structmc__rtc_1_1Configuration.html#a4fdd3aa2cff1a6d0738b0e8bab39293f":[3,0,7,3,18],
+"structmc__rtc_1_1Configuration.html#a516be2ebaed86b5b458575a595d1104a":[3,0,7,3,40],
 "structmc__rtc_1_1Configuration.html#a548367a2c7a77ee3e9a8fae5dd955767":[3,0,7,3,70],
 "structmc__rtc_1_1Configuration.html#a552f9761ab8458992b1ef20ad9019602":[3,0,7,3,63],
 "structmc__rtc_1_1Configuration.html#a56857d79e0d10c4347e20ee425987970":[3,0,7,3,1],
@@ -175,8 +177,8 @@ var NAVTREEINDEX11 =
 "structmc__rtc_1_1Logger.html#a93a57921c9019097a0903b86d0ba7571":[3,0,7,29,17],
 "structmc__rtc_1_1Logger.html#a986b2719c1337aa9d1e84e2b0b34481c":[3,0,7,29,15],
 "structmc__rtc_1_1Logger.html#acf6c621790b393b717c9a6b0c0ec0394":[3,0,7,29,11],
-"structmc__rtc_1_1Logger.html#ae7cc40f50bb8edbcc79c06476f7a4540":[3,0,7,29,7],
 "structmc__rtc_1_1Logger.html#ae7cc40f50bb8edbcc79c06476f7a4540":[3,0,7,29,6],
+"structmc__rtc_1_1Logger.html#ae7cc40f50bb8edbcc79c06476f7a4540":[3,0,7,29,7],
 "structmc__rtc_1_1Logger.html#aeb0d9597ada6a67eb2a89fcda8c74e7d":[3,0,7,29,18],
 "structmc__rtc_1_1Logger.html#aec88caf27ebb9c9615ed4fd51d9ccd98":[3,0,7,29,10],
 "structmc__rtc_1_1MessagePackBuilder.html":[3,0,7,32],
@@ -247,7 +249,5 @@ var NAVTREEINDEX11 =
 "structmc__rtc_1_1ObjectLoader_1_1ObjectDeleter.html#ad9d8c7bebf11fd046f3264f25d73f56d":[3,0,7,33,0,0],
 "structmc__rtc_1_1ROSBridge.html":[3,0,7,35],
 "structmc__rtc_1_1RobotPublisher.html":[3,0,7,34],
-"structmc__rtc_1_1RobotPublisher.html#a1928a3476891ae7d2c5dd0506f8935f8":[3,0,7,34,2],
-"structmc__rtc_1_1RobotPublisher.html#a1ff98ac0dc276543e910f89fcbb0f1b4":[3,0,7,34,3],
-"structmc__rtc_1_1RobotPublisher.html#a4c712f7481ae4d07e59f11bd4df8c2d7":[3,0,7,34,1]
+"structmc__rtc_1_1RobotPublisher.html#a1928a3476891ae7d2c5dd0506f8935f8":[3,0,7,34,2]
 };

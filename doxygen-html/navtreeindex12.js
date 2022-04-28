@@ -1,5 +1,7 @@
 var NAVTREEINDEX12 =
 {
+"structmc__rtc_1_1RobotPublisher.html#a1ff98ac0dc276543e910f89fcbb0f1b4":[3,0,7,34,3],
+"structmc__rtc_1_1RobotPublisher.html#a4c712f7481ae4d07e59f11bd4df8c2d7":[3,0,7,34,1],
 "structmc__rtc_1_1RobotPublisher.html#a848a9be5477c8e775ec83f546aab552d":[3,0,7,34,0],
 "structmc__rtc_1_1RobotPublisher.html#addd581f3eed02925519d0b823b8eb99c":[3,0,7,34,4],
 "structmc__rtc_1_1SharedPtrVectorConstIterator.html":[3,0,7,37],
@@ -247,7 +249,5 @@ var NAVTREEINDEX12 =
 "structmc__rtc_1_1gui_1_1XYThetaImpl.html#a6de2e9a332b75b696ddbd1167dc31d1b":[3,0,7,0,42,0],
 "structmc__rtc_1_1gui_1_1XYThetaImpl.html#ad69684bdac6275e7cd47e84f786cac2d":[3,0,7,0,42,1],
 "structmc__rtc_1_1gui_1_1XYThetaROImpl.html":[3,0,7,0,43],
-"structmc__rtc_1_1gui_1_1XYThetaROImpl.html#a17aa4be99cbd7e12a198638912b80726":[3,0,7,0,43,1],
-"structmc__rtc_1_1gui_1_1XYThetaROImpl.html#a2a9635b525b47f997fffcf697ae4b2f5":[3,0,7,0,43,2],
-"structmc__rtc_1_1gui_1_1XYThetaROImpl.html#ac0153847ff6a36d76c47cae5292be192":[3,0,7,0,43,0]
+"structmc__rtc_1_1gui_1_1XYThetaROImpl.html#a17aa4be99cbd7e12a198638912b80726":[3,0,7,0,43,1]
 };

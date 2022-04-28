@@ -21,6 +21,7 @@ var searchData=
   ['first',['first',['../structmc__tasks_1_1lipm__stabilizer_1_1ContactDescription.html#a720106ef8ea5446eee2a582d7d52eb2c',1,'mc_tasks::lipm_stabilizer::ContactDescription']]],
   ['firstiter_5f',['firstIter_',['../structmc__observers_1_1KinematicInertialPoseObserver.html#a99b1513ac739b395e903f8f414ad1b10',1,'mc_observers::KinematicInertialPoseObserver']]],
   ['fixcollisiontransforms',['fixCollisionTransforms',['../structmc__rbdyn_1_1Robot.html#a005d9859a7272ac6dbcab9c31aef8092',1,'mc_rbdyn::Robot']]],
+  ['fixsurface',['fixSurface',['../structmc__rbdyn_1_1Robot.html#a3d3381189f816f8871e540555a533e64',1,'mc_rbdyn::Robot']]],
   ['fixsurfaces',['fixSurfaces',['../structmc__rbdyn_1_1Robot.html#a218dfb7dbc50f94466e30871869b967d',1,'mc_rbdyn::Robot']]],
   ['flatlog',['FlatLog',['../structmc__rtc_1_1log_1_1FlatLog.html',1,'mc_rtc::log::FlatLog'],['../structmc__rtc_1_1log_1_1FlatLog.html#a904ba6cf9174416a99863f91d6e221df',1,'mc_rtc::log::FlatLog::FlatLog()=default'],['../structmc__rtc_1_1log_1_1FlatLog.html#a16c024635d4ff9c7a817ace5507a75d4',1,'mc_rtc::log::FlatLog::FlatLog(const std::string &amp;fpath)'],['../structmc__rtc_1_1log_1_1FlatLog.html#ac636557632a2142945a24f276b179162',1,'mc_rtc::log::FlatLog::FlatLog(const FlatLog &amp;)=delete'],['../structmc__rtc_1_1log_1_1FlatLog.html#a4b5e22bfdbf82d2cbf7d98f5f6979d76',1,'mc_rtc::log::FlatLog::FlatLog(FlatLog &amp;&amp;)=default']]],
   ['flatlog_2eh',['FlatLog.h',['../FlatLog_8h.html',1,'']]],

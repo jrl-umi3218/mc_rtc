@@ -24965,6 +24965,13 @@
       <arglist>(const std::string &amp;name, RobotFrame &amp;parent, sva::PTransformd X_p_f, bool baked=false)</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>makeFrames</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>ab70f3348aeda8560aa5740227eba3e1f</anchor>
+      <arglist>(std::vector&lt; mc_rbdyn::RobotModule::FrameDescription &gt; frames)</arglist>
+    </member>
+    <member kind="function">
       <type>bool</type>
       <name>hasSurface</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
@@ -26091,6 +26098,13 @@
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>a218dfb7dbc50f94466e30871869b967d</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>fixSurface</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a3d3381189f816f8871e540555a533e64</anchor>
+      <arglist>(Surface &amp;surface)</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
