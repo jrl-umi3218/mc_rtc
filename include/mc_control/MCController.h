@@ -1,10 +1,11 @@
 /*
- * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL, BIT
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
 #include <mc_control/Configuration.h>
+#include <mc_control/Contact.h>
 
 #include <mc_observers/ObserverPipeline.h>
 
@@ -188,6 +189,57 @@ public:
    * \throws if the main robot is not supported (see supported_robots())
    */
   virtual void reset(const ControllerResetData & reset_data);
+
+  /** Add collisions-pair between two robots
+   *
+   * If the r1-r2 collision manager does not exist yet, it is created and
+   * added to the solver.
+   */
+  void addCollisions(const std::string & r1,
+                     const std::string & r2,
+                     const std::vector<mc_rbdyn::Collision> & collisions);
+
+  /** Remove collisions-pair between two robots
+   *
+   * If the r1-r2 collision manager does not exist yet, this has no
+   * effect.
+   */
+  void removeCollisions(const std::string & r1,
+                        const std::string & r2,
+                        const std::vector<mc_rbdyn::Collision> & collisions);
+
+  /** Remove all collision-pair between two robots
+   *
+   * If the r1-r2 collision manager does not exist yet, this has no
+   * effect.
+   */
+  void removeCollisions(const std::string & r1, const std::string & r2);
+
+  /** Add a contact between two robots
+   *
+   * No effect if the contact is already present.
+   *
+   */
+  void addContact(const Contact & c);
+
+  /** Remove a contact between two robots
+   *
+   * No effect if the contact is already absent.
+   *
+   */
+  void removeContact(const Contact & c);
+
+  /** Remove all contacts */
+  void clearContacts();
+
+  /** Access the current contacts */
+  const ContactSet & contacts() const;
+
+  /** Check if a contact is already present */
+  bool hasContact(const Contact & c) const;
+
+  /** Returns true if the robot is part of the controller */
+  bool hasRobot(const std::string & robot) const;
 
   /** Return the main robot (first robot provided in the constructor)
    * \anchor mc_controller_robot_const_doc
@@ -437,6 +489,9 @@ protected:
                               mc_rbdyn::Robots & robots,
                               bool updateNrVars = true);
 
+  /** Update the contacts (or their DoFs) if needed */
+  void updateContacts();
+
 protected:
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
@@ -455,6 +510,30 @@ protected:
   /** DataStore to share variables/objects between different parts of the
    * framework (states...) */
   mc_rtc::DataStore datastore_;
+
+  /** Holds dynamics, kinematics and contact constraints that are added
+   * from the start by the controller */
+  std::vector<mc_solver::ConstraintSetPtr> constraints_;
+
+  /** Keep track of the contact constraint */
+  std::shared_ptr<mc_solver::ContactConstraint> contact_constraint_ = nullptr;
+
+  /** Collision managers for robot-pair (r1, r2), if r1 == r2 this is
+   * effectively a self-collision manager */
+  std::map<std::pair<std::string, std::string>, std::shared_ptr<mc_solver::CollisionsConstraint>> collision_constraints_;
+
+  /** FSM contacts */
+  ContactSet contacts_;
+  /** True if contacts were changed in the previous round */
+  bool contacts_changed_;
+  /** Data shown in the contacts' table: R1, R1Surface, R2, R2Surface, DoF, Friction */
+  using ContactTableDataT = std::tuple<std::string, std::string, std::string, std::string, std::string, double>;
+  /** Used in GUI display */
+  std::vector<ContactTableDataT> contacts_table_;
+
+  using duration_ms = std::chrono::duration<double, std::milli>;
+  /** Monitor updateContacts runtime */
+  duration_ms updateContacts_dt_{0};
 
 public:
   /** Controller timestep */
