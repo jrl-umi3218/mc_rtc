@@ -19,14 +19,12 @@ constructor_sources:
       solver().addConstraintSet(contactConstraint);
       solver().addConstraintSet(kinematicsConstraint);
       solver().addTask(postureTask);
-      solver().setContacts({{}});
   - name: Python
     lang: python
     source: |
       self.qpsolver.addConstraintSet(self.kinematicsConstraint)
       self.qpsolver.addConstraintSet(self.contactConstraint)
       self.qpsolver.addTask(self.postureTask)
-      self.qpsolver.setContacts([])
 reset_sources:
   - name: C++
     lang: cpp

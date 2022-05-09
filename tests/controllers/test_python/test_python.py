@@ -20,10 +20,8 @@ class TestPythonController(mc_control.MCPythonController):
     self.qpsolver.addTask(self.postureTask)
     self.positionTask = mc_tasks.PositionTask("R_WRIST_Y_S", self.robots(), 0)
     self.qpsolver.addTask(self.positionTask)
-    self.qpsolver.setContacts([
-          mc_rbdyn.Contact(self.robots(), "LeftFoot", "AllGround"),
-          mc_rbdyn.Contact(self.robots(), "RightFoot", "AllGround")
-        ])
+    self.addContact(self.robot().name(), "ground", "LeftFoot", "AllGround")
+    self.addContact(self.robot().name(), "ground", "RightFoot", "AllGround")
     self.hj1_name = "NECK_P"
     self.hj1_index = self.robot().jointIndexByName(self.hj1_name)
     self.hj1_q = 0.5

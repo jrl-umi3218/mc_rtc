@@ -7,7 +7,6 @@ class MyFirstController(mc_control.MCPythonController):
         self.qpsolver.addConstraintSet(self.kinematicsConstraint)
         self.qpsolver.addConstraintSet(self.contactConstraint)
         self.qpsolver.addTask(self.postureTask)
-        self.qpsolver.setContacts([])
         self.jointName = "NECK_Y"
         self.jointIndex = self.robot().jointIndexByName(self.jointName)
         self.goingLeft = True

@@ -11,6 +11,11 @@ cdef class ControllerResetData(object):
 
 cdef ControllerResetData ControllerResetDataFromPtr(c_mc_control.ControllerResetData *)
 
+cdef class Contact(object):
+  cdef c_mc_control.Contact impl
+
+cdef Contact ContactFromC(const c_mc_control.Contact&)
+
 cdef public api class MCController(object)[object MCControllerObject, type MCControllerType]:
   cdef c_mc_control.MCController * base
 

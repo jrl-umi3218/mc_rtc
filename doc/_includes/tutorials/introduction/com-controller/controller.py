@@ -9,10 +9,8 @@ class MyFirstController(mc_control.MCPythonController):
         self.qpsolver.addConstraintSet(self.dynamicsConstraint)
         self.qpsolver.addConstraintSet(self.contactConstraint)
         self.qpsolver.addTask(self.postureTask)
-        self.qpsolver.setContacts([
-          mc_rbdyn.Contact(self.robots(), 0, 1, "LeftFoot", "AllGround"),
-          mc_rbdyn.Contact(self.robots(), 0, 1, "RightFoot", "AllGround")
-        ])
+        self.addContact(self.robot().name(), "ground", "LeftFoot", "AllGround")
+        self.addContact(self.robot().name(), "ground", "RightFoot", "AllGround")
         self.comTask = mc_tasks.CoMTask(self.robots(), 0, 10.0, 1000.0)
         self.qpsolver.addTask(self.comTask)
         self.postureTask.stiffness(1)

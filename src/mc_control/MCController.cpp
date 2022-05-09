@@ -43,8 +43,20 @@ namespace mc_control
 
 Contact Contact::from_mc_rbdyn(const MCController & ctl, const mc_rbdyn::Contact & contact)
 {
-  return {ctl.robots().robot(contact.r1Index()).name(), ctl.robots().robot(contact.r2Index()).name(),
-          contact.r1Surface()->name(), contact.r2Surface()->name(), contact.friction()};
+
+  Eigen::Vector6d dof = Eigen::Vector6d::Ones();
+  const auto cId = contact.contactId(ctl.robots());
+  if(ctl.contactConstraint.contactConstr->hasDoFContact(cId))
+  {
+    dof = ctl.contactConstraint.contactConstr->dofContact(cId).diagonal();
+  }
+
+  return {ctl.robots().robot(contact.r1Index()).name(),
+          ctl.robots().robot(contact.r2Index()).name(),
+          contact.r1Surface()->name(),
+          contact.r2Surface()->name(),
+          contact.friction(),
+          dof};
 }
 
 MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt) : MCController(robot, dt, {}) {}

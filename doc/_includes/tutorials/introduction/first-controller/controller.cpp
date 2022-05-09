@@ -9,7 +9,6 @@ MyFirstController::MyFirstController(mc_rbdyn::RobotModulePtr rm, double dt, con
   solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(kinematicsConstraint);
   solver().addTask(postureTask);
-  solver().setContacts({{}});
 
   mc_rtc::log::success("MyFirstController init done");
 }

@@ -19,7 +19,6 @@ class MyFirstController(mc_control.MCPythonController):
         self.qpsolver.addConstraintSet(self.kinematicsConstraint)
         self.qpsolver.addConstraintSet(self.contactConstraint)
         self.qpsolver.addTask(self.postureTask)
-        self.qpsolver.setContacts([])
     def run_callback(self):
         return True
     def reset_callback(self, data):
