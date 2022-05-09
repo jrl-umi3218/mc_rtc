@@ -396,10 +396,8 @@
   <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">contactConstraint</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">kinematicsConstraint</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">postureTask</span><span class="p">);</span>
-  <span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">({</span>
-      <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">),</span>
-      <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
-  <span class="p">});</span>
+  <span class="n">addContact</span><span class="p">({</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">});</span>
+  <span class="n">addContact</span><span class="p">({</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">});</span>
 
   <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">success</span><span class="p">(</span><span class="s">"MyController init done "</span><span class="p">);</span>
 <span class="p">}</span>
@@ -413,9 +411,7 @@
     <span class="p">{</span>
       <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">success</span><span class="p">(</span><span class="s">"Moved the CoM"</span><span class="p">);</span>
       <span class="n">moved_com</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-      <span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">({</span>
-        <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
-      <span class="p">});</span>
+      <span class="n">removeContact</span><span class="p">({</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">});</span>
       <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">footTask</span><span class="p">);</span>
       <span class="n">footTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)));</span>
     <span class="p">}</span>
@@ -427,10 +423,7 @@
     <span class="p">{</span>
       <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">success</span><span class="p">(</span><span class="s">"Moved the left foot"</span><span class="p">);</span>
       <span class="n">moved_left_foot</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-      <span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">({</span>
-          <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">),</span>
-          <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
-      <span class="p">});</span>
+      <span class="n">addContact</span><span class="p">({</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">});</span>
       <span class="n">solver</span><span class="p">().</span><span class="n">removeTask</span><span class="p">(</span><span class="n">footTask</span><span class="p">);</span>
       <span class="k">auto</span> <span class="n">com</span> <span class="o">=</span> <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">();</span>
 
@@ -520,9 +513,7 @@
     <span class="p">{</span>
       <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">success</span><span class="p">(</span><span class="s">"Moved the CoM"</span><span class="p">);</span>
       <span class="n">moved_com</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-      <span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">({</span>
-        <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
-      <span class="p">});</span>
+      <span class="n">removeContact</span><span class="p">({</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">});</span>
       <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span> <span class="n">rmContact</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">);</span>
       <span class="n">aRContactTask</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span> <span class="n">mc_tasks</span><span class="o">::</span><span class="n">RemoveContactTask</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span>
                                                           <span class="n">bSpeedConstr</span><span class="p">,</span>
@@ -575,10 +566,7 @@
       <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">success</span><span class="p">(</span><span class="s">"Added left foot"</span><span class="p">);</span>
       <span class="n">added_left_foot</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
       <span class="n">solver</span><span class="p">().</span><span class="n">removeTask</span><span class="p">(</span><span class="n">aRContactTask</span><span class="p">);</span>
-      <span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">({</span>
-          <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">),</span>
-          <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
-      <span class="p">});</span>
+      <span class="n">addContact</span><span class="p">({</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">});</span>
       <span class="k">auto</span> <span class="n">com</span> <span class="o">=</span> <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">();</span>
 
       <span class="n">com</span><span class="p">.</span><span class="n">x</span><span class="p">()</span> <span class="o">=</span>

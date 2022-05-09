@@ -470,8 +470,6 @@
 63
 64
 65
-66
-67
 </pre></td><td class="code"><pre><span class="cp">#include "MyFirstController.h"
 </span>
 <span class="n">MyFirstController</span><span class="o">::</span><span class="n">MyFirstController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">)</span>
@@ -481,10 +479,8 @@
   <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">contactConstraint</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">dynamicsConstraint</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">postureTask</span><span class="p">);</span>
-  <span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">({</span>
-    <span class="p">{</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">},</span>
-    <span class="p">{</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">}</span>
-  <span class="p">});</span>
+  <span class="n">addContact</span><span class="p">(</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">);</span>
+  <span class="n">addContact</span><span class="p">(</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">);</span>
   <span class="n">comTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">CoMTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">comTask</span><span class="p">);</span>
   <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">stiffness</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
@@ -592,8 +588,6 @@
 43
 44
 45
-46
-47
 </pre></td><td class="code"><pre><span class="kn">import</span> <span class="nn">eigen</span>
 <span class="kn">import</span> <span class="nn">mc_control</span>
 <span class="kn">import</span> <span class="nn">mc_rbdyn</span>
@@ -605,10 +599,8 @@
         <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">dynamicsConstraint</span><span class="p">)</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">contactConstraint</span><span class="p">)</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">)</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">setContacts</span><span class="p">([</span>
-          <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">Contact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">),</span>
-          <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">Contact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
-        <span class="p">])</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">addContact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">addContact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">comTask</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="p">.</span><span class="n">CoMTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">)</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">comTask</span><span class="p">)</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">stiffness</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>

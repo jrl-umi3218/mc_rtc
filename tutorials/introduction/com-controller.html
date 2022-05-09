@@ -367,10 +367,8 @@
   <div class="card-body">
 
   <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// In the constructor</span>
-<span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">({</span>
-  <span class="p">{</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">},</span>
-  <span class="p">{</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">}</span>
-<span class="p">});</span></code></pre></figure>
+<span class="n">addContact</span><span class="p">({</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">});</span>
+<span class="n">addContact</span><span class="p">({</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">});</span></code></pre></figure>
 
   
   </div>
@@ -387,10 +385,8 @@
   <div class="card-body">
 
   <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># In the constructor
-</span><span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">setContacts</span><span class="p">([</span>
-  <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">Contact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">),</span>
-  <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">Contact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
-<span class="p">])</span></code></pre></figure>
+</span><span class="bp">self</span><span class="p">.</span><span class="n">addContact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">addContact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span></code></pre></figure>
 
   
   </div>

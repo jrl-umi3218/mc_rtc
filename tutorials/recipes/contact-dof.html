@@ -349,70 +349,35 @@
 
 <h2 id="how-to-create-one">How to create one?</h2>
 
-<p>DoF contacts will only modify the ContactConstraint. Let’s see the interesting prototypes in <code class="language-plaintext highlighter-rouge">Tasks::QPContactConstr.h</code>:</p>
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">addDofContact</span><span class="p">(</span><span class="k">const</span> <span class="n">ContactId</span><span class="o">&amp;</span> <span class="n">contactId</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span> <span class="n">dof</span><span class="p">);</span>
-<span class="kt">bool</span> <span class="nf">removeDofContact</span><span class="p">(</span><span class="k">const</span> <span class="n">ContactId</span><span class="o">&amp;</span> <span class="n">contactId</span><span class="p">);</span>
-<span class="kt">void</span> <span class="nf">updateDofContacts</span><span class="p">();</span>
-<span class="kt">void</span> <span class="nf">resetDofContacts</span><span class="p">();</span>
-</code></pre></div></div>
-<p>Thus the typical flow of DoF constraint will go like this:</p>
+<p>To create one we need to have:</p>
 <ul>
-  <li>Find the correct Contact to be freed/constrained</li>
-  <li>Select the correct DoF</li>
-  <li>Add it to the constraint</li>
-  <li>Update the constraint</li>
-  <li>When done, remove the DoF and update again</li>
+  <li>a contact we wish to modify</li>
+  <li>a correct DoF selection</li>
 </ul>
 
-<p>To find a ContactID, the best way is to create an <code class="language-plaintext highlighter-rouge">mc_rbdyn::Contact</code> and then call the <code class="language-plaintext highlighter-rouge">contactId</code> method like so:</p>
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span> <span class="n">contact</span><span class="p">;</span>
-<span class="n">tasks</span><span class="o">::</span><span class="n">qp</span><span class="o">::</span><span class="n">contactId</span> <span class="n">cId</span> <span class="o">=</span> <span class="n">contact</span><span class="p">.</span><span class="n">contactId</span><span class="p">(</span><span class="n">robots</span><span class="p">());</span>
-</code></pre></div></div>
-
-<p>Now, how to select DoF:</p>
+<p>To select DoF:</p>
 <ul>
-  <li>The DoF matrix should be a square 6x6 matrix</li>
-  <li>Only the diagonal elements should be set in normal cases. Non-diagonal elements could be used to generate for example an “helicoidal” constraint.</li>
+  <li>The DoF vector is a 6x1 vector;</li>
   <li>Every 0 element represents a free DoF, while every 1 represents a blocked DoF.</li>
   <li>The order is first the (x, y, z) rotations, then the (x, y, z) translations.</li>
 </ul>
 
 <p>For example:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 0 0 0 0 0
-0 0 0 0 0 0
-0 0 0 0 0 0
-0 0 0 0 0 0
-0 0 0 0 0 0
-0 0 0 0 0 0
 </code></pre></div></div>
 <p>Is a “virtual” contact: the motion is not restricted at all.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 0 0 0 0 0
-0 1 0 0 0 0
-0 0 1 0 0 0
-0 0 0 1 0 0
-0 0 0 0 1 0
-0 0 0 0 0 1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 1 1 1 1 1
 </code></pre></div></div>
 
 <p>Is entirely blocked (regular contact)</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 0 0 0 0 0
-0 1 0 0 0 0
-0 0 1 0 0 0
-0 0 0 1 0 0
-0 0 0 0 1 0
-0 0 0 0 0 0
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 1 1 1 1 0
 </code></pre></div></div>
 
 <p>Is blocked in every direction except the normal translation (useful for insertion).</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 0 0 0 0 0
-0 1 0 0 0 0
-0 0 0 0 0 0
-0 0 0 0 0 0
-0 0 0 0 0 0
-0 0 0 0 0 1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 1 0 0 0 1
 </code></pre></div></div>
 
 <p>Is a typical sliding planar contact: we can rotate around the normal axis, and translate along both tangential axis.</p>
@@ -423,22 +388,18 @@
 
 <h2 id="how-about-an-example">How about an example?</h2>
 
-<p>Let’s start with our default example of HRP2 standing on the ground. In our constructor you should have:</p>
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">({</span>
-            <span class="p">{</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">},</span>
-            <span class="p">{</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">}</span>
-            <span class="p">});</span>
+<p>Let’s start with our default example of JVRC1 standing on the ground. In our constructor you should have:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">addContact</span><span class="p">({</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">});</span>
+<span class="n">addContact</span><span class="p">({</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">});</span>
 </code></pre></div></div>
 
 <p>How about we try to move the right foot exactly vertically:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//In reset</span>
-<span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix6d</span> <span class="n">dof</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix6d</span><span class="o">::</span><span class="n">Identity</span><span class="p">();</span>
-<span class="n">dof</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
- 
-<span class="n">tasks</span><span class="o">::</span><span class="n">qp</span><span class="o">::</span><span class="n">ContactId</span> <span class="n">ContactId</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">).</span><span class="n">contactId</span><span class="p">(</span><span class="n">robots</span><span class="p">());</span>
-<span class="n">contactConstraint</span><span class="p">().</span><span class="n">contactConstr</span><span class="o">-&gt;</span><span class="n">addDofContact</span><span class="p">(</span><span class="n">ContactId</span><span class="p">,</span> <span class="n">dof</span><span class="p">);</span>
-<span class="n">contactConstraint</span><span class="p">().</span><span class="n">contactConstr</span><span class="o">-&gt;</span><span class="n">updateDofContacts</span><span class="p">();</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">dof</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">::</span><span class="n">Ones</span><span class="p">();</span>
+<span class="n">dof</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">friction</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span><span class="o">::</span><span class="n">defaultFriction</span><span class="p">;</span>
+<span class="n">addContact</span><span class="p">({</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">,</span> <span class="n">friction</span><span class="p">,</span> <span class="n">dof</span><span class="p">});</span>
 </code></pre></div></div>
 
 <p>Now let’s add an EndEffectorTask that will try to move the foot <em>not</em> vertically and check that the constraint does its job.</p>
@@ -448,11 +409,11 @@
 
 <span class="c1">//In .cpp</span>
 <span class="c1">// In constructor</span>
-<span class="n">efTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"R_FOOT"</span><span class="p">,</span> <span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
-<span class="n">efTask</span><span class="o">-&gt;</span><span class="n">addToSolver</span><span class="p">(</span><span class="n">solver</span><span class="p">());</span>
+<span class="n">efTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">robot</span><span class="p">().</span><span class="n">frame</span><span class="p">(</span><span class="s">"RightFoot"</span><span class="p">),</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+<span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">efTask</span><span class="p">);</span>
 
 <span class="c1">//In reset</span>
-<span class="n">efTask</span><span class="o">-&gt;</span><span class="n">resetTask</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">efTask</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
 <span class="n">efTask</span><span class="o">-&gt;</span><span class="n">add_ef_pose</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)));</span>
 </code></pre></div></div>
 <p>If you launch this you will see JVRC1 moving its foot perfectly vertically.</p>
@@ -460,12 +421,12 @@
   <p>Note: In this setup, you need to be in kinematics mode, else the robot will fall, unless you add a first step where you shift the robot’s weight onto the left foot.</p>
 </blockquote>
 
-<p>Let’s slightly change this to show how this can be used to simulate a sliding planar contact. Let’s just change the <code class="language-plaintext highlighter-rouge">dof</code> matrix, and the target of the <code class="language-plaintext highlighter-rouge">EndEffectorTask</code>.</p>
+<p>Let’s slightly change this to show how this can be used to simulate a sliding planar contact. Let’s just change the <code class="language-plaintext highlighter-rouge">dof</code> vector, and the target of the <code class="language-plaintext highlighter-rouge">EndEffectorTask</code>.</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix6d</span> <span class="n">dof</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix6d</span><span class="o">::</span><span class="n">Identity</span><span class="p">();</span>
-<span class="n">dof</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">dof</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">dof</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">dof</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span><span class="o">::</span><span class="n">Ones</span><span class="p">();</span>
+<span class="n">dof</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">dof</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">dof</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
 <span class="n">efTask</span><span class="o">-&gt;</span><span class="n">add_ef_pose</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">RotX</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span><span class="o">*</span><span class="n">sva</span><span class="o">::</span><span class="n">RotY</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span><span class="o">*</span><span class="n">sva</span><span class="o">::</span><span class="n">RotZ</span><span class="p">(</span><span class="mf">1.</span><span class="p">),</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)));</span>
 </code></pre></div></div>
