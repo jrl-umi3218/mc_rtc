@@ -211,10 +211,18 @@ cdef class MCController(object):
       return MCController.robot(self)
     else:
       return mc_rbdyn.RobotFromC(self.base.robot(name))
-  def addContact(self, Contact c):
-    self.base.addContact(c.impl)
-  def removeContact(self, Contact c):
-    self.base.removeContact(c.impl)
+  def addContact(self, c, *args):
+    if isinstance(c, Contact):
+      assert len(args) == 0, "addContact takes either an mc_control.Contact object or arguments for its construction"
+      self.base.addContact((<Contact>c).impl)
+    else:
+      self.addContact(Contact(c, *args))
+  def removeContact(self, c, *args):
+    if isinstance(c, Contact):
+      assert len(args) == 0, "removeContact takes either an mc_control.Contact object or arguments for its construction"
+      self.base.removeContact((<Contact>c).impl)
+    else:
+      self.removeContact(Contact(c, *args))
   def contacts(self):
     cdef c_mc_control.ContactSet cs = self.base.contacts()
     return [ContactFromC(c) for c in cs]
