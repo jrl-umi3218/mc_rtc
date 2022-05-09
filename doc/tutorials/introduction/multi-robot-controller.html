@@ -23,17 +23,13 @@ set_contact_sources:
   - name: C++
     lang: cpp
     source: |
-      solver().setContacts({
-        {robots(), 0, 2, "LeftFoot", "AllGround"},
-        {robots(), 0, 2, "RightFoot", "AllGround"}
-      });
+      addContact({robot().name(), "ground", "LeftFoot", "AllGround"});
+      addContact({robot().name(), "ground", "RightFoot", "AllGround"});
   - name: Python
     lang: python
     source: |
-      self.qpsolver.setContacts([
-        mc_rbdyn.Contact(self.robots(), 0, 2, "LeftFoot", "AllGround"),
-        mc_rbdyn.Contact(self.robots(), 0, 2, "RightFoot", "AllGround")
-      ])
+      self.addContact(self.robot().name(), "ground", "LeftFoot", "AllGround")
+      self.addContact(self.robot().name(), "ground", "RightFoot", "AllGround")
 reposition_door_sources:
   - name: C++
     lang: cpp

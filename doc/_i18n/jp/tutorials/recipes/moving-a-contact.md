@@ -56,10 +56,8 @@ MyController::MyController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc:
   solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(kinematicsConstraint);
   solver().addTask(postureTask);
-  solver().setContacts({
-      mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"),
-      mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")
-  });
+  addContact({robot().name(), "ground", "LeftFoot", "AllGround"});
+  addContact({robot().name(), "ground", "RightFoot", "AllGround"});
 
   mc_rtc::log::success("MyController init done ");
 }
@@ -73,9 +71,7 @@ bool MyController::run()
     {
       mc_rtc::log::success("Moved the CoM");
       moved_com = true;
-      solver().setContacts({
-        mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")
-      });
+      removeContact({robot().name(), "ground", "LeftFoot", "AllGround"});
       solver().addTask(footTask);
       footTask->target(sva::PTransformd(Eigen::Vector3d(0.4, 0, 0)));
     }
@@ -87,10 +83,7 @@ bool MyController::run()
     {
       mc_rtc::log::success("Moved the left foot");
       moved_left_foot = true;
-      solver().setContacts({
-          mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"),
-          mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")
-      });
+      addContact({robot().name(), "ground", "LeftFoot", "AllGround"});
       solver().removeTask(footTask);
       auto com = comTask->com();
 
@@ -182,9 +175,7 @@ bool MyController::run()
     {
       mc_rtc::log::success("Moved the CoM");
       moved_com = true;
-      solver().setContacts({
-        mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")
-      });
+      removeContact({robot().name(), "ground", "LeftFoot", "AllGround"});
       mc_rbdyn::Contact rmContact(robots(), "LeftFoot", "AllGround");
       aRContactTask.reset(new mc_tasks::RemoveContactTask(robots(),
                                                           bSpeedConstr,
@@ -237,10 +228,7 @@ bool MyController::run()
       mc_rtc::log::success("Added left foot");
       added_left_foot = true;
       solver().removeTask(aRContactTask);
-      solver().setContacts({
-          mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"),
-          mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")
-      });
+      addContact({robot().name(), "ground", "LeftFoot", "AllGround"});
       auto com = comTask->com();
 
       com.x() =

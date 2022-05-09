@@ -11,10 +11,8 @@ MyFirstController::MyFirstController(mc_rbdyn::RobotModulePtr rm, double dt, con
   solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(dynamicsConstraint);
   solver().addTask(postureTask);
-  solver().setContacts({
-    {robots(), 0, 2, "LeftFoot", "AllGround"},
-    {robots(), 0, 2, "RightFoot", "AllGround"}
-  });
+  addContact({robot().name(), "ground", "LeftFoot", "AllGround"});
+  addContact({robot().name(), "ground", "RightFoot", "AllGround"});
   comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0, 10.0, 1000.0);
   solver().addTask(comTask);
   postureTask->stiffness(1);
@@ -47,9 +45,7 @@ void MyFirstController::switch_phase()
   if(phase == APPROACH && handTask->eval().norm() < 0.05 && handTask->speed().norm() < 1e-4)
   {
     // Add a new contact
-    auto contacts = solver().contacts();
-    contacts.emplace_back(robots(), 0, 1, "RightGripper", "Handle");
-    solver().setContacts(contacts);
+    addContact({robot().name(), "door", "RightGripper", "Handle"});
     // Remove the surface transform task
     solver().removeTask(handTask);
     // Keep the robot in its current posture

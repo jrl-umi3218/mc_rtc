@@ -2,9 +2,7 @@
 if(phase == APPROACH && handTask->eval().norm < 0.05 && handTask->speed().norm() < 1e-4)
 {
   // Add a new contact
-  auto contacts = solver().contacts();
-  contacts.emplace_back(robots(), 0, 1, "RightGripper", "Handle");
-  solver().setContacts(contacts);
+  addContact({robot().name(), "door", "RightGripper", "Handle"});
   // Remove the surface transform task
   solver().removeTask(handTask);
   // Keep the robot in its current posture

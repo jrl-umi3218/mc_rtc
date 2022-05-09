@@ -2,9 +2,7 @@
 if(phase == APPROACH && handTask->eval().norm < 0.05 && handTask->speed().norm() < 1e-4)
 {
   // 新しい接触面を追加する
-  auto contacts = solver().contacts();
-  contacts.emplace_back(robots(), 0, 1, "RightGripper", "Handle");
-  solver().setContacts(contacts);
+  addContact({robot().name(), "door", "RightGripper", "Handle"});
   // 面変換タスクを削除する
   solver().removeTask(handTask);
   // ロボットの現在の姿勢を維持する

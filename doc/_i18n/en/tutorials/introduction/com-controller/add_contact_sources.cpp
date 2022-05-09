@@ -1,5 +1,3 @@
 // In the constructor
-solver().setContacts({
-  {robots(), 0, 1, "LeftFoot", "AllGround"},
-  {robots(), 0, 1, "RightFoot", "AllGround"}
-});
+addContact({robot().name(), "ground", "LeftFoot", "AllGround"});
+addContact({robot().name(), "ground", "RightFoot", "AllGround"});

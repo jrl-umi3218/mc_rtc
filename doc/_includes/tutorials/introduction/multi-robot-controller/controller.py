@@ -16,10 +16,8 @@ class MyFirstController(mc_control.MCPythonController):
         self.qpsolver.addConstraintSet(self.dynamicsConstraint)
         self.qpsolver.addConstraintSet(self.contactConstraint)
         self.qpsolver.addTask(self.postureTask)
-        self.qpsolver.setContacts([
-          mc_rbdyn.Contact(self.robots(), 0, 2, "LeftFoot", "AllGround"),
-          mc_rbdyn.Contact(self.robots(), 0, 2, "RightFoot", "AllGround")
-        ])
+        self.addContact(self.robot().name(), "ground", "LeftFoot", "AllGround")
+        self.addContact(self.robot().name(), "ground", "RightFoot", "AllGround")
         self.comTask = mc_tasks.CoMTask(self.robots(), 0, 10.0, 1000.0)
         self.qpsolver.addTask(self.comTask)
         self.postureTask.stiffness(1)
@@ -40,9 +38,7 @@ class MyFirstController(mc_control.MCPythonController):
     def switch_phase(self):
       if self.phase == APPROACH and self.handTask.eval().norm() < 0.05 and self.handTask.speed().norm() < 1e-4:
         # Add a new contact
-        contacts = self.qpsolver.contacts()
-        contacts.append(mc_rbdyn.Contact(self.robots(), 0, 1, "RightGripper", "Handle"))
-        self.qpsolver.setContacts(contacts)
+        self.addContact(self.robot().name(), "door", "RightGripper", "Handle")
         # Remove the surface transform task
         self.qpsolver.removeTask(self.handTask)
         # Keep the robot in its current posture
