@@ -33,41 +33,8 @@ cdef extern from "mc_control_fsm_wrapper.hpp":
   run_cb make_run_cb[T,U](T, U)
 
 cdef extern from "<mc_control/fsm/Controller.h>" namespace "mc_control::fsm":
-  cdef cppclass Contact:
-    Contact(const string&, const string&, const string&, const string&, double)
-    Contact(const string&, const string&, const string&, const string&, double, const c_eigen.Vector6d)
-    Contact()
-    string r1
-    string r2
-    string r1Surface
-    string r2Surface
-    double friction
-    c_eigen.Vector6d dof
-
-  # Actually std::set<Contact, std::less<Contact>, Eigen::aligned_allocator<Contact>> but Cython only know std::set<T>
-  cdef cppclass ContactSet:
-    cppclass iterator:
-      Contact& operator*()
-      iterator operator++()
-      iterator operator--()
-      bint operator==(iterator)
-      bint operator!=(iterator)
-    iterator begin()
-    iterator end()
-
   cdef cppclass Controller(c_mc_control.MCController):
-    void addCollisions(const string&, const string&,
-                       const vector[c_mc_rbdyn.Collision] &)
-    void removeCollisions(const string&, const string&)
-    void removeCollisions(const string&, const string&,
-                          const vector[c_mc_rbdyn.Collision] &)
-    cppbool hasRobot(const string&)
-    c_mc_rbdyn.Robot& robot(const string&)
     shared_ptr[c_mc_tasks.PostureTask] getPostureTask(const string&)
-    void addContact(const Contact&)
-    void removeContact(const Contact&)
-    const ContactSet & contacts()
-    cppbool hasContact(const Contact &)
     c_mc_solver.ContactConstraint & contactConstraint()
 
 cdef extern from "<mc_control/fsm/State.h>" namespace "mc_control::fsm":

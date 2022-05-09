@@ -7,7 +7,8 @@ from sva.c_sva cimport *
 from rbdyn.c_rbdyn cimport *
 cimport sch.c_sch as sch
 cimport tasks.qp.c_qp as c_qp
-from mc_rbdyn.c_mc_rbdyn cimport *
+from mc_rbdyn.c_mc_rbdyn cimport Robots, Collision
+cimport mc_rbdyn.c_mc_rbdyn as c_mc_rbdyn
 cimport mc_tasks.c_mc_tasks as c_mc_tasks
 
 from libcpp.map cimport map as cppmap
@@ -83,8 +84,8 @@ cdef extern from "<mc_solver/CollisionsConstraint.h>" namespace "mc_solver":
     cppbool removeSelfCollision(QPSolver&, string, string)
     void addEnvCollision(QPSolver&, const Collision&)
     void addSelfCollision(QPSolver&, const Collision&)
-    void setEnvCollisions(QPSolver&, const vector[Contact]&, const vector[Collision]&)
-    void setSelfCollisions(QPSolver&, const vector[Contact]&, const vector[Collision]&)
+    void setEnvCollisions(QPSolver&, const vector[c_mc_rbdyn.Contact]&, const vector[Collision]&)
+    void setSelfCollisions(QPSolver&, const vector[c_mc_rbdyn.Contact]&, const vector[Collision]&)
 
     CollisionsConstraint selfCollConstrMng
     CollisionsConstraint envCollConstrMng
@@ -95,8 +96,8 @@ cdef extern from "<mc_solver/QPSolver.h>" namespace "mc_solver":
 
     void addConstraintSet(const ConstraintSet&)
     void removeConstraintSet(const ConstraintSet&)
-    const vector[Contact] & contacts()
-    void setContacts(const vector[Contact]&)
+    const vector[c_mc_rbdyn.Contact] & contacts()
+    void setContacts(const vector[c_mc_rbdyn.Contact]&)
     void addTask(c_qp.Task *)
     void addTask(c_mc_tasks.MetaTask *)
     void removeTask(c_qp.Task *)
