@@ -118,6 +118,8 @@ public:
    */
   MC_SOLVER_DLLAPI QPSolver(double timeStep, Backend backend);
 
+  virtual ~QPSolver() = default;
+
   /** Returns the backend for this solver instance */
   inline Backend backend() const noexcept
   {

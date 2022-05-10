@@ -16,7 +16,7 @@ namespace mc_solver
  *
  * This solver can accepts tasks and constraints from mc_rtc and Tasks types
  */
-struct MC_SOLVER_DLLAPI TasksQPSolver : public QPSolver
+struct MC_SOLVER_DLLAPI TasksQPSolver final : public QPSolver
 {
   TasksQPSolver(mc_rbdyn::RobotsPtr robots, double timeStep) : QPSolver(robots, timeStep, QPSolver::Backend::Tasks)
   {
@@ -27,6 +27,8 @@ struct MC_SOLVER_DLLAPI TasksQPSolver : public QPSolver
   {
     positive_lambda_constraint_.addToSolver(robots().mbs(), solver_);
   }
+
+  ~TasksQPSolver() final = default;
 
   using QPSolver::addTask;
 
