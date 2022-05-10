@@ -19,12 +19,22 @@
 namespace mc_solver
 {
 
-thread_local QPSolver::Backend QPSolver::context_backend = QPSolver::Backend::Unset;
+static thread_local QPSolver::Backend CONTEXT_BACKEND = QPSolver::Backend::Unset;
+
+QPSolver::Backend QPSolver::context_backend()
+{
+  return CONTEXT_BACKEND;
+}
+
+void QPSolver::context_backend(Backend backend)
+{
+  CONTEXT_BACKEND = backend;
+}
 
 QPSolver::QPSolver(mc_rbdyn::RobotsPtr robots, double timeStep, Backend backend)
 : backend_(backend), robots_p(robots), timeStep(timeStep)
 {
-  context_backend = backend_;
+  context_backend(backend_);
   if(timeStep <= 0)
   {
     mc_rtc::log::error_and_throw<std::invalid_argument>("timeStep has to be > 0! timeStep = {}", timeStep);

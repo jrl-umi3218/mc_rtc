@@ -124,7 +124,7 @@ public:
     return backend_;
   }
 
-  /** Contextual backend
+  /** Returns the current context backend
    *
    * This should be set whenever constraints or tasks are about to be created and it is known they don't use the solver
    * object and thus cannot determine the correct backend
@@ -135,7 +135,10 @@ public:
    * - MCGlobalController sets it before run
    * - You might need to set it if you create tasks in a thread you created
    */
-  static thread_local Backend context_backend;
+  static Backend context_backend();
+
+  /** Set the current context backend */
+  static void context_backend(Backend backend);
 
   /** Add a constraint set
    * \param cs Constraint set added to the solver

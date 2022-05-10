@@ -45,7 +45,7 @@ struct MC_SOLVER_DLLAPI MetaTask
   using Backend = mc_solver::QPSolver::Backend;
 
 public:
-  inline MetaTask() : backend_(mc_solver::QPSolver::context_backend) {}
+  inline MetaTask() : backend_(mc_solver::QPSolver::context_backend()) {}
 
   virtual ~MetaTask();
 

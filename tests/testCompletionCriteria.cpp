@@ -26,7 +26,7 @@ mc_rbdyn::Robots & get_robots()
   configureRobotLoader();
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   robots_ptr = mc_rbdyn::loadRobot(*rm);
-  mc_solver::QPSolver::context_backend = mc_solver::QPSolver::Backend::Tasks;
+  mc_solver::QPSolver::context_backend(mc_solver::QPSolver::Backend::Tasks);
   return *robots_ptr;
 }
 

@@ -9,7 +9,7 @@
 namespace mc_solver
 {
 
-ConstraintSet::ConstraintSet() : backend_(mc_solver::QPSolver::context_backend) {}
+ConstraintSet::ConstraintSet() : backend_(mc_solver::QPSolver::context_backend()) {}
 
 void ConstraintSet::addToSolver(mc_solver::QPSolver & solver)
 {

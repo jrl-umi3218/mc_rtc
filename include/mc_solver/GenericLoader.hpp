@@ -57,7 +57,7 @@ template<typename Derived, typename T>
 typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
                                                                           const mc_rtc::Configuration & config)
 {
-  mc_solver::QPSolver::context_backend = solver.backend();
+  mc_solver::QPSolver::context_backend(solver.backend());
   static auto & fns = get_fns();
   if(config.has("type"))
   {
