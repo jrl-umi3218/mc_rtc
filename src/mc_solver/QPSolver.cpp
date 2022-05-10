@@ -60,7 +60,9 @@ void QPSolver::addConstraintSet(ConstraintSet & cs)
 void QPSolver::removeConstraintSet(ConstraintSet & cs)
 {
   cs.removeFromSolver(*this);
-  auto it = std::find(dynamicsConstraints_.begin(), dynamicsConstraints_.end(), static_cast<DynamicsConstraint *>(&cs));
+  auto it = std::find_if(dynamicsConstraints_.begin(), dynamicsConstraints_.end(), [&cs](DynamicsConstraint * dyn) {
+    return static_cast<ConstraintSet *>(dyn) == static_cast<ConstraintSet *>(&cs);
+  });
   if(it != dynamicsConstraints_.end())
   {
     dynamicsConstraints_.erase(it);
