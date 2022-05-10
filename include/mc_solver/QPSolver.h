@@ -348,3 +348,27 @@ protected:
 };
 
 } // namespace mc_solver
+
+namespace fmt
+{
+
+template<>
+struct formatter<mc_solver::QPSolver::Backend> : public formatter<string_view>
+{
+  template<typename FormatContext>
+  auto format(const mc_solver::QPSolver::Backend & backend, FormatContext & ctx) -> decltype(ctx.out())
+  {
+    using Backend = mc_solver::QPSolver::Backend;
+    switch(backend)
+    {
+      case Backend::Tasks:
+        return formatter<string_view>::format("Tasks", ctx);
+      case Backend::Unset:
+        return formatter<string_view>::format("Unset", ctx);
+      default:
+        return formatter<string_view>::format("UNEXPECTED", ctx);
+    }
+  }
+};
+
+} // namespace fmt
