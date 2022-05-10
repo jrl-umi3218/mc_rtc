@@ -858,7 +858,7 @@ public:
    * underlying MCController instance fails to run
    *
    */
-  bool running;
+  bool running = false;
 
 public:
   /*! \brief Store the controller configuration */
