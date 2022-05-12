@@ -273,8 +273,16 @@ Robot & Robots::load(const std::string & name,
 
 RobotsPtr loadRobot(const RobotModule & module, sva::PTransformd * base, const std::string & baseName)
 {
+  return loadRobot(module, module.name, base, baseName);
+}
+
+RobotsPtr loadRobot(const RobotModule & module,
+                    const std::string & name,
+                    sva::PTransformd * base,
+                    const std::string & baseName)
+{
   auto robots = Robots::make();
-  robots->load(module.name, module, base, baseName);
+  robots->load(name, module, base, baseName);
   return robots;
 }
 

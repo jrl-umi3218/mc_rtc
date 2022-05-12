@@ -300,6 +300,11 @@ MC_RBDYN_DLLAPI RobotsPtr loadRobot(const RobotModule & module,
                                     sva::PTransformd * base = nullptr,
                                     const std::string & baseName = "");
 
+MC_RBDYN_DLLAPI RobotsPtr loadRobot(const RobotModule & module,
+                                    const std::string & name,
+                                    sva::PTransformd * base = nullptr,
+                                    const std::string & baseName = "");
+
 MC_RBDYN_DLLAPI RobotsPtr loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules);
 
 MC_RBDYN_DLLAPI RobotsPtr loadRobotAndEnv(const RobotModule & module,
