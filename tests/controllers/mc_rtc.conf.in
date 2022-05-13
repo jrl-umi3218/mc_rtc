@@ -14,7 +14,8 @@
   "LogTemplate" : "mc-rtc-test",
 
   "ClearControllerModulePath" : true,
-  "ControllerModulePaths" : ["@PYTHON_CONTROLLER_PATH@", "@TEST_CONTROLLER_PATH@"],
+  // Note: we have more paths than strictly needed here because we sometimes link with outside components and Windows does not have RPATH
+  "ControllerModulePaths" : ["@PYTHON_CONTROLLER_PATH@", "@OBSERVER_MODULE_PATH@", "@TEST_CONTROLLER_PATH@"],
   "ClearRobotModulePath" : true,
   "RobotModulePaths" : ["@ROBOT_MODULE_PATH@"],
   "ClearObserverModulePath": true,
