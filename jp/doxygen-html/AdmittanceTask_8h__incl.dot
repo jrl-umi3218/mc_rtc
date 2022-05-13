@@ -45,10 +45,8 @@ digraph "include/mc_tasks/AdmittanceTask.h"
   Node19 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node20 [label="memory",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node17 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node21 [label="mc_rtc/shared.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$shared_8h.html"];
+  Node21 [label="mc_rtc/shared.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$shared_8h.html"];
   Node21 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node21 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node22 [label="type_traits",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node17 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node23 [label="SpaceVecAlg/SpaceVecAlg",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node15 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -67,6 +65,8 @@ digraph "include/mc_tasks/AdmittanceTask.h"
   Node50 -> Node37 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node15 -> Node52 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node52 [label="mc_control/generic\l_gripper.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$generic__gripper_8h.html"];
+  Node52 -> Node53 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node53 [label="mc_control/api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__control_2api_8h.html"];
   Node52 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node52 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node52 -> Node37 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -88,6 +88,7 @@ digraph "include/mc_tasks/AdmittanceTask.h"
   Node13 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node13 -> Node59 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node59 [label="mc_solver/QPSolver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$QPSolver_8h.html"];
+  Node59 -> Node53 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node59 -> Node60 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node60 [label="mc_rbdyn/Contact.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$mc__rbdyn_2Contact_8h.html"];
   Node60 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

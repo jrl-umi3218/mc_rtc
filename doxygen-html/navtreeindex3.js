@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"logging_8h.html#ab85e3cb123f11bf1f9290abe17a7d49e":[4,0,0,6,14,17],
 "logging_8h.html#ac6c926a2075cbaa39c4e9d12a2cac7e2":[4,0,0,6,14,1],
 "logging_8h.html#ad8493c09711c1562481e104d334694db":[4,0,0,6,14,5],
 "logging_8h.html#ada5a572b2a8b25bcd9f471bc5c3c0787":[4,0,0,6,14,4],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "namespacemembers_w.html":[2,1,0,20],
 "namespacemembers_x.html":[2,1,0,21],
 "namespacemembers_y.html":[2,1,0,22],
-"namespacemembers_z.html":[2,1,0,23],
-"namespaceros.html":[2,0,11]
+"namespacemembers_z.html":[2,1,0,23]
 };

@@ -1969,6 +1969,13 @@
     </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI RobotsPtr</type>
+      <name>loadRobot</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>ae3659b38656d82eb22226ad6fd30cafb</anchor>
+      <arglist>(const RobotModule &amp;module, const std::string &amp;name, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI RobotsPtr</type>
       <name>loadRobots</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
       <anchor>a4db76cbebcf7d350a4b7182cccfbe399</anchor>
@@ -4323,6 +4330,7 @@
     <name>QPSolver.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_solver/</path>
     <filename>QPSolver_8h</filename>
+    <includes id="mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
     <includes id="mc__rbdyn_2Contact_8h" name="Contact.h" local="no" imported="no">mc_rbdyn/Contact.h</includes>
     <includes id="Robots_8h" name="Robots.h" local="no" imported="no">mc_rbdyn/Robots.h</includes>
     <includes id="pragma_8h" name="pragma.h" local="no" imported="no">mc_rtc/pragma.h</includes>
@@ -24399,45 +24407,45 @@
     <filename>structmc__solver_1_1QPSolver.html</filename>
     <class kind="struct">mc_solver::QPSolver::ControllerToken</class>
     <member kind="function">
-      <type></type>
+      <type>MC_SOLVER_DLLAPI</type>
       <name>QPSolver</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a17eb05fe304c3013b50c5020a546b6bd</anchor>
+      <anchor>a40e3bf9eb4bdd2f2b4d2c482f206ba74</anchor>
       <arglist>(mc_rbdyn::RobotsPtr robots, double timeStep)</arglist>
     </member>
     <member kind="function">
-      <type></type>
+      <type>MC_SOLVER_DLLAPI</type>
       <name>QPSolver</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>adb5af970ec8d5b46ddcf8af19bd205be</anchor>
+      <anchor>a4b3f9d294c1ad1203411fa185f3a35cb</anchor>
       <arglist>(double timeStep)</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_SOLVER_DLLAPI void</type>
       <name>addConstraintSet</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a37580a89d1a0d1a862dfb6b7240e6dd0</anchor>
+      <anchor>a1e3d38aeb4c5d492565ec7667654d630</anchor>
       <arglist>(ConstraintSet &amp;cs)</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_SOLVER_DLLAPI void</type>
       <name>removeConstraintSet</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a2d48a1aa9f88ea1c6873000df4299a1d</anchor>
+      <anchor>ae31cc48fc2985ef5db74dc0fe8d76cbf</anchor>
       <arglist>(ConstraintSet &amp;cs)</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_SOLVER_DLLAPI void</type>
       <name>addTask</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a8b2f689232445049015987d2ff4d78ce</anchor>
+      <anchor>ad4f86d6f7c7c31a8e1dcc79fc411ddf0</anchor>
       <arglist>(tasks::qp::Task *task)</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_SOLVER_DLLAPI void</type>
       <name>addTask</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a68cf69e4985228c83affeb35320c4c25</anchor>
+      <anchor>a6fd39c11568bc5612a0bfe79542b61f6</anchor>
       <arglist>(mc_tasks::MetaTask *task)</arglist>
     </member>
     <member kind="function">
@@ -24448,17 +24456,17 @@
       <arglist>(std::shared_ptr&lt; T &gt; task)</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_SOLVER_DLLAPI void</type>
       <name>removeTask</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a59755b6d2a453830d66a662767ff3923</anchor>
+      <anchor>abc5053189784daf51baa36dcb6af3ed0</anchor>
       <arglist>(tasks::qp::Task *task)</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_SOLVER_DLLAPI void</type>
       <name>removeTask</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a28e05133ff619c24f30a376e951fde51</anchor>
+      <anchor>aaf2641434099101d73499f8762cf3bc2</anchor>
       <arglist>(mc_tasks::MetaTask *task)</arglist>
     </member>
     <member kind="function">
@@ -24483,66 +24491,66 @@
       <arglist>(tasks::qp::ConstraintFunction&lt; Fun... &gt; *constraint)</arglist>
     </member>
     <member kind="function">
-      <type>std::pair&lt; int, const tasks::qp::BilateralContact &amp; &gt;</type>
+      <type>MC_SOLVER_DLLAPI std::pair&lt; int, const tasks::qp::BilateralContact &amp; &gt;</type>
       <name>contactById</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a9d3c5b0a375a038d88ebc4c0acb35afc</anchor>
+      <anchor>a91ed6a6e73c390bd0d45bfed117fe65e</anchor>
       <arglist>(const tasks::qp::ContactId &amp;id) const</arglist>
     </member>
     <member kind="function">
-      <type>Eigen::VectorXd</type>
+      <type>MC_SOLVER_DLLAPI Eigen::VectorXd</type>
       <name>lambdaVec</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>aba37f50ba476a2701c05b8aa737d9362</anchor>
+      <anchor>a78b4bf61e9260fab535081e82c1ea185</anchor>
       <arglist>(int cIndex) const</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_CONTROL_DLLAPI void</type>
       <name>setContacts</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>ae628e7f079f7ec8dd5ba2818ffe27adc</anchor>
+      <anchor>a0d184dba2fa9bc3a3b678dc382c1bf53</anchor>
       <arglist>(const std::vector&lt; mc_rbdyn::Contact &gt; &amp;contacts={})</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_SOLVER_DLLAPI void</type>
       <name>setContacts</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a02df620ab92182fa9f19fe706ecbd262</anchor>
+      <anchor>a93674083efb9f9813a947244d46d8a4f</anchor>
       <arglist>(ControllerToken, const std::vector&lt; mc_rbdyn::Contact &gt; &amp;contacts)</arglist>
     </member>
     <member kind="function">
-      <type>const std::vector&lt; mc_rbdyn::Contact &gt; &amp;</type>
+      <type>MC_SOLVER_DLLAPI const std::vector&lt; mc_rbdyn::Contact &gt; &amp;</type>
       <name>contacts</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a14141ec983c638fb3400c1ea23c19aed</anchor>
+      <anchor>a0d239ea17fea2fd33c386c118d020205</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>const std::vector&lt; mc_tasks::MetaTask * &gt; &amp;</type>
+      <type>MC_SOLVER_DLLAPI const std::vector&lt; mc_tasks::MetaTask * &gt; &amp;</type>
       <name>tasks</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>ae04be5acbc6d5470efc60889e4024290</anchor>
+      <anchor>a165e827caaeccdbb797c869c9679fa83</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>const sva::ForceVecd</type>
+      <type>MC_SOLVER_DLLAPI const sva::ForceVecd</type>
       <name>desiredContactForce</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a12c9bbc1231db2f16cfeced583d1c213</anchor>
+      <anchor>ac644cb4d8d7f787edb2c2ed7eb4e5b6b</anchor>
       <arglist>(const mc_rbdyn::Contact &amp;id) const</arglist>
     </member>
     <member kind="function">
-      <type>bool</type>
+      <type>MC_SOLVER_DLLAPI bool</type>
       <name>run</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>ab8f45ed05cf2852c592659d496b2acbb</anchor>
+      <anchor>a178982a05dc3127fc36571a7ee690871</anchor>
       <arglist>(FeedbackType fType=FeedbackType::None)</arglist>
     </member>
     <member kind="function">
-      <type>const QPResultMsg &amp;</type>
+      <type>MC_SOLVER_DLLAPI const QPResultMsg &amp;</type>
       <name>send</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a0b4e9a6b5015c188b1c3825f4e266bd0</anchor>
+      <anchor>a7abbf494eb3bf62e5b0e7a5e605be31a</anchor>
       <arglist>(double curTime=0)</arglist>
     </member>
     <member kind="function">
@@ -24553,157 +24561,157 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>const mc_rbdyn::Robot &amp;</type>
+      <type>MC_SOLVER_DLLAPI const mc_rbdyn::Robot &amp;</type>
       <name>robot</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a07536ec6c134bd3f335a382a0a87d55e</anchor>
+      <anchor>aa98635b99d2219bb0857bdbb4d2a3cb0</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>mc_rbdyn::Robot &amp;</type>
+      <type>MC_SOLVER_DLLAPI mc_rbdyn::Robot &amp;</type>
       <name>robot</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a9de399f8ca81b31588579ac59deb8d44</anchor>
+      <anchor>ac0e07c1e376b865abb08d40752a1529d</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>mc_rbdyn::Robot &amp;</type>
+      <type>MC_SOLVER_DLLAPI mc_rbdyn::Robot &amp;</type>
       <name>robot</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a50b2ba3514b0bd8fa4e4775f6a74fc73</anchor>
+      <anchor>a300dc8d59cc3cc107d2a8f50602a4eb9</anchor>
       <arglist>(unsigned int idx)</arglist>
     </member>
     <member kind="function">
-      <type>const mc_rbdyn::Robot &amp;</type>
+      <type>MC_SOLVER_DLLAPI const mc_rbdyn::Robot &amp;</type>
       <name>robot</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a71a644e823553814792909b06f00f6c6</anchor>
+      <anchor>ad638347d117292c80992907fa3987e62</anchor>
       <arglist>(unsigned int idx) const</arglist>
     </member>
     <member kind="function">
-      <type>const mc_rbdyn::Robot &amp;</type>
+      <type>MC_SOLVER_DLLAPI const mc_rbdyn::Robot &amp;</type>
       <name>env</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>af48a56a36d044fa4077f1c9e0ad69936</anchor>
+      <anchor>a6410d7e6079206897b978c319668d691</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>mc_rbdyn::Robot &amp;</type>
+      <type>MC_SOLVER_DLLAPI mc_rbdyn::Robot &amp;</type>
       <name>env</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>ae35ec2765a45413bcfebae5e57bcea5f</anchor>
+      <anchor>a6e230c0979ded77c655d5dd3fb1697a6</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>const mc_rbdyn::Robots &amp;</type>
+      <type>MC_SOLVER_DLLAPI const mc_rbdyn::Robots &amp;</type>
       <name>robots</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>aad5585a2e93a0dcac5f96b1ecf8cddf0</anchor>
+      <anchor>aa05a50ad56450233f609a2c5795e0d5e</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>mc_rbdyn::Robots &amp;</type>
+      <type>MC_SOLVER_DLLAPI mc_rbdyn::Robots &amp;</type>
       <name>robots</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>afadc51df1ed896ae8e1546bfb7443ffb</anchor>
+      <anchor>ac15c58029df06a459f77690e5ea88597</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>const mc_rbdyn::Robots &amp;</type>
+      <type>MC_SOLVER_DLLAPI const mc_rbdyn::Robots &amp;</type>
       <name>realRobots</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a6c9e02613427dd8ab79f833d4244186d</anchor>
+      <anchor>a0224fa714ad329b4318144467a816f55</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>mc_rbdyn::Robots &amp;</type>
+      <type>MC_SOLVER_DLLAPI mc_rbdyn::Robots &amp;</type>
       <name>realRobots</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>acac203b080dfbd7dbc680e4d9e8aaa3c</anchor>
+      <anchor>a365076660b04cca8dd06ac312a069bef</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_SOLVER_DLLAPI void</type>
       <name>updateNrVars</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>acd57fb80048c2f364bc216334ed148a8</anchor>
+      <anchor>a9e45dc648bbba7a5723ca91c72b219bb</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_SOLVER_DLLAPI void</type>
       <name>updateConstrSize</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>aff107d95b504492274cf0499aa4ddfa0</anchor>
+      <anchor>a683d51631f3959b6996ba10489b8beb0</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>double</type>
+      <type>MC_SOLVER_DLLAPI double</type>
       <name>dt</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>aaf2cd366ed6fa6e21e9cc6833e94cd70</anchor>
+      <anchor>a368e938f37d56497ac776a7bcd355ca4</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>tasks::qp::SolverData &amp;</type>
+      <type>MC_SOLVER_DLLAPI tasks::qp::SolverData &amp;</type>
       <name>data</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a74f4a76c8edd444c9c903392c196be8a</anchor>
+      <anchor>aa96580307ca6a79c0adcd82ecd12709b</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_SOLVER_DLLAPI void</type>
       <name>fillTorque</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a26f03d18cabc6bc384e4ca7a8e172637</anchor>
+      <anchor>a5665af17d69daae4124e9ecc18d5c6ec</anchor>
       <arglist>(const mc_solver::DynamicsConstraint &amp;dynamicsConstraint)</arglist>
     </member>
     <member kind="function">
-      <type>boost::timer::cpu_times</type>
+      <type>MC_SOLVER_DLLAPI boost::timer::cpu_times</type>
       <name>solveTime</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a58d895e4be36ff13a42b481f28576e38</anchor>
+      <anchor>a6bcd64c1db11fed0541072931d4bc701</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>boost::timer::cpu_times</type>
+      <type>MC_SOLVER_DLLAPI boost::timer::cpu_times</type>
       <name>solveAndBuildTime</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a53c4d41439ee0e428928a7318fde3f07</anchor>
+      <anchor>acbb003a3deae463d8b0a6eacada8f5bc</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>const Eigen::VectorXd &amp;</type>
+      <type>MC_SOLVER_DLLAPI const Eigen::VectorXd &amp;</type>
       <name>result</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a14b25f17d47d3f23079d557fd8d2fc6a</anchor>
+      <anchor>a6e09da4883cf68d3a65b19ca1e3d6409</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_SOLVER_DLLAPI void</type>
       <name>logger</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a6d2e5c1529e97fa15bff07a9092b1339</anchor>
+      <anchor>af7872f1a777a83acc8b7b90d819b3c1f</anchor>
       <arglist>(std::shared_ptr&lt; mc_rtc::Logger &gt; logger)</arglist>
     </member>
     <member kind="function">
-      <type>std::shared_ptr&lt; mc_rtc::Logger &gt;</type>
+      <type>MC_SOLVER_DLLAPI std::shared_ptr&lt; mc_rtc::Logger &gt;</type>
       <name>logger</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>ae805619eed38900664c15a1f3be7921f</anchor>
+      <anchor>a916e5e5cc5594f5cf77a0b09346972ee</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_SOLVER_DLLAPI void</type>
       <name>gui</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>ac015f44b8b157dafe8303dd295e10e8d</anchor>
+      <anchor>a0247b42e311947399d379e03d7d94c1a</anchor>
       <arglist>(std::shared_ptr&lt; mc_rtc::gui::StateBuilder &gt; gui)</arglist>
     </member>
     <member kind="function">
-      <type>std::shared_ptr&lt; mc_rtc::gui::StateBuilder &gt;</type>
+      <type>MC_SOLVER_DLLAPI std::shared_ptr&lt; mc_rtc::gui::StateBuilder &gt;</type>
       <name>gui</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>aaff0d1437fd451774eb7a306b2c5d464</anchor>
+      <anchor>ae2c915c75a4967d2648933eee52ce6e8</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
@@ -24728,10 +24736,10 @@
       <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
-      <type></type>
+      <type>MC_SOLVER_DLLAPI</type>
       <name>QPSolver</name>
       <anchorfile>structmc__solver_1_1QPSolver.html</anchorfile>
-      <anchor>a4f91d1d6ce556366149d3d947182e5f3</anchor>
+      <anchor>a6dd45a192634bf27c53f1057070bd20f</anchor>
       <arglist>()</arglist>
     </member>
   </compound>
@@ -39012,6 +39020,13 @@
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
       <anchor>a21b38aae31d7154631b41aafcec98326</anchor>
       <arglist>(const RobotModule &amp;module, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI RobotsPtr</type>
+      <name>loadRobot</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>ae3659b38656d82eb22226ad6fd30cafb</anchor>
+      <arglist>(const RobotModule &amp;module, const std::string &amp;name, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</arglist>
     </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI RobotsPtr</type>

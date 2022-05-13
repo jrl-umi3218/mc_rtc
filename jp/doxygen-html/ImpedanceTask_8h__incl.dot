@@ -90,6 +90,8 @@ digraph "include/mc_tasks/ImpedanceTask.h"
   Node47 [label="boost/stacktrace.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node22 -> Node61 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node61 [label="mc_solver/QPSolver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$QPSolver_8h.html"];
+  Node61 -> Node55 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node55 [label="mc_control/api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__control_2api_8h.html"];
   Node61 -> Node62 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node62 [label="mc_rbdyn/Contact.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$mc__rbdyn_2Contact_8h.html"];
   Node62 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -112,7 +114,7 @@ digraph "include/mc_tasks/ImpedanceTask.h"
   Node61 -> Node66 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node61 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node22 -> Node76 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node76 [label="mc_tasks/MetaTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$MetaTask_8h.html"];
+  Node76 [label="mc_tasks/MetaTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$MetaTask_8h.html"];
   Node76 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node76 -> Node77 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node77 [label="mc_rtc/gui/StateBuilder.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$StateBuilder_8h.html"];
@@ -125,8 +127,6 @@ digraph "include/mc_tasks/ImpedanceTask.h"
   Node76 -> Node61 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node76 -> Node65 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node76 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node76 -> Node93 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node93 [label="cmath",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node22 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node22 -> Node94 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node94 [label="Tasks/QPTasks.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];

@@ -32,7 +32,9 @@ digraph "include/mc_tasks/AddRemoveContactTask.h"
   Node14 [label="string",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node47 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node49 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node49 [label="mc_control/generic\l_gripper.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$generic__gripper_8h.html"];
+  Node49 [label="mc_control/generic\l_gripper.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$generic__gripper_8h.html"];
+  Node49 -> Node50 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node50 [label="mc_control/api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__control_2api_8h.html"];
   Node49 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node49 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node49 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -60,6 +62,7 @@ digraph "include/mc_tasks/AddRemoveContactTask.h"
   Node56 [label="mc_solver/BoundedSpeedConstr.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$BoundedSpeedConstr_8h.html"];
   Node56 -> Node57 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node57 [label="mc_solver/QPSolver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$QPSolver_8h.html"];
+  Node57 -> Node50 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node57 -> Node58 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node58 [label="mc_rbdyn/Contact.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$mc__rbdyn_2Contact_8h.html"];
   Node58 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -134,9 +137,6 @@ digraph "include/mc_tasks/AddRemoveContactTask.h"
   Node86 [label="StateBuilder.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node72 -> Node87 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node87 [label="mc_rtc/log/Logger.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Logger_8h.html"];
-  Node87 -> Node88 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node88 [label="mc_rtc/log/utils.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$log_2utils_8h.html"];
-  Node88 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node87 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node87 -> Node53 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node72 -> Node57 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

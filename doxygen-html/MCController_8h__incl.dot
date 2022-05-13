@@ -131,6 +131,7 @@ digraph "include/mc_control/MCController.h"
   Node0 -> Node131 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node132 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node132 [label="mc_solver/QPSolver.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$QPSolver_8h.html"];
+  Node132 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node132 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node132 -> Node52 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node132 -> Node130 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

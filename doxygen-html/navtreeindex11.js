@@ -1,5 +1,6 @@
 var NAVTREEINDEX11 =
 {
+"structmc__rtc_1_1Configuration.html#a32803cad64b14b34c620c9b5e37072a6":[3,0,7,3,60],
 "structmc__rtc_1_1Configuration.html#a337880690cd85f2717649b1cf2ff904a":[3,0,7,3,29],
 "structmc__rtc_1_1Configuration.html#a3c79c749a5aaec1610c8d6eb2f826c1e":[3,0,7,3,22],
 "structmc__rtc_1_1Configuration.html#a445f971b2ff6b0211f0dd9dac27acb7c":[3,0,7,3,12],
@@ -248,6 +249,5 @@ var NAVTREEINDEX11 =
 "structmc__rtc_1_1ObjectLoader.html#aae9bc7b4461a90a191a7c1bd8f82fc7e":[3,0,7,33,14],
 "structmc__rtc_1_1ObjectLoader.html#ab0fb7a187ae96e784f32978127824fd8":[3,0,7,33,8],
 "structmc__rtc_1_1ObjectLoader.html#ac2b5e003d3ccd4958a32a83f1981754c":[3,0,7,33,19],
-"structmc__rtc_1_1ObjectLoader.html#acab918dfa002205a257be3c638f94ff2":[3,0,7,33,12],
-"structmc__rtc_1_1ObjectLoader.html#adbc1003c6e200934f93eca0d42306fe5":[3,0,7,33,13]
+"structmc__rtc_1_1ObjectLoader.html#acab918dfa002205a257be3c638f94ff2":[3,0,7,33,12]
 };

@@ -165,7 +165,7 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function is called by <a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> when <a class="el" href="structmc__solver_1_1QPSolver.html#a37580a89d1a0d1a862dfb6b7240e6dd0">mc_solver::QPSolver::addConstraintSet</a> is called, it is expected that the implementation calls the safe variant of its wrapper constr: </p><pre class="fragment">&lt;wrapped-type&gt;::addToSolver(mbs, solver)
+<p>This function is called by <a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> when <a class="el" href="structmc__solver_1_1QPSolver.html#a1e3d38aeb4c5d492565ec7667654d630">mc_solver::QPSolver::addConstraintSet</a> is called, it is expected that the implementation calls the safe variant of its wrapper constr: </p><pre class="fragment">&lt;wrapped-type&gt;::addToSolver(mbs, solver)
 </pre> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mbs</td><td>The MultiBody vector controlled by the invoking <a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> </td></tr>
@@ -201,7 +201,7 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function is called by <a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> when <a class="el" href="structmc__solver_1_1QPSolver.html#a2d48a1aa9f88ea1c6873000df4299a1d">mc_solver::QPSolver::removeConstraintSet</a> is called, typically it would call: </p><pre class="fragment">&lt;wrapped-type&gt;::removeFromSolver(solver)
+<p>This function is called by <a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> when <a class="el" href="structmc__solver_1_1QPSolver.html#ae31cc48fc2985ef5db74dc0fe8d76cbf">mc_solver::QPSolver::removeConstraintSet</a> is called, typically it would call: </p><pre class="fragment">&lt;wrapped-type&gt;::removeFromSolver(solver)
 </pre> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">solver</td><td>The actual solver instance used by the invoking <a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> </td></tr>

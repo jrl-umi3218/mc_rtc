@@ -1,5 +1,6 @@
 var NAVTREEINDEX4 =
 {
+"namespaceros.html":[2,0,11],
 "namespaces.html":[2,0],
 "namespacesch.html":[2,0,12],
 "namespacesch.html":[3,0,11],
@@ -248,6 +249,5 @@ var NAVTREEINDEX4 =
 "structmc__control_1_1Gripper.html#a6e41d5e49c7dd4eb8e72abea2897eb58":[3,0,2,10,23],
 "structmc__control_1_1Gripper.html#a6fe10788bcdbf6760ab2d6aabe8afdad":[3,0,2,10,53],
 "structmc__control_1_1Gripper.html#a7095762206c00c3b8a3de9d54a981a2e":[3,0,2,10,21],
-"structmc__control_1_1Gripper.html#a76b99a848a82fb27651c5f81a8eea5b2":[3,0,2,10,6],
-"structmc__control_1_1Gripper.html#a7a77897e0cadfd9a41ec5a3500f77140":[3,0,2,10,61]
+"structmc__control_1_1Gripper.html#a76b99a848a82fb27651c5f81a8eea5b2":[3,0,2,10,6]
 };

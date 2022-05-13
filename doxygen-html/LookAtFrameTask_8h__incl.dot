@@ -34,6 +34,8 @@ digraph "include/mc_tasks/LookAtFrameTask.h"
   Node50 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 -> Node52 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node52 [label="mc_control/generic\l_gripper.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$generic__gripper_8h.html"];
+  Node52 -> Node53 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node53 [label="mc_control/api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__control_2api_8h.html"];
   Node52 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node52 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 -> Node54 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -71,6 +73,7 @@ digraph "include/mc_tasks/LookAtFrameTask.h"
   Node45 [label="boost/stacktrace.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node3 -> Node59 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node59 [label="mc_solver/QPSolver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$QPSolver_8h.html"];
+  Node59 -> Node53 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node59 -> Node60 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node60 [label="mc_rbdyn/Contact.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__rbdyn_2Contact_8h.html"];
   Node60 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -108,9 +111,6 @@ digraph "include/mc_tasks/LookAtFrameTask.h"
   Node70 [label="mc_solver/msg/Contact.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$mc__solver_2msg_2Contact_8h.html"];
   Node70 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node70 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node69 -> Node72 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node72 [label="mc_solver/msg/Robot.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$mc__solver_2msg_2Robot_8h.html"];
-  Node72 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node69 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node59 -> Node64 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node59 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
