@@ -30,8 +30,8 @@ SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::RobotFrame &
   switch(backend_)
   {
     case Backend::Tasks:
-      finalize<tasks::qp::TransformTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(), frame.position(),
-                                         frame.X_b_f());
+      finalize<Backend::Tasks, tasks::qp::TransformTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(),
+                                                         frame.position(), frame.X_b_f());
       break;
     default:
       mc_rtc::log::error_and_throw("[SplineTrajectoryTask] Not implemented for backend: {}", backend_);

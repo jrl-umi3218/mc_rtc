@@ -28,6 +28,7 @@ macro(install_mc_rtc_lib_common MC_LIB KWD)
   else()
     target_compile_options(${MC_LIB} ${KWD} -matomics -s USE_PTHREADS=1)
   endif()
+  target_compile_features(${MC_LIB} ${KWD} cxx_std_17)
   if(TREAT_WARNINGS_AS_ERRORS)
     if(MSVC)
       target_compile_options(${MC_LIB} ${KWD} $<BUILD_INTERFACE:/WX>)
@@ -211,6 +212,7 @@ mc_rbdyn/RobotFrame.cpp
 set(mc_rbdyn_HDR
 ../include/mc_rbdyn/api.h
 ../include/mc_rbdyn/fwd.h
+../include/mc_rbdyn/hat.h
 ../include/mc_rbdyn/Contact.h
 ../include/mc_rbdyn/contact_transform.h
 ../include/mc_rbdyn/CylindricalSurface.h
@@ -248,9 +250,65 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/JointSensor.h
 )
 
-add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
-set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_RBDYN_EXPORTS")
-target_link_libraries(mc_rbdyn PUBLIC RBDyn::Parsers Tasks::Tasks mc_rtc_loader mc_rtc_utils mc_filter GEOS::geos)
+set(mc_tvm_HDR_DIR ../include/mc_tvm)
+set(mc_tvm_HDR
+  ${mc_tvm_HDR_DIR}/api.h
+  ${mc_tvm_HDR_DIR}/CollisionFunction.h
+  ${mc_tvm_HDR_DIR}/CoM.h
+  ${mc_tvm_HDR_DIR}/CoMFunction.h
+  ${mc_tvm_HDR_DIR}/CoMInConvexFunction.h
+  ${mc_tvm_HDR_DIR}/CompoundJointFunction.h
+  ${mc_tvm_HDR_DIR}/ContactFunction.h
+  ${mc_tvm_HDR_DIR}/Convex.h
+  ${mc_tvm_HDR_DIR}/DynamicFunction.h
+  ${mc_tvm_HDR_DIR}/Frame.h
+  #${mc_tvm_HDR_DIR}/FrameErrorFunction.h
+  ${mc_tvm_HDR_DIR}/FrameVelocity.h
+  #${mc_tvm_HDR_DIR}/GazeFunction.h
+  ${mc_tvm_HDR_DIR}/Limits.h
+  ${mc_tvm_HDR_DIR}/JointsSelectorFunction.h
+  ${mc_tvm_HDR_DIR}/Momentum.h
+  ${mc_tvm_HDR_DIR}/MomentumFunction.h
+  ${mc_tvm_HDR_DIR}/OrientationFunction.h
+  ${mc_tvm_HDR_DIR}/PositionFunction.h
+  #${mc_tvm_HDR_DIR}/PositionBasedVisServoFunction.h
+  ${mc_tvm_HDR_DIR}/PostureFunction.h
+  ${mc_tvm_HDR_DIR}/Robot.h
+  ${mc_tvm_HDR_DIR}/RobotFrame.h
+  #${mc_tvm_HDR_DIR}/TransformFunction.h
+  #${mc_tvm_HDR_DIR}/VectorOrientationFunction.h
+  #${mc_tvm_HDR_DIR}/utils.h
+)
+set(mc_tvm_SRC
+  mc_tvm/CollisionFunction.cpp
+  mc_tvm/CoM.cpp
+  mc_tvm/CoMFunction.cpp
+  mc_tvm/CoMInConvexFunction.cpp
+  mc_tvm/CompoundJointFunction.cpp
+  mc_tvm/ContactFunction.cpp
+  mc_tvm/Convex.cpp
+  mc_tvm/DynamicFunction.cpp
+  mc_tvm/Frame.cpp
+  #mc_tvm/FrameErrorFunction.cpp
+  mc_tvm/FrameVelocity.cpp
+  #mc_tvm/GazeFunction.cpp
+  mc_tvm/JointsSelectorFunction.cpp
+  mc_tvm/Momentum.cpp
+  mc_tvm/MomentumFunction.cpp
+  mc_tvm/OrientationFunction.cpp
+  mc_tvm/PositionFunction.cpp
+  #mc_tvm/PositionBasedVisServoFunction.cpp
+  mc_tvm/PostureFunction.cpp
+  mc_tvm/Robot.cpp
+  mc_tvm/RobotFrame.cpp
+  #mc_tvm/TransformFunction.cpp
+  #mc_tvm/VectorOrientationFunction.cpp
+  #mc_tvm/utils.cpp
+)
+
+add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR} ${mc_tvm_SRC} ${mc_tvm_HDR})
+target_compile_definitions(mc_rbdyn PRIVATE "-DMC_RBDYN_EXPORTS" "-DMC_TVM_EXPORTS")
+target_link_libraries(mc_rbdyn PUBLIC RBDyn::Parsers Tasks::Tasks mc_rtc_loader mc_rtc_utils mc_filter GEOS::geos TVM::TVM)
 target_compile_definitions(mc_rbdyn PUBLIC -DUSE_UNSTABLE_GEOS_CPP_API)
 # qhull
 if(MC_RTC_BUILD_STATIC)
@@ -324,6 +382,7 @@ mc_solver/DynamicsConstraint.cpp
 mc_solver/KinematicsConstraint.cpp
 mc_solver/QPSolver.cpp
 mc_solver/TasksQPSolver.cpp
+mc_solver/TVMQPSolver.cpp
 mc_solver/Update.cpp
 mc_solver/UpdateNrVars.cpp
 mc_tasks/MetaTask.cpp
@@ -352,6 +411,7 @@ set(mc_solver_HDR
 ../include/mc_solver/InequalityConstraint.h
 ../include/mc_solver/QPSolver.h
 ../include/mc_solver/TasksQPSolver.h
+../include/mc_solver/TVMQPSolver.h
 ../include/mc_tasks/MetaTask.h
 )
 

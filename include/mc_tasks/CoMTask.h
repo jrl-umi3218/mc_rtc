@@ -63,7 +63,6 @@ protected:
 
 private:
   unsigned int robot_index_;
-  Eigen::Vector3d cur_com_;
 };
 
 } // namespace mc_tasks

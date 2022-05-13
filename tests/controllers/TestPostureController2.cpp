@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #ifdef BOOST_TEST_MAIN
@@ -17,7 +17,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestPostureController2 : public MCController
 {
 public:
-  TestPostureController2(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt) : MCController(rm, dt)
+  TestPostureController2(mc_rbdyn::RobotModulePtr rm, double dt) : MCController(rm, dt)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().size(), 2);

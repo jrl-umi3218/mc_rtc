@@ -6,6 +6,8 @@
 
 #include <mc_tasks/MetaTaskLoader.h>
 
+#include <mc_tvm/MomentumFunction.h>
+
 #include <mc_rbdyn/rpy_utils.h>
 
 #include <mc_rtc/gui/ArrayInput.h>
@@ -15,25 +17,23 @@
 namespace mc_tasks
 {
 
-inline static tasks::qp::MomentumTask * tasks_error(mc_rtc::void_ptr & ptr)
-{
-  return static_cast<tasks::qp::MomentumTask *>(ptr.get());
-}
-
-inline static const tasks::qp::MomentumTask * tasks_error(const mc_rtc::void_ptr & ptr)
-{
-  return static_cast<const tasks::qp::MomentumTask *>(ptr.get());
-}
+static inline mc_rtc::void_ptr_caster<tasks::qp::MomentumTask> tasks_error{};
+static inline mc_rtc::void_ptr_caster<mc_tvm::MomentumFunction> tvm_error{};
 
 MomentumTask::MomentumTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness, double weight)
 : TrajectoryTaskGeneric(robots, robotIndex, stiffness, weight)
 {
   auto & robot = robots.robot(robotIndex);
-  auto momentum = rbd::computeCentroidalMomentum(robot.mb(), robot.mbc(), robot.com());
   switch(backend_)
   {
     case Backend::Tasks:
-      finalize<tasks::qp::MomentumTask>(robots.mbs(), static_cast<int>(rIndex), momentum);
+    {
+      auto momentum = rbd::computeCentroidalMomentum(robot.mb(), robot.mbc(), robot.com());
+      finalize<Backend::Tasks, tasks::qp::MomentumTask>(robots.mbs(), static_cast<int>(rIndex), momentum);
+      break;
+    }
+    case Backend::TVM:
+      finalize<Backend::TVM, mc_tvm::MomentumFunction>(robot);
       break;
     default:
       mc_rtc::log::error_and_throw("[MomentumTask] Not implemented for solver backend: {}", backend_);
@@ -65,6 +65,8 @@ sva::ForceVecd MomentumTask::momentum() const
   {
     case Backend::Tasks:
       return tasks_error(errorT)->momentum();
+    case Backend::TVM:
+      return tvm_error(errorT)->momentum();
     default:
       mc_rtc::log::error_and_throw("Not implemented");
   }
@@ -76,6 +78,9 @@ void MomentumTask::momentum(const sva::ForceVecd & m)
   {
     case Backend::Tasks:
       tasks_error(errorT)->momentum(m);
+      break;
+    case Backend::TVM:
+      tvm_error(errorT)->momentum(m);
       break;
     default:
       mc_rtc::log::error_and_throw("Not implemented");
@@ -92,6 +97,10 @@ void MomentumTask::addToLogger(mc_rtc::Logger & logger)
     case Backend::Tasks:
       logger.addLogEntry(name_ + "_momentum", this,
                          [this]() { return sva::ForceVecd(momentum().vector() - tasks_error(errorT)->eval()); });
+      break;
+    case Backend::TVM:
+      logger.addLogEntry(name_ + "_momentum", this,
+                         [this]() -> const sva::ForceVecd & { return tvm_error(errorT)->algo().momentum(); });
       break;
     default:
       break;
@@ -114,8 +123,16 @@ void MomentumTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                                                  return this->momentum().vector()
                                                                         - tasks_error(this->errorT)->eval();
                                                                }));
+      break;
     }
-    break;
+    case Backend::TVM:
+    {
+      gui.addElement({"Tasks", name_}, mc_rtc::gui::ArrayLabel("momentum", {"cx", "cy", "cz", "fx", "fy", "fz"},
+                                                               [this]() -> const sva::ForceVecd & {
+                                                                 return tvm_error(errorT)->algo().momentum();
+                                                               }));
+      break;
+    }
     default:
       break;
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_tasks/PositionTask.h>
@@ -24,8 +24,11 @@ PositionTask::PositionTask(const mc_rbdyn::RobotFrame & frame, double stiffness,
   switch(backend_)
   {
     case Backend::Tasks:
-      finalize<tasks::qp::PositionTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(),
-                                        frame.position().translation(), frame.X_b_f().translation());
+      finalize<Backend::Tasks, tasks::qp::PositionTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(),
+                                                        frame.position().translation(), frame.X_b_f().translation());
+      break;
+    case Backend::TVM:
+      finalize<Backend::TVM, mc_tvm::PositionFunction>(frame);
       break;
     default:
       mc_rtc::log::error_and_throw("[PositionTask] Not implemented for backend: {}", backend_);

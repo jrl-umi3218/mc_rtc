@@ -26,7 +26,8 @@ PositionBasedVisServoTask::PositionBasedVisServoTask(const std::string & bodyNam
   switch(backend_)
   {
     case Backend::Tasks:
-      finalize<tasks::qp::PositionBasedVisServoTask>(robots.mbs(), static_cast<int>(rIndex), bodyName, X_t_s, X_b_s);
+      finalize<Backend::Tasks, tasks::qp::PositionBasedVisServoTask>(robots.mbs(), static_cast<int>(rIndex), bodyName,
+                                                                     X_t_s, X_b_s);
       break;
     default:
       mc_rtc::log::error_and_throw("[PBVSTask] Not implemented for solver backend: {}", backend_);
@@ -53,8 +54,8 @@ PositionBasedVisServoTask::PositionBasedVisServoTask(const mc_rbdyn::RobotFrame 
   switch(backend_)
   {
     case Backend::Tasks:
-      finalize<tasks::qp::PositionBasedVisServoTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(), X_t_s,
-                                                     frame.X_b_f());
+      finalize<Backend::Tasks, tasks::qp::PositionBasedVisServoTask>(robots.mbs(), static_cast<int>(rIndex),
+                                                                     frame.body(), X_t_s, frame.X_b_f());
       break;
     default:
       mc_rtc::log::error_and_throw("[PBVSTask] Not implemented for solver backend: {}", backend_);

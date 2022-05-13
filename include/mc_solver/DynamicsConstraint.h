@@ -6,6 +6,10 @@
 
 #include <mc_solver/KinematicsConstraint.h>
 
+#include <mc_tvm/DynamicFunction.h>
+
+#include <Tasks/QPMotionConstr.h>
+
 namespace mc_solver
 {
 
@@ -46,8 +50,25 @@ public:
                      double velocityPercent = 1.0,
                      bool infTorque = false);
 
-  /** Fill robot().jointTorque after solving the optimization problem */
-  void fillJointTorque(mc_solver::QPSolver & solver) const;
+  /** Returns the tasks::qp::MotionConstr
+   *
+   * This assumes the backend was Tasks
+   */
+  inline tasks::qp::MotionConstr & motionConstr() noexcept
+  {
+    assert(backend_ == QPSolver::Backend::Tasks);
+    return *static_cast<tasks::qp::MotionConstr *>(motion_constr_.get());
+  }
+
+  /** Returns the mc_tvm::DynamicFunction
+   *
+   * Assumes the backend was TVM
+   */
+  inline mc_tvm::DynamicFunction & dynamicFunction()
+  {
+    assert(backend_ == QPSolver::Backend::TVM);
+    return *static_cast<mc_tvm::DynamicFunction *>(motion_constr_.get());
+  }
 
   void addToSolverImpl(QPSolver & solver) override;
 
@@ -63,6 +84,9 @@ protected:
    *
    * In Tasks backend:
    * - tasks::qp::MotionConstr or a derived constraint if the robot has flexibilities
+   *
+   * In TVM backend:
+   * - mc_tvm::DynamicFunction
    */
   mc_rtc::void_ptr motion_constr_;
   /** Robot index for the constraint */

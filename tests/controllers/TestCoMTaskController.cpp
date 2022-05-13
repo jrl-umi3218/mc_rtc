@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #ifdef BOOST_TEST_MAIN
@@ -18,7 +18,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestCoMTaskController : public MCController
 {
 public:
-  TestCoMTaskController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt) : MCController(rm, dt)
+  TestCoMTaskController(mc_rbdyn::RobotModulePtr rm, double dt, Backend backend) : MCController(rm, dt, backend)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().size(), 2);
@@ -93,7 +93,7 @@ public:
       /* Check that the task is "finished" */
       BOOST_CHECK_SMALL(comTask->speed().norm(), 1e-2);
 
-      /* And that RLEG_JOINT3 didn't move. Note that the error is not so
+      /* And that R_KNEE didn't move. Note that the error is not so
        * small because of other tasks' interaction */
       double current_rkj = robot().mbc().q[robot().jointIndexByName("R_KNEE")][0];
       BOOST_CHECK_SMALL(fabs(orig_rkj - current_rkj), 1e-2);
@@ -120,4 +120,9 @@ private:
 
 } // namespace mc_control
 
-SIMPLE_CONTROLLER_CONSTRUCTOR("TestCoMTaskController", mc_control::TestCoMTaskController)
+using Controller = mc_control::TestCoMTaskController;
+using Backend = mc_control::MCController::Backend;
+MULTI_CONTROLLERS_CONSTRUCTOR("TestCoMTaskController",
+                              Controller(rm, dt, Backend::Tasks),
+                              "TestCoMTaskController_TVM",
+                              Controller(rm, dt, Backend::TVM))

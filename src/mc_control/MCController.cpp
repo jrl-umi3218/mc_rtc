@@ -19,6 +19,7 @@
 #include <mc_tasks/MetaTaskLoader.h>
 
 #include <mc_solver/ConstraintSetLoader.h>
+#include <mc_solver/TVMQPSolver.h>
 #include <mc_solver/TasksQPSolver.h>
 
 #include <RBDyn/FK.h>
@@ -45,7 +46,7 @@ namespace mc_control
 Contact Contact::from_mc_rbdyn(const MCController & ctl, const mc_rbdyn::Contact & contact)
 {
 
-  Eigen::Vector6d dof = Eigen::Vector6d::Ones();
+  Eigen::Vector6d dof = contact.dof();
   if(ctl.solver().backend() == MCController::Backend::Tasks)
   {
     const auto cId = contact.contactId(ctl.robots());
@@ -89,6 +90,8 @@ static inline std::shared_ptr<mc_solver::QPSolver> make_solver(double dt, MCCont
   {
     case MCController::Backend::Tasks:
       return std::make_shared<mc_solver::TasksQPSolver>(dt);
+    case MCController::Backend::TVM:
+      return std::make_shared<mc_solver::TVMQPSolver>(dt);
     default:
       mc_rtc::log::error_and_throw("[MCController] Backend {} is not fully supported yet", backend);
   }
@@ -803,9 +806,10 @@ void MCController::updateContacts()
       auto r1Index = robot(c.r1).robotIndex();
       auto r2Index = robot(c.r2).robotIndex();
       contacts.emplace_back(robots(), r1Index, r2Index, c.r1Surface, c.r2Surface, c.friction);
-      auto cId = contacts.back().contactId(robots());
+      contacts.back().dof(c.dof);
       if(solver().backend() == Backend::Tasks)
       {
+        auto cId = contacts.back().contactId(robots());
         contact_constraint_->contactConstr()->addDofContact(cId, c.dof.asDiagonal());
       }
       auto & table_data = contacts_table_[table_idx];

@@ -46,8 +46,8 @@ VectorOrientationTask::VectorOrientationTask(const mc_rbdyn::RobotFrame & frame,
   switch(backend_)
   {
     case Backend::Tasks:
-      finalize<tasks::qp::VectorOrientationTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(), bodyVector,
-                                                 bodyVector);
+      finalize<Backend::Tasks, tasks::qp::VectorOrientationTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(),
+                                                                 bodyVector, bodyVector);
       break;
     default:
       mc_rtc::log::error_and_throw("[VectorOrientationTask] Not implemented for solver backend: {}", backend_);

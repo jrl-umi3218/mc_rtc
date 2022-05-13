@@ -33,8 +33,8 @@ TransformTask::TransformTask(const mc_rbdyn::RobotFrame & frame, double stiffnes
   switch(backend_)
   {
     case Backend::Tasks:
-      finalize<tasks::qp::SurfaceTransformTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(), frame.position(),
-                                                frame.X_b_f());
+      finalize<Backend::Tasks, tasks::qp::SurfaceTransformTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(),
+                                                                frame.position(), frame.X_b_f());
       break;
     default:
       mc_rtc::log::error_and_throw("[TransformTask] Not implemented for solver backend: {}", backend_);

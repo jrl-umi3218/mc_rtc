@@ -141,7 +141,7 @@ struct MC_SOLVER_DLLAPI TasksQPSolver final : public QPSolver
 
   double solveAndBuildTime() final;
 
-  const Eigen::VectorXd & result() const final;
+  const Eigen::VectorXd & result() const;
 
 private:
   /** The actual solver instance */
@@ -184,7 +184,14 @@ private:
   std::vector<std::vector<std::vector<double>>> control_q_{};
   std::vector<std::vector<std::vector<double>>> control_alpha_{};
 
+  /** Holds dynamics constraint currently in the solver */
+  std::vector<mc_solver::DynamicsConstraint *> dynamicsConstraints_;
+
   bool run_impl(FeedbackType fType = FeedbackType::None) final;
+
+  void addDynamicsConstraint(mc_solver::DynamicsConstraint * dynamics) final;
+
+  void removeDynamicsConstraint(mc_solver::ConstraintSet * maybe_dynamics) final;
 };
 
 /** Helper to get a \ref TasksQPSolver from a \ref QPSolver instance

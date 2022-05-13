@@ -2,6 +2,8 @@
 
 #include <mc_rbdyn/Robot.h>
 
+#include <mc_tvm/Frame.h>
+
 namespace mc_rbdyn
 {
 
@@ -22,6 +24,8 @@ Frame::Frame(NewFrameToken tkn, const std::string & name, Frame & parent, sva::P
   }
 }
 
+Frame::~Frame() = default;
+
 FramePtr Frame::make(const std::string & name, Frame & parent, sva::PTransformd X_p_f, bool baked)
 {
   auto robot_frame = dynamic_cast<RobotFrame *>(&parent);
@@ -31,6 +35,11 @@ FramePtr Frame::make(const std::string & name, Frame & parent, sva::PTransformd 
     return robot.makeFrame(name, *robot_frame, X_p_f, baked);
   }
   return std::make_shared<Frame>(NewFrameToken{}, name, parent, X_p_f, baked);
+}
+
+void Frame::init_tvm_frame() const
+{
+  tvm_frame_.reset(new mc_tvm::Frame(mc_tvm::Frame::NewFrameToken{}, *this));
 }
 
 } // namespace mc_rbdyn

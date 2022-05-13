@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #ifdef BOOST_TEST_MAIN
@@ -17,7 +17,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestPostureController : public MCController
 {
 public:
-  TestPostureController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt) : MCController(rm, dt)
+  TestPostureController(mc_rbdyn::RobotModulePtr rm, double dt, Backend backend) : MCController(rm, dt, backend)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().size(), 2);
@@ -25,7 +25,11 @@ public:
     BOOST_CHECK_EQUAL(robot().name(), "jvrc1");
     qpsolver->addConstraintSet(contactConstraint);
     qpsolver->addConstraintSet(kinematicsConstraint);
+    qpsolver->addConstraintSet(selfCollisionConstraint);
+    qpsolver->addConstraintSet(*compoundJointConstraint);
     postureTask->stiffness(200.0);
+    mc_rtc::log::critical("POSTURE TASK stiffness: {}", postureTask->stiffness());
+    mc_rtc::log::critical("POSTURE TASK damping: {}", postureTask->damping());
     qpsolver->addTask(postureTask.get());
     qpsolver->setContacts({});
     BOOST_CHECK(robot().hasJoint("NECK_P"));
@@ -41,6 +45,8 @@ public:
     BOOST_CHECK(ret);
     if(nrIter == 250)
     {
+      mc_rtc::log::critical("robot().mbc().q[head_joint_index][0]: {}", robot().mbc().q[head_joint_index][0]);
+      mc_rtc::log::critical("head_joint_target: {}", head_joint_target);
       BOOST_CHECK_SMALL(robot().mbc().q[head_joint_index][0] - head_joint_target, 0.05);
 
       neckTask_ = std::make_shared<mc_tasks::PostureTask>(solver(), 0);
@@ -69,6 +75,8 @@ public:
   {
     MCController::reset(reset_data);
     postureTask->target({{"NECK_P", {head_joint_target}}});
+    mc_rtc::log::critical("POSTURE TASK stiffness: {}", postureTask->stiffness());
+    mc_rtc::log::critical("POSTURE TASK damping: {}", postureTask->damping());
   }
 
 private:
@@ -80,4 +88,9 @@ private:
 
 } // namespace mc_control
 
-SIMPLE_CONTROLLER_CONSTRUCTOR("TestPostureController", mc_control::TestPostureController)
+using Controller = mc_control::TestPostureController;
+using Backend = mc_control::MCController::Backend;
+MULTI_CONTROLLERS_CONSTRUCTOR("TestPostureController",
+                              Controller(rm, dt, Backend::Tasks),
+                              "TestPostureController_TVM",
+                              Controller(rm, dt, Backend::TVM))

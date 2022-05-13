@@ -80,7 +80,7 @@ states:
         constraints:
           - body: l_wrist
             dof: [1, 1, 1, 1, 1, 1]
-            speed: [0, 0, 0, 0, 0, 0.001]
+            speed: [0, 0, 0, 0, 0, 0.01]
     tasks:
       CoM:
         type: com

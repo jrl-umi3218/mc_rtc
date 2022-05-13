@@ -4,6 +4,8 @@
 #include <mc_rtc/log/Logger.h>
 
 #include <mc_solver/ConstraintSet.h>
+#include <mc_solver/DynamicsConstraint.h>
+
 #include <mc_tasks/MetaTask.h>
 
 #include <boost/chrono.hpp>
@@ -157,22 +159,40 @@ const sva::ForceVecd TasksQPSolver::desiredContactForce(const mc_rbdyn::Contact 
 
 bool TasksQPSolver::run_impl(FeedbackType fType)
 {
+  bool success = false;
   switch(fType)
   {
     case FeedbackType::None:
-      return runOpenLoop();
+      success = runOpenLoop();
+      break;
+
     case FeedbackType::Joints:
-      return runJointsFeedback(false);
+      success = runJointsFeedback(false);
+      break;
+
     case FeedbackType::JointsWVelocity:
-      return runJointsFeedback(true);
+      success = runJointsFeedback(true);
+      break;
+
     case FeedbackType::ObservedRobots:
-      return runClosedLoop(true);
+      success = runClosedLoop(true);
+      break;
+
     case FeedbackType::ClosedLoopIntegrateReal:
-      return runClosedLoop(false);
+      success = runClosedLoop(false);
+      break;
+
     default:
       mc_rtc::log::error("FeedbackType set to unknown value");
-      return false;
+      success = false;
+      break;
   }
+  for(auto * dyn : dynamicsConstraints_)
+  {
+    dyn->motionConstr().computeTorque(solver_.alphaDVec(), solver_.lambdaVec());
+    rbd::vectorToParam(dyn->motionConstr().torque(), robot(dyn->robotIndex()).mbc().jointTorque);
+  }
+  return success;
 }
 
 bool TasksQPSolver::runOpenLoop()
@@ -369,6 +389,21 @@ double TasksQPSolver::solveAndBuildTime()
 const Eigen::VectorXd & TasksQPSolver::result() const
 {
   return solver_.result();
+}
+
+void TasksQPSolver::addDynamicsConstraint(mc_solver::DynamicsConstraint * dynamics)
+{
+  dynamicsConstraints_.push_back(dynamics);
+}
+
+void TasksQPSolver::removeDynamicsConstraint(mc_solver::ConstraintSet * cs)
+{
+  auto it = std::find_if(dynamicsConstraints_.begin(), dynamicsConstraints_.end(),
+                         [&cs](DynamicsConstraint * dyn) { return static_cast<ConstraintSet *>(dyn) == cs; });
+  if(it != dynamicsConstraints_.end())
+  {
+    dynamicsConstraints_.erase(it);
+  }
 }
 
 } // namespace mc_solver

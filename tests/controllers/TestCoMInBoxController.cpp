@@ -66,7 +66,7 @@ static std::vector<std::vector<Eigen::Vector3d>> makeCubePolygon(const Eigen::Ve
 struct MC_CONTROL_DLLAPI TestCoMInBoxController : public MCController
 {
 public:
-  TestCoMInBoxController(mc_rbdyn::RobotModulePtr rm, double dt) : MCController(rm, dt)
+  TestCoMInBoxController(mc_rbdyn::RobotModulePtr rm, double dt, Backend backend) : MCController(rm, dt, backend)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().size(), 2);
@@ -159,4 +159,9 @@ private:
 
 } // namespace mc_control
 
-SIMPLE_CONTROLLER_CONSTRUCTOR("TestCoMInBoxController", mc_control::TestCoMInBoxController)
+using Controller = mc_control::TestCoMInBoxController;
+using Backend = mc_control::MCController::Backend;
+MULTI_CONTROLLERS_CONSTRUCTOR("TestCoMInBoxController",
+                              Controller(rm, dt, Backend::Tasks),
+                              "TestCoMInBoxController_TVM",
+                              Controller(rm, dt, Backend::TVM))

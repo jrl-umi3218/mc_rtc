@@ -50,7 +50,10 @@ struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
 {
   friend struct Executor;
 
-  Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, const mc_rtc::Configuration & config);
+  Controller(mc_rbdyn::RobotModulePtr rm,
+             double dt,
+             const mc_rtc::Configuration & config,
+             Backend backend = Backend::Tasks);
 
   ~Controller() override;
 

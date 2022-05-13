@@ -95,6 +95,9 @@ public:
    *
    * In Tasks backend:
    * - tasks::qp::CollisionConstr
+   *
+   * In TVM backend:
+   * - details::TVMCollisionConstraint
    */
   mc_rtc::void_ptr constraint_;
   /** Index of the first robot affected by the constraint */
@@ -112,7 +115,7 @@ private:
   int __createCollId(const mc_rbdyn::Collision & col);
   std::pair<int, mc_rbdyn::Collision> __popCollId(const std::string & name1, const std::string & name2);
   /** Actually adds the collision to the constraint, handles id creation and wildcard support */
-  void __addCollision(const mc_solver::QPSolver & solver, const mc_rbdyn::Collision & col);
+  void __addCollision(mc_solver::QPSolver & solver, const mc_rbdyn::Collision & col);
 
   /* Internal management for collision display */
   std::unordered_set<int> monitored_;

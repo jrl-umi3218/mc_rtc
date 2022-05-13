@@ -7,7 +7,10 @@
 #include <mc_rtc/logging.h>
 
 #include <mc_solver/ConstraintSetLoader.h>
+#include <mc_solver/TVMQPSolver.h>
 #include <mc_solver/TasksQPSolver.h>
+
+#include <mc_tvm/CompoundJointFunction.h>
 
 namespace mc_solver
 {
@@ -100,6 +103,40 @@ std::string CompoundJointConstraint::descInEq(const std::vector<rbd::MultiBody> 
   return ss.str();
 }
 
+struct TVMCompoundJointConstraint
+{
+  std::vector<mc_tvm::CompoundJointFunctionPtr> functions_;
+  std::vector<tvm::TaskWithRequirementsPtr> constraints_;
+
+  TVMCompoundJointConstraint(const mc_rbdyn::Robot & robot)
+  {
+    const auto & descs = robot.module().compoundJoints();
+    functions_.reserve(descs.size());
+    constraints_.reserve(functions_.size());
+    for(const auto & cstr : descs)
+    {
+      functions_.push_back(std::make_shared<mc_tvm::CompoundJointFunction>(robot, cstr));
+    }
+  }
+
+  void addToSolver(mc_solver::TVMQPSolver & solver)
+  {
+    for(const auto & f : functions_)
+    {
+      constraints_.push_back(solver.problem().add(f <= 0.));
+    }
+  }
+
+  void removeFromSolver(mc_solver::TVMQPSolver & solver)
+  {
+    for(const auto & c : constraints_)
+    {
+      solver.problem().remove(*c);
+    }
+    constraints_.clear();
+  }
+};
+
 } // namespace details
 
 static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend,
@@ -113,6 +150,10 @@ static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend,
     case QPSolver::Backend::Tasks:
     {
       return mc_rtc::make_void_ptr<details::CompoundJointConstraint>(robots, rIndex, dt, cs);
+    }
+    case QPSolver::Backend::TVM:
+    {
+      return mc_rtc::make_void_ptr<details::TVMCompoundJointConstraint>(robots.robot(rIndex));
     }
     default:
       mc_rtc::log::error_and_throw("[CompoundJointConstraint] Not implemented for solver backend: {}", backend);
@@ -140,6 +181,9 @@ void CompoundJointConstraint::addToSolverImpl(QPSolver & solver)
       static_cast<details::CompoundJointConstraint *>(constraint_.get())
           ->addToSolver(solver.robots().mbs(), tasks_solver(solver).solver());
       break;
+    case QPSolver::Backend::TVM:
+      static_cast<details::TVMCompoundJointConstraint *>(constraint_.get())->addToSolver(tvm_solver(solver));
+      break;
     default:
       break;
   }
@@ -152,6 +196,9 @@ void CompoundJointConstraint::removeFromSolverImpl(QPSolver & solver)
     case QPSolver::Backend::Tasks:
       static_cast<details::CompoundJointConstraint *>(constraint_.get())
           ->removeFromSolver(tasks_solver(solver).solver());
+      break;
+    case QPSolver::Backend::TVM:
+      static_cast<details::TVMCompoundJointConstraint *>(constraint_.get())->removeFromSolver(tvm_solver(solver));
       break;
     default:
       break;

@@ -2,7 +2,7 @@
 # Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.10)
 if(POLICY CMP0063)
   cmake_policy(SET CMP0063 NEW)
 endif()
@@ -89,6 +89,7 @@ endif()
 
 add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer ${BOOST_STACKTRACE})
 add_project_dependency(Tasks REQUIRED)
+add_project_dependency(TVM REQUIRED)
 if(NOT TARGET RBDyn::Parsers)
   message(FATAL_ERROR "RBDyn must be built with parsers support")
 endif()

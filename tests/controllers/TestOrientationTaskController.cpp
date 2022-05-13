@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #ifdef BOOST_TEST_MAIN
@@ -24,7 +24,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestOrientationTaskController : public MCController
 {
 public:
-  TestOrientationTaskController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt) : MCController(rm, dt)
+  TestOrientationTaskController(mc_rbdyn::RobotModulePtr rm, double dt, Backend backend) : MCController(rm, dt, backend)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().size(), 2);
@@ -35,8 +35,8 @@ public:
     postureTask->stiffness(1);
     postureTask->weight(1);
     solver().addTask(postureTask.get());
-    solver().setContacts(
-        {mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"), mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
+    addContact({"jvrc1", "ground", "LeftFoot", "AllGround"});
+    addContact({"jvrc1", "ground", "RightFoot", "AllGround"});
 
     /* Create and add the position task with the default stiffness/weight */
     oriTask = std::make_shared<mc_tasks::OrientationTask>("R_WRIST_Y_S", robots(), 0);
@@ -51,6 +51,10 @@ public:
   virtual bool run() override
   {
     bool ret = MCController::run();
+    if(!ret)
+    {
+      mc_rtc::log::critical("Failed at {}", nrIter);
+    }
     BOOST_CHECK(ret);
     nrIter++;
     if(nrIter == 1500)
@@ -131,4 +135,9 @@ private:
 
 } // namespace mc_control
 
-SIMPLE_CONTROLLER_CONSTRUCTOR("TestOrientationTaskController", mc_control::TestOrientationTaskController)
+using Controller = mc_control::TestOrientationTaskController;
+using Backend = mc_control::MCController::Backend;
+MULTI_CONTROLLERS_CONSTRUCTOR("TestOrientationTaskController",
+                              Controller(rm, dt, Backend::Tasks),
+                              "TestOrientationTaskController_TVM",
+                              Controller(rm, dt, Backend::TVM))

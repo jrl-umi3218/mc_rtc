@@ -12,11 +12,16 @@
 
 #include <mc_rtc/void_ptr.h>
 
+#include <mc/rtc/deprecated.hh>
+
 namespace mc_solver
 {
 
 /** \class CoMIncPlaneConstr
- * \brief Wrapper around tasks::qp::CoMIncPlaneConstr
+ *
+ *  For every plane provided to this constraint, this ensures that the robot's
+ *  CoM remains on the positive side of this plane.
+ *
  */
 struct MC_SOLVER_DLLAPI CoMIncPlaneConstr : public ConstraintSet
 {
@@ -53,6 +58,9 @@ private:
    *
    * In Tasks backend:
    * - tasks::qp::CoMIncPlaneConstr
+   *
+   * In TVM backend:
+   * - details::TVMCoMIncPlaneConstr
    */
   mc_rtc::void_ptr constraint_;
 };

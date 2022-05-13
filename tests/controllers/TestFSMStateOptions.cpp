@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #ifdef BOOST_TEST_MAIN
@@ -22,8 +22,11 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestFSMStateOptionsController : public fsm::Controller
 {
 public:
-  TestFSMStateOptionsController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & conf)
-  : fsm::Controller(rm, dt, conf)
+  TestFSMStateOptionsController(mc_rbdyn::RobotModulePtr rm,
+                                double dt,
+                                const mc_rtc::Configuration & conf,
+                                Backend backend)
+  : fsm::Controller(rm, dt, conf, backend)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().size(), 2);
@@ -79,9 +82,9 @@ public:
       BOOST_REQUIRE(executor_.state() == "TestConstraintsAndTasks");
       // There is now a constraint to set l_wrist speed to a constant
       auto bIndex = robot().bodyIndexByName("l_wrist");
-      auto speed = robot().bodyVelW()[bIndex].vector();
+      auto speed = robot().bodyVelB()[bIndex].vector();
       Eigen::Vector6d ref = Eigen::Vector6d::Zero();
-      ref(5) = 0.001;
+      ref(5) = 0.01;
       BOOST_REQUIRE((speed - ref).norm() < 5e-4);
       BOOST_REQUIRE(hasTask<mc_tasks::CoMTask>());
     }
@@ -150,4 +153,9 @@ private:
 
 } // namespace mc_control
 
-CONTROLLER_CONSTRUCTOR("TestFSMStateOptions", mc_control::TestFSMStateOptionsController)
+using Controller = mc_control::TestFSMStateOptionsController;
+using Backend = mc_control::MCController::Backend;
+MULTI_CONTROLLERS_CONSTRUCTOR("TestFSMStateOptions",
+                              Controller(rm, dt, config, Backend::Tasks),
+                              "TestFSMStateOptions_TVM",
+                              Controller(rm, dt, config, Backend::TVM))

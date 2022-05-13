@@ -7,8 +7,11 @@
 #include <mc_solver/ConstraintSetLoader.h>
 #include <mc_solver/TasksQPSolver.h>
 
+#include <mc_tvm/DynamicFunction.h>
+
 #include <Tasks/Bounds.h>
-#include <Tasks/QPMotionConstr.h>
+
+#include "TVMKinematicsConstraint.h"
 
 namespace mc_solver
 {
@@ -73,6 +76,11 @@ static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots,
   }
 }
 
+mc_rtc::void_ptr initialize_tvm(const mc_rbdyn::Robot & robot)
+{
+  return mc_rtc::make_void_ptr<mc_tvm::DynamicFunction>(robot);
+}
+
 static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
                                    const mc_rbdyn::Robots & robots,
                                    unsigned int robotIndex,
@@ -83,6 +91,8 @@ static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
   {
     case QPSolver::Backend::Tasks:
       return initialize_tasks(robots, robotIndex, timeStep, infTorque);
+    case QPSolver::Backend::TVM:
+      return initialize_tvm(robots.robot(robotIndex));
     default:
       mc_rtc::log::error_and_throw("[DynamicsConstraint] Not implemented for solver backend: {}", backend);
   }
@@ -117,6 +127,23 @@ void DynamicsConstraint::addToSolverImpl(QPSolver & solver)
       static_cast<tasks::qp::MotionConstr *>(motion_constr_.get())
           ->addToSolver(solver.robots().mbs(), static_cast<TasksQPSolver &>(solver).solver());
       break;
+    case QPSolver::Backend::TVM:
+    {
+      auto & constraints_ = static_cast<TVMKinematicsConstraint *>(constraint_.get())->constraints_;
+      auto & problem = tvm_solver(solver).problem();
+      auto & tvm_robot = solver.robot(robotIndex_).tvmRobot();
+      auto tL = problem.add(tvm_robot.limits().tl <= tvm_robot.tau() <= tvm_robot.limits().tu,
+                            tvm::task_dynamics::None(), {tvm::requirements::PriorityLevel(0)});
+      constraints_.push_back(tL);
+      // FIXME We should be able to create proto task in TVM using reference or pointers
+      auto dyn_fn = static_cast<mc_tvm::DynamicFunction *>(motion_constr_.get());
+      std::shared_ptr<mc_tvm::DynamicFunction> dyn_fn_ptr(dyn_fn, [](mc_tvm::DynamicFunction *) {});
+      auto dyn = problem.add(dyn_fn_ptr == 0., tvm::task_dynamics::None(), {tvm::requirements::PriorityLevel(0)});
+      constraints_.push_back(dyn);
+      auto cstr = problem.constraint(*dyn);
+      problem.add(tvm::hint::Substitution(cstr, tvm_robot.tau()));
+    }
+    break;
     default:
       break;
   }
@@ -124,40 +151,23 @@ void DynamicsConstraint::addToSolverImpl(QPSolver & solver)
 
 void DynamicsConstraint::removeFromSolverImpl(QPSolver & solver)
 {
-  KinematicsConstraint::removeFromSolverImpl(solver);
   switch(backend_)
   {
     case QPSolver::Backend::Tasks:
+    {
+      KinematicsConstraint::removeFromSolverImpl(solver);
       static_cast<tasks::qp::MotionConstr *>(motion_constr_.get())
           ->removeFromSolver(static_cast<TasksQPSolver &>(solver).solver());
       break;
-    default:
+    }
+    case QPSolver::Backend::TVM:
+    {
+      auto & constr = *static_cast<TVMKinematicsConstraint *>(constraint_.get());
+      auto & problem = tvm_solver(solver).problem();
+      problem.removeSubstitutionFor(*problem.constraint(*constr.constraints_.back()));
+      KinematicsConstraint::removeFromSolverImpl(solver);
       break;
-  }
-}
-
-namespace
-{
-
-void fillJointTorqueImpl(tasks::qp::MotionConstr & motionConstr,
-                         const tasks::qp::QPSolver & solver,
-                         std::vector<std::vector<double>> & jointTorque)
-{
-  motionConstr.computeTorque(solver.alphaDVec(), solver.lambdaVec());
-  rbd::vectorToParam(motionConstr.torque(), jointTorque);
-}
-
-} // namespace
-
-void DynamicsConstraint::fillJointTorque(QPSolver & solver) const
-{
-  switch(solver.backend())
-  {
-    case QPSolver::Backend::Tasks:
-      fillJointTorqueImpl(*static_cast<tasks::qp::MotionConstr *>(motion_constr_.get()),
-                          static_cast<const TasksQPSolver &>(solver).solver(),
-                          solver.robots().robot(robotIndex_).mbc().jointTorque);
-      break;
+    }
     default:
       break;
   }

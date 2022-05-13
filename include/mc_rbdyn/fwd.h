@@ -18,6 +18,7 @@ using RobotsPtr = std::shared_ptr<Robots>;
 
 struct Robot;
 using RobotPtr = std::shared_ptr<Robot>;
+using ConstRobotPtr = std::shared_ptr<const Robot>;
 
 struct RobotFrame;
 using RobotFramePtr = std::shared_ptr<RobotFrame>;

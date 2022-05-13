@@ -49,7 +49,8 @@ GazeTask::GazeTask(const std::string & bodyName,
   switch(backend_)
   {
     case Backend::Tasks:
-      finalize<tasks::qp::GazeTask>(robots.mbs(), static_cast<int>(rIndex), bodyName, point2d, depthEstimate, X_b_gaze);
+      finalize<Backend::Tasks, tasks::qp::GazeTask>(robots.mbs(), static_cast<int>(rIndex), bodyName, point2d,
+                                                    depthEstimate, X_b_gaze);
       break;
     default:
       mc_rtc::log::error_and_throw("[GazeTask] Not implemented for solver backend: {}", backend_);
@@ -76,7 +77,8 @@ GazeTask::GazeTask(const std::string & bodyName,
   switch(backend_)
   {
     case Backend::Tasks:
-      finalize<tasks::qp::GazeTask>(robots.mbs(), static_cast<int>(rIndex), bodyName, point3d, X_b_gaze);
+      finalize<Backend::Tasks, tasks::qp::GazeTask>(robots.mbs(), static_cast<int>(rIndex), bodyName, point3d,
+                                                    X_b_gaze);
       break;
     default:
       mc_rtc::log::error_and_throw("[GazeTask] Not implemented for solver backend: {}", backend_);
@@ -96,7 +98,8 @@ GazeTask::GazeTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double 
   switch(backend_)
   {
     case Backend::Tasks:
-      finalize<tasks::qp::GazeTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(), error, frame.X_b_f());
+      finalize<Backend::Tasks, tasks::qp::GazeTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(), error,
+                                                    frame.X_b_f());
       break;
     default:
       mc_rtc::log::error_and_throw("[GazeTask] Not implemented for solver backend: {}", backend_);

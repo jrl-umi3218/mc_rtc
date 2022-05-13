@@ -11,6 +11,8 @@
 
 #include <mc_control/generic_gripper.h>
 
+#include <mc_tvm/fwd.h>
+
 #include <RBDyn/MultiBody.h>
 #include <RBDyn/MultiBodyConfig.h>
 #include <RBDyn/MultiBodyGraph.h>
@@ -68,6 +70,8 @@ public:
 public:
   Robot(Robot &&) = default;
   Robot & operator=(Robot &&) = default;
+
+  ~Robot();
 
   /** Returns the name of the robot
    *
@@ -279,6 +283,11 @@ public:
   const std::vector<std::vector<double>> & alphaD() const;
   /** Equivalent to robot.mbc().jointTorque (const) */
   const std::vector<std::vector<double>> & jointTorque() const;
+  /** Access the desired control torque */
+  inline const std::vector<std::vector<double>> & controlTorque() const noexcept
+  {
+    return jointTorque();
+  }
   /** Equivalent to robot.mbc().bodyPosW (const) */
   const std::vector<sva::PTransformd> & bodyPosW() const;
   /** Equivalent to robot.mbc().bodyVelW (const) */
@@ -295,6 +304,11 @@ public:
   std::vector<std::vector<double>> & alphaD();
   /** Equivalent to robot.mbc().jointTorque */
   std::vector<std::vector<double>> & jointTorque();
+  /** Access the desired control torque */
+  inline std::vector<std::vector<double>> & controlTorque() noexcept
+  {
+    return jointTorque();
+  }
   /** Equivalent to robot.mbc().bodyPosW */
   std::vector<sva::PTransformd> & bodyPosW();
   /** Equivalent to robot.mbc().bodyVelW */
@@ -610,7 +624,10 @@ public:
   const Eigen::Vector3d & zmpTarget() const;
 
   /** Compute and returns the mass of the robot */
-  double mass() const;
+  inline double mass() const noexcept
+  {
+    return mass_;
+  }
 
   /** @name Joint sensors
    *
@@ -1094,6 +1111,24 @@ public:
     return data_;
   }
 
+  /** Get the TVM robot associated to this robot
+   *
+   * FIXME Returns a non-const reference from a const method because it is most often used to register dependencies
+   * between TVM nodes which require non-const objects
+   */
+  mc_tvm::Robot & tvmRobot() const;
+
+  /** Get the TVM convex associated to this robot convex
+   *
+   * FIXME Returns a non-const reference from a const method because it is most often used to register dependencies
+   * between TVM nodes which require non-const objects
+   *
+   * \param name Name of the convex
+   *
+   * \throws If the convex does not exist
+   */
+  mc_tvm::Convex & tvmConvex(const std::string & name) const;
+
 private:
   Robots * robots_;
   unsigned int robots_idx_;
@@ -1129,6 +1164,8 @@ private:
   std::map<std::string, size_t> bodyForceSensors_;
   /** Frames in this robot */
   std::unordered_map<std::string, RobotFramePtr> frames_;
+  /** Mass of this robot */
+  double mass_ = 0.0;
 
 protected:
   struct NewRobotToken
@@ -1186,6 +1223,12 @@ protected:
 private:
   Robot(const Robot &) = delete;
   Robot & operator=(const Robot &) = delete;
+
+  /* mutable to allow initialization in const method */
+  mutable mc_tvm::RobotPtr tvm_robot_;
+
+  /* mutable to allow initialization in const method */
+  mutable std::map<std::string, mc_tvm::ConvexPtr> tvm_convexes_;
 
   /** Set the name of the robot
    *

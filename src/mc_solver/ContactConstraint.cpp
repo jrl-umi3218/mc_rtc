@@ -36,6 +36,8 @@ static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend,
           mc_rtc::log::error_and_throw("[ContactConstraint] Invalid contact type given to constructor");
       }
     }
+    case QPSolver::Backend::TVM:
+      return {nullptr, nullptr};
     default:
       mc_rtc::log::error_and_throw("[ContactConstr] Not implemented for solver backend: {}", backend);
   }
@@ -54,6 +56,8 @@ void ContactConstraint::addToSolverImpl(QPSolver & solver)
       static_cast<tasks::qp::ContactConstr *>(constraint_.get())
           ->addToSolver(solver.robots().mbs(), tasks_solver(solver).solver());
       break;
+    case QPSolver::Backend::TVM:
+      break;
     default:
       break;
   }
@@ -65,6 +69,8 @@ void ContactConstraint::removeFromSolverImpl(QPSolver & solver)
   {
     case QPSolver::Backend::Tasks:
       static_cast<tasks::qp::ContactConstr *>(constraint_.get())->removeFromSolver(tasks_solver(solver).solver());
+      break;
+    case QPSolver::Backend::TVM:
       break;
     default:
       break;
