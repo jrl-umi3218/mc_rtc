@@ -23,14 +23,12 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
   {
     mc_rtc::log::error_and_throw("[{}] No robot named {}", name(), robot_);
   }
+  auto & robot = ctl.robot(robot_);
   if(!ctl.robots().hasRobot(updateRobot_))
   {
     mc_rtc::log::error_and_throw("[{}] No robot named {}", name(), updateRobot_);
   }
-  if(updateFrom_ == Update::Sensor && !ctl.robot(robot_).hasBodySensor(fbSensorName_))
-  {
-    mc_rtc::log::error_and_throw("[{}] No sensor named {} in robot {}", name(), fbSensorName_, robot_);
-  }
+
   auto updateConfig = config("method", std::string{"sensor"});
   if(!updateConfig.empty())
   {
@@ -41,6 +39,19 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
     else
     {
       updateFrom_ = Update::Control;
+    }
+  }
+
+  if(updateFrom_ == Update::Sensor)
+  {
+    if(!robot.hasBodySensor(fbSensorName_))
+    {
+      mc_rtc::log::error_and_throw("[{}] No sensor named {} in robot {}", name(), fbSensorName_, robot_);
+    }
+    if(!robot.hasBody(robot.bodySensor(fbSensorName_).parent()))
+    {
+      mc_rtc::log::error_and_throw("[{}] BodySensor \"{}\" has no parent named \"{}\" in robot \"{}\"", name(),
+                                   fbSensorName_, robot.bodySensor(fbSensorName_).parent(), robot_);
     }
   }
 

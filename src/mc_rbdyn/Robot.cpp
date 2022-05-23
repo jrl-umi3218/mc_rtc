@@ -441,11 +441,17 @@ Robot::Robot(NewRobotToken,
   // Add a single default sensor if no sensor on the robot
   if(bodySensors_.size() == 0)
   {
-    bodySensors_.emplace_back();
+    bodySensors_.emplace_back("Default", mb().body(0).name(), sva::PTransformd::Identity());
   }
   for(size_t i = 0; i < bodySensors_.size(); ++i)
   {
     const auto & bS = bodySensors_[i];
+    if(mb().bodyIndexByName().count(bS.parentBody()) == 0)
+    {
+      mc_rtc::log::error_and_throw(
+          "BodySensor \"{}\" requires a parent body named \"{}\" but no such body was found in robot \"{}\"", bS.name(),
+          bS.parentBody(), name);
+    }
     bodySensorsIndex_[bS.name()] = i;
     bodyBodySensors_[bS.parentBody()] = i;
   }
