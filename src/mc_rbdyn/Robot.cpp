@@ -446,6 +446,12 @@ Robot::Robot(NewRobotToken,
   for(size_t i = 0; i < bodySensors_.size(); ++i)
   {
     const auto & bS = bodySensors_[i];
+    if(mb().bodyIndexByName().count(bS.parentBody()) == 0)
+    {
+      mc_rtc::log::error_and_throw(
+          "BodySensor \"{}\" requires a parent body named \"{}\" but no such body was found in robot \"{}\"", bS.name(),
+          bS.parentBody(), name);
+    }
     bodySensorsIndex_[bS.name()] = i;
     bodyBodySensors_[bS.parentBody()] = i;
   }
