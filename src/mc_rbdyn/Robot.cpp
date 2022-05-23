@@ -441,7 +441,7 @@ Robot::Robot(NewRobotToken,
   // Add a single default sensor if no sensor on the robot
   if(bodySensors_.size() == 0)
   {
-    bodySensors_.emplace_back();
+    bodySensors_.emplace_back("Default", mb().body(0).name(), sva::PTransformd::Identity());
   }
   for(size_t i = 0; i < bodySensors_.size(); ++i)
   {
