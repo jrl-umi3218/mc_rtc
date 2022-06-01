@@ -207,6 +207,7 @@ set(LOG_POLICY "non-threaded")
 # mc_task test controllers
 controller_test_run(TestCoMTaskController 4001)
 controller_test_run(TestMomentumTaskController 2001)
+controller_test_run(TestGazeTaskController 501)
 controller_test_run(TestPositionTaskController 5000)
 controller_test_run(TestOrientationTaskController 6001)
 controller_test_run(TestEndEffectorTaskController 4001)
