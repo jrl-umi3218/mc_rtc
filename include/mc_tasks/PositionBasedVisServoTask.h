@@ -26,7 +26,7 @@ public:
    * \param weight Task weight
    */
   PositionBasedVisServoTask(const mc_rbdyn::RobotFrame & frame,
-                            const sva::PTransformd & X_t_s,
+                            const sva::PTransformd & X_t_s = sva::PTransformd::Identity(),
                             double stiffness = 2.0,
                             double weight = 500.0);
 
