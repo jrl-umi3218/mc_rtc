@@ -1548,6 +1548,16 @@ RobotFrame & Robot::makeFrame(const std::string & name, RobotFrame & parent, sva
   return *frame;
 }
 
+RobotFramePtr Robot::makeTemporaryFrame(const std::string & name,
+                                        const RobotFrame & parent,
+                                        sva::PTransformd X_p_f,
+                                        bool baked) const
+{
+  /* const_cast is OK here because we never created const RobotFrame objects */
+  return std::make_shared<RobotFrame>(RobotFrame::NewRobotFrameToken{}, name, const_cast<RobotFrame &>(parent), X_p_f,
+                                      baked);
+}
+
 const ForceSensor * Robot::findBodyForceSensor(const std::string & body) const
 {
   auto it = bodyForceSensors_.find(body);

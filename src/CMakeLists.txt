@@ -262,9 +262,8 @@ set(mc_tvm_HDR
   ${mc_tvm_HDR_DIR}/Convex.h
   ${mc_tvm_HDR_DIR}/DynamicFunction.h
   ${mc_tvm_HDR_DIR}/Frame.h
-  #${mc_tvm_HDR_DIR}/FrameErrorFunction.h
   ${mc_tvm_HDR_DIR}/FrameVelocity.h
-  #${mc_tvm_HDR_DIR}/GazeFunction.h
+  ${mc_tvm_HDR_DIR}/GazeFunction.h
   ${mc_tvm_HDR_DIR}/Limits.h
   ${mc_tvm_HDR_DIR}/JointsSelectorFunction.h
   ${mc_tvm_HDR_DIR}/Momentum.h
@@ -277,7 +276,6 @@ set(mc_tvm_HDR
   ${mc_tvm_HDR_DIR}/RobotFrame.h
   #${mc_tvm_HDR_DIR}/TransformFunction.h
   #${mc_tvm_HDR_DIR}/VectorOrientationFunction.h
-  #${mc_tvm_HDR_DIR}/utils.h
 )
 set(mc_tvm_SRC
   mc_tvm/CollisionFunction.cpp
@@ -289,9 +287,8 @@ set(mc_tvm_SRC
   mc_tvm/Convex.cpp
   mc_tvm/DynamicFunction.cpp
   mc_tvm/Frame.cpp
-  #mc_tvm/FrameErrorFunction.cpp
   mc_tvm/FrameVelocity.cpp
-  #mc_tvm/GazeFunction.cpp
+  mc_tvm/GazeFunction.cpp
   mc_tvm/JointsSelectorFunction.cpp
   mc_tvm/Momentum.cpp
   mc_tvm/MomentumFunction.cpp
@@ -303,7 +300,6 @@ set(mc_tvm_SRC
   mc_tvm/RobotFrame.cpp
   #mc_tvm/TransformFunction.cpp
   #mc_tvm/VectorOrientationFunction.cpp
-  #mc_tvm/utils.cpp
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR} ${mc_tvm_SRC} ${mc_tvm_HDR})

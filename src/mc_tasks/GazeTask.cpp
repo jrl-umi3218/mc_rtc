@@ -6,6 +6,8 @@
 
 #include <mc_tasks/MetaTaskLoader.h>
 
+#include <mc_tvm/GazeFunction.h>
+
 #include <mc_rbdyn/configuration_io.h>
 
 namespace mc_tasks
@@ -30,10 +32,8 @@ void check_parameters(const mc_rbdyn::Robots & robots, unsigned int robotIndex, 
 
 } // namespace
 
-static inline tasks::qp::GazeTask * tasks_error(mc_rtc::void_ptr & ptr)
-{
-  return static_cast<tasks::qp::GazeTask *>(ptr.get());
-}
+static inline mc_rtc::void_ptr_caster<tasks::qp::GazeTask> tasks_error{};
+static inline mc_rtc::void_ptr_caster<mc_tvm::GazeFunction> tvm_error{};
 
 GazeTask::GazeTask(const std::string & bodyName,
                    const Eigen::Vector2d & point2d,
@@ -46,17 +46,25 @@ GazeTask::GazeTask(const std::string & bodyName,
 : TrajectoryTaskGeneric(robots, robotIndex, stiffness, weight)
 {
   check_parameters(robots, robotIndex, bodyName);
+  type_ = "gaze";
+  name_ = "gaze_" + robots.robot(robotIndex).name() + "_" + bodyName;
   switch(backend_)
   {
     case Backend::Tasks:
       finalize<Backend::Tasks, tasks::qp::GazeTask>(robots.mbs(), static_cast<int>(rIndex), bodyName, point2d,
                                                     depthEstimate, X_b_gaze);
       break;
+    case Backend::TVM:
+    {
+      auto & robot = robots.robot(robotIndex);
+      finalize<Backend::TVM, mc_tvm::GazeFunction>(
+          *robot.makeTemporaryFrame(name_, robot.frame(bodyName), X_b_gaze, true));
+      tvm_error(errorT)->estimate(point2d, depthEstimate);
+      break;
+    }
     default:
       mc_rtc::log::error_and_throw("[GazeTask] Not implemented for solver backend: {}", backend_);
   }
-  type_ = "gaze";
-  name_ = "gaze_" + robots.robot(robotIndex).name() + "_" + bodyName;
 }
 
 GazeTask::GazeTask(const std::string & bodyName,
@@ -80,6 +88,14 @@ GazeTask::GazeTask(const std::string & bodyName,
       finalize<Backend::Tasks, tasks::qp::GazeTask>(robots.mbs(), static_cast<int>(rIndex), bodyName, point3d,
                                                     X_b_gaze);
       break;
+    case Backend::TVM:
+    {
+      auto & robot = robots.robot(robotIndex);
+      finalize<Backend::TVM, mc_tvm::GazeFunction>(
+          *robot.makeTemporaryFrame(name_, robot.frame(bodyName), X_b_gaze, true));
+      tvm_error(errorT)->estimate(point3d);
+      break;
+    }
     default:
       mc_rtc::log::error_and_throw("[GazeTask] Not implemented for solver backend: {}", backend_);
   }
@@ -101,6 +117,10 @@ GazeTask::GazeTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double 
       finalize<Backend::Tasks, tasks::qp::GazeTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(), error,
                                                     frame.X_b_f());
       break;
+    case Backend::TVM:
+      finalize<Backend::TVM, mc_tvm::GazeFunction>(frame);
+      tvm_error(errorT)->estimate(error);
+      break;
     default:
       mc_rtc::log::error_and_throw("[GazeTask] Not implemented for solver backend: {}", backend_);
   }
@@ -116,14 +136,36 @@ void GazeTask::reset()
 
 void GazeTask::error(const Eigen::Vector2d & point2d, const Eigen::Vector2d & point2d_ref)
 {
-  tasks_error(errorT)->error(point2d, point2d_ref);
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      tasks_error(errorT)->error(point2d, point2d_ref);
+      break;
+    case Backend::TVM:
+      tvm_error(errorT)->estimate(point2d);
+      tvm_error(errorT)->target(point2d_ref);
+      break;
+    default:
+      break;
+  }
 }
 
 void GazeTask::error(const Eigen::Vector3d & point3d, const Eigen::Vector2d & point2d_ref)
 {
   if(point3d.z() > 0)
   {
-    tasks_error(errorT)->error(point3d, point2d_ref);
+    switch(backend_)
+    {
+      case Backend::Tasks:
+        tasks_error(errorT)->error(point3d, point2d_ref);
+        break;
+      case Backend::TVM:
+        tvm_error(errorT)->estimate(point3d);
+        tvm_error(errorT)->target(point2d_ref);
+        break;
+      default:
+        break;
+    }
   }
   else
   {

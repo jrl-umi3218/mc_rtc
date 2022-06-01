@@ -225,6 +225,29 @@ public:
    */
   RobotFrame & makeFrame(const std::string & name, RobotFrame & parent, sva::PTransformd X_p_f, bool baked = false);
 
+  /** Create a new temporary frame
+   *
+   * The frame is not kept by the robot and cannot be found via \ref frame or inside \ref frames
+   *
+   * The main purpose is to tie a frame lifetime to another object (e.g. a task, a constraint, a state...) that needs it
+   *
+   * \param name Name of the frame
+   *
+   * \param frame Parent frame of this frame
+   *
+   * \param X_p_f Transformation from the parent frame to the frame
+   *
+   * \param baked Attach the newly created frame to \p parent parent's body rather than \p parent if true
+   *
+   * \returns The newly created frame
+   *
+   * \throws If \p parent does not belong to this robot
+   */
+  RobotFramePtr makeTemporaryFrame(const std::string & name,
+                                   const RobotFrame & parent,
+                                   sva::PTransformd X_p_f,
+                                   bool baked = false) const;
+
   /**
    * Create new frames attached to this robot
    *
