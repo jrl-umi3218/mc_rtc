@@ -275,7 +275,7 @@ set(mc_tvm_HDR
   ${mc_tvm_HDR_DIR}/Robot.h
   ${mc_tvm_HDR_DIR}/RobotFrame.h
   #${mc_tvm_HDR_DIR}/TransformFunction.h
-  #${mc_tvm_HDR_DIR}/VectorOrientationFunction.h
+  ${mc_tvm_HDR_DIR}/VectorOrientationFunction.h
 )
 set(mc_tvm_SRC
   mc_tvm/CollisionFunction.cpp
@@ -299,7 +299,7 @@ set(mc_tvm_SRC
   mc_tvm/Robot.cpp
   mc_tvm/RobotFrame.cpp
   #mc_tvm/TransformFunction.cpp
-  #mc_tvm/VectorOrientationFunction.cpp
+  mc_tvm/VectorOrientationFunction.cpp
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR} ${mc_tvm_SRC} ${mc_tvm_HDR})
