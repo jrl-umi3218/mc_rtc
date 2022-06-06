@@ -76,6 +76,7 @@ struct MC_TVM_DLLAPI CoMFunction : tvm::function::abstract::Function
   }
 
 private:
+  mc_rbdyn::ConstRobotPtr robot_;
   const mc_tvm::CoM & comAlgo_;
   Eigen::Vector3d com_;
   Eigen::Vector3d refVel_;

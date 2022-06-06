@@ -11,7 +11,7 @@ namespace mc_tvm
 {
 
 CoMFunction::CoMFunction(const mc_rbdyn::Robot & robot)
-: tvm::function::abstract::Function(3), comAlgo_(robot.tvmRobot().comAlgo())
+: tvm::function::abstract::Function(3), robot_(robot), comAlgo_(robot.tvmRobot().comAlgo())
 {
   reset();
   // clang-format off
@@ -38,7 +38,7 @@ CoMFunction::CoMFunction(const mc_rbdyn::Robot & robot)
 
 void CoMFunction::reset()
 {
-  com_ = comAlgo_.com();
+  com_ = robot_->com();
   refVel_.setZero();
   refAccel_.setZero();
 }
