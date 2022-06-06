@@ -53,7 +53,7 @@ void VectorOrientationFunction::frameVector(const Eigen::Vector3d & frameVector)
 
 void VectorOrientationFunction::reset()
 {
-  Eigen::Matrix3d E_0_b = body_frame_.position().rotation().transpose();
+  Eigen::Matrix3d E_0_b = frame_->robot().frame(frame_->body()).position().rotation().transpose();
   target_ = E_0_b * bodyVector_;
   refVel_.setZero();
   refAccel_.setZero();
