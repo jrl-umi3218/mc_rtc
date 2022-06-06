@@ -70,15 +70,15 @@ VectorOrientationTask::VectorOrientationTask(const std::string & bodyName,
 void VectorOrientationTask::reset()
 {
   TrajectoryTaskGeneric::reset();
-  // Should be errorT->actual(), but it is not computed until the first call to
-  // errorT::update()
   switch(backend_)
   {
     case Backend::Tasks:
     {
+      // Should be errorT->actual(), but it is not computed until the first call to
+      // errorT::update()
       Eigen::Matrix3d E_0_b = frame_->robot().frame(body()).position().rotation().transpose();
       Eigen::Vector3d actualVector = E_0_b * tasks_error(errorT)->bodyVector();
-      this->targetVector(actualVector.normalized());
+      tasks_error(errorT)->target(actualVector.normalized());
       break;
     }
     case Backend::TVM:
