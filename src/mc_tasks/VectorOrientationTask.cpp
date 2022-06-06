@@ -29,7 +29,8 @@ VectorOrientationTask::VectorOrientationTask(const mc_rbdyn::RobotFrame & frame,
                                              double weight)
 : TrajectoryTaskGeneric<tasks::qp::VectorOrientationTask>(frame, stiffness, weight), frame_(frame)
 {
-  Eigen::Vector3d bodyVector = (frame.X_b_f().inv() * sva::PTransformd{frameVector}).translation().normalized();
+  const auto & X_b_f = frame.X_b_f();
+  Eigen::Vector3d bodyVector = (sva::PTransformd{frameVector} * X_b_f).translation().normalized();
   finalize(robots.mbs(), static_cast<int>(rIndex), frame.body(), bodyVector, bodyVector);
   type_ = "vectorOrientation";
   name_ = "vector_orientation_" + frame.robot().name() + "_" + frame.name();
@@ -53,25 +54,22 @@ void VectorOrientationTask::reset()
   // errorT::update()
   Eigen::Matrix3d E_0_b = frame_->robot().frame(body()).position().rotation().transpose();
   Eigen::Vector3d actualVector = E_0_b * errorT->bodyVector();
-  this->targetVector(actualVector);
+  this->targetVector(actualVector.normalized());
 }
 
 void VectorOrientationTask::targetVector(const Eigen::Vector3d & ori)
 {
-  Eigen::Matrix3d E_b_f = frame_->X_b_f().rotation().transpose();
-  errorT->target((E_b_f * ori).normalized());
+  errorT->target((sva::PTransformd{ori} * frame_->X_b_f()).translation().normalized());
 }
 
 Eigen::Vector3d VectorOrientationTask::targetVector() const
 {
-  const Eigen::Matrix3d & E_f_b = frame_->X_b_f().rotation();
-  return E_f_b * errorT->target();
+  return (frame_->X_b_f() * errorT->target()).translation();
 }
 
 Eigen::Vector3d VectorOrientationTask::actual() const
 {
-  const Eigen::Matrix3d & E_f_b = frame_->X_b_f().rotation();
-  return E_f_b * errorT->actual();
+  return (frame_->X_b_f() * errorT->actual()).translation();
 }
 
 void VectorOrientationTask::addToLogger(mc_rtc::Logger & logger)
