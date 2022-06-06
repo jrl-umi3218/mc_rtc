@@ -4,6 +4,8 @@
 
 #include <mc_tasks/TransformTask.h>
 
+#include <mc_tvm/TransformFunction.h>
+
 #include <mc_tasks/MetaTaskLoader.h>
 
 #include <mc_solver/TasksQPSolver.h>
@@ -17,15 +19,8 @@
 namespace mc_tasks
 {
 
-static inline tasks::qp::SurfaceTransformTask * tasks_error(mc_rtc::void_ptr & ptr)
-{
-  return static_cast<tasks::qp::SurfaceTransformTask *>(ptr.get());
-}
-
-static inline const tasks::qp::SurfaceTransformTask * tasks_error(const mc_rtc::void_ptr & ptr)
-{
-  return static_cast<const tasks::qp::SurfaceTransformTask *>(ptr.get());
-}
+static inline mc_rtc::void_ptr_caster<tasks::qp::SurfaceTransformTask> tasks_error{};
+static inline mc_rtc::void_ptr_caster<mc_tvm::TransformFunction> tvm_error{};
 
 TransformTask::TransformTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
 : TrajectoryTaskGeneric(frame.robot().robots(), frame.robot().robotIndex(), stiffness, weight), frame_(frame)
@@ -35,6 +30,9 @@ TransformTask::TransformTask(const mc_rbdyn::RobotFrame & frame, double stiffnes
     case Backend::Tasks:
       finalize<Backend::Tasks, tasks::qp::SurfaceTransformTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(),
                                                                 frame.position(), frame.X_b_f());
+      break;
+    case Backend::TVM:
+      finalize<Backend::TVM, mc_tvm::TransformFunction>(frame);
       break;
     default:
       mc_rtc::log::error_and_throw("[TransformTask] Not implemented for solver backend: {}", backend_);
@@ -60,6 +58,9 @@ void TransformTask::reset()
   {
     case Backend::Tasks:
       tasks_error(errorT)->target(frame_->position());
+      break;
+    case Backend::TVM:
+      tvm_error(errorT)->reset();
       break;
     default:
       break;
@@ -146,6 +147,8 @@ sva::PTransformd TransformTask::target() const
   {
     case Backend::Tasks:
       return tasks_error(errorT)->target();
+    case Backend::TVM:
+      return tvm_error(errorT)->pose();
     default:
       mc_rtc::log::error_and_throw("Not implemented");
   }
@@ -157,6 +160,9 @@ void TransformTask::target(const sva::PTransformd & pose)
   {
     case Backend::Tasks:
       tasks_error(errorT)->target(pose);
+      break;
+    case Backend::TVM:
+      tvm_error(errorT)->pose(pose);
       break;
     default:
       break;
