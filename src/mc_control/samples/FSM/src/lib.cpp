@@ -4,4 +4,7 @@
 
 #include "mc_fsm_controller.h"
 
-CONTROLLER_CONSTRUCTOR("FSM", FSMController)
+MULTI_CONTROLLERS_CONSTRUCTOR("FSM",
+                              FSMController(rm, dt, config, mc_control::MCController::Backend::Tasks),
+                              "FSM_TVM",
+                              FSMController(rm, dt, config, mc_control::MCController::Backend::TVM))
