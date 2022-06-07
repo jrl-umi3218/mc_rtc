@@ -374,7 +374,10 @@ void PostureTask::update(mc_solver::QPSolver & solver)
     }
     case Backend::TVM:
     {
-      tvm_error(pt_)->update(solver);
+      auto & pt = *tvm_error(pt_);
+      pt.update(solver);
+      speed_ = (pt.eval() - eval_) / dt_;
+      eval_ = pt.dimWeight().asDiagonal() * pt.eval();
       break;
     }
     default:
