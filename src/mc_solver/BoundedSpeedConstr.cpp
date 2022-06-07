@@ -234,11 +234,10 @@ void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver,
       }
       case QPSolver::Backend::TVM:
       {
-        if(bodyPoint != Eigen::Vector3d::Zero())
-        {
-          mc_rtc::log::error("Body point is ignored by the TVM backend, please create an intermediary frame instead");
-        }
-        addBoundedSpeed(solver, robot.frame(bodyName), dof, lowerSpeed, upperSpeed);
+        addBoundedSpeed(solver,
+                        *robot.makeTemporaryFrame(fmt::format("BoundedSpeedTempFrame_{}", bodyName),
+                                                  robot.frame(bodyName), {bodyPoint}, true),
+                        dof, lowerSpeed, upperSpeed);
         break;
       }
       default:
