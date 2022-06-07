@@ -16,7 +16,10 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI MCTextController : public MCController
 {
 public:
-  MCTextController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, const mc_rtc::Configuration & config);
+  MCTextController(std::shared_ptr<mc_rbdyn::RobotModule> robot,
+                   double dt,
+                   const mc_rtc::Configuration & config,
+                   Backend backend);
 
   void reset(const mc_control::ControllerResetData & data) override;
 
@@ -27,5 +30,3 @@ private:
 };
 
 } // namespace mc_control
-
-CONTROLLER_CONSTRUCTOR("Text", mc_control::MCTextController)
