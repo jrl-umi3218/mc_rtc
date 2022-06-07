@@ -19,6 +19,9 @@ bool Door_Initial::run(mc_control::fsm::Controller &)
   return false;
 }
 
-void Door_Initial::teardown(mc_control::fsm::Controller &) {}
+void Door_Initial::teardown(mc_control::fsm::Controller & ctl)
+{
+  ctl.gui()->removeElement({}, "Open door");
+}
 
 EXPORT_SINGLE_STATE("Door_Initial", Door_Initial)

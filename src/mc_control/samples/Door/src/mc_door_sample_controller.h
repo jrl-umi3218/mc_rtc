@@ -10,7 +10,7 @@
 
 struct MC_CONTROL_DLLAPI DoorSampleController : public mc_control::fsm::Controller
 {
-  DoorSampleController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config);
+  DoorSampleController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config, Backend backend);
 
   void supported_robots(std::vector<std::string> & out) const override
   {

@@ -4,4 +4,7 @@
 
 #include "mc_door_sample_controller.h"
 
-CONTROLLER_CONSTRUCTOR("DoorSample", DoorSampleController)
+MULTI_CONTROLLERS_CONSTRUCTOR("DoorSample",
+                              DoorSampleController(rm, dt, config, mc_control::MCController::Backend::Tasks),
+                              "DoorSample_TVM",
+                              DoorSampleController(rm, dt, config, mc_control::MCController::Backend::TVM))
