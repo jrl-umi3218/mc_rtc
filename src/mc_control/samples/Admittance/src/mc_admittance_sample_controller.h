@@ -10,7 +10,10 @@
 
 struct MC_CONTROL_DLLAPI AdmittanceSampleController : public mc_control::fsm::Controller
 {
-  AdmittanceSampleController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config);
+  AdmittanceSampleController(mc_rbdyn::RobotModulePtr rm,
+                             double dt,
+                             const mc_rtc::Configuration & config,
+                             Backend backend);
 
   void reset(const mc_control::ControllerResetData & reset_data) override;
   bool run() override;
