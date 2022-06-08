@@ -15,7 +15,7 @@ namespace mc_control
 
 struct MC_CONTROL_DLLAPI MCImpedanceController : public MCController
 {
-  MCImpedanceController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt);
+  MCImpedanceController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, Backend backend);
   void reset(const ControllerResetData & reset_data) override;
   bool run() override;
   void stop() override;
@@ -35,5 +35,3 @@ protected:
 };
 
 } // namespace mc_control
-
-SIMPLE_CONTROLLER_CONSTRUCTOR("Impedance", mc_control::MCImpedanceController)

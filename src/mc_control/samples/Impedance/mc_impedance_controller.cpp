@@ -9,8 +9,10 @@
 namespace mc_control
 {
 
-MCImpedanceController::MCImpedanceController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
-: MCController(robot_module, dt)
+MCImpedanceController::MCImpedanceController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module,
+                                             double dt,
+                                             Backend backend)
+: MCController(robot_module, dt, backend)
 {
   solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(kinematicsConstraint);
@@ -108,3 +110,8 @@ void MCImpedanceController::stop()
 }
 
 } // namespace mc_control
+
+MULTI_CONTROLLERS_CONSTRUCTOR("Impedance",
+                              mc_control::MCImpedanceController(rm, dt, mc_control::MCController::Backend::Tasks),
+                              "Impedance_TVM",
+                              mc_control::MCImpedanceController(rm, dt, mc_control::MCController::Backend::TVM))
