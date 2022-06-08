@@ -6,8 +6,9 @@
 
 ExternalForcesController::ExternalForcesController(mc_rbdyn::RobotModulePtr rm,
                                                    double dt,
-                                                   const mc_rtc::Configuration & config)
-: mc_control::fsm::Controller(rm, dt, config)
+                                                   const mc_rtc::Configuration & config,
+                                                   Backend backend)
+: mc_control::fsm::Controller(rm, dt, config, backend)
 {
   datastore().make_call("KinematicAnchorFrame::" + robot().name(), [](const mc_rbdyn::Robot & robot) {
     return sva::interpolate(robot.surfacePose("LeftFoot"), robot.surfacePose("RightFoot"), 0.5);
