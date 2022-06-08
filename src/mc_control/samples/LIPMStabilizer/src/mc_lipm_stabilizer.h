@@ -10,7 +10,10 @@
 
 struct MC_CONTROL_DLLAPI LIPMStabilizerController : public mc_control::fsm::Controller
 {
-  LIPMStabilizerController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config);
+  LIPMStabilizerController(mc_rbdyn::RobotModulePtr rm,
+                           double dt,
+                           const mc_rtc::Configuration & config,
+                           Backend backend);
 
   void supported_robots(std::vector<std::string> & out) const override
   {
