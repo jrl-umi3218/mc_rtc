@@ -1,5 +1,5 @@
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 set(LOG_ENABLED "false")
@@ -82,33 +82,47 @@ endmacro()
 
 macro(controller_test_run NAME NRITER)
   controller_test_common(${NAME})
-  if(CMAKE_CONFIGURATION_TYPES)
-    set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/$<CONFIG>/mc_rtc-${NAME}.conf")
-    file(GENERATE
-       OUTPUT ${CONFIG_OUT}
-       INPUT ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf)
-  else()
-    set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf")
-  endif()
-  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.in.yaml")
-    configure_file(${NAME}.in.yaml "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${NAME}.cmake.yaml")
+  macro(setup_test_run VARIANT)
     if(CMAKE_CONFIGURATION_TYPES)
+      set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${VARIANT}/$<CONFIG>/mc_rtc-${VARIANT}.conf")
       file(GENERATE
-        OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/$<CONFIG>/etc/${NAME}.yaml"
-        INPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${NAME}.cmake.yaml")
+         OUTPUT ${CONFIG_OUT}
+         INPUT ${CMAKE_CURRENT_BINARY_DIR}/${VARIANT}/mc_rtc-${VARIANT}.conf)
     else()
-      file(GENERATE
-        OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${NAME}.yaml"
-        INPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${NAME}.cmake.yaml")
+      set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${VARIANT}/mc_rtc-${VARIANT}.conf")
     endif()
-  endif()
-  set_target_properties(${NAME} PROPERTIES FOLDER tests/controllers/run)
-  if(ENABLE_FAST_TESTS)
-    set(ACTUALITER 5)
-  else()
-    set(ACTUALITER ${NRITER})
-  endif()
-  mc_rtc_add_test(NAME ${NAME} COMMAND test_controller_ticker --run_test=RUN -- ${CONFIG_OUT} ${ACTUALITER})
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.in.yaml")
+      configure_file(${NAME}.in.yaml "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${VARIANT}.cmake.yaml")
+      if(CMAKE_CONFIGURATION_TYPES)
+        file(GENERATE
+          OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/$<CONFIG>/etc/${VARIANT}.yaml"
+          INPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${VARIANT}.cmake.yaml")
+      else()
+        file(GENERATE
+          OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${VARIANT}.yaml"
+          INPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${VARIANT}.cmake.yaml")
+      endif()
+    endif()
+    if(TARGET ${VARIANT})
+      set_target_properties(${VARIANT} PROPERTIES FOLDER tests/controllers/run/details)
+    endif()
+    if(ENABLE_FAST_TESTS)
+      set(ACTUALITER 5)
+    else()
+      set(ACTUALITER ${NRITER})
+    endif()
+    mc_rtc_add_test(NAME ${VARIANT} COMMAND test_controller_ticker --run_test=RUN -- ${CONFIG_OUT} ${ACTUALITER})
+    # Add a custom target to run the controller in real-time and to run the test in IDE
+    add_custom_target(
+      controller-test-run-${VARIANT}
+      COMMAND test_controller_ticker --run_test=RUN -- ${CONFIG_OUT} ${NRITER} "" 1
+      DEPENDS ${NAME}
+      VERBATIM
+      USES_TERMINAL
+    )
+    set_target_properties(controller-test-run-${VARIANT} PROPERTIES FOLDER tests/controllers/run)
+  endmacro()
+  setup_test_run(${NAME})
 endmacro()
 
 function(setup_test_log_fixture CTL_TEST LOG_TEST)
@@ -248,12 +262,14 @@ endmacro()
 controller_sample_test_run(CoM "" 1000)
 controller_sample_test_run(EndEffector "" 1000)
 controller_sample_test_run(Posture "" 1000)
+
 if(ENABLE_FAST_TESTS)
   set(ACTUALITER 5)
 else()
   set(ACTUALITER 20)
 endif()
 add_test(NAME "test_controller_restart" COMMAND test_controller_restart ${CONFIG_OUT} ${ACTUALITER})
+
 controller_sample_test_run(Text "" 1000)
 file(GENERATE OUTPUT "${TEST_CONTROLLER_PATH}/etc/Text.conf" INPUT "${PROJECT_SOURCE_DIR}/src/mc_control/samples/Text/etc/Text.conf")
 
