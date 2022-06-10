@@ -23,14 +23,14 @@ void CoMIncPlaneConstr::removeFromSolver(tasks::qp::QPSolver & solver)
   constr->removeFromSolver(solver);
 }
 
-void CoMIncPlaneConstr::set_planes(QPSolver & solver,
-                                   const std::vector<mc_rbdyn::Plane> & planes,
-                                   const std::vector<Eigen::Vector3d> & speeds,
-                                   const std::vector<Eigen::Vector3d> & normalsDots,
-                                   double iDist,
-                                   double sDist,
-                                   double damping,
-                                   double dampingOff)
+void CoMIncPlaneConstr::setPlanes(QPSolver & solver,
+                                  const std::vector<mc_rbdyn::Plane> & planes,
+                                  const std::vector<Eigen::Vector3d> & speeds,
+                                  const std::vector<Eigen::Vector3d> & normalsDots,
+                                  double iDist,
+                                  double sDist,
+                                  double damping,
+                                  double dampingOff)
 {
   constr->reset();
   if(speeds.size() != 0 && normalsDots.size() == speeds.size() && planes.size() == speeds.size())
