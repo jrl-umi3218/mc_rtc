@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"logging_8h.html#aa189b2ec856ad8f96d632d635efc05ce":[4,0,0,6,14,8],
+"logging_8h.html#aa8cc2cc8dc25d49fa533f32a67f73c33":[4,0,0,6,14,6],
 "logging_8h.html#ab85e3cb123f11bf1f9290abe17a7d49e":[4,0,0,6,14,17],
 "logging_8h.html#ac6c926a2075cbaa39c4e9d12a2cac7e2":[4,0,0,6,14,1],
 "logging_8h.html#ad8493c09711c1562481e104d334694db":[4,0,0,6,14,5],
@@ -182,8 +184,8 @@ var NAVTREEINDEX3 =
 "namespacemc__rbdyn_1_1detail.html":[2,0,6,0],
 "namespacemc__rbdyn_1_1details.html":[2,0,6,1],
 "namespacemc__rbdyn_1_1details.html":[3,0,6,0],
-"namespacemc__rbdyn_1_1lipm__stabilizer.html":[3,0,6,1],
 "namespacemc__rbdyn_1_1lipm__stabilizer.html":[2,0,6,2],
+"namespacemc__rbdyn_1_1lipm__stabilizer.html":[3,0,6,1],
 "namespacemc__rtc.html":[2,0,7],
 "namespacemc__rtc.html":[3,0,7],
 "namespacemc__rtc_1_1constants.html":[2,0,7,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "namespacemembers_v.html":[2,1,0,19],
 "namespacemembers_vars.html":[2,1,2],
 "namespacemembers_w.html":[2,1,0,20],
-"namespacemembers_x.html":[2,1,0,21],
-"namespacemembers_y.html":[2,1,0,22],
-"namespacemembers_z.html":[2,1,0,23]
+"namespacemembers_x.html":[2,1,0,21]
 };

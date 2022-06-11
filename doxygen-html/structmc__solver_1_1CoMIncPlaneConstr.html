@@ -104,8 +104,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7fe287ede6acc66b93ebc6e1a8f54882"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6901fd29799bb8f88e639be2e2e06ac"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1CoMIncPlaneConstr.html#aa6901fd29799bb8f88e639be2e2e06ac">removeFromSolver</a> (tasks::qp::QPSolver &amp;solver) override</td></tr>
 <tr class="separator:aa6901fd29799bb8f88e639be2e2e06ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae037f758b45e836e2ef33edbda90c58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1CoMIncPlaneConstr.html#aae037f758b45e836e2ef33edbda90c58">set_planes</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver, const std::vector&lt; <a class="el" href="structmc__rbdyn_1_1Plane.html">mc_rbdyn::Plane</a> &gt; &amp;planes, const std::vector&lt; Eigen::Vector3d &gt; &amp;speeds={}, const std::vector&lt; Eigen::Vector3d &gt; &amp;normalsDots={}, double iDist=0.05, double sDist=0.01, double damping=0.1, double dampingOff=0.)</td></tr>
-<tr class="separator:aae037f758b45e836e2ef33edbda90c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9edafc031545c4395965a7ac0ebe6477"><td class="memItemLeft" align="right" valign="top">MC_RTC_DEPRECATED void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1CoMIncPlaneConstr.html#a9edafc031545c4395965a7ac0ebe6477">set_planes</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver, const std::vector&lt; <a class="el" href="structmc__rbdyn_1_1Plane.html">mc_rbdyn::Plane</a> &gt; &amp;planes, const std::vector&lt; Eigen::Vector3d &gt; &amp;speeds={}, const std::vector&lt; Eigen::Vector3d &gt; &amp;normalsDots={}, double iDist=0.05, double sDist=0.01, double damping=0.1, double dampingOff=0.)</td></tr>
+<tr class="separator:a9edafc031545c4395965a7ac0ebe6477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c30b632b5b5e654c666721a69d11714"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1CoMIncPlaneConstr.html#a9c30b632b5b5e654c666721a69d11714">setPlanes</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver, const std::vector&lt; <a class="el" href="structmc__rbdyn_1_1Plane.html">mc_rbdyn::Plane</a> &gt; &amp;planes, const std::vector&lt; Eigen::Vector3d &gt; &amp;speeds={}, const std::vector&lt; Eigen::Vector3d &gt; &amp;normalsDots={}, double iDist=0.05, double sDist=0.01, double damping=0.1, double dampingOff=0.)</td></tr>
+<tr class="separator:a9c30b632b5b5e654c666721a69d11714"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_structmc__solver_1_1ConstraintSet"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_structmc__solver_1_1ConstraintSet')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="structmc__solver_1_1ConstraintSet.html">mc_solver::ConstraintSet</a></td></tr>
 <tr class="memitem:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a> ()</td></tr>
 <tr class="separator:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -229,14 +231,86 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aae037f758b45e836e2ef33edbda90c58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae037f758b45e836e2ef33edbda90c58">&#9670;&nbsp;</a></span>set_planes()</h2>
+<a id="a9edafc031545c4395965a7ac0ebe6477"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9edafc031545c4395965a7ac0ebe6477">&#9670;&nbsp;</a></span>set_planes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">MC_RTC_DEPRECATED void mc_solver::CoMIncPlaneConstr::set_planes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="structmc__rbdyn_1_1Plane.html">mc_rbdyn::Plane</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>planes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; Eigen::Vector3d &gt; &amp;&#160;</td>
+          <td class="paramname"><em>speeds</em> = <code>{}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; Eigen::Vector3d &gt; &amp;&#160;</td>
+          <td class="paramname"><em>normalsDots</em> = <code>{}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>iDist</em> = <code>0.05</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>sDist</em> = <code>0.01</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>damping</em> = <code>0.1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dampingOff</em> = <code>0.</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9c30b632b5b5e654c666721a69d11714"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c30b632b5b5e654c666721a69d11714">&#9670;&nbsp;</a></span>setPlanes()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_solver::CoMIncPlaneConstr::set_planes </td>
+          <td class="memname">void mc_solver::CoMIncPlaneConstr::setPlanes </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;&#160;</td>
           <td class="paramname"><em>solver</em>, </td>

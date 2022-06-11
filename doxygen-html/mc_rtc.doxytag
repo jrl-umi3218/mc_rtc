@@ -2202,6 +2202,20 @@
     <filename>clock_8h</filename>
     <namespace>mc_rtc</namespace>
     <member kind="typedef">
+      <type>std::chrono::duration&lt; double, std::milli &gt;</type>
+      <name>duration_ms</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>afd4119022924596532a073fc5a0c6f46</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::chrono::duration&lt; double, std::micro &gt;</type>
+      <name>duration_us</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>adc728153d578b83ef5eef7a24396ffed</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
       <type>typename std::conditional&lt; std::chrono::high_resolution_clock::is_steady, std::chrono::high_resolution_clock, std::chrono::steady_clock &gt;::type</type>
       <name>clock</name>
       <anchorfile>namespacemc__rtc.html</anchorfile>
@@ -7520,10 +7534,17 @@
       <arglist>(tasks::qp::QPSolver &amp;solver) override</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_RTC_DEPRECATED void</type>
       <name>set_planes</name>
       <anchorfile>structmc__solver_1_1CoMIncPlaneConstr.html</anchorfile>
-      <anchor>aae037f758b45e836e2ef33edbda90c58</anchor>
+      <anchor>a9edafc031545c4395965a7ac0ebe6477</anchor>
+      <arglist>(QPSolver &amp;solver, const std::vector&lt; mc_rbdyn::Plane &gt; &amp;planes, const std::vector&lt; Eigen::Vector3d &gt; &amp;speeds={}, const std::vector&lt; Eigen::Vector3d &gt; &amp;normalsDots={}, double iDist=0.05, double sDist=0.01, double damping=0.1, double dampingOff=0.)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setPlanes</name>
+      <anchorfile>structmc__solver_1_1CoMIncPlaneConstr.html</anchorfile>
+      <anchor>a9c30b632b5b5e654c666721a69d11714</anchor>
       <arglist>(QPSolver &amp;solver, const std::vector&lt; mc_rbdyn::Plane &gt; &amp;planes, const std::vector&lt; Eigen::Vector3d &gt; &amp;speeds={}, const std::vector&lt; Eigen::Vector3d &gt; &amp;normalsDots={}, double iDist=0.05, double sDist=0.01, double damping=0.1, double dampingOff=0.)</arglist>
     </member>
   </compound>
@@ -23809,8 +23830,8 @@
       <type></type>
       <name>PositionBasedVisServoTask</name>
       <anchorfile>structmc__tasks_1_1PositionBasedVisServoTask.html</anchorfile>
-      <anchor>a3ba2fdcd766ed360e0146d54b05f91cb</anchor>
-      <arglist>(const mc_rbdyn::RobotFrame &amp;frame, const sva::PTransformd &amp;X_t_s, double stiffness=2.0, double weight=500.0)</arglist>
+      <anchor>a9cc81a8586f6a7232fc6cf1f92aaf0dc</anchor>
+      <arglist>(const mc_rbdyn::RobotFrame &amp;frame, const sva::PTransformd &amp;X_t_s=sva::PTransformd::Identity(), double stiffness=2.0, double weight=500.0)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -39220,6 +39241,20 @@
     <class kind="struct">mc_rtc::shared</class>
     <class kind="struct">mc_rtc::SharedPtrVectorConstIterator</class>
     <class kind="struct">mc_rtc::SharedPtrVectorIterator</class>
+    <member kind="typedef">
+      <type>std::chrono::duration&lt; double, std::milli &gt;</type>
+      <name>duration_ms</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>afd4119022924596532a073fc5a0c6f46</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::chrono::duration&lt; double, std::micro &gt;</type>
+      <name>duration_us</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>adc728153d578b83ef5eef7a24396ffed</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="typedef">
       <type>typename std::conditional&lt; std::chrono::high_resolution_clock::is_steady, std::chrono::high_resolution_clock, std::chrono::steady_clock &gt;::type</type>
       <name>clock</name>

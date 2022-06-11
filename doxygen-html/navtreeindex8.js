@@ -1,5 +1,7 @@
 var NAVTREEINDEX8 =
 {
+"structmc__planning_1_1Pendulum.html#a660e8b095ba2c72efa862309570bc472":[3,0,5,0,10],
+"structmc__planning_1_1Pendulum.html#a66ae8e3c44f2638fb41b3ac8271813b4":[3,0,5,0,2],
 "structmc__planning_1_1Pendulum.html#a7fe44e375700d8754c110a4be586af78":[3,0,5,0,6],
 "structmc__planning_1_1Pendulum.html#a9adff808e3b82be53c193a17d46d9c0b":[3,0,5,0,7],
 "structmc__planning_1_1Pendulum.html#aa58c5aad2cacd579145dd4cde7412e4f":[3,0,5,0,5],
@@ -247,7 +249,5 @@ var NAVTREEINDEX8 =
 "structmc__rbdyn_1_1Robot.html#a2b2dc756cfb84c337de115384febab34":[3,0,6,19,54],
 "structmc__rbdyn_1_1Robot.html#a2b7aa66da24521f280bbc2d9c16cdda7":[3,0,6,19,57],
 "structmc__rbdyn_1_1Robot.html#a2e0f6aac369cb793546b62a13809a897":[3,0,6,19,131],
-"structmc__rbdyn_1_1Robot.html#a30b21b6e828397cebd4f015cf9e87f44":[3,0,6,19,5],
-"structmc__rbdyn_1_1Robot.html#a3296b923f06db47d80641b7acf46e5bf":[3,0,6,19,141],
-"structmc__rbdyn_1_1Robot.html#a353666f3eb88becdbde844f6e6915807":[3,0,6,19,10]
+"structmc__rbdyn_1_1Robot.html#a30b21b6e828397cebd4f015cf9e87f44":[3,0,6,19,5]
 };

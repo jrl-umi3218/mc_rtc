@@ -1,5 +1,8 @@
 var NAVTREEINDEX18 =
 {
+"structmc__trajectory_1_1InterpolatedRotation.html#a3a83a147d6040fd550d83b1fa2a5e37c":[3,0,10,2,6],
+"structmc__trajectory_1_1InterpolatedRotation.html#a6188c9c45b2e7b836e82d911131c6f71":[3,0,10,2,5],
+"structmc__trajectory_1_1InterpolatedRotation.html#aa0cdeef0cd6d5a0f7daea52f53bac171":[3,0,10,2,4],
 "structmc__trajectory_1_1InterpolatedRotation.html#acbce3f9de05b28314ad0f61bb753d940":[3,0,10,2,0],
 "structmc__trajectory_1_1LinearInterpolation.html":[3,0,10,3],
 "structmc__trajectory_1_1LinearInterpolation.html#a283b5bb138c051d1a3e3ef6d7690dedf":[3,0,10,3,0],

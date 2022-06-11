@@ -153,5 +153,6 @@ digraph "include/mc_solver/CoMIncPlaneConstr.h"
   Node6 -> Node63 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node6 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node62 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node66 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

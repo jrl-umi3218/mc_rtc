@@ -98,9 +98,9 @@ Collaboration diagram for mc_tasks::PositionBasedVisServoTask:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3ba2fdcd766ed360e0146d54b05f91cb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PositionBasedVisServoTask.html#a3ba2fdcd766ed360e0146d54b05f91cb">PositionBasedVisServoTask</a> (const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;frame, const sva::PTransformd &amp;X_t_s, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>=2.0, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>=500.0)</td></tr>
-<tr class="memdesc:a3ba2fdcd766ed360e0146d54b05f91cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor (from frame)  <a href="#a3ba2fdcd766ed360e0146d54b05f91cb">More...</a><br /></td></tr>
-<tr class="separator:a3ba2fdcd766ed360e0146d54b05f91cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cc81a8586f6a7232fc6cf1f92aaf0dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PositionBasedVisServoTask.html#a9cc81a8586f6a7232fc6cf1f92aaf0dc">PositionBasedVisServoTask</a> (const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;frame, const sva::PTransformd &amp;X_t_s=sva::PTransformd::Identity(), double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>=2.0, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>=500.0)</td></tr>
+<tr class="memdesc:a9cc81a8586f6a7232fc6cf1f92aaf0dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor (from frame)  <a href="#a9cc81a8586f6a7232fc6cf1f92aaf0dc">More...</a><br /></td></tr>
+<tr class="separator:a9cc81a8586f6a7232fc6cf1f92aaf0dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2cab369aedb3678ebd9b4687faa8ba9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PositionBasedVisServoTask.html#ae2cab369aedb3678ebd9b4687faa8ba9">PositionBasedVisServoTask</a> (const std::string &amp;bodyName, const sva::PTransformd &amp;X_t_s, const sva::PTransformd &amp;X_b_s, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a77260d6774cb69d24d22e53890e7fa16">robots</a>, unsigned int robotIndex, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>=2.0, double <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>=500)</td></tr>
 <tr class="memdesc:ae2cab369aedb3678ebd9b4687faa8ba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ae2cab369aedb3678ebd9b4687faa8ba9">More...</a><br /></td></tr>
 <tr class="separator:ae2cab369aedb3678ebd9b4687faa8ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -296,8 +296,8 @@ Additional Inherited Members</h2></td></tr>
 <div class="textblock"><p>Servo an end-effector depending on position error. </p>
 <p>This task is thin wrapper around the appropriate tasks in Tasks. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a3ba2fdcd766ed360e0146d54b05f91cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ba2fdcd766ed360e0146d54b05f91cb">&#9670;&nbsp;</a></span>PositionBasedVisServoTask() <span class="overload">[1/3]</span></h2>
+<a id="a9cc81a8586f6a7232fc6cf1f92aaf0dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cc81a8586f6a7232fc6cf1f92aaf0dc">&#9670;&nbsp;</a></span>PositionBasedVisServoTask() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -312,7 +312,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const sva::PTransformd &amp;&#160;</td>
-          <td class="paramname"><em>X_t_s</em>, </td>
+          <td class="paramname"><em>X_t_s</em> = <code>sva::PTransformd::Identity()</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
