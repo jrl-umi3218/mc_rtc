@@ -1,8 +1,10 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_control/mc_global_controller.h>
+
+#include <mc_rtc/clock.h>
 
 #include <boost/test/unit_test.hpp>
 
@@ -41,8 +43,14 @@ BOOST_AUTO_TEST_CASE(RUN)
   std::string conf = argv[argi];
   unsigned int nrIter = static_cast<unsigned int>(std::atoi(argv[argi + 1]));
   std::string nextController = argc > argi + 2 ? argv[argi + 2] : "";
+  bool syncWithRealTime = argc > argi + 3 ? (std::string(argv[argi + 3]) == "1") : false;
+  mc_control::MCGlobalController::GlobalConfiguration gconf(conf);
+  if(syncWithRealTime)
+  {
+    gconf.enable_log = true;
+  }
   BOOST_CHECK(nrIter > 0);
-  mc_control::MCGlobalController controller(conf);
+  mc_control::MCGlobalController controller(gconf);
   // Simple init
   const auto & mb = controller.robot().mb();
   const auto & mbc = controller.robot().mbc();
@@ -79,18 +87,31 @@ BOOST_AUTO_TEST_CASE(RUN)
   controller.setEncoderValues(qEnc);
   controller.init(initq, controller.robot().module().default_attitude());
   controller.running = true;
-  for(size_t i = 0; i < nrIter; ++i)
-  {
-    simulateSensors();
-    BOOST_REQUIRE(controller.run());
-  }
+  mc_rtc::duration_us sync_delay{0};
+  mc_rtc::duration_us expected_loop_t{1e6 * controller.configuration().timestep};
+  auto update_delay = [&]() {
+    auto loop_start_t = mc_rtc::clock::now();
+    static auto prev_loop_start_t = loop_start_t;
+    sync_delay += expected_loop_t - (loop_start_t - prev_loop_start_t);
+    prev_loop_start_t = loop_start_t;
+    return loop_start_t + expected_loop_t + sync_delay;
+  };
+  auto do_sim_loops = [&]() {
+    for(size_t i = 0; i < nrIter; ++i)
+    {
+      auto sleep_t = update_delay();
+      simulateSensors();
+      BOOST_REQUIRE(controller.run());
+      if(syncWithRealTime)
+      {
+        std::this_thread::sleep_until(sleep_t);
+      }
+    }
+  };
+  do_sim_loops();
   if(nextController != "")
   {
     BOOST_REQUIRE(controller.EnableController(nextController));
-    for(size_t i = 0; i < nrIter; ++i)
-    {
-      simulateSensors();
-      BOOST_REQUIRE(controller.run());
-    }
+    do_sim_loops();
   }
 }

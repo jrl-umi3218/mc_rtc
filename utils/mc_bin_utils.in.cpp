@@ -691,7 +691,10 @@ int convert(int argc, char * argv[])
         exit(1);
       }
       std::string cmd = MC_BIN_TO_ROSBAG.string() + " " + in + " " + out_p.string() + " " + std::to_string(dt);
-      system(cmd.c_str());
+      if(system(cmd.c_str()) != 0)
+      {
+        mc_rtc::log::error("The following conversion call failed: {}", cmd);
+      }
     }
     else
     {

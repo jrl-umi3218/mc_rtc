@@ -105,7 +105,7 @@ void PostureTask::resetJointsSelector(mc_solver::QPSolver & solver)
 
 Eigen::VectorXd PostureTask::eval() const
 {
-  return pt_.eval();
+  return pt_.dimWeight().asDiagonal() * pt_.eval();
 }
 
 Eigen::VectorXd PostureTask::speed() const
@@ -133,7 +133,7 @@ void PostureTask::removeFromSolver(mc_solver::QPSolver & solver)
 
 void PostureTask::update(mc_solver::QPSolver &)
 {
-  speed_ = (pt_.eval() - eval_) / dt_;
+  speed_ = pt_.dimWeight().asDiagonal() * (pt_.eval() - eval_) / dt_;
   eval_ = pt_.eval();
 }
 
