@@ -68,6 +68,7 @@ digraph "include/mc_rbdyn/configuration_io.h"
   Node24 [label="mc_rbdyn/Collision.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Collision_8h.html"];
   Node24 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node24 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node24 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node25 [label="mc_rbdyn/Flexibility.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Flexibility_8h.html"];
   Node25 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

@@ -1,5 +1,7 @@
 var NAVTREEINDEX17 =
 {
+"structmc__tasks_1_1force_1_1ImpedanceTask.html#ad9dcb8ef222560d520f4822adf3fe3e2":[3,0,9,0,6,23],
+"structmc__tasks_1_1force_1_1ImpedanceTask.html#adcee9b37135af91695753725a9f9d139":[3,0,9,0,6,36],
 "structmc__tasks_1_1force_1_1ImpedanceTask.html#adf26c7977065bdefdf4fc00c526bc365":[3,0,9,0,6,35],
 "structmc__tasks_1_1force_1_1ImpedanceTask.html#ae1abae5aed22bdd4007eaccabffdc4ca":[3,0,9,0,6,38],
 "structmc__tasks_1_1force_1_1ImpedanceTask.html#ae257bdea578b9c3f62b7cbeb8791d2f8":[3,0,9,0,6,10],
@@ -247,7 +249,5 @@ var NAVTREEINDEX17 =
 "structmc__trajectory_1_1ExactCubic.html#af0dd28bb9136823399f3d85d5512bc33":[3,0,10,1,6],
 "structmc__trajectory_1_1ExactCubic.html#af47e1c92e5824f345b1616aacbd1891c":[3,0,10,1,9],
 "structmc__trajectory_1_1InterpolatedRotation.html":[3,0,10,2],
-"structmc__trajectory_1_1InterpolatedRotation.html#a00b27ba3e5f5c5028a5c3f1b18552617":[3,0,10,2,3],
-"structmc__trajectory_1_1InterpolatedRotation.html#a35aa6707fcb6b62d7be8daa9df9991eb":[3,0,10,2,1],
-"structmc__trajectory_1_1InterpolatedRotation.html#a3848a3c1a1d3796760025d7504c0e7a7":[3,0,10,2,2]
+"structmc__trajectory_1_1InterpolatedRotation.html#a00b27ba3e5f5c5028a5c3f1b18552617":[3,0,10,2,3]
 };

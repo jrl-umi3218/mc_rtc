@@ -7117,8 +7117,8 @@
       <type></type>
       <name>Collision</name>
       <anchorfile>structmc__rbdyn_1_1Collision.html</anchorfile>
-      <anchor>a212f22fc390d0f873dc67244cdbdbce7</anchor>
-      <arglist>(const std::string &amp;b1, const std::string &amp;b2, double i, double s, double d)</arglist>
+      <anchor>acaefaa7de7a14d7bf9b54fd270191322</anchor>
+      <arglist>(const std::string &amp;b1, const std::string &amp;b2, double i, double s, double d, const std::vector&lt; std::string &gt; &amp;r1Joints={}, const std::vector&lt; std::string &gt; &amp;r2Joints={})</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -7174,6 +7174,20 @@
       <name>damping</name>
       <anchorfile>structmc__rbdyn_1_1Collision.html</anchorfile>
       <anchor>affd388406c44197c32f6685e64d7bdb9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; std::string &gt;</type>
+      <name>r1Joints</name>
+      <anchorfile>structmc__rbdyn_1_1Collision.html</anchorfile>
+      <anchor>a7dbc635314d1e44f1cbd7c7a380281d3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; std::string &gt;</type>
+      <name>r2Joints</name>
+      <anchorfile>structmc__rbdyn_1_1Collision.html</anchorfile>
+      <anchor>a61143aeca6bba9864fb2101795ed0a89</anchor>
       <arglist></arglist>
     </member>
   </compound>
