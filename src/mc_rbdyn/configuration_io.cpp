@@ -152,7 +152,8 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::BodySensor>::save(const mc_r
 mc_rbdyn::Collision ConfigurationLoader<mc_rbdyn::Collision>::load(const mc_rtc::Configuration & config)
 {
   return mc_rbdyn::Collision(config("body1"), config("body2"), config("iDist", 0.05), config("sDist", 0.01),
-                             config("damping", 0.0));
+                             config("damping", 0.0), config("r1Joints", std::vector<std::string>{}),
+                             config("r2Joints", std::vector<std::string>{}));
 }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Collision>::save(const mc_rbdyn::Collision & c)
@@ -163,6 +164,8 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Collision>::save(const mc_rb
   config.add("iDist", c.iDist);
   config.add("sDist", c.sDist);
   config.add("damping", c.damping);
+  config.add("r1Joints", c.r1Joints);
+  config.add("r2Joints", c.r2Joints);
   return config;
 }
 

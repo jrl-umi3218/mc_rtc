@@ -34,6 +34,7 @@ framework. (#247)
   reference-style API where the data is backed by a shared pointer (#247)
 - [mc_tasks] All tasks (when it makes sense) can accept a frame at construction (#247)
 - [mc_solver] `mc_solver::BoundedSpeedConstr` can be used to constraint a frame velocity (#247)
+- [mc_solver] Active joints in a collision can be specified via `mc_rbdyn::Collision` objects (#262)
 - [utils] `build_and_install` now supports Ubuntu Jammy (22.04) (#248)
 - [utils] `build_and_install` can now install the Panda module (#249)
 
