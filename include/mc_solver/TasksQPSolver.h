@@ -12,7 +12,7 @@
 namespace mc_solver
 {
 
-/** This implements the QPSolver interface for the Task backend
+/** This implements the QPSolver interface for the Tasks backend
  *
  * This solver can accepts tasks and constraints from mc_rtc and Tasks types
  */
@@ -57,7 +57,7 @@ struct MC_SOLVER_DLLAPI TasksQPSolver final : public QPSolver
 
   void setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts) final;
 
-  /** Add a constraint function from the solver
+  /** Add a constraint function to the solver
    * \param constraint Pointer to the ConstraintFunction. QPSolver does not take ownserhip of this pointer and the
    * caller should make sure the object remains valid until it is removed from the solver
    */

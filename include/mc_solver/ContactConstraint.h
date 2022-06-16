@@ -49,7 +49,7 @@ public:
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
   void removeFromSolverImpl(QPSolver & solver) override;
 
-  /** Returns the underlying constraint in the Taks backend
+  /** Returns the underlying constraint in the Tasks backend
    *
    * \throws If the backend is not Tasks backend
    */

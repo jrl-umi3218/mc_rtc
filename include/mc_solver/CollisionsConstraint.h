@@ -20,7 +20,7 @@ struct QPSolver;
  *
  * Creates a collision constraint manager between two robots.
  *
- * If the two robots are the same, this effectivly creates a self-collision constraint
+ * If the two robots are the same, this effectively creates a self-collision constraint
  */
 struct MC_SOLVER_DLLAPI CollisionsConstraint : public ConstraintSet
 {
