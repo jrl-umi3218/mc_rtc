@@ -53,11 +53,12 @@ struct TVMCollisionConstraint
   }
 
   template<bool Delete>
-  void removeOrDeleteCollision(TVMQPSolver & solver, std::vector<CollisionData>::iterator it)
+  std::vector<CollisionData>::iterator removeOrDeleteCollision(TVMQPSolver & solver,
+                                                               std::vector<CollisionData>::iterator it)
   {
     if(it == data_.end())
     {
-      return;
+      return data_.end();
     }
     if(it->task)
     {
@@ -69,7 +70,11 @@ struct TVMCollisionConstraint
     }
     if constexpr(Delete)
     {
-      data_.erase(it);
+      return data_.erase(it);
+    }
+    else
+    {
+      return it;
     }
   }
 
@@ -93,8 +98,15 @@ struct TVMCollisionConstraint
 
   void clear()
   {
-    while(data_.size())
+    if(!solver)
     {
+      data_.clear();
+      return;
+    }
+    auto it = data_.begin();
+    while(it != data_.end())
+    {
+      it = removeOrDeleteCollision<true>(*solver, it);
     }
   }
 
