@@ -111,12 +111,12 @@ public:
    *
    * \note The real robots will be created by copying the provided robots
    */
-  MC_SOLVER_DLLAPI QPSolver(mc_rbdyn::RobotsPtr robots, double timeStep, Backend backend);
+  QPSolver(mc_rbdyn::RobotsPtr robots, double timeStep, Backend backend);
 
   /** Constructor (the solver creates its own Robots instance)
    * \param timeStep Timestep of the solver
    */
-  MC_SOLVER_DLLAPI QPSolver(double timeStep, Backend backend);
+  QPSolver(double timeStep, Backend backend);
 
   virtual ~QPSolver() = default;
 
@@ -145,7 +145,7 @@ public:
   /** Add a constraint set
    * \param cs Constraint set added to the solver
    */
-  MC_SOLVER_DLLAPI void addConstraintSet(ConstraintSet & cs);
+  void addConstraintSet(ConstraintSet & cs);
 
   /** Add a constraint set
    *
@@ -160,7 +160,7 @@ public:
   /** Remove a constraint set
    * \param cs Constrain set removed from the solver
    */
-  MC_SOLVER_DLLAPI void removeConstraintSet(ConstraintSet & cs);
+  void removeConstraintSet(ConstraintSet & cs);
 
   /** Remove a constraint set
    *
@@ -181,7 +181,7 @@ public:
    * automatically called before the optimization is solved.
    *
    */
-  MC_SOLVER_DLLAPI void addTask(mc_tasks::MetaTask * task);
+  void addTask(mc_tasks::MetaTask * task);
 
   /** Add a task to the solver, ownership is shared with the solver */
   inline void addTask(std::shared_ptr<mc_tasks::MetaTask> task)
@@ -201,7 +201,7 @@ public:
    * updated anymore and memory should be released by the task's owner.
    *
    */
-  MC_SOLVER_DLLAPI void removeTask(mc_tasks::MetaTask * task);
+  void removeTask(mc_tasks::MetaTask * task);
 
   /** Remove a task from the solver which was shared with the solver */
   inline void removeTask(std::shared_ptr<mc_tasks::MetaTask> task)
@@ -215,17 +215,17 @@ public:
   /** Reset all contacts in the solver and use the new set of contacts provided
    * \item contact Set of mc_rbdyn::Contact
    */
-  MC_CONTROL_DLLAPI void setContacts(const std::vector<mc_rbdyn::Contact> & contacts = {});
+  void setContacts(const std::vector<mc_rbdyn::Contact> & contacts = {});
 
   /* Called by the owning controller to actually set the contacts or internally by QPSolver when it has no owning
    * controller */
   virtual void setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts) = 0;
 
   /** Returns the current set of contacts */
-  MC_SOLVER_DLLAPI const std::vector<mc_rbdyn::Contact> & contacts() const;
+  const std::vector<mc_rbdyn::Contact> & contacts() const;
 
   /** Returns the MetaTasks currently in the solver */
-  MC_SOLVER_DLLAPI const std::vector<mc_tasks::MetaTask *> & tasks() const;
+  const std::vector<mc_tasks::MetaTask *> & tasks() const;
 
   /** Desired resultant of contact force in robot surface frame
    * \param contact Contact for which the force is desired.
@@ -242,40 +242,40 @@ public:
    *
    * \return True if successful, false otherwise.
    */
-  MC_SOLVER_DLLAPI bool run(FeedbackType fType = FeedbackType::None);
+  bool run(FeedbackType fType = FeedbackType::None);
 
   /** Gives access to the main robot in the solver */
-  MC_SOLVER_DLLAPI const mc_rbdyn::Robot & robot() const;
+  const mc_rbdyn::Robot & robot() const;
   /** Gives access to the main robot in the solver */
-  MC_SOLVER_DLLAPI mc_rbdyn::Robot & robot();
+  mc_rbdyn::Robot & robot();
 
   /** Gives access to the robot with the given index in the solver */
-  MC_SOLVER_DLLAPI mc_rbdyn::Robot & robot(unsigned int idx);
+  mc_rbdyn::Robot & robot(unsigned int idx);
   /** Gives access to the robot with the given index in the solver */
-  MC_SOLVER_DLLAPI const mc_rbdyn::Robot & robot(unsigned int idx) const;
+  const mc_rbdyn::Robot & robot(unsigned int idx) const;
 
   /** Gives access to the environment robot in the solver (see mc_rbdyn::Robots) */
-  MC_SOLVER_DLLAPI const mc_rbdyn::Robot & env() const;
+  const mc_rbdyn::Robot & env() const;
   /** Gives access to the environment robot in the solver (see mc_rbdyn::Robots) */
-  MC_SOLVER_DLLAPI mc_rbdyn::Robot & env();
+  mc_rbdyn::Robot & env();
 
   /** Gives access to the robots controlled by this solver */
-  MC_SOLVER_DLLAPI const mc_rbdyn::Robots & robots() const;
+  const mc_rbdyn::Robots & robots() const;
   /** Gives access to the robots controlled by this solver */
-  MC_SOLVER_DLLAPI mc_rbdyn::Robots & robots();
+  mc_rbdyn::Robots & robots();
 
   /** Gives access to the real robots used by this solver */
-  MC_SOLVER_DLLAPI const mc_rbdyn::Robots & realRobots() const;
+  const mc_rbdyn::Robots & realRobots() const;
   /** Gives access to the real robots used by this solver */
-  MC_SOLVER_DLLAPI mc_rbdyn::Robots & realRobots();
+  mc_rbdyn::Robots & realRobots();
 
   /** Returns the timestep of the solver
    * \return The timestep of the solver
    */
-  MC_SOLVER_DLLAPI double dt() const;
+  double dt() const;
 
   /** Use the dynamics constraint to fill torque in the main robot */
-  MC_SOLVER_DLLAPI void fillTorque(const mc_solver::DynamicsConstraint & dynamicsConstraint);
+  void fillTorque(const mc_solver::DynamicsConstraint & dynamicsConstraint);
 
   /** Returns the solving time in ms */
   virtual double solveTime() = 0;
@@ -289,14 +289,14 @@ public:
   virtual const Eigen::VectorXd & result() const = 0;
 
   /** Set the logger for this solver instance */
-  MC_SOLVER_DLLAPI void logger(std::shared_ptr<mc_rtc::Logger> logger);
+  void logger(std::shared_ptr<mc_rtc::Logger> logger);
   /** Access to the logger instance */
-  MC_SOLVER_DLLAPI std::shared_ptr<mc_rtc::Logger> logger() const;
+  std::shared_ptr<mc_rtc::Logger> logger() const;
 
   /** Set the GUI helper for this solver instance */
-  MC_SOLVER_DLLAPI void gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui);
+  void gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui);
   /** Access to the gui instance */
-  MC_SOLVER_DLLAPI std::shared_ptr<mc_rtc::gui::StateBuilder> gui() const;
+  std::shared_ptr<mc_rtc::gui::StateBuilder> gui() const;
 
   /** Set the controller that is owning this QPSolver instance */
   inline void controller(mc_control::MCController * ctl) noexcept
