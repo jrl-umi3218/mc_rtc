@@ -135,12 +135,11 @@ void DynamicsConstraint::addToSolverImpl(QPSolver & solver)
       auto tL = problem.add(tvm_robot.limits().tl <= tvm_robot.tau() <= tvm_robot.limits().tu,
                             tvm::task_dynamics::None(), {tvm::requirements::PriorityLevel(0)});
       constraints_.push_back(tL);
-      // FIXME We should be able to create proto task in TVM using reference or pointers
       mc_tvm::DynamicFunctionPtr dyn_fn = *static_cast<mc_tvm::DynamicFunctionPtr *>(motion_constr_.get());
       auto dyn = problem.add(dyn_fn == 0., tvm::task_dynamics::None(), {tvm::requirements::PriorityLevel(0)});
       constraints_.push_back(dyn);
-      // auto cstr = problem.constraint(*dyn);
-      // problem.add(tvm::hint::Substitution(cstr, tvm_robot.tau()));
+      auto cstr = problem.constraint(*dyn);
+      problem.add(tvm::hint::Substitution(cstr, tvm_robot.tau()));
       break;
     }
     default:
@@ -161,10 +160,9 @@ void DynamicsConstraint::removeFromSolverImpl(QPSolver & solver)
     }
     case QPSolver::Backend::TVM:
     {
-      // auto & constr = *static_cast<TVMKinematicsConstraint *>(constraint_.get());
-      // auto & problem = tvm_solver(solver).problem();
-      // problem.removeSubstitutionFor(*problem.constraint(*constr.constraints_.back()));
-      //
+      auto & constr = *static_cast<TVMKinematicsConstraint *>(constraint_.get());
+      auto & problem = tvm_solver(solver).problem();
+      problem.removeSubstitutionFor(*problem.constraint(*constr.constraints_.back()));
       KinematicsConstraint::removeFromSolverImpl(solver);
       break;
     }

@@ -29,8 +29,7 @@ public:
     postureTask->stiffness(1);
     postureTask->weight(1);
     solver().addTask(postureTask.get());
-    solver().setContacts(
-        {mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"), mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
+    solver().setContacts({{robots(), 1, 0, "AllGround", "LeftFoot"}, {robots(), 1, 0, "AllGround", "RightFoot"}});
 
     /* Create and add the CoM task with the default stiffness/weight */
     comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0);
@@ -43,12 +42,17 @@ public:
   virtual bool run() override
   {
     bool ret = MCController::run();
-    BOOST_CHECK(ret);
+    if(!ret)
+    {
+      mc_rtc::log::critical("Failed at iter {}", nrIter);
+    }
+    BOOST_REQUIRE(ret);
     nrIter++;
     if(nrIter == 10)
     {
       // Swap the contact order
-      solver().setContacts({{robots(), 1, 0, "AllGround", "LeftFoot"}, {robots(), 1, 0, "AllGround", "RightFoot"}});
+      solver().setContacts({mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"),
+                            mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
     }
     if(nrIter == 1000)
     {

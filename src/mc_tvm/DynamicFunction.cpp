@@ -90,7 +90,10 @@ void DynamicFunction::removeContact(const mc_rbdyn::RobotFrame & frame)
   auto it = findContact(frame);
   if(it != contacts_.end())
   {
-    // FIXME Remove variable from the function
+    for(const auto & var : it->forces_)
+    {
+      removeVariable(var);
+    }
     contacts_.erase(it);
   }
 }

@@ -68,7 +68,7 @@ void TVMQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Conta
       {
         gui_->removeElement({"Contacts", "Forces"}, fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S));
       }
-      removeContact(i);
+      it = removeContact(i);
     }
     else
     {
@@ -318,9 +318,11 @@ void TVMQPSolver::addDynamicsConstraint(mc_solver::DynamicsConstraint * dyn)
         s2Points.reserve(s1Points.size());
         auto X_b2_b1 =
             r1.mbc().bodyPosW[r1.bodyIndexByName(f1.body())] * r2.mbc().bodyPosW[r2.bodyIndexByName(f2.body())].inv();
-        std::transform(s1Points.begin(), s1Points.end(), std::back_inserter(s2Points),
-                       [&](const auto & X_b1_p) { return X_b1_p * X_b2_b1; });
-        addContactToDynamics(r2.name(), f2, s2Points, data.f2_, data.f2Constraints_, C, 2.0);
+        for(const auto & X_b1_p : s1Points)
+        {
+          s2Points.push_back(X_b1_p * X_b2_b1);
+        }
+        addContactToDynamics(r2.name(), f2, s2Points, data.f2_, data.f2Constraints_, C, -1.0);
       }
     }
   }
@@ -390,7 +392,8 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
   else
   {
     it->second->removeFromSolverImpl(*this);
-    forces = it->second->dynamicFunction().addContact(frame, points, dir);
+    auto & dyn = it->second->dynamicFunction();
+    forces = dyn.addContact(frame, points, dir);
     it->second->addToSolverImpl(*this);
   }
   for(int i = 0; i < forces.numberOfVariables(); ++i)
