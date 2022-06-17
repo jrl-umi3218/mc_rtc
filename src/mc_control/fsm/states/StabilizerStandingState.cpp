@@ -186,6 +186,15 @@ void StabilizerStandingState::start(Controller & ctl)
                             [this](double w) { stabilizerTask_->comWeight(w); });
   ctl.datastore().make_call("StabilizerStandingState::setCoMStiffness",
                             [this](const Eigen::Vector3d & s) { stabilizerTask_->comStiffness(s); });
+  ctl.datastore().make_call("StabilizerStandingState::setExternalWrenches",
+                            [this](const std::vector<std::string> & surfaceNames,
+				   const std::vector<sva::ForceVecd> & targetWrenches,
+				   const std::vector<sva::MotionVecd> & gains) {
+			      stabilizerTask_->setExternalWrenches(surfaceNames, targetWrenches, gains);
+			    });
+  ctl.datastore().make_call("StabilizerStandingState::getCoPAdmittance",
+			    [this](){ return stabilizerTask_->config().copAdmittance; });
+  ctl.datastore().make_call("StabilizerStandingState::setCoPAdmittance", [this](const Eigen::Vector2d & copAdmittance){ stabilizerTask_->copAdmittance(copAdmittance);});
 }
 
 void StabilizerStandingState::targetCoP(const Eigen::Vector3d & cop)
@@ -265,6 +274,9 @@ void StabilizerStandingState::teardown(Controller & ctl)
   ctl.datastore().remove("StabilizerStandingState::setTorsoStiffness");
   ctl.datastore().remove("StabilizerStandingState::setCoMWeight");
   ctl.datastore().remove("StabilizerStandingState::setCoMStiffness");
+  ctl.datastore().remove("StabilizerStandingState::setExternalWrenches");
+  ctl.datastore().remove("StabilizerStandingState::getCoPAdmittance");
+  ctl.datastore().remove("StabilizerStandingState::setCoPAdmittance");
   if(ownsAnchorFrameCallback_)
   {
     ctl.datastore().remove(anchorFrameFunction_);
