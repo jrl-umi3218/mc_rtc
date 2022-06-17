@@ -547,6 +547,10 @@ Robot::Robot(NewRobotToken,
 
 Robot::~Robot() = default;
 
+Robot::Robot(Robot &&) = default;
+
+Robot & Robot::operator=(Robot &&) = default;
+
 const std::string & Robot::name() const
 {
   return name_;

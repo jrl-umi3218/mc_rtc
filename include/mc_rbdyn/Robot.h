@@ -68,8 +68,8 @@ public:
   using convex_pair_t = std::pair<std::string, S_ObjectPtr>;
 
 public:
-  Robot(Robot &&) = default;
-  Robot & operator=(Robot &&) = default;
+  Robot(Robot &&);
+  Robot & operator=(Robot &&);
 
   ~Robot();
 
