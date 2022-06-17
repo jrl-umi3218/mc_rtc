@@ -67,7 +67,7 @@ public:
   inline mc_tvm::DynamicFunction & dynamicFunction()
   {
     assert(backend_ == QPSolver::Backend::TVM);
-    return *static_cast<mc_tvm::DynamicFunction *>(motion_constr_.get());
+    return *(static_cast<mc_tvm::DynamicFunctionPtr *>(motion_constr_.get())->get());
   }
 
   void addToSolverImpl(QPSolver & solver) override;
@@ -86,7 +86,7 @@ protected:
    * - tasks::qp::MotionConstr or a derived constraint if the robot has flexibilities
    *
    * In TVM backend:
-   * - mc_tvm::DynamicFunction
+   * - mc_tvm::DynamicFunctionPtr
    */
   mc_rtc::void_ptr motion_constr_;
   /** Robot index for the constraint */

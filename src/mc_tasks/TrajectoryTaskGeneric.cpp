@@ -20,7 +20,14 @@ static inline mc_rtc::void_ptr_caster<tasks::qp::TrajectoryTask> tasks_trajector
 static inline mc_rtc::void_ptr_caster<tasks::qp::HighLevelTask> tasks_error{};
 static inline mc_rtc::void_ptr_caster<tasks::qp::JointsSelector> tasks_selector{};
 
-static inline mc_rtc::void_ptr_caster<details::TVMTrajectoryTaskGeneric> tvm_trajectory{};
+static inline details::TVMTrajectoryTaskGeneric * tvm_trajectory(mc_rtc::void_ptr & ptr)
+{
+  return static_cast<details::TVMTrajectoryTaskGenericPtr *>(ptr.get())->get();
+}
+static inline const details::TVMTrajectoryTaskGeneric * tvm_trajectory(const mc_rtc::void_ptr & ptr)
+{
+  return static_cast<const details::TVMTrajectoryTaskGenericPtr *>(ptr.get())->get();
+}
 static inline mc_rtc::void_ptr_caster<tvm::function::abstract::Function> tvm_error{};
 static inline mc_rtc::void_ptr_caster<mc_tvm::JointsSelectorFunction> tvm_selector{};
 

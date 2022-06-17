@@ -57,6 +57,8 @@ struct TVMTrajectoryTaskGeneric
   }
 };
 
+using TVMTrajectoryTaskGenericPtr = std::shared_ptr<TVMTrajectoryTaskGeneric>;
+
 } // namespace details
 
 } // namespace mc_tasks

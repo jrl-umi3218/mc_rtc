@@ -286,8 +286,8 @@ protected:
     else if constexpr(backend == Backend::TVM)
     {
       auto error = static_cast<ErrorT *>(errorT.get());
-      trajectoryT_ = mc_rtc::make_void_ptr<details::TVMTrajectoryTaskGeneric>();
-      static_cast<details::TVMTrajectoryTaskGeneric *>(trajectoryT_.get())->init<ErrorT>(error);
+      trajectoryT_ = mc_rtc::make_void_ptr<details::TVMTrajectoryTaskGenericPtr>(std::make_shared<details::TVMTrajectoryTaskGeneric>());
+      static_cast<details::TVMTrajectoryTaskGenericPtr *>(trajectoryT_.get())->get()->init<ErrorT>(error);
       int size = error->size();
       stiffness_ = Eigen::VectorXd::Constant(size, 1, stiffness_(0));
       damping_ = Eigen::VectorXd::Constant(size, 1, damping_(0));

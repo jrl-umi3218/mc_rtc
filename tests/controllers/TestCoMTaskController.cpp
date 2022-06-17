@@ -45,7 +45,7 @@ public:
     bool ret = MCController::run();
     BOOST_CHECK(ret);
     nrIter++;
-    if(nrIter == 500)
+    if(nrIter == 10)
     {
       // Swap the contact order
       solver().setContacts({{robots(), 1, 0, "AllGround", "LeftFoot"}, {robots(), 1, 0, "AllGround", "RightFoot"}});

@@ -78,7 +78,7 @@ static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots,
 
 mc_rtc::void_ptr initialize_tvm(const mc_rbdyn::Robot & robot)
 {
-  return mc_rtc::make_void_ptr<mc_tvm::DynamicFunction>(robot);
+  return mc_rtc::make_void_ptr<mc_tvm::DynamicFunctionPtr>(std::make_shared<mc_tvm::DynamicFunction>(robot));
 }
 
 static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
@@ -136,14 +136,13 @@ void DynamicsConstraint::addToSolverImpl(QPSolver & solver)
                             tvm::task_dynamics::None(), {tvm::requirements::PriorityLevel(0)});
       constraints_.push_back(tL);
       // FIXME We should be able to create proto task in TVM using reference or pointers
-      auto dyn_fn = static_cast<mc_tvm::DynamicFunction *>(motion_constr_.get());
-      std::shared_ptr<mc_tvm::DynamicFunction> dyn_fn_ptr(dyn_fn, [](mc_tvm::DynamicFunction *) {});
-      auto dyn = problem.add(dyn_fn_ptr == 0., tvm::task_dynamics::None(), {tvm::requirements::PriorityLevel(0)});
+      mc_tvm::DynamicFunctionPtr dyn_fn = *static_cast<mc_tvm::DynamicFunctionPtr *>(motion_constr_.get());
+      auto dyn = problem.add(dyn_fn == 0., tvm::task_dynamics::None(), {tvm::requirements::PriorityLevel(0)});
       constraints_.push_back(dyn);
-      auto cstr = problem.constraint(*dyn);
-      problem.add(tvm::hint::Substitution(cstr, tvm_robot.tau()));
+      // auto cstr = problem.constraint(*dyn);
+      // problem.add(tvm::hint::Substitution(cstr, tvm_robot.tau()));
+      break;
     }
-    break;
     default:
       break;
   }
@@ -162,9 +161,10 @@ void DynamicsConstraint::removeFromSolverImpl(QPSolver & solver)
     }
     case QPSolver::Backend::TVM:
     {
-      auto & constr = *static_cast<TVMKinematicsConstraint *>(constraint_.get());
-      auto & problem = tvm_solver(solver).problem();
-      problem.removeSubstitutionFor(*problem.constraint(*constr.constraints_.back()));
+      // auto & constr = *static_cast<TVMKinematicsConstraint *>(constraint_.get());
+      // auto & problem = tvm_solver(solver).problem();
+      // problem.removeSubstitutionFor(*problem.constraint(*constr.constraints_.back()));
+      //
       KinematicsConstraint::removeFromSolverImpl(solver);
       break;
     }

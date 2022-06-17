@@ -64,23 +64,23 @@ void TVMKinematicsConstraint::addToSolver(mc_solver::TVMQPSolver & solver)
                                  {tvm::requirements::PriorityLevel(0)});
   constraints_.push_back(aL);
   /** Mimic constraints */
-  for(const auto & m : tvm_robot.mimics())
-  {
-    Eigen::DenseIndex startIdx = 0;
-    const auto & leader = m.first;
-    const auto & followers = m.second.first;
-    const auto & mimicMult = m.second.second;
-    for(const auto & f : followers)
-    {
-      Eigen::MatrixXd A = mimicMult.segment(startIdx, f->size());
-      auto mimic = solver.problem().add(A * tvm::dot(leader, 2) - tvm::dot(f, 2) == 0., tvm::task_dynamics::None{},
-                                        {tvm::requirements::PriorityLevel(0)});
-      solver.problem().add(tvm::hint::Substitution(solver.problem().constraint(*mimic), tvm::dot(f, 2),
-                                                   tvm::constant::fullRank, tvm::hint::internal::DiagonalCalculator{}));
-      mimics_constraints_.push_back(mimic);
-      startIdx += f->size();
-    }
-  }
+  //for(const auto & m : tvm_robot.mimics())
+  //{
+  //  Eigen::DenseIndex startIdx = 0;
+  //  const auto & leader = m.first;
+  //  const auto & followers = m.second.first;
+  //  const auto & mimicMult = m.second.second;
+  //  for(const auto & f : followers)
+  //  {
+  //    Eigen::MatrixXd A = mimicMult.segment(startIdx, f->size());
+  //    auto mimic = solver.problem().add(A * tvm::dot(leader, 2) - tvm::dot(f, 2) == 0., tvm::task_dynamics::None{},
+  //                                      {tvm::requirements::PriorityLevel(0)});
+  //    solver.problem().add(tvm::hint::Substitution(solver.problem().constraint(*mimic), tvm::dot(f, 2),
+  //                                                 tvm::constant::fullRank, tvm::hint::internal::DiagonalCalculator{}));
+  //    mimics_constraints_.push_back(mimic);
+  //    startIdx += f->size();
+  //  }
+  //}
   /** FIXME Implement torque derivative and jerk bounds */
 }
 
