@@ -4,39 +4,9 @@ StatesLibraries:
 StepByStep: false
 Managed: false
 IdleKeepState: true
-robots:
-  ground:
-    module: env/ground
-# General constraints, always on
-constraints:
-- type: contact
-- type: dynamics
-  damper: [0.1, 0.01, 0.5]
-- type: compoundJoint
-# Collision constraint
-collisions:
-- type: collision
-  useMinimal: true
-# Initial set of contacts
-contacts:
-- r1: jvrc1
-  r2: ground
-  r1Surface: LeftFoot
-  r2Surface: AllGround
-- r1: jvrc1
-  r2: ground
-  r1Surface: RightFoot
-  r2Surface: AllGround
+constraints: []
 
-# Some options for a specific robot
-jvrc1:
-  posture:
-    stiffness: 1
-    weight: 10
-  ff:
-    stiffness: 2
-    weight: 100
-# Implement some additional text states
+# Test that there are no missed iterations when switching from a meta state to another meta state
 states:
   TestInitial:
     base: TestMetaContinuity
@@ -48,8 +18,8 @@ states:
       - [TestInitial, OK, TestInitial2, Auto]
   TestMeta2:
     base: TestMeta
-# Transitions map
+
 transitions:
 - [TestMeta, OK, TestMeta2, Auto]
-# Initial state
+
 init: TestMeta
