@@ -10,6 +10,7 @@
 /* Easily serialized/deserialized types */
 #include <mc_rbdyn/Base.h>
 #include <mc_rbdyn/BodySensor.h>
+#include <mc_rbdyn/JointSensor.h>
 #include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/Flexibility.h>
 #include <mc_rbdyn/ForceSensor.h>
@@ -73,6 +74,7 @@ DECLARE_IO(mc_rbdyn::S_ObjectPtr)
 
 DECLARE_IO(mc_rbdyn::Base)
 DECLARE_IO(mc_rbdyn::BodySensor)
+DECLARE_IO(mc_rbdyn::JointSensor)
 DECLARE_IO(mc_rbdyn::Collision)
 DECLARE_IO(std::shared_ptr<mc_rbdyn::Surface>)
 DECLARE_IO(std::shared_ptr<mc_rbdyn::PlanarSurface>)

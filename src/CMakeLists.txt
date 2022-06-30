@@ -187,6 +187,7 @@ mc_rbdyn/Device.cpp
 mc_rbdyn/BodySensor.cpp
 mc_rbdyn/Frame.cpp
 mc_rbdyn/RobotFrame.cpp
+mc_rbdyn/JointSensor.cpp
 )
 
 set(mc_rbdyn_HDR
@@ -225,6 +226,7 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/Device.h
 ../include/mc_rbdyn/Frame.h
 ../include/mc_rbdyn/RobotFrame.h
+../include/mc_rbdyn/JointSensor.h
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})

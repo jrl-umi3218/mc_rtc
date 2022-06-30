@@ -149,6 +149,19 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::BodySensor>::save(const mc_r
   return config;
 }
 
+mc_rbdyn::JointSensor ConfigurationLoader<mc_rbdyn::JointSensor>::load(const mc_rtc::Configuration & config)
+{
+  return mc_rbdyn::JointSensor(config("name"), config("parentJoint"));
+}
+
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::JointSensor>::save(const mc_rbdyn::JointSensor & js)
+{
+  mc_rtc::Configuration config;
+  config.add("name", js.name());
+  config.add("parentJoint", js.parentJoint());
+  return config;
+}
+
 mc_rbdyn::Collision ConfigurationLoader<mc_rbdyn::Collision>::load(const mc_rtc::Configuration & config)
 {
   return mc_rbdyn::Collision(config("body1"), config("body2"), config("iDist", 0.05), config("sDist", 0.01),
@@ -1124,6 +1137,7 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   config("flexibilities", rm._flexibility);
   config("forceSensors", rm._forceSensors);
   config("bodySensors", rm._bodySensors);
+  config("jointSensors", rm._jointSensors);
   config("springs", rm._springs);
   config("minimalSelfCollisions", rm._minimalSelfCollisions);
   config("commonSelfCollisions", rm._commonSelfCollisions);
@@ -1234,6 +1248,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   config.add("flexibilities", rm._flexibility);
   config.add("forceSensors", rm._forceSensors);
   config.add("bodySensors", rm._bodySensors);
+  config.add("jointSensors", rm._jointSensors);
   config.add("springs", rm._springs);
   config.add("minimalSelfCollisions", rm._minimalSelfCollisions);
   config.add("commonSelfCollisions", rm._commonSelfCollisions);

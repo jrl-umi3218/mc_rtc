@@ -456,6 +456,20 @@ Robot::Robot(NewRobotToken,
     bodyBodySensors_[bS.parentBody()] = i;
   }
 
+  jointSensors_ = module_.jointSensors();
+  for(size_t i = 0; i < jointSensors_.size(); ++i)
+  {
+    const auto & js = jointSensors_[i];
+    if(mb().jointIndexByName().count(js.parentJoint()) == 0)
+    {
+      mc_rtc::log::error_and_throw(
+          "JointSensor \"{}\" requires a parent joint named \"{}\" but no such joint was found in robot \"{}\"", js.name(),
+          js.parentJoint(), name);
+    }
+    jointSensorsIndex_[js.name()] = i;
+    jointJointSensors_[js.parentJoint()] = i;
+  }
+
   devices_ = module_.devices();
   for(size_t i = 0; i < devices_.size(); ++i)
   {
@@ -590,6 +604,46 @@ BodySensorVector & Robot::bodySensors()
 const BodySensorVector & Robot::bodySensors() const
 {
   return bodySensors_;
+}
+
+bool Robot::hasJointSensor(const std::string & name) const
+{
+  return jointSensorsIndex_.count(name) != 0;
+}
+
+bool Robot::jointHasJointSensor(const std::string & joint) const
+{
+  return jointJointSensors_.count(joint) != 0;
+}
+
+JointSensor & Robot::jointSensor(const std::string & name)
+{
+  return const_cast<JointSensor &>(static_cast<const Robot *>(this)->jointSensor(name));
+}
+
+const JointSensor & Robot::jointSensor(const std::string & name) const
+{
+  return jointSensors_[jointSensorsIndex_.at(name)];
+}
+
+JointSensor & Robot::jointJointSensor(const std::string & joint)
+{
+  return const_cast<JointSensor &>(static_cast<const Robot *>(this)->jointJointSensor(joint));
+}
+
+const JointSensor & Robot::jointJointSensor(const std::string & joint) const
+{
+  return jointSensors_[jointJointSensors_.at(joint)];
+}
+
+JointSensorVector & Robot::jointSensors()
+{
+  return jointSensors_;
+}
+
+const JointSensorVector & Robot::jointSensors() const
+{
+  return jointSensors_;
 }
 
 bool Robot::hasJoint(const std::string & name) const

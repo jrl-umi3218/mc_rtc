@@ -37,6 +37,8 @@ struct MC_RBDYN_DLLAPI Device
   /** Build a device attached to a specific body of the robot */
   Device(const std::string & name, const std::string & parent, const sva::PTransformd & X_p_s);
 
+  Device(const std::string & name, const std::string & parent);
+
   Device(const Device &) = delete;
   Device & operator=(const Device &) = delete;
 
