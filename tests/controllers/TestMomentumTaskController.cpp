@@ -54,11 +54,6 @@ public:
     nrIter++;
     if(nrIter == 500)
     {
-      // Swap the contact order
-      removeContact({robot().name(), "ground", "LeftFoot", "AllGround"});
-      removeContact({robot().name(), "ground", "RightFoot", "AllGround"});
-      addContact({"ground", robot().name(), "AllGround", "LeftFoot"});
-      addContact({"ground", robot().name(), "AllGround", "RightFoot"});
       momentumTask->momentum(sva::ForceVecd::Zero());
     }
     if(nrIter == 1000)
