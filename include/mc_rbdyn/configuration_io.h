@@ -10,10 +10,10 @@
 /* Easily serialized/deserialized types */
 #include <mc_rbdyn/Base.h>
 #include <mc_rbdyn/BodySensor.h>
-#include <mc_rbdyn/JointSensor.h>
 #include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/Flexibility.h>
 #include <mc_rbdyn/ForceSensor.h>
+#include <mc_rbdyn/JointSensor.h>
 #include <mc_rbdyn/PolygonInterpolator.h>
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn/Springs.h>

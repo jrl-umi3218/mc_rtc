@@ -463,8 +463,8 @@ Robot::Robot(NewRobotToken,
     if(mb().jointIndexByName().count(js.parentJoint()) == 0)
     {
       mc_rtc::log::error_and_throw(
-          "JointSensor \"{}\" requires a parent joint named \"{}\" but no such joint was found in robot \"{}\"", js.name(),
-          js.parentJoint(), name);
+          "JointSensor \"{}\" requires a parent joint named \"{}\" but no such joint was found in robot \"{}\"",
+          js.name(), js.parentJoint(), name);
     }
     jointSensorsIndex_[js.name()] = i;
     jointJointSensors_[js.parentJoint()] = i;

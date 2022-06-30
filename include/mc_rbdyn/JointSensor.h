@@ -27,8 +27,7 @@ struct MC_RBDYN_DLLAPI JointSensor : public Device
    * @param jointName Name of the joint to which the sensor is attached
    *
    */
-  inline JointSensor(const std::string & name, const std::string & jointName)
-  : Device(name, jointName)
+  inline JointSensor(const std::string & name, const std::string & jointName) : Device(name, jointName)
   {
     type_ = "JointSensor";
   }
