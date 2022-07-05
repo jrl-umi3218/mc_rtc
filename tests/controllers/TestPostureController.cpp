@@ -28,8 +28,6 @@ public:
     qpsolver->addConstraintSet(selfCollisionConstraint);
     qpsolver->addConstraintSet(*compoundJointConstraint);
     postureTask->stiffness(200.0);
-    mc_rtc::log::critical("POSTURE TASK stiffness: {}", postureTask->stiffness());
-    mc_rtc::log::critical("POSTURE TASK damping: {}", postureTask->damping());
     qpsolver->addTask(postureTask.get());
     qpsolver->setContacts({});
     BOOST_CHECK(robot().hasJoint("NECK_P"));
@@ -45,8 +43,6 @@ public:
     BOOST_CHECK(ret);
     if(nrIter == 250)
     {
-      mc_rtc::log::critical("robot().mbc().q[head_joint_index][0]: {}", robot().mbc().q[head_joint_index][0]);
-      mc_rtc::log::critical("head_joint_target: {}", head_joint_target);
       BOOST_CHECK_SMALL(robot().mbc().q[head_joint_index][0] - head_joint_target, 0.05);
 
       neckTask_ = std::make_shared<mc_tasks::PostureTask>(solver(), 0);
@@ -75,8 +71,6 @@ public:
   {
     MCController::reset(reset_data);
     postureTask->target({{"NECK_P", {head_joint_target}}});
-    mc_rtc::log::critical("POSTURE TASK stiffness: {}", postureTask->stiffness());
-    mc_rtc::log::critical("POSTURE TASK damping: {}", postureTask->damping());
   }
 
 private:
