@@ -226,6 +226,9 @@ controller_test_run(TestFSMStateOptions 100)
 target_link_libraries(TestFSMStateOptions PUBLIC mc_control_fsm)
 
 set(FSM_TEST_STATES_DIR "${CMAKE_BINARY_DIR}/tests/fsm_states/TestMetaContinuity")
+if(CMAKE_CONFIGURATION_TYPES)
+  set(FSM_TEST_STATES_DIR "${FSM_TEST_STATES_DIR}/$<CONFIGURATION>")
+endif()
 controller_test_run(TestFSMMetaContinuity 20)
 target_link_libraries(TestFSMMetaContinuity PUBLIC mc_control_fsm)
 
