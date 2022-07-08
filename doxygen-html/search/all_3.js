@@ -244,7 +244,6 @@ var searchData=
   ['controllerserver',['ControllerServer',['../structmc__control_1_1ControllerServer.html',1,'mc_control::ControllerServer'],['../structmc__control_1_1ControllerServer.html#ac13be9e36cf38cb6bdde4cc8b4b19250',1,'mc_control::ControllerServer::ControllerServer()']]],
   ['controllerserver_2eh',['ControllerServer.h',['../ControllerServer_8h.html',1,'']]],
   ['controllertoken',['ControllerToken',['../structmc__solver_1_1QPSolver_1_1ControllerToken.html',1,'mc_solver::QPSolver']]],
-  ['controlpoints',['controlPoints',['../structmc__tasks_1_1SplineTrajectoryTask.html#a848034873f24f9e38dcc12d657e04741',1,'mc_tasks::SplineTrajectoryTask']]],
   ['controlslidingforce',['controlSlidingForce',['../structmc__control_1_1fsm_1_1SlidingFootContactState.html#a0a863a4ea794a8aaeb32c8dae8b59a07',1,'mc_control::fsm::SlidingFootContactState']]],
   ['convex',['convex',['../structmc__rbdyn_1_1Robot.html#a7fa487585e4b6d447c69ba78d9eca203',1,'mc_rbdyn::Robot::convex(const std::string &amp;cName)'],['../structmc__rbdyn_1_1Robot.html#a2b2dc756cfb84c337de115384febab34',1,'mc_rbdyn::Robot::convex(const std::string &amp;cName) const']]],
   ['convex_5fpair_5ft',['convex_pair_t',['../structmc__rbdyn_1_1Robot.html#aeaf56b7bf79a4e2be37e3c8615d156ad',1,'mc_rbdyn::Robot']]],

@@ -7,7 +7,6 @@ var structmc__tasks_1_1SplineTrajectoryTask =
     [ "addToGUI", "structmc__tasks_1_1SplineTrajectoryTask.html#afa99dd9c136ee9039a844a4ffb814640", null ],
     [ "addToLogger", "structmc__tasks_1_1SplineTrajectoryTask.html#aa7147dba544550aa616caa164a40209a", null ],
     [ "buildCompletionCriteria", "structmc__tasks_1_1SplineTrajectoryTask.html#a552e7c8b7ef80649a462476c30ef6cc6", null ],
-    [ "controlPoints", "structmc__tasks_1_1SplineTrajectoryTask.html#a848034873f24f9e38dcc12d657e04741", null ],
     [ "currentTime", "structmc__tasks_1_1SplineTrajectoryTask.html#a0debf08c0f670560ff53a465b38cbce2", null ],
     [ "damping", "structmc__tasks_1_1SplineTrajectoryTask.html#ac7b0abca4d4b4b3d00a49a66a366db6d", null ],
     [ "damping", "structmc__tasks_1_1SplineTrajectoryTask.html#a2171ccb74c8178694c6cab983182cb76", null ],

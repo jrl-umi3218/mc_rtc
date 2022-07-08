@@ -30439,13 +30439,6 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>std::vector&lt; Eigen::Vector3d &gt;</type>
-      <name>controlPoints</name>
-      <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
-      <anchor>a848034873f24f9e38dcc12d657e04741</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
       <type>void</type>
       <name>displaySamples</name>
       <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
@@ -30897,13 +30890,6 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>std::vector&lt; Eigen::Vector3d &gt;</type>
-      <name>controlPoints</name>
-      <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
-      <anchor>a848034873f24f9e38dcc12d657e04741</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
       <type>void</type>
       <name>displaySamples</name>
       <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
@@ -31341,13 +31327,6 @@
       <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
       <anchor>a8a915671172878e474be2514db659fb1</anchor>
       <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>std::vector&lt; Eigen::Vector3d &gt;</type>
-      <name>controlPoints</name>
-      <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
-      <anchor>a848034873f24f9e38dcc12d657e04741</anchor>
-      <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>void</type>
