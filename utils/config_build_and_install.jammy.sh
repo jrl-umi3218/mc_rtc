@@ -12,10 +12,10 @@ fi
 export PYTHON_FORCE_PYTHON2="false"
 export PYTHON_FORCE_PYTHON3="true"
 export PYTHON_BUILD_PYTHON2_AND_PYTHON3="false"
+export MC_LOG_UI_PYTHON_EXECUTABLE=python3
 
 mc_rtc_extra_steps()
 {
-  export MC_LOG_UI_PYTHON_EXECUTABLE=python3
   # Fix GEOS installation: see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1010002
   if [ ! -f /usr/include/geos/geom/Coordinate.inl ]
   then
