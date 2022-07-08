@@ -38,8 +38,7 @@ void PositionTask::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
   logger.addLogEntry(name_ + "_target", this, [this]() { return position(); });
-  logger.addLogEntry(name_ + "_curPos", this,
-                     [this]() -> const Eigen::Vector3d & { return frame_->position().translation(); });
+  logger.addLogEntry(name_ + "_curPos", this, [this]() { return frame_->position().translation(); });
   logger.addLogEntry(name_ + "_curVel", this, [this]() -> const Eigen::VectorXd & { return errorT->speed(); });
 }
 

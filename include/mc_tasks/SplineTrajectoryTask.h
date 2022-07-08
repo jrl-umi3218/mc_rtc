@@ -281,12 +281,6 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
    */
   const sva::PTransformd target() const;
 
-  /*! \brief Get the control points of the trajectory's b-spline
-   *
-   * \returns The list of control points in the spline
-   */
-  std::vector<Eigen::Vector3d> controlPoints();
-
   /*! \brief Number of points to sample on the spline for the gui display
    *
    * \param s number of samples
