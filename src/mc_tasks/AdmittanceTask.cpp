@@ -62,14 +62,11 @@ void AdmittanceTask::update(mc_solver::QPSolver &)
   // Compute position and rotation delta
   sva::PTransformd delta(mc_rbdyn::rpyToMat(timestep_ * refVelB_.angular()), timestep_ * refVelB_.linear());
 
-  // Apply feed forward term
-  refVelB_ += feedforwardVelB_;
-
   // Acceleration
-  TransformTask::refAccel((refVelB_ - TransformTask::refVelB()) / timestep_);
+  TransformTask::refAccel((refVelB_ + feedforwardVelB_ - TransformTask::refVelB()) / timestep_);
 
   // Velocity
-  TransformTask::refVelB(refVelB_);
+  TransformTask::refVelB(refVelB_ + feedforwardVelB_);
 
   // Position
   target(delta * target());
