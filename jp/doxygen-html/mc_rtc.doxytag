@@ -7895,6 +7895,13 @@
       <arglist>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double dt)</arglist>
     </member>
     <member kind="function">
+      <type></type>
+      <name>CompoundJointConstraint</name>
+      <anchorfile>structmc__solver_1_1CompoundJointConstraint.html</anchorfile>
+      <anchor>ad4afcab3d84695d266751de81854d522</anchor>
+      <arglist>(const mc_rbdyn::Robots &amp;robot, unsigned int robotIndex, double dt, const CompoundJointConstraintDescriptionVector &amp;cs)</arglist>
+    </member>
+    <member kind="function">
       <type>void</type>
       <name>addToSolver</name>
       <anchorfile>structmc__solver_1_1CompoundJointConstraint.html</anchorfile>

@@ -97,6 +97,8 @@ Collaboration diagram for mc_solver::CompoundJointConstraint:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a6bab2c52e39b3c37781091ff0477b554"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1CompoundJointConstraint.html#a6bab2c52e39b3c37781091ff0477b554">CompoundJointConstraint</a> (const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;robots, unsigned int robotIndex, double dt)</td></tr>
 <tr class="separator:a6bab2c52e39b3c37781091ff0477b554"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4afcab3d84695d266751de81854d522"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1CompoundJointConstraint.html#ad4afcab3d84695d266751de81854d522">CompoundJointConstraint</a> (const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;robot, unsigned int robotIndex, double dt, const <a class="el" href="namespacemc__solver.html#a2503fc4f7d91a2f6c53349f2a12effd1">CompoundJointConstraintDescriptionVector</a> &amp;cs)</td></tr>
+<tr class="separator:ad4afcab3d84695d266751de81854d522"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5c96ef4ac5e418eed9e07ad0be00064"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1CompoundJointConstraint.html#ab5c96ef4ac5e418eed9e07ad0be00064">addToSolver</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver) override</td></tr>
 <tr class="separator:ab5c96ef4ac5e418eed9e07ad0be00064"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af01c6fabfd9fb7f818d62693aaaac1ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1CompoundJointConstraint.html#af01c6fabfd9fb7f818d62693aaaac1ed">removeFromSolver</a> (tasks::qp::QPSolver &amp;solver) override</td></tr>
@@ -109,7 +111,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Wrapper for mc_solver::details::CompundJointConstraint </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6bab2c52e39b3c37781091ff0477b554"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6bab2c52e39b3c37781091ff0477b554">&#9670;&nbsp;</a></span>CompoundJointConstraint()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bab2c52e39b3c37781091ff0477b554">&#9670;&nbsp;</a></span>CompoundJointConstraint() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,6 +133,46 @@ Public Member Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>dt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad4afcab3d84695d266751de81854d522"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4afcab3d84695d266751de81854d522">&#9670;&nbsp;</a></span>CompoundJointConstraint() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_solver::CompoundJointConstraint::CompoundJointConstraint </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>robot</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>robotIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacemc__solver.html#a2503fc4f7d91a2f6c53349f2a12effd1">CompoundJointConstraintDescriptionVector</a> &amp;&#160;</td>
+          <td class="paramname"><em>cs</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

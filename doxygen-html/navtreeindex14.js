@@ -1,5 +1,6 @@
 var NAVTREEINDEX14 =
 {
+"structmc__solver_1_1ContactConstraint.html#a4456741f8ae0b07c199415fda9b9aecf":[3,0,8,8,6],
 "structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30":[3,0,8,8,0],
 "structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30a15d06b5b0997a0a5e17eccd053c7c652":[3,0,8,8,0,1],
 "structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30a75ced229938828d7cf205928657fd137":[3,0,8,8,0,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX14 =
 "structmc__tasks_1_1AddRemoveContactTask.html#ac370293e74d26c6c14fe3ff593de45f2":[3,0,9,3,22],
 "structmc__tasks_1_1AddRemoveContactTask.html#ac46066f1cc163f34fcbb8c45e7593536":[3,0,9,3,19],
 "structmc__tasks_1_1AddRemoveContactTask.html#acdd2290d6e07d8778d1bb92feb96d973":[3,0,9,3,27],
-"structmc__tasks_1_1AddRemoveContactTask.html#ad4c4be286affbb126d787a5356e7bf96":[3,0,9,3,26],
-"structmc__tasks_1_1AddRemoveContactTask.html#ae0fae793050143ac0f684c83e8146b23":[3,0,9,3,15]
+"structmc__tasks_1_1AddRemoveContactTask.html#ad4c4be286affbb126d787a5356e7bf96":[3,0,9,3,26]
 };
