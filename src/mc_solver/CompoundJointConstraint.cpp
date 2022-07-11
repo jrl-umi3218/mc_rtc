@@ -96,7 +96,15 @@ std::string CompoundJointConstraint::descInEq(const std::vector<rbd::MultiBody> 
 } // namespace details
 
 CompoundJointConstraint::CompoundJointConstraint(const mc_rbdyn::Robots & robots, unsigned int rIndex, double dt)
-: constr_(robots, rIndex, dt, robots.robot(rIndex).module().compoundJoints())
+: CompoundJointConstraint(robots, rIndex, dt, robots.robot(rIndex).module().compoundJoints())
+{
+}
+
+CompoundJointConstraint::CompoundJointConstraint(const mc_rbdyn::Robots & robots,
+                                                 unsigned int rIndex,
+                                                 double dt,
+                                                 const CompoundJointConstraintDescriptionVector & cs)
+: constr_(robots, rIndex, dt, cs)
 {
 }
 
@@ -119,7 +127,15 @@ namespace
 static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
     "compoundJoint",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      return std::make_shared<mc_solver::CompoundJointConstraint>(
-          solver.robots(), robotIndexFromConfig(config, solver.robots(), "compoundJoint"), solver.dt());
+      auto rIndex = robotIndexFromConfig(config, solver.robots(), "compoundJoint");
+      if(config.has("constraints"))
+      {
+        return std::make_shared<mc_solver::CompoundJointConstraint>(solver.robots(), rIndex, solver.dt(),
+                                                                    config("constraints"));
+      }
+      else
+      {
+        return std::make_shared<mc_solver::CompoundJointConstraint>(solver.robots(), rIndex, solver.dt());
+      }
     });
 }

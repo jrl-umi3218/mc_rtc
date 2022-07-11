@@ -103,6 +103,11 @@ struct MC_SOLVER_DLLAPI CompoundJointConstraint : public ConstraintSet
 {
   CompoundJointConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double dt);
 
+  CompoundJointConstraint(const mc_rbdyn::Robots & robot,
+                          unsigned int robotIndex,
+                          double dt,
+                          const CompoundJointConstraintDescriptionVector & cs);
+
   void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) override;
 
   void removeFromSolver(tasks::qp::QPSolver & solver) override;

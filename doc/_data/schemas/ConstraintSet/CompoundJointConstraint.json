@@ -5,7 +5,16 @@
   "properties":
   {
     "type": { "enum": ["compoundJoint"] },
-    "robot": { "$ref": "/../../common/ConstraintSet_robot.json" }
+    "robot": { "$ref": "/../../common/ConstraintSet_robot.json" },
+    "constraints":
+    {
+      "description": "List of compound joint constraints this robot must follow<br/>Use the robot's module definitions if not provided",
+      "type": "array",
+      "items":
+      {
+        "$ref": "/../../mc_rbdyn/CompoundJointConstraintDescription.json"
+      }
+    }
   },
  "required": ["type"]
 }
