@@ -1,0 +1,30 @@
+{
+  "title": "mc_rbdyn::CompoundJointConstraintDescription",
+  "type": "object",
+  "description": "Describes a compound joint constraint.<br/>The configuration (q1, q2) or joints (j1, j2) must lie on the negative side of a (p1, p2) line where p1 and p2 are configurations of the (j1, j2) pair",
+  "properties":
+  {
+    "j1":
+    {
+      "type": "string",
+      "description": "First joint for the compound constraint"
+    },
+    "j2":
+    {
+      "type": "string",
+      "description": "Second joint for the compound constraint"
+    },
+    "p1":
+    {
+      "description": "First point of configuration (q1, q2)",
+      "$ref": "/../../Eigen/Vector2d.json"
+    },
+    "p2":
+    {
+      "description": "Second point of configuration (q1, q2)",
+      "$ref": "/../../Eigen/Vector2d.json"
+    }
+  },
+  "required": ["j1", "j2", "p1", "p2"],
+  "additionalProperties": false
+}
