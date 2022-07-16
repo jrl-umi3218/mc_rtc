@@ -460,14 +460,14 @@ Robot::Robot(NewRobotToken,
   for(size_t i = 0; i < jointSensors_.size(); ++i)
   {
     const auto & js = jointSensors_[i];
-    if(mb().jointIndexByName().count(js.parentJoint()) == 0)
+    if(mb().jointIndexByName().count(js.joint()) == 0)
     {
       mc_rtc::log::error_and_throw(
-          "JointSensor \"{}\" requires a parent joint named \"{}\" but no such joint was found in robot \"{}\"",
-          js.name(), js.parentJoint(), name);
+          "JointSensor \"{}\" requires a joint named \"{}\" but no such joint was found in robot \"{}\"", js.name(),
+          js.joint(), name);
     }
     jointSensorsIndex_[js.name()] = i;
-    jointJointSensors_[js.parentJoint()] = i;
+    jointJointSensors_[js.joint()] = i;
   }
 
   devices_ = module_.devices();

@@ -37,7 +37,7 @@ struct MC_RBDYN_DLLAPI JointSensor
     type_ = "JointSensor";
   }
 
-  JointSensor(const JointSensor & js) : JointSensor(js.name(), js.parentJoint())
+  JointSensor(const JointSensor & js) : JointSensor(js.name(), js.joint())
   {
     motor_temperature_ = js.motor_temperature_;
     driver_temperature_ = js.driver_temperature_;
@@ -72,7 +72,7 @@ struct MC_RBDYN_DLLAPI JointSensor
   }
 
   /** Returns the sensor's joint name */
-  inline const std::string & parentJoint() const
+  inline const std::string & joint() const
   {
     return joint_;
   }
