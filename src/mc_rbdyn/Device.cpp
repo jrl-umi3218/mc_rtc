@@ -12,8 +12,6 @@ Device::Device(const std::string & name, const std::string & parent, const sva::
 {
 }
 
-Device::Device(const std::string & name, const std::string & parent) : type_(""), name_(name), parent_(parent) {}
-
 sva::PTransformd Device::X_0_s(const mc_rbdyn::Robot & robot) const
 {
   return X_p_s() * robot.bodyPosW(parent_);

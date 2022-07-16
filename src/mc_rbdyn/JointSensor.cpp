@@ -3,11 +3,9 @@
 namespace mc_rbdyn
 {
 
-JointSensor::~JointSensor() noexcept = default;
-
-DevicePtr JointSensor::clone() const
+JointSensorPtr JointSensor::clone() const
 {
-  return DevicePtr(new JointSensor(*this));
+  return JointSensorPtr(new JointSensor(*this));
 }
 
 } // namespace mc_rbdyn
