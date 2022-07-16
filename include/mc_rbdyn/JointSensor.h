@@ -77,38 +77,38 @@ struct MC_RBDYN_DLLAPI JointSensor
     return joint_;
   }
 
-  /** Return the sensor's motor temperature reading, Zero if not provided */
-  inline const double & motorTemperature() const
+  /** Return the sensor's motor temperature reading (Celcius), NaN if not provided */
+  inline double motorTemperature() const
   {
     return motor_temperature_;
   }
 
-  /** Set the sensor's motor temperature reading */
-  inline void motorTemperature(const double & motor_temperature)
+  /** Set the sensor's motor temperature reading (Celcius) */
+  inline void motorTemperature(double motor_temperature)
   {
     motor_temperature_ = motor_temperature;
   }
 
-  /** Return the sensor's driver temperature reading, Zero if not provided */
-  inline const double & driverTemperature() const
+  /** Return the sensor's driver temperature reading (Celcius), NaN if not provided */
+  inline double driverTemperature() const
   {
     return driver_temperature_;
   }
 
-  /** Set the sensor's driver temperature reading */
-  inline void driverTemperature(const double & driver_temperature)
+  /** Set the sensor's driver temperature reading (Celcius) */
+  inline void driverTemperature(double driver_temperature)
   {
     driver_temperature_ = driver_temperature;
   }
 
-  /** Return the sensor's current reading, Zero if not provided */
-  inline const double & motorCurrent() const
+  /** Return the sensor's current reading (Ampere), NaN if not provided */
+  inline double motorCurrent() const
   {
     return motor_current_;
   }
 
-  /** Set the sensor's current reading */
-  inline void motorCurrent(const double & motor_current)
+  /** Set the sensor's current reading (Ampere) */
+  inline void motorCurrent(double motor_current)
   {
     motor_current_ = motor_current;
   }
@@ -125,9 +125,12 @@ protected:
   std::string type_;
 
 private:
-  double motor_temperature_ = 0;
-  double driver_temperature_ = 0;
-  double motor_current_ = 0;
+  /* Motor temperature (Celcius) */
+  double motor_temperature_ = std::numeric_limits<double>::quiet_NaN();
+  /* Drive temperature (Celcius) */
+  double driver_temperature_ = std::numeric_limits<double>::quiet_NaN();
+  /* Motor current (Ampere) */
+  double motor_current_ = std::numeric_limits<double>::quiet_NaN();
 };
 
 typedef std::vector<JointSensor, Eigen::aligned_allocator<JointSensor>> JointSensorVector;
