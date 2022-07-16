@@ -148,10 +148,10 @@ public:
   const JointSensor & jointJointSensor(const std::string & name) const;
 
   /** Return all joint sensors */
-  JointSensorVector & jointSensors();
+  std::vector<JointSensor> & jointSensors();
 
   /** Return all joint sensors (const) */
-  const JointSensorVector & jointSensors() const;
+  const std::vector<JointSensor> & jointSensors() const;
 
   /** @} */
   /* End of Joint sensors group */
@@ -1046,7 +1046,7 @@ private:
   /** Correspondance between bodies' names and attached body sensors */
   std::unordered_map<std::string, size_t> bodyBodySensors_;
   /** Hold all joint sensors */
-  JointSensorVector jointSensors_;
+  std::vector<JointSensor> jointSensors_;
   /** Correspondance between joint sensor's name and joint sensor index*/
   std::unordered_map<std::string, size_t> jointSensorsIndex_;
   /** Correspondance between joints' names and attached joint sensors */

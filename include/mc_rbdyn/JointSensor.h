@@ -6,9 +6,8 @@
 
 #include <mc_rbdyn/api.h>
 
-#include <Eigen/StdVector>
-
 #include <memory>
+#include <limits>
 
 namespace mc_rbdyn
 {
@@ -132,7 +131,5 @@ private:
   /* Motor current (Ampere) */
   double motor_current_ = std::numeric_limits<double>::quiet_NaN();
 };
-
-typedef std::vector<JointSensor, Eigen::aligned_allocator<JointSensor>> JointSensorVector;
 
 } // namespace mc_rbdyn

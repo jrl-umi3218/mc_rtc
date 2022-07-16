@@ -448,7 +448,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    *
    * \see mc_rbdyn::JointSensor for details on the expected data
    */
-  const JointSensorVector & jointSensors() const
+  const std::vector<JointSensor> & jointSensors() const
   {
     return _jointSensors;
   }
@@ -642,7 +642,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** \see bodySensors() */
   BodySensorVector _bodySensors;
   /** \see jointSensors() */
-  JointSensorVector _jointSensors;
+  std::vector<JointSensor> _jointSensors;
   /** \see springs() */
   Springs _springs;
   /** \see minimalSelfCollisions() */

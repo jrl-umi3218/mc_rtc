@@ -636,12 +636,12 @@ const JointSensor & Robot::jointJointSensor(const std::string & joint) const
   return jointSensors_[jointJointSensors_.at(joint)];
 }
 
-JointSensorVector & Robot::jointSensors()
+std::vector<JointSensor> & Robot::jointSensors()
 {
   return jointSensors_;
 }
 
-const JointSensorVector & Robot::jointSensors() const
+const std::vector<JointSensor> & Robot::jointSensors() const
 {
   return jointSensors_;
 }
