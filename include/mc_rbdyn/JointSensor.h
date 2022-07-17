@@ -37,6 +37,13 @@ struct MC_RBDYN_DLLAPI JointSensor
     type_ = "JointSensor";
   }
 
+  /** Constructor
+   *
+   * @param jointName Name of the joint to which the sensor is attached
+   *
+   */
+  JointSensor(const std::string & jointName);
+
   JointSensor(const JointSensor & js) : JointSensor(js.name(), js.joint())
   {
     motor_temperature_ = js.motor_temperature_;
