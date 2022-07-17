@@ -6,8 +6,9 @@
 
 #include <mc_rbdyn/api.h>
 
-#include <memory>
 #include <limits>
+#include <memory>
+#include <string>
 
 namespace mc_rbdyn
 {
