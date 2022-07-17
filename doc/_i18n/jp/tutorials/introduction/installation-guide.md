@@ -14,7 +14,7 @@ UbuntuユーザーとmacOSユーザーにはバイナリ版を推奨します。
 
 {% assign install_apt=site.translations[site.lang].tutorials.introduction["installation-guide"].install_apt %}
 
-{% include show_sources.html sources=install_apt copy=false id="install_apt" copy=true %}
+{% include show_sources.html sources=install_apt id="install_apt" copy=true %}
 
 *注: mc\_rtcのディストリビューション版では、[eigen-qld](https://github.com/jrl-umi3218/eigen-qld)を介してQLD QPソルバー（線形二次計画法ソルバー）を使用できます。LSSOLへのアクセス権があり、[eigen-lssol](https://gite.lirmm.fr/multi-contact/eigen-lssol)をインストールできる場合、LSSOLのサポート付きで[Tasks](https://github.com/jrl-umi3218/Tasks)をビルドして`/usr`にインストールできます。この2つのバージョンはバイナリレベルで互換性があります。*
 

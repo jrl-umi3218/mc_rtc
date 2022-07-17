@@ -1,0 +1,25 @@
+StatesLibraries:
+  - "@FSM_STATES_INSTALL_PREFIX@"
+  - "@FSM_TEST_STATES_DIR@"
+StepByStep: false
+Managed: false
+IdleKeepState: true
+constraints: []
+
+# Test that there are no missed iterations when switching from a meta state to another meta state
+states:
+  TestInitial:
+    base: TestMetaContinuity
+  TestInitial2:
+    base: TestMetaContinuity
+  TestMeta:
+    base: Meta
+    transitions:
+      - [TestInitial, OK, TestInitial2, Auto]
+  TestMeta2:
+    base: TestMeta
+
+transitions:
+- [TestMeta, OK, TestMeta2, Auto]
+
+init: TestMeta

@@ -1174,6 +1174,8 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
 
   rm._frames = config("frames", std::vector<mc_rbdyn::RobotModule::FrameDescription>{});
 
+  rm._compoundJoints = config("compoundJoints", mc_rbdyn::CompoundJointConstraintDescriptionVector{});
+
   return rm;
 }
 
@@ -1257,6 +1259,10 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   config.add("default_attitude", rm._default_attitude);
   config.add("gripperSafety", rm._gripperSafety);
   config.add("lipmStabilizer", rm._lipmStabilizerConfig);
+  if(rm._compoundJoints.size())
+  {
+    config.add("compoundJoints", rm._compoundJoints);
+  }
   return config;
 }
 

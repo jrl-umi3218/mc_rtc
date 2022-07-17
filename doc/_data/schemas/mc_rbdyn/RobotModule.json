@@ -223,6 +223,15 @@
     {
       "$ref": "/../../mc_rbdyn/StabilizerConfiguration.json",
       "description": "Default configuration for {% doxygen mc_tasks::lipm_stabilizer::StabilizerTask %}"
+    },
+    "compoundJoints":
+    {
+      "description": "List of compound joint constraints this robot must follow",
+      "type": "array",
+      "items":
+      {
+        "$ref": "/../../mc_rbdyn/CompoundJointConstraintDescription.json"
+      }
     }
   },
   "required": ["path", "name"],

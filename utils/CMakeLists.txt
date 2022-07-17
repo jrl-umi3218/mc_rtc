@@ -1,9 +1,15 @@
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 if(NOT DEFINED MC_LOG_UI_PYTHON_EXECUTABLE)
-  set(MC_LOG_UI_PYTHON_EXECUTABLE "python")
+  if(PYTHON_BINDING_FORCE_PYTHON3)
+    set(MC_LOG_UI_PYTHON_EXECUTABLE "python3")
+  elseif(PYTHON_BINDING_FORCE_PYTHON2)
+    set(MC_LOG_UI_PYTHON_EXECUTABLE "python2")
+  else()
+    set(MC_LOG_UI_PYTHON_EXECUTABLE "python")
+  endif()
 endif()
 
 find_package(Boost REQUIRED COMPONENTS program_options timer)

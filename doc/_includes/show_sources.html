@@ -10,9 +10,11 @@
 <div class="tab-content" id="{{include.id}}TabContent">
   {% for src in include.sources %}
     {% capture id %}{{include.id}}{{src.name}}{{src.lang}}{% endcapture %}
+    {% capture copyid %}{{id}}{{forloop.index0}}{% endcapture %}
     {% capture id %}{{ id | slugify }}{% endcapture %}
+    {% capture copyid %}{{ copyid | slugify }}{% endcapture %}
     <div class="tab-pane{% if forloop.index0 == 0 %} show active{% endif %}" id="{{id}}TabContent" role="tabpanel" arial-labelledby="{{id}}Tab">
-      {% include show_source.html source=src.source lang=src.lang copy=include.copy id=include.id  include=src.include translate=src.translate %}
+      {% include show_source.html source=src.source lang=src.lang copy=include.copy id=copyid  include=src.include translate=src.translate %}
     </div>
   {% endfor %}
 </div>

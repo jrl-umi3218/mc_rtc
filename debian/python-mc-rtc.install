@@ -1,4 +1,5 @@
 usr/lib/python2.7/dist-packages/mc_control*
+usr/lib/python2.7/dist-packages/mc_observers*
 usr/lib/python2.7/dist-packages/mc_rbdyn*
 usr/lib/python2.7/dist-packages/mc_rtc*
 usr/lib/python2.7/dist-packages/mc_solver*

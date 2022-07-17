@@ -18,6 +18,7 @@ void MetaState::start(Controller & ctl)
     config_.add("StepByStep", false);
   }
   executor_.init(ctl, config_, name(), config_("category", std::vector<std::string>{}));
+  run(ctl);
 }
 
 bool MetaState::run(Controller & ctl)

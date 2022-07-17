@@ -237,7 +237,7 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
   template<typename Type, int Options, typename StrideType>
   void write(const Eigen::Ref<Type, Options, StrideType> & v)
   {
-#if not EIGEN_VERSION_AT_LEAST(3, 2, 90)
+#if !EIGEN_VERSION_AT_LEAST(3, 2, 90)
     using Index = Eigen::DenseIndex;
 #else
     using Index = Eigen::Index;

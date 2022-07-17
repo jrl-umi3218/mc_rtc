@@ -4,7 +4,7 @@
 
 #include "mpack.h"
 
-#if not EIGEN_VERSION_AT_LEAST(3, 2, 90)
+#if !EIGEN_VERSION_AT_LEAST(3, 2, 90)
 namespace Eigen
 {
 using Index = Eigen::DenseIndex;

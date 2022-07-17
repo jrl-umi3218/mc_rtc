@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.11.0] - 2022-07-08
+
 ### Highlights
 
 `mc_rbdyn::Frame` and `mc_rbdyn::RobotFrame` have been introduced. This removes
@@ -26,10 +28,15 @@ framework. (#247)
   JSON/YAML files (#247)
 - Idem for specifications of relative targets (#247)
 
+### Changes
+
+- [mc_control] Many functionalities of FSM controllers -- notably simplified contact and collision manipulations and configuration based initialization -- are now available in basic controllers (#250)
+
 ### Added
 
 - [mc_control] Controllers can specify extra frames in their configuration frame (#251)
 - [mc_control] Controllers can specify different `init_pos` for different `MainRobot` (#251)
+- [mc_rbdyn] Add an overload to load a robot module with a custom name
 - [mc_rtc_utils] `mc_rtc::shared` is a wrapper around `std::enabled_shared_from_this` to allow
   reference-style API where the data is backed by a shared pointer (#247)
 - [mc_tasks] All tasks (when it makes sense) can accept a frame at construction (#247)
@@ -40,8 +47,12 @@ framework. (#247)
 
 ### Fixes
 
+- [debian] Python bindings now include mc_observers
+- [fsm::Meta] Fix missed iterations at the start of meta states (#257)
 - [mc_control] Make robot position initialization consistant (#245)
+- [mc_rbdyn] Fix initialization of the default body sensor (#258)
 - [utils] Fix issues with pip/pip3 on Ubuntu Focal (#246)
+- [utils] Honor forced selection of Python for mc_log_ui
 
 ## [1.10.0] - 2022-04-06
 
@@ -467,7 +478,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.10.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.11.0...HEAD
+[1.11.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.11.0
 [1.10.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.10.0
 [1.9.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.9.0
 [1.8.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.2

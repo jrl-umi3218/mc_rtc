@@ -14,7 +14,7 @@ Binaries are recommended for Ubuntu users and macOS users. vcpkg is recommended 
 
 {% assign install_apt=site.translations[site.lang].tutorials.introduction["installation-guide"].install_apt %}
 
-{% include show_sources.html sources=install_apt copy=false id="install_apt" copy=true %}
+{% include show_sources.html sources=install_apt id="install_apt" copy=true %}
 
 *Note: the distributed version of mc\_rtc runs with the QLD QP solver through [eigen-qld](https://github.com/jrl-umi3218/eigen-qld). If you have access to the LSSOL solver and thus can install [eigen-lssol](https://gite.lirmm.fr/multi-contact/eigen-lssol) then you can build [Tasks](https://github.com/jrl-umi3218/Tasks) with LSSOL support and install it in `/usr`. The two versions are binary compatible.*
 
