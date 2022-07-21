@@ -200,7 +200,7 @@ void StabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
   MetaTask::removeFromSolver(*comTask, solver);
   MetaTask::removeFromSolver(*pelvisTask, solver);
   MetaTask::removeFromSolver(*torsoTask, solver);
-  for(const auto footTask : contactTasks)
+  for(const auto & footTask : contactTasks)
   {
     MetaTask::removeFromSolver(*footTask, solver);
   }
@@ -262,7 +262,7 @@ void StabilizerTask::update(mc_solver::QPSolver & solver)
   MetaTask::update(*comTask, solver);
   MetaTask::update(*pelvisTask, solver);
   MetaTask::update(*torsoTask, solver);
-  for(const auto footTask : contactTasks)
+  for(const auto & footTask : contactTasks)
   {
     MetaTask::update(*footTask, solver);
   }
@@ -473,7 +473,7 @@ void StabilizerTask::setContacts(const std::vector<ContactState> & contacts)
 void StabilizerTask::setContacts(const std::vector<std::pair<ContactState, sva::PTransformd>> & contacts)
 {
   ContactDescriptionVector addContacts;
-  for(const auto contact : contacts)
+  for(const auto & contact : contacts)
   {
     addContacts.push_back({contact.first, {robot(), footTasks[contact.first]->surface(), contact.second, c_.friction}});
   }
@@ -546,7 +546,7 @@ void StabilizerTask::setSupportFootGains()
 void StabilizerTask::checkInTheAir()
 {
   inTheAir_ = true;
-  for(const auto footT : footTasks)
+  for(const auto & footT : footTasks)
   {
     inTheAir_ = inTheAir_ && footT.second->measuredWrench().force().z() < c_.safetyThresholds.MIN_DS_PRESSURE;
   }
