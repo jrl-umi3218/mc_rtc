@@ -429,7 +429,7 @@ class PlotYAxis(object):
       self.plots[y_label].set_data(self.data[y_label][0][frame0:frame], self.data[y_label][1][frame0:frame])
       if self._3D:
         self.plots[y_label].set_3d_properties(self.data[y_label][2][frame0:frame])
-    return self.plots.values()
+    return list(self.plots.values())
 
   def update_x(self, x):
     styles = {}
