@@ -188,13 +188,15 @@ void StabilizerStandingState::start(Controller & ctl)
                             [this](const Eigen::Vector3d & s) { stabilizerTask_->comStiffness(s); });
   ctl.datastore().make_call("StabilizerStandingState::setExternalWrenches",
                             [this](const std::vector<std::string> & surfaceNames,
-				   const std::vector<sva::ForceVecd> & targetWrenches,
-				   const std::vector<sva::MotionVecd> & gains) {
-			      stabilizerTask_->setExternalWrenches(surfaceNames, targetWrenches, gains);
-			    });
+                                   const std::vector<sva::ForceVecd> & targetWrenches,
+                                   const std::vector<sva::MotionVecd> & gains) {
+                              stabilizerTask_->setExternalWrenches(surfaceNames, targetWrenches, gains);
+                            });
   ctl.datastore().make_call("StabilizerStandingState::getCoPAdmittance",
-			    [this](){ return stabilizerTask_->config().copAdmittance; });
-  ctl.datastore().make_call("StabilizerStandingState::setCoPAdmittance", [this](const Eigen::Vector2d & copAdmittance){ stabilizerTask_->copAdmittance(copAdmittance);});
+                            [this]() { return stabilizerTask_->config().copAdmittance; });
+  ctl.datastore().make_call("StabilizerStandingState::setCoPAdmittance", [this](const Eigen::Vector2d & copAdmittance) {
+    stabilizerTask_->copAdmittance(copAdmittance);
+  });
 }
 
 void StabilizerStandingState::targetCoP(const Eigen::Vector3d & cop)
