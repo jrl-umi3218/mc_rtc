@@ -702,6 +702,7 @@ bool MCGlobalController::run()
       {
         fs.wrench(controller_->realRobot().forceSensor(fs.name()).wrench());
       }
+      next_controller_->realRobot().mbc() = controller_->realRobot().mbc();
     }
     if(!running)
     {
