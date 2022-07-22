@@ -1002,6 +1002,8 @@ bool MCGlobalController::AddController(const std::string & name)
                                                            config.controllers_configs[name]);
     }
     controllers[name]->name_ = name;
+    controllers[name]->datastore().make_call("Global::EnableController",
+                                             [this](const std::string & name) { return EnableController(name); });
     if(config.enable_log)
     {
       controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
