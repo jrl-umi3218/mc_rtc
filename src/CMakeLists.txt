@@ -190,7 +190,6 @@ mc_rbdyn/Device.cpp
 mc_rbdyn/BodySensor.cpp
 mc_rbdyn/Frame.cpp
 mc_rbdyn/RobotFrame.cpp
-mc_rbdyn/JointSensor.cpp
 )
 
 set(mc_rbdyn_HDR
