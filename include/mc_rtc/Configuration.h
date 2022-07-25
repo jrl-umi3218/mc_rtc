@@ -281,6 +281,13 @@ public:
    */
   operator Eigen::Vector3d() const;
 
+  /*! \brief Retrieve as a Eigen::Vector4d instance
+   *
+   * \throws If the underlying value does not hold a numeric
+   * sequence of size 4
+   */
+  operator Eigen::Vector4d() const;
+
   /*! \brief Retrieve as a Eigen::Vector6d instance
    *
    * \throws If the underlying value does not hold a numeric

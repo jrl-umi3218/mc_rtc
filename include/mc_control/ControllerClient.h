@@ -359,6 +359,14 @@ protected:
     polygon(id, points, config.color);
   }
 
+  virtual void polyhedron(const ElementId & id,
+                          const std::vector<Eigen::Vector3d> & /* triangles */,
+                          const std::vector<Eigen::Vector4d> & /* colors */,
+                          const mc_rtc::gui::PolyhedronConfig & /* config */)
+  {
+    default_impl("Polyhedron", id);
+  }
+
   /** Should display a force in 3D environment
    */
   virtual void force(const ElementId & id,
@@ -797,13 +805,16 @@ private:
   /** Handle Trajectory and dispatch to 3D or Pose case */
   void handle_trajectory(const ElementId & id, const mc_rtc::Configuration & data);
 
-  /** Hand details of DisplayPolygon elemets */
+  /** Handle details of DisplayPolygon elements */
   void handle_polygon(const ElementId & id, const mc_rtc::Configuration & data);
 
-  /** Hand details of DisplayForce elemets */
+  /** Handle details of Polyhedron elements */
+  void handle_polyhedron(const ElementId & id, const mc_rtc::Configuration & data_);
+
+  /** Handle details of DisplayForce elements */
   void handle_force(const ElementId & id, const mc_rtc::Configuration & data);
 
-  /** Hand details of DisplayArrow elemets */
+  /** Handle details of DisplayArrow elemets */
   void handle_arrow(const ElementId & id, const mc_rtc::Configuration & data);
 
   /** Handle details of Rotation elements */

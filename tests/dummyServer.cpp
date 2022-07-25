@@ -256,6 +256,58 @@ struct TestServer
   std::vector<Eigen::Vector3d> polygon_;
   std::vector<Eigen::Vector3d> polygonColor_;
   std::vector<Eigen::Vector3d> polygonLineConfig_;
+  mc_rtc::gui::PolyhedronTriangles polyhedron_vertices_{// Upper pyramid
+                                                        {-1, -1, 0},
+                                                        {1, -1, 0},
+                                                        {0, 0, 1},
+                                                        {1, -1, 0},
+                                                        {1, 1, 0},
+                                                        {0, 0, 1},
+                                                        {1, 1, 0},
+                                                        {-1, 1, 0},
+                                                        {0, 0, 1},
+                                                        {-1, 1, 0},
+                                                        {-1, -1, 0},
+                                                        {0, 0, 1},
+                                                        // Lower pyramid
+                                                        {-1, -1, 0},
+                                                        {0, 0, -1},
+                                                        {1, -1, 0},
+                                                        {1, -1, 0},
+                                                        {0, 0, -1},
+                                                        {1, 1, 0},
+                                                        {1, 1, 0},
+                                                        {0, 0, -1},
+                                                        {-1, 1, 0},
+                                                        {-1, 1, 0},
+                                                        {0, 0, -1},
+                                                        {-1, -1, 0}};
+  mc_rtc::gui::PolyhedronColors polyhedron_colors_{// Colors for upper pyramid
+                                                   {1, 0, 0, 0.5},
+                                                   {1, 0, 0, 0.5},
+                                                   {1, 0, 0, 0.8},
+                                                   {0, 1, 0, 0.5},
+                                                   {0, 1, 0, 0.5},
+                                                   {0, 1, 0, 0.8},
+                                                   {0, 0, 1, 0.5},
+                                                   {0, 0, 1, 0.5},
+                                                   {0, 0, 1, 0.8},
+                                                   {1, 0, 1, 0.5},
+                                                   {1, 0, 1, 0.5},
+                                                   {1, 0, 1, 0.8},
+                                                   // Colors for lower pyramid
+                                                   {1, 0, 0, 0.5},
+                                                   {0, 1, 0, 0.5},
+                                                   {0, 0, 1, 0.5},
+                                                   {1, 0, 0, 0.5},
+                                                   {0, 1, 0, 0.5},
+                                                   {0, 0, 1, 0.5},
+                                                   {1, 0, 0, 0.5},
+                                                   {0, 1, 0, 0.5},
+                                                   {0, 0, 1, 0.5},
+                                                   {1, 0, 0, 0.5},
+                                                   {0, 1, 0, 0.5},
+                                                   {0, 0, 1, 0.5}};
   std::vector<std::vector<Eigen::Vector3d>> polygons_;
   std::vector<std::vector<Eigen::Vector3d>> polygonsColor_;
   std::vector<std::vector<Eigen::Vector3d>> polygonsLineConfig_;
@@ -509,6 +561,18 @@ TestServer::TestServer() : xythetaz_(4)
                      mc_rtc::gui::Polygon("Polygons", [this]() { return polygons_; }),
                      mc_rtc::gui::Polygon("Polygons (color)", orange, [this]() { return polygonsColor_; }),
                      mc_rtc::gui::Polygon("Polygons (config)", pstyle, [this]() { return polygonsLineConfig_; }));
+
+  mc_rtc::gui::PolyhedronConfig pconfig;
+  pconfig.triangle_color = mc_rtc::gui::Color::Red;
+  pconfig.use_triangle_color = false;
+  pconfig.show_triangle = false;
+  pconfig.show_vertices = false;
+  pconfig.show_edges = true;
+  pconfig.fixed_edge_color = false;
+  builder.addElement(
+      {"GUI Markers", "Polyhedrons"},
+      mc_rtc::gui::Polyhedron(
+          "Polyhedron", pconfig, [this]() { return polyhedron_vertices_; }, [this] { return polyhedron_colors_; }));
 
   builder.addElement(
       {"GUI Markers", "Trajectories"}, mc_rtc::gui::Trajectory("Vector3d", [this]() { return trajectory_; }),

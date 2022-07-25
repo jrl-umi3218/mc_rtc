@@ -339,6 +339,17 @@ Configuration::operator Eigen::Vector3d() const
   throw Exception("Stored Json value is not a Vector3d", v);
 }
 
+Configuration::operator Eigen::Vector4d() const
+{
+  if(v.isArray() && v.size() == 4 && v[0].isNumeric())
+  {
+    Eigen::Vector4d ret;
+    ret << v[0].asDouble(), v[1].asDouble(), v[2].asDouble(), v[3].asDouble();
+    return ret;
+  }
+  throw Exception("Stored Json value is not a Vector4d", v);
+}
+
 Configuration::operator Eigen::Vector6d() const
 {
   if(v.isArray() && v.size() == 6 && v[0].isNumeric())

@@ -102,6 +102,12 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
    */
   void write(const Eigen::Vector3d & v);
 
+  /** Write an Eigen::Vector4d
+   *
+   * Serializes as an array of size 4
+   */
+  void write(const Eigen::Vector4d & v);
+
   /** Write an Eigen::Vector6d
    *
    * Serializes as an array of size 6

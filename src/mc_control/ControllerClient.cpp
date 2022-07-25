@@ -392,6 +392,9 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
       case Elements::Polygon:
         handle_polygon(id, data);
         break;
+      case Elements::Polyhedron:
+        handle_polyhedron(id, data);
+        break;
       case Elements::Force:
         handle_force(id, data);
         break;
@@ -555,6 +558,39 @@ void ControllerClient::handle_polygon(const ElementId & id, const mc_rtc::Config
       exc.silence();
     }
   }
+}
+
+void ControllerClient::handle_polyhedron(const ElementId & id, const mc_rtc::Configuration & data_)
+{
+  mc_rtc::gui::PolyhedronConfig config;
+  if(data_.size() > 5)
+  {
+    config.fromMessagePack(data_[5]);
+  }
+
+  std::vector<Eigen::Vector3d> triangles;
+  std::vector<Eigen::Vector4d> colors;
+  try
+  {
+    triangles = data_[3];
+  }
+  catch(mc_rtc::Configuration::Exception & exc)
+  {
+    mc_rtc::log::error("Could not deserialize polyhedron vertices, supported data is vector<Eigen::Vector3d>");
+    mc_rtc::log::error(exc.what());
+    exc.silence();
+  }
+  try
+  {
+    colors = data_[4];
+  }
+  catch(mc_rtc::Configuration::Exception & exc)
+  {
+    mc_rtc::log::error("Could not deserialize polyhedron colors, supported data is vector<Eigen::Vector4d>");
+    mc_rtc::log::error(exc.what());
+    exc.silence();
+  }
+  polyhedron(id, triangles, colors, config);
 }
 
 void ControllerClient::handle_force(const ElementId & id, const mc_rtc::Configuration & data)
