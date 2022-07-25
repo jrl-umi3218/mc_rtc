@@ -463,10 +463,8 @@ Robot::Robot(NewRobotToken,
     if(mb().jointIndexByName().count(js.joint()) == 0)
     {
       mc_rtc::log::error_and_throw(
-          "JointSensor \"{}\" requires a joint named \"{}\" but no such joint was found in robot \"{}\"", js.name(),
-          js.joint(), name);
+          "JointSensor requires a joint named \"{}\" but no such joint was found in robot \"{}\"", js.joint(), name);
     }
-    jointSensorsIndex_[js.name()] = i;
     jointJointSensors_[js.joint()] = i;
   }
 
@@ -606,24 +604,9 @@ const BodySensorVector & Robot::bodySensors() const
   return bodySensors_;
 }
 
-bool Robot::hasJointSensor(const std::string & name) const
-{
-  return jointSensorsIndex_.count(name) != 0;
-}
-
 bool Robot::jointHasJointSensor(const std::string & joint) const
 {
   return jointJointSensors_.count(joint) != 0;
-}
-
-JointSensor & Robot::jointSensor(const std::string & name)
-{
-  return const_cast<JointSensor &>(static_cast<const Robot *>(this)->jointSensor(name));
-}
-
-const JointSensor & Robot::jointSensor(const std::string & name) const
-{
-  return jointSensors_[jointSensorsIndex_.at(name)];
 }
 
 JointSensor & Robot::jointJointSensor(const std::string & joint)

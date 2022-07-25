@@ -109,13 +109,6 @@ public:
   /** @} */
   /* End of Body sensors group */
 
-  /** Return true if the robot has a joint sensor named name
-   *
-   * @param name Name of the joint sensor
-   *
-   */
-  bool hasJointSensor(const std::string & name) const;
-
   /** Return true if the specified joint has a joint sensor attached to it
    *
    * @param joint Joint to query
@@ -123,29 +116,17 @@ public:
    */
   bool jointHasJointSensor(const std::string & joint) const;
 
-  /** Return a specific JointSensor by name
-   *
-   * @param name Name of the sensor
-   *
-   * @throws If the sensor does not exist
-   *
-   */
-  JointSensor & jointSensor(const std::string & name);
-
-  /** Return a specific JointSensor by name (const) */
-  const JointSensor & jointSensor(const std::string & name) const;
-
   /** Return a specific JointSensor by joint name
    *
-   * @param name Name of the joint
+   * @param joint Name of the joint
    *
    * @throws If there is no sensor attached to the joint
    *
    */
-  JointSensor & jointJointSensor(const std::string & name);
+  JointSensor & jointJointSensor(const std::string & joint);
 
   /** Return a specific JointSensor by joint name (const) */
-  const JointSensor & jointJointSensor(const std::string & name) const;
+  const JointSensor & jointJointSensor(const std::string & joint) const;
 
   /** Return all joint sensors */
   std::vector<JointSensor> & jointSensors();
@@ -1047,8 +1028,6 @@ private:
   std::unordered_map<std::string, size_t> bodyBodySensors_;
   /** Hold all joint sensors */
   std::vector<JointSensor> jointSensors_;
-  /** Correspondance between joint sensor's name and joint sensor index*/
-  std::unordered_map<std::string, size_t> jointSensorsIndex_;
   /** Correspondance between joints' names and attached joint sensors */
   std::unordered_map<std::string, size_t> jointJointSensors_;
   Springs springs_;

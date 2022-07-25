@@ -151,13 +151,12 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::BodySensor>::save(const mc_r
 
 mc_rbdyn::JointSensor ConfigurationLoader<mc_rbdyn::JointSensor>::load(const mc_rtc::Configuration & config)
 {
-  return mc_rbdyn::JointSensor(config("name"), config("joint"));
+  return mc_rbdyn::JointSensor(static_cast<std::string>(config("joint")));
 }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::JointSensor>::save(const mc_rbdyn::JointSensor & js)
 {
   mc_rtc::Configuration config;
-  config.add("name", js.name());
   config.add("joint", js.joint());
   return config;
 }
