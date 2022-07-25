@@ -120,9 +120,6 @@ struct MC_RBDYN_DLLAPI JointSensor
     motor_current_ = motor_current;
   }
 
-  /** Perform a device copy */
-  JointSensorPtr clone() const;
-
 protected:
   /** Name of the sensor */
   std::string name_;
