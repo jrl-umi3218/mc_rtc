@@ -616,6 +616,10 @@ JointSensor & Robot::jointJointSensor(const std::string & joint)
 
 const JointSensor & Robot::jointJointSensor(const std::string & joint) const
 {
+  if(!jointHasJointSensor(joint))
+  {
+    mc_rtc::log::error_and_throw("{} does not have a JointSensor attached to {} joint", name(), joint);
+  }
   return jointSensors_[jointJointSensors_.at(joint)];
 }
 
