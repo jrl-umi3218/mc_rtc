@@ -663,6 +663,100 @@ void MCGlobalController::setWrenches(unsigned int robotIndex, const std::map<std
   }
 }
 
+void MCGlobalController::setJointMotorTemperature(const std::string & joint, double temperature)
+{
+  setJointMotorTemperature(controller_->robot().name(), joint, temperature);
+}
+
+void MCGlobalController::setJointMotorTemperature(const std::string & robotName,
+                                                  const std::string & joint,
+                                                  double temperature)
+{
+  auto & robot = this->robot(robotName);
+  auto & realRobot = this->realRobot(robotName);
+  robot.jointJointSensor(joint).motorTemperature(temperature);
+  realRobot.jointJointSensor(joint).motorTemperature(temperature);
+}
+
+void MCGlobalController::setJointMotorTemperatures(const std::map<std::string, double> & temperatures)
+{
+  setJointMotorTemperatures(controller_->robot().name(), temperatures);
+}
+
+void MCGlobalController::setJointMotorTemperatures(const std::string & robotName,
+                                                   const std::map<std::string, double> & temperatures)
+{
+  auto & robot = this->robot(robotName);
+  auto & realRobot = this->realRobot(robotName);
+  for(const auto & t : temperatures)
+  {
+    robot.jointJointSensor(t.first).motorTemperature(t.second);
+    realRobot.jointJointSensor(t.first).motorTemperature(t.second);
+  }
+}
+
+void MCGlobalController::setJointDriverTemperature(const std::string & joint, double temperature)
+{
+  setJointDriverTemperature(controller_->robot().name(), joint, temperature);
+}
+
+void MCGlobalController::setJointDriverTemperature(const std::string & robotName,
+                                                   const std::string & joint,
+                                                   double temperature)
+{
+  auto & robot = this->robot(robotName);
+  auto & realRobot = this->realRobot(robotName);
+  robot.jointJointSensor(joint).motorTemperature(temperature);
+  realRobot.jointJointSensor(joint).motorTemperature(temperature);
+}
+
+void MCGlobalController::setJointDriverTemperatures(const std::map<std::string, double> & temperatures)
+{
+  setJointDriverTemperatures(controller_->robot().name(), temperatures);
+}
+
+void MCGlobalController::setJointDriverTemperatures(const std::string & robotName,
+                                                    const std::map<std::string, double> & temperatures)
+{
+  auto & robot = this->robot(robotName);
+  auto & realRobot = this->realRobot(robotName);
+  for(const auto & t : temperatures)
+  {
+    robot.jointJointSensor(t.first).motorTemperature(t.second);
+    realRobot.jointJointSensor(t.first).motorTemperature(t.second);
+  }
+}
+
+void MCGlobalController::setJointMotorCurrent(const std::string & joint, double current)
+{
+  setJointMotorCurrent(controller_->robot().name(), joint, current);
+}
+
+void MCGlobalController::setJointMotorCurrent(const std::string & robotName, const std::string & joint, double current)
+{
+  auto & robot = this->robot(robotName);
+  auto & realRobot = this->realRobot(robotName);
+  robot.jointJointSensor(joint).motorCurrent(current);
+  realRobot.jointJointSensor(joint).motorCurrent(current);
+}
+
+void MCGlobalController::setJointMotorCurrents(const std::map<std::string, double> & currents)
+{
+  setJointMotorCurrents(controller_->robot().name(), currents);
+}
+
+void MCGlobalController::setJointMotorCurrents(const std::string & robotName,
+                                               const std::map<std::string, double> & currents)
+{
+  auto & robot = this->robot(robotName);
+  auto & realRobot = this->realRobot(robotName);
+  for(const auto & c : currents)
+  {
+    robot.jointJointSensor(c.first).motorCurrent(c.second);
+    realRobot.jointJointSensor(c.first).motorCurrent(c.second);
+  }
+}
+
 bool MCGlobalController::run()
 {
   /** Always pick a steady clock */
@@ -701,6 +795,18 @@ bool MCGlobalController::run()
       for(auto & fs : next_controller_->realRobot().forceSensors())
       {
         fs.wrench(controller_->realRobot().forceSensor(fs.name()).wrench());
+      }
+      for(auto & js : next_controller_->robot().jointSensors())
+      {
+        js.motorTemperature(controller_->robot().jointJointSensor(js.joint()).motorTemperature());
+        js.driverTemperature(controller_->robot().jointJointSensor(js.joint()).driverTemperature());
+        js.motorCurrent(controller_->robot().jointJointSensor(js.joint()).motorCurrent());
+      }
+      for(auto & js : next_controller_->realRobot().jointSensors())
+      {
+        js.motorTemperature(controller_->realRobot().jointJointSensor(js.joint()).motorTemperature());
+        js.driverTemperature(controller_->realRobot().jointJointSensor(js.joint()).driverTemperature());
+        js.motorCurrent(controller_->realRobot().jointJointSensor(js.joint()).motorCurrent());
       }
     }
     if(!running)

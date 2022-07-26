@@ -513,6 +513,21 @@ public:
    * \deprecated in favor of setWrenches(const std::string &, const std::map<std::string, sva::ForceVecd> &)
    **/
   MC_RTC_DEPRECATED void setWrenches(unsigned int robotIndex, const std::map<std::string, sva::ForceVecd> & wrenches);
+
+  void setJointMotorTemperature(const std::string & joint, double temperature);
+  void setJointMotorTemperature(const std::string & robotName, const std::string & joint, double temperature);
+  void setJointMotorTemperatures(const std::map<std::string, double> & temperatures);
+  void setJointMotorTemperatures(const std::string & robotName, const std::map<std::string, double> & temperatures);
+
+  void setJointDriverTemperature(const std::string & joint, double temperature);
+  void setJointDriverTemperature(const std::string & robotName, const std::string & joint, double temperature);
+  void setJointDriverTemperatures(const std::map<std::string, double> & temperatures);
+  void setJointDriverTemperatures(const std::string & robotName, const std::map<std::string, double> & temperatures);
+
+  void setJointMotorCurrent(const std::string & joint, double current);
+  void setJointMotorCurrent(const std::string & robotName, const std::string & joint, double current);
+  void setJointMotorCurrents(const std::map<std::string, double> & currents);
+  void setJointMotorCurrents(const std::string & robotName, const std::map<std::string, double> & currents);
   /** @} */
 
 protected:
