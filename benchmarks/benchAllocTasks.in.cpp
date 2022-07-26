@@ -17,6 +17,7 @@ public:
     spdlog::set_level(spdlog::level::err);
     auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
     solver.robots().load(*rm);
+    solver.realRobots().load(*rm);
   }
 
   void SetUp(const ::benchmark::State &) {}
