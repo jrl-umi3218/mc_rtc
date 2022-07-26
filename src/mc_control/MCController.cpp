@@ -413,12 +413,10 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
     for(const auto & js : robot(name).jointSensors())
     {
       const auto & jnt = js.joint();
-      logger().addLogEntry(entry_str("JointSensor_" + jnt + "_motorTemperature"), [this, name, jnt]() {
-        return robot(name).jointJointSensor(jnt).motorTemperature();
-      });
-      logger().addLogEntry(entry_str("JointSensor_" + jnt + "_driverTemperature"), [this, name, jnt]() {
-        return robot(name).jointJointSensor(jnt).driverTemperature();
-      });
+      logger().addLogEntry(entry_str("JointSensor_" + jnt + "_motorTemperature"),
+                           [this, name, jnt]() { return robot(name).jointJointSensor(jnt).motorTemperature(); });
+      logger().addLogEntry(entry_str("JointSensor_" + jnt + "_driverTemperature"),
+                           [this, name, jnt]() { return robot(name).jointJointSensor(jnt).driverTemperature(); });
       logger().addLogEntry(entry_str("JointSensor_" + jnt + "_motorCurrent"),
                            [this, name, jnt]() { return robot(name).jointJointSensor(jnt).motorCurrent(); });
     }
