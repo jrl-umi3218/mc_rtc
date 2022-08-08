@@ -35,4 +35,3 @@ struct MC_CONTROL_FSM_STATE_DLLAPI EnableControllerState : State
 } // namespace fsm
 
 } // namespace mc_control
-
