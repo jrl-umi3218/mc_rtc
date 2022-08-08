@@ -12,7 +12,7 @@ namespace mc_control
 namespace fsm
 {
 
-/** Implements a state that switchs to a given controller
+/** Implements a state that switches to a given controller
  *
  * This state outputs "OK" if the switch succeeds but the next state only
  * starts when you switch back to the controller that initiated the switch.
