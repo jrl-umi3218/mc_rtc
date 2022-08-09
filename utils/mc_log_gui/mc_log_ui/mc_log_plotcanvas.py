@@ -343,13 +343,14 @@ class PlotYAxis(object):
     if not len(self):
       return None, None
     def getRange(value, i0 = None, iN = None):
-      first = 0
+      first, last = 0, 0
       if self._3D:
         check = np.nonzero(np.isfinite(value[0] + value[1] + value[2]))
       else:
         check = np.nonzero(np.isfinite(value[0] + value[1]))
-      first = check[0][0]
-      last = check[0][-1]
+      if len(check[0]):
+        first = check[0][0]
+        last = check[0][-1]
       if i0 is None:
         return first, last
       return min(i0, first), max(iN, last)
