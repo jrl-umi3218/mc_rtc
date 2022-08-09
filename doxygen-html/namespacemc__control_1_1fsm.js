@@ -2,6 +2,7 @@ var namespacemc__control_1_1fsm =
 [
     [ "AddRemoveContactState", "structmc__control_1_1fsm_1_1AddRemoveContactState.html", "structmc__control_1_1fsm_1_1AddRemoveContactState" ],
     [ "Controller", "structmc__control_1_1fsm_1_1Controller.html", "structmc__control_1_1fsm_1_1Controller" ],
+    [ "EnableControllerState", "structmc__control_1_1fsm_1_1EnableControllerState.html", "structmc__control_1_1fsm_1_1EnableControllerState" ],
     [ "Executor", "structmc__control_1_1fsm_1_1Executor.html", "structmc__control_1_1fsm_1_1Executor" ],
     [ "Grippers", "structmc__control_1_1fsm_1_1Grippers.html", "structmc__control_1_1fsm_1_1Grippers" ],
     [ "HalfSittingState", "structmc__control_1_1fsm_1_1HalfSittingState.html", "structmc__control_1_1fsm_1_1HalfSittingState" ],

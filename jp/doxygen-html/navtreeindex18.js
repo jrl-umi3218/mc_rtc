@@ -1,5 +1,11 @@
 var NAVTREEINDEX18 =
 {
+"structmc__trajectory_1_1ExactCubic.html#ae734960f82442e523fe5fa1077588e75":[3,0,10,1,5],
+"structmc__trajectory_1_1ExactCubic.html#aec46e0e93dfe6c8483cd4ab96ec133ae":[3,0,10,1,14],
+"structmc__trajectory_1_1ExactCubic.html#af0dd28bb9136823399f3d85d5512bc33":[3,0,10,1,6],
+"structmc__trajectory_1_1ExactCubic.html#af47e1c92e5824f345b1616aacbd1891c":[3,0,10,1,9],
+"structmc__trajectory_1_1InterpolatedRotation.html":[3,0,10,2],
+"structmc__trajectory_1_1InterpolatedRotation.html#a00b27ba3e5f5c5028a5c3f1b18552617":[3,0,10,2,3],
 "structmc__trajectory_1_1InterpolatedRotation.html#a35aa6707fcb6b62d7be8daa9df9991eb":[3,0,10,2,1],
 "structmc__trajectory_1_1InterpolatedRotation.html#a3848a3c1a1d3796760025d7504c0e7a7":[3,0,10,2,2],
 "structmc__trajectory_1_1InterpolatedRotation.html#a3a83a147d6040fd550d83b1fa2a5e37c":[3,0,10,2,6],

@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"logging_8h.html#a9003469324d75c8934d51654d98ef862":[4,0,0,6,14,19],
+"logging_8h.html#a9e944001fd155fd1621157e450cf3d06":[4,0,0,6,14,14],
 "logging_8h.html#aa189b2ec856ad8f96d632d635efc05ce":[4,0,0,6,14,8],
 "logging_8h.html#aa8cc2cc8dc25d49fa533f32a67f73c33":[4,0,0,6,14,6],
 "logging_8h.html#ab85e3cb123f11bf1f9290abe17a7d49e":[4,0,0,6,14,17],
@@ -175,8 +177,8 @@ var NAVTREEINDEX3 =
 "namespacemc__filter.html":[3,0,3],
 "namespacemc__filter.html":[2,0,3],
 "namespacemc__filter_1_1utils.html":[2,0,3,0],
-"namespacemc__observers.html":[3,0,4],
 "namespacemc__observers.html":[2,0,4],
+"namespacemc__observers.html":[3,0,4],
 "namespacemc__planning.html":[2,0,5],
 "namespacemc__planning.html":[3,0,5],
 "namespacemc__rbdyn.html":[2,0,6],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "namespacemembers_type.html":[2,1,3],
 "namespacemembers_u.html":[2,1,0,18],
 "namespacemembers_v.html":[2,1,0,19],
-"namespacemembers_vars.html":[2,1,2],
-"namespacemembers_w.html":[2,1,0,20],
-"namespacemembers_x.html":[2,1,0,21]
+"namespacemembers_vars.html":[2,1,2]
 };

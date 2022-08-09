@@ -429,6 +429,7 @@ var hierarchy =
     [ "mc_rbdyn::lipm_stabilizer::StabilizerConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html", null ],
     [ "mc_control::fsm::State", "structmc__control_1_1fsm_1_1State.html", [
       [ "mc_control::fsm::AddRemoveContactState", "structmc__control_1_1fsm_1_1AddRemoveContactState.html", null ],
+      [ "mc_control::fsm::EnableControllerState", "structmc__control_1_1fsm_1_1EnableControllerState.html", null ],
       [ "mc_control::fsm::Grippers", "structmc__control_1_1fsm_1_1Grippers.html", null ],
       [ "mc_control::fsm::HalfSittingState", "structmc__control_1_1fsm_1_1HalfSittingState.html", null ],
       [ "mc_control::fsm::MessageState", "structmc__control_1_1fsm_1_1MessageState.html", null ],
@@ -452,10 +453,10 @@ var hierarchy =
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html", null ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
     ] ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
     ] ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],

@@ -372,6 +372,10 @@
           
             
             
+            <a id="State_EnableController_link" href="#collapse_State_EnableController" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="State/EnableController" aria-controls="collapse_State_EnableController">fsm::EnableControllerState</a>
+          
+            
+            
             <a id="State_Grippers_link" href="#collapse_State_Grippers" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="State/Grippers" aria-controls="collapse_State_Grippers">fsm::Grippers</a>
           
             
@@ -20092,6 +20096,3309 @@ AddContactCompliant:
   base: AddRemoveContact
   type: compliance</pre>
       <button class="btn btn-primary copy-button" data-clipboard-target="#state-addremovecontact-exampleyamlyaml1yamlCopySource"><svg class="octicon octicon-copy" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg></button>
+    </div>
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+      
+        
+        
+        
+        
+        
+        
+  
+  
+  
+  <div id="collapse_State_EnableController" class="collapse collapseSchema" style="position:sticky; top: 65px;">
+    
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::EnableControllerState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#structmc__control_1_1fsm_1_1EnableControllerState">[API]</a></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Switch to the given controller.<br/>Outputs "OK" in case of success, "Failed" otherwise.</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>NextController</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string"></span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Controller to switch to</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>AddContacts</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_AddContacts" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_AddContacts">mc_control::fsm::Contact</a>
+  
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Add the specified contacts during the state's start</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_AddContacts">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::Contact</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Contact representation used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the first robot in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the second robot in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1Surface</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the first robot's surface in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2Surface</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the second robot's surface in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>friction</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.7</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Contact's coefficient of friction</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>dof</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_AddContacts_PROP_dof" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_AddContacts_PROP_dof">Eigen::Vector6d</a>
+  
+    &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">[1, 1, 1, 1, 1, 1]</span>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>True when the measured wrench reaches the desired wrench ([torque, force] in controlled surface frame). If some values are NaN, this direction is ignored</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_AddContacts_PROP_dof">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector6d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[6]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>RemoveContacts</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_RemoveContacts" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_RemoveContacts">mc_control::fsm::Contact</a>
+  
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Remove the specified contacts during the state's start</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_RemoveContacts">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::Contact</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Contact representation used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the first robot in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the second robot in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1Surface</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the first robot's surface in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2Surface</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the second robot's surface in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>friction</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.7</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Contact's coefficient of friction</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>dof</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_RemoveContacts_PROP_dof" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_RemoveContacts_PROP_dof">Eigen::Vector6d</a>
+  
+    &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">[1, 1, 1, 1, 1, 1]</span>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>True when the measured wrench reaches the desired wrench ([torque, force] in controlled surface frame). If some values are NaN, this direction is ignored</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_RemoveContacts_PROP_dof">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector6d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[6]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>AddContactsAfter</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_AddContactsAfter" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_AddContactsAfter">mc_control::fsm::Contact</a>
+  
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Add the specified contacts during the state's teardown</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_AddContactsAfter">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::Contact</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Contact representation used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the first robot in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the second robot in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1Surface</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the first robot's surface in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2Surface</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the second robot's surface in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>friction</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.7</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Contact's coefficient of friction</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>dof</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_AddContactsAfter_PROP_dof" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_AddContactsAfter_PROP_dof">Eigen::Vector6d</a>
+  
+    &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">[1, 1, 1, 1, 1, 1]</span>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>True when the measured wrench reaches the desired wrench ([torque, force] in controlled surface frame). If some values are NaN, this direction is ignored</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_AddContactsAfter_PROP_dof">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector6d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[6]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>RemoveContactsAfter</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_RemoveContactsAfter" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_RemoveContactsAfter">mc_control::fsm::Contact</a>
+  
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Remove the specified contacts during the state's teardown</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_RemoveContactsAfter">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::Contact</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Contact representation used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the first robot in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the second robot in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1Surface</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the first robot's surface in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2Surface</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the second robot's surface in the contact</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>friction</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.7</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Contact's coefficient of friction</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>dof</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_RemoveContactsAfter_PROP_dof" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_RemoveContactsAfter_PROP_dof">Eigen::Vector6d</a>
+  
+    &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">[1, 1, 1, 1, 1, 1]</span>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>True when the measured wrench reaches the desired wrench ([torque, force] in controlled surface frame). If some values are NaN, this direction is ignored</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_RemoveContactsAfter_PROP_dof">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector6d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[6]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>AddCollisions</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_AddCollisions" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_AddCollisions">FSM collisions</a>
+  
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Add the specified collisions during the state's start</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_AddCollisions">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">FSM collisions</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Collisions constraint specification used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the first robot in the collision constraint</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>r2</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">r1</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the second robot in the collision constraint</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>collisions</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_AddCollisions_PROP_collisions" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_AddCollisions_PROP_collisions">mc_rbdyn::Collision</a>
+  
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Required if collisions are added.<br/>Otherwise, if empty, all collisions between r1 and r2 are disabled</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_AddCollisions_PROP_collisions">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Collision">[API]</a></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body1</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>First convex body used, wildcards can be used</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body2</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Second convex body used, wildcards can be used</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>iDist</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.05</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Interaction distance</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>sDist</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.01</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Safety distance</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>damping</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.0</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Damping, 0 enables automatic computation</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>RemoveCollisions</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_RemoveCollisions" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_RemoveCollisions">FSM collisions</a>
+  
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Remove the specified collisions during the state's start</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_RemoveCollisions">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">FSM collisions</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Collisions constraint specification used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the first robot in the collision constraint</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>r2</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">r1</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the second robot in the collision constraint</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>collisions</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_RemoveCollisions_PROP_collisions" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_RemoveCollisions_PROP_collisions">mc_rbdyn::Collision</a>
+  
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Required if collisions are added.<br/>Otherwise, if empty, all collisions between r1 and r2 are disabled</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_RemoveCollisions_PROP_collisions">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Collision">[API]</a></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body1</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>First convex body used, wildcards can be used</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body2</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Second convex body used, wildcards can be used</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>iDist</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.05</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Interaction distance</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>sDist</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.01</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Safety distance</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>damping</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.0</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Damping, 0 enables automatic computation</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>AddCollisionsAfter</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_AddCollisionsAfter" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_AddCollisionsAfter">FSM collisions</a>
+  
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Add the specified collisions during the state's teardown</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_AddCollisionsAfter">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">FSM collisions</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Collisions constraint specification used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the first robot in the collision constraint</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>r2</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">r1</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the second robot in the collision constraint</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>collisions</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_AddCollisionsAfter_PROP_collisions" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_AddCollisionsAfter_PROP_collisions">mc_rbdyn::Collision</a>
+  
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Required if collisions are added.<br/>Otherwise, if empty, all collisions between r1 and r2 are disabled</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_AddCollisionsAfter_PROP_collisions">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Collision">[API]</a></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body1</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>First convex body used, wildcards can be used</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body2</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Second convex body used, wildcards can be used</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>iDist</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.05</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Interaction distance</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>sDist</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.01</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Safety distance</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>damping</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.0</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Damping, 0 enables automatic computation</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>RemoveCollisionsAfter</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_RemoveCollisionsAfter" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_RemoveCollisionsAfter">FSM collisions</a>
+  
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Remove the specified collisions during the state's teardown</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_RemoveCollisionsAfter">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">FSM collisions</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Collisions constraint specification used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the first robot in the collision constraint</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>r2</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">r1</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the second robot in the collision constraint</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>collisions</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_RemoveCollisionsAfter_PROP_collisions" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_RemoveCollisionsAfter_PROP_collisions">mc_rbdyn::Collision</a>
+  
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Required if collisions are added.<br/>Otherwise, if empty, all collisions between r1 and r2 are disabled</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_EnableController_PROP_RemoveCollisionsAfter_PROP_collisions">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Collision">[API]</a></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body1</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>First convex body used, wildcards can be used</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body2</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Second convex body used, wildcards can be used</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>iDist</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.05</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Interaction distance</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>sDist</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.01</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Safety distance</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>damping</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.0</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Damping, 0 enables automatic computation</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>DisablePostureTask</td>
+  
+    
+    
+      
+      
+        <td>
+          
+  
+  
+    
+      <span class="text-boolean">boolean</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-boolean">false</span>
+    
+  
+
+
+        </td>
+        <td>
+          <span class="text-secondary"><small>If true, disable all FSM posture tasks during this state execution.</small></span>
+        </td>
+      
+      
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="2">
+            <strong>OR</strong>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+      
+    
+      
+      
+        <td>
+          
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+
+
+  
+
+
+        </td>
+        <td>
+          <span class="text-secondary"><small>Disable the posture tasks for the specified robots during this state execution.</small></span>
+        </td>
+      
+      
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>constraints</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_constraints" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_constraints">object</a>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Constraints that will be added when the state starts and removed when the state stops.<br/>Keys are names for the constraints and values are <a href="/mc_rtc/json.html#ConstraintSet">ConstraintSet objects</a>.</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+    
+    <tr class="collapse" id="collapseState_EnableController_PROP_constraints">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">object</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Constraints that will be added when the state starts and removed when the state stops.<br/>Keys are names for the constraints and values are <a href="/mc_rtc/json.html#ConstraintSet">ConstraintSet objects</a>.</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>tasks</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_EnableController_PROP_tasks" aria-expanded="false" aria-controls="collapseState_EnableController_PROP_tasks">object</a>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Tasks that will be added when the state starts and removed when the state stops.<br/>Keys are names for the tasks and values are <a href="/mc_rtc/json.html#MetaTask">MetaTask objects</a>.</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+    
+    <tr class="collapse" id="collapseState_EnableController_PROP_tasks">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">object</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Tasks that will be added when the state starts and removed when the state stops.<br/>Keys are names for the tasks and values are <a href="/mc_rtc/json.html#MetaTask">MetaTask objects</a>.</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    <div class="card">
+      <div class="card-header">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_State_EnableController_example" aria-expanded="false" aria-controls="collapse_State_EnableController_example">Example</button>
+      </div>
+      <div id="collapse_State_EnableController_example" class="collapse">
+        <div class="card-body">
+          <ul class="nav nav-tabs" id="State_EnableController_exampleTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="state-enablecontroller-examplejsonjsonTab" data-toggle="tab" href="#state-enablecontroller-examplejsonjsonTabContent" role="tab" aria-controls="state-enablecontroller-examplejsonjsonTabContent" aria-selected="true">JSON</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="state-enablecontroller-exampleyamlyamlTab" data-toggle="tab" href="#state-enablecontroller-exampleyamlyamlTabContent" role="tab" aria-controls="state-enablecontroller-exampleyamlyamlTabContent" aria-selected="false">YAML</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="State_EnableController_exampleTabContent">
+  
+    
+    
+    
+    
+    <div class="tab-pane show active" id="state-enablecontroller-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="state-enablecontroller-examplejsonjsonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"base"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EnableController"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"NextController"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CoM"</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+  
+    
+    <div class="text-right">
+      <pre id="state-enablecontroller-examplejsonjson0jsonCopySource" class="offscreen" aria-hidden=true>{
+  "base": "EnableController",
+  "NextController": "CoM"
+}</pre>
+      <button class="btn btn-primary copy-button" data-clipboard-target="#state-enablecontroller-examplejsonjson0jsonCopySource"><svg class="octicon octicon-copy" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg></button>
+    </div>
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    
+    
+    <div class="tab-pane" id="state-enablecontroller-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="state-enablecontroller-exampleyamlyamlTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">base</span><span class="pi">:</span> <span class="s">EnableController</span>
+<span class="na">NextController</span><span class="pi">:</span> <span class="s">CoM</span></code></pre></figure>
+
+  
+    
+    <div class="text-right">
+      <pre id="state-enablecontroller-exampleyamlyaml1yamlCopySource" class="offscreen" aria-hidden=true>base: EnableController
+NextController: CoM</pre>
+      <button class="btn btn-primary copy-button" data-clipboard-target="#state-enablecontroller-exampleyamlyaml1yamlCopySource"><svg class="octicon octicon-copy" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg></button>
     </div>
   
   </div>

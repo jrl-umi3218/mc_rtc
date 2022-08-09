@@ -890,6 +890,15 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>EnableController.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/fsm/states/</path>
+    <filename>EnableController_8h</filename>
+    <includes id="State_8h" name="State.h" local="no" imported="no">mc_control/fsm/State.h</includes>
+    <class kind="struct">mc_control::fsm::EnableControllerState</class>
+    <namespace>mc_control</namespace>
+    <namespace>mc_control::fsm</namespace>
+  </compound>
+  <compound kind="file">
     <name>Grippers.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/fsm/states/</path>
     <filename>Grippers_8h</filename>
@@ -12477,6 +12486,32 @@
       <anchorfile>structmc__control_1_1ElementId.html</anchorfile>
       <anchor>a5753e9c679e8109c6bce7c9a02dd5c37</anchor>
       <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_control::fsm::EnableControllerState</name>
+    <filename>structmc__control_1_1fsm_1_1EnableControllerState.html</filename>
+    <base>mc_control::fsm::State</base>
+    <member kind="function">
+      <type>void</type>
+      <name>start</name>
+      <anchorfile>structmc__control_1_1fsm_1_1EnableControllerState.html</anchorfile>
+      <anchor>a168fa14ff5cbccc49aaa74609296f284</anchor>
+      <arglist>(Controller &amp;) override</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>run</name>
+      <anchorfile>structmc__control_1_1fsm_1_1EnableControllerState.html</anchorfile>
+      <anchor>adaf62dc42fa3a24438312df2d41ed563</anchor>
+      <arglist>(Controller &amp;) override</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>teardown</name>
+      <anchorfile>structmc__control_1_1fsm_1_1EnableControllerState.html</anchorfile>
+      <anchor>adceb9a9ccf2ca6ce391990a7be934d92</anchor>
+      <arglist>(Controller &amp;) override</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -38649,6 +38684,7 @@
     <filename>namespacemc__control_1_1fsm.html</filename>
     <class kind="struct">mc_control::fsm::AddRemoveContactState</class>
     <class kind="class">mc_control::fsm::Controller</class>
+    <class kind="struct">mc_control::fsm::EnableControllerState</class>
     <class kind="class">mc_control::fsm::Executor</class>
     <class kind="struct">mc_control::fsm::Grippers</class>
     <class kind="struct">mc_control::fsm::HalfSittingState</class>
