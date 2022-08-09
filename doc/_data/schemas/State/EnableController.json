@@ -1,0 +1,23 @@
+{
+  "allOf":
+  [
+    {
+      "title": "mc_control::fsm::EnableControllerState",
+      "description": "Switch to the given controller.<br/>Outputs \"OK\" in case of success, \"Failed\" otherwise.",
+      "type": "object",
+      "properties":
+      {
+        "NextController":
+        {
+          "type": "string",
+          "default": "",
+          "description": "Controller to switch to"
+        }
+      },
+      "required": []
+    },
+    {
+      "$ref": "/../../common/State.json"
+    }
+  ]
+}
