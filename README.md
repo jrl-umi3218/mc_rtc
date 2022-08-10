@@ -29,6 +29,7 @@ The following interface between `mc_rtc` and 3rd-party framework are available:
 - [mc_vrep](https://github.com/jrl-umi3218/mc_vrep) interface with the VREP simulation software;
 - [mc_naoqi](https://github.com/jrl-umi3218/mc_naoqi) interface with the NAOqi framework (Softbank Robotics robots);
 - [mc_franka](https://github.com/jrl-umi3218/mc_franka) interface with the libfranka library for Franka Emika robots;
+- [mc_mujoco](https://github.com/rohanpsingh/mc_mujoco) interface with the [MuJoCo](https://www.mujoco.org/) physics simulator;
 
 Installing
 ----------
