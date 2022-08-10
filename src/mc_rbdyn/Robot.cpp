@@ -456,6 +456,18 @@ Robot::Robot(NewRobotToken,
     bodyBodySensors_[bS.parentBody()] = i;
   }
 
+  jointSensors_ = module_.jointSensors();
+  for(size_t i = 0; i < jointSensors_.size(); ++i)
+  {
+    const auto & js = jointSensors_[i];
+    if(mb().jointIndexByName().count(js.joint()) == 0)
+    {
+      mc_rtc::log::error_and_throw(
+          "JointSensor requires a joint named \"{}\" but no such joint was found in robot \"{}\"", js.joint(), name);
+    }
+    jointJointSensors_[js.joint()] = i;
+  }
+
   devices_ = module_.devices();
   for(size_t i = 0; i < devices_.size(); ++i)
   {
@@ -590,6 +602,35 @@ BodySensorVector & Robot::bodySensors()
 const BodySensorVector & Robot::bodySensors() const
 {
   return bodySensors_;
+}
+
+bool Robot::jointHasJointSensor(const std::string & joint) const
+{
+  return jointJointSensors_.count(joint) != 0;
+}
+
+JointSensor & Robot::jointJointSensor(const std::string & joint)
+{
+  return const_cast<JointSensor &>(static_cast<const Robot *>(this)->jointJointSensor(joint));
+}
+
+const JointSensor & Robot::jointJointSensor(const std::string & joint) const
+{
+  if(!jointHasJointSensor(joint))
+  {
+    mc_rtc::log::error_and_throw("{} does not have a JointSensor attached to {} joint", name(), joint);
+  }
+  return jointSensors_[jointJointSensors_.at(joint)];
+}
+
+std::vector<JointSensor> & Robot::jointSensors()
+{
+  return jointSensors_;
+}
+
+const std::vector<JointSensor> & Robot::jointSensors() const
+{
+  return jointSensors_;
 }
 
 bool Robot::hasJoint(const std::string & name) const

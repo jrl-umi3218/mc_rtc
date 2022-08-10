@@ -513,6 +513,114 @@ public:
    * \deprecated in favor of setWrenches(const std::string &, const std::map<std::string, sva::ForceVecd> &)
    **/
   MC_RTC_DEPRECATED void setWrenches(unsigned int robotIndex, const std::map<std::string, sva::ForceVecd> & wrenches);
+
+  /*! \brief Motor temperature reading provided by the JointSensor for the main robot (sets control+real)
+   *
+   * \param joint name of the joint to which sensor is attached
+   * \param temperature motor temperature reading in Celcius
+   * \throws If the robot does not have any JointSensor at joint
+   */
+  void setJointMotorTemperature(const std::string & joint, double temperature);
+
+  /*! \brief Motor temperature reading provided by the JointSensor for the specified robot (sets control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param joint name of the joint to which sensor is attached
+   * \param temperature motor temperature reading in Celcius
+   * \throws If the robot does not have any JointSensor at joint
+   * \throws If the specified robot does not exist
+   */
+  void setJointMotorTemperature(const std::string & robotName, const std::string & joint, double temperature);
+
+  /*! \brief Motor temperature readings provided by multiple JointSensors for the main robot (sets control+real)
+   *
+   * \param temperatures map of joint name to motor temperature in Celcius
+   * \throws If any of the joint sensors do not exist
+   */
+  void setJointMotorTemperatures(const std::map<std::string, double> & temperatures);
+
+  /*! \brief Motor temperature readings provided by multiple JointSensors for the specified robot (sets control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param temperatures map of joint name to motor temperature in Celcius
+   * \throws If any of the joint sensors do not exist
+   * \throws If the specified robot does not exist
+   */
+  void setJointMotorTemperatures(const std::string & robotName, const std::map<std::string, double> & temperatures);
+
+  /*! \brief Driver temperature reading provided by the JointSensor for the main robot (sets control+real)
+   *
+   * \param joint name of the joint to which sensor is attached
+   * \param temperature driver temperature reading in Celcius
+   * \throws If the robot does not have any JointSensor at joint
+   */
+  void setJointDriverTemperature(const std::string & joint, double temperature);
+
+  /*! \brief Driver temperature reading provided by the JointSensor for the specified robot (sets control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param joint name of the joint to which sensor is attached
+   * \param temperature driver temperature reading in Celcius
+   * \throws If the robot does not have any JointSensor at joint
+   * \throws If the specified robot does not exist
+   */
+  void setJointDriverTemperature(const std::string & robotName, const std::string & joint, double temperature);
+
+  /*! \brief Driver temperature readings provided by multiple JointSensors for the main robot (sets control+real)
+   *
+   * \param temperatures map of joint name to driver temperature in Celcius
+   * \throws If any of the joint sensors do not exist
+   */
+  void setJointDriverTemperatures(const std::map<std::string, double> & temperatures);
+
+  /*! \brief Driver temperature readings provided by multiple JointSensors for the specified robot (sets control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param temperatures map of joint name to driver temperature in Celcius
+   * \throws If any of the joint sensors do not exist
+   * \throws If the specified robot does not exist
+   */
+  void setJointDriverTemperatures(const std::string & robotName, const std::map<std::string, double> & temperatures);
+
+  /*! \brief Motor current reading provided by the JointSensor for the main robot (sets control+real)
+   *
+   * \param joint name of the joint to which sensor is attached
+   * \param current motor current reading in Amperes
+   * \throws If the robot does not have any JointSensor at joint
+   */
+  void setJointMotorCurrent(const std::string & joint, double current);
+
+  /*! \brief Motor current reading provided by the JointSensor for the specified robot (sets control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param joint name of the joint to which sensor is attached
+   * \param current motor current reading in Amperes
+   * \throws If the robot does not have any JointSensor at joint
+   * \throws If the specified robot does not exist
+   */
+  void setJointMotorCurrent(const std::string & robotName, const std::string & joint, double current);
+
+  /*! \brief Motor current readings provided by multiple JointSensors for the main robot (sets control+real)
+   *
+   * \param currents map of joint name to motor current in Amperes
+   * \throws If any of the joint sensors do not exist
+   */
+  void setJointMotorCurrents(const std::map<std::string, double> & currents);
+
+  /*! \brief Motor current readings provided by multiple JointSensors for the specified robot (sets control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param currents map of joint name to motor current in Amperes
+   * \throws If any of the joint sensors do not exist
+   * \throws If the specified robot does not exist
+   */
+  void setJointMotorCurrents(const std::string & robotName, const std::map<std::string, double> & currents);
   /** @} */
 
 protected:

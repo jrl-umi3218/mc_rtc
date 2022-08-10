@@ -9,6 +9,7 @@
 #include <mc_rbdyn/CompoundJointConstraintDescription.h>
 #include <mc_rbdyn/Flexibility.h>
 #include <mc_rbdyn/ForceSensor.h>
+#include <mc_rbdyn/JointSensor.h>
 #include <mc_rbdyn/Mimic.h>
 #include <mc_rbdyn/Springs.h>
 #include <mc_rbdyn/api.h>
@@ -443,6 +444,15 @@ struct MC_RBDYN_DLLAPI RobotModule
     return _bodySensors;
   }
 
+  /** Return the joint sensors of the robot
+   *
+   * \see mc_rbdyn::JointSensor for details on the expected data
+   */
+  const std::vector<JointSensor> & jointSensors() const
+  {
+    return _jointSensors;
+  }
+
   /** Return the springs of a robot
    *
    * \see mc_rbdyn::Spring for details on the expected data
@@ -631,6 +641,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::vector<ForceSensor> _forceSensors;
   /** \see bodySensors() */
   BodySensorVector _bodySensors;
+  /** \see jointSensors() */
+  std::vector<JointSensor> _jointSensors;
   /** \see springs() */
   Springs _springs;
   /** \see minimalSelfCollisions() */

@@ -109,6 +109,34 @@ public:
   /** @} */
   /* End of Body sensors group */
 
+  /** Return true if the specified joint has a joint sensor attached to it
+   *
+   * @param joint Joint to query
+   *
+   */
+  bool jointHasJointSensor(const std::string & joint) const;
+
+  /** Return a specific JointSensor by joint name
+   *
+   * @param joint Name of the joint
+   *
+   * @throws If there is no sensor attached to the joint
+   *
+   */
+  JointSensor & jointJointSensor(const std::string & joint);
+
+  /** Return a specific JointSensor by joint name (const) */
+  const JointSensor & jointJointSensor(const std::string & joint) const;
+
+  /** Return all joint sensors */
+  std::vector<JointSensor> & jointSensors();
+
+  /** Return all joint sensors (const) */
+  const std::vector<JointSensor> & jointSensors() const;
+
+  /** @} */
+  /* End of Joint sensors group */
+
   /** Returns true if the robot has a joint named \p name */
   bool hasJoint(const std::string & name) const;
 
@@ -998,6 +1026,10 @@ private:
   std::unordered_map<std::string, size_t> bodySensorsIndex_;
   /** Correspondance between bodies' names and attached body sensors */
   std::unordered_map<std::string, size_t> bodyBodySensors_;
+  /** Hold all joint sensors */
+  std::vector<JointSensor> jointSensors_;
+  /** Correspondance between joints' names and attached joint sensors */
+  std::unordered_map<std::string, size_t> jointJointSensors_;
   Springs springs_;
   std::vector<std::vector<Eigen::VectorXd>> tlPoly_;
   std::vector<std::vector<Eigen::VectorXd>> tuPoly_;

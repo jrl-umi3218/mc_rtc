@@ -409,6 +409,17 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
                              return robot(name).bodySensor(bs_name).angularAcceleration();
                            });
     }
+    // Log all joint sensors
+    for(const auto & js : robot(name).jointSensors())
+    {
+      const auto & jnt = js.joint();
+      logger().addLogEntry(entry_str("JointSensor_" + jnt + "_motorTemperature"),
+                           [this, name, jnt]() { return robot(name).jointJointSensor(jnt).motorTemperature(); });
+      logger().addLogEntry(entry_str("JointSensor_" + jnt + "_driverTemperature"),
+                           [this, name, jnt]() { return robot(name).jointJointSensor(jnt).driverTemperature(); });
+      logger().addLogEntry(entry_str("JointSensor_" + jnt + "_motorCurrent"),
+                           [this, name, jnt]() { return robot(name).jointJointSensor(jnt).motorCurrent(); });
+    }
 
     /** Now update nr vars */
     solver().updateNrVars();
@@ -451,6 +462,12 @@ void MCController::removeRobot(const std::string & name)
       logger().removeLogEntry(entry_str(bs.name() + "_angularVelocity"));
       logger().removeLogEntry(entry_str(bs.name() + "_linearAcceleration"));
       logger().removeLogEntry(entry_str(bs.name() + "_angularAcceleration"));
+    }
+    for(const auto & js : robot.jointSensors())
+    {
+      logger().removeLogEntry(entry_str("JointSensor_" + js.joint() + "_motorTemperature"));
+      logger().removeLogEntry(entry_str("JointSensor_" + js.joint() + "_driverTemperature"));
+      logger().removeLogEntry(entry_str("JointSensor_" + js.joint() + "_motorCurrent"));
     }
   }
   robots().removeRobot(name);
