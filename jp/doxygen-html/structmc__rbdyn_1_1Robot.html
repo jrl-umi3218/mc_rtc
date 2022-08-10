@@ -103,6 +103,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9f0c4c44861063b684d43d4ad78a995e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e734d771ca6cf96801de8765cee637d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a3e734d771ca6cf96801de8765cee637d">module</a> () const</td></tr>
 <tr class="separator:a3e734d771ca6cf96801de8765cee637d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ea609c4deb32f5466ace339d80690bc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a5ea609c4deb32f5466ace339d80690bc">jointHasJointSensor</a> (const std::string &amp;joint) const</td></tr>
+<tr class="separator:a5ea609c4deb32f5466ace339d80690bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27c138feea74443477cec246feef4e36"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a27c138feea74443477cec246feef4e36">jointJointSensor</a> (const std::string &amp;joint)</td></tr>
+<tr class="separator:a27c138feea74443477cec246feef4e36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6354b734b171f226d1fadc9a12aeef31"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a6354b734b171f226d1fadc9a12aeef31">jointJointSensor</a> (const std::string &amp;joint) const</td></tr>
+<tr class="separator:a6354b734b171f226d1fadc9a12aeef31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa162596a1c837c1e19873758d43a2ab7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#aa162596a1c837c1e19873758d43a2ab7">jointSensors</a> ()</td></tr>
+<tr class="separator:aa162596a1c837c1e19873758d43a2ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a3ff2e0bc94f84395627aa385781866"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a6a3ff2e0bc94f84395627aa385781866">jointSensors</a> () const</td></tr>
+<tr class="separator:a6a3ff2e0bc94f84395627aa385781866"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafb78a38ec8b2037519f030140a95976"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#aafb78a38ec8b2037519f030140a95976">hasJoint</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>) const</td></tr>
 <tr class="separator:aafb78a38ec8b2037519f030140a95976"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8353aa6a66630a85c9249298ed960c6a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a8353aa6a66630a85c9249298ed960c6a">hasBody</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>) const</td></tr>
@@ -3051,6 +3061,31 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="a5ea609c4deb32f5466ace339d80690bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ea609c4deb32f5466ace339d80690bc">&#9670;&nbsp;</a></span>jointHasJointSensor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rbdyn::Robot::jointHasJointSensor </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>joint</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return true if the specified joint has a joint sensor attached to it</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">joint</td><td>Joint to query </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a7ad6afc9dd0267860a325771e7f87ea1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7ad6afc9dd0267860a325771e7f87ea1">&#9670;&nbsp;</a></span>jointIndexByName()</h2>
 
@@ -3099,6 +3134,92 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a27c138feea74443477cec246feef4e36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27c138feea74443477cec246feef4e36">&#9670;&nbsp;</a></span>jointJointSensor() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a>&amp; mc_rbdyn::Robot::jointJointSensor </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>joint</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return a specific <a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a> by joint name</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">joint</td><td>Name of the joint</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>there is no sensor attached to the joint </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6354b734b171f226d1fadc9a12aeef31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6354b734b171f226d1fadc9a12aeef31">&#9670;&nbsp;</a></span>jointJointSensor() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a>&amp; mc_rbdyn::Robot::jointJointSensor </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>joint</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return a specific <a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a> by joint name (const) </p>
+
+</div>
+</div>
+<a id="aa162596a1c837c1e19873758d43a2ab7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa162596a1c837c1e19873758d43a2ab7">&#9670;&nbsp;</a></span>jointSensors() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a>&gt;&amp; mc_rbdyn::Robot::jointSensors </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return all joint sensors </p>
+
+</div>
+</div>
+<a id="a6a3ff2e0bc94f84395627aa385781866"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a3ff2e0bc94f84395627aa385781866">&#9670;&nbsp;</a></span>jointSensors() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;<a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a>&gt;&amp; mc_rbdyn::Robot::jointSensors </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return all joint sensors (const) </p>
 
 </div>
 </div>

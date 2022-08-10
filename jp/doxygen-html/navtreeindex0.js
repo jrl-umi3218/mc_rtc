@@ -191,6 +191,8 @@ var NAVTREEINDEX0 =
 "IntegerInput_8h_source.html":[4,0,0,6,0,13],
 "InterpolatedRotation_8h.html":[4,0,0,9,3],
 "InterpolatedRotation_8h_source.html":[4,0,0,9,3],
+"JointSensor_8h.html":[4,0,0,4,16],
+"JointSensor_8h_source.html":[4,0,0,4,16],
 "KinematicInertialObserver_8h.html":[4,0,0,2,3],
 "KinematicInertialObserver_8h_source.html":[4,0,0,2,3],
 "KinematicInertialPoseObserver_8h.html":[4,0,0,2,4],
@@ -238,8 +240,8 @@ var NAVTREEINDEX0 =
 "MetaTasks_8h_source.html":[4,0,0,0,0,0,7],
 "Meta_8h.html":[4,0,0,0,0,0,6],
 "Meta_8h_source.html":[4,0,0,0,0,0,6],
-"Mimic_8h.html":[4,0,0,4,16],
-"Mimic_8h_source.html":[4,0,0,4,16],
+"Mimic_8h.html":[4,0,0,4,17],
+"Mimic_8h_source.html":[4,0,0,4,17],
 "MomentumTask_8h.html":[4,0,0,8,19],
 "MomentumTask_8h_source.html":[4,0,0,8,19],
 "NumberInput_8h.html":[4,0,0,6,0,15],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "NumberInput_8h_source.html":[4,0,0,6,0,15],
 "NumberSlider_8h.html":[4,0,0,6,0,16],
 "NumberSlider_8h.html#a5c6714af47a8cb199c7345ed1c2e8ffe":[4,0,0,6,0,16,1],
-"NumberSlider_8h_source.html":[4,0,0,6,0,16],
-"ObserverLoader_8h.html":[4,0,0,2,6],
-"ObserverLoader_8h_source.html":[4,0,0,2,6]
+"NumberSlider_8h_source.html":[4,0,0,6,0,16]
 };

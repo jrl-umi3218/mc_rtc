@@ -141,6 +141,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a17aa1885f3db7c16c3e06b2525be82d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4edb2a975531bfb2935c0d7b25f8f677"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespacemc__rbdyn.html#a728d731db2806e7673f67b958970e558">BodySensorVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a4edb2a975531bfb2935c0d7b25f8f677">bodySensors</a> () const</td></tr>
 <tr class="separator:a4edb2a975531bfb2935c0d7b25f8f677"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77d9b4bb262e90f14b45b1cfd2dcf00d"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a77d9b4bb262e90f14b45b1cfd2dcf00d">jointSensors</a> () const</td></tr>
+<tr class="separator:a77d9b4bb262e90f14b45b1cfd2dcf00d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27c7e09fee38804af1f74e980e97c988"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1Springs.html">Springs</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a27c7e09fee38804af1f74e980e97c988">springs</a> () const</td></tr>
 <tr class="separator:a27c7e09fee38804af1f74e980e97c988"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a540c068db94dc49566ccda2ed3825630"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="structmc__rbdyn_1_1Collision.html">mc_rbdyn::Collision</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a540c068db94dc49566ccda2ed3825630">minimalSelfCollisions</a> () const</td></tr>
@@ -220,6 +222,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a0c1a839a89c823bd31ca95f6caa371b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a850abf7b9eb7e6ef1f3ca70fc495c6e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacemc__rbdyn.html#a728d731db2806e7673f67b958970e558">BodySensorVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a850abf7b9eb7e6ef1f3ca70fc495c6e4">_bodySensors</a></td></tr>
 <tr class="separator:a850abf7b9eb7e6ef1f3ca70fc495c6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95efdc9e8c12a10434f6aac4589b96c8"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a95efdc9e8c12a10434f6aac4589b96c8">_jointSensors</a></td></tr>
+<tr class="separator:a95efdc9e8c12a10434f6aac4589b96c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5ef0e8c1b616ffae6dc46f704d8fd3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1Springs.html">Springs</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#ae5ef0e8c1b616ffae6dc46f704d8fd3f">_springs</a></td></tr>
 <tr class="separator:ae5ef0e8c1b616ffae6dc46f704d8fd3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad23bb6df3b05cf0105ca6cfbfdb2ee9b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structmc__rbdyn_1_1Collision.html">mc_rbdyn::Collision</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#ad23bb6df3b05cf0105ca6cfbfdb2ee9b">_minimalSelfCollisions</a></td></tr>
@@ -1013,6 +1017,33 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a77d9b4bb262e90f14b45b1cfd2dcf00d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77d9b4bb262e90f14b45b1cfd2dcf00d">&#9670;&nbsp;</a></span>jointSensors()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;<a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a>&gt;&amp; mc_rbdyn::RobotModule::jointSensors </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the joint sensors of the robot</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structmc__rbdyn_1_1JointSensor.html">mc_rbdyn::JointSensor</a> for <a class="el" href="namespacemc__rbdyn_1_1details.html">details</a> on the expected data </dd></dl>
+
+</div>
+</div>
 <a id="a1e78a7743c7a0b1c9b32b1acd727565e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1e78a7743c7a0b1c9b32b1acd727565e">&#9670;&nbsp;</a></span>make_default_ref_joint_order()</h2>
 
@@ -1513,6 +1544,21 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structmc__rbdyn_1_1RobotModule.html#ad22b6a0a6be201cdcf15639d5e210d94">jerkBounds()</a> </dd></dl>
+
+</div>
+</div>
+<a id="a95efdc9e8c12a10434f6aac4589b96c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95efdc9e8c12a10434f6aac4589b96c8">&#9670;&nbsp;</a></span>_jointSensors</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a>&gt; mc_rbdyn::RobotModule::_jointSensors</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a77d9b4bb262e90f14b45b1cfd2dcf00d">jointSensors()</a> </dd></dl>
 
 </div>
 </div>

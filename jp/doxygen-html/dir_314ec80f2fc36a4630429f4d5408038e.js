@@ -29,6 +29,9 @@ var dir_314ec80f2fc36a4630429f4d5408038e =
     [ "GripperSurface.h", "GripperSurface_8h.html", [
       [ "GripperSurface", "structmc__rbdyn_1_1GripperSurface.html", "structmc__rbdyn_1_1GripperSurface" ]
     ] ],
+    [ "JointSensor.h", "JointSensor_8h.html", [
+      [ "JointSensor", "structmc__rbdyn_1_1JointSensor.html", "structmc__rbdyn_1_1JointSensor" ]
+    ] ],
     [ "Mimic.h", "Mimic_8h.html", [
       [ "Mimic", "structmc__rbdyn_1_1Mimic.html", "structmc__rbdyn_1_1Mimic" ]
     ] ],

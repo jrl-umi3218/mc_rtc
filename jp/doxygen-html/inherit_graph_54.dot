@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_rbdyn::lipm_stabilizer\l::ExternalWrenchConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html",tooltip="Parameters for the external wrenches. "];
+  Node0 [label="mc_rbdyn::lipm_stabilizer\l::DCMBiasEstimatorConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html"];
 }

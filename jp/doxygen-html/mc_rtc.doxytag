@@ -1508,6 +1508,7 @@
     <includes id="Collision_8h" name="Collision.h" local="no" imported="no">mc_rbdyn/Collision.h</includes>
     <includes id="Flexibility_8h" name="Flexibility.h" local="no" imported="no">mc_rbdyn/Flexibility.h</includes>
     <includes id="ForceSensor_8h" name="ForceSensor.h" local="no" imported="no">mc_rbdyn/ForceSensor.h</includes>
+    <includes id="JointSensor_8h" name="JointSensor.h" local="no" imported="no">mc_rbdyn/JointSensor.h</includes>
     <includes id="PolygonInterpolator_8h" name="PolygonInterpolator.h" local="no" imported="no">mc_rbdyn/PolygonInterpolator.h</includes>
     <includes id="RobotModule_8h" name="RobotModule.h" local="no" imported="no">mc_rbdyn/RobotModule.h</includes>
     <includes id="Springs_8h" name="Springs.h" local="no" imported="no">mc_rbdyn/Springs.h</includes>
@@ -1690,6 +1691,14 @@
     <filename>GripperSurface_8h</filename>
     <includes id="Surface_8h" name="Surface.h" local="no" imported="no">mc_rbdyn/Surface.h</includes>
     <class kind="struct">mc_rbdyn::GripperSurface</class>
+    <namespace>mc_rbdyn</namespace>
+  </compound>
+  <compound kind="file">
+    <name>JointSensor.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
+    <filename>JointSensor_8h</filename>
+    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <class kind="struct">mc_rbdyn::JointSensor</class>
     <namespace>mc_rbdyn</namespace>
   </compound>
   <compound kind="file">
@@ -1877,6 +1886,7 @@
     <includes id="CompoundJointConstraintDescription_8h" name="CompoundJointConstraintDescription.h" local="no" imported="no">mc_rbdyn/CompoundJointConstraintDescription.h</includes>
     <includes id="Flexibility_8h" name="Flexibility.h" local="no" imported="no">mc_rbdyn/Flexibility.h</includes>
     <includes id="ForceSensor_8h" name="ForceSensor.h" local="no" imported="no">mc_rbdyn/ForceSensor.h</includes>
+    <includes id="JointSensor_8h" name="JointSensor.h" local="no" imported="no">mc_rbdyn/JointSensor.h</includes>
     <includes id="Mimic_8h" name="Mimic.h" local="no" imported="no">mc_rbdyn/Mimic.h</includes>
     <includes id="Springs_8h" name="Springs.h" local="no" imported="no">mc_rbdyn/Springs.h</includes>
     <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
@@ -17900,6 +17910,115 @@
     <templarg></templarg>
   </compound>
   <compound kind="struct">
+    <name>mc_rbdyn::JointSensor</name>
+    <filename>structmc__rbdyn_1_1JointSensor.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>JointSensor</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>ac0ae6ebd134c29a687ac45f234648e9a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>JointSensor</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>aa98c2a4e6de570b90d8d3813ca07e246</anchor>
+      <arglist>(const std::string &amp;jointName)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>JointSensor</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>a8146f210db7f5327db2790accce04e0b</anchor>
+      <arglist>(const JointSensor &amp;)=default</arglist>
+    </member>
+    <member kind="function">
+      <type>JointSensor &amp;</type>
+      <name>operator=</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>a1f6ea7b4b8c8d540834d479a43c68481</anchor>
+      <arglist>(const JointSensor &amp;)=default</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>JointSensor</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>abeb589efccbf28f0614568516829c052</anchor>
+      <arglist>(JointSensor &amp;&amp;)=default</arglist>
+    </member>
+    <member kind="function">
+      <type>JointSensor &amp;</type>
+      <name>operator=</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>a9ca43a7f508a4749070de344481077b2</anchor>
+      <arglist>(JointSensor &amp;&amp;)=default</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>~JointSensor</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>a760681e45e716ee3a648d2b833375da4</anchor>
+      <arglist>() noexcept=default</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::string &amp;</type>
+      <name>joint</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>a5bc82e5bc792b1205bab90bbc0db9ff0</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>motorTemperature</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>abfa5c1b8b13fe8bd3a7ddc4e241fda1a</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>motorTemperature</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>aea5410f5e72c9a14732809820c5b7fc7</anchor>
+      <arglist>(double motor_temperature) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>driverTemperature</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>abbd216e688e549ffdbadbacb9abb97a8</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>driverTemperature</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>a5474e649ba72ec2d82c3b196b7ee52f3</anchor>
+      <arglist>(double driver_temperature) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>motorCurrent</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>a94a894a6d608152e9ffd574db02f3aae</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>motorCurrent</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>a0cb1c64c1bad340b0c85d615af6bb5ee</anchor>
+      <arglist>(double motor_current) noexcept</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::string</type>
+      <name>joint_</name>
+      <anchorfile>structmc__rbdyn_1_1JointSensor.html</anchorfile>
+      <anchor>ab42af9da49bc5e327d328b9360f205bf</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_observers::KinematicInertialObserver</name>
     <filename>structmc__observers_1_1KinematicInertialObserver.html</filename>
     <base>mc_observers::KinematicInertialPoseObserver</base>
@@ -20363,6 +20482,90 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>setJointMotorTemperature</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>aff57491a7d2d7cc96d4977f736c6bd8b</anchor>
+      <arglist>(const std::string &amp;joint, double temperature)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorTemperature</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>a6b662443e9002a90bca5dfe756236684</anchor>
+      <arglist>(const std::string &amp;robotName, const std::string &amp;joint, double temperature)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorTemperatures</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>aeecb1c8207e307aabfdc08c8ffb31786</anchor>
+      <arglist>(const std::map&lt; std::string, double &gt; &amp;temperatures)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorTemperatures</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>a6a48de8fb529eec3c8cd9ae68b179e07</anchor>
+      <arglist>(const std::string &amp;robotName, const std::map&lt; std::string, double &gt; &amp;temperatures)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointDriverTemperature</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>ac71808ca04462db2ca9f4a65f6d46bb9</anchor>
+      <arglist>(const std::string &amp;joint, double temperature)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointDriverTemperature</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>a79fcb50fb8bfba2cb526aa9cef41e44a</anchor>
+      <arglist>(const std::string &amp;robotName, const std::string &amp;joint, double temperature)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointDriverTemperatures</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>a019e64216e49d2d2ea642e0d44a4cbd2</anchor>
+      <arglist>(const std::map&lt; std::string, double &gt; &amp;temperatures)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointDriverTemperatures</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>a748c8fc7580a3e19fff42f30b47f9483</anchor>
+      <arglist>(const std::string &amp;robotName, const std::map&lt; std::string, double &gt; &amp;temperatures)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorCurrent</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>aaca57626cc7f1603ed95ece43047ebc9</anchor>
+      <arglist>(const std::string &amp;joint, double current)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorCurrent</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>af3b4c5e9eb726b100ab1f45e71bb9c73</anchor>
+      <arglist>(const std::string &amp;robotName, const std::string &amp;joint, double current)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorCurrents</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>aa6658156e5c54320aaf08917ff7cbbf2</anchor>
+      <arglist>(const std::map&lt; std::string, double &gt; &amp;currents)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorCurrents</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>af5dff8941f459c180697a3987d0e9552</anchor>
+      <arglist>(const std::string &amp;robotName, const std::map&lt; std::string, double &gt; &amp;currents)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>setGripperTargetQ</name>
       <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
       <anchor>af318a5f7b3b092cc3b3627b4d5c7d1c2</anchor>
@@ -20710,6 +20913,90 @@
       <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
       <anchor>a97a206dec8ea065ce843dce750957630</anchor>
       <arglist>(unsigned int robotIndex, const std::map&lt; std::string, sva::ForceVecd &gt; &amp;wrenches)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorTemperature</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>aff57491a7d2d7cc96d4977f736c6bd8b</anchor>
+      <arglist>(const std::string &amp;joint, double temperature)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorTemperature</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>a6b662443e9002a90bca5dfe756236684</anchor>
+      <arglist>(const std::string &amp;robotName, const std::string &amp;joint, double temperature)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorTemperatures</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>aeecb1c8207e307aabfdc08c8ffb31786</anchor>
+      <arglist>(const std::map&lt; std::string, double &gt; &amp;temperatures)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorTemperatures</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>a6a48de8fb529eec3c8cd9ae68b179e07</anchor>
+      <arglist>(const std::string &amp;robotName, const std::map&lt; std::string, double &gt; &amp;temperatures)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointDriverTemperature</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>ac71808ca04462db2ca9f4a65f6d46bb9</anchor>
+      <arglist>(const std::string &amp;joint, double temperature)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointDriverTemperature</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>a79fcb50fb8bfba2cb526aa9cef41e44a</anchor>
+      <arglist>(const std::string &amp;robotName, const std::string &amp;joint, double temperature)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointDriverTemperatures</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>a019e64216e49d2d2ea642e0d44a4cbd2</anchor>
+      <arglist>(const std::map&lt; std::string, double &gt; &amp;temperatures)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointDriverTemperatures</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>a748c8fc7580a3e19fff42f30b47f9483</anchor>
+      <arglist>(const std::string &amp;robotName, const std::map&lt; std::string, double &gt; &amp;temperatures)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorCurrent</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>aaca57626cc7f1603ed95ece43047ebc9</anchor>
+      <arglist>(const std::string &amp;joint, double current)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorCurrent</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>af3b4c5e9eb726b100ab1f45e71bb9c73</anchor>
+      <arglist>(const std::string &amp;robotName, const std::string &amp;joint, double current)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorCurrents</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>aa6658156e5c54320aaf08917ff7cbbf2</anchor>
+      <arglist>(const std::map&lt; std::string, double &gt; &amp;currents)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setJointMotorCurrents</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>af5dff8941f459c180697a3987d0e9552</anchor>
+      <arglist>(const std::string &amp;robotName, const std::map&lt; std::string, double &gt; &amp;currents)</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
@@ -25109,6 +25396,41 @@
     </member>
     <member kind="function">
       <type>bool</type>
+      <name>jointHasJointSensor</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a5ea609c4deb32f5466ace339d80690bc</anchor>
+      <arglist>(const std::string &amp;joint) const</arglist>
+    </member>
+    <member kind="function">
+      <type>JointSensor &amp;</type>
+      <name>jointJointSensor</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a27c138feea74443477cec246feef4e36</anchor>
+      <arglist>(const std::string &amp;joint)</arglist>
+    </member>
+    <member kind="function">
+      <type>const JointSensor &amp;</type>
+      <name>jointJointSensor</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a6354b734b171f226d1fadc9a12aeef31</anchor>
+      <arglist>(const std::string &amp;joint) const</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; JointSensor &gt; &amp;</type>
+      <name>jointSensors</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>aa162596a1c837c1e19873758d43a2ab7</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; JointSensor &gt; &amp;</type>
+      <name>jointSensors</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a6a3ff2e0bc94f84395627aa385781866</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
       <name>hasJoint</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>aafb78a38ec8b2037519f030140a95976</anchor>
@@ -27615,6 +27937,13 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
+      <type>const std::vector&lt; JointSensor &gt; &amp;</type>
+      <name>jointSensors</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>a77d9b4bb262e90f14b45b1cfd2dcf00d</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
       <type>const Springs &amp;</type>
       <name>springs</name>
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
@@ -27878,6 +28207,13 @@
       <name>_bodySensors</name>
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
       <anchor>a850abf7b9eb7e6ef1f3ca70fc495c6e4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; JointSensor &gt;</type>
+      <name>_jointSensors</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>a95efdc9e8c12a10434f6aac4589b96c8</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -38862,6 +39198,7 @@
     <class kind="struct">mc_rbdyn::ForceSensor</class>
     <class kind="struct">mc_rbdyn::Frame</class>
     <class kind="struct">mc_rbdyn::GripperSurface</class>
+    <class kind="struct">mc_rbdyn::JointSensor</class>
     <class kind="struct">mc_rbdyn::Mimic</class>
     <class kind="struct">mc_rbdyn::PlanarSurface</class>
     <class kind="struct">mc_rbdyn::Plane</class>

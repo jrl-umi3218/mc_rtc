@@ -14,6 +14,7 @@ var namespacemc__rbdyn =
     [ "ForceSensor", "structmc__rbdyn_1_1ForceSensor.html", "structmc__rbdyn_1_1ForceSensor" ],
     [ "Frame", "structmc__rbdyn_1_1Frame.html", "structmc__rbdyn_1_1Frame" ],
     [ "GripperSurface", "structmc__rbdyn_1_1GripperSurface.html", "structmc__rbdyn_1_1GripperSurface" ],
+    [ "JointSensor", "structmc__rbdyn_1_1JointSensor.html", "structmc__rbdyn_1_1JointSensor" ],
     [ "Mimic", "structmc__rbdyn_1_1Mimic.html", "structmc__rbdyn_1_1Mimic" ],
     [ "PlanarSurface", "structmc__rbdyn_1_1PlanarSurface.html", "structmc__rbdyn_1_1PlanarSurface" ],
     [ "Plane", "structmc__rbdyn_1_1Plane.html", "structmc__rbdyn_1_1Plane" ],

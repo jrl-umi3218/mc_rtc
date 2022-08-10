@@ -17,6 +17,7 @@ var searchData=
   ['_7eglobalplugin',['~GlobalPlugin',['../structmc__control_1_1GlobalPlugin.html#ae68386345dfc2a1820747a566d37c4af',1,'mc_control::GlobalPlugin']]],
   ['_7egrippersurface',['~GripperSurface',['../structmc__rbdyn_1_1GripperSurface.html#aeae1f456b4be7ed9cce2cda368f01ed8',1,'mc_rbdyn::GripperSurface']]],
   ['_7ehandle',['~Handle',['../structmc__solver_1_1GenericLoader_1_1Handle.html#acb9b93dfdd948310129a694363b1d018',1,'mc_solver::GenericLoader::Handle']]],
+  ['_7ejointsensor',['~JointSensor',['../structmc__rbdyn_1_1JointSensor.html#a760681e45e716ee3a648d2b833375da4',1,'mc_rbdyn::JointSensor']]],
   ['_7elogger',['~Logger',['../structmc__rtc_1_1Logger.html#a7692f0ca12a02805cba83a9422de5a4e',1,'mc_rtc::Logger']]],
   ['_7eltdlhandle',['~LTDLHandle',['../structmc__rtc_1_1LTDLHandle.html#ac3f676e1ef23ac13767069ebf1018af7',1,'mc_rtc::LTDLHandle']]],
   ['_7emccontroller',['~MCController',['../structmc__control_1_1MCController.html#adbb448aeae9565e56d32cf50067dc9ee',1,'mc_control::MCController']]],

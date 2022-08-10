@@ -17,6 +17,7 @@ var searchData=
   ['_5fgrippers',['_grippers',['../structmc__rbdyn_1_1RobotModule.html#aff92408eda408fe95d5320918db67674',1,'mc_rbdyn::RobotModule']]],
   ['_5fgrippersafety',['_gripperSafety',['../structmc__rbdyn_1_1RobotModule.html#a58c75925a8766c6148fbb6a1385e61c5',1,'mc_rbdyn::RobotModule']]],
   ['_5fjerkbounds',['_jerkBounds',['../structmc__rbdyn_1_1RobotModule.html#aea1ceebb2d15dc034da0cad4033cacdf',1,'mc_rbdyn::RobotModule']]],
+  ['_5fjointsensors',['_jointSensors',['../structmc__rbdyn_1_1RobotModule.html#a95efdc9e8c12a10434f6aac4589b96c8',1,'mc_rbdyn::RobotModule']]],
   ['_5flipmstabilizerconfig',['_lipmStabilizerConfig',['../structmc__rbdyn_1_1RobotModule.html#a7da8429458a11c340c168aa0eade6694',1,'mc_rbdyn::RobotModule']]],
   ['_5fminimalselfcollisions',['_minimalSelfCollisions',['../structmc__rbdyn_1_1RobotModule.html#ad23bb6df3b05cf0105ca6cfbfdb2ee9b',1,'mc_rbdyn::RobotModule']]],
   ['_5fparameters',['_parameters',['../structmc__rbdyn_1_1RobotModule.html#a0f8cfd4ca7e7772f68266003e7b8fc3c',1,'mc_rbdyn::RobotModule']]],
