@@ -291,7 +291,7 @@ public:
   mc_rtc::Logger & logger();
 
   /** Returns mc_rtc::gui::StateBuilder ptr */
-  std::shared_ptr<mc_rtc::gui::StateBuilder> gui()
+  std::shared_ptr<mc_rtc::gui::StateBuilder> gui() const
   {
     return gui_;
   }
