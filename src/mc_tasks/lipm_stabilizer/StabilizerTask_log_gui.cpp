@@ -70,11 +70,11 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
       ArrayInput(
           "DCM filters", {"Integrator T [s]", "Derivator T [s]"},
           [this]() -> Eigen::Vector2d {
-            return {dcmIntegrator_.timeConstant(), dcmDerivator_.timeConstant()};
+            return {dcmIntegrator_.timeConstant(), dcmDerivator_.cutoffPeriod()};
           },
           [this](const Eigen::Vector2d & T) {
             dcmIntegratorTimeConstant(T(0));
-            dcmDerivatorTimeConstant(T(1));
+            dcmDerivatorCutoffPeriod(T(1));
           }));
   gui.addElement({"Tasks", name_, "Advanced"}, Button("Disable", [this]() { disable(); }));
   addConfigButtons({"Tasks", name_, "Advanced"});
@@ -393,7 +393,9 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_admittance_cop", this, [this]() -> const Eigen::Vector2d & { return c_.copAdmittance; });
   logger.addLogEntry(name_ + "_admittance_dfz", this, [this]() { return c_.dfzAdmittance; });
   logger.addLogEntry(name_ + "_dcmDerivator_filtered", this, [this]() { return dcmDerivator_.eval(); });
-  logger.addLogEntry(name_ + "_dcmDerivator_timeConstant", this, [this]() { return dcmDerivator_.timeConstant(); });
+  logger.addLogEntry(name_ + "_dcmDerivator_input_lp", this, [this]() { return dcmDerivator_.input_lp(); });
+  logger.addLogEntry(name_ + "_dcmDerivator_input_hp", this, [this]() { return dcmDerivator_.input_hp(); });
+  logger.addLogEntry(name_ + "_dcmDerivator_cutoffPeriod", this, [this]() { return dcmDerivator_.cutoffPeriod(); });
   logger.addLogEntry(name_ + "_dcmIntegrator_timeConstant", this, [this]() { return dcmIntegrator_.timeConstant(); });
   logger.addLogEntry(name_ + "_dcmTracking_derivGain", this, [this]() { return c_.dcmDerivGain; });
   logger.addLogEntry(name_ + "_dcmTracking_integralGain", this, [this]() { return c_.dcmIntegralGain; });

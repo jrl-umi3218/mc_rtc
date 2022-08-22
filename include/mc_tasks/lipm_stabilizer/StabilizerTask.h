@@ -10,13 +10,13 @@
 #include <mc_filter/ExponentialMovingAverage.h>
 #include <mc_filter/LeakyIntegrator.h>
 #include <mc_filter/LowPass.h>
+#include <mc_filter/LowPassCompose.h>
 #include <mc_filter/StationaryOffset.h>
+#include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/CoPTask.h>
 #include <mc_tasks/MetaTask.h>
 #include <mc_tasks/OrientationTask.h>
-
-#include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
 #include <mc_tasks/lipm_stabilizer/Contact.h>
 #include <mc_tasks/lipm_stabilizer/ZMPCC.h>
 
@@ -427,10 +427,10 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     dcmIntegrator_.timeConstant(dcmIntegratorTimeConstant);
   }
 
-  inline void dcmDerivatorTimeConstant(double dcmDerivatorTimeConstant) noexcept
+  inline void dcmDerivatorCutoffPeriod(double T) noexcept
   {
-    c_.dcmDerivatorTimeConstant = dcmDerivatorTimeConstant;
-    dcmDerivator_.timeConstant(dcmDerivatorTimeConstant);
+    c_.dcmDerivatorCutOffPeriod = T;
+    dcmDerivator_.cutoffPeriod(T);
   }
 
   inline void extWrenchSumLowPassCutoffPeriod(double cutoffPeriod) noexcept
@@ -900,7 +900,7 @@ protected:
   /** @} */
 
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
-  mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;
+  mc_filter::LowPassCompose<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */
   double dfzForceError_ = 0.; /**< Force error in foot force difference control */
   double dfzHeightError_ = 0.; /**< Height error in foot force difference control */

@@ -384,7 +384,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   double zmpdGain = 0.; /**< Gain on ZMPd */
   double dcmIntegratorTimeConstant =
       15.; /**< Time window for exponential moving average filter of the DCM integrator */
-  double dcmDerivatorTimeConstant = 1.; /**< Time window for the stationary offset filter of the DCM derivator */
+  double dcmDerivatorTimeConstant = 1.; /**< DEPRECATED, Use dcmDerivatorCutOffPeriod instead */
+  double dcmDerivatorCutOffPeriod = 1.; /**< Cutoff Period of the DCM derivator filter */
 
   std::vector<std::string> comActiveJoints; /**< Joints used by CoM IK task */
   Eigen::Vector3d comStiffness = {1000., 1000., 100.}; /**< Stiffness of CoM IK task */
@@ -478,7 +479,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
         dcmTracking("gains")("comdError", comdErrorGain);
         dcmTracking("gains")("zmpd", zmpdGain);
       }
-      dcmTracking("derivator_time_constant", dcmDerivatorTimeConstant);
+      dcmTracking("derivator_cutoff_period", dcmDerivatorCutOffPeriod);
       dcmTracking("integrator_time_constant", dcmIntegratorTimeConstant);
     }
     if(config.has("dcm_bias"))
@@ -592,7 +593,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf("dcm_tracking")("gains").add("deriv", dcmDerivGain);
     conf("dcm_tracking")("gains").add("comdError", comdErrorGain);
     conf("dcm_tracking")("gains").add("zmpd", zmpdGain);
-    conf("dcm_tracking").add("derivator_time_constant", dcmDerivatorTimeConstant);
+    conf("dcm_tracking").add("derivator_cutoff_period", dcmDerivatorCutOffPeriod);
     conf("dcm_tracking").add("integrator_time_constant", dcmIntegratorTimeConstant);
 
     conf.add("dcm_bias", dcmBias);
