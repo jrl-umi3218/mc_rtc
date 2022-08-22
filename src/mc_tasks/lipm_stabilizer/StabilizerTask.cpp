@@ -254,7 +254,7 @@ void StabilizerTask::update(mc_solver::QPSolver & solver)
   // Update contacts if they have changed
   updateContacts(solver);
 
-  updateState(realRobots_.robot().com(), realRobots_.robot().comVelocity());
+  updateState(realRobots_.robot().com(), realRobots_.robot().comVelocity(), realRobots_.robot().comAcceleration());
 
   // Run stabilizer
   run();
@@ -778,10 +778,13 @@ void StabilizerTask::run()
   runTime_ = 1000. * duration_cast<duration<double>>(endTime - startTime).count();
 }
 
-void StabilizerTask::updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd)
+void StabilizerTask::updateState(const Eigen::Vector3d & com,
+                                 const Eigen::Vector3d & comd,
+                                 const Eigen::Vector3d & comdd)
 {
   measuredCoM_ = com;
   measuredCoMd_ = comd;
+  measuredCoMdd_ = comdd;
   measuredDCM_ = measuredCoM_ + measuredCoMd_ / omega_;
 }
 
@@ -789,9 +792,11 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
 {
   Eigen::Vector3d comError = comTarget_ - measuredCoM_;
   Eigen::Vector3d comdError = comdTarget_ - measuredCoMd_;
+  Eigen::Vector3d comddError = comddTarget_ - measuredCoMdd_;
 
-  Eigen::Vector3d delta_dcmError = (comError + comdError / omega_) - dcmError_;
-  delta_dcmError.z() = 0.;
+  Eigen::Vector3d dcmdError = comdError + comddError / omega_;
+  dcmdError.z() = 0.;
+
   dcmError_ = comError + comdError / omega_;
   dcmError_.z() = 0.;
 
@@ -862,7 +867,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
       dcmEstimatorNeedsReset_ = true;
     }
 
-    dcmDerivator_.update(omega_ * (dcmError_ - zmpError), delta_dcmError / dt_);
+    dcmDerivator_.update(omega_ * (dcmError_ - zmpError), dcmdError);
     dcmIntegrator_.append(dcmError_);
   }
   dcmAverageError_ = dcmIntegrator_.eval();

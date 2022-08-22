@@ -648,8 +648,10 @@ private:
    * \param com Position of the center of mass.
    *
    * \param comd Velocity of the center of mass.
+   *
+   * \param comdd Acceleration of the center of mass.
    */
-  void updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd);
+  void updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, const Eigen::Vector3d & comdd);
 
   /**
    * @brief Update contact tasks in the solver
@@ -860,6 +862,7 @@ protected:
   Eigen::Vector3d dcmVelError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredCoM_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredCoMd_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d measuredCoMdd_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredZMP_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredDCM_ = Eigen::Vector3d::Zero(); /// Measured DCM (only used for logging)
   Eigen::Vector3d measuredDCMUnbiased_ = Eigen::Vector3d::Zero(); /// DCM unbiased (only used for logging)

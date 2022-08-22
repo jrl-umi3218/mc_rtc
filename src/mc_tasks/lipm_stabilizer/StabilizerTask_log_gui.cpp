@@ -471,6 +471,7 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
                      [this]() { return realRobot().surfacePose(footSurface(ContactState::Right)); });
   MC_RTC_LOG_HELPER(name_ + "_realRobot_com", measuredCoM_);
   MC_RTC_LOG_HELPER(name_ + "_realRobot_comd", measuredCoMd_);
+  MC_RTC_LOG_HELPER(name_ + "_realRobot_comdd", measuredCoMdd_);
   MC_RTC_LOG_HELPER(name_ + "_realRobot_dcm", measuredDCM_);
   MC_RTC_LOG_HELPER(name_ + "_realRobot_dcm_unbiased", measuredDCMUnbiased_);
   MC_RTC_LOG_HELPER(name_ + "_realRobot_com_unbiased", measuredCoMUnbiased_);
