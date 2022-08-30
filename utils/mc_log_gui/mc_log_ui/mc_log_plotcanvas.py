@@ -16,7 +16,11 @@ import matplotlib
 matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
 import numpy as np
-matplotlib.use('Qt5Agg')
+# This might fail if mc_log_ui is imported in a headless environment
+try:
+  matplotlib.use('Qt5Agg')
+except:
+  pass
 import matplotlib.pyplot
 
 from matplotlib.animation import FuncAnimation
