@@ -24,7 +24,7 @@ var structmc__control_1_1MCController =
     [ "env", "structmc__control_1_1MCController.html#a94eed9012e3dab581b9ad63a4e525343", null ],
     [ "env", "structmc__control_1_1MCController.html#a589dbcbbd52d3218012802800834926d", null ],
     [ "gripper", "structmc__control_1_1MCController.html#a64c51eba81ba10f77a9281041b706fac", null ],
-    [ "gui", "structmc__control_1_1MCController.html#abb942edc92a7d47993ea5d1ad78e58e9", null ],
+    [ "gui", "structmc__control_1_1MCController.html#ab64b93cc336d16be56c7832d1372c55f", null ],
     [ "hasContact", "structmc__control_1_1MCController.html#a03c94ba02ba9428b4804c6c1a221f721", null ],
     [ "hasObserverPipeline", "structmc__control_1_1MCController.html#af3caf78b3601e0806d9ebf6cfe9b5e5e", null ],
     [ "hasObserverPipeline", "structmc__control_1_1MCController.html#ac6529a8c099a0c775a7c99514086544b", null ],

@@ -19594,8 +19594,8 @@
       <type>std::shared_ptr&lt; mc_rtc::gui::StateBuilder &gt;</type>
       <name>gui</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>abb942edc92a7d47993ea5d1ad78e58e9</anchor>
-      <arglist>()</arglist>
+      <anchor>ab64b93cc336d16be56c7832d1372c55f</anchor>
+      <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type>mc_rtc::DataStore &amp;</type>
