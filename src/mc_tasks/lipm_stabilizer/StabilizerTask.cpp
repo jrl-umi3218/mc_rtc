@@ -971,7 +971,7 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   const sva::PTransformd & X_0_rc = rightContact.surfacePose();
   const sva::PTransformd & X_0_lankle = leftContact.anklePose();
   const sva::PTransformd & X_0_rankle = rightContact.anklePose();
-  sva::PTransformd X_0_com(comTarget_);
+  sva::PTransformd X_0_zmp(zmpTarget_);
 
   constexpr unsigned NB_VAR = 6 + 6;
   constexpr unsigned COST_DIM = 6 + NB_VAR + 1;
@@ -983,9 +983,9 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   // |w_l_0 + w_r_0 - desiredWrench|^2
   auto A_net = A.block<6, 12>(0, 0);
   auto b_net = b.segment<6>(0);
-  A_net.block<6, 6>(0, 0) = X_0_com.dualMatrix();
-  A_net.block<6, 6>(0, 6) = X_0_com.dualMatrix();
-  b_net = X_0_com.dualMul(desiredWrench).vector();
+  A_net.block<6, 6>(0, 0) = X_0_zmp.dualMatrix();
+  A_net.block<6, 6>(0, 6) = X_0_zmp.dualMatrix();
+  b_net = X_0_zmp.dualMul(desiredWrench).vector();
 
   // |ankle torques|^2
   auto A_lankle = A.block<6, 6>(6, 0);
