@@ -461,7 +461,8 @@ TestServer::TestServer() : xythetaz_(4)
                            mc_rtc::log::info("start_t was {:.2f} and is now {:.2f}", prev, start_t);
                            auto prev_v = start_v;
                            start_v = data("StartVector");
-                           mc_rtc::log::info("start_v was {} and is now {}", prev_v.transpose(), start_v.transpose());
+                           mc_rtc::log::info("start_v was {} and is now {}", MC_FMT_STREAMED(prev_v.transpose()),
+                                             MC_FMT_STREAMED(start_v.transpose()));
                          },
                          mc_rtc::gui::FormNumberInput("Start", true,
                                                       []() {

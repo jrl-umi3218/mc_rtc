@@ -710,7 +710,7 @@ void MCController::updateContacts()
       std::get<1>(table_data) = c.r1Surface;
       std::get<2>(table_data) = c.r2;
       std::get<3>(table_data) = c.r2Surface;
-      std::get<4>(table_data) = fmt::format("{}", c.dof.transpose());
+      std::get<4>(table_data) = fmt::format("{}", MC_FMT_STREAMED(c.dof.transpose()));
       std::get<5>(table_data) = c.friction;
       table_idx++;
     }
@@ -810,7 +810,7 @@ void MCController::addContact(const Contact & c)
     if(it->dof != c.dof)
     {
       mc_rtc::log::info("Changed contact DoF {}::{}/{}::{} to {}", c.r1, c.r1Surface, c.r2, c.r2Surface,
-                        c.dof.transpose());
+                        MC_FMT_STREAMED(c.dof.transpose()));
       it->dof = c.dof;
       contacts_changed_ = true;
     }
@@ -824,7 +824,8 @@ void MCController::addContact(const Contact & c)
   }
   else
   {
-    mc_rtc::log::info("Add contact {}::{}/{}::{} (DoF: {})", c.r1, c.r1Surface, c.r2, c.r2Surface, c.dof.transpose());
+    mc_rtc::log::info("Add contact {}::{}/{}::{} (DoF: {})", c.r1, c.r1Surface, c.r2, c.r2Surface,
+                      MC_FMT_STREAMED(c.dof.transpose()));
   }
 }
 

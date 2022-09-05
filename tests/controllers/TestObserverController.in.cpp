@@ -56,13 +56,15 @@ public:
 
     auto checkPose = [](const std::string & prefix, const sva::PTransformd & expected,
                         const sva::PTransformd & actual) {
-      BOOST_CHECK_MESSAGE(allclose(expected.rotation(), actual.rotation(), 1e-6),
-                          fmt::format("{} expected orientation [{}] but got [{}]", prefix,
-                                      mc_rbdyn::rpyFromMat(expected.rotation()).transpose().format(Eigen::IOFormat(4)),
-                                      mc_rbdyn::rpyFromMat(actual.rotation()).transpose().format(Eigen::IOFormat(4))));
+      BOOST_CHECK_MESSAGE(
+          allclose(expected.rotation(), actual.rotation(), 1e-6),
+          fmt::format("{} expected orientation [{}] but got [{}]", prefix,
+                      MC_FMT_STREAMED(mc_rbdyn::rpyFromMat(expected.rotation()).transpose().format(Eigen::IOFormat(4))),
+                      MC_FMT_STREAMED(mc_rbdyn::rpyFromMat(actual.rotation()).transpose().format(Eigen::IOFormat(4)))));
       BOOST_CHECK_MESSAGE(allclose(expected.translation(), actual.translation(), 1e-6),
                           fmt::format("{} expected position [{}] but got [{}]", prefix,
-                                      expected.translation().transpose(), actual.translation().transpose()));
+                                      MC_FMT_STREAMED(expected.translation().transpose()),
+                                      MC_FMT_STREAMED(actual.translation().transpose())));
     };
 
     // Check that the estimation from the KinematicInertial observers matches the

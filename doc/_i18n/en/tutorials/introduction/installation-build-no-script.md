@@ -30,6 +30,7 @@ If you wish to get Python bindings you will also need the following:
  * [python-pip]()
  * [python-numpy]()
  * [python-nose]()
+ * [python-pytest]()
  * [python-coverage]()
  * [Eigen3ToPython](https://github.com/jrl-umi3218/Eigen3ToPython)
  * [sch-core-python](https://github.com/jrl-umi3218/sch-core-python)

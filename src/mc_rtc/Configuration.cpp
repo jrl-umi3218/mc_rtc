@@ -450,7 +450,7 @@ Configuration::operator Eigen::MatrixXd() const
     for(size_t i = 0; i < v.size(); ++i)
     {
       auto row = v[i];
-      assert(row.size() == ret.cols());
+      assert(static_cast<Eigen::DenseIndex>(row.size()) == ret.cols());
       for(size_t j = 0; j < row.size(); ++j)
       {
         ret(static_cast<int>(i), static_cast<int>(j)) = row[j].asDouble();

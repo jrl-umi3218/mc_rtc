@@ -654,7 +654,7 @@ int convert(int argc, char * argv[])
     if(ext.size() == 0 && format.size())
     {
       out_p.replace_extension(format);
-      mc_rtc::log::info("Conversion will be output to {}", out_p);
+      mc_rtc::log::info("Conversion will be output to {}", out_p.string());
     }
   }
   if(!format.size())

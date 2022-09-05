@@ -39,7 +39,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   }
   if(bfs::exists(config_path))
   {
-    mc_rtc::log::info("Loading additional global configuration {}", config_path);
+    mc_rtc::log::info("Loading additional global configuration {}", config_path.string());
     config.load(config_path.string());
   }
   // Load extra configuration
@@ -394,14 +394,14 @@ inline void load_config(const std::string & desc,
     bfs::path global = conf_or_yaml(bfs::path(p) / search_path_suffix / (name + ".conf"));
     if(bfs::exists(global))
     {
-      mc_rtc::log::info("Loading additional {} configuration: {}", desc, global);
+      mc_rtc::log::info("Loading additional {} configuration: {}", desc, global.string());
       c.load(global.string());
     }
   }
   bfs::path local = conf_or_yaml(user_path / (name + ".conf"));
   if(bfs::exists(local))
   {
-    mc_rtc::log::info("Loading additional {} configuration: {}", desc, local);
+    mc_rtc::log::info("Loading additional {} configuration: {}", desc, local.string());
     c.load(local.string());
   }
   configs[name] = c;

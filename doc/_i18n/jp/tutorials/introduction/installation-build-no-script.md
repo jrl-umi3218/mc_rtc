@@ -30,6 +30,7 @@ Pythonバインディングを取得したい場合、以下のものが必要�
  * [python-pip]()
  * [python-numpy]()
  * [python-nose]()
+ * [python-pytest]()
  * [python-coverage]()
  * [Eigen3ToPython](https://github.com/jrl-umi3218/Eigen3ToPython)
  * [sch-core-python](https://github.com/jrl-umi3218/sch-core-python)
