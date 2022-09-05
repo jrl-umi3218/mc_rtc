@@ -203,7 +203,9 @@ void MCGlobalController::init(const std::vector<double> & initq)
         const auto X_s_b = sensor.X_b_s().inv();
         sva::PTransformd X_b_fb = robot().X_b1_b2(sensor.parentBody(), fb);
         sva::PTransformd X_s_fb = X_b_fb * X_s_b;
-        robot().posW(X_s_fb * X_0_s);
+        auto initPos = X_s_fb * X_0_s;
+        robot().posW(initPos);
+        realRobot().posW(initPos);
       };
       if(config.init_attitude_sensor.empty())
       {
