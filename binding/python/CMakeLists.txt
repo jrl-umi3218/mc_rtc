@@ -19,6 +19,8 @@ if(WIN32)
   list(APPEND BINDINGS_LIBRARIES ltdl RBDyn::RBDyn RBDyn::Parsers Tasks::Tasks spdlog::spdlog)
 endif()
 
+set(PYTHON_BINDING_USE_PYTEST ON CACHE BOOL "" FORCE)
+
 add_cython_bindings(mc_rtc
   TARGETS ${BINDINGS_LIBRARIES}
   VERSION ${PROJECT_VERSION}
