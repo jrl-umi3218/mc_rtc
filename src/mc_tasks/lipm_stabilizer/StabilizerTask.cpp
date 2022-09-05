@@ -980,7 +980,9 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   A.setZero(COST_DIM, NB_VAR);
   b.setZero(COST_DIM);
 
-  // |w_l_0 + w_r_0 - desiredWrench|^2
+  // |w_l_zmp + w_r_zmp - desiredWrench|^2
+  // We handle moments around the ZMP instead of the world origin to avoid numerical errors due to large moment values.
+  // https://github.com/jrl-umi3218/mc_rtc/pull/285
   auto A_net = A.block<6, 12>(0, 0);
   auto b_net = b.segment<6>(0);
   A_net.block<6, 6>(0, 0) = X_0_zmp.dualMatrix();
