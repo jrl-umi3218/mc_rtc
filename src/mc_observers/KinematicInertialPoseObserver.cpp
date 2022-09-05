@@ -72,15 +72,16 @@ bool KinematicInertialPoseObserver::run(const mc_control::MCController & ctl)
     if(error > maxAnchorFrameDiscontinuity_)
     {
       mc_rtc::log::warning("[{}] Control anchor frame jumped from [{}] to [{}] (error norm {} > threshold {})", name(),
-                           X_0_anchorFrame_.translation().transpose(), anchorFrame.translation().transpose(), error,
-                           maxAnchorFrameDiscontinuity_);
+                           MC_FMT_STREAMED(X_0_anchorFrame_.translation().transpose()),
+                           MC_FMT_STREAMED(anchorFrame.translation().transpose()), error, maxAnchorFrameDiscontinuity_);
       anchorFrameJumped_ = true;
     }
     if((anchorFrameReal.translation() - X_0_anchorFrameReal_.translation()).norm() > maxAnchorFrameDiscontinuity_)
     {
       mc_rtc::log::warning("[{}] Real anchor frame jumped from [{}] to [{}] (error norm {:.3f} > threshold {:.3f})",
-                           name(), X_0_anchorFrameReal_.translation().transpose(),
-                           anchorFrameReal.translation().transpose(), error, maxAnchorFrameDiscontinuity_);
+                           name(), MC_FMT_STREAMED(X_0_anchorFrameReal_.translation().transpose()),
+                           MC_FMT_STREAMED(anchorFrameReal.translation().transpose()), error,
+                           maxAnchorFrameDiscontinuity_);
       anchorFrameJumped_ = true;
     }
   }

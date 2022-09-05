@@ -38,8 +38,8 @@ void SlidingFootContactState::configure(const mc_rtc::Configuration & config)
 
 void SlidingFootContactState::start(Controller & ctl)
 {
-  mc_rtc::log::error("Enter state with CoM offset {}", com_offset_.transpose());
-  mc_rtc::log::error("Enter state with CoM sliding offset {}", com_offset_sliding_.transpose());
+  mc_rtc::log::error("Enter state with CoM offset {}", MC_FMT_STREAMED(com_offset_.transpose()));
+  mc_rtc::log::error("Enter state with CoM sliding offset {}", MC_FMT_STREAMED(com_offset_sliding_.transpose()));
   comTask_ = std::make_shared<mc_tasks::CoMTask>(ctl.robots(), 0, 10.0, 2000.0);
   comTask_->dimWeight(Eigen::Vector3d{1.0, 1.0, 1.0});
   comTask_->move_com({0, 0, move_com_z_});
@@ -96,11 +96,12 @@ void SlidingFootContactState::start(Controller & ctl)
     }
     slide_triggered_ = false;
     gui->addElement({"FSM"},
-                    mc_rtc::gui::Button("Report offset",
-                                        [this]() {
-                                          mc_rtc::log::info("New offset {}",
-                                                            (com_offset_ + comTask_->com() - com_target0).transpose());
-                                        }),
+                    mc_rtc::gui::Button(
+                        "Report offset",
+                        [this]() {
+                          mc_rtc::log::info("New offset {}",
+                                            MC_FMT_STREAMED((com_offset_ + comTask_->com() - com_target0).transpose()));
+                        }),
                     mc_rtc::gui::Button("Free foot Z",
                                         [this, &ctl]() {
                                           Eigen::Vector6d dof;
@@ -341,7 +342,7 @@ void SlidingFootContactState::controlCoM(Controller &)
       com_init_z_ = comTask_->com().z();
     }
     com_target0.z() = com_init_z_ + com_offset_.z();
-    mc_rtc::log::error("Applied CoM offset: {}", com_offset_.transpose());
+    mc_rtc::log::error("Applied CoM offset: {}", MC_FMT_STREAMED(com_offset_.transpose()));
     initial_com = comTask_->com();
     comTask_->com(com_target0);
     forceDistChanged_ = false;

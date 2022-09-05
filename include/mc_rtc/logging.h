@@ -12,6 +12,13 @@
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/logger.h>
 
+// fmt 9.0.0 removed automated operator<< discovery we use fmt::streamed instead when needed through a macro
+#if FMT_VERSION >= 9 * 10000
+#  define MC_FMT_STREAMED(X) fmt::streamed(X)
+#else
+#  define MC_FMT_STREAMED(X) X
+#endif
+
 #define BOOST_STACKTRACE_LINK
 #include <boost/stacktrace.hpp>
 
@@ -37,7 +44,7 @@ void error_and_throw [[noreturn]] (Args &&... args)
 {
   auto message = fmt::format(std::forward<Args>(args)...);
   details::cerr().critical(message);
-  details::cerr().critical("=== Backtrace ===\n{}", boost::stacktrace::stacktrace());
+  details::cerr().critical("=== Backtrace ===\n{}", MC_FMT_STREAMED(boost::stacktrace::stacktrace()));
   throw ExceptionT(message);
 }
 

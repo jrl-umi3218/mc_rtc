@@ -739,7 +739,8 @@ void StabilizerTask::run()
     }
     catch(std::runtime_error & e)
     {
-      mc_rtc::log::error("[{}] ZMP computation failed, keeping previous value {}", name(), measuredZMP_.transpose());
+      mc_rtc::log::error("[{}] ZMP computation failed, keeping previous value {}", name(),
+                         MC_FMT_STREAMED(measuredZMP_.transpose()));
     }
   }
   else
