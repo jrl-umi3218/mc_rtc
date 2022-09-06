@@ -2,6 +2,32 @@
 
 ## [Unreleased]
 
+## [1.12.0] - 2022-09-07
+
+### Changes
+
+- [mc_control] GUI can be accessed from a const controller (#282)
+
+### Added
+
+- [mc_control] Add `EnableController` callback in Datastore and the EnableController state (#278)
+- [mc_control] Add `JointSensor` and related interfaces (#279)
+- [mc_rbdyn] Load compound joints description from RobotModule yaml/json files (#273)
+- [mc_solver] Allow to specify compound joint constraints outside of the RobotModule (#273)
+- [mc_tasks] Datastore calls to set external wrenches for the stabilizer and set the CoP admittance gains (#276)
+
+### Fixes
+
+- [general] Fix build for fmt >= 0.9.0 and Python >= 3.9
+- [mc_control] Fixes oberved state on controller switch (#276)
+- [mc_control] Fixes about initialization of the robot attitude when specified in the controller (#275/#286)
+- [mc_log_ui] Fixes animations on right side in Python 3
+- [mc_log_ui] Fix a bug when NaN values are explicitly logged
+- [mc_log_ui] Avoid failed imports in headless environments
+- [mc_tasks] Do not filter the feedforward velocity in admittance tasks (#261)
+- [mc_tasks] Reset of StabilizerTask when already active (#276)
+- [mc_tasks] Fix a stabilizer issue when standing far from the origin (#285)
+
 ## [1.11.0] - 2022-07-08
 
 ### Highlights
@@ -479,6 +505,7 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 Initial release
 
 [Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.11.0...HEAD
+[1.12.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.12.0
 [1.11.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.11.0
 [1.10.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.10.0
 [1.9.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.9.0
