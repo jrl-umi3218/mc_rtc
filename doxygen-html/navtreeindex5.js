@@ -1,5 +1,6 @@
 var NAVTREEINDEX5 =
 {
+"structmc__control_1_1Gripper.html#a6acabadc915ad853670a65f5a83697e2":[3,0,2,10,3],
 "structmc__control_1_1Gripper.html#a6cc3775f48277db0ad4f80ec24af38f2":[3,0,2,10,15],
 "structmc__control_1_1Gripper.html#a6d32efc8e91965c32c9429c4610f7e94":[3,0,2,10,62],
 "structmc__control_1_1Gripper.html#a6e41d5e49c7dd4eb8e72abea2897eb58":[3,0,2,10,23],
@@ -248,6 +249,5 @@ var NAVTREEINDEX5 =
 "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a86b0d00d5943bf98a345f513b03f5388":[3,0,2,12,0,15],
 "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a8eedde988acfcfba5942a52d69f2b1b8":[3,0,2,12,0,21],
 "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a987a966351ac8bc6f17d94cc8103a408":[3,0,2,12,0,0],
-"structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a9b7cb460139df0aa576f76bfb45e4bc2":[3,0,2,12,0,13],
-"structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#aa22943a039c650dcc7f6b338506380a7":[3,0,2,12,0,5]
+"structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a9b7cb460139df0aa576f76bfb45e4bc2":[3,0,2,12,0,13]
 };

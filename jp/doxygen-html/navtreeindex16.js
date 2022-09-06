@@ -1,5 +1,6 @@
 var NAVTREEINDEX16 =
 {
+"structmc__tasks_1_1RemoveContactTask.html":[3,0,9,20],
 "structmc__tasks_1_1RemoveContactTask.html#a2015e5fecd242b335889e417ef01f98b":[3,0,9,20,1],
 "structmc__tasks_1_1RemoveContactTask.html#a6be76449c889b558b10232dc9e21f62a":[3,0,9,20,0],
 "structmc__tasks_1_1SmoothTask.html":[3,0,9,21],
@@ -248,6 +249,5 @@ var NAVTREEINDEX16 =
 "structmc__tasks_1_1force_1_1ImpedanceGains.html#a6b88536a57828978dc2877d83b65001d":[3,0,9,0,5,6],
 "structmc__tasks_1_1force_1_1ImpedanceGains.html#a6be8a021cc0967787e4bfcd3619d6a10":[3,0,9,0,5,3],
 "structmc__tasks_1_1force_1_1ImpedanceGains.html#a738759b89bc0325fd66daf8d70be9072":[3,0,9,0,5,1],
-"structmc__tasks_1_1force_1_1ImpedanceGains.html#a7d9f24350044abdb57754a79aba2ea9e":[3,0,9,0,5,17],
-"structmc__tasks_1_1force_1_1ImpedanceGains.html#a89707b58ca496b54f97c2e02c80e8243":[3,0,9,0,5,15]
+"structmc__tasks_1_1force_1_1ImpedanceGains.html#a7d9f24350044abdb57754a79aba2ea9e":[3,0,9,0,5,17]
 };

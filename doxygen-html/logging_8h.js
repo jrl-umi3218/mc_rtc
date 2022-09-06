@@ -6,6 +6,7 @@ var logging_8h =
     [ "LOG_INFO", "logging_8h.html#a63a6359b81688166256710bf0ea161df", null ],
     [ "LOG_SUCCESS", "logging_8h.html#ada5a572b2a8b25bcd9f471bc5c3c0787", null ],
     [ "LOG_WARNING", "logging_8h.html#ad8493c09711c1562481e104d334694db", null ],
+    [ "MC_FMT_STREAMED", "logging_8h.html#a3f0e2902b9317d3be03056aaf139412d", null ],
     [ "cerr", "logging_8h.html#aa8cc2cc8dc25d49fa533f32a67f73c33", null ],
     [ "critical", "logging_8h.html#a82d6969aa78c74fbe4716532661ea0d8", null ],
     [ "error", "logging_8h.html#aa189b2ec856ad8f96d632d635efc05ce", null ],

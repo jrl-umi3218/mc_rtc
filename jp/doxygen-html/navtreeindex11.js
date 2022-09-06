@@ -1,5 +1,6 @@
 var NAVTREEINDEX11 =
 {
+"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#abaf5f231ddd92e45c3947448560a43ec":[3,0,6,1,4,34],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#abd54fe3cf92a100a19f0a5bf408272d6":[3,0,6,1,4,8],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#abd7dd049c8ac626404fc3af328f09a85":[3,0,6,1,4,10],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ac0c774614c0a1f30b19d139295f48c89":[3,0,6,1,4,32],
@@ -248,6 +249,5 @@ var NAVTREEINDEX11 =
 "structmc__rtc_1_1MessagePackBuilder.html#a2c8ad12c224ebf3a1b58ed54c66b6354":[3,0,7,32,23],
 "structmc__rtc_1_1MessagePackBuilder.html#a42536e87c8671025ab1220d069c83b74":[3,0,7,32,11],
 "structmc__rtc_1_1MessagePackBuilder.html#a4943a63bcfbaeddca62d209dcd08e885":[3,0,7,32,29],
-"structmc__rtc_1_1MessagePackBuilder.html#a4cf78dd3a81d2c0d3fb848ae892f8e12":[3,0,7,32,33],
-"structmc__rtc_1_1MessagePackBuilder.html#a5106a9ce75422dc91abac33bd4c4f8e9":[3,0,7,32,28]
+"structmc__rtc_1_1MessagePackBuilder.html#a4cf78dd3a81d2c0d3fb848ae892f8e12":[3,0,7,32,33]
 };

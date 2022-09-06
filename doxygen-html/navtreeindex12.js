@@ -1,5 +1,6 @@
 var NAVTREEINDEX12 =
 {
+"structmc__rtc_1_1MessagePackBuilder.html#a5106a9ce75422dc91abac33bd4c4f8e9":[3,0,7,32,28],
 "structmc__rtc_1_1MessagePackBuilder.html#a511066bbf8b9b1bb9ebfc4ecefffc30c":[3,0,7,32,39],
 "structmc__rtc_1_1MessagePackBuilder.html#a5250cc8a284bafa0ce519a99916281f4":[3,0,7,32,20],
 "structmc__rtc_1_1MessagePackBuilder.html#a5a743846c35147473814f1df27223be4":[3,0,7,32,8],
@@ -248,6 +249,5 @@ var NAVTREEINDEX12 =
 "structmc__rtc_1_1gui_1_1RotationImpl.html#a7661413981acb1ca272bd40dcbdfec76":[3,0,7,0,33,0],
 "structmc__rtc_1_1gui_1_1RotationImpl.html#ad38cdbde21b335061f261683a3540046":[3,0,7,0,33,1],
 "structmc__rtc_1_1gui_1_1RotationROImpl.html":[3,0,7,0,34],
-"structmc__rtc_1_1gui_1_1RotationROImpl.html#a09c1c750a2be23f5554b148d0bdc0355":[3,0,7,0,34,0],
-"structmc__rtc_1_1gui_1_1RotationROImpl.html#a4fd7310d27046f65c062596a31abda2b":[3,0,7,0,34,1]
+"structmc__rtc_1_1gui_1_1RotationROImpl.html#a09c1c750a2be23f5554b148d0bdc0355":[3,0,7,0,34,0]
 };

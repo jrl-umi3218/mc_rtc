@@ -1,5 +1,6 @@
 var NAVTREEINDEX9 =
 {
+"structmc__rbdyn_1_1PolygonInterpolator.html#a41490869f7df5826143477c52ac3f236":[3,0,6,18,3],
 "structmc__rbdyn_1_1PolygonInterpolator.html#a5dbd705039482f156583eadaa91bd51a":[3,0,6,18,4],
 "structmc__rbdyn_1_1PolygonInterpolator.html#a8667e5bd25c0215d10ce8e139028207d":[3,0,6,18,1],
 "structmc__rbdyn_1_1PolygonInterpolator.html#a8692430f5c1315d38bbc1a1f4798907c":[3,0,6,18,5],
@@ -248,6 +249,5 @@ var NAVTREEINDEX9 =
 "structmc__rbdyn_1_1RobotModule.html#a5f8b8da35780c72a0455713fca1486a5":[3,0,6,23,13],
 "structmc__rbdyn_1_1RobotModule.html#a65db2f156200c10f888f52bf12875e64":[3,0,6,23,47],
 "structmc__rbdyn_1_1RobotModule.html#a664972f2b2163e90aab92a3903385b28":[3,0,6,23,50],
-"structmc__rbdyn_1_1RobotModule.html#a6f8d5e7c1d3c2df1113120dd61d6cef6":[3,0,6,23,70],
-"structmc__rbdyn_1_1RobotModule.html#a72ac49d4249ad8b6d66d85e4d35a2755":[3,0,6,23,52]
+"structmc__rbdyn_1_1RobotModule.html#a6f8d5e7c1d3c2df1113120dd61d6cef6":[3,0,6,23,70]
 };
