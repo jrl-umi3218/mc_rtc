@@ -1142,15 +1142,19 @@ void StabilizerTask::updateFootForceDifferenceControl()
     return;
   }
 
+  sva::PTransformd T_0_L(leftFootTask->surfacePose().rotation());
+  sva::PTransformd T_0_R(rightFootTask->surfacePose().rotation());
+
   // In what follows, vertical foot forces are expressed in their respective
   // foot sole frames, but foot force difference control expects them to be
   // written in the world frame, so the following lines are wrong (they miss a
   // frame transform). Thanks to @Saeed-Mansouri for pointing out this bug
   // <https://github.com/stephane-caron/lipm_walking_controller/discussions/72>.
-  double LFz_d = leftFootTask->targetWrench().force().z();
-  double RFz_d = rightFootTask->targetWrench().force().z();
-  double LFz = leftFootTask->measuredWrench().force().z();
-  double RFz = rightFootTask->measuredWrench().force().z();
+  // T_0_{L/R}.transMul transforms a ForceVecd variable from surface frame to world frame
+  double LFz_d = T_0_L.transMul(leftFootTask->targetWrench()).force().z();
+  double RFz_d = T_0_R.transMul(rightFootTask->targetWrench()).force().z();
+  double LFz = T_0_L.transMul(leftFootTask->measuredWrench()).force().z();
+  double RFz = T_0_R.transMul(rightFootTask->measuredWrench()).force().z();
   dfzForceError_ = (LFz_d - RFz_d) - (LFz - RFz);
 
   double LTz_d = leftFootTask->targetPose().translation().z();
@@ -1164,8 +1168,9 @@ void StabilizerTask::updateFootForceDifferenceControl()
   double dz_vdc = c_.vdcFrequency * vdcHeightError_;
   sva::MotionVecd velF = {{0., 0., 0.}, {0., 0., dz_ctrl}};
   sva::MotionVecd velT = {{0., 0., 0.}, {0., 0., dz_vdc}};
-  leftFootTask->refVelB(0.5 * (velT - velF));
-  rightFootTask->refVelB(0.5 * (velT + velF));
+  // T_0_{L/R} transforms a MotionVecd variable from world frame to surface frame
+  leftFootTask->refVelB(0.5 * (T_0_L * (velT - velF)));
+  rightFootTask->refVelB(0.5 * (T_0_R * (velT + velF)));
 }
 
 template Eigen::Vector3d StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::target>(
