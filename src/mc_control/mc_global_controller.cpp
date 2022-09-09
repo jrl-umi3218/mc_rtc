@@ -320,7 +320,7 @@ void MCGlobalController::initEncoders(mc_rbdyn::Robot & robot, const std::vector
       q[robot.jointIndexByName(jn)][0] = initq[i];
     }
   }
-  for(auto & g : controller_->robot().grippers())
+  for(auto & g : robot.grippers())
   {
     g.get().reset(initq);
   }
