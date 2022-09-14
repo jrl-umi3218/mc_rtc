@@ -5,8 +5,7 @@
 #pragma once
 
 #include <mc_rtc/MessagePackBuilder.h>
-
-#include <mc/rtc/deprecated.hh>
+#include <mc_rtc/deprecated.h>
 
 #include <mc_rbdyn/Gains.h>
 #include <mc_rbdyn/rpy_utils.h>

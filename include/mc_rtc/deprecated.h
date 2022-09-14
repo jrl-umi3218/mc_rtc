@@ -5,6 +5,7 @@
 #pragma once
 
 #include <mc_rtc/logging.h>
+#include <mc_rtc/macros/deprecated.h>
 
 /** Helper functions to emit deprecation messages when loading JSON/YAML from old versions */
 

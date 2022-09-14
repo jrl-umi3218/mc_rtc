@@ -5,7 +5,7 @@
 #pragma once
 
 #include <mc_control/mc_global_controller.h>
-#include <mc_rtc/ros.h>
+#include <mc_rtc_ros/ros.h>
 
 #include <mc_rtc_msgs/EnableController.h>
 #include <mc_rtc_msgs/close_grippers.h>

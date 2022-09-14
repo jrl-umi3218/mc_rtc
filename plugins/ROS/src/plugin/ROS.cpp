@@ -1,10 +1,10 @@
 #include "ROS.h"
 
-#include <mc_rtc/ros.h>
+#include <mc_rtc_ros/ros.h>
 
 #include <mc_control/GlobalPluginMacros.h>
 
-#include <mc_tasks/LookAtTFTask.h>
+#include <mc_tasks_ros/LookAtTFTask.h>
 
 namespace mc_plugin
 {

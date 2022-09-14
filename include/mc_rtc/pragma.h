@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <mc_rtc/macros/deprecated.h>
+
 /** Preprocessor identity, used to force expansion (mainly to work around MSVC "feature" */
 #define MC_RTC_PP_ID(x) x
 
@@ -11,7 +13,9 @@
 #define MC_RTC_STRINGIFY_(x) #x
 #define MC_RTC_STRINGIFY(x) MC_RTC_STRINGIFY_(x)
 
-#define MC_RTC_PRAGMA(x) _Pragma(MC_RTC_STRINGIFY(x))
+#ifndef MC_RTC_PRAGMA
+#  define MC_RTC_PRAGMA(x) _Pragma(MC_RTC_STRINGIFY(x))
+#endif
 
 /** Signal wrong number of arguments */
 #define MC_RTC_WN(fun, ...)                                                                                          \

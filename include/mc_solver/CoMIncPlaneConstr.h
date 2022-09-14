@@ -8,7 +8,7 @@
 #include <mc_solver/QPSolver.h>
 #include <mc_solver/api.h>
 
-#include <mc/rtc/deprecated.hh>
+#include <mc_rtc/deprecated.h>
 
 #include <Tasks/QPConstr.h>
 

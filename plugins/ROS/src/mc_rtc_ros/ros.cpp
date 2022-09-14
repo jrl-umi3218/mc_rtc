@@ -5,8 +5,8 @@
 #include <mc_rbdyn/Robots.h>
 #include <mc_rtc/config.h>
 #include <mc_rtc/logging.h>
-#include <mc_rtc/ros.h>
 #include <mc_rtc/utils.h>
+#include <mc_rtc_ros/ros.h>
 
 #include <RBDyn/FK.h>
 

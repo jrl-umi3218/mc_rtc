@@ -5,7 +5,7 @@
 #pragma once
 
 #include <mc_rbdyn/Device.h>
-#include <mc/rtc/deprecated.hh>
+#include <mc_rtc/deprecated.h>
 
 #include <Eigen/StdVector>
 
