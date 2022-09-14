@@ -774,7 +774,7 @@ void StabilizerTask::run()
 
   // Update orientation tasks according to feet orientation
   sva::PTransformd X_0_a = anchorFrame(robot());
-  Eigen::Matrix3d pelvisOrientation = X_0_a.rotation();
+  Eigen::Matrix3d pelvisOrientation = sva::RotZ(mc_rbdyn::rpyFromMat(X_0_a.rotation())[2]);
   pelvisTask->orientation(pelvisOrientation);
   torsoTask->orientation(mc_rbdyn::rpyToMat({0, c_.torsoPitch, 0}) * pelvisOrientation);
 
