@@ -404,6 +404,27 @@ public:
                       double minimalNetNormalForce = 1.) const;
 
   /**
+   * @brief Actual ZMP computation from net total wrench and the ZMP plane
+   *
+   * @param zmpOut Output of the ZMP computation expressed in the requested frame
+   * @param netTotalWrench Total wrench for all links in contact
+   * @param plane_p Arbitrary point on the ZMP plane
+   * @param plane_n Normal to the ZMP plane (normalized)
+   * @param minimalNetNormalForce[N] Mininal force above which the ZMP computation
+   * is considered valid. Must be >0 (prevents a divide by zero).
+   *
+   * @return True if the computation was successful, false otherwise and \p zmpOut is untouched
+   *
+   * \see bool mc_rbdyn::zmp(Eigen::Vector3d & zmpOut, const sva::ForceVecd & netTotalWrench, const Eigen::Vector3d &
+   * plane_p, const Eigen::Vector3d & plane_n, double minimalNetNormalForce)
+   */
+  bool zmp(Eigen::Vector3d & zmpOut,
+           const sva::ForceVecd & netTotalWrench,
+           const Eigen::Vector3d & plane_p,
+           const Eigen::Vector3d & plane_n,
+           double minimalNetNormalForce = 1.) const noexcept;
+
+  /**
    * @brief ZMP computation from net total wrench and a frame
    *
    * See \ref zmpDoc
@@ -422,6 +443,27 @@ public:
                       const sva::PTransformd & zmpFrame,
                       double minimalNetNormalForce = 1.) const;
 
+  /**
+   * @brief ZMP computation from net total wrench and a frame
+   *
+   * See \ref zmpDoc
+   *
+   * \see Eigen::Vector3d mc_rbdyn::zmp(Eigen::Vector3d & zmpOut, const sva::ForceVecd & netTotalWrench, const
+   * sva::PTransformd & zmpFrame, double minimalNetNormalForce)
+   *
+   * @param zmpOut Output of the ZMP computation expressed in the plane defined by the zmpFrame frame
+   * @param netTotalWrench
+   * @param zmpFrame Frame used for ZMP computation. The convention here is
+   * that the contact frame should have its z-axis pointing in the normal
+   * direction of the contact towards the robot.
+   *
+   * @return True if the computation was successful, false otherwise and \p zmpOut is untouched
+   */
+  bool zmp(Eigen::Vector3d & zmpOut,
+           const sva::ForceVecd & netTotalWrench,
+           const sva::PTransformd & zmpFrame,
+           double minimalNetNormalForce = 1.) const noexcept;
+
   /** Computes the ZMP from sensor names and a plane
    *
    * See \ref zmpDoc
@@ -433,6 +475,18 @@ public:
                       const Eigen::Vector3d & plane_n,
                       double minimalNetNormalForce = 1.) const;
 
+  /** Computes the ZMP from sensor names and a plane
+   *
+   * See \ref zmpDoc
+   *
+   * @param sensorNames Names of all sensors attached to a link in contact with the environment
+   */
+  bool zmp(Eigen::Vector3d & zmpOut,
+           const std::vector<std::string> & sensorNames,
+           const Eigen::Vector3d & plane_p,
+           const Eigen::Vector3d & plane_n,
+           double minimalNetNormalForce = 1.) const noexcept;
+
   /**
    * @brief Computes the ZMP from sensor names and a frame
    *
@@ -443,6 +497,18 @@ public:
   Eigen::Vector3d zmp(const std::vector<std::string> & sensorNames,
                       const sva::PTransformd & zmpFrame,
                       double minimalNetNormalForce = 1.) const;
+
+  /**
+   * @brief Computes the ZMP from sensor names and a frame
+   *
+   * See \ref zmpDoc
+   *
+   * @param sensorNames Names of all sensors attached to a link in contact with the environment
+   */
+  bool zmp(Eigen::Vector3d & zmpOut,
+           const std::vector<std::string> & sensorNames,
+           const sva::PTransformd & zmpFrame,
+           double minimalNetNormalForce = 1.) const noexcept;
 
   /** Access the robot's angular lower limits (const) */
   const std::vector<std::vector<double>> & ql() const;

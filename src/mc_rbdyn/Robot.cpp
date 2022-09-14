@@ -828,11 +828,28 @@ Eigen::Vector3d Robot::zmp(const sva::ForceVecd & netTotalWrench,
   return mc_rbdyn::zmp(netTotalWrench, plane_p, plane_n, minimalNetNormalForce);
 }
 
+bool Robot::zmp(Eigen::Vector3d & zmpOut,
+                const sva::ForceVecd & netTotalWrench,
+                const Eigen::Vector3d & plane_p,
+                const Eigen::Vector3d & plane_n,
+                double minimalNetNormalForce) const noexcept
+{
+  return mc_rbdyn::zmp(zmpOut, netTotalWrench, plane_p, plane_n, minimalNetNormalForce);
+}
+
 Eigen::Vector3d Robot::zmp(const sva::ForceVecd & netWrench,
                            const sva::PTransformd & zmpFrame,
                            double minimalNetNormalForce) const
 {
   return mc_rbdyn::zmp(netWrench, zmpFrame, minimalNetNormalForce);
+}
+
+bool Robot::zmp(Eigen::Vector3d & zmpOut,
+                const sva::ForceVecd & netWrench,
+                const sva::PTransformd & zmpFrame,
+                double minimalNetNormalForce) const noexcept
+{
+  return mc_rbdyn::zmp(zmpOut, netWrench, zmpFrame, minimalNetNormalForce);
 }
 
 Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorNames,
@@ -843,6 +860,15 @@ Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorNames,
   return zmp(netWrench(sensorNames), plane_p, plane_n, minimalNetNormalForce);
 }
 
+bool Robot::zmp(Eigen::Vector3d & zmpOut,
+                const std::vector<std::string> & sensorNames,
+                const Eigen::Vector3d & plane_p,
+                const Eigen::Vector3d & plane_n,
+                double minimalNetNormalForce) const noexcept
+{
+  return zmp(zmpOut, netWrench(sensorNames), plane_p, plane_n, minimalNetNormalForce);
+}
+
 Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorNames,
                            const sva::PTransformd & zmpFrame,
                            double minimalNetNormalForce) const
@@ -850,6 +876,16 @@ Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorNames,
   Eigen::Vector3d n = zmpFrame.rotation().row(2);
   Eigen::Vector3d p = zmpFrame.translation();
   return zmp(sensorNames, p, n, minimalNetNormalForce);
+}
+
+bool Robot::zmp(Eigen::Vector3d & zmpOut,
+                const std::vector<std::string> & sensorNames,
+                const sva::PTransformd & zmpFrame,
+                double minimalNetNormalForce) const noexcept
+{
+  Eigen::Vector3d n = zmpFrame.rotation().row(2);
+  Eigen::Vector3d p = zmpFrame.translation();
+  return zmp(zmpOut, sensorNames, p, n, minimalNetNormalForce);
 }
 
 const std::vector<std::vector<double>> & Robot::ql() const
