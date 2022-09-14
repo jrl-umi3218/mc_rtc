@@ -1,5 +1,11 @@
 var NAVTREEINDEX10 =
 {
+"structmc__rbdyn_1_1RobotModule.html#a5b8304a1ea905fa0378a31dcf65b1460":[3,0,6,23,3],
+"structmc__rbdyn_1_1RobotModule.html#a5de4bf236d1fa2f107fc27971009e979":[3,0,6,23,72],
+"structmc__rbdyn_1_1RobotModule.html#a5f8b8da35780c72a0455713fca1486a5":[3,0,6,23,13],
+"structmc__rbdyn_1_1RobotModule.html#a65db2f156200c10f888f52bf12875e64":[3,0,6,23,47],
+"structmc__rbdyn_1_1RobotModule.html#a664972f2b2163e90aab92a3903385b28":[3,0,6,23,50],
+"structmc__rbdyn_1_1RobotModule.html#a6f8d5e7c1d3c2df1113120dd61d6cef6":[3,0,6,23,70],
 "structmc__rbdyn_1_1RobotModule.html#a72ac49d4249ad8b6d66d85e4d35a2755":[3,0,6,23,52],
 "structmc__rbdyn_1_1RobotModule.html#a76b091f815bbbe008acd5f1923d680b9":[3,0,6,23,37],
 "structmc__rbdyn_1_1RobotModule.html#a77d9b4bb262e90f14b45b1cfd2dcf00d":[3,0,6,23,29],
@@ -243,11 +249,5 @@ var NAVTREEINDEX10 =
 "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a6cf15ba02637b2619905b4fb27f49b2c":[3,0,6,1,4,0],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a6cf18b92b08365adf4dfdbdbb041d5c2":[3,0,6,1,4,21],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a6ea68278767553d037dba6b104327cdd":[3,0,6,1,4,38],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a7202444717b6eb8868bf2478e45901b0":[3,0,6,1,4,42],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a830868e9f51b1d6e3926def0786b8da4":[3,0,6,1,4,16],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a8bc2c7d4a6964408929e7b23ff63667c":[3,0,6,1,4,31],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a9e3bade64b2388a1ceb550b86699f594":[3,0,6,1,4,12],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#aa9d26f0bb6e592ef0f94549e30da5972":[3,0,6,1,4,26],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#aaae1753ce0d0a7154330565e0788ffb1":[3,0,6,1,4,22],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#abaec169e8fcf147bf63785088fd3c896":[3,0,6,1,4,9]
+"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a7202444717b6eb8868bf2478e45901b0":[3,0,6,1,4,42]
 };

@@ -2201,11 +2201,25 @@
       <arglist>(const sva::ForceVecd &amp;netTotalWrench, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.)</arglist>
     </member>
     <member kind="function">
+      <type>bool MC_RBDYN_DLLAPI</type>
+      <name>zmp</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a16ead89124e40e3331ca5342b6bff282</anchor>
+      <arglist>(Eigen::Vector3d &amp;zmpOut, const sva::ForceVecd &amp;netTotalWrench, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.) noexcept</arglist>
+    </member>
+    <member kind="function">
       <type>Eigen::Vector3d MC_RBDYN_DLLAPI</type>
       <name>zmp</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
       <anchor>aa9d4155584b04e51fdb5c24f5739fc24</anchor>
       <arglist>(const sva::ForceVecd &amp;netTotalWrench, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool MC_RBDYN_DLLAPI</type>
+      <name>zmp</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>add217737ef65a4059123036de289c029</anchor>
+      <arglist>(Eigen::Vector3d &amp;zmpOut, const sva::ForceVecd &amp;netTotalWrench, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.) noexcept</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -26131,11 +26145,25 @@
       <docanchor file="namespacemc__rbdyn">zmpDoc</docanchor>
     </member>
     <member kind="function">
+      <type>bool</type>
+      <name>zmp</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>acfcb02ade95368eba497ffab50bab0d2</anchor>
+      <arglist>(Eigen::Vector3d &amp;zmpOut, const sva::ForceVecd &amp;netTotalWrench, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.) const noexcept</arglist>
+    </member>
+    <member kind="function">
       <type>Eigen::Vector3d</type>
       <name>zmp</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>aca98040d3ecdb597c65f3615a06d588d</anchor>
       <arglist>(const sva::ForceVecd &amp;netTotalWrench, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>zmp</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>aa2224fc6a6299e9ed0ec8fdd8f3b3d4c</anchor>
+      <arglist>(Eigen::Vector3d &amp;zmpOut, const sva::ForceVecd &amp;netTotalWrench, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>Eigen::Vector3d</type>
@@ -26145,11 +26173,25 @@
       <arglist>(const std::vector&lt; std::string &gt; &amp;sensorNames, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.) const</arglist>
     </member>
     <member kind="function">
+      <type>bool</type>
+      <name>zmp</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a4348f47e45430a9ed99a00c2940e2f00</anchor>
+      <arglist>(Eigen::Vector3d &amp;zmpOut, const std::vector&lt; std::string &gt; &amp;sensorNames, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.) const noexcept</arglist>
+    </member>
+    <member kind="function">
       <type>Eigen::Vector3d</type>
       <name>zmp</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>a4b62d2a94e3c81f2c436828bc9ed5186</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;sensorNames, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>zmp</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>ab8c0589359353a2d34b5f4331fa32793</anchor>
+      <arglist>(Eigen::Vector3d &amp;zmpOut, const std::vector&lt; std::string &gt; &amp;sensorNames, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
@@ -26993,11 +27035,25 @@
       <docanchor file="namespacemc__rbdyn">zmpDoc</docanchor>
     </member>
     <member kind="function">
+      <type>bool</type>
+      <name>zmp</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>acfcb02ade95368eba497ffab50bab0d2</anchor>
+      <arglist>(Eigen::Vector3d &amp;zmpOut, const sva::ForceVecd &amp;netTotalWrench, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.) const noexcept</arglist>
+    </member>
+    <member kind="function">
       <type>Eigen::Vector3d</type>
       <name>zmp</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>aca98040d3ecdb597c65f3615a06d588d</anchor>
       <arglist>(const sva::ForceVecd &amp;netTotalWrench, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>zmp</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>aa2224fc6a6299e9ed0ec8fdd8f3b3d4c</anchor>
+      <arglist>(Eigen::Vector3d &amp;zmpOut, const sva::ForceVecd &amp;netTotalWrench, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>Eigen::Vector3d</type>
@@ -27007,11 +27063,25 @@
       <arglist>(const std::vector&lt; std::string &gt; &amp;sensorNames, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.) const</arglist>
     </member>
     <member kind="function">
+      <type>bool</type>
+      <name>zmp</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a4348f47e45430a9ed99a00c2940e2f00</anchor>
+      <arglist>(Eigen::Vector3d &amp;zmpOut, const std::vector&lt; std::string &gt; &amp;sensorNames, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.) const noexcept</arglist>
+    </member>
+    <member kind="function">
       <type>Eigen::Vector3d</type>
       <name>zmp</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>a4b62d2a94e3c81f2c436828bc9ed5186</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;sensorNames, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>zmp</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>ab8c0589359353a2d34b5f4331fa32793</anchor>
+      <arglist>(Eigen::Vector3d &amp;zmpOut, const std::vector&lt; std::string &gt; &amp;sensorNames, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
@@ -39542,11 +39612,25 @@
       <arglist>(const sva::ForceVecd &amp;netTotalWrench, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.)</arglist>
     </member>
     <member kind="function">
+      <type>bool MC_RBDYN_DLLAPI</type>
+      <name>zmp</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a16ead89124e40e3331ca5342b6bff282</anchor>
+      <arglist>(Eigen::Vector3d &amp;zmpOut, const sva::ForceVecd &amp;netTotalWrench, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.) noexcept</arglist>
+    </member>
+    <member kind="function">
       <type>Eigen::Vector3d MC_RBDYN_DLLAPI</type>
       <name>zmp</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
       <anchor>aa9d4155584b04e51fdb5c24f5739fc24</anchor>
       <arglist>(const sva::ForceVecd &amp;netTotalWrench, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool MC_RBDYN_DLLAPI</type>
+      <name>zmp</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>add217737ef65a4059123036de289c029</anchor>
+      <arglist>(Eigen::Vector3d &amp;zmpOut, const sva::ForceVecd &amp;netTotalWrench, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.) noexcept</arglist>
     </member>
   </compound>
   <compound kind="namespace">

@@ -247,9 +247,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a329453006944dae96fa60d86dca66db8"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d <a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a329453006944dae96fa60d86dca66db8">zmp</a> (const sva::ForceVecd &amp;netTotalWrench, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.)</td></tr>
 <tr class="memdesc:a329453006944dae96fa60d86dca66db8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual ZMP computation from net total wrench and the ZMP plane.  <a href="#a329453006944dae96fa60d86dca66db8">More...</a><br /></td></tr>
 <tr class="separator:a329453006944dae96fa60d86dca66db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16ead89124e40e3331ca5342b6bff282"><td class="memItemLeft" align="right" valign="top">bool <a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a16ead89124e40e3331ca5342b6bff282">zmp</a> (Eigen::Vector3d &amp;zmpOut, const sva::ForceVecd &amp;netTotalWrench, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.) noexcept</td></tr>
+<tr class="memdesc:a16ead89124e40e3331ca5342b6bff282"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual ZMP computation from net total wrench and the ZMP plane.  <a href="#a16ead89124e40e3331ca5342b6bff282">More...</a><br /></td></tr>
+<tr class="separator:a16ead89124e40e3331ca5342b6bff282"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9d4155584b04e51fdb5c24f5739fc24"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d <a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#aa9d4155584b04e51fdb5c24f5739fc24">zmp</a> (const sva::ForceVecd &amp;netTotalWrench, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.)</td></tr>
 <tr class="memdesc:aa9d4155584b04e51fdb5c24f5739fc24"><td class="mdescLeft">&#160;</td><td class="mdescRight">ZMP computation from net total wrench and a frame.  <a href="#aa9d4155584b04e51fdb5c24f5739fc24">More...</a><br /></td></tr>
 <tr class="separator:aa9d4155584b04e51fdb5c24f5739fc24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add217737ef65a4059123036de289c029"><td class="memItemLeft" align="right" valign="top">bool <a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#add217737ef65a4059123036de289c029">zmp</a> (Eigen::Vector3d &amp;zmpOut, const sva::ForceVecd &amp;netTotalWrench, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.) noexcept</td></tr>
+<tr class="memdesc:add217737ef65a4059123036de289c029"><td class="mdescLeft">&#160;</td><td class="mdescRight">ZMP computation from net total wrench and a frame.  <a href="#add217737ef65a4059123036de289c029">More...</a><br /></td></tr>
+<tr class="separator:add217737ef65a4059123036de289c029"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Forward declarations for the <a class="el" href="namespacemc__rbdyn.html">mc_rbdyn</a> library</p>
@@ -1349,7 +1355,7 @@ rotation vectors", i.e. we need to transpose/flip signs from Equation (290) of t
 </div>
 </div>
 <a id="a329453006944dae96fa60d86dca66db8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a329453006944dae96fa60d86dca66db8">&#9670;&nbsp;</a></span>zmp() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a329453006944dae96fa60d86dca66db8">&#9670;&nbsp;</a></span>zmp() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1407,8 +1413,77 @@ rotation vectors", i.e. we need to transpose/flip signs from Equation (290) of t
 
 </div>
 </div>
+<a id="a16ead89124e40e3331ca5342b6bff282"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16ead89124e40e3331ca5342b6bff282">&#9670;&nbsp;</a></span>zmp() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> mc_rbdyn::zmp </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>zmpOut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const sva::ForceVecd &amp;&#160;</td>
+          <td class="paramname"><em>netTotalWrench</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>plane_p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>plane_n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>minimalNetNormalForce</em> = <code>1.</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Actual ZMP computation from net total wrench and the ZMP plane. </p>
+<p>See <a class="el" href="namespacemc__rbdyn.html#zmpDoc">zmpDoc</a></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">zmpOut</td><td>Output the updated ZMP </td></tr>
+    <tr><td class="paramname">netTotalWrench</td><td>Total wrench for all links in contact </td></tr>
+    <tr><td class="paramname">plane_p</td><td>Arbitrary point on the ZMP plane </td></tr>
+    <tr><td class="paramname">plane_n</td><td>Normal to the ZMP plane (normalized) </td></tr>
+    <tr><td class="paramname">minimalNetNormalForce[N]</td><td>Mininal force above which the ZMP computation is considered valid. Must be &gt;0 (prevents a divide by zero).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the ZMP was computed, otherwise <code>zmpOut</code> is left as-is and false is returned</dd></dl>
+<p><a class="anchor" id="zmpDoc"></a></p>
+
+</div>
+</div>
 <a id="aa9d4155584b04e51fdb5c24f5739fc24"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9d4155584b04e51fdb5c24f5739fc24">&#9670;&nbsp;</a></span>zmp() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9d4155584b04e51fdb5c24f5739fc24">&#9670;&nbsp;</a></span>zmp() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1444,7 +1519,8 @@ rotation vectors", i.e. we need to transpose/flip signs from Equation (290) of t
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">netTotalWrench</td><td></td></tr>
-    <tr><td class="paramname">zmpFrame</td><td><a class="el" href="structmc__rbdyn_1_1Frame.html">Frame</a> used for ZMP computation. The convention here is that the contact frame should have its z-axis pointing in the normal direction of the contact towards the robot.</td></tr>
+    <tr><td class="paramname">zmpFrame</td><td><a class="el" href="structmc__rbdyn_1_1Frame.html">Frame</a> used for ZMP computation. The convention here is that the contact frame should have its z-axis pointing in the normal direction of the contact towards the robot. </td></tr>
+    <tr><td class="paramname">minimalNetNormalForce[N]</td><td>Mininal force above which the ZMP computation is considered valid. Must be &gt;0 (prevents a divide by zero).</td></tr>
   </table>
   </dd>
 </dl>
@@ -1455,6 +1531,67 @@ rotation vectors", i.e. we need to transpose/flip signs from Equation (290) of t
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>ZMP expressed in the plane defined by the zmpFrame frame. </dd></dl>
+
+</div>
+</div>
+<a id="add217737ef65a4059123036de289c029"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add217737ef65a4059123036de289c029">&#9670;&nbsp;</a></span>zmp() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> mc_rbdyn::zmp </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>zmpOut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const sva::ForceVecd &amp;&#160;</td>
+          <td class="paramname"><em>netTotalWrench</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const sva::PTransformd &amp;&#160;</td>
+          <td class="paramname"><em>zmpFrame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>minimalNetNormalForce</em> = <code>1.</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ZMP computation from net total wrench and a frame. </p>
+<p>See <a class="el" href="namespacemc__rbdyn.html#zmpDoc">zmpDoc</a></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">zmpOut</td><td>Output the updated ZMP </td></tr>
+    <tr><td class="paramname">netTotalWrench</td><td></td></tr>
+    <tr><td class="paramname">zmpFrame</td><td><a class="el" href="structmc__rbdyn_1_1Frame.html">Frame</a> used for ZMP computation. The convention here is that the contact frame should have its z-axis pointing in the normal direction of the contact towards the robot. </td></tr>
+    <tr><td class="paramname">minimalNetNormalForce[N]</td><td>Mininal force above which the ZMP computation is considered valid. Must be &gt;0 (prevents a divide by zero).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the ZMP was computed, otherwise <code>zmpOut</code> is left as-is and false is returned </dd></dl>
 
 </div>
 </div>

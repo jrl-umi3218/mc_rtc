@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"namespacemembers_t.html":[2,1,0,17],
+"namespacemembers_type.html":[2,1,3],
 "namespacemembers_u.html":[2,1,0,18],
 "namespacemembers_v.html":[2,1,0,19],
 "namespacemembers_vars.html":[2,1,2],
@@ -247,7 +249,5 @@ var NAVTREEINDEX4 =
 "structmc__control_1_1Gripper.html#a4a8fd8850db3e9d9bbb2f2263a85eab3":[3,0,2,10,11],
 "structmc__control_1_1Gripper.html#a4df55158c2f68b17313b0eb90e74f227":[3,0,2,10,18],
 "structmc__control_1_1Gripper.html#a5a1af6322efc9a5896b0c18890e27231":[3,0,2,10,31],
-"structmc__control_1_1Gripper.html#a5eb0a94fccb4aa671546b6c635e7bb6c":[3,0,2,10,48],
-"structmc__control_1_1Gripper.html#a673081ad7c193519c89a22eba4119840":[3,0,2,10,64],
-"structmc__control_1_1Gripper.html#a6a33a0839ffab15eb5fb0411dd13dc5d":[3,0,2,10,10]
+"structmc__control_1_1Gripper.html#a5eb0a94fccb4aa671546b6c635e7bb6c":[3,0,2,10,48]
 };
