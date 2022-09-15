@@ -11,6 +11,7 @@
 #include <RBDyn/FK.h>
 
 #include <geometry_msgs/WrenchStamped.h>
+#include <mc_rtc_msgs/JointSensors.h>
 #include <nav_msgs/Odometry.h>
 #include <ros/ros.h>
 #include <sensor_msgs/Imu.h>
@@ -96,6 +97,7 @@ private:
   ros::Rate rosRate;
   ros::Publisher j_state_pub;
   ros::Publisher imu_pub;
+  ros::Publisher j_sensor_pub;
   ros::Publisher odom_pub;
   std::map<std::string, ros::Publisher> wrenches_pub;
   tf2_ros::TransformBroadcaster tf_caster;
@@ -104,6 +106,7 @@ private:
   struct RobotStateData
   {
     sensor_msgs::JointState js;
+    mc_rtc_msgs::JointSensors j_sensors;
     std::vector<geometry_msgs::TransformStamped> tfs;
     std::vector<geometry_msgs::TransformStamped> surface_tfs;
     sensor_msgs::Imu imu;
@@ -130,6 +133,7 @@ private:
 RobotPublisherImpl::RobotPublisherImpl(ros::NodeHandle & nh, const std::string & prefix, double rate, double dt)
 : nh(nh), rosRate(rate), j_state_pub(this->nh.advertise<sensor_msgs::JointState>(prefix + "joint_states", 1)),
   imu_pub(this->nh.advertise<sensor_msgs::Imu>(prefix + "imu", 1)),
+  j_sensor_pub(this->nh.advertise<mc_rtc_msgs::JointSensors>(prefix + "joint_sensors", 1)),
   odom_pub(this->nh.advertise<nav_msgs::Odometry>(prefix + "odom", 1)), tf_caster(), prefix(prefix), use_real(false),
   running(true), seq(0), msgs(), rate(rate), skip(static_cast<unsigned int>(ceil(1 / (rate * dt)))),
   th(std::bind(&RobotPublisherImpl::publishThread, this))
@@ -166,6 +170,16 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
       data.js.velocity.emplace_back(0);
       data.js.effort.emplace_back(0);
     }
+  }
+
+  data.j_sensors.header.frame_id = "";
+  data.j_sensors.header.stamp = tm;
+  for(const auto & js : robot.jointSensors())
+  {
+    data.j_sensors.name.emplace_back(js.joint());
+    data.j_sensors.motor_temperature.emplace_back(0);
+    data.j_sensors.driver_temperature.emplace_back(0);
+    data.j_sensors.motor_current.emplace_back(0);
   }
 
   data.odom.header.frame_id = "robot_map";
@@ -247,6 +261,19 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
         jI++;
       }
       jIdx += 1;
+    }
+  }
+
+  data.j_sensors.header.seq = seq;
+  data.j_sensors.header.stamp = tm;
+  {
+    size_t jsI = 0;
+    for(const auto & js : robot.jointSensors())
+    {
+      data.j_sensors.motor_temperature[jsI] = js.motorTemperature();
+      data.j_sensors.driver_temperature[jsI] = js.driverTemperature();
+      data.j_sensors.motor_current[jsI] = js.motorCurrent();
+      jsI++;
     }
   }
 
@@ -385,6 +412,7 @@ void RobotPublisherImpl::publishThread()
       try
       {
         j_state_pub.publish(msg.js);
+        j_sensor_pub.publish(msg.j_sensors);
         imu_pub.publish(msg.imu);
         odom_pub.publish(msg.odom);
         tf_caster.sendTransform(msg.tfs);
