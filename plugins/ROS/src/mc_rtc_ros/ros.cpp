@@ -177,9 +177,9 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
   for(const auto & js : robot.jointSensors())
   {
     data.j_sensors.name.emplace_back(js.joint());
-    data.j_sensors.motor_temperature.emplace_back(0);
-    data.j_sensors.driver_temperature.emplace_back(0);
-    data.j_sensors.motor_current.emplace_back(0);
+    data.j_sensors.motor_temperature.emplace_back(std::numeric_limits<double>::quiet_NaN());
+    data.j_sensors.driver_temperature.emplace_back(std::numeric_limits<double>::quiet_NaN());
+    data.j_sensors.motor_current.emplace_back(std::numeric_limits<double>::quiet_NaN());
   }
 
   data.odom.header.frame_id = "robot_map";
