@@ -58,11 +58,14 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
             dfzDamping(a(1));
           }),
       ArrayInput(
-          "DCM gains", {"Prop.", "Integral", "Deriv."},
-          [this]() -> Eigen::Vector3d {
-            return {c_.dcmPropGain, c_.dcmIntegralGain, c_.dcmDerivGain};
-          },
-          [this](const Eigen::Vector3d & gains) { dcmGains(gains(0), gains(1), gains(2)); }),
+          "DCM P gains", {"x", "y"}, [this]() -> Eigen::Vector2d { return c_.dcmPropGain; },
+          [this](const Eigen::Vector2d & gains) { dcmGains(gains, c_.dcmIntegralGain, c_.dcmDerivGain); }),
+      ArrayInput(
+          "DCM I gains", {"x", "y"}, [this]() -> Eigen::Vector2d { return c_.dcmIntegralGain; },
+          [this](const Eigen::Vector2d & gains) { dcmGains(c_.dcmPropGain, gains, c_.dcmDerivGain); }),
+      ArrayInput(
+          "DCM D gains", {"x", "y"}, [this]() -> Eigen::Vector2d { return c_.dcmDerivGain; },
+          [this](const Eigen::Vector2d & gains) { dcmGains(c_.dcmPropGain, c_.dcmIntegralGain, gains); }),
       NumberInput(
           "CoMd Error gain", [this]() { return c_.comdErrorGain; }, [this](double a) { c_.comdErrorGain = a; }),
       NumberInput(

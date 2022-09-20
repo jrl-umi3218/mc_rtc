@@ -297,9 +297,9 @@ void StabilizerTask::disable()
   disableConfig_ = c_;
   // Set the stabilizer gains to zero
   disableConfig_.copAdmittance.setZero();
-  disableConfig_.dcmDerivGain = 0.;
-  disableConfig_.dcmIntegralGain = 0.;
-  disableConfig_.dcmPropGain = 0.;
+  disableConfig_.dcmDerivGain = Eigen::Vector2d::Zero();
+  disableConfig_.dcmIntegralGain = Eigen::Vector2d::Zero();
+  disableConfig_.dcmPropGain = Eigen::Vector2d::Zero();
   disableConfig_.comdErrorGain = 0.;
   disableConfig_.zmpdGain = 0.;
   disableConfig_.dfzAdmittance = 0.;
@@ -872,11 +872,20 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   }
   dcmAverageError_ = dcmIntegrator_.eval();
   dcmVelError_ = dcmDerivator_.eval();
-
+  sva::PTransformd X_0_floatingbase = robot().mbc().bodyPosW[robot().bodyIndexByName("BODY")];
+  Eigen::Matrix3d R_0_fb_yaw = sva::RotZ(mc_rbdyn::rpyFromMat(X_0_floatingbase.rotation()).z());
   Eigen::Vector3d desiredCoMAccel = comddTarget_;
-  desiredCoMAccel += omega_ * (c_.dcmPropGain * dcmError_ + c_.comdErrorGain * comdError);
-  desiredCoMAccel += omega_ * c_.dcmIntegralGain * dcmAverageError_;
-  desiredCoMAccel += omega_ * c_.dcmDerivGain * dcmVelError_;
+
+  Eigen::Vector3d gain = Eigen::Vector3d{c_.dcmPropGain.x(), c_.dcmPropGain.y(), 0};
+  desiredCoMAccel += omega_ * R_0_fb_yaw.transpose() * gain.cwiseProduct(R_0_fb_yaw * dcmError_);
+
+  gain = Eigen::Vector3d{c_.dcmIntegralGain.x(), c_.dcmIntegralGain.y(), 0};
+  desiredCoMAccel += omega_ * R_0_fb_yaw.transpose() * gain.cwiseProduct(R_0_fb_yaw * dcmAverageError_);
+
+  gain = Eigen::Vector3d{c_.dcmDerivGain.x(), c_.dcmDerivGain.y(), 0};
+  desiredCoMAccel += omega_ * R_0_fb_yaw.transpose() * gain.cwiseProduct(R_0_fb_yaw * dcmVelError_);
+
+  desiredCoMAccel += omega_ * (c_.comdErrorGain * comdError);
   desiredCoMAccel -= omega_ * omega_ * c_.zmpdGain * zmpdTarget_;
 
   // Calculate CoM offset from measured wrench

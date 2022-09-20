@@ -414,11 +414,15 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     pelvisTask->stiffness(stiffness);
   }
 
-  inline void dcmGains(double p, double i, double d) noexcept
+  inline void dcmGains(Eigen::Vector2d p, Eigen::Vector2d i, Eigen::Vector2d d) noexcept
   {
-    c_.dcmPropGain = clamp(p, 0., c_.safetyThresholds.MAX_DCM_P_GAIN);
-    c_.dcmIntegralGain = clamp(i, 0., c_.safetyThresholds.MAX_DCM_I_GAIN);
-    c_.dcmDerivGain = clamp(d, 0., c_.safetyThresholds.MAX_DCM_D_GAIN);
+    Eigen::Vector2d zero = Eigen::Vector2d::Zero();
+    Eigen::Vector2d max = c_.safetyThresholds.MAX_DCM_P_GAIN * Eigen::Vector2d::Ones();
+    c_.dcmPropGain = clamp(p, zero, max);
+    max = c_.safetyThresholds.MAX_DCM_I_GAIN * Eigen::Vector2d::Ones();
+    c_.dcmIntegralGain = clamp(i, zero, max);
+    max = c_.safetyThresholds.MAX_DCM_D_GAIN * Eigen::Vector2d::Ones();
+    c_.dcmDerivGain = clamp(d, zero, max);
   }
 
   inline void dcmIntegratorTimeConstant(double dcmIntegratorTimeConstant) noexcept
