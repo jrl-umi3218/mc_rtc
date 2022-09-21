@@ -572,7 +572,9 @@ TestServer::TestServer() : xythetaz_(4)
   builder.addElement(
       {"GUI Markers", "Polyhedrons"},
       mc_rtc::gui::Polyhedron(
-          "Polyhedron", pconfig, [this]() { return polyhedron_vertices_; }, [this] { return polyhedron_colors_; }));
+          "Polyhedron (colors)", pconfig, [this]() { return polyhedron_vertices_; },
+          [this] { return polyhedron_colors_; }),
+      mc_rtc::gui::Polyhedron("Polyhedron (no color)", pconfig, [this]() { return polyhedron_vertices_; }));
 
   builder.addElement(
       {"GUI Markers", "Trajectories"}, mc_rtc::gui::Trajectory("Vector3d", [this]() { return trajectory_; }),
