@@ -33,8 +33,10 @@ string: sometext
 intV: [0, 1, 2, 3, 4, 5]
 stringV: [a, b, c, foo, bar]
 doubleA3: [1.1, 2.2, 3.3]
+v2d: [1.0, 2.3]
 v3d: [1.0, 2.3, -100]
 v6d: [1.0, -1.5, 2.0, -2.5, 3.0, -3.5]
+g6d: [1.0, -1.5, 2.0, -2.5, 3.0, -3.5]
 vXd: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 quat: [0.71, 0, 0.71, 0]
 emptyArray: []
@@ -54,6 +56,7 @@ dict:
   string: sometext
   intV: [0, 1, 2, 3, 4, 5]
   stringV: [a, b, c, foo, bar]
+  v2d: [1.0, 2.3]
   v3d: [1.0, 2.3, -100]
   v6d: [1.0, -1.5, 2.0, -2.5, 3.0, -3.5]
   quat: [0.71, 0, 0.71, 0]
@@ -85,6 +88,7 @@ static std::string JSON_DATA = R"(
   "intV": [0, 1, 2, 3, 4, 5],
   "stringV": ["a", "b", "c", "foo", "bar"],
   "doubleA3": [1.1, 2.2, 3.3],
+  "v2d": [1.0, 2.3],
   "v3d": [1.0, 2.3, -100],
   "v6d": [1.0, -1.5, 2.0, -2.5, 3.0, -3.5],
   "vXd": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -107,6 +111,7 @@ static std::string JSON_DATA = R"(
     "string": "sometext",
     "intV": [0, 1, 2, 3, 4, 5],
     "stringV": ["a", "b", "c", "foo", "bar"],
+    "v2d": [1.0, 2.3],
     "v3d": [1.0, 2.3, -100],
     "v6d": [1.0, -1.5, 2.0, -2.5, 3.0, -3.5],
     "quat": [0.71, 0, 0.71, 0],
@@ -302,6 +307,81 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     BOOST_CHECK_EQUAL(d, "sometext");
   }
 
+  /* Eigen::Vector2d test */
+  {
+    Eigen::Vector2d ref;
+    ref << 1.0, 2.3;
+    Eigen::Vector2d zero = Eigen::Vector2d::Zero();
+
+    Eigen::Vector2d a = config("v2d");
+    BOOST_CHECK_EQUAL(a, ref);
+
+    Eigen::Vector2d b = Eigen::Vector2d::Zero();
+    config("v2d", b);
+    BOOST_CHECK_EQUAL(b, ref);
+
+    Eigen::Vector2d c = Eigen::Vector2d::Zero();
+    config("v6d", c);
+    BOOST_CHECK_EQUAL(c, zero);
+
+    MC_RTC_diagnostic_push
+    MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
+    BOOST_CHECK_THROW(Eigen::Vector2d d = config("v6d"), mc_rtc::Configuration::Exception);
+    MC_RTC_diagnostic_pop
+
+    Eigen::Vector2d e = Eigen::Vector2d::Zero();
+    e = config("dict")("v2d");
+    BOOST_CHECK_EQUAL(e, ref);
+
+    Eigen::Vector2d f = Eigen::Vector2d::Zero();
+    config("dict")("v2d", f);
+    BOOST_CHECK_EQUAL(f, ref);
+  }
+
+  /* mc_rbdyn::Gains2d test */
+  {
+    mc_rbdyn::Gains2d ref;
+    ref << 1.0, 2.3;
+    mc_rbdyn::Gains2d zero = mc_rbdyn::Gains2d::Zero();
+
+    mc_rbdyn::Gains2d a = config("v2d");
+    BOOST_CHECK_EQUAL(a, ref);
+
+    mc_rbdyn::Gains2d b = mc_rbdyn::Gains2d::Zero();
+    config("v2d", b);
+    BOOST_CHECK_EQUAL(b, ref);
+
+    mc_rbdyn::Gains2d c = mc_rbdyn::Gains2d::Zero();
+    config("v6d", c);
+    BOOST_CHECK_EQUAL(c, zero);
+
+    MC_RTC_diagnostic_push
+    MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
+    BOOST_CHECK_THROW(mc_rbdyn::Gains2d d = config("v6d"), mc_rtc::Configuration::Exception);
+    MC_RTC_diagnostic_pop
+
+    mc_rbdyn::Gains2d e = mc_rbdyn::Gains2d::Zero();
+    e = config("dict")("v2d");
+    BOOST_CHECK_EQUAL(e, ref);
+
+    mc_rbdyn::Gains2d f = mc_rbdyn::Gains2d::Zero();
+    config("dict")("v2d", f);
+    BOOST_CHECK_EQUAL(f, ref);
+
+    ref.setConstant(42.5);
+
+    mc_rbdyn::Gains2d g = config("double");
+    BOOST_CHECK_EQUAL(g, ref);
+
+    mc_rbdyn::Gains2d h = mc_rbdyn::Gains2d::Zero();
+    config("double", h);
+    BOOST_CHECK_EQUAL(h, ref);
+
+    mc_rbdyn::Gains2d i = mc_rbdyn::Gains2d::Zero();
+    i = config("dict")("double");
+    BOOST_CHECK_EQUAL(i, ref);
+  }
+
   /* Eigen::Vector3d test */
   {
     Eigen::Vector3d ref;
@@ -333,6 +413,50 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     BOOST_CHECK_EQUAL(f, ref);
   }
 
+  /* mc_rbdyn::Gains3d test */
+  {
+    mc_rbdyn::Gains3d ref;
+    ref << 1.0, 2.3, -100;
+    mc_rbdyn::Gains3d zero = mc_rbdyn::Gains3d::Zero();
+
+    mc_rbdyn::Gains3d a = config("v3d");
+    BOOST_CHECK_EQUAL(a, ref);
+
+    mc_rbdyn::Gains3d b = mc_rbdyn::Gains3d::Zero();
+    config("v3d", b);
+    BOOST_CHECK_EQUAL(b, ref);
+
+    mc_rbdyn::Gains3d c = mc_rbdyn::Gains3d::Zero();
+    config("v6d", c);
+    BOOST_CHECK_EQUAL(c, zero);
+
+    MC_RTC_diagnostic_push
+    MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
+    BOOST_CHECK_THROW(mc_rbdyn::Gains3d d = config("v6d"), mc_rtc::Configuration::Exception);
+    MC_RTC_diagnostic_pop
+
+    mc_rbdyn::Gains3d e = mc_rbdyn::Gains3d::Zero();
+    e = config("dict")("v3d");
+    BOOST_CHECK_EQUAL(e, ref);
+
+    mc_rbdyn::Gains3d f = mc_rbdyn::Gains3d::Zero();
+    config("dict")("v3d", f);
+    BOOST_CHECK_EQUAL(f, ref);
+
+    ref.setConstant(42.5);
+
+    mc_rbdyn::Gains3d g = config("double");
+    BOOST_CHECK_EQUAL(g, ref);
+
+    mc_rbdyn::Gains3d h = mc_rbdyn::Gains3d::Zero();
+    config("double", h);
+    BOOST_CHECK_EQUAL(h, ref);
+
+    mc_rbdyn::Gains3d i = mc_rbdyn::Gains3d::Zero();
+    i = config("dict")("double");
+    BOOST_CHECK_EQUAL(i, ref);
+  }
+
   /* Eigen::Vector6d test */
   {
     Eigen::Vector6d ref;
@@ -362,6 +486,50 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     Eigen::Vector6d f = Eigen::Vector6d::Zero();
     config("dict")("v6d", f);
     BOOST_CHECK_EQUAL(f, ref);
+  }
+
+  /* mc_rbdyn::Gains6d test */
+  {
+    mc_rbdyn::Gains6d ref;
+    ref << 1.0, -1.5, 2.0, -2.5, 3.0, -3.5;
+    mc_rbdyn::Gains6d zero = mc_rbdyn::Gains6d::Zero();
+
+    mc_rbdyn::Gains6d a = config("v6d");
+    BOOST_CHECK_EQUAL(a, ref);
+
+    mc_rbdyn::Gains6d b = mc_rbdyn::Gains6d::Zero();
+    config("v6d", b);
+    BOOST_CHECK_EQUAL(b, ref);
+
+    mc_rbdyn::Gains6d c = mc_rbdyn::Gains6d::Zero();
+    config("v3d", c);
+    BOOST_CHECK_EQUAL(c, zero);
+
+    MC_RTC_diagnostic_push
+    MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
+    BOOST_CHECK_THROW(mc_rbdyn::Gains6d d = config("v3d"), mc_rtc::Configuration::Exception);
+    MC_RTC_diagnostic_pop
+
+    mc_rbdyn::Gains6d e = mc_rbdyn::Gains6d::Zero();
+    e = config("dict")("v6d");
+    BOOST_CHECK_EQUAL(e, ref);
+
+    mc_rbdyn::Gains6d f = mc_rbdyn::Gains6d::Zero();
+    config("dict")("v6d", f);
+    BOOST_CHECK_EQUAL(f, ref);
+
+    ref.setConstant(42.5);
+
+    mc_rbdyn::Gains6d g = config("double");
+    BOOST_CHECK_EQUAL(g, ref);
+
+    mc_rbdyn::Gains6d h = mc_rbdyn::Gains6d::Zero();
+    config("double", h);
+    BOOST_CHECK_EQUAL(h, ref);
+
+    mc_rbdyn::Gains6d i = mc_rbdyn::Gains6d::Zero();
+    i = config("dict")("double");
+    BOOST_CHECK_EQUAL(i, ref);
   }
 
   /* Eigen::VectorXd test */

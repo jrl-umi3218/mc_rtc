@@ -2,6 +2,8 @@
 
 #include <mc_rtc/utils_api.h>
 
+#include <mc_rbdyn/Gains.h>
+
 #include <SpaceVecAlg/SpaceVecAlg>
 
 #include <Eigen/Core>

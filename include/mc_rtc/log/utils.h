@@ -85,6 +85,9 @@ IMPL_MAPPING(sva::PTransformd, PTransformd);
 IMPL_MAPPING(sva::ForceVecd, ForceVecd);
 IMPL_MAPPING(sva::MotionVecd, MotionVecd);
 IMPL_MAPPING(sva::ImpedanceVecd, MotionVecd);
+IMPL_MAPPING(mc_rbdyn::Gains2d, Vector2d);
+IMPL_MAPPING(mc_rbdyn::Gains3d, Vector3d);
+IMPL_MAPPING(mc_rbdyn::Gains6d, Vector6d);
 
 #undef IMPL_MAPPING
 

@@ -6,17 +6,21 @@
 
 #include <mc_rtc/MessagePackBuilder.h>
 
+#include <mc/rtc/deprecated.hh>
+
+#include <mc_rbdyn/Gains.h>
+#include <mc_rbdyn/rpy_utils.h>
+
 #include <SpaceVecAlg/SpaceVecAlg>
 
-#include <mc_rbdyn/rpy_utils.h>
 #include <Eigen/Core>
+#include <spdlog/fmt/fmt.h>
+
 #include <array>
 #include <exception>
 #include <map>
-#include <mc/rtc/deprecated.hh>
 #include <memory>
 #include <set>
-#include <spdlog/fmt/fmt.h>
 #include <string>
 #include <unordered_set>
 #include <vector>
@@ -284,6 +288,24 @@ public:
    * sequence of size 6
    */
   operator Eigen::Vector6d() const;
+
+  /*! \brief Retrieve as a mc_rbdyn::Gains2d instance
+   *
+   * \throws If the underlying value is not a single double or a numeric sequence of size 2
+   */
+  operator mc_rbdyn::Gains2d() const;
+
+  /*! \brief Retrieve as a mc_rbdyn::Gains3d instance
+   *
+   * \throws If the underlying value is not a single double or a numeric sequence of size 3
+   */
+  operator mc_rbdyn::Gains3d() const;
+
+  /*! \brief Retrieve as a mc_rbdyn::Gains6d instance
+   *
+   * \throws If the underlying value is not a single double or a numeric sequence of size 6
+   */
+  operator mc_rbdyn::Gains6d() const;
 
   /*! \brief Retrieve as a Eigen::VectorXd instance
    *
