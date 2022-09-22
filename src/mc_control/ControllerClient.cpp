@@ -568,15 +568,16 @@ void ControllerClient::handle_polyhedron(const ElementId & id, const mc_rtc::Con
     config.fromMessagePack(data_[5]);
   }
 
-  std::vector<Eigen::Vector3d> triangles;
-  std::vector<mc_rtc::gui::Color> colors;
+  std::vector<std::array<Eigen::Vector3d, 3>> triangles;
+  std::vector<std::array<mc_rtc::gui::Color, 3>> colors;
   try
   {
     triangles = data_[3];
   }
   catch(mc_rtc::Configuration::Exception & exc)
   {
-    mc_rtc::log::error("Could not deserialize polyhedron vertices, supported data is vector<Eigen::Vector3d>");
+    mc_rtc::log::error(
+        "Could not deserialize polyhedron vertices, supported data is vector<std::array<Eigen::Vector3d, 3>>");
     mc_rtc::log::error(exc.what());
     exc.silence();
   }
@@ -586,7 +587,8 @@ void ControllerClient::handle_polyhedron(const ElementId & id, const mc_rtc::Con
   }
   catch(mc_rtc::Configuration::Exception & exc)
   {
-    mc_rtc::log::error("Could not deserialize polyhedron colors, supported data is vector<Eigen::Vector4d>");
+    mc_rtc::log::error(
+        "Could not deserialize polyhedron colors, supported data is vector<std::array<mc_rtc::gui::Color,3>>");
     mc_rtc::log::error(exc.what());
     exc.silence();
   }

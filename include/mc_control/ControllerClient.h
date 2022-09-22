@@ -360,8 +360,8 @@ protected:
   }
 
   virtual void polyhedron(const ElementId & id,
-                          const std::vector<Eigen::Vector3d> & /* triangles */,
-                          const std::vector<mc_rtc::gui::Color> & /* colors */,
+                          const std::vector<std::array<Eigen::Vector3d, 3>> & /* triangles */,
+                          const std::vector<std::array<mc_rtc::gui::Color, 3>> & /* colors */,
                           const mc_rtc::gui::PolyhedronConfig & /* config */)
   {
     default_impl("Polyhedron", id);
