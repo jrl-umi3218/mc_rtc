@@ -88,9 +88,9 @@ JVRC1RobotModule::JVRC1RobotModule(bool fixed) : RobotModule(std::string(JVRC_VA
                                            "L_KNEE",    "L_ANKLE_P", "L_ANKLE_R"};
   _lipmStabilizerConfig.torsoPitch = 0;
   _lipmStabilizerConfig.copAdmittance = Eigen::Vector2d{0.01, 0.01};
-  _lipmStabilizerConfig.dcmPropGain = 5.0 * Eigen::Vector2d::Ones();
-  _lipmStabilizerConfig.dcmIntegralGain = 10 * Eigen::Vector2d::Ones();
-  _lipmStabilizerConfig.dcmDerivGain = 0.5 * Eigen::Vector2d::Ones();
+  _lipmStabilizerConfig.dcmPropGain = 5.0;
+  _lipmStabilizerConfig.dcmIntegralGain = 10;
+  _lipmStabilizerConfig.dcmDerivGain = 0.5;
   _lipmStabilizerConfig.dcmDerivatorTimeConstant = 1;
   _lipmStabilizerConfig.dcmIntegratorTimeConstant = 10;
 }

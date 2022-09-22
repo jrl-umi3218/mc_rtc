@@ -297,9 +297,9 @@ void StabilizerTask::disable()
   disableConfig_ = c_;
   // Set the stabilizer gains to zero
   disableConfig_.copAdmittance.setZero();
-  disableConfig_.dcmDerivGain = Eigen::Vector2d::Zero();
-  disableConfig_.dcmIntegralGain = Eigen::Vector2d::Zero();
-  disableConfig_.dcmPropGain = Eigen::Vector2d::Zero();
+  disableConfig_.dcmDerivGain = 0.;
+  disableConfig_.dcmIntegralGain = 0.;
+  disableConfig_.dcmPropGain = 0.;
   disableConfig_.comdErrorGain = 0.;
   disableConfig_.zmpdGain = 0.;
   disableConfig_.dfzAdmittance = 0.;

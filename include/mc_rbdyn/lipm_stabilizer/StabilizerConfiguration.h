@@ -3,9 +3,13 @@
  */
 
 #pragma once
-#include <mc_filter/utils/clamp.h>
+
+#include <mc_rbdyn/Gains.h>
 #include <mc_rbdyn/api.h>
 #include <mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h>
+
+#include <mc_filter/utils/clamp.h>
+
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/logging.h>
 
@@ -377,9 +381,9 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   double dfzAdmittance = 1e-4; /**< Admittance for foot force difference control */
   double dfzDamping = 0.; /**< Damping term in foot force difference control */
 
-  Eigen::Vector2d dcmPropGain = {1., 1.}; /**< Proportional gain on DCM error */
-  Eigen::Vector2d dcmIntegralGain = {5., 5.}; /**< Integral gain on DCM error */
-  Eigen::Vector2d dcmDerivGain = {0., 0.}; /**< Derivative gain on DCM error */
+  mc_rbdyn::Gains2d dcmPropGain = 1.; /**< Proportional gain on DCM error */
+  mc_rbdyn::Gains2d dcmIntegralGain = 5.; /**< Integral gain on DCM error */
+  mc_rbdyn::Gains2d dcmDerivGain = 0.; /**< Derivative gain on DCM error */
   double comdErrorGain = 1.; /**< Gain on CoMd error */
   double zmpdGain = 0.; /**< Gain on ZMPd */
   double dcmIntegratorTimeConstant =
@@ -430,13 +434,9 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     const auto & s = safetyThresholds;
     clampInPlaceAndWarn(copAdmittance.x(), 0., s.MAX_COP_ADMITTANCE, "CoP x-admittance");
     clampInPlaceAndWarn(copAdmittance.y(), 0., s.MAX_COP_ADMITTANCE, "CoP y-admittance");
-    Eigen::Vector2d zero = Eigen::Vector2d::Zero();
-    Eigen::Vector2d max = s.MAX_DCM_D_GAIN * Eigen::Vector2d::Ones();
-    clampInPlaceAndWarn(dcmDerivGain, zero, max, "DCM deriv gain");
-    max = (s.MAX_DCM_I_GAIN * Eigen::Vector2d::Ones());
-    clampInPlaceAndWarn(dcmIntegralGain, zero, max, "DCM integral gain");
-    max = (s.MAX_DCM_P_GAIN * Eigen::Vector2d::Ones());
-    clampInPlaceAndWarn(dcmPropGain, zero, max, "DCM prop gain");
+    clampInPlaceAndWarn(dcmDerivGain, 0., s.MAX_DCM_D_GAIN, "DCM deriv gain");
+    clampInPlaceAndWarn(dcmIntegralGain, 0., s.MAX_DCM_I_GAIN, "DCM integral gain");
+    clampInPlaceAndWarn(dcmPropGain, 0., s.MAX_DCM_P_GAIN, "DCM prop gain");
     clampInPlaceAndWarn(comdErrorGain, 0., s.MAX_COMD_GAIN, "CoMd gain");
     clampInPlaceAndWarn(zmpdGain, 0., s.MAX_ZMPD_GAIN, "ZMPd gain");
     clampInPlaceAndWarn(dfzAdmittance, 0., s.MAX_DFZ_ADMITTANCE, "DFz admittance");

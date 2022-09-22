@@ -58,13 +58,13 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
             dfzDamping(a(1));
           }),
       ArrayInput(
-          "DCM P gains", {"x", "y"}, [this]() -> Eigen::Vector2d { return c_.dcmPropGain; },
+          "DCM P gains", {"x", "y"}, [this]() -> const Eigen::Vector2d & { return c_.dcmPropGain; },
           [this](const Eigen::Vector2d & gains) { dcmGains(gains, c_.dcmIntegralGain, c_.dcmDerivGain); }),
       ArrayInput(
-          "DCM I gains", {"x", "y"}, [this]() -> Eigen::Vector2d { return c_.dcmIntegralGain; },
+          "DCM I gains", {"x", "y"}, [this]() -> const Eigen::Vector2d & { return c_.dcmIntegralGain; },
           [this](const Eigen::Vector2d & gains) { dcmGains(c_.dcmPropGain, gains, c_.dcmDerivGain); }),
       ArrayInput(
-          "DCM D gains", {"x", "y"}, [this]() -> Eigen::Vector2d { return c_.dcmDerivGain; },
+          "DCM D gains", {"x", "y"}, [this]() -> const Eigen::Vector2d & { return c_.dcmDerivGain; },
           [this](const Eigen::Vector2d & gains) { dcmGains(c_.dcmPropGain, c_.dcmIntegralGain, gains); }),
       NumberInput(
           "CoMd Error gain", [this]() { return c_.comdErrorGain; }, [this](double a) { c_.comdErrorGain = a; }),
@@ -400,9 +400,12 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_dcmDerivator_input_hp", this, [this]() { return dcmDerivator_.input_hp(); });
   logger.addLogEntry(name_ + "_dcmDerivator_cutoffPeriod", this, [this]() { return dcmDerivator_.cutoffPeriod(); });
   logger.addLogEntry(name_ + "_dcmIntegrator_timeConstant", this, [this]() { return dcmIntegrator_.timeConstant(); });
-  logger.addLogEntry(name_ + "_dcmTracking_derivGain", this, [this]() { return c_.dcmDerivGain; });
-  logger.addLogEntry(name_ + "_dcmTracking_integralGain", this, [this]() { return c_.dcmIntegralGain; });
-  logger.addLogEntry(name_ + "_dcmTracking_propGain", this, [this]() { return c_.dcmPropGain; });
+  logger.addLogEntry(name_ + "_dcmTracking_derivGain", this,
+                     [this]() -> const Eigen::Vector2d & { return c_.dcmDerivGain; });
+  logger.addLogEntry(name_ + "_dcmTracking_integralGain", this,
+                     [this]() -> const Eigen::Vector2d & { return c_.dcmIntegralGain; });
+  logger.addLogEntry(name_ + "_dcmTracking_propGain", this,
+                     [this]() -> const Eigen::Vector2d & { return c_.dcmPropGain; });
   logger.addLogEntry(name_ + "_dcmTracking_comdErrorGain", this, [this]() { return c_.comdErrorGain; });
   logger.addLogEntry(name_ + "_dcmTracking_zmpdGain", this, [this]() { return c_.zmpdGain; });
   logger.addLogEntry(name_ + "_dcmBias_dcmMeasureErrorStd", this, [this]() { return c_.dcmBias.dcmMeasureErrorStd; });
