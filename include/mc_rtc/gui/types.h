@@ -20,6 +20,8 @@ struct MC_RTC_GUI_DLLAPI Color
 {
   Color() {}
   Color(double r, double g, double b, double a = 1.0) : r(r), g(g), b(b), a(a) {}
+  Color(const Eigen::Vector3d & color) : r(color.x()), g(color.y()), b(color.z()) {}
+  Color(const Eigen::Vector4d & color) : r(color.x()), g(color.y()), b(color.z()), a(color[3]) {}
   Color(const mc_rtc::Configuration & config)
   {
     fromConfig(config);
@@ -458,9 +460,6 @@ struct ConfigurationLoader<mc_rtc::gui::PointConfig>
 
 namespace gui
 {
-
-using PolyhedronTriangles = std::vector<Eigen::Vector3d>;
-using PolyhedronColors = std::vector<Eigen::Vector4d>;
 
 struct MC_RTC_GUI_DLLAPI PolyhedronConfig
 {

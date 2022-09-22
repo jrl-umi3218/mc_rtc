@@ -569,7 +569,7 @@ void ControllerClient::handle_polyhedron(const ElementId & id, const mc_rtc::Con
   }
 
   std::vector<Eigen::Vector3d> triangles;
-  std::vector<Eigen::Vector4d> colors;
+  std::vector<mc_rtc::gui::Color> colors;
   try
   {
     triangles = data_[3];

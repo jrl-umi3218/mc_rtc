@@ -30,7 +30,7 @@ struct PolyhedronImpl : public Element
   PolyhedronImpl(const std::string & name, const PolyhedronConfig & config, GetVerticesT get_vertices_fn)
   : Element(name), config_(config), get_vertices_fn_(get_vertices_fn)
   {
-    static_assert(details::CheckReturnType<GetVerticesT, PolyhedronTriangles>::value,
+    static_assert(details::CheckReturnType<GetVerticesT, std::vector<Eigen::Vector3d>>::value,
                   "Polyhedron vertices callback must return an std::vector<Eigen::Vector3d> (triangle set with points "
                   "ordered clockwise)");
   }
@@ -46,7 +46,7 @@ struct PolyhedronImpl : public Element
   void write(mc_rtc::MessagePackBuilder & builder)
   {
     builder.write(get_vertices_fn_());
-    builder.write(PolyhedronColors{});
+    builder.write();
     config_.write(builder);
   }
 
@@ -65,23 +65,24 @@ struct ColoredPolyhedronImpl : public PolyhedronImpl<GetVerticesT>
                         GetColorT get_color_fn)
   : PolyhedronImpl<GetVerticesT>(name, config, get_vertices_fn), get_color_fn_(get_color_fn)
   {
-    static_assert(details::CheckReturnType<GetColorT, PolyhedronColors>::value,
-                  "Polyhedron vertices' color callback must return an std::vector<Eigen::Vector4d> (triangle set with "
-                  "points ordered clockwise)");
+    static_assert(details::CheckReturnType<GetColorT, std::vector<mc_rtc::gui::Color>>::value,
+                  "Polyhedron color callback must return an std::vector<mc_rtc::gui::Color> (color for each of the "
+                  "triangle vertices)");
   }
 
   /** Invalid element */
   ColoredPolyhedronImpl() {}
 
-  static constexpr size_t write_size()
-  {
-    return PolyhedronImpl<GetVerticesT>::write_size();
-  }
-
   void write(mc_rtc::MessagePackBuilder & builder)
   {
     builder.write(get_vertices_fn_());
-    builder.write(get_color_fn_());
+    const auto & colors = get_color_fn_();
+    builder.start_array(colors.size());
+    for(const auto & c : colors)
+    {
+      c.write(builder);
+    }
+    builder.finish_array();
     config_.write(builder);
   }
 

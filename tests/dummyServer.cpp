@@ -513,63 +513,63 @@ TestServer::TestServer() : xythetaz_(4)
 
   auto polyhedron_vertices_fn = [this] {
     double z = std::max(0.1, (1 + cos(t_ / 2)) / 2);
-    return mc_rtc::gui::PolyhedronTriangles{// Upper pyramid
-                                            {-1, -1, 0},
-                                            {1, -1, 0},
-                                            {0, 0, z},
-                                            {1, -1, 0},
-                                            {1, 1, 0},
-                                            {0, 0, z},
-                                            {1, 1, 0},
-                                            {-1, 1, 0},
-                                            {0, 0, z},
-                                            {-1, 1, 0},
-                                            {-1, -1, 0},
-                                            {0, 0, z},
-                                            // Lower pyramid
-                                            {-1, -1, 0},
-                                            {0, 0, -z},
-                                            {1, -1, 0},
-                                            {1, -1, 0},
-                                            {0, 0, -z},
-                                            {1, 1, 0},
-                                            {1, 1, 0},
-                                            {0, 0, -z},
-                                            {-1, 1, 0},
-                                            {-1, 1, 0},
-                                            {0, 0, -z},
-                                            {-1, -1, 0}};
+    return std::vector<Eigen::Vector3d>{// Upper pyramid
+                                        {-1, -1, 0},
+                                        {1, -1, 0},
+                                        {0, 0, z},
+                                        {1, -1, 0},
+                                        {1, 1, 0},
+                                        {0, 0, z},
+                                        {1, 1, 0},
+                                        {-1, 1, 0},
+                                        {0, 0, z},
+                                        {-1, 1, 0},
+                                        {-1, -1, 0},
+                                        {0, 0, z},
+                                        // Lower pyramid
+                                        {-1, -1, 0},
+                                        {0, 0, -z},
+                                        {1, -1, 0},
+                                        {1, -1, 0},
+                                        {0, 0, -z},
+                                        {1, 1, 0},
+                                        {1, 1, 0},
+                                        {0, 0, -z},
+                                        {-1, 1, 0},
+                                        {-1, 1, 0},
+                                        {0, 0, -z},
+                                        {-1, -1, 0}};
   };
 
   auto polyhedron_colors_fn = [this] {
     double z = std::max(0.1, (1 + cos(t_ / 2)) / 2);
     Eigen::Vector4d color;
     color << mc_rtc::utils::heatmap<Eigen::Vector3d>(0, 1, z), 1;
-    return mc_rtc::gui::PolyhedronColors{{0, 0, 1, 1},
-                                         {0, 0, 1, 1},
-                                         color,
-                                         {0, 0, 1, 1},
-                                         {0, 0, 1, 1},
-                                         color,
-                                         {0, 0, 1, 1},
-                                         {0, 0, 1, 1},
-                                         color,
-                                         {0, 0, 1, 1},
-                                         {0, 0, 1, 1},
-                                         color,
-                                         // Colors for lower pyramid
-                                         {0, 0, 1, 1},
-                                         color,
-                                         {0, 0, 1, 1},
-                                         {0, 0, 1, 1},
-                                         color,
-                                         {0, 0, 1, 1},
-                                         {0, 0, 1, 1},
-                                         color,
-                                         {0, 0, 1, 1},
-                                         {0, 0, 1, 1},
-                                         color,
-                                         {0, 0, 1, 1}};
+    return std::vector<mc_rtc::gui::Color>{{0, 0, 1, 1},
+                                           {0, 0, 1, 1},
+                                           color,
+                                           {0, 0, 1, 1},
+                                           {0, 0, 1, 1},
+                                           color,
+                                           {0, 0, 1, 1},
+                                           {0, 0, 1, 1},
+                                           color,
+                                           {0, 0, 1, 1},
+                                           {0, 0, 1, 1},
+                                           color,
+                                           // Colors for lower pyramid
+                                           {0, 0, 1, 1},
+                                           color,
+                                           {0, 0, 1, 1},
+                                           {0, 0, 1, 1},
+                                           color,
+                                           {0, 0, 1, 1},
+                                           {0, 0, 1, 1},
+                                           color,
+                                           {0, 0, 1, 1},
+                                           {0, 0, 1, 1},
+                                           color,
+                                           {0, 0, 1, 1}};
   };
   mc_rtc::gui::PolyhedronConfig pconfig;
   pconfig.triangle_color = mc_rtc::gui::Color(1, 0, 0, 1.0);
