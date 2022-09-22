@@ -168,6 +168,21 @@ inline void clampInPlace(VectorT & v, double lower, double upper)
  * \see clampInPlace(VectorT& v, const VectorT & lower, const VectorT & upper)
  */
 template<typename VectorT>
+inline void clampInPlaceAndWarn(VectorT & vector, double lower, double upper, const std::string & label)
+{
+  for(unsigned i = 0; i < vector.size(); i++)
+  {
+    clampInPlaceAndWarn(vector(i), lower, upper, label + " (" + std::to_string(i) + ")");
+  }
+}
+
+/**
+ * @brief Clamps in-place each component of a vector in a given interval,
+ * issuing a warning when bounds are hit
+ *
+ * \see clampInPlace(VectorT& v, const VectorT & lower, const VectorT & upper)
+ */
+template<typename VectorT>
 inline void clampInPlaceAndWarn(VectorT & vector,
                                 const VectorT & lower,
                                 const VectorT & upper,

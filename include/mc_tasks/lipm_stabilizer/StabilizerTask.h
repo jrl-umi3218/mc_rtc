@@ -10,15 +10,17 @@
 #include <mc_filter/ExponentialMovingAverage.h>
 #include <mc_filter/LeakyIntegrator.h>
 #include <mc_filter/LowPass.h>
+#include <mc_filter/LowPassCompose.h>
 #include <mc_filter/StationaryOffset.h>
+#include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/CoPTask.h>
 #include <mc_tasks/MetaTask.h>
 #include <mc_tasks/OrientationTask.h>
-
-#include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
 #include <mc_tasks/lipm_stabilizer/Contact.h>
 #include <mc_tasks/lipm_stabilizer/ZMPCC.h>
+
+#include <mc/rtc/deprecated.hh>
 
 #include <state-observation/dynamics-estimators/lipm-dcm-estimator.hpp>
 
@@ -416,6 +418,11 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 
   inline void dcmGains(double p, double i, double d) noexcept
   {
+    dcmGains(Eigen::Vector2d::Constant(p), Eigen::Vector2d::Constant(i), Eigen::Vector2d::Constant(d));
+  }
+
+  inline void dcmGains(const Eigen::Vector2d & p, const Eigen::Vector2d & i, const Eigen::Vector2d & d) noexcept
+  {
     c_.dcmPropGain = clamp(p, 0., c_.safetyThresholds.MAX_DCM_P_GAIN);
     c_.dcmIntegralGain = clamp(i, 0., c_.safetyThresholds.MAX_DCM_I_GAIN);
     c_.dcmDerivGain = clamp(d, 0., c_.safetyThresholds.MAX_DCM_D_GAIN);
@@ -427,10 +434,15 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     dcmIntegrator_.timeConstant(dcmIntegratorTimeConstant);
   }
 
-  inline void dcmDerivatorTimeConstant(double dcmDerivatorTimeConstant) noexcept
+  MC_RTC_DEPRECATED inline void dcmDerivatorTimeConstant(double T) noexcept
   {
-    c_.dcmDerivatorTimeConstant = dcmDerivatorTimeConstant;
-    dcmDerivator_.timeConstant(dcmDerivatorTimeConstant);
+    dcmDerivatorCutoffPeriod(T);
+  }
+
+  inline void dcmDerivatorCutoffPeriod(double T) noexcept
+  {
+    c_.dcmDerivatorTimeConstant = T;
+    dcmDerivator_.cutoffPeriod(T);
   }
 
   inline void extWrenchSumLowPassCutoffPeriod(double cutoffPeriod) noexcept
@@ -648,8 +660,10 @@ private:
    * \param com Position of the center of mass.
    *
    * \param comd Velocity of the center of mass.
+   *
+   * \param comdd Acceleration of the center of mass.
    */
-  void updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd);
+  void updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, const Eigen::Vector3d & comdd);
 
   /**
    * @brief Update contact tasks in the solver
@@ -860,6 +874,7 @@ protected:
   Eigen::Vector3d dcmVelError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredCoM_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredCoMd_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d measuredCoMdd_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredZMP_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredDCM_ = Eigen::Vector3d::Zero(); /// Measured DCM (only used for logging)
   Eigen::Vector3d measuredDCMUnbiased_ = Eigen::Vector3d::Zero(); /// DCM unbiased (only used for logging)
@@ -900,7 +915,7 @@ protected:
   /** @} */
 
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
-  mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;
+  mc_filter::LowPassCompose<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */
   double dfzForceError_ = 0.; /**< Force error in foot force difference control */
   double dfzHeightError_ = 0.; /**< Height error in foot force difference control */

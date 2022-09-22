@@ -4,6 +4,8 @@
 
 #include <mc_rtc/log/Logger.h>
 
+#include <mc_rbdyn/Gains.h>
+
 /** This executable only test the various traits used to discriminate
  * valid logger callbacks, compilation failure would indicate an issue
  * with said traits. */
@@ -37,5 +39,6 @@ int main()
   test_traits<std::vector<unsigned int>, false>();
   test_traits<float, true>();
   test_traits<std::map<std::string, double>, false>();
+  test_traits<mc_rbdyn::Gains2d, true>();
   return 0;
 }

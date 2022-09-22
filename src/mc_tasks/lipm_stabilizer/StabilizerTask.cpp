@@ -254,7 +254,7 @@ void StabilizerTask::update(mc_solver::QPSolver & solver)
   // Update contacts if they have changed
   updateContacts(solver);
 
-  updateState(realRobots_.robot().com(), realRobots_.robot().comVelocity());
+  updateState(realRobots_.robot().com(), realRobots_.robot().comVelocity(), realRobots_.robot().comAcceleration());
 
   // Run stabilizer
   run();
@@ -333,7 +333,7 @@ void StabilizerTask::commitConfig()
 
 void StabilizerTask::configure_(mc_solver::QPSolver & solver)
 {
-  dcmDerivator_.timeConstant(c_.dcmDerivatorTimeConstant);
+  dcmDerivator_.cutoffPeriod(c_.dcmDerivatorTimeConstant);
   dcmIntegrator_.timeConstant(c_.dcmIntegratorTimeConstant);
   dcmIntegrator_.saturation(c_.safetyThresholds.MAX_AVERAGE_DCM_ERROR);
 
@@ -778,10 +778,13 @@ void StabilizerTask::run()
   runTime_ = 1000. * duration_cast<duration<double>>(endTime - startTime).count();
 }
 
-void StabilizerTask::updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd)
+void StabilizerTask::updateState(const Eigen::Vector3d & com,
+                                 const Eigen::Vector3d & comd,
+                                 const Eigen::Vector3d & comdd)
 {
   measuredCoM_ = com;
   measuredCoMd_ = comd;
+  measuredCoMdd_ = comdd;
   measuredDCM_ = measuredCoM_ + measuredCoMd_ / omega_;
 }
 
@@ -789,6 +792,11 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
 {
   Eigen::Vector3d comError = comTarget_ - measuredCoM_;
   Eigen::Vector3d comdError = comdTarget_ - measuredCoMd_;
+  Eigen::Vector3d comddError = comddTarget_ - measuredCoMdd_;
+
+  Eigen::Vector3d dcmdError = comdError + comddError / omega_;
+  dcmdError.z() = 0.;
+
   dcmError_ = comError + comdError / omega_;
   dcmError_.z() = 0.;
 
@@ -859,16 +867,24 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
       dcmEstimatorNeedsReset_ = true;
     }
 
-    dcmDerivator_.update(omega_ * (dcmError_ - zmpError));
+    dcmDerivator_.update(omega_ * (dcmError_ - zmpError), dcmdError);
     dcmIntegrator_.append(dcmError_);
   }
   dcmAverageError_ = dcmIntegrator_.eval();
   dcmVelError_ = dcmDerivator_.eval();
-
+  Eigen::Matrix3d R_0_fb_yaw = sva::RotZ(mc_rbdyn::rpyFromMat(robot().posW().rotation()).z());
   Eigen::Vector3d desiredCoMAccel = comddTarget_;
-  desiredCoMAccel += omega_ * (c_.dcmPropGain * dcmError_ + c_.comdErrorGain * comdError);
-  desiredCoMAccel += omega_ * c_.dcmIntegralGain * dcmAverageError_;
-  desiredCoMAccel += omega_ * c_.dcmDerivGain * dcmVelError_;
+
+  Eigen::Vector3d gain = Eigen::Vector3d{c_.dcmPropGain.x(), c_.dcmPropGain.y(), 0};
+  desiredCoMAccel += omega_ * R_0_fb_yaw.transpose() * gain.cwiseProduct(R_0_fb_yaw * dcmError_);
+
+  gain = Eigen::Vector3d{c_.dcmIntegralGain.x(), c_.dcmIntegralGain.y(), 0};
+  desiredCoMAccel += omega_ * R_0_fb_yaw.transpose() * gain.cwiseProduct(R_0_fb_yaw * dcmAverageError_);
+
+  gain = Eigen::Vector3d{c_.dcmDerivGain.x(), c_.dcmDerivGain.y(), 0};
+  desiredCoMAccel += omega_ * R_0_fb_yaw.transpose() * gain.cwiseProduct(R_0_fb_yaw * dcmVelError_);
+
+  desiredCoMAccel += omega_ * (c_.comdErrorGain * comdError);
   desiredCoMAccel -= omega_ * omega_ * c_.zmpdGain * zmpdTarget_;
 
   // Calculate CoM offset from measured wrench

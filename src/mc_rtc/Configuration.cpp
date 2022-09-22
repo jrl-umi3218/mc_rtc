@@ -350,6 +350,39 @@ Configuration::operator Eigen::Vector6d() const
   throw Exception("Stored Json value is not a Vector6d", v);
 }
 
+Configuration::operator mc_rbdyn::Gains2d() const
+{
+  assert(v.value_);
+  auto value = static_cast<const internal::RapidJSONValue *>(v.value_);
+  if(value->IsNumber())
+  {
+    return value->GetDouble();
+  }
+  return this->operator Eigen::Vector2d();
+}
+
+Configuration::operator mc_rbdyn::Gains3d() const
+{
+  assert(v.value_);
+  auto value = static_cast<const internal::RapidJSONValue *>(v.value_);
+  if(value->IsNumber())
+  {
+    return value->GetDouble();
+  }
+  return this->operator Eigen::Vector3d();
+}
+
+Configuration::operator mc_rbdyn::Gains6d() const
+{
+  assert(v.value_);
+  auto value = static_cast<const internal::RapidJSONValue *>(v.value_);
+  if(value->IsNumber())
+  {
+    return value->GetDouble();
+  }
+  return this->operator Eigen::Vector6d();
+}
+
 Configuration::operator Eigen::VectorXd() const
 {
   if(v.isArray() && (v.size() == 0 || v[0].isNumeric()))
