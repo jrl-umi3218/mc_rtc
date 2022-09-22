@@ -5,6 +5,7 @@
 #include <mc_control/ControllerServer.h>
 
 #include <mc_rtc/gui.h>
+#include <mc_rtc/utils/heatmap.h>
 
 #include <SpaceVecAlg/Conversions.h>
 
@@ -540,31 +541,10 @@ TestServer::TestServer() : xythetaz_(4)
                                             {-1, -1, 0}};
   };
 
-  auto rgbColorMap = [](double minimum, double maximum, double value) {
-    Eigen::Vector3d rgb;
-    if(value > maximum)
-    {
-      rgb << 1, 0, 0;
-      return rgb;
-    }
-    if(value < minimum)
-    {
-      rgb << 0, 0, 0;
-      return rgb;
-    }
-
-    const auto ratio = 2 * (value - minimum) / (maximum - minimum);
-    const auto b = std::max(0., (1 - ratio));
-    const auto r = std::max(0., (ratio - 1));
-    const auto g = 1 - b - r;
-    rgb << r, g, b;
-    return rgb;
-  };
-
-  auto polyhedron_colors_fn = [this, rgbColorMap] {
+  auto polyhedron_colors_fn = [this] {
     double z = std::max(0.1, (1 + cos(t_ / 2)) / 2);
     Eigen::Vector4d color;
-    color << rgbColorMap(0, 1, z), 1;
+    color << mc_rtc::utils::heatmap<Eigen::Vector3d>(0, 1, z), 1;
     return mc_rtc::gui::PolyhedronColors{{0, 0, 1, 1},
                                          {0, 0, 1, 1},
                                          color,
