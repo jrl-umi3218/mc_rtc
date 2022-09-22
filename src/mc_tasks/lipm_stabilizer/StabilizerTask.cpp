@@ -872,8 +872,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   }
   dcmAverageError_ = dcmIntegrator_.eval();
   dcmVelError_ = dcmDerivator_.eval();
-  sva::PTransformd X_0_floatingbase = robot().mbc().bodyPosW[robot().bodyIndexByName("BODY")];
-  Eigen::Matrix3d R_0_fb_yaw = sva::RotZ(mc_rbdyn::rpyFromMat(X_0_floatingbase.rotation()).z());
+  Eigen::Matrix3d R_0_fb_yaw = sva::RotZ(mc_rbdyn::rpyFromMat(robot().posW().rotation()).z());
   Eigen::Vector3d desiredCoMAccel = comddTarget_;
 
   Eigen::Vector3d gain = Eigen::Vector3d{c_.dcmPropGain.x(), c_.dcmPropGain.y(), 0};
