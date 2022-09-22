@@ -533,18 +533,20 @@ struct MC_RTC_GUI_DLLAPI PolyhedronConfig
     out.finish_array();
   }
 
-  Color triangle_color; ///< Default triangle face color
+  ///< Default triangle face color
+  Color triangle_color;
   bool show_triangle = true;
-  bool use_triangle_color =
-      false; ///< When true, use triangle face color from triangle_color. Else interpolate between each vertex color
+  ///< When true, use triangle face color from triangle_color. Else interpolate between each vertex color
+  bool use_triangle_color = false;
   LineConfig edge_config;
   bool show_edges = true;
-  bool fixed_edge_color =
-      true; ///< When true, use edge colors from edges_config. Else interpolate between each vertex color
+  ///< When true, use edge colors from edges_config. Else interpolate between each vertex color
+  bool fixed_edge_color = true;
   PointConfig vertices_config;
   bool show_vertices = true;
-  bool fixed_vertices_color = true; ///< When true, use vertices colors from vertices_config. Else use the vertex color
-                                    ///< passed along with the triangles
+  ///< When true, use vertices colors from vertices_config. Else use the vertex color
+  ///< passed along with the triangles
+  bool fixed_vertices_color = true;
 };
 } // namespace gui
 
