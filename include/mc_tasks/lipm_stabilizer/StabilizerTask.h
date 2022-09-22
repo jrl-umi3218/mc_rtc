@@ -20,6 +20,8 @@
 #include <mc_tasks/lipm_stabilizer/Contact.h>
 #include <mc_tasks/lipm_stabilizer/ZMPCC.h>
 
+#include <mc/rtc/deprecated.hh>
+
 #include <state-observation/dynamics-estimators/lipm-dcm-estimator.hpp>
 
 #include <Eigen/QR>
@@ -431,9 +433,14 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     dcmIntegrator_.timeConstant(dcmIntegratorTimeConstant);
   }
 
+  MC_RTC_DEPRECATED inline void dcmDerivatorTimeConstant(double T) noexcept
+  {
+    dcmDerivatorCutoffPeriod(T);
+  }
+
   inline void dcmDerivatorCutoffPeriod(double T) noexcept
   {
-    c_.dcmDerivatorCutOffPeriod = T;
+    c_.dcmDerivatorTimeConstant = T;
     dcmDerivator_.cutoffPeriod(T);
   }
 

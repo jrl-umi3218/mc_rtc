@@ -333,7 +333,7 @@ void StabilizerTask::commitConfig()
 
 void StabilizerTask::configure_(mc_solver::QPSolver & solver)
 {
-  dcmDerivator_.cutoffPeriod(c_.dcmDerivatorCutOffPeriod);
+  dcmDerivator_.cutoffPeriod(c_.dcmDerivatorTimeConstant);
   dcmIntegrator_.timeConstant(c_.dcmIntegratorTimeConstant);
   dcmIntegrator_.saturation(c_.safetyThresholds.MAX_AVERAGE_DCM_ERROR);
 
