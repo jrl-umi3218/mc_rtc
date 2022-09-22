@@ -14,6 +14,8 @@ namespace mc_rtc
 namespace gui
 {
 
+namespace details
+{
 /** Polyhedron should display a polyhedron or a set of polyhedrons
  *
  * A color is provided to display the polyhedron(s)
@@ -92,39 +94,41 @@ protected:
   GetColorT get_color_fn_;
 };
 
+} // namespace details
+
 /** Helper function to build a PolyhedronImpl */
 template<typename GetVerticesT, typename GetColorT>
-ColoredPolyhedronImpl<GetVerticesT, GetColorT> Polyhedron(const std::string & name,
-                                                          GetVerticesT get_vertices_fn,
-                                                          GetColorT get_color_fn)
+details::ColoredPolyhedronImpl<GetVerticesT, GetColorT> Polyhedron(const std::string & name,
+                                                                   GetVerticesT get_vertices_fn,
+                                                                   GetColorT get_color_fn)
 {
-  return ColoredPolyhedronImpl<GetVerticesT, GetColorT>(name, {}, get_vertices_fn, get_color_fn);
+  return details::ColoredPolyhedronImpl<GetVerticesT, GetColorT>(name, {}, get_vertices_fn, get_color_fn);
 }
 
 /** Helper function to build a PolyhedronImpl */
 template<typename GetVerticesT, typename GetColorT>
-ColoredPolyhedronImpl<GetVerticesT, GetColorT> Polyhedron(const std::string & name,
-                                                          const PolyhedronConfig & config,
-                                                          GetVerticesT get_vertices_fn,
-                                                          GetColorT get_color_fn)
+details::ColoredPolyhedronImpl<GetVerticesT, GetColorT> Polyhedron(const std::string & name,
+                                                                   const PolyhedronConfig & config,
+                                                                   GetVerticesT get_vertices_fn,
+                                                                   GetColorT get_color_fn)
 {
-  return ColoredPolyhedronImpl<GetVerticesT, GetColorT>(name, config, get_vertices_fn, get_color_fn);
+  return details::ColoredPolyhedronImpl<GetVerticesT, GetColorT>(name, config, get_vertices_fn, get_color_fn);
 }
 
 /** Helper function to build a PolyhedronImpl */
 template<typename GetVerticesT>
-PolyhedronImpl<GetVerticesT> Polyhedron(const std::string & name, GetVerticesT get_vertices_fn)
+details::PolyhedronImpl<GetVerticesT> Polyhedron(const std::string & name, GetVerticesT get_vertices_fn)
 {
-  return PolyhedronImpl<GetVerticesT>(name, {}, get_vertices_fn);
+  return details::PolyhedronImpl<GetVerticesT>(name, {}, get_vertices_fn);
 }
 
 /** Helper function to build a PolyhedronImpl */
 template<typename GetVerticesT>
-PolyhedronImpl<GetVerticesT> Polyhedron(const std::string & name,
-                                        const PolyhedronConfig & config,
-                                        GetVerticesT get_vertices_fn)
+details::PolyhedronImpl<GetVerticesT> Polyhedron(const std::string & name,
+                                                 const PolyhedronConfig & config,
+                                                 GetVerticesT get_vertices_fn)
 {
-  return PolyhedronImpl<GetVerticesT>(name, config, get_vertices_fn);
+  return details::PolyhedronImpl<GetVerticesT>(name, config, get_vertices_fn);
 }
 
 } // namespace gui
