@@ -868,6 +868,12 @@ public:
    */
   void add(const std::string & key, const Eigen::Vector3d & value);
 
+  /*! \brief Add a Eigen::Vector4d element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, const Eigen::Vector4d & value);
+
   /*! \brief Add a Eigen::Vector6d element to the Configuration
    *
    * \see add(const std::string&, bool)
@@ -1019,6 +1025,12 @@ public:
    * \see push(bool);
    */
   void push(const Eigen::Vector3d & value);
+
+  /*! \brief Insert a Eigen::Vector4d element into an array
+   *
+   * \see push(bool);
+   */
+  void push(const Eigen::Vector4d & value);
 
   /*! \brief Insert a Eigen::Vector6d element into an array
    *

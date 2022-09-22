@@ -35,6 +35,7 @@ stringV: [a, b, c, foo, bar]
 doubleA3: [1.1, 2.2, 3.3]
 v2d: [1.0, 2.3]
 v3d: [1.0, 2.3, -100]
+v4d: [1.0, 2.3, 3.3, -100]
 v6d: [1.0, -1.5, 2.0, -2.5, 3.0, -3.5]
 g6d: [1.0, -1.5, 2.0, -2.5, 3.0, -3.5]
 vXd: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -58,6 +59,7 @@ dict:
   stringV: [a, b, c, foo, bar]
   v2d: [1.0, 2.3]
   v3d: [1.0, 2.3, -100]
+  v4d: [1.0, 2.3, 3.3, -100]
   v6d: [1.0, -1.5, 2.0, -2.5, 3.0, -3.5]
   quat: [0.71, 0, 0.71, 0]
   doubleDoublePair: [42.5, -42.5]
@@ -90,6 +92,7 @@ static std::string JSON_DATA = R"(
   "doubleA3": [1.1, 2.2, 3.3],
   "v2d": [1.0, 2.3],
   "v3d": [1.0, 2.3, -100],
+  "v4d": [1.0, 2.3, 3.3, -100],
   "v6d": [1.0, -1.5, 2.0, -2.5, 3.0, -3.5],
   "vXd": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   "quat": [0.71, 0, 0.71, 0],
@@ -113,6 +116,7 @@ static std::string JSON_DATA = R"(
     "stringV": ["a", "b", "c", "foo", "bar"],
     "v2d": [1.0, 2.3],
     "v3d": [1.0, 2.3, -100],
+    "v4d": [1.0, 2.3, 3.3, -100],
     "v6d": [1.0, -1.5, 2.0, -2.5, 3.0, -3.5],
     "quat": [0.71, 0, 0.71, 0],
     "doubleDoublePair": [42.5, -42.5],
@@ -455,6 +459,37 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     mc_rbdyn::Gains3d i = mc_rbdyn::Gains3d::Zero();
     i = config("dict")("double");
     BOOST_CHECK_EQUAL(i, ref);
+  }
+
+  /* Eigen::Vector4d test */
+  {
+    Eigen::Vector4d ref;
+    ref << 1.0, 2.3, 3.3, -100;
+    Eigen::Vector4d zero = Eigen::Vector4d::Zero();
+
+    Eigen::Vector4d a = config("v4d");
+    BOOST_CHECK_EQUAL(a, ref);
+
+    Eigen::Vector4d b = Eigen::Vector4d::Zero();
+    config("v4d", b);
+    BOOST_CHECK_EQUAL(b, ref);
+
+    Eigen::Vector4d c = Eigen::Vector4d::Zero();
+    config("v6d", c);
+    BOOST_CHECK_EQUAL(c, zero);
+
+    MC_RTC_diagnostic_push
+    MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
+    BOOST_CHECK_THROW(Eigen::Vector4d d = config("v6d"), mc_rtc::Configuration::Exception);
+    MC_RTC_diagnostic_pop
+
+    Eigen::Vector4d e = Eigen::Vector4d::Zero();
+    e = config("dict")("v4d");
+    BOOST_CHECK_EQUAL(e, ref);
+
+    Eigen::Vector4d f = Eigen::Vector4d::Zero();
+    config("dict")("v4d", f);
+    BOOST_CHECK_EQUAL(f, ref);
   }
 
   /* Eigen::Vector6d test */

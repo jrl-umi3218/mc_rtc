@@ -883,6 +883,7 @@ void Configuration::add(const std::string & key, const char * value) { add(key, 
 void Configuration::add(const std::string & key, const std::string & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, const Eigen::Vector2d & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, const Eigen::Vector3d & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::Vector4d & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, const Eigen::Vector6d & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, const Eigen::VectorXd & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, const Eigen::Quaterniond & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
@@ -991,6 +992,7 @@ void Configuration::push(const char * value) { push(std::string(value)); }
 void Configuration::push(const std::string & value) { push_impl(*this, value, v.value_, v.doc_.get()); }
 void Configuration::push(const Eigen::Vector2d & value) { push_impl(*this, value, v.value_, v.doc_.get()); }
 void Configuration::push(const Eigen::Vector3d & value) { push_impl(*this, value, v.value_, v.doc_.get()); }
+void Configuration::push(const Eigen::Vector4d & value) { push_impl(*this, value, v.value_, v.doc_.get()); }
 void Configuration::push(const Eigen::Vector6d & value) { push_impl(*this, value, v.value_, v.doc_.get()); }
 void Configuration::push(const Eigen::VectorXd & value) { push_impl(*this, value, v.value_, v.doc_.get()); }
 void Configuration::push(const Eigen::Quaterniond & value) { push_impl(*this, value, v.value_, v.doc_.get()); }
