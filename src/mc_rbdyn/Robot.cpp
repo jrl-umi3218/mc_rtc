@@ -298,6 +298,8 @@ Robot::Robot(NewRobotToken,
     }
     mbc().q = initQ;
     forwardKinematics();
+    forwardVelocity();
+    forwardAcceleration();
   }
 
   bodyTransforms_.resize(mb().bodies().size());
