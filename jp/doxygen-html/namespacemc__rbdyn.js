@@ -13,6 +13,7 @@ var namespacemc__rbdyn =
     [ "Flexibility", "structmc__rbdyn_1_1Flexibility.html", "structmc__rbdyn_1_1Flexibility" ],
     [ "ForceSensor", "structmc__rbdyn_1_1ForceSensor.html", "structmc__rbdyn_1_1ForceSensor" ],
     [ "Frame", "structmc__rbdyn_1_1Frame.html", "structmc__rbdyn_1_1Frame" ],
+    [ "Gains", "structmc__rbdyn_1_1Gains.html", "structmc__rbdyn_1_1Gains" ],
     [ "GripperSurface", "structmc__rbdyn_1_1GripperSurface.html", "structmc__rbdyn_1_1GripperSurface" ],
     [ "JointSensor", "structmc__rbdyn_1_1JointSensor.html", "structmc__rbdyn_1_1JointSensor" ],
     [ "Mimic", "structmc__rbdyn_1_1Mimic.html", "structmc__rbdyn_1_1Mimic" ],

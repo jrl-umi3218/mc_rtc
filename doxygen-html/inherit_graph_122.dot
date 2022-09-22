@@ -4,7 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_rtc::gui::plot::\limpl::Ordinate\< GetT \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html"];
-  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="mc_rtc::gui::plot::\limpl::OrdinateWithColor\l\< GetT, GetColor \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1plot_1_1impl_1_1OrdinateWithColor.html"];
+  Node0 [label="mc_rtc::gui::plot::\lAxisConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1plot_1_1AxisConfiguration.html"];
 }

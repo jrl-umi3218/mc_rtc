@@ -12,5 +12,6 @@ var searchData=
   ['lookattask_2eh',['LookAtTask.h',['../LookAtTask_8h.html',1,'']]],
   ['lookattftask_2eh',['LookAtTFTask.h',['../LookAtTFTask_8h.html',1,'']]],
   ['lowpass_2eh',['LowPass.h',['../LowPass_8h.html',1,'']]],
+  ['lowpasscompose_2eh',['LowPassCompose.h',['../LowPassCompose_8h.html',1,'']]],
   ['lowpassfinitedifferences_2eh',['LowPassFiniteDifferences.h',['../LowPassFiniteDifferences_8h.html',1,'']]]
 ];

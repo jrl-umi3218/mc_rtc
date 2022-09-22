@@ -106,6 +106,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a4de43cd1afd6571c2b390ac00c3ed252"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__filter_1_1utils.html#a4de43cd1afd6571c2b390ac00c3ed252">clampInPlace</a> (VectorT &amp;v, double lower, double upper)</td></tr>
 <tr class="memdesc:a4de43cd1afd6571c2b390ac00c3ed252"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamps in-place each component of a vector in a given interval.  <a href="#a4de43cd1afd6571c2b390ac00c3ed252">More...</a><br /></td></tr>
 <tr class="separator:a4de43cd1afd6571c2b390ac00c3ed252"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab82d5e06d06a98e2087aadce7be029ab"><td class="memTemplParams" colspan="2">template&lt;typename VectorT &gt; </td></tr>
+<tr class="memitem:ab82d5e06d06a98e2087aadce7be029ab"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__filter_1_1utils.html#ab82d5e06d06a98e2087aadce7be029ab">clampInPlaceAndWarn</a> (VectorT &amp;vector, double lower, double upper, const std::string &amp;label)</td></tr>
+<tr class="memdesc:ab82d5e06d06a98e2087aadce7be029ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamps in-place each component of a vector in a given interval, issuing a warning when bounds are hit.  <a href="#ab82d5e06d06a98e2087aadce7be029ab">More...</a><br /></td></tr>
+<tr class="separator:ab82d5e06d06a98e2087aadce7be029ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae7592fcc8c4adee0d0108bc9ffba659"><td class="memTemplParams" colspan="2">template&lt;typename VectorT &gt; </td></tr>
 <tr class="memitem:aae7592fcc8c4adee0d0108bc9ffba659"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__filter_1_1utils.html#aae7592fcc8c4adee0d0108bc9ffba659">clampInPlaceAndWarn</a> (VectorT &amp;vector, const VectorT &amp;lower, const VectorT &amp;upper, const std::string &amp;label)</td></tr>
 <tr class="memdesc:aae7592fcc8c4adee0d0108bc9ffba659"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamps in-place each component of a vector in a given interval, issuing a warning when bounds are hit.  <a href="#aae7592fcc8c4adee0d0108bc9ffba659">More...</a><br /></td></tr>
@@ -513,7 +517,7 @@ template&lt;typename VectorT &gt; </div>
 </div>
 </div>
 <a id="ac413b7125d296374adc252995e63570d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac413b7125d296374adc252995e63570d">&#9670;&nbsp;</a></span>clampInPlaceAndWarn() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac413b7125d296374adc252995e63570d">&#9670;&nbsp;</a></span>clampInPlaceAndWarn() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -562,8 +566,61 @@ template&lt;typename VectorT &gt; </div>
 
 </div>
 </div>
+<a id="ab82d5e06d06a98e2087aadce7be029ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab82d5e06d06a98e2087aadce7be029ab">&#9670;&nbsp;</a></span>clampInPlaceAndWarn() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VectorT &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_filter::utils::clampInPlaceAndWarn </td>
+          <td>(</td>
+          <td class="paramtype">VectorT &amp;&#160;</td>
+          <td class="paramname"><em>vector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>lower</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>upper</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>label</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Clamps in-place each component of a vector in a given interval, issuing a warning when bounds are hit. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespacemc__filter_1_1utils.html#a7ee9282ad316cf4eef418c7060fcfcf9" title="Clamps each component of a vector in a given interval. ">clampInPlace(VectorT&amp; v, const VectorT &amp; lower, const VectorT &amp; upper)</a> </dd></dl>
+
+</div>
+</div>
 <a id="aae7592fcc8c4adee0d0108bc9ffba659"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae7592fcc8c4adee0d0108bc9ffba659">&#9670;&nbsp;</a></span>clampInPlaceAndWarn() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aae7592fcc8c4adee0d0108bc9ffba659">&#9670;&nbsp;</a></span>clampInPlaceAndWarn() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

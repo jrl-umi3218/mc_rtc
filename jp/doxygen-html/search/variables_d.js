@@ -31,6 +31,7 @@ var searchData=
   ['mbs_5f',['mbs_',['../structmc__rbdyn_1_1Robots.html#a898afa6275886be6bd9ed57346d02cef',1,'mc_rbdyn::Robots']]],
   ['measuredcom_5f',['measuredCoM_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a5ba652e24e17842a3a0e7d00157a0416',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['measuredcomd_5f',['measuredCoMd_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa44333b1b7aa2db2ae3f82162fe00536',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
+  ['measuredcomdd_5f',['measuredCoMdd_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aca1f80d2f2d2daf7c758bd98a81ab610',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['measuredcomunbiased_5f',['measuredCoMUnbiased_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a35e9e734fe506e426a866ccbb5b790f5',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['measureddcm_5f',['measuredDCM_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a0b4b1c28b4e34a2f4c4600b4f2ec2245',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['measureddcmunbiased_5f',['measuredDCMUnbiased_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a2747ce4f19500c9313bd38400d6c4c3a',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],

@@ -290,10 +290,16 @@ var hierarchy =
     [ "mc_filter::LowPass< Eigen::Vector3d >", "structmc__filter_1_1LowPass.html", null ],
     [ "mc_filter::LowPass< sva::ForceVecd >", "structmc__filter_1_1LowPass.html", null ],
     [ "mc_filter::LowPass< sva::MotionVecd >", "structmc__filter_1_1LowPass.html", null ],
+    [ "mc_filter::LowPassCompose< T >", "structmc__filter_1_1LowPassCompose.html", null ],
+    [ "mc_filter::LowPassCompose< Eigen::Vector3d >", "structmc__filter_1_1LowPassCompose.html", null ],
     [ "mc_rtc::LTDLHandle", "structmc__rtc_1_1LTDLHandle.html", null ],
     [ "mc_rtc::LTDLMutex", "structmc__rtc_1_1LTDLMutex.html", null ],
     [ "map", null, [
       [ "mc_rbdyn::VisualMap", "structmc__rbdyn_1_1VisualMap.html", null ]
+    ] ],
+    [ "Matrix", null, [
+      [ "mc_rbdyn::Gains< 2 >", "structmc__rbdyn_1_1Gains.html", null ],
+      [ "mc_rbdyn::Gains< N >", "structmc__rbdyn_1_1Gains.html", null ]
     ] ],
     [ "mc_control::MCController", "structmc__control_1_1MCController.html", [
       [ "mc_control::fsm::Controller", "structmc__control_1_1fsm_1_1Controller.html", null ],

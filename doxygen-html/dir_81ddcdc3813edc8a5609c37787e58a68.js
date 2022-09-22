@@ -10,6 +10,9 @@ var dir_81ddcdc3813edc8a5609c37787e58a68 =
     [ "LowPass.h", "LowPass_8h.html", [
       [ "LowPass", "structmc__filter_1_1LowPass.html", "structmc__filter_1_1LowPass" ]
     ] ],
+    [ "LowPassCompose.h", "LowPassCompose_8h.html", [
+      [ "LowPassCompose", "structmc__filter_1_1LowPassCompose.html", "structmc__filter_1_1LowPassCompose" ]
+    ] ],
     [ "LowPassFiniteDifferences.h", "LowPassFiniteDifferences_8h.html", [
       [ "LowPassFiniteDifferences", "structmc__filter_1_1LowPassFiniteDifferences.html", "structmc__filter_1_1LowPassFiniteDifferences" ]
     ] ],

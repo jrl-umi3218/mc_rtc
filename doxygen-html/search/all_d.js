@@ -204,6 +204,7 @@ var searchData=
   ['measuredcom_5f',['measuredCoM_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a5ba652e24e17842a3a0e7d00157a0416',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['measuredcomd',['measuredCoMd',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a33c41662a68ba76b375b5f9dcd878475',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['measuredcomd_5f',['measuredCoMd_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa44333b1b7aa2db2ae3f82162fe00536',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
+  ['measuredcomdd_5f',['measuredCoMdd_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aca1f80d2f2d2daf7c758bd98a81ab610',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['measuredcomunbiased_5f',['measuredCoMUnbiased_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a35e9e734fe506e426a866ccbb5b790f5',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['measuredcop',['measuredCoP',['../structmc__tasks_1_1force_1_1CoPTask.html#acf756c0e7e6aa1fbb60feb6491427411',1,'mc_tasks::force::CoPTask']]],
   ['measuredcopw',['measuredCoPW',['../structmc__tasks_1_1force_1_1CoPTask.html#a16f95e7ea6a037950ea6b8eb5e57b58d',1,'mc_tasks::force::CoPTask']]],

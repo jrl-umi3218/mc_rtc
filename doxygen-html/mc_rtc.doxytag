@@ -620,6 +620,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/</path>
     <filename>mc__rtc_2Configuration_8h</filename>
     <includes id="MessagePackBuilder_8h" name="MessagePackBuilder.h" local="no" imported="no">mc_rtc/MessagePackBuilder.h</includes>
+    <includes id="Gains_8h" name="Gains.h" local="no" imported="no">mc_rbdyn/Gains.h</includes>
     <includes id="rpy__utils_8h" name="rpy_utils.h" local="no" imported="no">mc_rbdyn/rpy_utils.h</includes>
     <class kind="struct">mc_rtc::ConfigurationLoader</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; void &gt;</class>
@@ -1229,6 +1230,14 @@
     <namespace>mc_filter</namespace>
   </compound>
   <compound kind="file">
+    <name>LowPassCompose.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_filter/</path>
+    <filename>LowPassCompose_8h</filename>
+    <includes id="logging_8h" name="logging.h" local="no" imported="no">mc_rtc/logging.h</includes>
+    <class kind="struct">mc_filter::LowPassCompose</class>
+    <namespace>mc_filter</namespace>
+  </compound>
+  <compound kind="file">
     <name>LowPassFiniteDifferences.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_filter/</path>
     <filename>LowPassFiniteDifferences_8h</filename>
@@ -1313,6 +1322,13 @@
       <anchorfile>namespacemc__filter_1_1utils.html</anchorfile>
       <anchor>a4de43cd1afd6571c2b390ac00c3ed252</anchor>
       <arglist>(VectorT &amp;v, double lower, double upper)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>clampInPlaceAndWarn</name>
+      <anchorfile>namespacemc__filter_1_1utils.html</anchorfile>
+      <anchor>ab82d5e06d06a98e2087aadce7be029ab</anchor>
+      <arglist>(VectorT &amp;vector, double lower, double upper, const std::string &amp;label)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -1686,6 +1702,34 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>Gains.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
+    <filename>Gains_8h</filename>
+    <class kind="struct">mc_rbdyn::Gains</class>
+    <namespace>mc_rbdyn</namespace>
+    <member kind="typedef">
+      <type>Gains&lt; 2 &gt;</type>
+      <name>Gains2d</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a579a5a84c1619ddaae2108661c3241f5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>Gains&lt; 3 &gt;</type>
+      <name>Gains3d</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a568b6e5798e01953165c11cd12fe415b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>Gains&lt; 6 &gt;</type>
+      <name>Gains6d</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a63313c08848a1cdd1461b077c1a83a4b</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>GripperSurface.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>GripperSurface_8h</filename>
@@ -1705,9 +1749,10 @@
     <name>StabilizerConfiguration.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/lipm_stabilizer/</path>
     <filename>StabilizerConfiguration_8h</filename>
-    <includes id="clamp_8h" name="clamp.h" local="no" imported="no">mc_filter/utils/clamp.h</includes>
+    <includes id="Gains_8h" name="Gains.h" local="no" imported="no">mc_rbdyn/Gains.h</includes>
     <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <includes id="ZMPCCConfiguration_8h" name="ZMPCCConfiguration.h" local="no" imported="no">mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h</includes>
+    <includes id="clamp_8h" name="clamp.h" local="no" imported="no">mc_filter/utils/clamp.h</includes>
     <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
     <includes id="logging_8h" name="logging.h" local="no" imported="no">mc_rtc/logging.h</includes>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::FDQPWeights</class>
@@ -3803,6 +3848,27 @@
       <anchor>aae268af9ba09c4178e3d3711b5e3a32a</anchor>
       <arglist>(sva::ImpedanceVecd, MotionVecd)</arglist>
     </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a924ed0ac7a53f8d0f36281e6e9d337a5</anchor>
+      <arglist>(mc_rbdyn::Gains2d, Vector2d)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a5dc69800593dae0a5002db3668e9294d</anchor>
+      <arglist>(mc_rbdyn::Gains3d, Vector3d)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>aa0c490e185c40165c27a46a5a22517f3</anchor>
+      <arglist>(mc_rbdyn::Gains6d, Vector6d)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>utils.h</name>
@@ -3971,6 +4037,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/</path>
     <filename>MessagePackBuilder_8h</filename>
     <includes id="utils__api_8h" name="utils_api.h" local="no" imported="no">mc_rtc/utils_api.h</includes>
+    <includes id="Gains_8h" name="Gains.h" local="no" imported="no">mc_rbdyn/Gains.h</includes>
     <class kind="struct">mc_rtc::MessagePackBuilder</class>
     <namespace>mc_rtc</namespace>
   </compound>
@@ -4592,12 +4659,13 @@
     <includes id="ExponentialMovingAverage_8h" name="ExponentialMovingAverage.h" local="no" imported="no">mc_filter/ExponentialMovingAverage.h</includes>
     <includes id="LeakyIntegrator_8h" name="LeakyIntegrator.h" local="no" imported="no">mc_filter/LeakyIntegrator.h</includes>
     <includes id="LowPass_8h" name="LowPass.h" local="no" imported="no">mc_filter/LowPass.h</includes>
+    <includes id="LowPassCompose_8h" name="LowPassCompose.h" local="no" imported="no">mc_filter/LowPassCompose.h</includes>
     <includes id="StationaryOffset_8h" name="StationaryOffset.h" local="no" imported="no">mc_filter/StationaryOffset.h</includes>
+    <includes id="StabilizerConfiguration_8h" name="StabilizerConfiguration.h" local="no" imported="no">mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h</includes>
     <includes id="CoMTask_8h" name="CoMTask.h" local="no" imported="no">mc_tasks/CoMTask.h</includes>
     <includes id="CoPTask_8h" name="CoPTask.h" local="no" imported="no">mc_tasks/CoPTask.h</includes>
     <includes id="MetaTask_8h" name="MetaTask.h" local="no" imported="no">mc_tasks/MetaTask.h</includes>
     <includes id="OrientationTask_8h" name="OrientationTask.h" local="no" imported="no">mc_tasks/OrientationTask.h</includes>
-    <includes id="StabilizerConfiguration_8h" name="StabilizerConfiguration.h" local="no" imported="no">mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h</includes>
     <includes id="mc__tasks_2lipm__stabilizer_2Contact_8h" name="Contact.h" local="no" imported="no">mc_tasks/lipm_stabilizer/Contact.h</includes>
     <includes id="ZMPCC_8h" name="ZMPCC.h" local="no" imported="no">mc_tasks/lipm_stabilizer/ZMPCC.h</includes>
     <class kind="struct">mc_tasks::lipm_stabilizer::StabilizerTask</class>
@@ -8149,6 +8217,27 @@
       <name>operator Eigen::Vector6d</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
       <anchor>a028726dd426da2ce9c6101297b2c197c</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>operator mc_rbdyn::Gains2d</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>ab4277077c2bcfe6f21eb33ddf18aed03</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>operator mc_rbdyn::Gains3d</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a11e4a412a6e0fab0fdb4a33746eefca6</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>operator mc_rbdyn::Gains6d</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a157e0ee8843fa29aa11dd4a959c77608</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
@@ -15111,6 +15200,29 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rbdyn::Gains</name>
+    <filename>structmc__rbdyn_1_1Gains.html</filename>
+    <templarg>N</templarg>
+    <member kind="function">
+      <type></type>
+      <name>Gains</name>
+      <anchorfile>structmc__rbdyn_1_1Gains.html</anchorfile>
+      <anchor>a376b202a881efa2bfbdb8484439c500e</anchor>
+      <arglist>(double value)</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>Gains&lt; 2 &gt;</name>
+    <filename>structmc__rbdyn_1_1Gains.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>Gains</name>
+      <anchorfile>structmc__rbdyn_1_1Gains.html</anchorfile>
+      <anchor>a376b202a881efa2bfbdb8484439c500e</anchor>
+      <arglist>(double value)</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_tasks::GazeTask</name>
     <filename>structmc__tasks_1_1GazeTask.html</filename>
     <base>TrajectoryTaskGeneric&lt; tasks::qp::GazeTask &gt;</base>
@@ -19221,6 +19333,169 @@
       <name>dt_</name>
       <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
       <anchor>a54232494fa4fa74a08d85acf3f95ab7a</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_filter::LowPassCompose</name>
+    <filename>structmc__filter_1_1LowPassCompose.html</filename>
+    <templarg>T</templarg>
+    <member kind="function">
+      <type></type>
+      <name>LowPassCompose</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a7e0a3a63985bcbe4304ce4b1314ae0e6</anchor>
+      <arglist>(double dt, double period=0)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>cutoffPeriod</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a80c33c72f2aea1d2c1d74b2cfd3d63bf</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>cutoffPeriod</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a2dd78dbccd35a9a733811b29ddb6b6a3</anchor>
+      <arglist>(double period)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a7f46ce62deea611cc28c1e2ceb4af642</anchor>
+      <arglist>(const T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>update</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a9fd2155357d9c895023db9abbf420083</anchor>
+      <arglist>(const T &amp;newValue_hp, const T &amp;newValue_lp)</arglist>
+    </member>
+    <member kind="function">
+      <type>const T &amp;</type>
+      <name>eval</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>ae9f7ed9268b1cd1c1c95003dc9dd7971</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const T &amp;</type>
+      <name>input_lp</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a72e203e4ce83a77ee216885e32a3ee3f</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const T &amp;</type>
+      <name>input_hp</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>ab8e31710e639fcbcd906a3404cfb51b1</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>dt</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a17ccf94bb433a45d1f577ad6fbf4211e</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>dt</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>ad557a04cb22cea4ed06206997d17e894</anchor>
+      <arglist>(double dt)</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>dt_</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a1d92b23e03b65ae1fac33a54ebc7d08a</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>LowPassCompose&lt; Eigen::Vector3d &gt;</name>
+    <filename>structmc__filter_1_1LowPassCompose.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>LowPassCompose</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a7e0a3a63985bcbe4304ce4b1314ae0e6</anchor>
+      <arglist>(double dt, double period=0)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>cutoffPeriod</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a80c33c72f2aea1d2c1d74b2cfd3d63bf</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>cutoffPeriod</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a2dd78dbccd35a9a733811b29ddb6b6a3</anchor>
+      <arglist>(double period)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a7f46ce62deea611cc28c1e2ceb4af642</anchor>
+      <arglist>(const Eigen::Vector3d &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>update</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a9fd2155357d9c895023db9abbf420083</anchor>
+      <arglist>(const Eigen::Vector3d &amp;newValue_hp, const Eigen::Vector3d &amp;newValue_lp)</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>eval</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>ae9f7ed9268b1cd1c1c95003dc9dd7971</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>input_lp</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a72e203e4ce83a77ee216885e32a3ee3f</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>input_hp</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>ab8e31710e639fcbcd906a3404cfb51b1</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>dt</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a17ccf94bb433a45d1f577ad6fbf4211e</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>dt</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>ad557a04cb22cea4ed06206997d17e894</anchor>
+      <arglist>(double dt)</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>dt_</name>
+      <anchorfile>structmc__filter_1_1LowPassCompose.html</anchorfile>
+      <anchor>a1d92b23e03b65ae1fac33a54ebc7d08a</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -32282,24 +32557,24 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>double</type>
+      <type>mc_rbdyn::Gains2d</type>
       <name>dcmPropGain</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
-      <anchor>aaae1753ce0d0a7154330565e0788ffb1</anchor>
+      <anchor>ac90879e6d883a90f3612c68e670a4fe9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>double</type>
+      <type>mc_rbdyn::Gains2d</type>
       <name>dcmIntegralGain</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
-      <anchor>a26e250e0c089b2808642057977c2af01</anchor>
+      <anchor>af146ad31f58547fc9c6266989dbed13e</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>double</type>
+      <type>mc_rbdyn::Gains2d</type>
       <name>dcmDerivGain</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
-      <anchor>a1a17a20ec9324108f9313e97cc7f5910</anchor>
+      <anchor>af4654ca70591e2a2c3de9ebf2ee57ccb</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -32874,10 +33149,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
-      <type>mc_filter::StationaryOffset&lt; Eigen::Vector3d &gt;</type>
+      <type>mc_filter::LowPassCompose&lt; Eigen::Vector3d &gt;</type>
       <name>dcmDerivator_</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a0238d047704d0cdaca32fe09153e4688</anchor>
+      <anchor>a68d1efc50be7bb07bdf12ed98bba24cc</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -33295,6 +33570,13 @@
     </member>
     <member kind="variable" protection="protected">
       <type>Eigen::Vector3d</type>
+      <name>measuredCoMdd_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>aca1f80d2f2d2daf7c758bd98a81ab610</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
       <name>measuredZMP_</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>a6863d425eff4e098af4abc8a38ee2326</anchor>
@@ -33400,17 +33682,31 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>dcmGains</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a58c5a5511acce6250f822dddf65e0a2d</anchor>
+      <arglist>(const Eigen::Vector2d &amp;p, const Eigen::Vector2d &amp;i, const Eigen::Vector2d &amp;d) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>dcmIntegratorTimeConstant</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>ac26f74f6c9313363b2691105da3eae52</anchor>
       <arglist>(double dcmIntegratorTimeConstant) noexcept</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>MC_RTC_DEPRECATED void</type>
       <name>dcmDerivatorTimeConstant</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a93949613824347661e94f1ca1388f62f</anchor>
-      <arglist>(double dcmDerivatorTimeConstant) noexcept</arglist>
+      <anchor>ae203e35dbd5418acb8ec2650f020a6b5</anchor>
+      <arglist>(double T) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>dcmDerivatorCutoffPeriod</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a3984d932742f5329d85f805b4723e7d2</anchor>
+      <arglist>(double T) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -39157,6 +39453,7 @@
     <class kind="struct">mc_filter::ExponentialMovingAverage</class>
     <class kind="struct">mc_filter::LeakyIntegrator</class>
     <class kind="struct">mc_filter::LowPass</class>
+    <class kind="struct">mc_filter::LowPassCompose</class>
     <class kind="struct">mc_filter::LowPassFiniteDifferences</class>
     <class kind="struct">mc_filter::StationaryOffset</class>
   </compound>
@@ -39230,6 +39527,13 @@
       <type>void</type>
       <name>clampInPlaceAndWarn</name>
       <anchorfile>namespacemc__filter_1_1utils.html</anchorfile>
+      <anchor>ab82d5e06d06a98e2087aadce7be029ab</anchor>
+      <arglist>(VectorT &amp;vector, double lower, double upper, const std::string &amp;label)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>clampInPlaceAndWarn</name>
+      <anchorfile>namespacemc__filter_1_1utils.html</anchorfile>
       <anchor>aae7592fcc8c4adee0d0108bc9ffba659</anchor>
       <arglist>(VectorT &amp;vector, const VectorT &amp;lower, const VectorT &amp;upper, const std::string &amp;label)</arglist>
     </member>
@@ -39274,6 +39578,7 @@
     <class kind="struct">mc_rbdyn::Flexibility</class>
     <class kind="struct">mc_rbdyn::ForceSensor</class>
     <class kind="struct">mc_rbdyn::Frame</class>
+    <class kind="struct">mc_rbdyn::Gains</class>
     <class kind="struct">mc_rbdyn::GripperSurface</class>
     <class kind="struct">mc_rbdyn::JointSensor</class>
     <class kind="struct">mc_rbdyn::Mimic</class>
@@ -39364,6 +39669,27 @@
       <name>ConstFramePtr</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
       <anchor>a2dbebe10445fe21fb342ac391a10ba24</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>Gains&lt; 2 &gt;</type>
+      <name>Gains2d</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a579a5a84c1619ddaae2108661c3241f5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>Gains&lt; 3 &gt;</type>
+      <name>Gains3d</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a568b6e5798e01953165c11cd12fe415b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>Gains&lt; 6 &gt;</type>
+      <name>Gains6d</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a63313c08848a1cdd1461b077c1a83a4b</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -40810,6 +41136,27 @@
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
       <anchor>aae268af9ba09c4178e3d3711b5e3a32a</anchor>
       <arglist>(sva::ImpedanceVecd, MotionVecd)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a924ed0ac7a53f8d0f36281e6e9d337a5</anchor>
+      <arglist>(mc_rbdyn::Gains2d, Vector2d)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a5dc69800593dae0a5002db3668e9294d</anchor>
+      <arglist>(mc_rbdyn::Gains3d, Vector3d)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>aa0c490e185c40165c27a46a5a22517f3</anchor>
+      <arglist>(mc_rbdyn::Gains6d, Vector6d)</arglist>
     </member>
     <member kind="function">
       <type>void</type>

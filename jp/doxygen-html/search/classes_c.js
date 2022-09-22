@@ -20,6 +20,8 @@ var searchData=
   ['lowpass_3c_20eigen_3a_3avector3d_20_3e',['LowPass&lt; Eigen::Vector3d &gt;',['../structmc__filter_1_1LowPass.html',1,'mc_filter']]],
   ['lowpass_3c_20sva_3a_3aforcevecd_20_3e',['LowPass&lt; sva::ForceVecd &gt;',['../structmc__filter_1_1LowPass.html',1,'mc_filter']]],
   ['lowpass_3c_20sva_3a_3amotionvecd_20_3e',['LowPass&lt; sva::MotionVecd &gt;',['../structmc__filter_1_1LowPass.html',1,'mc_filter']]],
+  ['lowpasscompose',['LowPassCompose',['../structmc__filter_1_1LowPassCompose.html',1,'mc_filter']]],
+  ['lowpasscompose_3c_20eigen_3a_3avector3d_20_3e',['LowPassCompose&lt; Eigen::Vector3d &gt;',['../structmc__filter_1_1LowPassCompose.html',1,'mc_filter']]],
   ['lowpassfinitedifferences',['LowPassFiniteDifferences',['../structmc__filter_1_1LowPassFiniteDifferences.html',1,'mc_filter']]],
   ['ltdlhandle',['LTDLHandle',['../structmc__rtc_1_1LTDLHandle.html',1,'mc_rtc']]],
   ['ltdlmutex',['LTDLMutex',['../structmc__rtc_1_1LTDLMutex.html',1,'mc_rtc']]]

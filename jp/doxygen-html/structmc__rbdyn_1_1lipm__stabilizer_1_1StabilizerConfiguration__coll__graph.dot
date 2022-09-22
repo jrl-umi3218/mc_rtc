@@ -5,14 +5,18 @@ digraph "mc_rbdyn::lipm_stabilizer::StabilizerConfiguration"
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
   Node1 [label="mc_rbdyn::lipm_stabilizer\l::StabilizerConfiguration",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" safetyThresholds" ,fontname="Helvetica"];
-  Node2 [label="mc_rbdyn::lipm_stabilizer\l::SafetyThresholds",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html",tooltip="Stabilizer safety thresholds. "];
-  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" fdqpWeights" ,fontname="Helvetica"];
-  Node3 [label="mc_rbdyn::lipm_stabilizer\l::FDQPWeights",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1FDQPWeights.html"];
-  Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" zmpcc" ,fontname="Helvetica"];
-  Node4 [label="mc_rbdyn::lipm_stabilizer\l::ZMPCCConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration.html"];
-  Node5 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" extWrench" ,fontname="Helvetica"];
-  Node5 [label="mc_rbdyn::lipm_stabilizer\l::ExternalWrenchConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html",tooltip="Parameters for the external wrenches. "];
-  Node6 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" dcmBias" ,fontname="Helvetica"];
-  Node6 [label="mc_rbdyn::lipm_stabilizer\l::DCMBiasEstimatorConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html"];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" dcmDerivGain\ndcmPropGain\ndcmIntegralGain" ,fontname="Helvetica"];
+  Node2 [label="mc_rbdyn::Gains\< 2 \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1Gains.html"];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Eigen::Matrix\< double,\l N, 1 \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" safetyThresholds" ,fontname="Helvetica"];
+  Node4 [label="mc_rbdyn::lipm_stabilizer\l::SafetyThresholds",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html",tooltip="Stabilizer safety thresholds. "];
+  Node5 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" fdqpWeights" ,fontname="Helvetica"];
+  Node5 [label="mc_rbdyn::lipm_stabilizer\l::FDQPWeights",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1FDQPWeights.html"];
+  Node6 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" zmpcc" ,fontname="Helvetica"];
+  Node6 [label="mc_rbdyn::lipm_stabilizer\l::ZMPCCConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration.html"];
+  Node7 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" extWrench" ,fontname="Helvetica"];
+  Node7 [label="mc_rbdyn::lipm_stabilizer\l::ExternalWrenchConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html",tooltip="Parameters for the external wrenches. "];
+  Node8 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" dcmBias" ,fontname="Helvetica"];
+  Node8 [label="mc_rbdyn::lipm_stabilizer\l::DCMBiasEstimatorConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html"];
 }

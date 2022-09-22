@@ -9,5 +9,6 @@ var clamp_8h =
     [ "clampInPlace", "clamp_8h.html#a7ee9282ad316cf4eef418c7060fcfcf9", null ],
     [ "clampInPlace", "clamp_8h.html#a4de43cd1afd6571c2b390ac00c3ed252", null ],
     [ "clampInPlaceAndWarn", "clamp_8h.html#ac413b7125d296374adc252995e63570d", null ],
+    [ "clampInPlaceAndWarn", "clamp_8h.html#ab82d5e06d06a98e2087aadce7be029ab", null ],
     [ "clampInPlaceAndWarn", "clamp_8h.html#aae7592fcc8c4adee0d0108bc9ffba659", null ]
 ];

@@ -26,6 +26,7 @@ var dir_314ec80f2fc36a4630429f4d5408038e =
       [ "NewFrameToken", "structmc__rbdyn_1_1Frame_1_1NewFrameToken.html", null ]
     ] ],
     [ "fwd.h", "fwd_8h.html", "fwd_8h" ],
+    [ "Gains.h", "Gains_8h.html", "Gains_8h" ],
     [ "GripperSurface.h", "GripperSurface_8h.html", [
       [ "GripperSurface", "structmc__rbdyn_1_1GripperSurface.html", "structmc__rbdyn_1_1GripperSurface" ]
     ] ],

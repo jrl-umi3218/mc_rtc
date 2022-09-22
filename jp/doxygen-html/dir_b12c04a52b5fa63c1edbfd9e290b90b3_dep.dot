@@ -10,5 +10,5 @@ digraph "include/mc_rbdyn/lipm_stabilizer" {
   dir_81ddcdc3813edc8a5609c37787e58a68 [shape=box label="mc_filter" fillcolor="white" style="filled" color="red" URL="dir_81ddcdc3813edc8a5609c37787e58a68.html"];
   dir_b12c04a52b5fa63c1edbfd9e290b90b3->dir_379a22462e4fb075f5428ea3ff528930 [headlabel="3", labeldistance=1.5 headhref="dir_000017_000008.html"];
   dir_b12c04a52b5fa63c1edbfd9e290b90b3->dir_81ddcdc3813edc8a5609c37787e58a68 [headlabel="1", labeldistance=1.5 headhref="dir_000017_000015.html"];
-  dir_81ddcdc3813edc8a5609c37787e58a68->dir_379a22462e4fb075f5428ea3ff528930 [headlabel="3", labeldistance=1.5 headhref="dir_000015_000008.html"];
+  dir_81ddcdc3813edc8a5609c37787e58a68->dir_379a22462e4fb075f5428ea3ff528930 [headlabel="4", labeldistance=1.5 headhref="dir_000015_000008.html"];
 }
