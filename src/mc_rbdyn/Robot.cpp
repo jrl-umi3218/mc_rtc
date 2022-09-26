@@ -1563,11 +1563,17 @@ const Eigen::Vector3d & mc_rbdyn::Robot::zmpTarget() const
 
 mc_control::Gripper & Robot::gripper(const std::string & gripper)
 {
-  if(!grippers_.count(gripper))
+  return const_cast<mc_control::Gripper &>(static_cast<const Robot *>(this)->gripper(gripper));
+}
+
+const mc_control::Gripper & Robot::gripper(const std::string & gripper) const
+{
+  auto it = grippers_.find(gripper);
+  if(it == grippers_.end())
   {
     mc_rtc::log::error_and_throw("No gripper named {} in robot {}", gripper, name());
   }
-  return *grippers_.at(gripper);
+  return *it->second;
 }
 
 bool Robot::hasGripper(const std::string & gripper) const

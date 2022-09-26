@@ -1036,6 +1036,14 @@ public:
    */
   mc_control::Gripper & gripper(const std::string & gripper);
 
+  /** Access a gripper by name
+   *
+   * \param gripper Gripper name
+   *
+   * \throws If the gripper does not exist within this robot
+   */
+  const mc_control::Gripper & gripper(const std::string & gripper) const;
+
   /** Checks whether a gripper is part of this robot */
   bool hasGripper(const std::string & gripper) const;
 
