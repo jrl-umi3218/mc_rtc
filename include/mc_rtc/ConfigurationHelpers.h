@@ -60,7 +60,7 @@ std::vector<T> fromVectorOrElement(const mc_rtc::Configuration & config,
     try
     {
       T elem = c;
-      return {elem};
+      return std::vector<T>(1, elem);
     }
     catch(mc_rtc::Configuration::Exception & notAnElem)
     { // If that fails as well, return the default

@@ -2,7 +2,7 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_tasks/LookAtTFTask.h>
+#include <mc_tasks_ros/LookAtTFTask.h>
 
 #include <mc_tasks/MetaTaskLoader.h>
 

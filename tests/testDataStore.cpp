@@ -417,6 +417,8 @@ struct aligned_allocator<Overloaded> : public std::allocator<Overloaded>
 bool aligned_allocator<Overloaded>::used = false;
 } // namespace Eigen
 
+// EIGEN_MAKE_ALIGNED_OPERATOR_NEW is no-op in C++17 from 3.4.0
+#if !EIGEN_VERSION_AT_LEAST(3, 4, 0)
 BOOST_AUTO_TEST_CASE(EigenOverloadOperatorNew)
 {
   DataStore store;
@@ -426,6 +428,7 @@ BOOST_AUTO_TEST_CASE(EigenOverloadOperatorNew)
   store.remove("overloaded");
   BOOST_CHECK(Eigen::aligned_allocator<Overloaded>::used == false);
 }
+#endif
 
 BOOST_AUTO_TEST_CASE(TestStabilizer)
 {

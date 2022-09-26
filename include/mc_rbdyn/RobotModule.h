@@ -15,9 +15,8 @@
 #include <mc_rbdyn/api.h>
 #include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
 
-#include <mc/rtc/deprecated.hh>
-
 #include <mc_rtc/constants.h>
+#include <mc_rtc/deprecated.h>
 
 #include <RBDyn/parsers/common.h>
 
