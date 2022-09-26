@@ -1,7 +1,7 @@
 var dir_314ec80f2fc36a4630429f4d5408038e =
 [
     [ "lipm_stabilizer", "dir_b12c04a52b5fa63c1edbfd9e290b90b3.html", "dir_b12c04a52b5fa63c1edbfd9e290b90b3" ],
-    [ "api.h", "mc__rbdyn_2api_8h.html", "mc__rbdyn_2api_8h" ],
+    [ "api.h", "include_2mc__rbdyn_2api_8h.html", "include_2mc__rbdyn_2api_8h" ],
     [ "Base.h", "Base_8h.html", [
       [ "Base", "structmc__rbdyn_1_1Base.html", "structmc__rbdyn_1_1Base" ]
     ] ],

@@ -2,7 +2,7 @@ var dir_fad12f0f0b10f75a80792b958ab0d808 =
 [
     [ "msg", "dir_334ef0e5d85f2880d776f6f4efef6326.html", "dir_334ef0e5d85f2880d776f6f4efef6326" ],
     [ "utils", "dir_166bf500fe105c405562c1ec652d185c.html", "dir_166bf500fe105c405562c1ec652d185c" ],
-    [ "api.h", "mc__solver_2api_8h.html", "mc__solver_2api_8h" ],
+    [ "api.h", "include_2mc__solver_2api_8h.html", "include_2mc__solver_2api_8h" ],
     [ "BoundedSpeedConstr.h", "BoundedSpeedConstr_8h.html", [
       [ "BoundedSpeedConstr", "structmc__solver_1_1BoundedSpeedConstr.html", "structmc__solver_1_1BoundedSpeedConstr" ]
     ] ],

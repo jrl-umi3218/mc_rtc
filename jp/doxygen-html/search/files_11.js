@@ -8,8 +8,7 @@ var searchData=
   ['robotmodule_2eh',['RobotModule.h',['../RobotModule_8h.html',1,'']]],
   ['robotmodulemacros_2eh',['RobotModuleMacros.h',['../RobotModuleMacros_8h.html',1,'']]],
   ['robots_2eh',['Robots.h',['../Robots_8h.html',1,'']]],
-  ['ros_2eh',['ros.h',['../ros_8h.html',1,'']]],
-  ['ros_5fapi_2eh',['ros_api.h',['../mc__rtc_2ros__api_8h.html',1,'(Global Namespace)'],['../mc__tasks_2ros__api_8h.html',1,'(Global Namespace)']]],
+  ['ros_2eh',['ros.h',['../ros_8h.html',1,'(Global Namespace)'],['../ros_2ros_8h.html',1,'(Global Namespace)']]],
   ['rotation_2eh',['Rotation.h',['../Rotation_8h.html',1,'']]],
   ['rpy_5futils_2eh',['rpy_utils.h',['../rpy__utils_8h.html',1,'']]]
 ];

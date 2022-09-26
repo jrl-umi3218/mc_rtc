@@ -30,5 +30,5 @@ digraph "include/mc_rtc/gui/elements.h"
   Node1 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node12 [label="vector",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node13 [label="mc_rtc/gui/api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__rtc_2gui_2api_8h.html"];
+  Node13 [label="mc_rtc/gui/api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$include_2mc__rtc_2gui_2api_8h.html"];
 }

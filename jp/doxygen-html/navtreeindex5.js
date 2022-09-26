@@ -1,5 +1,12 @@
 var NAVTREEINDEX5 =
 {
+"structmc__control_1_1Gripper.html#a1f9ced059d4998dab6150b7796e974af":[3,0,2,10,7],
+"structmc__control_1_1Gripper.html#a200872123e1278c66747c2a35e991123":[3,0,2,10,8],
+"structmc__control_1_1Gripper.html#a22fa930ce8c386d8ccae3bd2664cdad2":[3,0,2,10,45],
+"structmc__control_1_1Gripper.html#a255e63b9cd2411c182b63f7d645414ad":[3,0,2,10,25],
+"structmc__control_1_1Gripper.html#a256da9263781bdd51abeeea862c5e7f4":[3,0,2,10,54],
+"structmc__control_1_1Gripper.html#a30fe14a15d20853d1d0ddd2c3cedcb14":[3,0,2,10,52],
+"structmc__control_1_1Gripper.html#a35f8adae647723d47d34a4f1037e3fb2":[3,0,2,10,65],
 "structmc__control_1_1Gripper.html#a38f825e4e67bde2ec4b2f0088b81e91b":[3,0,2,10,9],
 "structmc__control_1_1Gripper.html#a39397815377ea951403fd34befb1359a":[3,0,2,10,14],
 "structmc__control_1_1Gripper.html#a3d7cfa4cecffe109ec06217fa5e7ad8f":[3,0,2,10,55],
@@ -242,12 +249,5 @@ var NAVTREEINDEX5 =
 "structmc__control_1_1MCGlobalController.html#afc42120f3cbed546bd2a52b93bf08794":[3,0,2,12,34],
 "structmc__control_1_1MCGlobalController.html#afd88894202e0d03669627e4e049d6927":[3,0,2,12,28],
 "structmc__control_1_1MCGlobalController.html#aff57491a7d2d7cc96d4977f736c6bd8b":[3,0,2,12,59],
-"structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html":[3,0,2,12,0],
-"structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a02a37bf8e560cc576b7fd7579aeeaf64":[3,0,2,12,0,28],
-"structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a098660ebece62cefc4b8cf0e108845e3":[3,0,2,12,0,17],
-"structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a0ca07c26b98991be2e1036a78c5f9702":[3,0,2,12,0,23],
-"structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a0f8466a2f2e104ed4fd266c5d50a1390":[3,0,2,12,0,24],
-"structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a10a18732116f39ff9f8bce06edf764a6":[3,0,2,12,0,8],
-"structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a160c16f13781fc249731c80cb25b9dad":[3,0,2,12,0,20],
-"structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a1fa58d70b7f6aea1d24376d1e2263adc":[3,0,2,12,0,9]
+"structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html":[3,0,2,12,0]
 };

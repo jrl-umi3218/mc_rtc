@@ -75,7 +75,15 @@ $(document).ready(function(){initNavTree('pragma_8h.html','');});
 <div class="title">pragma.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><div class="dynheader">
+<div class="textblock"><code>#include &lt;mc_rtc/macros/deprecated.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for pragma.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="pragma_8h__incl.png" border="0" usemap="#include_2mc__rtc_2pragma_8h" alt=""/></div>
+<map name="include_2mc__rtc_2pragma_8h" id="include_2mc__rtc_2pragma_8h">
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="pragma_8h__dep__incl.png" border="0" usemap="#include_2mc__rtc_2pragma_8hdep" alt=""/></div>
@@ -133,6 +141,8 @@ Macros</h2></td></tr>
 <tr class="separator:a02fba0b09122a66e1ebc4148d27ae52a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50f154e9e60e5f9860cc22930076d527"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pragma_8h.html#a50f154e9e60e5f9860cc22930076d527">MC_RTC_diagnostic_ignored_</a>(c,  w)&#160;&#160;&#160;MC_RTC_##c##_diagnostic_ignored(w)</td></tr>
 <tr class="separator:a50f154e9e60e5f9860cc22930076d527"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f03fcd513350b95f4c858ab704d09e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pragma_8h.html#a3f03fcd513350b95f4c858ab704d09e7">MC_RTC_diagnostic_ignored</a>(...)&#160;&#160;&#160;<a class="el" href="pragma_8h.html#a68ae92d9a7368007a7f93d6e5bee5454">MC_RTC_MAP_TWO_ARGS</a>(<a class="el" href="pragma_8h.html#a50f154e9e60e5f9860cc22930076d527">MC_RTC_diagnostic_ignored_</a>, __VA_ARGS__)</td></tr>
+<tr class="separator:a3f03fcd513350b95f4c858ab704d09e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ac787813b16519f3f73b107be57393b2c"></a>
@@ -150,6 +160,25 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3f03fcd513350b95f4c858ab704d09e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f03fcd513350b95f4c858ab704d09e7">&#9670;&nbsp;</a></span>MC_RTC_diagnostic_ignored</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RTC_diagnostic_ignored</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em></td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="pragma_8h.html#a68ae92d9a7368007a7f93d6e5bee5454">MC_RTC_MAP_TWO_ARGS</a>(<a class="el" href="pragma_8h.html#a50f154e9e60e5f9860cc22930076d527">MC_RTC_diagnostic_ignored_</a>, __VA_ARGS__)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Ignore warning by compiler. Used as MC_RTC_diagnostic_ignored(compiler1, warningID1, compiler2, warningID2, ...). </p>
 
 </div>
 </div>
@@ -810,20 +839,20 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="pragma_8h.html#af3a2e2d6c980d07a49970e25c5d41480">MC_RTC_PP_ID</a>(<a class="code" href="pragma_8h.html#a7bc988f4aa0896d1c3894abe5f5dbd13">MC_RTC_GET_MACRO</a>(_0, __VA_ARGS__, <a class="code" href="pragma_8h.html#aa9db95d32724926b4d70ab2a9f946bd6">MC_RTC_MAP2_10</a>, <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#ab032378e87b8c10476e9aee3cc528e4a">MC_RTC_MAP2_9</a>, <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#ac00f36990364a7007d671684da1574b8">MC_RTC_MAP2_8</a>, \</div><div class="line">                                <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#a11c29fa750e184bef82b6be408687315">MC_RTC_MAP2_7</a>, <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#a313ee4f04812fed7e80a7704f2170a87">MC_RTC_MAP2_6</a>, <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#af448ba39ad2935ff76446bc1979522da">MC_RTC_MAP2_5</a>,        \</div><div class="line">                                <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#a6803324242017bdb17050394560aeb5a">MC_RTC_MAP2_4</a>, <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#aa30117a8c590694c7766b22ceef74b0d">MC_RTC_MAP2_3</a>, <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#aa5c3a443aa863d55c2eddad4de772b85">MC_RTC_MAP2_2</a>,        \</div><div class="line">                                <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#aec845bab774899526515c76978058a55">MC_RTC_MAP2_1</a>, <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#a4af0974096a7f82dbf9a9d12ed30a90a">MC_RTC_MAP2_0</a>, <a class="code" href="pragma_8h.html#a4af0974096a7f82dbf9a9d12ed30a90a">MC_RTC_MAP2_0</a>)(fun, __VA_ARGS__))</div><div class="ttc" id="pragma_8h_html_aa077be087e9b5e0e80d29ceb922af636"><div class="ttname"><a href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a></div><div class="ttdeci">#define MC_RTC_WN(fun,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:17</div></div>
-<div class="ttc" id="pragma_8h_html_af3a2e2d6c980d07a49970e25c5d41480"><div class="ttname"><a href="pragma_8h.html#af3a2e2d6c980d07a49970e25c5d41480">MC_RTC_PP_ID</a></div><div class="ttdeci">#define MC_RTC_PP_ID(x)</div><div class="ttdef"><b>Definition:</b> pragma.h:8</div></div>
-<div class="ttc" id="pragma_8h_html_ac00f36990364a7007d671684da1574b8"><div class="ttname"><a href="pragma_8h.html#ac00f36990364a7007d671684da1574b8">MC_RTC_MAP2_8</a></div><div class="ttdeci">#define MC_RTC_MAP2_8(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:30</div></div>
-<div class="ttc" id="pragma_8h_html_aa9db95d32724926b4d70ab2a9f946bd6"><div class="ttname"><a href="pragma_8h.html#aa9db95d32724926b4d70ab2a9f946bd6">MC_RTC_MAP2_10</a></div><div class="ttdeci">#define MC_RTC_MAP2_10(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:32</div></div>
-<div class="ttc" id="pragma_8h_html_a313ee4f04812fed7e80a7704f2170a87"><div class="ttname"><a href="pragma_8h.html#a313ee4f04812fed7e80a7704f2170a87">MC_RTC_MAP2_6</a></div><div class="ttdeci">#define MC_RTC_MAP2_6(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:28</div></div>
-<div class="ttc" id="pragma_8h_html_aec845bab774899526515c76978058a55"><div class="ttname"><a href="pragma_8h.html#aec845bab774899526515c76978058a55">MC_RTC_MAP2_1</a></div><div class="ttdeci">#define MC_RTC_MAP2_1(fun, X, Y)</div><div class="ttdef"><b>Definition:</b> pragma.h:23</div></div>
-<div class="ttc" id="pragma_8h_html_ab032378e87b8c10476e9aee3cc528e4a"><div class="ttname"><a href="pragma_8h.html#ab032378e87b8c10476e9aee3cc528e4a">MC_RTC_MAP2_9</a></div><div class="ttdeci">#define MC_RTC_MAP2_9(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:31</div></div>
-<div class="ttc" id="pragma_8h_html_a4af0974096a7f82dbf9a9d12ed30a90a"><div class="ttname"><a href="pragma_8h.html#a4af0974096a7f82dbf9a9d12ed30a90a">MC_RTC_MAP2_0</a></div><div class="ttdeci">#define MC_RTC_MAP2_0(fun)</div><div class="ttdef"><b>Definition:</b> pragma.h:22</div></div>
-<div class="ttc" id="pragma_8h_html_aa30117a8c590694c7766b22ceef74b0d"><div class="ttname"><a href="pragma_8h.html#aa30117a8c590694c7766b22ceef74b0d">MC_RTC_MAP2_3</a></div><div class="ttdeci">#define MC_RTC_MAP2_3(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:25</div></div>
-<div class="ttc" id="pragma_8h_html_a7bc988f4aa0896d1c3894abe5f5dbd13"><div class="ttname"><a href="pragma_8h.html#a7bc988f4aa0896d1c3894abe5f5dbd13">MC_RTC_GET_MACRO</a></div><div class="ttdeci">#define MC_RTC_GET_MACRO(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, NAME,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:34</div></div>
-<div class="ttc" id="pragma_8h_html_aa5c3a443aa863d55c2eddad4de772b85"><div class="ttname"><a href="pragma_8h.html#aa5c3a443aa863d55c2eddad4de772b85">MC_RTC_MAP2_2</a></div><div class="ttdeci">#define MC_RTC_MAP2_2(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:24</div></div>
-<div class="ttc" id="pragma_8h_html_a6803324242017bdb17050394560aeb5a"><div class="ttname"><a href="pragma_8h.html#a6803324242017bdb17050394560aeb5a">MC_RTC_MAP2_4</a></div><div class="ttdeci">#define MC_RTC_MAP2_4(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:26</div></div>
-<div class="ttc" id="pragma_8h_html_a11c29fa750e184bef82b6be408687315"><div class="ttname"><a href="pragma_8h.html#a11c29fa750e184bef82b6be408687315">MC_RTC_MAP2_7</a></div><div class="ttdeci">#define MC_RTC_MAP2_7(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:29</div></div>
-<div class="ttc" id="pragma_8h_html_af448ba39ad2935ff76446bc1979522da"><div class="ttname"><a href="pragma_8h.html#af448ba39ad2935ff76446bc1979522da">MC_RTC_MAP2_5</a></div><div class="ttdeci">#define MC_RTC_MAP2_5(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:27</div></div>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="pragma_8h.html#af3a2e2d6c980d07a49970e25c5d41480">MC_RTC_PP_ID</a>(<a class="code" href="pragma_8h.html#a7bc988f4aa0896d1c3894abe5f5dbd13">MC_RTC_GET_MACRO</a>(_0, __VA_ARGS__, <a class="code" href="pragma_8h.html#aa9db95d32724926b4d70ab2a9f946bd6">MC_RTC_MAP2_10</a>, <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#ab032378e87b8c10476e9aee3cc528e4a">MC_RTC_MAP2_9</a>, <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#ac00f36990364a7007d671684da1574b8">MC_RTC_MAP2_8</a>, \</div><div class="line">                                <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#a11c29fa750e184bef82b6be408687315">MC_RTC_MAP2_7</a>, <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#a313ee4f04812fed7e80a7704f2170a87">MC_RTC_MAP2_6</a>, <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#af448ba39ad2935ff76446bc1979522da">MC_RTC_MAP2_5</a>,        \</div><div class="line">                                <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#a6803324242017bdb17050394560aeb5a">MC_RTC_MAP2_4</a>, <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#aa30117a8c590694c7766b22ceef74b0d">MC_RTC_MAP2_3</a>, <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#aa5c3a443aa863d55c2eddad4de772b85">MC_RTC_MAP2_2</a>,        \</div><div class="line">                                <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#aec845bab774899526515c76978058a55">MC_RTC_MAP2_1</a>, <a class="code" href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a>, <a class="code" href="pragma_8h.html#a4af0974096a7f82dbf9a9d12ed30a90a">MC_RTC_MAP2_0</a>, <a class="code" href="pragma_8h.html#a4af0974096a7f82dbf9a9d12ed30a90a">MC_RTC_MAP2_0</a>)(fun, __VA_ARGS__))</div><div class="ttc" id="pragma_8h_html_aa077be087e9b5e0e80d29ceb922af636"><div class="ttname"><a href="pragma_8h.html#aa077be087e9b5e0e80d29ceb922af636">MC_RTC_WN</a></div><div class="ttdeci">#define MC_RTC_WN(fun,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:21</div></div>
+<div class="ttc" id="pragma_8h_html_af3a2e2d6c980d07a49970e25c5d41480"><div class="ttname"><a href="pragma_8h.html#af3a2e2d6c980d07a49970e25c5d41480">MC_RTC_PP_ID</a></div><div class="ttdeci">#define MC_RTC_PP_ID(x)</div><div class="ttdef"><b>Definition:</b> pragma.h:10</div></div>
+<div class="ttc" id="pragma_8h_html_ac00f36990364a7007d671684da1574b8"><div class="ttname"><a href="pragma_8h.html#ac00f36990364a7007d671684da1574b8">MC_RTC_MAP2_8</a></div><div class="ttdeci">#define MC_RTC_MAP2_8(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:34</div></div>
+<div class="ttc" id="pragma_8h_html_aa9db95d32724926b4d70ab2a9f946bd6"><div class="ttname"><a href="pragma_8h.html#aa9db95d32724926b4d70ab2a9f946bd6">MC_RTC_MAP2_10</a></div><div class="ttdeci">#define MC_RTC_MAP2_10(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:36</div></div>
+<div class="ttc" id="pragma_8h_html_a313ee4f04812fed7e80a7704f2170a87"><div class="ttname"><a href="pragma_8h.html#a313ee4f04812fed7e80a7704f2170a87">MC_RTC_MAP2_6</a></div><div class="ttdeci">#define MC_RTC_MAP2_6(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:32</div></div>
+<div class="ttc" id="pragma_8h_html_aec845bab774899526515c76978058a55"><div class="ttname"><a href="pragma_8h.html#aec845bab774899526515c76978058a55">MC_RTC_MAP2_1</a></div><div class="ttdeci">#define MC_RTC_MAP2_1(fun, X, Y)</div><div class="ttdef"><b>Definition:</b> pragma.h:27</div></div>
+<div class="ttc" id="pragma_8h_html_ab032378e87b8c10476e9aee3cc528e4a"><div class="ttname"><a href="pragma_8h.html#ab032378e87b8c10476e9aee3cc528e4a">MC_RTC_MAP2_9</a></div><div class="ttdeci">#define MC_RTC_MAP2_9(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:35</div></div>
+<div class="ttc" id="pragma_8h_html_a4af0974096a7f82dbf9a9d12ed30a90a"><div class="ttname"><a href="pragma_8h.html#a4af0974096a7f82dbf9a9d12ed30a90a">MC_RTC_MAP2_0</a></div><div class="ttdeci">#define MC_RTC_MAP2_0(fun)</div><div class="ttdef"><b>Definition:</b> pragma.h:26</div></div>
+<div class="ttc" id="pragma_8h_html_aa30117a8c590694c7766b22ceef74b0d"><div class="ttname"><a href="pragma_8h.html#aa30117a8c590694c7766b22ceef74b0d">MC_RTC_MAP2_3</a></div><div class="ttdeci">#define MC_RTC_MAP2_3(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:29</div></div>
+<div class="ttc" id="pragma_8h_html_a7bc988f4aa0896d1c3894abe5f5dbd13"><div class="ttname"><a href="pragma_8h.html#a7bc988f4aa0896d1c3894abe5f5dbd13">MC_RTC_GET_MACRO</a></div><div class="ttdeci">#define MC_RTC_GET_MACRO(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, NAME,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:38</div></div>
+<div class="ttc" id="pragma_8h_html_aa5c3a443aa863d55c2eddad4de772b85"><div class="ttname"><a href="pragma_8h.html#aa5c3a443aa863d55c2eddad4de772b85">MC_RTC_MAP2_2</a></div><div class="ttdeci">#define MC_RTC_MAP2_2(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:28</div></div>
+<div class="ttc" id="pragma_8h_html_a6803324242017bdb17050394560aeb5a"><div class="ttname"><a href="pragma_8h.html#a6803324242017bdb17050394560aeb5a">MC_RTC_MAP2_4</a></div><div class="ttdeci">#define MC_RTC_MAP2_4(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:30</div></div>
+<div class="ttc" id="pragma_8h_html_a11c29fa750e184bef82b6be408687315"><div class="ttname"><a href="pragma_8h.html#a11c29fa750e184bef82b6be408687315">MC_RTC_MAP2_7</a></div><div class="ttdeci">#define MC_RTC_MAP2_7(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:33</div></div>
+<div class="ttc" id="pragma_8h_html_af448ba39ad2935ff76446bc1979522da"><div class="ttname"><a href="pragma_8h.html#af448ba39ad2935ff76446bc1979522da">MC_RTC_MAP2_5</a></div><div class="ttdeci">#define MC_RTC_MAP2_5(fun, X, Y,...)</div><div class="ttdef"><b>Definition:</b> pragma.h:31</div></div>
 </div><!-- fragment --><p>Transform fun(arg1, arg2, arg3, arg4, ...) into fun(arg1, arg2), fun(arg3, arg4), ... </p>
 
 </div>
@@ -945,7 +974,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="pragma_8h.html#a8b26cd59b48fd7f9a75f848ec1963e65">MC_RTC_PRAGMA</a>(message(__FILE__ <span class="stringliteral">&quot;[&quot;</span> STRING(__LINE__) <span class="stringliteral">&quot;] Incorrect number of arguments when invoking macro &quot;</span> STRING( \</div><div class="line">      fun) <span class="stringliteral">&quot;. Call is ignored&quot;</span>))</div><div class="ttc" id="pragma_8h_html_a8b26cd59b48fd7f9a75f848ec1963e65"><div class="ttname"><a href="pragma_8h.html#a8b26cd59b48fd7f9a75f848ec1963e65">MC_RTC_PRAGMA</a></div><div class="ttdeci">#define MC_RTC_PRAGMA(x)</div><div class="ttdef"><b>Definition:</b> pragma.h:14</div></div>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="pragma_8h.html#a8b26cd59b48fd7f9a75f848ec1963e65">MC_RTC_PRAGMA</a>(message(__FILE__ <span class="stringliteral">&quot;[&quot;</span> STRING(__LINE__) <span class="stringliteral">&quot;] Incorrect number of arguments when invoking macro &quot;</span> STRING( \</div><div class="line">      fun) <span class="stringliteral">&quot;. Call is ignored&quot;</span>))</div><div class="ttc" id="pragma_8h_html_a8b26cd59b48fd7f9a75f848ec1963e65"><div class="ttname"><a href="pragma_8h.html#a8b26cd59b48fd7f9a75f848ec1963e65">MC_RTC_PRAGMA</a></div><div class="ttdeci">#define MC_RTC_PRAGMA(x)</div><div class="ttdef"><b>Definition:</b> pragma.h:17</div></div>
 </div><!-- fragment --><p>Signal wrong number of arguments </p>
 
 </div>

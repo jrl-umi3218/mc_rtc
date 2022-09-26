@@ -3,46 +3,46 @@
   <compound kind="file">
     <name>api.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/</path>
-    <filename>mc__control_2api_8h</filename>
+    <filename>include_2mc__control_2api_8h</filename>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_VERSION</name>
-      <anchorfile>mc__control_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2api_8h.html</anchorfile>
       <anchor>a22df2857d14ed04f3b639527d08f7740</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_DLLIMPORT</name>
-      <anchorfile>mc__control_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2api_8h.html</anchorfile>
       <anchor>a93d9bb1f3f36bbffb00cf015b0bb0e37</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_DLLEXPORT</name>
-      <anchorfile>mc__control_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2api_8h.html</anchorfile>
       <anchor>a3ab2eb8965ce5e6d787aecf3e46d3be0</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_DLLLOCAL</name>
-      <anchorfile>mc__control_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2api_8h.html</anchorfile>
       <anchor>a5fd14ed2320e3cbe50d19d4ada5b64a7</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_DLLAPI</name>
-      <anchorfile>mc__control_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2api_8h.html</anchorfile>
       <anchor>a167861c5d95139886801b242d6d0115f</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_LOCAL</name>
-      <anchorfile>mc__control_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2api_8h.html</anchorfile>
       <anchor>aaef3a5c95b86a2ae0592bfafaec89185</anchor>
       <arglist></arglist>
     </member>
@@ -50,46 +50,46 @@
   <compound kind="file">
     <name>api.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/fsm/</path>
-    <filename>mc__control_2fsm_2api_8h</filename>
+    <filename>include_2mc__control_2fsm_2api_8h</filename>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_FSM_VERSION</name>
-      <anchorfile>mc__control_2fsm_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2fsm_2api_8h.html</anchorfile>
       <anchor>a6a20ff82176ab6a5233f93165acadfd9</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_FSM_DLLIMPORT</name>
-      <anchorfile>mc__control_2fsm_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2fsm_2api_8h.html</anchorfile>
       <anchor>ab0dcbeac9312e33f462e6484a868a52b</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_FSM_DLLEXPORT</name>
-      <anchorfile>mc__control_2fsm_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2fsm_2api_8h.html</anchorfile>
       <anchor>a4907a97f0041ceb9c310d2b8cd0c027d</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_FSM_DLLLOCAL</name>
-      <anchorfile>mc__control_2fsm_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2fsm_2api_8h.html</anchorfile>
       <anchor>a1ce3297615a42b33da114e62f6176f2f</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_FSM_DLLAPI</name>
-      <anchorfile>mc__control_2fsm_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2fsm_2api_8h.html</anchorfile>
       <anchor>abb5c53c99c37c6ca870d1838f76228ef</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_FSM_LOCAL</name>
-      <anchorfile>mc__control_2fsm_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2fsm_2api_8h.html</anchorfile>
       <anchor>a44f5f50f69e648fb0b8d592720aeaf50</anchor>
       <arglist></arglist>
     </member>
@@ -97,46 +97,46 @@
   <compound kind="file">
     <name>api.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/fsm/states/</path>
-    <filename>mc__control_2fsm_2states_2api_8h</filename>
+    <filename>include_2mc__control_2fsm_2states_2api_8h</filename>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_FSM_STATE_VERSION</name>
-      <anchorfile>mc__control_2fsm_2states_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2fsm_2states_2api_8h.html</anchorfile>
       <anchor>a2fe6be3f7fd6b98de2dbdcb335b157b0</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_FSM_STATE_DLLIMPORT</name>
-      <anchorfile>mc__control_2fsm_2states_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2fsm_2states_2api_8h.html</anchorfile>
       <anchor>adb918e5798089061b14f124312865580</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_FSM_STATE_DLLEXPORT</name>
-      <anchorfile>mc__control_2fsm_2states_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2fsm_2states_2api_8h.html</anchorfile>
       <anchor>a16bceb2813abeb80aa1e49f1109e6c88</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_FSM_STATE_DLLLOCAL</name>
-      <anchorfile>mc__control_2fsm_2states_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2fsm_2states_2api_8h.html</anchorfile>
       <anchor>a113188e6b7bc199d59abd8a7f463d9f9</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_FSM_STATE_DLLAPI</name>
-      <anchorfile>mc__control_2fsm_2states_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2fsm_2states_2api_8h.html</anchorfile>
       <anchor>a4cfcac728c1786a9888c977f8b656ba2</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_CONTROL_FSM_STATE_LOCAL</name>
-      <anchorfile>mc__control_2fsm_2states_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__control_2fsm_2states_2api_8h.html</anchorfile>
       <anchor>a9f940b92f5b7fef9b7af442273630546</anchor>
       <arglist></arglist>
     </member>
@@ -144,74 +144,74 @@
   <compound kind="file">
     <name>api.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_observers/</path>
-    <filename>mc__observers_2api_8h</filename>
+    <filename>include_2mc__observers_2api_8h</filename>
     <member kind="define">
       <type>#define</type>
       <name>MC_OBSERVERS_DLLIMPORT</name>
-      <anchorfile>mc__observers_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__observers_2api_8h.html</anchorfile>
       <anchor>a0193ed43a7a8a2bca1082d339d28651e</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_OBSERVERS_DLLEXPORT</name>
-      <anchorfile>mc__observers_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__observers_2api_8h.html</anchorfile>
       <anchor>a584f0147ac169a854c258384854bd841</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_OBSERVERS_DLLLOCAL</name>
-      <anchorfile>mc__observers_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__observers_2api_8h.html</anchorfile>
       <anchor>a55268a03db41d5270bf2614681e1eb51</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_OBSERVERS_DLLAPI</name>
-      <anchorfile>mc__observers_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__observers_2api_8h.html</anchorfile>
       <anchor>adde8be25d8f40acd541ed21395a5c73a</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_OBSERVERS_LOCAL</name>
-      <anchorfile>mc__observers_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__observers_2api_8h.html</anchorfile>
       <anchor>a094cf177ee9875b67aca0d123880fe86</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_OBSERVER_DLLIMPORT</name>
-      <anchorfile>mc__observers_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__observers_2api_8h.html</anchorfile>
       <anchor>a5ec028a59707a198d06a6b92110d7ee1</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_OBSERVER_DLLEXPORT</name>
-      <anchorfile>mc__observers_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__observers_2api_8h.html</anchorfile>
       <anchor>a71f5d19aecb89bc7ff66ea90cbec91d3</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_OBSERVER_DLLLOCAL</name>
-      <anchorfile>mc__observers_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__observers_2api_8h.html</anchorfile>
       <anchor>a933db9b3406c8c221ba3ee7f689e7511</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_OBSERVER_DLLAPI</name>
-      <anchorfile>mc__observers_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__observers_2api_8h.html</anchorfile>
       <anchor>a5f92e3e5bb50345181ceaa0fdc4ed310</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_OBSERVER_LOCAL</name>
-      <anchorfile>mc__observers_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__observers_2api_8h.html</anchorfile>
       <anchor>ad87f4c4e93529fdbfdd4a95ef34bbd7a</anchor>
       <arglist></arglist>
     </member>
@@ -219,46 +219,46 @@
   <compound kind="file">
     <name>api.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_planning/</path>
-    <filename>mc__planning_2api_8h</filename>
+    <filename>include_2mc__planning_2api_8h</filename>
     <member kind="define">
       <type>#define</type>
       <name>MC_PLANNING_VERSION</name>
-      <anchorfile>mc__planning_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__planning_2api_8h.html</anchorfile>
       <anchor>aca946837554c98dec168efee18c95e5c</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_PLANNING_DLLIMPORT</name>
-      <anchorfile>mc__planning_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__planning_2api_8h.html</anchorfile>
       <anchor>a7ef3aedb0867986ac977b43fdd7cf21f</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_PLANNING_DLLEXPORT</name>
-      <anchorfile>mc__planning_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__planning_2api_8h.html</anchorfile>
       <anchor>a6a868413b6c5bddd02aeef2f6a0ef5c8</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_PLANNING_DLLLOCAL</name>
-      <anchorfile>mc__planning_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__planning_2api_8h.html</anchorfile>
       <anchor>aff1ad001b6bf5fdb9fb19cd51c97a75e</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_PLANNING_DLLAPI</name>
-      <anchorfile>mc__planning_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__planning_2api_8h.html</anchorfile>
       <anchor>a3adede9987330f98fe6a52abdfb955f5</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_PLANNING_LOCAL</name>
-      <anchorfile>mc__planning_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__planning_2api_8h.html</anchorfile>
       <anchor>a73898c9a3a9215937de16e50d4e504a3</anchor>
       <arglist></arglist>
     </member>
@@ -266,46 +266,46 @@
   <compound kind="file">
     <name>api.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
-    <filename>mc__rbdyn_2api_8h</filename>
+    <filename>include_2mc__rbdyn_2api_8h</filename>
     <member kind="define">
       <type>#define</type>
       <name>MC_RBDYN_VERSION</name>
-      <anchorfile>mc__rbdyn_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__rbdyn_2api_8h.html</anchorfile>
       <anchor>a552577349e8efdac2745cbdd3898f85e</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_RBDYN_DLLIMPORT</name>
-      <anchorfile>mc__rbdyn_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__rbdyn_2api_8h.html</anchorfile>
       <anchor>a529cb71c3827899033a1e94d10552a38</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_RBDYN_DLLEXPORT</name>
-      <anchorfile>mc__rbdyn_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__rbdyn_2api_8h.html</anchorfile>
       <anchor>ae269070c4054c9fa40053b5e28ea074f</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_RBDYN_DLLLOCAL</name>
-      <anchorfile>mc__rbdyn_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__rbdyn_2api_8h.html</anchorfile>
       <anchor>a2956eb566ae27b5965f64bc3c422c703</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_RBDYN_DLLAPI</name>
-      <anchorfile>mc__rbdyn_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__rbdyn_2api_8h.html</anchorfile>
       <anchor>a5f64edebd03a669545de1ba699d6cb49</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_RBDYN_LOCAL</name>
-      <anchorfile>mc__rbdyn_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__rbdyn_2api_8h.html</anchorfile>
       <anchor>a830b69e4ab5049ef14b25b9a3dd872cb</anchor>
       <arglist></arglist>
     </member>
@@ -313,46 +313,46 @@
   <compound kind="file">
     <name>api.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_robots/</path>
-    <filename>mc__robots_2api_8h</filename>
+    <filename>include_2mc__robots_2api_8h</filename>
     <member kind="define">
       <type>#define</type>
       <name>MC_ROBOTS_VERSION</name>
-      <anchorfile>mc__robots_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__robots_2api_8h.html</anchorfile>
       <anchor>a12b895bf0b39c259b3eb51ee7782f970</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_ROBOTS_DLLIMPORT</name>
-      <anchorfile>mc__robots_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__robots_2api_8h.html</anchorfile>
       <anchor>afab08aefa87854e0f4e002300f42f2e0</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_ROBOTS_DLLEXPORT</name>
-      <anchorfile>mc__robots_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__robots_2api_8h.html</anchorfile>
       <anchor>a551f4997282c602cc3b9699950bff0d9</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_ROBOTS_DLLLOCAL</name>
-      <anchorfile>mc__robots_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__robots_2api_8h.html</anchorfile>
       <anchor>abd12baa7258deaf7a15d3874f1920e57</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_ROBOTS_DLLAPI</name>
-      <anchorfile>mc__robots_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__robots_2api_8h.html</anchorfile>
       <anchor>aab9f1fcb73f7bb68ce97897257085bc6</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_ROBOTS_LOCAL</name>
-      <anchorfile>mc__robots_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__robots_2api_8h.html</anchorfile>
       <anchor>a31fee9d1d5fe536ba8cfac80e376564e</anchor>
       <arglist></arglist>
     </member>
@@ -360,46 +360,46 @@
   <compound kind="file">
     <name>api.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
-    <filename>mc__rtc_2gui_2api_8h</filename>
+    <filename>include_2mc__rtc_2gui_2api_8h</filename>
     <member kind="define">
       <type>#define</type>
       <name>MC_RTC_GUI_VERSION</name>
-      <anchorfile>mc__rtc_2gui_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__rtc_2gui_2api_8h.html</anchorfile>
       <anchor>a3c227096c22154059e88b20b7cd202bc</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_RTC_GUI_DLLIMPORT</name>
-      <anchorfile>mc__rtc_2gui_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__rtc_2gui_2api_8h.html</anchorfile>
       <anchor>a9365441c6f8e61e9f8c39bb75c617b43</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_RTC_GUI_DLLEXPORT</name>
-      <anchorfile>mc__rtc_2gui_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__rtc_2gui_2api_8h.html</anchorfile>
       <anchor>a14ad7305617c58803f8ce0c7541bb508</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_RTC_GUI_DLLLOCAL</name>
-      <anchorfile>mc__rtc_2gui_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__rtc_2gui_2api_8h.html</anchorfile>
       <anchor>a0480d192b9c9ae9d9d88bf17771118b2</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_RTC_GUI_DLLAPI</name>
-      <anchorfile>mc__rtc_2gui_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__rtc_2gui_2api_8h.html</anchorfile>
       <anchor>a0154310cb006fb3f499c367ca3e861a8</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_RTC_GUI_LOCAL</name>
-      <anchorfile>mc__rtc_2gui_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__rtc_2gui_2api_8h.html</anchorfile>
       <anchor>aa7fe5afca945e356848d1a6b156528fa</anchor>
       <arglist></arglist>
     </member>
@@ -407,46 +407,46 @@
   <compound kind="file">
     <name>api.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_solver/</path>
-    <filename>mc__solver_2api_8h</filename>
+    <filename>include_2mc__solver_2api_8h</filename>
     <member kind="define">
       <type>#define</type>
       <name>MC_SOLVER_VERSION</name>
-      <anchorfile>mc__solver_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__solver_2api_8h.html</anchorfile>
       <anchor>ae4634b29539fd982b8b83c15830c1c37</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_SOLVER_DLLIMPORT</name>
-      <anchorfile>mc__solver_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__solver_2api_8h.html</anchorfile>
       <anchor>a85361305f43d765074b5a82afaa82487</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_SOLVER_DLLEXPORT</name>
-      <anchorfile>mc__solver_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__solver_2api_8h.html</anchorfile>
       <anchor>a24ff42006c016a5adc79aec2a1dfc0fe</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_SOLVER_DLLLOCAL</name>
-      <anchorfile>mc__solver_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__solver_2api_8h.html</anchorfile>
       <anchor>ae3c35da4cb012ab2f6caea5696a56dae</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_SOLVER_DLLAPI</name>
-      <anchorfile>mc__solver_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__solver_2api_8h.html</anchorfile>
       <anchor>a1f670c9ef41bde54578a3afc8fd75445</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_SOLVER_LOCAL</name>
-      <anchorfile>mc__solver_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__solver_2api_8h.html</anchorfile>
       <anchor>ad2b85045fbd2243b5745829691239595</anchor>
       <arglist></arglist>
     </member>
@@ -454,46 +454,46 @@
   <compound kind="file">
     <name>api.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_tasks/</path>
-    <filename>mc__tasks_2api_8h</filename>
+    <filename>include_2mc__tasks_2api_8h</filename>
     <member kind="define">
       <type>#define</type>
       <name>MC_TASKS_VERSION</name>
-      <anchorfile>mc__tasks_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__tasks_2api_8h.html</anchorfile>
       <anchor>a47ff1b35f32c422f53ffee9a1a5d2de4</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_TASKS_DLLIMPORT</name>
-      <anchorfile>mc__tasks_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__tasks_2api_8h.html</anchorfile>
       <anchor>a1ca51f7fba6e50050fa71ee00906116e</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_TASKS_DLLEXPORT</name>
-      <anchorfile>mc__tasks_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__tasks_2api_8h.html</anchorfile>
       <anchor>a6f58d55d50caa4b695e9ae0db68a84e3</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_TASKS_DLLLOCAL</name>
-      <anchorfile>mc__tasks_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__tasks_2api_8h.html</anchorfile>
       <anchor>a88d2b44a0ab87ccac98cac02f5bc0220</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_TASKS_DLLAPI</name>
-      <anchorfile>mc__tasks_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__tasks_2api_8h.html</anchorfile>
       <anchor>a54b6b62a72f51c6877ce5f6855eae009</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_TASKS_LOCAL</name>
-      <anchorfile>mc__tasks_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__tasks_2api_8h.html</anchorfile>
       <anchor>a6fad7ce5639c7536227a82e08f06c0e5</anchor>
       <arglist></arglist>
     </member>
@@ -501,47 +501,134 @@
   <compound kind="file">
     <name>api.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_trajectory/</path>
-    <filename>mc__trajectory_2api_8h</filename>
+    <filename>include_2mc__trajectory_2api_8h</filename>
     <member kind="define">
       <type>#define</type>
       <name>MC_TRAJECTORY_VERSION</name>
-      <anchorfile>mc__trajectory_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__trajectory_2api_8h.html</anchorfile>
       <anchor>acd63e2a4854ce5d3f1eec2e5f2cf7498</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_TRAJECTORY_DLLIMPORT</name>
-      <anchorfile>mc__trajectory_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__trajectory_2api_8h.html</anchorfile>
       <anchor>a6dc4322483ff7548be6769a3e2d2ae54</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_TRAJECTORY_DLLEXPORT</name>
-      <anchorfile>mc__trajectory_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__trajectory_2api_8h.html</anchorfile>
       <anchor>a531302b8554807c8aca0fcf931c490f3</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_TRAJECTORY_DLLLOCAL</name>
-      <anchorfile>mc__trajectory_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__trajectory_2api_8h.html</anchorfile>
       <anchor>aa1a1e2ac0d81d28e134d91b52199d1e1</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_TRAJECTORY_DLLAPI</name>
-      <anchorfile>mc__trajectory_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__trajectory_2api_8h.html</anchorfile>
       <anchor>adff5a6c1e965ae6fdc756a2c5187f9c9</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>MC_TRAJECTORY_LOCAL</name>
-      <anchorfile>mc__trajectory_2api_8h.html</anchorfile>
+      <anchorfile>include_2mc__trajectory_2api_8h.html</anchorfile>
       <anchor>a4d2a4bf4b090297efb1f6dfa124b52e2</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>api.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/plugins/ROS/include/mc_rtc_ros/</path>
+    <filename>plugins_2ROS_2include_2mc__rtc__ros_2api_8h</filename>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_ROS_VERSION</name>
+      <anchorfile>plugins_2ROS_2include_2mc__rtc__ros_2api_8h.html</anchorfile>
+      <anchor>a4c77ffabba6fb012e781847cfb5dca02</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_ROS_DLLIMPORT</name>
+      <anchorfile>plugins_2ROS_2include_2mc__rtc__ros_2api_8h.html</anchorfile>
+      <anchor>a3cbe6a1ac62448731bc867c7068ba36c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_ROS_DLLEXPORT</name>
+      <anchorfile>plugins_2ROS_2include_2mc__rtc__ros_2api_8h.html</anchorfile>
+      <anchor>aabc0589237f2cf4df48b8ca69df575a4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_ROS_DLLLOCAL</name>
+      <anchorfile>plugins_2ROS_2include_2mc__rtc__ros_2api_8h.html</anchorfile>
+      <anchor>a387309c9381fda92ba227506899eeb8b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_ROS_DLLAPI</name>
+      <anchorfile>plugins_2ROS_2include_2mc__rtc__ros_2api_8h.html</anchorfile>
+      <anchor>a17fc85a6fd39970f9a707344763058c1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_ROS_LOCAL</name>
+      <anchorfile>plugins_2ROS_2include_2mc__rtc__ros_2api_8h.html</anchorfile>
+      <anchor>ac6f294a8922c33b67092dbcf4b692c43</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>api.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/plugins/ROS/include/mc_tasks_ros/</path>
+    <filename>plugins_2ROS_2include_2mc__tasks__ros_2api_8h</filename>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_TASKS_ROS_DLLIMPORT</name>
+      <anchorfile>plugins_2ROS_2include_2mc__tasks__ros_2api_8h.html</anchorfile>
+      <anchor>ad9cb61445fafdd004c409dbab29c15ce</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_TASKS_ROS_DLLEXPORT</name>
+      <anchorfile>plugins_2ROS_2include_2mc__tasks__ros_2api_8h.html</anchorfile>
+      <anchor>a7e3780f3cce3c679104c80e08d8e2694</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_TASKS_ROS_DLLLOCAL</name>
+      <anchorfile>plugins_2ROS_2include_2mc__tasks__ros_2api_8h.html</anchorfile>
+      <anchor>af79974efde92fc0dac6467d3c01568ed</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_TASKS_ROS_DLLAPI</name>
+      <anchorfile>plugins_2ROS_2include_2mc__tasks__ros_2api_8h.html</anchorfile>
+      <anchor>aa9127fc040ab12d0ad1fd62b9f562ace</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_TASKS_ROS_LOCAL</name>
+      <anchorfile>plugins_2ROS_2include_2mc__tasks__ros_2api_8h.html</anchorfile>
+      <anchor>a29794f98df087d4fed1ddd7f873a2488</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -596,7 +683,7 @@
     <name>CompletionCriteria.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/</path>
     <filename>CompletionCriteria_8h</filename>
-    <includes id="mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
+    <includes id="include_2mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
     <includes id="MetaTask_8h" name="MetaTask.h" local="no" imported="no">mc_tasks/MetaTask.h</includes>
     <class kind="struct">mc_control::CompletionCriteria</class>
     <namespace>mc_control</namespace>
@@ -620,6 +707,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/</path>
     <filename>mc__rtc_2Configuration_8h</filename>
     <includes id="MessagePackBuilder_8h" name="MessagePackBuilder.h" local="no" imported="no">mc_rtc/MessagePackBuilder.h</includes>
+    <includes id="deprecated_8h" name="deprecated.h" local="no" imported="no">mc_rtc/deprecated.h</includes>
     <includes id="Gains_8h" name="Gains.h" local="no" imported="no">mc_rbdyn/Gains.h</includes>
     <includes id="rpy__utils_8h" name="rpy_utils.h" local="no" imported="no">mc_rbdyn/rpy_utils.h</includes>
     <class kind="struct">mc_rtc::ConfigurationLoader</class>
@@ -662,7 +750,7 @@
     <name>Contact.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/</path>
     <filename>mc__control_2Contact_8h</filename>
-    <includes id="mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
+    <includes id="include_2mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
     <includes id="mc__rbdyn_2Contact_8h" name="Contact.h" local="no" imported="no">mc_rbdyn/Contact.h</includes>
     <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
     <class kind="class">mc_control::Contact</class>
@@ -683,7 +771,7 @@
     <name>Contact.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>mc__rbdyn_2Contact_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
     <class kind="struct">mc_solver::QPContactPtr</class>
     <class kind="struct">mc_solver::QPContactPtrWPoints</class>
@@ -712,7 +800,7 @@
     <includes id="mc__rbdyn_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rbdyn/Robot.h</includes>
     <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
     <includes id="logging_8h" name="logging.h" local="no" imported="no">mc_rtc/logging.h</includes>
-    <includes id="mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
+    <includes id="include_2mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
     <class kind="struct">mc_tasks::lipm_stabilizer::internal::Contact</class>
     <class kind="struct">mc_tasks::lipm_stabilizer::ContactDescription</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_tasks::lipm_stabilizer::ContactState &gt;</class>
@@ -803,7 +891,7 @@
     <name>Executor.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/fsm/</path>
     <filename>Executor_8h</filename>
-    <includes id="mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
+    <includes id="include_2mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
     <includes id="State_8h" name="State.h" local="no" imported="no">mc_control/fsm/State.h</includes>
     <includes id="StateFactory_8h" name="StateFactory.h" local="no" imported="no">mc_control/fsm/StateFactory.h</includes>
     <includes id="TransitionMap_8h" name="TransitionMap.h" local="no" imported="no">mc_control/fsm/TransitionMap.h</includes>
@@ -824,8 +912,8 @@
     <name>State.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/fsm/</path>
     <filename>State_8h</filename>
-    <includes id="mc__control_2fsm_2api_8h" name="api.h" local="no" imported="no">mc_control/fsm/api.h</includes>
-    <includes id="mc__control_2fsm_2states_2api_8h" name="api.h" local="no" imported="no">mc_control/fsm/states/api.h</includes>
+    <includes id="include_2mc__control_2fsm_2api_8h" name="api.h" local="no" imported="no">mc_control/fsm/api.h</includes>
+    <includes id="include_2mc__control_2fsm_2states_2api_8h" name="api.h" local="no" imported="no">mc_control/fsm/states/api.h</includes>
     <includes id="ConstraintSet_8h" name="ConstraintSet.h" local="no" imported="no">mc_solver/ConstraintSet.h</includes>
     <includes id="MetaTask_8h" name="MetaTask.h" local="no" imported="no">mc_tasks/MetaTask.h</includes>
     <includes id="PostureTask_8h" name="PostureTask.h" local="no" imported="no">mc_tasks/PostureTask.h</includes>
@@ -1010,7 +1098,7 @@
     <name>Transition.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/fsm/</path>
     <filename>Transition_8h</filename>
-    <includes id="mc__control_2fsm_2api_8h" name="api.h" local="no" imported="no">mc_control/fsm/api.h</includes>
+    <includes id="include_2mc__control_2fsm_2api_8h" name="api.h" local="no" imported="no">mc_control/fsm/api.h</includes>
     <class kind="class">mc_control::fsm::Transition</class>
     <namespace>mc_control</namespace>
     <namespace>mc_control::fsm</namespace>
@@ -1029,7 +1117,7 @@
     <name>generic_gripper.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/</path>
     <filename>generic__gripper_8h</filename>
-    <includes id="mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
+    <includes id="include_2mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
     <includes id="RobotModule_8h" name="RobotModule.h" local="no" imported="no">mc_rbdyn/RobotModule.h</includes>
     <class kind="struct">mc_control::Gripper</class>
     <namespace>mc_rbdyn</namespace>
@@ -1142,7 +1230,7 @@
     <includes id="ControllerServer_8h" name="ControllerServer.h" local="no" imported="no">mc_control/ControllerServer.h</includes>
     <includes id="GlobalPlugin__fwd_8h" name="GlobalPlugin_fwd.h" local="no" imported="no">mc_control/GlobalPlugin_fwd.h</includes>
     <includes id="MCController_8h" name="MCController.h" local="no" imported="no">mc_control/MCController.h</includes>
-    <includes id="mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
+    <includes id="include_2mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
     <includes id="RobotModule_8h" name="RobotModule.h" local="no" imported="no">mc_rbdyn/RobotModule.h</includes>
     <includes id="loader_8h" name="loader.h" local="no" imported="no">mc_rtc/loader.h</includes>
     <includes id="Logger_8h" name="Logger.h" local="no" imported="no">mc_rtc/log/Logger.h</includes>
@@ -1155,7 +1243,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/</path>
     <filename>mc__python__controller_8h</filename>
     <includes id="MCController_8h" name="MCController.h" local="no" imported="no">mc_control/MCController.h</includes>
-    <includes id="mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
+    <includes id="include_2mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
     <class kind="struct">mc_control::PythonRWCallback</class>
     <class kind="struct">mc_control::MCPythonController</class>
     <namespace>mc_control</namespace>
@@ -1179,7 +1267,7 @@
     <includes id="QPSolver_8h" name="QPSolver.h" local="no" imported="no">mc_solver/QPSolver.h</includes>
     <includes id="QPResult_8h" name="QPResult.h" local="no" imported="no">mc_solver/msg/QPResult.h</includes>
     <includes id="PostureTask_8h" name="PostureTask.h" local="no" imported="no">mc_tasks/PostureTask.h</includes>
-    <includes id="mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
+    <includes id="include_2mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
     <class kind="class">mc_control::ControllerResetData</class>
     <class kind="class">mc_control::MCController</class>
     <class kind="struct">mc_control::MCController::DeprecatedAnchorFrame</class>
@@ -1197,7 +1285,7 @@
     <name>SimulationContactPair.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/</path>
     <filename>SimulationContactPair_8h</filename>
-    <includes id="mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
+    <includes id="include_2mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
     <includes id="mc__rbdyn_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rbdyn/Robot.h</includes>
     <includes id="SCHAddon_8h" name="SCHAddon.h" local="no" imported="no">mc_rbdyn/SCHAddon.h</includes>
     <includes id="surface__hull_8h" name="surface_hull.h" local="no" imported="no">mc_rbdyn/surface_hull.h</includes>
@@ -1343,7 +1431,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_observers/</path>
     <filename>BodySensorObserver_8h</filename>
     <includes id="Observer_8h" name="Observer.h" local="no" imported="no">mc_observers/Observer.h</includes>
-    <includes id="mc__observers_2api_8h" name="api.h" local="no" imported="no">mc_observers/api.h</includes>
+    <includes id="include_2mc__observers_2api_8h" name="api.h" local="no" imported="no">mc_observers/api.h</includes>
     <includes id="mc__rbdyn_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rbdyn/Robot.h</includes>
     <class kind="struct">mc_observers::BodySensorObserver</class>
     <namespace>mc_observers</namespace>
@@ -1353,7 +1441,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_observers/</path>
     <filename>EncoderObserver_8h</filename>
     <includes id="Observer_8h" name="Observer.h" local="no" imported="no">mc_observers/Observer.h</includes>
-    <includes id="mc__observers_2api_8h" name="api.h" local="no" imported="no">mc_observers/api.h</includes>
+    <includes id="include_2mc__observers_2api_8h" name="api.h" local="no" imported="no">mc_observers/api.h</includes>
     <includes id="mc__rbdyn_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rbdyn/Robot.h</includes>
     <class kind="struct">mc_observers::EncoderObserver</class>
     <namespace>mc_observers</namespace>
@@ -1364,7 +1452,7 @@
     <filename>KinematicInertialObserver_8h</filename>
     <includes id="LowPass_8h" name="LowPass.h" local="no" imported="no">mc_filter/LowPass.h</includes>
     <includes id="KinematicInertialPoseObserver_8h" name="KinematicInertialPoseObserver.h" local="no" imported="no">mc_observers/KinematicInertialPoseObserver.h</includes>
-    <includes id="mc__observers_2api_8h" name="api.h" local="no" imported="no">mc_observers/api.h</includes>
+    <includes id="include_2mc__observers_2api_8h" name="api.h" local="no" imported="no">mc_observers/api.h</includes>
     <class kind="struct">mc_observers::KinematicInertialObserver</class>
     <namespace>mc_observers</namespace>
   </compound>
@@ -1373,7 +1461,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_observers/</path>
     <filename>KinematicInertialPoseObserver_8h</filename>
     <includes id="Observer_8h" name="Observer.h" local="no" imported="no">mc_observers/Observer.h</includes>
-    <includes id="mc__observers_2api_8h" name="api.h" local="no" imported="no">mc_observers/api.h</includes>
+    <includes id="include_2mc__observers_2api_8h" name="api.h" local="no" imported="no">mc_observers/api.h</includes>
     <includes id="mc__rbdyn_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rbdyn/Robot.h</includes>
     <class kind="struct">mc_observers::KinematicInertialPoseObserver</class>
     <namespace>mc_observers</namespace>
@@ -1382,7 +1470,7 @@
     <name>Observer.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_observers/</path>
     <filename>Observer_8h</filename>
-    <includes id="mc__observers_2api_8h" name="api.h" local="no" imported="no">mc_observers/api.h</includes>
+    <includes id="include_2mc__observers_2api_8h" name="api.h" local="no" imported="no">mc_observers/api.h</includes>
     <includes id="StateBuilder_8h" name="StateBuilder.h" local="no" imported="no">mc_rtc/gui/StateBuilder.h</includes>
     <includes id="Logger_8h" name="Logger.h" local="no" imported="no">mc_rtc/log/Logger.h</includes>
     <class kind="struct">mc_observers::Observer</class>
@@ -1411,7 +1499,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_observers/</path>
     <filename>ObserverLoader_8h</filename>
     <includes id="Observer_8h" name="Observer.h" local="no" imported="no">mc_observers/Observer.h</includes>
-    <includes id="mc__observers_2api_8h" name="api.h" local="no" imported="no">mc_observers/api.h</includes>
+    <includes id="include_2mc__observers_2api_8h" name="api.h" local="no" imported="no">mc_observers/api.h</includes>
     <includes id="loader_8h" name="loader.h" local="no" imported="no">mc_rtc/loader.h</includes>
     <class kind="class">mc_observers::ObserverLoader</class>
     <namespace>mc_observers</namespace>
@@ -1441,7 +1529,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_observers/</path>
     <filename>ObserverPipeline_8h</filename>
     <includes id="Observer_8h" name="Observer.h" local="no" imported="no">mc_observers/Observer.h</includes>
-    <includes id="mc__observers_2api_8h" name="api.h" local="no" imported="no">mc_observers/api.h</includes>
+    <includes id="include_2mc__observers_2api_8h" name="api.h" local="no" imported="no">mc_observers/api.h</includes>
     <includes id="StateBuilder_8h" name="StateBuilder.h" local="no" imported="no">mc_rtc/gui/StateBuilder.h</includes>
     <includes id="Logger_8h" name="Logger.h" local="no" imported="no">mc_rtc/log/Logger.h</includes>
     <includes id="type__name_8h" name="type_name.h" local="no" imported="no">mc_rtc/type_name.h</includes>
@@ -1455,7 +1543,7 @@
     <name>Pendulum.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_planning/</path>
     <filename>Pendulum_8h</filename>
-    <includes id="mc__planning_2api_8h" name="api.h" local="no" imported="no">mc_planning/api.h</includes>
+    <includes id="include_2mc__planning_2api_8h" name="api.h" local="no" imported="no">mc_planning/api.h</includes>
     <class kind="struct">mc_planning::Pendulum</class>
     <namespace>mc_planning</namespace>
   </compound>
@@ -1463,7 +1551,7 @@
     <name>Base.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>Base_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <class kind="struct">mc_rbdyn::Base</class>
     <namespace>mc_rbdyn</namespace>
   </compound>
@@ -1472,6 +1560,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>BodySensor_8h</filename>
     <includes id="Device_8h" name="Device.h" local="no" imported="no">mc_rbdyn/Device.h</includes>
+    <includes id="deprecated_8h" name="deprecated.h" local="no" imported="no">mc_rtc/deprecated.h</includes>
     <class kind="struct">mc_rbdyn::BodySensor</class>
     <namespace>mc_rbdyn</namespace>
     <member kind="typedef">
@@ -1486,7 +1575,7 @@
     <name>Collision.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>Collision_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <class kind="struct">mc_rbdyn::Collision</class>
     <namespace>mc_rbdyn</namespace>
     <member kind="function">
@@ -1550,7 +1639,7 @@
     <name>contact_transform.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>contact__transform_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <namespace>mc_rbdyn</namespace>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI sva::PTransformd</type>
@@ -1600,7 +1689,7 @@
     <name>Device.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>Device_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <class kind="struct">mc_rbdyn::Device</class>
     <namespace>mc_rbdyn</namespace>
     <member kind="typedef">
@@ -1629,7 +1718,7 @@
     <name>Flexibility.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>Flexibility_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <class kind="struct">mc_rbdyn::Flexibility</class>
     <namespace>mc_rbdyn</namespace>
   </compound>
@@ -1646,7 +1735,7 @@
     <name>Frame.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>Frame_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <includes id="fwd_8h" name="fwd.h" local="no" imported="no">mc_rbdyn/fwd.h</includes>
     <includes id="shared_8h" name="shared.h" local="no" imported="no">mc_rtc/shared.h</includes>
     <class kind="struct">mc_rbdyn::Frame</class>
@@ -1741,7 +1830,7 @@
     <name>JointSensor.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>JointSensor_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <class kind="struct">mc_rbdyn::JointSensor</class>
     <namespace>mc_rbdyn</namespace>
   </compound>
@@ -1750,7 +1839,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/lipm_stabilizer/</path>
     <filename>StabilizerConfiguration_8h</filename>
     <includes id="Gains_8h" name="Gains.h" local="no" imported="no">mc_rbdyn/Gains.h</includes>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <includes id="ZMPCCConfiguration_8h" name="ZMPCCConfiguration.h" local="no" imported="no">mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h</includes>
     <includes id="clamp_8h" name="clamp.h" local="no" imported="no">mc_filter/utils/clamp.h</includes>
     <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
@@ -1773,7 +1862,7 @@
     <name>ZMPCCConfiguration.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/lipm_stabilizer/</path>
     <filename>ZMPCCConfiguration_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;</class>
@@ -1785,7 +1874,7 @@
     <name>Mimic.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>Mimic_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <class kind="struct">mc_rbdyn::Mimic</class>
     <namespace>mc_rbdyn</namespace>
   </compound>
@@ -1801,7 +1890,7 @@
     <name>polygon_utils.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>polygon__utils_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <class kind="struct">mc_rbdyn::QuadraticGenerator</class>
     <class kind="struct">mc_rbdyn::Plane</class>
     <namespace>geos</namespace>
@@ -1826,7 +1915,7 @@
     <name>PolygonInterpolator.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>PolygonInterpolator_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <class kind="struct">mc_rbdyn::PolygonInterpolator</class>
     <namespace>geos</namespace>
     <namespace>geos::geom</namespace>
@@ -1906,7 +1995,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>RobotLoader_8h</filename>
     <includes id="RobotModule_8h" name="RobotModule.h" local="no" imported="no">mc_rbdyn/RobotModule.h</includes>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <includes id="loader_8h" name="loader.h" local="no" imported="no">mc_rtc/loader.h</includes>
     <class kind="struct">mc_rbdyn::details::are_strings</class>
     <class kind="struct">mc_rbdyn::details::are_strings&lt; T &gt;</class>
@@ -1934,9 +2023,10 @@
     <includes id="JointSensor_8h" name="JointSensor.h" local="no" imported="no">mc_rbdyn/JointSensor.h</includes>
     <includes id="Mimic_8h" name="Mimic.h" local="no" imported="no">mc_rbdyn/Mimic.h</includes>
     <includes id="Springs_8h" name="Springs.h" local="no" imported="no">mc_rbdyn/Springs.h</includes>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <includes id="StabilizerConfiguration_8h" name="StabilizerConfiguration.h" local="no" imported="no">mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h</includes>
     <includes id="constants_8h" name="constants.h" local="no" imported="no">mc_rtc/constants.h</includes>
+    <includes id="deprecated_8h" name="deprecated.h" local="no" imported="no">mc_rtc/deprecated.h</includes>
     <class kind="struct">mc_rbdyn::DevicePtrVector</class>
     <class kind="struct">mc_rbdyn::VisualMap</class>
     <class kind="struct">mc_rbdyn::RobotModule</class>
@@ -2113,7 +2203,7 @@
     <name>SCHAddon.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>SCHAddon_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <namespace>sch</namespace>
     <namespace>sch::mc_rbdyn</namespace>
     <member kind="function">
@@ -2149,7 +2239,7 @@
     <name>Springs.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>Springs_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <class kind="struct">mc_rbdyn::Springs</class>
     <namespace>mc_rbdyn</namespace>
   </compound>
@@ -2157,7 +2247,7 @@
     <name>Surface.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>Surface_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <class kind="struct">mc_rbdyn::Surface</class>
     <namespace>mc_rbdyn</namespace>
     <member kind="typedef">
@@ -2173,7 +2263,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>surface__hull_8h</filename>
     <includes id="pragma_8h" name="pragma.h" local="no" imported="no">mc_rtc/pragma.h</includes>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <namespace>mc_rbdyn</namespace>
     <member kind="function">
       <type>MC_RTC_diagnostic_push</type>
@@ -2222,7 +2312,7 @@
     <name>surface_utils.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>surface__utils_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <namespace>mc_rbdyn</namespace>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI std::vector&lt; std::shared_ptr&lt; Surface &gt; &gt;</type>
@@ -2236,7 +2326,7 @@
     <name>ZMP.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>mc__rbdyn_2ZMP_8h</filename>
-    <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <namespace>mc_rbdyn</namespace>
     <member kind="function">
       <type>Eigen::Vector3d MC_RBDYN_DLLAPI</type>
@@ -2691,7 +2781,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>elements_8h</filename>
     <includes id="MessagePackBuilder_8h" name="MessagePackBuilder.h" local="no" imported="no">mc_rtc/MessagePackBuilder.h</includes>
-    <includes id="mc__rtc_2gui_2api_8h" name="api.h" local="no" imported="no">mc_rtc/gui/api.h</includes>
+    <includes id="include_2mc__rtc_2gui_2api_8h" name="api.h" local="no" imported="no">mc_rtc/gui/api.h</includes>
     <class kind="struct">mc_rtc::gui::Element</class>
     <class kind="struct">mc_rtc::gui::DataElement</class>
     <class kind="struct">mc_rtc::gui::CallbackElement</class>
@@ -3156,7 +3246,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>types_8h</filename>
     <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
-    <includes id="mc__rtc_2gui_2api_8h" name="api.h" local="no" imported="no">mc_rtc/gui/api.h</includes>
+    <includes id="include_2mc__rtc_2gui_2api_8h" name="api.h" local="no" imported="no">mc_rtc/gui/api.h</includes>
     <includes id="logging_8h" name="logging.h" local="no" imported="no">mc_rtc/logging.h</includes>
     <class kind="struct">mc_rtc::gui::Color</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::Color &gt;</class>
@@ -4206,6 +4296,13 @@
       <anchor>a50f154e9e60e5f9860cc22930076d527</anchor>
       <arglist>(c, w)</arglist>
     </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_diagnostic_ignored</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>a3f03fcd513350b95f4c858ab704d09e7</anchor>
+      <arglist>(...)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>shared.h</name>
@@ -4288,7 +4385,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_solver/</path>
     <filename>BoundedSpeedConstr_8h</filename>
     <includes id="QPSolver_8h" name="QPSolver.h" local="no" imported="no">mc_solver/QPSolver.h</includes>
-    <includes id="mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
+    <includes id="include_2mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
     <class kind="class">mc_solver::BoundedSpeedConstr</class>
     <namespace>mc_solver</namespace>
   </compound>
@@ -4311,7 +4408,8 @@
     <filename>CoMIncPlaneConstr_8h</filename>
     <includes id="polygon__utils_8h" name="polygon_utils.h" local="no" imported="no">mc_rbdyn/polygon_utils.h</includes>
     <includes id="QPSolver_8h" name="QPSolver.h" local="no" imported="no">mc_solver/QPSolver.h</includes>
-    <includes id="mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
+    <includes id="include_2mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
+    <includes id="deprecated_8h" name="deprecated.h" local="no" imported="no">mc_rtc/deprecated.h</includes>
     <class kind="class">mc_solver::CoMIncPlaneConstr</class>
     <namespace>mc_solver</namespace>
   </compound>
@@ -4345,7 +4443,7 @@
     <name>ConstraintSet.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_solver/</path>
     <filename>ConstraintSet_8h</filename>
-    <includes id="mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
+    <includes id="include_2mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
     <class kind="class">mc_solver::ConstraintSet</class>
     <namespace>mc_solver</namespace>
     <member kind="typedef">
@@ -4451,13 +4549,13 @@
     <name>QPSolver.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_solver/</path>
     <filename>QPSolver_8h</filename>
-    <includes id="mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
+    <includes id="include_2mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
     <includes id="mc__rbdyn_2Contact_8h" name="Contact.h" local="no" imported="no">mc_rbdyn/Contact.h</includes>
     <includes id="Robots_8h" name="Robots.h" local="no" imported="no">mc_rbdyn/Robots.h</includes>
     <includes id="pragma_8h" name="pragma.h" local="no" imported="no">mc_rtc/pragma.h</includes>
     <includes id="ConstraintSet_8h" name="ConstraintSet.h" local="no" imported="no">mc_solver/ConstraintSet.h</includes>
     <includes id="DynamicsConstraint_8h" name="DynamicsConstraint.h" local="no" imported="no">mc_solver/DynamicsConstraint.h</includes>
-    <includes id="mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
+    <includes id="include_2mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
     <includes id="QPResult_8h" name="QPResult.h" local="no" imported="no">mc_solver/msg/QPResult.h</includes>
     <class kind="class">mc_solver::QPSolver</class>
     <class kind="struct">mc_solver::QPSolver::ControllerToken</class>
@@ -4488,7 +4586,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_solver/utils/</path>
     <filename>ContactWrenchMatrixToLambdaMatrix_8h</filename>
     <includes id="QPSolver_8h" name="QPSolver.h" local="no" imported="no">mc_solver/QPSolver.h</includes>
-    <includes id="mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
+    <includes id="include_2mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
     <class kind="struct">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix</class>
     <namespace>mc_solver</namespace>
     <namespace>mc_solver::utils</namespace>
@@ -4524,7 +4622,7 @@
     <name>UpdateNrVars.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_solver/utils/</path>
     <filename>UpdateNrVars_8h</filename>
-    <includes id="mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
+    <includes id="include_2mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
     <class kind="struct">mc_solver::utils::UpdateNrVarsData</class>
     <class kind="struct">mc_solver::utils::UpdateNrVarsRobot</class>
     <class kind="struct">mc_solver::utils::UpdateNrVarsLambda</class>
@@ -4538,7 +4636,7 @@
     <includes id="Robots_8h" name="Robots.h" local="no" imported="no">mc_rbdyn/Robots.h</includes>
     <includes id="BoundedSpeedConstr_8h" name="BoundedSpeedConstr.h" local="no" imported="no">mc_solver/BoundedSpeedConstr.h</includes>
     <includes id="MetaTask_8h" name="MetaTask.h" local="no" imported="no">mc_tasks/MetaTask.h</includes>
-    <includes id="mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
+    <includes id="include_2mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
     <class kind="struct">mc_tasks::AddRemoveContactTask</class>
     <class kind="struct">mc_tasks::AddContactTask</class>
     <class kind="struct">mc_tasks::RemoveContactTask</class>
@@ -4630,7 +4728,7 @@
     <name>ImpedanceGains.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_tasks/</path>
     <filename>ImpedanceGains_8h</filename>
-    <includes id="mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
+    <includes id="include_2mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
     <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
     <class kind="struct">mc_tasks::force::details::ImpedanceVecd</class>
     <class kind="struct">mc_tasks::force::ImpedanceGains</class>
@@ -4662,6 +4760,7 @@
     <includes id="LowPassCompose_8h" name="LowPassCompose.h" local="no" imported="no">mc_filter/LowPassCompose.h</includes>
     <includes id="StationaryOffset_8h" name="StationaryOffset.h" local="no" imported="no">mc_filter/StationaryOffset.h</includes>
     <includes id="StabilizerConfiguration_8h" name="StabilizerConfiguration.h" local="no" imported="no">mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h</includes>
+    <includes id="deprecated_8h" name="deprecated.h" local="no" imported="no">mc_rtc/deprecated.h</includes>
     <includes id="CoMTask_8h" name="CoMTask.h" local="no" imported="no">mc_tasks/CoMTask.h</includes>
     <includes id="CoPTask_8h" name="CoPTask.h" local="no" imported="no">mc_tasks/CoPTask.h</includes>
     <includes id="MetaTask_8h" name="MetaTask.h" local="no" imported="no">mc_tasks/MetaTask.h</includes>
@@ -4793,8 +4892,8 @@
     <includes id="StateBuilder_8h" name="StateBuilder.h" local="no" imported="no">mc_rtc/gui/StateBuilder.h</includes>
     <includes id="Logger_8h" name="Logger.h" local="no" imported="no">mc_rtc/log/Logger.h</includes>
     <includes id="QPSolver_8h" name="QPSolver.h" local="no" imported="no">mc_solver/QPSolver.h</includes>
-    <includes id="mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
-    <includes id="mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
+    <includes id="include_2mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
+    <includes id="include_2mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
     <class kind="struct">mc_tasks::MetaTask</class>
     <namespace>mc_control</namespace>
     <namespace>mc_tasks</namespace>
@@ -4874,7 +4973,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_tasks/</path>
     <filename>RelativeEndEffectorTask_8h</filename>
     <includes id="EndEffectorTask_8h" name="EndEffectorTask.h" local="no" imported="no">mc_tasks/EndEffectorTask.h</includes>
-    <includes id="mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
+    <includes id="include_2mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
     <class kind="struct">mc_tasks::RelativeEndEffectorTask</class>
     <namespace>mc_tasks</namespace>
   </compound>
@@ -4917,7 +5016,7 @@
     <includes id="logging_8h" name="logging.h" local="no" imported="no">mc_rtc/logging.h</includes>
     <includes id="QPSolver_8h" name="QPSolver.h" local="no" imported="no">mc_solver/QPSolver.h</includes>
     <includes id="MetaTask_8h" name="MetaTask.h" local="no" imported="no">mc_tasks/MetaTask.h</includes>
-    <includes id="mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
+    <includes id="include_2mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
     <class kind="struct">mc_tasks::TrajectoryTaskGeneric</class>
     <namespace>mc_tasks</namespace>
   </compound>
@@ -4944,7 +5043,7 @@
     <filename>BSpline_8h</filename>
     <includes id="StateBuilder_8h" name="StateBuilder.h" local="no" imported="no">mc_rtc/gui/StateBuilder.h</includes>
     <includes id="Spline_8h" name="Spline.h" local="no" imported="no">mc_trajectory/Spline.h</includes>
-    <includes id="mc__trajectory_2api_8h" name="api.h" local="no" imported="no">mc_trajectory/api.h</includes>
+    <includes id="include_2mc__trajectory_2api_8h" name="api.h" local="no" imported="no">mc_trajectory/api.h</includes>
     <class kind="struct">mc_trajectory::BSpline</class>
     <namespace>mc_trajectory</namespace>
   </compound>
@@ -4954,7 +5053,7 @@
     <filename>ExactCubic_8h</filename>
     <includes id="StateBuilder_8h" name="StateBuilder.h" local="no" imported="no">mc_rtc/gui/StateBuilder.h</includes>
     <includes id="Spline_8h" name="Spline.h" local="no" imported="no">mc_trajectory/Spline.h</includes>
-    <includes id="mc__trajectory_2api_8h" name="api.h" local="no" imported="no">mc_trajectory/api.h</includes>
+    <includes id="include_2mc__trajectory_2api_8h" name="api.h" local="no" imported="no">mc_trajectory/api.h</includes>
     <class kind="struct">mc_trajectory::ExactCubic</class>
     <namespace>mc_trajectory</namespace>
   </compound>
@@ -4964,7 +5063,7 @@
     <filename>InterpolatedRotation_8h</filename>
     <includes id="StateBuilder_8h" name="StateBuilder.h" local="no" imported="no">mc_rtc/gui/StateBuilder.h</includes>
     <includes id="Spline_8h" name="Spline.h" local="no" imported="no">mc_trajectory/Spline.h</includes>
-    <includes id="mc__trajectory_2api_8h" name="api.h" local="no" imported="no">mc_trajectory/api.h</includes>
+    <includes id="include_2mc__trajectory_2api_8h" name="api.h" local="no" imported="no">mc_trajectory/api.h</includes>
     <class kind="struct">mc_trajectory::InterpolatedRotation</class>
     <namespace>mc_trajectory</namespace>
   </compound>
@@ -4988,7 +5087,7 @@
     <name>Spline.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_trajectory/</path>
     <filename>Spline_8h</filename>
-    <includes id="mc__trajectory_2api_8h" name="api.h" local="no" imported="no">mc_trajectory/api.h</includes>
+    <includes id="include_2mc__trajectory_2api_8h" name="api.h" local="no" imported="no">mc_trajectory/api.h</includes>
     <class kind="struct">mc_trajectory::Spline</class>
     <namespace>mc_trajectory</namespace>
   </compound>
@@ -4996,7 +5095,7 @@
     <name>spline_utils.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_trajectory/</path>
     <filename>spline__utils_8h</filename>
-    <includes id="mc__trajectory_2api_8h" name="api.h" local="no" imported="no">mc_trajectory/api.h</includes>
+    <includes id="include_2mc__trajectory_2api_8h" name="api.h" local="no" imported="no">mc_trajectory/api.h</includes>
     <namespace>mc_trajectory</namespace>
     <member kind="function">
       <type>MC_TRAJECTORY_DLLAPI Eigen::MatrixXd</type>
@@ -5010,7 +5109,14 @@
     <name>ros.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/plugins/ROS/include/mc_rtc/</path>
     <filename>ros_8h</filename>
-    <includes id="mc__rtc_2ros__api_8h" name="ros_api.h" local="no" imported="no">mc_rtc/ros_api.h</includes>
+    <includes id="deprecated_8h" name="deprecated.h" local="no" imported="no">mc_rtc/deprecated.h</includes>
+    <includes id="ros_2ros_8h" name="ros.h" local="no" imported="no">mc_rtc_ros/ros.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>ros.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/plugins/ROS/include/mc_rtc_ros/</path>
+    <filename>ros_2ros_8h</filename>
+    <includes id="plugins_2ROS_2include_2mc__rtc__ros_2api_8h" name="api.h" local="no" imported="no">mc_rtc_ros/api.h</includes>
     <class kind="struct">mc_rtc::ROSBridge</class>
     <class kind="struct">mc_rtc::RobotPublisher</class>
     <namespace>ros</namespace>
@@ -5019,98 +5125,18 @@
     <namespace>mc_rtc</namespace>
   </compound>
   <compound kind="file">
-    <name>ros_api.h</name>
-    <path>/home/runner/work/mc_rtc/mc_rtc/plugins/ROS/include/mc_rtc/</path>
-    <filename>mc__rtc_2ros__api_8h</filename>
-    <member kind="define">
-      <type>#define</type>
-      <name>MC_RTC_ROS_VERSION</name>
-      <anchorfile>mc__rtc_2ros__api_8h.html</anchorfile>
-      <anchor>a4c77ffabba6fb012e781847cfb5dca02</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>MC_RTC_ROS_DLLIMPORT</name>
-      <anchorfile>mc__rtc_2ros__api_8h.html</anchorfile>
-      <anchor>a3cbe6a1ac62448731bc867c7068ba36c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>MC_RTC_ROS_DLLEXPORT</name>
-      <anchorfile>mc__rtc_2ros__api_8h.html</anchorfile>
-      <anchor>aabc0589237f2cf4df48b8ca69df575a4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>MC_RTC_ROS_DLLLOCAL</name>
-      <anchorfile>mc__rtc_2ros__api_8h.html</anchorfile>
-      <anchor>a387309c9381fda92ba227506899eeb8b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>MC_RTC_ROS_DLLAPI</name>
-      <anchorfile>mc__rtc_2ros__api_8h.html</anchorfile>
-      <anchor>a17fc85a6fd39970f9a707344763058c1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>MC_RTC_ROS_LOCAL</name>
-      <anchorfile>mc__rtc_2ros__api_8h.html</anchorfile>
-      <anchor>ac6f294a8922c33b67092dbcf4b692c43</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="file">
-    <name>ros_api.h</name>
-    <path>/home/runner/work/mc_rtc/mc_rtc/plugins/ROS/include/mc_tasks/</path>
-    <filename>mc__tasks_2ros__api_8h</filename>
-    <member kind="define">
-      <type>#define</type>
-      <name>MC_TASKS_ROS_DLLIMPORT</name>
-      <anchorfile>mc__tasks_2ros__api_8h.html</anchorfile>
-      <anchor>ad9cb61445fafdd004c409dbab29c15ce</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>MC_TASKS_ROS_DLLEXPORT</name>
-      <anchorfile>mc__tasks_2ros__api_8h.html</anchorfile>
-      <anchor>a7e3780f3cce3c679104c80e08d8e2694</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>MC_TASKS_ROS_DLLLOCAL</name>
-      <anchorfile>mc__tasks_2ros__api_8h.html</anchorfile>
-      <anchor>af79974efde92fc0dac6467d3c01568ed</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>MC_TASKS_ROS_DLLAPI</name>
-      <anchorfile>mc__tasks_2ros__api_8h.html</anchorfile>
-      <anchor>aa9127fc040ab12d0ad1fd62b9f562ace</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>MC_TASKS_ROS_LOCAL</name>
-      <anchorfile>mc__tasks_2ros__api_8h.html</anchorfile>
-      <anchor>a29794f98df087d4fed1ddd7f873a2488</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="file">
     <name>LookAtTFTask.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/plugins/ROS/include/mc_tasks/</path>
     <filename>LookAtTFTask_8h</filename>
+    <includes id="deprecated_8h" name="deprecated.h" local="no" imported="no">mc_rtc/deprecated.h</includes>
+    <includes id="ros_2LookAtTFTask_8h" name="LookAtTFTask.h" local="no" imported="no">mc_tasks_ros/LookAtTFTask.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>LookAtTFTask.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/plugins/ROS/include/mc_tasks_ros/</path>
+    <filename>ros_2LookAtTFTask_8h</filename>
+    <includes id="plugins_2ROS_2include_2mc__tasks__ros_2api_8h" name="api.h" local="no" imported="no">mc_tasks_ros/api.h</includes>
     <includes id="LookAtTask_8h" name="LookAtTask.h" local="no" imported="no">mc_tasks/LookAtTask.h</includes>
-    <includes id="mc__tasks_2ros__api_8h" name="ros_api.h" local="no" imported="no">mc_tasks/ros_api.h</includes>
     <class kind="struct">mc_tasks::LookAtTFTask</class>
     <namespace>mc_tasks</namespace>
   </compound>

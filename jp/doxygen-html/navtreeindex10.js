@@ -1,5 +1,12 @@
 var NAVTREEINDEX10 =
 {
+"structmc__rbdyn_1_1RobotFrame.html#ae6d6e55b0e7dc9905c43001ad5b7c719":[3,0,6,22,16],
+"structmc__rbdyn_1_1RobotFrame.html#aee21dea39cadcfdf5c0c7734d27a156d":[3,0,6,22,8],
+"structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html":[3,0,6,22,0],
+"structmc__rbdyn_1_1RobotLoader.html":[3,0,6,23],
+"structmc__rbdyn_1_1RobotModule.html":[3,0,6,24],
+"structmc__rbdyn_1_1RobotModule.html#a064f95b0a8e134739d1f7ab194afe42f":[3,0,6,24,45],
+"structmc__rbdyn_1_1RobotModule.html#a0a6e511b53b2be9ca1258dc7e39857ba":[3,0,6,24,64],
 "structmc__rbdyn_1_1RobotModule.html#a0b4dd720e3b699b37947c3453a93e126":[3,0,6,24,46],
 "structmc__rbdyn_1_1RobotModule.html#a0c1a839a89c823bd31ca95f6caa371b0":[3,0,6,24,51],
 "structmc__rbdyn_1_1RobotModule.html#a0f2e303e32aeb00e4928808dc3e0760a":[3,0,6,24,22],
@@ -242,12 +249,5 @@ var NAVTREEINDEX10 =
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a5b9bbb849504eb7763660147da1094a8":[3,0,6,1,3,1],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a6e4162251f42ce05989ad8f40465d3b9":[3,0,6,1,3,5],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a7280e47779527fa1f63dc2603c00d9da":[3,0,6,1,3,2],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a7b736726261a83dd3bf62d9d5a5fbb01":[3,0,6,1,3,11],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a898823d244b31760aef9e426859b652b":[3,0,6,1,3,10],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#ab31f8fcab66cbe034d5c5e918eecb1fc":[3,0,6,1,3,13],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#ab8d222052bba6e7caa2af1311a4dbef5":[3,0,6,1,3,7],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#ab9c54f586d7060e79d2c3d8b02357fd4":[3,0,6,1,3,9],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#aba691140794cf4004229b6b5f2ac50a3":[3,0,6,1,3,12],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#ac1276cfbb01a99a72157dc2d2b68ac3d":[3,0,6,1,3,0],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#ac6c9d0b6634fc1c8e48daaf8e2538ea4":[3,0,6,1,3,6]
+"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a7b736726261a83dd3bf62d9d5a5fbb01":[3,0,6,1,3,11]
 };

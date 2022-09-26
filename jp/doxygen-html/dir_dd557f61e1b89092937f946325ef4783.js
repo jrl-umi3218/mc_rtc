@@ -1,6 +1,6 @@
 var dir_dd557f61e1b89092937f946325ef4783 =
 [
-    [ "api.h", "mc__observers_2api_8h.html", "mc__observers_2api_8h" ],
+    [ "api.h", "include_2mc__observers_2api_8h.html", "include_2mc__observers_2api_8h" ],
     [ "BodySensorObserver.h", "BodySensorObserver_8h.html", [
       [ "BodySensorObserver", "structmc__observers_1_1BodySensorObserver.html", "structmc__observers_1_1BodySensorObserver" ]
     ] ],

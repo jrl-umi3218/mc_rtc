@@ -2,7 +2,7 @@ var dir_dda95c61bc807ada3674ae2fc67687f0 =
 [
     [ "details", "dir_f60bbde16662fb0dce970d667851b692.html", "dir_f60bbde16662fb0dce970d667851b692" ],
     [ "plot", "dir_db09ff38bdf4a48089498df3a23be2f9.html", "dir_db09ff38bdf4a48089498df3a23be2f9" ],
-    [ "api.h", "mc__rtc_2gui_2api_8h.html", "mc__rtc_2gui_2api_8h" ],
+    [ "api.h", "include_2mc__rtc_2gui_2api_8h.html", "include_2mc__rtc_2gui_2api_8h" ],
     [ "ArrayInput.h", "ArrayInput_8h.html", "ArrayInput_8h" ],
     [ "ArrayLabel.h", "ArrayLabel_8h.html", "ArrayLabel_8h" ],
     [ "Arrow.h", "Arrow_8h.html", "Arrow_8h" ],

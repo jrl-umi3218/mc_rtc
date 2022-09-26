@@ -9,7 +9,7 @@ var dir_c5d9ba9e59fcda315855869f4a23a264 =
     [ "AdmittanceTask.h", "AdmittanceTask_8h.html", [
       [ "AdmittanceTask", "structmc__tasks_1_1force_1_1AdmittanceTask.html", "structmc__tasks_1_1force_1_1AdmittanceTask" ]
     ] ],
-    [ "api.h", "mc__tasks_2api_8h.html", "mc__tasks_2api_8h" ],
+    [ "api.h", "include_2mc__tasks_2api_8h.html", "include_2mc__tasks_2api_8h" ],
     [ "BSplineTrajectoryTask.h", "BSplineTrajectoryTask_8h.html", [
       [ "BSplineTrajectoryTask", "structmc__tasks_1_1BSplineTrajectoryTask.html", "structmc__tasks_1_1BSplineTrajectoryTask" ]
     ] ],

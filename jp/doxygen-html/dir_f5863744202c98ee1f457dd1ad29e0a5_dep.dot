@@ -7,5 +7,8 @@ digraph "plugins/ROS/include/mc_tasks" {
   dir_f5863744202c98ee1f457dd1ad29e0a5 [shape=box, label="mc_tasks", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_f5863744202c98ee1f457dd1ad29e0a5.html"];
   }
   dir_d44c64559bbebec7f509842c48db8b23 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_d44c64559bbebec7f509842c48db8b23.html"];
-  dir_f5863744202c98ee1f457dd1ad29e0a5->dir_d44c64559bbebec7f509842c48db8b23 [headlabel="1", labeldistance=1.5 headhref="dir_000026_000000.html"];
+  dir_ee999e0d52ed226e451882f5cdb28265 [shape=box label="mc_tasks_ros" URL="dir_ee999e0d52ed226e451882f5cdb28265.html"];
+  dir_f5863744202c98ee1f457dd1ad29e0a5->dir_d44c64559bbebec7f509842c48db8b23 [headlabel="1", labeldistance=1.5 headhref="dir_000028_000000.html"];
+  dir_f5863744202c98ee1f457dd1ad29e0a5->dir_ee999e0d52ed226e451882f5cdb28265 [headlabel="1", labeldistance=1.5 headhref="dir_000028_000017.html"];
+  dir_ee999e0d52ed226e451882f5cdb28265->dir_d44c64559bbebec7f509842c48db8b23 [headlabel="1", labeldistance=1.5 headhref="dir_000017_000000.html"];
 }

@@ -9,7 +9,7 @@ digraph "include/mc_control/fsm/states" {
   dir_c5d9ba9e59fcda315855869f4a23a264 [shape=box label="mc_tasks" fillcolor="white" style="filled" color="red" URL="dir_c5d9ba9e59fcda315855869f4a23a264.html"];
   dir_379a22462e4fb075f5428ea3ff528930 [shape=box label="mc_rtc" fillcolor="white" style="filled" color="red" URL="dir_379a22462e4fb075f5428ea3ff528930.html"];
   dir_07d3c227ab2f47ab361e8e4c5a7f6b3c [shape=box label="mc_planning" URL="dir_07d3c227ab2f47ab361e8e4c5a7f6b3c.html"];
-  dir_c5d9ba9e59fcda315855869f4a23a264->dir_379a22462e4fb075f5428ea3ff528930 [headlabel="8", labeldistance=1.5 headhref="dir_000011_000008.html"];
+  dir_c5d9ba9e59fcda315855869f4a23a264->dir_379a22462e4fb075f5428ea3ff528930 [headlabel="9", labeldistance=1.5 headhref="dir_000011_000008.html"];
   dir_e6b7f2c290ec347c099e5f45d81956a4->dir_c5d9ba9e59fcda315855869f4a23a264 [headlabel="8", labeldistance=1.5 headhref="dir_000003_000011.html"];
   dir_e6b7f2c290ec347c099e5f45d81956a4->dir_379a22462e4fb075f5428ea3ff528930 [headlabel="1", labeldistance=1.5 headhref="dir_000003_000008.html"];
   dir_e6b7f2c290ec347c099e5f45d81956a4->dir_07d3c227ab2f47ab361e8e4c5a7f6b3c [headlabel="1", labeldistance=1.5 headhref="dir_000003_000005.html"];

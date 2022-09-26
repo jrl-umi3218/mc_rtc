@@ -1,6 +1,7 @@
 var pragma_8h =
 [
     [ "MC_RTC_ClangOnly_diagnostic_ignored", "pragma_8h.html#ac787813b16519f3f73b107be57393b2c", null ],
+    [ "MC_RTC_diagnostic_ignored", "pragma_8h.html#a3f03fcd513350b95f4c858ab704d09e7", null ],
     [ "MC_RTC_diagnostic_ignored_", "pragma_8h.html#a50f154e9e60e5f9860cc22930076d527", null ],
     [ "MC_RTC_GCC_diagnostic_ignored", "pragma_8h.html#abb0fdda60b84f4da1bf5f29993d5ac52", null ],
     [ "MC_RTC_GCCOnly_diagnostic_ignored", "pragma_8h.html#a2134aaaf2025a8052f43fee929131bf1", null ],

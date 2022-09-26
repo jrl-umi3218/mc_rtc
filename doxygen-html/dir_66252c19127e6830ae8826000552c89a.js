@@ -1,6 +1,6 @@
 var dir_66252c19127e6830ae8826000552c89a =
 [
-    [ "api.h", "mc__trajectory_2api_8h.html", "mc__trajectory_2api_8h" ],
+    [ "api.h", "include_2mc__trajectory_2api_8h.html", "include_2mc__trajectory_2api_8h" ],
     [ "BSpline.h", "BSpline_8h.html", [
       [ "BSpline", "structmc__trajectory_1_1BSpline.html", "structmc__trajectory_1_1BSpline" ]
     ] ],

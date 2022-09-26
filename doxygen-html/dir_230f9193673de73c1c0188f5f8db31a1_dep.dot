@@ -1,0 +1,13 @@
+digraph "plugins/ROS/include/mc_rtc" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_0884a74720358c6ca75630db8a4fc3d2 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_0884a74720358c6ca75630db8a4fc3d2.html"]
+  dir_230f9193673de73c1c0188f5f8db31a1 [shape=box, label="mc_rtc", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_230f9193673de73c1c0188f5f8db31a1.html"];
+  }
+  dir_6ecf9e14e0aa5493dc7f0adc174cdd9e [shape=box label="mc_rtc_ros" URL="dir_6ecf9e14e0aa5493dc7f0adc174cdd9e.html"];
+  dir_d44c64559bbebec7f509842c48db8b23 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_d44c64559bbebec7f509842c48db8b23.html"];
+  dir_230f9193673de73c1c0188f5f8db31a1->dir_6ecf9e14e0aa5493dc7f0adc174cdd9e [headlabel="1", labeldistance=1.5 headhref="dir_000027_000016.html"];
+  dir_230f9193673de73c1c0188f5f8db31a1->dir_d44c64559bbebec7f509842c48db8b23 [headlabel="1", labeldistance=1.5 headhref="dir_000027_000000.html"];
+}
