@@ -321,6 +321,7 @@ set(mc_rtc_gui_SRC
 
 set(mc_rtc_gui_HDR
   ../include/mc_rtc/gui/api.h
+  ../include/mc_rtc/gui/helpers.h
   ../include/mc_rtc/gui/StateBuilder.h
   ../include/mc_rtc/gui/StateBuilder.hpp
   ../include/mc_rtc/gui/ArrayInput.h

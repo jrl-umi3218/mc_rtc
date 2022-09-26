@@ -244,6 +244,9 @@ struct TestServer
   double d_ = 0.;
   double slide_ = 0.;
   Eigen::VectorXd v_{Eigen::VectorXd::Ones(6)};
+  sva::MotionVecd vel_{{0, 0, 0}, {0, 0, 1}};
+  sva::AdmittanceVecd admittance_vec_{{0.01, 0.01, 0.01}, {0.05, 0.05, 0.03}};
+  Eigen::Matrix3d mat3_ = sva::RotZ(1.57);
   Eigen::Vector3d v3_{-1., -1., 1.};
   Eigen::Vector3d vInt_ = {0.2, 0.2, 0.};
   std::string combo_ = "b";
@@ -431,6 +434,21 @@ TestServer::TestServer() : xythetaz_(4)
                                        data_combo_ = s;
                                        std::cout << "data_combo_ changed to " << data_combo_ << std::endl;
                                      }));
+  builder.addElement({"Helpers", "Inputs"}, mc_rtc::gui::make_input_element("String", string_),
+                     mc_rtc::gui::make_input_element("IntegerInput", int_),
+                     mc_rtc::gui::make_input_element("NumberInput", d_),
+                     mc_rtc::gui::make_number_slider("NumberSlider", slide_, -100.0, 100.0),
+                     mc_rtc::gui::make_input_element("ArrayInput", v_),
+                     mc_rtc::gui::make_input_element("ArrayInput with labels", {"x", "y", "z"}, v3_),
+                     mc_rtc::gui::make_input_element("ComboInput", {"a", "b", "c", "d"}, combo_),
+                     mc_rtc::gui::make_input_element("MotionVecd", vel_),
+                     mc_rtc::gui::make_admittancevecd_input("AdmittanceVecd", admittance_vec_));
+  builder.addElement({"Helpers", "Labels"}, mc_rtc::gui::make_label("value", provider.value),
+                     mc_rtc::gui::make_array_label("point", provider.point),
+                     mc_rtc::gui::make_array_label("point with labels", {"x", "y", "z"}, provider.point),
+                     mc_rtc::gui::make_rpy_label("Rotation RPY [deg]", mat3_));
+  builder.addElement({"Helpers", "Checkbox"}, mc_rtc::gui::make_checkbox("Checkbox (helper)", check_));
+
   builder.addElement({"Schema"}, mc_rtc::gui::Schema("Add metatask", "MetaTask", [](const mc_rtc::Configuration & c) {
                        std::cout << "Got schema request:\n" << c.dump(true) << std::endl;
                      }));

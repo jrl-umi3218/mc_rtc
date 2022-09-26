@@ -6,7 +6,9 @@
 
 /** This file contains some utility template metaprogramming functions for the GUI */
 
+#include <array>
 #include <type_traits>
+#include <vector>
 
 namespace mc_rtc
 {
@@ -95,6 +97,34 @@ template<typename GetT, typename T, typename... Args>
 struct CheckReturnType<GetT, T, Args...>
 {
   static constexpr bool value = CheckReturnType<GetT, T>::value || CheckReturnType<GetT, Args...>::value;
+};
+
+/** Check whether type is an std::array or std::vector */
+template<typename T>
+struct is_array_or_vector
+{
+  enum
+  {
+    value = false
+  };
+};
+
+template<typename T, typename A>
+struct is_array_or_vector<std::vector<T, A>>
+{
+  enum
+  {
+    value = true
+  };
+};
+
+template<typename T, std::size_t N>
+struct is_array_or_vector<std::array<T, N>>
+{
+  enum
+  {
+    value = true
+  };
 };
 
 } // namespace details
