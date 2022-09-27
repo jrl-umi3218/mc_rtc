@@ -205,6 +205,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a30b21b6e828397cebd4f015cf9e87f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b970df4059237f37021b47d5aaf2494"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__control_1_1Gripper.html">mc_control::Gripper</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a8b970df4059237f37021b47d5aaf2494">gripper</a> (const std::string &amp;gripper)</td></tr>
 <tr class="separator:a8b970df4059237f37021b47d5aaf2494"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1c37bc25e3eb43bd7f040c252647e64"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__control_1_1Gripper.html">mc_control::Gripper</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ac1c37bc25e3eb43bd7f040c252647e64">gripper</a> (const std::string &amp;gripper) const</td></tr>
+<tr class="separator:ac1c37bc25e3eb43bd7f040c252647e64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae15e501f93c406e3ad5d19ab6904bd4e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ae15e501f93c406e3ad5d19ab6904bd4e">hasGripper</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a8b970df4059237f37021b47d5aaf2494">gripper</a>) const</td></tr>
 <tr class="separator:ae15e501f93c406e3ad5d19ab6904bd4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b0c83dbee42dff616909c21b90825b8"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; std::string, <a class="el" href="namespacemc__control.html#a67d3b51822d3e7d0c56d9af675f9eaa1">mc_control::GripperPtr</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a6b0c83dbee42dff616909c21b90825b8">grippersByName</a> () const</td></tr>
@@ -2618,7 +2620,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a8b970df4059237f37021b47d5aaf2494"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b970df4059237f37021b47d5aaf2494">&#9670;&nbsp;</a></span>gripper()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b970df4059237f37021b47d5aaf2494">&#9670;&nbsp;</a></span>gripper() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2629,6 +2631,37 @@ template&lt;typename T &gt; </div>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>gripper</em></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Access a gripper by name</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gripper</td><td>Gripper name</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>the gripper does not exist within this robot </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac1c37bc25e3eb43bd7f040c252647e64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1c37bc25e3eb43bd7f040c252647e64">&#9670;&nbsp;</a></span>gripper() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structmc__control_1_1Gripper.html">mc_control::Gripper</a>&amp; mc_rbdyn::Robot::gripper </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>gripper</em></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">

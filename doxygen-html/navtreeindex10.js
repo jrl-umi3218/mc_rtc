@@ -1,5 +1,6 @@
 var NAVTREEINDEX10 =
 {
+"structmc__rbdyn_1_1RobotFrame.html#adee19234fa1267ab00958cbb30b4bd1f":[3,0,6,22,18],
 "structmc__rbdyn_1_1RobotFrame.html#ae6d6e55b0e7dc9905c43001ad5b7c719":[3,0,6,22,16],
 "structmc__rbdyn_1_1RobotFrame.html#aee21dea39cadcfdf5c0c7734d27a156d":[3,0,6,22,8],
 "structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html":[3,0,6,22,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX10 =
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a421d3ed8e7c051add55a77503588ed4e":[3,0,6,1,3,3],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a5b9bbb849504eb7763660147da1094a8":[3,0,6,1,3,1],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a6e4162251f42ce05989ad8f40465d3b9":[3,0,6,1,3,5],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a7280e47779527fa1f63dc2603c00d9da":[3,0,6,1,3,2],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a7b736726261a83dd3bf62d9d5a5fbb01":[3,0,6,1,3,11]
+"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a7280e47779527fa1f63dc2603c00d9da":[3,0,6,1,3,2]
 };

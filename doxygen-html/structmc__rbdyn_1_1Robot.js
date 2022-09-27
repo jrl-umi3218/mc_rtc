@@ -92,6 +92,7 @@ var structmc__rbdyn_1_1Robot =
     [ "frame", "structmc__rbdyn_1_1Robot.html#ad3d92cb0d6c4ba8c42ee9a35a7d56bab", null ],
     [ "frames", "structmc__rbdyn_1_1Robot.html#a8c6c471776005048105c48791df73ea5", null ],
     [ "gripper", "structmc__rbdyn_1_1Robot.html#a8b970df4059237f37021b47d5aaf2494", null ],
+    [ "gripper", "structmc__rbdyn_1_1Robot.html#ac1c37bc25e3eb43bd7f040c252647e64", null ],
     [ "grippers", "structmc__rbdyn_1_1Robot.html#afa96f71ad7e9c085d622c4885c15f1bb", null ],
     [ "grippersByName", "structmc__rbdyn_1_1Robot.html#a6b0c83dbee42dff616909c21b90825b8", null ],
     [ "hasBody", "structmc__rbdyn_1_1Robot.html#a8353aa6a66630a85c9249298ed960c6a", null ],

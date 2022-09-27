@@ -26074,6 +26074,13 @@
       <arglist>(const std::string &amp;gripper)</arglist>
     </member>
     <member kind="function">
+      <type>const mc_control::Gripper &amp;</type>
+      <name>gripper</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>ac1c37bc25e3eb43bd7f040c252647e64</anchor>
+      <arglist>(const std::string &amp;gripper) const</arglist>
+    </member>
+    <member kind="function">
       <type>bool</type>
       <name>hasGripper</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
