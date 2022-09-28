@@ -442,11 +442,13 @@ TestServer::TestServer() : xythetaz_(4)
                      mc_rtc::gui::make_input_element("ArrayInput with labels", {"x", "y", "z"}, v3_),
                      mc_rtc::gui::make_input_element("ComboInput", {"a", "b", "c", "d"}, combo_),
                      mc_rtc::gui::make_input_element("MotionVecd", vel_),
+                     mc_rtc::gui::make_motionvecd_input_rad("MotionVecd (rad)", vel_),
                      mc_rtc::gui::make_admittancevecd_input("AdmittanceVecd", admittance_vec_));
   builder.addElement({"Helpers", "Labels"}, mc_rtc::gui::make_label("value", provider.value),
                      mc_rtc::gui::make_array_label("point", provider.point),
                      mc_rtc::gui::make_array_label("point with labels", {"x", "y", "z"}, provider.point),
-                     mc_rtc::gui::make_rpy_label("Rotation RPY [deg]", mat3_));
+                     mc_rtc::gui::make_rpy_label("Rotation RPY [deg]", mat3_),
+                     mc_rtc::gui::make_rpy_label_rad("Rotation RPY [rad]", mat3_));
   builder.addElement({"Helpers", "Checkbox"}, mc_rtc::gui::make_checkbox("Checkbox (helper)", check_));
 
   builder.addElement({"Schema"}, mc_rtc::gui::Schema("Add metatask", "MetaTask", [](const mc_rtc::Configuration & c) {
