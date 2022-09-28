@@ -293,6 +293,55 @@ In that example, the content of the `Surface` combo box will change depending on
 
 Every callback call triggered by the user interaction happens after an iteration of the controller and before the next. You don't have to worry about concurrency here.
 
+### GUI Helpers
+
+The above sections presented the generic way of creating GUI elements. While you can do everything this way, the syntax is cumbersome. One of the most common use-case of the GUI is to display/modify member variables. This use case can be simplified with helper functions:
+
+```cpp
+// Some member variables
+// These must remain in scope for as long as the GUI elements using them are in the GUI.
+Eigen::Matrix3d rot_ = Eigen::Matrix3d::Identity();
+std::vector<double> array_{0,1,2,3};
+bool check_ = true;
+double slide_ = 0;
+std::string combo_{"Value C"};
+
+gui()->addElement({"Category"},
+  mc_rtc::gui::make_input_element("Rotation RPY (deg)", rot), // Displays an RPY input expressed in degrees
+  mc_rtc::gui::make_rpy_input_rad("Rotation RPY (rad)", rot), // Displays an RPY input expressed in radians
+  mc_rtc::gui::make_input_element("Array", array_), // Displays an array input
+  mc_rtc::gui::make_input_element("CheckBox", check_), // Displays a checkbox
+  mc_rtc::gui::make_number_slider("Slider", slide_, -100, 100), // Displays a numer slider with bounds [-100;100]
+  mc_rtc::gui::make_input_element("Combo", {"Value A", "Value B", "Value C"}, combo_); // Creates a ComboBox
+)
+```
+
+Note that these helpers will automatically select the most appropriate GUI elements based on the provided type. In case where multiple elements may be suitable for a given type `make_input_element` displays the most generic element for that type. You may explicitely choose a more suitable type:
+
+```cpp
+double value = 42;
+gui()->addElement({"Category"},
+  mc_rtc::gui::make_input_element("Number Input", value), // will display a simple number input
+  mc_rtc::gui::make_number_slider("Number Slider", value, -100, 100) // will display a number slider instead
+  );
+```
+
+The above helpers are strictly equivalent to their lambda function counterpart, for example:
+
+```cpp
+mc_rtc::gui::make_input_element("Number Input", value)
+// is the same as
+mc_rtc::gui::NumberInput("Number Input",
+  [&value]()
+  {
+    return value;
+  },
+  [&value](const double & newValue)
+  {
+    value = newValue;
+  });
+```
+
 ### Remove elements from the GUI
 
 Two functions are provided to remove elements from the GUI:
