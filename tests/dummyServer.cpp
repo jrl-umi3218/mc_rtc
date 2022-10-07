@@ -560,8 +560,9 @@ TestServer::TestServer() : xythetaz_(4)
   pconfig.fixed_edge_color = true;
   pconfig.edge_config.color = mc_rtc::gui::Color::LightGray;
   pconfig.edge_config.width = 0.03;
-  builder.addElement({"GUI Markers", "Polyhedrons"},
-                     mc_rtc::gui::Polyhedron("Polyhedron", pconfig, polyhedron_vertices_fn, polyhedron_colors_fn));
+  builder.addElement(
+      {"GUI Markers", "Polyhedrons"},
+      mc_rtc::gui::ColoredPolyhedron("Polyhedron", pconfig, polyhedron_vertices_fn, polyhedron_colors_fn));
 
   builder.addElement(
       {"GUI Markers", "Trajectories"}, mc_rtc::gui::Trajectory("Vector3d", [this]() { return trajectory_; }),

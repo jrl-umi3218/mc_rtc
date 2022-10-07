@@ -359,13 +359,36 @@ protected:
     polygon(id, points, config.color);
   }
 
+  /** Should display a polyhedron
+   *
+   * The polyhedron is described by a list of clockwise-ordered triangles.
+   *
+   * A vertices/triangles version is also available, this default implementation calls that by default.
+   *
+   * \param colors might be empty
+   *
+   * \param config contains additional information about handling the drawing
+   */
   virtual void polyhedron(const ElementId & id,
-                          const std::vector<std::array<Eigen::Vector3d, 3>> & /* triangles */,
-                          const std::vector<std::array<mc_rtc::gui::Color, 3>> & /* colors */,
-                          const mc_rtc::gui::PolyhedronConfig & /* config */)
-  {
-    default_impl("Polyhedron", id);
-  }
+                          const std::vector<std::array<Eigen::Vector3d, 3>> & triangles,
+                          const std::vector<std::array<mc_rtc::gui::Color, 3>> & colors,
+                          const mc_rtc::gui::PolyhedronConfig & config);
+
+  /** Should display a polyhedron
+   *
+   * The polygon is described by a list of vertices and a list of triangles
+   *
+   * A triangle list version is also available, this default implementation calls that by default.
+   *
+   * \param colors might be empty
+   *
+   * \param config contains additional information about handling the drawing
+   */
+  virtual void polyhedron(const ElementId & id,
+                          const std::vector<Eigen::Vector3d> & vertices,
+                          const std::vector<std::array<size_t, 3>> & triangles,
+                          const std::vector<mc_rtc::gui::Color> & colors,
+                          const mc_rtc::gui::PolyhedronConfig & config);
 
   /** Should display a force in 3D environment
    */
@@ -809,7 +832,10 @@ private:
   void handle_polygon(const ElementId & id, const mc_rtc::Configuration & data);
 
   /** Handle details of Polyhedron elements */
-  void handle_polyhedron(const ElementId & id, const mc_rtc::Configuration & data_);
+  void handle_polyhedron_triangles_list(const ElementId & id, const mc_rtc::Configuration & data_);
+
+  /** Handle details of Polyhedron elements */
+  void handle_polyhedron_vertices_triangles(const ElementId & id, const mc_rtc::Configuration & data_);
 
   /** Handle details of DisplayForce elements */
   void handle_force(const ElementId & id, const mc_rtc::Configuration & data);
@@ -843,6 +869,11 @@ private:
                     const std::vector<std::string> & header,
                     const std::vector<std::string> & format,
                     const std::vector<mc_rtc::Configuration> & data);
+
+  /** These two booleans allow to only implement one of the two versions of the polyhedron callback, the other is
+   * automatically handled by the default implementation */
+  bool default_polyhedron_triangles_list_ = false;
+  bool default_polyhedron_vertices_triangles_ = false;
 };
 
 } // namespace mc_control

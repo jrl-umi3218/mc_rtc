@@ -43,7 +43,8 @@ enum class Elements
   Table,
   Robot,
   Visual,
-  Polyhedron
+  PolyhedronTrianglesList,
+  PolyhedronVerticesTriangles
 };
 
 /** Element is the common class for every element's type available in the
