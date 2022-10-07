@@ -48,6 +48,11 @@ if(NOT MC_RTC_BUILD_STATIC)
 else()
 endif()
 
+find_program(PYTHON ${MC_LOG_UI_PYTHON_EXECUTABLE})
+if(NOT PYTHON)
+  return()
+endif()
+
 configure_file(mc_rtc_new_controller.in.py "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_new_controller" @ONLY)
 set(AROBASE "@")
 configure_file(mc_rtc_new_fsm_controller.in.py "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_new_fsm_controller" @ONLY)
