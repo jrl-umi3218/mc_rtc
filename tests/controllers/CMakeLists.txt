@@ -14,10 +14,10 @@ else()
   set(LOG_DIRECTORY "/tmp")
 endif()
 
-find_program(PYTHON python3 NAMES python python2)
+find_program(PYTHON_PGM python3 NAMES python python2)
 macro(AddLogTest NAME CTL_NAME NRITER UTILS_BIN_DIR)
-  if(PYTHON)
-    add_test(NAME "${NAME}" COMMAND "${PYTHON}" "${CMAKE_CURRENT_SOURCE_DIR}/check_log.py" "${CTL_NAME}" "${UTILS_BIN_DIR}")
+  if(PYTHON_PGM)
+    add_test(NAME "${NAME}" COMMAND "${PYTHON_PGM}" "${CMAKE_CURRENT_SOURCE_DIR}/check_log.py" "${CTL_NAME}" ${NRITER} "${UTILS_BIN_DIR}")
   endif()
 endmacro()
 

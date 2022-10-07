@@ -48,8 +48,8 @@ if(NOT MC_RTC_BUILD_STATIC)
 else()
 endif()
 
-find_program(PYTHON ${MC_LOG_UI_PYTHON_EXECUTABLE})
-if(NOT PYTHON)
+find_program(PYTHON_PGM ${MC_LOG_UI_PYTHON_EXECUTABLE})
+if(NOT PYTHON_PGM)
   return()
 endif()
 
