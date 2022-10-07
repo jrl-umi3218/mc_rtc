@@ -22,10 +22,6 @@
 #include <mc_rtc/io_utils.h>
 #include <mc_rtc/logging.h>
 
-#include <RBDyn/EulerIntegration.h>
-#include <RBDyn/FK.h>
-#include <RBDyn/FV.h>
-
 #include <boost/chrono.hpp>
 
 #include <algorithm>

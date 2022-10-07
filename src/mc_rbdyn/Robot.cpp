@@ -14,10 +14,10 @@
 #include <mc_rtc/pragma.h>
 
 #include <RBDyn/CoM.h>
-#include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FA.h>
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
+#include <RBDyn/NumericalIntegration.h>
 
 #include <sch/S_Object/S_Cylinder.h>
 #include <sch/S_Object/S_Superellipsoid.h>
@@ -1394,12 +1394,12 @@ void Robot::forwardAcceleration(rbd::MultiBodyConfig & mbc, const sva::MotionVec
 
 void mc_rbdyn::Robot::eulerIntegration(double step)
 {
-  rbd::eulerIntegration(mb(), mbc(), step);
+  rbd::integration(mb(), mbc(), step);
 }
 
 void mc_rbdyn::Robot::eulerIntegration(rbd::MultiBodyConfig & mbc, double step) const
 {
-  rbd::eulerIntegration(mb(), mbc, step);
+  rbd::integration(mb(), mbc, step);
 }
 
 const sva::PTransformd & Robot::posW() const

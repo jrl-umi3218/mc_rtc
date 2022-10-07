@@ -9,10 +9,6 @@
 #include <mc_rtc/gui/Button.h>
 #include <mc_rtc/logging.h>
 
-#include <RBDyn/EulerIntegration.h>
-#include <RBDyn/FK.h>
-#include <RBDyn/FV.h>
-
 /* Note all service calls except for controller switches are implemented in mc_global_controller_services.cpp */
 
 namespace mc_control
@@ -52,8 +48,8 @@ void MCHalfSitPoseController::reset(const ControllerResetData & reset_data)
   postureTask->reset();
   postureTask.get()->weight(100.);
   postureTask.get()->stiffness(2.);
-  rbd::forwardKinematics(robot().mb(), robot().mbc());
-  rbd::forwardVelocity(robot().mb(), robot().mbc());
+  robot().forwardKinematics();
+  robot().forwardVelocity();
   gui_->removeElement({"Controller"}, "Go half-sitting");
   gui_->addElement({"Controller"},
                    mc_rtc::gui::Button("Go half-sitting", [this]() { postureTask->posture(halfSitPose); }));
