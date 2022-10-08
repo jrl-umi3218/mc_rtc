@@ -176,30 +176,42 @@ auto Polyhedron(const std::string & name, const PolyhedronConfig & config, GetTr
 }
 
 /** Helper function to build a PolyhedronVerticesTrianglesImpl */
-template<typename GetVerticesT, typename GetTrianglesT>
-auto Polyhedron(const std::string & name, GetVerticesT get_vertices_fn, GetTrianglesT get_triangles_fn)
+template<typename GetVerticesOrTrianglesT, typename GetTrianglesOrColorsT>
+auto Polyhedron(const std::string & name,
+                GetVerticesOrTrianglesT get_vertices_or_triangles_fn,
+                GetTrianglesOrColorsT get_triangles_or_colors_fn)
 {
-  return details::PolyhedronVerticesTrianglesImpl<GetVerticesT, GetTrianglesT>(name, {}, get_vertices_fn,
-                                                                               get_triangles_fn);
+  if constexpr(details::CheckReturnType<GetVerticesOrTrianglesT, std::vector<std::array<Eigen::Vector3d, 3>>>::value)
+  {
+    auto poly = Polyhedron(name, PolyhedronConfig{}, get_vertices_or_triangles_fn);
+    return details::ColoredPolyhedronImpl<decltype(poly), GetTrianglesOrColorsT>(std::move(poly),
+                                                                                 get_triangles_or_colors_fn);
+  }
+  else
+  {
+    return details::PolyhedronVerticesTrianglesImpl<GetVerticesOrTrianglesT, GetTrianglesOrColorsT>(
+        name, {}, get_vertices_or_triangles_fn, get_triangles_or_colors_fn);
+  }
 }
 
 /** Helper function to build a PolyhedronVerticesTrianglesImpl */
-template<typename GetVerticesT, typename GetTrianglesT>
+template<typename GetVerticesOrTrianglesT, typename GetTrianglesOrColorsT>
 auto Polyhedron(const std::string & name,
                 const PolyhedronConfig & config,
-                GetVerticesT get_vertices_fn,
-                GetTrianglesT get_triangles_fn)
+                GetVerticesOrTrianglesT get_vertices_or_triangles_fn,
+                GetTrianglesOrColorsT get_triangles_or_colors_fn)
 {
-  return details::PolyhedronVerticesTrianglesImpl<GetVerticesT, GetTrianglesT>(name, config, get_vertices_fn,
-                                                                               get_triangles_fn);
-}
-
-/** Helper function to build a ColoredPolyhedronImpl */
-template<typename GetTrianglesT, typename GetColorT>
-auto ColoredPolyhedron(const std::string & name, GetTrianglesT get_triangles_fn, GetColorT get_color_fn)
-{
-  auto poly = Polyhedron(name, get_triangles_fn);
-  return details::ColoredPolyhedronImpl<decltype(poly), GetColorT>(std::move(poly), get_color_fn);
+  if constexpr(details::CheckReturnType<GetVerticesOrTrianglesT, std::vector<std::array<Eigen::Vector3d, 3>>>::value)
+  {
+    auto poly = Polyhedron(name, config, get_vertices_or_triangles_fn);
+    return details::ColoredPolyhedronImpl<decltype(poly), GetTrianglesOrColorsT>(std::move(poly),
+                                                                                 get_triangles_or_colors_fn);
+  }
+  else
+  {
+    return details::PolyhedronVerticesTrianglesImpl<GetVerticesOrTrianglesT, GetTrianglesOrColorsT>(
+        name, config, get_vertices_or_triangles_fn, get_triangles_or_colors_fn);
+  }
 }
 
 /** Helper function to build a ColoredPolyhedronImpl */
@@ -215,10 +227,10 @@ auto ColoredPolyhedron(const std::string & name,
 
 /** Helper function to build a ColoredPolyhedronImpl */
 template<typename GetVerticesT, typename GetTrianglesT, typename GetColorT>
-auto ColoredPolyhedron(const std::string & name,
-                       GetVerticesT get_vertices_fn,
-                       GetTrianglesT get_triangles_fn,
-                       GetColorT get_color_fn)
+auto Polyhedron(const std::string & name,
+                GetVerticesT get_vertices_fn,
+                GetTrianglesT get_triangles_fn,
+                GetColorT get_color_fn)
 {
   auto poly = Polyhedron(name, get_vertices_fn, get_triangles_fn);
   return details::ColoredPolyhedronImpl<decltype(poly), GetColorT>(std::move(poly), get_color_fn);
@@ -226,11 +238,11 @@ auto ColoredPolyhedron(const std::string & name,
 
 /** Helper function to build a ColoredPolyhedronImpl */
 template<typename GetVerticesT, typename GetTrianglesT, typename GetColorT>
-auto ColoredPolyhedron(const std::string & name,
-                       const PolyhedronConfig & config,
-                       GetVerticesT get_vertices_fn,
-                       GetVerticesT get_triangles_fn,
-                       GetColorT get_color_fn)
+auto Polyhedron(const std::string & name,
+                const PolyhedronConfig & config,
+                GetVerticesT get_vertices_fn,
+                GetVerticesT get_triangles_fn,
+                GetColorT get_color_fn)
 {
   auto poly = Polyhedron(name, config, get_vertices_fn, get_triangles_fn);
   return details::ColoredPolyhedronImpl<decltype(poly), GetColorT>(std::move(poly), get_color_fn);
