@@ -213,22 +213,56 @@ public:
    */
   operator bool() const;
 
-  /*! \brief Cast to int
+  /*! \brief Cast to int8_t
    *
-   * Strictly for int-typed entries
+   * Strictly for int8_t-typed entries
    *
-   * \throws If the underlying value does not hold an int
+   * \throws If the underlying value does not hold an int8_t
    */
-  operator int() const;
+  operator int8_t() const;
 
-  /*! \brief Cast to unsigned int
+  /*! \brief Cast to uint8_t
    *
    * Int entries that are strictly positive will be treated as
-   * unsigned int entries
+   * uint8_t entries
    *
-   * \throws If the underlying value does not hold an unsigned int
+   * \throws If the underlying value does not hold an uint8_t
    */
-  operator unsigned int() const;
+  operator uint8_t() const;
+
+  /*! \brief Cast to int16_t
+   *
+   * Strictly for int16_t-typed entries
+   *
+   * \throws If the underlying value does not hold an int16_t
+   */
+  operator int16_t() const;
+
+  /*! \brief Cast to uint16_t
+   *
+   * Int entries that are strictly positive will be treated as
+   * uint16_t entries
+   *
+   * \throws If the underlying value does not hold an uint16_t
+   */
+  operator uint16_t() const;
+
+  /*! \brief Cast to int32_t
+   *
+   * Strictly for int32_t-typed entries
+   *
+   * \throws If the underlying value does not hold an int32_t
+   */
+  operator int32_t() const;
+
+  /*! \brief Cast to uint32_t
+   *
+   * Int entries that are strictly positive will be treated as
+   * uint32_t entries
+   *
+   * \throws If the underlying value does not hold an uint32_t
+   */
+  operator uint32_t() const;
 
   /*! \brief Cast to int64_t
    *
@@ -813,17 +847,41 @@ public:
    */
   void add(const std::string & key, bool value);
 
-  /*! \brief Add a int element to the Configuration
+  /*! \brief Add a int64_t element to the Configuration
    *
    * \see add(const std::string&, bool)
    */
-  void add(const std::string & key, int value);
+  void add(const std::string & key, int8_t value);
 
-  /*! \brief Add a unsigned int element to the Configuration
+  /*! \brief Add a uint8_t element to the Configuration
    *
    * \see add(const std::string&, bool)
    */
-  void add(const std::string & key, unsigned int value);
+  void add(const std::string & key, uint8_t value);
+
+  /*! \brief Add a int16_t element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, int16_t value);
+
+  /*! \brief Add a uint16_t element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, uint16_t value);
+
+  /*! \brief Add a int32_t element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, int32_t value);
+
+  /*! \brief Add a uint32_t element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, uint32_t value);
 
   /*! \brief Add a int64_t element to the Configuration
    *
@@ -972,17 +1030,41 @@ public:
    */
   void push(bool value);
 
-  /*! \brief Insert a int element into an array
+  /*! \brief Insert a int8_t element int8_to an array
    *
    * \see push(bool);
    */
-  void push(int value);
+  void push(int8_t value);
 
-  /*! \brief Insert a unsigned int element into an array
+  /*! \brief Insert a uint8_t element into an array
    *
    * \see push(bool);
    */
-  void push(unsigned int value);
+  void push(uint8_t value);
+
+  /*! \brief Insert a int16_t element int16_to an array
+   *
+   * \see push(bool);
+   */
+  void push(int16_t value);
+
+  /*! \brief Insert a uint16_t element into an array
+   *
+   * \see push(bool);
+   */
+  void push(uint16_t value);
+
+  /*! \brief Insert a int32_t element int32_to an array
+   *
+   * \see push(bool);
+   */
+  void push(int32_t value);
+
+  /*! \brief Insert a uint32_t element into an array
+   *
+   * \see push(bool);
+   */
+  void push(uint32_t value);
 
   /*! \brief Insert a int64_t element int64_to an array
    *

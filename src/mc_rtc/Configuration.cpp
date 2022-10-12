@@ -251,7 +251,39 @@ Configuration::operator bool() const
   throw Exception("Stored Json value is not a bool", v);
 }
 
-Configuration::operator int() const
+Configuration::operator int8_t() const
+{
+  assert(v.value_);
+  auto value = static_cast<const internal::RapidJSONValue *>(v.value_);
+  if(value->IsInt())
+  {
+    int32_t i = value->GetInt();
+    if(i >= std::numeric_limits<int8_t>::min() && i <= std::numeric_limits<int8_t>::max())
+    {
+      return static_cast<int8_t>(i);
+    }
+    throw Exception("Stored Json value is too large or too small for an int8_t", v);
+  }
+  throw Exception("Stored Json value is not an int", v);
+}
+
+Configuration::operator int16_t() const
+{
+  assert(v.value_);
+  auto value = static_cast<const internal::RapidJSONValue *>(v.value_);
+  if(value->IsInt())
+  {
+    int32_t i = value->GetInt();
+    if(i >= std::numeric_limits<int16_t>::min() && i <= std::numeric_limits<int16_t>::max())
+    {
+      return static_cast<int16_t>(i);
+    }
+    throw Exception("Stored Json value is too large or too small for an int16_t", v);
+  }
+  throw Exception("Stored Json value is not an int", v);
+}
+
+Configuration::operator int32_t() const
 {
   assert(v.value_);
   auto value = static_cast<const internal::RapidJSONValue *>(v.value_);
@@ -259,18 +291,7 @@ Configuration::operator int() const
   {
     return value->GetInt();
   }
-  throw Exception("Stored Json value is not an int", v);
-}
-
-Configuration::operator unsigned int() const
-{
-  assert(v.value_);
-  auto value = static_cast<const internal::RapidJSONValue *>(v.value_);
-  if(value->IsUint() || (value->IsInt() && value->GetInt() >= 0))
-  {
-    return value->GetUint();
-  }
-  throw Exception("Stored Json value is not an unsigned int", v);
+  throw Exception("Stored Json value is not an int32_t", v);
 }
 
 Configuration::operator int64_t() const
@@ -282,6 +303,49 @@ Configuration::operator int64_t() const
     return value->GetInt64();
   }
   throw Exception("Stored Json value is not an int64_t", v);
+}
+
+Configuration::operator uint8_t() const
+{
+  assert(v.value_);
+  auto value = static_cast<const internal::RapidJSONValue *>(v.value_);
+  if(value->IsUint())
+  {
+    uint32_t i = value->GetUint();
+    if(i <= std::numeric_limits<uint8_t>::max())
+    {
+      return static_cast<uint8_t>(i);
+    }
+    throw Exception("Stored Json value is too large or too small for an uint8_t", v);
+  }
+  throw Exception("Stored Json value is not an uint", v);
+}
+
+Configuration::operator uint16_t() const
+{
+  assert(v.value_);
+  auto value = static_cast<const internal::RapidJSONValue *>(v.value_);
+  if(value->IsUint())
+  {
+    uint32_t i = value->GetUint();
+    if(i <= std::numeric_limits<uint16_t>::max())
+    {
+      return static_cast<uint16_t>(i);
+    }
+    throw Exception("Stored Json value is too large or too small for an uint16_t", v);
+  }
+  throw Exception("Stored Json value is not an uint", v);
+}
+
+Configuration::operator uint32_t() const
+{
+  assert(v.value_);
+  auto value = static_cast<const internal::RapidJSONValue *>(v.value_);
+  if(value->IsUint())
+  {
+    return value->GetUint();
+  }
+  throw Exception("Stored Json value is not an uint32_t", v);
 }
 
 Configuration::operator uint64_t() const
@@ -874,8 +938,12 @@ void Configuration::push_null()
 
 // clang-format off
 void Configuration::add(const std::string & key, bool value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, int value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, unsigned int value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, int8_t value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, uint8_t value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, int16_t value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, uint16_t value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, int32_t value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, uint32_t value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, int64_t value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, uint64_t value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, double value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
@@ -983,8 +1051,12 @@ Configuration Configuration::object()
 
 // clang-format off
 void Configuration::push(bool value) { push_impl(*this, value, v.value_, v.doc_.get()); }
-void Configuration::push(int value) { push_impl(*this, value, v.value_, v.doc_.get()); }
-void Configuration::push(unsigned int value) { push_impl(*this, value, v.value_, v.doc_.get()); }
+void Configuration::push(int8_t value) { push_impl(*this, value, v.value_, v.doc_.get()); }
+void Configuration::push(uint8_t value) { push_impl(*this, value, v.value_, v.doc_.get()); }
+void Configuration::push(int16_t value) { push_impl(*this, value, v.value_, v.doc_.get()); }
+void Configuration::push(uint16_t value) { push_impl(*this, value, v.value_, v.doc_.get()); }
+void Configuration::push(int32_t value) { push_impl(*this, value, v.value_, v.doc_.get()); }
+void Configuration::push(uint32_t value) { push_impl(*this, value, v.value_, v.doc_.get()); }
 void Configuration::push(int64_t value) { push_impl(*this, value, v.value_, v.doc_.get()); }
 void Configuration::push(uint64_t value) { push_impl(*this, value, v.value_, v.doc_.get()); }
 void Configuration::push(double value) { push_impl(*this, value, v.value_, v.doc_.get()); }
