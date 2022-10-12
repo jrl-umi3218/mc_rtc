@@ -1374,3 +1374,48 @@ BOOST_AUTO_TEST_CASE(TestFileConfiguration)
   }
   bfs::remove(file);
 }
+
+/** We purposefully create a number-like class that would create an ambiguity without the numeric_limits specialization
+ */
+struct MyNumber
+{
+  uint64_t n = 42;
+  MyNumber() = default;
+  MyNumber(uint64_t n) : n(n) {}
+
+  operator uint64_t() const
+  {
+    return n;
+  }
+  operator uint32_t() const
+  {
+    return static_cast<uint32_t>(n);
+  }
+};
+
+namespace std
+{
+
+template<>
+class numeric_limits<MyNumber> : public numeric_limits<uint64_t>
+{
+};
+
+} // namespace std
+
+BOOST_AUTO_TEST_CASE(TestIntegralTypes)
+{
+  MyNumber number;
+  mc_rtc::Configuration config;
+  config.add("number", number);
+  {
+    MyNumber number2 = config("number");
+    BOOST_CHECK_EQUAL(number.n, number2.n);
+  }
+  {
+    auto array = config.array("array");
+    array.push(number);
+    MyNumber number2 = config("array")[0];
+    BOOST_CHECK_EQUAL(number.n, number2.n);
+  }
+}

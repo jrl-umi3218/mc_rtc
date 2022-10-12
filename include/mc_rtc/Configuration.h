@@ -96,6 +96,42 @@ template<typename T, typename... Args>
 struct has_configuration_save_object : decltype(_has_configuration_save_object::test<T, Args...>(nullptr))
 {
 };
+
+template<typename T>
+constexpr bool is_integral_v = std::is_integral_v<T> || std::numeric_limits<std::decay_t<T>>::is_integer;
+
+/** Compare two integral types */
+template<typename RefT, typename T>
+constexpr bool is_like()
+{
+  static_assert(std::is_integral_v<RefT>);
+  if constexpr(is_integral_v<T>)
+  {
+    // clang-format off
+    return std::numeric_limits<T>::is_signed == std::is_signed_v<RefT>
+           && std::numeric_limits<T>::max() == std::numeric_limits<RefT>::max();
+    // clang-format on
+  }
+  return false;
+}
+
+template<typename T>
+constexpr bool is_like_int8_t = is_like<int8_t, T>();
+template<typename T>
+constexpr bool is_like_int16_t = is_like<int16_t, T>();
+template<typename T>
+constexpr bool is_like_int32_t = is_like<int32_t, T>();
+template<typename T>
+constexpr bool is_like_int64_t = is_like<int64_t, T>();
+template<typename T>
+constexpr bool is_like_uint8_t = is_like<uint8_t, T>();
+template<typename T>
+constexpr bool is_like_uint16_t = is_like<uint16_t, T>();
+template<typename T>
+constexpr bool is_like_uint32_t = is_like<uint32_t, T>();
+template<typename T>
+constexpr bool is_like_uint64_t = is_like<uint64_t, T>();
+
 } // namespace internal
 
 /*! \brief Simplify access to values hold within a JSON file
@@ -554,6 +590,51 @@ public:
     else
     {
       throw Configuration::Exception("Stored Json value is not an array", v);
+    }
+  }
+
+  /** Integral type conversions
+   *
+   * \throws If the cast to the similar standard integral type would fail
+   */
+  template<typename T, typename std::enable_if<internal::is_integral_v<T>, int>::type = 0>
+  operator T() const
+  {
+    if constexpr(internal::is_like_int8_t<T>)
+    {
+      return static_cast<T>(this->operator int8_t());
+    }
+    else if constexpr(internal::is_like_int16_t<T>)
+    {
+      return static_cast<T>(this->operator int16_t());
+    }
+    else if constexpr(internal::is_like_int32_t<T>)
+    {
+      return static_cast<T>(this->operator int32_t());
+    }
+    else if constexpr(internal::is_like_int64_t<T>)
+    {
+      return static_cast<T>(this->operator int64_t());
+    }
+    else if constexpr(internal::is_like_uint8_t<T>)
+    {
+      return static_cast<T>(this->operator uint8_t());
+    }
+    else if constexpr(internal::is_like_uint16_t<T>)
+    {
+      return static_cast<T>(this->operator uint16_t());
+    }
+    else if constexpr(internal::is_like_uint32_t<T>)
+    {
+      return static_cast<T>(this->operator uint32_t());
+    }
+    else if constexpr(internal::is_like_uint64_t<T>)
+    {
+      return static_cast<T>(this->operator uint64_t());
+    }
+    else
+    {
+      static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
     }
   }
 
@@ -1197,8 +1278,6 @@ public:
    * Requires the existence of:
    * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&, Args ...);
    *
-   * \param key Key of the element
-   *
    * \param value Value to push
    */
   template<typename T,
@@ -1207,6 +1286,51 @@ public:
   void push(const T & value, Args &&... args)
   {
     push(mc_rtc::ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
+  }
+
+  /** Integral type conversions
+   *
+   * \param value Value to push
+   */
+  template<typename T, typename std::enable_if<internal::is_integral_v<T>, int>::type = 0>
+  void push(const T & value)
+  {
+    if constexpr(internal::is_like_int8_t<T>)
+    {
+      push(static_cast<int8_t>(value));
+    }
+    else if constexpr(internal::is_like_int16_t<T>)
+    {
+      push(static_cast<int16_t>(value));
+    }
+    else if constexpr(internal::is_like_int32_t<T>)
+    {
+      push(static_cast<int32_t>(value));
+    }
+    else if constexpr(internal::is_like_int64_t<T>)
+    {
+      push(static_cast<int64_t>(value));
+    }
+    else if constexpr(internal::is_like_uint8_t<T>)
+    {
+      push(static_cast<uint8_t>(value));
+    }
+    else if constexpr(internal::is_like_uint16_t<T>)
+    {
+      push(static_cast<uint16_t>(value));
+    }
+    else if constexpr(internal::is_like_uint32_t<T>)
+    {
+      push(static_cast<uint32_t>(value));
+    }
+    else if constexpr(internal::is_like_uint64_t<T>)
+    {
+      push(static_cast<uint64_t>(value));
+    }
+    else
+    {
+      static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
+    }
   }
 
   /*! \brief Add a vector into the JSON document
@@ -1319,6 +1443,53 @@ public:
     for(const auto & v : value)
     {
       v.push(*v, std::forward<Args>(args)...);
+    }
+  }
+
+  /** Integral type conversions
+   *
+   * \param Key key of the element
+   *
+   * \param value Value to add
+   */
+  template<typename T, typename std::enable_if<internal::is_integral_v<T>, int>::type = 0>
+  void add(const std::string & key, const T & value)
+  {
+    if constexpr(internal::is_like_int8_t<T>)
+    {
+      add(key, static_cast<int8_t>(value));
+    }
+    else if constexpr(internal::is_like_int16_t<T>)
+    {
+      add(key, static_cast<int16_t>(value));
+    }
+    else if constexpr(internal::is_like_int32_t<T>)
+    {
+      add(key, static_cast<int32_t>(value));
+    }
+    else if constexpr(internal::is_like_int64_t<T>)
+    {
+      add(key, static_cast<int64_t>(value));
+    }
+    else if constexpr(internal::is_like_uint8_t<T>)
+    {
+      add(key, static_cast<uint8_t>(value));
+    }
+    else if constexpr(internal::is_like_uint16_t<T>)
+    {
+      add(key, static_cast<uint16_t>(value));
+    }
+    else if constexpr(internal::is_like_uint32_t<T>)
+    {
+      add(key, static_cast<uint32_t>(value));
+    }
+    else if constexpr(internal::is_like_uint64_t<T>)
+    {
+      add(key, static_cast<uint64_t>(value));
+    }
+    else
+    {
+      static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
     }
   }
 
