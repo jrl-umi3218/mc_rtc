@@ -241,7 +241,7 @@ template<typename GetVerticesT, typename GetTrianglesT, typename GetColorT>
 auto Polyhedron(const std::string & name,
                 const PolyhedronConfig & config,
                 GetVerticesT get_vertices_fn,
-                GetVerticesT get_triangles_fn,
+                GetTrianglesT get_triangles_fn,
                 GetColorT get_color_fn)
 {
   auto poly = Polyhedron(name, config, get_vertices_fn, get_triangles_fn);

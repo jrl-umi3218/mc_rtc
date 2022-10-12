@@ -699,16 +699,15 @@ void ControllerClient::handle_polyhedron_vertices_triangles(const ElementId & id
     return;
   }
   std::vector<mc_rtc::gui::Color> colors;
-  if(data_.size() > 5)
+  if(data_.size() > 6)
   {
     try
     {
-      colors = data_[5];
+      colors = data_[6];
     }
     catch(mc_rtc::Configuration::Exception & exc)
     {
-      mc_rtc::log::error(
-          "Could not deserialize polyhedron colors, supported data is vector<std::array<mc_rtc::gui::Color,3>>");
+      mc_rtc::log::error("Could not deserialize polyhedron colors, supported data is std::vector<mc_rtc::gui::Color>");
       mc_rtc::log::error(exc.what());
       exc.silence();
     }
