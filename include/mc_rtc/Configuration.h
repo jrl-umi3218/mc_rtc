@@ -97,41 +97,6 @@ struct has_configuration_save_object : decltype(_has_configuration_save_object::
 {
 };
 
-template<typename T>
-constexpr bool is_integral_v = std::is_integral_v<T> || std::numeric_limits<std::decay_t<T>>::is_integer;
-
-/** Compare two integral types */
-template<typename RefT, typename T>
-constexpr bool is_like()
-{
-  static_assert(std::is_integral_v<RefT>);
-  if constexpr(is_integral_v<T>)
-  {
-    // clang-format off
-    return std::numeric_limits<T>::is_signed == std::is_signed_v<RefT>
-           && std::numeric_limits<T>::max() == std::numeric_limits<RefT>::max();
-    // clang-format on
-  }
-  return false;
-}
-
-template<typename T>
-constexpr bool is_like_int8_t = is_like<int8_t, T>();
-template<typename T>
-constexpr bool is_like_int16_t = is_like<int16_t, T>();
-template<typename T>
-constexpr bool is_like_int32_t = is_like<int32_t, T>();
-template<typename T>
-constexpr bool is_like_int64_t = is_like<int64_t, T>();
-template<typename T>
-constexpr bool is_like_uint8_t = is_like<uint8_t, T>();
-template<typename T>
-constexpr bool is_like_uint16_t = is_like<uint16_t, T>();
-template<typename T>
-constexpr bool is_like_uint32_t = is_like<uint32_t, T>();
-template<typename T>
-constexpr bool is_like_uint64_t = is_like<uint64_t, T>();
-
 } // namespace internal
 
 /*! \brief Simplify access to values hold within a JSON file

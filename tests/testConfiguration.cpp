@@ -1418,4 +1418,10 @@ BOOST_AUTO_TEST_CASE(TestIntegralTypes)
     MyNumber number2 = config("array")[0];
     BOOST_CHECK_EQUAL(number.n, number2.n);
   }
+  {
+    std::vector<char> buffer(512);
+    mc_rtc::MessagePackBuilder builder(buffer);
+    builder.write(number);
+    builder.finish();
+  }
 }
