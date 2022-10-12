@@ -186,6 +186,16 @@ Polygon("Step plan",
         [this]]() { return step_plan_display_; });
 ```
 
+##### `Polyhedron`
+
+This element displays a polyhedron two representations are accepted:
+1. Providing a single list of triangles as `std::vector<std::array<Eigen::Vector3d, 3>>`
+2. Providing a list of vertices as `std::vector<Eigen::Vector3d>` and a list of triangles as indices into the vertices array as `std::vector<std::array<size_t, 3>>`
+
+Furthermore, you can provide per vertex color for this polyhedron, for each case the representation is:
+1. An `std::vector<std::array<mc_rtc::gui::Color, 3>>`
+2. An `std::vector<mc_rtc::gui::Color>`
+
 ##### `Force`
 
 This element displays a force vector in the 3D environment. You need to provide the force value as an `sva::ForceVecd` as well as the frame where the force is applied as an `sva::PTransformd`.
