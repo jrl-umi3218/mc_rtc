@@ -96,6 +96,7 @@ template<typename T, typename... Args>
 struct has_configuration_save_object : decltype(_has_configuration_save_object::test<T, Args...>(nullptr))
 {
 };
+
 } // namespace internal
 
 /*! \brief Simplify access to values hold within a JSON file
@@ -213,22 +214,56 @@ public:
    */
   operator bool() const;
 
-  /*! \brief Cast to int
+  /*! \brief Cast to int8_t
    *
-   * Strictly for int-typed entries
+   * Strictly for int8_t-typed entries
    *
-   * \throws If the underlying value does not hold an int
+   * \throws If the underlying value does not hold an int8_t
    */
-  operator int() const;
+  operator int8_t() const;
 
-  /*! \brief Cast to unsigned int
+  /*! \brief Cast to uint8_t
    *
    * Int entries that are strictly positive will be treated as
-   * unsigned int entries
+   * uint8_t entries
    *
-   * \throws If the underlying value does not hold an unsigned int
+   * \throws If the underlying value does not hold an uint8_t
    */
-  operator unsigned int() const;
+  operator uint8_t() const;
+
+  /*! \brief Cast to int16_t
+   *
+   * Strictly for int16_t-typed entries
+   *
+   * \throws If the underlying value does not hold an int16_t
+   */
+  operator int16_t() const;
+
+  /*! \brief Cast to uint16_t
+   *
+   * Int entries that are strictly positive will be treated as
+   * uint16_t entries
+   *
+   * \throws If the underlying value does not hold an uint16_t
+   */
+  operator uint16_t() const;
+
+  /*! \brief Cast to int32_t
+   *
+   * Strictly for int32_t-typed entries
+   *
+   * \throws If the underlying value does not hold an int32_t
+   */
+  operator int32_t() const;
+
+  /*! \brief Cast to uint32_t
+   *
+   * Int entries that are strictly positive will be treated as
+   * uint32_t entries
+   *
+   * \throws If the underlying value does not hold an uint32_t
+   */
+  operator uint32_t() const;
 
   /*! \brief Cast to int64_t
    *
@@ -280,6 +315,13 @@ public:
    * sequence of size 3
    */
   operator Eigen::Vector3d() const;
+
+  /*! \brief Retrieve as a Eigen::Vector4d instance
+   *
+   * \throws If the underlying value does not hold a numeric
+   * sequence of size 4
+   */
+  operator Eigen::Vector4d() const;
 
   /*! \brief Retrieve as a Eigen::Vector6d instance
    *
@@ -513,6 +555,51 @@ public:
     else
     {
       throw Configuration::Exception("Stored Json value is not an array", v);
+    }
+  }
+
+  /** Integral type conversions
+   *
+   * \throws If the cast to the similar standard integral type would fail
+   */
+  template<typename T, typename std::enable_if<internal::is_integral_v<T>, int>::type = 0>
+  operator T() const
+  {
+    if constexpr(internal::is_like_int8_t<T>)
+    {
+      return static_cast<T>(this->operator int8_t());
+    }
+    else if constexpr(internal::is_like_int16_t<T>)
+    {
+      return static_cast<T>(this->operator int16_t());
+    }
+    else if constexpr(internal::is_like_int32_t<T>)
+    {
+      return static_cast<T>(this->operator int32_t());
+    }
+    else if constexpr(internal::is_like_int64_t<T>)
+    {
+      return static_cast<T>(this->operator int64_t());
+    }
+    else if constexpr(internal::is_like_uint8_t<T>)
+    {
+      return static_cast<T>(this->operator uint8_t());
+    }
+    else if constexpr(internal::is_like_uint16_t<T>)
+    {
+      return static_cast<T>(this->operator uint16_t());
+    }
+    else if constexpr(internal::is_like_uint32_t<T>)
+    {
+      return static_cast<T>(this->operator uint32_t());
+    }
+    else if constexpr(internal::is_like_uint64_t<T>)
+    {
+      return static_cast<T>(this->operator uint64_t());
+    }
+    else
+    {
+      static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
     }
   }
 
@@ -806,17 +893,41 @@ public:
    */
   void add(const std::string & key, bool value);
 
-  /*! \brief Add a int element to the Configuration
+  /*! \brief Add a int64_t element to the Configuration
    *
    * \see add(const std::string&, bool)
    */
-  void add(const std::string & key, int value);
+  void add(const std::string & key, int8_t value);
 
-  /*! \brief Add a unsigned int element to the Configuration
+  /*! \brief Add a uint8_t element to the Configuration
    *
    * \see add(const std::string&, bool)
    */
-  void add(const std::string & key, unsigned int value);
+  void add(const std::string & key, uint8_t value);
+
+  /*! \brief Add a int16_t element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, int16_t value);
+
+  /*! \brief Add a uint16_t element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, uint16_t value);
+
+  /*! \brief Add a int32_t element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, int32_t value);
+
+  /*! \brief Add a uint32_t element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, uint32_t value);
 
   /*! \brief Add a int64_t element to the Configuration
    *
@@ -860,6 +971,12 @@ public:
    * \see add(const std::string&, bool)
    */
   void add(const std::string & key, const Eigen::Vector3d & value);
+
+  /*! \brief Add a Eigen::Vector4d element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, const Eigen::Vector4d & value);
 
   /*! \brief Add a Eigen::Vector6d element to the Configuration
    *
@@ -959,17 +1076,41 @@ public:
    */
   void push(bool value);
 
-  /*! \brief Insert a int element into an array
+  /*! \brief Insert a int8_t element int8_to an array
    *
    * \see push(bool);
    */
-  void push(int value);
+  void push(int8_t value);
 
-  /*! \brief Insert a unsigned int element into an array
+  /*! \brief Insert a uint8_t element into an array
    *
    * \see push(bool);
    */
-  void push(unsigned int value);
+  void push(uint8_t value);
+
+  /*! \brief Insert a int16_t element int16_to an array
+   *
+   * \see push(bool);
+   */
+  void push(int16_t value);
+
+  /*! \brief Insert a uint16_t element into an array
+   *
+   * \see push(bool);
+   */
+  void push(uint16_t value);
+
+  /*! \brief Insert a int32_t element int32_to an array
+   *
+   * \see push(bool);
+   */
+  void push(int32_t value);
+
+  /*! \brief Insert a uint32_t element into an array
+   *
+   * \see push(bool);
+   */
+  void push(uint32_t value);
 
   /*! \brief Insert a int64_t element int64_to an array
    *
@@ -1012,6 +1153,12 @@ public:
    * \see push(bool);
    */
   void push(const Eigen::Vector3d & value);
+
+  /*! \brief Insert a Eigen::Vector4d element into an array
+   *
+   * \see push(bool);
+   */
+  void push(const Eigen::Vector4d & value);
 
   /*! \brief Insert a Eigen::Vector6d element into an array
    *
@@ -1096,8 +1243,6 @@ public:
    * Requires the existence of:
    * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&, Args ...);
    *
-   * \param key Key of the element
-   *
    * \param value Value to push
    */
   template<typename T,
@@ -1106,6 +1251,51 @@ public:
   void push(const T & value, Args &&... args)
   {
     push(mc_rtc::ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
+  }
+
+  /** Integral type conversions
+   *
+   * \param value Value to push
+   */
+  template<typename T, typename std::enable_if<internal::is_integral_v<T>, int>::type = 0>
+  void push(const T & value)
+  {
+    if constexpr(internal::is_like_int8_t<T>)
+    {
+      push(static_cast<int8_t>(value));
+    }
+    else if constexpr(internal::is_like_int16_t<T>)
+    {
+      push(static_cast<int16_t>(value));
+    }
+    else if constexpr(internal::is_like_int32_t<T>)
+    {
+      push(static_cast<int32_t>(value));
+    }
+    else if constexpr(internal::is_like_int64_t<T>)
+    {
+      push(static_cast<int64_t>(value));
+    }
+    else if constexpr(internal::is_like_uint8_t<T>)
+    {
+      push(static_cast<uint8_t>(value));
+    }
+    else if constexpr(internal::is_like_uint16_t<T>)
+    {
+      push(static_cast<uint16_t>(value));
+    }
+    else if constexpr(internal::is_like_uint32_t<T>)
+    {
+      push(static_cast<uint32_t>(value));
+    }
+    else if constexpr(internal::is_like_uint64_t<T>)
+    {
+      push(static_cast<uint64_t>(value));
+    }
+    else
+    {
+      static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
+    }
   }
 
   /*! \brief Add a vector into the JSON document
@@ -1218,6 +1408,53 @@ public:
     for(const auto & v : value)
     {
       v.push(*v, std::forward<Args>(args)...);
+    }
+  }
+
+  /** Integral type conversions
+   *
+   * \param Key key of the element
+   *
+   * \param value Value to add
+   */
+  template<typename T, typename std::enable_if<internal::is_integral_v<T>, int>::type = 0>
+  void add(const std::string & key, const T & value)
+  {
+    if constexpr(internal::is_like_int8_t<T>)
+    {
+      add(key, static_cast<int8_t>(value));
+    }
+    else if constexpr(internal::is_like_int16_t<T>)
+    {
+      add(key, static_cast<int16_t>(value));
+    }
+    else if constexpr(internal::is_like_int32_t<T>)
+    {
+      add(key, static_cast<int32_t>(value));
+    }
+    else if constexpr(internal::is_like_int64_t<T>)
+    {
+      add(key, static_cast<int64_t>(value));
+    }
+    else if constexpr(internal::is_like_uint8_t<T>)
+    {
+      add(key, static_cast<uint8_t>(value));
+    }
+    else if constexpr(internal::is_like_uint16_t<T>)
+    {
+      add(key, static_cast<uint16_t>(value));
+    }
+    else if constexpr(internal::is_like_uint32_t<T>)
+    {
+      add(key, static_cast<uint32_t>(value));
+    }
+    else if constexpr(internal::is_like_uint64_t<T>)
+    {
+      add(key, static_cast<uint64_t>(value));
+    }
+    else
+    {
+      static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
     }
   }
 

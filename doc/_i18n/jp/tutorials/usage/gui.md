@@ -187,6 +187,8 @@ Polygon("Step plan",
         [this]]() { return step_plan_display_; });
 ```
 
+{% comment %}FIXME Missing Polyhedron section{% endcomment %}
+
 ##### `Force`
 
 この要素は、3次元環境に力ベクトルを表示します。力の値を`sva::ForceVecd`として指定し、力を適用する対象となるフレームを`sva::PTransformd`として指定する必要があります。

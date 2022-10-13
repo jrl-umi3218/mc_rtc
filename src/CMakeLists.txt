@@ -12,6 +12,7 @@ if(UNIX AND NOT EMSCRIPTEN)
 endif()
 
 macro(install_mc_rtc_lib_common MC_LIB KWD)
+  target_compile_features(${MC_LIB} ${KWD} cxx_std_17)
   target_include_directories(${MC_LIB} INTERFACE $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${MC_RTC_INCLUDE_DIR}>)
   if(MSVC)
     target_compile_options(${MC_LIB} ${KWD} /source-charset:utf-8)
@@ -124,6 +125,7 @@ set(mc_rtc_utils_HDR
   ../include/mc_rtc/deprecated.h
   ../include/mc_rtc/pragma.h
   ../include/mc_rtc/shared.h
+  ../include/mc_rtc/utils/heatmap.h
 )
 
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})

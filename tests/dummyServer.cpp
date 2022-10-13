@@ -5,6 +5,7 @@
 #include <mc_control/ControllerServer.h>
 
 #include <mc_rtc/gui.h>
+#include <mc_rtc/utils/heatmap.h>
 
 #include <SpaceVecAlg/Conversions.h>
 
@@ -509,6 +510,129 @@ TestServer::TestServer() : xythetaz_(4)
                      mc_rtc::gui::Polygon("Polygons", [this]() { return polygons_; }),
                      mc_rtc::gui::Polygon("Polygons (color)", orange, [this]() { return polygonsColor_; }),
                      mc_rtc::gui::Polygon("Polygons (config)", pstyle, [this]() { return polygonsLineConfig_; }));
+
+  auto polyhedron_triangles_fn = [this]() {
+    double z = std::max(0.1, (1 + cos(t_ / 2)) / 2);
+    // clang-format off
+    return std::vector<std::array<Eigen::Vector3d, 3>>
+    {
+      // Upper pyramid
+      {{ {-1, -1, 0}, {1, -1, 0}, {0, 0, z} }},
+      {{ {1, -1, 0}, {1, 1, 0}, {0, 0, z} }},
+      {{ {1, 1, 0}, {-1, 1, 0}, {0, 0, z} }},
+      {{ {-1, 1, 0}, {-1, -1, 0}, {0, 0, z} }},
+      // Lower pyramid
+      {{ {-1, -1, 0}, {0, 0, -z}, {1, -1, 0} }},
+      {{ {1, -1, 0}, {0, 0, -z}, {1, 1, 0} }},
+      {{ {1, 1, 0}, {0, 0, -z}, {-1, 1, 0} }},
+      {{ {-1, 1, 0}, {0, 0, -z}, {-1, -1, 0} }}
+    };
+    // clang-format on
+  };
+
+  auto polyhedron_vertices_fn = [this]() {
+    double z = std::max(0.1, (1 + sin(t_ / 2)) / 2);
+    // clang-format off
+    return std::vector<Eigen::Vector3d>
+    {
+      {-1, -1, 0},
+      {1, -1, 0},
+      {1, 1, 0},
+      {-1, 1, 0},
+      {0, 0, z},
+      {0, 0, -z}
+    };
+    // clang-format on
+  };
+
+  auto polyhedron_indices_fn = []() {
+    // clang-format off
+    return std::vector<std::array<size_t, 3>>
+    {
+      {0, 1, 4},
+      {1, 2, 4},
+      {2, 3, 4},
+      {3, 0, 4},
+      {0, 1, 5},
+      {1, 2, 5},
+      {2, 3, 5},
+      {3, 0, 5},
+    };
+    // clang-format on
+  };
+
+  auto polyhedron_colors_fn = [this]() {
+    double z = std::max(0.1, (1 + cos(t_ / 2)) / 2);
+    Eigen::Vector4d color;
+    color << mc_rtc::utils::heatmap<Eigen::Vector3d>(0, 1, z), 1;
+    auto blue = mc_rtc::gui::Color{0, 0, 1, 1};
+    // clang-format off
+    return std::vector<std::array<mc_rtc::gui::Color, 3>>
+    {
+      // Colors for upper pyramid
+      {blue, blue, color},
+      {blue, blue, color},
+      {blue, blue, color},
+      {blue, blue, color},
+      // Colors for lower pyramid
+      {blue, color, blue},
+      {blue, color, blue},
+      {blue, color, blue},
+      {blue, color, blue}
+     };
+    // clang-format on
+  };
+
+  auto polyhedron_vertices_colors_fn = [this]() {
+    double z = std::max(0.1, (1 + sin(t_ / 2)) / 2);
+    Eigen::Vector4d color;
+    color << mc_rtc::utils::heatmap<Eigen::Vector3d>(0, 1, z), 1;
+    auto blue = mc_rtc::gui::Color{0, 0, 1, 1};
+    // clang-format off
+    return std::vector<mc_rtc::gui::Color>
+    {
+      blue,
+      blue,
+      blue,
+      blue,
+      color,
+      color
+    };
+    // clang-format on
+  };
+
+  mc_rtc::gui::PolyhedronConfig pconfig;
+  pconfig.triangle_color = mc_rtc::gui::Color(1, 0, 0, 1.0);
+  pconfig.use_triangle_color = false;
+  pconfig.show_triangle = true;
+  pconfig.show_vertices = true;
+  pconfig.show_edges = true;
+  pconfig.fixed_edge_color = true;
+  pconfig.edge_config.color = mc_rtc::gui::Color::LightGray;
+  pconfig.edge_config.width = 0.03;
+  static bool publish_as_vertices_triangles = false;
+  auto send_polyhedron = [=]() {
+    builder.removeElement({"GUI Markers", "Polyhedrons"}, "Polyhedron");
+    if(publish_as_vertices_triangles)
+    {
+      builder.addElement({"GUI Markers", "Polyhedrons"},
+                         mc_rtc::gui::Polyhedron("Polyhedron", pconfig, polyhedron_vertices_fn, polyhedron_indices_fn,
+                                                 polyhedron_vertices_colors_fn));
+    }
+    else
+    {
+      builder.addElement({"GUI Markers", "Polyhedrons"},
+                         mc_rtc::gui::Polyhedron("Polyhedron", pconfig, polyhedron_triangles_fn, polyhedron_colors_fn));
+    }
+  };
+  builder.addElement({"GUI Markers", "Polyhedrons"},
+                     mc_rtc::gui::Checkbox(
+                         "Publish as vertices/indices", []() { return publish_as_vertices_triangles; },
+                         [send_polyhedron] {
+                           publish_as_vertices_triangles = !publish_as_vertices_triangles;
+                           send_polyhedron();
+                         }));
+  send_polyhedron();
 
   builder.addElement(
       {"GUI Markers", "Trajectories"}, mc_rtc::gui::Trajectory("Vector3d", [this]() { return trajectory_; }),

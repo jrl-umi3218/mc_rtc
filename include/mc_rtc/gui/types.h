@@ -20,6 +20,8 @@ struct MC_RTC_GUI_DLLAPI Color
 {
   Color() {}
   Color(double r, double g, double b, double a = 1.0) : r(r), g(g), b(b), a(a) {}
+  Color(const Eigen::Vector3d & color) : r(color.x()), g(color.y()), b(color.z()) {}
+  Color(const Eigen::Vector4d & color) : r(color.x()), g(color.y()), b(color.z()), a(color[3]) {}
   Color(const mc_rtc::Configuration & config)
   {
     fromConfig(config);
@@ -455,4 +457,113 @@ struct ConfigurationLoader<mc_rtc::gui::PointConfig>
     return point.saveConfig();
   }
 };
+
+namespace gui
+{
+
+struct MC_RTC_GUI_DLLAPI PolyhedronConfig
+{
+  PolyhedronConfig() {}
+
+  PolyhedronConfig(const mc_rtc::Configuration & config)
+  {
+    fromConfig(config);
+  }
+
+  void fromConfig(const mc_rtc::Configuration & config)
+  {
+    config("triangle_color", triangle_color);
+    config("show_triangle", show_triangle);
+    config("use_triangle_color", use_triangle_color);
+    config("edges", edge_config);
+    config("show_edges", show_edges);
+    config("fixed_edge_color", fixed_edge_color);
+    config("vertices", vertices_config);
+    config("show_vertices", show_vertices);
+    config("fixed_vertices_color", fixed_vertices_color);
+  }
+
+  mc_rtc::Configuration saveConfig() const
+  {
+    mc_rtc::Configuration conf;
+    conf.add("triangle_color", triangle_color);
+    conf.add("show_triangle", show_triangle);
+    conf.add("use_triangle_color", use_triangle_color);
+    conf.add("edges", edge_config);
+    conf.add("show_edges", show_edges);
+    conf.add("fixed_edge_color", fixed_edge_color);
+    conf.add("vertices", vertices_config);
+    conf.add("show_vertices", show_vertices);
+    conf.add("fixed_vertices_color", fixed_vertices_color);
+    return conf;
+  }
+
+  void fromMessagePack(const mc_rtc::Configuration & config)
+  {
+    triangle_color.fromMessagePack(config[0]);
+    show_triangle = config[1];
+    use_triangle_color = config[2];
+    edge_config.fromMessagePack(config[3]);
+    show_edges = config[4];
+    fixed_edge_color = config[5];
+    vertices_config.fromMessagePack(config[6]);
+    show_vertices = config[7];
+    fixed_vertices_color = config[8];
+  }
+
+  static constexpr size_t write_size()
+  {
+    return 1;
+  }
+
+  void write(mc_rtc::MessagePackBuilder & out) const
+  {
+    out.start_array(9);
+    triangle_color.write(out);
+    out.write(show_triangle);
+    out.write(use_triangle_color);
+
+    edge_config.write(out);
+    out.write(show_edges);
+    out.write(fixed_edge_color);
+
+    vertices_config.write(out);
+    out.write(show_vertices);
+    out.write(fixed_vertices_color);
+    out.finish_array();
+  }
+
+  ///< Default triangle face color
+  Color triangle_color;
+  bool show_triangle = true;
+  ///< When true, use triangle face color from triangle_color. Else interpolate between each vertex color
+  bool use_triangle_color = false;
+  LineConfig edge_config;
+  bool show_edges = true;
+  ///< When true, use edge colors from edges_config. Else interpolate between each vertex color
+  bool fixed_edge_color = true;
+  PointConfig vertices_config;
+  bool show_vertices = true;
+  ///< When true, use vertices colors from vertices_config. Else use the vertex color
+  ///< passed along with the triangles
+  bool fixed_vertices_color = true;
+};
+} // namespace gui
+
+template<>
+struct ConfigurationLoader<mc_rtc::gui::PolyhedronConfig>
+{
+  static mc_rtc::gui::PolyhedronConfig load(const mc_rtc::Configuration & config)
+  {
+    mc_rtc::gui::PolyhedronConfig polyhedron;
+    polyhedron.fromConfig(config);
+    return polyhedron;
+  }
+
+  static mc_rtc::Configuration save(const mc_rtc::gui::PolyhedronConfig & polyhedron)
+  {
+    return polyhedron.saveConfig();
+  }
+};
+
 } // namespace mc_rtc

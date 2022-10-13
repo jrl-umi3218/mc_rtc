@@ -392,6 +392,12 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
       case Elements::Polygon:
         handle_polygon(id, data);
         break;
+      case Elements::PolyhedronTrianglesList:
+        handle_polyhedron_triangles_list(id, data);
+        break;
+      case Elements::PolyhedronVerticesTriangles:
+        handle_polyhedron_vertices_triangles(id, data);
+        break;
       case Elements::Force:
         handle_force(id, data);
         break;
@@ -448,6 +454,72 @@ void ControllerClient::default_impl(const std::string & type, const ElementId & 
 {
   mc_rtc::log::warning("This implementation of ControllerClient does not handle {} GUI needed by {}/{}", type,
                        cat2str(id.category), id.name);
+}
+
+void ControllerClient::polyhedron(const ElementId & id,
+                                  const std::vector<std::array<Eigen::Vector3d, 3>> & triangles,
+                                  const std::vector<std::array<mc_rtc::gui::Color, 3>> & colors,
+                                  const mc_rtc::gui::PolyhedronConfig & config)
+{
+  // The default other polyhedron implementation was called and this is also the default implementation, we are running
+  // in circle
+  if(default_polyhedron_vertices_triangles_)
+  {
+    default_impl("Polyhedron", id);
+    return;
+  }
+  // Otherwise we transform this call for the other implementation
+  default_polyhedron_triangles_list_ = true;
+  std::vector<Eigen::Vector3d> vertices;
+  vertices.reserve(3 * triangles.size());
+  std::vector<std::array<size_t, 3>> indices;
+  indices.reserve(triangles.size());
+  for(size_t i = 0; i < triangles.size(); ++i)
+  {
+    vertices.push_back(triangles[i][0]);
+    vertices.push_back(triangles[i][1]);
+    vertices.push_back(triangles[i][2]);
+    indices.push_back({3 * i, 3 * i + 1, 3 * i + 2});
+  }
+  std::vector<mc_rtc::gui::Color> vertices_colors;
+  vertices_colors.reserve(3 * colors.size());
+  for(const auto & c : colors)
+  {
+    vertices_colors.push_back(c[0]);
+    vertices_colors.push_back(c[1]);
+    vertices_colors.push_back(c[2]);
+  }
+  polyhedron(id, vertices, indices, vertices_colors, config);
+}
+
+void ControllerClient::polyhedron(const ElementId & id,
+                                  const std::vector<Eigen::Vector3d> & vertices,
+                                  const std::vector<std::array<size_t, 3>> & indices,
+                                  const std::vector<mc_rtc::gui::Color> & colors,
+                                  const mc_rtc::gui::PolyhedronConfig & config)
+{
+  // The default other polyhedron implementation was called and this is also the default implementation, we are running
+  // in circle
+  if(default_polyhedron_triangles_list_)
+  {
+    default_impl("Polyhedron", id);
+    return;
+  }
+  // Otherwise we transform this call for the other implementation
+  default_polyhedron_vertices_triangles_ = true;
+  std::vector<std::array<Eigen::Vector3d, 3>> triangles;
+  triangles.reserve(indices.size());
+  for(const auto & idx : indices)
+  {
+    triangles.push_back({vertices[idx[0]], vertices[idx[1]], vertices[idx[2]]});
+  }
+  std::vector<std::array<mc_rtc::gui::Color, 3>> triangle_colors;
+  triangle_colors.reserve(indices.size());
+  for(const auto & idx : indices)
+  {
+    triangle_colors.push_back({colors[idx[0]], colors[idx[1]], colors[idx[2]]});
+  }
+  polyhedron(id, triangles, triangle_colors, config);
 }
 
 void ControllerClient::handle_point3d(const ElementId & id, const mc_rtc::Configuration & data)
@@ -555,6 +627,98 @@ void ControllerClient::handle_polygon(const ElementId & id, const mc_rtc::Config
       exc.silence();
     }
   }
+}
+
+void ControllerClient::handle_polyhedron_triangles_list(const ElementId & id, const mc_rtc::Configuration & data_)
+{
+  mc_rtc::gui::PolyhedronConfig config(data_[4]);
+
+  std::vector<std::array<Eigen::Vector3d, 3>> triangles;
+  std::vector<std::array<mc_rtc::gui::Color, 3>> colors;
+  try
+  {
+    triangles = data_[3];
+  }
+  catch(mc_rtc::Configuration::Exception & exc)
+  {
+    mc_rtc::log::error(
+        "Could not deserialize polyhedron vertices, supported data is vector<std::array<Eigen::Vector3d, 3>>");
+    mc_rtc::log::error(exc.what());
+    exc.silence();
+    return;
+  }
+  if(data_.size() > 5)
+  {
+    try
+    {
+      colors = data_[5];
+    }
+    catch(mc_rtc::Configuration::Exception & exc)
+    {
+      mc_rtc::log::error(
+          "Could not deserialize polyhedron colors, supported data is vector<std::array<mc_rtc::gui::Color,3>>");
+      mc_rtc::log::error(exc.what());
+      exc.silence();
+    }
+    if(colors.size() != 0 && colors.size() != triangles.size())
+    {
+      mc_rtc::log::error("{}/{} is not providing enough color data (expected: {}, got: {})", cat2str(id.category),
+                         id.name, triangles.size(), colors.size());
+      return;
+    }
+  }
+  polyhedron(id, triangles, colors, config);
+}
+
+void ControllerClient::handle_polyhedron_vertices_triangles(const ElementId & id, const mc_rtc::Configuration & data_)
+{
+  mc_rtc::gui::PolyhedronConfig config(data_[5]);
+
+  std::vector<Eigen::Vector3d> vertices;
+  try
+  {
+    vertices = data_[3];
+  }
+  catch(mc_rtc::Configuration::Exception & exc)
+  {
+    mc_rtc::log::error("Could not deserialize polyhedron vertices, expecting a list of vertices");
+    mc_rtc::log::error(exc.what());
+    exc.silence();
+    return;
+  }
+  std::vector<std::array<size_t, 3>> indices;
+  try
+  {
+    indices = data_[4];
+  }
+  catch(mc_rtc::Configuration::Exception & exc)
+  {
+    mc_rtc::log::error("Could not deserialize polyhedron triangles, expecting a list of indices");
+    mc_rtc::log::error(exc.what());
+    exc.silence();
+    return;
+  }
+  std::vector<mc_rtc::gui::Color> colors;
+  if(data_.size() > 6)
+  {
+    try
+    {
+      colors = data_[6];
+    }
+    catch(mc_rtc::Configuration::Exception & exc)
+    {
+      mc_rtc::log::error("Could not deserialize polyhedron colors, supported data is std::vector<mc_rtc::gui::Color>");
+      mc_rtc::log::error(exc.what());
+      exc.silence();
+    }
+    if(colors.size() != 0 && colors.size() != vertices.size())
+    {
+      mc_rtc::log::error("{}/{} is not providing enough color data (expected: {}, got: {})", cat2str(id.category),
+                         id.name, vertices.size(), colors.size());
+      return;
+    }
+  }
+  polyhedron(id, vertices, indices, colors, config);
 }
 
 void ControllerClient::handle_force(const ElementId & id, const mc_rtc::Configuration & data)

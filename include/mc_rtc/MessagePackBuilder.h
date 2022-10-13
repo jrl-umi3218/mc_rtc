@@ -22,6 +22,46 @@ struct Configuration;
 
 struct MessagePackBuilderImpl;
 
+namespace internal
+{
+
+template<typename T>
+constexpr bool is_integral_v = std::is_integral_v<T> || std::numeric_limits<std::decay_t<T>>::is_integer;
+
+/** Compare two integral types */
+template<typename RefT, typename T>
+constexpr bool is_like()
+{
+  static_assert(std::is_integral_v<RefT>);
+  if constexpr(is_integral_v<T>)
+  {
+    // clang-format off
+    return std::numeric_limits<T>::is_signed == std::is_signed_v<RefT>
+           && std::numeric_limits<T>::max() == std::numeric_limits<RefT>::max();
+    // clang-format on
+  }
+  return false;
+}
+
+template<typename T>
+constexpr bool is_like_int8_t = is_like<int8_t, T>();
+template<typename T>
+constexpr bool is_like_int16_t = is_like<int16_t, T>();
+template<typename T>
+constexpr bool is_like_int32_t = is_like<int32_t, T>();
+template<typename T>
+constexpr bool is_like_int64_t = is_like<int64_t, T>();
+template<typename T>
+constexpr bool is_like_uint8_t = is_like<uint8_t, T>();
+template<typename T>
+constexpr bool is_like_uint16_t = is_like<uint16_t, T>();
+template<typename T>
+constexpr bool is_like_uint32_t = is_like<uint32_t, T>();
+template<typename T>
+constexpr bool is_like_uint64_t = is_like<uint64_t, T>();
+
+} // namespace internal
+
 /** Helper class to build a MessagePack message
  *
  * After a message has been built, the builder object must be discarded to
@@ -102,6 +142,12 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
    */
   void write(const Eigen::Vector3d & v);
 
+  /** Write an Eigen::Vector4d
+   *
+   * Serializes as an array of size 4
+   */
+  void write(const Eigen::Vector4d & v);
+
   /** Write an Eigen::Vector6d
    *
    * Serializes as an array of size 6
@@ -155,6 +201,48 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
    * Serialied as the JSON data it holds
    */
   void write(const mc_rtc::Configuration & config);
+
+  /** Write numbers by finding their closest standard size match */
+  template<typename T, typename std::enable_if_t<internal::is_integral_v<T>, int> = 0>
+  void write(const T & number)
+  {
+    if constexpr(internal::is_like_int8_t<T>)
+    {
+      write(static_cast<int8_t>(number));
+    }
+    else if constexpr(internal::is_like_int16_t<T>)
+    {
+      write(static_cast<int16_t>(number));
+    }
+    else if constexpr(internal::is_like_int32_t<T>)
+    {
+      write(static_cast<int32_t>(number));
+    }
+    else if constexpr(internal::is_like_int64_t<T>)
+    {
+      write(static_cast<int64_t>(number));
+    }
+    else if constexpr(internal::is_like_uint8_t<T>)
+    {
+      write(static_cast<uint8_t>(number));
+    }
+    else if constexpr(internal::is_like_uint16_t<T>)
+    {
+      write(static_cast<uint16_t>(number));
+    }
+    else if constexpr(internal::is_like_uint32_t<T>)
+    {
+      write(static_cast<uint32_t>(number));
+    }
+    else if constexpr(internal::is_like_uint64_t<T>)
+    {
+      write(static_cast<uint64_t>(number));
+    }
+    else
+    {
+      static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
+    }
+  }
 
   /** @} */
   /* End Add data to the MessagePack section (advanced) */

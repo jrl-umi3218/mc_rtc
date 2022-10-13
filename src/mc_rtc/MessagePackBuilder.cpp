@@ -200,6 +200,13 @@ void MessagePackBuilder::write(const Eigen::Vector3d & v)
   finish_array();
 }
 
+void MessagePackBuilder::write(const Eigen::Vector4d & v)
+{
+  start_array(4);
+  write_vector(impl_.get(), v);
+  finish_array();
+}
+
 void MessagePackBuilder::write(const Eigen::Vector6d & v)
 {
   start_array(6);

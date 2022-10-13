@@ -42,7 +42,9 @@ enum class Elements
   XYTheta,
   Table,
   Robot,
-  Visual
+  Visual,
+  PolyhedronTrianglesList,
+  PolyhedronVerticesTriangles
 };
 
 /** Element is the common class for every element's type available in the
