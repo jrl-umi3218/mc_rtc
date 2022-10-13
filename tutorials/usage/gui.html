@@ -333,6 +333,7 @@
 <li class="toc-entry toc-h5"><a href="#point3drotationtransform">Point3D/Rotation/Transform</a></li>
 <li class="toc-entry toc-h5"><a href="#trajectory">Trajectory</a></li>
 <li class="toc-entry toc-h5"><a href="#polygon">Polygon</a></li>
+<li class="toc-entry toc-h5"><a href="#polyhedron">Polyhedron</a></li>
 <li class="toc-entry toc-h5"><a href="#force">Force</a></li>
 <li class="toc-entry toc-h5"><a href="#arrow">Arrow</a></li>
 <li class="toc-entry toc-h5"><a href="#xytheta">XYTheta</a></li>
@@ -536,6 +537,20 @@
 <span class="n">Polygon</span><span class="p">(</span><span class="s">"Step plan"</span><span class="p">,</span>
         <span class="p">[</span><span class="k">this</span><span class="p">]]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">step_plan_display_</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
+
+<h5 id="polyhedron"><code class="language-plaintext highlighter-rouge">Polyhedron</code></h5>
+
+<p>This element displays a polyhedron two representations are accepted:</p>
+<ol>
+  <li>Providing a single list of triangles as <code class="language-plaintext highlighter-rouge">std::vector&lt;std::array&lt;Eigen::Vector3d, 3&gt;&gt;</code></li>
+  <li>Providing a list of vertices as <code class="language-plaintext highlighter-rouge">std::vector&lt;Eigen::Vector3d&gt;</code> and a list of triangles as indices into the vertices array as <code class="language-plaintext highlighter-rouge">std::vector&lt;std::array&lt;size_t, 3&gt;&gt;</code></li>
+</ol>
+
+<p>Furthermore, you can provide per vertex color for this polyhedron, for each case the representation is:</p>
+<ol>
+  <li>An <code class="language-plaintext highlighter-rouge">std::vector&lt;std::array&lt;mc_rtc::gui::Color, 3&gt;&gt;</code></li>
+  <li>An <code class="language-plaintext highlighter-rouge">std::vector&lt;mc_rtc::gui::Color&gt;</code></li>
+</ol>
 
 <h5 id="force"><code class="language-plaintext highlighter-rouge">Force</code></h5>
 

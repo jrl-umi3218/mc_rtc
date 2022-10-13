@@ -2,6 +2,8 @@ var structmc__rtc_1_1gui_1_1Color =
 [
     [ "Color", "structmc__rtc_1_1gui_1_1Color.html#a6bf0c09177e7f1b669b9adb92c419e31", null ],
     [ "Color", "structmc__rtc_1_1gui_1_1Color.html#a6617b4f252dcb3740631c1bcdaa3cb67", null ],
+    [ "Color", "structmc__rtc_1_1gui_1_1Color.html#aab06b548deecc9ca44696c6b98213e55", null ],
+    [ "Color", "structmc__rtc_1_1gui_1_1Color.html#a81127ba81153ea1258152723f280323c", null ],
     [ "Color", "structmc__rtc_1_1gui_1_1Color.html#aeb57adc472b6fb0a69bf7a10b5f5594a", null ],
     [ "fromConfig", "structmc__rtc_1_1gui_1_1Color.html#ace1e440c98b94d1beb7525aeb268bdbc", null ],
     [ "fromMessagePack", "structmc__rtc_1_1gui_1_1Color.html#a201dd52d431e2ea56fb165822154f85b", null ],

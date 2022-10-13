@@ -12,5 +12,6 @@ var searchData=
   ['verbose',['verbose',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ad3172aea56993c54869ca977f7eed0d1',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration::verbose()'],['../structmc__rtc_1_1ObjectLoader.html#ac2b5e003d3ccd4958a32a83f1981754c',1,'mc_rtc::ObjectLoader::verbose()']]],
   ['verbose_5floader',['verbose_loader',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a02a37bf8e560cc576b7fd7579aeeaf64',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['vertical',['vertical',['../namespacemc__rtc_1_1constants.html#aaaeaab7136aa7d17fa172fde905c2cc7',1,'mc_rtc::constants']]],
+  ['vertices_5fconfig',['vertices_config',['../structmc__rtc_1_1gui_1_1PolyhedronConfig.html#aa734896695957f84df0e49e6dc3a5e86',1,'mc_rtc::gui::PolyhedronConfig']]],
   ['vmax',['vmax',['../structmc__control_1_1Gripper.html#a35f8adae647723d47d34a4f1037e3fb2',1,'mc_control::Gripper']]]
 ];

@@ -33,6 +33,7 @@ var namespacemc__rtc_1_1gui =
     [ "Point3DROImpl", "structmc__rtc_1_1gui_1_1Point3DROImpl.html", "structmc__rtc_1_1gui_1_1Point3DROImpl" ],
     [ "PointConfig", "structmc__rtc_1_1gui_1_1PointConfig.html", "structmc__rtc_1_1gui_1_1PointConfig" ],
     [ "PolygonImpl", "structmc__rtc_1_1gui_1_1PolygonImpl.html", "structmc__rtc_1_1gui_1_1PolygonImpl" ],
+    [ "PolyhedronConfig", "structmc__rtc_1_1gui_1_1PolyhedronConfig.html", "structmc__rtc_1_1gui_1_1PolyhedronConfig" ],
     [ "RotationImpl", "structmc__rtc_1_1gui_1_1RotationImpl.html", "structmc__rtc_1_1gui_1_1RotationImpl" ],
     [ "RotationROImpl", "structmc__rtc_1_1gui_1_1RotationROImpl.html", "structmc__rtc_1_1gui_1_1RotationROImpl" ],
     [ "SchemaImpl", "structmc__rtc_1_1gui_1_1SchemaImpl.html", "structmc__rtc_1_1gui_1_1SchemaImpl" ],

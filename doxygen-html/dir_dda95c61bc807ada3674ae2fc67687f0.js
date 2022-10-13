@@ -20,6 +20,7 @@ var dir_dda95c61bc807ada3674ae2fc67687f0 =
     [ "plot.h", "plot_8h.html", null ],
     [ "Point3D.h", "Point3D_8h.html", "Point3D_8h" ],
     [ "Polygon.h", "Polygon_8h.html", "Polygon_8h" ],
+    [ "Polyhedron.h", "Polyhedron_8h.html", "Polyhedron_8h" ],
     [ "Robot.h", "mc__rtc_2gui_2Robot_8h.html", "mc__rtc_2gui_2Robot_8h" ],
     [ "Rotation.h", "Rotation_8h.html", "Rotation_8h" ],
     [ "Schema.h", "Schema_8h.html", "Schema_8h" ],

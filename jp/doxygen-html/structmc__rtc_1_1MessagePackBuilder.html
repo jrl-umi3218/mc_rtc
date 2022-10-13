@@ -137,6 +137,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac438d3ed0ab1cec9477dfe63e9bb0299"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c8ad12c224ebf3a1b58ed54c66b6354"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1MessagePackBuilder.html#a2c8ad12c224ebf3a1b58ed54c66b6354">write</a> (const Eigen::Vector3d &amp;v)</td></tr>
 <tr class="separator:a2c8ad12c224ebf3a1b58ed54c66b6354"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0adc8c8177e22ed2fa4b05982bc53e6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1MessagePackBuilder.html#a0adc8c8177e22ed2fa4b05982bc53e6e">write</a> (const Eigen::Vector4d &amp;v)</td></tr>
+<tr class="separator:a0adc8c8177e22ed2fa4b05982bc53e6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2131c707b052d666de663c56ebc4203"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1MessagePackBuilder.html#af2131c707b052d666de663c56ebc4203">write</a> (const Eigen::Vector6d &amp;v)</td></tr>
 <tr class="separator:af2131c707b052d666de663c56ebc4203"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afeb27a7c5296c14410a786a17694dd90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1MessagePackBuilder.html#afeb27a7c5296c14410a786a17694dd90">write</a> (const Eigen::VectorXd &amp;v)</td></tr>
@@ -155,6 +157,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab4c3e3612a75cd29da998497fcc81c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ecdea776e00c52344616ef74040065a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1MessagePackBuilder.html#a8ecdea776e00c52344616ef74040065a">write</a> (const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
 <tr class="separator:a8ecdea776e00c52344616ef74040065a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ff5aeafe52b8c4559036d8def37ddfe"><td class="memTemplParams" colspan="2">template&lt;typename T , typename std::enable_if_t&lt; internal::is_integral_v&lt; T &gt;, int &gt;  = 0&gt; </td></tr>
+<tr class="memitem:a8ff5aeafe52b8c4559036d8def37ddfe"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1MessagePackBuilder.html#a8ff5aeafe52b8c4559036d8def37ddfe">write</a> (const T &amp;number)</td></tr>
+<tr class="separator:a8ff5aeafe52b8c4559036d8def37ddfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Add data to the MessagePack (containers)</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>These functions support the serialization of standard containers of serializable objects. </p>
 </div></td></tr>
@@ -335,7 +340,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ab7c6cb64330027b2fec8e69d218a866d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab7c6cb64330027b2fec8e69d218a866d">&#9670;&nbsp;</a></span>write() <span class="overload">[1/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7c6cb64330027b2fec8e69d218a866d">&#9670;&nbsp;</a></span>write() <span class="overload">[1/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -353,7 +358,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a5a743846c35147473814f1df27223be4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a743846c35147473814f1df27223be4">&#9670;&nbsp;</a></span>write() <span class="overload">[2/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a743846c35147473814f1df27223be4">&#9670;&nbsp;</a></span>write() <span class="overload">[2/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -372,7 +377,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ae3980d77ade44ab490ea9d4ca75ec164"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae3980d77ade44ab490ea9d4ca75ec164">&#9670;&nbsp;</a></span>write() <span class="overload">[3/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3980d77ade44ab490ea9d4ca75ec164">&#9670;&nbsp;</a></span>write() <span class="overload">[3/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -391,7 +396,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ab76daa4136aa82a8b07f46bc11de04ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab76daa4136aa82a8b07f46bc11de04ab">&#9670;&nbsp;</a></span>write() <span class="overload">[4/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab76daa4136aa82a8b07f46bc11de04ab">&#9670;&nbsp;</a></span>write() <span class="overload">[4/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -410,7 +415,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a42536e87c8671025ab1220d069c83b74"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42536e87c8671025ab1220d069c83b74">&#9670;&nbsp;</a></span>write() <span class="overload">[5/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a42536e87c8671025ab1220d069c83b74">&#9670;&nbsp;</a></span>write() <span class="overload">[5/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -429,7 +434,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="af8b75017d8de6dd590cbd5257413e244"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8b75017d8de6dd590cbd5257413e244">&#9670;&nbsp;</a></span>write() <span class="overload">[6/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af8b75017d8de6dd590cbd5257413e244">&#9670;&nbsp;</a></span>write() <span class="overload">[6/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -448,7 +453,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a7c94452f85aaaae78212cc764546f907"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c94452f85aaaae78212cc764546f907">&#9670;&nbsp;</a></span>write() <span class="overload">[7/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c94452f85aaaae78212cc764546f907">&#9670;&nbsp;</a></span>write() <span class="overload">[7/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -467,7 +472,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ac0c7a9a19f16c58f512e500d89a9ab22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0c7a9a19f16c58f512e500d89a9ab22">&#9670;&nbsp;</a></span>write() <span class="overload">[8/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0c7a9a19f16c58f512e500d89a9ab22">&#9670;&nbsp;</a></span>write() <span class="overload">[8/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -486,7 +491,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ad77f11c5d489b292fd00d97b62ce3d4d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad77f11c5d489b292fd00d97b62ce3d4d">&#9670;&nbsp;</a></span>write() <span class="overload">[9/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad77f11c5d489b292fd00d97b62ce3d4d">&#9670;&nbsp;</a></span>write() <span class="overload">[9/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -505,7 +510,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a9aa97f6d95239884929625a08e0cac35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9aa97f6d95239884929625a08e0cac35">&#9670;&nbsp;</a></span>write() <span class="overload">[10/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9aa97f6d95239884929625a08e0cac35">&#9670;&nbsp;</a></span>write() <span class="overload">[10/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -524,7 +529,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a6d56aa3b133f26426361556823abdf80"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d56aa3b133f26426361556823abdf80">&#9670;&nbsp;</a></span>write() <span class="overload">[11/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d56aa3b133f26426361556823abdf80">&#9670;&nbsp;</a></span>write() <span class="overload">[11/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -543,7 +548,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a92e09fbed9161cea08676d368e27d0fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92e09fbed9161cea08676d368e27d0fa">&#9670;&nbsp;</a></span>write() <span class="overload">[12/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a92e09fbed9161cea08676d368e27d0fa">&#9670;&nbsp;</a></span>write() <span class="overload">[12/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -562,7 +567,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a01c67ae50c59f128747e4b94ffaa5a5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01c67ae50c59f128747e4b94ffaa5a5f">&#9670;&nbsp;</a></span>write() <span class="overload">[13/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a01c67ae50c59f128747e4b94ffaa5a5f">&#9670;&nbsp;</a></span>write() <span class="overload">[13/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -581,7 +586,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a5250cc8a284bafa0ce519a99916281f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5250cc8a284bafa0ce519a99916281f4">&#9670;&nbsp;</a></span>write() <span class="overload">[14/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5250cc8a284bafa0ce519a99916281f4">&#9670;&nbsp;</a></span>write() <span class="overload">[14/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -600,7 +605,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a9e723757f1b9e4baf971d8212b60666a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e723757f1b9e4baf971d8212b60666a">&#9670;&nbsp;</a></span>write() <span class="overload">[15/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e723757f1b9e4baf971d8212b60666a">&#9670;&nbsp;</a></span>write() <span class="overload">[15/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -629,7 +634,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ac438d3ed0ab1cec9477dfe63e9bb0299"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac438d3ed0ab1cec9477dfe63e9bb0299">&#9670;&nbsp;</a></span>write() <span class="overload">[16/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac438d3ed0ab1cec9477dfe63e9bb0299">&#9670;&nbsp;</a></span>write() <span class="overload">[16/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -649,7 +654,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a2c8ad12c224ebf3a1b58ed54c66b6354"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c8ad12c224ebf3a1b58ed54c66b6354">&#9670;&nbsp;</a></span>write() <span class="overload">[17/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c8ad12c224ebf3a1b58ed54c66b6354">&#9670;&nbsp;</a></span>write() <span class="overload">[17/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -668,8 +673,28 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a0adc8c8177e22ed2fa4b05982bc53e6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0adc8c8177e22ed2fa4b05982bc53e6e">&#9670;&nbsp;</a></span>write() <span class="overload">[18/35]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rtc::MessagePackBuilder::write </td>
+          <td>(</td>
+          <td class="paramtype">const Eigen::Vector4d &amp;&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Write an Eigen::Vector4d</p>
+<p>Serializes as an array of size 4 </p>
+
+</div>
+</div>
 <a id="af2131c707b052d666de663c56ebc4203"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2131c707b052d666de663c56ebc4203">&#9670;&nbsp;</a></span>write() <span class="overload">[18/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af2131c707b052d666de663c56ebc4203">&#9670;&nbsp;</a></span>write() <span class="overload">[19/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -689,7 +714,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="afeb27a7c5296c14410a786a17694dd90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afeb27a7c5296c14410a786a17694dd90">&#9670;&nbsp;</a></span>write() <span class="overload">[19/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afeb27a7c5296c14410a786a17694dd90">&#9670;&nbsp;</a></span>write() <span class="overload">[20/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -709,7 +734,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a74da4251765d4fc62aafac0fab05519e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74da4251765d4fc62aafac0fab05519e">&#9670;&nbsp;</a></span>write() <span class="overload">[20/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a74da4251765d4fc62aafac0fab05519e">&#9670;&nbsp;</a></span>write() <span class="overload">[21/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -729,7 +754,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="aa9b29c6e647ca8cae9b77d2a9a9cf422"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9b29c6e647ca8cae9b77d2a9a9cf422">&#9670;&nbsp;</a></span>write() <span class="overload">[21/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9b29c6e647ca8cae9b77d2a9a9cf422">&#9670;&nbsp;</a></span>write() <span class="overload">[22/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -749,7 +774,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a5106a9ce75422dc91abac33bd4c4f8e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5106a9ce75422dc91abac33bd4c4f8e9">&#9670;&nbsp;</a></span>write() <span class="overload">[22/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5106a9ce75422dc91abac33bd4c4f8e9">&#9670;&nbsp;</a></span>write() <span class="overload">[23/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -769,7 +794,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a4943a63bcfbaeddca62d209dcd08e885"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4943a63bcfbaeddca62d209dcd08e885">&#9670;&nbsp;</a></span>write() <span class="overload">[23/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4943a63bcfbaeddca62d209dcd08e885">&#9670;&nbsp;</a></span>write() <span class="overload">[24/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -789,7 +814,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a83480f7381e658b282b0132b5b495ce7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83480f7381e658b282b0132b5b495ce7">&#9670;&nbsp;</a></span>write() <span class="overload">[24/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a83480f7381e658b282b0132b5b495ce7">&#9670;&nbsp;</a></span>write() <span class="overload">[25/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -809,7 +834,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ab4c3e3612a75cd29da998497fcc81c4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4c3e3612a75cd29da998497fcc81c4e">&#9670;&nbsp;</a></span>write() <span class="overload">[25/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4c3e3612a75cd29da998497fcc81c4e">&#9670;&nbsp;</a></span>write() <span class="overload">[26/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -829,7 +854,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a8ecdea776e00c52344616ef74040065a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ecdea776e00c52344616ef74040065a">&#9670;&nbsp;</a></span>write() <span class="overload">[26/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ecdea776e00c52344616ef74040065a">&#9670;&nbsp;</a></span>write() <span class="overload">[27/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -848,8 +873,37 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a8ff5aeafe52b8c4559036d8def37ddfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ff5aeafe52b8c4559036d8def37ddfe">&#9670;&nbsp;</a></span>write() <span class="overload">[28/35]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename std::enable_if_t&lt; internal::is_integral_v&lt; T &gt;, int &gt;  = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rtc::MessagePackBuilder::write </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>number</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Write numbers by finding their closest standard size match </p>
+
+</div>
+</div>
 <a id="a4cf78dd3a81d2c0d3fb848ae892f8e12"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4cf78dd3a81d2c0d3fb848ae892f8e12">&#9670;&nbsp;</a></span>write() <span class="overload">[27/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cf78dd3a81d2c0d3fb848ae892f8e12">&#9670;&nbsp;</a></span>write() <span class="overload">[29/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -878,7 +932,7 @@ template&lt;typename T , typename A &gt; </div>
 </div>
 </div>
 <a id="a90dd5ca64d759e4cbe4b7616e5e08b81"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90dd5ca64d759e4cbe4b7616e5e08b81">&#9670;&nbsp;</a></span>write() <span class="overload">[28/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a90dd5ca64d759e4cbe4b7616e5e08b81">&#9670;&nbsp;</a></span>write() <span class="overload">[30/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -907,7 +961,7 @@ template&lt;typename T , std::size_t N&gt; </div>
 </div>
 </div>
 <a id="af402f0657bfdd62c221c3c6f987f418f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af402f0657bfdd62c221c3c6f987f418f">&#9670;&nbsp;</a></span>write() <span class="overload">[29/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af402f0657bfdd62c221c3c6f987f418f">&#9670;&nbsp;</a></span>write() <span class="overload">[31/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -936,7 +990,7 @@ template&lt;typename T1 , typename T2 &gt; </div>
 </div>
 </div>
 <a id="a766e1234e36e2068ee419b6d5aef8083"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a766e1234e36e2068ee419b6d5aef8083">&#9670;&nbsp;</a></span>write() <span class="overload">[30/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a766e1234e36e2068ee419b6d5aef8083">&#9670;&nbsp;</a></span>write() <span class="overload">[32/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -965,7 +1019,7 @@ template&lt;typename KeyT , typename T , typename C , typename A &gt; </div>
 </div>
 </div>
 <a id="a1e1b7151bf1db5da13fae7bcadf04d4d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e1b7151bf1db5da13fae7bcadf04d4d">&#9670;&nbsp;</a></span>write() <span class="overload">[31/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e1b7151bf1db5da13fae7bcadf04d4d">&#9670;&nbsp;</a></span>write() <span class="overload">[33/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -994,7 +1048,7 @@ template&lt;typename T , typename C , typename A &gt; </div>
 </div>
 </div>
 <a id="abbdabc927f9f2c4313903839283637ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abbdabc927f9f2c4313903839283637ac">&#9670;&nbsp;</a></span>write() <span class="overload">[32/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abbdabc927f9f2c4313903839283637ac">&#9670;&nbsp;</a></span>write() <span class="overload">[34/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1023,7 +1077,7 @@ template&lt;typename... Args&gt; </div>
 </div>
 </div>
 <a id="a511066bbf8b9b1bb9ebfc4ecefffc30c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a511066bbf8b9b1bb9ebfc4ecefffc30c">&#9670;&nbsp;</a></span>write() <span class="overload">[33/33]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a511066bbf8b9b1bb9ebfc4ecefffc30c">&#9670;&nbsp;</a></span>write() <span class="overload">[35/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

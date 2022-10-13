@@ -52,6 +52,7 @@ var hierarchy =
     [ "mc_rtc::ConfigurationLoader< mc_rtc::gui::ForceConfig >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ForceConfig_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rtc::gui::LineConfig >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1LineConfig_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rtc::gui::PointConfig >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PointConfig_01_4.html", null ],
+    [ "mc_rtc::ConfigurationLoader< mc_rtc::gui::PolyhedronConfig >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PolyhedronConfig_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_tasks::force::ImpedanceGains >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_tasks::lipm_stabilizer::ContactState >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< void >", "structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html", null ],
@@ -187,6 +188,8 @@ var hierarchy =
         [ "mc_rtc::gui::TransformROImpl< GetT >", "structmc__rtc_1_1gui_1_1TransformROImpl.html", null ],
         [ "mc_rtc::gui::XYThetaROImpl< GetT >", "structmc__rtc_1_1gui_1_1XYThetaROImpl.html", null ]
       ] ],
+      [ "mc_rtc::gui::details::PolyhedronTrianglesListImpl< GetTrianglesT >", "structmc__rtc_1_1gui_1_1details_1_1PolyhedronTrianglesListImpl.html", null ],
+      [ "mc_rtc::gui::details::PolyhedronVerticesTrianglesImpl< GetVerticesT, GetTrianglesT >", "structmc__rtc_1_1gui_1_1details_1_1PolyhedronVerticesTrianglesImpl.html", null ],
       [ "mc_rtc::gui::details::RobotImpl< GetT >", "structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html", null ],
       [ "mc_rtc::gui::details::StaticTableImpl< GetData >", "structmc__rtc_1_1gui_1_1details_1_1StaticTableImpl.html", null ],
       [ "mc_rtc::gui::details::TableImpl< GetHeader, GetData >", "structmc__rtc_1_1gui_1_1details_1_1TableImpl.html", [
@@ -399,6 +402,10 @@ var hierarchy =
     [ "mc_rtc::gui::plot::PolygonDescription", "structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html", null ],
     [ "mc_rbdyn::PolygonInterpolator", "structmc__rbdyn_1_1PolygonInterpolator.html", null ],
     [ "mc_rtc::gui::plot::impl::Polygons< GetT >", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Polygons.html", null ],
+    [ "mc_rtc::gui::PolyhedronConfig", "structmc__rtc_1_1gui_1_1PolyhedronConfig.html", null ],
+    [ "PolyhedronT", null, [
+      [ "mc_rtc::gui::details::ColoredPolyhedronImpl< PolyhedronT, GetColorT >", "structmc__rtc_1_1gui_1_1details_1_1ColoredPolyhedronImpl.html", null ]
+    ] ],
     [ "mc_control::PythonRWCallback", "structmc__control_1_1PythonRWCallback.html", null ],
     [ "mc_solver::QPContactPtr", "structmc__solver_1_1QPContactPtr.html", null ],
     [ "mc_solver::QPContactPtrWPoints", "structmc__solver_1_1QPContactPtrWPoints.html", null ],

@@ -2563,6 +2563,7 @@
     <includes id="NumberSlider_8h" name="NumberSlider.h" local="no" imported="no">mc_rtc/gui/NumberSlider.h</includes>
     <includes id="Point3D_8h" name="Point3D.h" local="no" imported="no">mc_rtc/gui/Point3D.h</includes>
     <includes id="Polygon_8h" name="Polygon.h" local="no" imported="no">mc_rtc/gui/Polygon.h</includes>
+    <includes id="Polyhedron_8h" name="Polyhedron.h" local="no" imported="no">mc_rtc/gui/Polyhedron.h</includes>
     <includes id="mc__rtc_2gui_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rtc/gui/Robot.h</includes>
     <includes id="Rotation_8h" name="Rotation.h" local="no" imported="no">mc_rtc/gui/Rotation.h</includes>
     <includes id="Schema_8h" name="Schema.h" local="no" imported="no">mc_rtc/gui/Schema.h</includes>
@@ -2819,6 +2820,8 @@
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a51c45b795d5d18a3e4e0c37e8b20a141">Table</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a5d1eca158c00250d9c4c32d947b7c433">Robot</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a4557e77491fe3dbd9a6055aeb0ed00d7">Visual</enumvalue>
+      <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a94c8141fc670449195562629a2055edf">PolyhedronTrianglesList</enumvalue>
+      <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a35ddbf0f6429fc2aabd5fadc20766153">PolyhedronVerticesTriangles</enumvalue>
     </member>
   </compound>
   <compound kind="file">
@@ -3258,6 +3261,8 @@
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::ForceConfig &gt;</class>
     <class kind="struct">mc_rtc::gui::PointConfig</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::PointConfig &gt;</class>
+    <class kind="struct">mc_rtc::gui::PolyhedronConfig</class>
+    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::PolyhedronConfig &gt;</class>
     <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::gui</namespace>
     <member kind="enumeration">
@@ -3308,6 +3313,69 @@
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
       <anchor>a6a9e684830b60a463c848a290d2b910b</anchor>
       <arglist>(const std::string &amp;name, const PointConfig &amp;config, GetT get_fn, SetT set_fn)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>Polyhedron.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
+    <filename>Polyhedron_8h</filename>
+    <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
+    <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
+    <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
+    <class kind="struct">mc_rtc::gui::details::PolyhedronTrianglesListImpl</class>
+    <class kind="struct">mc_rtc::gui::details::PolyhedronVerticesTrianglesImpl</class>
+    <class kind="struct">mc_rtc::gui::details::ColoredPolyhedronImpl</class>
+    <namespace>mc_rtc</namespace>
+    <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
+    <member kind="function">
+      <type>auto</type>
+      <name>Polyhedron</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a1cadd149b5d41c11735dbd88babe8682</anchor>
+      <arglist>(const std::string &amp;name, GetTrianglesT get_triangles_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Polyhedron</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a0844bcf3f749bc2c3bcfb36bab3248b7</anchor>
+      <arglist>(const std::string &amp;name, const PolyhedronConfig &amp;config, GetTrianglesT get_triangles_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Polyhedron</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a81c80807fb522ea42e550d8afef97d96</anchor>
+      <arglist>(const std::string &amp;name, GetVerticesOrTrianglesT get_vertices_or_triangles_fn, GetTrianglesOrColorsT get_triangles_or_colors_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Polyhedron</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a67f435aeffc46d95c478578d86aef732</anchor>
+      <arglist>(const std::string &amp;name, const PolyhedronConfig &amp;config, GetVerticesOrTrianglesT get_vertices_or_triangles_fn, GetTrianglesOrColorsT get_triangles_or_colors_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>ColoredPolyhedron</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a5171220f7e195ae9fab9affc5b648973</anchor>
+      <arglist>(const std::string &amp;name, const PolyhedronConfig &amp;config, GetTrianglesT get_triangles_fn, GetColorT get_color_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Polyhedron</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a8f62834ebdac62261d49bf4582df541c</anchor>
+      <arglist>(const std::string &amp;name, GetVerticesT get_vertices_fn, GetTrianglesT get_triangles_fn, GetColorT get_color_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Polyhedron</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a0074155dfebc9c355c338024df640aa5</anchor>
+      <arglist>(const std::string &amp;name, const PolyhedronConfig &amp;config, GetVerticesT get_vertices_fn, GetTrianglesT get_triangles_fn, GetColorT get_color_fn)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -4130,6 +4198,77 @@
     <includes id="Gains_8h" name="Gains.h" local="no" imported="no">mc_rbdyn/Gains.h</includes>
     <class kind="struct">mc_rtc::MessagePackBuilder</class>
     <namespace>mc_rtc</namespace>
+    <namespace>mc_rtc::internal</namespace>
+    <member kind="function">
+      <type>constexpr bool</type>
+      <name>is_like</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>acba6fe117d8807e358abe0a19f91362c</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_integral_v</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>a71205a048e877fdade723bb88b6bbbdb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_int8_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>a1916e10919c876ca3ec9601e5fa6110d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_int16_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>aea3a30b04f5e1536751b6b0eb2a2d8db</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_int32_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>afdbadbf7cd608469cc1b986f907b0590</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_int64_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>a5d81455351f259d743932cff9fb14442</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_uint8_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>aabd034adefcd3f66b71c74173a942cfa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_uint16_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>a11741a3b42edf962a451b31c84ec9c16</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_uint32_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>a8f487774ba8a847c81c631e8c44509b4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_uint64_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>aaa486786eded3072808be5972a79c15a</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>pragma.h</name>
@@ -4331,6 +4470,20 @@
       <anchorfile>namespacemc__rtc.html</anchorfile>
       <anchor>a8fb61bc6391bc9cd0ef2aa0efff2d641</anchor>
       <arglist>()</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>heatmap.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/utils/</path>
+    <filename>heatmap_8h</filename>
+    <namespace>mc_rtc</namespace>
+    <namespace>mc_rtc::utils</namespace>
+    <member kind="function">
+      <type>T</type>
+      <name>heatmap</name>
+      <anchorfile>namespacemc__rtc_1_1utils.html</anchorfile>
+      <anchor>a82fe941770f36f355a999699984b5943</anchor>
+      <arglist>(double minimum, double maximum, double value)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -7456,6 +7609,20 @@
       <type></type>
       <name>Color</name>
       <anchorfile>structmc__rtc_1_1gui_1_1Color.html</anchorfile>
+      <anchor>aab06b548deecc9ca44696c6b98213e55</anchor>
+      <arglist>(const Eigen::Vector3d &amp;color)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Color</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1Color.html</anchorfile>
+      <anchor>a81127ba81153ea1258152723f280323c</anchor>
+      <arglist>(const Eigen::Vector4d &amp;color)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Color</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1Color.html</anchorfile>
       <anchor>aeb57adc472b6fb0a69bf7a10b5f5594a</anchor>
       <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
     </member>
@@ -7611,6 +7778,47 @@
       <name>ColorMap</name>
       <anchorfile>structmc__rtc_1_1gui_1_1Color.html</anchorfile>
       <anchor>aa0e78cc8d6f0ea185fa70c4a5b95d6c9</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::ColoredPolyhedronImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1ColoredPolyhedronImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
+    <member kind="function">
+      <type></type>
+      <name>ColoredPolyhedronImpl</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ColoredPolyhedronImpl.html</anchorfile>
+      <anchor>ab6e913f9aa2658ac5e00cac59415ef35</anchor>
+      <arglist>(PolyhedronT &amp;&amp;poly, GetColorT get_color_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>ColoredPolyhedronImpl</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ColoredPolyhedronImpl.html</anchorfile>
+      <anchor>a52ee7cc911dfff011ed84e31b7a5bd36</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ColoredPolyhedronImpl.html</anchorfile>
+      <anchor>accab9daf6e28b3efd3bdf847f67e2095</anchor>
+      <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static constexpr size_t</type>
+      <name>write_size</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ColoredPolyhedronImpl.html</anchorfile>
+      <anchor>ae695bcd60727c7cc10d95250d5c6a815</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>GetColorT</type>
+      <name>get_color_fn_</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ColoredPolyhedronImpl.html</anchorfile>
+      <anchor>a96f16e1780ddfc8465abbfece875355c</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -8184,16 +8392,44 @@
     </member>
     <member kind="function">
       <type></type>
-      <name>operator int</name>
+      <name>operator int8_t</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
-      <anchor>addad9797926f65f2ff14c5110f95c338</anchor>
+      <anchor>a4e97283946de569617be0c40319521ba</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type></type>
-      <name>operator unsigned int</name>
+      <name>operator uint8_t</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
-      <anchor>ab39671fa3b6d9cc688c03543bc4013a5</anchor>
+      <anchor>a9b7ffae96984d36e4f0438b130a80aa6</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>operator int16_t</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>ad1f3ce752f08879eb61e68b415a45c72</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>operator uint16_t</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a570adf2564bf994e405785374074db25</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>operator int32_t</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>af8e3b548ed89ecab2ad60dc6a8c46e01</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>operator uint32_t</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a82e00a8b56a139a51b09b425bcaa2c95</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
@@ -8236,6 +8472,13 @@
       <name>operator Eigen::Vector3d</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
       <anchor>ac33924d180b8d55448ee3e2ff7d07ab6</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>operator Eigen::Vector4d</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>aa72218d59f450a0f7b00b92884a52a57</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
@@ -8370,6 +8613,13 @@
       <name>operator std::unordered_set&lt; T, H, E, A &gt;</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
       <anchor>a0ed2f23cedeb589c8f7f26f54b99b76f</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>operator T</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a60d258128cadfb8b4cc30229d169991b</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
@@ -8538,15 +8788,43 @@
       <type>void</type>
       <name>add</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
-      <anchor>ad8c514c42066587028dffdda71d04215</anchor>
-      <arglist>(const std::string &amp;key, int value)</arglist>
+      <anchor>ade042daba56d5d0ec500412077a4e1eb</anchor>
+      <arglist>(const std::string &amp;key, int8_t value)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>add</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
-      <anchor>a903485c9427fa24b5f754c341e749217</anchor>
-      <arglist>(const std::string &amp;key, unsigned int value)</arglist>
+      <anchor>a50d6a43811251874b1c4e11be29fa7de</anchor>
+      <arglist>(const std::string &amp;key, uint8_t value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>add</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>ad989ff036acb61548547424bc76f92c8</anchor>
+      <arglist>(const std::string &amp;key, int16_t value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>add</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>abff23a45849dc4a9aa8e064f8d6c7371</anchor>
+      <arglist>(const std::string &amp;key, uint16_t value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>add</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a95f18ab31e5917324fffa93ffda9c722</anchor>
+      <arglist>(const std::string &amp;key, int32_t value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>add</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a907d4fb92315e13b9572a1d6e4a1c672</anchor>
+      <arglist>(const std::string &amp;key, uint32_t value)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -8596,6 +8874,13 @@
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
       <anchor>a943753f6cca1b82f7115eb76fe478a10</anchor>
       <arglist>(const std::string &amp;key, const Eigen::Vector3d &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>add</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>ac33f957d2ea4c36430cfdb4d75e6f27e</anchor>
+      <arglist>(const std::string &amp;key, const Eigen::Vector4d &amp;value)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -8706,15 +8991,43 @@
       <type>void</type>
       <name>push</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
-      <anchor>af7cc0d1d2c6cf370f88dadc0b8e4e81a</anchor>
-      <arglist>(int value)</arglist>
+      <anchor>a270d7e0f691ca97809d3f5d98407e1d7</anchor>
+      <arglist>(int8_t value)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>push</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
-      <anchor>a847a47be791d47b6c31726e99b0ea088</anchor>
-      <arglist>(unsigned int value)</arglist>
+      <anchor>a5a589ab5f60fe846b5ae912c8c44eda2</anchor>
+      <arglist>(uint8_t value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>push</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a32a5454150cad4764b2ae9bcd766df14</anchor>
+      <arglist>(int16_t value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>push</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>ae6fdcf19e27dbb961354287ad68cecbe</anchor>
+      <arglist>(uint16_t value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>push</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a3eb04b597afaccd554d483565c7b2dfa</anchor>
+      <arglist>(int32_t value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>push</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a6a726ec56eefc8f4d701fba866920659</anchor>
+      <arglist>(uint32_t value)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -8764,6 +9077,13 @@
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
       <anchor>a732d4fba7f1ceee9d8f87274bbdda8ef</anchor>
       <arglist>(const Eigen::Vector3d &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>push</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a0b0bd73a5499a59adc679f65efbd2f8e</anchor>
+      <arglist>(const Eigen::Vector4d &amp;value)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -8865,6 +9185,13 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>push</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a3a7be6c1fef0edd187f6abe6e2dcb5fe</anchor>
+      <arglist>(const T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>add</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
       <anchor>a26b92d3f9bebfeac92ea681f503cf815</anchor>
@@ -8904,6 +9231,13 @@
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
       <anchor>ae73a0ee95aa1ea44a146d0befaa25539</anchor>
       <arglist>(const std::string &amp;key, const std::unordered_set&lt; T, H, E, A &gt; &amp;value, Args &amp;&amp;... args)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>add</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a9793616ca54c66ed2c7767540209ff04</anchor>
+      <arglist>(const std::string &amp;key, const T &amp;value)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -9416,6 +9750,24 @@
       <anchorfile>structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PointConfig_01_4.html</anchorfile>
       <anchor>a6b4642eb20b0edf5fecba11ffb927a93</anchor>
       <arglist>(const mc_rtc::gui::PointConfig &amp;point)</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::PolyhedronConfig &gt;</name>
+    <filename>structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PolyhedronConfig_01_4.html</filename>
+    <member kind="function" static="yes">
+      <type>static mc_rtc::gui::PolyhedronConfig</type>
+      <name>load</name>
+      <anchorfile>structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PolyhedronConfig_01_4.html</anchorfile>
+      <anchor>a9d4cc906347cfaacc7624d3d0ef7a911</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static mc_rtc::Configuration</type>
+      <name>save</name>
+      <anchorfile>structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PolyhedronConfig_01_4.html</anchorfile>
+      <anchor>acb8b8e0e480d0ac10cbc5b89044ba9f5</anchor>
+      <arglist>(const mc_rtc::gui::PolyhedronConfig &amp;polyhedron)</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -11296,6 +11648,20 @@
       <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
       <anchor>a6a40d8da80eede227857901c00cc0e18</anchor>
       <arglist>(const ElementId &amp;id, const std::vector&lt; std::vector&lt; Eigen::Vector3d &gt;&gt; &amp;points, const mc_rtc::gui::LineConfig &amp;config)</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
+      <name>polyhedron</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a036a286690518e0f2f4a3832d1da3111</anchor>
+      <arglist>(const ElementId &amp;id, const std::vector&lt; std::array&lt; Eigen::Vector3d, 3 &gt;&gt; &amp;triangles, const std::vector&lt; std::array&lt; mc_rtc::gui::Color, 3 &gt;&gt; &amp;colors, const mc_rtc::gui::PolyhedronConfig &amp;config)</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
+      <name>polyhedron</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a6130bd76e1329ed69ca4b48a4cb067f2</anchor>
+      <arglist>(const ElementId &amp;id, const std::vector&lt; Eigen::Vector3d &gt; &amp;vertices, const std::vector&lt; std::array&lt; size_t, 3 &gt;&gt; &amp;triangles, const std::vector&lt; mc_rtc::gui::Color &gt; &amp;colors, const mc_rtc::gui::PolyhedronConfig &amp;config)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
       <type>virtual void</type>
@@ -21627,6 +21993,13 @@
       <type>void</type>
       <name>write</name>
       <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
+      <anchor>a0adc8c8177e22ed2fa4b05982bc53e6e</anchor>
+      <arglist>(const Eigen::Vector4d &amp;v)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
       <anchor>af2131c707b052d666de663c56ebc4203</anchor>
       <arglist>(const Eigen::Vector6d &amp;v)</arglist>
     </member>
@@ -21685,6 +22058,13 @@
       <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
       <anchor>a8ecdea776e00c52344616ef74040065a</anchor>
       <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
+      <anchor>a8ff5aeafe52b8c4559036d8def37ddfe</anchor>
+      <arglist>(const T &amp;number)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -21858,6 +22238,13 @@
       <type>void</type>
       <name>write</name>
       <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
+      <anchor>a0adc8c8177e22ed2fa4b05982bc53e6e</anchor>
+      <arglist>(const Eigen::Vector4d &amp;v)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
       <anchor>af2131c707b052d666de663c56ebc4203</anchor>
       <arglist>(const Eigen::Vector6d &amp;v)</arglist>
     </member>
@@ -21916,6 +22303,13 @@
       <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
       <anchor>a8ecdea776e00c52344616ef74040065a</anchor>
       <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
+      <anchor>a8ff5aeafe52b8c4559036d8def37ddfe</anchor>
+      <arglist>(const T &amp;number)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -24484,6 +24878,240 @@
       <name>type</name>
       <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Polygons.html</anchorfile>
       <anchor>a9bac28b142bf3360b5d6a15aa09197fa</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::PolyhedronConfig</name>
+    <filename>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>PolyhedronConfig</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>af28549c89e5fa4384edee1ad0f9faa1f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>PolyhedronConfig</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>af80df128b288bb11d44ae255a44b0b28</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>fromConfig</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>a9f2b940d1dc0a044bdde4d84ea8b99c2</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_rtc::Configuration</type>
+      <name>saveConfig</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>ae43350292804b4d9a49db9dfea249c58</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>fromMessagePack</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>a1c4fb85814b326aa6ad294d5059349ce</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>a8bb2687d569eb11c086242c43dd753e8</anchor>
+      <arglist>(mc_rtc::MessagePackBuilder &amp;out) const</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static constexpr size_t</type>
+      <name>write_size</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>a1eeda4dad2f2bf5ad14f815cfa57bf0e</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable">
+      <type>Color</type>
+      <name>triangle_color</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>abfb2c75d6f1432be6f1eff37076f8bcd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>show_triangle</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>a79d59b11727556847ba58e67c59a3774</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>use_triangle_color</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>a5b8c4b94f3842035ad0081f773923b88</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>LineConfig</type>
+      <name>edge_config</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>a697312cc418b907744cee554d5d55a9f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>show_edges</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>a980f44c5d63d11ee6911c5ef51a9228d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>fixed_edge_color</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>a680f82eff40a172f69825aeb95a97fc2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>PointConfig</type>
+      <name>vertices_config</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>aa734896695957f84df0e49e6dc3a5e86</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>show_vertices</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>a80778cd3434b42476d0235261c7a82aa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>fixed_vertices_color</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1PolyhedronConfig.html</anchorfile>
+      <anchor>a145b7000dee7772c7504efa55f8e0e99</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::PolyhedronTrianglesListImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1PolyhedronTrianglesListImpl.html</filename>
+    <templarg>GetTrianglesT</templarg>
+    <base>mc_rtc::gui::Element</base>
+    <member kind="function">
+      <type></type>
+      <name>PolyhedronTrianglesListImpl</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronTrianglesListImpl.html</anchorfile>
+      <anchor>a0544b1a5d18edb78fa26d334d3d02f9e</anchor>
+      <arglist>(const std::string &amp;name, const PolyhedronConfig &amp;config, GetTrianglesT get_triangles_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>PolyhedronTrianglesListImpl</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronTrianglesListImpl.html</anchorfile>
+      <anchor>ad7aa22362c25fd86d6283fd91b612f29</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronTrianglesListImpl.html</anchorfile>
+      <anchor>a46c1864dcbbfc8c6b0ec5315a17df728</anchor>
+      <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static constexpr size_t</type>
+      <name>write_size</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronTrianglesListImpl.html</anchorfile>
+      <anchor>a5c99257d3a703910b61fe904cb2d9d94</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static constexpr auto</type>
+      <name>type</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronTrianglesListImpl.html</anchorfile>
+      <anchor>af940c50d0d603a24189c52aa88ca266d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>PolyhedronConfig</type>
+      <name>config_</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronTrianglesListImpl.html</anchorfile>
+      <anchor>ad17c2b52641de3ef8231a285f1129b14</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>GetTrianglesT</type>
+      <name>get_triangles_fn_</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronTrianglesListImpl.html</anchorfile>
+      <anchor>a5a8d0768d9f25b064cf6456dc38ac56c</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::PolyhedronVerticesTrianglesImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1PolyhedronVerticesTrianglesImpl.html</filename>
+    <templarg>GetVerticesT</templarg>
+    <templarg>GetTrianglesT</templarg>
+    <base>mc_rtc::gui::Element</base>
+    <member kind="function">
+      <type></type>
+      <name>PolyhedronVerticesTrianglesImpl</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronVerticesTrianglesImpl.html</anchorfile>
+      <anchor>a6cd91d3cc1e381d06e5eac5b3f17b8a1</anchor>
+      <arglist>(const std::string &amp;name, const PolyhedronConfig &amp;config, GetVerticesT get_vertices_fn, GetTrianglesT get_triangles_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>PolyhedronVerticesTrianglesImpl</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronVerticesTrianglesImpl.html</anchorfile>
+      <anchor>a6192845873ccd47ed30742dd90069e27</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronVerticesTrianglesImpl.html</anchorfile>
+      <anchor>a9677d07850b9f2dcfaf97054c9b99b97</anchor>
+      <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static constexpr size_t</type>
+      <name>write_size</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronVerticesTrianglesImpl.html</anchorfile>
+      <anchor>a7f38388a58e5c83e508c73fe0010a058</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static constexpr auto</type>
+      <name>type</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronVerticesTrianglesImpl.html</anchorfile>
+      <anchor>afbf3e0e965138dc3d9bec00919afe416</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>PolyhedronConfig</type>
+      <name>config_</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronVerticesTrianglesImpl.html</anchorfile>
+      <anchor>afebe0ae416f92197e49a8f75a18badb4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>GetVerticesT</type>
+      <name>get_vertices_fn_</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronVerticesTrianglesImpl.html</anchorfile>
+      <anchor>a5082ce6fed2e9cf6d35dcc5e03c17270</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>GetTrianglesT</type>
+      <name>get_triangles_fn_</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolyhedronVerticesTrianglesImpl.html</anchorfile>
+      <anchor>a0bb8482dc4f0bb943d66d0339e1f1017</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -40028,6 +40656,7 @@
     <namespace>mc_rtc::internal</namespace>
     <namespace>mc_rtc::io</namespace>
     <namespace>mc_rtc::log</namespace>
+    <namespace>mc_rtc::utils</namespace>
     <class kind="struct">mc_rtc::Configuration</class>
     <class kind="struct">mc_rtc::ConfigurationArrayIterator</class>
     <class kind="struct">mc_rtc::ConfigurationFile</class>
@@ -40048,6 +40677,7 @@
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::ForceConfig &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::LineConfig &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::PointConfig &gt;</class>
+    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::PolyhedronConfig &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_tasks::force::ImpedanceGains &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_tasks::lipm_stabilizer::ContactState &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; void &gt;</class>
@@ -40252,6 +40882,7 @@
     <class kind="struct">mc_rtc::gui::Point3DROImpl</class>
     <class kind="struct">mc_rtc::gui::PointConfig</class>
     <class kind="struct">mc_rtc::gui::PolygonImpl</class>
+    <class kind="struct">mc_rtc::gui::PolyhedronConfig</class>
     <class kind="struct">mc_rtc::gui::RotationImpl</class>
     <class kind="struct">mc_rtc::gui::RotationROImpl</class>
     <class kind="struct">mc_rtc::gui::SchemaImpl</class>
@@ -40293,6 +40924,8 @@
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a51c45b795d5d18a3e4e0c37e8b20a141">Table</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a5d1eca158c00250d9c4c32d947b7c433">Robot</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a4557e77491fe3dbd9a6055aeb0ed00d7">Visual</enumvalue>
+      <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a94c8141fc670449195562629a2055edf">PolyhedronTrianglesList</enumvalue>
+      <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a35ddbf0f6429fc2aabd5fadc20766153">PolyhedronVerticesTriangles</enumvalue>
     </member>
     <member kind="enumeration">
       <type></type>
@@ -40530,6 +41163,55 @@
       <arglist>(const std::string &amp;name, const LineConfig &amp;config, GetT get_fn)</arglist>
     </member>
     <member kind="function">
+      <type>auto</type>
+      <name>Polyhedron</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a1cadd149b5d41c11735dbd88babe8682</anchor>
+      <arglist>(const std::string &amp;name, GetTrianglesT get_triangles_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Polyhedron</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a0844bcf3f749bc2c3bcfb36bab3248b7</anchor>
+      <arglist>(const std::string &amp;name, const PolyhedronConfig &amp;config, GetTrianglesT get_triangles_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Polyhedron</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a81c80807fb522ea42e550d8afef97d96</anchor>
+      <arglist>(const std::string &amp;name, GetVerticesOrTrianglesT get_vertices_or_triangles_fn, GetTrianglesOrColorsT get_triangles_or_colors_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Polyhedron</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a67f435aeffc46d95c478578d86aef732</anchor>
+      <arglist>(const std::string &amp;name, const PolyhedronConfig &amp;config, GetVerticesOrTrianglesT get_vertices_or_triangles_fn, GetTrianglesOrColorsT get_triangles_or_colors_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>ColoredPolyhedron</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a5171220f7e195ae9fab9affc5b648973</anchor>
+      <arglist>(const std::string &amp;name, const PolyhedronConfig &amp;config, GetTrianglesT get_triangles_fn, GetColorT get_color_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Polyhedron</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a8f62834ebdac62261d49bf4582df541c</anchor>
+      <arglist>(const std::string &amp;name, GetVerticesT get_vertices_fn, GetTrianglesT get_triangles_fn, GetColorT get_color_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Polyhedron</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a0074155dfebc9c355c338024df640aa5</anchor>
+      <arglist>(const std::string &amp;name, const PolyhedronConfig &amp;config, GetVerticesT get_vertices_fn, GetTrianglesT get_triangles_fn, GetColorT get_color_fn)</arglist>
+    </member>
+    <member kind="function">
       <type>details::RobotImpl&lt; GetT &gt;</type>
       <name>Robot</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
@@ -40648,8 +41330,11 @@
     <class kind="struct">mc_rtc::gui::details::CheckReturnType</class>
     <class kind="struct">mc_rtc::gui::details::CheckReturnType&lt; GetT, T &gt;</class>
     <class kind="struct">mc_rtc::gui::details::CheckReturnType&lt; GetT, T, Args... &gt;</class>
+    <class kind="struct">mc_rtc::gui::details::ColoredPolyhedronImpl</class>
     <class kind="struct">mc_rtc::gui::details::FormattedTableImpl</class>
     <class kind="struct">mc_rtc::gui::details::NotAGetter</class>
+    <class kind="struct">mc_rtc::gui::details::PolyhedronTrianglesListImpl</class>
+    <class kind="struct">mc_rtc::gui::details::PolyhedronVerticesTrianglesImpl</class>
     <class kind="struct">mc_rtc::gui::details::ReturnType</class>
     <class kind="struct">mc_rtc::gui::details::ReturnTypeImpl</class>
     <class kind="struct">mc_rtc::gui::details::ReturnTypeImpl&lt; GetT, false &gt;</class>
@@ -40881,11 +41566,81 @@
       <arglist>(const std::string &amp;name)</arglist>
     </member>
     <member kind="function">
+      <type>constexpr bool</type>
+      <name>is_like</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>acba6fe117d8807e358abe0a19f91362c</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
       <type>MC_RTC_UTILS_DLLAPI std::string</type>
       <name>demangle</name>
       <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
       <anchor>af017e274f3cf4699850fdbf753d07fa2</anchor>
       <arglist>(const char *name)</arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_integral_v</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>a71205a048e877fdade723bb88b6bbbdb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_int8_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>a1916e10919c876ca3ec9601e5fa6110d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_int16_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>aea3a30b04f5e1536751b6b0eb2a2d8db</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_int32_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>afdbadbf7cd608469cc1b986f907b0590</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_int64_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>a5d81455351f259d743932cff9fb14442</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_uint8_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>aabd034adefcd3f66b71c74173a942cfa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_uint16_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>a11741a3b42edf962a451b31c84ec9c16</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_uint32_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>a8f487774ba8a847c81c631e8c44509b4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_like_uint64_t</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>aaa486786eded3072808be5972a79c15a</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="namespace">
@@ -41257,6 +42012,17 @@
       <anchorfile>namespacemc__rtc_1_1log_1_1details.html</anchorfile>
       <anchor>aa8cc2cc8dc25d49fa533f32a67f73c33</anchor>
       <arglist>()</arglist>
+    </member>
+  </compound>
+  <compound kind="namespace">
+    <name>mc_rtc::utils</name>
+    <filename>namespacemc__rtc_1_1utils.html</filename>
+    <member kind="function">
+      <type>T</type>
+      <name>heatmap</name>
+      <anchorfile>namespacemc__rtc_1_1utils.html</anchorfile>
+      <anchor>a82fe941770f36f355a999699984b5943</anchor>
+      <arglist>(double minimum, double maximum, double value)</arglist>
     </member>
   </compound>
   <compound kind="namespace">

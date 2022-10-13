@@ -48,6 +48,8 @@ var structmc__control_1_1ControllerClient =
     [ "point3d", "structmc__control_1_1ControllerClient.html#a97764f539b0c5aa4a668304a2d86f83c", null ],
     [ "polygon", "structmc__control_1_1ControllerClient.html#a9b237bbf2c2441f2d80e9c2b825dcb1b", null ],
     [ "polygon", "structmc__control_1_1ControllerClient.html#a6a40d8da80eede227857901c00cc0e18", null ],
+    [ "polyhedron", "structmc__control_1_1ControllerClient.html#a036a286690518e0f2f4a3832d1da3111", null ],
+    [ "polyhedron", "structmc__control_1_1ControllerClient.html#a6130bd76e1329ed69ca4b48a4cb067f2", null ],
     [ "raw_request", "structmc__control_1_1ControllerClient.html#ae9277b82054ae7ec23310d52f5393fc9", null ],
     [ "raw_request", "structmc__control_1_1ControllerClient.html#a55c0ef4b41b4ba4dc57759c387335d60", null ],
     [ "raw_request", "structmc__control_1_1ControllerClient.html#ad71e478b911f2bb391ab06af04c4411f", null ],

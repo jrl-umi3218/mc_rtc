@@ -76,7 +76,7 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 : <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1Gripper.html#ae5dccc3ca07db76cec2cd0e70cc0bff5">mc_rbdyn::RobotModule::Gripper</a>
 </li>
 <li>Safety()
-: <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety.html#a2b38f18523213a233bff74f28f1a40c6">mc_rbdyn::RobotModule::Gripper::Safety</a>
+: <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety.html#a8dd63f7c20eda1e3f4f891a8d4171095">mc_rbdyn::RobotModule::Gripper::Safety</a>
 </li>
 <li>safetyThresholds
 : <a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a4d88d0c612afd2fc60d4b60efa76bc3f">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a>
@@ -136,6 +136,7 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 , <a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ForceConfig_01_4.html#a74e01f5be59856ceb601a953b65cb5bd">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::ForceConfig &gt;</a>
 , <a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1LineConfig_01_4.html#a3573736c28a6c915f613ad94730b9371">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::LineConfig &gt;</a>
 , <a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PointConfig_01_4.html#a6b4642eb20b0edf5fecba11ffb927a93">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::PointConfig &gt;</a>
+, <a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PolyhedronConfig_01_4.html#acb8b8e0e480d0ac10cbc5b89044ba9f5">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::PolyhedronConfig &gt;</a>
 , <a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html#a97c67e1306c98af4fc45bc85c2a80b7d">mc_rtc::ConfigurationLoader&lt; mc_tasks::force::ImpedanceGains &gt;</a>
 , <a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html#a569fbb0c9f4777d08b28cad40479fb7f">mc_rtc::ConfigurationLoader&lt; mc_tasks::lipm_stabilizer::ContactState &gt;</a>
 , <a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html#a6d4adb3f20c993a424538d38241da5de">mc_rtc::ConfigurationLoader&lt; void &gt;</a>
@@ -147,6 +148,7 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 , <a class="el" href="structmc__rtc_1_1gui_1_1ForceConfig.html#ab5a33c69de1d469bbb53b17ed0530968">mc_rtc::gui::ForceConfig</a>
 , <a class="el" href="structmc__rtc_1_1gui_1_1LineConfig.html#abbb100a82d14ff110a122854fed43e8c">mc_rtc::gui::LineConfig</a>
 , <a class="el" href="structmc__rtc_1_1gui_1_1PointConfig.html#acab9db007b58f49e3c728cebd47f325a">mc_rtc::gui::PointConfig</a>
+, <a class="el" href="structmc__rtc_1_1gui_1_1PolyhedronConfig.html#ae43350292804b4d9a49db9dfea249c58">mc_rtc::gui::PolyhedronConfig</a>
 </li>
 <li>saved_posture_weights_
 : <a class="el" href="structmc__control_1_1fsm_1_1Controller.html#a7d070ffb51aac7ef5d5b1b03ad215311">mc_control::fsm::Controller</a>
@@ -278,10 +280,10 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 : <a class="el" href="structmc__control_1_1MCGlobalController.html#a019e64216e49d2d2ea642e0d44a4cbd2">mc_control::MCGlobalController</a>
 </li>
 <li>setJointMotorCurrent()
-: <a class="el" href="structmc__control_1_1MCGlobalController.html#aaca57626cc7f1603ed95ece43047ebc9">mc_control::MCGlobalController</a>
+: <a class="el" href="structmc__control_1_1MCGlobalController.html#af3b4c5e9eb726b100ab1f45e71bb9c73">mc_control::MCGlobalController</a>
 </li>
 <li>setJointMotorCurrents()
-: <a class="el" href="structmc__control_1_1MCGlobalController.html#af5dff8941f459c180697a3987d0e9552">mc_control::MCGlobalController</a>
+: <a class="el" href="structmc__control_1_1MCGlobalController.html#aa6658156e5c54320aaf08917ff7cbbf2">mc_control::MCGlobalController</a>
 </li>
 <li>setJointMotorTemperature()
 : <a class="el" href="structmc__control_1_1MCGlobalController.html#aff57491a7d2d7cc96d4977f736c6bd8b">mc_control::MCGlobalController</a>
@@ -378,6 +380,15 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 </li>
 <li>should_run_before
 : <a class="el" href="structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html#a8d5d8ec0e6f797e19f52c661902581c6">mc_control::GlobalPlugin::GlobalPluginConfiguration</a>
+</li>
+<li>show_edges
+: <a class="el" href="structmc__rtc_1_1gui_1_1PolyhedronConfig.html#a980f44c5d63d11ee6911c5ef51a9228d">mc_rtc::gui::PolyhedronConfig</a>
+</li>
+<li>show_triangle
+: <a class="el" href="structmc__rtc_1_1gui_1_1PolyhedronConfig.html#a79d59b11727556847ba58e67c59a3774">mc_rtc::gui::PolyhedronConfig</a>
+</li>
+<li>show_vertices
+: <a class="el" href="structmc__rtc_1_1gui_1_1PolyhedronConfig.html#a80778cd3434b42476d0235261c7a82aa">mc_rtc::gui::PolyhedronConfig</a>
 </li>
 <li>shutdown()
 : <a class="el" href="structmc__rtc_1_1ROSBridge.html#a9ad7c399069ed81e3fb57a415babe0e8">mc_rtc::ROSBridge</a>
@@ -490,10 +501,10 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 : <a class="el" href="structmc__rbdyn_1_1Springs.html#acb0fbbe6da7929023e50ef5f4a3471d4">mc_rbdyn::Springs</a>
 </li>
 <li>StabilizerConfiguration()
-: <a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a01de7b3d2c97b489adcb94c882e4e83b">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a>
+: <a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a6cf15ba02637b2619905b4fb27f49b2c">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a>
 </li>
 <li>StabilizerTask()
-: <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#acbc98793917ce33829d717f289906192">mc_tasks::lipm_stabilizer::StabilizerTask</a>
+: <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa1d5ba976db61be09781ea564a2a7bb5">mc_tasks::lipm_stabilizer::StabilizerTask</a>
 </li>
 <li>stabilizerTask_
 : <a class="el" href="structmc__control_1_1fsm_1_1StabilizerStandingState.html#ac1b5a6462db239740800b703e5ef6d38">mc_control::fsm::StabilizerStandingState</a>
@@ -519,7 +530,7 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 , <a class="el" href="structmc__control_1_1fsm_1_1StabilizerStandingState.html#a6e8df7ef63d968bdfe366e5c12d224e7">mc_control::fsm::StabilizerStandingState</a>
 , <a class="el" href="structmc__control_1_1fsm_1_1State.html#aabbb5ad8636a504d50d0fe5a6b4b6267">mc_control::fsm::State</a>
 , <a class="el" href="structmc__rtc_1_1Logger.html#a93a57921c9019097a0903b86d0ba7571">mc_rtc::Logger</a>
-, <a class="el" href="structmc__trajectory_1_1Spline.html#a2ff62b0a83ab31052558810918ed950c">mc_trajectory::Spline&lt; T, WaypointsT &gt;</a>
+, <a class="el" href="structmc__trajectory_1_1Spline.html#a8378e992bf3e1bbad575ce977e3f73ab">mc_trajectory::Spline&lt; T, WaypointsT &gt;</a>
 </li>
 <li>start_
 : <a class="el" href="structmc__control_1_1fsm_1_1PythonState.html#a5dd07ae158c8b5cb2d7aae8182fa5726">mc_control::fsm::PythonState</a>
@@ -576,17 +587,17 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 </li>
 <li>stiffness()
 : <a class="el" href="structmc__tasks_1_1AddRemoveContactTask.html#a48baadecb63cdda817bda05f6e8f1bfa">mc_tasks::AddRemoveContactTask</a>
-, <a class="el" href="structmc__tasks_1_1force_1_1ComplianceTask.html#aa97e6e109aed6c749c86c3e52ff734f7">mc_tasks::force::ComplianceTask</a>
+, <a class="el" href="structmc__tasks_1_1force_1_1ComplianceTask.html#a449d3d8ab18b84bb0d12b932b8aea91a">mc_tasks::force::ComplianceTask</a>
 , <a class="el" href="structmc__tasks_1_1PostureTask.html#a15a1e19481a9a67cc4c0a9db183f7463">mc_tasks::PostureTask</a>
 , <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a05b539bc8a2cb07958b1a6f2e8b1ac66">mc_tasks::SplineTrajectoryTask&lt; Derived &gt;</a>
-, <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ae901348ef6b40b04af30f6796714b4ff">mc_tasks::TrajectoryTaskGeneric&lt; T &gt;</a>
+, <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a38374ba4bc699b91a3f49cbc9bcf2f11">mc_tasks::TrajectoryTaskGeneric&lt; T &gt;</a>
 , <a class="el" href="structmc__tasks_1_1TransformTask.html#aed51021240e5eda4c056af715968efb3">mc_tasks::TransformTask</a>
 </li>
 <li>stiffness_
 : <a class="el" href="structmc__tasks_1_1AddRemoveContactTask.html#ad4c4be286affbb126d787a5356e7bf96">mc_tasks::AddRemoveContactTask</a>
 </li>
 <li>stiffnessInterpolation()
-: <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a114c7cde6ceb53c5b33d0551d6b0c286">mc_tasks::SplineTrajectoryTask&lt; Derived &gt;</a>
+: <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a9821caed3391acbcb3162ef2432a92fc">mc_tasks::SplineTrajectoryTask&lt; Derived &gt;</a>
 </li>
 <li>stiffnessInterpolator_
 : <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a7584b0ee675b53361e1efe97f3069543">mc_tasks::SplineTrajectoryTask&lt; Derived &gt;</a>
@@ -629,7 +640,7 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 : <a class="el" href="structmc__rtc_1_1gui_1_1LineConfig.html#a2678eadbdc5908c80e0dcc9c39941a14">mc_rtc::gui::LineConfig</a>
 , <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#a9298450fcf5a9549db2df14dc6223e4a">mc_rtc::gui::plot::impl::AbscissaOrdinate&lt; GetXT, GetYT &gt;</a>
 , <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a9f8bf84f326b02b180223b983089e84e">mc_rtc::gui::plot::impl::Ordinate&lt; GetT &gt;</a>
-, <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#ac77e54fdbd9679a2ee38b3386fd0a227">mc_rtc::gui::plot::PolygonDescription</a>
+, <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#a00a7628372d8f7a8fcb4ae2532c8ca86">mc_rtc::gui::plot::PolygonDescription</a>
 </li>
 <li>style_
 : <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#ad56c269ffbd0cbf144af4b4ff066bd59">mc_rtc::gui::plot::impl::AbscissaOrdinate&lt; GetXT, GetYT &gt;</a>

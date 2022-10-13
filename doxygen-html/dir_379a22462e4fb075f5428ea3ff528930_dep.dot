@@ -9,6 +9,7 @@ digraph "include/mc_rtc" {
     dir_379a22462e4fb075f5428ea3ff528930 [shape=plaintext label="mc_rtc"];
     dir_dda95c61bc807ada3674ae2fc67687f0 [shape=box label="gui" color="red" fillcolor="white" style="filled" URL="dir_dda95c61bc807ada3674ae2fc67687f0.html"];
     dir_b6742d8caace21cd527a100fbd03062c [shape=box label="log" color="black" fillcolor="white" style="filled" URL="dir_b6742d8caace21cd527a100fbd03062c.html"];
+    dir_336acc40aa9f93d9d7f11e2873ce2166 [shape=box label="utils" color="black" fillcolor="white" style="filled" URL="dir_336acc40aa9f93d9d7f11e2873ce2166.html"];
   }
   }
   dir_314ec80f2fc36a4630429f4d5408038e [shape=box label="mc_rbdyn" fillcolor="white" style="filled" color="red" URL="dir_314ec80f2fc36a4630429f4d5408038e.html"];
