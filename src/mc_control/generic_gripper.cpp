@@ -191,7 +191,15 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
   {
     if(robot.hasJoint(name))
     {
-      joints_mbc_idx.push_back(static_cast<int>(robot.jointIndexByName(name)));
+      auto jIndex = static_cast<int>(robot.jointIndexByName(name));
+      if(robot.mb().joint(jIndex).dof() == 1)
+      {
+        joints_mbc_idx.push_back(jIndex);
+      }
+      else
+      {
+        joints_mbc_idx.push_back(-1);
+      }
     }
     else
     {

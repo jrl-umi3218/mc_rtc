@@ -18,14 +18,20 @@ void HalfSittingState::start(Controller & ctl)
   default_stiffness_ = postureTask->stiffness();
   postureTask->stiffness(config_("stiffness", static_cast<const double &>(default_stiffness_)));
   /* Set the halfSitPose in posture Task */
-  const auto & halfSit = ctl.robot().module().stance();
-  const auto & ref_joint_order = ctl.robot().refJointOrder();
+  const auto & robot = ctl.robot(robot_);
+  const auto & halfSit = robot.module().stance();
+  const auto & ref_joint_order = robot.refJointOrder();
   auto posture = postureTask->posture();
-  for(unsigned int i = 0; i < ref_joint_order.size(); ++i)
+  for(const auto & j : ref_joint_order)
   {
-    if(ctl.robot().hasJoint(ref_joint_order[i]))
+    if(robot.hasJoint(j))
     {
-      posture[ctl.robot().jointIndexByName(ref_joint_order[i])] = halfSit.at(ref_joint_order[i]);
+      auto jIndex = robot.jointIndexByName(j);
+      const auto & jTarget = halfSit.at(j);
+      if(posture[jIndex].size() == jTarget.size())
+      {
+        posture[jIndex] = jTarget;
+      }
     }
   }
   postureTask->posture(posture);

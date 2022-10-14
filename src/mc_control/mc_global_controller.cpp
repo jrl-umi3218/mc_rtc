@@ -313,7 +313,17 @@ void MCGlobalController::initEncoders(mc_rbdyn::Robot & robot, const std::vector
     const auto & jn = rjo[i];
     if(robot.hasJoint(jn))
     {
-      q[robot.jointIndexByName(jn)][0] = initq[i];
+      auto jIndex = robot.jointIndexByName(jn);
+      auto jDof = robot.mb().joint(static_cast<int>(jIndex)).dof();
+      if(jDof == 1)
+      {
+        q[jIndex][0] = initq[i];
+      }
+      else if(jDof > 1)
+      {
+        mc_rtc::log::warning("Not using encoder values to initialize {}, please complain to mc_rtc maintainers",
+                             rjo[i]);
+      }
     }
   }
   for(auto & g : robot.grippers())
@@ -340,14 +350,21 @@ void MCGlobalController::initEncoders(mc_rbdyn::Robot & robot)
     {
       auto jIndex = robot.jointIndexByName(j);
       const auto & q = robot.mbc().q[jIndex];
-      for(const auto & qi : q)
+      if(q.size())
       {
-        rinitq.push_back(qi);
+        for(const auto & qi : q)
+        {
+          rinitq.push_back(qi);
+        }
+      }
+      else
+      {
+        rinitq.push_back(0.0);
       }
     }
     else
     {
-      rinitq.push_back(0);
+      rinitq.push_back(0.0);
     }
   }
   for(auto & g : robot.grippers())

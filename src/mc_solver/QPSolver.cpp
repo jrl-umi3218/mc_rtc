@@ -396,10 +396,13 @@ bool QPSolver::runJointsFeedback(bool wVelocity)
           continue;
         }
         auto jI = robot.jointIndexByName(jN);
-        robot.mbc().q[jI][0] = encoders[j];
-        if(wVelocity)
+        if(robot.mbc().q[jI].size() == 1)
         {
-          robot.mbc().alpha[jI][0] = encoders_alpha_[i][j];
+          robot.mbc().q[jI][0] = encoders[j];
+          if(wVelocity)
+          {
+            robot.mbc().alpha[jI][0] = encoders_alpha_[i][j];
+          }
         }
       }
       robot.forwardKinematics();
