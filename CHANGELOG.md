@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+## [1.13.0] - 2022-10-16
+
+### Changes
+
+- [general] mc_rtc now uses C++17 (#297)
+
+### Added
+
+- [mc_control] Publish joint sensors in ROS (#293)
+- [mc_rbdyn] Add a non throwing version of ZMP computations (#292)
+- [mc_rbdyn] Add const accessor for grippers (#298)
+- [mc_rtc] Add gui::Polyhedron element (#296)
+- [mc_tasks] DCM derivative gains are now 2D (#295)
+
+### Fixes
+
+- [mc_control] Fix gripper initialization issue (#291)
+- [mc_control] Fix assumption around robot.hasJoint
+- [mc_tasks] Set roll and pitch target of torso to 0 in StabilizerTask (#175)
+- [mc_tasks] Fix foot force difference control issue in StabilizerTask (#290)
+
 ## [1.12.0] - 2022-09-07
 
 ### Changes
@@ -504,7 +525,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.11.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.13.0...HEAD
+[1.13.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.13.0
 [1.12.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.12.0
 [1.11.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.11.0
 [1.10.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.10.0
