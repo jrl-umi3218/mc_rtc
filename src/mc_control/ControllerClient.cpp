@@ -896,19 +896,19 @@ namespace
 struct X
 {
   mc_rtc::gui::plot::AxisConfiguration config;
-  double value;
+  std::vector<double> values;
 
   X(const mc_rtc::Configuration & data)
   {
     config.fromMessagePack(data[0]);
-    value = data[1];
+    values = data[1];
   }
 };
 
 struct Y
 {
   std::string legend;
-  double value;
+  std::vector<double> values;
   mc_rtc::gui::Color color;
   mc_rtc::gui::plot::Style style;
   mc_rtc::gui::plot::Side side;
@@ -916,7 +916,7 @@ struct Y
   Y(const mc_rtc::Configuration & data)
   {
     legend = static_cast<std::string>(data[1]);
-    value = data[2];
+    values = data[2];
     color.fromMessagePack(data[3]);
     style = static_cast<mc_rtc::gui::plot::Style>(static_cast<uint64_t>(data[4]));
     side = static_cast<mc_rtc::gui::plot::Side>(static_cast<uint64_t>(data[5]));
@@ -926,8 +926,7 @@ struct Y
 struct XY
 {
   std::string legend;
-  double x;
-  double y;
+  std::vector<std::array<double, 2>> values;
   mc_rtc::gui::Color color;
   mc_rtc::gui::plot::Style style;
   mc_rtc::gui::plot::Side side;
@@ -935,11 +934,10 @@ struct XY
   XY(const mc_rtc::Configuration & data)
   {
     legend = static_cast<std::string>(data[1]);
-    x = data[2];
-    y = data[3];
-    color.fromMessagePack(data[4]);
-    style = static_cast<mc_rtc::gui::plot::Style>(static_cast<uint64_t>(data[5]));
-    side = static_cast<mc_rtc::gui::plot::Side>(static_cast<uint64_t>(data[6]));
+    values = data[2];
+    color.fromMessagePack(data[3]);
+    style = static_cast<mc_rtc::gui::plot::Style>(static_cast<uint64_t>(data[4]));
+    side = static_cast<mc_rtc::gui::plot::Side>(static_cast<uint64_t>(data[5]));
   }
 };
 
@@ -998,12 +996,23 @@ void ControllerClient::handle_standard_plot(const mc_rtc::Configuration & plot)
     if(type == Type::Ordinate)
     {
       Y y(y_);
-      plot_point(id, i - 6, y.legend, x.value, y.value, y.color, y.style, y.side);
+      if(x.values.size() < y.values.size())
+      {
+        mc_rtc::log::error("[Plot::{}] Not enough X data compared to Y data", title);
+      }
+      size_t x_0 = y.values.size() - x.values.size();
+      for(size_t j = 0; j < y.values.size(); ++j)
+      {
+        plot_point(id, i - 6, y.legend, x.values[x_0 + j], y.values[j], y.color, y.style, y.side);
+      }
     }
     else if(type == Type::AbscissaOrdinate)
     {
       XY xy(y_);
-      plot_point(id, i - 6, xy.legend, xy.x, xy.y, xy.color, xy.style, xy.side);
+      for(const auto & v : xy.values)
+      {
+        plot_point(id, i - 6, xy.legend, v[0], v[1], xy.color, xy.style, xy.side);
+      }
     }
     else if(type == Type::Polygon)
     {
@@ -1046,7 +1055,10 @@ void ControllerClient::handle_xy_plot(const mc_rtc::Configuration & plot)
     if(type == Type::AbscissaOrdinate)
     {
       XY xy(y_);
-      plot_point(id, i - 6, xy.legend, xy.x, xy.y, xy.color, xy.style, xy.side);
+      for(const auto & v : xy.values)
+      {
+        plot_point(id, i - 6, xy.legend, v[0], v[1], xy.color, xy.style, xy.side);
+      }
     }
     else if(type == Type::Polygon)
     {

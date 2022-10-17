@@ -30,14 +30,21 @@ struct Abscissa
   {
     static_assert(details::CheckReturnType<GetT, double>::value,
                   "Abscissa should return a single floating-point value");
+    cache_.reserve(16);
   }
 
   void write(mc_rtc::MessagePackBuilder & builder) const
   {
     builder.start_array(2);
     config_.write(builder);
-    builder.write(get_fn_());
+    builder.write(cache_);
     builder.finish_array();
+    cache_.resize(0);
+  }
+
+  void update() const
+  {
+    cache_.push_back(get_fn_());
   }
 
   Abscissa & range(const Range & range)
@@ -61,6 +68,7 @@ struct Abscissa
 private:
   AxisConfiguration config_;
   GetT get_fn_;
+  mutable std::vector<double> cache_;
 };
 
 } // namespace impl
@@ -74,16 +82,9 @@ impl::Abscissa<GetT> X(AxisConfiguration config, GetT get_fn)
 
 /** Helper to create an impl::Abscissa without limits */
 template<typename GetT>
-impl::Abscissa<GetT> X(const std::string & legend, GetT get_fn)
+impl::Abscissa<GetT> X(std::string_view legend, GetT get_fn)
 {
   return impl::Abscissa<GetT>(AxisConfiguration(legend), get_fn);
-}
-
-/** Helper to create an impl::Abscissa without limits (C-string overload) */
-template<typename GetT>
-impl::Abscissa<GetT> X(const char * legend, GetT get_fn)
-{
-  return impl::Abscissa<GetT>(std::string(legend), get_fn);
 }
 
 } // namespace plot

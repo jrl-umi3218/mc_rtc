@@ -173,7 +173,11 @@ void StateBuilder::addXYPlot(const std::string & name,
   uint64_t sz = 6;
   uint64_t id = ++plot_id_;
   plot_callback_function_t cb = [id, sz, xConfig, yLeftConfig, yRightConfig](mc_rtc::MessagePackBuilder & builder,
-                                                                             const std::string & name) {
+                                                                             const std::string & name, bool update) {
+    if(update)
+    {
+      return;
+    }
     builder.write(static_cast<uint64_t>(plot::Plot::XY));
     builder.write(id);
     builder.write(name);
@@ -216,10 +220,16 @@ void StateBuilder::addPlot(const std::string & name,
   uint64_t sz = 6;
   uint64_t id = ++plot_id_;
   plot_callback_function_t cb = [abscissa, id, sz, yLeftConfig, yRightConfig](mc_rtc::MessagePackBuilder & builder,
-                                                                              const std::string & name) {
+                                                                              const std::string & name, bool update) {
+    if(update)
+    {
+      abscissa.update();
+      return;
+    }
     builder.write(static_cast<uint64_t>(plot::Plot::Standard));
     builder.write(id);
     builder.write(name);
+    abscissa.update();
     abscissa.write(builder);
     yLeftConfig.write(builder);
     yRightConfig.write(builder);
@@ -233,8 +243,14 @@ void StateBuilder::addPlotData(PlotCallback & callback, T plot, Args... args)
 {
   callback.msg_size += 1;
   auto prev_callback = callback.callback;
-  callback.callback = [prev_callback, plot](mc_rtc::MessagePackBuilder & builder, const std::string & name) {
-    prev_callback(builder, name);
+  callback.callback = [prev_callback, plot](mc_rtc::MessagePackBuilder & builder, const std::string & name,
+                                            bool update) {
+    prev_callback(builder, name, update);
+    plot.update();
+    if(update)
+    {
+      return;
+    }
     plot.write(builder);
   };
   addPlotData(callback, args...);

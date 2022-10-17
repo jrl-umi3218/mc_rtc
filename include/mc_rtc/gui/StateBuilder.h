@@ -333,6 +333,9 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
    */
   size_t update(std::vector<char> & data);
 
+  /** Update the plots only */
+  void update();
+
   /** Handle a request */
   bool handleRequest(const std::vector<std::string> & category,
                      const std::string & name,
@@ -362,8 +365,8 @@ private:
 
   /** Holds static data for the GUI */
   mc_rtc::Configuration data_;
-  /** Callback used to write plot data into the GUI message */
-  using plot_callback_function_t = std::function<void(mc_rtc::MessagePackBuilder &, const std::string &)>;
+  /** Callback used to write/update plot data into the GUI message */
+  using plot_callback_function_t = std::function<void(mc_rtc::MessagePackBuilder &, const std::string &, bool)>;
   struct PlotCallback
   {
     plot::Plot type;

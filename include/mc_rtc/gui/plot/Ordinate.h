@@ -26,11 +26,12 @@ struct Ordinate
 {
   static constexpr Type type = Type::Ordinate;
 
-  Ordinate(const std::string & name, GetT get_fn, Color color, Style style, Side side)
+  Ordinate(std::string_view name, GetT get_fn, Color color, Style style, Side side)
   : name_(name), get_fn_(get_fn), color_(color), style_(style), side_(side)
   {
     static_assert(details::CheckReturnType<GetT, double>::value,
                   "Ordinate callback should return a single floating-point value");
+    cache_.reserve(16);
   }
 
   void write(mc_rtc::MessagePackBuilder & builder) const
@@ -38,11 +39,17 @@ struct Ordinate
     builder.start_array(6);
     builder.write(static_cast<uint64_t>(type));
     builder.write(name_);
-    builder.write(get_fn_());
+    builder.write(cache_);
     color_.write(builder);
     builder.write(static_cast<uint64_t>(style_));
     builder.write(static_cast<uint64_t>(side_));
     builder.finish_array();
+    cache_.resize(0);
+  }
+
+  void update() const
+  {
+    cache_.push_back(get_fn_());
   }
 
   Ordinate & style(Style style)
@@ -61,6 +68,7 @@ protected:
   std::string name_;
   GetT get_fn_;
   mutable Color color_;
+  mutable std::vector<double> cache_;
   Style style_;
   Side side_;
 };
@@ -69,7 +77,7 @@ protected:
 template<typename GetT, typename GetColor>
 struct OrdinateWithColor : public Ordinate<GetT>
 {
-  OrdinateWithColor(const std::string & name, GetT get_fn, GetColor color, Style style, Side side)
+  OrdinateWithColor(std::string_view name, GetT get_fn, GetColor color, Style style, Side side)
   : Ordinate<GetT>(name, get_fn, color(), style, side), get_color_(color)
   {
     static_assert(details::CheckReturnType<GetColor, Color>::value, "Ordinate color callback should return a color");
@@ -89,7 +97,7 @@ private:
 
 /** Helper to create an impl::Ordinate */
 template<typename GetT>
-impl::Ordinate<GetT> Y(const std::string & name,
+impl::Ordinate<GetT> Y(std::string_view name,
                        GetT get_fn,
                        Color color,
                        Style style = Style::Solid,
@@ -100,7 +108,7 @@ impl::Ordinate<GetT> Y(const std::string & name,
 
 /** Helper to create an impl::OrdinateWithColor */
 template<typename GetT, typename GetColor>
-impl::OrdinateWithColor<GetT, GetColor> Y(const std::string & name,
+impl::OrdinateWithColor<GetT, GetColor> Y(std::string_view name,
                                           GetT get_fn,
                                           GetColor get_color,
                                           Style style = Style::Solid,

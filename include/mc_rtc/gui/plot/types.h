@@ -108,9 +108,9 @@ struct MC_RTC_GUI_DLLAPI AxisConfiguration
   Range range;
 
   AxisConfiguration() = default;
-  AxisConfiguration(const std::string & name) : AxisConfiguration(name, {}) {}
+  AxisConfiguration(std::string_view name) : AxisConfiguration(name, {}) {}
   AxisConfiguration(Range range) : AxisConfiguration("", range) {}
-  AxisConfiguration(const std::string & name, Range range) : name(name), range(range) {}
+  AxisConfiguration(std::string_view name, Range range) : name(name), range(range) {}
 
   AxisConfiguration & min(double min)
   {
