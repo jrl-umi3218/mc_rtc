@@ -214,13 +214,23 @@ size_t StateBuilder::update(std::vector<char> & buffer)
   for(auto & p : plots_)
   {
     builder.start_array(p.second.msg_size);
-    p.second.callback(builder, p.first);
+    p.second.callback(builder, p.first, false);
     builder.finish_array();
   }
   builder.finish_array();
 
   builder.finish_array();
   return builder.finish();
+}
+
+void StateBuilder::update()
+{
+  static std::vector<char> buffer;
+  static mc_rtc::MessagePackBuilder builder(buffer);
+  for(auto & p : plots_)
+  {
+    p.second.callback(builder, p.first, true);
+  }
 }
 
 void StateBuilder::update(mc_rtc::MessagePackBuilder & builder, Category & category)

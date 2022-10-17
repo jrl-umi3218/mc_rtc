@@ -41,6 +41,8 @@ struct Polygon
     builder.finish_array();
   }
 
+  void update() const {}
+
   Polygon & side(Side side)
   {
     side_ = side;

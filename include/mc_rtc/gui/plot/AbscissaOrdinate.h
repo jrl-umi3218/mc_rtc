@@ -26,13 +26,14 @@ struct AbscissaOrdinate
 {
   static constexpr Type type = Type::AbscissaOrdinate;
 
-  AbscissaOrdinate(const std::string & name, GetXT get_x_fn, GetYT get_y_fn, Color color, Style style, Side side)
+  AbscissaOrdinate(std::string_view name, GetXT get_x_fn, GetYT get_y_fn, Color color, Style style, Side side)
   : name_(name), get_x_fn_(get_x_fn), get_y_fn_(get_y_fn), color_(color), style_(style), side_(side)
   {
     static_assert(details::CheckReturnType<GetXT, double>::value,
                   "AbscissaOrdinate x-callback should return a single floating-point value");
     static_assert(details::CheckReturnType<GetYT, double>::value,
                   "AbscissaOrdinate y-callback should return a single floating-point value");
+    cache_.reserve(16);
   }
 
   void write(mc_rtc::MessagePackBuilder & builder) const
@@ -40,12 +41,17 @@ struct AbscissaOrdinate
     builder.start_array(7);
     builder.write(static_cast<uint64_t>(type));
     builder.write(name_);
-    builder.write(get_x_fn_());
-    builder.write(get_y_fn_());
+    builder.write(cache_);
     color_.write(builder);
     builder.write(static_cast<uint64_t>(style_));
     builder.write(static_cast<uint64_t>(side_));
     builder.finish_array();
+    cache_.resize(0);
+  }
+
+  void update() const
+  {
+    cache_.push_back({get_x_fn_(), get_y_fn_()});
   }
 
   AbscissaOrdinate & style(Style style)
@@ -65,6 +71,7 @@ protected:
   GetXT get_x_fn_;
   GetYT get_y_fn_;
   mutable Color color_;
+  mutable std::vector<std::array<double, 2>> cache_;
   Style style_;
   Side side_;
 };
@@ -73,7 +80,7 @@ protected:
 template<typename GetXT, typename GetYT, typename GetColor>
 struct AbscissaOrdinateWithColor : public AbscissaOrdinate<GetXT, GetYT>
 {
-  AbscissaOrdinateWithColor(const std::string & name, GetXT get_x, GetYT get_y, GetColor color, Style style, Side side)
+  AbscissaOrdinateWithColor(std::string_view name, GetXT get_x, GetYT get_y, GetColor color, Style style, Side side)
   : AbscissaOrdinate<GetXT, GetYT>(name, get_x, get_y, color(), style, side), get_color_(color)
   {
     static_assert(details::CheckReturnType<GetColor, Color>::value,
@@ -93,7 +100,7 @@ private:
 
 /** Helper to create an impl::Ordinate */
 template<typename GetXT, typename GetYT>
-impl::AbscissaOrdinate<GetXT, GetYT> XY(const std::string & name,
+impl::AbscissaOrdinate<GetXT, GetYT> XY(std::string_view name,
                                         GetXT get_x_fn,
                                         GetYT get_y_fn,
                                         Color color,
@@ -105,7 +112,7 @@ impl::AbscissaOrdinate<GetXT, GetYT> XY(const std::string & name,
 
 /** Helper to create an impl::OrdinateWithColor */
 template<typename GetXT, typename GetYT, typename GetColor>
-impl::AbscissaOrdinateWithColor<GetXT, GetYT, GetColor> XY(const std::string & name,
+impl::AbscissaOrdinateWithColor<GetXT, GetYT, GetColor> XY(std::string_view name,
                                                            GetXT get_x_fn,
                                                            GetYT get_y_fn,
                                                            GetColor get_color_fn,

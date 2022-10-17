@@ -235,7 +235,7 @@ struct TestServer
 
   void switch_visual(const std::string & visual);
 
-  mc_control::ControllerServer server{1.0, 1.0, {"ipc:///tmp/mc_rtc_pub.ipc"}, {"ipc:///tmp/mc_rtc_rep.ipc"}};
+  mc_control::ControllerServer server{0.005, 0.05, {"ipc:///tmp/mc_rtc_pub.ipc"}, {"ipc:///tmp/mc_rtc_rep.ipc"}};
   DummyProvider provider;
   mc_rtc::gui::StateBuilder builder;
   bool check_ = true;
@@ -687,6 +687,17 @@ TestServer::TestServer() : xythetaz_(4)
                         "cos(t)", [this]() { return std::cos(t_); }, Color::Blue));
   };
   add_demo_plot("sin(t)/cos(t)", sin_cos_plot);
+  auto discontinuous_plot = [this](const std::string & name) {
+    builder.addPlot(name, mc_rtc::gui::plot::X("t", [this]() { return t_; }),
+                    mc_rtc::gui::plot::Y(
+                        "Y",
+                        []() -> double {
+                          static unsigned int t_i = 0;
+                          return t_i++ % 10;
+                        },
+                        Color::Red));
+  };
+  add_demo_plot("Discontinuous plot", discontinuous_plot);
   auto demo_style_plot = [this](const std::string & name) {
     builder.addPlot(name, mc_rtc::gui::plot::X("t", [this]() { return t_; }),
                     mc_rtc::gui::plot::Y(
@@ -949,7 +960,7 @@ void TestServer::publish()
   graph_.update(t_);
   server.handle_requests(builder);
   server.publish(builder);
-  t_ += 0.05;
+  t_ += 0.005;
 }
 
 void TestServer::make_table(size_t s)
@@ -983,8 +994,9 @@ int main()
   TestServer server;
   while(1)
   {
+    auto now = std::chrono::high_resolution_clock::now();
     server.publish();
-    std::this_thread::sleep_for(std::chrono::microseconds(50000));
+    std::this_thread::sleep_until(now + std::chrono::milliseconds(5));
   }
   return 0;
 }

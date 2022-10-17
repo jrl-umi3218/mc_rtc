@@ -99,6 +99,7 @@ void ControllerServer::publish(mc_rtc::gui::StateBuilder & gui_builder)
   }
   else
   {
+    gui_builder.update();
     buffer_size_ = 0;
   }
 }

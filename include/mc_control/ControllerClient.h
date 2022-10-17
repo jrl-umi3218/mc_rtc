@@ -729,8 +729,7 @@ protected:
    * \p id Plot id
    *
    * \p did Id for this data, this is strictly increasing from 0 to the
-   * number of plots - 1 and you can assume that only one data point is added
-   * in one iteration
+   * number of plots - 1
    *
    * \p legend Legend for this data
    *
