@@ -1,6 +1,5 @@
 var NAVTREEINDEX12 =
 {
-"structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration_01_4.html":[3,0,7,14],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration_01_4.html":[3,0,7,15],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ArrowConfig_01_4.html":[3,0,7,18],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1Color_01_4.html":[3,0,7,19],
@@ -249,5 +248,6 @@ var NAVTREEINDEX12 =
 "structmc__rtc_1_1gui_1_1Element.html#a000ffd25b2fe0b3b36ad02b44cd190c3":[3,0,7,0,16,4],
 "structmc__rtc_1_1gui_1_1Element.html#a00f7fa6be59c8cc61304d35e7dd2a914":[3,0,7,0,16,2],
 "structmc__rtc_1_1gui_1_1Element.html#a086e5b72ef29fb83ebba494135f0f579":[3,0,7,0,16,0],
-"structmc__rtc_1_1gui_1_1Element.html#a208ba439700a31e9ff94abc76a466472":[3,0,7,0,16,7]
+"structmc__rtc_1_1gui_1_1Element.html#a208ba439700a31e9ff94abc76a466472":[3,0,7,0,16,7],
+"structmc__rtc_1_1gui_1_1Element.html#a4f1f84cbf9bafb94cd41824712565f5a":[3,0,7,0,16,5]
 };

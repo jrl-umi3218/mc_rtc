@@ -1,6 +1,5 @@
 var NAVTREEINDEX11 =
 {
-"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a07f7e6178872a0fba9b61975b707b1c4":[3,0,6,1,1,10],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a0c30e8b5d771f6d5ca4e80fc73c785f4":[3,0,6,1,1,3],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a0c6ab2b29c544d4087d747936d9e4446":[3,0,6,1,1,12],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a2a8cb02f8574c718d60edde5cb1276a2":[3,0,6,1,1,6],
@@ -249,5 +248,6 @@ var NAVTREEINDEX11 =
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration_01_4.html":[3,0,7,10],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration_01_4.html":[3,0,7,11],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1FDQPWeights_01_4.html":[3,0,7,12],
-"structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds_01_4.html":[3,0,7,13]
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds_01_4.html":[3,0,7,13],
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration_01_4.html":[3,0,7,14]
 };

@@ -1,6 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"MetaTask_8h.html#a3ce36af538f25151dc006eb3d50e8b3d":[4,0,0,8,17,1],
 "MetaTask_8h.html#aa673a5574c449b983c740d35cddf6669":[4,0,0,8,17,2],
 "MetaTask_8h_source.html":[4,0,0,8,17],
 "MetaTasks_8h.html":[4,0,0,0,0,0,7],
@@ -30,8 +29,8 @@ var NAVTREEINDEX1 =
 "Observer_8h.html#a721e422633105cbc8e8e38736212705c":[4,0,0,2,5,1],
 "Observer_8h_source.html":[4,0,0,2,5],
 "Ordinate_8h.html":[4,0,0,6,0,1,2],
-"Ordinate_8h.html#a5957f379abaa61742baef9909ae18990":[4,0,0,6,0,1,2,3],
-"Ordinate_8h.html#aa288bbda415eb4c0d8c5d6fd8fd00f12":[4,0,0,6,0,1,2,2],
+"Ordinate_8h.html#a09e783ef208faafb14fb04a4d269619a":[4,0,0,6,0,1,2,2],
+"Ordinate_8h.html#a6c606d5a78632224ad064015a385e81c":[4,0,0,6,0,1,2,3],
 "Ordinate_8h_source.html":[4,0,0,6,0,1,2],
 "OrientationTask_8h.html":[4,0,0,8,20],
 "OrientationTask_8h_source.html":[4,0,0,8,20],
@@ -249,5 +248,6 @@ var NAVTREEINDEX1 =
 "clock_8h.html#adc728153d578b83ef5eef7a24396ffed":[4,0,0,6,3,2],
 "clock_8h.html#afd4119022924596532a073fc5a0c6f46":[4,0,0,6,3,1],
 "clock_8h_source.html":[4,0,0,6,3],
-"configuration__io_8h.html":[4,0,0,4,6]
+"configuration__io_8h.html":[4,0,0,4,6],
+"configuration__io_8h.html#a839325e1d657147f6c746b3043b0b1b0":[4,0,0,4,6,3]
 };

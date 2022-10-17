@@ -1,6 +1,5 @@
 var NAVTREEINDEX4 =
 {
-"namespacemc__tasks_1_1lipm__stabilizer_1_1internal.html":[2,0,9,1,0],
 "namespacemc__tasks_1_1lipm__stabilizer_1_1internal.html":[3,0,9,1,0],
 "namespacemc__trajectory.html":[2,0,10],
 "namespacemc__trajectory.html":[3,0,10],
@@ -249,5 +248,6 @@ var NAVTREEINDEX4 =
 "structmc__control_1_1ElementId.html":[3,0,2,7],
 "structmc__control_1_1ElementId.html#a17c9c3f1700bd2f02814ca219844c934":[3,0,2,7,0],
 "structmc__control_1_1ElementId.html#a200df31dd4025e687962b95ec3f7810d":[3,0,2,7,4],
-"structmc__control_1_1ElementId.html#a232678c79a8f6faa8923330bd50ec053":[3,0,2,7,3]
+"structmc__control_1_1ElementId.html#a232678c79a8f6faa8923330bd50ec053":[3,0,2,7,3],
+"structmc__control_1_1ElementId.html#a24f027cf01658b8e6c701bab7d33f728":[3,0,2,7,6]
 };

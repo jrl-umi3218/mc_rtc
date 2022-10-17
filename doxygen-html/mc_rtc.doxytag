@@ -3013,15 +3013,8 @@
       <type>impl::Abscissa&lt; GetT &gt;</type>
       <name>X</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>ac22eeca55379fb5c66be97b783a8bd32</anchor>
-      <arglist>(const std::string &amp;legend, GetT get_fn)</arglist>
-    </member>
-    <member kind="function">
-      <type>impl::Abscissa&lt; GetT &gt;</type>
-      <name>X</name>
-      <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>ac2f689ceed9f080a4ccc49a6a70aeb4c</anchor>
-      <arglist>(const char *legend, GetT get_fn)</arglist>
+      <anchor>a243fda4292af83b9a3c37610efb76e2f</anchor>
+      <arglist>(std::string_view legend, GetT get_fn)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -3040,15 +3033,15 @@
       <type>impl::AbscissaOrdinate&lt; GetXT, GetYT &gt;</type>
       <name>XY</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>aff7557ff1a45292b67d02328c81bdde6</anchor>
-      <arglist>(const std::string &amp;name, GetXT get_x_fn, GetYT get_y_fn, Color color, Style style=Style::Solid, Side side=Side::Left)</arglist>
+      <anchor>ab22cf8c8dfe0090e06c4a4ddd484d82a</anchor>
+      <arglist>(std::string_view name, GetXT get_x_fn, GetYT get_y_fn, Color color, Style style=Style::Solid, Side side=Side::Left)</arglist>
     </member>
     <member kind="function">
       <type>impl::AbscissaOrdinateWithColor&lt; GetXT, GetYT, GetColor &gt;</type>
       <name>XY</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>a93ee6aaded7dfd640df87a78e649062d</anchor>
-      <arglist>(const std::string &amp;name, GetXT get_x_fn, GetYT get_y_fn, GetColor get_color_fn, Style style=Style::Solid, Side side=Side::Left)</arglist>
+      <anchor>a7b441029a734fc7579954b5cd15122a8</anchor>
+      <arglist>(std::string_view name, GetXT get_x_fn, GetYT get_y_fn, GetColor get_color_fn, Style style=Style::Solid, Side side=Side::Left)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -3067,15 +3060,15 @@
       <type>impl::Ordinate&lt; GetT &gt;</type>
       <name>Y</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>aa288bbda415eb4c0d8c5d6fd8fd00f12</anchor>
-      <arglist>(const std::string &amp;name, GetT get_fn, Color color, Style style=Style::Solid, Side side=Side::Left)</arglist>
+      <anchor>a09e783ef208faafb14fb04a4d269619a</anchor>
+      <arglist>(std::string_view name, GetT get_fn, Color color, Style style=Style::Solid, Side side=Side::Left)</arglist>
     </member>
     <member kind="function">
       <type>impl::OrdinateWithColor&lt; GetT, GetColor &gt;</type>
       <name>Y</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>a5957f379abaa61742baef9909ae18990</anchor>
-      <arglist>(const std::string &amp;name, GetT get_fn, GetColor get_color, Style style=Style::Solid, Side side=Side::Left)</arglist>
+      <anchor>a6c606d5a78632224ad064015a385e81c</anchor>
+      <arglist>(std::string_view name, GetT get_fn, GetColor get_color, Style style=Style::Solid, Side side=Side::Left)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -5353,6 +5346,13 @@
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder) const</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>update</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Abscissa.html</anchorfile>
+      <anchor>a435960d9655c3bb2667207c9f032ee4f</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
       <type>Abscissa &amp;</type>
       <name>range</name>
       <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Abscissa.html</anchorfile>
@@ -5390,8 +5390,8 @@
       <type></type>
       <name>AbscissaOrdinate</name>
       <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html</anchorfile>
-      <anchor>a59782a8bb1c04dbaf888856985d7273d</anchor>
-      <arglist>(const std::string &amp;name, GetXT get_x_fn, GetYT get_y_fn, Color color, Style style, Side side)</arglist>
+      <anchor>af3f4ab107c57033a656a21089b96aa0f</anchor>
+      <arglist>(std::string_view name, GetXT get_x_fn, GetYT get_y_fn, Color color, Style style, Side side)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -5399,6 +5399,13 @@
       <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html</anchorfile>
       <anchor>a3356c8e13777a41231e4a53f60a0e14c</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder) const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>update</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html</anchorfile>
+      <anchor>a2e706b62c33208c260b9f4c4b0569f83</anchor>
+      <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type>AbscissaOrdinate &amp;</type>
@@ -5450,6 +5457,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
+      <type>std::vector&lt; std::array&lt; double, 2 &gt; &gt;</type>
+      <name>cache_</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html</anchorfile>
+      <anchor>a5ebd8b842d24f72c96bd9a19d4274e85</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
       <type>Style</type>
       <name>style_</name>
       <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html</anchorfile>
@@ -5475,8 +5489,8 @@
       <type></type>
       <name>AbscissaOrdinateWithColor</name>
       <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html</anchorfile>
-      <anchor>abd61cc0d2ea75882f75a5f54f9047a0f</anchor>
-      <arglist>(const std::string &amp;name, GetXT get_x, GetYT get_y, GetColor color, Style style, Side side)</arglist>
+      <anchor>a7e96cb8a2ee39eb14b2280b51f23168e</anchor>
+      <arglist>(std::string_view name, GetXT get_x, GetYT get_y, GetColor color, Style style, Side side)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -6369,8 +6383,8 @@
       <type></type>
       <name>AxisConfiguration</name>
       <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1AxisConfiguration.html</anchorfile>
-      <anchor>a656136780fbda0d82b1ff16905c46f5e</anchor>
-      <arglist>(const std::string &amp;name)</arglist>
+      <anchor>a6b6025a1158b29480ad8e3a917fefd28</anchor>
+      <arglist>(std::string_view name)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -6383,8 +6397,8 @@
       <type></type>
       <name>AxisConfiguration</name>
       <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1AxisConfiguration.html</anchorfile>
-      <anchor>a9e0fde8a6e63e1f3a21bbb9f946b9dcc</anchor>
-      <arglist>(const std::string &amp;name, Range range)</arglist>
+      <anchor>ac5dc5aa65f1fbf1cb927b0983b857aaf</anchor>
+      <arglist>(std::string_view name, Range range)</arglist>
     </member>
     <member kind="function">
       <type>AxisConfiguration &amp;</type>
@@ -23767,8 +23781,8 @@
       <type></type>
       <name>Ordinate</name>
       <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html</anchorfile>
-      <anchor>afe2f931b5577ee78af7623eee61496e3</anchor>
-      <arglist>(const std::string &amp;name, GetT get_fn, Color color, Style style, Side side)</arglist>
+      <anchor>aa863471ab604e5c3fc6a7d6ef1e485ac</anchor>
+      <arglist>(std::string_view name, GetT get_fn, Color color, Style style, Side side)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -23776,6 +23790,13 @@
       <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html</anchorfile>
       <anchor>afd2006099d5d013adab3798f84e088c7</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder) const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>update</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html</anchorfile>
+      <anchor>a8e34663c5cc34ae8073379aae0b4bf34</anchor>
+      <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type>Ordinate &amp;</type>
@@ -23820,6 +23841,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
+      <type>std::vector&lt; double &gt;</type>
+      <name>cache_</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html</anchorfile>
+      <anchor>a593abcb0579ff5d3cc6f7d7b39bf0a63</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
       <type>Style</type>
       <name>style_</name>
       <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html</anchorfile>
@@ -23844,8 +23872,8 @@
       <type></type>
       <name>OrdinateWithColor</name>
       <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1OrdinateWithColor.html</anchorfile>
-      <anchor>a7070266af8da1fd1c5130a42d6327ebf</anchor>
-      <arglist>(const std::string &amp;name, GetT get_fn, GetColor color, Style style, Side side)</arglist>
+      <anchor>af378e5fc283945226b11b2c44b86637d</anchor>
+      <arglist>(std::string_view name, GetT get_fn, GetColor color, Style style, Side side)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -24596,6 +24624,13 @@
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder) const</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>update</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Polygon.html</anchorfile>
+      <anchor>a1a0f735aa2d0b506b0edf6a0f3ee4c2b</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
       <type>Polygon &amp;</type>
       <name>side</name>
       <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Polygon.html</anchorfile>
@@ -24865,6 +24900,13 @@
       <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Polygons.html</anchorfile>
       <anchor>a881d4f1ec50acb6bb79e8db1605ac1ac</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder) const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>update</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Polygons.html</anchorfile>
+      <anchor>a95c53448f7dada585abd8b36701859c0</anchor>
+      <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type>Polygons &amp;</type>
@@ -35071,6 +35113,13 @@
       <arglist>(std::vector&lt; char &gt; &amp;data)</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>update</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
+      <anchor>a895a6c18a775e400171a1a01e3db55e0</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
       <type>bool</type>
       <name>handleRequest</name>
       <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
@@ -41425,43 +41474,36 @@
       <type>impl::Abscissa&lt; GetT &gt;</type>
       <name>X</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>ac22eeca55379fb5c66be97b783a8bd32</anchor>
-      <arglist>(const std::string &amp;legend, GetT get_fn)</arglist>
-    </member>
-    <member kind="function">
-      <type>impl::Abscissa&lt; GetT &gt;</type>
-      <name>X</name>
-      <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>ac2f689ceed9f080a4ccc49a6a70aeb4c</anchor>
-      <arglist>(const char *legend, GetT get_fn)</arglist>
+      <anchor>a243fda4292af83b9a3c37610efb76e2f</anchor>
+      <arglist>(std::string_view legend, GetT get_fn)</arglist>
     </member>
     <member kind="function">
       <type>impl::AbscissaOrdinate&lt; GetXT, GetYT &gt;</type>
       <name>XY</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>aff7557ff1a45292b67d02328c81bdde6</anchor>
-      <arglist>(const std::string &amp;name, GetXT get_x_fn, GetYT get_y_fn, Color color, Style style=Style::Solid, Side side=Side::Left)</arglist>
+      <anchor>ab22cf8c8dfe0090e06c4a4ddd484d82a</anchor>
+      <arglist>(std::string_view name, GetXT get_x_fn, GetYT get_y_fn, Color color, Style style=Style::Solid, Side side=Side::Left)</arglist>
     </member>
     <member kind="function">
       <type>impl::AbscissaOrdinateWithColor&lt; GetXT, GetYT, GetColor &gt;</type>
       <name>XY</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>a93ee6aaded7dfd640df87a78e649062d</anchor>
-      <arglist>(const std::string &amp;name, GetXT get_x_fn, GetYT get_y_fn, GetColor get_color_fn, Style style=Style::Solid, Side side=Side::Left)</arglist>
+      <anchor>a7b441029a734fc7579954b5cd15122a8</anchor>
+      <arglist>(std::string_view name, GetXT get_x_fn, GetYT get_y_fn, GetColor get_color_fn, Style style=Style::Solid, Side side=Side::Left)</arglist>
     </member>
     <member kind="function">
       <type>impl::Ordinate&lt; GetT &gt;</type>
       <name>Y</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>aa288bbda415eb4c0d8c5d6fd8fd00f12</anchor>
-      <arglist>(const std::string &amp;name, GetT get_fn, Color color, Style style=Style::Solid, Side side=Side::Left)</arglist>
+      <anchor>a09e783ef208faafb14fb04a4d269619a</anchor>
+      <arglist>(std::string_view name, GetT get_fn, Color color, Style style=Style::Solid, Side side=Side::Left)</arglist>
     </member>
     <member kind="function">
       <type>impl::OrdinateWithColor&lt; GetT, GetColor &gt;</type>
       <name>Y</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>a5957f379abaa61742baef9909ae18990</anchor>
-      <arglist>(const std::string &amp;name, GetT get_fn, GetColor get_color, Style style=Style::Solid, Side side=Side::Left)</arglist>
+      <anchor>a6c606d5a78632224ad064015a385e81c</anchor>
+      <arglist>(std::string_view name, GetT get_fn, GetColor get_color, Style style=Style::Solid, Side side=Side::Left)</arglist>
     </member>
     <member kind="function">
       <type>impl::Polygon&lt; GetT &gt;</type>

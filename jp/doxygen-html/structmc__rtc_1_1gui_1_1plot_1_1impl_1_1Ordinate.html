@@ -97,10 +97,12 @@ Collaboration diagram for mc_rtc::gui::plot::impl::Ordinate&lt; GetT &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:afe2f931b5577ee78af7623eee61496e3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#afe2f931b5577ee78af7623eee61496e3">Ordinate</a> (const std::string &amp;name, GetT get_fn, <a class="el" href="structmc__rtc_1_1gui_1_1Color.html">Color</a> color, Style <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a9f8bf84f326b02b180223b983089e84e">style</a>, Side <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a3247e32aaba3a8e62bbcc61e9b172ec7">side</a>)</td></tr>
-<tr class="separator:afe2f931b5577ee78af7623eee61496e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa863471ab604e5c3fc6a7d6ef1e485ac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#aa863471ab604e5c3fc6a7d6ef1e485ac">Ordinate</a> (std::string_view name, GetT get_fn, <a class="el" href="structmc__rtc_1_1gui_1_1Color.html">Color</a> color, Style <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a9f8bf84f326b02b180223b983089e84e">style</a>, Side <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a3247e32aaba3a8e62bbcc61e9b172ec7">side</a>)</td></tr>
+<tr class="separator:aa863471ab604e5c3fc6a7d6ef1e485ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd2006099d5d013adab3798f84e088c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#afd2006099d5d013adab3798f84e088c7">write</a> (<a class="el" href="structmc__rtc_1_1MessagePackBuilder.html">mc_rtc::MessagePackBuilder</a> &amp;builder) const</td></tr>
 <tr class="separator:afd2006099d5d013adab3798f84e088c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e34663c5cc34ae8073379aae0b4bf34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a8e34663c5cc34ae8073379aae0b4bf34">update</a> () const</td></tr>
+<tr class="separator:a8e34663c5cc34ae8073379aae0b4bf34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f8bf84f326b02b180223b983089e84e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html">Ordinate</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a9f8bf84f326b02b180223b983089e84e">style</a> (Style style)</td></tr>
 <tr class="separator:a9f8bf84f326b02b180223b983089e84e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3247e32aaba3a8e62bbcc61e9b172ec7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html">Ordinate</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a3247e32aaba3a8e62bbcc61e9b172ec7">side</a> (Side side)</td></tr>
@@ -119,6 +121,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a6e0a97eb4969b6d697f5e3d4f957d886"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae207af9008ec8b5da6db891ea0ebd79c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1gui_1_1Color.html">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#ae207af9008ec8b5da6db891ea0ebd79c">color_</a></td></tr>
 <tr class="separator:ae207af9008ec8b5da6db891ea0ebd79c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a593abcb0579ff5d3cc6f7d7b39bf0a63"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a593abcb0579ff5d3cc6f7d7b39bf0a63">cache_</a></td></tr>
+<tr class="separator:a593abcb0579ff5d3cc6f7d7b39bf0a63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a859f99683fcc0f5acf120cd6e0f84dbc"><td class="memItemLeft" align="right" valign="top">Style&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a859f99683fcc0f5acf120cd6e0f84dbc">style_</a></td></tr>
 <tr class="separator:a859f99683fcc0f5acf120cd6e0f84dbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73f245b506213662fd3d5f3deb1eb837"><td class="memItemLeft" align="right" valign="top">Side&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a73f245b506213662fd3d5f3deb1eb837">side_</a></td></tr>
@@ -130,8 +134,8 @@ struct mc_rtc::gui::plot::impl::Ordinate&lt; GetT &gt;</h3>
 
 <p>For a given plot, this holds options on the ordinate plot and a callback that returns the current value </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="afe2f931b5577ee78af7623eee61496e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe2f931b5577ee78af7623eee61496e3">&#9670;&nbsp;</a></span>Ordinate()</h2>
+<a id="aa863471ab604e5c3fc6a7d6ef1e485ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa863471ab604e5c3fc6a7d6ef1e485ac">&#9670;&nbsp;</a></span>Ordinate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -144,7 +148,7 @@ template&lt;typename GetT&gt; </div>
         <tr>
           <td class="memname"><a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html">mc_rtc::gui::plot::impl::Ordinate</a>&lt; GetT &gt;::<a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html">Ordinate</a> </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramtype">std::string_view&#160;</td>
           <td class="paramname"><em>name</em>, </td>
         </tr>
         <tr>
@@ -243,6 +247,33 @@ template&lt;typename GetT&gt; </div>
 
 </div>
 </div>
+<a id="a8e34663c5cc34ae8073379aae0b4bf34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e34663c5cc34ae8073379aae0b4bf34">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename GetT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html">mc_rtc::gui::plot::impl::Ordinate</a>&lt; GetT &gt;::update </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="afd2006099d5d013adab3798f84e088c7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afd2006099d5d013adab3798f84e088c7">&#9670;&nbsp;</a></span>write()</h2>
 
@@ -272,6 +303,30 @@ template&lt;typename GetT&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a593abcb0579ff5d3cc6f7d7b39bf0a63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a593abcb0579ff5d3cc6f7d7b39bf0a63">&#9670;&nbsp;</a></span>cache_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename GetT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;double&gt; <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html">mc_rtc::gui::plot::impl::Ordinate</a>&lt; GetT &gt;::cache_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">mutable</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ae207af9008ec8b5da6db891ea0ebd79c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae207af9008ec8b5da6db891ea0ebd79c">&#9670;&nbsp;</a></span>color_</h2>
 

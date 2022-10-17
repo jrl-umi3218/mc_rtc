@@ -1,6 +1,5 @@
 var NAVTREEINDEX10 =
 {
-"structmc__rbdyn_1_1Robot.html#af183f29b2232cbc87cc8dc744f93424e":[3,0,6,21,98],
 "structmc__rbdyn_1_1Robot.html#af239b709cd1907f1aa264dfa2cb9fd15":[3,0,6,21,49],
 "structmc__rbdyn_1_1Robot.html#af7764d03bd41fedfa98443d4a0b262e9":[3,0,6,21,32],
 "structmc__rbdyn_1_1Robot.html#af946d00c2f9e36ed5c0899f237f35c32":[3,0,6,21,119],
@@ -249,5 +248,6 @@ var NAVTREEINDEX10 =
 "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#abbfe11529cd8bed15f419ef28f84c05a":[3,0,6,1,0,6],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#ac67cc4752eab92b73ae51747966b7e8b":[3,0,6,1,0,4],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#ad377affc6265727ec1d5939522ff053a":[3,0,6,1,0,9],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html":[3,0,6,1,1]
+"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html":[3,0,6,1,1],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a07f7e6178872a0fba9b61975b707b1c4":[3,0,6,1,1,10]
 };

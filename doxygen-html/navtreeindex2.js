@@ -1,6 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"configuration__io_8h.html#a839325e1d657147f6c746b3043b0b1b0":[4,0,0,4,6,3],
 "configuration__io_8h_source.html":[4,0,0,4,6],
 "constants_8h.html":[4,0,0,6,6],
 "constants_8h.html#a04b344c34834432afcfcc1ac86bff22c":[4,0,0,6,6,3],
@@ -249,5 +248,6 @@ var NAVTREEINDEX2 =
 "include_2mc__rbdyn_2api_8h.html#a529cb71c3827899033a1e94d10552a38":[4,0,0,4,1,2],
 "include_2mc__rbdyn_2api_8h.html#a552577349e8efdac2745cbdd3898f85e":[4,0,0,4,1,5],
 "include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49":[4,0,0,4,1,0],
-"include_2mc__rbdyn_2api_8h.html#a830b69e4ab5049ef14b25b9a3dd872cb":[4,0,0,4,1,4]
+"include_2mc__rbdyn_2api_8h.html#a830b69e4ab5049ef14b25b9a3dd872cb":[4,0,0,4,1,4],
+"include_2mc__rbdyn_2api_8h.html#ae269070c4054c9fa40053b5e28ea074f":[4,0,0,4,1,1]
 };

@@ -1,6 +1,5 @@
 var NAVTREEINDEX6 =
 {
-"structmc__control_1_1MCGlobalController.html#abb317d4970e11c3a477f7eed5522c6e0":[3,0,2,12,93],
 "structmc__control_1_1MCGlobalController.html#abd38f947b653b762f0371cf97864acd9":[3,0,2,12,91],
 "structmc__control_1_1MCGlobalController.html#ac2125f658eb07e8b7a24ad0ee82d352f":[3,0,2,12,46],
 "structmc__control_1_1MCGlobalController.html#ac3700efc103aef8819abdc0c444e5895":[3,0,2,12,66],
@@ -249,5 +248,6 @@ var NAVTREEINDEX6 =
 "structmc__control_1_1fsm_1_1SlidingFootContactState.html#a9b45b6ebec94b8502bfe6717ba09d19b":[3,0,2,0,13,33],
 "structmc__control_1_1fsm_1_1SlidingFootContactState.html#a9e3b5656c9c6f645bd62bbf973546eb8":[3,0,2,0,13,25],
 "structmc__control_1_1fsm_1_1SlidingFootContactState.html#aa95d9e4bbf8ffb75a92bde4c6b9a81d5":[3,0,2,0,13,20],
-"structmc__control_1_1fsm_1_1SlidingFootContactState.html#ab6d4b0fcecc806087c717afbc93eb583":[3,0,2,0,13,17]
+"structmc__control_1_1fsm_1_1SlidingFootContactState.html#ab6d4b0fcecc806087c717afbc93eb583":[3,0,2,0,13,17],
+"structmc__control_1_1fsm_1_1SlidingFootContactState.html#abc3ca39b3247340c6bb268c1a37ea0e1":[3,0,2,0,13,13]
 };

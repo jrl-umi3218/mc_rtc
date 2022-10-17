@@ -27,5 +27,6 @@ var structmc__rtc_1_1gui_1_1StateBuilder =
     [ "removePlot", "structmc__rtc_1_1gui_1_1StateBuilder.html#a8988ff74a597f9a7aa546524e6287e9c", null ],
     [ "reset", "structmc__rtc_1_1gui_1_1StateBuilder.html#a6668b50fa6ceaf6beaa730f401ab553c", null ],
     [ "size", "structmc__rtc_1_1gui_1_1StateBuilder.html#a7e6582bb6ecddab6159fab5a71c95cfb", null ],
-    [ "update", "structmc__rtc_1_1gui_1_1StateBuilder.html#aa251549720e40fd68b267308e5fdc765", null ]
+    [ "update", "structmc__rtc_1_1gui_1_1StateBuilder.html#aa251549720e40fd68b267308e5fdc765", null ],
+    [ "update", "structmc__rtc_1_1gui_1_1StateBuilder.html#a895a6c18a775e400171a1a01e3db55e0", null ]
 ];

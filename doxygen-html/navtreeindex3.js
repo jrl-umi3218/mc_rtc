@@ -1,6 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"include_2mc__rbdyn_2api_8h.html#ae269070c4054c9fa40053b5e28ea074f":[4,0,0,4,1,1],
 "include_2mc__rbdyn_2api_8h_source.html":[4,0,0,4,1],
 "include_2mc__robots_2api_8h.html":[4,0,0,5,0],
 "include_2mc__robots_2api_8h.html#a12b895bf0b39c259b3eb51ee7782f970":[4,0,0,5,0,5],
@@ -238,8 +237,8 @@ var NAVTREEINDEX3 =
 "namespacemc__rtc_1_1utils.html":[2,0,7,5],
 "namespacemc__solver.html":[2,0,8],
 "namespacemc__solver.html":[3,0,8],
-"namespacemc__solver_1_1details.html":[3,0,8,0],
 "namespacemc__solver_1_1details.html":[2,0,8,0],
+"namespacemc__solver_1_1details.html":[3,0,8,0],
 "namespacemc__solver_1_1utils.html":[2,0,8,1],
 "namespacemc__solver_1_1utils.html":[3,0,8,1],
 "namespacemc__tasks.html":[2,0,9],
@@ -249,5 +248,6 @@ var NAVTREEINDEX3 =
 "namespacemc__tasks_1_1force_1_1details.html":[2,0,9,0,0],
 "namespacemc__tasks_1_1force_1_1details.html":[3,0,9,0,0],
 "namespacemc__tasks_1_1lipm__stabilizer.html":[2,0,9,1],
-"namespacemc__tasks_1_1lipm__stabilizer.html":[3,0,9,1]
+"namespacemc__tasks_1_1lipm__stabilizer.html":[3,0,9,1],
+"namespacemc__tasks_1_1lipm__stabilizer_1_1internal.html":[2,0,9,1,0]
 };
