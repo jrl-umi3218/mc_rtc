@@ -25,9 +25,30 @@ namespace bfs = boost::filesystem;
 namespace mc_robots
 {
 
-JVRC1RobotModule::JVRC1RobotModule(bool fixed) : RobotModule(std::string(JVRC_VAL_VAL(JVRC_DESCRIPTION_PATH)), "jvrc1")
+JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics)
+: RobotModule(std::string(JVRC_VAL_VAL(JVRC_DESCRIPTION_PATH)), "jvrc1")
 {
-  init(rbd::parsers::from_urdf_file(urdf_path, fixed));
+  std::vector<std::string> filter_links = {};
+  if(filter_mimics)
+  {
+    // clang-format off
+    filter_links = {
+      "R_LTHUMB_S",
+      "R_UINDEX_S",
+      "R_LINDEX_S",
+      "R_ULITTLE_S",
+      "R_LLITTLE_S",
+      "L_LTHUMB_S",
+      "L_UINDEX_S",
+      "L_LINDEX_S",
+      "L_ULITTLE_S",
+      "L_LLITTLE_S"
+    };
+    // clang-format on
+  }
+  init(rbd::parsers::from_urdf_file(
+      urdf_path,
+      rbd::parsers::ParserParameters{}.fixed(fixed).filtered_links(filter_links).remove_filtered_links(false)));
 
   std::string convexPath = path + "/convex/" + name + "/";
   bfs::path p(convexPath);
@@ -103,7 +124,7 @@ extern "C"
 {
   ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names)
   {
-    names = {"JVRC1", "JVRC1Fixed"};
+    names = {"JVRC1", "JVRC1Fixed", "JVRC1NoHands", "JVRC1NoHandsFixed"};
   }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
   {
@@ -118,6 +139,14 @@ extern "C"
     else if(name == "JVRC1Fixed")
     {
       return new mc_robots::JVRC1RobotModule(true);
+    }
+    if(name == "JVRC1NoHands")
+    {
+      return new mc_robots::JVRC1RobotModule(false, true);
+    }
+    else if(name == "JVRC1NoHandsFixed")
+    {
+      return new mc_robots::JVRC1RobotModule(true, true);
     }
     else
     {
@@ -137,6 +166,10 @@ namespace
 static auto registered = []() {
   using fn_t = std::function<mc_robots::JVRC1RobotModule *()>;
   mc_rbdyn::RobotLoader::register_object("JVRC1", fn_t([]() { return new mc_robots::JVRC1RobotModule(false); }));
+  mc_rbdyn::RobotLoader::register_object("JVRC1NoHands",
+                                         fn_t([]() { return new mc_robots::JVRC1RobotModule(false, true); }));
+  mc_rbdyn::RobotLoader::register_object("JVRC1NoHandsFixed",
+                                         fn_t([]() { return new mc_robots::JVRC1RobotModule(true, true); }));
   mc_rbdyn::RobotLoader::register_object("JVRC1Fixed", fn_t([]() { return new mc_robots::JVRC1RobotModule(true); }));
   return true;
 }();
