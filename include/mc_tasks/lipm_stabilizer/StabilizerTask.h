@@ -744,13 +744,18 @@ private:
     std::string surfaceName;
   };
 
-  /** @brief Compute the CoM offset and the sum wrench from the external wrenches.
+  /** @brief Compute the CoM offset (\alpha) and the ZMP coefficient (\kappa) and the sum wrench from the external
+   * wrenches. see Murooka et al. RAL 2021 eq (8)
    *
    *  @tparam TargetOrMeasured Change depending on the used wrenches
-   *  @param robot Robot used to transform surface wrenches (control robot or real robot)
+   *  @param robot [in] - Robot used to transform surface wrenches (control robot or real robot)
+   *  @param offset_alpha [out] - Com offset
+   *  @param coef_alpha [out] - ZmP coefficient
    */
   template<sva::ForceVecd ExternalWrench::*TargetOrMeasured>
-  Eigen::Vector3d computeCoMOffset(const mc_rbdyn::Robot & robot) const;
+  void computeWrenchOffsetAndCoefficient(const mc_rbdyn::Robot & robot,
+                                         Eigen::Vector3d & offset_alpha,
+                                         double & coef_kappa) const;
 
   /** @brief Compute the sum of external wrenches.
    *
@@ -902,6 +907,8 @@ protected:
   sva::ForceVecd extWrenchSumMeasured_ = sva::ForceVecd::Zero(); /**< Sum of measured external wrenches */
   Eigen::Vector3d comOffsetTarget_ = Eigen::Vector3d::Zero(); /**< Target (expected) CoM offset */
   Eigen::Vector3d comOffsetMeasured_ = Eigen::Vector3d::Zero(); /**< Measured CoM offset */
+  double zmpCoeTarget_ = 1; /**< target (expected) Zmp Coefficient  */
+  double zmpCoefMeasured_ = 1; /**< Measured Zmp Coefficient  */
   Eigen::Vector3d comOffsetErr_ = Eigen::Vector3d::Zero(); /**< CoM offset error */
   Eigen::Vector3d comOffsetErrCoM_ = Eigen::Vector3d::Zero(); /**< CoM offset error handled by CoM modification */
   Eigen::Vector3d comOffsetErrZMP_ = Eigen::Vector3d::Zero(); /**< CoM offset error handled by ZMP modification */
@@ -930,10 +937,14 @@ protected:
   sva::PTransformd zmpFrame_ = sva::PTransformd::Identity(); /**< Frame in which the ZMP is computed */
 };
 
-extern template Eigen::Vector3d StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::target>(
-    const mc_rbdyn::Robot &) const;
-extern template Eigen::Vector3d StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::measured>(
-    const mc_rbdyn::Robot &) const;
+extern template void StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::target>(
+    const mc_rbdyn::Robot & robot,
+    Eigen::Vector3d & offset_alpha,
+    double & coef_kappa) const;
+extern template void StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::measured>(
+    const mc_rbdyn::Robot & robot,
+    Eigen::Vector3d & offset_alpha,
+    double & coef_kappa) const;
 
 extern template sva::ForceVecd StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::target>(
     const mc_rbdyn::Robot &,
