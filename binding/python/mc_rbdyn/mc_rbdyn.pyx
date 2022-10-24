@@ -519,20 +519,8 @@ cdef class Robots(object):
       ret.append(self.Robot(i))
     return ret
 
-  def load(self, RobotModule module, *args):
-    cdef c_sva.PTransformd * b = NULL
-    bName = ""
-    if len(args):
-      if isinstance(args[0], sva.PTransformd):
-        b = (<sva.PTransformd>(args[0])).impl
-        if len(args) > 1:
-          bName = args[1]
-      else:
-        deprecated()
-        return self.load(module, *args[1:])
-    if isinstance(bName, unicode):
-      bName = bName.encode(u'ascii')
-    return RobotFromC(deref(self.impl).load(deref(module.impl), b, bName))
+  def load(self, RobotModule module):
+    return RobotFromC(deref(self.impl).load(deref(module.impl)))
 
   def mbs(self):
     return rbdyn.MultiBodyVectorFromPtr(&(deref(self.impl).mbs()))
@@ -1325,49 +1313,16 @@ def points_from_polygon(GeosGeomGeometry geom):
   cdef vector[c_eigen.Vector3d] vp = c_mc_rbdyn.points_from_polygon(geom.impl)
   return [eigen.Vector3dFromC(v) for v in vp]
 
-def loadRobot(RobotModule module, *args):#sva.PTransformd base = None, bName = ""):
-  cdef c_sva.PTransformd * b = NULL
-  bName = ""
-  if len(args):
-    if isinstance(args[0], sva.PTransformd):
-      b = (<sva.PTransformd>(args[0])).impl;
-      if len(args) > 1:
-        bName = args[1]
-    else:
-      deprecated()
-      return loadRobot(module, *args[1:])
-  if isinstance(bName, unicode):
-    bName = bName.encode(u'ascii')
-  return RobotsFromPtr(c_mc_rbdyn.loadRobot(deref(module.impl.get()), b, bName))
+def loadRobot(RobotModule module):
+  return RobotsFromPtr(c_mc_rbdyn.loadRobot(deref(module.impl.get())))
 
 def loadRobots(robot_modules, robot_surface_dirs = None):
   if robot_surface_dirs is not None:
     deprecated()
   return RobotsFromPtr(c_mc_rbdyn.loadRobots(RobotModuleVector(robot_modules).v))
 
-def loadRobotAndEnv(RobotModule module, RobotModule envModule,
-                    sva.PTransformd base = None, bId = -1):
-  if base is None:
-    return RobotsFromPtr(c_mc_rbdyn.loadRobotAndEnv(deref(module.impl.get()), deref(envModule.impl.get())))
-  else:
-    return RobotsFromPtr(c_mc_rbdyn.loadRobotAndEnv(deref(module.impl.get()), deref(envModule.impl.get()), base.impl, bId))
-
-def loadRobotFromUrdf(name, urdf, withVirtualLinks = True, filteredLinks = [],
-    fixed = False, sva.PTransformd base = None, bName = ""):
-  if isinstance(name, unicode):
-    name = name.encode(u'ascii')
-  if isinstance(urdf, unicode):
-    urdf = urdf.encode(u'ascii')
-  if base is None:
-    base = sva.PTransformd(skip_alloc = True)
-  robots = RobotsFromPtr(c_mc_rbdyn.loadRobotFromUrdf(name, urdf, withVirtualLinks,
-    filteredLinks, fixed, base.impl, bName))
-  return robots
-
-def createRobotWithBase(name, Robot robot, Base base, eigen.Vector3d baseAxis = eigen.Vector3d.UnitZ()):
-  cdef Robots ret = Robots()
-  ret.impl.get().createRobotWithBase(name, deref(robot.impl), base.impl, baseAxis.impl)
-  return ret
+def loadRobotAndEnv(RobotModule module, RobotModule envModule):
+  return RobotsFromPtr(c_mc_rbdyn.loadRobotAndEnv(deref(module.impl.get()), deref(envModule.impl.get())))
 
 def planar(T, B, N):
   return sva.PTransformdFromC(c_mc_rbdyn.planar(T, B, N))

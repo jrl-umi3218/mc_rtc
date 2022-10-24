@@ -258,16 +258,16 @@ Robot::Robot(NewRobotToken,
              Robots & robots,
              unsigned int robots_idx,
              bool loadFiles,
-             const sva::PTransformd * base,
-             const std::string & bName)
-: robots_(&robots), robots_idx_(robots_idx), name_(name)
+             const LoadRobotParameters & params)
+: robots_(&robots), robots_idx_(robots_idx), name_(name), load_params_(params)
 {
   const auto & module_ = module();
 
-  if(base)
+  sva::PTransformd base_tf = params.base_tf_.value_or(sva::PTransformd::Identity());
+  std::string base_name = params.base_.value_or(mb().body(0).name());
+  if(params.base_tf_ || params.base_)
   {
-    std::string baseName = bName.empty() ? mb().body(0).name() : bName;
-    mb() = mbg().makeMultiBody(baseName, mb().joint(0).type() == rbd::Joint::Fixed, *base);
+    mb() = mbg().makeMultiBody(base_name, mb().joint(0).type() == rbd::Joint::Fixed, base_tf);
     mbc() = rbd::MultiBodyConfig(mb());
   }
 
@@ -303,8 +303,7 @@ Robot::Robot(NewRobotToken,
   }
 
   bodyTransforms_.resize(mb().bodies().size());
-  const auto & bbts =
-      base ? mbg().bodiesBaseTransform(mb().body(0).name(), *base) : mbg().bodiesBaseTransform(mb().body(0).name());
+  const auto & bbts = mbg().bodiesBaseTransform(base_name, base_tf);
   for(size_t i = 0; i < mb().bodies().size(); ++i)
   {
     const auto & b = mb().body(static_cast<int>(i));
@@ -404,7 +403,17 @@ Robot::Robot(NewRobotToken,
     for(auto & fs : forceSensors_)
     {
       bfs::path calib_file = bfs::path(module_.calib_dir) / std::string("calib_data." + fs.name());
-      fs.loadCalibrator(calib_file.string(), mbc().gravity);
+      if(!bfs::exists(calib_file))
+      {
+        if(params.warn_on_missing_files_)
+        {
+          mc_rtc::log::warning("No calibration file {} found for force sensor {}", calib_file, fs.name());
+        }
+      }
+      else
+      {
+        fs.loadCalibrator(calib_file.string(), mbc().gravity);
+      }
     }
   }
   for(size_t i = 0; i < forceSensors_.size(); ++i)
@@ -425,7 +434,7 @@ Robot::Robot(NewRobotToken,
     {
       loadRSDFFromDir(module_.rsdf_dir);
     }
-    else if(module_.rsdf_dir.size())
+    else if(module_.rsdf_dir.size() && params.warn_on_missing_files_)
     {
       mc_rtc::log::error("RSDF directory ({}) specified by RobotModule for {} does not exist.", module_.rsdf_dir,
                          module_.name);

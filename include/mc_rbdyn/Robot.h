@@ -22,6 +22,36 @@ namespace mc_rbdyn
 
 struct Robots;
 
+struct Robot;
+
+/** Optional parameters when loading a robot */
+struct LoadRobotParameters
+{
+  friend struct Robot;
+
+private:
+  /** Initial transformation betwen the base and the world */
+  std::optional<sva::PTransformd> base_tf_ = std::nullopt;
+  /** Use this body as the base instead of the RobotModule provided one */
+  std::optional<std::string> base_ = std::nullopt;
+  /** If true, print warning messages for missing files */
+  bool warn_on_missing_files_ = false;
+
+public:
+#define MAKE_LOAD_ROBOT_PARAMETER_SETTER(T, NAME)     \
+  inline LoadRobotParameters & NAME(T value) noexcept \
+  {                                                   \
+    NAME##_ = value;                                  \
+    return *this;                                     \
+  }
+
+  MAKE_LOAD_ROBOT_PARAMETER_SETTER(const sva::PTransformd &, base_tf)
+  MAKE_LOAD_ROBOT_PARAMETER_SETTER(std::string_view, base)
+  MAKE_LOAD_ROBOT_PARAMETER_SETTER(bool, warn_on_missing_files)
+
+#undef MAKE_LOAD_ROBOT_PARAMETER_SETTER
+};
+
 struct MC_RBDYN_DLLAPI Robot
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -1140,8 +1170,7 @@ public:
         Robots & robots,
         unsigned int robots_idx,
         bool loadFiles,
-        const sva::PTransformd * base = nullptr,
-        const std::string & baseName = "");
+        const LoadRobotParameters & params = {});
 
 protected:
   /** Copy loaded data from this robot to a new robot **/
@@ -1187,6 +1216,9 @@ private:
    * Robot object as the change is not communicated in any way.
    */
   void name(const std::string & n);
+
+  /** Parameters passed at creation time */
+  LoadRobotParameters load_params_;
 };
 
 /** @defgroup robotFromConfig Helpers to obtain robot index/name from configuration

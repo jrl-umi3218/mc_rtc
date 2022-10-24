@@ -136,15 +136,11 @@ cdef extern from "<mc_rbdyn/Robots.h>" namespace "mc_rbdyn":
     const Robot & robot()
     const Robot & env()
 
-    Robot & load(const RobotModule&, PTransformd*, const string&)
+    Robot & load(const RobotModule&)
 
     const Robot & robot(unsigned int)
 
     unsigned int size()
-
-    void createRobotWithBase(const string&, Robots&, unsigned int, const Base&, const Vector3d&)
-
-    void createRobotWithBase(const string&, Robot&, const Base&, const Vector3d&)
 
     void robotCopy(const Robot&, const string&)
 
@@ -235,12 +231,9 @@ cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
 
     RobotModule & module()
 
-  shared_ptr[Robots] loadRobot(const RobotModule&, PTransformd *, const string&)
+  shared_ptr[Robots] loadRobot(const RobotModule&)
   shared_ptr[Robots] loadRobots(const vector[RobotModulePtr]&)
   shared_ptr[Robots] loadRobotAndEnv(const RobotModule&, const RobotModule&)
-  shared_ptr[Robots] loadRobotAndEnv(const RobotModule&, const RobotModule&, PTransformd*, const string&)
-  shared_ptr[Robots] loadRobotFromUrdf(const string&, const string&, cppbool, const
-      vector[string]&, cppbool, PTransformd*, const string&)
 
 cdef extern from "<mc_rbdyn/Surface.h>" namespace "mc_rbdyn":
   cdef cppclass Surface:
