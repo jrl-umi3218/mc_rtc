@@ -76,7 +76,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
 MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules,
                            double dt,
                            const mc_rtc::Configuration & config)
-: qpsolver(std::make_shared<mc_solver::QPSolver>(dt)),
+: qpsolver(std::make_shared<mc_solver::QPSolver>(dt)), outputRobots_(mc_rbdyn::Robots::make()),
   logger_(std::make_shared<mc_rtc::Logger>(mc_rtc::Logger::Policy::NON_THREADED, "", "")),
   gui_(std::make_shared<mc_rtc::gui::StateBuilder>()), config_(config), timeStep(dt)
 {
@@ -248,6 +248,34 @@ MCController::~MCController()
 mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name)
 {
   loadRobot(rm, name, realRobots(), false);
+
+  // Load canonical robot model (for output and display)
+  mc_rbdyn::RobotModulePtr canonicalModule = nullptr;
+  const auto & cp = rm->canonicalParameters();
+  mc_rtc::log::info("Canonical parameters: {}", mc_rtc::io::to_string(cp));
+  if(cp.size() == 1)
+  {
+    auto canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp[0]);
+  }
+  else if(cp.size() == 2)
+  {
+    auto canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp[0], cp[1]);
+  }
+  else if(cp.size() == 3)
+  {
+    auto canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp[0], cp[1], cp[2]);
+  }
+  else if(!cp.empty())
+  {
+    mc_rtc::log::error_and_throw<mc_rtc::LoaderException>(
+        "[MCController] Canonical robots can only have 1 to 3 parameters");
+  }
+
+  if(!canonicalModule)
+  {
+    canonicalModule = rm;
+  }
+  loadRobot(canonicalModule, name, outputRobots(), false);
   return loadRobot(rm, name, robots(), true);
 }
 
@@ -622,6 +650,12 @@ bool MCController::run(mc_solver::FeedbackType fType)
     mc_rtc::log::error("QP failed to run()");
     return false;
   }
+  // Update output robots
+  // These should be used by interfaces to control the robot
+  for(const auto & robot : robots())
+  {
+    robot.module().controlToCanonical(robot, outputRobot(robot.name()));
+  }
   return true;
 }
 
@@ -922,6 +956,36 @@ const mc_rbdyn::Robot & MCController::env() const
 mc_rbdyn::Robot & MCController::env()
 {
   return qpsolver->env();
+}
+
+const mc_rbdyn::Robots & MCController::outputRobots() const
+{
+  return *outputRobots_;
+}
+
+mc_rbdyn::Robots & MCController::outputRobots()
+{
+  return *outputRobots_;
+}
+
+const mc_rbdyn::Robot & MCController::outputRobot() const
+{
+  return outputRobots_->robot();
+}
+
+mc_rbdyn::Robot & MCController::outputRobot()
+{
+  return outputRobots_->robot();
+}
+
+const mc_rbdyn::Robot & MCController::outputRobot(const std::string & name) const
+{
+  return outputRobots_->robot(name);
+}
+
+mc_rbdyn::Robot & MCController::outputRobot(const std::string & name)
+{
+  return outputRobots_->robot(name);
 }
 
 const mc_solver::QPSolver & MCController::solver() const

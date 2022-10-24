@@ -241,19 +241,14 @@ public:
   /** Returns true if the robot is part of the controller */
   bool hasRobot(const std::string & robot) const;
 
+  /**
+   * @name Accessors to the control robots
+   * @{
+   */
   /** Return the main robot (first robot provided in the constructor)
    * \anchor mc_controller_robot_const_doc
    */
   const mc_rbdyn::Robot & robot() const;
-
-  /** Return the env "robot"
-   * \note
-   * In multi-robot scenarios, the env robot is either:
-   *   1. The first robot with zero dof
-   *   2. The last robot provided at construction
-   * \anchor mc_controller_env_const_doc
-   */
-  const mc_rbdyn::Robot & env() const;
 
   /** Return the mc_rbdyn::Robots controlled by this controller
    * \anchor mc_controller_robots_const_doc
@@ -276,8 +271,18 @@ public:
   /** Non-const variant of \ref mc_controller_robot_const_doc "robot()" */
   mc_rbdyn::Robot & robot();
 
+  /** Return the env "robot"
+   * \note
+   * In multi-robot scenarios, the env robot is either:
+   *   1. The first robot with zero dof
+   *   2. The last robot provided at construction
+   * \anchor mc_controller_env_const_doc
+   */
+  const mc_rbdyn::Robot & env() const;
+
   /** Non-const variant of \ref mc_controller_env_const_doc "env()" */
   mc_rbdyn::Robot & env();
+  /** @} */
 
   /** Return the mc_solver::QPSolver instance attached to this controller
    * \anchor mc_controller_qpsolver_const_doc
@@ -308,6 +313,10 @@ public:
     return datastore_;
   }
 
+  /**
+   * @name Accessors to the real robots
+   * @{
+   */
   /** Return the mc_rbdyn::Robots real robots instance
    * \anchor mc_controller_real_robots_const_doc
    */
@@ -331,6 +340,40 @@ public:
 
   /** Non-const variant of \ref mc_controller_realRobot_name_const_doc "realRobot(name)" */
   mc_rbdyn::Robot & realRobot(const std::string & name);
+  /** @} */
+
+  /**
+   * @name Accessors to the output control robots
+   *
+   * These robots are used by the various interfaces to send control commands to
+   * the robots, and by the ROS plugin to publish a complete visualization of
+   * the robots (including non-controlled joints)
+   * @{
+   */
+  /** Return the mc_rbdyn::Robots real robots instance
+   * \anchor mc_controller_real_robots_const_doc
+   */
+  const mc_rbdyn::Robots & outputRobots() const;
+  /** Non-const variant of \ref mc_controller_real_robots_const_doc "outputRobots()" **/
+  mc_rbdyn::Robots & outputRobots();
+
+  /** Return the main mc_rbdyn::Robot real robot instance
+   * \anchor mc_controller_real_robot_const_doc
+   */
+  const mc_rbdyn::Robot & outputRobot() const;
+  /** Non-const variant of \ref mc_controller_real_robot_const_doc "outputRobot()" */
+  mc_rbdyn::Robot & outputRobot();
+
+  /** Return the mc_rbdyn::Robot controlled by this controller
+   *
+   * @throws std::runtime_error if the robot does not exist
+   * \anchor mc_controller_outputRobot_name_const_doc
+   **/
+  const mc_rbdyn::Robot & outputRobot(const std::string & name) const;
+
+  /** Non-const variant of \ref mc_controller_outputRobot_name_const_doc "outputRobot(name)" */
+  mc_rbdyn::Robot & outputRobot(const std::string & name);
+  /** @} */
 
   /** Returns a list of robots supported by the controller.
    * \param out Vector of supported robots designed by name (as returned by
@@ -495,6 +538,13 @@ protected:
 protected:
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
+
+  /** Load robots used for output (display/control)
+   *
+   * These robots use the canonical model representation defined in the robot
+   * module.
+   */
+  mc_rbdyn::RobotsPtr outputRobots_;
 
   /** State observation pipelines for this controller */
   std::vector<mc_observers::ObserverPipeline> observerPipelines_;
