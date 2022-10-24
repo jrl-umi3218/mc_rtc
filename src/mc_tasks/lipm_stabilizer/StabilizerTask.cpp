@@ -814,10 +814,10 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   // this corresponds to \gamma in Murooka et al RAL 2021
   for(auto & extWrench : extWrenches_)
   {
-    if(robot().surfaceHasIndirectForceSensor(extWrench.surfaceName))
+    const auto & wrenchFrame = robot().frame(extWrench.surfaceName);
+    if(wrenchFrame.hasForceSensor())
     {
-      extWrench.measured =
-          sva::ForceVecd(extWrench.gain.vector().cwiseProduct(robot().surfaceWrench(extWrench.surfaceName).vector()));
+      extWrench.measured = {extWrench.gain.vector().cwiseProduct(wrenchFrame.wrench().vector())};
     }
     else
     {
