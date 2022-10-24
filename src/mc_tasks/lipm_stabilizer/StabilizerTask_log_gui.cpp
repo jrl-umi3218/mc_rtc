@@ -145,6 +145,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                        c_.dcmBias.biasDriftPerSecondStd = v;
                        dcmEstimator_.setBiasDriftPerSecond(v);
                      }),
+                 ArrayLabel("Local Bias", [this]() { return dcmEstimator_.getLocalBias(); }),
                  ArrayInput(
                      "Bias Limit [m]", {"sagital", "lateral"},
                      [this]() -> const Eigen::Vector2d & { return c_.dcmBias.biasLimit; },
@@ -156,8 +157,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                      "CoM bias Limit [m]", {"sagital", "lateral"},
                      [this]() -> const Eigen::Vector2d & { return c_.dcmBias.comBiasLimit; },
                      [this](const Eigen::Vector2d & v) { c_.dcmBias.comBiasLimit = v; }),
-                 ArrayLabel("Local Bias", [this]() { return dcmEstimator_.getLocalBias(); }),
-                 ArrayLabel("CoM offset (ext wrench)", [this]() { return comOffsetTarget_; }),
+                 ArrayLabel("CoM offset (ext wrench)", [this]() { return comOffsetMeasured_; }),
                  Label("zmpcoef (ext wrench)", [this]() { return std::to_string(zmpCoefMeasured_); }));
   gui.addElement({"Tasks", name_, "Advanced", "Ext Wrench"},
                  Checkbox(
