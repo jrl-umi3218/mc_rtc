@@ -6,8 +6,9 @@
 
 /*! Interface used to load robots */
 
+#include <mc_rbdyn/Robot.h>
 #include <mc_rbdyn/RobotModule.h>
-#include <mc_rbdyn/api.h>
+
 #include <mc_rtc/config.h>
 #include <mc_rtc/loader.h>
 
@@ -125,6 +126,34 @@ public:
     if(rm->_canonicalParameters.size() == 0)
     {
       rm->_canonicalParameters = rm->_parameters;
+    }
+    if(!rm->controlToCanonical)
+    {
+      if(rm->_canonicalParameters == rm->_parameters)
+      {
+        rm->controlToCanonical = [](const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical) {
+          canonical.mbc() = control.mbc();
+        };
+      }
+      else
+      {
+        // TODO Build a better function at this point using the (fixed) difference between control and canonical
+        // e.g.
+        // bool first = true;
+        // std::vector<...> // <-- some mapping index stuff
+        // rm->controlToCanonical = [rm, first, index_maps](const mc_rbdyn::Control & control, mc_rbdyn::Robot &
+        // canonical) mutable
+        // {
+        //   assert(control.module().parameters() == rm->_parameters && canonical.module().parameters() ==
+        //   rm->_canonicalParameters); if(first)
+        //   {
+        //     // initialize the stuff we need
+        //     first = false;
+        //   }
+        //   do_the_update();
+        // };
+        rm->controlToCanonical = &RobotModule::ControlToCanonical;
+      }
     }
     return rm;
   }

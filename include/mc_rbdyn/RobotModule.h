@@ -585,8 +585,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * - set the correct mimic configuration for missing joints if the mimic's reference is provided by \param control
    * - set other joints to the encoder values or 0 if it is not part of the encoders
    */
-  std::function<void(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical)> controlToCanonical =
-      &RobotModule::ControlToCanonical;
+  std::function<void(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical)> controlToCanonical;
 
   /** Returns the path to a "real" URDF file
    *
