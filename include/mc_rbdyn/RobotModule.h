@@ -572,6 +572,22 @@ struct MC_RBDYN_DLLAPI RobotModule
     return _parameters;
   }
 
+  /** Returns the list of parameters to get a RobotModule that is a canonical representation of this module */
+  inline const std::vector<std::string> & canonicalParameters() const
+  {
+    return _canonicalParameters;
+  }
+
+  /** Convert from the module configuration to the \ref canonicalParameters configuration
+   *
+   * The default implementation:
+   * - copies the value of common joints between \param control and \param canonical
+   * - set the correct mimic configuration for missing joints if the mimic's reference is provided by \param control
+   * - set other joints to the encoder values or 0 if it is not part of the encoders
+   */
+  std::function<void(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical)> controlToCanonical =
+      &RobotModule::ControlToCanonical;
+
   /** Returns the path to a "real" URDF file
    *
    * This will be used to show a visually distinct robot for displaying the
@@ -660,6 +676,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   CompoundJointConstraintDescriptionVector _compoundJoints;
   /** \see parameters() */
   std::vector<std::string> _parameters;
+  /** \see canonicalParameters() */
+  std::vector<std::string> _canonicalParameters;
   /** \see defaultLIPMStabilizerConfiguration() */
   mc_rbdyn::lipm_stabilizer::StabilizerConfiguration _lipmStabilizerConfig;
   /** \see real_urdf() */
@@ -668,6 +686,9 @@ struct MC_RBDYN_DLLAPI RobotModule
   DevicePtrVector _devices;
   /** \see frames() */
   std::vector<FrameDescription> _frames;
+
+  /** Default implementation for \ref controlToCanonical */
+  static void ControlToCanonical(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical);
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;

@@ -4,6 +4,8 @@
 
 #include <mc_rbdyn/RobotModule.h>
 
+#include <mc_rbdyn/Robot.h>
+
 namespace mc_rbdyn
 {
 
@@ -216,6 +218,51 @@ RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
   ret.push_back(convert(limits.torque));
   ret.push_back(limits.torque);
   return ret;
+}
+
+void RobotModule::ControlToCanonical(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical)
+{
+  // Copy the encoders into canonical
+  if(control.encoderValues().size() == control.refJointOrder().size())
+  {
+    const auto & rjo = control.refJointOrder();
+    const auto & encoders = control.encoderValues();
+    for(size_t i = 0; i < rjo.size(); ++i)
+    {
+      auto mbcIndex = canonical.jointIndexInMBC(i);
+      if(mbcIndex < 0)
+      {
+        continue;
+      }
+      canonical.mbc().q[static_cast<size_t>(mbcIndex)][0] = encoders[i];
+    }
+  }
+  // Copy the joints from control into canonical
+  for(size_t cIndex = 0; cIndex < control.mb().joints().size(); ++cIndex)
+  {
+    const auto & cJoint = control.mb().joint(static_cast<int>(cIndex));
+    if(canonical.hasJoint(cJoint.name()))
+    {
+      auto canIndex = canonical.jointIndexByName(cJoint.name());
+      const auto & canJoint = canonical.mb().joint(static_cast<int>(canIndex));
+      if(canJoint.dof() == cJoint.dof())
+      {
+        canonical.mbc().q[canIndex] = control.mbc().q[cIndex];
+      }
+    }
+  }
+  // Handle mimics in canonical
+  for(const auto & m : canonical.mb().joints())
+  {
+    if(m.isMimic())
+    {
+      auto mainIndex = canonical.jointIndexByName(m.mimicName());
+      auto mimicIndex = canonical.jointIndexByName(m.name());
+      canonical.mbc().q[mimicIndex][0] = m.mimicMultiplier() * canonical.mbc().q[mainIndex][0] + m.mimicOffset();
+    }
+  }
+  // Copy the base position which triggers all the updates
+  canonical.posW(control.posW());
 }
 
 } // namespace mc_rbdyn
