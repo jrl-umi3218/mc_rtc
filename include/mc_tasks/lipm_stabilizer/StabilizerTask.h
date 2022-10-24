@@ -907,7 +907,7 @@ protected:
   sva::ForceVecd extWrenchSumMeasured_ = sva::ForceVecd::Zero(); /**< Sum of measured external wrenches */
   Eigen::Vector3d comOffsetTarget_ = Eigen::Vector3d::Zero(); /**< Target (expected) CoM offset */
   Eigen::Vector3d comOffsetMeasured_ = Eigen::Vector3d::Zero(); /**< Measured CoM offset */
-  double zmpCoeTarget_ = 1; /**< target (expected) Zmp Coefficient  */
+  double zmpCoefTarget_ = 1; /**< target (expected) Zmp Coefficient  */
   double zmpCoefMeasured_ = 1; /**< Measured Zmp Coefficient  */
   Eigen::Vector3d comOffsetErr_ = Eigen::Vector3d::Zero(); /**< CoM offset error */
   Eigen::Vector3d comOffsetErrCoM_ = Eigen::Vector3d::Zero(); /**< CoM offset error handled by CoM modification */

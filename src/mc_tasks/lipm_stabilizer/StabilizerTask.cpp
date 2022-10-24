@@ -649,7 +649,7 @@ void StabilizerTask::setExternalWrenches(const std::vector<std::string> & surfac
     }
   }
 
-  computeWrenchOffsetAndCoefficient<&ExternalWrench::target>(robot(), comOffsetTarget_, zmpCoefMeasured_);
+  computeWrenchOffsetAndCoefficient<&ExternalWrench::target>(robot(), comOffsetTarget_, zmpCoefTarget_);
   comTarget_ = comTargetRaw_ - comOffsetErrCoM_;
   if(c_.extWrench.addExpectedCoMOffset)
   {
