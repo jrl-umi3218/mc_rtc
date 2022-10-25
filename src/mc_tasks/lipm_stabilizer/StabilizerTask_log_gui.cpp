@@ -193,7 +193,9 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                      [this](double a) { comOffsetLowPassCoMCutoffPeriod(a); }),
                  NumberInput(
                      "Time constant of comOffsetDerivator", [this]() { return comOffsetDerivator_.timeConstant(); },
-                     [this](double a) { comOffsetDerivatorTimeConstant(a); }));
+                     [this](double a) { comOffsetDerivatorTimeConstant(a); }),
+                 ArrayLabel("CoM offset ", [this]() { return comOffsetMeasured_; }),
+                 Label("zmpcoef ", [this]() { return std::to_string(zmpCoefMeasured_); }));
 
   gui.addElement({"Tasks", name_, "Debug"}, Button("Disable", [this]() { disable(); }));
   addConfigButtons({"Tasks", name_, "Debug"});
