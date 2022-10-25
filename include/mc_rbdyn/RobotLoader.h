@@ -79,23 +79,55 @@ public:
     std::unique_lock<std::mutex> guard{mtx};
     init();
     mc_rbdyn::RobotModulePtr rm = nullptr;
+    auto setup_canonical = [](mc_rbdyn::RobotModulePtr rm) {
+      assert(rm);
+      if(rm->_canonicalParameters.empty())
+      {
+        rm->_canonicalParameters = rm->_parameters;
+      }
+      if(!rm->controlToCanonical)
+      {
+        if(rm->_canonicalParameters == rm->_parameters)
+        {
+          rm->controlToCanonical = [](const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical) {
+            canonical.mbc() = control.mbc();
+          };
+        }
+        else
+        {
+          // TODO Build a better function at this point using the (fixed) difference between control and canonical
+          // e.g.
+          // bool first = true;
+          // std::vector<...> // <-- some mapping index stuff
+          // rm->controlToCanonical = [rm, first, index_maps](const mc_rbdyn::Control & control, mc_rbdyn::Robot &
+          // canonical) mutable
+          // {
+          //   assert(control.module().parameters() == rm->_parameters && canonical.module().parameters() ==
+          //   rm->_canonicalParameters); if(first)
+          //   {
+          //     // initialize the stuff we need
+          //     first = false;
+          //   }
+          //   do_the_update();
+          // };
+          rm->controlToCanonical = &RobotModule::ControlToCanonical;
+        }
+      }
+    };
     if(aliases.count(name))
     {
       const auto & params = aliases[name];
       if(params.size() == 1)
       {
-        guard.unlock();
-        rm = get_robot_module(params[0]);
+        rm = get_robot_module_from_lib(params[0]);
       }
       else if(params.size() == 2)
       {
-        guard.unlock();
-        rm = get_robot_module(params[0], params[1]);
+        rm = get_robot_module_from_lib(params[0], params[1]);
       }
       else if(params.size() == 3)
       {
-        guard.unlock();
-        rm = get_robot_module(params[0], params[1], params[2]);
+        rm = get_robot_module_from_lib(params[0], params[1], params[2]);
       }
       else
       {
@@ -103,58 +135,12 @@ public:
       }
       rm->_parameters.resize(1);
       rm->_parameters[0] = name;
-      return rm;
     }
     else
     {
-      if(!robot_loader->has_object(name))
-      {
-        mc_rtc::log::error(
-            "Cannot load the requested robot: {}\nIt is neither a valid alias nor a known exported robot", name);
-        mc_rtc::log::info("Available robots:");
-        mtx.unlock();
-        for(const auto & r : available_robots())
-        {
-          mc_rtc::log::info("- {}", r);
-        }
-        mc_rtc::log::error_and_throw<mc_rtc::LoaderException>("Cannot load the requested robot: {}", name);
-      }
-      rm = robot_loader->create_object(name, args...);
+      rm = get_robot_module_from_lib(name, args...);
     }
-    rm->_parameters = {name};
-    fill_rm_parameters(rm, args...);
-    if(rm->_canonicalParameters.empty())
-    {
-      rm->_canonicalParameters = rm->_parameters;
-    }
-    if(!rm->controlToCanonical)
-    {
-      if(rm->_canonicalParameters == rm->_parameters)
-      {
-        rm->controlToCanonical = [](const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical) {
-          canonical.mbc() = control.mbc();
-        };
-      }
-      else
-      {
-        // TODO Build a better function at this point using the (fixed) difference between control and canonical
-        // e.g.
-        // bool first = true;
-        // std::vector<...> // <-- some mapping index stuff
-        // rm->controlToCanonical = [rm, first, index_maps](const mc_rbdyn::Control & control, mc_rbdyn::Robot &
-        // canonical) mutable
-        // {
-        //   assert(control.module().parameters() == rm->_parameters && canonical.module().parameters() ==
-        //   rm->_canonicalParameters); if(first)
-        //   {
-        //     // initialize the stuff we need
-        //     first = false;
-        //   }
-        //   do_the_update();
-        // };
-        rm->controlToCanonical = &RobotModule::ControlToCanonical;
-      }
-    }
+    setup_canonical(rm);
     return rm;
   }
 
@@ -222,6 +208,31 @@ private:
   }
 
   static inline void fill_rm_parameters(mc_rbdyn::RobotModulePtr &) {}
+
+  template<typename... Args>
+  static mc_rbdyn::RobotModulePtr get_robot_module_from_lib(const std::string & name, const Args &... args)
+  {
+    if(!robot_loader->has_object(name))
+    {
+      mc_rtc::log::error("Cannot load the requested robot: {}\nIt is neither a valid alias nor a known exported robot",
+                         name);
+      mc_rtc::log::info("Available robots:");
+      mtx.unlock();
+      for(const auto & r : available_robots())
+      {
+        mc_rtc::log::info("- {}", r);
+      }
+      mc_rtc::log::error_and_throw<mc_rtc::LoaderException>("Cannot load the requested robot: {}", name);
+    }
+    mc_rbdyn::RobotModulePtr rm = robot_loader->create_object(name, args...);
+    if(!rm)
+    {
+      mc_rtc::log::error_and_throw("Failed to load {}", name);
+    }
+    rm->_parameters = {name};
+    fill_rm_parameters(rm, args...);
+    return rm;
+  }
 
   static std::unique_ptr<mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>> robot_loader;
   static bool verbose_;
