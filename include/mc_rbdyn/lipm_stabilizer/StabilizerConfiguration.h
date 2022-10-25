@@ -142,7 +142,9 @@ struct DCMBiasEstimatorConfiguration
   bool withDCMBias = false;
   /// Whether the DCM filter is enabled
   bool withDCMFilter = false;
-  /// Whether the absolution CoM position gets unbiased
+  /// Whether the absolute CoM position gets unbiased (useful when the disturbance comes from a bias on the CoM, for
+  /// example modeling errors or carrying an object, but it would be wrong if the disturbance comes from an unexpected
+  /// contact, the estimator cannot distinguish between them)
   bool correctCoMPos = false;
 
   void load(const mc_rtc::Configuration & config)
