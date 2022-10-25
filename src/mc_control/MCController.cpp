@@ -319,7 +319,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
     data("frames").add(r.name(), r.frames());
     auto name = r.name();
     gui()->addElement({"Robots"}, mc_rtc::gui::Robot(r.name(), [name, this]() -> const mc_rbdyn::Robot & {
-                        return this->robot(name);
+                        return this->outputRobot(name);
                       }));
   }
   if(updateNrVars)
