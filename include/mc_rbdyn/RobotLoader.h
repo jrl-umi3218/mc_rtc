@@ -123,7 +123,7 @@ public:
     }
     rm->_parameters = {name};
     fill_rm_parameters(rm, args...);
-    if(rm->_canonicalParameters.size() == 0)
+    if(rm->_canonicalParameters.empty())
     {
       rm->_canonicalParameters = rm->_parameters;
     }

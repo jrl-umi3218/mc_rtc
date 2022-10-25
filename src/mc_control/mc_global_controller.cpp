@@ -892,17 +892,24 @@ bool MCGlobalController::run()
     pre_gripper_mbcs_ = controller_->robots().mbcs();
     for(size_t i = 0; i < controller_->robots().size(); ++i)
     {
-      const auto & gi = controller_->robots().robot(i).grippers();
+      auto & robot = controller_->robots().robot(i);
+      auto & realRobot = controller_->realRobot(robot.name());
+      const auto & gi = robot.grippers();
       if(gi.empty())
       {
         continue;
       }
       for(auto & g : gi)
       {
-        g.get().run(controller_->timeStep, controller_->robots().robot(i),
-                    controller_->solver().result().robots_state[i].q);
+        g.get().run(controller_->timeStep, robot, controller_->solver().result().robots_state[i].q);
       }
-      controller_->robots().robot(i).forwardKinematics();
+      robot.forwardKinematics();
+
+      auto & outRobot = controller_->outputRobot(robot.name());
+      auto & outRealRobot = controller_->outputRealRobot(robot.name());
+      robot.module().controlToCanonical(robot, outRobot);
+      // FIXME: The real robot grippers should be displayed correctly too!
+      robot.module().controlToCanonical(realRobot, outRealRobot);
     }
     if(config.enable_log)
     {

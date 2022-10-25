@@ -375,6 +375,39 @@ public:
   mc_rbdyn::Robot & outputRobot(const std::string & name);
   /** @} */
 
+  /**
+   * @name Accessors to the output control robots
+   *
+   * These robots are used by the various interfaces to send control commands to
+   * the robots, and by the ROS plugin to publish a complete visualization of
+   * the robots (including non-controlled joints)
+   * @{
+   */
+  /** Return the mc_rbdyn::Robots real robots instance
+   * \anchor mc_controller_real_robots_const_doc
+   */
+  const mc_rbdyn::Robots & outputRealRobots() const;
+  /** Non-const variant of \ref mc_controller_real_robots_const_doc "outputRealRobots()" **/
+  mc_rbdyn::Robots & outputRealRobots();
+
+  /** Return the main mc_rbdyn::Robot real robot instance
+   * \anchor mc_controller_real_robot_const_doc
+   */
+  const mc_rbdyn::Robot & outputRealRobot() const;
+  /** Non-const variant of \ref mc_controller_real_robot_const_doc "outputRealRobot()" */
+  mc_rbdyn::Robot & outputRealRobot();
+
+  /** Return the mc_rbdyn::Robot controlled by this controller
+   *
+   * @throws std::runtime_error if the robot does not exist
+   * \anchor mc_controller_outputRealRobot_name_const_doc
+   **/
+  const mc_rbdyn::Robot & outputRealRobot(const std::string & name) const;
+
+  /** Non-const variant of \ref mc_controller_outputRealRobot_name_const_doc "outputRealRobot(name)" */
+  mc_rbdyn::Robot & outputRealRobot(const std::string & name);
+  /** @} */
+
   /** Returns a list of robots supported by the controller.
    * \param out Vector of supported robots designed by name (as returned by
    * RobotModule::name())
@@ -545,6 +578,7 @@ protected:
    * module.
    */
   mc_rbdyn::RobotsPtr outputRobots_;
+  mc_rbdyn::RobotsPtr outputRealRobots_;
 
   /** State observation pipelines for this controller */
   std::vector<mc_observers::ObserverPipeline> observerPipelines_;

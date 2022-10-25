@@ -28,6 +28,8 @@ namespace mc_robots
 JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics)
 : RobotModule(std::string(JVRC_VAL_VAL(JVRC_DESCRIPTION_PATH)), "jvrc1")
 {
+  _canonicalParameters = {"JVRC1"};
+
   std::vector<std::string> filter_links = {};
   if(filter_mimics)
   {
