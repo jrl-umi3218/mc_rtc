@@ -175,7 +175,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                      [this]() { c_.extWrench.modifyZMPErrD = !c_.extWrench.modifyZMPErrD; }),
                  Checkbox(
                      "excludeFromDCMBiasEst", [this]() { return c_.extWrench.excludeFromDCMBiasEst; },
-                     [this]() { c_.extWrench.excludeFromDCMBiasEst; }),
+                     [this]() { c_.extWrench.excludeFromDCMBiasEst = !c_.extWrench.excludeFromDCMBiasEst; }),
                  NumberInput(
                      "Limit of comOffsetErrCoM", [this]() { return c_.extWrench.comOffsetErrCoMLimit; },
                      [this](double a) { c_.extWrench.comOffsetErrCoMLimit = a; }),
@@ -194,8 +194,8 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  NumberInput(
                      "Time constant of comOffsetDerivator", [this]() { return comOffsetDerivator_.timeConstant(); },
                      [this](double a) { comOffsetDerivatorTimeConstant(a); }),
-                 ArrayLabel("CoM offset ", [this]() { return comOffsetMeasured_; }),
-                 Label("zmpcoef ", [this]() { return std::to_string(zmpCoefMeasured_); }));
+                 ArrayLabel("Measured CoM offset ", [this]() { return comOffsetMeasured_; }),
+                 Label("Zmp coef ", [this]() { return std::to_string(zmpCoefMeasured_); }));
 
   gui.addElement({"Tasks", name_, "Debug"}, Button("Disable", [this]() { disable(); }));
   addConfigButtons({"Tasks", name_, "Debug"});
