@@ -184,7 +184,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
   targetQIn.resize(active_joints.size());
   targetQ = nullptr;
 
-  reversed = reverseLimits;
+  reversed_ = reverseLimits;
 
   joints_mbc_idx.clear();
   for(const auto & name : names)
@@ -546,7 +546,7 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, std::map<std::string
       {
         mc_rtc::log::warning("Gripper safety triggered on {}", names[i]);
         overCommandLimit[i] = true;
-        if(reversed)
+        if(reversed_)
         {
           actualQ[i] = actualQ[i] + config_.releaseSafetyOffset;
         }

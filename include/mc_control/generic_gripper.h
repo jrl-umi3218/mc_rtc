@@ -279,6 +279,12 @@ struct MC_RBDYN_DLLAPI Gripper
     return is_metric_;
   }
 
+  /** \brief When true the gripper is considered "open" when the joints' values are minimal */
+  inline bool reversed() const noexcept
+  {
+    return reversed_;
+  }
+
 protected:
   /*! \brief Set the target opening of a single gripper joint by index
    * \param activeJointId Index of the active joint
@@ -367,7 +373,7 @@ protected:
   /*! Store the number of iterations where the gripper command was over the limit */
   std::vector<unsigned int> overCommandLimitIter;
   /*! True if the gripper is reversed */
-  bool reversed = false;
+  bool reversed_ = false;
 };
 
 using GripperPtr = std::unique_ptr<Gripper>;
