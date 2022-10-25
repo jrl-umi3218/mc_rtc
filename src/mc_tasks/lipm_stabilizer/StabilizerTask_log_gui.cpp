@@ -156,9 +156,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  ArrayInput(
                      "CoM bias Limit [m]", {"sagital", "lateral"},
                      [this]() -> const Eigen::Vector2d & { return c_.dcmBias.comBiasLimit; },
-                     [this](const Eigen::Vector2d & v) { c_.dcmBias.comBiasLimit = v; }),
-                 ArrayLabel("CoM offset (ext wrench)", [this]() { return comOffsetMeasured_; }),
-                 Label("zmpcoef (ext wrench)", [this]() { return std::to_string(zmpCoefMeasured_); }));
+                     [this](const Eigen::Vector2d & v) { c_.dcmBias.comBiasLimit = v; }));
   gui.addElement({"Tasks", name_, "Advanced", "Ext Wrench"},
                  Checkbox(
                      "addExpectedCoMOffset", [this]() { return c_.extWrench.addExpectedCoMOffset; },
@@ -175,6 +173,9 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  Checkbox(
                      "modifyZMPErrD", [this]() { return c_.extWrench.modifyZMPErrD; },
                      [this]() { c_.extWrench.modifyZMPErrD = !c_.extWrench.modifyZMPErrD; }),
+                 Checkbox(
+                     "excludeFromDCMBiasEst", [this]() { return c_.extWrench.excludeFromDCMBiasEst; },
+                     [this]() { c_.extWrench.excludeFromDCMBiasEst; }),
                  NumberInput(
                      "Limit of comOffsetErrCoM", [this]() { return c_.extWrench.comOffsetErrCoMLimit; },
                      [this](double a) { c_.extWrench.comOffsetErrCoMLimit = a; }),
