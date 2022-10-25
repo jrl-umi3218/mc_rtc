@@ -849,15 +849,24 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
       if(dcmEstimatorNeedsReset_)
       {
         dcmEstimator_.resetWithMeasurements(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation, true);
-        dcmEstimator_.setUnbiasedCoMOffset(comOffsetMeasured_.head<2>());
-        dcmEstimator_.setZMPCoef(zmpCoefMeasured_);
-
+        if(c_.extWrench.excludeFromDCMBiasEst)
+        {
+          dcmEstimator_.setUnbiasedCoMOffset(-comOffsetMeasured_.head<2>());
+          dcmEstimator_.setZMPCoef(zmpCoefMeasured_);
+        }
         dcmEstimatorNeedsReset_ = false;
       }
       else
       {
-        dcmEstimator_.setInputs(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation, comOffsetMeasured_.head<2>(),
-                                zmpCoefMeasured_);
+        if(c_.extWrench.excludeFromDCMBiasEst)
+        {
+          dcmEstimator_.setInputs(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation,
+                                  -comOffsetMeasured_.head<2>(), zmpCoefMeasured_);
+        }
+        else
+        {
+          dcmEstimator_.setInputs(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation);
+        }
       }
 
       /// run the estimation
