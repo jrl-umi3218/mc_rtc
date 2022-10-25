@@ -659,18 +659,18 @@ void StabilizerTask::setExternalWrenches(const std::vector<std::string> & surfac
 
 template<sva::ForceVecd StabilizerTask::ExternalWrench::*TargetOrMeasured>
 void StabilizerTask::computeWrenchOffsetAndCoefficient(const mc_rbdyn::Robot & robot,
-                                                       Eigen::Vector3d & offset_alpha,
+                                                       Eigen::Vector3d & offset_gamma,
                                                        double & coef_kappa) const
 {
-  offset_alpha.setZero();
+  offset_gamma.setZero();
   coef_kappa = 0;
   Eigen::Vector3d pos, force, moment;
   for(const auto & extWrench : extWrenches_)
   {
     computeExternalContact(robot, extWrench.surfaceName, extWrench.*TargetOrMeasured, pos, force, moment);
 
-    offset_alpha.x() += (pos.z() - zmpTarget_.z()) * force.x() - pos.x() * force.z() + moment.y();
-    offset_alpha.y() += (pos.z() - zmpTarget_.z()) * force.y() - pos.y() * force.z() - moment.x();
+    offset_gamma.x() += (pos.z() - zmpTarget_.z()) * force.x() - pos.x() * force.z() + moment.y();
+    offset_gamma.y() += (pos.z() - zmpTarget_.z()) * force.y() - pos.y() * force.z() - moment.x();
 
     coef_kappa -= force.z();
   }
@@ -687,7 +687,7 @@ void StabilizerTask::computeWrenchOffsetAndCoefficient(const mc_rbdyn::Robot & r
   // \zeta in Murooka et al. RAL 2019
   double zeta = robot.mass() * verticalComAcc;
 
-  offset_alpha /= zeta;
+  offset_gamma /= zeta;
 
   coef_kappa /= zeta;
   coef_kappa += 1.;
@@ -1211,11 +1211,11 @@ void StabilizerTask::updateFootForceDifferenceControl()
 
 template void StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::target>(
     const mc_rbdyn::Robot & robot,
-    Eigen::Vector3d & offset_alpha,
+    Eigen::Vector3d & offset_gamma,
     double & coef_kappa) const;
 template void StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::measured>(
     const mc_rbdyn::Robot & robot,
-    Eigen::Vector3d & offset_alpha,
+    Eigen::Vector3d & offset_gamma,
     double & coef_kappa) const;
 
 template sva::ForceVecd StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::target>(
