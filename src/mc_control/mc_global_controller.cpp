@@ -1048,6 +1048,66 @@ const mc_rbdyn::Robot & MCGlobalController::realRobot(const std::string & name) 
   return realRobots().robot(name);
 }
 
+mc_rbdyn::Robots & MCGlobalController::outputRobots()
+{
+  return controller_->outputRobots();
+}
+
+const mc_rbdyn::Robots & MCGlobalController::outputRobots() const
+{
+  return controller_->outputRobots();
+}
+
+mc_rbdyn::Robots & MCGlobalController::outputRealRobots()
+{
+  return controller_->outputRealRobots();
+}
+
+const mc_rbdyn::Robots & MCGlobalController::outputRealRobots() const
+{
+  return controller_->outputRealRobots();
+}
+
+mc_rbdyn::Robot & MCGlobalController::outputRobot()
+{
+  return controller_->outputRobot();
+}
+
+const mc_rbdyn::Robot & MCGlobalController::outputRobot() const
+{
+  return controller_->outputRobot();
+}
+
+mc_rbdyn::Robot & MCGlobalController::outputRobot(const std::string & name)
+{
+  return outputRobots().robot(name);
+}
+
+const mc_rbdyn::Robot & MCGlobalController::outputRobot(const std::string & name) const
+{
+  return outputRobots().robot(name);
+}
+
+mc_rbdyn::Robot & MCGlobalController::outputRealRobot()
+{
+  return controller_->outputRealRobot();
+}
+
+const mc_rbdyn::Robot & MCGlobalController::outputRealRobot() const
+{
+  return controller_->outputRealRobot();
+}
+
+mc_rbdyn::Robot & MCGlobalController::outputRealRobot(const std::string & name)
+{
+  return outputRealRobots().robot(name);
+}
+
+const mc_rbdyn::Robot & MCGlobalController::outputRealRobot(const std::string & name) const
+{
+  return outputRealRobots().robot(name);
+}
+
 void MCGlobalController::setGripperTargetQ(const std::string & robot,
                                            const std::string & name,
                                            const std::vector<double> & q)
