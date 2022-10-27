@@ -749,12 +749,12 @@ private:
    *
    *  @tparam TargetOrMeasured Change depending on the used wrenches
    *  @param robot [in] - Robot used to transform surface wrenches (control robot or real robot)
-   *  @param offset_alpha [out] - Com offset
+   *  @param offset_gamma [out] - Com offset
    *  @param coef_alpha [out] - ZmP coefficient
    */
   template<sva::ForceVecd ExternalWrench::*TargetOrMeasured>
   void computeWrenchOffsetAndCoefficient(const mc_rbdyn::Robot & robot,
-                                         Eigen::Vector3d & offset_alpha,
+                                         Eigen::Vector3d & offset_gamma,
                                          double & coef_kappa) const;
 
   /** @brief Compute the sum of external wrenches.
@@ -939,11 +939,11 @@ protected:
 
 extern template void StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::target>(
     const mc_rbdyn::Robot & robot,
-    Eigen::Vector3d & offset_alpha,
+    Eigen::Vector3d & offset_gamma,
     double & coef_kappa) const;
 extern template void StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::measured>(
     const mc_rbdyn::Robot & robot,
-    Eigen::Vector3d & offset_alpha,
+    Eigen::Vector3d & offset_gamma,
     double & coef_kappa) const;
 
 extern template sva::ForceVecd StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::target>(
