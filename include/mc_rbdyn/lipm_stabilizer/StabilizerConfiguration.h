@@ -209,8 +209,8 @@ struct DCMBiasEstimatorConfiguration
  *    take external forces into account), then set addExpectedCoMOffset, modifyCoMErr, modifyZMPErr to true.
  *  - modifyZMPErrD should theoretically be true, but it depends on the derivative of the measured external forces, so
  *    it becomes sensitive to the noises in the measurement noise.
- *  - If you want to use the DCM bias estimator then if one of addExpectedCoMOffset, modifyCoMErr or modifyZMPErr is
- * true, set excludeFromDCMBiasEst to true.
+ *  - If you want to use the DCM bias estimator then if the pattern generator takes the forces into account or if one of
+ * addExpectedCoMOffset, modifyCoMErr or modifyZMPErr is true, set excludeFromDCMBiasEst to true.
  *  - subtractMeasuredValue is a more experimental and the option inspired from
  *    https://github.com/stephane-caron/lipm_walking_controller/discussions/28 Normally set to false.
  */
