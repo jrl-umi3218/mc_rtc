@@ -851,7 +851,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
         dcmEstimator_.resetWithMeasurements(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation, true);
         if(c_.extWrench.excludeFromDCMBiasEst)
         {
-          /// We have to send the oppopsite of the offset because the error is target-measured,
+          /// We have to send the oppopsite of the offset because the error is target - measured,
           dcmEstimator_.setUnbiasedCoMOffset(-comOffsetMeasured_.head<2>());
           dcmEstimator_.setZMPCoef(zmpCoefMeasured_);
         }
@@ -861,7 +861,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
       {
         if(c_.extWrench.excludeFromDCMBiasEst)
         {
-          /// We have to send the oppopsite of the offset because the error is target-measured,
+          /// We have to send the oppopsite of the offset because the error is target - measured,
           dcmEstimator_.setInputs(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation,
                                   -comOffsetMeasured_.head<2>(), zmpCoefMeasured_);
         }
