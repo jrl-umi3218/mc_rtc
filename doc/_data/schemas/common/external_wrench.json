@@ -29,6 +29,11 @@
       "default": "false",
       "description": "Modify ZMP velocity depending on the error of the external wrenches in target and measurement"
     },
+    "exclude_from_dcm_bias_est": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Exclude external forces from DCM Bias estimation (should be used when the pg/stabilizer is actively compensating for those measured forces)"
+    },
 
     "com_offset_err_com_limit": {
       "type": "number",
