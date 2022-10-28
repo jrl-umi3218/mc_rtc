@@ -228,8 +228,8 @@ struct ExternalWrenchConfiguration
   bool modifyZMPErr = false;
   /// Modify ZMP velocity depending on the error velocity of the external wrenches in target and measurement
   bool modifyZMPErrD = false;
-  /// Exclude external forces from DCM Bias estimation (should be used when the stabilizer is actively compensating for
-  /// those measured forces)
+  /// Exclude external forces from DCM Bias estimation (should be used when the pg/stabilizer is actively compensating
+  /// for those measured forces)
   bool excludeFromDCMBiasEst = false;
   /// Limit of CoM offset error handled by CoM modification
   double comOffsetErrCoMLimit = 0.1;
