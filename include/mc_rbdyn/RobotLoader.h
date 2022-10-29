@@ -91,26 +91,16 @@ public:
         {
           rm->controlToCanonical = [](const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical) {
             canonical.mbc() = control.mbc();
+            canonical.encoderValues(control.encoderValues());
           };
         }
         else
         {
-          // TODO Build a better function at this point using the (fixed) difference between control and canonical
-          // e.g.
-          // bool first = true;
-          // std::vector<...> // <-- some mapping index stuff
-          // rm->controlToCanonical = [rm, first, index_maps](const mc_rbdyn::Control & control, mc_rbdyn::Robot &
-          // canonical) mutable
-          // {
-          //   assert(control.module().parameters() == rm->_parameters && canonical.module().parameters() ==
-          //   rm->_canonicalParameters); if(first)
-          //   {
-          //     // initialize the stuff we need
-          //     first = false;
-          //   }
-          //   do_the_update();
-          // };
-          rm->controlToCanonical = &RobotModule::ControlToCanonical;
+          rm->controlToCanonical = [rm](const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical) {
+            assert(control.module().parameters() == rm->_parameters
+                   && canonical.module().parameters() == rm->_canonicalParameters);
+            rm->defaultControlToCanonical(control, canonical);
+          };
         }
       }
     };

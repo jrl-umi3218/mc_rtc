@@ -581,11 +581,27 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Convert from the module configuration to the \ref canonicalParameters configuration
    *
    * The default implementation:
-   * - copies the value of common joints between \param control and \param canonical
-   * - set the correct mimic configuration for missing joints if the mimic's reference is provided by \param control
-   * - set other joints to the encoder values or 0 if it is not part of the encoders
+   * - Copies the control robot mbc and encoders to the canonical robot if no
+   *   custom canonical robot module is set in _canonicalParameters
+   * - Calls defaultControlToCanonical(const mc_rbdyn::Robot &, const mc_rbdyn::Robot &) otherwise
+   *
+   * This function is called automatically by mc_rtc after each iteration of MCController::run()
    */
   std::function<void(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical)> controlToCanonical;
+
+  /** Default implementation of controlToCanonical
+   *
+   * By default this implementation is used when the canonical robot module
+   * differs from the control robot module. It may be called by the user in
+   * their own custom implementation of controlToCanonical(mc_rbdyn::Robot &, mc_rbdyn::Robot &)
+   *
+   * The default implementation:
+   * - Copies all common encoders from the control robot to the canonical robot
+   * - Copies all common joint values from the control robot to the
+   * canonical robot
+   * - Handle mimics in the canonical robot
+   * */
+  std::function<void(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical)> defaultControlToCanonical;
 
   /** Returns the path to a "real" URDF file
    *
@@ -611,6 +627,10 @@ struct MC_RBDYN_DLLAPI RobotModule
     return _frames;
   }
 
+protected:
+  void setupDefaultControlToCanonical();
+
+public:
   /** Path to the robot's description package */
   std::string path;
   /** (default) Name of the robot */
@@ -685,9 +705,6 @@ struct MC_RBDYN_DLLAPI RobotModule
   DevicePtrVector _devices;
   /** \see frames() */
   std::vector<FrameDescription> _frames;
-
-  /** Default implementation for \ref controlToCanonical */
-  static void ControlToCanonical(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical);
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;

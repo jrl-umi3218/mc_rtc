@@ -908,7 +908,6 @@ bool MCGlobalController::run()
       auto & outRobot = controller_->outputRobot(robot.name());
       auto & outRealRobot = controller_->outputRealRobot(robot.name());
       robot.module().controlToCanonical(robot, outRobot);
-      // FIXME: The real robot grippers should be displayed correctly too!
       robot.module().controlToCanonical(realRobot, outRealRobot);
     }
     if(config.enable_log)
