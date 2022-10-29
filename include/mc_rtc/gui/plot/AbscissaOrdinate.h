@@ -38,7 +38,7 @@ struct AbscissaOrdinate
 
   void write(mc_rtc::MessagePackBuilder & builder) const
   {
-    builder.start_array(7);
+    builder.start_array(6);
     builder.write(static_cast<uint64_t>(type));
     builder.write(name_);
     builder.write(cache_);
