@@ -50,7 +50,7 @@ JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics)
   }
   init(rbd::parsers::from_urdf_file(
       urdf_path,
-      rbd::parsers::ParserParameters{}.fixed(fixed).filtered_links(filter_links).remove_filtered_links(false)));
+      rbd::parsers::ParserParameters{}.fixed(fixed).filtered_links(filter_links).remove_filtered_links(true)));
 
   std::string convexPath = path + "/convex/" + name + "/";
   bfs::path p(convexPath);

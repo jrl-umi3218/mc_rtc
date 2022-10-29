@@ -11,9 +11,8 @@ RobotConverter::RobotConverter(const RobotConverterConfig & config) : config_(co
 
 void RobotConverter::precompute(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot & outputRobot)
 {
-  // Construct list of common joints between inputRobot and outputRobot
-  if(config_.mbcToOutMbc)
-  {
+  if(config_.mbcToOutMbc_)
+  { // Construct list of common joints between inputRobot and outputRobot
     commonJointIndices_.reserve(std::max(inputRobot.mb().joints().size(), outputRobot.mb().joints().size()));
     for(const auto & joint : inputRobot.mb().joints())
     {
@@ -26,46 +25,40 @@ void RobotConverter::precompute(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Ro
     }
   }
 
-  if(config_.copyEncoderValues || config_.copyEncoderVelocities || config_.encodersToOutMbc)
-  {
+  if(config_.copyEncoderValues_ || config_.copyEncoderVelocities_ || config_.encodersToOutMbc_)
+  { // Common actuated joints and its index in output mbc
     commonEncoderToJointIndices_.reserve(inputRobot.refJointOrder().size());
     commonEncoderIndices_.reserve(inputRobot.refJointOrder().size());
-    // Construct the list of common actuated joints between the
-    // inputRobot and outputRobot
     const auto & rjo = inputRobot.refJointOrder();
     for(size_t i = 0; i < rjo.size(); ++i)
     {
       const auto & jname = rjo[i];
       if(outputRobot.hasJoint(jname))
       {
-        auto mbcIndex = outputRobot.jointIndexInMBC(i);
-        if(mbcIndex < 0)
-        {
-          continue;
-        }
-        commonEncoderToJointIndices_.emplace_back(i, mbcIndex);
-
         const auto & oRjo = outputRobot.refJointOrder();
-        auto it = std::find(oRjo.begin(), oRjo.end(), rjo[i]);
+        auto it = std::find(oRjo.begin(), oRjo.end(), jname);
         if(it != oRjo.end())
         {
           commonEncoderIndices_.emplace_back(i, std::distance(oRjo.begin(), it));
         }
+
+        auto mbcIndex = outputRobot.jointIndexByName(jname);
+        commonEncoderToJointIndices_.emplace_back(i, mbcIndex);
       }
     }
   }
 
-  if(config_.copyEncoderValues)
+  if(config_.copyEncoderValues_)
   {
     outEncoderValues_.resize(outputRobot.refJointOrder().size());
   }
 
-  if(config_.copyEncoderVelocities)
+  if(config_.copyEncoderVelocities_)
   {
     outEncoderVelocities_.resize(outputRobot.refJointOrder().size());
   }
 
-  if(config_.computeMimics)
+  if(config_.computeMimics_)
   {
     for(const auto & m : outputRobot.mb().joints())
     {
@@ -91,24 +84,24 @@ void RobotConverter::convert(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot
   const auto & encoders = inputRobot.encoderValues();
   if(encoders.size() == inputRobot.refJointOrder().size())
   {
-    if(config_.encodersToOutMbc)
+    if(config_.encodersToOutMbc_)
     {
       for(const auto & indices : commonEncoderToJointIndices_)
       {
         outputRobot.mbc().q[indices.second][0] = encoders[indices.first];
       }
     }
-    if(config_.copyEncoderValues)
+    if(config_.copyEncoderValues_)
     {
-      for(const auto & indices : commonEncoderToJointIndices_)
+      for(const auto & indices : commonEncoderIndices_)
       {
         outEncoderValues_[indices.second] = encoders[indices.first];
       }
       outputRobot.encoderValues(outEncoderValues_);
     }
-    if(config_.copyEncoderValues)
+    if(config_.copyEncoderVelocities_)
     {
-      for(const auto & indices : commonEncoderToJointIndices_)
+      for(const auto & indices : commonEncoderIndices_)
       {
         outEncoderVelocities_[indices.second] = encoders[indices.first];
       }
@@ -123,27 +116,27 @@ void RobotConverter::convert(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot
       output[commonIndices.second] = input[commonIndices.first];
     }
   };
-  if(config_.mbcToOutMbc)
+  if(config_.mbcToOutMbc_)
   {
-    if(config_.q)
+    if(config_.q_)
     {
       copyMbc(inputRobot.mbc().q, outputRobot.mbc().q);
     }
-    if(config_.alpha)
+    if(config_.alpha_)
     {
       copyMbc(inputRobot.mbc().alpha, outputRobot.mbc().alpha);
     }
-    if(config_.alphad)
+    if(config_.alphad_)
     {
       copyMbc(inputRobot.mbc().alphaD, outputRobot.mbc().alphaD);
     }
-    if(config_.tau)
+    if(config_.tau_)
     {
       copyMbc(inputRobot.mbc().jointTorque, outputRobot.mbc().jointTorque);
     }
   }
 
-  if(config_.computeMimics)
+  if(config_.computeMimics_)
   {
     // Handle mimics in outputRobot
     for(const auto & mimicIndices : mimicJoints_)
@@ -154,7 +147,7 @@ void RobotConverter::convert(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot
     }
   }
 
-  if(config_.copyForceSensors)
+  if(config_.copyForceSensors_)
   {
     // Copy the force sensors into outputRobot
     for(const auto & fs : inputRobot.forceSensors())
@@ -166,7 +159,7 @@ void RobotConverter::convert(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot
     }
   }
 
-  if(config_.copyBodySensors)
+  if(config_.copyBodySensors_)
   {
     // Copy the body sensors into outputRobot
     for(const auto & bs : inputRobot.bodySensors())

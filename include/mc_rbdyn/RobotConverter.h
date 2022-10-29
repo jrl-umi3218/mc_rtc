@@ -16,29 +16,85 @@ namespace mc_rbdyn
 struct RobotConverterConfig
 {
   ///< Copy input robot's mbc to their corresponding output robot's mbc
-  bool mbcToOutMbc = true;
+  bool mbcToOutMbc_ = true;
   /**
-   * Chosse which mbc properties to copy, only effective if mbcToOutMbc = true
+   * Chosse which mbc properties to copy, only effective if mbcToOutMbc_ = true
    * @{
    */
-  bool q = true;
-  bool alpha = true;
-  bool alphad = true;
-  bool tau = true;
+  bool q_ = true;
+  bool alpha_ = true;
+  bool alphad_ = true;
+  bool tau_ = true;
   ///< @}
 
   ///< Copy input encoder values to the output robot's mbc
-  bool encodersToOutMbc = true;
+  bool encodersToOutMbc_ = true;
   ///< Copy input encoder values to the output robot's encoder values
-  bool copyEncoderValues = true;
+  bool copyEncoderValues_ = true;
   ///< Copy input encoder velocities to the output robot's encoder velocities
-  bool copyEncoderVelocities = true;
+  bool copyEncoderVelocities_ = true;
   ///< Copy input force sensors to the output robot's force sensors
-  bool copyForceSensors = true;
+  bool copyForceSensors_ = true;
   ///< Copy input body sensors to the output robot's body sensors
-  bool copyBodySensors = true;
+  bool copyBodySensors_ = true;
   ///< Compute the output robot's joint mimics
-  bool computeMimics = true;
+  bool computeMimics_ = true;
+
+  inline RobotConverterConfig & mbcToOutMbc(bool b) noexcept
+  {
+    mbcToOutMbc_ = b;
+    return *this;
+  }
+  inline RobotConverterConfig q(bool b) noexcept
+  {
+    q_ = b;
+    return *this;
+  };
+  inline RobotConverterConfig alpha(bool b) noexcept
+  {
+    alpha_ = b;
+    return *this;
+  };
+  inline RobotConverterConfig alphad(bool b) noexcept
+  {
+    alphad_ = b;
+    return *this;
+  };
+  inline RobotConverterConfig tau(bool b) noexcept
+  {
+    tau_ = b;
+    return *this;
+  };
+  inline RobotConverterConfig encodersToOutMbc(bool b) noexcept
+  {
+    encodersToOutMbc_ = b;
+    return *this;
+  };
+  inline RobotConverterConfig copyEncoderValues(bool b) noexcept
+  {
+    copyEncoderValues_ = b;
+    return *this;
+  };
+  inline RobotConverterConfig copyEncoderVelocities(bool b) noexcept
+  {
+    copyEncoderVelocities_ = b;
+    return *this;
+  };
+  inline RobotConverterConfig copyForceSensors(bool b) noexcept
+  {
+    copyForceSensors_ = b;
+    return *this;
+  };
+  inline RobotConverterConfig copyBodySensors(bool b) noexcept
+  {
+    copyBodySensors_ = b;
+    return *this;
+  };
+  inline RobotConverterConfig computeMimics(bool b) noexcept
+  {
+    computeMimics_ = b;
+    return *this;
+  };
 };
 
 /**
@@ -74,7 +130,7 @@ protected:
   void precompute(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot & outputRobot);
 
 protected:
-  RobotConverterConfig config_;
+  const RobotConverterConfig config_;
   bool first_ = true;
   // Common joint indices from inputRobot_ -> outputRobot_ robot
   std::vector<std::pair<unsigned int, unsigned int>> commonJointIndices_{};
