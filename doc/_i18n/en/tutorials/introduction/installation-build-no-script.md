@@ -29,7 +29,6 @@ If you wish to get Python bindings you will also need the following:
  * [Cython](http://cython.org/) >= 0.2
  * [python-pip]()
  * [python-numpy]()
- * [python-nose]()
  * [python-pytest]()
  * [python-coverage]()
  * [Eigen3ToPython](https://github.com/jrl-umi3218/Eigen3ToPython)

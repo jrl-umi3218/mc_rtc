@@ -5,7 +5,7 @@ then
   export BREW_DEPENDENCIES="$BREW_DEPENDENCIES google-benchmark"
 fi
 
-export PIP_DEPENDENCIES="Cython coverage nose pytest numpy matplotlib"
+export PIP_DEPENDENCIES="Cython coverage pytest numpy matplotlib"
 if $WITH_ROS_SUPPORT && [ -z $ROS_DISTRO ]
 then
   echo "ROS support is disabled as ROS was not detected. If you have ROS, please source the setup script before running this script."

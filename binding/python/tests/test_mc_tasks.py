@@ -7,8 +7,6 @@ import mc_rbdyn
 import mc_rtc
 import eigen as e
 
-from nose import with_setup
-
 mc_rtc.Loader.debug_suffix("")
 
 class TestMCTasks():

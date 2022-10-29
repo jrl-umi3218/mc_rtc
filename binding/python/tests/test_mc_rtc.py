@@ -9,9 +9,8 @@ import eigen
 import sva
 
 import os
+import pytest
 import tempfile
-
-from nose.tools import *
 
 def makeConfigFile(data):
   f = tempfile.NamedTemporaryFile(delete = False)
@@ -94,12 +93,9 @@ def sampleConfig2(fromDisk):
     return data
 
 
-@nottest
-def test_configuration_reading(config, fromDisk2):
-  @raises(RuntimeError)
-  def test_throw():
-    config("NONE")
-  test_throw()
+def do_configuration_reading(config, fromDisk2):
+  with pytest.raises(RuntimeError):
+      config("NONE")
 
   assert(config("int", int) == 42)
   assert(config("int", 0) == 42)
@@ -126,10 +122,8 @@ def test_configuration_reading(config, fromDisk2):
   assert(config("v3d", eigen.Vector3d) == ref)
   assert(config("v3d", zero) == ref)
   assert(config("v6d", zero) == zero)
-  @raises(RuntimeError)
-  def test_v6d_to_v3d_throw():
-    config("v6d", eigen.Vector3d)
-  test_v6d_to_v3d_throw()
+  with pytest.raises(RuntimeError):
+      config("v6d", eigen.Vector3d)
   assert(config("dict")("v3d", eigen.Vector3d) == ref)
   assert(config("dict")("v3d", zero) == ref)
 
@@ -138,10 +132,8 @@ def test_configuration_reading(config, fromDisk2):
   assert(config("v6d", eigen.Vector6d) == ref)
   assert(config("v6d", zero) == ref)
   assert(config("v3d", zero) == zero)
-  @raises(RuntimeError)
-  def test_v3d_to_v6d_throw():
-    config("v3d", eigen.Vector6d)
-  test_v3d_to_v6d_throw()
+  with pytest.raises(RuntimeError):
+      config("v3d", eigen.Vector6d)
   assert(config("dict")("v6d", eigen.Vector6d) == ref)
   assert(config("dict")("v6d", zero) == ref)
 
@@ -151,10 +143,8 @@ def test_configuration_reading(config, fromDisk2):
   assert(config("v6d", eigen.VectorXd) == ref6)
   assert(config("v3d", eigen.VectorXd) == ref3)
   assert(config("vXd", eigen.VectorXd) == ref)
-  @raises(RuntimeError)
-  def test_int_tovxd_throw():
-    config("int", eigen.VectorXd)
-  test_int_tovxd_throw()
+  with pytest.raises(RuntimeError):
+      config("int", eigen.VectorXd)
   assert(config("dict")("v6d", eigen.VectorXd) == ref6)
   assert(config("dict")("v3d", eigen.VectorXd) == ref3)
   assert(config("emptyArray", eigen.VectorXd.Zero(100)) == eigen.VectorXd.Zero(0))
@@ -212,21 +202,21 @@ def test_configuration_reading_disk_disk():
   file = sampleConfig(True)
   config = mc_rtc.Configuration(file)
   os.remove(file)
-  test_configuration_reading(config, True)
+  do_configuration_reading(config, True)
 
 def test_configuration_reading_disk_data():
   file = sampleConfig(True)
   config = mc_rtc.Configuration(file)
   os.remove(file)
-  test_configuration_reading(config, False)
+  do_configuration_reading(config, False)
 
 def test_configuration_reading_data_disk():
   config = mc_rtc.Configuration.fromData(sampleConfig(False))
-  test_configuration_reading(config, True)
+  do_configuration_reading(config, True)
 
 def test_configuration_reading_data_data():
   config = mc_rtc.Configuration.fromData(sampleConfig(False))
-  test_configuration_reading(config, False)
+  do_configuration_reading(config, False)
 
 def test_configuration_writing():
   tmpF = tempfile.NamedTemporaryFile(delete = False).name

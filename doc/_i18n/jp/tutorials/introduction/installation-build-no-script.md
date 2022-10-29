@@ -29,7 +29,6 @@ Pythonバインディングを取得したい場合、以下のものが必要�
  * [Cython](http://cython.org/) 0.2以降
  * [python-pip]()
  * [python-numpy]()
- * [python-nose]()
  * [python-pytest]()
  * [python-coverage]()
  * [Eigen3ToPython](https://github.com/jrl-umi3218/Eigen3ToPython)
