@@ -7,7 +7,9 @@
 /*! Interface used to load robots */
 
 #include <mc_rbdyn/Robot.h>
+#include <mc_rbdyn/RobotConverter.h>
 #include <mc_rbdyn/RobotModule.h>
+#include <mc_rtc/io_utils.h>
 
 #include <mc_rtc/config.h>
 #include <mc_rtc/loader.h>
@@ -101,21 +103,19 @@ public:
             {
               canonical.bodySensor(bs.name()) = bs;
             }
-
-            // What about devices?
-            // Should they be called from the canonical robot in the controller?
-            // Or does it make sense to use the control robot?
-            // for(const auto & device : control.devices())
-            // {
-            // }
           };
         }
         else
         {
-          rm->controlToCanonical = [rm](const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical) {
+          // The first time this function is ran, initialize the fixed list of common joints
+          // between the control robot and canonical robot
+          mc_rbdyn::RobotConverter converter;
+          rm->controlToCanonical = [rm, converter](const mc_rbdyn::Robot & control,
+                                                   mc_rbdyn::Robot & canonical) mutable {
             assert(control.module().parameters() == rm->_parameters
                    && canonical.module().parameters() == rm->_canonicalParameters);
-            rm->defaultControlToCanonical(control, canonical);
+
+            converter.convert(control, canonical);
           };
         }
       }
@@ -137,7 +137,9 @@ public:
       }
       else
       {
-        mc_rtc::log::error_and_throw<mc_rtc::LoaderException>("Aliases can only handle 1 to 3 parameters");
+        mc_rtc::log::error_and_throw<mc_rtc::LoaderException>(
+            "Aliases can only handle 1 to 3 parameters, {} provided ({})", params.size(),
+            mc_rtc::io::to_string(params));
       }
       rm->_parameters.resize(1);
       rm->_parameters[0] = name;

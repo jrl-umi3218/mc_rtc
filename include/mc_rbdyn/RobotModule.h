@@ -581,27 +581,15 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Convert from the module configuration to the \ref canonicalParameters configuration
    *
    * The default implementation:
-   * - Copies the control robot mbc, encoders and sensors to the canonical robot if no
-   *   custom canonical robot module is set in _canonicalParameters
-   * - Calls defaultControlToCanonical(const mc_rbdyn::Robot &, const mc_rbdyn::Robot &) otherwise
+   * - If no custom canonical robot module is set in _canonicalParameters: copies the control robot mbc, encoders and
+   * sensors to the canonical robot
+   * - If a custom canonical robot module is set, it calls
+   *   RobotConverter::converter(const mc_rbdyn::Robot &, mc_rbdyn::Robot &) to
+   *   perform the conversion.
    *
    * This function is called automatically by mc_rtc after each iteration of MCController::run()
    */
   std::function<void(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical)> controlToCanonical;
-
-  /** Default implementation of controlToCanonical
-   *
-   * By default this implementation is used when the canonical robot module
-   * differs from the control robot module. It may be called by the user in
-   * their own custom implementation of controlToCanonical(mc_rbdyn::Robot &, mc_rbdyn::Robot &)
-   *
-   * The default implementation:
-   * - Copies all common encoders from the control robot to the canonical robot
-   * - Copies all common joint values from the control robot to the
-   * canonical robot
-   * - Handle mimics in the canonical robot
-   * */
-  std::function<void(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical)> defaultControlToCanonical;
 
   /** Returns the path to a "real" URDF file
    *
@@ -626,9 +614,6 @@ struct MC_RBDYN_DLLAPI RobotModule
   {
     return _frames;
   }
-
-protected:
-  void setupDefaultControlToCanonical();
 
 public:
   /** Path to the robot's description package */

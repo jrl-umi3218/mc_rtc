@@ -182,6 +182,7 @@ mc_rbdyn/Robots.cpp
 mc_rbdyn/PolygonInterpolator.cpp
 mc_rbdyn/polygon_utils.cpp
 mc_rbdyn/RobotLoader.cpp
+mc_rbdyn/RobotConverter.cpp
 mc_rbdyn/Collision.cpp
 mc_rbdyn/ForceSensor.cpp
 mc_rbdyn/RobotModule.cpp
@@ -208,6 +209,7 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/Robot.h
 ../include/mc_rbdyn/Robots.h
 ../include/mc_rbdyn/RobotLoader.h
+../include/mc_rbdyn/RobotConverter.h
 ../include/mc_rbdyn/RobotModule.h
 ../include/mc_rbdyn/RobotModuleMacros.h
 ../include/mc_rbdyn/SCHAddon.h
