@@ -581,7 +581,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Convert from the module configuration to the \ref canonicalParameters configuration
    *
    * The default implementation:
-   * - Copies the control robot mbc and encoders to the canonical robot if no
+   * - Copies the control robot mbc, encoders and sensors to the canonical robot if no
    *   custom canonical robot module is set in _canonicalParameters
    * - Calls defaultControlToCanonical(const mc_rbdyn::Robot &, const mc_rbdyn::Robot &) otherwise
    *

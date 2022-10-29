@@ -92,6 +92,22 @@ public:
           rm->controlToCanonical = [](const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical) {
             canonical.mbc() = control.mbc();
             canonical.encoderValues(control.encoderValues());
+            for(const auto & fs : control.forceSensors())
+            {
+              canonical.forceSensor(fs.name()) = fs;
+            }
+
+            for(const auto & bs : control.bodySensors())
+            {
+              canonical.bodySensor(bs.name()) = bs;
+            }
+
+            // What about devices?
+            // Should they be called from the canonical robot in the controller?
+            // Or does it make sense to use the control robot?
+            // for(const auto & device : control.devices())
+            // {
+            // }
           };
         }
         else

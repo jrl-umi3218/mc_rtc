@@ -126,16 +126,6 @@ void RobotModule::setupDefaultControlToCanonical()
       first = false;
     }
 
-    // Copy the encoders into canonical
-    const auto & encoders = control.encoderValues();
-    if(encoders.size() == control.refJointOrder().size())
-    {
-      for(const auto & indices : commonEncoderIndices)
-      {
-        canonical.mbc().q[indices.second][0] = encoders[indices.first];
-      }
-    }
-
     // Copy the common mbc joints into canonical
     for(const auto & commonIndices : commonJointIndices)
     {
@@ -149,6 +139,32 @@ void RobotModule::setupDefaultControlToCanonical()
       canonical.mbc().q[mimicIndices.second][0] =
           m.mimicMultiplier() * canonical.mbc().q[mimicIndices.first][0] + m.mimicOffset();
     }
+
+    // Copy the encoders into canonical
+    const auto & encoders = control.encoderValues();
+    if(encoders.size() == control.refJointOrder().size())
+    {
+      for(const auto & indices : commonEncoderIndices)
+      {
+        canonical.mbc().q[indices.second][0] = encoders[indices.first];
+      }
+    }
+
+    // Copy the force sensors into canonical
+    for(const auto & fs : control.forceSensors())
+    {
+      if(canonical.hasForceSensor(fs.name()))
+      {
+        canonical.forceSensor(fs.name()) = fs;
+      }
+    }
+
+    // Copy the body sensors into canonical
+    for(const auto & bs : control.bodySensors())
+    {
+      canonical.bodySensor(bs.name()) = bs;
+    }
+
     // Copy the base position which triggers all the updates
     canonical.posW(control.posW());
   };
