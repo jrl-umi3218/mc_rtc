@@ -239,7 +239,24 @@ public:
   bool hasContact(const Contact & c) const;
 
   /** Returns true if the robot is part of the controller */
-  bool hasRobot(const std::string & robot) const;
+  inline bool hasRobot(const std::string & robot) const noexcept
+  {
+    return robots().hasRobot(robot);
+  }
+
+  /** Return the mc_rbdyn::Robots controlled by this controller
+   * \anchor mc_controller_robots_const_doc
+   */
+  inline const mc_rbdyn::Robots & robots() const noexcept
+  {
+    return solver().robots();
+  }
+
+  /** Non-const variant of \ref mc_controller_robots_const_doc "robots()" */
+  inline mc_rbdyn::Robots & robots() noexcept
+  {
+    return solver().robots();
+  }
 
   /**
    * @name Accessors to the control robots
@@ -248,28 +265,32 @@ public:
   /** Return the main robot (first robot provided in the constructor)
    * \anchor mc_controller_robot_const_doc
    */
-  const mc_rbdyn::Robot & robot() const;
+  inline const mc_rbdyn::Robot & robot() const noexcept
+  {
+    return robots().robot();
+  }
 
-  /** Return the mc_rbdyn::Robots controlled by this controller
-   * \anchor mc_controller_robots_const_doc
-   */
-  const mc_rbdyn::Robots & robots() const;
-
-  /** Non-const variant of \ref mc_controller_robots_const_doc "robots()" */
-  mc_rbdyn::Robots & robots();
+  /** Non-const variant of \ref mc_controller_robot_const_doc "robot()" */
+  inline mc_rbdyn::Robot & robot() noexcept
+  {
+    return robots().robot();
+  }
 
   /** Return the mc_rbdyn::Robot controlled by this controller
    *
    * @throws std::runtime_error if the robot does not exist
    * \anchor mc_controller_robot_name_const_doc
    **/
-  const mc_rbdyn::Robot & robot(const std::string & name) const;
+  inline const mc_rbdyn::Robot & robot(const std::string & name) const
+  {
+    return robots().robot(name);
+  }
 
   /** Non-const variant of \ref mc_controller_robot_name_const_doc "robot(name)" */
-  mc_rbdyn::Robot & robot(const std::string & name);
-
-  /** Non-const variant of \ref mc_controller_robot_const_doc "robot()" */
-  mc_rbdyn::Robot & robot();
+  inline mc_rbdyn::Robot & robot(const std::string & name)
+  {
+    return robots().robot(name);
+  }
 
   /** Return the env "robot"
    * \note
@@ -278,37 +299,52 @@ public:
    *   2. The last robot provided at construction
    * \anchor mc_controller_env_const_doc
    */
-  const mc_rbdyn::Robot & env() const;
+  inline const mc_rbdyn::Robot & env() const noexcept
+  {
+    return robots().env();
+  }
 
   /** Non-const variant of \ref mc_controller_env_const_doc "env()" */
-  mc_rbdyn::Robot & env();
+  inline mc_rbdyn::Robot & env() noexcept
+  {
+    return robots().env();
+  }
   /** @} */
 
   /** Return the mc_solver::QPSolver instance attached to this controller
    * \anchor mc_controller_qpsolver_const_doc
    */
-  const mc_solver::QPSolver & solver() const;
+  inline const mc_solver::QPSolver & solver() const noexcept
+  {
+    return *qpsolver;
+  }
 
   /** Non-const variant of \ref mc_controller_qpsolver_const_doc "solver()" */
-  mc_solver::QPSolver & solver();
+  inline mc_solver::QPSolver & solver() noexcept
+  {
+    return *qpsolver;
+  }
 
   /** Returns mc_rtc::Logger instance */
-  mc_rtc::Logger & logger();
+  inline mc_rtc::Logger & logger() noexcept
+  {
+    return *logger_;
+  }
 
   /** Returns mc_rtc::gui::StateBuilder ptr */
-  std::shared_ptr<mc_rtc::gui::StateBuilder> gui() const
+  inline std::shared_ptr<mc_rtc::gui::StateBuilder> gui() const noexcept
   {
     return gui_;
   }
 
   /** Provides access to the shared datastore */
-  mc_rtc::DataStore & datastore()
+  inline mc_rtc::DataStore & datastore() noexcept
   {
     return datastore_;
   }
 
   /** Provides access to the shared datastore (const) */
-  const mc_rtc::DataStore & datastore() const
+  const mc_rtc::DataStore & datastore() const noexcept
   {
     return datastore_;
   }
@@ -320,59 +356,94 @@ public:
   /** Return the mc_rbdyn::Robots real robots instance
    * \anchor mc_controller_real_robots_const_doc
    */
-  const mc_rbdyn::Robots & realRobots() const;
+  inline const mc_rbdyn::Robots & realRobots() const noexcept
+  {
+    return solver().realRobots();
+  }
   /** Non-const variant of \ref mc_controller_real_robots_const_doc "realRobots()" **/
-  mc_rbdyn::Robots & realRobots();
+  inline mc_rbdyn::Robots & realRobots() noexcept
+  {
+    return solver().realRobots();
+  }
 
   /** Return the main mc_rbdyn::Robot real robot instance
    * \anchor mc_controller_real_robot_const_doc
    */
-  const mc_rbdyn::Robot & realRobot() const;
+  inline const mc_rbdyn::Robot & realRobot() const noexcept
+  {
+    return realRobots().robot();
+  }
   /** Non-const variant of \ref mc_controller_real_robot_const_doc "realRobot()" */
-  mc_rbdyn::Robot & realRobot();
+  inline mc_rbdyn::Robot & realRobot() noexcept
+  {
+    return realRobots().robot();
+  }
 
   /** Return the mc_rbdyn::Robot controlled by this controller
    *
    * @throws std::runtime_error if the robot does not exist
    * \anchor mc_controller_realRobot_name_const_doc
    **/
-  const mc_rbdyn::Robot & realRobot(const std::string & name) const;
+  inline const mc_rbdyn::Robot & realRobot(const std::string & name) const
+  {
+    return realRobots().robot(name);
+  }
 
   /** Non-const variant of \ref mc_controller_realRobot_name_const_doc "realRobot(name)" */
-  mc_rbdyn::Robot & realRobot(const std::string & name);
+  inline mc_rbdyn::Robot & realRobot(const std::string & name)
+  {
+    return realRobots().robot(name);
+  }
   /** @} */
 
   /**
    * @name Accessors to the output robots
    *
-   * These robots are used by the various interfaces to send control commands to
-   * the robots, and by the ROS plugin to publish a complete visualization of
-   * the robots (including non-controlled joints)
+   * Output robots should be used by interface and plugin that need to get a view of the complete system being
+   * controlled.
    * @{
    */
-  /** Return the mc_rbdyn::Robots output robots instance
+  /** Return the output robots
    * \anchor mc_controller_real_robots_const_doc
    */
-  const mc_rbdyn::Robots & outputRobots() const;
+  inline const mc_rbdyn::Robots & outputRobots() const noexcept
+  {
+    return *outputRobots_;
+  }
   /** Non-const variant of \ref mc_controller_output_robots_const_doc "outputRobots()" **/
-  mc_rbdyn::Robots & outputRobots();
+  inline mc_rbdyn::Robots & outputRobots() noexcept
+  {
+    return *outputRobots_;
+  }
 
-  /** Return the main mc_rbdyn::Robot output robot instance
+  /** Return the main robot's output instance
    * \anchor mc_controller_output_robot_const_doc
    */
-  const mc_rbdyn::Robot & outputRobot() const;
+  inline const mc_rbdyn::Robot & outputRobot() const noexcept
+  {
+    return outputRobots_->robot();
+  }
   /** Non-const variant of \ref mc_controller_output_robot_const_doc "outputRobot()" */
-  mc_rbdyn::Robot & outputRobot();
+  inline mc_rbdyn::Robot & outputRobot() noexcept
+  {
+    return outputRobots_->robot();
+  }
 
-  /** Return the mc_rbdyn::Robot controlled by this controller
+  /** Return an output robot by name
    *
    * @throws std::runtime_error if the robot does not exist
    * \anchor mc_controller_outputRobot_name_const_doc
    **/
-  const mc_rbdyn::Robot & outputRobot(const std::string & name) const;
+  inline const mc_rbdyn::Robot & outputRobot(const std::string & name) const
+  {
+    return outputRobots_->robot(name);
+  }
 
   /** Non-const variant of \ref mc_controller_outputRobot_name_const_doc "outputRobot(name)" */
-  mc_rbdyn::Robot & outputRobot(const std::string & name);
+  inline mc_rbdyn::Robot & outputRobot(const std::string & name)
+  {
+    return outputRobots_->robot(name);
+  }
   /** @} */
 
   /**
@@ -386,26 +457,44 @@ public:
   /** Return the mc_rbdyn::Robots real robots instance
    * \anchor mc_controller_output_real_robots_const_doc
    */
-  const mc_rbdyn::Robots & outputRealRobots() const;
+  inline const mc_rbdyn::Robots & outputRealRobots() const noexcept
+  {
+    return *outputRealRobots_;
+  }
   /** Non-const variant of \ref mc_controller_output_real_robots_const_doc "outputRealRobots()" **/
-  mc_rbdyn::Robots & outputRealRobots();
+  inline mc_rbdyn::Robots & outputRealRobots() noexcept
+  {
+    return *outputRealRobots_;
+  }
 
   /** Return the main mc_rbdyn::Robot real robot instance
    * \anchor mc_controller_output_real_robot_const_doc
    */
-  const mc_rbdyn::Robot & outputRealRobot() const;
+  inline const mc_rbdyn::Robot & outputRealRobot() const noexcept
+  {
+    return outputRealRobots_->robot();
+  }
   /** Non-const variant of \ref mc_controller_output_real_robot_const_doc "outputRealRobot()" */
-  mc_rbdyn::Robot & outputRealRobot();
+  inline mc_rbdyn::Robot & outputRealRobot() noexcept
+  {
+    return outputRealRobots_->robot();
+  }
 
   /** Return the mc_rbdyn::Robot controlled by this controller
    *
    * @throws std::runtime_error if the robot does not exist
    * \anchor mc_controller_outputRealRobot_name_const_doc
    **/
-  const mc_rbdyn::Robot & outputRealRobot(const std::string & name) const;
+  inline const mc_rbdyn::Robot & outputRealRobot(const std::string & name) const
+  {
+    return outputRealRobots_->robot(name);
+  }
 
   /** Non-const variant of \ref mc_controller_outputRealRobot_name_const_doc "outputRealRobot(name)" */
-  mc_rbdyn::Robot & outputRealRobot(const std::string & name);
+  inline mc_rbdyn::Robot & outputRealRobot(const std::string & name)
+  {
+    return outputRealRobots_->robot(name);
+  }
   /** @} */
 
   /** Returns a list of robots supported by the controller.
