@@ -1189,6 +1189,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   config.add("name", rm.name);
   config.add("urdf_path", relative(rm.urdf_path, rm.path).string());
   config.add("rsdf_dir", relative(rm.rsdf_dir, rm.path).string());
+  config.add("canonicalParameters", rm.canonicalParameters());
   if(save_mbc)
   {
     config.add("mb", rm.mb);
