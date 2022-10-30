@@ -129,6 +129,9 @@ struct MC_RBDYN_DLLAPI Gripper
    * */
   std::vector<double> getTargetQ() const;
 
+  /// Result of the previous gripper command computation
+  const std::map<std::string, std::vector<double>> & getGripperCommand() const noexcept;
+
   /*! \brief Set the target opening of all gripper joints simultaneously
    * \param targetOpening Opening value ranging from 0 (closed) to 1 (open)
    *
@@ -328,6 +331,8 @@ protected:
   std::vector<size_t> active_joints_idx;
   /*! All joint indexes in mbc, -1 if absent */
   std::vector<int> joints_mbc_idx;
+  /*! Result of the previous gripper command computation */
+  std::map<std::string, std::vector<double>> qOut_;
 
   /*! True if all joints are primatic */
   bool is_metric_;

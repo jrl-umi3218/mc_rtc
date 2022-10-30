@@ -228,6 +228,7 @@ controller_test_run(TestVectorOrientationTaskController 2001)
 # mc_solver test controllers
 controller_test_run(TestCoMInBoxController 4001)
 controller_test_run(TestCollisionController 2001)
+controller_test_run(TestCanonicalRobotController 2001)
 
 # Test FSM generic state configuration option
 set(FSM_STATES_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/src/mc_control/fsm/states/")
