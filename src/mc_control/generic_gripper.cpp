@@ -412,11 +412,6 @@ double Gripper::getTargetOpening(const std::string & jointName) const
   return this->targetQ ? targetOpening(jIdx) : curOpening(jIdx);
 }
 
-const std::map<std::string, std::vector<double>> & Gripper::getGripperCommand() const noexcept
-{
-  return qOut_;
-}
-
 void Gripper::percentVMAX(double percent)
 {
   config_.percentVMax = mc_filter::utils::clamp(percent, 0, 1);
@@ -531,7 +526,7 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, std::map<std::string
     {
       robot.mbc().q[static_cast<size_t>(joints_mbc_idx[i])] = {_q[i]};
     }
-    qOut_[names[i]] = {_q[i]};
+    qOut[names[i]] = {_q[i]};
   }
   for(size_t i = active_joints.size(); i < names.size(); ++i)
   {
@@ -540,7 +535,7 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, std::map<std::string
     {
       robot.mbc().q[static_cast<size_t>(joints_mbc_idx[i])] = {_q[i]};
     }
-    qOut_[names[i]] = {_q[i]};
+    qOut[names[i]] = {_q[i]};
   }
   for(size_t i = 0; i < actualQ.size(); ++i)
   {
@@ -568,7 +563,6 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, std::map<std::string
       overCommandLimit[i] = false;
     }
   }
-  qOut = qOut_;
 }
 
 double Gripper::opening() const

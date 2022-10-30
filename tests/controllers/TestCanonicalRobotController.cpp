@@ -35,75 +35,36 @@ public:
 
   virtual bool run() override
   {
-    // FIXME
-    // The outputRobot update is handled by MCGlobalController, thus we have to wait one
-    // iteration to have it up to date in the controller. This is done this way
-    // because the gripper control is currently handled by MCGlobalController
-    // AFTER MCController::run.
-    //
-    // The gripper state should be handled by MCController::run instead of
-    // MCGlobalController::run and the update of outputRobot handled by
-    // MCController instead
-    if(nrIter > 0)
-    {
-      // For all non gripper joints
-      for(const auto & j : robot().refJointOrder())
-      {
-        if(j != "L_UTHUMB" && j != "R_UTHUMB")
-        {
-          if(!robot().mb().joint(robot().jointIndexByName(j)).isMimic())
-          {
-            BOOST_REQUIRE_CLOSE(robot().mbc().q[robot().jointIndexByName(j)][0],
-                                outputRobot().mbc().q[outputRobot().jointIndexByName(j)][0], 1e-10);
-            BOOST_REQUIRE_CLOSE(robot().mbc().alpha[robot().jointIndexByName(j)][0],
-                                outputRobot().mbc().alpha[outputRobot().jointIndexByName(j)][0], 1e-10);
-            BOOST_REQUIRE_CLOSE(robot().mbc().alphaD[robot().jointIndexByName(j)][0],
-                                outputRobot().mbc().alphaD[outputRobot().jointIndexByName(j)][0], 1e-10);
-          }
-        }
-      }
-
-      // For all gripper joints
-      for(const auto & gripper : robot().grippers())
-      {
-        // Get the commanded angle that the mc_control::Gripper should have sent
-        // to the output robot
-        const auto & gq = gripper.get().getGripperCommand();
-        for(const auto & j : gripper.get().activeJoints())
-        {
-          auto commanded = gq.at(j)[0];
-          BOOST_REQUIRE_CLOSE(commanded, outputRobot().mbc().q[outputRobot().jointIndexByName(j)][0], 1e-10);
-        }
-
-        // Check mimics
-        for(const auto & jname : gripper.get().joints())
-        {
-          auto jIdx = outputRobot().jointIndexByName(jname);
-          const auto & j = outputRobot().mb().joint(jIdx);
-          if(j.isMimic())
-          {
-            auto mainIndex = outputRobot().jointIndexByName(j.mimicName());
-            auto mimicQ = j.mimicMultiplier() * outputRobot().mbc().q[mainIndex][0] + j.mimicOffset();
-            BOOST_REQUIRE(outputRobot().mbc().q[jIdx][0] == mimicQ);
-          }
-        }
-      }
-    }
-
+    BOOST_REQUIRE(datastore().get<bool>("HasTestCanonicalRobotControllerPlugin"));
     auto njoints = robot().mbc().q.size();
-    auto postureT = [&](int j) {
+    auto postureT = [&](size_t j) {
       return std::cos(static_cast<double>(j) / static_cast<double>(njoints) + nrIter / 2000.);
     };
 
-    auto posture = robot().mbc().q;
-    for(unsigned i = 0; i < robot().refJointOrder().size(); ++i)
+    size_t jIdx = 0;
+    for(const auto & j : robot().mb().joints())
     {
-      posture[robot().jointIndexInMBC(i)][0] = postureT(i);
+      if(j.dof() == 1)
+      {
+        target_[j.name()] = {postureT(jIdx)};
+      }
+      jIdx++;
     }
-    postureTask->posture(posture);
+    postureTask->target(target_);
 
-    robot().gripper("l_gripper").setTargetQ("L_UTHUMB", postureT(0));
-    robot().gripper("r_gripper").setTargetQ("R_UTHUMB", postureT(0));
+    double & targetQ = datastore().get<double>("GripperTarget");
+    if(targetQ >= gripper_max_ && dir_ > 0.0)
+    {
+      dir_ = -1.0;
+    }
+    if(targetQ <= gripper_min_ && dir_ < 0.0)
+    {
+      dir_ = 1.0;
+    }
+    targetQ += dir_ * vmax_ * solver().dt();
+
+    robot().gripper("l_gripper").setTargetQ("L_UTHUMB", targetQ);
+    robot().gripper("r_gripper").setTargetQ("R_UTHUMB", targetQ);
 
     bool ret = MCController::run();
     BOOST_CHECK(ret);
@@ -114,10 +75,23 @@ public:
   virtual void reset(const ControllerResetData & reset_data) override
   {
     MCController::reset(reset_data);
+    datastore().make<double>("GripperTarget", robot().gripper("l_gripper").getTargetQ("L_UTHUMB"));
+    // Use half of the configured max speed of the gripper
+    gripper_min_ = robot().module().bounds()[0].at("L_UTHUMB")[0];
+    gripper_max_ = robot().module().bounds()[1].at("L_UTHUMB")[0];
+    double gripper_range = (gripper_max_ - gripper_min_);
+    gripper_min_ += 0.1 * gripper_range;
+    gripper_max_ -= 0.1 * gripper_range;
+    vmax_ = robot().module().bounds()[3].at("L_UTHUMB")[0] * robot().gripper("l_gripper").percentVMAX() * 0.5;
   }
 
 private:
   unsigned int nrIter = 0;
+  std::map<std::string, std::vector<double>> target_;
+  double gripper_min_ = 0.0;
+  double gripper_max_ = 0.0;
+  double vmax_ = 0.0;
+  double dir_ = 1.0;
 };
 
 } // namespace mc_control
