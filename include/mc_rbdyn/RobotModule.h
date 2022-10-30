@@ -584,8 +584,9 @@ struct MC_RBDYN_DLLAPI RobotModule
    * - If no custom canonical robot module is set in _canonicalParameters: copies the control robot mbc, encoders and
    * sensors to the canonical robot
    * - If a custom canonical robot module is set, it calls
-   *   RobotConverter::converter(const mc_rbdyn::Robot &, mc_rbdyn::Robot &) to
-   *   perform the conversion.
+   *   mc_rbdyn::RobotConverter::convert() to perform the conversion. By default
+   *   this copies all common properties between the control robot and its
+   *   canonical representation
    *
    * This function is called automatically by mc_rtc after each iteration of MCController::run()
    */

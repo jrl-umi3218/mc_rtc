@@ -10,8 +10,7 @@ namespace mc_rbdyn
 {
 
 /**
- * @brief Configuration for the RobotConverter
- *
+ * @brief Configuration for mc_rbdyn::RobotConverter
  */
 struct RobotConverterConfig
 {

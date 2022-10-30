@@ -678,15 +678,16 @@ public:
   /*! \brief Const access to current controller */
   const MCController & controller() const;
 
-  /**
-   * @name Accessors to the various robots:
+  /** @name Accessors to the various robots:
+   *
    * - The control robot used by mc_rtc to solve the QP is expressed without
    *   suffix
-   * - The real robot is suffixed by "Real". It represents the observed state of the robot. See the
-   *   ObserverPipeline for more information on how to set up a state
+   * - The real robots represent the observed state of the robots. See
+   *   mc_observers::ObserverPipeline for more information on how to set up a state
    *   observation pipeline.
-   * - The output robot is suffixed by "Output". It's the robot used by the
-   *   various interfaces to send the control state to the robot.
+   * - The output robots are used by the various interfaces to send control commands to
+   *   the robots, and by the ROS plugin to publish a complete visualization of
+   *   the robots (including non-controlled joints) various interfaces to send the control state to the robot.
    * @{
    */
   /*! \brief Access to the control robots instance. */
@@ -737,16 +738,16 @@ public:
    **/
   const mc_rbdyn::Robot & realRobot(const std::string & name) const;
 
-  /*! \brief Access to the control robots instance. */
+  /*! \brief Access to the output robots instance. */
   mc_rbdyn::Robots & outputRobots();
 
-  /*! \brief Const access to the control robots instance. */
+  /*! \brief Const access to the output robots instance. */
   const mc_rbdyn::Robots & outputRobots() const;
 
-  /*! \brief Access to the real robots instance. */
+  /*! \brief Access to the output real robots instance. */
   mc_rbdyn::Robots & outputRealRobots();
 
-  /*! \brief Const access to the real robots instance. */
+  /*! \brief Const access to the output real robots instance. */
   const mc_rbdyn::Robots & outputRealRobots() const;
 
   /*! \brief Access the output robot */
@@ -757,13 +758,13 @@ public:
 
   /*! \brief Access to the output robot instance.
    *
-   * @throws if no real robot with that name exist
+   * @throws if no output robot with that name exist
    */
   mc_rbdyn::Robot & outputRobot(const std::string & name);
 
   /*! \brief Const access to the output robot instance.
    *
-   * @throws if no real robot named with that name exist
+   * @throws if no output robot named with that name exist
    **/
   const mc_rbdyn::Robot & outputRobot(const std::string & name) const;
 

@@ -343,25 +343,25 @@ public:
   /** @} */
 
   /**
-   * @name Accessors to the output control robots
+   * @name Accessors to the output robots
    *
    * These robots are used by the various interfaces to send control commands to
    * the robots, and by the ROS plugin to publish a complete visualization of
    * the robots (including non-controlled joints)
    * @{
    */
-  /** Return the mc_rbdyn::Robots real robots instance
+  /** Return the mc_rbdyn::Robots output robots instance
    * \anchor mc_controller_real_robots_const_doc
    */
   const mc_rbdyn::Robots & outputRobots() const;
-  /** Non-const variant of \ref mc_controller_real_robots_const_doc "outputRobots()" **/
+  /** Non-const variant of \ref mc_controller_output_robots_const_doc "outputRobots()" **/
   mc_rbdyn::Robots & outputRobots();
 
-  /** Return the main mc_rbdyn::Robot real robot instance
-   * \anchor mc_controller_real_robot_const_doc
+  /** Return the main mc_rbdyn::Robot output robot instance
+   * \anchor mc_controller_output_robot_const_doc
    */
   const mc_rbdyn::Robot & outputRobot() const;
-  /** Non-const variant of \ref mc_controller_real_robot_const_doc "outputRobot()" */
+  /** Non-const variant of \ref mc_controller_output_robot_const_doc "outputRobot()" */
   mc_rbdyn::Robot & outputRobot();
 
   /** Return the mc_rbdyn::Robot controlled by this controller
@@ -376,7 +376,7 @@ public:
   /** @} */
 
   /**
-   * @name Accessors to the output control robots
+   * @name Accessors to the output real robots
    *
    * These robots are used by the various interfaces to send control commands to
    * the robots, and by the ROS plugin to publish a complete visualization of
@@ -384,17 +384,17 @@ public:
    * @{
    */
   /** Return the mc_rbdyn::Robots real robots instance
-   * \anchor mc_controller_real_robots_const_doc
+   * \anchor mc_controller_output_real_robots_const_doc
    */
   const mc_rbdyn::Robots & outputRealRobots() const;
-  /** Non-const variant of \ref mc_controller_real_robots_const_doc "outputRealRobots()" **/
+  /** Non-const variant of \ref mc_controller_output_real_robots_const_doc "outputRealRobots()" **/
   mc_rbdyn::Robots & outputRealRobots();
 
   /** Return the main mc_rbdyn::Robot real robot instance
-   * \anchor mc_controller_real_robot_const_doc
+   * \anchor mc_controller_output_real_robot_const_doc
    */
   const mc_rbdyn::Robot & outputRealRobot() const;
-  /** Non-const variant of \ref mc_controller_real_robot_const_doc "outputRealRobot()" */
+  /** Non-const variant of \ref mc_controller_output_real_robot_const_doc "outputRealRobot()" */
   mc_rbdyn::Robot & outputRealRobot();
 
   /** Return the mc_rbdyn::Robot controlled by this controller
