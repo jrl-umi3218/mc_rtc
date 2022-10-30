@@ -15,6 +15,12 @@
       "default": "${path}/urdf/${name}.urdf",
       "description": "Path to the URDF file, can be relative to \"path\""
     },
+    "canonicalParameters":
+    {
+      "type": "array",
+      "description": "Canonical representation of this robot module",
+      "items": { "type": "string" }
+    },
     "mb":
     {
       "description": "If mb is provided, mbc, bounds, visuals and collisionTransforms are required. Otherwise, the URDF is loaded when the object is loaded, using the filteredLinks and fixed properties.",

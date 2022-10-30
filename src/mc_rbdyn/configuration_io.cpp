@@ -1041,6 +1041,7 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
     return path / "urdf" / fmt::format("{}.urdf", name);
   }();
   mc_rbdyn::RobotModule rm(path.string(), name, urdf_path.string());
+  config("canonicalParameters", rm._canonicalParameters);
   if(config.has("mb"))
   {
     rm.mb = config("mb");
