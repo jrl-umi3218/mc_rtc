@@ -18,7 +18,7 @@
     "canonicalParameters":
     {
       "type": "array",
-      "description": "Canonical representation of this robot module",
+      "description": "Parameters passed to RobotLoader to obtain a canonical module for this robot",
       "items": { "type": "string" }
     },
     "mb":
