@@ -1,9 +1,10 @@
 /*
- * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
+#include <mc_rbdyn/RobotData.h>
 #include <mc_rbdyn/RobotFrame.h>
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn/Surface.h>
@@ -36,6 +37,8 @@ private:
   std::optional<std::string> base_ = std::nullopt;
   /** If true, print warning messages for missing files */
   bool warn_on_missing_files_ = false;
+  /** If provided, this is used as RobotData for the given robot, otherwise a new RobotData is created */
+  RobotDataPtr data_ = nullptr;
 
 public:
 #define MAKE_LOAD_ROBOT_PARAMETER_SETTER(T, NAME)     \
@@ -48,6 +51,7 @@ public:
   MAKE_LOAD_ROBOT_PARAMETER_SETTER(const sva::PTransformd &, base_tf)
   MAKE_LOAD_ROBOT_PARAMETER_SETTER(std::string_view, base)
   MAKE_LOAD_ROBOT_PARAMETER_SETTER(bool, warn_on_missing_files)
+  MAKE_LOAD_ROBOT_PARAMETER_SETTER(RobotDataPtr, data)
 
 #undef MAKE_LOAD_ROBOT_PARAMETER_SETTER
 };
@@ -1088,6 +1092,12 @@ public:
     return grippersRef_;
   }
 
+  /** Access the data associated to this object */
+  inline const RobotDataPtr data() const noexcept
+  {
+    return data_;
+  }
+
 private:
   Robots * robots_;
   unsigned int robots_idx_;
@@ -1111,6 +1121,8 @@ private:
   std::map<std::string, mc_rbdyn::SurfacePtr> surfaces_;
   std::vector<ForceSensor> forceSensors_;
   std::map<std::string, std::vector<double>> stance_;
+  /** Data (optionally) shared with other instances of a similar robot */
+  RobotDataPtr data_;
   /** Reference joint order see mc_rbdyn::RobotModule */
   std::vector<std::string> refJointOrder_;
   /** Correspondance between refJointOrder (actuated joints) index and

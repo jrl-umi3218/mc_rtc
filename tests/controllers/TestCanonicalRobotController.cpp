@@ -26,6 +26,13 @@ public:
     BOOST_CHECK_EQUAL(robot().name(), "jvrc1");
     BOOST_CHECK_EQUAL(rm->_parameters[0], "JVRC1NoHands");
     BOOST_CHECK_EQUAL(rm->_canonicalParameters[0], "JVRC1");
+    // Check that RobotData is shared between all robots
+    for(const auto & r : robots())
+    {
+      BOOST_REQUIRE(r.data().get() == realRobot(r.name()).data().get());
+      BOOST_REQUIRE(r.data().get() == outputRobot(r.name()).data().get());
+      BOOST_REQUIRE(r.data().get() == outputRealRobot(r.name()).data().get());
+    }
     solver().addConstraintSet(kinematicsConstraint);
     postureTask->stiffness(1);
     postureTask->weight(1);

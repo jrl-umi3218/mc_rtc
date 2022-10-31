@@ -268,187 +268,195 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
   {
     canonicalModule = rm;
   }
-  loadRobot(canonicalModule, name, *outputRobots_, false);
-  loadRobot(canonicalModule, name, *outputRealRobots_, false);
-  // Load control/real robots
-  loadRobot(rm, name, realRobots(), false);
-  return loadRobot(rm, name, robots(), true);
+  mc_rbdyn::LoadRobotParameters params{};
+  auto & robot = loadRobot(rm, name, robots(), params);
+  params.warn_on_missing_files(false).data(robot.data());
+  loadRobot(rm, name, realRobots(), params);
+  loadRobot(canonicalModule, name, *outputRobots_, params);
+  loadRobot(canonicalModule, name, *outputRealRobots_, params);
+  addRobotToLog(robot);
+  addRobotToGUI(robot);
+  solver().updateNrVars();
+  return robot;
 }
 
 mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
                                           const std::string & name,
                                           mc_rbdyn::Robots & robots,
-                                          bool updateNrVars)
+                                          const mc_rbdyn::LoadRobotParameters & params)
 {
   assert(rm);
-  auto & r = robots.load(name, *rm);
+  auto & r = robots.load(name, *rm, params);
   r.mbc().gravity = mc_rtc::constants::gravity;
   r.forwardKinematics();
   r.forwardVelocity();
-  if(gui_ && updateNrVars)
-  {
-    auto data = gui_->data();
-    if(!data.has("robots"))
-    {
-      data.array("robots");
-    }
-    if(!data.has("bodies"))
-    {
-      data.add("bodies");
-    }
-    if(!data.has("surfaces"))
-    {
-      data.add("surfaces");
-    }
-    if(!data.has("joints"))
-    {
-      data.add("joints");
-    }
-    if(!data.has("frames"))
-    {
-      data.add("frames");
-    }
-    data("robots").push(r.name());
-    auto bs = data("bodies").array(r.name());
-    for(const auto & b : r.mb().bodies())
-    {
-      bs.push(b.name());
-    }
-    data("surfaces").add(r.name(), r.availableSurfaces());
-    data("joints").add(r.name(), r.module().ref_joint_order());
-    data("frames").add(r.name(), r.frames());
-    auto name = r.name();
-    gui()->addElement({"Robots"}, mc_rtc::gui::Robot(r.name(), [name, this]() -> const mc_rbdyn::Robot & {
-                        return this->outputRobot(name);
-                      }));
-  }
-  if(updateNrVars)
-  {
-    /** Add the robot to the log */
-    // If this is the main robot we don't add a prefix
-    auto prefix = robots.robot().name() == name ? "" : fmt::format("{}_", name);
-    auto entry = [&](const char * entry) { return fmt::format("{}{}", prefix, entry); };
-    auto entry_str = [&](const std::string & entry) { return fmt::format("{}{}", prefix, entry); };
-    // The robot has some joints so we want to log this state
-    if(robot(name).refJointOrder().size())
-    {
-      logger().addLogEntry(entry("qIn"),
-                           [this, name]() -> const std::vector<double> & { return robot(name).encoderValues(); });
-      logger().addLogEntry(entry("alphaIn"),
-                           [this, name]() -> const std::vector<double> & { return robot(name).encoderVelocities(); });
-      logger().addLogEntry(entry("tauIn"),
-                           [this, name]() -> const std::vector<double> & { return robot(name).jointTorques(); });
-      std::vector<double> qOut(robot(name).refJointOrder().size(), 0);
-      logger().addLogEntry(entry("qOut"), [this, name, qOut]() mutable -> const std::vector<double> & {
-        auto & robot = this->robot(name);
-        for(size_t i = 0; i < qOut.size(); ++i)
-        {
-          auto mbcIndex = robot.jointIndexInMBC(i);
-          if(mbcIndex != -1)
-          {
-            qOut[i] = robot.mbc().q[static_cast<size_t>(mbcIndex)][0];
-          }
-        }
-        return qOut;
-      });
-      auto & alphaOut = qOut;
-      logger().addLogEntry(entry("alphaOut"), [this, name, alphaOut]() mutable -> const std::vector<double> & {
-        auto & robot = this->robot(name);
-        for(size_t i = 0; i < alphaOut.size(); ++i)
-        {
-          auto mbcIndex = robot.jointIndexInMBC(i);
-          if(mbcIndex != -1)
-          {
-            alphaOut[i] = robot.mbc().alpha[static_cast<size_t>(mbcIndex)][0];
-          }
-        }
-        return alphaOut;
-      });
-      auto & alphaDOut = qOut;
-      logger().addLogEntry(entry("alphaDOut"), [this, name, alphaDOut]() mutable -> const std::vector<double> & {
-        auto & robot = this->robot(name);
-        for(size_t i = 0; i < alphaDOut.size(); ++i)
-        {
-          auto mbcIndex = robot.jointIndexInMBC(i);
-          if(mbcIndex != -1)
-          {
-            alphaDOut[i] = robot.mbc().alphaD[static_cast<size_t>(mbcIndex)][0];
-          }
-        }
-        return alphaDOut;
-      });
-      auto & tauOut = qOut;
-      logger().addLogEntry(entry("tauOut"), [this, name, tauOut]() mutable -> const std::vector<double> & {
-        auto & robot = this->robot(name);
-        for(size_t i = 0; i < tauOut.size(); ++i)
-        {
-          auto mbcIndex = robot.jointIndexInMBC(i);
-          if(mbcIndex != -1)
-          {
-            tauOut[i] = robot.mbc().jointTorque[static_cast<size_t>(mbcIndex)][0];
-          }
-        }
-        return tauOut;
-      });
-    }
-    // Log the floating base position and its estimation if the robot has one
-    if(robot(name).mb().joint(0).dof() == 6)
-    {
-      logger().addLogEntry(entry("ff"),
-                           [this, name]() -> const sva::PTransformd & { return robot(name).mbc().bodyPosW[0]; });
-      logger().addLogEntry(entry("ff_real"),
-                           [this, name]() -> const sva::PTransformd & { return realRobot(name).mbc().bodyPosW[0]; });
-    }
-    // Log all force sensors
-    for(const auto & fs : robot(name).forceSensors())
-    {
-      const auto & fs_name = fs.name();
-      logger().addLogEntry(entry_str(fs.name()), [this, name, fs_name]() -> const sva::ForceVecd & {
-        return robot(name).forceSensor(fs_name).wrench();
-      });
-    }
-    // Log all body sensors
-    const auto & bodySensors = robot(name).bodySensors();
-    for(size_t i = 0; i < bodySensors.size(); ++i)
-    {
-      const auto & bs_name = bodySensors[i].name();
-      logger().addLogEntry(entry_str(bs_name + "_position"), [this, name, bs_name]() -> const Eigen::Vector3d & {
-        return robot(name).bodySensor(bs_name).position();
-      });
-      logger().addLogEntry(entry_str(bs_name + "_orientation"), [this, name, bs_name]() -> const Eigen::Quaterniond & {
-        return robot(name).bodySensor(bs_name).orientation();
-      });
-      logger().addLogEntry(entry_str(bs_name + "_linearVelocity"), [this, name, bs_name]() -> const Eigen::Vector3d & {
-        return robot(name).bodySensor(bs_name).linearVelocity();
-      });
-      logger().addLogEntry(entry_str(bs_name + "_angularVelocity"), [this, name, bs_name]() -> const Eigen::Vector3d & {
-        return robot(name).bodySensor(bs_name).angularVelocity();
-      });
-      logger().addLogEntry(entry_str(bs_name + "_linearAcceleration"),
-                           [this, name, bs_name]() -> const Eigen::Vector3d & {
-                             return robot(name).bodySensor(bs_name).linearAcceleration();
-                           });
-      logger().addLogEntry(entry_str(bs_name + "_angularAcceleration"),
-                           [this, name, bs_name]() -> const Eigen::Vector3d & {
-                             return robot(name).bodySensor(bs_name).angularAcceleration();
-                           });
-    }
-    // Log all joint sensors
-    for(const auto & js : robot(name).jointSensors())
-    {
-      const auto & jnt = js.joint();
-      logger().addLogEntry(entry_str("JointSensor_" + jnt + "_motorTemperature"),
-                           [this, name, jnt]() { return robot(name).jointJointSensor(jnt).motorTemperature(); });
-      logger().addLogEntry(entry_str("JointSensor_" + jnt + "_driverTemperature"),
-                           [this, name, jnt]() { return robot(name).jointJointSensor(jnt).driverTemperature(); });
-      logger().addLogEntry(entry_str("JointSensor_" + jnt + "_motorCurrent"),
-                           [this, name, jnt]() { return robot(name).jointJointSensor(jnt).motorCurrent(); });
-    }
-
-    /** Now update nr vars */
-    solver().updateNrVars();
-  }
   return r;
+}
+
+void MCController::addRobotToGUI(const mc_rbdyn::Robot & r)
+{
+  if(!gui_)
+  {
+    return;
+  }
+  auto data = gui_->data();
+  if(!data.has("robots"))
+  {
+    data.array("robots");
+  }
+  if(!data.has("bodies"))
+  {
+    data.add("bodies");
+  }
+  if(!data.has("surfaces"))
+  {
+    data.add("surfaces");
+  }
+  if(!data.has("joints"))
+  {
+    data.add("joints");
+  }
+  if(!data.has("frames"))
+  {
+    data.add("frames");
+  }
+  data("robots").push(r.name());
+  auto bs = data("bodies").array(r.name());
+  for(const auto & b : r.mb().bodies())
+  {
+    bs.push(b.name());
+  }
+  data("surfaces").add(r.name(), r.availableSurfaces());
+  data("joints").add(r.name(), r.module().ref_joint_order());
+  data("frames").add(r.name(), r.frames());
+  auto name = r.name();
+  gui()->addElement({"Robots"}, mc_rtc::gui::Robot(r.name(), [name, this]() -> const mc_rbdyn::Robot & {
+                      return this->outputRobot(name);
+                    }));
+}
+
+void MCController::addRobotToLog(const mc_rbdyn::Robot & r)
+{
+  // If this is the main robot we don't add a prefix
+  const auto & name = r.name();
+  auto prefix = robots().robot().name() == name ? "" : fmt::format("{}_", name);
+  auto entry = [&](const char * entry) { return fmt::format("{}{}", prefix, entry); };
+  auto entry_str = [&](const std::string & entry) { return fmt::format("{}{}", prefix, entry); };
+  // The robot has some joints so we want to log this state
+  if(robot(name).refJointOrder().size())
+  {
+    logger().addLogEntry(entry("qIn"),
+                         [this, name]() -> const std::vector<double> & { return robot(name).encoderValues(); });
+    logger().addLogEntry(entry("alphaIn"),
+                         [this, name]() -> const std::vector<double> & { return robot(name).encoderVelocities(); });
+    logger().addLogEntry(entry("tauIn"),
+                         [this, name]() -> const std::vector<double> & { return robot(name).jointTorques(); });
+    std::vector<double> qOut(robot(name).refJointOrder().size(), 0);
+    logger().addLogEntry(entry("qOut"), [this, name, qOut]() mutable -> const std::vector<double> & {
+      auto & robot = this->robot(name);
+      for(size_t i = 0; i < qOut.size(); ++i)
+      {
+        auto mbcIndex = robot.jointIndexInMBC(i);
+        if(mbcIndex != -1)
+        {
+          qOut[i] = robot.mbc().q[static_cast<size_t>(mbcIndex)][0];
+        }
+      }
+      return qOut;
+    });
+    auto & alphaOut = qOut;
+    logger().addLogEntry(entry("alphaOut"), [this, name, alphaOut]() mutable -> const std::vector<double> & {
+      auto & robot = this->robot(name);
+      for(size_t i = 0; i < alphaOut.size(); ++i)
+      {
+        auto mbcIndex = robot.jointIndexInMBC(i);
+        if(mbcIndex != -1)
+        {
+          alphaOut[i] = robot.mbc().alpha[static_cast<size_t>(mbcIndex)][0];
+        }
+      }
+      return alphaOut;
+    });
+    auto & alphaDOut = qOut;
+    logger().addLogEntry(entry("alphaDOut"), [this, name, alphaDOut]() mutable -> const std::vector<double> & {
+      auto & robot = this->robot(name);
+      for(size_t i = 0; i < alphaDOut.size(); ++i)
+      {
+        auto mbcIndex = robot.jointIndexInMBC(i);
+        if(mbcIndex != -1)
+        {
+          alphaDOut[i] = robot.mbc().alphaD[static_cast<size_t>(mbcIndex)][0];
+        }
+      }
+      return alphaDOut;
+    });
+    auto & tauOut = qOut;
+    logger().addLogEntry(entry("tauOut"), [this, name, tauOut]() mutable -> const std::vector<double> & {
+      auto & robot = this->robot(name);
+      for(size_t i = 0; i < tauOut.size(); ++i)
+      {
+        auto mbcIndex = robot.jointIndexInMBC(i);
+        if(mbcIndex != -1)
+        {
+          tauOut[i] = robot.mbc().jointTorque[static_cast<size_t>(mbcIndex)][0];
+        }
+      }
+      return tauOut;
+    });
+  }
+  // Log the floating base position and its estimation if the robot has one
+  if(robot(name).mb().joint(0).dof() == 6)
+  {
+    logger().addLogEntry(entry("ff"),
+                         [this, name]() -> const sva::PTransformd & { return robot(name).mbc().bodyPosW[0]; });
+    logger().addLogEntry(entry("ff_real"),
+                         [this, name]() -> const sva::PTransformd & { return realRobot(name).mbc().bodyPosW[0]; });
+  }
+  // Log all force sensors
+  for(const auto & fs : robot(name).forceSensors())
+  {
+    const auto & fs_name = fs.name();
+    logger().addLogEntry(entry_str(fs.name()), [this, name, fs_name]() -> const sva::ForceVecd & {
+      return robot(name).forceSensor(fs_name).wrench();
+    });
+  }
+  // Log all body sensors
+  const auto & bodySensors = robot(name).bodySensors();
+  for(size_t i = 0; i < bodySensors.size(); ++i)
+  {
+    const auto & bs_name = bodySensors[i].name();
+    logger().addLogEntry(entry_str(bs_name + "_position"), [this, name, bs_name]() -> const Eigen::Vector3d & {
+      return robot(name).bodySensor(bs_name).position();
+    });
+    logger().addLogEntry(entry_str(bs_name + "_orientation"), [this, name, bs_name]() -> const Eigen::Quaterniond & {
+      return robot(name).bodySensor(bs_name).orientation();
+    });
+    logger().addLogEntry(entry_str(bs_name + "_linearVelocity"), [this, name, bs_name]() -> const Eigen::Vector3d & {
+      return robot(name).bodySensor(bs_name).linearVelocity();
+    });
+    logger().addLogEntry(entry_str(bs_name + "_angularVelocity"), [this, name, bs_name]() -> const Eigen::Vector3d & {
+      return robot(name).bodySensor(bs_name).angularVelocity();
+    });
+    logger().addLogEntry(entry_str(bs_name + "_linearAcceleration"),
+                         [this, name, bs_name]() -> const Eigen::Vector3d & {
+                           return robot(name).bodySensor(bs_name).linearAcceleration();
+                         });
+    logger().addLogEntry(entry_str(bs_name + "_angularAcceleration"),
+                         [this, name, bs_name]() -> const Eigen::Vector3d & {
+                           return robot(name).bodySensor(bs_name).angularAcceleration();
+                         });
+  }
+  // Log all joint sensors
+  for(const auto & js : robot(name).jointSensors())
+  {
+    const auto & jnt = js.joint();
+    logger().addLogEntry(entry_str("JointSensor_" + jnt + "_motorTemperature"),
+                         [this, name, jnt]() { return robot(name).jointJointSensor(jnt).motorTemperature(); });
+    logger().addLogEntry(entry_str("JointSensor_" + jnt + "_driverTemperature"),
+                         [this, name, jnt]() { return robot(name).jointJointSensor(jnt).driverTemperature(); });
+    logger().addLogEntry(entry_str("JointSensor_" + jnt + "_motorCurrent"),
+                         [this, name, jnt]() { return robot(name).jointJointSensor(jnt).motorCurrent(); });
+  }
 }
 
 void MCController::removeRobot(const std::string & name)

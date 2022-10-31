@@ -652,7 +652,13 @@ protected:
   mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm,
                               const std::string & name,
                               mc_rbdyn::Robots & robots,
-                              bool updateNrVars = true);
+                              const mc_rbdyn::LoadRobotParameters & params);
+
+  /** Add a control robot to the log */
+  void addRobotToLog(const mc_rbdyn::Robot & robot);
+
+  /** Add a control robot to the GUI */
+  void addRobotToGUI(const mc_rbdyn::Robot & robot);
 
   /** Update the contacts (or their DoFs) if needed */
   void updateContacts();

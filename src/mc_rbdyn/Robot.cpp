@@ -261,6 +261,14 @@ Robot::Robot(NewRobotToken,
              const LoadRobotParameters & params)
 : robots_(&robots), robots_idx_(robots_idx), name_(name), load_params_(params)
 {
+  if(params.data_)
+  {
+    data_ = params.data_;
+  }
+  else
+  {
+    data_ = std::make_shared<RobotData>();
+  }
   const auto & module_ = module();
 
   sva::PTransformd base_tf = params.base_tf_.value_or(sva::PTransformd::Identity());
