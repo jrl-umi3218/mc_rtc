@@ -92,6 +92,7 @@ void ObjectLoader<T>::load_libraries(const std::vector<std::string> & paths, Loa
 template<typename T>
 void ObjectLoader<T>::clear()
 {
+  deleters_.clear();
   handles_.clear();
   callbacks_.clear();
 }
