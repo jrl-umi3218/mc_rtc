@@ -494,8 +494,6 @@ void MCController::removeRobot(const std::string & name)
       logger().removeLogEntry(entry_str("JointSensor_" + js.joint() + "_motorCurrent"));
     }
   }
-  robots().removeRobot(name);
-  realRobots().removeRobot(name);
   if(gui_)
   {
     gui_->removeElement({"Robots"}, name);
@@ -506,6 +504,10 @@ void MCController::removeRobot(const std::string & name)
     data("bodies").remove(name);
     data("surfaces").remove(name);
   }
+  outputRealRobots().removeRobot(name);
+  outputRobots().removeRobot(name);
+  realRobots().removeRobot(name);
+  robots().removeRobot(name);
   solver().updateNrVars();
 }
 
