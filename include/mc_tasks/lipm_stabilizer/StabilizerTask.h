@@ -57,6 +57,20 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
+  /** @brief External wrench. */
+  struct ExternalWrench
+  {
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+    /// Target (expected) external wrench
+    sva::ForceVecd target;
+    /// Measured external wrench
+    sva::ForceVecd measured;
+    /// Gain of measured external wrench
+    sva::MotionVecd gain;
+    /// Name of the surface to which the external wrench is applied
+    std::string surfaceName;
+  };
+
   /**
    * @brief Creates a stabilizer meta task
    *
@@ -306,12 +320,62 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    *
    * \see staticTarget for a helper to define the stabilizer target when the CoM
    * is static
+   *
+   * \anchor stabilizer_target
    */
   void target(const Eigen::Vector3d & com,
               const Eigen::Vector3d & comd,
               const Eigen::Vector3d & comdd,
               const Eigen::Vector3d & zmp,
               const Eigen::Vector3d & zmpd = Eigen::Vector3d::Zero());
+
+  /** @brief Return the raw CoM target as provided by \ref stabilizer_target "target()"
+   *
+   * @warning: Depending on the stabilizer configuration, this target may be
+   * modified by the stabilizer (to take into account bias and external forces).
+   *
+   * \see targetCoM()
+   **/
+  inline const Eigen::Vector3d & targetCoMRaw() const noexcept
+  {
+    return comTargetRaw_;
+  }
+
+  /** @brief Returns the CoM target used for stabilization.
+   *
+   * The stabilizer may modify the user-provided target targetCoMRaw() to
+   * compensate for external forces and/or bias. The target returned by this
+   * function thus corresponds to the actual target used by the stabilizer, and
+   * not the raw user provided target.
+   */
+  inline const Eigen::Vector3d & targetCoM() const noexcept
+  {
+    return comTargetRaw_;
+  }
+
+  /* Return the target CoM velocity provided by \ref stabilizer_target "target()" */
+  inline const Eigen::Vector3d & targetCoMVelocity() const noexcept
+  {
+    return comdTarget_;
+  }
+
+  /* Return the target CoM acceleration provided by \ref stabilizer_target "target()" */
+  inline const Eigen::Vector3d & targetCoMAcceleration() const noexcept
+  {
+    return comddTarget_;
+  }
+
+  /* Return the target ZMP provided by \ref stabilizer_target "target()" */
+  inline const Eigen::Vector3d & targetZMP() const noexcept
+  {
+    return zmpTarget_;
+  }
+
+  /* Return the target ZMP velocity by \ref stabilizer_target "target()" */
+  inline const Eigen::Vector3d & targetZMPVelocity() const noexcept
+  {
+    return zmpdTarget_;
+  }
 
   /**
    * @brief Set the wrench that the robot expects to receive from the external contacts.
@@ -322,10 +386,21 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * @param surfaceNames Names of the surface to which the external wrench is applied
    * @param targetWrenches Target (expected) external wrenches
    * @param gains Gains of measured external wrenches
+   *
+   * \anchor set_external_wrenches
    */
   void setExternalWrenches(const std::vector<std::string> & surfaceNames,
                            const std::vector<sva::ForceVecd> & targetWrenches,
                            const std::vector<sva::MotionVecd> & gains);
+
+  /* Return the current external wrenches targets
+   *
+   * \see \ref set_external_wrenches "setExternalWrenches()"
+   **/
+  inline const std::vector<ExternalWrench> & externalWrenches() const noexcept
+  {
+    return extWrenches_;
+  }
 
   inline const Eigen::Vector3d & measuredDCM() noexcept
   {
@@ -356,7 +431,6 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   {
     return comOffsetMeasured_;
   }
-
 
   inline bool inContact(ContactState state) const noexcept
   {
@@ -735,20 +809,6 @@ private:
     c_.zmpcc = zmpccConfig;
     zmpcc_.configure(zmpccConfig);
   }
-
-  /** @brief External wrench. */
-  struct ExternalWrench
-  {
-    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-    /// Target (expected) external wrench
-    sva::ForceVecd target;
-    /// Measured external wrench
-    sva::ForceVecd measured;
-    /// Gain of measured external wrench
-    sva::MotionVecd gain;
-    /// Name of the surface to which the external wrench is applied
-    std::string surfaceName;
-  };
 
   /** @brief Compute the CoM offset (\alpha) and the ZMP coefficient (\kappa) and the sum wrench from the external
    * wrenches. see Murooka et al. RAL 2021 eq (8)
