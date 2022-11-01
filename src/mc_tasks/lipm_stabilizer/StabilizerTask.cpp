@@ -1192,11 +1192,6 @@ void StabilizerTask::updateFootForceDifferenceControl()
   sva::PTransformd T_0_L(leftFootTask->surfacePose().rotation());
   sva::PTransformd T_0_R(rightFootTask->surfacePose().rotation());
 
-  // In what follows, vertical foot forces are expressed in their respective
-  // foot sole frames, but foot force difference control expects them to be
-  // written in the world frame, so the following lines are wrong (they miss a
-  // frame transform). Thanks to @Saeed-Mansouri for pointing out this bug
-  // <https://github.com/stephane-caron/lipm_walking_controller/discussions/72>.
   // T_0_{L/R}.transMul transforms a ForceVecd variable from surface frame to world frame
   double LFz_d = T_0_L.transMul(leftFootTask->targetWrench()).force().z();
   double RFz_d = T_0_R.transMul(rightFootTask->targetWrench()).force().z();
