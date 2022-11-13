@@ -455,25 +455,6 @@ public:
    */
   void setEncoderVelocities(const std::string & robotName, const std::vector<double> & eVelocities);
 
-  /*! \brief Sets the main robot's flexible joint values (control+real)
-   *
-   * \param eValues Flexible joint values (provided by an estimator)
-   *
-   * \note It is expected that these values follow the order given by
-   * robot.flexibility()
-   */
-  void setFlexibilityValues(const std::vector<double> & fValues);
-
-  /** Set the actual flexibility values for the specified robot (control + real)
-   *
-   * \param robotName Name of the robot to which the sensor values will be assigned.
-   * A robot with that name must exist in both robots() and realRobots() instances.
-   * \param eValues Flexible joint values (provided by an estimator)
-   *
-   * \throws If the specified robot does not exist
-   **/
-  void setFlexibilityValues(const std::string & robotName, const std::vector<double> & fValues);
-
   /*! \brief Sets the main robot's actual joint torques (control+real)
    *
    * \param tValues  Actual joint torques (provided by sensors)

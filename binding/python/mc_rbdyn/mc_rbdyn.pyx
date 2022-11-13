@@ -177,11 +177,6 @@ cdef class BodySensor(object):
   def linearAcceleration(self):
     return eigen.Vector3dFromC(self.impl.linearAcceleration())
 
-cdef BodySensor BodySensorFromRef(c_mc_rbdyn.BodySensor & bs):
-    cdef BodySensor ret = BodySensor(skip_alloc = True)
-    ret.impl = &(bs)
-    return ret
-
 cdef BodySensor BodySensorFromCRef(const c_mc_rbdyn.BodySensor & bs):
     cdef BodySensor ret = BodySensor(skip_alloc = True)
     ret.impl = &(c_mc_rbdyn.const_cast_body_sensor(bs))
@@ -225,11 +220,6 @@ cdef class ForceSensor(object):
     return sva.ForceVecdFromC(self.impl.worldWrench(deref(robot.impl)))
   def worldWrenchWithoutGravity(self, Robot robot):
     return sva.ForceVecdFromC(self.impl.worldWrenchWithoutGravity(deref(robot.impl)))
-
-cdef ForceSensor ForceSensorFromRef(c_mc_rbdyn.ForceSensor & fs):
-    cdef ForceSensor ret = ForceSensor(skip_alloc = True)
-    ret.impl = &(fs)
-    return ret
 
 cdef ForceSensor ForceSensorFromCRef(const c_mc_rbdyn.ForceSensor & fs):
     cdef ForceSensor ret = ForceSensor(skip_alloc = True)
@@ -584,7 +574,7 @@ cdef class Robot(object):
     self.__is_valid()
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
-    return ForceSensorFromRef(self.impl.forceSensor(name))
+    return ForceSensorFromCRef(self.impl.forceSensor(name))
   def hasForceSensor(self, name):
     self.__is_valid()
     if isinstance(name, unicode):
@@ -594,7 +584,7 @@ cdef class Robot(object):
     self.__is_valid()
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
-    return ForceSensorFromRef(self.impl.bodyForceSensor(name))
+    return ForceSensorFromCRef(self.impl.bodyForceSensor(name))
   def bodyHasForceSensor(self, name):
     self.__is_valid()
     if isinstance(name, unicode):
@@ -606,9 +596,9 @@ cdef class Robot(object):
     if name is None:
       if isinstance(name, unicode):
         name = name.encode(u'ascii')
-      return BodySensorFromRef(self.impl.bodySensor())
+      return BodySensorFromCRef(self.impl.bodySensor())
     else:
-      return BodySensorFromRef(self.impl.bodySensor(name))
+      return BodySensorFromCRef(self.impl.bodySensor(name))
   def bodySensors(self):
     self.__is_valid()
     size = c_mc_rbdyn.getBodySensorsSize(deref(self.impl))
@@ -628,7 +618,7 @@ cdef class Robot(object):
     return self.impl.bodyHasBodySensor(name)
   def bodyBodySensor(self, name):
     self.__is_valid()
-    return BodySensorFromRef(self.impl.bodyBodySensor(name))
+    return BodySensorFromCRef(self.impl.bodyBodySensor(name))
 
   def surfaceWrench(self, surfaceName):
       self.__is_valid()

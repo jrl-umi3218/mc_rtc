@@ -93,16 +93,6 @@ public:
         {
           rm->controlToCanonical = [](const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical) {
             canonical.mbc() = control.mbc();
-            canonical.encoderValues(control.encoderValues());
-            for(const auto & fs : control.forceSensors())
-            {
-              canonical.forceSensor(fs.name()) = fs;
-            }
-
-            for(const auto & bs : control.bodySensors())
-            {
-              canonical.bodySensor(bs.name()) = bs;
-            }
           };
         }
         else

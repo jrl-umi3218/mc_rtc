@@ -251,28 +251,69 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
   // Load canonical robot model (for output and display)
   mc_rbdyn::RobotModulePtr canonicalModule = nullptr;
   const auto & cp = rm->canonicalParameters();
-  if(cp.size() == 1)
-  {
-    canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp[0]);
-  }
-  else if(cp.size() == 2)
-  {
-    canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp[0], cp[1]);
-  }
-  else if(cp.size() == 3)
-  {
-    canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp[0], cp[1], cp[2]);
-  }
-
-  if(!canonicalModule)
+  if(cp == rm->parameters())
   {
     canonicalModule = rm;
+  }
+  else
+  {
+    if(cp.size() == 1)
+    {
+      canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp[0]);
+    }
+    else if(cp.size() == 2)
+    {
+      canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp[0], cp[1]);
+    }
+    else if(cp.size() == 3)
+    {
+      canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp[0], cp[1], cp[2]);
+    }
+    if(!canonicalModule)
+    {
+      canonicalModule = rm;
+    }
   }
   mc_rbdyn::LoadRobotParameters params{};
   auto & robot = loadRobot(rm, name, robots(), params);
   params.warn_on_missing_files(false).data(robot.data());
   loadRobot(rm, name, realRobots(), params);
-  loadRobot(canonicalModule, name, *outputRobots_, params);
+  std::string urdf;
+  auto loadUrdf = [&canonicalModule, &urdf]() -> const std::string & {
+    if(urdf.size())
+    {
+      return urdf;
+    }
+    const auto & urdfPath = canonicalModule->urdf_path;
+    std::ifstream ifs(urdfPath);
+    if(ifs.is_open())
+    {
+      std::stringstream urdfSS;
+      urdfSS << ifs.rdbuf();
+      urdf = urdfSS.str();
+      return urdf;
+    }
+    mc_rtc::log::error("Could not open urdf file {} for robot {}, cannot initialize grippers", urdfPath,
+                       canonicalModule->name);
+    mc_rtc::log::error_and_throw("Failed to initialize grippers");
+  };
+  auto & outputRobot = loadRobot(canonicalModule, name, *outputRobots_, params);
+  for(const auto & gripper : canonicalModule->grippers())
+  {
+    auto mimics = gripper.mimics();
+    const auto & safety = gripper.safety() ? *gripper.safety() : canonicalModule->gripperSafety();
+    if(mimics)
+    {
+      robot.data()->grippers[gripper.name].reset(
+          new mc_control::Gripper(outputRobot, gripper.joints, *mimics, gripper.reverse_limits, safety));
+    }
+    else
+    {
+      robot.data()->grippers[gripper.name].reset(
+          new mc_control::Gripper(outputRobot, gripper.joints, loadUrdf(), gripper.reverse_limits, safety));
+    }
+    robot.data()->grippersRef.push_back(std::ref(*robot.data()->grippers[gripper.name]));
+  }
   loadRobot(canonicalModule, name, *outputRealRobots_, params);
   addRobotToLog(robot);
   addRobotToGUI(robot);

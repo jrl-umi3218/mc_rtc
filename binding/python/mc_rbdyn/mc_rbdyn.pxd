@@ -20,9 +20,7 @@ cdef Collision CollisionFromC(const c_mc_rbdyn.Collision&)
 
 cdef class BodySensor(object):
   cdef cppbool __own_impl
-  cdef c_mc_rbdyn.BodySensor * impl
-
-cdef BodySensor BodySensorFromRef(c_mc_rbdyn.BodySensor&)
+  cdef const c_mc_rbdyn.BodySensor * impl
 
 cdef BodySensor BodySensorFromCRef(const c_mc_rbdyn.BodySensor&)
 
@@ -33,9 +31,7 @@ cdef Flexibility FlexibilityFromC(const c_mc_rbdyn.Flexibility&)
 
 cdef class ForceSensor(object):
   cdef cppbool __own_impl
-  cdef c_mc_rbdyn.ForceSensor  * impl
-
-cdef ForceSensor ForceSensorFromRef(c_mc_rbdyn.ForceSensor&)
+  cdef const c_mc_rbdyn.ForceSensor  * impl
 
 cdef ForceSensor ForceSensorFromCRef(const c_mc_rbdyn.ForceSensor&)
 

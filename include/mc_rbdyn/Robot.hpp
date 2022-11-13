@@ -12,19 +12,19 @@ namespace mc_rbdyn
 {
 
 template<typename T>
-bool Robot::hasDevice(const std::string & name) const
+bool Robot::hasDevice(const std::string & name) const noexcept
 {
-  return devicesIndex_.count(name) != 0;
+  return data_->devicesIndex.count(name) != 0;
 }
 
 template<>
-inline bool Robot::hasDevice<ForceSensor>(const std::string & name) const
+inline bool Robot::hasDevice<ForceSensor>(const std::string & name) const noexcept
 {
   return hasForceSensor(name);
 }
 
 template<>
-inline bool Robot::hasDevice<BodySensor>(const std::string & name) const
+inline bool Robot::hasDevice<BodySensor>(const std::string & name) const noexcept
 {
   return hasBodySensor(name);
 }
@@ -32,15 +32,17 @@ inline bool Robot::hasDevice<BodySensor>(const std::string & name) const
 template<typename T>
 const T & Robot::device(const std::string & name) const
 {
-  auto it = devicesIndex_.find(name);
-  if(it == devicesIndex_.end())
+  auto it = data_->devicesIndex.find(name);
+  if(it == data_->devicesIndex.end())
   {
-    mc_rtc::log::error_and_throw("No sensor named {} in {}", name, this->name());
+    mc_rtc::log::error_and_throw("No device named {} in {}", name, this->name());
   }
-  auto ptr = dynamic_cast<T *>(devices_[it->second].get());
+  auto dev = data_->devices[it->second].get();
+  auto ptr = dynamic_cast<T *>(dev);
   if(!ptr)
   {
-    mc_rtc::log::error_and_throw("{} sensor type did not match the requested one: {}", name, mc_rtc::type_name<T>());
+    mc_rtc::log::error_and_throw("{} sensor type did not match the requested one: {} (actual device type: {})", name,
+                                 mc_rtc::type_name<T>(), dev->type());
   }
   return *ptr;
 }

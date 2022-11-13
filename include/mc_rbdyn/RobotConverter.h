@@ -20,84 +20,48 @@ struct RobotConverterConfig
    * Chosse which mbc properties to copy, only effective if mbcToOutMbc_ = true
    * @{
    */
-  bool q_ = true;
-  bool alpha_ = true;
-  bool alphad_ = true;
-  bool tau_ = true;
+  bool copyJointCommand_ = true;
+  bool copyJointVelocityCommand_ = true;
+  bool copyJointAccelerationCommand_ = true;
+  bool copyJointTorqueCommand_ = true;
   ///< @}
 
   ///< Copy input encoder values to the output robot's mbc
-  bool encodersToOutMbc_ = true;
-  ///< Copy input encoder values to the output robot's encoder values
-  bool copyEncoderValues_ = true;
-  ///< Copy input encoder velocities to the output robot's encoder velocities
-  bool copyEncoderVelocities_ = true;
-  ///< Copy input force sensors to the output robot's force sensors
-  bool copyForceSensors_ = true;
-  ///< Copy input body sensors to the output robot's body sensors
-  bool copyBodySensors_ = true;
+  bool encodersToOutMbc_ = false;
+  ///< Copy input encoder values to the output robot's mbc on the first run
+  bool encodersToOutMbcOnce_ = true;
   ///< Compute the output robot's joint mimics
-  bool computeMimics_ = true;
+  bool enforceMimics_ = true;
 
-  inline RobotConverterConfig & mbcToOutMbc(bool b) noexcept
-  {
-    mbcToOutMbc_ = b;
-    return *this;
+  /* Copy the input robot's position in the world into the output
+   *
+   * This also triggers the robot's kinematic update (outputRobot.forwardKinematics()), if this option is false the
+   * update must be done outside of the robot converter if the accurate position of the robot is needed
+   */
+  bool copyPosWorld_ = true;
+
+#define ROBOT_CONVERTER_PROPERTY(NAME)                \
+  inline RobotConverterConfig & NAME(bool b) noexcept \
+  {                                                   \
+    NAME##_ = b;                                      \
+    return *this;                                     \
   }
-  inline RobotConverterConfig q(bool b) noexcept
-  {
-    q_ = b;
-    return *this;
-  };
-  inline RobotConverterConfig alpha(bool b) noexcept
-  {
-    alpha_ = b;
-    return *this;
-  };
-  inline RobotConverterConfig alphad(bool b) noexcept
-  {
-    alphad_ = b;
-    return *this;
-  };
-  inline RobotConverterConfig tau(bool b) noexcept
-  {
-    tau_ = b;
-    return *this;
-  };
-  inline RobotConverterConfig encodersToOutMbc(bool b) noexcept
-  {
-    encodersToOutMbc_ = b;
-    return *this;
-  };
-  inline RobotConverterConfig copyEncoderValues(bool b) noexcept
-  {
-    copyEncoderValues_ = b;
-    return *this;
-  };
-  inline RobotConverterConfig copyEncoderVelocities(bool b) noexcept
-  {
-    copyEncoderVelocities_ = b;
-    return *this;
-  };
-  inline RobotConverterConfig copyForceSensors(bool b) noexcept
-  {
-    copyForceSensors_ = b;
-    return *this;
-  };
-  inline RobotConverterConfig copyBodySensors(bool b) noexcept
-  {
-    copyBodySensors_ = b;
-    return *this;
-  };
-  inline RobotConverterConfig computeMimics(bool b) noexcept
-  {
-    computeMimics_ = b;
-    return *this;
-  };
+
+  ROBOT_CONVERTER_PROPERTY(mbcToOutMbc)
+  ROBOT_CONVERTER_PROPERTY(copyJointCommand)
+  ROBOT_CONVERTER_PROPERTY(copyJointVelocityCommand)
+  ROBOT_CONVERTER_PROPERTY(copyJointAccelerationCommand)
+  ROBOT_CONVERTER_PROPERTY(copyJointTorqueCommand)
+  ROBOT_CONVERTER_PROPERTY(encodersToOutMbc)
+  ROBOT_CONVERTER_PROPERTY(encodersToOutMbcOnce)
+  ROBOT_CONVERTER_PROPERTY(enforceMimics)
+  ROBOT_CONVERTER_PROPERTY(copyPosWorld)
+
+#undef ROBOT_CONVERTER_PROPERTY
 };
 
 /**
- * @brief Copies all common properties from one robot to another (joint values,
+ * @brief Copies all common properties from one robot to another
  * encoders, sensors, etc)
  *
  * @warning When using the RobotConverter to output to a real robot system, be
@@ -133,14 +97,8 @@ protected:
   bool first_ = true;
   // Common joint indices from inputRobot_ -> outputRobot_ robot
   std::vector<std::pair<unsigned int, unsigned int>> commonJointIndices_{};
-  // Common encoder indices from inputRobot_ -> outputRobot_ robot
+  // Encoder indices from inputRobot_ -> outputRobot_ robot
   std::vector<std::pair<unsigned int, unsigned int>> commonEncoderToJointIndices_{};
-  // Indices from inputRobot_ encoders to outputRobot_ encoders
-  std::vector<std::pair<unsigned int, unsigned int>> commonEncoderIndices_{};
-  // Output encoder values
-  std::vector<double> outEncoderValues_;
-  // Output encoder velocities
-  std::vector<double> outEncoderVelocities_;
   // Indices of joints with mimics from actuated joints in inputRobot_
   // to their mimic counterpart in outputRobot_
   std::vector<std::pair<unsigned int, unsigned int>> mimicJoints_{};

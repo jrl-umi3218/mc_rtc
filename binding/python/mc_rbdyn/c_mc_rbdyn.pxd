@@ -153,15 +153,15 @@ cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
     unsigned int bodyIndexByName(string)
 
     bool hasForceSensor(string)
-    ForceSensor& forceSensor(string)
+    const ForceSensor& forceSensor(string)
     bool bodyHasForceSensor(string)
-    ForceSensor & bodyForceSensor(string)
+    const ForceSensor & bodyForceSensor(string)
 
-    BodySensor& bodySensor()
+    const BodySensor& bodySensor()
     bool hasBodySensor(string)
-    BodySensor& bodySensor(string)
+    const BodySensor& bodySensor(string)
     bool bodyHasBodySensor(string)
-    BodySensor& bodyBodySensor(string)
+    const BodySensor& bodyBodySensor(string)
 
     const MultiBody& mb()
     const MultiBodyConfig& mbc()
