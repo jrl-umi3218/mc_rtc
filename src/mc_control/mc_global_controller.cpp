@@ -166,11 +166,11 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
 
 void MCGlobalController::init(const std::vector<double> & initq, const sva::PTransformd & initAttitude)
 {
-  initEncoders(robot(), initq);
-  robot().posW(initAttitude);
-  for(auto & robot : robots())
+  initEncoders(controller().robot(), initq);
+  controller().robot().posW(initAttitude);
+  for(auto & robot : controller().robots())
   {
-    if(robot.robotIndex() == robots().robotIndex())
+    if(robot.robotIndex() == controller().robots().robotIndex())
     {
       continue;
     }
@@ -181,11 +181,12 @@ void MCGlobalController::init(const std::vector<double> & initq, const sva::PTra
 
 void MCGlobalController::init(const std::vector<double> & initq)
 {
-  initEncoders(robot(), initq);
+  initEncoders(controller().robot(), initq);
 
-  auto & q = robot().mbc().q;
+  auto & q = controller().robot().mbc().q;
   if(!controller_->config().has("init_pos")
-     && !(controller_->config().has(robot().name()) && controller_->config()(robot().name()).has("init_pos")))
+     && !(controller_->config().has(controller().robot().name())
+          && controller_->config()(controller().robot().name()).has("init_pos")))
   {
     // Configure initial attitude (requires FK to be computed)
     if(config.init_attitude_from_sensor)
@@ -194,14 +195,14 @@ void MCGlobalController::init(const std::vector<double> & initq)
         mc_rtc::log::info("Initializing attitude from body sensor: {}", sensor.name());
         // Update free flyer from body sensor takin into account the kinematics
         // between sensor and body
-        const auto & fb = robot().mb().body(0).name();
+        const auto & fb = controller().robot().mb().body(0).name();
         sva::PTransformd X_0_s(sensor.orientation(), sensor.position());
         const auto X_s_b = sensor.X_b_s().inv();
-        sva::PTransformd X_b_fb = robot().X_b1_b2(sensor.parentBody(), fb);
+        sva::PTransformd X_b_fb = controller().robot().X_b1_b2(sensor.parentBody(), fb);
         sva::PTransformd X_s_fb = X_b_fb * X_s_b;
         auto initPos = X_s_fb * X_0_s;
-        robot().posW(initPos);
-        realRobot().posW(initPos);
+        controller().robot().posW(initPos);
+        controller().realRobot().posW(initPos);
       };
       if(config.init_attitude_sensor.empty())
       {
@@ -224,18 +225,18 @@ void MCGlobalController::init(const std::vector<double> & initq)
     else
     {
       mc_rtc::log::info("Initializing attitude from robot module: q=[{}]",
-                        mc_rtc::io::to_string(robot().module().default_attitude(), ", ", 3));
+                        mc_rtc::io::to_string(controller().robot().module().default_attitude(), ", ", 3));
       if(q[0].size() == 7)
       {
-        const auto & initAttitude = robot().module().default_attitude();
+        const auto & initAttitude = controller().robot().module().default_attitude();
         q[0] = {std::begin(initAttitude), std::end(initAttitude)};
-        robot().forwardKinematics();
+        controller().robot().forwardKinematics();
       }
     }
   }
-  for(auto & robot : robots())
+  for(auto & robot : controller().robots())
   {
-    if(robot.robotIndex() == robots().robotIndex())
+    if(robot.robotIndex() == controller().robots().robotIndex())
     {
       continue;
     }
@@ -254,7 +255,7 @@ void MCGlobalController::init(const std::map<std::string, std::vector<double>> &
                               const std::map<std::string, sva::PTransformd> & initAttitudes,
                               bool reset)
 {
-  for(auto & robot : robots())
+  for(auto & robot : controller().robots())
   {
     auto initq_it = initqs.find(robot.name());
     if(initq_it != initqs.end())
@@ -378,7 +379,7 @@ void MCGlobalController::initController(bool reset)
   {
     start_log();
   }
-  const auto & q = robot().mbc().q;
+  const auto & q = controller().robot().mbc().q;
   controller_->reset({q});
   controller_->resetObserverPipelines();
   initGUI();
@@ -401,23 +402,23 @@ void MCGlobalController::initController(bool reset)
 
 void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
 {
-  robot().data()->bodySensors[0].position(pos);
+  controller().robot().data()->bodySensors[0].position(pos);
 }
 
 void MCGlobalController::setSensorPosition(const std::string & robotName, const Eigen::Vector3d & pos)
 {
-  robot(robotName).data()->bodySensors[0].position(pos);
+  controller().robot(robotName).data()->bodySensors[0].position(pos);
 }
 
 void MCGlobalController::setSensorPositions(const std::map<std::string, Eigen::Vector3d> & poses)
 {
-  setSensorPositions(robot(), poses);
+  setSensorPositions(controller().robot(), poses);
 }
 
 void MCGlobalController::setSensorPositions(const std::string & robotName,
                                             const std::map<std::string, Eigen::Vector3d> & poses)
 {
-  setSensorPositions(robot(robotName), poses);
+  setSensorPositions(controller().robot(robotName), poses);
 }
 
 void MCGlobalController::setSensorPositions(mc_rbdyn::Robot & robot,
@@ -431,22 +432,22 @@ void MCGlobalController::setSensorPositions(mc_rbdyn::Robot & robot,
 
 void MCGlobalController::setSensorOrientation(const Eigen::Quaterniond & ori)
 {
-  robot().data()->bodySensors[0].orientation(ori);
+  controller().robot().data()->bodySensors[0].orientation(ori);
 }
 
 void MCGlobalController::setSensorOrientation(const std::string & robotName, const Eigen::Quaterniond & ori)
 {
-  robot(robotName).data()->bodySensors[0].orientation(ori);
+  controller().robot(robotName).data()->bodySensors[0].orientation(ori);
 }
 
 void MCGlobalController::setSensorOrientations(const QuaternionMap & oris)
 {
-  setSensorOrientations(robot(), oris);
+  setSensorOrientations(controller().robot(), oris);
 }
 
 void MCGlobalController::setSensorOrientations(const std::string & robotName, const QuaternionMap & oris)
 {
-  setSensorOrientations(robot(robotName), oris);
+  setSensorOrientations(controller().robot(robotName), oris);
 }
 
 void MCGlobalController::setSensorOrientations(mc_rbdyn::Robot & robot, const QuaternionMap & oris)
@@ -459,23 +460,23 @@ void MCGlobalController::setSensorOrientations(mc_rbdyn::Robot & robot, const Qu
 
 void MCGlobalController::setSensorLinearVelocity(const Eigen::Vector3d & vel)
 {
-  robot().data()->bodySensors[0].linearVelocity(vel);
+  controller().robot().data()->bodySensors[0].linearVelocity(vel);
 }
 
 void MCGlobalController::setSensorLinearVelocity(const std::string & robotName, const Eigen::Vector3d & vel)
 {
-  robot(robotName).data()->bodySensors[0].linearVelocity(vel);
+  controller().robot(robotName).data()->bodySensors[0].linearVelocity(vel);
 }
 
 void MCGlobalController::setSensorLinearVelocities(const std::map<std::string, Eigen::Vector3d> & linearVels)
 {
-  setSensorLinearVelocities(robot(), linearVels);
+  setSensorLinearVelocities(controller().robot(), linearVels);
 }
 
 void MCGlobalController::setSensorLinearVelocities(const std::string & robotName,
                                                    const std::map<std::string, Eigen::Vector3d> & linearVels)
 {
-  setSensorLinearVelocities(robot(robotName), linearVels);
+  setSensorLinearVelocities(controller().robot(robotName), linearVels);
 }
 
 void MCGlobalController::setSensorLinearVelocities(mc_rbdyn::Robot & robot,
@@ -489,23 +490,23 @@ void MCGlobalController::setSensorLinearVelocities(mc_rbdyn::Robot & robot,
 
 void MCGlobalController::setSensorAngularVelocity(const Eigen::Vector3d & vel)
 {
-  robot().data()->bodySensors[0].angularVelocity(vel);
+  controller().robot().data()->bodySensors[0].angularVelocity(vel);
 }
 
 void MCGlobalController::setSensorAngularVelocity(const std::string & name, const Eigen::Vector3d & vel)
 {
-  robot(name).data()->bodySensors[0].angularVelocity(vel);
+  controller().robot(name).data()->bodySensors[0].angularVelocity(vel);
 }
 
 void MCGlobalController::setSensorAngularVelocities(const std::map<std::string, Eigen::Vector3d> & angularVels)
 {
-  setSensorAngularVelocities(robot(), angularVels);
+  setSensorAngularVelocities(controller().robot(), angularVels);
 }
 
 void MCGlobalController::setSensorAngularVelocities(const std::string & name,
                                                     const std::map<std::string, Eigen::Vector3d> & angularVels)
 {
-  setSensorAngularVelocities(robot(name), angularVels);
+  setSensorAngularVelocities(controller().robot(name), angularVels);
 }
 
 void MCGlobalController::setSensorAngularVelocities(mc_rbdyn::Robot & robot,
@@ -535,23 +536,23 @@ void MCGlobalController::setSensorAccelerations(mc_rbdyn::Robot & robot,
 
 void MCGlobalController::setSensorLinearAcceleration(const Eigen::Vector3d & acc)
 {
-  robot().data()->bodySensors[0].linearAcceleration(acc);
+  controller().robot().data()->bodySensors[0].linearAcceleration(acc);
 }
 
 void MCGlobalController::setSensorLinearAcceleration(const std::string & name, const Eigen::Vector3d & acc)
 {
-  robot(name).data()->bodySensors[0].linearAcceleration(acc);
+  controller().robot(name).data()->bodySensors[0].linearAcceleration(acc);
 }
 
 void MCGlobalController::setSensorLinearAccelerations(const std::map<std::string, Eigen::Vector3d> & accels)
 {
-  setSensorLinearAccelerations(robot(), accels);
+  setSensorLinearAccelerations(controller().robot(), accels);
 }
 
 void MCGlobalController::setSensorLinearAccelerations(const std::string & name,
                                                       const std::map<std::string, Eigen::Vector3d> & accels)
 {
-  setSensorLinearAccelerations(robot(name), accels);
+  setSensorLinearAccelerations(controller().robot(name), accels);
 }
 
 void MCGlobalController::setSensorLinearAccelerations(mc_rbdyn::Robot & robot,
@@ -565,12 +566,12 @@ void MCGlobalController::setSensorLinearAccelerations(mc_rbdyn::Robot & robot,
 
 void MCGlobalController::setSensorAngularAcceleration(const Eigen::Vector3d & acc)
 {
-  robot().data()->bodySensors[0].angularAcceleration(acc);
+  controller().robot().data()->bodySensors[0].angularAcceleration(acc);
 }
 
 void MCGlobalController::setSensorAngularAccelerations(const std::map<std::string, Eigen::Vector3d> & accels)
 {
-  setSensorAngularAccelerations(robot(), accels);
+  setSensorAngularAccelerations(controller().robot(), accels);
 }
 
 void MCGlobalController::setSensorAngularAccelerations(mc_rbdyn::Robot & robot,
@@ -584,32 +585,32 @@ void MCGlobalController::setSensorAngularAccelerations(mc_rbdyn::Robot & robot,
 
 void MCGlobalController::setEncoderValues(const std::vector<double> & eValues)
 {
-  robot().data()->encoderValues = eValues;
+  controller().robot().data()->encoderValues = eValues;
 }
 
 void MCGlobalController::setEncoderValues(const std::string & robotName, const std::vector<double> & eValues)
 {
-  robot(robotName).data()->encoderValues = eValues;
+  controller().robot(robotName).data()->encoderValues = eValues;
 }
 
 void MCGlobalController::setEncoderVelocities(const std::vector<double> & eVelocities)
 {
-  robot().data()->encoderVelocities = eVelocities;
+  controller().robot().data()->encoderVelocities = eVelocities;
 }
 
 void MCGlobalController::setEncoderVelocities(const std::string & robotName, const std::vector<double> & eVelocities)
 {
-  robot(robotName).data()->encoderVelocities = eVelocities;
+  controller().robot(robotName).data()->encoderVelocities = eVelocities;
 }
 
 void MCGlobalController::setJointTorques(const std::vector<double> & tValues)
 {
-  robot().data()->jointTorques = tValues;
+  controller().robot().data()->jointTorques = tValues;
 }
 
 void MCGlobalController::setJointTorques(const std::string & robotName, const std::vector<double> & tValues)
 {
-  robot(robotName).data()->jointTorques = tValues;
+  controller().robot(robotName).data()->jointTorques = tValues;
 }
 
 void MCGlobalController::setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches)
@@ -620,7 +621,7 @@ void MCGlobalController::setWrenches(const std::map<std::string, sva::ForceVecd>
 void MCGlobalController::setWrenches(const std::string & robotName,
                                      const std::map<std::string, sva::ForceVecd> & wrenches)
 {
-  auto & robot = this->robot(robotName);
+  auto & robot = controller().robot(robotName);
   for(const auto & w : wrenches)
   {
     robot.data()->forceSensors[robot.data()->forceSensorsIndex.at(w.first)].wrench(w.second);
@@ -643,7 +644,7 @@ void MCGlobalController::setJointMotorTemperature(const std::string & robotName,
                                                   const std::string & joint,
                                                   double temperature)
 {
-  auto & robot = this->robot(robotName);
+  auto & robot = controller().robot(robotName);
   auto & sensors = robot.data()->jointSensors;
   sensors[robot.data()->jointJointSensors.at(joint)].motorTemperature(temperature);
 }
@@ -656,7 +657,7 @@ void MCGlobalController::setJointMotorTemperatures(const std::map<std::string, d
 void MCGlobalController::setJointMotorTemperatures(const std::string & robotName,
                                                    const std::map<std::string, double> & temperatures)
 {
-  auto & robot = this->robot(robotName);
+  auto & robot = controller().robot(robotName);
   auto & sensors = robot.data()->jointSensors;
   for(const auto & t : temperatures)
   {
@@ -673,7 +674,7 @@ void MCGlobalController::setJointDriverTemperature(const std::string & robotName
                                                    const std::string & joint,
                                                    double temperature)
 {
-  auto & robot = this->robot(robotName);
+  auto & robot = controller().robot(robotName);
   auto & sensors = robot.data()->jointSensors;
   sensors[robot.data()->jointJointSensors.at(joint)].driverTemperature(temperature);
 }
@@ -686,7 +687,7 @@ void MCGlobalController::setJointDriverTemperatures(const std::map<std::string, 
 void MCGlobalController::setJointDriverTemperatures(const std::string & robotName,
                                                     const std::map<std::string, double> & temperatures)
 {
-  auto & robot = this->robot(robotName);
+  auto & robot = controller().robot(robotName);
   auto & sensors = robot.data()->jointSensors;
   for(const auto & t : temperatures)
   {
@@ -701,7 +702,7 @@ void MCGlobalController::setJointMotorCurrent(const std::string & joint, double 
 
 void MCGlobalController::setJointMotorCurrent(const std::string & robotName, const std::string & joint, double current)
 {
-  auto & robot = this->robot(robotName);
+  auto & robot = controller().robot(robotName);
   auto & sensors = robot.data()->jointSensors;
   sensors[robot.data()->jointJointSensors.at(joint)].motorCurrent(current);
 }
@@ -714,7 +715,7 @@ void MCGlobalController::setJointMotorCurrents(const std::map<std::string, doubl
 void MCGlobalController::setJointMotorCurrents(const std::string & robotName,
                                                const std::map<std::string, double> & currents)
 {
-  auto & robot = this->robot(robotName);
+  auto & robot = controller().robot(robotName);
   auto & sensors = robot.data()->jointSensors;
   for(const auto & c : currents)
   {
@@ -946,7 +947,7 @@ double MCGlobalController::timestep() const
 
 const std::vector<std::string> & MCGlobalController::ref_joint_order()
 {
-  return robot().refJointOrder();
+  return controller().robot().refJointOrder();
 }
 
 bool MCGlobalController::AddController(const std::string & name)

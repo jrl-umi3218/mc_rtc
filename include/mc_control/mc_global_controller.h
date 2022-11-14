@@ -667,49 +667,44 @@ public:
     return *controller_;
   }
 
-  /** @name Accessors to the various robots:
+  /** @name Accessors to the robots:
    *
-   * - The control robot used by mc_rtc to solve the QP is expressed without
-   *   suffix
-   * - The real robots represent the observed state of the robots. See
-   *   mc_observers::ObserverPipeline for more information on how to set up a state
-   *   observation pipeline.
-   * - The output robots are used by the various interfaces to send control commands to
-   *   the robots, and by the ROS plugin to publish a complete visualization of
-   *   the robots (including non-controlled joints) various interfaces to send the control state to the robot.
+   * - robots contains the output of the controller pipeline, that is:
+   *   controller -> grippers -> plugins -> module.postprocess
+   * - realRobots contains the output of the observer pipeline, that is:
+   *   observer pipeline -> plugins -> module.postprocess
+   *
    * @{
    */
 
-#define MAKE_ROBOTS_ACCESSOR(NAME)                                    \
+#define MAKE_ROBOTS_ACCESSOR(NAME, PTR)                               \
   inline mc_rbdyn::Robots & NAME##s() noexcept                        \
   {                                                                   \
-    return controller().NAME##s();                                    \
+    return *controller().PTR##s_;                                     \
   }                                                                   \
   inline const mc_rbdyn::Robots & NAME##s() const noexcept            \
   {                                                                   \
-    return controller().NAME##s();                                    \
+    return *controller().PTR##s_;                                     \
   }                                                                   \
   inline mc_rbdyn::Robot & NAME() noexcept                            \
   {                                                                   \
-    return controller().NAME();                                       \
+    return NAME##s().robot();                                         \
   }                                                                   \
   inline const mc_rbdyn::Robot & NAME() const noexcept                \
   {                                                                   \
-    return controller().NAME();                                       \
+    return NAME##s().robot();                                         \
   }                                                                   \
   inline mc_rbdyn::Robot & NAME(const std::string & name)             \
   {                                                                   \
-    return controller().NAME(name);                                   \
+    return NAME##s().robot(name);                                     \
   }                                                                   \
   inline const mc_rbdyn::Robot & NAME(const std::string & name) const \
   {                                                                   \
-    return controller().NAME(name);                                   \
+    return NAME##s().robot(name);                                     \
   }
 
-  MAKE_ROBOTS_ACCESSOR(robot)
-  MAKE_ROBOTS_ACCESSOR(realRobot)
-  MAKE_ROBOTS_ACCESSOR(outputRobot)
-  MAKE_ROBOTS_ACCESSOR(outputRealRobot)
+  MAKE_ROBOTS_ACCESSOR(robot, outputRobot)
+  MAKE_ROBOTS_ACCESSOR(realRobot, outputRealRobot)
 
 #undef MAKE_ROBOTS_ACCESSOR
 
