@@ -827,7 +827,8 @@ bool MCGlobalController::run()
     for(size_t i = 0; i < controller_->robots().size(); ++i)
     {
       auto & robot = controller_->robots().robot(i);
-      auto & realRobot = controller_->realRobot(robot.name());
+      auto & realRobot = controller_->realRobots().robot(i);
+      auto & outputRobot = controller_->outputRobots().robot(i);
       const auto & gi = robot.grippers();
       if(gi.empty())
       {
@@ -835,7 +836,7 @@ bool MCGlobalController::run()
       }
       for(auto & g : gi)
       {
-        g.get().run(controller_->timeStep, robot, controller_->solver().result().robots_state[i].q);
+        g.get().run(controller_->timeStep, outputRobot, controller_->solver().result().robots_state[i].q);
       }
       robot.forwardKinematics();
 
