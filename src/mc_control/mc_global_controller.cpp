@@ -836,15 +836,16 @@ bool MCGlobalController::run()
       controller_->converters_[i].convert(robot, outputRobot);
       controller_->converters_[i].convert(realRobot, outputRealRobot);
       const auto & gi = robot.grippers();
-      if(gi.empty())
+      if(!gi.empty())
       {
-        continue;
+        for(auto & g : gi)
+        {
+          g.get().run(controller_->timeStep, outputRobot, controller_->solver().result().robots_state[i].q);
+        }
+        outputRobot.forwardKinematics();
       }
-      for(auto & g : gi)
-      {
-        g.get().run(controller_->timeStep, outputRobot, controller_->solver().result().robots_state[i].q);
-      }
-      outputRobot.forwardKinematics();
+      robot.module().controlToCanonicalPostProcess(robot, outputRobot);
+      robot.module().controlToCanonicalPostProcess(realRobot, outputRealRobot);
     }
     if(config.enable_log)
     {
@@ -871,15 +872,6 @@ bool MCGlobalController::run()
       auto start_t = clock::now();
       plugin.plugin->after(*this);
       plugin.plugin_after_dt = clock::now() - start_t;
-    }
-    for(size_t i = 0; i < controller_->robots().size(); ++i)
-    {
-      auto & robot = controller_->robots().robot(i);
-      auto & realRobot = controller_->realRobots().robot(i);
-      auto & outputRobot = controller_->outputRobots().robot(i);
-      auto & outputRealRobot = controller_->outputRealRobots().robot(i);
-      robot.module().controlToCanonicalPostProcess(robot, outputRobot);
-      robot.module().controlToCanonicalPostProcess(realRobot, outputRealRobot);
     }
   }
   else

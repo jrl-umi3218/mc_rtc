@@ -595,7 +595,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    *
    * This function is called automatically by mc_rtc after each iteration of MCGlobalController::run()
    *
-   * It is called last, after the controller/observer, the grippers and the plugins have run
+   * It is called last, after the controller/observer/grippers have run and before the plugins/log/GUI
    */
   std::function<void(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical)> controlToCanonicalPostProcess =
       [](const mc_rbdyn::Robot &, mc_rbdyn::Robot &) {};

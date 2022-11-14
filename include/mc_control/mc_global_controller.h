@@ -670,9 +670,9 @@ public:
   /** @name Accessors to the robots:
    *
    * - robots contains the output of the controller pipeline, that is:
-   *   controller -> grippers -> plugins -> module.postprocess
+   *   controller -> converter -> grippers -> module.postprocess -> plugins
    * - realRobots contains the output of the observer pipeline, that is:
-   *   observer pipeline -> plugins -> module.postprocess
+   *   observer pipeline -> converter -> module.postprocess -> plugins
    *
    * @{
    */
