@@ -142,8 +142,8 @@ BOOST_AUTO_TEST_CASE(TestRobotZMPSimple)
   // Put all mass on the left foot, ZMP should be under the sensor
   const auto normalForce = robot.mass() * 10;
   const auto sensorNames = std::vector<std::string>{"LeftFootForceSensor", "RightFootForceSensor"};
-  auto & lfs = robot.forceSensor("LeftFootForceSensor");
-  auto & rfs = robot.forceSensor("RightFootForceSensor");
+  auto & lfs = robot.data()->forceSensors[robot.data()->forceSensorsIndex.at("LeftFootForceSensor")];
+  auto & rfs = robot.data()->forceSensors[robot.data()->forceSensorsIndex.at("RightFootForceSensor")];
   // Prevent using the JVRC1 calibration files (when they exist)
   // for the ZMP computation to obtain repeatable results here.
   // Resetting the calibrator makes sure that it has no effect.

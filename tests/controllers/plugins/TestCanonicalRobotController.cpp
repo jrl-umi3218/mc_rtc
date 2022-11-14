@@ -28,12 +28,12 @@ struct MC_CONTROL_DLLAPI TestCanonicalRobotController : public mc_control::Globa
 
   void after(mc_control::MCGlobalController & controller) override
   {
-    const auto & robot = controller.robot();
-    const auto & outputRobot = controller.outputRobot();
+    const auto & robot = controller.controller().robot();
+    const auto & outputRobot = controller.controller().outputRobot();
     // For all non gripper joints
     for(const auto & j : robot.refJointOrder())
     {
-      if(j != "L_UTHUMB" && j != "R_UTHUMB")
+      if(robot.hasJoint(j))
       {
         size_t jIdx = robot.jointIndexByName(j);
         size_t oIdx = outputRobot.jointIndexByName(j);

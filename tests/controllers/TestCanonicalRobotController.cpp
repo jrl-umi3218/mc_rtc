@@ -84,12 +84,12 @@ public:
     MCController::reset(reset_data);
     datastore().make<double>("GripperTarget", robot().gripper("l_gripper").getTargetQ("L_UTHUMB"));
     // Use half of the configured max speed of the gripper
-    gripper_min_ = robot().module().bounds()[0].at("L_UTHUMB")[0];
-    gripper_max_ = robot().module().bounds()[1].at("L_UTHUMB")[0];
+    gripper_min_ = outputRobot().module().bounds()[0].at("L_UTHUMB")[0];
+    gripper_max_ = outputRobot().module().bounds()[1].at("L_UTHUMB")[0];
     double gripper_range = (gripper_max_ - gripper_min_);
     gripper_min_ += 0.1 * gripper_range;
     gripper_max_ -= 0.1 * gripper_range;
-    vmax_ = robot().module().bounds()[3].at("L_UTHUMB")[0] * robot().gripper("l_gripper").percentVMAX() * 0.5;
+    vmax_ = outputRobot().module().bounds()[3].at("L_UTHUMB")[0] * robot().gripper("l_gripper").percentVMAX() * 0.5;
   }
 
 private:

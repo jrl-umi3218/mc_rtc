@@ -21,16 +21,17 @@ BOOST_AUTO_TEST_CASE(TestCanonicalRobot)
   auto & canonicalRobot = canonicalRobots->robot();
   auto & robot = robots->robot();
 
-  auto filteredLinks = std::vector<std::string>{"R_LTHUMB_S", "R_UINDEX_S", "R_LINDEX_S", "R_ULITTLE_S", "R_LLITTLE_S",
-                                                "L_LTHUMB_S", "L_UINDEX_S", "L_LINDEX_S", "L_ULITTLE_S", "L_LLITTLE_S"};
+  auto filteredLinks =
+      std::vector<std::string>{"R_UTHUMB_S", "R_LTHUMB_S", "R_UINDEX_S", "R_LINDEX_S", "R_ULITTLE_S", "R_LLITTLE_S",
+                               "L_UTHUMB_S", "L_LTHUMB_S", "L_UINDEX_S", "L_LINDEX_S", "L_ULITTLE_S", "L_LLITTLE_S"};
 
   for(const auto & filteredLink : filteredLinks)
   {
     BOOST_REQUIRE(canonicalRobot.hasBody(filteredLink));
     BOOST_REQUIRE(!robot.hasBody(filteredLink));
   }
-  BOOST_REQUIRE(robot.hasJoint("L_UTHUMB"));
-  BOOST_REQUIRE(robot.hasJoint("R_UTHUMB"));
+  BOOST_REQUIRE(!robot.hasJoint("L_UTHUMB"));
+  BOOST_REQUIRE(!robot.hasJoint("R_UTHUMB"));
   BOOST_REQUIRE(canonicalRobot.hasJoint("L_UTHUMB"));
   BOOST_REQUIRE(canonicalRobot.hasJoint("R_UTHUMB"));
 
@@ -47,10 +48,12 @@ BOOST_AUTO_TEST_CASE(TestCanonicalRobotConverter)
   BOOST_REQUIRE(rm->_canonicalParameters[0] == "JVRC1");
   auto rmc = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
 
-  auto canonicalRobots = mc_rbdyn::loadRobot(*rmc);
   auto robots = mc_rbdyn::loadRobot(*rm);
-  auto & canonicalRobot = canonicalRobots->robot();
   auto & robot = robots->robot();
+
+  auto canonicalRobots = mc_rbdyn::Robots::make();
+  canonicalRobots->load(*rmc, mc_rbdyn::LoadRobotParameters{}.data(robot.data()));
+  auto & canonicalRobot = canonicalRobots->robot();
 
   std::random_device dev;
   std::mt19937 rng(dev());
@@ -76,24 +79,17 @@ BOOST_AUTO_TEST_CASE(TestCanonicalRobotConverter)
     enc.push_back(dist(rng));
     vel.push_back(dist(rng));
   }
-  robot.encoderValues(enc);
-  robot.encoderVelocities(vel);
+  robot.data()->encoderValues = enc;
+  robot.data()->encoderVelocities = vel;
   robot.forwardKinematics();
 
-  robot.forceSensor("RightFootForceSensor")
-      .wrench(sva::ForceVecd{Eigen::Vector3d{dist(rng), dist(rng), dist(rng)},
-                             Eigen::Vector3d{dist(rng), dist(rng), dist(rng)}});
+  robot.data()->forceSensors[robot.data()->forceSensorsIndex.at("RightFootForceSensor")].wrench(sva::ForceVecd{
+      Eigen::Vector3d{dist(rng), dist(rng), dist(rng)}, Eigen::Vector3d{dist(rng), dist(rng), dist(rng)}});
 
   {
     auto converter = mc_rbdyn::RobotConverter{// XXX it would be better to write a fixture to check for all combinations
                                               // of these parameters
-                                              mc_rbdyn::RobotConverterConfig{}
-                                                  .mbcToOutMbc(true)
-                                                  .copyForceSensors(true)
-                                                  .computeMimics(true)
-                                                  .copyEncoderValues(true)
-                                                  .copyEncoderVelocities(true)};
-    converter.convert(robot, canonicalRobot);
+                                              robot, canonicalRobot, mc_rbdyn::RobotConverterConfig{}};
     for(unsigned i = 0; i < robot.mbc().q.size(); ++i)
     {
       if(robot.mbc().q.size() == 1)
@@ -127,13 +123,7 @@ BOOST_AUTO_TEST_CASE(TestCanonicalRobotConverter)
     BOOST_REQUIRE_CLOSE(rfs.x(), crfs.x(), 1e-10);
     for(unsigned i = 0; i < robot.refJointOrder().size(); ++i)
     {
-      auto j = robot.refJointOrder()[i];
-      if(canonicalRobot.hasJoint(j))
-      {
-        const auto & cRjo = canonicalRobot.refJointOrder();
-        auto cIdx = std::distance(cRjo.begin(), std::find(cRjo.begin(), cRjo.end(), j));
-        BOOST_REQUIRE(canonicalRobot.encoderValues()[cIdx] == robot.encoderValues()[i]);
-      }
+      BOOST_REQUIRE(canonicalRobot.encoderValues()[i] == robot.encoderValues()[i]);
     }
   }
 }

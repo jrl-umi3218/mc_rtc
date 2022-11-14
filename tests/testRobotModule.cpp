@@ -112,9 +112,7 @@ BOOST_AUTO_TEST_CASE(TestRobotModule)
   BOOST_REQUIRE(robot.frame("Camera_RGB").parent()->name() == "Camera_Depth");
 
   // Check grippers
-  BOOST_REQUIRE(robot.grippers().size() == 2);
-  BOOST_REQUIRE(robot.hasGripper("l_gripper"));
-  BOOST_REQUIRE(robot.hasGripper("r_gripper"));
+  BOOST_REQUIRE(robot.module().grippers().size() == 2);
 
   // Check force sensors
   BOOST_REQUIRE(robot.forceSensors().size() == 4);
