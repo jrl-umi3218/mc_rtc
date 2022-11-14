@@ -289,7 +289,6 @@ void MCGlobalController::reset(const std::map<std::string, std::vector<double>> 
 {
   controllers.erase(current_ctrl);
   setup_logger_.erase(current_ctrl);
-  pre_gripper_mbcs_.clear();
   config.load_controllers_configs();
   AddController(current_ctrl);
   controller_ = controllers[current_ctrl].get();
@@ -811,10 +810,6 @@ bool MCGlobalController::run()
       plugin.plugin->before(*this);
       plugin.plugin_before_dt = clock::now() - start_t;
     }
-    for(size_t i = 0; i < pre_gripper_mbcs_.size() && i < controller_->robots().size(); ++i)
-    {
-      controller_->robots().robot(i).mbc() = pre_gripper_mbcs_[i];
-    }
     auto start_observers_run_t = clock::now();
     controller_->runObserverPipelines();
     observers_run_dt = clock::now() - start_observers_run_t;
@@ -823,12 +818,14 @@ bool MCGlobalController::run()
     bool r = controller_->run();
     auto end_controller_run_t = clock::now();
 
-    pre_gripper_mbcs_ = controller_->robots().mbcs();
     for(size_t i = 0; i < controller_->robots().size(); ++i)
     {
       auto & robot = controller_->robots().robot(i);
       auto & realRobot = controller_->realRobots().robot(i);
       auto & outputRobot = controller_->outputRobots().robot(i);
+      auto & outputRealRobot = controller_->outputRealRobots().robot(i);
+      robot.module().controlToCanonical(robot, outputRobot);
+      robot.module().controlToCanonical(realRobot, outputRealRobot);
       const auto & gi = robot.grippers();
       if(gi.empty())
       {
@@ -838,12 +835,7 @@ bool MCGlobalController::run()
       {
         g.get().run(controller_->timeStep, outputRobot, controller_->solver().result().robots_state[i].q);
       }
-      robot.forwardKinematics();
-
-      auto & outRobot = controller_->outputRobot(robot.name());
-      auto & outRealRobot = controller_->outputRealRobot(robot.name());
-      robot.module().controlToCanonical(robot, outRobot);
-      robot.module().controlToCanonical(realRobot, outRealRobot);
+      outputRobot.forwardKinematics();
     }
     if(config.enable_log)
     {

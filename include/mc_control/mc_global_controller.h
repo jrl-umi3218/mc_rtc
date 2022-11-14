@@ -988,9 +988,6 @@ private:
   double solver_solve_t = 0;
   double framework_cost = 0;
 
-  /** Keep track of controller outputs before applying gripper control */
-  std::vector<rbd::MultiBodyConfig> pre_gripper_mbcs_;
-
   /** Reset controller-specific plugins
    *
    * When switching controllers, plugins that are enabled in both controllers are reset, new plugins are init
