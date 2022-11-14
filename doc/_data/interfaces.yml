@@ -40,3 +40,9 @@
   pkg:
     name: mc_mujoco
     url: https://github.com/rohanpsingh/mc_mujoco
+- name: RTDE
+  url: https://www.universal-robots.com/articles/ur/interface-communication/real-time-data-exchange-rtde-guide/
+  icon: ur_rtde.png
+  pkg:
+    name: mc_rtde
+    url: https://github.com/isri-aist/mc_rtde

@@ -86,3 +86,12 @@
     module:
       url: https://gite.lirmm.fr/multi-contact/mc-bazar
       name: mc-bazar
+- name: UR5e
+  icon: ur5e.png
+  pkg:
+    desc:
+      url: https://github.com/isri-aist/mc_ur5e_description
+      name: mc_ur5e_description
+    module:
+      url: https://github.com/isri-aist/mc_ur5e
+      name: mc_ur5e
