@@ -95,3 +95,12 @@
     module:
       url: https://github.com/isri-aist/mc_ur5e
       name: mc_ur5e
+- name: AlienGo
+  icon: aliengo.jpg
+  pkg:
+    desc:
+      url: https://github.com/isri-aist/mc_aliengo_description
+      name: mc_aliengo_description
+    module:
+      url: https://github.com/rohanpsingh/mc_aliengo
+      name: mc_aliengo
