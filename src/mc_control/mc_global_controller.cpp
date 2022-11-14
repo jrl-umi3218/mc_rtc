@@ -380,6 +380,14 @@ void MCGlobalController::initController(bool reset)
     start_log();
   }
   const auto & q = controller().robot().mbc().q;
+  controller_->converters_.clear();
+  controller_->converters_.reserve(controller_->robots().size());
+  for(size_t i = 0; i < controller_->robots().size(); ++i)
+  {
+    const auto & input = controller_->robots().robot(i);
+    auto & output = controller_->outputRobots().robot(i);
+    controller_->converters_.emplace_back(input, output, input.module().controlToCanonicalConfig);
+  }
   controller_->reset({q});
   controller_->resetObserverPipelines();
   initGUI();
@@ -825,8 +833,8 @@ bool MCGlobalController::run()
       auto & realRobot = controller_->realRobots().robot(i);
       auto & outputRobot = controller_->outputRobots().robot(i);
       auto & outputRealRobot = controller_->outputRealRobots().robot(i);
-      robot.module().controlToCanonical(robot, outputRobot);
-      robot.module().controlToCanonical(realRobot, outputRealRobot);
+      controller_->converters_[i].convert(robot, outputRobot);
+      controller_->converters_[i].convert(realRobot, outputRealRobot);
       const auto & gi = robot.grippers();
       if(gi.empty())
       {
@@ -863,6 +871,15 @@ bool MCGlobalController::run()
       auto start_t = clock::now();
       plugin.plugin->after(*this);
       plugin.plugin_after_dt = clock::now() - start_t;
+    }
+    for(size_t i = 0; i < controller_->robots().size(); ++i)
+    {
+      auto & robot = controller_->robots().robot(i);
+      auto & realRobot = controller_->realRobots().robot(i);
+      auto & outputRobot = controller_->outputRobots().robot(i);
+      auto & outputRealRobot = controller_->outputRealRobots().robot(i);
+      robot.module().controlToCanonicalPostProcess(robot, outputRobot);
+      robot.module().controlToCanonicalPostProcess(realRobot, outputRealRobot);
     }
   }
   else

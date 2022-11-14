@@ -11,6 +11,7 @@
 #include <mc_rbdyn/ForceSensor.h>
 #include <mc_rbdyn/JointSensor.h>
 #include <mc_rbdyn/Mimic.h>
+#include <mc_rbdyn/RobotConverterConfig.h>
 #include <mc_rbdyn/Springs.h>
 #include <mc_rbdyn/api.h>
 #include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
@@ -578,19 +579,26 @@ struct MC_RBDYN_DLLAPI RobotModule
     return _canonicalParameters;
   }
 
-  /** Convert from the module configuration to the \ref canonicalParameters configuration
+  /** Returns the configuration for the control to canonical conversion
    *
-   * The default implementation:
-   * - If no custom canonical robot module is set in _canonicalParameters: copies the control robot mbc, encoders and
-   * sensors to the canonical robot
-   * - If a custom canonical robot module is set, it calls
-   *   mc_rbdyn::RobotConverter::convert() to perform the conversion. By default
-   *   this copies all common properties between the control robot and its
-   *   canonical representation
-   *
-   * This function is called automatically by mc_rtc after each iteration of MCController::run()
+   * The default configuration:
+   * - copies the common configuration values from the control model to the canonical model
+   * - copies the initial encoders value into the canonical model for other joints
+   * - enforce mimic relations
+   * - copy the world pose of the control model to the canonical model
    */
-  std::function<void(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical)> controlToCanonical;
+  RobotConverterConfig controlToCanonicalConfig;
+
+  /* Post-processing for control to canonical
+   *
+   * The default implementation does nothing
+   *
+   * This function is called automatically by mc_rtc after each iteration of MCGlobalController::run()
+   *
+   * It is called last, after the controller/observer, the grippers and the plugins have run
+   */
+  std::function<void(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical)> controlToCanonicalPostProcess =
+      [](const mc_rbdyn::Robot &, mc_rbdyn::Robot &) {};
 
   /** Returns the path to a "real" URDF file
    *

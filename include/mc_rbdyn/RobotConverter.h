@@ -3,62 +3,12 @@
  */
 
 #pragma once
+
 #include <mc_rbdyn/Robot.h>
-#include <mc_rbdyn/api.h>
+#include <mc_rbdyn/RobotConverterConfig.h>
 
 namespace mc_rbdyn
 {
-
-/**
- * @brief Configuration for mc_rbdyn::RobotConverter
- */
-struct RobotConverterConfig
-{
-  ///< Copy input robot's mbc to their corresponding output robot's mbc
-  bool mbcToOutMbc_ = true;
-  /**
-   * Chosse which mbc properties to copy, only effective if mbcToOutMbc_ = true
-   * @{
-   */
-  bool copyJointCommand_ = true;
-  bool copyJointVelocityCommand_ = true;
-  bool copyJointAccelerationCommand_ = true;
-  bool copyJointTorqueCommand_ = true;
-  ///< @}
-
-  ///< Copy input encoder values to the output robot's mbc
-  bool encodersToOutMbc_ = false;
-  ///< Copy input encoder values to the output robot's mbc on the first run
-  bool encodersToOutMbcOnce_ = true;
-  ///< Compute the output robot's joint mimics
-  bool enforceMimics_ = true;
-
-  /* Copy the input robot's position in the world into the output
-   *
-   * This also triggers the robot's kinematic update (outputRobot.forwardKinematics()), if this option is false the
-   * update must be done outside of the robot converter if the accurate position of the robot is needed
-   */
-  bool copyPosWorld_ = true;
-
-#define ROBOT_CONVERTER_PROPERTY(NAME)                \
-  inline RobotConverterConfig & NAME(bool b) noexcept \
-  {                                                   \
-    NAME##_ = b;                                      \
-    return *this;                                     \
-  }
-
-  ROBOT_CONVERTER_PROPERTY(mbcToOutMbc)
-  ROBOT_CONVERTER_PROPERTY(copyJointCommand)
-  ROBOT_CONVERTER_PROPERTY(copyJointVelocityCommand)
-  ROBOT_CONVERTER_PROPERTY(copyJointAccelerationCommand)
-  ROBOT_CONVERTER_PROPERTY(copyJointTorqueCommand)
-  ROBOT_CONVERTER_PROPERTY(encodersToOutMbc)
-  ROBOT_CONVERTER_PROPERTY(encodersToOutMbcOnce)
-  ROBOT_CONVERTER_PROPERTY(enforceMimics)
-  ROBOT_CONVERTER_PROPERTY(copyPosWorld)
-
-#undef ROBOT_CONVERTER_PROPERTY
-};
 
 /**
  * @brief Copies all common properties from one robot to another
@@ -71,14 +21,24 @@ struct RobotConverterConfig
  */
 struct MC_RBDYN_DLLAPI RobotConverter
 {
-  RobotConverter(const RobotConverterConfig & config = RobotConverterConfig{});
+  /** Initialize the converter and run it once on the output robot
+   *
+   * \param inputRobot Same robot that will be fed to \ref convert
+   *
+   * \param outputRobot Same robot that will be fed to \ref convert
+   *
+   * \param config Config used by this converter
+   */
+  RobotConverter(const mc_rbdyn::Robot & inputRobot,
+                 mc_rbdyn::Robot & outputRobot,
+                 const RobotConverterConfig & config);
 
   /**
    * @brief Copies the common properties of the input robot to the output robot
    *
    * See mc_rbdyn::RobotConverterConfig for available copy options.
    */
-  void convert(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot & outputRobot);
+  void convert(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot & outputRobot) const;
 
   inline const RobotConverterConfig & config() const noexcept
   {
@@ -90,11 +50,17 @@ protected:
    * @brief Precomputes the mappings of common properties between input/output
    * robot according to the chosen config_
    */
-  void precompute(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot & outputRobot);
+  void precompute(const mc_rbdyn::Robot & inputRobot, const mc_rbdyn::Robot & outputRobot);
+
+  /**
+   *
+   * Copy encoders to output robot configuration
+   *
+   */
+  void encodersToOutput(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot & outputRobot) const;
 
 protected:
-  const RobotConverterConfig config_;
-  bool first_ = true;
+  RobotConverterConfig config_;
   // Common joint indices from inputRobot_ -> outputRobot_ robot
   std::vector<std::pair<unsigned int, unsigned int>> commonJointIndices_{};
   // Encoder indices from inputRobot_ -> outputRobot_ robot

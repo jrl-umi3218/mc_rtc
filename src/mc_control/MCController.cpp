@@ -315,6 +315,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
   addRobotToLog(robot);
   addRobotToGUI(robot);
   solver().updateNrVars();
+  converters_.emplace_back(robot, outputRobot, robot.module().controlToCanonicalConfig);
   return robot;
 }
 
@@ -539,6 +540,7 @@ void MCController::removeRobot(const std::string & name)
       logger().removeLogEntry(entry_str("JointSensor_" + js.joint() + "_driverTemperature"));
       logger().removeLogEntry(entry_str("JointSensor_" + js.joint() + "_motorCurrent"));
     }
+    converters_.erase(converters_.begin() + robot.robotIndex());
   }
   if(gui_)
   {

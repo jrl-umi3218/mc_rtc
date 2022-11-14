@@ -7,15 +7,32 @@
 namespace mc_rbdyn
 {
 
-RobotConverter::RobotConverter(const RobotConverterConfig & config) : config_(config) {}
+RobotConverter::RobotConverter(const mc_rbdyn::Robot & inputRobot,
+                               mc_rbdyn::Robot & outputRobot,
+                               const RobotConverterConfig & config)
+: config_(config)
+{
+  precompute(inputRobot, outputRobot);
+  if(config_.encodersToOutMbcOnce_ && !config_.encodersToOutMbc_)
+  {
+    encodersToOutput(inputRobot, outputRobot);
+  }
+  convert(inputRobot, outputRobot);
+}
 
-void RobotConverter::precompute(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot & outputRobot)
+void RobotConverter::precompute(const mc_rbdyn::Robot & inputRobot, const mc_rbdyn::Robot & outputRobot)
 {
   if(config_.mbcToOutMbc_)
   { // Construct list of common joints between inputRobot and outputRobot
     commonJointIndices_.reserve(std::max(inputRobot.mb().joints().size(), outputRobot.mb().joints().size()));
     for(const auto & joint : inputRobot.mb().joints())
     {
+      // Skip fixed joints in the input robot
+      if(joint.dof() == 0)
+      {
+        continue;
+      }
+      // Otherwise we can copy the joint from control to canonical if it has the same dof
       const auto & jname = joint.name();
       if(outputRobot.hasJoint(jname)
          && outputRobot.mb().joint(static_cast<int>(outputRobot.jointIndexByName(jname))).dof() == joint.dof())
@@ -58,24 +75,24 @@ void RobotConverter::precompute(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Ro
   }
 }
 
-void RobotConverter::convert(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot & outputRobot)
+void RobotConverter::encodersToOutput(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot & outputRobot) const
 {
-  if(first_)
+  const auto & encoders = inputRobot.encoderValues();
+  if(encoders.size() == inputRobot.refJointOrder().size())
   {
-    precompute(inputRobot, outputRobot);
-  }
-
-  // Copy the encoders into outputRobot
-  if(config_.encodersToOutMbc_ || (first_ && config_.encodersToOutMbcOnce_))
-  {
-    const auto & encoders = inputRobot.encoderValues();
-    if(encoders.size() == inputRobot.refJointOrder().size())
+    for(const auto & indices : commonEncoderToJointIndices_)
     {
-      for(const auto & indices : commonEncoderToJointIndices_)
-      {
-        outputRobot.mbc().q[indices.second][0] = encoders[indices.first];
-      }
+      outputRobot.mbc().q[indices.second][0] = encoders[indices.first];
     }
+  }
+}
+
+void RobotConverter::convert(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot & outputRobot) const
+{
+  // Copy the encoders into outputRobot
+  if(config_.encodersToOutMbc_)
+  {
+    encodersToOutput(inputRobot, outputRobot);
   }
 
   // Copy the common mbc joints into outputRobot
@@ -116,8 +133,6 @@ void RobotConverter::convert(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot
     // Copy the base position which triggers all the updates
     outputRobot.posW(inputRobot.posW());
   }
-
-  first_ = false;
 }
 
 } // namespace mc_rbdyn

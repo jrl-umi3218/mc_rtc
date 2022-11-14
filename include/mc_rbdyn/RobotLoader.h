@@ -87,27 +87,9 @@ public:
       {
         rm->_canonicalParameters = rm->_parameters;
       }
-      if(!rm->controlToCanonical)
+      if(!rm->controlToCanonicalPostProcess)
       {
-        if(rm->_canonicalParameters == rm->_parameters)
-        {
-          rm->controlToCanonical = [](const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical) {
-            canonical.mbc() = control.mbc();
-          };
-        }
-        else
-        {
-          // The first time this function is ran, initialize the fixed list of common joints
-          // between the control robot and canonical robot
-          mc_rbdyn::RobotConverter converter;
-          rm->controlToCanonical = [rm, converter](const mc_rbdyn::Robot & control,
-                                                   mc_rbdyn::Robot & canonical) mutable {
-            assert(control.module().parameters() == rm->_parameters
-                   && canonical.module().parameters() == rm->_canonicalParameters);
-
-            converter.convert(control, canonical);
-          };
-        }
+        rm->controlToCanonicalPostProcess = [](const mc_rbdyn::Robot &, mc_rbdyn::Robot &) {};
       }
     };
     if(aliases.count(name))
@@ -242,6 +224,6 @@ private:
   static bool verbose_;
   static std::mutex mtx;
   static std::map<std::string, std::vector<std::string>> aliases;
-};
+}; // namespace mc_rbdyn
 
 } // namespace mc_rbdyn

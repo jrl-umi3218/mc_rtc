@@ -9,6 +9,7 @@
 
 #include <mc_observers/ObserverPipeline.h>
 
+#include <mc_rbdyn/RobotConverter.h>
 #include <mc_rbdyn/Robots.h>
 
 #include <mc_rtc/DataStore.h>
@@ -674,6 +675,8 @@ protected:
    */
   mc_rbdyn::RobotsPtr outputRobots_;
   mc_rbdyn::RobotsPtr outputRealRobots_;
+  /** Control to canonical converters */
+  std::vector<mc_rbdyn::RobotConverter> converters_;
 
   /** State observation pipelines for this controller */
   std::vector<mc_observers::ObserverPipeline> observerPipelines_;
