@@ -263,6 +263,13 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
       mc_rtc::log::critical("Failed to load the canonical module for {}, acting as if canonical was self", name);
       canonicalModule = rm;
     }
+    else
+    {
+      if(!mc_rbdyn::check_module_compatibility(*rm, *canonicalModule))
+      {
+        mc_rtc::log::error_and_throw("Incompatibilities between a robot module and its canonical representation");
+      }
+    }
   }
   mc_rbdyn::LoadRobotParameters params{};
   auto & robot = loadRobot(rm, name, robots(), params);
