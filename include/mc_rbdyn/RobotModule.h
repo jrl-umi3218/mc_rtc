@@ -700,9 +700,62 @@ typedef std::shared_ptr<RobotModule> RobotModulePtr;
  * \param limits Limits as provided by RBDyn parsers
  *
  */
-RobotModule::bounds_t MC_RBDYN_DLLAPI urdf_limits_to_bounds(const rbd::parsers::Limits & limits);
+MC_RBDYN_DLLAPI RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits);
 
 using RobotModuleVector = std::vector<RobotModule, Eigen::aligned_allocator<RobotModule>>;
+
+/** Checks that two RobotModule are compatible for control
+ *
+ * The requirements are:
+ * - Same reference joint order
+ * - Same force sensors
+ * - Same body sensors
+ * - Same joint sensors
+ * - Same grippers
+ * - Same devices
+ *
+ * \returns True if the two modules are compatible, false otherwise
+ */
+MC_RBDYN_DLLAPI bool check_module_compatibility(const RobotModule & lhs, const RobotModule & rhs);
+
+inline bool operator==(const RobotModule::Gripper::Safety & lhs, const RobotModule::Gripper::Safety & rhs)
+{
+  return lhs.percentVMax == rhs.percentVMax && lhs.actualCommandDiffTrigger == rhs.actualCommandDiffTrigger
+         && lhs.releaseSafetyOffset == rhs.releaseSafetyOffset
+         && lhs.overCommandLimitIterN == rhs.overCommandLimitIterN;
+}
+
+inline bool operator==(const RobotModule::Gripper & lhs, const RobotModule::Gripper & rhs)
+{
+  auto compareMimics = [&]() {
+    auto lmimics = lhs.mimics();
+    auto rmimics = rhs.mimics();
+    if(lmimics == nullptr && rmimics == nullptr)
+    {
+      return true;
+    }
+    if(lmimics == nullptr || rmimics == nullptr)
+    {
+      return false;
+    }
+    return *lmimics == *rmimics;
+  };
+  auto compareSafety = [&]() {
+    auto lsafety = lhs.safety();
+    auto rsafety = rhs.safety();
+    if(lsafety == nullptr && rsafety == nullptr)
+    {
+      return true;
+    }
+    if(lsafety == nullptr || rsafety == nullptr)
+    {
+      return false;
+    }
+    return *lsafety == *rsafety;
+  };
+  return lhs.name == rhs.name && lhs.joints == rhs.joints && lhs.reverse_limits == rhs.reverse_limits && compareSafety()
+         && compareMimics();
+}
 
 } // namespace mc_rbdyn
 
