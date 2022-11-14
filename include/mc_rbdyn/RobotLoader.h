@@ -142,6 +142,12 @@ public:
     return rm;
   }
 
+  /** Returns the RobotModule that would be loaded from get_robot_module(args[0], ..., args[args.size() - 1])
+   *
+   * This is arbitrarly limited to 3 arguments
+   */
+  static RobotModulePtr get_robot_module(const std::vector<std::string> & args);
+
   template<typename RetT, typename... Args>
   static void register_object(const std::string & name, std::function<RetT *(const Args &...)> callback)
   {
