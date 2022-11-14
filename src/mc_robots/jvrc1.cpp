@@ -35,11 +35,13 @@ JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics)
   {
     // clang-format off
     filter_links = {
+      "R_UTHUMB_S",
       "R_LTHUMB_S",
       "R_UINDEX_S",
       "R_LINDEX_S",
       "R_ULITTLE_S",
       "R_LLITTLE_S",
+      "L_UTHUMB_S",
       "L_LTHUMB_S",
       "L_UINDEX_S",
       "L_LINDEX_S",
