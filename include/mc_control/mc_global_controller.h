@@ -654,10 +654,18 @@ public:
   const mc_solver::QPResultMsg & send(const double & t);
 
   /*! \brief Access the current controller */
-  MCController & controller();
+  inline MCController & controller() noexcept
+  {
+    assert(controller_ != nullptr);
+    return *controller_;
+  }
 
   /*! \brief Const access to current controller */
-  const MCController & controller() const;
+  inline const MCController & controller() const noexcept
+  {
+    assert(controller_ != nullptr);
+    return *controller_;
+  }
 
   /** @name Accessors to the various robots:
    *
@@ -671,101 +679,39 @@ public:
    *   the robots (including non-controlled joints) various interfaces to send the control state to the robot.
    * @{
    */
-  /*! \brief Access to the control robots instance. */
-  mc_rbdyn::Robots & robots();
 
-  /*! \brief Const access to the control robots instance. */
-  const mc_rbdyn::Robots & robots() const;
+#define MAKE_ROBOTS_ACCESSOR(NAME)                                    \
+  inline mc_rbdyn::Robots & NAME##s() noexcept                        \
+  {                                                                   \
+    return controller().NAME##s();                                    \
+  }                                                                   \
+  inline const mc_rbdyn::Robots & NAME##s() const noexcept            \
+  {                                                                   \
+    return controller().NAME##s();                                    \
+  }                                                                   \
+  inline mc_rbdyn::Robot & NAME() noexcept                            \
+  {                                                                   \
+    return controller().NAME();                                       \
+  }                                                                   \
+  inline const mc_rbdyn::Robot & NAME() const noexcept                \
+  {                                                                   \
+    return controller().NAME();                                       \
+  }                                                                   \
+  inline mc_rbdyn::Robot & NAME(const std::string & name)             \
+  {                                                                   \
+    return controller().NAME(name);                                   \
+  }                                                                   \
+  inline const mc_rbdyn::Robot & NAME(const std::string & name) const \
+  {                                                                   \
+    return controller().NAME(name);                                   \
+  }
 
-  /*! \brief Access to the real robots instance. */
-  mc_rbdyn::Robots & realRobots();
+  MAKE_ROBOTS_ACCESSOR(robot)
+  MAKE_ROBOTS_ACCESSOR(realRobot)
+  MAKE_ROBOTS_ACCESSOR(outputRobot)
+  MAKE_ROBOTS_ACCESSOR(outputRealRobot)
 
-  /*! \brief Const access to the real robots instance. */
-  const mc_rbdyn::Robots & realRobots() const;
-
-  /*! \brief Access the main robot */
-  mc_rbdyn::Robot & robot();
-
-  /*! \brief Const access to the main robot */
-  const mc_rbdyn::Robot & robot() const;
-
-  /*! \brief Access to a robot instance.
-   *
-   * @throws if no robot with that name exist
-   */
-  mc_rbdyn::Robot & robot(const std::string & name);
-
-  /*! \brief Const access to a  robot instance.
-   *
-   * @throws if no robot named with that name exist
-   **/
-  const mc_rbdyn::Robot & robot(const std::string & name) const;
-
-  /*! \brief Access the main real robot */
-  mc_rbdyn::Robot & realRobot();
-
-  /*! \brief Const access to the main real robot */
-  const mc_rbdyn::Robot & realRobot() const;
-
-  /*! \brief Access to a real robot instance.
-   *
-   * @throws if no real robot with that name exist
-   */
-  mc_rbdyn::Robot & realRobot(const std::string & name);
-
-  /*! \brief Const access to a real robot instance.
-   *
-   * @throws if no real robot named with that name exist
-   **/
-  const mc_rbdyn::Robot & realRobot(const std::string & name) const;
-
-  /*! \brief Access to the output robots instance. */
-  mc_rbdyn::Robots & outputRobots();
-
-  /*! \brief Const access to the output robots instance. */
-  const mc_rbdyn::Robots & outputRobots() const;
-
-  /*! \brief Access to the output real robots instance. */
-  mc_rbdyn::Robots & outputRealRobots();
-
-  /*! \brief Const access to the output real robots instance. */
-  const mc_rbdyn::Robots & outputRealRobots() const;
-
-  /*! \brief Access the output robot */
-  mc_rbdyn::Robot & outputRobot();
-
-  /*! \brief Const access to the output robot */
-  const mc_rbdyn::Robot & outputRobot() const;
-
-  /*! \brief Access to the output robot instance.
-   *
-   * @throws if no output robot with that name exist
-   */
-  mc_rbdyn::Robot & outputRobot(const std::string & name);
-
-  /*! \brief Const access to the output robot instance.
-   *
-   * @throws if no output robot named with that name exist
-   **/
-  const mc_rbdyn::Robot & outputRobot(const std::string & name) const;
-
-  /*! \brief Access the output real robot */
-  mc_rbdyn::Robot & outputRealRobot();
-
-  /*! \brief Const access to the output real robot */
-  const mc_rbdyn::Robot & outputRealRobot() const;
-
-  /*! \brief Access to the output real robot instance.
-   *
-   * @throws if no real robot with that name exist
-   */
-  mc_rbdyn::Robot & outputRealRobot(const std::string & name);
-
-  /*! \brief Const access to the output real robot instance.
-   *
-   * @throws if no real robot named with that name exist
-   **/
-  const mc_rbdyn::Robot & outputRealRobot(const std::string & name) const;
+#undef MAKE_ROBOTS_ACCESSOR
 
   /** @} */
 
