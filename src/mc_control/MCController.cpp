@@ -257,20 +257,10 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
   }
   else
   {
-    if(cp.size() == 1)
-    {
-      canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp[0]);
-    }
-    else if(cp.size() == 2)
-    {
-      canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp[0], cp[1]);
-    }
-    else if(cp.size() == 3)
-    {
-      canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp[0], cp[1], cp[2]);
-    }
+    canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp);
     if(!canonicalModule)
     {
+      mc_rtc::log::critical("Failed to load the canonical module for {}, acting as if canonical was self", name);
       canonicalModule = rm;
     }
   }
