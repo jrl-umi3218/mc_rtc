@@ -467,16 +467,16 @@ Robot::Robot(NewRobotToken,
   if(!params.data_)
   {
     data_->bodySensors = module_.bodySensors();
-    for(size_t i = 0; i < data_->bodySensors.size(); ++i)
-    {
-      const auto & bS = data_->bodySensors[i];
-      data_->bodySensorsIndex[bS.name()] = i;
-    }
     auto & bodySensors_ = data_->bodySensors;
     // Add a single default sensor if no sensor on the robot
     if(bodySensors_.size() == 0)
     {
       bodySensors_.emplace_back("Default", mb().body(0).name(), sva::PTransformd::Identity());
+    }
+    for(size_t i = 0; i < data_->bodySensors.size(); ++i)
+    {
+      const auto & bS = data_->bodySensors[i];
+      data_->bodySensorsIndex[bS.name()] = i;
     }
     for(size_t i = 0; i < bodySensors_.size(); ++i)
     {
