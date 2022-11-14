@@ -492,10 +492,6 @@ Robot::Robot(NewRobotToken,
     for(size_t i = 0; i < jointSensors_.size(); ++i)
     {
       const auto & js = jointSensors_[i];
-      if(mb().jointIndexByName().count(js.joint()) == 0)
-      {
-        continue;
-      }
       data_->jointJointSensors[js.joint()] = i;
     }
   }
