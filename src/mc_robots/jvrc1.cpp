@@ -51,6 +51,14 @@ JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics)
   init(rbd::parsers::from_urdf_file(
       urdf_path,
       rbd::parsers::ParserParameters{}.fixed(fixed).filtered_links(filter_links).remove_filtered_links(true)));
+  _ref_joint_order = {"R_HIP_P",      "R_HIP_R",      "R_HIP_Y",      "R_KNEE",       "R_ANKLE_R", "R_ANKLE_P",
+                      "L_HIP_P",      "L_HIP_R",      "L_HIP_Y",      "L_KNEE",       "L_ANKLE_R", "L_ANKLE_P",
+                      "WAIST_Y",      "WAIST_P",      "WAIST_R",      "NECK_Y",       "NECK_R",    "NECK_P",
+                      "R_SHOULDER_P", "R_SHOULDER_R", "R_SHOULDER_Y", "R_ELBOW_P",    "R_ELBOW_Y", "R_WRIST_R",
+                      "R_WRIST_Y",    "R_UTHUMB",     "R_LTHUMB",     "R_UINDEX",     "R_LINDEX",  "R_ULITTLE",
+                      "R_LLITTLE",    "L_SHOULDER_P", "L_SHOULDER_R", "L_SHOULDER_Y", "L_ELBOW_P", "L_ELBOW_Y",
+                      "L_WRIST_R",    "L_WRIST_Y",    "L_UTHUMB",     "L_LTHUMB",     "L_UINDEX",  "L_LINDEX",
+                      "L_ULITTLE",    "L_LLITTLE"};
 
   std::string convexPath = path + "/convex/" + name + "/";
   bfs::path p(convexPath);
