@@ -16,6 +16,7 @@
 #include <RBDyn/MultiBodyGraph.h>
 
 #include <memory>
+#include <optional>
 #include <unordered_map>
 
 namespace mc_rbdyn
