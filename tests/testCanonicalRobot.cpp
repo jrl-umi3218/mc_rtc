@@ -9,6 +9,8 @@
 #include <boost/test/unit_test.hpp>
 #include <random>
 
+static bool configured = configureRobotLoader();
+
 BOOST_AUTO_TEST_CASE(TestCanonicalRobot)
 {
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1NoHands");
