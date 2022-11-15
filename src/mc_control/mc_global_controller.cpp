@@ -840,7 +840,7 @@ bool MCGlobalController::run()
       {
         for(auto & g : gi)
         {
-          g.get().run(controller_->timeStep, outputRobot, controller_->solver().result().robots_state[i].q);
+          g.get().run(controller_->timeStep, outputRobot, outputRealRobot);
         }
         outputRobot.forwardKinematics();
       }

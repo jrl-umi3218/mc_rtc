@@ -97,11 +97,11 @@ struct MC_RBDYN_DLLAPI Gripper
    *
    * \param robot Robot for which this gripper control is running
    *
-   * \param qOut Output of the gripper state
+   * \param real Real robot for which this gripper control is running
    *
    * The gripper control updates both the robot's configuration and the output
    */
-  void run(double timeStep, mc_rbdyn::Robot & robot, std::map<std::string, std::vector<double>> & qOut);
+  void run(double timeStep, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & real);
 
   /*! \brief Set the target configuration of the active joints involved in the gripper
    * \param targetQ Desired values of the active joints involved in the gripper
