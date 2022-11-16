@@ -1237,6 +1237,20 @@
     <class kind="struct">mc_control::MCGlobalController</class>
     <class kind="struct">mc_control::MCGlobalController::GlobalConfiguration</class>
     <namespace>mc_control</namespace>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAKE_ROBOTS_ACCESSOR</name>
+      <anchorfile>mc__global__controller_8h.html</anchorfile>
+      <anchor>aaf0a11741b6fb186ec99a9d2616dbf1a</anchor>
+      <arglist>(NAME, PTR)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAKE_ROBOTS_ACCESSOR</name>
+      <anchorfile>mc__global__controller_8h.html</anchorfile>
+      <anchor>aaf0a11741b6fb186ec99a9d2616dbf1a</anchor>
+      <arglist>(NAME, PTR)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>mc_python_controller.h</name>
@@ -1255,6 +1269,7 @@
     <includes id="mc__control_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_control/Configuration.h</includes>
     <includes id="mc__control_2Contact_8h" name="Contact.h" local="no" imported="no">mc_control/Contact.h</includes>
     <includes id="ObserverPipeline_8h" name="ObserverPipeline.h" local="no" imported="no">mc_observers/ObserverPipeline.h</includes>
+    <includes id="RobotConverter_8h" name="RobotConverter.h" local="no" imported="no">mc_rbdyn/RobotConverter.h</includes>
     <includes id="Robots_8h" name="Robots.h" local="no" imported="no">mc_rbdyn/Robots.h</includes>
     <includes id="DataStore_8h" name="DataStore.h" local="no" imported="no">mc_rtc/DataStore.h</includes>
     <includes id="gui_8h" name="gui.h" local="no" imported="no">mc_rtc/gui.h</includes>
@@ -1570,6 +1585,13 @@
       <anchor>a728d731db2806e7673f67b958970e558</anchor>
       <arglist></arglist>
     </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>accbb9a0b34219e39b1dad5d93f5fa05d</anchor>
+      <arglist>(const mc_rbdyn::BodySensor &amp;lhs, const mc_rbdyn::BodySensor &amp;rhs)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>Collision.h</name>
@@ -1730,6 +1752,13 @@
     <class kind="struct">mc_rbdyn::ForceSensor</class>
     <namespace>mc_rbdyn</namespace>
     <namespace>mc_rbdyn::detail</namespace>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a5aa4dab41fa3cd48e13c4fd628bcb630</anchor>
+      <arglist>(const mc_rbdyn::ForceSensor &amp;lhs, const mc_rbdyn::ForceSensor &amp;rhs)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>Frame.h</name>
@@ -1833,6 +1862,13 @@
     <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <class kind="struct">mc_rbdyn::JointSensor</class>
     <namespace>mc_rbdyn</namespace>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a8925faa2c281c5667b4227aee573c835</anchor>
+      <arglist>(const JointSensor &amp;lhs, const JointSensor &amp;rhs)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>StabilizerConfiguration.h</name>
@@ -1877,6 +1913,13 @@
     <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <class kind="struct">mc_rbdyn::Mimic</class>
     <namespace>mc_rbdyn</namespace>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>acc171bbf6f9fa58525ac71fa8c54a2f4</anchor>
+      <arglist>(const Mimic &amp;lhs, const Mimic &amp;rhs)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>PlanarSurface.h</name>
@@ -1925,13 +1968,22 @@
     <name>Robot.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>mc__rbdyn_2Robot_8h</filename>
+    <includes id="RobotData_8h" name="RobotData.h" local="no" imported="no">mc_rbdyn/RobotData.h</includes>
     <includes id="RobotFrame_8h" name="RobotFrame.h" local="no" imported="no">mc_rbdyn/RobotFrame.h</includes>
     <includes id="RobotModule_8h" name="RobotModule.h" local="no" imported="no">mc_rbdyn/RobotModule.h</includes>
     <includes id="Surface_8h" name="Surface.h" local="no" imported="no">mc_rbdyn/Surface.h</includes>
     <includes id="generic__gripper_8h" name="generic_gripper.h" local="no" imported="no">mc_control/generic_gripper.h</includes>
+    <class kind="struct">mc_rbdyn::LoadRobotParameters</class>
     <class kind="struct">mc_rbdyn::Robot</class>
     <class kind="struct">mc_rbdyn::Robot::NewRobotToken</class>
     <namespace>mc_rbdyn</namespace>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAKE_LOAD_ROBOT_PARAMETER_SETTER</name>
+      <anchorfile>mc__rbdyn_2Robot_8h.html</anchorfile>
+      <anchor>ae0f739acfdd73fed13231f4d3314bc7d</anchor>
+      <arglist>(T, NAME)</arglist>
+    </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI const mc_rbdyn::Robot &amp;</type>
       <name>robotFromConfig</name>
@@ -1982,6 +2034,50 @@
     <namespace>mc_solver</namespace>
   </compound>
   <compound kind="file">
+    <name>RobotConverter.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
+    <filename>RobotConverter_8h</filename>
+    <includes id="mc__rbdyn_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rbdyn/Robot.h</includes>
+    <includes id="RobotConverterConfig_8h" name="RobotConverterConfig.h" local="no" imported="no">mc_rbdyn/RobotConverterConfig.h</includes>
+    <class kind="struct">mc_rbdyn::RobotConverter</class>
+    <namespace>mc_rbdyn</namespace>
+  </compound>
+  <compound kind="file">
+    <name>RobotConverterConfig.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
+    <filename>RobotConverterConfig_8h</filename>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <class kind="struct">mc_rbdyn::RobotConverterConfig</class>
+    <namespace>mc_rbdyn</namespace>
+    <member kind="define">
+      <type>#define</type>
+      <name>ROBOT_CONVERTER_PROPERTY</name>
+      <anchorfile>RobotConverterConfig_8h.html</anchorfile>
+      <anchor>ae27e0b8a058ed1e00902d106a877ffe7</anchor>
+      <arglist>(NAME)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>RobotData.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
+    <filename>RobotData_8h</filename>
+    <includes id="generic__gripper_8h" name="generic_gripper.h" local="no" imported="no">mc_control/generic_gripper.h</includes>
+    <includes id="BodySensor_8h" name="BodySensor.h" local="no" imported="no">mc_rbdyn/BodySensor.h</includes>
+    <includes id="Flexibility_8h" name="Flexibility.h" local="no" imported="no">mc_rbdyn/Flexibility.h</includes>
+    <includes id="ForceSensor_8h" name="ForceSensor.h" local="no" imported="no">mc_rbdyn/ForceSensor.h</includes>
+    <includes id="JointSensor_8h" name="JointSensor.h" local="no" imported="no">mc_rbdyn/JointSensor.h</includes>
+    <includes id="Springs_8h" name="Springs.h" local="no" imported="no">mc_rbdyn/Springs.h</includes>
+    <class kind="struct">mc_rbdyn::RobotData</class>
+    <namespace>mc_rbdyn</namespace>
+    <member kind="typedef">
+      <type>std::shared_ptr&lt; RobotData &gt;</type>
+      <name>RobotDataPtr</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a33ca728cc2ff802237e8135754f359a8</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>RobotFrame.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>RobotFrame_8h</filename>
@@ -1994,8 +2090,10 @@
     <name>RobotLoader.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>RobotLoader_8h</filename>
+    <includes id="mc__rbdyn_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rbdyn/Robot.h</includes>
+    <includes id="RobotConverter_8h" name="RobotConverter.h" local="no" imported="no">mc_rbdyn/RobotConverter.h</includes>
     <includes id="RobotModule_8h" name="RobotModule.h" local="no" imported="no">mc_rbdyn/RobotModule.h</includes>
-    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="io__utils_8h" name="io_utils.h" local="no" imported="no">mc_rtc/io_utils.h</includes>
     <includes id="loader_8h" name="loader.h" local="no" imported="no">mc_rtc/loader.h</includes>
     <class kind="struct">mc_rbdyn::details::are_strings</class>
     <class kind="struct">mc_rbdyn::details::are_strings&lt; T &gt;</class>
@@ -2022,6 +2120,7 @@
     <includes id="ForceSensor_8h" name="ForceSensor.h" local="no" imported="no">mc_rbdyn/ForceSensor.h</includes>
     <includes id="JointSensor_8h" name="JointSensor.h" local="no" imported="no">mc_rbdyn/JointSensor.h</includes>
     <includes id="Mimic_8h" name="Mimic.h" local="no" imported="no">mc_rbdyn/Mimic.h</includes>
+    <includes id="RobotConverterConfig_8h" name="RobotConverterConfig.h" local="no" imported="no">mc_rbdyn/RobotConverterConfig.h</includes>
     <includes id="Springs_8h" name="Springs.h" local="no" imported="no">mc_rbdyn/Springs.h</includes>
     <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <includes id="StabilizerConfiguration_8h" name="StabilizerConfiguration.h" local="no" imported="no">mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h</includes>
@@ -2063,11 +2162,32 @@
       <arglist></arglist>
     </member>
     <member kind="function">
-      <type>RobotModule::bounds_t MC_RBDYN_DLLAPI</type>
+      <type>MC_RBDYN_DLLAPI RobotModule::bounds_t</type>
       <name>urdf_limits_to_bounds</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
-      <anchor>aa4f40fc0642de7f1debd053f9c5d393f</anchor>
+      <anchor>ae02615325b483661411e4eb7d76e0522</anchor>
       <arglist>(const rbd::parsers::Limits &amp;limits)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI bool</type>
+      <name>check_module_compatibility</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a8ac23895f52ccc0e6ea9f77dfc83c84a</anchor>
+      <arglist>(const RobotModule &amp;lhs, const RobotModule &amp;rhs)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>abaf5b2b5f77f9658f757b3a1dbdcf030</anchor>
+      <arglist>(const RobotModule::Gripper::Safety &amp;lhs, const RobotModule::Gripper::Safety &amp;rhs)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a5e07749ee4441c7ee3c8d1b9508f6126</anchor>
+      <arglist>(const RobotModule::Gripper &amp;lhs, const RobotModule::Gripper &amp;rhs)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -2118,15 +2238,15 @@
       <type>MC_RBDYN_DLLAPI RobotsPtr</type>
       <name>loadRobot</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
-      <anchor>a21b38aae31d7154631b41aafcec98326</anchor>
-      <arglist>(const RobotModule &amp;module, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</arglist>
+      <anchor>a7ac28a8438587660a42d241937783322</anchor>
+      <arglist>(const RobotModule &amp;module, const LoadRobotParameters &amp;params={})</arglist>
     </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI RobotsPtr</type>
       <name>loadRobot</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
-      <anchor>ae3659b38656d82eb22226ad6fd30cafb</anchor>
-      <arglist>(const RobotModule &amp;module, const std::string &amp;name, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</arglist>
+      <anchor>a023b9824634ace45cf7ebb23a5abdc00</anchor>
+      <arglist>(const std::string &amp;name, const RobotModule &amp;module, const LoadRobotParameters &amp;params={})</arglist>
     </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI RobotsPtr</type>
@@ -2139,15 +2259,15 @@
       <type>MC_RBDYN_DLLAPI RobotsPtr</type>
       <name>loadRobotAndEnv</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
-      <anchor>ab4fd3f7bf8df752d0d8260c0e55ed1cc</anchor>
-      <arglist>(const RobotModule &amp;module, const RobotModule &amp;envModule, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</arglist>
+      <anchor>aa833d20a49375cc17cd9b18370531657</anchor>
+      <arglist>(const RobotModule &amp;module, const RobotModule &amp;envModule)</arglist>
     </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI RobotsPtr</type>
       <name>loadRobotFromUrdf</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
-      <anchor>aca0f0b796b6f6ff8c4a9b27222c73e77</anchor>
-      <arglist>(const std::string &amp;name, const std::string &amp;urdf, bool withVirtualLinks=true, const std::vector&lt; std::string &gt; &amp;filteredLinks={}, bool fixed=false, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</arglist>
+      <anchor>a23af9e4069ba5394163c390df9d48dba</anchor>
+      <arglist>(const std::string &amp;name, const std::string &amp;urdf, const rbd::parsers::ParserParameters &amp;parser_params={}, const LoadRobotParameters &amp;load_params={})</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -4914,6 +5034,7 @@
     <includes id="mc__tasks_2lipm__stabilizer_2Contact_8h" name="Contact.h" local="no" imported="no">mc_tasks/lipm_stabilizer/Contact.h</includes>
     <includes id="ZMPCC_8h" name="ZMPCC.h" local="no" imported="no">mc_tasks/lipm_stabilizer/ZMPCC.h</includes>
     <class kind="struct">mc_tasks::lipm_stabilizer::StabilizerTask</class>
+    <class kind="struct">mc_tasks::lipm_stabilizer::StabilizerTask::ExternalWrench</class>
     <class kind="struct">mc_tasks::lipm_stabilizer::StabilizerTask::EnumClassHash</class>
     <namespace>mc_tasks</namespace>
     <namespace>mc_tasks::lipm_stabilizer</namespace>
@@ -4960,18 +5081,18 @@
       <arglist></arglist>
     </member>
     <member kind="function">
-      <type>template Eigen::Vector3d</type>
-      <name>StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::target &gt;</name>
+      <type>template void</type>
+      <name>StabilizerTask::computeWrenchOffsetAndCoefficient&lt;&amp;StabilizerTask::ExternalWrench::target &gt;</name>
       <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
-      <anchor>a3867c9c55a9b154439b74f2f35eb1f7d</anchor>
-      <arglist>(const mc_rbdyn::Robot &amp;) const</arglist>
+      <anchor>ac38a37625b74268c51a9ae8efa42b3d8</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;robot, Eigen::Vector3d &amp;offset_gamma, double &amp;coef_kappa) const</arglist>
     </member>
     <member kind="function">
-      <type>template Eigen::Vector3d</type>
-      <name>StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::measured &gt;</name>
+      <type>template void</type>
+      <name>StabilizerTask::computeWrenchOffsetAndCoefficient&lt;&amp;StabilizerTask::ExternalWrench::measured &gt;</name>
       <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
-      <anchor>ae7aa9f4851b07165e94068424b7c39bf</anchor>
-      <arglist>(const mc_rbdyn::Robot &amp;) const</arglist>
+      <anchor>acdaf79a7c1b60d8b1c1aee6805951e0b</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;robot, Eigen::Vector3d &amp;offset_gamma, double &amp;coef_kappa) const</arglist>
     </member>
     <member kind="function">
       <type>template sva::ForceVecd</type>
@@ -14172,6 +14293,38 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_tasks::lipm_stabilizer::StabilizerTask::ExternalWrench</name>
+    <filename>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html</filename>
+    <member kind="variable">
+      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW sva::ForceVecd</type>
+      <name>target</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html</anchorfile>
+      <anchor>ae9d03ec70b391be76eff714f09c3d9be</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>sva::ForceVecd</type>
+      <name>measured</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html</anchorfile>
+      <anchor>a82076f5b90cd1d001fa11fe63f0e2ebb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>sva::MotionVecd</type>
+      <name>gain</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html</anchorfile>
+      <anchor>af9765851f1823c93e170865b6c2978a6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>surfaceName</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html</anchorfile>
+      <anchor>a1c50fb7bcd1942de3e2dcec516a2fcfe</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration</name>
     <filename>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</filename>
     <member kind="function">
@@ -14221,6 +14374,13 @@
       <name>modifyZMPErrD</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
       <anchor>abfe6e931e6f6f77dd2ca657c0d5e3840</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>excludeFromDCMBiasEst</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
+      <anchor>adf774b10bdd24ff8788bb6fffa757719</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -16614,8 +16774,8 @@
       <type>void</type>
       <name>run</name>
       <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
-      <anchor>af6a69ed1632b542cf0c2c62d9a201aa3</anchor>
-      <arglist>(double timeStep, mc_rbdyn::Robot &amp;robot, std::map&lt; std::string, std::vector&lt; double &gt;&gt; &amp;qOut)</arglist>
+      <anchor>a9fc1ebc4fa711f899a3ae47e75cbef45</anchor>
+      <arglist>(double timeStep, mc_rbdyn::Robot &amp;robot, mc_rbdyn::Robot &amp;real)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -16790,6 +16950,13 @@
       <name>is_metric</name>
       <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
       <anchor>a7f7b4fa1ac249a3f4f5682ec32064dc9</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>reversed</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>aa3a5bd62e0af52b3b1d61015ed83be5a</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="typedef" protection="protected">
@@ -17011,9 +17178,9 @@
     </member>
     <member kind="variable" protection="protected">
       <type>bool</type>
-      <name>reversed</name>
+      <name>reversed_</name>
       <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
-      <anchor>a7a77897e0cadfd9a41ec5a3500f77140</anchor>
+      <anchor>a1dc21cebf510e761cd4e4c9e37d2a24c</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -19175,6 +19342,17 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rbdyn::LoadRobotParameters</name>
+    <filename>structmc__rbdyn_1_1LoadRobotParameters.html</filename>
+    <member kind="friend">
+      <type>friend struct</type>
+      <name>Robot</name>
+      <anchorfile>structmc__rbdyn_1_1LoadRobotParameters.html</anchorfile>
+      <anchor>ad03b49f51df2ba1d492ced03d923fdd0</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rtc::Logger</name>
     <filename>structmc__rtc_1_1Logger.html</filename>
     <member kind="enumeration">
@@ -20207,156 +20385,66 @@
       <type>bool</type>
       <name>hasRobot</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a9085d944ee5bcb87a30626a4016f3f97</anchor>
-      <arglist>(const std::string &amp;robot) const</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Robot &amp;</type>
-      <name>robot</name>
-      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a3d0a5351228f1b62ad1268339020d230</anchor>
-      <arglist>() const</arglist>
-      <docanchor file="structmc__control_1_1MCController">mc_controller_robot_const_doc</docanchor>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Robot &amp;</type>
-      <name>env</name>
-      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a94eed9012e3dab581b9ad63a4e525343</anchor>
-      <arglist>() const</arglist>
-      <docanchor file="structmc__control_1_1MCController">mc_controller_env_const_doc</docanchor>
+      <anchor>afaa78577373a2362772543b2b6c12b40</anchor>
+      <arglist>(const std::string &amp;robot) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const mc_rbdyn::Robots &amp;</type>
       <name>robots</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>adc557ecb7d64eb2d8be551f7cf6678cd</anchor>
-      <arglist>() const</arglist>
+      <anchor>ae45b98b34b9c614d9eb3aaa86371f53d</anchor>
+      <arglist>() const noexcept</arglist>
       <docanchor file="structmc__control_1_1MCController">mc_controller_robots_const_doc</docanchor>
     </member>
     <member kind="function">
       <type>mc_rbdyn::Robots &amp;</type>
       <name>robots</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>aef59bf32cd83b177201962e7a7325928</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Robot &amp;</type>
-      <name>robot</name>
-      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a6784579e052281787348a47eb3113943</anchor>
-      <arglist>(const std::string &amp;name) const</arglist>
-      <docanchor file="structmc__control_1_1MCController">mc_controller_robot_name_const_doc</docanchor>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robot &amp;</type>
-      <name>robot</name>
-      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>ae49802b3de0837b6c43b8fac4174480e</anchor>
-      <arglist>(const std::string &amp;name)</arglist>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robot &amp;</type>
-      <name>robot</name>
-      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a01afa1d8da9cc41b34f8119023102f65</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robot &amp;</type>
-      <name>env</name>
-      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a589dbcbbd52d3218012802800834926d</anchor>
-      <arglist>()</arglist>
+      <anchor>a628684adf3f6e304077a376c6b955626</anchor>
+      <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type>const mc_solver::QPSolver &amp;</type>
       <name>solver</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>aa6a9b2cd350ec94a1f1bda12c3133c28</anchor>
-      <arglist>() const</arglist>
+      <anchor>a2ba815b606908b3c2798234812bbecf4</anchor>
+      <arglist>() const noexcept</arglist>
       <docanchor file="structmc__control_1_1MCController">mc_controller_qpsolver_const_doc</docanchor>
     </member>
     <member kind="function">
       <type>mc_solver::QPSolver &amp;</type>
       <name>solver</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>abc7651033ec24b18d662797fc3bb48fa</anchor>
-      <arglist>()</arglist>
+      <anchor>ac04f6067bb9aa467f914fc202676e8bc</anchor>
+      <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type>mc_rtc::Logger &amp;</type>
       <name>logger</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>ac9542a86bbb7baaf4d40c879b01a4073</anchor>
-      <arglist>()</arglist>
+      <anchor>ab35bed98f155238c6df771595cc2b939</anchor>
+      <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type>std::shared_ptr&lt; mc_rtc::gui::StateBuilder &gt;</type>
       <name>gui</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>ab64b93cc336d16be56c7832d1372c55f</anchor>
-      <arglist>() const</arglist>
+      <anchor>ae0156b939ab3f41184257ec763988c93</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>mc_rtc::DataStore &amp;</type>
       <name>datastore</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a5d814ae6c6c4d33fd9601c80ef74ccd9</anchor>
-      <arglist>()</arglist>
+      <anchor>af8bcfa30a03911b0e31373ebcf2b4e24</anchor>
+      <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type>const mc_rtc::DataStore &amp;</type>
       <name>datastore</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a03fa7c2dd20fecd96b0b92f1ea2977d3</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Robots &amp;</type>
-      <name>realRobots</name>
-      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a1443aed08b26c319294465b1caa1e221</anchor>
-      <arglist>() const</arglist>
-      <docanchor file="structmc__control_1_1MCController">mc_controller_real_robots_const_doc</docanchor>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robots &amp;</type>
-      <name>realRobots</name>
-      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a47636696fa5be9a4e8c0d10d6dae1a20</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Robot &amp;</type>
-      <name>realRobot</name>
-      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>ab491ba1a03ccfd4b3fe37079ed4f03b1</anchor>
-      <arglist>() const</arglist>
-      <docanchor file="structmc__control_1_1MCController">mc_controller_real_robot_const_doc</docanchor>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robot &amp;</type>
-      <name>realRobot</name>
-      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a545cbd53e4486c535a4e4ffcd2ad0d6e</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Robot &amp;</type>
-      <name>realRobot</name>
-      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a0a3a3bbc225e57c006dc2caaad5b9973</anchor>
-      <arglist>(const std::string &amp;name) const</arglist>
-      <docanchor file="structmc__control_1_1MCController">mc_controller_realRobot_name_const_doc</docanchor>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robot &amp;</type>
-      <name>realRobot</name>
-      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>aeccb28ff63147f9cf19a67eb73546a27</anchor>
-      <arglist>(const std::string &amp;name)</arglist>
+      <anchor>ab79d84107b2223df41dab5679efb017d</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -20427,6 +20515,185 @@
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
       <anchor>ae736f4f84fcbea832107c350efece532</anchor>
       <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>robot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>acfd9a66de7436236e8f18f609d540335</anchor>
+      <arglist>() const noexcept</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_robot_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>robot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a81f29a3cfb16a760a8055af259ad816b</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>robot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a6784579e052281787348a47eb3113943</anchor>
+      <arglist>(const std::string &amp;name) const</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_robot_name_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>robot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ae49802b3de0837b6c43b8fac4174480e</anchor>
+      <arglist>(const std::string &amp;name)</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>env</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ad90423e437af145cf9163b556aa611cb</anchor>
+      <arglist>() const noexcept</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_env_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>env</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ab00874f83e2bad308801656301018cb8</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robots &amp;</type>
+      <name>realRobots</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a0300e29b876797fe06dd7c16c971905d</anchor>
+      <arglist>() const noexcept</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_real_robots_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robots &amp;</type>
+      <name>realRobots</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a782b17730a57144b815c8b4f5cceccc9</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>realRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a4102d10f1ab1d631e010b0424509c1d3</anchor>
+      <arglist>() const noexcept</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_real_robot_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>realRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a2963e586daefa5602cd71756be0e2a63</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>realRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a0a3a3bbc225e57c006dc2caaad5b9973</anchor>
+      <arglist>(const std::string &amp;name) const</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_realRobot_name_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>realRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>aeccb28ff63147f9cf19a67eb73546a27</anchor>
+      <arglist>(const std::string &amp;name)</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robots &amp;</type>
+      <name>outputRobots</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ad743c41c4c0ec7a351f387f6ebf2767e</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robots &amp;</type>
+      <name>outputRobots</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a8acf876963e88e4100b80b9ad589d762</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>outputRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ad8e60fcd8bc61def814c2bf1121d5fee</anchor>
+      <arglist>() const noexcept</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_output_robot_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>outputRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ab4e6a2d9cba993718c4b25c754403b85</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>outputRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a060e9f6c8402de1d0d37b13f570cc8c1</anchor>
+      <arglist>(const std::string &amp;name) const</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_outputRobot_name_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>outputRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a2e8a9481f16e0accfece637e13060745</anchor>
+      <arglist>(const std::string &amp;name)</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robots &amp;</type>
+      <name>outputRealRobots</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a55b0f3d5665621fdc7f34951a429905f</anchor>
+      <arglist>() const noexcept</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_output_real_robots_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robots &amp;</type>
+      <name>outputRealRobots</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a282081d4de374d22bfc04f3aaae1a1bc</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>outputRealRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a24e996fa1da0b182546e44ca000136e7</anchor>
+      <arglist>() const noexcept</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_output_real_robot_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>outputRealRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a18d296efa2e989b1b0a92cbb9a21430e</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>outputRealRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a16ddd24ea64b2dd9c808b4a5eab52a3d</anchor>
+      <arglist>(const std::string &amp;name) const</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_outputRealRobot_name_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>outputRealRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a0d60a9910007f631da04c3ef658520ce</anchor>
+      <arglist>(const std::string &amp;name)</arglist>
     </member>
     <member kind="variable">
       <type>const double</type>
@@ -20530,8 +20797,22 @@
       <type>mc_rbdyn::Robot &amp;</type>
       <name>loadRobot</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>aefccad1f0ce477f1427b939f5f698d6b</anchor>
-      <arglist>(mc_rbdyn::RobotModulePtr rm, const std::string &amp;name, mc_rbdyn::Robots &amp;robots, bool updateNrVars=true)</arglist>
+      <anchor>af5e7664c119aa760e63927f2df193927</anchor>
+      <arglist>(mc_rbdyn::RobotModulePtr rm, const std::string &amp;name, mc_rbdyn::Robots &amp;robots, const mc_rbdyn::LoadRobotParameters &amp;params)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>addRobotToLog</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ab3c033438648c65e4f7aa29300b41603</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;robot)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>addRobotToGUI</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>aa494450b7b8e405cbdc4b2b493988008</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;robot)</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
@@ -20545,6 +20826,27 @@
       <name>qpsolver</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
       <anchor>a4523facc71906c6622227d0fa2597963</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_rbdyn::RobotsPtr</type>
+      <name>outputRobots_</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>aacbfcf3ecd0fc3aeec5cc4b9611e3324</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_rbdyn::RobotsPtr</type>
+      <name>outputRealRobots_</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a389be3c7a5ded058156621b73cb240a3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::vector&lt; mc_rbdyn::RobotConverter &gt;</type>
+      <name>converters_</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ae3dfca5993f1e6fe3467fa3cf4c8fcc1</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -20637,6 +20939,185 @@
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
       <anchor>a3e2b38b036ecf0354d551a491d342a85</anchor>
       <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>robot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>acfd9a66de7436236e8f18f609d540335</anchor>
+      <arglist>() const noexcept</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_robot_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>robot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a81f29a3cfb16a760a8055af259ad816b</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>robot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a6784579e052281787348a47eb3113943</anchor>
+      <arglist>(const std::string &amp;name) const</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_robot_name_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>robot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ae49802b3de0837b6c43b8fac4174480e</anchor>
+      <arglist>(const std::string &amp;name)</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>env</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ad90423e437af145cf9163b556aa611cb</anchor>
+      <arglist>() const noexcept</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_env_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>env</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ab00874f83e2bad308801656301018cb8</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robots &amp;</type>
+      <name>realRobots</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a0300e29b876797fe06dd7c16c971905d</anchor>
+      <arglist>() const noexcept</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_real_robots_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robots &amp;</type>
+      <name>realRobots</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a782b17730a57144b815c8b4f5cceccc9</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>realRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a4102d10f1ab1d631e010b0424509c1d3</anchor>
+      <arglist>() const noexcept</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_real_robot_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>realRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a2963e586daefa5602cd71756be0e2a63</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>realRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a0a3a3bbc225e57c006dc2caaad5b9973</anchor>
+      <arglist>(const std::string &amp;name) const</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_realRobot_name_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>realRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>aeccb28ff63147f9cf19a67eb73546a27</anchor>
+      <arglist>(const std::string &amp;name)</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robots &amp;</type>
+      <name>outputRobots</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ad743c41c4c0ec7a351f387f6ebf2767e</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robots &amp;</type>
+      <name>outputRobots</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a8acf876963e88e4100b80b9ad589d762</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>outputRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ad8e60fcd8bc61def814c2bf1121d5fee</anchor>
+      <arglist>() const noexcept</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_output_robot_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>outputRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>ab4e6a2d9cba993718c4b25c754403b85</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>outputRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a060e9f6c8402de1d0d37b13f570cc8c1</anchor>
+      <arglist>(const std::string &amp;name) const</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_outputRobot_name_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>outputRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a2e8a9481f16e0accfece637e13060745</anchor>
+      <arglist>(const std::string &amp;name)</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robots &amp;</type>
+      <name>outputRealRobots</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a55b0f3d5665621fdc7f34951a429905f</anchor>
+      <arglist>() const noexcept</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_output_real_robots_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robots &amp;</type>
+      <name>outputRealRobots</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a282081d4de374d22bfc04f3aaae1a1bc</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>outputRealRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a24e996fa1da0b182546e44ca000136e7</anchor>
+      <arglist>() const noexcept</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_output_real_robot_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>outputRealRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a18d296efa2e989b1b0a92cbb9a21430e</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>outputRealRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a16ddd24ea64b2dd9c808b4a5eab52a3d</anchor>
+      <arglist>(const std::string &amp;name) const</arglist>
+      <docanchor file="structmc__control_1_1MCController">mc_controller_outputRealRobot_name_const_doc</docanchor>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>outputRealRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a0d60a9910007f631da04c3ef658520ce</anchor>
+      <arglist>(const std::string &amp;name)</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -20773,99 +21254,15 @@
       <type>MCController &amp;</type>
       <name>controller</name>
       <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>a9874f934eb7c0408a19eb50e673b8d52</anchor>
-      <arglist>()</arglist>
+      <anchor>ab0208889660687499cbb3b62b8f22f55</anchor>
+      <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type>const MCController &amp;</type>
       <name>controller</name>
       <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>aa118bd65716debe35ce485130da8a99f</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robots &amp;</type>
-      <name>robots</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>a70698192db374ec4f01093192a31b9b8</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Robots &amp;</type>
-      <name>robots</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>a8082e0a5cb74de8f79b74fa543cf80d9</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robots &amp;</type>
-      <name>realRobots</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>afd88894202e0d03669627e4e049d6927</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Robots &amp;</type>
-      <name>realRobots</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>a1bac67547ea86d74b63f234bdcc92626</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robot &amp;</type>
-      <name>robot</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>a42001babd4517419e96376bffccf20e8</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Robot &amp;</type>
-      <name>robot</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>afc42120f3cbed546bd2a52b93bf08794</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robot &amp;</type>
-      <name>robot</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>a67e2b341a7294a04f01a152291976082</anchor>
-      <arglist>(const std::string &amp;name)</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Robot &amp;</type>
-      <name>robot</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>aa6a16a2d6348139dd38a89896ad9a2ec</anchor>
-      <arglist>(const std::string &amp;name) const</arglist>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robot &amp;</type>
-      <name>realRobot</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>a447bdf10bea46610b6ab74bc669d9c53</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Robot &amp;</type>
-      <name>realRobot</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>aa13fb3a34f6c41a207d4fe998cd7ba3d</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robot &amp;</type>
-      <name>realRobot</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>a70557a753d071e2eb956e4336a6b79f3</anchor>
-      <arglist>(const std::string &amp;name)</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Robot &amp;</type>
-      <name>realRobot</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>a8b3bf986263c03cf909ee5d17dccc28d</anchor>
-      <arglist>(const std::string &amp;name) const</arglist>
+      <anchor>a8e7baccc0ca5a627a7e876291949487d</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>double</type>
@@ -21132,20 +21529,6 @@
       <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
       <anchor>a10908456431ff240d54fb48cf6ddfdbd</anchor>
       <arglist>(const std::string &amp;robotName, const std::vector&lt; double &gt; &amp;eVelocities)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>setFlexibilityValues</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>ac2125f658eb07e8b7a24ad0ee82d352f</anchor>
-      <arglist>(const std::vector&lt; double &gt; &amp;fValues)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>setFlexibilityValues</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>a623f72475e7fa92aea0679bd21553d7f</anchor>
-      <arglist>(const std::string &amp;robotName, const std::vector&lt; double &gt; &amp;fValues)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -21566,20 +21949,6 @@
       <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
       <anchor>a10908456431ff240d54fb48cf6ddfdbd</anchor>
       <arglist>(const std::string &amp;robotName, const std::vector&lt; double &gt; &amp;eVelocities)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>setFlexibilityValues</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>ac2125f658eb07e8b7a24ad0ee82d352f</anchor>
-      <arglist>(const std::vector&lt; double &gt; &amp;fValues)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>setFlexibilityValues</name>
-      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>a623f72475e7fa92aea0679bd21553d7f</anchor>
-      <arglist>(const std::string &amp;robotName, const std::vector&lt; double &gt; &amp;fValues)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -26390,15 +26759,8 @@
       <type>bool</type>
       <name>jointHasJointSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a5ea609c4deb32f5466ace339d80690bc</anchor>
-      <arglist>(const std::string &amp;joint) const</arglist>
-    </member>
-    <member kind="function">
-      <type>JointSensor &amp;</type>
-      <name>jointJointSensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a27c138feea74443477cec246feef4e36</anchor>
-      <arglist>(const std::string &amp;joint)</arglist>
+      <anchor>a8e27a5f9fb46fdf980254c4ac5761f94</anchor>
+      <arglist>(const std::string &amp;joint) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const JointSensor &amp;</type>
@@ -26408,18 +26770,11 @@
       <arglist>(const std::string &amp;joint) const</arglist>
     </member>
     <member kind="function">
-      <type>std::vector&lt; JointSensor &gt; &amp;</type>
-      <name>jointSensors</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>aa162596a1c837c1e19873758d43a2ab7</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
       <type>const std::vector&lt; JointSensor &gt; &amp;</type>
       <name>jointSensors</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a6a3ff2e0bc94f84395627aa385781866</anchor>
-      <arglist>() const</arglist>
+      <anchor>a06bea736214045982c99b3c70e660ae1</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -26761,57 +27116,50 @@
       <type>const std::unordered_map&lt; std::string, mc_control::GripperPtr &gt; &amp;</type>
       <name>grippersByName</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a6b0c83dbee42dff616909c21b90825b8</anchor>
-      <arglist>() const</arglist>
+      <anchor>ae446ae5052274ecd2b2c8d8a641d02c2</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const std::vector&lt; mc_control::GripperRef &gt; &amp;</type>
       <name>grippers</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>afa96f71ad7e9c085d622c4885c15f1bb</anchor>
-      <arglist>() const</arglist>
+      <anchor>a461d76c25d7b7d24be8f73afa1471e03</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const RobotDataPtr</type>
+      <name>data</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>af35e2fdc9ec56540b48e9bd5247c7b2b</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>Robot</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a67d08992e4533e60f597d33c9da1b9f0</anchor>
-      <arglist>(NewRobotToken, const std::string &amp;name, Robots &amp;robots, unsigned int robots_idx, bool loadFiles, const sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</arglist>
-    </member>
-    <member kind="function">
-      <type>BodySensor &amp;</type>
-      <name>bodySensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a3effaf63deb70c0d2463cf374cc2e7c1</anchor>
-      <arglist>()</arglist>
+      <anchor>af401606c1f14455ae3fb2e642c2b5ade</anchor>
+      <arglist>(NewRobotToken, const std::string &amp;name, Robots &amp;robots, unsigned int robots_idx, bool loadFiles, const LoadRobotParameters &amp;params={})</arglist>
     </member>
     <member kind="function">
       <type>const BodySensor &amp;</type>
       <name>bodySensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a3e34acaf5dc3b279cc97e5cd4c215708</anchor>
-      <arglist>() const</arglist>
+      <anchor>a41b7c80447b0d61661bfc2a0242eaa8f</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>hasBodySensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a2572eb64a1ab6318f715e0163400e4bf</anchor>
-      <arglist>(const std::string &amp;name) const</arglist>
+      <anchor>a52d953d97ba1f0fbeed5e208e78e3d97</anchor>
+      <arglist>(const std::string &amp;name) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>bodyHasBodySensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a558d26564bdb4888db21b2ae13d32f39</anchor>
-      <arglist>(const std::string &amp;body) const</arglist>
-    </member>
-    <member kind="function">
-      <type>BodySensor &amp;</type>
-      <name>bodySensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a439af8f5d3edc70f1f8cf8b947c61cdd</anchor>
-      <arglist>(const std::string &amp;name)</arglist>
+      <anchor>aaf5526be81e352a5fa7ce4038ba39052</anchor>
+      <arglist>(const std::string &amp;body) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const BodySensor &amp;</type>
@@ -26821,13 +27169,6 @@
       <arglist>(const std::string &amp;name) const</arglist>
     </member>
     <member kind="function">
-      <type>BodySensor &amp;</type>
-      <name>bodyBodySensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a4a5ebf8a9421a34de48c2b31449478cc</anchor>
-      <arglist>(const std::string &amp;name)</arglist>
-    </member>
-    <member kind="function">
       <type>const BodySensor &amp;</type>
       <name>bodyBodySensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
@@ -26835,18 +27176,11 @@
       <arglist>(const std::string &amp;name) const</arglist>
     </member>
     <member kind="function">
-      <type>BodySensorVector &amp;</type>
-      <name>bodySensors</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a0a7aeb8979e469e5d34c4ffea9267a70</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
       <type>const BodySensorVector &amp;</type>
       <name>bodySensors</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ace8a8b93689ec20b516f8d0ae460ea80</anchor>
-      <arglist>() const</arglist>
+      <anchor>afc810f916462cb34c4126220f4f8a3e9</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>unsigned int</type>
@@ -27378,57 +27712,22 @@
       <type>const std::vector&lt; double &gt; &amp;</type>
       <name>encoderValues</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a1191c63affb21cb0e15698a48ee83355</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>encoderValues</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ab757a9c9f2f1a0c2f6a2d0ce73a4c89f</anchor>
-      <arglist>(const std::vector&lt; double &gt; &amp;encoderValues)</arglist>
+      <anchor>a1da8134deea10a32f7d35fc381649606</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const std::vector&lt; double &gt; &amp;</type>
       <name>encoderVelocities</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ad88153372c03f393b45a9d7ac88df0c5</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>encoderVelocities</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a02d2160fc0a6f5a7b206776fa9ac6242</anchor>
-      <arglist>(const std::vector&lt; double &gt; &amp;encoderVelocities)</arglist>
-    </member>
-    <member kind="function">
-      <type>const std::vector&lt; double &gt; &amp;</type>
-      <name>flexibilityValues</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a4c07f58dbe7a2cba53e4bec2abc2bdff</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>flexibilityValues</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a458513fda098c7ddd3ffa9f1605dbc0a</anchor>
-      <arglist>(const std::vector&lt; double &gt; &amp;flexibilityValues)</arglist>
+      <anchor>a8a2e3e0b4b0e226712007e9fe905f9e9</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const std::vector&lt; double &gt; &amp;</type>
       <name>jointTorques</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a91168b4930361d5a61a60a925ae0cc6d</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>jointTorques</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>abc6661a03573ba04f70c8cd14939dd0e</anchor>
-      <arglist>(const std::vector&lt; double &gt; &amp;jointTorques)</arglist>
+      <anchor>af65b1b51c93d319952e2ae3965e204c8</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const std::vector&lt; std::string &gt; &amp;</type>
@@ -27441,15 +27740,15 @@
       <type>bool</type>
       <name>hasForceSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ae6addeeebfb0b899376ed338b212a33a</anchor>
-      <arglist>(const std::string &amp;name) const</arglist>
+      <anchor>a42615f6ac857b53acb4ae0376c3986c7</anchor>
+      <arglist>(const std::string &amp;name) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>bodyHasForceSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a183b8dbcdcda9c179b83c780bccea04b</anchor>
-      <arglist>(const std::string &amp;body) const</arglist>
+      <anchor>acf845c2c3a0f18430986e4a752f08fe7</anchor>
+      <arglist>(const std::string &amp;body) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -27473,25 +27772,11 @@
       <arglist>(const std::string &amp;surface) const</arglist>
     </member>
     <member kind="function">
-      <type>ForceSensor &amp;</type>
-      <name>forceSensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a4c4b5161096f6e95ceaa57280f951dab</anchor>
-      <arglist>(const std::string &amp;name)</arglist>
-    </member>
-    <member kind="function">
       <type>const ForceSensor &amp;</type>
       <name>forceSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>a40d807280f230919ff00adf3d43a5caa</anchor>
       <arglist>(const std::string &amp;name) const</arglist>
-    </member>
-    <member kind="function">
-      <type>ForceSensor &amp;</type>
-      <name>bodyForceSensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a49efc5c9284a39c13647ff5500138d33</anchor>
-      <arglist>(const std::string &amp;body)</arglist>
     </member>
     <member kind="function">
       <type>const ForceSensor &amp;</type>
@@ -27508,13 +27793,6 @@
       <arglist>(const std::string &amp;body) const</arglist>
     </member>
     <member kind="function">
-      <type>ForceSensor &amp;</type>
-      <name>surfaceForceSensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ac4bfab32c0f157b828a70134f1ffe985</anchor>
-      <arglist>(const std::string &amp;surfaceName)</arglist>
-    </member>
-    <member kind="function">
       <type>const ForceSensor &amp;</type>
       <name>surfaceForceSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
@@ -27522,25 +27800,11 @@
       <arglist>(const std::string &amp;surfaceName) const</arglist>
     </member>
     <member kind="function">
-      <type>ForceSensor &amp;</type>
-      <name>indirectBodyForceSensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a901f76e997eccaa20ef748302229edf6</anchor>
-      <arglist>(const std::string &amp;body)</arglist>
-    </member>
-    <member kind="function">
       <type>const ForceSensor &amp;</type>
       <name>indirectBodyForceSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>a0c2ceb538921611b7b50a50634859e5f</anchor>
       <arglist>(const std::string &amp;body) const</arglist>
-    </member>
-    <member kind="function">
-      <type>ForceSensor &amp;</type>
-      <name>indirectSurfaceForceSensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a4733eee02a2b700c1e5ab9796f92b26b</anchor>
-      <arglist>(const std::string &amp;surface)</arglist>
     </member>
     <member kind="function">
       <type>const ForceSensor &amp;</type>
@@ -27553,29 +27817,22 @@
       <type>const std::vector&lt; ForceSensor &gt; &amp;</type>
       <name>forceSensors</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ad3fe91912f91e71eaff0a67af81b4ca0</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>std::vector&lt; ForceSensor &gt; &amp;</type>
-      <name>forceSensors</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>aa9ece4044d66c5fb62667f7dc91dd6d4</anchor>
-      <arglist>()</arglist>
+      <anchor>ac3d3115ea3d21076f556ce974f299f0e</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>hasDevice</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>af183f29b2232cbc87cc8dc744f93424e</anchor>
-      <arglist>(const std::string &amp;name) const</arglist>
+      <anchor>a607854d4b0275f088553d91bbcdc9905</anchor>
+      <arglist>(const std::string &amp;name) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>hasSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ab011a5322c37711cf940653e7b814b50</anchor>
-      <arglist>(const std::string &amp;name) const</arglist>
+      <anchor>a59d3c6669d54957b2bfd0125aaf83dca</anchor>
+      <arglist>(const std::string &amp;name) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const T &amp;</type>
@@ -27669,39 +27926,25 @@
       <arglist></arglist>
     </member>
     <member kind="function">
-      <type>BodySensor &amp;</type>
-      <name>bodySensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a3effaf63deb70c0d2463cf374cc2e7c1</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
       <type>const BodySensor &amp;</type>
       <name>bodySensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a3e34acaf5dc3b279cc97e5cd4c215708</anchor>
-      <arglist>() const</arglist>
+      <anchor>a41b7c80447b0d61661bfc2a0242eaa8f</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>hasBodySensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a2572eb64a1ab6318f715e0163400e4bf</anchor>
-      <arglist>(const std::string &amp;name) const</arglist>
+      <anchor>a52d953d97ba1f0fbeed5e208e78e3d97</anchor>
+      <arglist>(const std::string &amp;name) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>bodyHasBodySensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a558d26564bdb4888db21b2ae13d32f39</anchor>
-      <arglist>(const std::string &amp;body) const</arglist>
-    </member>
-    <member kind="function">
-      <type>BodySensor &amp;</type>
-      <name>bodySensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a439af8f5d3edc70f1f8cf8b947c61cdd</anchor>
-      <arglist>(const std::string &amp;name)</arglist>
+      <anchor>aaf5526be81e352a5fa7ce4038ba39052</anchor>
+      <arglist>(const std::string &amp;body) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const BodySensor &amp;</type>
@@ -27711,13 +27954,6 @@
       <arglist>(const std::string &amp;name) const</arglist>
     </member>
     <member kind="function">
-      <type>BodySensor &amp;</type>
-      <name>bodyBodySensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a4a5ebf8a9421a34de48c2b31449478cc</anchor>
-      <arglist>(const std::string &amp;name)</arglist>
-    </member>
-    <member kind="function">
       <type>const BodySensor &amp;</type>
       <name>bodyBodySensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
@@ -27725,18 +27961,11 @@
       <arglist>(const std::string &amp;name) const</arglist>
     </member>
     <member kind="function">
-      <type>BodySensorVector &amp;</type>
-      <name>bodySensors</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a0a7aeb8979e469e5d34c4ffea9267a70</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
       <type>const BodySensorVector &amp;</type>
       <name>bodySensors</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ace8a8b93689ec20b516f8d0ae460ea80</anchor>
-      <arglist>() const</arglist>
+      <anchor>afc810f916462cb34c4126220f4f8a3e9</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>unsigned int</type>
@@ -28268,57 +28497,22 @@
       <type>const std::vector&lt; double &gt; &amp;</type>
       <name>encoderValues</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a1191c63affb21cb0e15698a48ee83355</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>encoderValues</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ab757a9c9f2f1a0c2f6a2d0ce73a4c89f</anchor>
-      <arglist>(const std::vector&lt; double &gt; &amp;encoderValues)</arglist>
+      <anchor>a1da8134deea10a32f7d35fc381649606</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const std::vector&lt; double &gt; &amp;</type>
       <name>encoderVelocities</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ad88153372c03f393b45a9d7ac88df0c5</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>encoderVelocities</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a02d2160fc0a6f5a7b206776fa9ac6242</anchor>
-      <arglist>(const std::vector&lt; double &gt; &amp;encoderVelocities)</arglist>
-    </member>
-    <member kind="function">
-      <type>const std::vector&lt; double &gt; &amp;</type>
-      <name>flexibilityValues</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a4c07f58dbe7a2cba53e4bec2abc2bdff</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>flexibilityValues</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a458513fda098c7ddd3ffa9f1605dbc0a</anchor>
-      <arglist>(const std::vector&lt; double &gt; &amp;flexibilityValues)</arglist>
+      <anchor>a8a2e3e0b4b0e226712007e9fe905f9e9</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const std::vector&lt; double &gt; &amp;</type>
       <name>jointTorques</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a91168b4930361d5a61a60a925ae0cc6d</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>jointTorques</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>abc6661a03573ba04f70c8cd14939dd0e</anchor>
-      <arglist>(const std::vector&lt; double &gt; &amp;jointTorques)</arglist>
+      <anchor>af65b1b51c93d319952e2ae3965e204c8</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const std::vector&lt; std::string &gt; &amp;</type>
@@ -28331,15 +28525,15 @@
       <type>bool</type>
       <name>hasForceSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ae6addeeebfb0b899376ed338b212a33a</anchor>
-      <arglist>(const std::string &amp;name) const</arglist>
+      <anchor>a42615f6ac857b53acb4ae0376c3986c7</anchor>
+      <arglist>(const std::string &amp;name) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>bodyHasForceSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a183b8dbcdcda9c179b83c780bccea04b</anchor>
-      <arglist>(const std::string &amp;body) const</arglist>
+      <anchor>acf845c2c3a0f18430986e4a752f08fe7</anchor>
+      <arglist>(const std::string &amp;body) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -28363,25 +28557,11 @@
       <arglist>(const std::string &amp;surface) const</arglist>
     </member>
     <member kind="function">
-      <type>ForceSensor &amp;</type>
-      <name>forceSensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a4c4b5161096f6e95ceaa57280f951dab</anchor>
-      <arglist>(const std::string &amp;name)</arglist>
-    </member>
-    <member kind="function">
       <type>const ForceSensor &amp;</type>
       <name>forceSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>a40d807280f230919ff00adf3d43a5caa</anchor>
       <arglist>(const std::string &amp;name) const</arglist>
-    </member>
-    <member kind="function">
-      <type>ForceSensor &amp;</type>
-      <name>bodyForceSensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a49efc5c9284a39c13647ff5500138d33</anchor>
-      <arglist>(const std::string &amp;body)</arglist>
     </member>
     <member kind="function">
       <type>const ForceSensor &amp;</type>
@@ -28398,13 +28578,6 @@
       <arglist>(const std::string &amp;body) const</arglist>
     </member>
     <member kind="function">
-      <type>ForceSensor &amp;</type>
-      <name>surfaceForceSensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ac4bfab32c0f157b828a70134f1ffe985</anchor>
-      <arglist>(const std::string &amp;surfaceName)</arglist>
-    </member>
-    <member kind="function">
       <type>const ForceSensor &amp;</type>
       <name>surfaceForceSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
@@ -28412,25 +28585,11 @@
       <arglist>(const std::string &amp;surfaceName) const</arglist>
     </member>
     <member kind="function">
-      <type>ForceSensor &amp;</type>
-      <name>indirectBodyForceSensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a901f76e997eccaa20ef748302229edf6</anchor>
-      <arglist>(const std::string &amp;body)</arglist>
-    </member>
-    <member kind="function">
       <type>const ForceSensor &amp;</type>
       <name>indirectBodyForceSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>a0c2ceb538921611b7b50a50634859e5f</anchor>
       <arglist>(const std::string &amp;body) const</arglist>
-    </member>
-    <member kind="function">
-      <type>ForceSensor &amp;</type>
-      <name>indirectSurfaceForceSensor</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a4733eee02a2b700c1e5ab9796f92b26b</anchor>
-      <arglist>(const std::string &amp;surface)</arglist>
     </member>
     <member kind="function">
       <type>const ForceSensor &amp;</type>
@@ -28443,29 +28602,22 @@
       <type>const std::vector&lt; ForceSensor &gt; &amp;</type>
       <name>forceSensors</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ad3fe91912f91e71eaff0a67af81b4ca0</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>std::vector&lt; ForceSensor &gt; &amp;</type>
-      <name>forceSensors</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>aa9ece4044d66c5fb62667f7dc91dd6d4</anchor>
-      <arglist>()</arglist>
+      <anchor>ac3d3115ea3d21076f556ce974f299f0e</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>hasDevice</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>af183f29b2232cbc87cc8dc744f93424e</anchor>
-      <arglist>(const std::string &amp;name) const</arglist>
+      <anchor>a607854d4b0275f088553d91bbcdc9905</anchor>
+      <arglist>(const std::string &amp;name) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>hasSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ab011a5322c37711cf940653e7b814b50</anchor>
-      <arglist>(const std::string &amp;name) const</arglist>
+      <anchor>a59d3c6669d54957b2bfd0125aaf83dca</anchor>
+      <arglist>(const std::string &amp;name) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const T &amp;</type>
@@ -28515,6 +28667,263 @@
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>abc302e460bc53880eb062681e9e50a54</anchor>
       <arglist>(SensorPtr sensor)</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rbdyn::RobotConverter</name>
+    <filename>structmc__rbdyn_1_1RobotConverter.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>RobotConverter</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverter.html</anchorfile>
+      <anchor>ad6f66343bf7f506fbcfb1aacdfc1f530</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;inputRobot, mc_rbdyn::Robot &amp;outputRobot, const RobotConverterConfig &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>convert</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverter.html</anchorfile>
+      <anchor>afe3168a20d548b5cd5abd23c6a6c04a8</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;inputRobot, mc_rbdyn::Robot &amp;outputRobot) const</arglist>
+    </member>
+    <member kind="function">
+      <type>const RobotConverterConfig &amp;</type>
+      <name>config</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverter.html</anchorfile>
+      <anchor>afa210ba62c3607be90a9c8371b07a68a</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>precompute</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverter.html</anchorfile>
+      <anchor>a4f226cefe778f8796b9fc828f3320df9</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;inputRobot, const mc_rbdyn::Robot &amp;outputRobot)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>encodersToOutput</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverter.html</anchorfile>
+      <anchor>aad569e8279b82a321da6d421a5cb5f4b</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;inputRobot, mc_rbdyn::Robot &amp;outputRobot) const</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>RobotConverterConfig</type>
+      <name>config_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverter.html</anchorfile>
+      <anchor>aefc35795686134ebe045229615c6764c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::vector&lt; std::pair&lt; unsigned int, unsigned int &gt; &gt;</type>
+      <name>commonJointIndices_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverter.html</anchorfile>
+      <anchor>a36a83b4fc9222b0e37f13910c20b9d8d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::vector&lt; std::pair&lt; unsigned int, unsigned int &gt; &gt;</type>
+      <name>commonEncoderToJointIndices_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverter.html</anchorfile>
+      <anchor>a3ae2e8970a964a2d79149204e0ca3887</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::vector&lt; std::pair&lt; unsigned int, unsigned int &gt; &gt;</type>
+      <name>mimicJoints_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverter.html</anchorfile>
+      <anchor>a99f04e008c24f4c2c65543dae39ed94e</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rbdyn::RobotConverterConfig</name>
+    <filename>structmc__rbdyn_1_1RobotConverterConfig.html</filename>
+    <member kind="variable">
+      <type>bool</type>
+      <name>mbcToOutMbc_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverterConfig.html</anchorfile>
+      <anchor>af4662e7a413eb1071cbda12ea494f119</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>encodersToOutMbc_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverterConfig.html</anchorfile>
+      <anchor>ac217c0e99ff1e9811e70bbf0f33eeaf6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>encodersToOutMbcOnce_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverterConfig.html</anchorfile>
+      <anchor>a46f187b5fa5c1e230e38e830571a51a3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>enforceMimics_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverterConfig.html</anchorfile>
+      <anchor>a35b9dedc6a6d413306eaf91c53c2f7e9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>copyPosWorld_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverterConfig.html</anchorfile>
+      <anchor>ad727e4fc644bbb52165aeecf938f5d8c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>copyJointCommand_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverterConfig.html</anchorfile>
+      <anchor>a20e3813cb3f775e5109c7e18447c657e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>copyJointVelocityCommand_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverterConfig.html</anchorfile>
+      <anchor>ad46aa74bc9576f13ab33b336a39f79bc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>copyJointAccelerationCommand_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverterConfig.html</anchorfile>
+      <anchor>a18cb48145d144b357595524c49b5cace</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>copyJointCommand_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverterConfig.html</anchorfile>
+      <anchor>a20e3813cb3f775e5109c7e18447c657e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>copyJointVelocityCommand_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverterConfig.html</anchorfile>
+      <anchor>ad46aa74bc9576f13ab33b336a39f79bc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>copyJointAccelerationCommand_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotConverterConfig.html</anchorfile>
+      <anchor>a18cb48145d144b357595524c49b5cace</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rbdyn::RobotData</name>
+    <filename>structmc__rbdyn_1_1RobotData.html</filename>
+    <member kind="variable">
+      <type>std::vector&lt; std::string &gt;</type>
+      <name>refJointOrder</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>a1f39d588da8f5023be53cbd1c09616e9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; double &gt;</type>
+      <name>encoderValues</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>ae164d088f20cb9d263f6952a631578ec</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; double &gt;</type>
+      <name>encoderVelocities</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>a12f65759039a9c380311f655e7ae4cf3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; double &gt;</type>
+      <name>jointTorques</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>a35588fd13b7cc23e8ce4ced64c951c3a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; ForceSensor &gt;</type>
+      <name>forceSensors</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>a0fe8c6c109a01c727c6c7b64c4b8ead2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::unordered_map&lt; std::string, size_t &gt;</type>
+      <name>forceSensorsIndex</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>a3254977695e2955bdda9d07d7ec8a9de</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>BodySensorVector</type>
+      <name>bodySensors</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>a2168b5d056d55ed259dca4795d9f4064</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::unordered_map&lt; std::string, size_t &gt;</type>
+      <name>bodySensorsIndex</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>a67dc85b79dc89817f8522617b3fd0a3a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::unordered_map&lt; std::string, size_t &gt;</type>
+      <name>bodyBodySensors</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>aaea88c1f821415cf1d63e20fdef5f865</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; JointSensor &gt;</type>
+      <name>jointSensors</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>acda43b3386e92305df5a1a20b319a43b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::unordered_map&lt; std::string, size_t &gt;</type>
+      <name>jointJointSensors</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>a8df243b849e2f49e9e08a6accad2589c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::unordered_map&lt; std::string, mc_control::GripperPtr &gt;</type>
+      <name>grippers</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>a6c24c8a0470ce0d09de26991f2e5c0a7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; mc_control::GripperRef &gt;</type>
+      <name>grippersRef</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>ad35bd605b7b926166d9b5aa6ad517536</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>DevicePtrVector</type>
+      <name>devices</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>aaedac65f208c8d20ce463dc27e2dd96e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::unordered_map&lt; std::string, size_t &gt;</type>
+      <name>devicesIndex</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>aadf5f6efd574f54480a60a1b4f95e722</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -28795,6 +29204,13 @@
       <anchorfile>structmc__rbdyn_1_1RobotLoader.html</anchorfile>
       <anchor>ad660aedc7dbf7cd0cd0e60da5fffe4c2</anchor>
       <arglist>(const std::string &amp;name, const Args &amp;... args)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static RobotModulePtr</type>
+      <name>get_robot_module</name>
+      <anchorfile>structmc__rbdyn_1_1RobotLoader.html</anchorfile>
+      <anchor>a0340bd5b2c882415da7c86b6ad80b058</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;args)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static void</type>
@@ -29090,6 +29506,13 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
+      <type>const std::vector&lt; std::string &gt; &amp;</type>
+      <name>canonicalParameters</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>aa9bb0c4df2675a03c1139f460c5d3989</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
       <type>std::string</type>
       <name>real_urdf</name>
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
@@ -29109,6 +29532,20 @@
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
       <anchor>a7d603f118a4a09c26a287320b3d6f212</anchor>
       <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="variable">
+      <type>RobotConverterConfig</type>
+      <name>controlToCanonicalConfig</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>a16418afe9c239311f7ff25cc380ae0c5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::function&lt; void(const mc_rbdyn::Robot &amp;control, mc_rbdyn::Robot &amp;canonical)&gt;</type>
+      <name>controlToCanonicalPostProcess</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>a0f36485a023d3ba5e4bc09206851f3bb</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable">
       <type>std::string</type>
@@ -29332,6 +29769,13 @@
       <name>_parameters</name>
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
       <anchor>a0f8cfd4ca7e7772f68266003e7b8fc3c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; std::string &gt;</type>
+      <name>_canonicalParameters</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>a8651177a3f5ceeb464f6b5e116ecb4c3</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -29639,23 +30083,15 @@
       <type>Robot &amp;</type>
       <name>load</name>
       <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
-      <anchor>a9fb9d3b5342881259df4ea8afbd04cf9</anchor>
-      <arglist>(const std::string &amp;name, const RobotModule &amp;module, sva::PTransformd *base=nullptr, const std::string &amp;bName=&quot;&quot;)</arglist>
-      <docanchor file="structmc__rbdyn_1_1Robots">load_robot_with_name</docanchor>
+      <anchor>a6f0793141dd6d33e4fd1b8350d898641</anchor>
+      <arglist>(const std::string &amp;name, const RobotModule &amp;module, const LoadRobotParameters &amp;params={})</arglist>
     </member>
     <member kind="function">
       <type>Robot &amp;</type>
       <name>load</name>
       <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
-      <anchor>aff5d4cb6dbea1f169c866ec6004793ee</anchor>
-      <arglist>(const RobotModule &amp;module, sva::PTransformd *base=nullptr, const std::string &amp;bName=&quot;&quot;)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>load</name>
-      <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
-      <anchor>a560aec7c6ac306acd1e9eb9e2048cb5e</anchor>
-      <arglist>(const RobotModule &amp;module, const RobotModule &amp;envModule, sva::PTransformd *base=nullptr, const std::string &amp;bName=&quot;&quot;)</arglist>
+      <anchor>a4b1451c180d38ed2d650c1ab2fc90ee1</anchor>
+      <arglist>(const RobotModule &amp;module, const LoadRobotParameters &amp;params={})</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -29675,29 +30111,15 @@
       <type>Robot &amp;</type>
       <name>loadFromUrdf</name>
       <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
-      <anchor>af75cbe7bed91ed0d48c5896a0f99aa71</anchor>
-      <arglist>(const std::string &amp;name, const std::string &amp;urdf, bool withVirtualLinks=true, const std::vector&lt; std::string &gt; &amp;filteredLinks={}, bool fixed=false, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</arglist>
+      <anchor>a66c9da989e953938559067ad2e305726</anchor>
+      <arglist>(const std::string &amp;name, const std::string &amp;urdf, const rbd::parsers::ParserParameters &amp;parser_params={}, const LoadRobotParameters &amp;load_params={})</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>robotCopy</name>
       <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
-      <anchor>a097b14649963b032f36aa48f14ad808a</anchor>
-      <arglist>(const Robot &amp;robot, const std::string &amp;newName)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>createRobotWithBase</name>
-      <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
-      <anchor>adc42f526c6ebd10289b6c85b9c64f992</anchor>
-      <arglist>(const std::string &amp;name, Robots &amp;robots, unsigned int robots_idx, const Base &amp;base, const Eigen::Vector3d &amp;baseAxis=Eigen::Vector3d::UnitZ())</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>createRobotWithBase</name>
-      <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
-      <anchor>a39fc4f08cb02c8557106a8f86f03feb0</anchor>
-      <arglist>(const std::string &amp;name, Robot &amp;robot, const Base &amp;base, const Eigen::Vector3d &amp;baseAxis=Eigen::Vector3d::UnitZ())</arglist>
+      <anchor>a7bc6487208bd7d2631a1d7f394a8bf84</anchor>
+      <arglist>(const Robot &amp;robot, const std::string &amp;copyName)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -29948,23 +30370,15 @@
       <type>Robot &amp;</type>
       <name>load</name>
       <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
-      <anchor>a9fb9d3b5342881259df4ea8afbd04cf9</anchor>
-      <arglist>(const std::string &amp;name, const RobotModule &amp;module, sva::PTransformd *base=nullptr, const std::string &amp;bName=&quot;&quot;)</arglist>
-      <docanchor file="structmc__rbdyn_1_1Robots">load_robot_with_name</docanchor>
+      <anchor>a6f0793141dd6d33e4fd1b8350d898641</anchor>
+      <arglist>(const std::string &amp;name, const RobotModule &amp;module, const LoadRobotParameters &amp;params={})</arglist>
     </member>
     <member kind="function">
       <type>Robot &amp;</type>
       <name>load</name>
       <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
-      <anchor>aff5d4cb6dbea1f169c866ec6004793ee</anchor>
-      <arglist>(const RobotModule &amp;module, sva::PTransformd *base=nullptr, const std::string &amp;bName=&quot;&quot;)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>load</name>
-      <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
-      <anchor>a560aec7c6ac306acd1e9eb9e2048cb5e</anchor>
-      <arglist>(const RobotModule &amp;module, const RobotModule &amp;envModule, sva::PTransformd *base=nullptr, const std::string &amp;bName=&quot;&quot;)</arglist>
+      <anchor>a4b1451c180d38ed2d650c1ab2fc90ee1</anchor>
+      <arglist>(const RobotModule &amp;module, const LoadRobotParameters &amp;params={})</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -29984,29 +30398,15 @@
       <type>Robot &amp;</type>
       <name>loadFromUrdf</name>
       <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
-      <anchor>af75cbe7bed91ed0d48c5896a0f99aa71</anchor>
-      <arglist>(const std::string &amp;name, const std::string &amp;urdf, bool withVirtualLinks=true, const std::vector&lt; std::string &gt; &amp;filteredLinks={}, bool fixed=false, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</arglist>
+      <anchor>a66c9da989e953938559067ad2e305726</anchor>
+      <arglist>(const std::string &amp;name, const std::string &amp;urdf, const rbd::parsers::ParserParameters &amp;parser_params={}, const LoadRobotParameters &amp;load_params={})</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>robotCopy</name>
       <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
-      <anchor>a097b14649963b032f36aa48f14ad808a</anchor>
-      <arglist>(const Robot &amp;robot, const std::string &amp;newName)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>createRobotWithBase</name>
-      <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
-      <anchor>adc42f526c6ebd10289b6c85b9c64f992</anchor>
-      <arglist>(const std::string &amp;name, Robots &amp;robots, unsigned int robots_idx, const Base &amp;base, const Eigen::Vector3d &amp;baseAxis=Eigen::Vector3d::UnitZ())</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>createRobotWithBase</name>
-      <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
-      <anchor>a39fc4f08cb02c8557106a8f86f03feb0</anchor>
-      <arglist>(const std::string &amp;name, Robot &amp;robot, const Base &amp;base, const Eigen::Vector3d &amp;baseAxis=Eigen::Vector3d::UnitZ())</arglist>
+      <anchor>a7bc6487208bd7d2631a1d7f394a8bf84</anchor>
+      <arglist>(const Robot &amp;robot, const std::string &amp;copyName)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -33606,11 +34006,12 @@
     <filename>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</filename>
     <base>mc_tasks::MetaTask</base>
     <class kind="struct">mc_tasks::lipm_stabilizer::StabilizerTask::EnumClassHash</class>
+    <class kind="struct">mc_tasks::lipm_stabilizer::StabilizerTask::ExternalWrench</class>
     <member kind="function">
-      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</type>
+      <type></type>
       <name>StabilizerTask</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>aa1d5ba976db61be09781ea564a2a7bb5</anchor>
+      <anchor>afe79a5d39b9aaf14d33026354d81280d</anchor>
       <arglist>(const mc_rbdyn::Robots &amp;robots, const mc_rbdyn::Robots &amp;realRobots, unsigned int robotIndex, const std::string &amp;leftSurface, const std::string &amp;rightSurface, const std::string &amp;torsoBodyName, double dt)</arglist>
     </member>
     <member kind="function">
@@ -33773,6 +34174,49 @@
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>a8a8a726b9e64cf46649652479923b3cf</anchor>
       <arglist>(const Eigen::Vector3d &amp;com, const Eigen::Vector3d &amp;comd, const Eigen::Vector3d &amp;comdd, const Eigen::Vector3d &amp;zmp, const Eigen::Vector3d &amp;zmpd=Eigen::Vector3d::Zero())</arglist>
+      <docanchor file="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask">stabilizer_target</docanchor>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>targetCoMRaw</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a36caee86d60312d0329e964cd5909e91</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>targetCoM</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a8d2ec1f0f1f41224897010e86ddccdd7</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>targetCoMVelocity</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a7f4cb4a06854f0b4437c07ba733c9699</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>targetCoMAcceleration</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a642ca0dd7488041f71dca650f759be5b</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>targetZMP</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>af1cd20ce828afc0bdf7399bbe8571230</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>targetZMPVelocity</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>aeffdf1f5030b46371c2ec220db793b50</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -33780,6 +34224,14 @@
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>ab68f4f026a0e51b572c2b6fb39c81fdb</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;surfaceNames, const std::vector&lt; sva::ForceVecd &gt; &amp;targetWrenches, const std::vector&lt; sva::MotionVecd &gt; &amp;gains)</arglist>
+      <docanchor file="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask">set_external_wrenches</docanchor>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; ExternalWrench &gt; &amp;</type>
+      <name>externalWrenches</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a3300ec93b5d85e099c8530c0ceca8713</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const Eigen::Vector3d &amp;</type>
@@ -33815,6 +34267,13 @@
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>a136d6fa382469eb01738751657dc18e1</anchor>
       <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>comOffsetMeasured</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a3b43cf3e68a1716d00b15c788e6d75a9</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -33975,6 +34434,20 @@
       <name>comOffsetMeasured_</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>a8f0dfeb868178dce27d2ea0553c10c0f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>zmpCoefTarget_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a78d13362383ec74a8c60e18c6b2a58f6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>zmpCoefMeasured_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a9b25af3fa9fd413a3d1060e601ca92b9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -34668,6 +35141,20 @@
       <name>comOffsetMeasured_</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>a8f0dfeb868178dce27d2ea0553c10c0f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>zmpCoefTarget_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a78d13362383ec74a8c60e18c6b2a58f6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>zmpCoefMeasured_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a9b25af3fa9fd413a3d1060e601ca92b9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -40291,12 +40778,16 @@
     <class kind="struct">mc_rbdyn::Gains</class>
     <class kind="struct">mc_rbdyn::GripperSurface</class>
     <class kind="struct">mc_rbdyn::JointSensor</class>
+    <class kind="struct">mc_rbdyn::LoadRobotParameters</class>
     <class kind="struct">mc_rbdyn::Mimic</class>
     <class kind="struct">mc_rbdyn::PlanarSurface</class>
     <class kind="struct">mc_rbdyn::Plane</class>
     <class kind="struct">mc_rbdyn::PolygonInterpolator</class>
     <class kind="struct">mc_rbdyn::QuadraticGenerator</class>
     <class kind="struct">mc_rbdyn::Robot</class>
+    <class kind="struct">mc_rbdyn::RobotConverter</class>
+    <class kind="struct">mc_rbdyn::RobotConverterConfig</class>
+    <class kind="struct">mc_rbdyn::RobotData</class>
     <class kind="struct">mc_rbdyn::RobotFrame</class>
     <class kind="class">mc_rbdyn::RobotLoader</class>
     <class kind="struct">mc_rbdyn::RobotModule</class>
@@ -40403,6 +40894,13 @@
       <arglist></arglist>
     </member>
     <member kind="typedef">
+      <type>std::shared_ptr&lt; RobotData &gt;</type>
+      <name>RobotDataPtr</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a33ca728cc2ff802237e8135754f359a8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
       <type>std::shared_ptr&lt; sch::S_Object &gt;</type>
       <name>S_ObjectPtr</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
@@ -40429,6 +40927,13 @@
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
       <anchor>a848cf0b2e8f6ca6f18ceba1769d9a426</anchor>
       <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>accbb9a0b34219e39b1dad5d93f5fa05d</anchor>
+      <arglist>(const mc_rbdyn::BodySensor &amp;lhs, const mc_rbdyn::BodySensor &amp;rhs)</arglist>
     </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI std::ostream &amp;</type>
@@ -40480,6 +40985,27 @@
       <arglist>(const Surface &amp;r1Surface, const Surface &amp;r2Surface, const sva::PTransformd &amp;X_es_rs)</arglist>
     </member>
     <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a5aa4dab41fa3cd48e13c4fd628bcb630</anchor>
+      <arglist>(const mc_rbdyn::ForceSensor &amp;lhs, const mc_rbdyn::ForceSensor &amp;rhs)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a8925faa2c281c5667b4227aee573c835</anchor>
+      <arglist>(const JointSensor &amp;lhs, const JointSensor &amp;rhs)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>acc171bbf6f9fa58525ac71fa8c54a2f4</anchor>
+      <arglist>(const Mimic &amp;lhs, const Mimic &amp;rhs)</arglist>
+    </member>
+    <member kind="function">
       <type>MC_RBDYN_DLLAPI std::vector&lt; Plane &gt;</type>
       <name>planes_from_polygon</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
@@ -40515,25 +41041,46 @@
       <arglist>(const mc_rtc::Configuration &amp;config, const mc_rbdyn::Robots &amp;robots, const std::string &amp;prefix=&quot;&quot;, bool required=false, const std::string &amp;robotIndexKey=&quot;robotIndex&quot;, const std::string &amp;robotNameKey=&quot;robot&quot;, const std::string &amp;defaultRobotName=&quot;&quot;)</arglist>
     </member>
     <member kind="function">
-      <type>RobotModule::bounds_t MC_RBDYN_DLLAPI</type>
+      <type>MC_RBDYN_DLLAPI RobotModule::bounds_t</type>
       <name>urdf_limits_to_bounds</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
-      <anchor>aa4f40fc0642de7f1debd053f9c5d393f</anchor>
+      <anchor>ae02615325b483661411e4eb7d76e0522</anchor>
       <arglist>(const rbd::parsers::Limits &amp;limits)</arglist>
     </member>
     <member kind="function">
-      <type>MC_RBDYN_DLLAPI RobotsPtr</type>
-      <name>loadRobot</name>
+      <type>MC_RBDYN_DLLAPI bool</type>
+      <name>check_module_compatibility</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
-      <anchor>a21b38aae31d7154631b41aafcec98326</anchor>
-      <arglist>(const RobotModule &amp;module, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</arglist>
+      <anchor>a8ac23895f52ccc0e6ea9f77dfc83c84a</anchor>
+      <arglist>(const RobotModule &amp;lhs, const RobotModule &amp;rhs)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>abaf5b2b5f77f9658f757b3a1dbdcf030</anchor>
+      <arglist>(const RobotModule::Gripper::Safety &amp;lhs, const RobotModule::Gripper::Safety &amp;rhs)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a5e07749ee4441c7ee3c8d1b9508f6126</anchor>
+      <arglist>(const RobotModule::Gripper &amp;lhs, const RobotModule::Gripper &amp;rhs)</arglist>
     </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI RobotsPtr</type>
       <name>loadRobot</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
-      <anchor>ae3659b38656d82eb22226ad6fd30cafb</anchor>
-      <arglist>(const RobotModule &amp;module, const std::string &amp;name, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</arglist>
+      <anchor>a7ac28a8438587660a42d241937783322</anchor>
+      <arglist>(const RobotModule &amp;module, const LoadRobotParameters &amp;params={})</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI RobotsPtr</type>
+      <name>loadRobot</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a023b9824634ace45cf7ebb23a5abdc00</anchor>
+      <arglist>(const std::string &amp;name, const RobotModule &amp;module, const LoadRobotParameters &amp;params={})</arglist>
     </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI RobotsPtr</type>
@@ -40546,15 +41093,15 @@
       <type>MC_RBDYN_DLLAPI RobotsPtr</type>
       <name>loadRobotAndEnv</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
-      <anchor>ab4fd3f7bf8df752d0d8260c0e55ed1cc</anchor>
-      <arglist>(const RobotModule &amp;module, const RobotModule &amp;envModule, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</arglist>
+      <anchor>aa833d20a49375cc17cd9b18370531657</anchor>
+      <arglist>(const RobotModule &amp;module, const RobotModule &amp;envModule)</arglist>
     </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI RobotsPtr</type>
       <name>loadRobotFromUrdf</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
-      <anchor>aca0f0b796b6f6ff8c4a9b27222c73e77</anchor>
-      <arglist>(const std::string &amp;name, const std::string &amp;urdf, bool withVirtualLinks=true, const std::vector&lt; std::string &gt; &amp;filteredLinks={}, bool fixed=false, sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</arglist>
+      <anchor>a23af9e4069ba5394163c390df9d48dba</anchor>
+      <arglist>(const std::string &amp;name, const std::string &amp;urdf, const rbd::parsers::ParserParameters &amp;parser_params={}, const LoadRobotParameters &amp;load_params={})</arglist>
     </member>
     <member kind="function">
       <type>Eigen::Matrix3d</type>
@@ -42308,18 +42855,18 @@
       <arglist></arglist>
     </member>
     <member kind="function">
-      <type>template Eigen::Vector3d</type>
-      <name>StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::target &gt;</name>
+      <type>template void</type>
+      <name>StabilizerTask::computeWrenchOffsetAndCoefficient&lt;&amp;StabilizerTask::ExternalWrench::target &gt;</name>
       <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
-      <anchor>a3867c9c55a9b154439b74f2f35eb1f7d</anchor>
-      <arglist>(const mc_rbdyn::Robot &amp;) const</arglist>
+      <anchor>ac38a37625b74268c51a9ae8efa42b3d8</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;robot, Eigen::Vector3d &amp;offset_gamma, double &amp;coef_kappa) const</arglist>
     </member>
     <member kind="function">
-      <type>template Eigen::Vector3d</type>
-      <name>StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::measured &gt;</name>
+      <type>template void</type>
+      <name>StabilizerTask::computeWrenchOffsetAndCoefficient&lt;&amp;StabilizerTask::ExternalWrench::measured &gt;</name>
       <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
-      <anchor>ae7aa9f4851b07165e94068424b7c39bf</anchor>
-      <arglist>(const mc_rbdyn::Robot &amp;) const</arglist>
+      <anchor>acdaf79a7c1b60d8b1c1aee6805951e0b</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;robot, Eigen::Vector3d &amp;offset_gamma, double &amp;coef_kappa) const</arglist>
     </member>
     <member kind="function">
       <type>template sva::ForceVecd</type>

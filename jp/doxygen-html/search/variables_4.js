@@ -46,6 +46,8 @@ var searchData=
   ['deltacompvelw_5f',['deltaCompVelW_',['../structmc__tasks_1_1force_1_1ImpedanceTask.html#adf26c7977065bdefdf4fc00c526bc365',1,'mc_tasks::force::ImpedanceTask']]],
   ['desc_5f',['desc_',['../structmc__observers_1_1Observer.html#a09b5945fa09bf14489d9796d43df60b9',1,'mc_observers::Observer::desc_()'],['../structmc__observers_1_1ObserverPipeline.html#adf93df3bebd6b8e6dc341c2c20ba18ee',1,'mc_observers::ObserverPipeline::desc_()']]],
   ['desiredwrench_5f',['desiredWrench_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a706d2d0fed1d66103c2bcf669dd47bb8',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
+  ['devices',['devices',['../structmc__rbdyn_1_1RobotData.html#aaedac65f208c8d20ce463dc27e2dd96e',1,'mc_rbdyn::RobotData']]],
+  ['devicesindex',['devicesIndex',['../structmc__rbdyn_1_1RobotData.html#aadf5f6efd574f54480a60a1b4f95e722',1,'mc_rbdyn::RobotData']]],
   ['dfzadmittance',['dfzAdmittance',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ad3f20459a99d3de2b16e882b592bffbd',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
   ['dfzdamping',['dfzDamping',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ac97586a249bbe2430e958b9fa1e7f7d7',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
   ['dfzforceerror_5f',['dfzForceError_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a29892a01046ffddb485441466a5dfbe0',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],

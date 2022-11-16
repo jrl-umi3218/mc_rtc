@@ -87,6 +87,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ad660aedc7dbf7cd0cd0e60da5fffe4c2"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:ad660aedc7dbf7cd0cd0e60da5fffe4c2"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="namespacemc__rbdyn.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotLoader.html#ad660aedc7dbf7cd0cd0e60da5fffe4c2">get_robot_module</a> (const std::string &amp;name, const Args &amp;... args)</td></tr>
 <tr class="separator:ad660aedc7dbf7cd0cd0e60da5fffe4c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0340bd5b2c882415da7c86b6ad80b058"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacemc__rbdyn.html#af67e459a90b9a864418fca7d55d959a3">RobotModulePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotLoader.html#a0340bd5b2c882415da7c86b6ad80b058">get_robot_module</a> (const std::vector&lt; std::string &gt; &amp;args)</td></tr>
+<tr class="separator:a0340bd5b2c882415da7c86b6ad80b058"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a1e3e1c0700d5045bf0d6894ef6a8e1"><td class="memTemplParams" colspan="2">template&lt;typename RetT , typename... Args&gt; </td></tr>
 <tr class="memitem:a2a1e3e1c0700d5045bf0d6894ef6a8e1"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotLoader.html#a2a1e3e1c0700d5045bf0d6894ef6a8e1">register_object</a> (const std::string &amp;name, std::function&lt; RetT *(const Args &amp;...)&gt; callback)</td></tr>
 <tr class="separator:a2a1e3e1c0700d5045bf0d6894ef6a8e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -159,7 +161,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ad660aedc7dbf7cd0cd0e60da5fffe4c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad660aedc7dbf7cd0cd0e60da5fffe4c2">&#9670;&nbsp;</a></span>get_robot_module()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad660aedc7dbf7cd0cd0e60da5fffe4c2">&#9670;&nbsp;</a></span>get_robot_module() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -201,6 +203,34 @@ template&lt;typename... Args&gt; </div>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>It is the responsability of the caller to make sure that the signature of the module creation fits that declared by the module </dd></dl>
+
+</div>
+</div>
+<a id="a0340bd5b2c882415da7c86b6ad80b058"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0340bd5b2c882415da7c86b6ad80b058">&#9670;&nbsp;</a></span>get_robot_module() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="namespacemc__rbdyn.html#af67e459a90b9a864418fca7d55d959a3">RobotModulePtr</a> mc_rbdyn::RobotLoader::get_robot_module </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>args</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> that would be loaded from get_robot_module(args[0], ..., args[args.size() - 1])</p>
+<p>This is arbitrarly limited to 3 arguments </p>
 
 </div>
 </div>

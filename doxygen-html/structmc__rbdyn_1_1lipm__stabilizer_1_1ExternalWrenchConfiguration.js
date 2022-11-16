@@ -8,6 +8,7 @@ var structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration =
     [ "comOffsetErrZMPLimit", "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#ad636aa194409ba418d4f4c6377d0fe71", null ],
     [ "comOffsetLowPassCoMCutoffPeriod", "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a2a8cb02f8574c718d60edde5cb1276a2", null ],
     [ "comOffsetLowPassCutoffPeriod", "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#af5d1903ed4c7cc1a0071edf8752d9e58", null ],
+    [ "excludeFromDCMBiasEst", "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#adf774b10bdd24ff8788bb6fffa757719", null ],
     [ "extWrenchSumLowPassCutoffPeriod", "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#abc2551e9efb790f462bf04173f5333cb", null ],
     [ "modifyCoMErr", "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a507c635c55a7cddbc95dc46fb9261907", null ],
     [ "modifyZMPErr", "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a07f7e6178872a0fba9b61975b707b1c4", null ],

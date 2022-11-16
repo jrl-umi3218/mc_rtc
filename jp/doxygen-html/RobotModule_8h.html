@@ -86,6 +86,7 @@ $(document).ready(function(){initNavTree('RobotModule_8h.html','');});
 <code>#include &lt;<a class="el" href="ForceSensor_8h_source.html">mc_rbdyn/ForceSensor.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="JointSensor_8h_source.html">mc_rbdyn/JointSensor.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="Mimic_8h_source.html">mc_rbdyn/Mimic.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="RobotConverterConfig_8h_source.html">mc_rbdyn/RobotConverterConfig.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="Springs_8h_source.html">mc_rbdyn/Springs.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="include_2mc__rbdyn_2api_8h_source.html">mc_rbdyn/api.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="StabilizerConfiguration_8h_source.html">mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h</a>&gt;</code><br />
@@ -149,9 +150,15 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa4f40fc0642de7f1debd053f9c5d393f"><td class="memItemLeft" align="right" valign="top">RobotModule::bounds_t <a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#aa4f40fc0642de7f1debd053f9c5d393f">mc_rbdyn::urdf_limits_to_bounds</a> (const rbd::parsers::Limits &amp;limits)</td></tr>
-<tr class="memdesc:aa4f40fc0642de7f1debd053f9c5d393f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts limits provided by RBDyn parsers to bounds.  <a href="namespacemc__rbdyn.html#aa4f40fc0642de7f1debd053f9c5d393f">More...</a><br /></td></tr>
-<tr class="separator:aa4f40fc0642de7f1debd053f9c5d393f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae02615325b483661411e4eb7d76e0522"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> RobotModule::bounds_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#ae02615325b483661411e4eb7d76e0522">mc_rbdyn::urdf_limits_to_bounds</a> (const rbd::parsers::Limits &amp;limits)</td></tr>
+<tr class="memdesc:ae02615325b483661411e4eb7d76e0522"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts limits provided by RBDyn parsers to bounds.  <a href="namespacemc__rbdyn.html#ae02615325b483661411e4eb7d76e0522">More...</a><br /></td></tr>
+<tr class="separator:ae02615325b483661411e4eb7d76e0522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ac23895f52ccc0e6ea9f77dfc83c84a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a8ac23895f52ccc0e6ea9f77dfc83c84a">mc_rbdyn::check_module_compatibility</a> (const RobotModule &amp;lhs, const RobotModule &amp;rhs)</td></tr>
+<tr class="separator:a8ac23895f52ccc0e6ea9f77dfc83c84a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abaf5b2b5f77f9658f757b3a1dbdcf030"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#abaf5b2b5f77f9658f757b3a1dbdcf030">mc_rbdyn::operator==</a> (const RobotModule::Gripper::Safety &amp;lhs, const RobotModule::Gripper::Safety &amp;rhs)</td></tr>
+<tr class="separator:abaf5b2b5f77f9658f757b3a1dbdcf030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e07749ee4441c7ee3c8d1b9508f6126"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a5e07749ee4441c7ee3c8d1b9508f6126">mc_rbdyn::operator==</a> (const RobotModule::Gripper &amp;lhs, const RobotModule::Gripper &amp;rhs)</td></tr>
+<tr class="separator:a5e07749ee4441c7ee3c8d1b9508f6126"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a983157fccbdda235351228ec75cbd167"></a>

@@ -363,8 +363,8 @@
 
 <p>To represent the robots, the framework provides two sets of robot instances (<a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robots" target="blank_"><code>mc_rbdyn::Robots</code></a>):</p>
 <ul>
-  <li><a href="/mc_rtc/doxygen.html#structmc__control_1_1MCController#adc557ecb7d64eb2d8be551f7cf6678cd" target="blank_"><code>mc_control::MCController::robots()</code></a> represents the control state (desired) of the robots.</li>
-  <li><a href="/mc_rtc/doxygen.html#structmc__control_1_1MCController#a1443aed08b26c319294465b1caa1e221" target="blank_"><code>mc_control::MCController::realRobots()</code></a> represents the state of the real robots. It’s the role of the observer pipeline to define how these robot states are estimated.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__control_1_1MCController#ae45b98b34b9c614d9eb3aaa86371f53d" target="blank_"><code>mc_control::MCController::robots()</code></a> represents the control state (desired) of the robots.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__control_1_1MCController#a0300e29b876797fe06dd7c16c971905d" target="blank_"><code>mc_control::MCController::realRobots()</code></a> represents the state of the real robots. It’s the role of the observer pipeline to define how these robot states are estimated.</li>
 </ul>
 
 <h1 id="configuring-the-observer-pipelines">Configuring the observer pipelines</h1>
@@ -462,8 +462,8 @@
 <p>The encoder observer may be used to obtain the position and velocity of all actuated joints.</p>
 
 <ul>
-  <li>Joint values can be obtained from sensor as provided by <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a1191c63affb21cb0e15698a48ee83355" target="blank_"><code>mc_rbdyn::Robot::encoderValues()</code></a> or using the joint state of another robot <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a485eb8aa4ceb0a0a5010844d16e47f95" target="blank_"><code>mc_rbdyn::Robot::q()</code></a>.</li>
-  <li>Joint velocities can be obtained from a joint velocity sensor <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#ad88153372c03f393b45a9d7ac88df0c5" target="blank_"><code>mc_rbdyn::Robot::encoderVelocities()</code></a>, estimated by finite differences of the (estimated) position, or using the joint velocities of another robot <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a5773f91f2a9d0eb5cb4b6a0943551a1b" target="blank_"><code>mc_rbdyn::Robot::alpha()</code></a></li>
+  <li>Joint values can be obtained from sensor as provided by <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a1da8134deea10a32f7d35fc381649606" target="blank_"><code>mc_rbdyn::Robot::encoderValues()</code></a> or using the joint state of another robot <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a485eb8aa4ceb0a0a5010844d16e47f95" target="blank_"><code>mc_rbdyn::Robot::q()</code></a>.</li>
+  <li>Joint velocities can be obtained from a joint velocity sensor <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a8a2e3e0b4b0e226712007e9fe905f9e9" target="blank_"><code>mc_rbdyn::Robot::encoderVelocities()</code></a>, estimated by finite differences of the (estimated) position, or using the joint velocities of another robot <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a5773f91f2a9d0eb5cb4b6a0943551a1b" target="blank_"><code>mc_rbdyn::Robot::alpha()</code></a></li>
   <li>The observer will compute forward kinematics <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#ae46b693d4431e61db9f1d4a05f66dd5e" target="blank_"><code>mc_rbdyn::Robot::forwardKinematics()</code></a> and forward velocity <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#afd93342dd86da6803288346a3798d374" target="blank_"><code>mc_rbdyn::Robot::forwardVelocity()</code></a> to update the corresponding body positions and velocities (which may be required by subsequent observers).</li>
 </ul>
 

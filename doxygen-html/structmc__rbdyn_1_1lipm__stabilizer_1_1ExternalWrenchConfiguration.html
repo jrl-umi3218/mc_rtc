@@ -106,6 +106,8 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:abfe6e931e6f6f77dd2ca657c0d5e3840"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#abfe6e931e6f6f77dd2ca657c0d5e3840">modifyZMPErrD</a> = false</td></tr>
 <tr class="memdesc:abfe6e931e6f6f77dd2ca657c0d5e3840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify ZMP velocity depending on the error velocity of the external wrenches in target and measurement.  <a href="#abfe6e931e6f6f77dd2ca657c0d5e3840">More...</a><br /></td></tr>
 <tr class="separator:abfe6e931e6f6f77dd2ca657c0d5e3840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf774b10bdd24ff8788bb6fffa757719"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#adf774b10bdd24ff8788bb6fffa757719">excludeFromDCMBiasEst</a> = false</td></tr>
+<tr class="separator:adf774b10bdd24ff8788bb6fffa757719"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37cc2ccf9652f8868edf8d8ee1f13edc"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a37cc2ccf9652f8868edf8d8ee1f13edc">comOffsetErrCoMLimit</a> = 0.1</td></tr>
 <tr class="memdesc:a37cc2ccf9652f8868edf8d8ee1f13edc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Limit of CoM offset error handled by CoM modification.  <a href="#a37cc2ccf9652f8868edf8d8ee1f13edc">More...</a><br /></td></tr>
 <tr class="separator:a37cc2ccf9652f8868edf8d8ee1f13edc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,11 +130,14 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Parameters for the external wrenches. </p>
 <p>The external forces affect the two layers, i.e., pattern generation and stabilization control.</p>
-<p>For the pattern generation, if the external forces are not taken into account in the input target CoM, an offset is added by feedforward from the target external forces. This feature is enabled by setting addExpectedCoMOffset to true. For the stabilization control, the error between the target external forces and the measured external forces is compensated by the CoM strategy and the ZMP strategy. High-frequency errors are handled by the ZMP strategy, while low-frequency errors are handled by the CoM strategy. The CoM strategy is enabled when modifyCoMErr is set to true. The ZMP strategy is enabled when modifyZMPErr is set to true. Strictly speaking, the ZMP strategy also depends on the derivative of the external force error, and when modifyZMPErrD is true, the corresponding compensation is also enabled. However, the effect of the compensation related to the derivative is not dominant and is affected by the measured external force noise, so it is recommended to try with modifyZMPErrD false first. CommOffsetDerivatorTimeConstant is a time constant for calculating this derivative. The maximum amounts of modification for CoM strategy and ZMP strategy are comOffsetErrCoMLimit and comOffsetErrZMPLimit, respectively.</p>
+<p>For the pattern generation, if the external forces are not taken into account in the input target CoM, an offset is added by feedforward from the target external forces. This feature is enabled by setting addExpectedCoMOffset to true. For the stabilization control, the error between the target external forces and the measured external forces is compensated by the CoM strategy and the ZMP strategy. High-frequency errors are handled by the ZMP strategy, while low-frequency errors are handled by the CoM strategy. The CoM strategy is enabled when modifyCoMErr is set to true. The ZMP strategy is enabled when modifyZMPErr is set to true. Strictly speaking, the ZMP strategy also depends on the derivative of the external force error, and when modifyZMPErrD is true, the corresponding compensation is also enabled. However, the effect of the compensation related to the derivative is not dominant and is affected by the measured external force noise, so it is recommended to try with modifyZMPErrD false first.</p>
+<p>If there are additional biases and unknown external forces that are not predicted nor measured, the DCM bias estimator could be used. In that case, if one of addExpectedCoMOffset, modifyCoMErr or modifyZMPErr is true, it is highly recommended to set excludeFromDCMBiasEst to true. It will exclude the expected/measured external forces from the computation of the bias and prevent them to be twice compensated for.</p>
+<p>CommOffsetDerivatorTimeConstant is a time constant for calculating this derivative. The maximum amounts of modification for CoM strategy and ZMP strategy are comOffsetErrCoMLimit and comOffsetErrZMPLimit, respectively.</p>
 <p>The total measured external force is passed through the low-pass filter of the cutoff period exitWenchSumLowPassCutoffPeriod. Then, from the error between the target external forces and the measured external forces, the amounts of compensation for the CoM strategy and ZMP strategy are calculated using two low-pass filters. One is a low-pass filter of the cutoff period comOffsetLowPassCutoffPeriod (High-LPF), and the other is a low-pass filter of the cutoff period comOffsetLowPassCoMCutoffPeriod (Low-LPF). Make the comOffsetLowPassCoMCutoffPeriod larger than the comOffsetLowPassCutoffPeriod. The CoM strategy deals with the error components that pass through the High-LPF and pass through the Low-LPF. The ZMP strategy deals with the error components that pass the High-LPF but do NOT pass the Low-LPF.</p>
 <ul>
 <li>If you want the StabilizerTask to deal with external forces in a simple way (i.e., the pattern generator does not take external forces into account), then set addExpectedCoMOffset, modifyCoMErr, modifyZMPErr to true.</li>
 <li>modifyZMPErrD should theoretically be true, but it depends on the derivative of the measured external forces, so it becomes sensitive to the noises in the measurement noise.</li>
+<li>If you want to use the DCM bias estimator then if the pattern generator takes the forces into account or if one of addExpectedCoMOffset, modifyCoMErr or modifyZMPErr is true, set excludeFromDCMBiasEst to true.</li>
 <li>subtractMeasuredValue is a more experimental and the option inspired from <a href="https://github.com/stephane-caron/lipm_walking_controller/discussions/28">https://github.com/stephane-caron/lipm_walking_controller/discussions/28</a> Normally set to false. </li>
 </ul>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -280,6 +285,21 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Cutoff period for the low-pass filter of CoM offset. </p>
+
+</div>
+</div>
+<a id="adf774b10bdd24ff8788bb6fffa757719"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf774b10bdd24ff8788bb6fffa757719">&#9670;&nbsp;</a></span>excludeFromDCMBiasEst</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration::excludeFromDCMBiasEst = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Exclude external forces from DCM Bias estimation (should be used when the pg/stabilizer is actively compensating for those measured forces) </p>
 
 </div>
 </div>

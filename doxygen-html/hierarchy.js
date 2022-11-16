@@ -210,6 +210,7 @@ var hierarchy =
     [ "mc_control::fsm::Executor", "structmc__control_1_1fsm_1_1Executor.html", null ],
     [ "mc_filter::ExponentialMovingAverage< VectorT >", "structmc__filter_1_1ExponentialMovingAverage.html", null ],
     [ "mc_filter::ExponentialMovingAverage< Eigen::Vector3d >", "structmc__filter_1_1ExponentialMovingAverage.html", null ],
+    [ "mc_tasks::lipm_stabilizer::StabilizerTask::ExternalWrench", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html", null ],
     [ "false_type", null, [
       [ "mc_control::MCController::DeprecatedAnchorFrame< T >", "structmc__control_1_1MCController_1_1DeprecatedAnchorFrame.html", null ]
@@ -285,6 +286,7 @@ var hierarchy =
     [ "mc_trajectory::LinearInterpolation< Eigen::Vector6d >", "structmc__trajectory_1_1LinearInterpolation.html", null ],
     [ "mc_rtc::gui::LineConfig", "structmc__rtc_1_1gui_1_1LineConfig.html", null ],
     [ "mc_rtc::Loader", "structmc__rtc_1_1Loader.html", null ],
+    [ "mc_rbdyn::LoadRobotParameters", "structmc__rbdyn_1_1LoadRobotParameters.html", null ],
     [ "mc_rtc::Logger", "structmc__rtc_1_1Logger.html", null ],
     [ "mc_rtc::log::LogWriter< T >", "structmc__rtc_1_1log_1_1LogWriter.html", null ],
     [ "mc_filter::LowPass< T >", "structmc__filter_1_1LowPass.html", [
@@ -418,6 +420,9 @@ var hierarchy =
     [ "mc_rtc::gui::details::ReturnTypeImpl< GetT, is_getter >", "structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl.html", null ],
     [ "mc_rtc::gui::details::ReturnTypeImpl< GetT, false >", "structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl_3_01GetT_00_01false_01_4.html", null ],
     [ "mc_rbdyn::Robot", "structmc__rbdyn_1_1Robot.html", null ],
+    [ "mc_rbdyn::RobotConverter", "structmc__rbdyn_1_1RobotConverter.html", null ],
+    [ "mc_rbdyn::RobotConverterConfig", "structmc__rbdyn_1_1RobotConverterConfig.html", null ],
+    [ "mc_rbdyn::RobotData", "structmc__rbdyn_1_1RobotData.html", null ],
     [ "mc_rbdyn::RobotLoader", "structmc__rbdyn_1_1RobotLoader.html", null ],
     [ "mc_rbdyn::RobotModule", "structmc__rbdyn_1_1RobotModule.html", null ],
     [ "mc_solver::RobotMsg", "structmc__solver_1_1RobotMsg.html", null ],
@@ -467,10 +472,10 @@ var hierarchy =
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html", null ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
     ] ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
     ] ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],

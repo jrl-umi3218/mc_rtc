@@ -114,10 +114,10 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3867c9c55a9b154439b74f2f35eb1f7d"><td class="memItemLeft" align="right" valign="top">template Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a3867c9c55a9b154439b74f2f35eb1f7d">StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::target &gt;</a> (const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;) const</td></tr>
-<tr class="separator:a3867c9c55a9b154439b74f2f35eb1f7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7aa9f4851b07165e94068424b7c39bf"><td class="memItemLeft" align="right" valign="top">template Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#ae7aa9f4851b07165e94068424b7c39bf">StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::measured &gt;</a> (const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;) const</td></tr>
-<tr class="separator:ae7aa9f4851b07165e94068424b7c39bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac38a37625b74268c51a9ae8efa42b3d8"><td class="memItemLeft" align="right" valign="top">template void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#ac38a37625b74268c51a9ae8efa42b3d8">StabilizerTask::computeWrenchOffsetAndCoefficient&lt;&amp;StabilizerTask::ExternalWrench::target &gt;</a> (const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;robot, Eigen::Vector3d &amp;offset_gamma, double &amp;coef_kappa) const</td></tr>
+<tr class="separator:ac38a37625b74268c51a9ae8efa42b3d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdaf79a7c1b60d8b1c1aee6805951e0b"><td class="memItemLeft" align="right" valign="top">template void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#acdaf79a7c1b60d8b1c1aee6805951e0b">StabilizerTask::computeWrenchOffsetAndCoefficient&lt;&amp;StabilizerTask::ExternalWrench::measured &gt;</a> (const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;robot, Eigen::Vector3d &amp;offset_gamma, double &amp;coef_kappa) const</td></tr>
+<tr class="separator:acdaf79a7c1b60d8b1c1aee6805951e0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae21f6735cfe70bc1be33b8d4013434b3"><td class="memItemLeft" align="right" valign="top">template sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#ae21f6735cfe70bc1be33b8d4013434b3">StabilizerTask::computeExternalWrenchSum&lt;&amp;StabilizerTask::ExternalWrench::target &gt;</a> (const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;, const Eigen::Vector3d &amp;) const</td></tr>
 <tr class="separator:ae21f6735cfe70bc1be33b8d4013434b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d8b50c213771d3e5677471854ada3cd"><td class="memItemLeft" align="right" valign="top">template sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a0d8b50c213771d3e5677471854ada3cd">StabilizerTask::computeExternalWrenchSum&lt;&amp;StabilizerTask::ExternalWrench::measured &gt;</a> (const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;, const Eigen::Vector3d &amp;) const</td></tr>
@@ -237,42 +237,6 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ae7aa9f4851b07165e94068424b7c39bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7aa9f4851b07165e94068424b7c39bf">&#9670;&nbsp;</a></span>StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::measured >()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">template Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::measured &gt; </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3867c9c55a9b154439b74f2f35eb1f7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3867c9c55a9b154439b74f2f35eb1f7d">&#9670;&nbsp;</a></span>StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::target >()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">template Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::target &gt; </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a0d8b50c213771d3e5677471854ada3cd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0d8b50c213771d3e5677471854ada3cd">&#9670;&nbsp;</a></span>StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::measured >()</h2>
 
@@ -280,7 +244,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">template sva::ForceVecd mc_tasks::lipm_stabilizer::StabilizerTask::computeExternalWrenchSum&lt;&amp;StabilizerTask::ExternalWrench::measured &gt; </td>
+          <td class="memname">template sva::ForceVecd mc_tasks::lipm_stabilizer::StabilizerTask::computeExternalWrenchSum&lt;&amp;<a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html#a82076f5b90cd1d001fa11fe63f0e2ebb">StabilizerTask::ExternalWrench::measured</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
           <td class="paramname">, </td>
@@ -308,7 +272,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">template sva::ForceVecd mc_tasks::lipm_stabilizer::StabilizerTask::computeExternalWrenchSum&lt;&amp;StabilizerTask::ExternalWrench::target &gt; </td>
+          <td class="memname">template sva::ForceVecd mc_tasks::lipm_stabilizer::StabilizerTask::computeExternalWrenchSum&lt;&amp;<a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html#ae9d03ec70b391be76eff714f09c3d9be">StabilizerTask::ExternalWrench::target</a> &gt; </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
           <td class="paramname">, </td>
@@ -318,6 +282,74 @@ Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
           <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acdaf79a7c1b60d8b1c1aee6805951e0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdaf79a7c1b60d8b1c1aee6805951e0b">&#9670;&nbsp;</a></span>StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::measured >()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">template void mc_tasks::lipm_stabilizer::StabilizerTask::computeWrenchOffsetAndCoefficient&lt;&amp;<a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html#a82076f5b90cd1d001fa11fe63f0e2ebb">StabilizerTask::ExternalWrench::measured</a> &gt; </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
+          <td class="paramname"><em>robot</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>offset_gamma</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>coef_kappa</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac38a37625b74268c51a9ae8efa42b3d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac38a37625b74268c51a9ae8efa42b3d8">&#9670;&nbsp;</a></span>StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::target >()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">template void mc_tasks::lipm_stabilizer::StabilizerTask::computeWrenchOffsetAndCoefficient&lt;&amp;<a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html#ae9d03ec70b391be76eff714f09c3d9be">StabilizerTask::ExternalWrench::target</a> &gt; </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
+          <td class="paramname"><em>robot</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>offset_gamma</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>coef_kappa</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

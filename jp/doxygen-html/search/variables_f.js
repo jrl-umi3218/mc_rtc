@@ -21,6 +21,8 @@ var searchData=
   ['out_5fpurple',['OUT_PURPLE',['../namespacemc__rtc.html#aeb1d99e566cb5c454074579fcfa712f4',1,'mc_rtc']]],
   ['out_5fred',['OUT_RED',['../namespacemc__rtc.html#a9003469324d75c8934d51654d98ef862',1,'mc_rtc']]],
   ['outputcrit_5f',['outputCrit_',['../structmc__control_1_1fsm_1_1MetaTasksState.html#a15385e3dba9c3a9ceacf9aa32ee4d0b5',1,'mc_control::fsm::MetaTasksState']]],
+  ['outputrealrobots_5f',['outputRealRobots_',['../structmc__control_1_1MCController.html#a389be3c7a5ded058156621b73cb240a3',1,'mc_control::MCController']]],
+  ['outputrobots_5f',['outputRobots_',['../structmc__control_1_1MCController.html#aacbfcf3ecd0fc3aeec5cc4b9611e3324',1,'mc_control::MCController']]],
   ['outputstates_5f',['outputStates_',['../structmc__control_1_1fsm_1_1ParallelState.html#a9ce6f4335845118f747a356c6e9ca289',1,'mc_control::fsm::ParallelState']]],
   ['overcommandlimit',['overCommandLimit',['../structmc__control_1_1Gripper.html#aff69bd84c7afd52a4633b5dd49d70170',1,'mc_control::Gripper']]],
   ['overcommandlimititer',['overCommandLimitIter',['../structmc__control_1_1Gripper.html#acd2dade357fca9fa8f2261a8f29fc6b7',1,'mc_control::Gripper']]],

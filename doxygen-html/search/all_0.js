@@ -3,6 +3,7 @@ var searchData=
   ['_5faccelerationbounds',['_accelerationBounds',['../structmc__rbdyn_1_1RobotModule.html#a392097f1562229e352b6079edd9e2941',1,'mc_rbdyn::RobotModule']]],
   ['_5fbodysensors',['_bodySensors',['../structmc__rbdyn_1_1RobotModule.html#a850abf7b9eb7e6ef1f3ca70fc495c6e4',1,'mc_rbdyn::RobotModule']]],
   ['_5fbounds',['_bounds',['../structmc__rbdyn_1_1RobotModule.html#af19dd43ad8642aabc8c406e0972c5d65',1,'mc_rbdyn::RobotModule']]],
+  ['_5fcanonicalparameters',['_canonicalParameters',['../structmc__rbdyn_1_1RobotModule.html#a8651177a3f5ceeb464f6b5e116ecb4c3',1,'mc_rbdyn::RobotModule']]],
   ['_5fcollision',['_collision',['../structmc__rbdyn_1_1RobotModule.html#ab30a1f088ce9b008c0b619185554d751',1,'mc_rbdyn::RobotModule']]],
   ['_5fcollisionobjects',['_collisionObjects',['../structmc__rbdyn_1_1RobotModule.html#a97cc4ac9b4bfbf45c36e4407e836505c',1,'mc_rbdyn::RobotModule']]],
   ['_5fcollisiontransforms',['_collisionTransforms',['../structmc__rbdyn_1_1RobotModule.html#a57b63a2f82b40741398b3a167b43592c',1,'mc_rbdyn::RobotModule']]],

@@ -169,6 +169,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a28b00d3621296be062c8545316171a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8361592b3630831c0cb57d8bb86afceb"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a8361592b3630831c0cb57d8bb86afceb">parameters</a> () const</td></tr>
 <tr class="separator:a8361592b3630831c0cb57d8bb86afceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9bb0c4df2675a03c1139f460c5d3989"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#aa9bb0c4df2675a03c1139f460c5d3989">canonicalParameters</a> () const</td></tr>
+<tr class="separator:aa9bb0c4df2675a03c1139f460c5d3989"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacf9d200189fd184ab6fe0b88cf16fdb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#aacf9d200189fd184ab6fe0b88cf16fdb">real_urdf</a> () const</td></tr>
 <tr class="separator:aacf9d200189fd184ab6fe0b88cf16fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bbfe1ae62d9e98aa1bbbc1c518623f4"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1DevicePtrVector.html">DevicePtrVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a3bbfe1ae62d9e98aa1bbbc1c518623f4">devices</a> () const</td></tr>
@@ -178,6 +180,10 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:a16418afe9c239311f7ff25cc380ae0c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1RobotConverterConfig.html">RobotConverterConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a16418afe9c239311f7ff25cc380ae0c5">controlToCanonicalConfig</a></td></tr>
+<tr class="separator:a16418afe9c239311f7ff25cc380ae0c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f36485a023d3ba5e4bc09206851f3bb"><td class="memItemLeft" align="right" valign="top">std::function&lt; void(const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;control, <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;canonical)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a0f36485a023d3ba5e4bc09206851f3bb">controlToCanonicalPostProcess</a></td></tr>
+<tr class="separator:a0f36485a023d3ba5e4bc09206851f3bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5de4bf236d1fa2f107fc27971009e979"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a5de4bf236d1fa2f107fc27971009e979">path</a></td></tr>
 <tr class="separator:a5de4bf236d1fa2f107fc27971009e979"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad888b6f335ade03b6628633d4a446bc9"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#ad888b6f335ade03b6628633d4a446bc9">name</a></td></tr>
@@ -242,6 +248,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a0b4dd720e3b699b37947c3453a93e126"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f8cfd4ca7e7772f68266003e7b8fc3c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a0f8cfd4ca7e7772f68266003e7b8fc3c">_parameters</a></td></tr>
 <tr class="separator:a0f8cfd4ca7e7772f68266003e7b8fc3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8651177a3f5ceeb464f6b5e116ecb4c3"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a8651177a3f5ceeb464f6b5e116ecb4c3">_canonicalParameters</a></td></tr>
+<tr class="separator:a8651177a3f5ceeb464f6b5e116ecb4c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7da8429458a11c340c168aa0eade6694"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a7da8429458a11c340c168aa0eade6694">_lipmStabilizerConfig</a></td></tr>
 <tr class="separator:a7da8429458a11c340c168aa0eade6694"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a581c9d2efa5a52e3850b8858ac0b58c4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a581c9d2efa5a52e3850b8858ac0b58c4">_real_urdf</a></td></tr>
@@ -575,6 +583,32 @@ Public Attributes</h2></td></tr>
 <p>Generate correct bounds from URDF bounds</p>
 <p>URDF outputs bounds in {lower, upper, velocity, torque} forms</p>
 <p>This function set _bounds to: {lower, upper, -velocity, velocity, -torque, torque} </p>
+
+</div>
+</div>
+<a id="aa9bb0c4df2675a03c1139f460c5d3989"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9bb0c4df2675a03c1139f460c5d3989">&#9670;&nbsp;</a></span>canonicalParameters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;std::string&gt;&amp; mc_rbdyn::RobotModule::canonicalParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the list of parameters to get a <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> that is a canonical representation of this module </p>
 
 </div>
 </div>
@@ -1337,6 +1371,21 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a8651177a3f5ceeb464f6b5e116ecb4c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8651177a3f5ceeb464f6b5e116ecb4c3">&#9670;&nbsp;</a></span>_canonicalParameters</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; mc_rbdyn::RobotModule::_canonicalParameters</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structmc__rbdyn_1_1RobotModule.html#aa9bb0c4df2675a03c1139f460c5d3989">canonicalParameters()</a> </dd></dl>
+
+</div>
+</div>
 <a id="ab30a1f088ce9b008c0b619185554d751"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab30a1f088ce9b008c0b619185554d751">&#9670;&nbsp;</a></span>_collision</h2>
 
@@ -1725,6 +1774,41 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Path to the robot's calib folder </p>
 
+</div>
+</div>
+<a id="a16418afe9c239311f7ff25cc380ae0c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16418afe9c239311f7ff25cc380ae0c5">&#9670;&nbsp;</a></span>controlToCanonicalConfig</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rbdyn_1_1RobotConverterConfig.html">RobotConverterConfig</a> mc_rbdyn::RobotModule::controlToCanonicalConfig</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the configuration for the control to canonical conversion</p>
+<p>The default configuration:</p><ul>
+<li>copies the common configuration values from the control model to the canonical model</li>
+<li>copies the initial encoders value into the canonical model for other joints</li>
+<li>enforce mimic relations</li>
+<li>copy the world pose of the control model to the canonical model </li>
+</ul>
+
+</div>
+</div>
+<a id="a0f36485a023d3ba5e4bc09206851f3bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f36485a023d3ba5e4bc09206851f3bb">&#9670;&nbsp;</a></span>controlToCanonicalPostProcess</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::function&lt;void(const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp; control, <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp; canonical)&gt; mc_rbdyn::RobotModule::controlToCanonicalPostProcess</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">      [](<span class="keyword">const</span> <a class="code" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;, <a class="code" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;) {}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="ab4acadd6d4c3d607b929be70f3ba94e5"></a>

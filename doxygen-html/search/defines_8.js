@@ -1,6 +1,8 @@
 var searchData=
 [
   ['make_5fdata_5finput_5fhelper',['MAKE_DATA_INPUT_HELPER',['../Form_8h.html#a062345796d2fda83f914c01ae308ae33',1,'Form.h']]],
+  ['make_5fload_5frobot_5fparameter_5fsetter',['MAKE_LOAD_ROBOT_PARAMETER_SETTER',['../mc__rbdyn_2Robot_8h.html#ae0f739acfdd73fed13231f4d3314bc7d',1,'Robot.h']]],
+  ['make_5frobots_5faccessor',['MAKE_ROBOTS_ACCESSOR',['../mc__global__controller_8h.html#aaf0a11741b6fb186ec99a9d2616dbf1a',1,'mc_global_controller.h']]],
   ['mc_5fcontrol_5fclient_5fdllapi',['MC_CONTROL_CLIENT_DLLAPI',['../client__api_8h.html#ad7a20267075ce3dd99312af104b78af8',1,'client_api.h']]],
   ['mc_5fcontrol_5fclient_5fdllexport',['MC_CONTROL_CLIENT_DLLEXPORT',['../client__api_8h.html#a135d76578fe99739b25aeb9f883b6303',1,'client_api.h']]],
   ['mc_5fcontrol_5fclient_5fdllimport',['MC_CONTROL_CLIENT_DLLIMPORT',['../client__api_8h.html#ab2b2007b5447424d69ba1ba5554910d5',1,'client_api.h']]],

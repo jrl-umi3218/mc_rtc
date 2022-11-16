@@ -118,9 +118,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af8d2812249f9a609ed32cb1a43ac45fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1Gripper.html#af8d2812249f9a609ed32cb1a43ac45fc">reset</a> (const <a class="el" href="structmc__control_1_1Gripper.html">Gripper</a> &amp;gripper)</td></tr>
 <tr class="memdesc:af8d2812249f9a609ed32cb1a43ac45fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset from another gripper.  <a href="#af8d2812249f9a609ed32cb1a43ac45fc">More...</a><br /></td></tr>
 <tr class="separator:af8d2812249f9a609ed32cb1a43ac45fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6a69ed1632b542cf0c2c62d9a201aa3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1Gripper.html#af6a69ed1632b542cf0c2c62d9a201aa3">run</a> (double timeStep, <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;robot, std::map&lt; std::string, std::vector&lt; double &gt;&gt; &amp;qOut)</td></tr>
-<tr class="memdesc:af6a69ed1632b542cf0c2c62d9a201aa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run one iteration of control.  <a href="#af6a69ed1632b542cf0c2c62d9a201aa3">More...</a><br /></td></tr>
-<tr class="separator:af6a69ed1632b542cf0c2c62d9a201aa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fc1ebc4fa711f899a3ae47e75cbef45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1Gripper.html#a9fc1ebc4fa711f899a3ae47e75cbef45">run</a> (double timeStep, <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;robot, <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;real)</td></tr>
+<tr class="memdesc:a9fc1ebc4fa711f899a3ae47e75cbef45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run one iteration of control.  <a href="#a9fc1ebc4fa711f899a3ae47e75cbef45">More...</a><br /></td></tr>
+<tr class="separator:a9fc1ebc4fa711f899a3ae47e75cbef45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e92af3c043c39987da91fb4f53d708e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1Gripper.html#a1e92af3c043c39987da91fb4f53d708e">setTargetQ</a> (const std::vector&lt; double &gt; &amp;<a class="el" href="structmc__control_1_1Gripper.html#a95690e9746ea4f736d5cae7372e20f01">targetQ</a>)</td></tr>
 <tr class="memdesc:a1e92af3c043c39987da91fb4f53d708e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the target configuration of the active joints involved in the gripper.  <a href="#a1e92af3c043c39987da91fb4f53d708e">More...</a><br /></td></tr>
 <tr class="separator:a1e92af3c043c39987da91fb4f53d708e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -185,6 +185,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7f7b4fa1ac249a3f4f5682ec32064dc9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1Gripper.html#a7f7b4fa1ac249a3f4f5682ec32064dc9">is_metric</a> () const noexcept</td></tr>
 <tr class="memdesc:a7f7b4fa1ac249a3f4f5682ec32064dc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if a gripper is metric, i.e. all active joints are prismatic rather than revolute.  <a href="#a7f7b4fa1ac249a3f4f5682ec32064dc9">More...</a><br /></td></tr>
 <tr class="separator:a7f7b4fa1ac249a3f4f5682ec32064dc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3a5bd62e0af52b3b1d61015ed83be5a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1Gripper.html#aa3a5bd62e0af52b3b1d61015ed83be5a">reversed</a> () const noexcept</td></tr>
+<tr class="memdesc:aa3a5bd62e0af52b3b1d61015ed83be5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">When true the gripper is considered "open" when the joints' values are minimal.  <a href="#aa3a5bd62e0af52b3b1d61015ed83be5a">More...</a><br /></td></tr>
+<tr class="separator:aa3a5bd62e0af52b3b1d61015ed83be5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-types"></a>
 Protected Types</h2></td></tr>
@@ -265,8 +268,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:aff69bd84c7afd52a4633b5dd49d70170"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd2dade357fca9fa8f2261a8f29fc6b7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; unsigned int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1Gripper.html#acd2dade357fca9fa8f2261a8f29fc6b7">overCommandLimitIter</a></td></tr>
 <tr class="separator:acd2dade357fca9fa8f2261a8f29fc6b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a77897e0cadfd9a41ec5a3500f77140"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1Gripper.html#a7a77897e0cadfd9a41ec5a3500f77140">reversed</a> = false</td></tr>
-<tr class="separator:a7a77897e0cadfd9a41ec5a3500f77140"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dc21cebf510e761cd4e4c9e37d2a24c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1Gripper.html#a1dc21cebf510e761cd4e4c9e37d2a24c">reversed_</a> = false</td></tr>
+<tr class="separator:a1dc21cebf510e761cd4e4c9e37d2a24c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A robot's gripper reprensentation. </p>
@@ -1181,8 +1184,35 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="af6a69ed1632b542cf0c2c62d9a201aa3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6a69ed1632b542cf0c2c62d9a201aa3">&#9670;&nbsp;</a></span>run()</h2>
+<a id="aa3a5bd62e0af52b3b1d61015ed83be5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3a5bd62e0af52b3b1d61015ed83be5a">&#9670;&nbsp;</a></span>reversed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_control::Gripper::reversed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>When true the gripper is considered "open" when the joints' values are minimal. </p>
+
+</div>
+</div>
+<a id="a9fc1ebc4fa711f899a3ae47e75cbef45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fc1ebc4fa711f899a3ae47e75cbef45">&#9670;&nbsp;</a></span>run()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1202,8 +1232,8 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::map&lt; std::string, std::vector&lt; double &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>qOut</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
+          <td class="paramname"><em>real</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1217,7 +1247,7 @@ Protected Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">robot</td><td>Robot for which this gripper control is running</td></tr>
-    <tr><td class="paramname">qOut</td><td>Output of the gripper state</td></tr>
+    <tr><td class="paramname">real</td><td>Real robot for which this gripper control is running</td></tr>
   </table>
   </dd>
 </dl>
@@ -1965,8 +1995,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a7a77897e0cadfd9a41ec5a3500f77140"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a77897e0cadfd9a41ec5a3500f77140">&#9670;&nbsp;</a></span>reversed</h2>
+<a id="a1dc21cebf510e761cd4e4c9e37d2a24c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1dc21cebf510e761cd4e4c9e37d2a24c">&#9670;&nbsp;</a></span>reversed_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1975,7 +2005,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool mc_control::Gripper::reversed = false</td>
+          <td class="memname">bool mc_control::Gripper::reversed_ = false</td>
         </tr>
       </table>
   </td>

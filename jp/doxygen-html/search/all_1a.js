@@ -10,6 +10,8 @@ var searchData=
   ['zmpccconfiguration',['ZMPCCConfiguration',['../structmc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration.html',1,'mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration'],['../structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#a1949eb437a14ae9ceb04a1ed238fa998',1,'mc_tasks::lipm_stabilizer::ZMPCC::ZMPCCConfiguration()'],['../namespacemc__tasks_1_1lipm__stabilizer.html#a61ba26bc4aeec5031be001df091b4b1a',1,'mc_tasks::lipm_stabilizer::ZMPCCConfiguration()']]],
   ['zmpccconfiguration_2eh',['ZMPCCConfiguration.h',['../ZMPCCConfiguration_8h.html',1,'']]],
   ['zmpcconlyds_5f',['zmpccOnlyDS_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aafe66416fe947aab7f6de7cd369df88f',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
+  ['zmpcoefmeasured_5f',['zmpCoefMeasured_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a9b25af3fa9fd413a3d1060e601ca92b9',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
+  ['zmpcoeftarget_5f',['zmpCoefTarget_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a78d13362383ec74a8c60e18c6b2a58f6',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['zmpd',['zmpd',['../structmc__planning_1_1Pendulum.html#a2b6c323003ef905cb0655c08a09f77b0',1,'mc_planning::Pendulum']]],
   ['zmpd_5f',['zmpd_',['../structmc__planning_1_1Pendulum.html#ad8c91f4b7e9ce0496255708e646771a0',1,'mc_planning::Pendulum']]],
   ['zmpdgain',['zmpdGain',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a1c98bf56a034264da108e725e6256a5b',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],

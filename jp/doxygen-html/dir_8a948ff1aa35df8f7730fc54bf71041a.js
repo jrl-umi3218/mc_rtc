@@ -26,10 +26,7 @@ var dir_8a948ff1aa35df8f7730fc54bf71041a =
     ] ],
     [ "GlobalPluginMacros.h", "GlobalPluginMacros_8h.html", "GlobalPluginMacros_8h" ],
     [ "mc_controller.h", "mc__controller_8h.html", "mc__controller_8h" ],
-    [ "mc_global_controller.h", "mc__global__controller_8h.html", [
-      [ "MCGlobalController", "structmc__control_1_1MCGlobalController.html", "structmc__control_1_1MCGlobalController" ],
-      [ "GlobalConfiguration", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration" ]
-    ] ],
+    [ "mc_global_controller.h", "mc__global__controller_8h.html", "mc__global__controller_8h" ],
     [ "mc_python_controller.h", "mc__python__controller_8h.html", [
       [ "PythonRWCallback", "structmc__control_1_1PythonRWCallback.html", "structmc__control_1_1PythonRWCallback" ],
       [ "MCPythonController", "structmc__control_1_1MCPythonController.html", "structmc__control_1_1MCPythonController" ]

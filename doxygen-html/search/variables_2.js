@@ -12,7 +12,10 @@ var searchData=
   ['blue',['Blue',['../structmc__rtc_1_1gui_1_1Color.html#a5a61a49e6fc3a4164027706e24071ae3',1,'mc_rtc::gui::Color']]],
   ['body1',['body1',['../structmc__rbdyn_1_1Collision.html#a169addbd06a09743b06287121884f027',1,'mc_rbdyn::Collision']]],
   ['body2',['body2',['../structmc__rbdyn_1_1Collision.html#afde353de6419a4e248eec0851f664968',1,'mc_rbdyn::Collision']]],
+  ['bodybodysensors',['bodyBodySensors',['../structmc__rbdyn_1_1RobotData.html#aaea88c1f821415cf1d63e20fdef5f865',1,'mc_rbdyn::RobotData']]],
   ['bodyid',['bodyId',['../structmc__tasks_1_1AddRemoveContactTask.html#a8846f1a33c20ed70bf425b49027aba12',1,'mc_tasks::AddRemoveContactTask']]],
   ['bodymbcidx_5f',['bodyMbcIdx_',['../structmc__rbdyn_1_1RobotFrame.html#adee19234fa1267ab00958cbb30b4bd1f',1,'mc_rbdyn::RobotFrame']]],
+  ['bodysensors',['bodySensors',['../structmc__rbdyn_1_1RobotData.html#a2168b5d056d55ed259dca4795d9f4064',1,'mc_rbdyn::RobotData']]],
+  ['bodysensorsindex',['bodySensorsIndex',['../structmc__rbdyn_1_1RobotData.html#a67dc85b79dc89817f8522617b3fd0a3a',1,'mc_rbdyn::RobotData']]],
   ['bspline',['bspline',['../structmc__tasks_1_1BSplineTrajectoryTask.html#ac881b5b505b63c5e89bec2e598c767e0',1,'mc_tasks::BSplineTrajectoryTask::bspline()'],['../structmc__tasks_1_1ExactCubicTrajectoryTask.html#a825212a1055ad43955b8284562905f13',1,'mc_tasks::ExactCubicTrajectoryTask::bspline()']]]
 ];

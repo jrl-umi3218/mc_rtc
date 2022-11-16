@@ -72,12 +72,14 @@ $(document).ready(function(){initNavTree('mc__rbdyn_2Robot_8h.html','');});
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Robot.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="RobotFrame_8h_source.html">mc_rbdyn/RobotFrame.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="RobotData_8h_source.html">mc_rbdyn/RobotData.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="RobotFrame_8h_source.html">mc_rbdyn/RobotFrame.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="RobotModule_8h_source.html">mc_rbdyn/RobotModule.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="Surface_8h_source.html">mc_rbdyn/Surface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="generic__gripper_8h_source.html">mc_control/generic_gripper.h</a>&gt;</code><br />
@@ -85,6 +87,7 @@ $(document).ready(function(){initNavTree('mc__rbdyn_2Robot_8h.html','');});
 <code>#include &lt;RBDyn/MultiBodyConfig.h&gt;</code><br />
 <code>#include &lt;RBDyn/MultiBodyGraph.h&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;optional&gt;</code><br />
 <code>#include &lt;unordered_map&gt;</code><br />
 <code>#include &lt;mc_rbdyn/Robot.hpp&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -106,6 +109,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1LoadRobotParameters.html">mc_rbdyn::LoadRobotParameters</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot_1_1NewRobotToken.html">mc_rbdyn::Robot::NewRobotToken</a></td></tr>
@@ -115,6 +120,11 @@ Classes</h2></td></tr>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacemc__rbdyn"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html">mc_rbdyn</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ae0f739acfdd73fed13231f4d3314bc7d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mc__rbdyn_2Robot_8h.html#ae0f739acfdd73fed13231f4d3314bc7d">MAKE_LOAD_ROBOT_PARAMETER_SETTER</a>(T,  NAME)</td></tr>
+<tr class="separator:ae0f739acfdd73fed13231f4d3314bc7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -128,6 +138,35 @@ Functions</h2></td></tr>
 <tr class="memdesc:gaf9b711ec2baa5684b8f422d740464b5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to obtain the robot index from configuration.  <a href="group__robotFromConfig.html#gaf9b711ec2baa5684b8f422d740464b5f">More...</a><br /></td></tr>
 <tr class="separator:gaf9b711ec2baa5684b8f422d740464b5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ae0f739acfdd73fed13231f4d3314bc7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0f739acfdd73fed13231f4d3314bc7d">&#9670;&nbsp;</a></span>MAKE_LOAD_ROBOT_PARAMETER_SETTER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAKE_LOAD_ROBOT_PARAMETER_SETTER</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">T, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">NAME&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">inline</span> LoadRobotParameters &amp; NAME(T value) noexcept \</div><div class="line">  {                                                   \</div><div class="line">    NAME##_ = value;                                  \</div><div class="line">    return *<span class="keyword">this</span>;                                     \</div><div class="line">  }</div></div><!-- fragment -->
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->

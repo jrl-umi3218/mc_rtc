@@ -116,7 +116,49 @@ Classes</h2></td></tr>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacemc__control"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__control.html">mc_control</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Accessors to the robots:</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><ul>
+<li>robots contains the output of the controller pipeline, that is: controller -&gt; converter -&gt; grippers -&gt; module.postprocess -&gt; plugins</li>
+<li>realRobots contains the output of the observer pipeline, that is: observer pipeline -&gt; converter -&gt; module.postprocess -&gt; plugins </li>
+</ul>
+</div></td></tr>
+<tr class="memitem:aaf0a11741b6fb186ec99a9d2616dbf1a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mc__global__controller_8h.html#aaf0a11741b6fb186ec99a9d2616dbf1a">MAKE_ROBOTS_ACCESSOR</a>(NAME,  PTR)</td></tr>
+<tr class="separator:aaf0a11741b6fb186ec99a9d2616dbf1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aaf0a11741b6fb186ec99a9d2616dbf1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf0a11741b6fb186ec99a9d2616dbf1a">&#9670;&nbsp;</a></span>MAKE_ROBOTS_ACCESSOR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAKE_ROBOTS_ACCESSOR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">NAME, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">PTR&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">inline</span> <a class="code" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp; NAME##s() noexcept                        \</div><div class="line">  {                                                                   \</div><div class="line">    return *controller().PTR##s_;                                     \</div><div class="line">  }                                                                   \</div><div class="line">  inline <span class="keyword">const</span> <a class="code" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp; NAME##s() const noexcept            \</div><div class="line">  {                                                                   \</div><div class="line">    return *controller().PTR##s_;                                     \</div><div class="line">  }                                                                   \</div><div class="line">  inline <a class="code" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp; NAME() noexcept                            \</div><div class="line">  {                                                                   \</div><div class="line">    return NAME##s().robot();                                         \</div><div class="line">  }                                                                   \</div><div class="line">  inline <span class="keyword">const</span> <a class="code" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp; NAME() const noexcept                \</div><div class="line">  {                                                                   \</div><div class="line">    return NAME##s().robot();                                         \</div><div class="line">  }                                                                   \</div><div class="line">  inline <a class="code" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp; NAME(<span class="keyword">const</span> std::string &amp; name)             \</div><div class="line">  {                                                                   \</div><div class="line">    return NAME##s().robot(name);                                     \</div><div class="line">  }                                                                   \</div><div class="line">  inline <span class="keyword">const</span> <a class="code" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp; NAME(<span class="keyword">const</span> std::string &amp; name) <span class="keyword">const</span> \</div><div class="line">  {                                                                   \</div><div class="line">    return NAME##s().robot(name);                                     \</div><div class="line">  }</div><div class="ttc" id="structmc__rbdyn_1_1Robots_html"><div class="ttname"><a href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a></div><div class="ttdef"><b>Definition:</b> Robots.h:15</div></div>
+<div class="ttc" id="structmc__rbdyn_1_1Robot_html"><div class="ttname"><a href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a></div><div class="ttdef"><b>Definition:</b> Robot.h:60</div></div>
+</div><!-- fragment -->
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->

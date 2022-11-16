@@ -362,8 +362,8 @@
 
 <p>このフレームワークでは、ロボットを表現するための2つのロボットインスタンスのセットが用意されています。</p>
 <ul>
-  <li><a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCController#adc557ecb7d64eb2d8be551f7cf6678cd" target="blank_"><code>mc_control::MCController::robots()</code></a>は、ロボットの制御状態（目標状態）を表します。</li>
-  <li><a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCController#a1443aed08b26c319294465b1caa1e221" target="blank_"><code>mc_control::MCController::realRobots()</code></a>は、ロボットの実際の状態を表します。これらのロボットの状態をどのように推定するかは、観測器パイプラインで定義する必要があります。</li>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCController#ae45b98b34b9c614d9eb3aaa86371f53d" target="blank_"><code>mc_control::MCController::robots()</code></a>は、ロボットの制御状態（目標状態）を表します。</li>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCController#a0300e29b876797fe06dd7c16c971905d" target="blank_"><code>mc_control::MCController::realRobots()</code></a>は、ロボットの実際の状態を表します。これらのロボットの状態をどのように推定するかは、観測器パイプラインで定義する必要があります。</li>
 </ul>
 
 <h1 id="観測器パイプラインを設定する">観測器パイプラインを設定する</h1>
@@ -462,8 +462,8 @@
 <p>エンコーダー観測器を使用すると、駆動されているすべての関節の位置と速度を取得できます。</p>
 
 <ul>
-  <li>関節の値は、センサーの値<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#a1191c63affb21cb0e15698a48ee83355" target="blank_"><code>mc_rbdyn::Robot::encoderValues()</code></a>として取得するか、ロボットの他の関節状態<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#a485eb8aa4ceb0a0a5010844d16e47f95" target="blank_"><code>mc_rbdyn::Robot::q()</code></a>を使用して取得できます。</li>
-  <li>関節の速度は、関節速度センサーの値<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#a1191c63affb21cb0e15698a48ee83355" target="blank_"><code>mc_rbdyn::Robot::encoderValues()</code></a>として取得するか、（推定された）位置の有限差分による推定値として取得するか、ロボットの他の関節速度<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#a5773f91f2a9d0eb5cb4b6a0943551a1b" target="blank_"><code>mc_rbdyn::Robot::alpha()</code></a>を使用して取得できます。</li>
+  <li>関節の値は、センサーの値<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#a1da8134deea10a32f7d35fc381649606" target="blank_"><code>mc_rbdyn::Robot::encoderValues()</code></a>として取得するか、ロボットの他の関節状態<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#a485eb8aa4ceb0a0a5010844d16e47f95" target="blank_"><code>mc_rbdyn::Robot::q()</code></a>を使用して取得できます。</li>
+  <li>関節の速度は、関節速度センサーの値<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#a1da8134deea10a32f7d35fc381649606" target="blank_"><code>mc_rbdyn::Robot::encoderValues()</code></a>として取得するか、（推定された）位置の有限差分による推定値として取得するか、ロボットの他の関節速度<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#a5773f91f2a9d0eb5cb4b6a0943551a1b" target="blank_"><code>mc_rbdyn::Robot::alpha()</code></a>を使用して取得できます。</li>
   <li>この観測器では、フォワードキネマティクス<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#ae46b693d4431e61db9f1d4a05f66dd5e" target="blank_"><code>mc_rbdyn::Robot::forwardKinematics()</code></a>とフォワード速度<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#afd93342dd86da6803288346a3798d374" target="blank_"><code>mc_rbdyn::Robot::forwardVelocity()</code></a>が計算され、該当するボディの位置と速度が更新されます（この位置と速度は、後続の観測器で使用されます）。</li>
 </ul>
 

@@ -53,5 +53,6 @@ var searchData=
   ['supportmax_5f',['supportMax_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae1133e256a909367f839ecef2528c7be',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['supportmin_5f',['supportMin_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a37b5b7e6f2acd693711f6b1e8c7310db',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['supportpolygons_5f',['supportPolygons_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad55b59e574799dcf11bc7598b8a6cea9',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
-  ['supportsurface_5f',['supportSurface_',['../structmc__control_1_1fsm_1_1SlidingFootContactState.html#a6b5b93da636466144e8c964dee5400f4',1,'mc_control::fsm::SlidingFootContactState']]]
+  ['supportsurface_5f',['supportSurface_',['../structmc__control_1_1fsm_1_1SlidingFootContactState.html#a6b5b93da636466144e8c964dee5400f4',1,'mc_control::fsm::SlidingFootContactState']]],
+  ['surfacename',['surfaceName',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html#a1c50fb7bcd1942de3e2dcec516a2fcfe',1,'mc_tasks::lipm_stabilizer::StabilizerTask::ExternalWrench']]]
 ];

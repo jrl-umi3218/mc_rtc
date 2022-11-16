@@ -111,7 +111,6 @@ Public Attributes</h2></td></tr>
 <tr class="memdesc:a41a4ad61ac746f632ece2ef93aa59b09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the DCM filter is enabled.  <a href="#a41a4ad61ac746f632ece2ef93aa59b09">More...</a><br /></td></tr>
 <tr class="separator:a41a4ad61ac746f632ece2ef93aa59b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a447ab7af04c97c1b2ee54db7ec0b3835"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a447ab7af04c97c1b2ee54db7ec0b3835">correctCoMPos</a> = false</td></tr>
-<tr class="memdesc:a447ab7af04c97c1b2ee54db7ec0b3835"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the absolution CoM position gets unbiased.  <a href="#a447ab7af04c97c1b2ee54db7ec0b3835">More...</a><br /></td></tr>
 <tr class="separator:a447ab7af04c97c1b2ee54db7ec0b3835"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -228,8 +227,7 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Whether the absolution CoM position gets unbiased. </p>
+<p>Whether the absolute CoM position gets unbiased (useful when the disturbance comes from a bias on the CoM, for example modeling errors or carrying an object, but it would be wrong if the disturbance comes from an unexpected contact, the estimator cannot distinguish between them) </p>
 
 </div>
 </div>
