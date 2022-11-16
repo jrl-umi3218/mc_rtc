@@ -424,7 +424,7 @@ Robot::Robot(NewRobotToken,
       {
         if(params.warn_on_missing_files_)
         {
-          mc_rtc::log::warning("No calibration file {} found for force sensor {}", calib_file, fs.name());
+          mc_rtc::log::warning("No calibration file {} found for force sensor {}", calib_file.string(), fs.name());
         }
       }
       else
