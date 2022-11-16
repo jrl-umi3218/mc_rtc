@@ -87,16 +87,6 @@ mc_rbdyn::BodySensor make_ref()
   return {"sensor", "parent", random_pt()};
 }
 
-namespace mc_rbdyn
-{
-
-bool operator==(const mc_rbdyn::BodySensor & lhs, const mc_rbdyn::BodySensor & rhs)
-{
-  return lhs.name() == rhs.name() && lhs.parentBody() == rhs.parentBody() && lhs.X_b_s() == rhs.X_b_s();
-}
-
-} // namespace mc_rbdyn
-
 template<>
 mc_rbdyn::Collision make_ref()
 {
@@ -222,14 +212,6 @@ mc_rbdyn::ForceSensor make_ref()
 {
   return {"forceSensor", "parentBody", random_pt()};
 }
-
-namespace mc_rbdyn
-{
-bool operator==(const mc_rbdyn::ForceSensor & lhs, const mc_rbdyn::ForceSensor & rhs)
-{
-  return lhs.name() == rhs.name() && lhs.parentBody() == rhs.parentBody() && lhs.X_p_f() == rhs.X_p_f();
-}
-} // namespace mc_rbdyn
 
 template<>
 mc_rbdyn::Plane make_ref()
@@ -359,55 +341,6 @@ bool operator==(const Visual & lhs, const Visual & rhs)
 } // namespace parsers
 
 } // namespace rbd
-
-namespace mc_rbdyn
-{
-
-bool operator==(const Mimic & lhs, const Mimic & rhs)
-{
-  return lhs.name == rhs.name && lhs.joint == rhs.joint && lhs.multiplier == rhs.multiplier && lhs.offset == rhs.offset;
-}
-
-bool operator==(const RobotModule::Gripper::Safety & lhs, const RobotModule::Gripper::Safety & rhs)
-{
-  return lhs.percentVMax == rhs.percentVMax && lhs.actualCommandDiffTrigger == rhs.actualCommandDiffTrigger
-         && lhs.releaseSafetyOffset == rhs.releaseSafetyOffset
-         && lhs.overCommandLimitIterN == rhs.overCommandLimitIterN;
-}
-
-bool operator==(const RobotModule::Gripper & lhs, const RobotModule::Gripper & rhs)
-{
-  auto compareMimics = [&]() {
-    auto lmimics = lhs.mimics();
-    auto rmimics = rhs.mimics();
-    if(lmimics == nullptr && rmimics == nullptr)
-    {
-      return true;
-    }
-    if(lmimics == nullptr || rmimics == nullptr)
-    {
-      return false;
-    }
-    return *lmimics == *rmimics;
-  };
-  auto compareSafety = [&]() {
-    auto lsafety = lhs.safety();
-    auto rsafety = rhs.safety();
-    if(lsafety == nullptr && rsafety == nullptr)
-    {
-      return true;
-    }
-    if(lsafety == nullptr || rsafety == nullptr)
-    {
-      return false;
-    }
-    return *lsafety == *rsafety;
-  };
-  return lhs.name == rhs.name && lhs.joints == rhs.joints && lhs.reverse_limits == rhs.reverse_limits && compareSafety()
-         && compareMimics();
-}
-
-} // namespace mc_rbdyn
 
 bool compareHulls(const std::map<std::string, std::pair<std::string, std::string>> & lhs,
                   const std::map<std::string, std::pair<std::string, std::string>> & rhs)

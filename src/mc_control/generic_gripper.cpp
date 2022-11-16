@@ -184,7 +184,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
   targetQIn.resize(active_joints.size());
   targetQ = nullptr;
 
-  reversed = reverseLimits;
+  reversed_ = reverseLimits;
 
   joints_mbc_idx.clear();
   for(const auto & name : names)
@@ -477,7 +477,7 @@ double Gripper::targetOpening(size_t jointId) const
   }
 }
 
-void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, std::map<std::string, std::vector<double>> & qOut)
+void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & real)
 {
   if(targetQ)
   {
@@ -525,8 +525,8 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, std::map<std::string
     if(joints_mbc_idx[i] != -1)
     {
       robot.mbc().q[static_cast<size_t>(joints_mbc_idx[i])] = {_q[i]};
+      real.mbc().q[static_cast<size_t>(joints_mbc_idx[i])] = {_q[i]};
     }
-    qOut[names[i]] = {_q[i]};
   }
   for(size_t i = active_joints.size(); i < names.size(); ++i)
   {
@@ -534,8 +534,8 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, std::map<std::string
     if(joints_mbc_idx[i] != -1)
     {
       robot.mbc().q[static_cast<size_t>(joints_mbc_idx[i])] = {_q[i]};
+      real.mbc().q[static_cast<size_t>(joints_mbc_idx[i])] = {_q[i]};
     }
-    qOut[names[i]] = {_q[i]};
   }
   for(size_t i = 0; i < actualQ.size(); ++i)
   {
@@ -546,7 +546,7 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, std::map<std::string
       {
         mc_rtc::log::warning("Gripper safety triggered on {}", names[i]);
         overCommandLimit[i] = true;
-        if(reversed)
+        if(reversed_)
         {
           actualQ[i] = actualQ[i] + config_.releaseSafetyOffset;
         }

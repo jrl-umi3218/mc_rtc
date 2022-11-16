@@ -11,6 +11,7 @@
 #include <mc_rbdyn/ForceSensor.h>
 #include <mc_rbdyn/JointSensor.h>
 #include <mc_rbdyn/Mimic.h>
+#include <mc_rbdyn/RobotConverterConfig.h>
 #include <mc_rbdyn/Springs.h>
 #include <mc_rbdyn/api.h>
 #include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
@@ -572,6 +573,33 @@ struct MC_RBDYN_DLLAPI RobotModule
     return _parameters;
   }
 
+  /** Returns the list of parameters to get a RobotModule that is a canonical representation of this module */
+  inline const std::vector<std::string> & canonicalParameters() const
+  {
+    return _canonicalParameters;
+  }
+
+  /** Returns the configuration for the control to canonical conversion
+   *
+   * The default configuration:
+   * - copies the common configuration values from the control model to the canonical model
+   * - copies the initial encoders value into the canonical model for other joints
+   * - enforce mimic relations
+   * - copy the world pose of the control model to the canonical model
+   */
+  RobotConverterConfig controlToCanonicalConfig;
+
+  /* Post-processing for control to canonical
+   *
+   * The default implementation does nothing
+   *
+   * This function is called automatically by mc_rtc after each iteration of MCGlobalController::run()
+   *
+   * It is called last, after the controller/observer/grippers have run and before the plugins/log/GUI
+   */
+  std::function<void(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical)> controlToCanonicalPostProcess =
+      [](const mc_rbdyn::Robot &, mc_rbdyn::Robot &) {};
+
   /** Returns the path to a "real" URDF file
    *
    * This will be used to show a visually distinct robot for displaying the
@@ -596,6 +624,7 @@ struct MC_RBDYN_DLLAPI RobotModule
     return _frames;
   }
 
+public:
   /** Path to the robot's description package */
   std::string path;
   /** (default) Name of the robot */
@@ -660,6 +689,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   CompoundJointConstraintDescriptionVector _compoundJoints;
   /** \see parameters() */
   std::vector<std::string> _parameters;
+  /** \see canonicalParameters() */
+  std::vector<std::string> _canonicalParameters;
   /** \see defaultLIPMStabilizerConfiguration() */
   mc_rbdyn::lipm_stabilizer::StabilizerConfiguration _lipmStabilizerConfig;
   /** \see real_urdf() */
@@ -677,9 +708,62 @@ typedef std::shared_ptr<RobotModule> RobotModulePtr;
  * \param limits Limits as provided by RBDyn parsers
  *
  */
-RobotModule::bounds_t MC_RBDYN_DLLAPI urdf_limits_to_bounds(const rbd::parsers::Limits & limits);
+MC_RBDYN_DLLAPI RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits);
 
 using RobotModuleVector = std::vector<RobotModule, Eigen::aligned_allocator<RobotModule>>;
+
+/** Checks that two RobotModule are compatible for control
+ *
+ * The requirements are:
+ * - Same reference joint order
+ * - Same force sensors
+ * - Same body sensors
+ * - Same joint sensors
+ * - Same grippers
+ * - Same devices
+ *
+ * \returns True if the two modules are compatible, false otherwise
+ */
+MC_RBDYN_DLLAPI bool check_module_compatibility(const RobotModule & lhs, const RobotModule & rhs);
+
+inline bool operator==(const RobotModule::Gripper::Safety & lhs, const RobotModule::Gripper::Safety & rhs)
+{
+  return lhs.percentVMax == rhs.percentVMax && lhs.actualCommandDiffTrigger == rhs.actualCommandDiffTrigger
+         && lhs.releaseSafetyOffset == rhs.releaseSafetyOffset
+         && lhs.overCommandLimitIterN == rhs.overCommandLimitIterN;
+}
+
+inline bool operator==(const RobotModule::Gripper & lhs, const RobotModule::Gripper & rhs)
+{
+  auto compareMimics = [&]() {
+    auto lmimics = lhs.mimics();
+    auto rmimics = rhs.mimics();
+    if(lmimics == nullptr && rmimics == nullptr)
+    {
+      return true;
+    }
+    if(lmimics == nullptr || rmimics == nullptr)
+    {
+      return false;
+    }
+    return *lmimics == *rmimics;
+  };
+  auto compareSafety = [&]() {
+    auto lsafety = lhs.safety();
+    auto rsafety = rhs.safety();
+    if(lsafety == nullptr && rsafety == nullptr)
+    {
+      return true;
+    }
+    if(lsafety == nullptr || rsafety == nullptr)
+    {
+      return false;
+    }
+    return *lsafety == *rsafety;
+  };
+  return lhs.name == rhs.name && lhs.joints == rhs.joints && lhs.reverse_limits == rhs.reverse_limits && compareSafety()
+         && compareMimics();
+}
 
 } // namespace mc_rbdyn
 

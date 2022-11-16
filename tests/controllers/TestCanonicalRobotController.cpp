@@ -1,0 +1,106 @@
+/*
+ * Copyright 2022 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
+#ifdef BOOST_TEST_MAIN
+#  undef BOOST_TEST_MAIN
+#endif
+#include <mc_control/api.h>
+#include <mc_control/mc_controller.h>
+#include <mc_rtc/logging.h>
+#include <mc_tasks/PostureTask.h>
+
+#include <boost/test/unit_test.hpp>
+
+namespace mc_control
+{
+
+struct MC_CONTROL_DLLAPI TestCanonicalRobotController : public MCController
+{
+public:
+  TestCanonicalRobotController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt) : MCController(rm, dt)
+  {
+    // Check that the default constructor loads the robot + ground environment
+    BOOST_CHECK_EQUAL(robots().size(), 2);
+    // Check that JVRC-1 was loaded
+    BOOST_CHECK_EQUAL(robot().name(), "jvrc1");
+    BOOST_CHECK_EQUAL(rm->_parameters[0], "JVRC1NoHands");
+    BOOST_CHECK_EQUAL(rm->_canonicalParameters[0], "JVRC1");
+    // Check that RobotData is shared between all robots
+    for(const auto & r : robots())
+    {
+      BOOST_REQUIRE(r.data().get() == realRobot(r.name()).data().get());
+      BOOST_REQUIRE(r.data().get() == outputRobot(r.name()).data().get());
+      BOOST_REQUIRE(r.data().get() == outputRealRobot(r.name()).data().get());
+    }
+    solver().addConstraintSet(kinematicsConstraint);
+    postureTask->stiffness(1);
+    postureTask->weight(1);
+    solver().addTask(postureTask.get());
+    mc_rtc::log::success("Created TestCanonicalRobotController");
+  }
+
+  virtual bool run() override
+  {
+    BOOST_REQUIRE(datastore().get<bool>("HasTestCanonicalRobotControllerPlugin"));
+    auto njoints = robot().mbc().q.size();
+    auto postureT = [&](size_t j) {
+      return std::cos(static_cast<double>(j) / static_cast<double>(njoints) + nrIter / 2000.);
+    };
+
+    size_t jIdx = 0;
+    for(const auto & j : robot().mb().joints())
+    {
+      if(j.dof() == 1)
+      {
+        target_[j.name()] = {postureT(jIdx)};
+      }
+      jIdx++;
+    }
+    postureTask->target(target_);
+
+    double & targetQ = datastore().get<double>("GripperTarget");
+    if(targetQ >= gripper_max_ && dir_ > 0.0)
+    {
+      dir_ = -1.0;
+    }
+    if(targetQ <= gripper_min_ && dir_ < 0.0)
+    {
+      dir_ = 1.0;
+    }
+    targetQ += dir_ * vmax_ * solver().dt();
+
+    robot().gripper("l_gripper").setTargetQ("L_UTHUMB", targetQ);
+    robot().gripper("r_gripper").setTargetQ("R_UTHUMB", targetQ);
+
+    bool ret = MCController::run();
+    BOOST_CHECK(ret);
+    nrIter++;
+    return ret;
+  }
+
+  virtual void reset(const ControllerResetData & reset_data) override
+  {
+    MCController::reset(reset_data);
+    datastore().make<double>("GripperTarget", robot().gripper("l_gripper").getTargetQ("L_UTHUMB"));
+    // Use half of the configured max speed of the gripper
+    gripper_min_ = outputRobot().module().bounds()[0].at("L_UTHUMB")[0];
+    gripper_max_ = outputRobot().module().bounds()[1].at("L_UTHUMB")[0];
+    double gripper_range = (gripper_max_ - gripper_min_);
+    gripper_min_ += 0.1 * gripper_range;
+    gripper_max_ -= 0.1 * gripper_range;
+    vmax_ = outputRobot().module().bounds()[3].at("L_UTHUMB")[0] * robot().gripper("l_gripper").percentVMAX() * 0.5;
+  }
+
+private:
+  unsigned int nrIter = 0;
+  std::map<std::string, std::vector<double>> target_;
+  double gripper_min_ = 0.0;
+  double gripper_max_ = 0.0;
+  double vmax_ = 0.0;
+  double dir_ = 1.0;
+};
+
+} // namespace mc_control
+
+SIMPLE_CONTROLLER_CONSTRUCTOR("TestCanonicalRobotController", mc_control::TestCanonicalRobotController)

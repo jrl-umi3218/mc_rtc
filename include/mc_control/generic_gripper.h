@@ -97,11 +97,11 @@ struct MC_RBDYN_DLLAPI Gripper
    *
    * \param robot Robot for which this gripper control is running
    *
-   * \param qOut Output of the gripper state
+   * \param real Real robot for which this gripper control is running
    *
    * The gripper control updates both the robot's configuration and the output
    */
-  void run(double timeStep, mc_rbdyn::Robot & robot, std::map<std::string, std::vector<double>> & qOut);
+  void run(double timeStep, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & real);
 
   /*! \brief Set the target configuration of the active joints involved in the gripper
    * \param targetQ Desired values of the active joints involved in the gripper
@@ -279,6 +279,12 @@ struct MC_RBDYN_DLLAPI Gripper
     return is_metric_;
   }
 
+  /** \brief When true the gripper is considered "open" when the joints' values are minimal */
+  inline bool reversed() const noexcept
+  {
+    return reversed_;
+  }
+
 protected:
   /*! \brief Set the target opening of a single gripper joint by index
    * \param activeJointId Index of the active joint
@@ -367,7 +373,7 @@ protected:
   /*! Store the number of iterations where the gripper command was over the limit */
   std::vector<unsigned int> overCommandLimitIter;
   /*! True if the gripper is reversed */
-  bool reversed = false;
+  bool reversed_ = false;
 };
 
 using GripperPtr = std::unique_ptr<Gripper>;

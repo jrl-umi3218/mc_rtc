@@ -4,6 +4,8 @@
 
 #include <mc_rbdyn/RobotModule.h>
 
+#include <mc_rbdyn/Robot.h>
+
 namespace mc_rbdyn
 {
 
@@ -216,6 +218,73 @@ RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
   ret.push_back(convert(limits.torque));
   ret.push_back(limits.torque);
   return ret;
+}
+
+bool check_module_compatibility(const RobotModule & lhs, const RobotModule & rhs)
+{
+  bool is_ok = true;
+  auto format_params = [](const std::vector<std::string> & params) -> std::string {
+    if(params.size() == 0)
+    {
+      return "[]";
+    }
+    std::stringstream ss;
+    ss << "[";
+    for(size_t i = 0; i < params.size() - 1; ++i)
+    {
+      ss << params[i] << ", ";
+    }
+    ss << params.back() << "]";
+    return ss.str();
+  };
+  auto show_incompatiblity_issue = [&](std::string_view reason) {
+    if(is_ok)
+    {
+      is_ok = false;
+      mc_rtc::log::critical("{} (params: {}) and {} (params: {}) are incompatible.\nReasons:", lhs.name,
+                            format_params(lhs.parameters()), rhs.name, format_params(rhs.parameters()));
+    }
+    mc_rtc::log::critical("- {}", reason);
+  };
+  if(lhs.ref_joint_order() != rhs.ref_joint_order())
+  {
+    show_incompatiblity_issue("Different reference joint order");
+  }
+  if(lhs.bodySensors() != rhs.bodySensors())
+  {
+    show_incompatiblity_issue("Different body sensors");
+  }
+  if(lhs.forceSensors() != rhs.forceSensors())
+  {
+    show_incompatiblity_issue("Different force sensors");
+  }
+  if(lhs.jointSensors() != rhs.jointSensors())
+  {
+    show_incompatiblity_issue("Different joint sensors");
+  }
+  if(lhs.grippers() != rhs.grippers())
+  {
+    show_incompatiblity_issue("Different grippers");
+  }
+  if(lhs.devices().size() != rhs.devices().size())
+  {
+    show_incompatiblity_issue("Different devices");
+  }
+  else
+  {
+    const auto & lhs_devices = lhs.devices();
+    const auto & rhs_devices = rhs.devices();
+    for(size_t i = 0; lhs_devices.size(); ++i)
+    {
+      const auto & lhs_d = *lhs_devices[i];
+      const auto & rhs_d = *rhs_devices[i];
+      if(lhs_d.name() != rhs_d.name() || lhs_d.type() != rhs_d.type() || lhs_d.parent() != rhs_d.parent())
+      {
+        show_incompatiblity_issue(fmt::format("Different device: {} != {}", lhs_d.name(), rhs_d.name()));
+      }
+    }
+  }
+  return is_ok;
 }
 
 } // namespace mc_rbdyn

@@ -35,7 +35,7 @@ void ROSPlugin::reset(mc_control::MCGlobalController & controller)
 {
   if(publish_control)
   {
-    mc_rtc::ROSBridge::init_robot_publisher("control", controller.timestep(), controller.robot());
+    mc_rtc::ROSBridge::init_robot_publisher("control", controller.timestep(), controller.controller().outputRobot());
   }
   if(publish_env)
   {
@@ -46,15 +46,15 @@ void ROSPlugin::reset(mc_control::MCGlobalController & controller)
                                                 robots.robot(i), use_real);
       }
     };
-    publish_env("control/env", controller.controller().robots(), false);
+    publish_env("control/env", controller.controller().outputRobots(), false);
     if(publish_real)
     {
-      publish_env("real/env", controller.controller().realRobots(), true);
+      publish_env("real/env", controller.controller().outputRealRobots(), true);
     }
   }
   if(publish_real)
   {
-    const auto & real_robot = controller.controller().realRobot();
+    const auto & real_robot = controller.controller().outputRealRobot();
     mc_rtc::ROSBridge::init_robot_publisher("real", controller.timestep(), real_robot, true);
   }
 }
@@ -63,7 +63,7 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
 {
   if(publish_control)
   {
-    mc_rtc::ROSBridge::update_robot_publisher("control", controller.timestep(), controller.robot());
+    mc_rtc::ROSBridge::update_robot_publisher("control", controller.timestep(), controller.controller().outputRobot());
   }
   // Publish environment state
   if(publish_env)
@@ -76,16 +76,16 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
       }
       published_env = std::max<size_t>(publish_env, robots.size() - 1);
     };
-    update_env("control/env", controller.controller().robots());
+    update_env("control/env", controller.controller().outputRobots());
     if(publish_real)
     {
-      update_env("real/env", controller.controller().realRobots());
+      update_env("real/env", controller.controller().outputRealRobots());
     }
   }
   // Publish real robot
   if(publish_real)
   {
-    auto & real_robot = controller.controller().realRobot();
+    auto & real_robot = controller.controller().outputRealRobot();
     mc_rtc::ROSBridge::update_robot_publisher("real", controller.timestep(), real_robot);
   }
 }

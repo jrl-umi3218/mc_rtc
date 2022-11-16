@@ -124,7 +124,6 @@ cdef extern from "<mc_control/mc_global_controller.h>" namespace "mc_control":
     void setSensorLinearAcceleration(Vector3d)
     void setEncoderValues(vector[double])
     void setEncoderVelocities(vector[double])
-    void setFlexibilityValues(vector[double])
     void setJointTorques(vector[double])
     void setWrenches(cppmap[string, ForceVecd])
 

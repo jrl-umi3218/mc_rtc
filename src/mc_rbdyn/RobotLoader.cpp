@@ -39,7 +39,10 @@ void handle_aliases_dir(const bfs::path & dir)
 
 } // namespace
 
-void mc_rbdyn::RobotLoader::load_aliases(const std::string & fname)
+namespace mc_rbdyn
+{
+
+void RobotLoader::load_aliases(const std::string & fname)
 {
   if(verbose_)
   {
@@ -83,7 +86,7 @@ void mc_rbdyn::RobotLoader::load_aliases(const std::string & fname)
   }
 }
 
-std::vector<std::string> mc_rbdyn::RobotLoader::available_robots()
+std::vector<std::string> RobotLoader::available_robots()
 {
   std::lock_guard<std::mutex> guard{mtx};
   init();
@@ -95,7 +98,7 @@ std::vector<std::string> mc_rbdyn::RobotLoader::available_robots()
   return ret;
 }
 
-void mc_rbdyn::RobotLoader::update_robot_module_path(const std::vector<std::string> & paths)
+void RobotLoader::update_robot_module_path(const std::vector<std::string> & paths)
 {
   std::lock_guard<std::mutex> guard{mtx};
   init();
@@ -106,7 +109,7 @@ void mc_rbdyn::RobotLoader::update_robot_module_path(const std::vector<std::stri
   }
 }
 
-void mc_rbdyn::RobotLoader::init(bool skip_default_path)
+void RobotLoader::init(bool skip_default_path)
 {
   if(!robot_loader)
   {
@@ -117,8 +120,7 @@ void mc_rbdyn::RobotLoader::init(bool skip_default_path)
       {
         default_path.push_back(mc_rtc::MC_ROBOTS_INSTALL_PREFIX);
       }
-      robot_loader.reset(
-          new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>("MC_RTC_ROBOT_MODULE", default_path, verbose_));
+      robot_loader.reset(new mc_rtc::ObjectLoader<RobotModule>("MC_RTC_ROBOT_MODULE", default_path, verbose_));
       for(const auto & p : default_path)
       {
         handle_aliases_dir(bfs::path(p) / "aliases");
@@ -137,3 +139,23 @@ void mc_rbdyn::RobotLoader::init(bool skip_default_path)
     }
   }
 }
+
+RobotModulePtr RobotLoader::get_robot_module(const std::vector<std::string> & args)
+{
+  if(args.size() == 1)
+  {
+    return get_robot_module(args[0]);
+  }
+  if(args.size() == 2)
+  {
+    return get_robot_module(args[0], args[1]);
+  }
+  if(args.size() == 3)
+  {
+    return get_robot_module(args[0], args[1], args[2]);
+  }
+  mc_rtc::log::error_and_throw<mc_rtc::LoaderException>(
+      "RobotLoader dynamic arguments should have 1 to 3 arguments but {} were provided", args.size());
+}
+
+} // namespace mc_rbdyn

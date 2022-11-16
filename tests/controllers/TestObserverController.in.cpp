@@ -83,6 +83,10 @@ public:
 
     for(const auto & joint : robot().refJointOrder())
     {
+      if(!robot().hasJoint(joint))
+      {
+        continue;
+      }
       auto j = robot().jointIndexByName(joint);
       BOOST_CHECK_CLOSE(robot().mbc().q[j][0], realRobot().mbc().q[j][0], 1e-6);
       BOOST_CHECK_CLOSE(robot().mbc().alpha[j][0], realRobot().mbc().alpha[j][0], 1e-6);

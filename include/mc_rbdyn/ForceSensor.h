@@ -185,4 +185,9 @@ private:
   std::shared_ptr<detail::ForceSensorCalibData> calibration_;
 };
 
+inline bool operator==(const mc_rbdyn::ForceSensor & lhs, const mc_rbdyn::ForceSensor & rhs)
+{
+  return lhs.name() == rhs.name() && lhs.parentBody() == rhs.parentBody() && lhs.X_p_f() == rhs.X_p_f();
+}
+
 } // namespace mc_rbdyn

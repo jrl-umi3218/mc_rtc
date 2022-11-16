@@ -337,8 +337,6 @@ cdef class MCGlobalController(object):
     self.impl.setEncoderValues(q)
   def setEncoderVelocities(self, alpha):
     self.impl.setEncoderVelocities(alpha)
-  def setFlexibilityValues(self, flex):
-    self.impl.setFlexibilityValues(flex)
   def setJointTorques(self, tau):
     self.impl.setJointTorques(tau)
   def setWrenches(self, wrenchesIn):

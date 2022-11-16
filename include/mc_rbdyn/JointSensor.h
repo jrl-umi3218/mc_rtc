@@ -92,4 +92,9 @@ private:
   double motor_current_ = std::numeric_limits<double>::quiet_NaN();
 };
 
+inline bool operator==(const JointSensor & lhs, const JointSensor & rhs)
+{
+  return lhs.joint() == rhs.joint();
+}
+
 } // namespace mc_rbdyn

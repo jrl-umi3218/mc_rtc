@@ -6,8 +6,11 @@
 
 /*! Interface used to load robots */
 
+#include <mc_rbdyn/Robot.h>
+#include <mc_rbdyn/RobotConverter.h>
 #include <mc_rbdyn/RobotModule.h>
-#include <mc_rbdyn/api.h>
+#include <mc_rtc/io_utils.h>
+
 #include <mc_rtc/config.h>
 #include <mc_rtc/loader.h>
 
@@ -78,52 +81,54 @@ public:
     std::unique_lock<std::mutex> guard{mtx};
     init();
     mc_rbdyn::RobotModulePtr rm = nullptr;
+    auto setup_canonical = [](mc_rbdyn::RobotModulePtr rm) {
+      assert(rm);
+      if(rm->_canonicalParameters.empty())
+      {
+        rm->_canonicalParameters = rm->_parameters;
+      }
+      if(!rm->controlToCanonicalPostProcess)
+      {
+        rm->controlToCanonicalPostProcess = [](const mc_rbdyn::Robot &, mc_rbdyn::Robot &) {};
+      }
+    };
     if(aliases.count(name))
     {
       const auto & params = aliases[name];
       if(params.size() == 1)
       {
-        guard.unlock();
-        rm = get_robot_module(params[0]);
+        rm = get_robot_module_from_lib(params[0]);
       }
       else if(params.size() == 2)
       {
-        guard.unlock();
-        rm = get_robot_module(params[0], params[1]);
+        rm = get_robot_module_from_lib(params[0], params[1]);
       }
       else if(params.size() == 3)
       {
-        guard.unlock();
-        rm = get_robot_module(params[0], params[1], params[2]);
+        rm = get_robot_module_from_lib(params[0], params[1], params[2]);
       }
       else
       {
-        mc_rtc::log::error_and_throw<mc_rtc::LoaderException>("Aliases can only handle 1 to 3 parameters");
+        mc_rtc::log::error_and_throw<mc_rtc::LoaderException>(
+            "Aliases can only handle 1 to 3 parameters, {} provided ({})", params.size(),
+            mc_rtc::io::to_string(params));
       }
       rm->_parameters.resize(1);
       rm->_parameters[0] = name;
-      return rm;
     }
     else
     {
-      if(!robot_loader->has_object(name))
-      {
-        mc_rtc::log::error(
-            "Cannot load the requested robot: {}\nIt is neither a valid alias nor a known exported robot", name);
-        mc_rtc::log::info("Available robots:");
-        mtx.unlock();
-        for(const auto & r : available_robots())
-        {
-          mc_rtc::log::info("- {}", r);
-        }
-        mc_rtc::log::error_and_throw<mc_rtc::LoaderException>("Cannot load the requested robot: {}", name);
-      }
-      rm = robot_loader->create_object(name, args...);
+      rm = get_robot_module_from_lib(name, args...);
     }
-    rm->_parameters = {name};
-    fill_rm_parameters(rm, args...);
+    setup_canonical(rm);
     return rm;
   }
+
+  /** Returns the RobotModule that would be loaded from get_robot_module(args[0], ..., args[args.size() - 1])
+   *
+   * This is arbitrarly limited to 3 arguments
+   */
+  static RobotModulePtr get_robot_module(const std::vector<std::string> & args);
 
   template<typename RetT, typename... Args>
   static void register_object(const std::string & name, std::function<RetT *(const Args &...)> callback)
@@ -190,10 +195,35 @@ private:
 
   static inline void fill_rm_parameters(mc_rbdyn::RobotModulePtr &) {}
 
+  template<typename... Args>
+  static mc_rbdyn::RobotModulePtr get_robot_module_from_lib(const std::string & name, const Args &... args)
+  {
+    if(!robot_loader->has_object(name))
+    {
+      mc_rtc::log::error("Cannot load the requested robot: {}\nIt is neither a valid alias nor a known exported robot",
+                         name);
+      mc_rtc::log::info("Available robots:");
+      mtx.unlock();
+      for(const auto & r : available_robots())
+      {
+        mc_rtc::log::info("- {}", r);
+      }
+      mc_rtc::log::error_and_throw<mc_rtc::LoaderException>("Cannot load the requested robot: {}", name);
+    }
+    mc_rbdyn::RobotModulePtr rm = robot_loader->create_object(name, args...);
+    if(!rm)
+    {
+      mc_rtc::log::error_and_throw("Failed to load {}", name);
+    }
+    rm->_parameters = {name};
+    fill_rm_parameters(rm, args...);
+    return rm;
+  }
+
   static std::unique_ptr<mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>> robot_loader;
   static bool verbose_;
   static std::mutex mtx;
   static std::map<std::string, std::vector<std::string>> aliases;
-};
+}; // namespace mc_rbdyn
 
 } // namespace mc_rbdyn

@@ -70,6 +70,28 @@ macro(controller_test_common NAME)
     set(ROBOT_MODULE_PATH "${ROBOT_MODULE_PATH}/$<CONFIGURATION>")
     set(TEST_CONTROLLER_PATH "${TEST_CONTROLLER_PATH}/$<CONFIGURATION>")
   endif()
+  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/plugins/${NAME}.cpp")
+    set(TEST_PLUGINS "\"${NAME}\"")
+    add_library(${NAME}Plugin SHARED "${CMAKE_CURRENT_SOURCE_DIR}/plugins/${NAME}.cpp")
+    set_target_properties(${NAME}Plugin PROPERTIES FOLDER tests/controllers/plugins)
+    target_link_libraries(${NAME}Plugin PUBLIC Boost::unit_test_framework mc_control)
+    set(PLUGINS_MODULE_PATH "${CMAKE_CURRENT_BINARY_DIR}/controllers/plugins/${NAME}")
+    set_target_properties(
+      ${NAME}Plugin
+      PROPERTIES
+        COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
+        PREFIX ""
+        ARCHIVE_OUTPUT_DIRECTORY "${PLUGINS_MODULE_PATH}"
+        LIBRARY_OUTPUT_DIRECTORY "${PLUGINS_MODULE_PATH}"
+        RUNTIME_OUTPUT_DIRECTORY "${PLUGINS_MODULE_PATH}"
+    )
+    if(CMAKE_CONFIGURATION_TYPES)
+      set(PLUGINS_MODULE_PATH "${PLUGINS_MODULE_PATH}/$<CONFIG>")
+    endif()
+  else()
+    set(PLUGINS_MODULE_PATH "")
+    set(TEST_PLUGINS "")
+  endif()
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf)
 endmacro()
 
@@ -228,6 +250,8 @@ controller_test_run(TestVectorOrientationTaskController 2001)
 # mc_solver test controllers
 controller_test_run(TestCoMInBoxController 4001)
 controller_test_run(TestCollisionController 2001)
+# mc_global_controller behavior test
+controller_test_run(TestCanonicalRobotController 2001)
 
 # Test FSM generic state configuration option
 set(FSM_STATES_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/src/mc_control/fsm/states/")

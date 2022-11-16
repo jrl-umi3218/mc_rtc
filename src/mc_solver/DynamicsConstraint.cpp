@@ -83,10 +83,6 @@ void DynamicsConstraint::build_constr(const mc_rbdyn::Robots & robots,
     motionConstr.reset(new tasks::qp::MotionSpringConstr(robots.mbs(), static_cast<int>(robotIndex), tBound, tDBound,
                                                          timeStep, sjList));
   }
-  /*FIXME Implement?
-  else if(robot.tlPoly.size() != 0)
-  {
-  } */
   else
   {
     motionConstr.reset(

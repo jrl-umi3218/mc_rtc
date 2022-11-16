@@ -155,40 +155,6 @@ const Robot & Robots::robot(const std::string & name) const
   return *robots_[key->second];
 }
 
-void Robots::createRobotWithBase(const std::string & name,
-                                 Robots & robots,
-                                 unsigned int robots_idx,
-                                 const Base & base,
-                                 const Eigen::Vector3d & baseAxis)
-{
-  {
-    const auto & robot = *robots.robots_[robots_idx];
-    if(hasRobot(name))
-    {
-      mc_rtc::log::error_and_throw("Cannot copy robot {} with a new base as a robot named {} already exists",
-                                   robot.name(), name);
-    }
-    this->robot_modules_.push_back(robot.module());
-    this->mbs_.push_back(robot.mbg().makeMultiBody(base.baseName, base.baseType, baseAxis, base.X_0_s, base.X_b0_s));
-    this->mbcs_.emplace_back(this->mbs_.back());
-    this->mbgs_.push_back(robot.mbg());
-  }
-  auto robotIndex = static_cast<unsigned int>(this->mbs_.size()) - 1;
-  robots_.push_back(std::make_shared<Robot>(Robot::NewRobotToken{}, name, *this, robotIndex, false));
-  // emplace_back might have invalidated the reference we formed before
-  const auto & robot = *robots.robots_[robots_idx];
-  robot.copyLoadedData(*robots_.back());
-  robotNameToIndex_[name] = robotIndex;
-}
-
-void Robots::createRobotWithBase(const std::string & name,
-                                 Robot & robot,
-                                 const Base & base,
-                                 const Eigen::Vector3d & baseAxis)
-{
-  createRobotWithBase(name, *robot.robots_, robot.robots_idx_, base, baseAxis);
-}
-
 void Robots::removeRobot(const std::string & name)
 {
   if(!hasRobot(name))
@@ -236,21 +202,13 @@ void Robots::robotCopy(const Robot & robot, const std::string & copyName)
   auto referenceIndex = robot.robots_idx_;
   auto copyRobotIndex = static_cast<unsigned int>(this->mbs_.size()) - 1;
   robots_.push_back(std::make_shared<Robot>(Robot::NewRobotToken{}, copyName, *this, copyRobotIndex, false));
-  // emplace_back might have invalidated the reference we were given
+  // push_back might have invalidated the reference we were given
   const auto & refRobot = *referenceRobots->robots_[referenceIndex];
   refRobot.copyLoadedData(*robots_.back());
   robotNameToIndex_[copyName] = copyRobotIndex;
 }
 
-Robot & Robots::load(const RobotModule & module, sva::PTransformd * base, const std::string & bName)
-{
-  return load(module.name, module, base, bName);
-}
-
-Robot & Robots::load(const std::string & name,
-                     const RobotModule & module,
-                     sva::PTransformd * base,
-                     const std::string & bName)
+Robot & Robots::load(const std::string & name, const RobotModule & module, const LoadRobotParameters & params)
 {
   if(hasRobot(name))
   {
@@ -261,47 +219,29 @@ Robot & Robots::load(const std::string & name,
   mbcs_.emplace_back(module.mbc);
   mbgs_.emplace_back(module.mbg);
   robots_.push_back(std::make_shared<Robot>(Robot::NewRobotToken{}, name, *this,
-                                            static_cast<unsigned int>(mbs_.size() - 1), true, base, bName));
+                                            static_cast<unsigned int>(mbs_.size() - 1), true, params));
   robotNameToIndex_[name] = robots_.back()->robotIndex();
   updateIndexes();
   return *robots_.back();
 }
 
-/*void loadPolyTorqueBoundsData(const std::string & file, Robot & robot)
+RobotsPtr loadRobot(const RobotModule & module, const LoadRobotParameters & params)
 {
-}*/
-
-RobotsPtr loadRobot(const RobotModule & module, sva::PTransformd * base, const std::string & baseName)
-{
-  return loadRobot(module, module.name, base, baseName);
+  return loadRobot(module.name, module, params);
 }
 
-RobotsPtr loadRobot(const RobotModule & module,
-                    const std::string & name,
-                    sva::PTransformd * base,
-                    const std::string & baseName)
+RobotsPtr loadRobot(const std::string & name, const RobotModule & module, const LoadRobotParameters & params)
 {
   auto robots = Robots::make();
-  robots->load(name, module, base, baseName);
+  robots->load(name, module, params);
   return robots;
 }
 
-void Robots::load(const RobotModule & module,
-                  const RobotModule & envModule,
-                  sva::PTransformd * base,
-                  const std::string & baseName)
-{
-  load(module.name, module, base, baseName);
-  load(envModule.name, envModule);
-}
-
-RobotsPtr loadRobotAndEnv(const RobotModule & module,
-                          const RobotModule & envModule,
-                          sva::PTransformd * base,
-                          const std::string & baseName)
+RobotsPtr loadRobotAndEnv(const RobotModule & module, const RobotModule & envModule)
 {
   auto robots = Robots::make();
-  robots->load(module, envModule, base, baseName);
+  robots->load(module);
+  robots->load(envModule);
   return robots;
 }
 
@@ -322,29 +262,21 @@ RobotsPtr loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules)
 
 Robot & Robots::loadFromUrdf(const std::string & name,
                              const std::string & urdf,
-                             bool withVirtualLinks,
-                             const std::vector<std::string> & filteredLinks,
-                             bool fixed,
-                             sva::PTransformd * base,
-                             const std::string & baseName)
+                             const rbd::parsers::ParserParameters & parser_params,
+                             const LoadRobotParameters & load_params)
 {
-  auto res = rbd::parsers::from_urdf(urdf, fixed, filteredLinks, true, "", withVirtualLinks);
-
+  auto res = rbd::parsers::from_urdf(urdf, parser_params);
   mc_rbdyn::RobotModule module(name, res);
-
-  return load(module, base, baseName);
+  return load(module, load_params);
 }
 
 RobotsPtr loadRobotFromUrdf(const std::string & name,
                             const std::string & urdf,
-                            bool withVirtualLinks,
-                            const std::vector<std::string> & filteredLinks,
-                            bool fixed,
-                            sva::PTransformd * base,
-                            const std::string & baseName)
+                            const rbd::parsers::ParserParameters & parser_params,
+                            const LoadRobotParameters & load_params)
 {
   auto robots = Robots::make();
-  robots->loadFromUrdf(name, urdf, withVirtualLinks, filteredLinks, fixed, base, baseName);
+  robots->loadFromUrdf(name, urdf, parser_params, load_params);
   return robots;
 }
 

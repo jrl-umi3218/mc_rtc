@@ -73,51 +73,27 @@ public:
    * @{
    */
 
-  /** Load a single robot from a RobotModule with an optional base
+  /** Load a single robot from a RobotModule with the provided parameters
    *
    * \param name Name of the new robot. Must be unique.
    *
    * \param module The RobotModule to fetch data from for this robot
    *
-   * \param base If non-null, used as the initial transformation between the base and the world
-   *
-   * \param bName If empty, use the "normal" base, otherwise use body bName as base
-   *
-   * \returns a reference to the robot that was just loaded
+   * \param params \see LoadRobotParameters for a description of the parameters
    *
    * \throws If a robot named <name> already exists
    *
-   * \anchor load_robot_with_name
    */
-  Robot & load(const std::string & name,
-               const RobotModule & module,
-               sva::PTransformd * base = nullptr,
-               const std::string & bName = "");
+  Robot & load(const std::string & name, const RobotModule & module, const LoadRobotParameters & params = {});
 
-  /** Load a single robot from a RobotModule with an optional base
+  /** Load a single robot from a RobotModule
    *
-   * \param module The RobotModule to fetch data from for this robot. The module
-   * name is used as the new robot name
-   *
-   * Calls \ref road_robot_with_name with RobotModule::name as the new robot
-   * name
+   * Use the name in the module to load the robot
    */
-  Robot & load(const RobotModule & module, sva::PTransformd * base = nullptr, const std::string & bName = "");
-
-  /** Load a robot and an environment from RobotModule instances with an optional base
-   *
-   * \param module RobotModule for the robot
-   *
-   * \param envModule RobotModule for the environment
-   *
-   * \param base If non-null, used as the initial transformation between the base and the world
-   *
-   * \param bName If empty, use the "normal" base, otherwise use body bName as base
-   */
-  void load(const RobotModule & module,
-            const RobotModule & envModule,
-            sva::PTransformd * base = nullptr,
-            const std::string & bName = "");
+  inline Robot & load(const RobotModule & module, const LoadRobotParameters & params = {})
+  {
+    return load(module.name, module, params);
+  }
 
   /** Load multiple robots from as many RobotModule instances
    *
@@ -131,26 +107,22 @@ public:
    */
   void rename(const std::string & oldName, const std::string & newName);
 
+  /** Load a robot directly from URDF content with the given parameters
+   *
+   * \param name Name of the robot
+   *
+   * \param urdf URDF content to be parsed
+   *
+   * \param parser_params Parameters used to parse the URDF
+   *
+   * \param load_params Parameters used to load the robot
+   */
   Robot & loadFromUrdf(const std::string & name,
                        const std::string & urdf,
-                       bool withVirtualLinks = true,
-                       const std::vector<std::string> & filteredLinks = {},
-                       bool fixed = false,
-                       sva::PTransformd * base = nullptr,
-                       const std::string & baseName = "");
+                       const rbd::parsers::ParserParameters & parser_params = {},
+                       const LoadRobotParameters & load_params = {});
 
-  void robotCopy(const Robot & robot, const std::string & newName);
-
-  void createRobotWithBase(const std::string & name,
-                           Robots & robots,
-                           unsigned int robots_idx,
-                           const Base & base,
-                           const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
-
-  void createRobotWithBase(const std::string & name,
-                           Robot & robot,
-                           const Base & base,
-                           const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
+  void robotCopy(const Robot & robot, const std::string & copyName);
 
   void removeRobot(const std::string & name);
 
@@ -266,7 +238,7 @@ public:
 
   /** Copy this instance into another instance
    *
-   * \p out will be cleared and robots loaded in this instance will be copied into \p outt
+   * \p out will be cleared and robots loaded in this instance will be copied into \p out
    */
   void copy(mc_rbdyn::Robots & out) const;
 
@@ -296,28 +268,19 @@ protected:
 };
 
 /* Static pendant of the loader functions to create Robots directly */
-MC_RBDYN_DLLAPI RobotsPtr loadRobot(const RobotModule & module,
-                                    sva::PTransformd * base = nullptr,
-                                    const std::string & baseName = "");
+MC_RBDYN_DLLAPI RobotsPtr loadRobot(const RobotModule & module, const LoadRobotParameters & params = {});
 
-MC_RBDYN_DLLAPI RobotsPtr loadRobot(const RobotModule & module,
-                                    const std::string & name,
-                                    sva::PTransformd * base = nullptr,
-                                    const std::string & baseName = "");
+MC_RBDYN_DLLAPI RobotsPtr loadRobot(const std::string & name,
+                                    const RobotModule & module,
+                                    const LoadRobotParameters & params = {});
 
 MC_RBDYN_DLLAPI RobotsPtr loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules);
 
-MC_RBDYN_DLLAPI RobotsPtr loadRobotAndEnv(const RobotModule & module,
-                                          const RobotModule & envModule,
-                                          sva::PTransformd * base = nullptr,
-                                          const std::string & baseName = "");
+MC_RBDYN_DLLAPI RobotsPtr loadRobotAndEnv(const RobotModule & module, const RobotModule & envModule);
 
 MC_RBDYN_DLLAPI RobotsPtr loadRobotFromUrdf(const std::string & name,
                                             const std::string & urdf,
-                                            bool withVirtualLinks = true,
-                                            const std::vector<std::string> & filteredLinks = {},
-                                            bool fixed = false,
-                                            sva::PTransformd * base = nullptr,
-                                            const std::string & baseName = "");
+                                            const rbd::parsers::ParserParameters & parser_params = {},
+                                            const LoadRobotParameters & load_params = {});
 
 } // namespace mc_rbdyn

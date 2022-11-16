@@ -25,4 +25,9 @@ public:
   double offset;
 };
 
+inline bool operator==(const Mimic & lhs, const Mimic & rhs)
+{
+  return lhs.name == rhs.name && lhs.joint == rhs.joint && lhs.multiplier == rhs.multiplier && lhs.offset == rhs.offset;
+}
+
 } // namespace mc_rbdyn

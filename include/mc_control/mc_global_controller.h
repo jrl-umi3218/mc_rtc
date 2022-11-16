@@ -455,25 +455,6 @@ public:
    */
   void setEncoderVelocities(const std::string & robotName, const std::vector<double> & eVelocities);
 
-  /*! \brief Sets the main robot's flexible joint values (control+real)
-   *
-   * \param eValues Flexible joint values (provided by an estimator)
-   *
-   * \note It is expected that these values follow the order given by
-   * robot.flexibility()
-   */
-  void setFlexibilityValues(const std::vector<double> & fValues);
-
-  /** Set the actual flexibility values for the specified robot (control + real)
-   *
-   * \param robotName Name of the robot to which the sensor values will be assigned.
-   * A robot with that name must exist in both robots() and realRobots() instances.
-   * \param eValues Flexible joint values (provided by an estimator)
-   *
-   * \throws If the specified robot does not exist
-   **/
-  void setFlexibilityValues(const std::string & robotName, const std::vector<double> & fValues);
-
   /*! \brief Sets the main robot's actual joint torques (control+real)
    *
    * \param tValues  Actual joint torques (provided by sensors)
@@ -673,58 +654,61 @@ public:
   const mc_solver::QPResultMsg & send(const double & t);
 
   /*! \brief Access the current controller */
-  MCController & controller();
+  inline MCController & controller() noexcept
+  {
+    assert(controller_ != nullptr);
+    return *controller_;
+  }
 
   /*! \brief Const access to current controller */
-  const MCController & controller() const;
+  inline const MCController & controller() const noexcept
+  {
+    assert(controller_ != nullptr);
+    return *controller_;
+  }
 
-  /*! \brief Access to the control robots instance. */
-  mc_rbdyn::Robots & robots();
-
-  /*! \brief Const access to the control robots instance. */
-  const mc_rbdyn::Robots & robots() const;
-
-  /*! \brief Access to the real robots instance. */
-  mc_rbdyn::Robots & realRobots();
-
-  /*! \brief Const access to the real robots instance. */
-  const mc_rbdyn::Robots & realRobots() const;
-
-  /*! \brief Access the main robot */
-  mc_rbdyn::Robot & robot();
-
-  /*! \brief Const access to the main robot */
-  const mc_rbdyn::Robot & robot() const;
-
-  /*! \brief Access to a robot instance.
+  /** @name Accessors to the robots:
    *
-   * @throws if no robot with that name exist
+   * - robots contains the output of the controller pipeline, that is:
+   *   controller -> converter -> grippers -> module.postprocess -> plugins
+   * - realRobots contains the output of the observer pipeline, that is:
+   *   observer pipeline -> converter -> module.postprocess -> plugins
+   *
+   * @{
    */
-  mc_rbdyn::Robot & robot(const std::string & name);
 
-  /*! \brief Const access to a  robot instance.
-   *
-   * @throws if no robot named with that name exist
-   **/
-  const mc_rbdyn::Robot & robot(const std::string & name) const;
+#define MAKE_ROBOTS_ACCESSOR(NAME, PTR)                               \
+  inline mc_rbdyn::Robots & NAME##s() noexcept                        \
+  {                                                                   \
+    return *controller().PTR##s_;                                     \
+  }                                                                   \
+  inline const mc_rbdyn::Robots & NAME##s() const noexcept            \
+  {                                                                   \
+    return *controller().PTR##s_;                                     \
+  }                                                                   \
+  inline mc_rbdyn::Robot & NAME() noexcept                            \
+  {                                                                   \
+    return NAME##s().robot();                                         \
+  }                                                                   \
+  inline const mc_rbdyn::Robot & NAME() const noexcept                \
+  {                                                                   \
+    return NAME##s().robot();                                         \
+  }                                                                   \
+  inline mc_rbdyn::Robot & NAME(const std::string & name)             \
+  {                                                                   \
+    return NAME##s().robot(name);                                     \
+  }                                                                   \
+  inline const mc_rbdyn::Robot & NAME(const std::string & name) const \
+  {                                                                   \
+    return NAME##s().robot(name);                                     \
+  }
 
-  /*! \brief Access the main real robot */
-  mc_rbdyn::Robot & realRobot();
+  MAKE_ROBOTS_ACCESSOR(robot, outputRobot)
+  MAKE_ROBOTS_ACCESSOR(realRobot, outputRealRobot)
 
-  /*! \brief Const access to the main real robot */
-  const mc_rbdyn::Robot & realRobot() const;
+#undef MAKE_ROBOTS_ACCESSOR
 
-  /*! \brief Access to a real robot instance.
-   *
-   * @throws if no real robot with that name exist
-   */
-  mc_rbdyn::Robot & realRobot(const std::string & name);
-
-  /*! \brief Const access to a real robot instance.
-   *
-   * @throws if no real robot named with that name exist
-   **/
-  const mc_rbdyn::Robot & realRobot(const std::string & name) const;
+  /** @} */
 
   /*! \brief Get the controller timestep */
   double timestep() const;
@@ -998,9 +982,6 @@ private:
   double solver_build_and_solve_t = 0;
   double solver_solve_t = 0;
   double framework_cost = 0;
-
-  /** Keep track of controller outputs before applying gripper control */
-  std::vector<rbd::MultiBodyConfig> pre_gripper_mbcs_;
 
   /** Reset controller-specific plugins
    *
