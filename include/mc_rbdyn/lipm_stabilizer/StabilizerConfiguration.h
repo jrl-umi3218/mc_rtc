@@ -142,7 +142,9 @@ struct DCMBiasEstimatorConfiguration
   bool withDCMBias = false;
   /// Whether the DCM filter is enabled
   bool withDCMFilter = false;
-  /// Whether the absolution CoM position gets unbiased
+  /// Whether the absolute CoM position gets unbiased (useful when the disturbance comes from a bias on the CoM, for
+  /// example modeling errors or carrying an object, but it would be wrong if the disturbance comes from an unexpected
+  /// contact, the estimator cannot distinguish between them)
   bool correctCoMPos = false;
 
   void load(const mc_rtc::Configuration & config)
@@ -185,6 +187,12 @@ struct DCMBiasEstimatorConfiguration
  * derivative of the external force error, and when modifyZMPErrD is true, the corresponding compensation is also
  * enabled. However, the effect of the compensation related to the derivative is not dominant and is affected by the
  * measured external force noise, so it is recommended to try with modifyZMPErrD false first.
+ *
+ * If there are additional biases and unknown external forces that are not predicted nor measured, the DCM bias
+ * estimator could be used. In that case, if one of addExpectedCoMOffset, modifyCoMErr or modifyZMPErr is true, it is
+ * highly recommended to set excludeFromDCMBiasEst to true. It will exclude the expected/measured external forces from
+ * the computation of the bias and prevent them to be twice compensated for.
+ *
  * CommOffsetDerivatorTimeConstant is a time constant for calculating this derivative. The maximum amounts of
  * modification for CoM strategy and ZMP strategy are comOffsetErrCoMLimit and comOffsetErrZMPLimit, respectively.
  *
@@ -201,6 +209,8 @@ struct DCMBiasEstimatorConfiguration
  *    take external forces into account), then set addExpectedCoMOffset, modifyCoMErr, modifyZMPErr to true.
  *  - modifyZMPErrD should theoretically be true, but it depends on the derivative of the measured external forces, so
  *    it becomes sensitive to the noises in the measurement noise.
+ *  - If you want to use the DCM bias estimator then if the pattern generator takes the forces into account or if one of
+ * addExpectedCoMOffset, modifyCoMErr or modifyZMPErr is true, set excludeFromDCMBiasEst to true.
  *  - subtractMeasuredValue is a more experimental and the option inspired from
  *    https://github.com/stephane-caron/lipm_walking_controller/discussions/28 Normally set to false.
  */
@@ -218,6 +228,9 @@ struct ExternalWrenchConfiguration
   bool modifyZMPErr = false;
   /// Modify ZMP velocity depending on the error velocity of the external wrenches in target and measurement
   bool modifyZMPErrD = false;
+  /// Exclude external forces from DCM Bias estimation (should be used when the pg/stabilizer is actively compensating
+  /// for those measured forces)
+  bool excludeFromDCMBiasEst = false;
   /// Limit of CoM offset error handled by CoM modification
   double comOffsetErrCoMLimit = 0.1;
   /// Limit of CoM offset error handled by ZMP modification [m]
@@ -238,6 +251,7 @@ struct ExternalWrenchConfiguration
     config("modify_com_error", modifyCoMErr);
     config("modify_zmp_error", modifyZMPErr);
     config("modify_zmp_error_d", modifyZMPErrD);
+    config("exclude_from_dcm_bias_est", excludeFromDCMBiasEst);
     config("com_offset_err_com_limit", comOffsetErrCoMLimit);
     config("com_offset_err_zmp_limit", comOffsetErrZMPLimit);
     config("ext_wrench_sum_cutoff", extWrenchSumLowPassCutoffPeriod);
@@ -254,6 +268,7 @@ struct ExternalWrenchConfiguration
     config.add("modify_com_error", modifyCoMErr);
     config.add("modify_zmp_error", modifyZMPErr);
     config.add("modify_zmp_error_d", modifyZMPErrD);
+    config.add("exclude_from_dcm_bias_est", excludeFromDCMBiasEst);
     config.add("com_offset_err_com_limit", comOffsetErrCoMLimit);
     config.add("com_offset_err_zmp_limit", comOffsetErrZMPLimit);
     config.add("ext_wrench_sum_cutoff", extWrenchSumLowPassCutoffPeriod);

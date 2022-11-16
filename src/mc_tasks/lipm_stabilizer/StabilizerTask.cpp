@@ -649,7 +649,7 @@ void StabilizerTask::setExternalWrenches(const std::vector<std::string> & surfac
     }
   }
 
-  comOffsetTarget_ = computeCoMOffset<&ExternalWrench::target>(robot());
+  computeWrenchOffsetAndCoefficient<&ExternalWrench::target>(robot(), comOffsetTarget_, zmpCoefTarget_);
   comTarget_ = comTargetRaw_ - comOffsetErrCoM_;
   if(c_.extWrench.addExpectedCoMOffset)
   {
@@ -658,29 +658,39 @@ void StabilizerTask::setExternalWrenches(const std::vector<std::string> & surfac
 }
 
 template<sva::ForceVecd StabilizerTask::ExternalWrench::*TargetOrMeasured>
-Eigen::Vector3d StabilizerTask::computeCoMOffset(const mc_rbdyn::Robot & robot) const
+void StabilizerTask::computeWrenchOffsetAndCoefficient(const mc_rbdyn::Robot & robot,
+                                                       Eigen::Vector3d & offset_gamma,
+                                                       double & coef_kappa) const
 {
-  Eigen::Vector3d comOffset = Eigen::Vector3d::Zero();
+  offset_gamma.setZero();
+  coef_kappa = 0;
   Eigen::Vector3d pos, force, moment;
   for(const auto & extWrench : extWrenches_)
   {
     computeExternalContact(robot, extWrench.surfaceName, extWrench.*TargetOrMeasured, pos, force, moment);
 
-    comOffset.x() += (pos.z() - zmpTarget_.z()) * force.x() - pos.x() * force.z() + moment.y();
-    comOffset.y() += (pos.z() - zmpTarget_.z()) * force.y() - pos.y() * force.z() - moment.x();
+    offset_gamma.x() += (pos.z() - zmpTarget_.z()) * force.x() - pos.x() * force.z() + moment.y();
+    offset_gamma.y() += (pos.z() - zmpTarget_.z()) * force.y() - pos.y() * force.z() - moment.x();
+
+    coef_kappa -= force.z();
   }
   double verticalComAcc = comddTarget_.z() + constants::gravity.z();
   double verticalComAccThre = 1e-3;
   if(std::abs(verticalComAcc) < verticalComAccThre)
   {
-    mc_rtc::log::warning(
-        "[StabilizerTask::computeCoMOffset] overwrite verticalComAcc because it's too close to zero: {}",
-        verticalComAcc);
+    mc_rtc::log::warning("[StabilizerTask::computeWrenchOffsetAndCoefficient] overwrite verticalComAcc because it's "
+                         "too close to zero: {}",
+                         verticalComAcc);
     verticalComAcc = verticalComAcc >= 0 ? verticalComAccThre : -verticalComAccThre;
   }
-  comOffset /= robot.mass() * verticalComAcc;
 
-  return comOffset;
+  // \zeta in Murooka et al. RAL 2019
+  double zeta = robot.mass() * verticalComAcc;
+
+  offset_gamma /= zeta;
+
+  coef_kappa /= zeta;
+  coef_kappa += 1.;
 }
 
 template<sva::ForceVecd StabilizerTask::ExternalWrench::*TargetOrMeasured>
@@ -800,6 +810,22 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   dcmError_ = comError + comdError / omega_;
   dcmError_.z() = 0.;
 
+  // Calculate CoM offset from measured wrench
+  // this corresponds to \gamma in Murooka et al RAL 2021
+  for(auto & extWrench : extWrenches_)
+  {
+    const auto & wrenchFrame = robot().frame(extWrench.surfaceName);
+    if(wrenchFrame.hasForceSensor())
+    {
+      extWrench.measured = {extWrench.gain.vector().cwiseProduct(wrenchFrame.wrench().vector())};
+    }
+    else
+    {
+      extWrench.measured = extWrench.target;
+    }
+  }
+  computeWrenchOffsetAndCoefficient<&ExternalWrench::measured>(realRobot(), comOffsetMeasured_, zmpCoefMeasured_);
+
   if(inTheAir_)
   {
     dcmDerivator_.reset(Eigen::Vector3d::Zero());
@@ -823,11 +849,26 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
       if(dcmEstimatorNeedsReset_)
       {
         dcmEstimator_.resetWithMeasurements(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation, true);
+        if(c_.extWrench.excludeFromDCMBiasEst)
+        {
+          /// We have to send the oppopsite of the offset because the error is target - measured
+          dcmEstimator_.setUnbiasedCoMOffset(-comOffsetMeasured_.head<2>());
+          dcmEstimator_.setZMPCoef(zmpCoefMeasured_);
+        }
         dcmEstimatorNeedsReset_ = false;
       }
       else
       {
-        dcmEstimator_.setInputs(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation);
+        if(c_.extWrench.excludeFromDCMBiasEst)
+        {
+          /// We have to send the oppopsite of the offset because the error is target - measured
+          dcmEstimator_.setInputs(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation,
+                                  -comOffsetMeasured_.head<2>(), zmpCoefMeasured_);
+        }
+        else
+        {
+          dcmEstimator_.setInputs(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation);
+        }
       }
 
       /// run the estimation
@@ -872,35 +913,29 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   }
   dcmAverageError_ = dcmIntegrator_.eval();
   dcmVelError_ = dcmDerivator_.eval();
+
+  /// The gains along the axis are defined in the local cordinates so we extract the yaw
+  /// rotation matrix
   Eigen::Matrix3d R_0_fb_yaw = sva::RotZ(mc_rbdyn::rpyFromMat(robot().posW().rotation()).z());
+
+  /// feed forward
   Eigen::Vector3d desiredCoMAccel = comddTarget_;
 
+  /// Proportional term
   Eigen::Vector3d gain = Eigen::Vector3d{c_.dcmPropGain.x(), c_.dcmPropGain.y(), 0};
   desiredCoMAccel += omega_ * R_0_fb_yaw.transpose() * gain.cwiseProduct(R_0_fb_yaw * dcmError_);
 
+  /// integral term
   gain = Eigen::Vector3d{c_.dcmIntegralGain.x(), c_.dcmIntegralGain.y(), 0};
   desiredCoMAccel += omega_ * R_0_fb_yaw.transpose() * gain.cwiseProduct(R_0_fb_yaw * dcmAverageError_);
 
+  /// derivative term
   gain = Eigen::Vector3d{c_.dcmDerivGain.x(), c_.dcmDerivGain.y(), 0};
   desiredCoMAccel += omega_ * R_0_fb_yaw.transpose() * gain.cwiseProduct(R_0_fb_yaw * dcmVelError_);
 
+  /// additional terms
   desiredCoMAccel += omega_ * (c_.comdErrorGain * comdError);
   desiredCoMAccel -= omega_ * omega_ * c_.zmpdGain * zmpdTarget_;
-
-  // Calculate CoM offset from measured wrench
-  for(auto & extWrench : extWrenches_)
-  {
-    if(robot().surfaceHasIndirectForceSensor(extWrench.surfaceName))
-    {
-      extWrench.measured =
-          sva::ForceVecd(extWrench.gain.vector().cwiseProduct(robot().surfaceWrench(extWrench.surfaceName).vector()));
-    }
-    else
-    {
-      extWrench.measured = extWrench.target;
-    }
-  }
-  comOffsetMeasured_ = computeCoMOffset<&ExternalWrench::measured>(realRobot());
 
   // Modify the desired CoM and ZMP depending on the external wrench error
   comOffsetLowPass_.update(comOffsetMeasured_ - comOffsetTarget_);
@@ -1157,11 +1192,6 @@ void StabilizerTask::updateFootForceDifferenceControl()
   sva::PTransformd T_0_L(leftFootTask->surfacePose().rotation());
   sva::PTransformd T_0_R(rightFootTask->surfacePose().rotation());
 
-  // In what follows, vertical foot forces are expressed in their respective
-  // foot sole frames, but foot force difference control expects them to be
-  // written in the world frame, so the following lines are wrong (they miss a
-  // frame transform). Thanks to @Saeed-Mansouri for pointing out this bug
-  // <https://github.com/stephane-caron/lipm_walking_controller/discussions/72>.
   // T_0_{L/R}.transMul transforms a ForceVecd variable from surface frame to world frame
   double LFz_d = T_0_L.transMul(leftFootTask->targetWrench()).force().z();
   double RFz_d = T_0_R.transMul(rightFootTask->targetWrench()).force().z();
@@ -1185,10 +1215,14 @@ void StabilizerTask::updateFootForceDifferenceControl()
   rightFootTask->refVelB(0.5 * (T_0_R * (velT + velF)));
 }
 
-template Eigen::Vector3d StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::target>(
-    const mc_rbdyn::Robot &) const;
-template Eigen::Vector3d StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::measured>(
-    const mc_rbdyn::Robot &) const;
+template void StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::target>(
+    const mc_rbdyn::Robot & robot,
+    Eigen::Vector3d & offset_gamma,
+    double & coef_kappa) const;
+template void StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::measured>(
+    const mc_rbdyn::Robot & robot,
+    Eigen::Vector3d & offset_gamma,
+    double & coef_kappa) const;
 
 template sva::ForceVecd StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::target>(
     const mc_rbdyn::Robot &,
