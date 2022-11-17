@@ -106,7 +106,7 @@ void KinematicInertialPoseObserver::estimateOrientation(const mc_rbdyn::Robot & 
   const sva::PTransformd & X_0_cIMU = robot.bodyPosW(imuParent);
   sva::PTransformd X_rIMU_rBase = X_0_rBase * X_0_rIMU.inv();
 
-  Eigen::Matrix3d E_0_mIMU = imuSensor.orientation().toRotationMatrix();
+  Eigen::Matrix3d E_0_mIMU = imuSensor.X_b_s().rotation().transpose() * imuSensor.orientation().toRotationMatrix();
   const Eigen::Matrix3d & E_0_cIMU = X_0_cIMU.rotation();
   // Estimate IMU orientation: merges roll+pitch from measurement with yaw from control
   Eigen::Matrix3d E_0_eIMU = mergeRoll1Pitch1WithYaw2(E_0_mIMU, E_0_cIMU);
