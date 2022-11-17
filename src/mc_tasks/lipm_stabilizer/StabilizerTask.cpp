@@ -124,7 +124,20 @@ void StabilizerTask::reset()
   omega_ = std::sqrt(constants::gravity.z() / robot().com().z());
   commitConfig();
 
-  setContacts({ContactState::Left, ContactState::Right});
+  if(contacts_.size() == 0)
+  {
+    setContacts({ContactState::Left, ContactState::Right});
+  }
+  else
+  {
+    std::vector<ContactState> contactsToAdd;
+    contactsToAdd.reserve(contacts_.size());
+    for(const auto & c : contacts_)
+    {
+      contactsToAdd.push_back(c.first);
+    }
+    setContacts(contactsToAdd);
+  }
 }
 
 void StabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
