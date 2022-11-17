@@ -384,7 +384,7 @@ states:
 ###
 transitions:
   # Stand from left to right support and lift and put down feet
-- [Pause_2s, OK, Stabilizer::Standing, Auto]
+- [LIPMStabilizer::Pause_2s, OK, Stabilizer::Standing, Auto]
 - [Stabilizer::Standing, Lift feet, LIPMStabilizer::StandingFSM::AlternateFeetLifting, Auto]
 - [LIPMStabilizer::StandingFSM::AlternateFeetLifting, OK, Stabilizer::Standing, Auto]
   # Stand from left to right support and lift and put down feet (manual user input)
