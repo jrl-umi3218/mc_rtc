@@ -287,6 +287,7 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
   data.imu.angular_velocity.y = imu_angular_velocity.y();
   data.imu.angular_velocity.z = imu_angular_velocity.z();
   const auto & imu_orientation = robot.bodySensor().orientation();
+  data.imu.orientation.w = imu_orientation.w();
   data.imu.orientation.x = imu_orientation.x();
   data.imu.orientation.y = imu_orientation.y();
   data.imu.orientation.z = imu_orientation.z();
