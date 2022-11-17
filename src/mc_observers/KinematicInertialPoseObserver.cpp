@@ -62,13 +62,13 @@ bool KinematicInertialPoseObserver::run(const mc_control::MCController & ctl)
   anchorFrameJumped_ = false;
   auto anchorFrame = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.robot(robot_));
   auto anchorFrameReal = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.realRobot(realRobot_));
-  auto error = (anchorFrame.translation() - X_0_anchorFrame_.translation()).norm();
   if(firstIter_)
   { // Ignore anchor frame check on first iteration
     firstIter_ = false;
   }
   else
   { // Check whether anchor frame jumped
+    auto error = (anchorFrame.translation() - X_0_anchorFrame_.translation()).norm();
     if(error > maxAnchorFrameDiscontinuity_)
     {
       mc_rtc::log::warning("[{}] Control anchor frame jumped from [{}] to [{}] (error norm {} > threshold {})", name(),
@@ -76,11 +76,12 @@ bool KinematicInertialPoseObserver::run(const mc_control::MCController & ctl)
                            MC_FMT_STREAMED(anchorFrame.translation().transpose()), error, maxAnchorFrameDiscontinuity_);
       anchorFrameJumped_ = true;
     }
-    if((anchorFrameReal.translation() - X_0_anchorFrameReal_.translation()).norm() > maxAnchorFrameDiscontinuity_)
+    auto errorReal = (anchorFrameReal.translation() - X_0_anchorFrameReal_.translation()).norm();
+    if(errorReal > maxAnchorFrameDiscontinuity_)
     {
       mc_rtc::log::warning("[{}] Real anchor frame jumped from [{}] to [{}] (error norm {:.3f} > threshold {:.3f})",
                            name(), MC_FMT_STREAMED(X_0_anchorFrameReal_.translation().transpose()),
-                           MC_FMT_STREAMED(anchorFrameReal.translation().transpose()), error,
+                           MC_FMT_STREAMED(anchorFrameReal.translation().transpose()), errorReal,
                            maxAnchorFrameDiscontinuity_);
       anchorFrameJumped_ = true;
     }
@@ -106,7 +107,7 @@ void KinematicInertialPoseObserver::estimateOrientation(const mc_rbdyn::Robot & 
   const sva::PTransformd & X_0_cIMU = robot.bodyPosW(imuParent);
   sva::PTransformd X_rIMU_rBase = X_0_rBase * X_0_rIMU.inv();
 
-  Eigen::Matrix3d E_0_mIMU = imuSensor.orientation().toRotationMatrix();
+  Eigen::Matrix3d E_0_mIMU = imuSensor.X_b_s().rotation().transpose() * imuSensor.orientation().toRotationMatrix();
   const Eigen::Matrix3d & E_0_cIMU = X_0_cIMU.rotation();
   // Estimate IMU orientation: merges roll+pitch from measurement with yaw from control
   Eigen::Matrix3d E_0_eIMU = mergeRoll1Pitch1WithYaw2(E_0_mIMU, E_0_cIMU);
