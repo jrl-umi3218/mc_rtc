@@ -488,6 +488,7 @@ void StabilizerTask::setContacts(const ContactDescriptionVector & contacts)
                                  "requires at least one contact to be set.");
   }
   contacts_.clear();
+  addContacts_.clear();
 
   // Reset support area boundaries
   supportMin_ = std::numeric_limits<double>::max() * Eigen::Vector2d::Ones();
