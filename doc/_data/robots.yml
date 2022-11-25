@@ -104,3 +104,12 @@
     module:
       url: https://github.com/rohanpsingh/mc_aliengo
       name: mc_aliengo
+- name: Fetch
+  icon: fetch_image.jpg
+  pkg:
+    desc:
+      url: https://github.com/isri-aist/mc_fetch_description
+      name: mc_fetch_description
+    module:
+      url: https://github.com/isri-aist/mc_fetch
+      name: mc_fetch
