@@ -1,12 +1,12 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
 #include <mc_filter/utils/clamp.h>
 
-#include <mc_tasks/SurfaceTransformTask.h>
+#include <mc_tasks/TransformTask.h>
 
 namespace mc_tasks
 {
@@ -251,10 +251,10 @@ protected:
   void addToLogger(mc_rtc::Logger & logger) override;
 
   /** Transform's refVelB() becomes internal to the task. */
-  using SurfaceTransformTask::refVelB;
+  using TransformTask::refVelB;
 
   /** Surface transform's target becomes internal to the task. Its setter is now targetPose(). */
-  using SurfaceTransformTask::target;
+  using TransformTask::target;
 
   /** Override addToSolver in order to get the timestep's solver automatically
    *

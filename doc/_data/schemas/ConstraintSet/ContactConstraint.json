@@ -9,11 +9,6 @@
       "description": "Defaults to velocity if absent",
       "type": "string",
       "enum": ["acceleration", "velocity", "position"]
-    },
-    "dynamics":
-    {
-      "description": "Defaults to true",
-      "type": "boolean"
     }
   },
   "required": ["type"]

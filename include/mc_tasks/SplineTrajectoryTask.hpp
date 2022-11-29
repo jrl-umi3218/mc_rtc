@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -20,14 +20,22 @@ SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::RobotFrame &
                                                     double weight,
                                                     const Eigen::Matrix3d & target,
                                                     const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
-: TrajectoryTaskGeneric<tasks::qp::TransformTask>(frame, stiffness, weight), frame_(frame), duration_(duration),
+: TrajectoryTaskGeneric(frame, stiffness, weight), frame_(frame), duration_(duration),
   oriSpline_(duration, frame.position().rotation(), target, oriWp), dimWeightInterpolator_(), stiffnessInterpolator_(),
   dampingInterpolator_()
 {
   type_ = "trajectory";
   name_ = "trajectory_" + frame.robot().name() + "_" + frame.name();
 
-  finalize(robots.mbs(), static_cast<int>(rIndex), frame.body(), frame.position(), frame.X_b_f());
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      finalize<tasks::qp::TransformTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(), frame.position(),
+                                         frame.X_b_f());
+      break;
+    default:
+      mc_rtc::log::error_and_throw("[SplineTrajectoryTask] Not implemented for backend: {}", backend_);
+  }
 }
 
 template<typename Derived>
@@ -364,13 +372,26 @@ unsigned SplineTrajectoryTask<Derived>::displaySamples() const
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::refPose(const sva::PTransformd & target)
 {
-  errorT->target(target);
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      static_cast<tasks::qp::TransformTask *>(errorT.get())->target(target);
+      break;
+    default:
+      break;
+  }
 }
 
 template<typename Derived>
 const sva::PTransformd & SplineTrajectoryTask<Derived>::refPose() const
 {
-  return errorT->target();
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      return static_cast<const tasks::qp::TransformTask *>(errorT.get())->target();
+    default:
+      mc_rtc::log::error_and_throw("Not implemented");
+  }
 }
 
 template<typename Derived>

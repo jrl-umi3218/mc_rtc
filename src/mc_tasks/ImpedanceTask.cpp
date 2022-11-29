@@ -1,13 +1,17 @@
 /*
- * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_rbdyn/configuration_io.h>
 #include <mc_tasks/ImpedanceTask.h>
+
 #include <mc_tasks/MetaTaskLoader.h>
 
+#include <mc_rbdyn/configuration_io.h>
+
+#include <mc_rtc/gui/ArrayInput.h>
 #include <mc_rtc/gui/ArrayLabel.h>
 #include <mc_rtc/gui/Checkbox.h>
+#include <mc_rtc/gui/NumberInput.h>
 #include <mc_rtc/gui/Transform.h>
 
 namespace mc_tasks
@@ -21,15 +25,20 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
                              unsigned int robotIndex,
                              double stiffness,
                              double weight)
-: SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight), lowPass_(0.005, cutoffPeriod_)
+: ImpedanceTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight)
 {
-  const auto & robot = robots.robot(robotIndex);
-  type_ = "impedance";
-  name_ = "impedance_" + robots.robot(rIndex).name() + "_" + surfaceName;
+}
 
-  if(!robot.surfaceHasIndirectForceSensor(surfaceName))
+ImpedanceTask::ImpedanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+: TransformTask(frame, stiffness, weight), lowPass_(0.005, cutoffPeriod_)
+{
+  const auto & robot = frame.robot();
+  type_ = "impedance";
+  name_ = "impedance_" + robot.name() + "_" + frame.name();
+
+  if(!frame.hasForceSensor())
   {
-    mc_rtc::log::error_and_throw("[{}] Surface {} does not have a force sensor attached", name_, surfaceName);
+    mc_rtc::log::error_and_throw("[{}] Frame {} does not have a force sensor attached", name_, frame.name());
   }
 }
 
@@ -128,7 +137,7 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
     // Transform to target pose frame (see compliancePose implementation)
     sva::PTransformd T_0_d(targetPoseW_.rotation());
     // The previous compliancePose() is stored in SurfaceTransformTask::target()
-    deltaCompPoseW_ = T_0_d.inv() * SurfaceTransformTask::target() * targetPoseW_.inv() * T_0_d;
+    deltaCompPoseW_ = T_0_d.inv() * TransformTask::target() * targetPoseW_.inv() * T_0_d;
   }
 
   // 5. Set compliance values to the targets of SurfaceTransformTask
@@ -141,7 +150,7 @@ void ImpedanceTask::reset()
 {
   // Set the target pose of SurfaceTransformTask to the current pose
   // Reset the target velocity and acceleration of SurfaceTransformTask to zero
-  SurfaceTransformTask::reset();
+  TransformTask::reset();
 
   // Set the target and compliance poses to the SurfaceTransformTask target (i.e., the current pose)
   targetPoseW_ = target();
@@ -177,23 +186,23 @@ void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
   {
     cutoffPeriod(config("cutoffPeriod"));
   }
-  SurfaceTransformTask::load(solver, config);
-  // The SurfaceTransformTask::load function above only sets
+  TransformTask::load(solver, config);
+  // The TransformTask::load function above only sets
   // the TrajectoryTaskGeneric's target, but not the compliance target, so we
   // need to set it manually here.
-  targetPose(SurfaceTransformTask::target());
+  targetPose(TransformTask::target());
 }
 
 void ImpedanceTask::addToSolver(mc_solver::QPSolver & solver)
 {
   lowPass_.dt(solver.dt());
   cutoffPeriod(cutoffPeriod_);
-  SurfaceTransformTask::addToSolver(solver);
+  TransformTask::addToSolver(solver);
 }
 
 void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
 {
-  SurfaceTransformTask::addToLogger(logger);
+  TransformTask::addToLogger(logger);
 
   // impedance parameters
   logger.addLogEntry(name_ + "_gains_M", this, [this]() -> const sva::ImpedanceVecd & { return gains().M().vec(); });
@@ -223,8 +232,8 @@ void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
 
 void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  // Don't add SurfaceTransformTask because the target of SurfaceTransformTask should not be set by user
-  TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::addToGUI(gui);
+  // Don't add TransformTask because the target of TransformTask should not be set by user
+  TrajectoryTaskGeneric::addToGUI(gui);
 
   gui.addElement({"Tasks", name_},
                  // pose

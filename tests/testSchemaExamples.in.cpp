@@ -30,6 +30,8 @@ namespace bfs = boost::filesystem;
 
 #include <mc_tasks/MetaTaskLoader.h>
 
+#include <mc_solver/TasksQPSolver.h>
+
 #include "utils.h"
 
 static bool configured = configureRobotLoader();
@@ -39,7 +41,7 @@ static auto em =
     mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"));
 static auto robots = mc_rbdyn::loadRobotAndEnv(*rm, *em);
 static std::unique_ptr<mc_solver::QPSolver> solver_ptr = [](mc_rbdyn::RobotsPtr robots) {
-  std::unique_ptr<mc_solver::QPSolver> solver(new mc_solver::QPSolver(robots, 0.005));
+  std::unique_ptr<mc_solver::TasksQPSolver> solver(new mc_solver::TasksQPSolver(robots, 0.005));
   solver->logger(std::make_shared<mc_rtc::Logger>(mc_rtc::Logger::Policy::NON_THREADED, ".", ""));
   solver->logger()->start("schema-examples", 0.005);
   solver->gui(std::make_shared<mc_rtc::gui::StateBuilder>());

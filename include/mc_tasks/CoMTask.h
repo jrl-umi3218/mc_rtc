@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -9,15 +9,9 @@
 namespace mc_tasks
 {
 
-/*! \brief Control a robot's CoM
- *
- * This task is a thin wrapper above the appropriate Tasks types
- *
- */
-struct MC_TASKS_DLLAPI CoMTask : public TrajectoryTaskGeneric<tasks::qp::CoMTask>
+/*! \brief Control a robot's CoM */
+struct MC_TASKS_DLLAPI CoMTask : public TrajectoryTaskGeneric
 {
-  using TrajectoryBase = TrajectoryTaskGeneric<tasks::qp::CoMTask>;
-
 public:
   /*! \brief Constructor
    *

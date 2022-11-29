@@ -32,12 +32,6 @@ cdef class CollisionsConstraint(ConstraintSet):
 
 cdef CollisionsConstraint CollisionsConstraintFromPtr(c_mc_solver.CollisionsConstraint*)
 
-cdef class RobotEnvCollisionsConstraint(ConstraintSet):
-  cdef c_mc_solver.RobotEnvCollisionsConstraint * impl
-  cdef cppbool __own_impl
-
-cdef RobotEnvCollisionsConstraint RobotEnvCollisionsConstraintFromPtr(c_mc_solver.RobotEnvCollisionsConstraint*)
-
 cdef class QPSolver(object):
   cdef c_mc_solver.QPSolver * impl
   cdef cppbool __own_impl

@@ -25,22 +25,22 @@ cdef class PostureTask(MetaTask):
 cdef PostureTask PostureTaskFromPtr(c_mc_tasks.PostureTask *)
 
 cdef class _CoMTrajectoryTask(MetaTask):
-  cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.CoMTask] * ttg_base
+  cdef c_mc_tasks.TrajectoryTaskGeneric * ttg_base
 
 cdef class _PositionTrajectoryTask(MetaTask):
-  cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.PositionTask] * ttg_base
+  cdef c_mc_tasks.TrajectoryTaskGeneric * ttg_base
 
 cdef class _OrientationTrajectoryTask(MetaTask):
-  cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.OrientationTask] * ttg_base
+  cdef c_mc_tasks.TrajectoryTaskGeneric * ttg_base
 
 cdef class _VectorOrientationTrajectoryTask(MetaTask):
-  cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.VectorOrientationTask] * ttg_base
+  cdef c_mc_tasks.TrajectoryTaskGeneric * ttg_base
 
 cdef class _SurfaceTransformTask(MetaTask):
-  cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.SurfaceTransformTask] * ttg_base
+  cdef c_mc_tasks.TrajectoryTaskGeneric * ttg_base
 
 cdef class _SplineTrajectoryTask(MetaTask):
-  cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.TransformTask] * ttg_base
+  cdef c_mc_tasks.TrajectoryTaskGeneric * ttg_base
 
 cdef class BSplineTrajectoryTask(_SplineTrajectoryTask):
   cdef c_mc_tasks.BSplineTrajectoryTask * impl
@@ -51,7 +51,7 @@ cdef class ExactCubicTrajectoryTask(_SplineTrajectoryTask):
   cdef cppbool __own_impl
 
 cdef class _TransformTask(MetaTask):
-  cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.TransformTask] * ttg_base
+  cdef c_mc_tasks.TrajectoryTaskGeneric * ttg_base
 
 cdef class CoMTask(_CoMTrajectoryTask):
   cdef c_mc_tasks.CoMTask * impl

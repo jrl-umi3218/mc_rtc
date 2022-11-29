@@ -302,6 +302,7 @@ set(mc_solver_SRC
 mc_solver/BoundedSpeedConstr.cpp
 mc_solver/CollisionsConstraint.cpp
 mc_solver/CoMIncPlaneConstr.cpp
+mc_solver/ConstraintSet.cpp
 mc_solver/CompoundJointConstraint.cpp
 mc_solver/ConstraintSetLoader.cpp
 mc_solver/ContactConstraint.cpp
@@ -309,6 +310,7 @@ mc_solver/ContactWrenchMatrixToLambdaMatrix.cpp
 mc_solver/DynamicsConstraint.cpp
 mc_solver/KinematicsConstraint.cpp
 mc_solver/QPSolver.cpp
+mc_solver/TasksQPSolver.cpp
 mc_solver/Update.cpp
 mc_solver/UpdateNrVars.cpp
 mc_tasks/MetaTask.cpp
@@ -316,9 +318,6 @@ mc_tasks/MetaTask.cpp
 
 set(mc_solver_HDR
 ../include/mc_solver/api.h
-../include/mc_solver/msg/Contact.h
-../include/mc_solver/msg/QPResult.h
-../include/mc_solver/msg/Robot.h
 ../include/mc_solver/utils/Constraint.h
 ../include/mc_solver/utils/ContactWrenchMatrixToLambdaMatrix.h
 ../include/mc_solver/utils/Update.h
@@ -339,6 +338,7 @@ set(mc_solver_HDR
 ../include/mc_solver/GenInequalityConstraint.h
 ../include/mc_solver/InequalityConstraint.h
 ../include/mc_solver/QPSolver.h
+../include/mc_solver/TasksQPSolver.h
 ../include/mc_tasks/MetaTask.h
 )
 
@@ -372,6 +372,7 @@ target_link_libraries(mc_trajectory PUBLIC ndcurves::ndcurves mc_rtc::mc_rtc_gui
 install_mc_rtc_lib(mc_trajectory)
 
 set(mc_tasks_SRC
+mc_tasks/TrajectoryTaskGeneric.cpp
 mc_tasks/MomentumTask.cpp
 mc_tasks/PositionTask.cpp
 mc_tasks/TransformTask.cpp
@@ -419,7 +420,6 @@ set(mc_tasks_HDR
 ../include/mc_tasks/BSplineTrajectoryTask.h
 ../include/mc_tasks/ExactCubicTrajectoryTask.h
 ../include/mc_tasks/TrajectoryTaskGeneric.h
-../include/mc_tasks/TrajectoryTaskGeneric.hpp
 ../include/mc_tasks/ComplianceTask.h
 ../include/mc_tasks/AdmittanceTask.h
 ../include/mc_tasks/ImpedanceGains.h

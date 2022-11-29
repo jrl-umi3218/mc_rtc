@@ -1,27 +1,44 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_rbdyn/rpy_utils.h>
-#include <mc_rtc/ConfigurationHelpers.h>
-#include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/TransformTask.h>
 
-#include <mc_rtc/gui/Transform.h>
+#include <mc_tasks/MetaTaskLoader.h>
 
+#include <mc_solver/TasksQPSolver.h>
+
+#include <mc_rbdyn/rpy_utils.h>
+
+#include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_rtc/deprecated.h>
+#include <mc_rtc/gui/Transform.h>
 
 namespace mc_tasks
 {
 
-TransformTask::TransformTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
-: TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>(frame.robot().robots(),
-                                                         frame.robot().robotIndex(),
-                                                         stiffness,
-                                                         weight),
-  frame_(frame)
+static inline tasks::qp::SurfaceTransformTask * tasks_error(mc_rtc::void_ptr & ptr)
 {
-  finalize(robots.mbs(), static_cast<int>(rIndex), frame.body(), frame.position(), frame.X_b_f());
+  return static_cast<tasks::qp::SurfaceTransformTask *>(ptr.get());
+}
+
+static inline const tasks::qp::SurfaceTransformTask * tasks_error(const mc_rtc::void_ptr & ptr)
+{
+  return static_cast<const tasks::qp::SurfaceTransformTask *>(ptr.get());
+}
+
+TransformTask::TransformTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+: TrajectoryTaskGeneric(frame.robot().robots(), frame.robot().robotIndex(), stiffness, weight), frame_(frame)
+{
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      finalize<tasks::qp::SurfaceTransformTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(), frame.position(),
+                                                frame.X_b_f());
+      break;
+    default:
+      mc_rtc::log::error_and_throw("[TransformTask] Not implemented for solver backend: {}", backend_);
+  }
 
   type_ = "transform";
   name_ = "transform_" + frame.robot().name() + "_" + frame.name();
@@ -39,7 +56,14 @@ TransformTask::TransformTask(const std::string & surfaceName,
 void TransformTask::reset()
 {
   TrajectoryTaskGeneric::reset();
-  errorT->target(frame_->position());
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      tasks_error(errorT)->target(frame_->position());
+      break;
+    default:
+      break;
+  }
 }
 
 /*! \brief Load parameters from a Configuration object */
@@ -118,12 +142,25 @@ void TransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
 
 sva::PTransformd TransformTask::target() const
 {
-  return errorT->target();
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      return tasks_error(errorT)->target();
+    default:
+      mc_rtc::log::error_and_throw("Not implemented");
+  }
 }
 
 void TransformTask::target(const sva::PTransformd & pose)
 {
-  errorT->target(pose);
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      tasks_error(errorT)->target(pose);
+      break;
+    default:
+      break;
+  }
 }
 
 void TransformTask::targetSurface(unsigned int robotIndex,
@@ -191,7 +228,7 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> TransformTask::bu
 
 void TransformTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::addToGUI(gui);
+  TrajectoryTaskGeneric::addToGUI(gui);
   gui.addElement({"Tasks", name_},
                  mc_rtc::gui::Transform(
                      "pos_target", [this]() { return this->target(); },

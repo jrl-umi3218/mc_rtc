@@ -22,6 +22,7 @@ const double dt = 0.005;
 mc_rbdyn::Robots & get_robots()
 {
   spdlog::set_level(spdlog::level::err);
+  mc_solver::QPSolver::context_backend(mc_solver::QPSolver::Backend::Tasks);
   static mc_rbdyn::RobotsPtr robots_ptr = nullptr;
   if(robots_ptr)
   {

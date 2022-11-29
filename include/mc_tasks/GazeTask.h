@@ -9,12 +9,8 @@
 namespace mc_tasks
 {
 
-/*! \brief Control the Gaze of a body
- *
- * This task is thin wrapper around the appropriate tasks in Tasks.
- *
- */
-struct MC_TASKS_DLLAPI GazeTask : public TrajectoryTaskGeneric<tasks::qp::GazeTask>
+/*! \brief Control the Gaze of a body */
+struct MC_TASKS_DLLAPI GazeTask : public TrajectoryTaskGeneric
 {
 public:
   /*! \brief Constructor

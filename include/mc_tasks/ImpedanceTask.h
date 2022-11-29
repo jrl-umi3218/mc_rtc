@@ -1,11 +1,11 @@
 /*
- * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
 #include <mc_tasks/ImpedanceGains.h>
-#include <mc_tasks/SurfaceTransformTask.h>
+#include <mc_tasks/TransformTask.h>
 
 #include <mc_filter/LowPass.h>
 
@@ -49,7 +49,7 @@ namespace force
  *    https://www.springer.com/jp/book/9780792377337
  *
  */
-struct MC_TASKS_DLLAPI ImpedanceTask : SurfaceTransformTask
+struct MC_TASKS_DLLAPI ImpedanceTask : TransformTask
 {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -68,13 +68,24 @@ public:
    *
    * \throws If the body the task is attempting to control does not have a
    * sensor attached to it
-   *
    */
   ImpedanceTask(const std::string & surfaceName,
                 const mc_rbdyn::Robots & robots,
                 unsigned robotIndex,
                 double stiffness = 5.0,
                 double weight = 1000.0);
+
+  /** \brief Constructor
+   *
+   * \param frame Frame controlled by this task
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param weight Task weight
+   *
+   * \throws If the frame does not have a force sensor attached to it
+   */
+  ImpedanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness = 5.0, double weight = 1000.0);
 
   /*! \brief Reset the task
    *
@@ -251,8 +262,8 @@ protected:
   sva::ForceVecd measuredWrench_ = sva::ForceVecd::Zero();
   sva::ForceVecd filteredMeasuredWrench_ = sva::ForceVecd::Zero();
 
-  mc_filter::LowPass<sva::ForceVecd> lowPass_;
   double cutoffPeriod_ = 0.05;
+  mc_filter::LowPass<sva::ForceVecd> lowPass_;
 
   // Hold mode
   bool hold_ = false;
@@ -268,9 +279,9 @@ private:
    *  Instead, the user can set the targetPose, targetVel, and targetAccel.
    *  Targets of SurfaceTransformTask are determined from the target values through the impedance equation.
    */
-  using SurfaceTransformTask::refAccel;
-  using SurfaceTransformTask::refVelB;
-  using SurfaceTransformTask::target;
+  using TransformTask::refAccel;
+  using TransformTask::refVelB;
+  using TransformTask::target;
 };
 
 } // namespace force

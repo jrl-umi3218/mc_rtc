@@ -1,6 +1,13 @@
-#include <mc_rtc/logging.h>
+/*
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 #include <mc_solver/CompoundJointConstraint.h>
+
+#include <mc_rtc/logging.h>
+
 #include <mc_solver/ConstraintSetLoader.h>
+#include <mc_solver/TasksQPSolver.h>
 
 namespace mc_solver
 {
@@ -95,6 +102,23 @@ std::string CompoundJointConstraint::descInEq(const std::vector<rbd::MultiBody> 
 
 } // namespace details
 
+static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend,
+                                        const mc_rbdyn::Robots & robots,
+                                        unsigned int rIndex,
+                                        double dt,
+                                        const CompoundJointConstraintDescriptionVector & cs)
+{
+  switch(backend)
+  {
+    case QPSolver::Backend::Tasks:
+    {
+      return mc_rtc::make_void_ptr<details::CompoundJointConstraint>(robots, rIndex, dt, cs);
+    }
+    default:
+      mc_rtc::log::error_and_throw("[CompoundJointConstraint] Not implemented for solver backend: {}", backend);
+  }
+}
+
 CompoundJointConstraint::CompoundJointConstraint(const mc_rbdyn::Robots & robots, unsigned int rIndex, double dt)
 : CompoundJointConstraint(robots, rIndex, dt, robots.robot(rIndex).module().compoundJoints())
 {
@@ -104,19 +128,34 @@ CompoundJointConstraint::CompoundJointConstraint(const mc_rbdyn::Robots & robots
                                                  unsigned int rIndex,
                                                  double dt,
                                                  const CompoundJointConstraintDescriptionVector & cs)
-: constr_(robots, rIndex, dt, cs)
+: constraint_(make_constraint(backend_, robots, rIndex, dt, cs))
 {
 }
 
-void CompoundJointConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)
+void CompoundJointConstraint::addToSolverImpl(QPSolver & solver)
 {
-  constr_.addToSolver(mbs, solver);
-  solver.updateConstrSize();
+  switch(backend_)
+  {
+    case QPSolver::Backend::Tasks:
+      static_cast<details::CompoundJointConstraint *>(constraint_.get())
+          ->addToSolver(solver.robots().mbs(), tasks_solver(solver).solver());
+      break;
+    default:
+      break;
+  }
 }
 
-void CompoundJointConstraint::removeFromSolver(tasks::qp::QPSolver & solver)
+void CompoundJointConstraint::removeFromSolverImpl(QPSolver & solver)
 {
-  constr_.removeFromSolver(solver);
+  switch(backend_)
+  {
+    case QPSolver::Backend::Tasks:
+      static_cast<details::CompoundJointConstraint *>(constraint_.get())
+          ->removeFromSolver(tasks_solver(solver).solver());
+      break;
+    default:
+      break;
+  }
 }
 
 } // namespace mc_solver

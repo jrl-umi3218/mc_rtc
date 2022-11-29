@@ -1,60 +1,83 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_rtc/logging.h>
-#include <mc_solver/ConstraintSetLoader.h>
 #include <mc_solver/ContactConstraint.h>
+
+#include <mc_solver/ConstraintSetLoader.h>
+#include <mc_solver/TasksQPSolver.h>
+
+#include <mc_rtc/logging.h>
+
+#include <Tasks/QPContactConstr.h>
+#include <Tasks/QPMotionConstr.h>
 
 namespace mc_solver
 {
 
-ContactConstraint::ContactConstraint(double timeStep, ContactType contactType, bool dynamics)
+static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend,
+                                        double timeStep,
+                                        ContactConstraint::ContactType contactType)
 {
-  if(contactType == Acceleration)
+  using CType = ContactConstraint::ContactType;
+  switch(backend)
   {
-    contactConstr.reset(new tasks::qp::ContactAccConstr());
-  }
-  else if(contactType == Velocity)
-  {
-    contactConstr.reset(new tasks::qp::ContactSpeedConstr(timeStep));
-  }
-  else if(contactType == Position)
-  {
-    contactConstr.reset(new tasks::qp::ContactPosConstr(timeStep));
-  }
-  else
-  {
-    mc_rtc::log::error_and_throw("Trying to create a contact constraint from an unknown contact constraint type");
-  }
-  if(dynamics)
-  {
-    posLambdaConstr.reset(new tasks::qp::PositiveLambda());
+    case QPSolver::Backend::Tasks:
+    {
+      switch(contactType)
+      {
+        case CType::Acceleration:
+          return mc_rtc::make_void_ptr<tasks::qp::ContactAccConstr>();
+        case CType::Velocity:
+          return mc_rtc::make_void_ptr<tasks::qp::ContactSpeedConstr>(timeStep);
+        case CType::Position:
+          return mc_rtc::make_void_ptr<tasks::qp::ContactPosConstr>(timeStep);
+        default:
+          mc_rtc::log::error_and_throw("[ContactConstraint] Invalid contact type given to constructor");
+      }
+    }
+    default:
+      mc_rtc::log::error_and_throw("[ContactConstr] Not implemented for solver backend: {}", backend);
   }
 }
 
-void ContactConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)
+ContactConstraint::ContactConstraint(double timeStep, ContactType contactType)
+: constraint_(make_constraint(backend_, timeStep, contactType))
 {
-  if(contactConstr)
+}
+
+void ContactConstraint::addToSolverImpl(QPSolver & solver)
+{
+  switch(backend_)
   {
-    contactConstr->addToSolver(mbs, solver);
-  }
-  if(posLambdaConstr)
-  {
-    posLambdaConstr->addToSolver(mbs, solver);
+    case QPSolver::Backend::Tasks:
+      static_cast<tasks::qp::ContactConstr *>(constraint_.get())
+          ->addToSolver(solver.robots().mbs(), tasks_solver(solver).solver());
+      break;
+    default:
+      break;
   }
 }
 
-void ContactConstraint::removeFromSolver(tasks::qp::QPSolver & solver)
+void ContactConstraint::removeFromSolverImpl(QPSolver & solver)
 {
-  if(contactConstr)
+  switch(backend_)
   {
-    contactConstr->removeFromSolver(solver);
+    case QPSolver::Backend::Tasks:
+      static_cast<tasks::qp::ContactConstr *>(constraint_.get())->removeFromSolver(tasks_solver(solver).solver());
+      break;
+    default:
+      break;
   }
-  if(posLambdaConstr)
+}
+
+tasks::qp::ContactConstr * ContactConstraint::contactConstr()
+{
+  if(backend_ != QPSolver::Backend::Tasks)
   {
-    posLambdaConstr->removeFromSolver(solver);
+    mc_rtc::log::error_and_throw("[ContactConstraint] contactConstr() is only usable for the Tasks backend");
   }
+  return static_cast<tasks::qp::ContactConstr *>(constraint_.get());
 }
 
 } // namespace mc_solver
@@ -80,7 +103,6 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
         mc_rtc::log::error("Stored contact type for contact constraint not recognized, default to velocity");
         mc_rtc::log::warning("(Read: {}, expect one of: acceleration, velocity, position)", cTypeStr);
       }
-      bool dynamics = config("dynamics", true);
-      return std::make_shared<mc_solver::ContactConstraint>(solver.dt(), cType, dynamics);
+      return std::make_shared<mc_solver::ContactConstraint>(solver.dt(), cType);
     });
 }

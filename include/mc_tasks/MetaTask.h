@@ -1,15 +1,17 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
+#include <mc_tasks/api.h>
+
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/gui/StateBuilder.h>
 #include <mc_rtc/log/Logger.h>
+
 #include <mc_solver/QPSolver.h>
 #include <mc_solver/api.h>
-#include <mc_tasks/api.h>
 
 #include <cmath>
 
@@ -18,10 +20,15 @@ namespace mc_control
 struct CompletionCriteria;
 }
 
-namespace mc_tasks
+namespace mc_solver
 {
 
-MC_SOLVER_DLLAPI double extraStiffness(double error, double extraStiffness);
+struct TasksQPSolver;
+
+}
+
+namespace mc_tasks
+{
 
 /*! \brief Represents a generic task
  *
@@ -31,9 +38,15 @@ MC_SOLVER_DLLAPI double extraStiffness(double error, double extraStiffness);
 struct MC_SOLVER_DLLAPI MetaTask
 {
   friend struct mc_solver::QPSolver;
+  friend struct mc_solver::TasksQPSolver;
   friend struct mc_control::CompletionCriteria;
 
+  /** Shortcut for implementation */
+  using Backend = mc_solver::QPSolver::Backend;
+
 public:
+  inline MetaTask() : backend_(mc_solver::QPSolver::context_backend()) {}
+
   virtual ~MetaTask();
 
   /** Get the type of the task */
@@ -155,6 +168,11 @@ public:
   inline void incrementIterInSolver() noexcept
   {
     iterInSolver_++;
+  }
+
+  inline Backend backend() const noexcept
+  {
+    return backend_;
   }
 
 protected:
@@ -300,6 +318,9 @@ protected:
   virtual std::function<bool(const mc_tasks::MetaTask & task, std::string &)> buildCompletionCriteria(
       double dt,
       const mc_rtc::Configuration & config) const;
+
+  /** QPSolver backend at creation time */
+  Backend backend_;
 
   std::string type_;
   std::string name_;

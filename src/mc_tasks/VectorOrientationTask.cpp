@@ -1,15 +1,27 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/VectorOrientationTask.h>
 
+#include <mc_tasks/MetaTaskLoader.h>
+
+#include <mc_rtc/gui/ArrayInput.h>
 #include <mc_rtc/gui/Arrow.h>
 #include <mc_rtc/gui/Point3D.h>
 
 namespace mc_tasks
 {
+
+inline static tasks::qp::VectorOrientationTask * tasks_error(mc_rtc::void_ptr & ptr)
+{
+  return static_cast<tasks::qp::VectorOrientationTask *>(ptr.get());
+}
+
+inline static const tasks::qp::VectorOrientationTask * tasks_error(const mc_rtc::void_ptr & ptr)
+{
+  return static_cast<const tasks::qp::VectorOrientationTask *>(ptr.get());
+}
 
 VectorOrientationTask::VectorOrientationTask(const std::string & bodyName,
                                              const Eigen::Vector3d & bodyVector,
@@ -27,11 +39,19 @@ VectorOrientationTask::VectorOrientationTask(const mc_rbdyn::RobotFrame & frame,
                                              const Eigen::Vector3d & frameVector,
                                              double stiffness,
                                              double weight)
-: TrajectoryTaskGeneric<tasks::qp::VectorOrientationTask>(frame, stiffness, weight), frame_(frame)
+: TrajectoryTaskGeneric(frame, stiffness, weight), frame_(frame)
 {
   const auto & X_b_f = frame.X_b_f();
   Eigen::Vector3d bodyVector = (sva::PTransformd{frameVector} * X_b_f).translation().normalized();
-  finalize(robots.mbs(), static_cast<int>(rIndex), frame.body(), bodyVector, bodyVector);
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      finalize<tasks::qp::VectorOrientationTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(), bodyVector,
+                                                 bodyVector);
+      break;
+    default:
+      mc_rtc::log::error_and_throw("[VectorOrientationTask] Not implemented for solver backend: {}", backend_);
+  }
   type_ = "vectorOrientation";
   name_ = "vector_orientation_" + frame.robot().name() + "_" + frame.name();
   reset();
@@ -52,24 +72,58 @@ void VectorOrientationTask::reset()
   TrajectoryTaskGeneric::reset();
   // Should be errorT->actual(), but it is not computed until the first call to
   // errorT::update()
-  Eigen::Matrix3d E_0_b = frame_->robot().frame(body()).position().rotation().transpose();
-  Eigen::Vector3d actualVector = E_0_b * errorT->bodyVector();
-  this->targetVector(actualVector.normalized());
+  switch(backend_)
+  {
+    case Backend::Tasks:
+    {
+      Eigen::Matrix3d E_0_b = frame_->robot().frame(body()).position().rotation().transpose();
+      Eigen::Vector3d actualVector = E_0_b * tasks_error(errorT)->bodyVector();
+      this->targetVector(actualVector.normalized());
+    }
+    break;
+    default:
+      break;
+  }
 }
 
 void VectorOrientationTask::targetVector(const Eigen::Vector3d & ori)
 {
-  errorT->target((sva::PTransformd{ori} * frame_->X_b_f()).translation().normalized());
+  switch(backend_)
+  {
+    case Backend::Tasks:
+    {
+      tasks_error(errorT)->target((sva::PTransformd{ori} * frame_->X_b_f()).translation().normalized());
+    }
+    break;
+    default:
+      break;
+  }
 }
 
 Eigen::Vector3d VectorOrientationTask::targetVector() const
 {
-  return (frame_->X_b_f() * errorT->target()).translation();
+  switch(backend_)
+  {
+    case Backend::Tasks:
+    {
+      return (frame_->X_b_f() * tasks_error(errorT)->target()).translation();
+    }
+    default:
+      mc_rtc::log::error_and_throw("Not implemented");
+  }
 }
 
 Eigen::Vector3d VectorOrientationTask::actual() const
 {
-  return (frame_->X_b_f() * errorT->actual()).translation();
+  switch(backend_)
+  {
+    case Backend::Tasks:
+    {
+      return (frame_->X_b_f() * tasks_error(errorT)->actual()).translation();
+    }
+    default:
+      mc_rtc::log::error_and_throw("Not implemented");
+  }
 }
 
 void VectorOrientationTask::addToLogger(mc_rtc::Logger & logger)

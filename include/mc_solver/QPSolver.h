@@ -1,20 +1,16 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#ifndef _H_MCCONTROLQPSOLVER_H_
-#define _H_MCCONTROLQPSOLVER_H_
+#pragma once
+
+#include <mc_solver/api.h>
 
 #include <mc_control/api.h>
 #include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/Robots.h>
-#include <mc_rtc/pragma.h>
-#include <mc_solver/ConstraintSet.h>
-#include <mc_solver/DynamicsConstraint.h>
-#include <mc_solver/api.h>
-#include <mc_solver/msg/QPResult.h>
 
-#include <Tasks/QPSolver.h>
+#include <mc_rtc/pragma.h>
 
 #include <memory>
 
@@ -76,16 +72,29 @@ enum class MC_SOLVER_DLLAPI FeedbackType
 
 MC_RTC_diagnostic_pop
 
+struct ConstraintSet;
+struct DynamicsConstraint;
+struct TasksQPSolver;
+
 /** \class QPSolver
  *
- * Wraps a tasks::qp::QPSolver instance
+ * Abstract base class for wrapping a solver
  *
  * Always ensure that the solver is up-to-date
  */
-
-struct QPSolver
+struct MC_SOLVER_DLLAPI QPSolver
 {
 public:
+  /** Known backends for QPSolver implementation, tasks and constraints in
+   * mc_rtc can discriminate on this value to select the implementation */
+  enum class Backend
+  {
+    /** Unset */
+    Unset,
+    /** Use Tasks library as a backend */
+    Tasks
+  };
+
   /** This token is used to give mc_control::MCController access to some internals */
   struct MC_SOLVER_DLLAPI ControllerToken
   {
@@ -102,28 +111,66 @@ public:
    *
    * \note The real robots will be created by copying the provided robots
    */
-  MC_SOLVER_DLLAPI QPSolver(mc_rbdyn::RobotsPtr robots, double timeStep);
+  QPSolver(mc_rbdyn::RobotsPtr robots, double timeStep, Backend backend);
 
   /** Constructor (the solver creates its own Robots instance)
    * \param timeStep Timestep of the solver
    */
-  MC_SOLVER_DLLAPI QPSolver(double timeStep);
+  QPSolver(double timeStep, Backend backend);
+
+  virtual ~QPSolver() = default;
+
+  /** Returns the backend for this solver instance */
+  inline Backend backend() const noexcept
+  {
+    return backend_;
+  }
+
+  /** Returns the current context backend
+   *
+   * This should be set whenever constraints or tasks are about to be created and it is known they don't use the solver
+   * object and thus cannot determine the correct backend
+   *
+   * For example:
+   * - QPSolver implementations should set it on the thread it's created
+   * - ConstraintSetLoader and MetaTasksLoader set it before loading objects
+   * - MCGlobalController sets it before run
+   * - You might need to set it if you create tasks in a thread you created
+   */
+  static Backend context_backend();
+
+  /** Set the current context backend */
+  static void context_backend(Backend backend);
 
   /** Add a constraint set
    * \param cs Constraint set added to the solver
    */
-  MC_SOLVER_DLLAPI void addConstraintSet(ConstraintSet & cs);
+  void addConstraintSet(ConstraintSet & cs);
+
+  /** Add a constraint set
+   *
+   * \param cs Constraint set added to the solver
+   */
+  template<typename T>
+  inline void addConstraintSet(const std::unique_ptr<T> & ptr)
+  {
+    addConstraintSet(*ptr);
+  }
 
   /** Remove a constraint set
    * \param cs Constrain set removed from the solver
    */
-  MC_SOLVER_DLLAPI void removeConstraintSet(ConstraintSet & cs);
+  void removeConstraintSet(ConstraintSet & cs);
 
-  /** Add a task to the solver
-   * \param task Pointer to the added task, QPSolver does not take ownership of this pointer and the caller should make
-   * sure the object remains valid until it is removed from the solver
+  /** Remove a constraint set
+   *
+   * \param cs Constraint set removed from the solver
    */
-  MC_SOLVER_DLLAPI void addTask(tasks::qp::Task * task);
+  template<typename T>
+  inline void removeConstraintSet(const std::unique_ptr<T> & ptr)
+  {
+    removeConstraintSet(*ptr);
+  }
 
   /** Add a task to the solver
    *
@@ -134,32 +181,17 @@ public:
    * automatically called before the optimization is solved.
    *
    */
-  MC_SOLVER_DLLAPI void addTask(mc_tasks::MetaTask * task);
+  void addTask(mc_tasks::MetaTask * task);
 
-  /** Add a task to the solver
-   *
-   * Simple wrapper to add a shared_ptr
-   *
-   * \param task Shared-pointer to a task T that is derived from
-   * mc_tasks::MetaTask
-   *
-   */
-  template<typename T>
-  inline void addTask(std::shared_ptr<T> task)
+  /** Add a task to the solver, ownership is shared with the solver */
+  inline void addTask(std::shared_ptr<mc_tasks::MetaTask> task)
   {
-    static_assert(std::is_base_of<mc_tasks::MetaTask, T>::value || std::is_base_of<tasks::qp::Task, T>::value,
-                  "You are trying to add a task that is neither a tasks::qp::Task or an mc_tasks::MetaTask");
     if(task)
     {
       addTask(task.get());
       shPtrTasksStorage.emplace_back(task);
     }
   }
-
-  /** Remove a task from the solver
-   * \param task Pointer to the removed task. The task is not deleted after being removed
-   */
-  MC_SOLVER_DLLAPI void removeTask(tasks::qp::Task * task);
 
   /** Remove a task from the solver
    *
@@ -169,85 +201,38 @@ public:
    * updated anymore and memory should be released by the task's owner.
    *
    */
-  MC_SOLVER_DLLAPI void removeTask(mc_tasks::MetaTask * task);
+  void removeTask(mc_tasks::MetaTask * task);
 
-  /** Remove a task from the solver
-   *
-   * Simple wrapper to remove a shared_ptr
-   *
-   * \param task Shared-pointer to a task T that is derived from
-   * mc_tasks::MetaTask
-   *
-   */
-  template<typename T>
-  inline void removeTask(std::shared_ptr<T> task)
+  /** Remove a task from the solver which was shared with the solver */
+  inline void removeTask(std::shared_ptr<mc_tasks::MetaTask> task)
   {
-    static_assert(std::is_base_of<mc_tasks::MetaTask, T>::value || std::is_base_of<tasks::qp::Task, T>::value,
-                  "You are trying to add a task that is neither a tasks::qp::Task or an mc_tasks::MetaTask");
     if(task)
     {
       removeTask(task.get());
     }
   }
 
-  /** Add a constraint function from the solver
-   * \param constraint Pointer to the ConstraintFunction. QPSolver does not take ownserhip of this pointer and the
-   * caller should make sure the object remains valid until it is removed from the solver
-   */
-  template<typename... Fun>
-  void addConstraint(tasks::qp::ConstraintFunction<Fun...> * constraint)
-  {
-    constraint->addToSolver(robots().mbs(), solver);
-    solver.updateConstrSize();
-    solver.updateNrVars(robots().mbs());
-  }
-
-  /** Remove a constraint function from the solver
-   * \param constraint Pointer to the constraint that will be removed. It is not destroyed afterwards
-   */
-  template<typename... Fun>
-  void removeConstraint(tasks::qp::ConstraintFunction<Fun...> * constraint)
-  {
-    constraint->removeFromSolver(solver);
-    solver.updateConstrSize();
-    solver.updateNrVars(robots().mbs());
-  }
-
-  /** Gives access to the tasks::qp::BilateralContact entity in the solver from a contact id
-   * \param id The contact id of the contact
-   * \return The tasks:qp::BilateralContact entity from the solver if id is valid, otherwise, the first element of the
-   * pair is -1 and the reference is invalid
-   */
-  MC_SOLVER_DLLAPI std::pair<int, const tasks::qp::BilateralContact &> contactById(
-      const tasks::qp::ContactId & id) const;
-
-  /** Gives access to a part to lambdaVec given a contact index
-   * \param cIndex The index of the contact
-   * \return The lambdaVec associated
-   */
-  MC_SOLVER_DLLAPI Eigen::VectorXd lambdaVec(int cIndex) const;
-
   /** Reset all contacts in the solver and use the new set of contacts provided
    * \item contact Set of mc_rbdyn::Contact
    */
-  MC_CONTROL_DLLAPI void setContacts(const std::vector<mc_rbdyn::Contact> & contacts = {});
+  void setContacts(const std::vector<mc_rbdyn::Contact> & contacts = {});
 
   /* Called by the owning controller to actually set the contacts or internally by QPSolver when it has no owning
    * controller */
-  MC_SOLVER_DLLAPI void setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts);
+  virtual void setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts) = 0;
 
   /** Returns the current set of contacts */
-  MC_SOLVER_DLLAPI const std::vector<mc_rbdyn::Contact> & contacts() const;
+  const std::vector<mc_rbdyn::Contact> & contacts() const;
 
   /** Returns the MetaTasks currently in the solver */
-  MC_SOLVER_DLLAPI const std::vector<mc_tasks::MetaTask *> & tasks() const;
+  const std::vector<mc_tasks::MetaTask *> & tasks() const;
 
   /** Desired resultant of contact force in robot surface frame
    * \param contact Contact for which the force is desired.
    * This contact must be one of the active contacts in the solver.
    * \return Contact force in robot surface frame
    */
-  MC_SOLVER_DLLAPI const sva::ForceVecd desiredContactForce(const mc_rbdyn::Contact & id) const;
+  virtual const sva::ForceVecd desiredContactForce(const mc_rbdyn::Contact & id) const = 0;
 
   /** Run one iteration of the QP.
    *
@@ -257,95 +242,61 @@ public:
    *
    * \return True if successful, false otherwise.
    */
-  MC_SOLVER_DLLAPI bool run(FeedbackType fType = FeedbackType::None);
-
-  /** Provides the result of run() for robots.robot()
-   * \param curTime Unused
-   */
-  MC_SOLVER_DLLAPI const QPResultMsg & send(double curTime = 0);
-
-  /** Non-const access to QPResultMsg
-   *
-   * You are unlikely to need this function, it is used by the framework to
-   * change the gripper's states
-   *
-   */
-  inline QPResultMsg & result()
-  {
-    return qpRes;
-  }
+  bool run(FeedbackType fType = FeedbackType::None);
 
   /** Gives access to the main robot in the solver */
-  MC_SOLVER_DLLAPI const mc_rbdyn::Robot & robot() const;
+  const mc_rbdyn::Robot & robot() const;
   /** Gives access to the main robot in the solver */
-  MC_SOLVER_DLLAPI mc_rbdyn::Robot & robot();
+  mc_rbdyn::Robot & robot();
 
   /** Gives access to the robot with the given index in the solver */
-  MC_SOLVER_DLLAPI mc_rbdyn::Robot & robot(unsigned int idx);
+  mc_rbdyn::Robot & robot(unsigned int idx);
   /** Gives access to the robot with the given index in the solver */
-  MC_SOLVER_DLLAPI const mc_rbdyn::Robot & robot(unsigned int idx) const;
+  const mc_rbdyn::Robot & robot(unsigned int idx) const;
 
   /** Gives access to the environment robot in the solver (see mc_rbdyn::Robots) */
-  MC_SOLVER_DLLAPI const mc_rbdyn::Robot & env() const;
+  const mc_rbdyn::Robot & env() const;
   /** Gives access to the environment robot in the solver (see mc_rbdyn::Robots) */
-  MC_SOLVER_DLLAPI mc_rbdyn::Robot & env();
+  mc_rbdyn::Robot & env();
 
   /** Gives access to the robots controlled by this solver */
-  MC_SOLVER_DLLAPI const mc_rbdyn::Robots & robots() const;
+  const mc_rbdyn::Robots & robots() const;
   /** Gives access to the robots controlled by this solver */
-  MC_SOLVER_DLLAPI mc_rbdyn::Robots & robots();
+  mc_rbdyn::Robots & robots();
 
   /** Gives access to the real robots used by this solver */
-  MC_SOLVER_DLLAPI const mc_rbdyn::Robots & realRobots() const;
+  const mc_rbdyn::Robots & realRobots() const;
   /** Gives access to the real robots used by this solver */
-  MC_SOLVER_DLLAPI mc_rbdyn::Robots & realRobots();
-
-  /** Update number of variables
-   *
-   * This should be called when/if you add new robots into the scene after the
-   * solver initialization, this is a costly operation.
-   */
-  MC_SOLVER_DLLAPI void updateNrVars();
-
-  /** Update constraints matrix sizes
-   *
-   * \note This is mainly provided to allow safe usage of raw constraint from
-   * Tasks rather than those wrapped in this library, you probably do not need
-   * to call this
-   */
-  MC_SOLVER_DLLAPI void updateConstrSize();
+  mc_rbdyn::Robots & realRobots();
 
   /** Returns the timestep of the solver
    * \return The timestep of the solver
    */
-  MC_SOLVER_DLLAPI double dt() const;
-
-  /** Returns the internal QP solver data
-   * \return The data of the solver
-   */
-  MC_SOLVER_DLLAPI tasks::qp::SolverData & data();
+  double dt() const;
 
   /** Use the dynamics constraint to fill torque in the main robot */
-  MC_SOLVER_DLLAPI void fillTorque(const mc_solver::DynamicsConstraint & dynamicsConstraint);
+  void fillTorque(const mc_solver::DynamicsConstraint & dynamicsConstraint);
 
-  MC_SOLVER_DLLAPI boost::timer::cpu_times solveTime();
+  /** Returns the solving time in ms */
+  virtual double solveTime() = 0;
 
-  MC_SOLVER_DLLAPI boost::timer::cpu_times solveAndBuildTime();
+  /** Returns the building and solving time in ms */
+  virtual double solveAndBuildTime() = 0;
 
   /** Return the solvers result vector.
    * \return The solvers result vector.
    */
-  MC_SOLVER_DLLAPI const Eigen::VectorXd & result() const;
+  virtual const Eigen::VectorXd & result() const = 0;
 
   /** Set the logger for this solver instance */
-  MC_SOLVER_DLLAPI void logger(std::shared_ptr<mc_rtc::Logger> logger);
+  void logger(std::shared_ptr<mc_rtc::Logger> logger);
   /** Access to the logger instance */
-  MC_SOLVER_DLLAPI std::shared_ptr<mc_rtc::Logger> logger() const;
+  std::shared_ptr<mc_rtc::Logger> logger() const;
 
   /** Set the GUI helper for this solver instance */
-  MC_SOLVER_DLLAPI void gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui);
+  void gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui);
   /** Access to the gui instance */
-  MC_SOLVER_DLLAPI std::shared_ptr<mc_rtc::gui::StateBuilder> gui() const;
+  std::shared_ptr<mc_rtc::gui::StateBuilder> gui() const;
 
   /** Set the controller that is owning this QPSolver instance */
   inline void controller(mc_control::MCController * ctl) noexcept
@@ -363,17 +314,14 @@ public:
     return controller_;
   }
 
-private:
+protected:
+  Backend backend_;
   mc_rbdyn::RobotsPtr robots_p;
   mc_rbdyn::RobotsPtr realRobots_p;
   double timeStep;
 
   /** Holds mc_rbdyn::Contact in the solver */
   std::vector<mc_rbdyn::Contact> contacts_;
-  /** Holds unilateral contacts in the solver */
-  std::vector<tasks::qp::UnilateralContact> uniContacts;
-  /** Holds bilateral contacts in the solver */
-  std::vector<tasks::qp::BilateralContact> biContacts;
 
   /** Holds MetaTask currently in the solver */
   std::vector<mc_tasks::MetaTask *> metaTasks_;
@@ -381,15 +329,10 @@ private:
   /** Holds dynamics constraint currently in the solver */
   std::vector<mc_solver::DynamicsConstraint *> dynamicsConstraints_;
 
-private:
-  /** The actual solver instance */
-  tasks::qp::QPSolver solver;
-  /** Latest result */
-  QPResultMsg qpRes;
-
+  /** Storage for shared_pointer on tasks */
   std::vector<std::shared_ptr<void>> shPtrTasksStorage;
 
-  /** Update qpRes from the latest run() */
+  /** Update result after the latest run() */
   void __fillResult();
 
   /** Pointer to the Logger */
@@ -400,48 +343,34 @@ private:
 
   void addTaskToGUI(mc_tasks::MetaTask * task);
 
-  /** Run without feedback (open-loop) */
-  bool runOpenLoop();
-
-  /** Run with encoders' feedback */
-  bool runJointsFeedback(bool wVelocity);
-
-  /**
-   * WARNING EXPERIMENTAL
-   *
-   * Runs the QP on an estimated robot state.
-   *
-   * Uses the real robot state (mbc.q and mbc.alpha) from realRobots() instances.
-   * It is the users responsibility to ensure that the real robot instance is properly estimated
-   * and filled. Typically, this will be done through the Observers pipeline.
-   * For example, the following pipeline provides a suitable state:
-   *
-   * \code{.yaml}
-   * RunObservers: [Encoder, KinematicInertial]
-   * UpdateObservers: [Encoder, KinematicInertial]
-   * \endcode
-   *
-   * @param integrateControlState If true, integration is performed over the control state, otherwise over the observed
-   * state
-   *
-   * @return True if successful, false otherwise
-   */
-  bool runClosedLoop(bool integrateControlState);
-
-  /** Feedback data */
-  std::vector<std::vector<double>> prev_encoders_{};
-  std::vector<std::vector<double>> encoders_alpha_{};
-  std::vector<std::vector<std::vector<double>>> control_q_{};
-  std::vector<std::vector<std::vector<double>>> control_alpha_{};
-
   /** Can be nullptr if this not associated to any controller */
   mc_control::MCController * controller_ = nullptr;
 
-public:
-  /** \deprecated{Default constructor, not made for general usage} */
-  MC_SOLVER_DLLAPI QPSolver() {}
+  virtual bool run_impl(FeedbackType fType = FeedbackType::None) = 0;
 };
 
 } // namespace mc_solver
 
-#endif
+namespace fmt
+{
+
+template<>
+struct formatter<mc_solver::QPSolver::Backend> : public formatter<string_view>
+{
+  template<typename FormatContext>
+  auto format(const mc_solver::QPSolver::Backend & backend, FormatContext & ctx) -> decltype(ctx.out())
+  {
+    using Backend = mc_solver::QPSolver::Backend;
+    switch(backend)
+    {
+      case Backend::Tasks:
+        return formatter<string_view>::format("Tasks", ctx);
+      case Backend::Unset:
+        return formatter<string_view>::format("Unset", ctx);
+      default:
+        return formatter<string_view>::format("UNEXPECTED", ctx);
+    }
+  }
+};
+
+} // namespace fmt

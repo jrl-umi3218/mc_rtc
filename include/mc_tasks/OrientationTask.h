@@ -9,12 +9,8 @@
 namespace mc_tasks
 {
 
-/*! \brief Control the orientation of a frame
- *
- * This task is thin wrapper around the appropriate tasks in Tasks.
- *
- */
-struct MC_TASKS_DLLAPI OrientationTask : public TrajectoryTaskGeneric<tasks::qp::OrientationTask>
+/*! \brief Control the orientation of a frame */
+struct MC_TASKS_DLLAPI OrientationTask : public TrajectoryTaskGeneric
 {
 public:
   friend struct EndEffectorTask;

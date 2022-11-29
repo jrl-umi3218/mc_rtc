@@ -21,10 +21,16 @@ PositionBasedVisServoTask::PositionBasedVisServoTask(const std::string & bodyNam
                                                      unsigned int robotIndex,
                                                      double stiffness,
                                                      double weight)
-: TrajectoryTaskGeneric<tasks::qp::PositionBasedVisServoTask>(robots, robotIndex, stiffness, weight), X_t_s_(X_t_s)
+: TrajectoryTaskGeneric(robots, robotIndex, stiffness, weight), X_t_s_(X_t_s)
 {
-  finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, X_t_s, X_b_s);
-  type_ = "pbvs";
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      finalize<tasks::qp::PositionBasedVisServoTask>(robots.mbs(), static_cast<int>(rIndex), bodyName, X_t_s, X_b_s);
+      break;
+    default:
+      mc_rtc::log::error_and_throw("[PBVSTask] Not implemented for solver backend: {}", backend_);
+  }
   name_ = "pbvs_" + robots.robot(robotIndex).name() + "_" + bodyName;
 }
 
@@ -44,7 +50,15 @@ PositionBasedVisServoTask::PositionBasedVisServoTask(const mc_rbdyn::RobotFrame 
                                                      double weight)
 : TrajectoryBase(frame, stiffness, weight), X_t_s_(X_t_s)
 {
-  finalize(robots.mbs(), static_cast<int>(rIndex), frame.body(), X_t_s_, frame.X_b_f());
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      finalize<tasks::qp::PositionBasedVisServoTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(), X_t_s,
+                                                     frame.X_b_f());
+      break;
+    default:
+      mc_rtc::log::error_and_throw("[PBVSTask] Not implemented for solver backend: {}", backend_);
+  }
   type_ = "pbvs";
   name_ = "pbvs_" + frame.robot().name() + "_" + frame.name();
 }
@@ -52,28 +66,43 @@ PositionBasedVisServoTask::PositionBasedVisServoTask(const mc_rbdyn::RobotFrame 
 void PositionBasedVisServoTask::reset()
 {
   TrajectoryTaskGeneric::reset();
-  X_t_s_ = sva::PTransformd::Identity();
-  errorT->error(X_t_s_);
+  error(sva::PTransformd::Identity());
 }
 
 void PositionBasedVisServoTask::error(const sva::PTransformd & X_t_s)
 {
   X_t_s_ = X_t_s;
-  errorT->error(X_t_s_);
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      static_cast<tasks::qp::PositionBasedVisServoTask *>(errorT.get())->error(X_t_s_);
+      break;
+    default:
+      break;
+  }
 }
 
 void PositionBasedVisServoTask::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
   MC_RTC_LOG_HELPER(name_ + "_error", X_t_s_);
-  logger.addLogEntry(name_ + "_eval", this, [this]() -> sva::PTransformd {
-    Eigen::Vector6d eval = errorT->eval();
-    Eigen::Vector3d angleAxis = eval.head(3);
-    Eigen::Vector3d axis = angleAxis / angleAxis.norm();
-    double angle = angleAxis.dot(axis);
-    Eigen::Quaterniond quat(Eigen::AngleAxisd(angle, axis));
-    return sva::PTransformd(quat, eval.tail(3));
-  });
+  switch(backend_)
+  {
+    case Backend::Tasks:
+    {
+      logger.addLogEntry(name_ + "_eval", this, [this]() -> sva::PTransformd {
+        Eigen::Vector6d eval = static_cast<tasks::qp::PositionBasedVisServoTask *>(errorT.get())->eval();
+        Eigen::Vector3d angleAxis = eval.head(3);
+        Eigen::Vector3d axis = angleAxis / angleAxis.norm();
+        double angle = angleAxis.dot(axis);
+        Eigen::Quaterniond quat(Eigen::AngleAxisd(angle, axis));
+        return sva::PTransformd(quat, eval.tail(3));
+      });
+    }
+    break;
+    default:
+      break;
+  }
 }
 
 } // namespace mc_tasks

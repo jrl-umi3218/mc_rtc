@@ -1,9 +1,12 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL, BIT
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_rtc/logging.h>
 #include <mc_solver/utils/ContactWrenchMatrixToLambdaMatrix.h>
+
+#include <mc_solver/TasksQPSolver.h>
+
+#include <mc_rtc/logging.h>
 
 #if not EIGEN_VERSION_AT_LEAST(3, 2, 90)
 namespace Eigen
@@ -18,9 +21,14 @@ namespace mc_solver
 namespace utils
 {
 
-ContactWrenchMatrixToLambdaMatrix::ContactWrenchMatrixToLambdaMatrix(const mc_solver::QPSolver & solver,
+ContactWrenchMatrixToLambdaMatrix::ContactWrenchMatrixToLambdaMatrix(const mc_solver::QPSolver & solver_,
                                                                      const tasks::qp::ContactId & id)
 {
+  if(solver_.backend() != QPSolver::Backend::Tasks)
+  {
+    mc_rtc::log::error_and_throw("[ContactWrenchMatrixToLambdaMatrix] Only supports Tasks backend");
+  }
+  const auto & solver = tasks_solver(solver_);
   auto qp_c = solver.contactById(id);
   if(qp_c.first == -1)
   {

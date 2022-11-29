@@ -1,41 +1,24 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_solver/ConstraintSetLoader.h>
 #include <mc_solver/DynamicsConstraint.h>
 
+#include <mc_solver/ConstraintSetLoader.h>
+#include <mc_solver/TasksQPSolver.h>
+
 #include <Tasks/Bounds.h>
+#include <Tasks/QPMotionConstr.h>
 
 namespace mc_solver
 {
 
-DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
-                                       unsigned int robotIndex,
-                                       double timeStep,
-                                       bool infTorque)
-: KinematicsConstraint(robots, robotIndex, timeStep), inSolver_(false), robotIndex_(robotIndex)
+static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots,
+                                         unsigned int robotIndex,
+                                         double timeStep,
+                                         bool infTorque)
 {
-  build_constr(robots, robotIndex, infTorque, timeStep);
-}
-
-DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
-                                       unsigned int robotIndex,
-                                       double timeStep,
-                                       const std::array<double, 3> & damper,
-                                       double velocityPercent,
-                                       bool infTorque)
-: KinematicsConstraint(robots, robotIndex, timeStep, damper, velocityPercent), inSolver_(false), robotIndex_(robotIndex)
-{
-  build_constr(robots, robotIndex, infTorque, timeStep);
-}
-
-void DynamicsConstraint::build_constr(const mc_rbdyn::Robots & robots,
-                                      unsigned int robotIndex,
-                                      bool infTorque,
-                                      double timeStep)
-{
-  const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
+  const auto & robot = robots.robot(robotIndex);
   std::vector<std::vector<double>> tl = robot.tl();
   std::vector<std::vector<double>> tu = robot.tu();
   std::vector<std::vector<double>> tdl = robot.tdl();
@@ -80,33 +63,103 @@ void DynamicsConstraint::build_constr(const mc_rbdyn::Robots & robots,
     {
       sjList.push_back(tasks::qp::SpringJoint(flex.jointName, flex.K, flex.C, flex.O));
     }
-    motionConstr.reset(new tasks::qp::MotionSpringConstr(robots.mbs(), static_cast<int>(robotIndex), tBound, tDBound,
-                                                         timeStep, sjList));
+    return mc_rtc::make_void_ptr<tasks::qp::MotionSpringConstr>(robots.mbs(), static_cast<int>(robotIndex), tBound,
+                                                                tDBound, timeStep, sjList);
   }
   else
   {
-    motionConstr.reset(
-        new tasks::qp::MotionConstr(robots.mbs(), static_cast<int>(robotIndex), tBound, tDBound, timeStep));
+    return mc_rtc::make_void_ptr<tasks::qp::MotionConstr>(robots.mbs(), static_cast<int>(robotIndex), tBound, tDBound,
+                                                          timeStep);
   }
 }
 
-void DynamicsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)
+static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
+                                   const mc_rbdyn::Robots & robots,
+                                   unsigned int robotIndex,
+                                   double timeStep,
+                                   bool infTorque)
 {
-  if(!inSolver_)
+  switch(backend)
   {
-    KinematicsConstraint::addToSolver(mbs, solver);
-    motionConstr->addToSolver(mbs, solver);
-    inSolver_ = true;
+    case QPSolver::Backend::Tasks:
+      return initialize_tasks(robots, robotIndex, timeStep, infTorque);
+    default:
+      mc_rtc::log::error_and_throw("[DynamicsConstraint] Not implemented for solver backend: {}", backend);
   }
 }
 
-void DynamicsConstraint::removeFromSolver(tasks::qp::QPSolver & solver)
+DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
+                                       unsigned int robotIndex,
+                                       double timeStep,
+                                       bool infTorque)
+: KinematicsConstraint(robots, robotIndex, timeStep),
+  motion_constr_(initialize(backend_, robots, robotIndex, timeStep, infTorque)), robotIndex_(robotIndex)
 {
-  if(inSolver_)
+}
+
+DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
+                                       unsigned int robotIndex,
+                                       double timeStep,
+                                       const std::array<double, 3> & damper,
+                                       double velocityPercent,
+                                       bool infTorque)
+: KinematicsConstraint(robots, robotIndex, timeStep, damper, velocityPercent),
+  motion_constr_(initialize(backend_, robots, robotIndex, timeStep, infTorque)), robotIndex_(robotIndex)
+{
+}
+
+void DynamicsConstraint::addToSolverImpl(QPSolver & solver)
+{
+  KinematicsConstraint::addToSolverImpl(solver);
+  switch(backend_)
   {
-    KinematicsConstraint::removeFromSolver(solver);
-    motionConstr->removeFromSolver(solver);
-    inSolver_ = false;
+    case QPSolver::Backend::Tasks:
+      static_cast<tasks::qp::MotionConstr *>(motion_constr_.get())
+          ->addToSolver(solver.robots().mbs(), static_cast<TasksQPSolver &>(solver).solver());
+      break;
+    default:
+      break;
+  }
+}
+
+void DynamicsConstraint::removeFromSolverImpl(QPSolver & solver)
+{
+  KinematicsConstraint::removeFromSolverImpl(solver);
+  switch(backend_)
+  {
+    case QPSolver::Backend::Tasks:
+      static_cast<tasks::qp::MotionConstr *>(motion_constr_.get())
+          ->removeFromSolver(static_cast<TasksQPSolver &>(solver).solver());
+      break;
+    default:
+      break;
+  }
+}
+
+namespace
+{
+
+void fillJointTorqueImpl(tasks::qp::MotionConstr & motionConstr,
+                         const tasks::qp::QPSolver & solver,
+                         std::vector<std::vector<double>> & jointTorque)
+{
+  motionConstr.computeTorque(solver.alphaDVec(), solver.lambdaVec());
+  rbd::vectorToParam(motionConstr.torque(), jointTorque);
+}
+
+} // namespace
+
+void DynamicsConstraint::fillJointTorque(QPSolver & solver) const
+{
+  switch(solver.backend())
+  {
+    case QPSolver::Backend::Tasks:
+      fillJointTorqueImpl(*static_cast<tasks::qp::MotionConstr *>(motion_constr_.get()),
+                          static_cast<const TasksQPSolver &>(solver).solver(),
+                          solver.robots().robot(robotIndex_).mbc().jointTorque);
+      break;
+    default:
+      break;
   }
 }
 

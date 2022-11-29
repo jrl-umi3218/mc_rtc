@@ -1,9 +1,8 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#ifndef _H_ADDREMOVECONTACTTASK_H_
-#define _H_ADDREMOVECONTACTTASK_H_
+#pragma once
 
 #include <mc_rbdyn/Robots.h>
 #include <mc_solver/BoundedSpeedConstr.h>
@@ -28,6 +27,8 @@ namespace mc_tasks
  * The robot's surface will move along its normal axis. It is the
  * programmer responsibility to stop the task when the desired
  * destination has been reached.
+ *
+ * This task only works in the Tasks backend
  */
 struct MC_TASKS_DLLAPI AddRemoveContactTask : public MetaTask
 {
@@ -238,5 +239,3 @@ public:
 };
 
 } // namespace mc_tasks
-
-#endif

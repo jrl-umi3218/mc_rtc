@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_rtc/ConfigurationHelpers.h>
@@ -11,15 +11,32 @@
 namespace mc_tasks
 {
 
+static inline tasks::qp::CoMTask * tasks_error(mc_rtc::void_ptr & ptr)
+{
+  return static_cast<tasks::qp::CoMTask *>(ptr.get());
+}
+
+static inline const tasks::qp::CoMTask * tasks_error(const mc_rtc::void_ptr & ptr)
+{
+  return static_cast<const tasks::qp::CoMTask *>(ptr.get());
+}
+
 CoMTask::CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness, double weight)
-: TrajectoryTaskGeneric<tasks::qp::CoMTask>(robots, robotIndex, stiffness, weight), robot_index_(robotIndex),
+: TrajectoryTaskGeneric(robots, robotIndex, stiffness, weight), robot_index_(robotIndex),
   cur_com_(Eigen::Vector3d::Zero())
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
 
   cur_com_ = rbd::computeCoM(robot.mb(), robot.mbc());
 
-  finalize(robots.mbs(), static_cast<int>(robotIndex), cur_com_);
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      finalize<tasks::qp::CoMTask>(robots.mbs(), static_cast<int>(robotIndex), cur_com_);
+      break;
+    default:
+      mc_rtc::log::error_and_throw("[CoMTask] Not implemented for solver backend: {}", backend_);
+  }
   type_ = "com";
   name_ = "com_" + robots.robot(robot_index_).name();
 }
@@ -29,7 +46,14 @@ void CoMTask::reset()
   TrajectoryTaskGeneric::reset();
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);
   cur_com_ = rbd::computeCoM(robot.mb(), robot.mbc());
-  errorT->com(cur_com_);
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      tasks_error(errorT)->com(cur_com_);
+      break;
+    default:
+      break;
+  }
 }
 
 void CoMTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
@@ -68,23 +92,49 @@ void CoMTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & c
 void CoMTask::move_com(const Eigen::Vector3d & com)
 {
   cur_com_ += com;
-  errorT->com(cur_com_);
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      tasks_error(errorT)->com(cur_com_);
+      break;
+    default:
+      break;
+  }
 }
 
 void CoMTask::com(const Eigen::Vector3d & com)
 {
   cur_com_ = com;
-  errorT->com(com);
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      tasks_error(errorT)->com(cur_com_);
+      break;
+    default:
+      break;
+  }
 }
 
 const Eigen::Vector3d & CoMTask::com() const
 {
-  return errorT->com();
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      return tasks_error(errorT)->com();
+    default:
+      mc_rtc::log::error_and_throw("Not implemented");
+  }
 }
 
 const Eigen::Vector3d & CoMTask::actual() const
 {
-  return errorT->actual();
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      return tasks_error(errorT)->actual();
+    default:
+      mc_rtc::log::error_and_throw("Not implemented");
+  }
 }
 
 void CoMTask::addToLogger(mc_rtc::Logger & logger)
@@ -96,7 +146,7 @@ void CoMTask::addToLogger(mc_rtc::Logger & logger)
 
 void CoMTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  TrajectoryTaskGeneric<tasks::qp::CoMTask>::addToGUI(gui);
+  TrajectoryBase::addToGUI(gui);
   gui.addElement({"Tasks", name_},
                  mc_rtc::gui::Point3D(
                      "com_target", [this]() -> const Eigen::Vector3d & { return this->com(); },

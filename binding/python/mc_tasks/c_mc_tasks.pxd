@@ -50,7 +50,7 @@ cdef extern from "<mc_tasks/PostureTask.h>" namespace "mc_tasks":
     double weight()
 
 cdef extern from "<mc_tasks/TrajectoryTaskGeneric.h>" namespace "mc_tasks":
-  cdef cppclass TrajectoryTaskGeneric[T](MetaTask):
+  cdef cppclass TrajectoryTaskGeneric(MetaTask):
     void refVel(const c_eigen.VectorXd &)
     void refAccel(const c_eigen.VectorXd &)
     void stiffness(double)
@@ -61,7 +61,7 @@ cdef extern from "<mc_tasks/TrajectoryTaskGeneric.h>" namespace "mc_tasks":
     double weight()
 
 cdef extern from "<mc_tasks/CoMTask.h>" namespace "mc_tasks":
-  cdef cppclass CoMTask(TrajectoryTaskGeneric[c_qp.CoMTask]):
+  cdef cppclass CoMTask(TrajectoryTaskGeneric):
     CoMTask(const c_mc_rbdyn.Robots &, unsigned int,
             double, double)
     c_eigen.Vector3d com()
@@ -69,21 +69,21 @@ cdef extern from "<mc_tasks/CoMTask.h>" namespace "mc_tasks":
     void move_com(const c_eigen.Vector3d &)
 
 cdef extern from "<mc_tasks/PositionTask.h>" namespace "mc_tasks":
-  cdef cppclass PositionTask(TrajectoryTaskGeneric[c_qp.PositionTask]):
+  cdef cppclass PositionTask(TrajectoryTaskGeneric):
     PositionTask(const string &, const c_mc_rbdyn.Robots &,
                  unsigned int, double, double)
     c_eigen.Vector3d position()
     void position(const c_eigen.Vector3d &)
 
 cdef extern from "<mc_tasks/OrientationTask.h>" namespace "mc_tasks":
-  cdef cppclass OrientationTask(TrajectoryTaskGeneric[c_qp.OrientationTask]):
+  cdef cppclass OrientationTask(TrajectoryTaskGeneric):
     OrientationTask(const string &, const c_mc_rbdyn.Robots &,
                     unsigned int, double, double)
     c_eigen.Matrix3d orientation()
     void orientation(const c_eigen.Matrix3d &)
 
 cdef extern from "<mc_tasks/VectorOrientationTask.h>" namespace "mc_tasks":
-  cdef cppclass VectorOrientationTask(TrajectoryTaskGeneric[c_qp.VectorOrientationTask]):
+  cdef cppclass VectorOrientationTask(TrajectoryTaskGeneric):
     VectorOrientationTask(const string &, const c_eigen.Vector3d &,
                           const c_eigen.Vector3d &, const c_mc_rbdyn.Robots &,
                           unsigned int, double, double)
@@ -105,7 +105,7 @@ cdef extern from "<mc_tasks/RelativeEndEffectorTask.h>" namespace "mc_tasks":
                     unsigned int, const string &, double, double)
 
 cdef extern from "<mc_tasks/SurfaceTransformTask.h>" namespace "mc_tasks":
-  cdef cppclass SurfaceTransformTask(TrajectoryTaskGeneric[c_qp.SurfaceTransformTask]):
+  cdef cppclass SurfaceTransformTask(TrajectoryTaskGeneric):
     SurfaceTransformTask() # This does not exist but silence a compilation error on Cython 0.2
     SurfaceTransformTask(const string &, const c_mc_rbdyn.Robots &,
                          unsigned int, double, double)
@@ -113,7 +113,7 @@ cdef extern from "<mc_tasks/SurfaceTransformTask.h>" namespace "mc_tasks":
     void target(const c_sva.PTransformd &)
 
 cdef extern from "<mc_tasks/SplineTrajectoryTask.h>" namespace "mc_tasks":
-  cdef cppclass SplineTrajectoryTask[T](TrajectoryTaskGeneric[c_qp.TransformTask]):
+  cdef cppclass SplineTrajectoryTask[T](TrajectoryTaskGeneric):
     SplineTrajectoryTask() # This does not exist but silence a compilation error on Cython 0.2
     SplineTrajectoryTask(const c_mc_rbdyn.Robots&,
             unsigned int, const string &, double, double, double,

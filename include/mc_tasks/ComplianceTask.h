@@ -13,12 +13,6 @@ namespace mc_tasks
 namespace force
 {
 
-namespace
-{
-static const std::pair<double, double> defaultFGain = {0.02, 0.005};
-static const std::pair<double, double> defaultTGain = {0.2, 0.05};
-} // namespace
-
 /*! \brief Add a contact in a compliant manner
  *
  * Uses an mc_tasks::EndEffectorTask to drive the selected body until certain
@@ -31,6 +25,9 @@ struct MC_TASKS_DLLAPI ComplianceTask : MetaTask
 {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+  static const std::pair<double, double> defaultFGain;
+  static const std::pair<double, double> defaultTGain;
 
   /*! \brief Constructor with dof restrictions
    *

@@ -12,11 +12,6 @@
 namespace mc_tasks
 {
 
-double extraStiffness(double error, double extraStiffness)
-{
-  return exp(-error) * extraStiffness;
-}
-
 MetaTask::~MetaTask() {}
 
 void MetaTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)

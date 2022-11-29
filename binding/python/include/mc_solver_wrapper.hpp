@@ -25,9 +25,14 @@ struct ContactConstrCastResult
 ContactConstrCastResult get_contact_constr(ContactConstraint & cc)
 {
   ContactConstrCastResult res{nullptr, nullptr, nullptr};
-  res.acc = dynamic_cast<tasks::qp::ContactAccConstr *>(cc.contactConstr.get());
-  res.speed = dynamic_cast<tasks::qp::ContactSpeedConstr *>(cc.contactConstr.get());
-  res.pos = dynamic_cast<tasks::qp::ContactPosConstr *>(cc.contactConstr.get());
+  if(cc.backend() != QPSolver::Backend::Tasks)
+  {
+    return res;
+  }
+  auto constr = cc.contactConstr();
+  res.acc = dynamic_cast<tasks::qp::ContactAccConstr *>(constr);
+  res.speed = dynamic_cast<tasks::qp::ContactSpeedConstr *>(constr);
+  res.pos = dynamic_cast<tasks::qp::ContactPosConstr *>(constr);
   return res;
 }
 

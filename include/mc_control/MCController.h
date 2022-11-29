@@ -22,7 +22,6 @@
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/KinematicsConstraint.h>
 #include <mc_solver/QPSolver.h>
-#include <mc_solver/msg/QPResult.h>
 
 #include <mc_tasks/PostureTask.h>
 
@@ -62,6 +61,9 @@ struct MC_CONTROL_DLLAPI MCController
   friend struct MCGlobalController;
 
 public:
+  /** Shortcut for the Backend enum type */
+  using Backend = mc_solver::QPSolver::Backend;
+
   virtual ~MCController();
   /** This function is called at each time step of the process driving the robot
    * (i.e. simulation or robot's controller). This function is the most likely
@@ -168,11 +170,6 @@ public:
    * controller to pause.
    */
   virtual void stop();
-
-  /** Gives access to the result of the QP execution
-   * \param t Unused at the moment
-   */
-  virtual const mc_solver::QPResultMsg & send(const double & t);
 
   /** Reset the controller with data provided by ControllerResetData. This is
    * called at two possible points during a simulation/live execution:
@@ -616,29 +613,57 @@ public:
   }
 
 protected:
-  /** Builds a controller base with an empty environment
+  /** Builds a controller with a single robot. The env/ground environment is automatically added
+   *
    * \param robot Pointer to the main RobotModule
-   * \param dt Controller timestep
-   * your controller
-   */
-  MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt);
-
-  MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, const mc_rtc::Configuration & config);
-
-  /** Builds a multi-robot controller base
-   * \param robots Collection of robot modules used by the controller
+   *
    * \param dt Timestep of the controller
+   *
+   * \param backend Backend for the solver
    */
-  MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules, double dt);
+  MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, Backend backend = Backend::Tasks);
 
-  /** Builds a multi-robot controller base
-   * \param robots Collection of robot modules used by the controller
+  /** Builds a controller with a single robot. The env/ground environment is automatically added
+   *
+   * \param robot Pointer to the main RobotModule
+   *
    * \param dt Timestep of the controller
-   * \param config Controller configuration
+   *
+   * \param config Configuration of the controller
+   *
+   * \param backend Backend for the solver
+   */
+  MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot,
+               double dt,
+               const mc_rtc::Configuration & config,
+               Backend backend = Backend::Tasks);
+
+  /** Builds a controller with multiple robots
+   *
+   * \param robots Collection of robot modules used by the controller
+   *
+   * \param dt Timestep of the controller
+   *
+   * \param backend Backend for the solver
    */
   MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules,
                double dt,
-               const mc_rtc::Configuration & config);
+               Backend backend = Backend::Tasks);
+
+  /** Builds a controller with multiple robots
+   *
+   * \param robots Collection of robot modules used by the controller
+   *
+   * \param dt Timestep of the controller
+   *
+   * \param config Controller configuration
+   *
+   * \param backend Backend for the solver
+   */
+  MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules,
+               double dt,
+               const mc_rtc::Configuration & config,
+               Backend backend = Backend::Tasks);
 
   /** Load an additional robot into the controller
    *
@@ -721,13 +746,13 @@ public:
   /** Controller timestep */
   const double timeStep;
   /** Contact constraint for the main robot */
-  mc_solver::ContactConstraint contactConstraint;
+  std::unique_ptr<mc_solver::ContactConstraint> contactConstraint;
   /** Dynamics constraints for the main robot */
-  mc_solver::DynamicsConstraint dynamicsConstraint;
+  std::unique_ptr<mc_solver::DynamicsConstraint> dynamicsConstraint;
   /** Kinematics constraints for the main robot */
-  mc_solver::KinematicsConstraint kinematicsConstraint;
+  std::unique_ptr<mc_solver::KinematicsConstraint> kinematicsConstraint;
   /** Self collisions constraint for the main robot */
-  mc_solver::CollisionsConstraint selfCollisionConstraint;
+  std::unique_ptr<mc_solver::CollisionsConstraint> selfCollisionConstraint;
   /** Compound joint constraint for the main robot */
   std::unique_ptr<mc_solver::CompoundJointConstraint> compoundJointConstraint;
   /** Posture task for the main robot */

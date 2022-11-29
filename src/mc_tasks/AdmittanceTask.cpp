@@ -9,7 +9,9 @@
 #include <mc_rbdyn/configuration_io.h>
 #include <mc_rbdyn/rpy_utils.h>
 
+#include <mc_rtc/gui/ArrayInput.h>
 #include <mc_rtc/gui/ArrayLabel.h>
+#include <mc_rtc/gui/NumberInput.h>
 #include <mc_rtc/gui/Transform.h>
 
 #include <mc_rtc/deprecated.h>
@@ -139,7 +141,7 @@ void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
       mc_rtc::gui::NumberInput(
           "Velocity filter gain", [this]() { return velFilterGain_; }, [this](double g) { velFilterGain(g); }));
   // Don't add TransformTask as target configuration is different
-  TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::addToGUI(gui);
+  TrajectoryTaskGeneric::addToGUI(gui);
 }
 
 void AdmittanceTask::addToSolver(mc_solver::QPSolver & solver)

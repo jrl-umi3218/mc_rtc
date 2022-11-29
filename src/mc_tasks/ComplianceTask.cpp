@@ -45,6 +45,9 @@ const mc_rbdyn::ForceSensor & getSensor(const mc_rbdyn::Robots & robots,
 
 } // namespace
 
+const std::pair<double, double> ComplianceTask::defaultFGain = {0.02, 0.005};
+const std::pair<double, double> ComplianceTask::defaultTGain = {0.2, 0.05};
+
 ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
                                unsigned int robotIndex,
                                const std::string & body,

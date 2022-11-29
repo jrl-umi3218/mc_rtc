@@ -1,26 +1,67 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_solver/CoMIncPlaneConstr.h>
+
 #include <mc_solver/ConstraintSetLoader.h>
+#include <mc_solver/TasksQPSolver.h>
+
+#include <Tasks/QPConstr.h>
 
 namespace mc_solver
 {
 
+/** Helper to cast the constraint */
+static tasks::qp::CoMIncPlaneConstr & tasks_constraint(mc_rtc::void_ptr & ptr)
+{
+  return *static_cast<tasks::qp::CoMIncPlaneConstr *>(ptr.get());
+}
+
+static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend,
+                                        const mc_rbdyn::Robots & robots,
+                                        unsigned int robotIndex,
+                                        double dt)
+{
+  switch(backend)
+  {
+    case QPSolver::Backend::Tasks:
+      return mc_rtc::make_void_ptr<tasks::qp::CoMIncPlaneConstr>(robots.mbs(), static_cast<int>(robotIndex), dt);
+    default:
+      mc_rtc::log::error_and_throw("[CoMIncPlaneConstr] Not implemented for solver backend: {}", backend);
+  }
+}
+
 CoMIncPlaneConstr::CoMIncPlaneConstr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double dt)
-: constr(new tasks::qp::CoMIncPlaneConstr(robots.mbs(), static_cast<int>(robotIndex), dt))
+: constraint_(make_constraint(backend_, robots, robotIndex, dt))
 {
 }
 
-void CoMIncPlaneConstr::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)
+void CoMIncPlaneConstr::addToSolverImpl(QPSolver & solver)
 {
-  constr->addToSolver(mbs, solver);
+  switch(backend_)
+  {
+    case QPSolver::Backend::Tasks:
+    {
+      auto & qpsolver = tasks_solver(solver).solver();
+      tasks_constraint(constraint_).addToSolver(solver.robots().mbs(), qpsolver);
+    }
+    break;
+    default:
+      break;
+  }
 }
 
-void CoMIncPlaneConstr::removeFromSolver(tasks::qp::QPSolver & solver)
+void CoMIncPlaneConstr::removeFromSolverImpl(QPSolver & solver)
 {
-  constr->removeFromSolver(solver);
+  switch(backend_)
+  {
+    case QPSolver::Backend::Tasks:
+      tasks_constraint(constraint_).removeFromSolver(tasks_solver(solver).solver());
+      break;
+    default:
+      break;
+  }
 }
 
 void CoMIncPlaneConstr::setPlanes(QPSolver & solver,
@@ -32,35 +73,47 @@ void CoMIncPlaneConstr::setPlanes(QPSolver & solver,
                                   double damping,
                                   double dampingOff)
 {
-  constr->reset();
-  if(speeds.size() != 0 && normalsDots.size() == speeds.size() && planes.size() == speeds.size())
+  switch(backend_)
   {
-    for(size_t i = 0; i < planes.size(); ++i)
+    case QPSolver::Backend::Tasks:
     {
-      if(planes[i].normal.norm() > 0.5)
+      auto & constr = tasks_constraint(constraint_);
+      auto & qpsolver = tasks_solver(solver);
+      constr.reset();
+      if(speeds.size() != 0 && normalsDots.size() == speeds.size() && planes.size() == speeds.size())
       {
-        constr->addPlane(static_cast<int>(i), planes[i].normal, planes[i].offset, iDist, sDist, damping, speeds[i],
-                         normalsDots[i], dampingOff);
+        for(size_t i = 0; i < planes.size(); ++i)
+        {
+          if(planes[i].normal.norm() > 0.5)
+          {
+            constr.addPlane(static_cast<int>(i), planes[i].normal, planes[i].offset, iDist, sDist, damping, speeds[i],
+                            normalsDots[i], dampingOff);
+          }
+        }
       }
-    }
-  }
-  else
-  {
-    if(speeds.size() != 0 && (normalsDots.size() != speeds.size() || planes.size() != speeds.size()))
-    {
-      mc_rtc::log::warning("set_planes: speeds size > 0 but different from normalsDots or planes, acting as if speeds "
-                           "were not provided");
-    }
-    for(size_t i = 0; i < planes.size(); ++i)
-    {
-      if(planes[i].normal.norm() > 0.5)
+      else
       {
-        constr->addPlane(static_cast<int>(i), planes[i].normal, planes[i].offset, iDist, sDist, damping, dampingOff);
+        if(speeds.size() != 0 && (normalsDots.size() != speeds.size() || planes.size() != speeds.size()))
+        {
+          mc_rtc::log::warning(
+              "set_planes: speeds size > 0 but different from normalsDots or planes, acting as if speeds "
+              "were not provided");
+        }
+        for(size_t i = 0; i < planes.size(); ++i)
+        {
+          if(planes[i].normal.norm() > 0.5)
+          {
+            constr.addPlane(static_cast<int>(i), planes[i].normal, planes[i].offset, iDist, sDist, damping, dampingOff);
+          }
+        }
       }
+      constr.updateNrPlanes();
+      qpsolver.updateConstrSize();
     }
+    break;
+    default:
+      break;
   }
-  constr->updateNrPlanes();
-  solver.updateConstrSize();
 }
 
 } // namespace mc_solver
