@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+## [1.14.0] - 2022-11-29
+
+### Changes
+
+- [mc_control] Introduced output robots that allow to decouple the control model from the output model (#303)
+- [mc_rbdyn] Sensors' data is now shared among all instances of a "same" robot (i.e. control/real/output/outputReal) (#303)
+- [mc_rbdyn] Sensors' data can no longer be set through the `Robot` interface (#303)
+- [mc_solver] QPSolver is now an abstract class, many implementation details of tasks/constraints are now hidden (#254)
+
+### Fixes
+
+- [GUI] Live plots now contain all data regardless of the GUI timestep (#300)
+- [mc_tasks] Make the DCM estimator compatible with external wrenches in the stabilizer (#301)
+- [mc_observers] Fix kinematic inertial IMU pose (#306)
+
 ## [1.13.0] - 2022-10-16
 
 ### Changes
@@ -525,7 +540,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.13.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.14.0...HEAD
+[1.14.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.0
 [1.13.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.13.0
 [1.12.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.12.0
 [1.11.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.11.0

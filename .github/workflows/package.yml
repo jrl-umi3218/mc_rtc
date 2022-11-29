@@ -23,7 +23,7 @@ jobs:
   package:
     uses: jrl-umi3218/github-actions/.github/workflows/package-project.yml@master
     with:
-      deps: '["jrl-umi3218/mc_rtc_ros", "jrl-umi3218/mc_openrtm", "jrl-umi3218/mc_udp", "jrl-umi3218/mc_panda"]'
+      deps: '["jrl-umi3218/mc_rtc_ros", "jrl-umi3218/mc_openrtm", "jrl-umi3218/mc_udp", "jrl-umi3218/mc_panda", "jrl-umi3218/mc_state_observation"]'
       with-ros: true
     secrets:
       CLOUDSMITH_API_KEY: ${{ secrets.CLOUDSMITH_API_KEY }}
