@@ -1,12 +1,10 @@
 var searchData=
 [
   ['labelname_5f',['labelName_',['../structmc__control_1_1fsm_1_1MessageState.html#a19f38c0a2486d70b98b287fd201581cf',1,'mc_control::fsm::MessageState']]],
-  ['lambdavec',['lambdaVec',['../structmc__solver_1_1QPResultMsg.html#ab4ee75a60ee710b7b99409060e536ace',1,'mc_solver::QPResultMsg']]],
   ['lastconfig_5f',['lastConfig_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a4d2037034ff54a5625fc7009aa1c5448',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['left',['Left',['../plot_2types_8h.html#aa149c1d1da2ae1c94f1ae91f4919625a',1,'Left():&#160;types.h'],['../mc__tasks_2lipm__stabilizer_2Contact_8h.html#aa149c1d1da2ae1c94f1ae91f4919625a',1,'Left():&#160;Contact.h']]],
   ['leftfootratio_5f',['leftFootRatio_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a077f98071aa5d9ae2b861aba4edbc606',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['leftfootsurface',['leftFootSurface',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a30cc86b398c8b84bb07fd032e35d76e9',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
-  ['lhrelef_5f',['lhRelEf_',['../structmc__control_1_1fsm_1_1SlidingFootContactState.html#a8b7ae1f2d491a5ec0e1a3205196eeff5',1,'mc_control::fsm::SlidingFootContactState']]],
   ['lightgray',['LightGray',['../structmc__rtc_1_1gui_1_1Color.html#a3df51c77219b7e3811b711250de18017',1,'mc_rtc::gui::Color']]],
   ['linveltask',['linVelTask',['../structmc__tasks_1_1AddRemoveContactTask.html#a3e1fc72abbc657ece8ae16faafaffeff',1,'mc_tasks::AddRemoveContactTask']]],
   ['linveltaskpid',['linVelTaskPid',['../structmc__tasks_1_1AddRemoveContactTask.html#a114af5b6d97905968a79dce1bc86f0ed',1,'mc_tasks::AddRemoveContactTask']]],
@@ -15,7 +13,7 @@ var searchData=
   ['log_5fpolicy',['log_policy',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#acbde34fb861228455a925e57f38b2e6d',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['log_5ftemplate',['log_template',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a0ca07c26b98991be2e1036a78c5f9702',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['logacc_5f',['logAcc_',['../structmc__observers_1_1BodySensorObserver.html#a8237ffd181f9918f0db8c7ab1489b217',1,'mc_observers::BodySensorObserver']]],
-  ['logger_5f',['logger_',['../structmc__control_1_1MCController.html#a5de6a08cbbe04ccc032bc4ebbd2773dc',1,'mc_control::MCController']]],
+  ['logger_5f',['logger_',['../structmc__control_1_1MCController.html#a5de6a08cbbe04ccc032bc4ebbd2773dc',1,'mc_control::MCController::logger_()'],['../structmc__solver_1_1QPSolver.html#a16aae96dcf217841ba84452ae694421e',1,'mc_solver::QPSolver::logger_()']]],
   ['logpos_5f',['logPos_',['../structmc__observers_1_1BodySensorObserver.html#a7e72177501cdb730e9c0b45e9081317a',1,'mc_observers::BodySensorObserver']]],
   ['logposition_5f',['logPosition_',['../structmc__observers_1_1EncoderObserver.html#a2aded6c41596d4fdb15732a615b44307',1,'mc_observers::EncoderObserver']]],
   ['logtype_5f',['logType_',['../structmc__control_1_1fsm_1_1MessageState.html#a17d7efa8afe689d0859dbc2c353a857d',1,'mc_control::fsm::MessageState']]],

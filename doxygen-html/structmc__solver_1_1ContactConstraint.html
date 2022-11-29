@@ -72,15 +72,11 @@ $(document).ready(function(){initNavTree('structmc__solver_1_1ContactConstraint.
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structmc__solver_1_1ContactConstraint-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">mc_solver::ContactConstraint Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Wraps multiple constraints related to Contact.  
- <a href="structmc__solver_1_1ContactConstraint.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="ContactConstraint_8h_source.html">mc_solver/ContactConstraint.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -108,27 +104,38 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2226b4449ee6faeb3f6d70cfdfb13b4f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ContactConstraint.html#a2226b4449ee6faeb3f6d70cfdfb13b4f">ContactConstraint</a> (double timeStep, <a class="el" href="structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30">ContactType</a> contactType=<a class="el" href="structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30a15d06b5b0997a0a5e17eccd053c7c652">Velocity</a>, bool dynamics=true)</td></tr>
-<tr class="separator:a2226b4449ee6faeb3f6d70cfdfb13b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e94d3c790da36671345692cbf14e81d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ContactConstraint.html#a3e94d3c790da36671345692cbf14e81d">addToSolver</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver) override</td></tr>
-<tr class="separator:a3e94d3c790da36671345692cbf14e81d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af72efeda2c9cd6af2e4626f32ab7583d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ContactConstraint.html#af72efeda2c9cd6af2e4626f32ab7583d">removeFromSolver</a> (tasks::qp::QPSolver &amp;solver) override</td></tr>
-<tr class="separator:af72efeda2c9cd6af2e4626f32ab7583d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4a4d2baaacb8b1d914d66a0110c99ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ContactConstraint.html#ad4a4d2baaacb8b1d914d66a0110c99ab">ContactConstraint</a> ()</td></tr>
-<tr class="separator:ad4a4d2baaacb8b1d914d66a0110c99ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a544f184a51c137915111ec31c7f03826"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ContactConstraint.html#a544f184a51c137915111ec31c7f03826">ContactConstraint</a> (double timeStep, <a class="el" href="structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30">ContactType</a> contactType=<a class="el" href="structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30a15d06b5b0997a0a5e17eccd053c7c652">Velocity</a>)</td></tr>
+<tr class="separator:a544f184a51c137915111ec31c7f03826"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accd5d499f2b4ff1bf588c04e4b520024"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ContactConstraint.html#accd5d499f2b4ff1bf588c04e4b520024">addToSolverImpl</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver) override</td></tr>
+<tr class="separator:accd5d499f2b4ff1bf588c04e4b520024"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a059aae518fa197d296c9dcb9c56521a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ContactConstraint.html#a059aae518fa197d296c9dcb9c56521a5">removeFromSolverImpl</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver) override</td></tr>
+<tr class="separator:a059aae518fa197d296c9dcb9c56521a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa06cba392d88e851509f3ee9663fb248"><td class="memItemLeft" align="right" valign="top">tasks::qp::ContactConstr *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ContactConstraint.html#aa06cba392d88e851509f3ee9663fb248">contactConstr</a> ()</td></tr>
+<tr class="separator:aa06cba392d88e851509f3ee9663fb248"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_structmc__solver_1_1ConstraintSet"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_structmc__solver_1_1ConstraintSet')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="structmc__solver_1_1ConstraintSet.html">mc_solver::ConstraintSet</a></td></tr>
+<tr class="memitem:a3aa0c213151164988d93d883ed53df8d inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a3aa0c213151164988d93d883ed53df8d">ConstraintSet</a> ()</td></tr>
+<tr class="separator:a3aa0c213151164988d93d883ed53df8d inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58761b08e77d74f6d24dbb5fe538dbba inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a58761b08e77d74f6d24dbb5fe538dbba">addToSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
+<tr class="separator:a58761b08e77d74f6d24dbb5fe538dbba inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e6245316fcaebb545166a021c8d9158 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a4e6245316fcaebb545166a021c8d9158">removeFromSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
+<tr class="separator:a4e6245316fcaebb545166a021c8d9158 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a> ()</td></tr>
 <tr class="separator:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e164a1efbfdb75c84edeb725b34ba59 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a6e164a1efbfdb75c84edeb725b34ba59">inSolver</a> () const noexcept</td></tr>
+<tr class="separator:a6e164a1efbfdb75c84edeb725b34ba59 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f3a5b79af846b7b1f1d95f2d6569208 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">QPSolver::Backend</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a4f3a5b79af846b7b1f1d95f2d6569208">backend</a> () const noexcept</td></tr>
+<tr class="separator:a4f3a5b79af846b7b1f1d95f2d6569208 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:ad8b6359d4d1a771db2fd8bad433acf1f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; tasks::qp::ContactConstr &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ContactConstraint.html#ad8b6359d4d1a771db2fd8bad433acf1f">contactConstr</a></td></tr>
-<tr class="separator:ad8b6359d4d1a771db2fd8bad433acf1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4456741f8ae0b07c199415fda9b9aecf"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; tasks::qp::PositiveLambda &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ContactConstraint.html#a4456741f8ae0b07c199415fda9b9aecf">posLambdaConstr</a></td></tr>
-<tr class="separator:a4456741f8ae0b07c199415fda9b9aecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_attribs_structmc__solver_1_1ConstraintSet"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_structmc__solver_1_1ConstraintSet')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="structmc__solver_1_1ConstraintSet.html">mc_solver::ConstraintSet</a></td></tr>
+<tr class="memitem:aec90699d0bd3179f9258ff09fcf5cca0 inherit pro_attribs_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">QPSolver::Backend</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#aec90699d0bd3179f9258ff09fcf5cca0">backend_</a></td></tr>
+<tr class="separator:aec90699d0bd3179f9258ff09fcf5cca0 inherit pro_attribs_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa2c09323d080bd537cd08b97399e25f inherit pro_attribs_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#afa2c09323d080bd537cd08b97399e25f">inSolver_</a> = false</td></tr>
+<tr class="separator:afa2c09323d080bd537cd08b97399e25f inherit pro_attribs_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Wraps multiple constraints related to Contact. </p>
+<div class="textblock"><p>Handle geometric constraints on contacts </p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="aa1038fc325c517503d2f68a3feec1c30"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa1038fc325c517503d2f68a3feec1c30">&#9670;&nbsp;</a></span>ContactType</h2>
@@ -154,8 +161,8 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a2226b4449ee6faeb3f6d70cfdfb13b4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2226b4449ee6faeb3f6d70cfdfb13b4f">&#9670;&nbsp;</a></span>ContactConstraint() <span class="overload">[1/2]</span></h2>
+<a id="a544f184a51c137915111ec31c7f03826"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a544f184a51c137915111ec31c7f03826">&#9670;&nbsp;</a></span>ContactConstraint()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -170,13 +177,7 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30">ContactType</a>&#160;</td>
-          <td class="paramname"><em>contactType</em> = <code><a class="el" href="structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30a15d06b5b0997a0a5e17eccd053c7c652">Velocity</a></code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>dynamics</em> = <code>true</code>&#160;</td>
+          <td class="paramname"><em>contactType</em> = <code><a class="el" href="structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30a15d06b5b0997a0a5e17eccd053c7c652">Velocity</a></code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -185,46 +186,20 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Constructor </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Constructor</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">timeStep</td><td>Ignored if contactType is Acceleration </td></tr>
-    <tr><td class="paramname">contactType</td><td>Type of contact corresponding, this value dictates the type of tasks::qp::ContactConstr that will be generated </td></tr>
-    <tr><td class="paramname">dynamics</td><td>If true, the constraint will include a tasks::qp::PositiveLambda constraint in addition to the tasks::qp::ContactConstr </td></tr>
+    <tr><td class="paramname">timeStep</td><td>Solver timestep</td></tr>
+    <tr><td class="paramname">contactType</td><td>Enable different geometric constraint </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="ad4a4d2baaacb8b1d914d66a0110c99ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4a4d2baaacb8b1d914d66a0110c99ab">&#9670;&nbsp;</a></span>ContactConstraint() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_solver::ContactConstraint::ContactConstraint </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000012">Deprecated:</a></b></dt><dd>{Default constructor, not made for general usage} </dd></dl>
-
-</div>
-</div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3e94d3c790da36671345692cbf14e81d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e94d3c790da36671345692cbf14e81d">&#9670;&nbsp;</a></span>addToSolver()</h2>
+<a id="accd5d499f2b4ff1bf588c04e4b520024"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#accd5d499f2b4ff1bf588c04e4b520024">&#9670;&nbsp;</a></span>addToSolverImpl()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -233,48 +208,9 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void mc_solver::ContactConstraint::addToSolver </td>
+          <td class="memname">void mc_solver::ContactConstraint::addToSolverImpl </td>
           <td>(</td>
-          <td class="paramtype">const std::vector&lt; rbd::MultiBody &gt; &amp;&#160;</td>
-          <td class="paramname"><em>mbs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">tasks::qp::QPSolver &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Implementation of <a class="el" href="structmc__solver_1_1ConstraintSet.html#a8b2739907caaeb5d49ccaedc1665e3ca">mc_solver::ConstraintSet::addToSolver</a> </p>
-
-<p>Implements <a class="el" href="structmc__solver_1_1ConstraintSet.html#a8b2739907caaeb5d49ccaedc1665e3ca">mc_solver::ConstraintSet</a>.</p>
-
-</div>
-</div>
-<a id="af72efeda2c9cd6af2e4626f32ab7583d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af72efeda2c9cd6af2e4626f32ab7583d">&#9670;&nbsp;</a></span>removeFromSolver()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void mc_solver::ContactConstraint::removeFromSolver </td>
-          <td>(</td>
-          <td class="paramtype">tasks::qp::QPSolver &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;&#160;</td>
           <td class="paramname"><em>solver</em></td><td>)</td>
           <td></td>
         </tr>
@@ -285,40 +221,62 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Implementation of <a class="el" href="structmc__solver_1_1ConstraintSet.html#aa7a3302adccb4d3183e829fd2754b75a">mc_solver::ConstraintSet::removeFromSolver</a> </p>
+<p>Implementation of <a class="el" href="structmc__solver_1_1ConstraintSet.html#a58761b08e77d74f6d24dbb5fe538dbba">mc_solver::ConstraintSet::addToSolver</a> </p>
 
-<p>Implements <a class="el" href="structmc__solver_1_1ConstraintSet.html#aa7a3302adccb4d3183e829fd2754b75a">mc_solver::ConstraintSet</a>.</p>
+<p>Implements <a class="el" href="structmc__solver_1_1ConstraintSet.html#a5f94c3979ed1c1f437a611be1e4b1ea0">mc_solver::ConstraintSet</a>.</p>
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="ad8b6359d4d1a771db2fd8bad433acf1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8b6359d4d1a771db2fd8bad433acf1f">&#9670;&nbsp;</a></span>contactConstr</h2>
+<a id="aa06cba392d88e851509f3ee9663fb248"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa06cba392d88e851509f3ee9663fb248">&#9670;&nbsp;</a></span>contactConstr()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;tasks::qp::ContactConstr&gt; mc_solver::ContactConstraint::contactConstr</td>
+          <td class="memname">tasks::qp::ContactConstr* mc_solver::ContactConstraint::contactConstr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Holds the proper type of ContactConstr based on constructor input, always holds a valid pointer </p>
+<p>Returns the underlying constraint in the Tasks backend</p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>the backend is not Tasks backend </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="a4456741f8ae0b07c199415fda9b9aecf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4456741f8ae0b07c199415fda9b9aecf">&#9670;&nbsp;</a></span>posLambdaConstr</h2>
+<a id="a059aae518fa197d296c9dcb9c56521a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a059aae518fa197d296c9dcb9c56521a5">&#9670;&nbsp;</a></span>removeFromSolverImpl()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;tasks::qp::PositiveLambda&gt; mc_solver::ContactConstraint::posLambdaConstr</td>
+          <td class="memname">void mc_solver::ContactConstraint::removeFromSolverImpl </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>May be a null-ptr </p>
+<p>Implementation of <a class="el" href="structmc__solver_1_1ConstraintSet.html#a4e6245316fcaebb545166a021c8d9158">mc_solver::ConstraintSet::removeFromSolver</a> </p>
+
+<p>Implements <a class="el" href="structmc__solver_1_1ConstraintSet.html#a458f00ac8d8935759c92dfa8fd2a2243">mc_solver::ConstraintSet</a>.</p>
 
 </div>
 </div>

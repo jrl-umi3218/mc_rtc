@@ -10,6 +10,7 @@ var searchData=
   ['formarrayinput',['FormArrayInput',['../structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html',1,'mc_rtc::gui::internal']]],
   ['formattedtableimpl',['FormattedTableImpl',['../structmc__rtc_1_1gui_1_1details_1_1FormattedTableImpl.html',1,'mc_rtc::gui::details']]],
   ['formatter_3c_20mc_5frtc_3a_3aconfiguration_20_3e',['formatter&lt; mc_rtc::Configuration &gt;',['../structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html',1,'fmt']]],
+  ['formatter_3c_20mc_5fsolver_3a_3aqpsolver_3a_3abackend_20_3e',['formatter&lt; mc_solver::QPSolver::Backend &gt;',['../structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html',1,'fmt']]],
   ['formcomboinput',['FormComboInput',['../structmc__rtc_1_1gui_1_1FormComboInput.html',1,'mc_rtc::gui']]],
   ['formdatacomboinput',['FormDataComboInput',['../structmc__rtc_1_1gui_1_1FormDataComboInput.html',1,'mc_rtc::gui']]],
   ['formdatainput',['FormDataInput',['../structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html',1,'mc_rtc::gui::internal']]],

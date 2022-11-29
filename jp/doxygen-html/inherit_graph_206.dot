@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_trajectory::SequenceInterpolator\l\< Value, InterpolationFunction \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__trajectory_1_1SequenceInterpolator.html",tooltip="Interpolate values in a timed sequence. "];
+  Node0 [label="mc_trajectory::Spline\l\< T, WaypointsT \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__trajectory_1_1Spline.html"];
 }

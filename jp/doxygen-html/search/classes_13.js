@@ -12,7 +12,6 @@ var searchData=
   ['sharedptrvectorconstiterator',['SharedPtrVectorConstIterator',['../structmc__rtc_1_1SharedPtrVectorConstIterator.html',1,'mc_rtc']]],
   ['sharedptrvectoriterator',['SharedPtrVectorIterator',['../structmc__rtc_1_1SharedPtrVectorIterator.html',1,'mc_rtc']]],
   ['simulationcontactpair',['SimulationContactPair',['../structmc__control_1_1SimulationContactPair.html',1,'mc_control']]],
-  ['slidingfootcontactstate',['SlidingFootContactState',['../structmc__control_1_1fsm_1_1SlidingFootContactState.html',1,'mc_control::fsm']]],
   ['smoothtask',['SmoothTask',['../structmc__tasks_1_1SmoothTask.html',1,'mc_tasks']]],
   ['spline',['Spline',['../structmc__trajectory_1_1Spline.html',1,'mc_trajectory']]],
   ['spline_3c_20eigen_3a_3amatrix3d_2c_20std_3a_3avector_3c_20std_3a_3apair_3c_20double_2c_20eigen_3a_3amatrix3d_20_3e_20_3e_20_3e',['Spline&lt; Eigen::Matrix3d, std::vector&lt; std::pair&lt; double, Eigen::Matrix3d &gt; &gt; &gt;',['../structmc__trajectory_1_1Spline.html',1,'mc_trajectory']]],

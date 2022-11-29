@@ -20,7 +20,7 @@ var searchData=
   ['constraint_2eh',['Constraint.h',['../Constraint_8h.html',1,'']]],
   ['constraintset_2eh',['ConstraintSet.h',['../ConstraintSet_8h.html',1,'']]],
   ['constraintsetloader_2eh',['ConstraintSetLoader.h',['../ConstraintSetLoader_8h.html',1,'']]],
-  ['contact_2eh',['Contact.h',['../mc__control_2Contact_8h.html',1,'(Global Namespace)'],['../mc__rbdyn_2Contact_8h.html',1,'(Global Namespace)'],['../mc__solver_2msg_2Contact_8h.html',1,'(Global Namespace)'],['../mc__tasks_2lipm__stabilizer_2Contact_8h.html',1,'(Global Namespace)']]],
+  ['contact_2eh',['Contact.h',['../mc__control_2Contact_8h.html',1,'(Global Namespace)'],['../mc__rbdyn_2Contact_8h.html',1,'(Global Namespace)'],['../mc__tasks_2lipm__stabilizer_2Contact_8h.html',1,'(Global Namespace)']]],
   ['contact_5ftransform_2eh',['contact_transform.h',['../contact__transform_8h.html',1,'']]],
   ['contactconstraint_2eh',['ContactConstraint.h',['../ContactConstraint_8h.html',1,'']]],
   ['contactwrenchmatrixtolambdamatrix_2eh',['ContactWrenchMatrixToLambdaMatrix.h',['../ContactWrenchMatrixToLambdaMatrix_8h.html',1,'']]],

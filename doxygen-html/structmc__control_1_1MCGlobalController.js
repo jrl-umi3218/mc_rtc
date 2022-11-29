@@ -28,7 +28,6 @@ var structmc__control_1_1MCGlobalController =
     [ "refreshLog", "structmc__control_1_1MCGlobalController.html#a07310532c70c9cb3087cbbec3a2f14e3", null ],
     [ "reset", "structmc__control_1_1MCGlobalController.html#ae0b1e4eabca46ba58faef362b03dce49", null ],
     [ "run", "structmc__control_1_1MCGlobalController.html#a153432b8c6ebfc4f9484deb1439ca3ee", null ],
-    [ "send", "structmc__control_1_1MCGlobalController.html#a2d8ba93ec28be3eed4d6d8bfa58c80cf", null ],
     [ "server", "structmc__control_1_1MCGlobalController.html#a6fa39ac887fc881a4e99c3a30efbb3d3", null ],
     [ "setEncoderValues", "structmc__control_1_1MCGlobalController.html#a2703ab87cc9556a1f18cc883113da33c", null ],
     [ "setEncoderValues", "structmc__control_1_1MCGlobalController.html#a94410b73f4fae3e1115ad37eefe27976", null ],

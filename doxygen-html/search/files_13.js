@@ -1,6 +1,7 @@
 var searchData=
 [
   ['table_2eh',['Table.h',['../Table_8h.html',1,'']]],
+  ['tasksqpsolver_2eh',['TasksQPSolver.h',['../TasksQPSolver_8h.html',1,'']]],
   ['traits_2eh',['traits.h',['../traits_8h.html',1,'']]],
   ['trajectory_2eh',['Trajectory.h',['../Trajectory_8h.html',1,'']]],
   ['trajectorytaskgeneric_2eh',['TrajectoryTaskGeneric.h',['../TrajectoryTaskGeneric_8h.html',1,'']]],

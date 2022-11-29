@@ -125,14 +125,12 @@ var hierarchy =
       [ "mc_solver::ContactConstraint", "structmc__solver_1_1ContactConstraint.html", null ],
       [ "mc_solver::KinematicsConstraint", "structmc__solver_1_1KinematicsConstraint.html", [
         [ "mc_solver::DynamicsConstraint", "structmc__solver_1_1DynamicsConstraint.html", null ]
-      ] ],
-      [ "mc_solver::RobotEnvCollisionsConstraint", "structmc__solver_1_1RobotEnvCollisionsConstraint.html", null ]
+      ] ]
     ] ],
     [ "mc_control::Contact", "structmc__control_1_1Contact.html", null ],
     [ "mc_rbdyn::Contact", "structmc__rbdyn_1_1Contact.html", null ],
     [ "mc_tasks::lipm_stabilizer::internal::Contact", "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html", null ],
     [ "mc_tasks::lipm_stabilizer::ContactDescription", "structmc__tasks_1_1lipm__stabilizer_1_1ContactDescription.html", null ],
-    [ "mc_solver::ContactMsg", "structmc__solver_1_1ContactMsg.html", null ],
     [ "mc_solver::utils::ContactWrenchMatrixToLambdaMatrix", "structmc__solver_1_1utils_1_1ContactWrenchMatrixToLambdaMatrix.html", null ],
     [ "mc_control::ControllerClient", "structmc__control_1_1ControllerClient.html", null ],
     [ "mc_control::ControllerLoader", "structmc__control_1_1ControllerLoader.html", null ],
@@ -219,7 +217,8 @@ var hierarchy =
     [ "mc_rtc::log::FlatLog", "structmc__rtc_1_1log_1_1FlatLog.html", null ],
     [ "mc_rbdyn::Flexibility", "structmc__rbdyn_1_1Flexibility.html", null ],
     [ "formatter", null, [
-      [ "fmt::formatter< mc_rtc::Configuration >", "structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html", null ]
+      [ "fmt::formatter< mc_rtc::Configuration >", "structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html", null ],
+      [ "fmt::formatter< mc_solver::QPSolver::Backend >", "structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html", null ]
     ] ],
     [ "mc_rtc::gui::FormElement< Derived, element >", "structmc__rtc_1_1gui_1_1FormElement.html", null ],
     [ "mc_rtc::gui::FormElement< FormArrayInput< T, DataCallback >, Elements::ArrayInput >", "structmc__rtc_1_1gui_1_1FormElement.html", [
@@ -323,26 +322,14 @@ var hierarchy =
       [ "mc_tasks::force::ComplianceTask", "structmc__tasks_1_1force_1_1ComplianceTask.html", null ],
       [ "mc_tasks::lipm_stabilizer::StabilizerTask", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html", null ],
       [ "mc_tasks::PostureTask", "structmc__tasks_1_1PostureTask.html", null ],
-      [ "mc_tasks::TrajectoryTaskGeneric< T >", "structmc__tasks_1_1TrajectoryTaskGeneric.html", null ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::CoMTask >", "structmc__tasks_1_1TrajectoryTaskGeneric.html", [
-        [ "mc_tasks::CoMTask", "structmc__tasks_1_1CoMTask.html", null ]
-      ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::GazeTask >", "structmc__tasks_1_1TrajectoryTaskGeneric.html", [
-        [ "mc_tasks::GazeTask", "structmc__tasks_1_1GazeTask.html", null ]
-      ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::MomentumTask >", "structmc__tasks_1_1TrajectoryTaskGeneric.html", [
-        [ "mc_tasks::MomentumTask", "structmc__tasks_1_1MomentumTask.html", null ]
-      ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::OrientationTask >", "structmc__tasks_1_1TrajectoryTaskGeneric.html", [
-        [ "mc_tasks::OrientationTask", "structmc__tasks_1_1OrientationTask.html", null ]
-      ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::PositionBasedVisServoTask >", "structmc__tasks_1_1TrajectoryTaskGeneric.html", [
-        [ "mc_tasks::PositionBasedVisServoTask", "structmc__tasks_1_1PositionBasedVisServoTask.html", null ]
-      ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::PositionTask >", "structmc__tasks_1_1TrajectoryTaskGeneric.html", [
-        [ "mc_tasks::PositionTask", "structmc__tasks_1_1PositionTask.html", null ]
-      ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::SurfaceTransformTask >", "structmc__tasks_1_1TrajectoryTaskGeneric.html", [
+      [ "mc_tasks::TrajectoryTaskGeneric", "structmc__tasks_1_1TrajectoryTaskGeneric.html", [
+        [ "mc_tasks::CoMTask", "structmc__tasks_1_1CoMTask.html", null ],
+        [ "mc_tasks::GazeTask", "structmc__tasks_1_1GazeTask.html", null ],
+        [ "mc_tasks::MomentumTask", "structmc__tasks_1_1MomentumTask.html", null ],
+        [ "mc_tasks::OrientationTask", "structmc__tasks_1_1OrientationTask.html", null ],
+        [ "mc_tasks::PositionBasedVisServoTask", "structmc__tasks_1_1PositionBasedVisServoTask.html", null ],
+        [ "mc_tasks::PositionTask", "structmc__tasks_1_1PositionTask.html", null ],
+        [ "mc_tasks::SplineTrajectoryTask< Derived >", "structmc__tasks_1_1SplineTrajectoryTask.html", null ],
         [ "mc_tasks::TransformTask", "structmc__tasks_1_1TransformTask.html", [
           [ "mc_tasks::force::AdmittanceTask", "structmc__tasks_1_1force_1_1AdmittanceTask.html", [
             [ "mc_tasks::force::DampingTask", "structmc__tasks_1_1force_1_1DampingTask.html", [
@@ -350,23 +337,18 @@ var hierarchy =
             ] ]
           ] ],
           [ "mc_tasks::force::ImpedanceTask", "structmc__tasks_1_1force_1_1ImpedanceTask.html", null ]
-        ] ]
-      ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::TransformTask >", "structmc__tasks_1_1TrajectoryTaskGeneric.html", [
-        [ "mc_tasks::SplineTrajectoryTask< Derived >", "structmc__tasks_1_1SplineTrajectoryTask.html", null ],
-        [ "mc_tasks::SplineTrajectoryTask< BSplineTrajectoryTask >", "structmc__tasks_1_1SplineTrajectoryTask.html", [
-          [ "mc_tasks::BSplineTrajectoryTask", "structmc__tasks_1_1BSplineTrajectoryTask.html", null ]
         ] ],
-        [ "mc_tasks::SplineTrajectoryTask< ExactCubicTrajectoryTask >", "structmc__tasks_1_1SplineTrajectoryTask.html", [
-          [ "mc_tasks::ExactCubicTrajectoryTask", "structmc__tasks_1_1ExactCubicTrajectoryTask.html", null ]
-        ] ]
-      ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::VectorOrientationTask >", "structmc__tasks_1_1TrajectoryTaskGeneric.html", [
         [ "mc_tasks::VectorOrientationTask", "structmc__tasks_1_1VectorOrientationTask.html", [
           [ "mc_tasks::LookAtTask", "structmc__tasks_1_1LookAtTask.html", [
             [ "mc_tasks::LookAtFrameTask", "structmc__tasks_1_1LookAtFrameTask.html", null ],
             [ "mc_tasks::LookAtTFTask", "structmc__tasks_1_1LookAtTFTask.html", null ]
           ] ]
+        ] ],
+        [ "mc_tasks::SplineTrajectoryTask< BSplineTrajectoryTask >", "structmc__tasks_1_1SplineTrajectoryTask.html", [
+          [ "mc_tasks::BSplineTrajectoryTask", "structmc__tasks_1_1BSplineTrajectoryTask.html", null ]
+        ] ],
+        [ "mc_tasks::SplineTrajectoryTask< ExactCubicTrajectoryTask >", "structmc__tasks_1_1SplineTrajectoryTask.html", [
+          [ "mc_tasks::ExactCubicTrajectoryTask", "structmc__tasks_1_1ExactCubicTrajectoryTask.html", null ]
         ] ]
       ] ]
     ] ],
@@ -411,8 +393,9 @@ var hierarchy =
     [ "mc_control::PythonRWCallback", "structmc__control_1_1PythonRWCallback.html", null ],
     [ "mc_solver::QPContactPtr", "structmc__solver_1_1QPContactPtr.html", null ],
     [ "mc_solver::QPContactPtrWPoints", "structmc__solver_1_1QPContactPtrWPoints.html", null ],
-    [ "mc_solver::QPResultMsg", "structmc__solver_1_1QPResultMsg.html", null ],
-    [ "mc_solver::QPSolver", "structmc__solver_1_1QPSolver.html", null ],
+    [ "mc_solver::QPSolver", "structmc__solver_1_1QPSolver.html", [
+      [ "mc_solver::TasksQPSolver", "structmc__solver_1_1TasksQPSolver.html", null ]
+    ] ],
     [ "mc_rbdyn::QuadraticGenerator", "structmc__rbdyn_1_1QuadraticGenerator.html", null ],
     [ "mc_rtc::gui::plot::Range", "structmc__rtc_1_1gui_1_1plot_1_1Range.html", null ],
     [ "mc_rtc::log::FlatLog::record", "structmc__rtc_1_1log_1_1FlatLog_1_1record.html", null ],
@@ -425,7 +408,6 @@ var hierarchy =
     [ "mc_rbdyn::RobotData", "structmc__rbdyn_1_1RobotData.html", null ],
     [ "mc_rbdyn::RobotLoader", "structmc__rbdyn_1_1RobotLoader.html", null ],
     [ "mc_rbdyn::RobotModule", "structmc__rbdyn_1_1RobotModule.html", null ],
-    [ "mc_solver::RobotMsg", "structmc__solver_1_1RobotMsg.html", null ],
     [ "mc_rtc::RobotPublisher", "structmc__rtc_1_1RobotPublisher.html", null ],
     [ "mc_rtc::ROSBridge", "structmc__rtc_1_1ROSBridge.html", null ],
     [ "mc_rbdyn::RobotModule::Gripper::Safety", "structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety.html", null ],
@@ -458,7 +440,6 @@ var hierarchy =
       [ "mc_control::fsm::PauseState", "structmc__control_1_1fsm_1_1PauseState.html", null ],
       [ "mc_control::fsm::PostureState", "structmc__control_1_1fsm_1_1PostureState.html", null ],
       [ "mc_control::fsm::PythonState", "structmc__control_1_1fsm_1_1PythonState.html", null ],
-      [ "mc_control::fsm::SlidingFootContactState", "structmc__control_1_1fsm_1_1SlidingFootContactState.html", null ],
       [ "mc_control::fsm::StabilizerStandingState", "structmc__control_1_1fsm_1_1StabilizerStandingState.html", null ]
     ] ],
     [ "mc_rtc::gui::StateBuilder", "structmc__rtc_1_1gui_1_1StateBuilder.html", null ],
@@ -472,10 +453,10 @@ var hierarchy =
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html", null ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
     ] ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
     ] ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],
@@ -520,7 +501,6 @@ var hierarchy =
     [ "vector", null, [
       [ "mc_rbdyn::DevicePtrVector", "structmc__rbdyn_1_1DevicePtrVector.html", null ]
     ] ],
-    [ "mc_solver::ZMP", "structmc__solver_1_1ZMP.html", null ],
     [ "mc_tasks::lipm_stabilizer::ZMPCC", "structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration.html", null ],
     [ "ElementT", null, [

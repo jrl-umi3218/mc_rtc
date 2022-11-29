@@ -5,7 +5,6 @@ var searchData=
   ['sequenceinterpolator_2eh',['SequenceInterpolator.h',['../SequenceInterpolator_8h.html',1,'']]],
   ['shared_2eh',['shared.h',['../shared_8h.html',1,'']]],
   ['simulationcontactpair_2eh',['SimulationContactPair.h',['../SimulationContactPair_8h.html',1,'']]],
-  ['slidingfootcontact_2eh',['SlidingFootContact.h',['../SlidingFootContact_8h.html',1,'']]],
   ['smoothtask_2eh',['SmoothTask.h',['../SmoothTask_8h.html',1,'']]],
   ['spline_2eh',['Spline.h',['../Spline_8h.html',1,'']]],
   ['spline_5futils_2eh',['spline_utils.h',['../spline__utils_8h.html',1,'']]],

@@ -1,9 +1,12 @@
 var structmc__tasks_1_1MetaTask =
 [
+    [ "Backend", "structmc__tasks_1_1MetaTask.html#a33509a37fe853747dcacae6cdda089f1", null ],
+    [ "MetaTask", "structmc__tasks_1_1MetaTask.html#aa9d8f2bfa435c5386adcafddf3ea087d", null ],
     [ "~MetaTask", "structmc__tasks_1_1MetaTask.html#aea3e513dfe137830b38272336451b8cc", null ],
     [ "addToGUI", "structmc__tasks_1_1MetaTask.html#a6be5d66b0aba0cac4f65093d5d3b7c7f", null ],
     [ "addToLogger", "structmc__tasks_1_1MetaTask.html#a19bd5d3b7b1b36dae48b516457de16a8", null ],
     [ "addToSolver", "structmc__tasks_1_1MetaTask.html#a87fbfd10dd81b8ce64a7a9f82d80d078", null ],
+    [ "backend", "structmc__tasks_1_1MetaTask.html#a2827c0bf7b69c7d349c34e9b3db19958", null ],
     [ "buildCompletionCriteria", "structmc__tasks_1_1MetaTask.html#a753237535cc3e200e44ae0fa276f733e", null ],
     [ "dimWeight", "structmc__tasks_1_1MetaTask.html#a98221b876dab3cc67fbd60036213eb46", null ],
     [ "dimWeight", "structmc__tasks_1_1MetaTask.html#ae6437fb02541a7c63e177ee13170b5a4", null ],
@@ -26,6 +29,8 @@ var structmc__tasks_1_1MetaTask =
     [ "update", "structmc__tasks_1_1MetaTask.html#a21e9870f7434084d52299f18f8f86da7", null ],
     [ "mc_control::CompletionCriteria", "structmc__tasks_1_1MetaTask.html#a93d28090bec75d3e17832041ced6e3f9", null ],
     [ "mc_solver::QPSolver", "structmc__tasks_1_1MetaTask.html#a1f3a8dff16b572ac14d1ab4cf32a9e36", null ],
+    [ "mc_solver::TasksQPSolver", "structmc__tasks_1_1MetaTask.html#a0465ff354dd0a25c4bd0aa0785f2652e", null ],
+    [ "backend_", "structmc__tasks_1_1MetaTask.html#abde4ba259deee57ffed51fa090aad188", null ],
     [ "iterInSolver_", "structmc__tasks_1_1MetaTask.html#a5bf5a9f30f1497e15abc33faf7a97e5c", null ],
     [ "name_", "structmc__tasks_1_1MetaTask.html#a6e55f0bff9a3d49ba0b92e0a4dff9a6f", null ],
     [ "type_", "structmc__tasks_1_1MetaTask.html#addf8dbe10befa2b37c8e7ea386561775", null ]

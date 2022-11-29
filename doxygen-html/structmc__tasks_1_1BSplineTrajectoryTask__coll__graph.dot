@@ -8,7 +8,7 @@ digraph "mc_tasks::BSplineTrajectoryTask"
   Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 [label="mc_tasks::SplineTrajectory\lTask\< BSplineTrajectoryTask \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1SplineTrajectoryTask.html"];
   Node6 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="mc_tasks::TrajectoryTask\lGeneric\< tasks::qp::Transform\lTask \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1TrajectoryTaskGeneric.html"];
+  Node6 [label="mc_tasks::TrajectoryTask\lGeneric",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1TrajectoryTaskGeneric.html",tooltip="Generic wrapper for a trajectory dynamic over an error function. "];
   Node7 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 [label="mc_tasks::MetaTask",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1MetaTask.html",tooltip="Represents a generic task. "];
   Node8 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" robots" ,fontname="Helvetica"];

@@ -1,6 +1,5 @@
 var structmc__tasks_1_1TransformTask =
 [
-    [ "TrajectoryBase", "structmc__tasks_1_1TransformTask.html#afc07a09fa745dd322cb17e9b21b2547b", null ],
     [ "TransformTask", "structmc__tasks_1_1TransformTask.html#af76f18eb60ebc27c1e8b7612535aecc9", null ],
     [ "TransformTask", "structmc__tasks_1_1TransformTask.html#a9d566e2a0f59e9b4ed91c9a5849e31af", null ],
     [ "addToGUI", "structmc__tasks_1_1TransformTask.html#abc682d060a6d0815896f02614c0f1014", null ],

@@ -1,6 +1,7 @@
 var structmc__tasks_1_1force_1_1ImpedanceTask =
 [
     [ "ImpedanceTask", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a0ef3a7aced29828c13a1db97ca2c4d0b", null ],
+    [ "ImpedanceTask", "structmc__tasks_1_1force_1_1ImpedanceTask.html#ad22745f66f514b82fe1aaa047f07d90f", null ],
     [ "addToGUI", "structmc__tasks_1_1force_1_1ImpedanceTask.html#ae6658a431750580958b194b2d0a4963c", null ],
     [ "addToLogger", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a2d68f87660e62b62cbaa910632d68a3c", null ],
     [ "addToSolver", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a1014edb78929f3768bd4dd9c2260fab1", null ],

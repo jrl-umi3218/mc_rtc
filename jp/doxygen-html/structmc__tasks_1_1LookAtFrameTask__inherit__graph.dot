@@ -9,7 +9,7 @@ digraph "mc_tasks::LookAtFrameTask"
   Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 [label="mc_tasks::VectorOrientationTask",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1VectorOrientationTask.html",tooltip="Control the orientation of a vector attached to a frame. "];
   Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="mc_tasks::TrajectoryTask\lGeneric\< tasks::qp::VectorOrientation\lTask \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1TrajectoryTaskGeneric.html"];
+  Node3 [label="mc_tasks::TrajectoryTask\lGeneric",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1TrajectoryTaskGeneric.html",tooltip="Generic wrapper for a trajectory dynamic over an error function. "];
   Node4 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 [label="mc_tasks::MetaTask",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1MetaTask.html",tooltip="Represents a generic task. "];
 }

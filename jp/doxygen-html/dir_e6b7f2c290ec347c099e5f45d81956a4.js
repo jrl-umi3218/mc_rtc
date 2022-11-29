@@ -31,9 +31,6 @@ var dir_e6b7f2c290ec347c099e5f45d81956a4 =
     [ "Posture.h", "Posture_8h.html", [
       [ "PostureState", "structmc__control_1_1fsm_1_1PostureState.html", "structmc__control_1_1fsm_1_1PostureState" ]
     ] ],
-    [ "SlidingFootContact.h", "SlidingFootContact_8h.html", [
-      [ "SlidingFootContactState", "structmc__control_1_1fsm_1_1SlidingFootContactState.html", "structmc__control_1_1fsm_1_1SlidingFootContactState" ]
-    ] ],
     [ "StabilizerStandingState.h", "StabilizerStandingState_8h.html", [
       [ "StabilizerStandingState", "structmc__control_1_1fsm_1_1StabilizerStandingState.html", "structmc__control_1_1fsm_1_1StabilizerStandingState" ]
     ] ]

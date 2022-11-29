@@ -28,7 +28,5 @@ digraph "Graphical Class Hierarchy"
   Node0 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node11 [label="mc_control::fsm::PythonState",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1fsm_1_1PythonState.html"];
   Node0 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node12 [label="mc_control::fsm::Sliding\lFootContactState",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1fsm_1_1SlidingFootContactState.html"];
-  Node0 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node13 [label="mc_control::fsm::Stabilizer\lStandingState",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1fsm_1_1StabilizerStandingState.html",tooltip="Simple state to control and stabilize the CoM of a biped-like robot using the LIPMStabilizer. "];
+  Node12 [label="mc_control::fsm::Stabilizer\lStandingState",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1fsm_1_1StabilizerStandingState.html",tooltip="Simple state to control and stabilize the CoM of a biped-like robot using the LIPMStabilizer. "];
 }

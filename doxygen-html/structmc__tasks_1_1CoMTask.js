@@ -1,6 +1,5 @@
 var structmc__tasks_1_1CoMTask =
 [
-    [ "TrajectoryBase", "structmc__tasks_1_1CoMTask.html#a51467f7e3f362d7aaa1b6ddb48b5d41a", null ],
     [ "CoMTask", "structmc__tasks_1_1CoMTask.html#a4c8786f3b387a997fb2ae923e2843669", null ],
     [ "actual", "structmc__tasks_1_1CoMTask.html#abc72179651c43a085fe41dd7e420b699", null ],
     [ "addToGUI", "structmc__tasks_1_1CoMTask.html#ad673a413597c928fe6b631c7d778e650", null ],

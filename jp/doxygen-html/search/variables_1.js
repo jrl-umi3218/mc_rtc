@@ -20,8 +20,6 @@ var searchData=
   ['afull_5f',['AFull_',['../structmc__solver_1_1utils_1_1Update.html#a6ba3138c342b7e4efa2328ac11930706',1,'mc_solver::utils::Update']]],
   ['all_5fwaypoints_5f',['all_waypoints_',['../structmc__trajectory_1_1InterpolatedRotation.html#a3a83a147d6040fd550d83b1fa2a5e37c',1,'mc_trajectory::InterpolatedRotation']]],
   ['alpha_5f',['alpha_',['../structmc__filter_1_1ExponentialMovingAverage.html#accd3db44b24084922b2d1915e378b2fb',1,'mc_filter::ExponentialMovingAverage']]],
-  ['alphadvec',['alphaDVec',['../structmc__solver_1_1RobotMsg.html#a006a571037b605b0b5c9e749fac3e06c',1,'mc_solver::RobotMsg']]],
-  ['alphavec',['alphaVec',['../structmc__solver_1_1RobotMsg.html#ab4e17120478e2a800aa790e32be96e84',1,'mc_solver::RobotMsg']]],
   ['anchorframefunction_5f',['anchorFrameFunction_',['../structmc__control_1_1fsm_1_1StabilizerStandingState.html#a3223acafb893060e115adac91d3c254e',1,'mc_control::fsm::StabilizerStandingState::anchorFrameFunction_()'],['../structmc__observers_1_1KinematicInertialPoseObserver.html#a5764a9e879bc0a36b86fac6a4dba1766',1,'mc_observers::KinematicInertialPoseObserver::anchorFrameFunction_()']]],
   ['anchorframejumped_5f',['anchorFrameJumped_',['../structmc__observers_1_1KinematicInertialPoseObserver.html#a0962069b8dd23329e068a7d3234fd8b0',1,'mc_observers::KinematicInertialPoseObserver']]],
   ['ankletorquesqrt',['ankleTorqueSqrt',['../structmc__rbdyn_1_1lipm__stabilizer_1_1FDQPWeights.html#afb817ae2c1c643510fdaf15dc911cdd4',1,'mc_rbdyn::lipm_stabilizer::FDQPWeights']]],

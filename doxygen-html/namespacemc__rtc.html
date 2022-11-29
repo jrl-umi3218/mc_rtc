@@ -198,6 +198,8 @@ Typedefs</h2></td></tr>
 <tr class="separator:a5a9a29b4e1cc43e334c4ca10059ef277"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04f4430d990b320f494b3a21112c7e3a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a04f4430d990b320f494b3a21112c7e3a">LTDLHandlePtr</a> = std::shared_ptr&lt; <a class="el" href="structmc__rtc_1_1LTDLHandle.html">LTDLHandle</a> &gt;</td></tr>
 <tr class="separator:a04f4430d990b320f494b3a21112c7e3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a180392c9544bd202410478d8a4fb623d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d">void_ptr</a> = std::unique_ptr&lt; void, void(*)(void *)&gt;</td></tr>
+<tr class="separator:a180392c9544bd202410478d8a4fb623d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -212,6 +214,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a8fb61bc6391bc9cd0ef2aa0efff2d641">type_name</a> ()</td></tr>
 <tr class="separator:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0b92b93372ae4db1cf2eb6ee6cd0828"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
+<tr class="memitem:aa0b92b93372ae4db1cf2eb6ee6cd0828"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d">void_ptr</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#aa0b92b93372ae4db1cf2eb6ee6cd0828">make_void_ptr</a> (Args &amp;&amp;... args)</td></tr>
+<tr class="separator:aa0b92b93372ae4db1cf2eb6ee6cd0828"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -236,7 +241,8 @@ Variables</h2></td></tr>
 <p>Helper functions to emit deprecation messages when loading JSON/YAML from old versions</p>
 <p>This file contains some utility template metaprogramming functions for the GUI</p>
 <p>This header contains the base block of all elements in the GUI system. For the implementation details of specific elements look into their dedicated header</p>
-<p>This file contains classes that are used to configure the visual styles of various elements in the GUI </p>
+<p>This file contains classes that are used to configure the visual styles of various elements in the GUI</p>
+<p>Helpers for unique_ptr&lt;void, void (*)(void *)&gt; </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
 <a id="a5a9a29b4e1cc43e334c4ca10059ef277"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5a9a29b4e1cc43e334c4ca10059ef277">&#9670;&nbsp;</a></span>clock</h2>
@@ -289,6 +295,20 @@ Variables</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="namespacemc__rtc.html#a04f4430d990b320f494b3a21112c7e3a">mc_rtc::LTDLHandlePtr</a> = typedef std::shared_ptr&lt;<a class="el" href="structmc__rtc_1_1LTDLHandle.html">LTDLHandle</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a180392c9544bd202410478d8a4fb623d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a180392c9544bd202410478d8a4fb623d">&#9670;&nbsp;</a></span>void_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d">mc_rtc::void_ptr</a> = typedef std::unique_ptr&lt;void, void (*)(void *)&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -407,6 +427,26 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="aa0b92b93372ae4db1cf2eb6ee6cd0828"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0b92b93372ae4db1cf2eb6ee6cd0828">&#9670;&nbsp;</a></span>make_void_ptr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename... Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d">void_ptr</a> mc_rtc::make_void_ptr </td>
+          <td>(</td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

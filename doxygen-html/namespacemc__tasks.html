@@ -72,8 +72,7 @@ $(document).ready(function(){initNavTree('namespacemc__tasks.html','');});
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">mc_tasks Namespace Reference</div>  </div>
 </div><!--header-->
@@ -130,7 +129,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control the orientation of a frame.  <a href="structmc__tasks_1_1OrientationTask.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PositionBasedVisServoTask.html">PositionBasedVisServoTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Servo an end-effector depending on position error.  <a href="structmc__tasks_1_1PositionBasedVisServoTask.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Servo an end-effector depending on position error in camera frame.  <a href="structmc__tasks_1_1PositionBasedVisServoTask.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PositionTask.html">PositionTask</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control the position of a frame.  <a href="structmc__tasks_1_1PositionTask.html#details">More...</a><br /></td></tr>
@@ -150,7 +149,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic CRTP implementation for a task tracking a curve in both position and orientation. This class takes care of much of the logic behind tracking a curve:  <a href="structmc__tasks_1_1SplineTrajectoryTask.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html">TrajectoryTaskGeneric</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic wrapper for a tasks::qp::TrajectoryTask.  <a href="structmc__tasks_1_1TrajectoryTaskGeneric.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic wrapper for a trajectory dynamic over an error function.  <a href="structmc__tasks_1_1TrajectoryTaskGeneric.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html">TransformTask</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control a frame 6D pose.  <a href="structmc__tasks_1_1TransformTask.html#details">More...</a><br /></td></tr>
@@ -169,11 +168,6 @@ Typedefs</h2></td></tr>
 <tr class="separator:a20b4cf1d7ce78ab29822e5d5d6616489"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68fe384fc8c455a604bb80d86aca6f46"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__tasks.html#a68fe384fc8c455a604bb80d86aca6f46">SurfaceTransformTask</a> = <a class="el" href="structmc__tasks_1_1TransformTask.html">TransformTask</a></td></tr>
 <tr class="separator:a68fe384fc8c455a604bb80d86aca6f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:aa673a5574c449b983c740d35cddf6669"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__solver_2api_8h.html#a1f670c9ef41bde54578a3afc8fd75445">MC_SOLVER_DLLAPI</a> double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__tasks.html#aa673a5574c449b983c740d35cddf6669">extraStiffness</a> (double error, double extraStiffness)</td></tr>
-<tr class="separator:aa673a5574c449b983c740d35cddf6669"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="ace28b694118e322db35e47ac966047b5"></a>
@@ -226,35 +220,6 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="namespacemc__tasks.html#a68fe384fc8c455a604bb80d86aca6f46">mc_tasks::SurfaceTransformTask</a> = typedef <a class="el" href="structmc__tasks_1_1TransformTask.html">TransformTask</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="aa673a5574c449b983c740d35cddf6669"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa673a5574c449b983c740d35cddf6669">&#9670;&nbsp;</a></span>extraStiffness()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="include_2mc__solver_2api_8h.html#a1f670c9ef41bde54578a3afc8fd75445">MC_SOLVER_DLLAPI</a> double mc_tasks::extraStiffness </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>error</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>extraStiffness</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">

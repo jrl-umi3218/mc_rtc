@@ -71,6 +71,8 @@ $(document).ready(function(){initNavTree('structmc__solver_1_1ConstraintSet.html
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="structmc__solver_1_1ConstraintSet-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">mc_solver::ConstraintSet Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -91,12 +93,32 @@ Inheritance diagram for mc_solver::ConstraintSet:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8b2739907caaeb5d49ccaedc1665e3ca"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a8b2739907caaeb5d49ccaedc1665e3ca">addToSolver</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver)=0</td></tr>
-<tr class="separator:a8b2739907caaeb5d49ccaedc1665e3ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7a3302adccb4d3183e829fd2754b75a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#aa7a3302adccb4d3183e829fd2754b75a">removeFromSolver</a> (tasks::qp::QPSolver &amp;solver)=0</td></tr>
-<tr class="separator:aa7a3302adccb4d3183e829fd2754b75a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aa0c213151164988d93d883ed53df8d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a3aa0c213151164988d93d883ed53df8d">ConstraintSet</a> ()</td></tr>
+<tr class="separator:a3aa0c213151164988d93d883ed53df8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58761b08e77d74f6d24dbb5fe538dbba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a58761b08e77d74f6d24dbb5fe538dbba">addToSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
+<tr class="separator:a58761b08e77d74f6d24dbb5fe538dbba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e6245316fcaebb545166a021c8d9158"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a4e6245316fcaebb545166a021c8d9158">removeFromSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
+<tr class="separator:a4e6245316fcaebb545166a021c8d9158"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad979bb11e0faeba2c10d36d5a4c46e00"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a> ()</td></tr>
 <tr class="separator:ad979bb11e0faeba2c10d36d5a4c46e00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e164a1efbfdb75c84edeb725b34ba59"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a6e164a1efbfdb75c84edeb725b34ba59">inSolver</a> () const noexcept</td></tr>
+<tr class="separator:a6e164a1efbfdb75c84edeb725b34ba59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f3a5b79af846b7b1f1d95f2d6569208"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">QPSolver::Backend</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a4f3a5b79af846b7b1f1d95f2d6569208">backend</a> () const noexcept</td></tr>
+<tr class="separator:a4f3a5b79af846b7b1f1d95f2d6569208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a5f94c3979ed1c1f437a611be1e4b1ea0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a5f94c3979ed1c1f437a611be1e4b1ea0">addToSolverImpl</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver)=0</td></tr>
+<tr class="separator:a5f94c3979ed1c1f437a611be1e4b1ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a458f00ac8d8935759c92dfa8fd2a2243"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a458f00ac8d8935759c92dfa8fd2a2243">removeFromSolverImpl</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver)=0</td></tr>
+<tr class="separator:a458f00ac8d8935759c92dfa8fd2a2243"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:aec90699d0bd3179f9258ff09fcf5cca0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">QPSolver::Backend</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#aec90699d0bd3179f9258ff09fcf5cca0">backend_</a></td></tr>
+<tr class="separator:aec90699d0bd3179f9258ff09fcf5cca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa2c09323d080bd537cd08b97399e25f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#afa2c09323d080bd537cd08b97399e25f">inSolver_</a> = false</td></tr>
+<tr class="separator:afa2c09323d080bd537cd08b97399e25f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class is a basis to wrap Constraint functions from Tasks. The aim of such wrappers should be two-folds: </p>
@@ -105,6 +127,24 @@ Public Member Functions</h2></td></tr>
 <li>make the class easier to use with mc_* facilities </li>
 </ul>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a3aa0c213151164988d93d883ed53df8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aa0c213151164988d93d883ed53df8d">&#9670;&nbsp;</a></span>ConstraintSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_solver::ConstraintSet::ConstraintSet </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constructor, register the solver backend at creation time </p>
+
+</div>
+</div>
 <a id="ad979bb11e0faeba2c10d36d5a4c46e00"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad979bb11e0faeba2c10d36d5a4c46e00">&#9670;&nbsp;</a></span>~ConstraintSet()</h2>
 
@@ -132,54 +172,27 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8b2739907caaeb5d49ccaedc1665e3ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b2739907caaeb5d49ccaedc1665e3ca">&#9670;&nbsp;</a></span>addToSolver()</h2>
+<a id="a58761b08e77d74f6d24dbb5fe538dbba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58761b08e77d74f6d24dbb5fe538dbba">&#9670;&nbsp;</a></span>addToSolver()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void mc_solver::ConstraintSet::addToSolver </td>
+          <td class="memname">void mc_solver::ConstraintSet::addToSolver </td>
           <td>(</td>
-          <td class="paramtype">const std::vector&lt; rbd::MultiBody &gt; &amp;&#160;</td>
-          <td class="paramname"><em>mbs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">tasks::qp::QPSolver &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>This function is called by <a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> when <a class="el" href="structmc__solver_1_1QPSolver.html#a1e3d38aeb4c5d492565ec7667654d630">mc_solver::QPSolver::addConstraintSet</a> is called, it is expected that the implementation calls the safe variant of its wrapper constr: </p><pre class="fragment">&lt;wrapped-type&gt;::addToSolver(mbs, solver)
-</pre> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">mbs</td><td>The MultiBody vector controlled by the invoking <a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> </td></tr>
-    <tr><td class="paramname">solver</td><td>The actual solver instance used by the invoking <a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="structmc__solver_1_1RobotEnvCollisionsConstraint.html#a958e2813a9368f8e2628e367aac46449">mc_solver::RobotEnvCollisionsConstraint</a>, <a class="el" href="structmc__solver_1_1CompoundJointConstraint.html#ab5c96ef4ac5e418eed9e07ad0be00064">mc_solver::CompoundJointConstraint</a>, <a class="el" href="structmc__solver_1_1CollisionsConstraint.html#ad35e4c70b095a3dd62bcc640f5fc3cae">mc_solver::CollisionsConstraint</a>, <a class="el" href="structmc__solver_1_1DynamicsConstraint.html#a08413ca37fc394ed2b3f692f2bcc8e44">mc_solver::DynamicsConstraint</a>, <a class="el" href="structmc__solver_1_1KinematicsConstraint.html#af5b445df5cd29d199cfda9031d5a468f">mc_solver::KinematicsConstraint</a>, <a class="el" href="structmc__solver_1_1ContactConstraint.html#a3e94d3c790da36671345692cbf14e81d">mc_solver::ContactConstraint</a>, <a class="el" href="structmc__solver_1_1CoMIncPlaneConstr.html#a7fe287ede6acc66b93ebc6e1a8f54882">mc_solver::CoMIncPlaneConstr</a>, and <a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#a54adcdc90cc41a64a9723b693f8beb1b">mc_solver::BoundedSpeedConstr</a>.</p>
+<p>This is called by <a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> when the constraint is added to the problem </p>
 
 </div>
 </div>
-<a id="aa7a3302adccb4d3183e829fd2754b75a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7a3302adccb4d3183e829fd2754b75a">&#9670;&nbsp;</a></span>removeFromSolver()</h2>
+<a id="a5f94c3979ed1c1f437a611be1e4b1ea0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f94c3979ed1c1f437a611be1e4b1ea0">&#9670;&nbsp;</a></span>addToSolverImpl()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -188,28 +201,167 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void mc_solver::ConstraintSet::removeFromSolver </td>
+          <td class="memname">virtual void mc_solver::ConstraintSet::addToSolverImpl </td>
           <td>(</td>
-          <td class="paramtype">tasks::qp::QPSolver &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;&#160;</td>
           <td class="paramname"><em>solver</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function is called by <a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> when <a class="el" href="structmc__solver_1_1QPSolver.html#ae31cc48fc2985ef5db74dc0fe8d76cbf">mc_solver::QPSolver::removeConstraintSet</a> is called, typically it would call: </p><pre class="fragment">&lt;wrapped-type&gt;::removeFromSolver(solver)
-</pre> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>The actual solver instance used by the invoking <a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Should take care of the actual insertion into a concrete solver </p>
 
-<p>Implemented in <a class="el" href="structmc__solver_1_1RobotEnvCollisionsConstraint.html#a1c44940f9826474f5b4c894c1014a610">mc_solver::RobotEnvCollisionsConstraint</a>, <a class="el" href="structmc__solver_1_1CompoundJointConstraint.html#af01c6fabfd9fb7f818d62693aaaac1ed">mc_solver::CompoundJointConstraint</a>, <a class="el" href="structmc__solver_1_1CollisionsConstraint.html#ad7757edd53edcdbda1ba8da7513acc74">mc_solver::CollisionsConstraint</a>, <a class="el" href="structmc__solver_1_1DynamicsConstraint.html#ac37f401f997c13db2b3a3cf080f0bd4b">mc_solver::DynamicsConstraint</a>, <a class="el" href="structmc__solver_1_1KinematicsConstraint.html#a559d44b398969ebc1c69f0ffd80a3569">mc_solver::KinematicsConstraint</a>, <a class="el" href="structmc__solver_1_1ContactConstraint.html#af72efeda2c9cd6af2e4626f32ab7583d">mc_solver::ContactConstraint</a>, <a class="el" href="structmc__solver_1_1CoMIncPlaneConstr.html#aa6901fd29799bb8f88e639be2e2e06ac">mc_solver::CoMIncPlaneConstr</a>, and <a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#a0214a46d2452e2dcf610bbf44f863019">mc_solver::BoundedSpeedConstr</a>.</p>
+<p>Implemented in <a class="el" href="structmc__solver_1_1CompoundJointConstraint.html#ad78058050bf35ad9b60fa5ae7ad5867b">mc_solver::CompoundJointConstraint</a>, <a class="el" href="structmc__solver_1_1CollisionsConstraint.html#ac67b641bbf9753c95ae23a15d0462f94">mc_solver::CollisionsConstraint</a>, <a class="el" href="structmc__solver_1_1DynamicsConstraint.html#aebe3a1c0ac228a8b688b95dfadf01cac">mc_solver::DynamicsConstraint</a>, <a class="el" href="structmc__solver_1_1KinematicsConstraint.html#a06616183807eb79abc5cf88ef2b02f97">mc_solver::KinematicsConstraint</a>, <a class="el" href="structmc__solver_1_1ContactConstraint.html#accd5d499f2b4ff1bf588c04e4b520024">mc_solver::ContactConstraint</a>, <a class="el" href="structmc__solver_1_1CoMIncPlaneConstr.html#a94e6c71d438e21f5a255431104041c78">mc_solver::CoMIncPlaneConstr</a>, and <a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#a3e0135e09a0ca044d4f50bbcec3fdcdc">mc_solver::BoundedSpeedConstr</a>.</p>
+
+</div>
+</div>
+<a id="a4f3a5b79af846b7b1f1d95f2d6569208"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f3a5b79af846b7b1f1d95f2d6569208">&#9670;&nbsp;</a></span>backend()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">QPSolver::Backend</a> mc_solver::ConstraintSet::backend </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6e164a1efbfdb75c84edeb725b34ba59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e164a1efbfdb75c84edeb725b34ba59">&#9670;&nbsp;</a></span>inSolver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_solver::ConstraintSet::inSolver </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4e6245316fcaebb545166a021c8d9158"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e6245316fcaebb545166a021c8d9158">&#9670;&nbsp;</a></span>removeFromSolver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::ConstraintSet::removeFromSolver </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This is called by <a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> when the constraint is removed from the problem </p>
+
+</div>
+</div>
+<a id="a458f00ac8d8935759c92dfa8fd2a2243"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a458f00ac8d8935759c92dfa8fd2a2243">&#9670;&nbsp;</a></span>removeFromSolverImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void mc_solver::ConstraintSet::removeFromSolverImpl </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Should take care of the actual removal from a concrete solver </p>
+
+<p>Implemented in <a class="el" href="structmc__solver_1_1CompoundJointConstraint.html#a6e55cfaa8c320f257149ba9d51873bc4">mc_solver::CompoundJointConstraint</a>, <a class="el" href="structmc__solver_1_1CollisionsConstraint.html#a1b4f2373157afc1f88ab43dad20be2b7">mc_solver::CollisionsConstraint</a>, <a class="el" href="structmc__solver_1_1DynamicsConstraint.html#a8d3e0faeab3b3690a4a6c02c15dbc678">mc_solver::DynamicsConstraint</a>, <a class="el" href="structmc__solver_1_1KinematicsConstraint.html#a3751b44937ce331f390feae67cae798c">mc_solver::KinematicsConstraint</a>, <a class="el" href="structmc__solver_1_1ContactConstraint.html#a059aae518fa197d296c9dcb9c56521a5">mc_solver::ContactConstraint</a>, <a class="el" href="structmc__solver_1_1CoMIncPlaneConstr.html#a889618ec5824f33b9bc2759914af1c0b">mc_solver::CoMIncPlaneConstr</a>, and <a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#a26c1996eb25ec71b97103c4773665afc">mc_solver::BoundedSpeedConstr</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="aec90699d0bd3179f9258ff09fcf5cca0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec90699d0bd3179f9258ff09fcf5cca0">&#9670;&nbsp;</a></span>backend_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">QPSolver::Backend</a> mc_solver::ConstraintSet::backend_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p><a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> backend when the constraint is created </p>
+
+</div>
+</div>
+<a id="afa2c09323d080bd537cd08b97399e25f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa2c09323d080bd537cd08b97399e25f">&#9670;&nbsp;</a></span>inSolver_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_solver::ConstraintSet::inSolver_ = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>True if the constraint is in a solver already </p>
 
 </div>
 </div>

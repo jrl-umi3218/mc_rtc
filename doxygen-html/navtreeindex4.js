@@ -1,12 +1,5 @@
 var NAVTREEINDEX4 =
 {
-"namespacemc__rtc_1_1log_1_1details.html":[2,0,7,4,0],
-"namespacemc__rtc_1_1utils.html":[2,0,7,5],
-"namespacemc__solver.html":[2,0,8],
-"namespacemc__solver.html":[3,0,8],
-"namespacemc__solver_1_1details.html":[2,0,8,0],
-"namespacemc__solver_1_1details.html":[3,0,8,0],
-"namespacemc__solver_1_1utils.html":[2,0,8,1],
 "namespacemc__solver_1_1utils.html":[3,0,8,1],
 "namespacemc__tasks.html":[2,0,9],
 "namespacemc__tasks.html":[3,0,9],
@@ -148,6 +141,8 @@ var NAVTREEINDEX4 =
 "spline__utils_8h_source.html":[4,0,0,9,7],
 "structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html":[3,0,0,0],
 "structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html#a4c98c9eb5c4adf4c8485ef306bc24c77":[3,0,0,0,0],
+"structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html":[3,0,0,1],
+"structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html#aeb432b9ff899051aee5412ccba9ce8a0":[3,0,0,1,0],
 "structmc__control_1_1CompletionCriteria.html":[3,0,2,1],
 "structmc__control_1_1CompletionCriteria.html#a2485b806e905c84cd087fb47287f2240":[3,0,2,1,2],
 "structmc__control_1_1CompletionCriteria.html#a6b2c61033f0f8d2d7f45aeb6e8fb028e":[3,0,2,1,0],
@@ -249,5 +244,10 @@ var NAVTREEINDEX4 =
 "structmc__control_1_1ControllerClient.html#ae5d35906c488252e7ddd9efb814ce112":[3,0,2,3,27],
 "structmc__control_1_1ControllerClient.html#ae7d1fd65a91be05ac94dd3553756672d":[3,0,2,3,42],
 "structmc__control_1_1ControllerClient.html#ae9277b82054ae7ec23310d52f5393fc9":[3,0,2,3,50],
-"structmc__control_1_1ControllerClient.html#aebaab2ca01fe90e61c5902a94bbf99fe":[3,0,2,3,83]
+"structmc__control_1_1ControllerClient.html#aebaab2ca01fe90e61c5902a94bbf99fe":[3,0,2,3,83],
+"structmc__control_1_1ControllerClient.html#af04c2016424462fb277795ac1078073f":[3,0,2,3,13],
+"structmc__control_1_1ControllerClient.html#af45508fdb55f9b0fb191121c36b10a7d":[3,0,2,3,68],
+"structmc__control_1_1ControllerLoader.html":[3,0,2,4],
+"structmc__control_1_1ControllerResetData.html":[3,0,2,5],
+"structmc__control_1_1ControllerResetData.html#a2e6d446ed6dd7f705c238d69b57e9f14":[3,0,2,5,0]
 };

@@ -39,10 +39,8 @@ digraph "include/mc_control/fsm/api.h"
   Node2 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node17 [label="include/mc_control\l/fsm/states/Posture.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Posture_8h.html"];
   Node2 -> Node18 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node18 [label="include/mc_control\l/fsm/states/SlidingFootContact.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$SlidingFootContact_8h.html"];
-  Node2 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node19 [label="include/mc_control\l/fsm/states/StabilizerStanding\lState.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$StabilizerStandingState_8h.html"];
-  Node1 -> Node20 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node20 [label="include/mc_control\l/fsm/Transition.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Transition_8h.html"];
-  Node20 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="include/mc_control\l/fsm/states/StabilizerStanding\lState.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$StabilizerStandingState_8h.html"];
+  Node1 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="include/mc_control\l/fsm/Transition.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Transition_8h.html"];
+  Node19 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

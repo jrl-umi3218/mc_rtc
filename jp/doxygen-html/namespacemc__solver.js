@@ -9,7 +9,6 @@ var namespacemc__solver =
     [ "ConstraintSet", "structmc__solver_1_1ConstraintSet.html", "structmc__solver_1_1ConstraintSet" ],
     [ "ConstraintSetLoader", "structmc__solver_1_1ConstraintSetLoader.html", null ],
     [ "ContactConstraint", "structmc__solver_1_1ContactConstraint.html", "structmc__solver_1_1ContactConstraint" ],
-    [ "ContactMsg", "structmc__solver_1_1ContactMsg.html", "structmc__solver_1_1ContactMsg" ],
     [ "DynamicsConstraint", "structmc__solver_1_1DynamicsConstraint.html", "structmc__solver_1_1DynamicsConstraint" ],
     [ "EqualityConstraintForce", "structmc__solver_1_1EqualityConstraintForce.html", "structmc__solver_1_1EqualityConstraintForce" ],
     [ "EqualityConstraintLambda", "structmc__solver_1_1EqualityConstraintLambda.html", "structmc__solver_1_1EqualityConstraintLambda" ],
@@ -24,9 +23,6 @@ var namespacemc__solver =
     [ "KinematicsConstraint", "structmc__solver_1_1KinematicsConstraint.html", "structmc__solver_1_1KinematicsConstraint" ],
     [ "QPContactPtr", "structmc__solver_1_1QPContactPtr.html", "structmc__solver_1_1QPContactPtr" ],
     [ "QPContactPtrWPoints", "structmc__solver_1_1QPContactPtrWPoints.html", "structmc__solver_1_1QPContactPtrWPoints" ],
-    [ "QPResultMsg", "structmc__solver_1_1QPResultMsg.html", "structmc__solver_1_1QPResultMsg" ],
     [ "QPSolver", "structmc__solver_1_1QPSolver.html", "structmc__solver_1_1QPSolver" ],
-    [ "RobotEnvCollisionsConstraint", "structmc__solver_1_1RobotEnvCollisionsConstraint.html", "structmc__solver_1_1RobotEnvCollisionsConstraint" ],
-    [ "RobotMsg", "structmc__solver_1_1RobotMsg.html", "structmc__solver_1_1RobotMsg" ],
-    [ "ZMP", "structmc__solver_1_1ZMP.html", "structmc__solver_1_1ZMP" ]
+    [ "TasksQPSolver", "structmc__solver_1_1TasksQPSolver.html", "structmc__solver_1_1TasksQPSolver" ]
 ];

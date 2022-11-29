@@ -71,7 +71,8 @@ $(document).ready(function(){initNavTree('structmc__solver_1_1KinematicsConstrai
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="structmc__solver_1_1KinematicsConstraint-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">mc_solver::KinematicsConstraint Class Reference</div>  </div>
@@ -98,30 +99,44 @@ Collaboration diagram for mc_solver::KinematicsConstraint:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae4fa119dd4f6643ea9bfd6e71d100e48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1KinematicsConstraint.html#ae4fa119dd4f6643ea9bfd6e71d100e48">KinematicsConstraint</a> (const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;robots, unsigned int robotIndex, double timeStep)</td></tr>
 <tr class="separator:ae4fa119dd4f6643ea9bfd6e71d100e48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89801271d9d8e8288c6be32b13970f3f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1KinematicsConstraint.html#a89801271d9d8e8288c6be32b13970f3f">KinematicsConstraint</a> (const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;robots, unsigned int robotIndex, double timeStep, const std::array&lt; double, 3 &gt; &amp;damper, double velocityPercent=1.0)</td></tr>
-<tr class="separator:a89801271d9d8e8288c6be32b13970f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5b445df5cd29d199cfda9031d5a468f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1KinematicsConstraint.html#af5b445df5cd29d199cfda9031d5a468f">addToSolver</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver) override</td></tr>
-<tr class="separator:af5b445df5cd29d199cfda9031d5a468f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a559d44b398969ebc1c69f0ffd80a3569"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1KinematicsConstraint.html#a559d44b398969ebc1c69f0ffd80a3569">removeFromSolver</a> (tasks::qp::QPSolver &amp;solver) override</td></tr>
-<tr class="separator:a559d44b398969ebc1c69f0ffd80a3569"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9772713ef63997c2ff16a754cdf34401"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1KinematicsConstraint.html#a9772713ef63997c2ff16a754cdf34401">KinematicsConstraint</a> ()</td></tr>
-<tr class="separator:a9772713ef63997c2ff16a754cdf34401"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e18bf7aa8ff9324f2c12163ec26e784"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1KinematicsConstraint.html#a8e18bf7aa8ff9324f2c12163ec26e784">KinematicsConstraint</a> (const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;robots, unsigned int robotIndex, double timeStep, const std::array&lt; double, 3 &gt; &amp;damper, double velocityPercent=0.5)</td></tr>
+<tr class="separator:a8e18bf7aa8ff9324f2c12163ec26e784"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_structmc__solver_1_1ConstraintSet"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_structmc__solver_1_1ConstraintSet')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="structmc__solver_1_1ConstraintSet.html">mc_solver::ConstraintSet</a></td></tr>
+<tr class="memitem:a3aa0c213151164988d93d883ed53df8d inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a3aa0c213151164988d93d883ed53df8d">ConstraintSet</a> ()</td></tr>
+<tr class="separator:a3aa0c213151164988d93d883ed53df8d inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58761b08e77d74f6d24dbb5fe538dbba inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a58761b08e77d74f6d24dbb5fe538dbba">addToSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
+<tr class="separator:a58761b08e77d74f6d24dbb5fe538dbba inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e6245316fcaebb545166a021c8d9158 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a4e6245316fcaebb545166a021c8d9158">removeFromSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
+<tr class="separator:a4e6245316fcaebb545166a021c8d9158 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a> ()</td></tr>
 <tr class="separator:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e164a1efbfdb75c84edeb725b34ba59 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a6e164a1efbfdb75c84edeb725b34ba59">inSolver</a> () const noexcept</td></tr>
+<tr class="separator:a6e164a1efbfdb75c84edeb725b34ba59 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f3a5b79af846b7b1f1d95f2d6569208 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">QPSolver::Backend</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#a4f3a5b79af846b7b1f1d95f2d6569208">backend</a> () const noexcept</td></tr>
+<tr class="separator:a4f3a5b79af846b7b1f1d95f2d6569208 inherit pub_methods_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:ab113d21083add766566decba27631820"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; tasks::qp::JointLimitsConstr &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1KinematicsConstraint.html#ab113d21083add766566decba27631820">jointLimitsConstr</a></td></tr>
-<tr class="separator:ab113d21083add766566decba27631820"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3febf798804706fce1efe1eac46c16f9"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; tasks::qp::DamperJointLimitsConstr &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1KinematicsConstraint.html#a3febf798804706fce1efe1eac46c16f9">damperJointLimitsConstr</a></td></tr>
-<tr class="separator:a3febf798804706fce1efe1eac46c16f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a06616183807eb79abc5cf88ef2b02f97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1KinematicsConstraint.html#a06616183807eb79abc5cf88ef2b02f97">addToSolverImpl</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
+<tr class="separator:a06616183807eb79abc5cf88ef2b02f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3751b44937ce331f390feae67cae798c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1KinematicsConstraint.html#a3751b44937ce331f390feae67cae798c">removeFromSolverImpl</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
+<tr class="separator:a3751b44937ce331f390feae67cae798c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a6444ac62b2a85edcbd3f49d86b53ff31"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d">mc_rtc::void_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1KinematicsConstraint.html#a6444ac62b2a85edcbd3f49d86b53ff31">constraint_</a></td></tr>
+<tr class="separator:a6444ac62b2a85edcbd3f49d86b53ff31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_structmc__solver_1_1ConstraintSet"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_structmc__solver_1_1ConstraintSet')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="structmc__solver_1_1ConstraintSet.html">mc_solver::ConstraintSet</a></td></tr>
+<tr class="memitem:aec90699d0bd3179f9258ff09fcf5cca0 inherit pro_attribs_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">QPSolver::Backend</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#aec90699d0bd3179f9258ff09fcf5cca0">backend_</a></td></tr>
+<tr class="separator:aec90699d0bd3179f9258ff09fcf5cca0 inherit pro_attribs_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa2c09323d080bd537cd08b97399e25f inherit pro_attribs_structmc__solver_1_1ConstraintSet"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1ConstraintSet.html#afa2c09323d080bd537cd08b97399e25f">inSolver_</a> = false</td></tr>
+<tr class="separator:afa2c09323d080bd537cd08b97399e25f inherit pro_attribs_structmc__solver_1_1ConstraintSet"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Holds kinematic constraints (joint limits) for the robot </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae4fa119dd4f6643ea9bfd6e71d100e48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae4fa119dd4f6643ea9bfd6e71d100e48">&#9670;&nbsp;</a></span>KinematicsConstraint() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4fa119dd4f6643ea9bfd6e71d100e48">&#9670;&nbsp;</a></span>KinematicsConstraint() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -162,8 +177,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a89801271d9d8e8288c6be32b13970f3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89801271d9d8e8288c6be32b13970f3f">&#9670;&nbsp;</a></span>KinematicsConstraint() <span class="overload">[2/3]</span></h2>
+<a id="a8e18bf7aa8ff9324f2c12163ec26e784"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e18bf7aa8ff9324f2c12163ec26e784">&#9670;&nbsp;</a></span>KinematicsConstraint() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -196,7 +211,7 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>velocityPercent</em> = <code>1.0</code>&#160;</td>
+          <td class="paramname"><em>velocityPercent</em> = <code>0.5</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -218,35 +233,9 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a9772713ef63997c2ff16a754cdf34401"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9772713ef63997c2ff16a754cdf34401">&#9670;&nbsp;</a></span>KinematicsConstraint() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_solver::KinematicsConstraint::KinematicsConstraint </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000014">Deprecated:</a></b></dt><dd>{Default constructor, not made for general usage} </dd></dl>
-
-</div>
-</div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="af5b445df5cd29d199cfda9031d5a468f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af5b445df5cd29d199cfda9031d5a468f">&#9670;&nbsp;</a></span>addToSolver()</h2>
+<a id="a06616183807eb79abc5cf88ef2b02f97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06616183807eb79abc5cf88ef2b02f97">&#9670;&nbsp;</a></span>addToSolverImpl()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -255,96 +244,80 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void mc_solver::KinematicsConstraint::addToSolver </td>
+          <td class="memname">void mc_solver::KinematicsConstraint::addToSolverImpl </td>
           <td>(</td>
-          <td class="paramtype">const std::vector&lt; rbd::MultiBody &gt; &amp;&#160;</td>
-          <td class="paramname"><em>mbs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">tasks::qp::QPSolver &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Implementation of <a class="el" href="structmc__solver_1_1ConstraintSet.html#a8b2739907caaeb5d49ccaedc1665e3ca">mc_solver::ConstraintSet::addToSolver</a> </p>
-
-<p>Implements <a class="el" href="structmc__solver_1_1ConstraintSet.html#a8b2739907caaeb5d49ccaedc1665e3ca">mc_solver::ConstraintSet</a>.</p>
-
-<p>Reimplemented in <a class="el" href="structmc__solver_1_1DynamicsConstraint.html#a08413ca37fc394ed2b3f692f2bcc8e44">mc_solver::DynamicsConstraint</a>.</p>
-
-</div>
-</div>
-<a id="a559d44b398969ebc1c69f0ffd80a3569"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a559d44b398969ebc1c69f0ffd80a3569">&#9670;&nbsp;</a></span>removeFromSolver()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void mc_solver::KinematicsConstraint::removeFromSolver </td>
-          <td>(</td>
-          <td class="paramtype">tasks::qp::QPSolver &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;&#160;</td>
           <td class="paramname"><em>solver</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Implementation of <a class="el" href="structmc__solver_1_1ConstraintSet.html#aa7a3302adccb4d3183e829fd2754b75a">mc_solver::ConstraintSet::removeFromSolver</a> </p>
+<p>Implementation of <a class="el" href="structmc__solver_1_1ConstraintSet.html#a58761b08e77d74f6d24dbb5fe538dbba">mc_solver::ConstraintSet::addToSolver</a> </p>
 
-<p>Implements <a class="el" href="structmc__solver_1_1ConstraintSet.html#aa7a3302adccb4d3183e829fd2754b75a">mc_solver::ConstraintSet</a>.</p>
+<p>Implements <a class="el" href="structmc__solver_1_1ConstraintSet.html#a5f94c3979ed1c1f437a611be1e4b1ea0">mc_solver::ConstraintSet</a>.</p>
 
-<p>Reimplemented in <a class="el" href="structmc__solver_1_1DynamicsConstraint.html#ac37f401f997c13db2b3a3cf080f0bd4b">mc_solver::DynamicsConstraint</a>.</p>
+</div>
+</div>
+<a id="a3751b44937ce331f390feae67cae798c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3751b44937ce331f390feae67cae798c">&#9670;&nbsp;</a></span>removeFromSolverImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::KinematicsConstraint::removeFromSolverImpl </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Implementation of <a class="el" href="structmc__solver_1_1ConstraintSet.html#a4e6245316fcaebb545166a021c8d9158">mc_solver::ConstraintSet::removeFromSolver</a> </p>
+
+<p>Implements <a class="el" href="structmc__solver_1_1ConstraintSet.html#a458f00ac8d8935759c92dfa8fd2a2243">mc_solver::ConstraintSet</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a3febf798804706fce1efe1eac46c16f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3febf798804706fce1efe1eac46c16f9">&#9670;&nbsp;</a></span>damperJointLimitsConstr</h2>
+<a id="a6444ac62b2a85edcbd3f49d86b53ff31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6444ac62b2a85edcbd3f49d86b53ff31">&#9670;&nbsp;</a></span>constraint_</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;tasks::qp::DamperJointLimitsConstr&gt; mc_solver::KinematicsConstraint::damperJointLimitsConstr</td>
+          <td class="memname"><a class="el" href="namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d">mc_rtc::void_ptr</a> mc_solver::KinematicsConstraint::constraint_</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Holds DamperJointLimitsConstr, can be null depending on construction </p>
-
-</div>
-</div>
-<a id="ab113d21083add766566decba27631820"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab113d21083add766566decba27631820">&#9670;&nbsp;</a></span>jointLimitsConstr</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt;tasks::qp::JointLimitsConstr&gt; mc_solver::KinematicsConstraint::jointLimitsConstr</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Holds JointLimitsConstr, can be null depending on construction </p>
+<p>Holds the constraint implementation</p>
+<p>In Tasks backend:</p><ul>
+<li>tasks::qp::JointLimitsConstr for non-damped constraint</li>
+<li>tasks::qp::DampedJointLimitsConstr for damped-constraint</li>
+</ul>
+<p>The deleter carries the initial type of the constraint </p>
 
 </div>
 </div>

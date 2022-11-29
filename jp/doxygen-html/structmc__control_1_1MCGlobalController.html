@@ -142,9 +142,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6fa39ac887fc881a4e99c3a30efbb3d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__control_1_1ControllerServer.html">ControllerServer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController.html#a6fa39ac887fc881a4e99c3a30efbb3d3">server</a> ()</td></tr>
 <tr class="memdesc:a6fa39ac887fc881a4e99c3a30efbb3d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access the server.  <a href="#a6fa39ac887fc881a4e99c3a30efbb3d3">More...</a><br /></td></tr>
 <tr class="separator:a6fa39ac887fc881a4e99c3a30efbb3d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d8ba93ec28be3eed4d6d8bfa58c80cf"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__solver_1_1QPResultMsg.html">mc_solver::QPResultMsg</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController.html#a2d8ba93ec28be3eed4d6d8bfa58c80cf">send</a> (const double &amp;t)</td></tr>
-<tr class="memdesc:a2d8ba93ec28be3eed4d6d8bfa58c80cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access the result of the latest run.  <a href="#a2d8ba93ec28be3eed4d6d8bfa58c80cf">More...</a><br /></td></tr>
-<tr class="separator:a2d8ba93ec28be3eed4d6d8bfa58c80cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0208889660687499cbb3b62b8f22f55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__control_1_1MCController.html">MCController</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController.html#ab0208889660687499cbb3b62b8f22f55">controller</a> () noexcept</td></tr>
 <tr class="memdesc:ab0208889660687499cbb3b62b8f22f55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access the current controller.  <a href="#ab0208889660687499cbb3b62b8f22f55">More...</a><br /></td></tr>
 <tr class="separator:ab0208889660687499cbb3b62b8f22f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -338,7 +335,7 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:aab73d3fc95c0d7d61dd7b22d5ef72849"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController.html#aab73d3fc95c0d7d61dd7b22d5ef72849">running</a></td></tr>
+<tr class="memitem:aab73d3fc95c0d7d61dd7b22d5ef72849"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController.html#aab73d3fc95c0d7d61dd7b22d5ef72849">running</a> = false</td></tr>
 <tr class="memdesc:aab73d3fc95c0d7d61dd7b22d5ef72849"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the controller is running.  <a href="#aab73d3fc95c0d7d61dd7b22d5ef72849">More...</a><br /></td></tr>
 <tr class="separator:aab73d3fc95c0d7d61dd7b22d5ef72849"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -1055,33 +1052,6 @@ Protected Member Functions</h2></td></tr>
 
 <p>Runs one step of the controller. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if the current controller succeeded, false otherwise </dd></dl>
-
-</div>
-</div>
-<a id="a2d8ba93ec28be3eed4d6d8bfa58c80cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d8ba93ec28be3eed4d6d8bfa58c80cf">&#9670;&nbsp;</a></span>send()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="structmc__solver_1_1QPResultMsg.html">mc_solver::QPResultMsg</a>&amp; mc_control::MCGlobalController::send </td>
-          <td>(</td>
-          <td class="paramtype">const double &amp;&#160;</td>
-          <td class="paramname"><em>t</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Access the result of the latest run. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">t</td><td>Unused</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to the latest result </dd></dl>
 
 </div>
 </div>
@@ -3278,7 +3248,7 @@ Protected Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mc_control::MCGlobalController::running</td>
+          <td class="memname">bool mc_control::MCGlobalController::running = false</td>
         </tr>
       </table>
 </div><div class="memdoc">

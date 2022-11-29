@@ -29,10 +29,11 @@ var searchData=
   ['_7eobserverpipeline',['~ObserverPipeline',['../structmc__observers_1_1ObserverPipeline.html#a39bca6757576671034b071813416b6fa',1,'mc_observers::ObserverPipeline']]],
   ['_7eplanarsurface',['~PlanarSurface',['../structmc__rbdyn_1_1PlanarSurface.html#a14cef1c49d935db2d1e30c9a54180f84',1,'mc_rbdyn::PlanarSurface']]],
   ['_7epositiontask',['~PositionTask',['../structmc__tasks_1_1PositionTask.html#a8b27ece320044774405b64dcfd78147c',1,'mc_tasks::PositionTask']]],
+  ['_7eqpsolver',['~QPSolver',['../structmc__solver_1_1QPSolver.html#a3790dba884300b905da43b8378a9ba9d',1,'mc_solver::QPSolver']]],
   ['_7erobotpublisher',['~RobotPublisher',['../structmc__rtc_1_1RobotPublisher.html#a4c712f7481ae4d07e59f11bd4df8c2d7',1,'mc_rtc::RobotPublisher']]],
-  ['_7eslidingfootcontactstate',['~SlidingFootContactState',['../structmc__control_1_1fsm_1_1SlidingFootContactState.html#adc42e4c9f7e35e0b30319912ae2a93ae',1,'mc_control::fsm::SlidingFootContactState']]],
   ['_7estate',['~State',['../structmc__control_1_1fsm_1_1State.html#a361292f4c1af52fb11fb081142832e06',1,'mc_control::fsm::State']]],
   ['_7esurface',['~Surface',['../structmc__rbdyn_1_1Surface.html#a3f8d3cd62afe2e13709b86f5b027a699',1,'mc_rbdyn::Surface']]],
-  ['_7etrajectorytaskgeneric',['~TrajectoryTaskGeneric',['../structmc__tasks_1_1TrajectoryTaskGeneric.html#a723271227584b9a8af649ce887d9c947',1,'mc_tasks::TrajectoryTaskGeneric']]],
+  ['_7etasksqpsolver',['~TasksQPSolver',['../structmc__solver_1_1TasksQPSolver.html#a3febf55306d3265969ed2a8fc3520fd4',1,'mc_solver::TasksQPSolver']]],
+  ['_7etrajectorytaskgeneric',['~TrajectoryTaskGeneric',['../structmc__tasks_1_1TrajectoryTaskGeneric.html#ace3e9ff562d04c476047aa635f2be052',1,'mc_tasks::TrajectoryTaskGeneric']]],
   ['_7eupdate',['~Update',['../structmc__solver_1_1utils_1_1Update.html#ab8ad71dd3414ee8bccc766c7bc8b4dc3',1,'mc_solver::utils::Update']]]
 ];

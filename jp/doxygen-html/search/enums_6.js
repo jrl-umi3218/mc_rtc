@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['velupdate',['VelUpdate',['../structmc__observers_1_1EncoderObserver.html#aac0902eb5fa7af1436db7cc9ff06dff9',1,'mc_observers::EncoderObserver']]]
+  ['update',['Update',['../structmc__observers_1_1BodySensorObserver.html#ace7a5ef240bc42d89053419e8718eba3',1,'mc_observers::BodySensorObserver']]]
 ];

@@ -1,14 +1,12 @@
 var dir_fad12f0f0b10f75a80792b958ab0d808 =
 [
-    [ "msg", "dir_334ef0e5d85f2880d776f6f4efef6326.html", "dir_334ef0e5d85f2880d776f6f4efef6326" ],
     [ "utils", "dir_166bf500fe105c405562c1ec652d185c.html", "dir_166bf500fe105c405562c1ec652d185c" ],
     [ "api.h", "include_2mc__solver_2api_8h.html", "include_2mc__solver_2api_8h" ],
     [ "BoundedSpeedConstr.h", "BoundedSpeedConstr_8h.html", [
       [ "BoundedSpeedConstr", "structmc__solver_1_1BoundedSpeedConstr.html", "structmc__solver_1_1BoundedSpeedConstr" ]
     ] ],
     [ "CollisionsConstraint.h", "CollisionsConstraint_8h.html", [
-      [ "CollisionsConstraint", "structmc__solver_1_1CollisionsConstraint.html", "structmc__solver_1_1CollisionsConstraint" ],
-      [ "RobotEnvCollisionsConstraint", "structmc__solver_1_1RobotEnvCollisionsConstraint.html", "structmc__solver_1_1RobotEnvCollisionsConstraint" ]
+      [ "CollisionsConstraint", "structmc__solver_1_1CollisionsConstraint.html", "structmc__solver_1_1CollisionsConstraint" ]
     ] ],
     [ "CoMIncPlaneConstr.h", "CoMIncPlaneConstr_8h.html", [
       [ "CoMIncPlaneConstr", "structmc__solver_1_1CoMIncPlaneConstr.html", "structmc__solver_1_1CoMIncPlaneConstr" ]
@@ -49,5 +47,6 @@ var dir_fad12f0f0b10f75a80792b958ab0d808 =
     [ "KinematicsConstraint.h", "KinematicsConstraint_8h.html", [
       [ "KinematicsConstraint", "structmc__solver_1_1KinematicsConstraint.html", "structmc__solver_1_1KinematicsConstraint" ]
     ] ],
-    [ "QPSolver.h", "QPSolver_8h.html", "QPSolver_8h" ]
+    [ "QPSolver.h", "QPSolver_8h.html", "QPSolver_8h" ],
+    [ "TasksQPSolver.h", "TasksQPSolver_8h.html", "TasksQPSolver_8h" ]
 ];

@@ -2,7 +2,7 @@ var structmc__tasks_1_1SplineTrajectoryTask =
 [
     [ "SequenceInterpolator6d", "structmc__tasks_1_1SplineTrajectoryTask.html#a8d2ac7fd3779da3324969baf637212bf", null ],
     [ "SplineTrajectoryBase", "structmc__tasks_1_1SplineTrajectoryTask.html#a649052a5fbf326990d2b3d20ec66ab19", null ],
-    [ "TrajectoryTask", "structmc__tasks_1_1SplineTrajectoryTask.html#a8a14f83ca09f800540bae6ce5b29c376", null ],
+    [ "TrajectoryTask", "structmc__tasks_1_1SplineTrajectoryTask.html#af8a4647ef51a16ccf960c519e13c0ccf", null ],
     [ "SplineTrajectoryTask", "structmc__tasks_1_1SplineTrajectoryTask.html#ac523b327dfdeff9b88aa265240099073", null ],
     [ "addToGUI", "structmc__tasks_1_1SplineTrajectoryTask.html#afa99dd9c136ee9039a844a4ffb814640", null ],
     [ "addToLogger", "structmc__tasks_1_1SplineTrajectoryTask.html#aa7147dba544550aa616caa164a40209a", null ],

@@ -67,7 +67,6 @@ var searchData=
   ['contact',['Contact',['../structmc__control_1_1Contact.html',1,'mc_control::Contact'],['../structmc__rbdyn_1_1Contact.html',1,'mc_rbdyn::Contact'],['../structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html',1,'mc_tasks::lipm_stabilizer::internal::Contact']]],
   ['contactconstraint',['ContactConstraint',['../structmc__solver_1_1ContactConstraint.html',1,'mc_solver']]],
   ['contactdescription',['ContactDescription',['../structmc__tasks_1_1lipm__stabilizer_1_1ContactDescription.html',1,'mc_tasks::lipm_stabilizer']]],
-  ['contactmsg',['ContactMsg',['../structmc__solver_1_1ContactMsg.html',1,'mc_solver']]],
   ['contactwrenchmatrixtolambdamatrix',['ContactWrenchMatrixToLambdaMatrix',['../structmc__solver_1_1utils_1_1ContactWrenchMatrixToLambdaMatrix.html',1,'mc_solver::utils']]],
   ['controller',['Controller',['../structmc__control_1_1fsm_1_1Controller.html',1,'mc_control::fsm']]],
   ['controllerclient',['ControllerClient',['../structmc__control_1_1ControllerClient.html',1,'mc_control']]],
