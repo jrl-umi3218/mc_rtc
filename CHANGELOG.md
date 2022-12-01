@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.14.1] - 2022-12-01
+
+### Fixes
+
+- [HalfSitController] Do not reset the self collision constraint pointer to zero
+
 ## [1.14.0] - 2022-11-29
 
 ### Changes
@@ -540,7 +546,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.14.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.14.1...HEAD
+[1.14.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.1
 [1.14.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.0
 [1.13.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.13.0
 [1.12.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.12.0
