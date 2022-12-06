@@ -50,6 +50,12 @@ QPSolver::QPSolver(double timeStep, Backend backend) : QPSolver{mc_rbdyn::Robots
 
 void QPSolver::addConstraintSet(ConstraintSet & cs)
 {
+  if(cs.backend() != backend_)
+  {
+    mc_rtc::log::error_and_throw(
+        "[QPSolver::addConstraintSet] Constraint backend ({}) is different from this solver backend ({})", cs.backend(),
+        backend_);
+  }
   cs.addToSolver(*this);
   if(dynamic_cast<DynamicsConstraint *>(&cs) != nullptr)
   {
@@ -59,6 +65,12 @@ void QPSolver::addConstraintSet(ConstraintSet & cs)
 
 void QPSolver::removeConstraintSet(ConstraintSet & cs)
 {
+  if(cs.backend() != backend_)
+  {
+    mc_rtc::log::error_and_throw(
+        "[QPSolver::removeConstraintSet] Constraint backend ({}) is different from this solver backend ({})",
+        cs.backend(), backend_);
+  }
   cs.removeFromSolver(*this);
   auto it = std::find_if(dynamicsConstraints_.begin(), dynamicsConstraints_.end(), [&cs](DynamicsConstraint * dyn) {
     return static_cast<ConstraintSet *>(dyn) == static_cast<ConstraintSet *>(&cs);
@@ -100,8 +112,9 @@ void QPSolver::removeTask(mc_tasks::MetaTask * task)
   {
     if(task->backend() != backend_)
     {
-      mc_rtc::log::error_and_throw("[QPSolver::addTask] Task backend ({}) is different from this solver backend ({})",
-                                   task->backend(), backend_);
+      mc_rtc::log::error_and_throw(
+          "[QPSolver::removeTask] Task backend ({}) is different from this solver backend ({})", task->backend(),
+          backend_);
     }
     task->removeFromSolver(*this);
     task->resetIterInSolver();
