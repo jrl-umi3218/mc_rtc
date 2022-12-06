@@ -862,7 +862,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
 
       if(dcmEstimatorNeedsReset_)
       {
-        dcmEstimator_.resetWithMeasurements(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation, true);
+        dcmEstimator_.resetWithMeasurements(measuredDCM_.head<2>(), measuredZMP_.head<2>(), waistOrientation, true);
         if(c_.extWrench.excludeFromDCMBiasEst)
         {
           /// We have to send the oppopsite of the offset because the error is target - measured
