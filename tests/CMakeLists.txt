@@ -29,6 +29,10 @@ add_executable(testQuadraticGenerator testQuadraticGenerator.cpp)
 set_target_properties(testQuadraticGenerator PROPERTIES FOLDER tests/utility)
 target_link_libraries(testQuadraticGenerator PUBLIC mc_rbdyn)
 
+add_executable(testNotify testNotify.cpp)
+set_target_properties(testNotify PROPERTIES FOLDER tests/utility)
+target_link_libraries(testNotify PUBLIC mc_rtc_utils)
+
 #################################
 # -- Framework utility tests -- #
 #################################

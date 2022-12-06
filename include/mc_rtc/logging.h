@@ -37,12 +37,15 @@ MC_RTC_UTILS_DLLAPI spdlog::logger & info();
 
 MC_RTC_UTILS_DLLAPI spdlog::logger & cerr();
 
+MC_RTC_UTILS_DLLAPI void notify(const std::string & message);
+
 } // namespace details
 
 template<typename ExceptionT = std::runtime_error, typename... Args>
 void error_and_throw [[noreturn]] (Args &&... args)
 {
   auto message = fmt::format(std::forward<Args>(args)...);
+  details::notify(message);
   details::cerr().critical(message);
   details::cerr().critical("=== Backtrace ===\n{}", MC_FMT_STREAMED(boost::stacktrace::stacktrace()));
   throw ExceptionT(message);
@@ -76,6 +79,12 @@ template<typename... Args>
 void success(Args &&... args)
 {
   details::success().info(std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+void notify(Args &&... args)
+{
+  details::notify(fmt::format(std::forward<Args>(args)...));
 }
 
 } // namespace log
