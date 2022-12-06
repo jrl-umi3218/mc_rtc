@@ -375,6 +375,7 @@ void MCGlobalController::initEncoders(mc_rbdyn::Robot & robot)
 
 void MCGlobalController::initController(bool reset)
 {
+  mc_solver::QPSolver::context_backend(controller_->solver().backend());
   if(config.enable_log)
   {
     start_log();
@@ -790,6 +791,7 @@ bool MCGlobalController::run()
       {
         next_controller_->robot().gripper(g.first).reset(*g.second);
       }
+      mc_solver::QPSolver::context_backend(next_controller_->solver().backend());
       next_controller_->reset({controller_->robot().mbc().q});
       next_controller_->resetObserverPipelines();
       controller_ = next_controller_;
@@ -811,6 +813,7 @@ bool MCGlobalController::run()
   }
   if(running)
   {
+    mc_solver::QPSolver::context_backend(controller_->solver().backend());
     for(auto & plugin : plugins_before_)
     {
       auto start_t = clock::now();
