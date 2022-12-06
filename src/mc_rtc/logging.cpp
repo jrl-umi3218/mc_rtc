@@ -10,6 +10,9 @@
 #endif
 
 #ifdef MC_RTC_HAS_WINTOAST
+#  include <codecvt>
+#  include <locale>
+#  include <mc_rtc/version.h>
 #  include "wintoastlib.h"
 #endif
 
@@ -96,44 +99,49 @@ static inline void do_notify(const std::string & message)
 
 #ifdef MC_RTC_HAS_WINTOAST
 
-static bool do_notify_init = []() {
-  if(!WinToastLib::WinToast::isCompatible())
+static bool do_notify_init()
+{
+  static bool initialized = []()
   {
-    mc_rtc::log::warning("[mc_rtc] Failed to initialize WinToast");
-    return false;
-  }
-  auto toaster = WinToastLib::WinToast::instance();
-  toaster->setShortcuPolicy(WinToastLib::WinToast::ShortcutPolicy::SHORTCUT_POLICY_IGNORE);
-  toaster->setAppName("[mc_rtc]");
-  const auto aumi =
-      WinToastLib::WinToast::configureAUMI(L"mc-rtc", L"mc-rtc", L"notifications", std::wstring(MC_RTC_VERSION));
-  toaster->setAppUserModelId(aumi);
-  if(!toaster->initialize())
-  {
-    mc_rtc::log::warning("[mc_rtc] Failed to initialize toaster");
-    return false;
-  }
-  return true;
-}();
+    if(!WinToastLib::WinToast::isCompatible())
+    {
+      mc_rtc::log::warning("[mc_rtc] Failed to initialize WinToast");
+      return false;
+    }
+    auto toaster = WinToastLib::WinToast::instance();
+    toaster->setAppName(L"mc-rtc");
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    const auto aumi = WinToastLib::WinToast::configureAUMI(L"mc-rtc", L"mc-rtc");
+    toaster->setAppUserModelId(aumi);
+    if(!toaster->initialize())
+    {
+      mc_rtc::log::warning("[mc_rtc] Failed to initialize toaster");
+      return false;
+    }
+    return true;
+  }();
+  return initialized;
+}
 
 struct ToastHandler : public WinToastLib::IWinToastHandler
 {
-  void toastActivated() override {}
-  void toastActivated(int) override {}
-  void toastDismissed(WinToastLib::WinToastDismissalReason) override {}
-  void toastFailed() override {}
+  void toastActivated() const override {}
+  void toastActivated(int) const override {}
+  void toastDismissed(WinToastDismissalReason) const override {}
+  void toastFailed() const override {}
 };
 
 static inline void do_notify(const std::string & message)
 {
-  if(!do_notify_init)
+  if(!do_notify_init())
   {
     return;
   }
   auto handler = new ToastHandler();
   auto tmpl = WinToastLib::WinToastTemplate(WinToastLib::WinToastTemplate::Text02);
   tmpl.setTextField(L"[mc_rtc]", WinToastLib::WinToastTemplate::FirstLine);
-  tmpl.setTextField(std::wstring(message.c_str()), WinToastLib::WinToastTemplate::SecondLine);
+  std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+  tmpl.setTextField(converter.from_bytes(message), WinToastLib::WinToastTemplate::SecondLine);
   auto toaster = WinToastLib::WinToast::instance();
   if(!toaster->showToast(tmpl, handler))
   {
