@@ -121,6 +121,9 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                      "Enabled", [this]() { return c_.dcmBias.withDCMBias; },
                      [this]() { c_.dcmBias.withDCMBias = !c_.dcmBias.withDCMBias; }),
                  Checkbox(
+                     "Correct DCM", [this]() { return c_.dcmBias.correctDCM; },
+                     [this]() { c_.dcmBias.correctDCM = !c_.dcmBias.correctDCM; }),
+                 Checkbox(
                      "Correct CoM Pos", [this]() { return c_.dcmBias.correctCoMPos; },
                      [this]() { c_.dcmBias.correctCoMPos = !c_.dcmBias.correctCoMPos; }),
                  Checkbox(

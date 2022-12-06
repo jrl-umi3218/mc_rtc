@@ -871,50 +871,54 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
         }
         dcmEstimatorNeedsReset_ = false;
       }
+
       else
       {
         if(c_.extWrench.excludeFromDCMBiasEst)
         {
           /// We have to send the oppopsite of the offset because the error is target - measured
-          dcmEstimator_.setInputs(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation,
+          dcmEstimator_.setInputs(measuredDCM_.head<2>(), measuredZMP_.head<2>(), waistOrientation,
                                   -comOffsetMeasured_.head<2>(), zmpCoefMeasured_);
         }
         else
         {
-          dcmEstimator_.setInputs(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation);
+          dcmEstimator_.setInputs(measuredDCM_.head<2>(), measuredZMP_.head<2>(), waistOrientation);
         }
       }
 
       /// run the estimation
       dcmEstimator_.update();
-
-      if(c_.dcmBias.withDCMFilter)
+      measuredDCMUnbiased_.segment(0, 2) = measuredDCM_.segment(0, 2) - dcmEstimator_.getBias();
+      if(c_.dcmBias.correctDCM)
       {
-        /// the estimators provides a filtered DCM
-        dcmError_.head<2>() = dcmEstimator_.getUnbiasedDCM();
+        if(c_.dcmBias.withDCMFilter)
+        {
+          /// the estimators provides a filtered DCM
+          dcmError_.head<2>() = dcmEstimator_.getUnbiasedDCM();
+        }
+        else
+        {
+          dcmError_.head<2>() -= dcmEstimator_.getBias();
+        }
+        /// the bias should also correct the CoM
+        comError.head<2>() -= dcmEstimator_.getBias();
+        /// the unbiased dcm allows also to get the velocity of the CoM
+        comdError.head<2>() = omega_ * (dcmError_.head<2>() - comError.head<2>());
+
+        Eigen::Vector2d comBias = dcmEstimator_.getBias();
+        clampInPlace(comBias, (-c_.dcmBias.comBiasLimit).eval(), c_.dcmBias.comBiasLimit);
+
+        measuredCoMUnbiased_.head<2>() = measuredCoM_.head<2>() + comBias;
+        measuredCoMUnbiased_.z() = measuredCoM_.z();
+
+        if(c_.dcmBias.correctCoMPos)
+        {
+          /// correct the estimated CoM Position
+          measuredCoM_ = measuredCoMUnbiased_;
+        }
+
+        measuredDCMUnbiased_ = dcmTarget_ - dcmError_;
       }
-      else
-      {
-        dcmError_.head<2>() -= dcmEstimator_.getBias();
-      }
-      /// the bias should also correct the CoM
-      comError.head<2>() -= dcmEstimator_.getBias();
-      /// the unbiased dcm allows also to get the velocity of the CoM
-      comdError.head<2>() = omega_ * (dcmError_.head<2>() - comError.head<2>());
-
-      Eigen::Vector2d comBias = dcmEstimator_.getBias();
-      clampInPlace(comBias, (-c_.dcmBias.comBiasLimit).eval(), c_.dcmBias.comBiasLimit);
-
-      measuredCoMUnbiased_.head<2>() = measuredCoM_.head<2>() + comBias;
-      measuredCoMUnbiased_.z() = measuredCoM_.z();
-
-      if(c_.dcmBias.correctCoMPos)
-      {
-        /// correct the estimated CoM Position
-        measuredCoM_ = measuredCoMUnbiased_;
-      }
-
-      measuredDCMUnbiased_ = dcmTarget_ - dcmError_;
     }
     else
     {

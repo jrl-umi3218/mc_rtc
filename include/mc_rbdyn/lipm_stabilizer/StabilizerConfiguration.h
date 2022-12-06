@@ -146,6 +146,8 @@ struct DCMBiasEstimatorConfiguration
   /// example modeling errors or carrying an object, but it would be wrong if the disturbance comes from an unexpected
   /// contact, the estimator cannot distinguish between them)
   bool correctCoMPos = false;
+  /// Whether the estimated bias should be used on the dcm
+  bool correctDCM = true;
 
   void load(const mc_rtc::Configuration & config)
   {
@@ -157,6 +159,7 @@ struct DCMBiasEstimatorConfiguration
     config("withDCMBias", withDCMBias);
     config("correctCoMPos", correctCoMPos);
     config("withDCMFilter", withDCMFilter);
+    config("correctDCM", correctDCM);
   }
 
   mc_rtc::Configuration save() const
@@ -169,6 +172,7 @@ struct DCMBiasEstimatorConfiguration
     config.add("comBiasLimit", comBiasLimit);
     config.add("withDCMBias", withDCMBias);
     config.add("correctCoMPos", correctCoMPos);
+    config.add("correctDCM", correctDCM);
     config.add("withDCMFilter", withDCMFilter);
     return config;
   }
