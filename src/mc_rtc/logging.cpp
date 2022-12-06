@@ -4,8 +4,18 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
+#ifdef MC_RTC_HAS_LIBNOTIFY
+#  include <libnotify/notification.h>
+#  include <libnotify/notify.h>
+#endif
+
+#ifdef MC_RTC_HAS_WINTOAST
+#  include "wintoastlib.h"
+#endif
+
 #ifdef MC_RTC_HAS_WSL_NOTIFY_SEND
 #  include <internals/logging.h>
+#  include <stdlib.h>
 #endif
 
 namespace mc_rtc
@@ -61,9 +71,6 @@ spdlog::logger & cerr()
 
 #ifdef MC_RTC_HAS_LIBNOTIFY
 
-#  include <libnotify/notification.h>
-#  include <libnotify/notify.h>
-
 static bool do_notify_init = []() {
   bool r = notify_init("mc_rtc");
   if(!r)
@@ -88,8 +95,6 @@ static inline void do_notify(const std::string & message)
 #endif
 
 #ifdef MC_RTC_HAS_WINTOAST
-
-#  include "wintoastlib.h"
 
 static bool do_notify_init = []() {
   if(!WinToastLib::WinToast::isCompatible())
@@ -139,8 +144,6 @@ static inline void do_notify(const std::string & message)
 #endif
 
 #ifdef MC_RTC_HAS_WSL_NOTIFY_SEND
-
-#  include <stdlib.h>
 
 static inline void do_notify(const std::string & message)
 {
