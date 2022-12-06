@@ -424,7 +424,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 
   inline const Eigen::Vector3d & measuredCoMd() noexcept
   {
-    return measuredCoM_;
+    return measuredCoMd_;
   }
 
   inline const Eigen::Vector3d & comOffsetTarget() noexcept
