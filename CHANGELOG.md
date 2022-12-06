@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [1.14.2] - 2022-12-06
+
+### Fixes
+
+- Ensure the context backend is always set in the controller run/reset function
+- Safeguards against inclusion of different backend's constraints
+
 ## [1.14.1] - 2022-12-01
 
 ### Fixes
@@ -546,7 +553,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.14.1...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.14.2...HEAD
+[1.14.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.2
 [1.14.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.1
 [1.14.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.0
 [1.13.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.13.0
