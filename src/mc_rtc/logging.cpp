@@ -10,9 +10,11 @@
 #endif
 
 #ifdef MC_RTC_HAS_WINTOAST
+#  include <mc_rtc/version.h>
+
 #  include <codecvt>
 #  include <locale>
-#  include <mc_rtc/version.h>
+
 #  include "wintoastlib.h"
 #endif
 
@@ -101,8 +103,7 @@ static inline void do_notify(const std::string & message)
 
 static bool do_notify_init()
 {
-  static bool initialized = []()
-  {
+  static bool initialized = []() {
     if(!WinToastLib::WinToast::isCompatible())
     {
       mc_rtc::log::warning("[mc_rtc] Failed to initialize WinToast");
