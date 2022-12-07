@@ -40,6 +40,8 @@ extern "C"
                                     const double & dt,
                                     const mc_control::Configuration &)
   {
+    mc_rtc::log::info("[PythonController] Running with Python {}.{}.{}", PY_MAJOR_VERSION, PY_MINOR_VERSION,
+                      PY_MICRO_VERSION);
     if(!Py_IsInitialized())
     {
       Py_Initialize();
