@@ -3,5 +3,4 @@
 #
 
 include(FindPkgConfig)
-pkg_check_modules(LIBNOTIFY REQUIRED libnotify IMPORTED_TARGET)
-add_library(mc_rtc_3rd_party::libnotify ALIAS PkgConfig::LIBNOTIFY)
+pkg_check_modules(mc_rtc_3rd_party_libnotify REQUIRED libnotify IMPORTED_TARGET)
