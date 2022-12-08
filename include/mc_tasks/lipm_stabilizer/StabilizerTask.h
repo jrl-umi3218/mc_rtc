@@ -409,7 +409,11 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 
   inline const Eigen::Vector2d biasDCM() noexcept
   {
-    return dcmEstimator_.getBias();
+    if(c_.dcmBias.withDCMBias)
+    {
+      return dcmEstimator_.getBias();
+    }
+    return Eigen::Vector2d::Zero();
   }
 
   inline const Eigen::Vector3d & measuredZMP() noexcept
