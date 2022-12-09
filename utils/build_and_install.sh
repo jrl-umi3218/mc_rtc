@@ -982,13 +982,13 @@ if $WITH_HRP2
 then
   if $WITH_ROS_SUPPORT
   then
-    check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc_description#main $CATKIN_DATA_WORKSPACE_SRC
+    check_and_clone_git_dependency git@github.com:isri-aist/hrp2_drc_description#main $CATKIN_DATA_WORKSPACE_SRC
     echo_log "-- [OK] Successfully cloned and updated the robot description to $git_dep to $repo_dir (catkin)"
   else
-    check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc_description#main $SOURCE_DIR
+    check_and_clone_git_dependency git@github.com:isri-aist/hrp2_drc_description#main $SOURCE_DIR
     echo_log "-- [OK] Successfully cloned and updated the robot description $git_dep to $repo_dir (no catkin)"
   fi
-  check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp2/mc-hrp2 $SOURCE_DIR
+  check_and_clone_git_dependency git@github.com:isri-aist/mc-hrp2 $SOURCE_DIR
   echo_log "-- [OK] Successfully cloned and updated the robot module $git_dep to $repo_dir"
 fi
 
@@ -1038,13 +1038,13 @@ if $WITH_HRP5
 then
   if $WITH_ROS_SUPPORT
   then
-    check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp5/hrp5_p_description $CATKIN_DATA_WORKSPACE_SRC
+    check_and_clone_git_dependency git@github.com:isri-aist/hrp5_p_description $CATKIN_DATA_WORKSPACE_SRC
     echo_log "-- [OK] Successfully cloned and updated the robot description $git_dep to $repo_dir (catkin)"
   else
-    check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp5/hrp5_p_description $SOURCE_DIR
+    check_and_clone_git_dependency git@github.com:isri-aist/hrp5_p_description $SOURCE_DIR
     echo_log "-- [OK] Successfully cloned and updated the robot description $git_dep to $repo_dir (no catkin)"
   fi
-  check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp5/mc_hrp5_p $SOURCE_DIR
+  check_and_clone_git_dependency git@github.com:isri-aist/mc_hrp5_p $SOURCE_DIR
   echo_log "-- [OK] Successfully cloned and updated the robot module $git_dep to $repo_dir"
 fi
 
@@ -1410,10 +1410,10 @@ then
   echo_log "-- Installing with HRP2 robot support"
   if ! $WITH_ROS_SUPPORT
   then
-    build_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc_description
+    build_git_dependency git@github.com:isri-aist/hrp2_drc_description
     echo_log "-- [OK] Successfully built the robot description $git_dep (no catkin)"
   fi
-  build_git_dependency git@gite.lirmm.fr:mc-hrp2/mc-hrp2
+  build_git_dependency git@github.com:isri-aist/mc-hrp2
   echo_log "-- [OK] Successfully built the robot module $git_dep"
 fi
 
@@ -1458,10 +1458,10 @@ then
   echo_log "-- Installing with HRP5 robot support"
   if ! $WITH_ROS_SUPPORT
   then
-    build_git_dependency git@gite.lirmm.fr:mc-hrp5/hrp5_p_description
+    build_git_dependency git@github.com:isri-aist/hrp5_p_description
     echo_log "-- [OK] Successfully built the robot description $git_dep (no catkin)"
   fi
-  build_git_dependency git@gite.lirmm.fr:mc-hrp5/mc_hrp5_p
+  build_git_dependency git@github.com:isri-aist/mc_hrp5_p
   echo_log "-- [OK] Successfully built the robot module $git_dep"
 fi
 

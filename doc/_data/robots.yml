@@ -2,10 +2,10 @@
   icon: hrp2.jpg
   pkg:
     desc:
-      url: https://gite.lirmm.fr/mc-hrp2/hrp2_drc
+      url: https://github.com/isri-aist/hrp2_drc_description
       name: hrp2_drc
     module:
-      url: https://gite.lirmm.fr/mc-hrp2/mc-hrp2
+      url: https://github.com/isri-aist/mc-hrp2
       name: mc-hrp2
 - name: HRP-4-LIRMM
   icon: hrp4.jpg
@@ -38,10 +38,10 @@
   icon: hrp5p.jpg
   pkg:
     desc:
-      url: https://gite.lirmm.fr/mc-hrp5/hrp5_p_description
+      url: https://github.com/isri-aist/hrp5_p_description
       name: hrp5_p_description
     module:
-      url: https://gite.lirmm.fr/mc-hrp5/mc_hrp5_p
+      url: https://github.com/isri-aist/mc_hrp5_p
       name: mc_hrp5_p
 - name: Nao
   icon: nao.jpg
