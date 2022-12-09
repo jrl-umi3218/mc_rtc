@@ -877,12 +877,12 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
         if(c_.extWrench.excludeFromDCMBiasEst)
         {
           /// We have to send the oppopsite of the offset because the error is target - measured
-          dcmEstimator_.setInputs(measuredDCM_.head<2>(), measuredZMP_.head<2>(), waistOrientation,
+          dcmEstimator_.setInputs(-measuredDCM_.head<2>(), -measuredZMP_.head<2>(), waistOrientation,
                                   -comOffsetMeasured_.head<2>(), zmpCoefMeasured_);
         }
         else
         {
-          dcmEstimator_.setInputs(measuredDCM_.head<2>(), measuredZMP_.head<2>(), waistOrientation);
+          dcmEstimator_.setInputs(-measuredDCM_.head<2>(), -measuredZMP_.head<2>(), waistOrientation);
         }
       }
 
@@ -917,6 +917,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
       }
 
       measuredDCMUnbiased_.segment(0, 2) = measuredDCM_.segment(0, 2) + dcmEstimator_.getBias();
+      measuredDCMUnbiased_.z() = 0;
     }
     else
     {
