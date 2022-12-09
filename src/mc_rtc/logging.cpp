@@ -91,10 +91,11 @@ static inline void do_notify(const std::string & message)
   {
     return;
   }
-  std::unique_ptr<NotifyNotification> n(notify_notification_new("[mc_rtc]", message.c_str(), nullptr));
-  notify_notification_set_timeout(n.get(), NOTIFY_EXPIRES_DEFAULT);
-  notify_notification_set_urgency(n.get(), NOTIFY_URGENCY_CRITICAL);
-  notify_notification_show(n.get(), nullptr);
+  auto n = notify_notification_new("[mc_rtc]", message.c_str(), nullptr);
+  notify_notification_set_timeout(n, NOTIFY_EXPIRES_DEFAULT);
+  notify_notification_set_urgency(n, NOTIFY_URGENCY_CRITICAL);
+  notify_notification_show(n, nullptr);
+  g_object_unref(n);
 }
 
 #endif
