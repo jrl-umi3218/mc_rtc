@@ -434,7 +434,7 @@ endif()
 mc_rtc_add_test(NAME TestPluginController COMMAND test_controller_ticker --run_test=RUN -- "${CONFIG_OUT}" 5 TestPluginController_2_3)
 
 # Test Python bindings
-if(PYTHON_BINDING)
+if(PYTHON_BINDING AND NOT APPLE)
   file(READ "ObserverPipelinesPython.json" OBSERVER_PIPELINES)
   set(LOG_ENABLED "true")
   get_python_names(python_names)
