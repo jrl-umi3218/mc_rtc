@@ -615,19 +615,7 @@ then
     brew upgrade $BREW_DEPENDENCIES
     if [ "x$WITH_PYTHON_SUPPORT" == xON ] && $NOT_CLONE_ONLY
     then
-      if [ "x$PYTHON_BUILD_PYTHON2_AND_PYTHON3" == xON ]
-      then
-        sudo pip2 install $PIP_DEPENDENCIES
-        sudo pip3 install $PIP_DEPENDENCIES
-      elif [ "x$PYTHON_FORCE_PYTHON2" == xON ]
-      then
-        sudo pip2 install $PIP_DEPENDENCIES
-      elif [ "x$PYTHON_FORCE_PYTHON3" == xON ]
-      then
-        sudo pip3 install $PIP_DEPENDENCIES
-      else
-        sudo pip install $PIP_DEPENDENCIES
-      fi
+      python3 -m pip install $PIP_DEPENDENCIES
     fi
     mc_rtc_extra_steps
   else
@@ -652,7 +640,7 @@ else
   export OS=Windows
   if [ "x$WITH_PYTHON_SUPPORT" == xON ] && $NOT_CLONE_ONLY
   then
-    pip install --user ${PIP_DEPENDENCIES}
+    python -m pip install --user ${PIP_DEPENDENCIES}
   fi
   mc_rtc_extra_steps
 fi
@@ -660,37 +648,6 @@ fi
 echo_log ""
 echo_log "-- [SUCCESS] Successfully installed system dependencies"
 echo_log ""
-
-###############################################
-#  -- Check python/pip coherency if needed -- #
-###############################################
-
-if [ "x$WITH_PYTHON_SUPPORT" == xON ] && [ "x$PYTHON_FORCE_PYTHON2" == xOFF ] && [ "x$PYTHON_FORCE_PYTHON3" == xOFF ]
-then
-  if ! pip --version | grep -q "`python -c 'import sys; print(\"python {}.{}\".format(sys.version_info.major, sys.version_info.minor));'`"
-  then
-    echo_log "The pip command does not match the corresponding python version, this will lead to errors"
-    echo_log "Either fix your system or use --python-force-python2 true or --python-force-python3 true"
-  fi
-fi
-
-if [ "x$WITH_PYTHON_SUPPORT" == xON ] && ( [ "x$PYTHON_FORCE_PYTHON2" == xON ] || [ "x$PYTHON_BUILD_PYTHON2_AND_PYTHON3" == xON ] )
-then
-  if ! pip2 --version | grep -q "`python2 -c 'import sys; print(\"python {}.{}\".format(sys.version_info.major, sys.version_info.minor));'`"
-  then
-    echo_log "The pip2 command does not match the corresponding python2 version, this will lead to errors"
-    echo_log "Resolve the issue at your system level"
-  fi
-fi
-
-if [ "x$WITH_PYTHON_SUPPORT" == xON ] && ( [ "x$PYTHON_FORCE_PYTHON3" == xON ] || [ "x$PYTHON_BUILD_PYTHON3_AND_PYTHON3" == xON ] )
-then
-  if ! pip3 --version | grep -q "`python3 -c 'import sys; print(\"python {}.{}\".format(sys.version_info.major, sys.version_info.minor));'`"
-  then
-    echo_log "The pip3 command does not match the corresponding python3 version, this will lead to errors"
-    echo_log "Resolve the issue at your system level"
-  fi
-fi
 
 ########################
 ##  -- Install ROS --  #
