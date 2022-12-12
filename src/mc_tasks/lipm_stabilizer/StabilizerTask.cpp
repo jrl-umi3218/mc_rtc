@@ -95,8 +95,8 @@ void StabilizerTask::reset()
   dcmAverageError_ = Eigen::Vector3d::Zero();
   dcmError_ = Eigen::Vector3d::Zero();
   dcmVelError_ = Eigen::Vector3d::Zero();
-  dfzForceError_ = 0.;
-  dfzHeightError_ = 0.;
+  dfForceError_ = Eigen::Vector3d::Zero();
+  dfError_ = Eigen::Vector3d::Zero();
   desiredWrench_ = sva::ForceVecd::Zero();
   distribWrench_ = sva::ForceVecd::Zero();
   vdcHeightError_ = 0.;
@@ -315,7 +315,7 @@ void StabilizerTask::disable()
   disableConfig_.dcmPropGain = 0.;
   disableConfig_.comdErrorGain = 0.;
   disableConfig_.zmpdGain = 0.;
-  disableConfig_.dfzAdmittance = 0.;
+  disableConfig_.dfAdmittance = 0.;
   disableConfig_.vdcFrequency = 0.;
   disableConfig_.vdcStiffness = 0.;
   zmpcc_.enabled(false);
@@ -1198,9 +1198,9 @@ void StabilizerTask::updateFootForceDifferenceControl()
   auto rightFootTask = footTasks[ContactState::Right];
   if(!inDoubleSupport() || inTheAir_)
   {
-    dfzForceError_ = 0.;
-    dfzHeightError_ = 0.;
-    vdcHeightError_ = 0.;
+    dfForceError_ = Eigen::Vector3d::Zero();
+    dfError_ = Eigen::Vector3d::Zero();
+    vdcHeightError_ = 0;
     leftFootTask->refVelB({{0., 0., 0.}, {0., 0., 0.}});
     rightFootTask->refVelB({{0., 0., 0.}, {0., 0., 0.}});
     return;
@@ -1209,24 +1209,34 @@ void StabilizerTask::updateFootForceDifferenceControl()
   sva::PTransformd T_0_L(leftFootTask->surfacePose().rotation());
   sva::PTransformd T_0_R(rightFootTask->surfacePose().rotation());
 
+  /// The gains along the axis are defined in the local cordinates so we extract the yaw
+  /// rotation matrix
+  Eigen::Matrix3d R_0_fb_yaw = sva::RotZ(mc_rbdyn::rpyFromMat(robot().posW().rotation()).z());
+
   // T_0_{L/R}.transMul transforms a ForceVecd variable from surface frame to world frame
-  double LFz_d = T_0_L.transMul(leftFootTask->targetWrench()).force().z();
-  double RFz_d = T_0_R.transMul(rightFootTask->targetWrench()).force().z();
-  double LFz = T_0_L.transMul(leftFootTask->measuredWrench()).force().z();
-  double RFz = T_0_R.transMul(rightFootTask->measuredWrench()).force().z();
-  dfzForceError_ = (LFz_d - RFz_d) - (LFz - RFz);
+  Eigen::Vector3d LF_d = T_0_L.transMul(leftFootTask->targetWrench()).force();
+  Eigen::Vector3d RF_d = T_0_R.transMul(rightFootTask->targetWrench()).force();
+  Eigen::Vector3d LF = T_0_L.transMul(leftFootTask->measuredWrench()).force();
+  Eigen::Vector3d RF = T_0_R.transMul(rightFootTask->measuredWrench()).force();
+  dfForceError_ = (LF_d - RF_d) - (LF - RF);
 
-  double LTz_d = leftFootTask->targetPose().translation().z();
-  double RTz_d = rightFootTask->targetPose().translation().z();
-  double LTz = leftFootTask->surfacePose().translation().z();
-  double RTz = rightFootTask->surfacePose().translation().z();
-  dfzHeightError_ = (LTz_d - RTz_d) - (LTz - RTz);
-  vdcHeightError_ = (LTz_d + RTz_d) - (LTz + RTz);
+  Eigen::Vector3d LT_d = leftFootTask->targetPose().translation();
+  Eigen::Vector3d RT_d = rightFootTask->targetPose().translation();
+  Eigen::Vector3d LT = leftFootTask->surfacePose().translation();
+  Eigen::Vector3d RT = rightFootTask->surfacePose().translation();
+  dfError_ = (LT_d - RT_d) - (LT - RT);
+  vdcHeightError_ = ((LT_d + RT_d) - (LT + RT)).z();
 
-  double dz_ctrl = c_.dfzAdmittance * dfzForceError_ - c_.dfzDamping * dfzHeightError_;
+  Eigen::Vector3d gainAdmittance = Eigen::Vector3d{c_.dfAdmittance.x(), c_.dfAdmittance.y(), c_.dfAdmittance.z()};
+  Eigen::Vector3d gainDamping = Eigen::Vector3d{c_.dfDamping.x(), c_.dfDamping.y(), c_.dfDamping.z()};
+
+  Eigen::Vector3d df_ctrl =
+      R_0_fb_yaw.transpose()
+      * (gainAdmittance.cwiseProduct(R_0_fb_yaw * dfForceError_) - gainDamping.cwiseProduct(R_0_fb_yaw * dfError_));
+
   double dz_vdc = c_.vdcFrequency * vdcHeightError_;
-  sva::MotionVecd velF = {{0., 0., 0.}, {0., 0., dz_ctrl}};
-  sva::MotionVecd velT = {{0., 0., 0.}, {0., 0., dz_vdc}};
+  sva::MotionVecd velF = {{0., 0., 0.}, df_ctrl};
+  sva::MotionVecd velT = {{0., 0., 0.}, {0, 0, dz_vdc}};
   // T_0_{L/R} transforms a MotionVecd variable from world frame to surface frame
   leftFootTask->refVelB(0.5 * (T_0_L * (velT - velF)));
   rightFootTask->refVelB(0.5 * (T_0_R * (velT + velF)));
