@@ -53,6 +53,20 @@ extern "C"
 #pragma GCC diagnostic pop
     PySys_SetArgvEx(0, {}, 0);
 
+    auto sys_path_object = PySys_GetObject("path");
+    PyErr_Print();
+    auto sys_path_repr = PyObject_Repr(sys_path_object);
+    PyErr_Print();
+#if PY_MAJOR_VERSION > 2
+    auto sys_path_str = PyUnicode_AsUTF8String(sys_path_repr);
+    PyErr_Print();
+    auto sys_path = PyBytes_AsString(sys_path_str);
+#else
+    auto sys_path = PyString_AsString(sys_path_repr);
+#endif
+    PyErr_Print();
+    mc_rtc::log::info("[PythonController] sys.path: {}", sys_path);
+
     auto signal_mod = PyImport_ImportModule("signal");
     PyErr_Print();
     auto signal_signal = PyObject_GetAttrString(signal_mod, "signal");
