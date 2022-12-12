@@ -489,3 +489,50 @@ BOOST_AUTO_TEST_CASE(TestLogger)
     bfs::remove(path);
   }
 }
+
+BOOST_AUTO_TEST_CASE(TestResume)
+{
+  std::string path_1;
+  std::string path_2;
+  double dt = 0.001;
+  {
+    using Policy = mc_rtc::Logger::Policy;
+    mc_rtc::Logger logger(Policy::NON_THREADED, bfs::temp_directory_path().string(), "mc-rtc-test");
+    logger.start("logger", dt);
+    path_1 = logger.path();
+    LogData data;
+    data.addToLogger(logger, true);
+    for(size_t i = 0; i < 1000; ++i)
+    {
+      logger.log();
+      data.refresh();
+    }
+    logger.start("logger", dt, true);
+    path_2 = logger.path();
+    BOOST_REQUIRE(path_1 != path_2);
+    for(size_t i = 0; i < 1000; ++i)
+    {
+      logger.log();
+      data.refresh();
+    }
+  }
+  auto latest = bfs::temp_directory_path() / "mc-rtc-test-logger-latest.bin";
+  if(bfs::exists(latest))
+  {
+    bfs::remove(latest);
+  }
+  {
+    BOOST_REQUIRE(bfs::exists(path_1));
+    BOOST_REQUIRE(bfs::exists(path_2));
+    mc_rtc::log::FlatLog flat_1(path_1);
+    BOOST_REQUIRE(flat_1.size() > 0);
+    mc_rtc::log::FlatLog flat_2(path_2);
+    BOOST_REQUIRE(flat_2.size() > 0);
+    BOOST_REQUIRE(flat_1.entries() == flat_2.entries());
+    auto final_t1 = flat_1.get<double>("t", flat_1.size() - 1, 0.0);
+    auto first_t2 = flat_2.get<double>("t", 0, 0.0);
+    BOOST_REQUIRE(std::fabs(first_t2 - final_t1 - dt) < 1e-9);
+  }
+  bfs::remove(path_1);
+  bfs::remove(path_2);
+}
