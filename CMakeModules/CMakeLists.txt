@@ -14,6 +14,10 @@ if(NOT WIN32 AND NOT MC_RTC_BUILD_STATIC)
   list(APPEND MODULE_FILES Findmc_rtc_3rd_party_ltdl.cmake)
 endif()
 
+if(NOT WIN32)
+  list(APPEND MODULE_FILES Findmc_rtc_3rd_party_libnotify.cmake)
+endif()
+
 install(FILES ${MODULE_FILES} DESTINATION "${CONFIG_INSTALL_DIR}")
 foreach(F ${MODULE_FILES})
   set(PACKAGE_EXTRA_MACROS "${PACKAGE_EXTRA_MACROS}

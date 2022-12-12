@@ -4,3 +4,6 @@
 [submodule ".jrl-ci"]
 	path = .jrl-ci
 	url = https://github.com/jrl-umi3218/jrl-travis.git
+[submodule "3rd-party/WinToast"]
+	path = 3rd-party/WinToast
+	url = https://github.com/mohabouje/WinToast
