@@ -4189,6 +4189,13 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
+      <type>MC_RTC_UTILS_DLLAPI void</type>
+      <name>notify</name>
+      <anchorfile>namespacemc__rtc_1_1log_1_1details.html</anchorfile>
+      <anchor>a825688a25acf02d7518a7a1f19c83e04</anchor>
+      <arglist>(const std::string &amp;message)</arglist>
+    </member>
+    <member kind="function">
       <type>void</type>
       <name>error_and_throw</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
@@ -4228,6 +4235,13 @@
       <name>success</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
       <anchor>a4493319384c54d938a70d54193ed2dbc</anchor>
+      <arglist>(Args &amp;&amp;... args)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>notify</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a54ebcc7be85c707e724b30af37292667</anchor>
       <arglist>(Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="variable">
@@ -39385,6 +39399,13 @@
       <anchor>a4493319384c54d938a70d54193ed2dbc</anchor>
       <arglist>(Args &amp;&amp;... args)</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>notify</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a54ebcc7be85c707e724b30af37292667</anchor>
+      <arglist>(Args &amp;&amp;... args)</arglist>
+    </member>
   </compound>
   <compound kind="namespace">
     <name>mc_rtc::log::details</name>
@@ -39409,6 +39430,13 @@
       <anchorfile>namespacemc__rtc_1_1log_1_1details.html</anchorfile>
       <anchor>aa8cc2cc8dc25d49fa533f32a67f73c33</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RTC_UTILS_DLLAPI void</type>
+      <name>notify</name>
+      <anchorfile>namespacemc__rtc_1_1log_1_1details.html</anchorfile>
+      <anchor>a825688a25acf02d7518a7a1f19c83e04</anchor>
+      <arglist>(const std::string &amp;message)</arglist>
     </member>
   </compound>
   <compound kind="namespace">

@@ -1,5 +1,7 @@
 var NAVTREEINDEX5 =
 {
+"structmc__control_1_1ControllerResetData.html":[3,0,2,5],
+"structmc__control_1_1ControllerResetData.html#a2e6d446ed6dd7f705c238d69b57e9f14":[3,0,2,5,0],
 "structmc__control_1_1ControllerServer.html":[3,0,2,6],
 "structmc__control_1_1ControllerServer.html#a38c2d4255f3f4db5c9315f3c7468b87f":[3,0,2,6,5],
 "structmc__control_1_1ControllerServer.html#a734ffb48f73a37374b9b51c4c7655507":[3,0,2,6,3],
@@ -247,7 +249,5 @@ var NAVTREEINDEX5 =
 "structmc__control_1_1MCGlobalController.html#a81741b8b19919c98fb7998372f902535":[3,0,2,12,53],
 "structmc__control_1_1MCGlobalController.html#a81d56d40787c8ecff59283a9c85109ca":[3,0,2,12,86],
 "structmc__control_1_1MCGlobalController.html#a865cf8ffa3c30f8936b7e384706cff2d":[3,0,2,12,2],
-"structmc__control_1_1MCGlobalController.html#a893f4ffae6fbc419efff45b53ef6ffd2":[3,0,2,12,48],
-"structmc__control_1_1MCGlobalController.html#a8ad898a9f117fc71508d7e5aec5ffa3d":[3,0,2,12,52],
-"structmc__control_1_1MCGlobalController.html#a8c38d4793edb8d7c910be3e80b348f7b":[3,0,2,12,66]
+"structmc__control_1_1MCGlobalController.html#a893f4ffae6fbc419efff45b53ef6ffd2":[3,0,2,12,48]
 };

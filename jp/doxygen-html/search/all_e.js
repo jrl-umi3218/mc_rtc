@@ -20,6 +20,7 @@ var searchData=
   ['normal_5fderivative',['normal_derivative',['../structmc__rbdyn_1_1PolygonInterpolator.html#a8692430f5c1315d38bbc1a1f4798907c',1,'mc_rbdyn::PolygonInterpolator']]],
   ['normalacc',['normalAcc',['../structmc__tasks_1_1TrajectoryTaskGeneric.html#ad7934da95aafbb164740323dad4c90ef',1,'mc_tasks::TrajectoryTaskGeneric']]],
   ['notagetter',['NotAGetter',['../structmc__rtc_1_1gui_1_1details_1_1NotAGetter.html',1,'mc_rtc::gui::details']]],
+  ['notify',['notify',['../namespacemc__rtc_1_1log_1_1details.html#a825688a25acf02d7518a7a1f19c83e04',1,'mc_rtc::log::details::notify()'],['../namespacemc__rtc_1_1log.html#a54ebcc7be85c707e724b30af37292667',1,'mc_rtc::log::notify()']]],
   ['nrbilatpoints',['nrBilatPoints',['../structmc__rbdyn_1_1Contact.html#a09ed33807af99b34743159c7ab72cb41',1,'mc_rbdyn::Contact']]],
   ['nrboundedspeeds',['nrBoundedSpeeds',['../structmc__solver_1_1BoundedSpeedConstr.html#a70c84d6defba583690d9175ca4cf192d',1,'mc_solver::BoundedSpeedConstr']]],
   ['nrconegen',['nrConeGen',['../structmc__rbdyn_1_1Contact.html#aac270db0e23b02eb4906922862bf8086',1,'mc_rbdyn::Contact']]],

@@ -1,5 +1,7 @@
 var NAVTREEINDEX19 =
 {
+"traits_8h.html#a8e445bc0e47af1ff42f00cec4cbacbf7":[4,0,0,6,0,0,0,10],
+"traits_8h_source.html":[4,0,0,6,0,0,0],
 "type__name_8h.html":[4,0,0,6,19],
 "type__name_8h.html#a8fb61bc6391bc9cd0ef2aa0efff2d641":[4,0,0,6,19,1],
 "type__name_8h.html#af017e274f3cf4699850fdbf753d07fa2":[4,0,0,6,19,0],

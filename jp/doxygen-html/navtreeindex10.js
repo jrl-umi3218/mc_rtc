@@ -1,5 +1,7 @@
 var NAVTREEINDEX10 =
 {
+"structmc__rbdyn_1_1RobotFrame.html#a339b968385764b0d3e7cc93026593e43":[3,0,6,26,7],
+"structmc__rbdyn_1_1RobotFrame.html#a381329b9873a2dd595adb15b522f233c":[3,0,6,26,2],
 "structmc__rbdyn_1_1RobotFrame.html#a3e0f90eac149c38be620e57b08e1ba78":[3,0,6,26,14],
 "structmc__rbdyn_1_1RobotFrame.html#a48809129dc45e9f5e08d97e041334a07":[3,0,6,26,1],
 "structmc__rbdyn_1_1RobotFrame.html#a4cb8f9a941f66cbe0a2bccc17a6155e0":[3,0,6,26,20],
@@ -247,7 +249,5 @@ var NAVTREEINDEX10 =
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a7ffbc94c90b9db18e568822089740ce3":[3,0,6,1,1,0],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#abc2551e9efb790f462bf04173f5333cb":[3,0,6,1,1,9],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#abfe6e931e6f6f77dd2ca657c0d5e3840":[3,0,6,1,1,12],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#ad636aa194409ba418d4f4c6377d0fe71":[3,0,6,1,1,5],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#adf774b10bdd24ff8788bb6fffa757719":[3,0,6,1,1,8],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#af5d1903ed4c7cc1a0071edf8752d9e58":[3,0,6,1,1,7]
+"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#ad636aa194409ba418d4f4c6377d0fe71":[3,0,6,1,1,5]
 };

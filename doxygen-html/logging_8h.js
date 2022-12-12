@@ -13,6 +13,8 @@ var logging_8h =
     [ "error_and_throw", "logging_8h.html#a2bad497e8a4c7a7f29f7ab908c83274e", null ],
     [ "info", "logging_8h.html#a2e57684e4d69b10eb5c9f41cf59c11ea", null ],
     [ "info", "logging_8h.html#a0d3a4bb8b582e5c1795b8ae9cd5f3ec9", null ],
+    [ "notify", "logging_8h.html#a825688a25acf02d7518a7a1f19c83e04", null ],
+    [ "notify", "logging_8h.html#a54ebcc7be85c707e724b30af37292667", null ],
     [ "success", "logging_8h.html#a4be6522543b254e76db5d80f58a4e290", null ],
     [ "success", "logging_8h.html#a4493319384c54d938a70d54193ed2dbc", null ],
     [ "warning", "logging_8h.html#a9e944001fd155fd1621157e450cf3d06", null ],
