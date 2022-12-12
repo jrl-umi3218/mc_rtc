@@ -69,6 +69,7 @@ Depends: cmake,
          libyaml-cpp-dev,
          libspdlog-dev,
          libltdl-dev,
+         libnotify-dev,
          libmc-rtc1 (= ${binary:Version}),
          ${misc:Depends}
 Suggests: libmc-rtc-doc
