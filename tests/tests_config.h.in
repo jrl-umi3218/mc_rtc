@@ -7,3 +7,5 @@
 #include <string>
 
 static const std::string ROBOTS_BUILD_DIR = "@CMAKE_BINARY_DIR@/@ROBOTS_BUILD_DIR@";
+
+static const std::string MC_BIN_UTILS = "$<TARGET_FILE:mc_bin_utils>";
