@@ -95,7 +95,17 @@ struct SafetyThresholds
     config("MAX_COMD_GAIN", MAX_COMD_GAIN);
     config("MAX_ZMPD_GAIN", MAX_ZMPD_GAIN);
     config("MAX_DF_ADMITTANCE", MAX_DF_ADMITTANCE);
+    if(config.has("MAX_DFZ_ADMITTANCE"))
+    {
+      mc_rtc::log::deprecated("StabilizerConfiguration::SafetyThresholds", "MAX_DFZ_ADMITTANCE", "MAX_DF_ADMITTANCE");
+      config("MAX_DFZ_ADMITTANCE", MAX_DF_ADMITTANCE);
+    }
     config("MAX_DF_DAMPING", MAX_DF_ADMITTANCE);
+    if(config.has("MAX_DFZ_DAMPING"))
+    {
+      mc_rtc::log::deprecated("StabilizerConfiguration::SafetyThresholds", "MAX_DFZ_DAMPING", "MAX_DF_ADMITTANCE");
+      config("MAX_DFZ_DAMPING", MAX_DF_ADMITTANCE);
+    }
     config("MAX_FDC_RX_VEL", MAX_FDC_RX_VEL);
     config("MAX_FDC_RY_VEL", MAX_FDC_RY_VEL);
     config("MAX_FDC_RZ_VEL", MAX_FDC_RZ_VEL);
