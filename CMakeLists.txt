@@ -222,16 +222,17 @@ add_subdirectory(CMakeModules)
 add_subdirectory(doc)
 add_subdirectory(src)
 add_subdirectory(plugins)
+add_subdirectory(utils)
+
+if(${PYTHON_BINDING})
+ add_subdirectory(binding/python)
+endif()
+
 if(${BUILD_TESTING})
   add_subdirectory(tests)
 endif()
 if(${BUILD_BENCHMARKS})
   add_subdirectory(benchmarks)
-endif()
-add_subdirectory(utils)
-
-if(${PYTHON_BINDING})
- add_subdirectory(binding/python)
 endif()
 
 add_subdirectory(robots)

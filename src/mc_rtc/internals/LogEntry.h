@@ -500,7 +500,8 @@ private:
                   "LogType should be an int32_t like thing");
     for(size_t i = 0; i < s; i += 2)
     {
-      assert(mpack_node_type(mpack_node_array_at(value, i)) == mpack_type_int);
+      assert(mpack_node_type(mpack_node_array_at(value, i)) == mpack_type_int
+             || mpack_node_type(mpack_node_array_at(value, i)) == mpack_type_uint);
       builder.write(mpack_node_i32(mpack_node_array_at(value, i)));
       copy_data(builder, mpack_node_array_at(value, i + 1));
     }
