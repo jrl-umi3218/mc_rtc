@@ -112,6 +112,9 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a41a4ad61ac746f632ece2ef93aa59b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a447ab7af04c97c1b2ee54db7ec0b3835"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a447ab7af04c97c1b2ee54db7ec0b3835">correctCoMPos</a> = false</td></tr>
 <tr class="separator:a447ab7af04c97c1b2ee54db7ec0b3835"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fe120580865bc366febaa3cf7ca16db"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a2fe120580865bc366febaa3cf7ca16db">correctDCM</a> = true</td></tr>
+<tr class="memdesc:a2fe120580865bc366febaa3cf7ca16db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the estimated bias should be used on the dcm.  <a href="#a2fe120580865bc366febaa3cf7ca16db">More...</a><br /></td></tr>
+<tr class="separator:a2fe120580865bc366febaa3cf7ca16db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Parameters for the DCM bias estimator </p>
@@ -228,6 +231,22 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Whether the absolute CoM position gets unbiased (useful when the disturbance comes from a bias on the CoM, for example modeling errors or carrying an object, but it would be wrong if the disturbance comes from an unexpected contact, the estimator cannot distinguish between them) </p>
+
+</div>
+</div>
+<a id="a2fe120580865bc366febaa3cf7ca16db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fe120580865bc366febaa3cf7ca16db">&#9670;&nbsp;</a></span>correctDCM</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration::correctDCM = true</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Whether the estimated bias should be used on the dcm. </p>
 
 </div>
 </div>

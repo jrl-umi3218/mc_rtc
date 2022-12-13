@@ -92,6 +92,7 @@ var searchData=
   ['copyjointvelocitycommand_5f',['copyJointVelocityCommand_',['../structmc__rbdyn_1_1RobotConverterConfig.html#ad46aa74bc9576f13ab33b336a39f79bc',1,'mc_rbdyn::RobotConverterConfig']]],
   ['copyposworld_5f',['copyPosWorld_',['../structmc__rbdyn_1_1RobotConverterConfig.html#ad727e4fc644bbb52165aeecf938f5d8c',1,'mc_rbdyn::RobotConverterConfig']]],
   ['correctcompos',['correctCoMPos',['../structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a447ab7af04c97c1b2ee54db7ec0b3835',1,'mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration']]],
+  ['correctdcm',['correctDCM',['../structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a2fe120580865bc366febaa3cf7ca16db',1,'mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration']]],
   ['crit_5f',['crit_',['../structmc__control_1_1fsm_1_1PostureState.html#a83609f4952920e5a7bc53086f86e05b0',1,'mc_control::fsm::PostureState']]],
   ['criteria',['criteria',['../structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html#aa1d90135dc97508bf146a086b7b8305e',1,'mc_control::fsm::MetaTasksState::TaskCriteria']]],
   ['criterias_5f',['criterias_',['../structmc__control_1_1fsm_1_1MetaTasksState.html#abf365e7d07d5e71915cfa982fc0eb3cd',1,'mc_control::fsm::MetaTasksState']]],

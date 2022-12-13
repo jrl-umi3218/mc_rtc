@@ -303,6 +303,7 @@ var hierarchy =
     ] ],
     [ "Matrix", null, [
       [ "mc_rbdyn::Gains< 2 >", "structmc__rbdyn_1_1Gains.html", null ],
+      [ "mc_rbdyn::Gains< 3 >", "structmc__rbdyn_1_1Gains.html", null ],
       [ "mc_rbdyn::Gains< N >", "structmc__rbdyn_1_1Gains.html", null ]
     ] ],
     [ "mc_control::MCController", "structmc__control_1_1MCController.html", [
@@ -453,10 +454,10 @@ var hierarchy =
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html", null ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
     ] ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
     ] ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],

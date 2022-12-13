@@ -1,5 +1,6 @@
 var NAVTREEINDEX12 =
 {
+"structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html":[3,0,7,26],
 "structmc__rtc_1_1Configuration_1_1Exception.html":[3,0,7,3,0],
 "structmc__rtc_1_1Configuration_1_1Exception.html#a02a511274c6edbdfcf14ecc723a495c5":[3,0,7,3,0,5],
 "structmc__rtc_1_1Configuration_1_1Exception.html#a036273616d903f906ac28972cc16d902":[3,0,7,3,0,4],
@@ -64,8 +65,8 @@ var NAVTREEINDEX12 =
 "structmc__rtc_1_1Logger.html#a93a57921c9019097a0903b86d0ba7571":[3,0,7,30,17],
 "structmc__rtc_1_1Logger.html#a986b2719c1337aa9d1e84e2b0b34481c":[3,0,7,30,15],
 "structmc__rtc_1_1Logger.html#acf6c621790b393b717c9a6b0c0ec0394":[3,0,7,30,11],
-"structmc__rtc_1_1Logger.html#ae7cc40f50bb8edbcc79c06476f7a4540":[3,0,7,30,7],
 "structmc__rtc_1_1Logger.html#ae7cc40f50bb8edbcc79c06476f7a4540":[3,0,7,30,6],
+"structmc__rtc_1_1Logger.html#ae7cc40f50bb8edbcc79c06476f7a4540":[3,0,7,30,7],
 "structmc__rtc_1_1Logger.html#aeb0d9597ada6a67eb2a89fcda8c74e7d":[3,0,7,30,18],
 "structmc__rtc_1_1Logger.html#aec88caf27ebb9c9615ed4fd51d9ccd98":[3,0,7,30,10],
 "structmc__rtc_1_1MessagePackBuilder.html":[3,0,7,33],
@@ -248,6 +249,5 @@ var NAVTREEINDEX12 =
 "structmc__rtc_1_1gui_1_1ForceConfig.html#a172deb6bbb037afc2955e6ce0495a1cd":[3,0,7,0,17,6],
 "structmc__rtc_1_1gui_1_1ForceConfig.html#a2d88ac62138a8f3a15a0c48468ec2d51":[3,0,7,0,17,1],
 "structmc__rtc_1_1gui_1_1ForceConfig.html#a3a1a3cbb8780c4dbf5d8e38e12f8c609":[3,0,7,0,17,4],
-"structmc__rtc_1_1gui_1_1ForceConfig.html#a5b196a2d50081a662c2765c283a6d6b8":[3,0,7,0,17,7],
-"structmc__rtc_1_1gui_1_1ForceConfig.html#a78b1ea720927b2fa64a4f54b403a9184":[3,0,7,0,17,3]
+"structmc__rtc_1_1gui_1_1ForceConfig.html#a5b196a2d50081a662c2765c283a6d6b8":[3,0,7,0,17,7]
 };

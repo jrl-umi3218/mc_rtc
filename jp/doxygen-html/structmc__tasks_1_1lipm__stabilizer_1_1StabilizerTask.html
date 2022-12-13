@@ -190,6 +190,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3300ec93b5d85e099c8530c0ceca8713"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae78207848e03e1b1153ad47f812aeb3c"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae78207848e03e1b1153ad47f812aeb3c">measuredDCM</a> () noexcept</td></tr>
 <tr class="separator:ae78207848e03e1b1153ad47f812aeb3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa645580f763fa4c2b0811db9cfbc3cf2"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector2d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa645580f763fa4c2b0811db9cfbc3cf2">biasDCM</a> () noexcept</td></tr>
+<tr class="separator:aa645580f763fa4c2b0811db9cfbc3cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41fed4c5c24646bb999d0ad8048b6c9d"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a41fed4c5c24646bb999d0ad8048b6c9d">measuredZMP</a> () noexcept</td></tr>
 <tr class="separator:a41fed4c5c24646bb999d0ad8048b6c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad173d40ca3a81fe661d64d90fcf92106"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad173d40ca3a81fe661d64d90fcf92106">measuredCoM</a> () noexcept</td></tr>
@@ -237,10 +239,10 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a68d1efc50be7bb07bdf12ed98bba24cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22569ac33f8c0e99bb674520373c41c6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a22569ac33f8c0e99bb674520373c41c6">inTheAir_</a> = false</td></tr>
 <tr class="separator:a22569ac33f8c0e99bb674520373c41c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29892a01046ffddb485441466a5dfbe0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a29892a01046ffddb485441466a5dfbe0">dfzForceError_</a> = 0.</td></tr>
-<tr class="separator:a29892a01046ffddb485441466a5dfbe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac424f24910f5856c99a44c359865dc2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aac424f24910f5856c99a44c359865dc2">dfzHeightError_</a> = 0.</td></tr>
-<tr class="separator:aac424f24910f5856c99a44c359865dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af009d6a160e266c013a56d7348ac4c80"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#af009d6a160e266c013a56d7348ac4c80">dfForceError_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="separator:af009d6a160e266c013a56d7348ac4c80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a071bad816dfef57c9f0a2a8b3d9fa49e"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a071bad816dfef57c9f0a2a8b3d9fa49e">dfError_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="separator:a071bad816dfef57c9f0a2a8b3d9fa49e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78355a7b3bb963abe0bc160f0d51bcb9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a78355a7b3bb963abe0bc160f0d51bcb9">dt_</a> = 0.005</td></tr>
 <tr class="separator:a78355a7b3bb963abe0bc160f0d51bcb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a077f98071aa5d9ae2b861aba4edbc606"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a077f98071aa5d9ae2b861aba4edbc606">leftFootRatio_</a> = 0.5</td></tr>
@@ -249,7 +251,7 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:aadea2267fb6365e262900d3da4e40d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c5ff776bf36beaee2182776ba4feca0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1c5ff776bf36beaee2182776ba4feca0">runTime_</a> = 0.</td></tr>
 <tr class="separator:a1c5ff776bf36beaee2182776ba4feca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab459d6ba167857323daefe6a3fbef750"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ab459d6ba167857323daefe6a3fbef750">vdcHeightError_</a> = 0.</td></tr>
+<tr class="memitem:ab459d6ba167857323daefe6a3fbef750"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ab459d6ba167857323daefe6a3fbef750">vdcHeightError_</a> = 0</td></tr>
 <tr class="separator:ab459d6ba167857323daefe6a3fbef750"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a706d2d0fed1d66103c2bcf669dd47bb8"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a706d2d0fed1d66103c2bcf669dd47bb8">desiredWrench_</a> = sva::ForceVecd::Zero()</td></tr>
 <tr class="separator:a706d2d0fed1d66103c2bcf669dd47bb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -452,10 +454,10 @@ Setters to reconfigure the stabilizer online</h2></td></tr>
 <tr class="separator:a87e39ffd522ed054a2f5d066d04f98f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a902360523f74d1b286d46e5d3743c7b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a902360523f74d1b286d46e5d3743c7b6">vdcStiffness</a> (double stiffness) noexcept</td></tr>
 <tr class="separator:a902360523f74d1b286d46e5d3743c7b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fd7403b0681845c2b1209bdc6a8a00a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1fd7403b0681845c2b1209bdc6a8a00a">dfzAdmittance</a> (double dfzAdmittance) noexcept</td></tr>
-<tr class="separator:a1fd7403b0681845c2b1209bdc6a8a00a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ed512bddf3fb21126e5029218746f39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a4ed512bddf3fb21126e5029218746f39">dfzDamping</a> (double dfzDamping) noexcept</td></tr>
-<tr class="separator:a4ed512bddf3fb21126e5029218746f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69f288875e64cd0d86f876dca9f3ef3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a69f288875e64cd0d86f876dca9f3ef3e">dfAdmittance</a> (Eigen::Vector3d dfAdmittance) noexcept</td></tr>
+<tr class="separator:a69f288875e64cd0d86f876dca9f3ef3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad95c2c21d090a13680ccd51b542688ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad95c2c21d090a13680ccd51b542688ac">dfDamping</a> (Eigen::Vector3d dfDamping) noexcept</td></tr>
+<tr class="separator:ad95c2c21d090a13680ccd51b542688ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61511c4f2321084adc649936db38ca70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a61511c4f2321084adc649936db38ca70">fdqpWeights</a> (const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a6237f0269786bf01feaf316a6259b712">FDQPWeights</a> &amp;fdqp) noexcept</td></tr>
 <tr class="separator:a61511c4f2321084adc649936db38ca70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41a809b5612edf600a57d53917f6fc62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a41a809b5612edf600a57d53917f6fc62">safetyThresholds</a> (const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a5f51d2adfa451cd98a1b3f3b2ed68ee4">SafetyThresholds</a> &amp;thresholds) noexcept</td></tr>
@@ -781,6 +783,31 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Anchor frame in-between the feet according to <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a91cb5583f420f95611496de2bf2e43b1" title="Interpolation paremeter between left and right foot. ">leftFootRatio()</a> </dd></dl>
+
+</div>
+</div>
+<a id="aa645580f763fa4c2b0811db9cfbc3cf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa645580f763fa4c2b0811db9cfbc3cf2">&#9670;&nbsp;</a></span>biasDCM()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const Eigen::Vector2d mc_tasks::lipm_stabilizer::StabilizerTask::biasDCM </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -1550,8 +1577,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a1fd7403b0681845c2b1209bdc6a8a00a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fd7403b0681845c2b1209bdc6a8a00a">&#9670;&nbsp;</a></span>dfzAdmittance()</h2>
+<a id="a69f288875e64cd0d86f876dca9f3ef3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69f288875e64cd0d86f876dca9f3ef3e">&#9670;&nbsp;</a></span>dfAdmittance()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1560,10 +1587,10 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::dfzAdmittance </td>
+          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::dfAdmittance </td>
           <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dfzAdmittance</em></td><td>)</td>
+          <td class="paramtype">Eigen::Vector3d&#160;</td>
+          <td class="paramname"><em>dfAdmittance</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1576,8 +1603,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a4ed512bddf3fb21126e5029218746f39"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ed512bddf3fb21126e5029218746f39">&#9670;&nbsp;</a></span>dfzDamping()</h2>
+<a id="ad95c2c21d090a13680ccd51b542688ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad95c2c21d090a13680ccd51b542688ac">&#9670;&nbsp;</a></span>dfDamping()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1586,10 +1613,10 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::dfzDamping </td>
+          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::dfDamping </td>
           <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dfzDamping</em></td><td>)</td>
+          <td class="paramtype">Eigen::Vector3d&#160;</td>
+          <td class="paramname"><em>dfDamping</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -3603,8 +3630,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a29892a01046ffddb485441466a5dfbe0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29892a01046ffddb485441466a5dfbe0">&#9670;&nbsp;</a></span>dfzForceError_</h2>
+<a id="a071bad816dfef57c9f0a2a8b3d9fa49e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a071bad816dfef57c9f0a2a8b3d9fa49e">&#9670;&nbsp;</a></span>dfError_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3613,30 +3640,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::dfzForceError_ = 0.</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Force error in foot force difference control </p>
-
-</div>
-</div>
-<a id="aac424f24910f5856c99a44c359865dc2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac424f24910f5856c99a44c359865dc2">&#9670;&nbsp;</a></span>dfzHeightError_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::dfzHeightError_ = 0.</td>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::dfError_ = Eigen::Vector3d::Zero()</td>
         </tr>
       </table>
   </td>
@@ -3646,6 +3650,29 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Height error in foot force difference control </p>
+
+</div>
+</div>
+<a id="af009d6a160e266c013a56d7348ac4c80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af009d6a160e266c013a56d7348ac4c80">&#9670;&nbsp;</a></span>dfForceError_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::dfForceError_ = Eigen::Vector3d::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Force error in foot force difference control </p>
 
 </div>
 </div>
@@ -4451,7 +4478,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::vdcHeightError_ = 0.</td>
+          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::vdcHeightError_ = 0</td>
         </tr>
       </table>
   </td>

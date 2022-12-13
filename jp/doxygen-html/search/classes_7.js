@@ -2,6 +2,7 @@ var searchData=
 [
   ['gains',['Gains',['../structmc__rbdyn_1_1Gains.html',1,'mc_rbdyn']]],
   ['gains_3c_202_20_3e',['Gains&lt; 2 &gt;',['../structmc__rbdyn_1_1Gains.html',1,'mc_rbdyn']]],
+  ['gains_3c_203_20_3e',['Gains&lt; 3 &gt;',['../structmc__rbdyn_1_1Gains.html',1,'mc_rbdyn']]],
   ['gazetask',['GazeTask',['../structmc__tasks_1_1GazeTask.html',1,'mc_tasks']]],
   ['genericloader',['GenericLoader',['../structmc__solver_1_1GenericLoader.html',1,'mc_solver']]],
   ['genericloader_3c_20constraintsetloader_2c_20constraintset_20_3e',['GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;',['../structmc__solver_1_1GenericLoader.html',1,'mc_solver']]],

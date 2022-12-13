@@ -1,5 +1,6 @@
 var NAVTREEINDEX14 =
 {
+"structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#acb8f660f859e833c99de6513966fe4bb":[3,0,7,0,2,2,4],
 "structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#acc0a5ccc455b33de968ad47b6a7c3304":[3,0,7,0,2,2,5],
 "structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#affe6dfc002b26a7d843a7d38d820e6ae":[3,0,7,0,2,2,12],
 "structmc__rtc_1_1gui_1_1plot_1_1Range.html":[3,0,7,0,2,3],
@@ -248,6 +249,5 @@ var NAVTREEINDEX14 =
 "structmc__solver_1_1QPSolver.html#a3790dba884300b905da43b8378a9ba9d":[3,0,8,23,4],
 "structmc__solver_1_1QPSolver.html#a43c54369fed8652576d3f3b9f362b11a":[3,0,8,23,52],
 "structmc__solver_1_1QPSolver.html#a47437e01c4e6e215ff7a9fbd966f615f":[3,0,8,23,41],
-"structmc__solver_1_1QPSolver.html#a4fdc43b5c12ffef1c046652c45b85fc1":[3,0,8,23,42],
-"structmc__solver_1_1QPSolver.html#a50b2ba3514b0bd8fa4e4775f6a74fc73":[3,0,8,23,34]
+"structmc__solver_1_1QPSolver.html#a4fdc43b5c12ffef1c046652c45b85fc1":[3,0,8,23,42]
 };

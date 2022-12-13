@@ -52,15 +52,15 @@ var NAVTREEINDEX =
 "structmc__observers_1_1ObserverPipeline.html#a5fab50c8444f1de1c5bcfcdf22d88a22",
 "structmc__rbdyn_1_1JointSensor.html#a94a894a6d608152e9ffd574db02f3aae",
 "structmc__rbdyn_1_1RobotFrame.html#a339b968385764b0d3e7cc93026593e43",
-"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#adf774b10bdd24ff8788bb6fffa757719",
-"structmc__rtc_1_1Configuration_1_1Exception.html",
-"structmc__rtc_1_1gui_1_1ForceConfig.html#a9a4b2dd24ef25e1505a01f37a899349c",
-"structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#acc0a5ccc455b33de968ad47b6a7c3304",
-"structmc__solver_1_1QPSolver.html#a51d3c043e44c49f5371d692e95749d9f",
-"structmc__tasks_1_1LookAtTFTask.html#aad7bb499a5ca16373eb9420ee5ac33ab",
-"structmc__tasks_1_1TransformTask.html#a23ad3f774d74e81633461ffe28c9335f",
+"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#ad636aa194409ba418d4f4c6377d0fe71",
+"structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html",
+"structmc__rtc_1_1gui_1_1ForceConfig.html#a78b1ea720927b2fa64a4f54b403a9184",
+"structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#acb8f660f859e833c99de6513966fe4bb",
+"structmc__solver_1_1QPSolver.html#a50b2ba3514b0bd8fa4e4775f6a74fc73",
+"structmc__tasks_1_1LookAtTFTask.html#a99f87ba3d72d5c2e019e35c8637821f4",
+"structmc__tasks_1_1TransformTask.html#a144e87a49044adc220d50cba33a84c47",
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a40e319f4a2cadb78b98f47b7ef930bf9",
-"traits_8h.html#a8e445bc0e47af1ff42f00cec4cbacbf7"
+"traits_8h.html#a62d70a1c5467de8404eceee15a80da68"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
