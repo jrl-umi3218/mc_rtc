@@ -10,7 +10,7 @@ var searchData=
   ['sdist',['sDist',['../structmc__rbdyn_1_1Collision.html#a2853ab9ab669747303ccda6b22bb7d77',1,'mc_rbdyn::Collision']]],
   ['second',['second',['../structmc__tasks_1_1lipm__stabilizer_1_1ContactDescription.html#a8dad298937c721041146a906fdbddb68',1,'mc_tasks::lipm_stabilizer::ContactDescription']]],
   ['selectort_5f',['selectorT_',['../structmc__tasks_1_1TrajectoryTaskGeneric.html#ac1e629f49bb9c961a4f44c66b4b23d18',1,'mc_tasks::TrajectoryTaskGeneric']]],
-  ['selfcollisionconstraint',['selfCollisionConstraint',['../structmc__control_1_1MCController.html#a8d26914822bca3fe00ee42e85f7a7f54',1,'mc_control::MCController']]],
+  ['selfcollisionconstraint',['selfCollisionConstraint',['../structmc__control_1_1MCController.html#a3f37903af5e6a3806018826f196f28ee',1,'mc_control::MCController']]],
   ['sensor_5f',['sensor_',['../structmc__rbdyn_1_1RobotFrame.html#a4cb8f9a941f66cbe0a2bccc17a6155e0',1,'mc_rbdyn::RobotFrame']]],
   ['server_5f',['server_',['../structmc__control_1_1ControllerClient.html#a623d95e96630e3bb80d8a61349a98094',1,'mc_control::ControllerClient']]],
   ['shaft_5fdiam',['shaft_diam',['../structmc__rtc_1_1gui_1_1ArrowConfig.html#a863ad38d78a492d921944bd9093a8f83',1,'mc_rtc::gui::ArrowConfig']]],

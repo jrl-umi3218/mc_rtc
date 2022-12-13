@@ -1,5 +1,7 @@
 var NAVTREEINDEX18 =
 {
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3ca80b3de904c482671181d285cb0678":[3,0,9,1,2,94],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3e01dabf47eec2038cf3db88324df2d3":[3,0,9,1,2,56],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a40e319f4a2cadb78b98f47b7ef930bf9":[3,0,9,1,2,124],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a41a809b5612edf600a57d53917f6fc62":[3,0,9,1,2,67],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a41fed4c5c24646bb999d0ad8048b6c9d":[3,0,9,1,2,55],
@@ -247,7 +249,5 @@ var NAVTREEINDEX18 =
 "surface__utils_8h.html":[4,0,0,4,36],
 "surface__utils_8h.html#a01a984b0ca29b3b20b799b01e7239a9b":[4,0,0,4,36,0],
 "surface__utils_8h_source.html":[4,0,0,4,36],
-"traits_8h.html":[4,0,0,6,0,0,0],
-"traits_8h.html#a3f24a46e2245c7951863c943009a6b3c":[4,0,0,6,0,0,0,9],
-"traits_8h.html#a437b4050328d7178f5872223cf9f7f35":[4,0,0,6,0,0,0,8]
+"traits_8h.html":[4,0,0,6,0,0,0]
 };

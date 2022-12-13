@@ -387,6 +387,7 @@ $(document).ready(function(){initNavTree('functions_r.html','');});
 , <a class="el" href="structmc__observers_1_1ObserverPipeline.html#ab4e1a0ed6d7db9a831779c798ce4a2af">mc_observers::ObserverPipeline</a>
 , <a class="el" href="structmc__planning_1_1Pendulum.html#a660e8b095ba2c72efa862309570bc472">mc_planning::Pendulum</a>
 , <a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html#a6668b50fa6ceaf6beaa730f401ab553c">mc_rtc::gui::StateBuilder</a>
+, <a class="el" href="classmc__rtc_1_1unique__ptr.html#a0d4a44133fd8982ced564945c180879b">mc_rtc::unique_ptr&lt; T, Deleter &gt;</a>
 , <a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#ab0fffcd8e01c61ced64cf5371999acb7">mc_solver::BoundedSpeedConstr</a>
 , <a class="el" href="structmc__solver_1_1CollisionsConstraint.html#a3234964e5bd5e0bd73e62f507f1880c4">mc_solver::CollisionsConstraint</a>
 , <a class="el" href="structmc__tasks_1_1CoMTask.html#ad3b7357c19453006b5af45c25a786f9e">mc_tasks::CoMTask</a>
@@ -431,7 +432,7 @@ $(document).ready(function(){initNavTree('functions_r.html','');});
 , <a class="el" href="structmc__tasks_1_1force_1_1ComplianceTask.html#ad1f9dd57c39cef2bdcffafeea3404702">mc_tasks::force::ComplianceTask</a>
 , <a class="el" href="structmc__tasks_1_1MetaTask.html#a745e75d72133feaf9b7aef649485168f">mc_tasks::MetaTask</a>
 , <a class="el" href="structmc__tasks_1_1PostureTask.html#a53ab7fdbe90e3b309a618bec3bb69859">mc_tasks::PostureTask</a>
-, <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#abde6c831eab691e6c7662bd0b1ae7329">mc_tasks::TrajectoryTaskGeneric</a>
+, <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a4166c0c288bbca68e04eb8485ccf849b">mc_tasks::TrajectoryTaskGeneric</a>
 </li>
 <li>resetObserverPipelines()
 : <a class="el" href="structmc__control_1_1MCController.html#ae47b233aee0c9428445ead4f9e57eb4f">mc_control::MCController</a>
@@ -473,22 +474,27 @@ $(document).ready(function(){initNavTree('functions_r.html','');});
 </li>
 <li>robot()
 : <a class="el" href="structmc__control_1_1ControllerClient.html#ae3efbe9ac079a07e540872820bf951f9">mc_control::ControllerClient</a>
-, <a class="el" href="structmc__control_1_1MCController.html#ae49802b3de0837b6c43b8fac4174480e">mc_control::MCController</a>
+, <a class="el" href="structmc__control_1_1MCController.html#a6784579e052281787348a47eb3113943">mc_control::MCController</a>
 </li>
 <li>Robot
 : <a class="el" href="structmc__rbdyn_1_1LoadRobotParameters.html#ad03b49f51df2ba1d492ced03d923fdd0">mc_rbdyn::LoadRobotParameters</a>
 , <a class="el" href="structmc__rbdyn_1_1Robot.html#a023a2a4a841760ae65a2d868bb6139fa">mc_rbdyn::Robot</a>
-, <a class="el" href="structmc__rbdyn_1_1RobotFrame.html#ad03b49f51df2ba1d492ced03d923fdd0">mc_rbdyn::RobotFrame</a>
+</li>
+<li>robot()
+: <a class="el" href="structmc__rbdyn_1_1RobotFrame.html#a540f8df03fdee424e2db6118a1b273c5">mc_rbdyn::RobotFrame</a>
+</li>
+<li>Robot
+: <a class="el" href="structmc__rbdyn_1_1RobotFrame.html#ad03b49f51df2ba1d492ced03d923fdd0">mc_rbdyn::RobotFrame</a>
 </li>
 <li>robot()
 : <a class="el" href="structmc__rbdyn_1_1RobotFrame.html#a0b98dbe9586dc410286fd82bd1875d3d">mc_rbdyn::RobotFrame</a>
-, <a class="el" href="structmc__rbdyn_1_1Robots.html#a3e160f2c75f75740bcec75b3a2f2a881">mc_rbdyn::Robots</a>
+, <a class="el" href="structmc__rbdyn_1_1Robots.html#a8756bc3dcfdd1d5fb0a9fda13322835b">mc_rbdyn::Robots</a>
 </li>
 <li>Robot
 : <a class="el" href="structmc__rbdyn_1_1Robots.html#ad03b49f51df2ba1d492ced03d923fdd0">mc_rbdyn::Robots</a>
 </li>
 <li>robot()
-: <a class="el" href="structmc__solver_1_1QPSolver.html#a9de399f8ca81b31588579ac59deb8d44">mc_solver::QPSolver</a>
+: <a class="el" href="structmc__solver_1_1QPSolver.html#a71a644e823553814792909b06f00f6c6">mc_solver::QPSolver</a>
 , <a class="el" href="structmc__tasks_1_1AddRemoveContactTask.html#aaf9b93ac2b2b32e8e3f12d6ed84b5d01">mc_tasks::AddRemoveContactTask</a>
 , <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad69940b8fb336e2728359e8a1014958b">mc_tasks::lipm_stabilizer::StabilizerTask</a>
 </li>
@@ -524,7 +530,7 @@ $(document).ready(function(){initNavTree('functions_r.html','');});
 </li>
 <li>robotIndex()
 : <a class="el" href="structmc__rbdyn_1_1Robot.html#af110c909887516af9f6758118978b643">mc_rbdyn::Robot</a>
-, <a class="el" href="structmc__rbdyn_1_1Robots.html#a6b8424f1c2946197d3f2528a8fba02b5">mc_rbdyn::Robots</a>
+, <a class="el" href="structmc__rbdyn_1_1Robots.html#a2c3772d82fdee696f58cb282a3658dfd">mc_rbdyn::Robots</a>
 , <a class="el" href="structmc__solver_1_1DynamicsConstraint.html#a92463a157ffb06efd45398a8e46dddd3">mc_solver::DynamicsConstraint</a>
 </li>
 <li>robotIndex_
@@ -533,7 +539,7 @@ $(document).ready(function(){initNavTree('functions_r.html','');});
 , <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a23a5f961e6993f20ebe16f246736e1cc">mc_tasks::lipm_stabilizer::StabilizerTask</a>
 </li>
 <li>RobotModule()
-: <a class="el" href="structmc__rbdyn_1_1RobotModule.html#aeb69ff6b27d5a88ee2271aacf6b5e409">mc_rbdyn::RobotModule</a>
+: <a class="el" href="structmc__rbdyn_1_1RobotModule.html#ae2153d9cef8cbcb7d0d87a0ac21ac5ad">mc_rbdyn::RobotModule</a>
 </li>
 <li>robotModule()
 : <a class="el" href="structmc__rbdyn_1_1Robots.html#a9369f09e1f26a46c62a0a0dab3f5a6f4">mc_rbdyn::Robots</a>
@@ -549,20 +555,20 @@ $(document).ready(function(){initNavTree('functions_r.html','');});
 </li>
 <li>robots()
 : <a class="el" href="structmc__control_1_1MCController.html#ae45b98b34b9c614d9eb3aaa86371f53d">mc_control::MCController</a>
-, <a class="el" href="structmc__rbdyn_1_1Robot.html#a4a2161c1f89c0b9e3a812ca390ff7666">mc_rbdyn::Robot</a>
+, <a class="el" href="structmc__rbdyn_1_1Robot.html#a6c413ebff3be3f588eff569106ba4426">mc_rbdyn::Robot</a>
 </li>
 <li>Robots
 : <a class="el" href="structmc__rbdyn_1_1Robot.html#a7ea6242bb22401bac23542e1db3a74ed">mc_rbdyn::Robot</a>
 </li>
 <li>robots()
-: <a class="el" href="structmc__rbdyn_1_1Robot.html#a6c413ebff3be3f588eff569106ba4426">mc_rbdyn::Robot</a>
-, <a class="el" href="structmc__rbdyn_1_1Robots.html#a886cbfa11123ab43258689967de469f3">mc_rbdyn::Robots</a>
+: <a class="el" href="structmc__rbdyn_1_1Robot.html#a4a2161c1f89c0b9e3a812ca390ff7666">mc_rbdyn::Robot</a>
+, <a class="el" href="structmc__rbdyn_1_1Robots.html#a6a81e676dbc5f5d2bc3012642622226d">mc_rbdyn::Robots</a>
 </li>
 <li>Robots()
 : <a class="el" href="structmc__rbdyn_1_1Robots.html#a8e908a3f267130d533a61af7e996348e">mc_rbdyn::Robots</a>
 </li>
 <li>robots()
-: <a class="el" href="structmc__rbdyn_1_1Robots.html#a6a81e676dbc5f5d2bc3012642622226d">mc_rbdyn::Robots</a>
+: <a class="el" href="structmc__rbdyn_1_1Robots.html#a886cbfa11123ab43258689967de469f3">mc_rbdyn::Robots</a>
 </li>
 <li>Robots()
 : <a class="el" href="structmc__rbdyn_1_1Robots.html#a6acde4ce29bd1f40884cecc9c747ca27">mc_rbdyn::Robots</a>
@@ -604,7 +610,7 @@ $(document).ready(function(){initNavTree('functions_r.html','');});
 : <a class="el" href="structmc__rbdyn_1_1RobotModule.html#a964a0cee9de236a3143a69e384fde6d3">mc_rbdyn::RobotModule</a>
 </li>
 <li>run()
-: <a class="el" href="structmc__control_1_1ControllerClient.html#a8079e120ef304ca447b0f36c42598364">mc_control::ControllerClient</a>
+: <a class="el" href="structmc__control_1_1ControllerClient.html#acf4cab847f34bf43e9666bc2c0bd1a85">mc_control::ControllerClient</a>
 , <a class="el" href="structmc__control_1_1fsm_1_1AddRemoveContactState.html#a88a669bde8f5bcdfb31560b7f4e3d39c">mc_control::fsm::AddRemoveContactState</a>
 , <a class="el" href="structmc__control_1_1fsm_1_1Controller.html#af87858917b432bbd4a9c728a4e344d1e">mc_control::fsm::Controller</a>
 , <a class="el" href="structmc__control_1_1fsm_1_1EnableControllerState.html#adaf62dc42fa3a24438312df2d41ed563">mc_control::fsm::EnableControllerState</a>
@@ -656,7 +662,7 @@ $(document).ready(function(){initNavTree('functions_r.html','');});
 : <a class="el" href="structmc__control_1_1MCController.html#a49fc72e5be121546b68cd1d8b4edccc8">mc_control::MCController</a>
 </li>
 <li>runObservers()
-: <a class="el" href="structmc__observers_1_1ObserverPipeline.html#a1ff155de33b02e9583105970a7dd7f62">mc_observers::ObserverPipeline</a>
+: <a class="el" href="structmc__observers_1_1ObserverPipeline.html#a640689162c772d2c2525b27cfb57ead5">mc_observers::ObserverPipeline</a>
 </li>
 <li>runObservers_
 : <a class="el" href="structmc__observers_1_1ObserverPipeline.html#a7d03e7fb21e85073504b55ff84c3ec6d">mc_observers::ObserverPipeline</a>

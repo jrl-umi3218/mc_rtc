@@ -476,6 +476,14 @@ var hierarchy =
         [ "mc_rbdyn::Robots", "structmc__rbdyn_1_1Robots.html", null ]
       ] ]
     ] ],
+    [ "unique_ptr", null, [
+      [ "mc_rtc::unique_ptr< T, Deleter >", "classmc__rtc_1_1unique__ptr.html", null ],
+      [ "mc_rtc::unique_ptr< mc_solver::CollisionsConstraint >", "classmc__rtc_1_1unique__ptr.html", null ],
+      [ "mc_rtc::unique_ptr< mc_solver::CompoundJointConstraint >", "classmc__rtc_1_1unique__ptr.html", null ],
+      [ "mc_rtc::unique_ptr< mc_solver::ContactConstraint >", "classmc__rtc_1_1unique__ptr.html", null ],
+      [ "mc_rtc::unique_ptr< mc_solver::DynamicsConstraint >", "classmc__rtc_1_1unique__ptr.html", null ],
+      [ "mc_rtc::unique_ptr< mc_solver::KinematicsConstraint >", "classmc__rtc_1_1unique__ptr.html", null ]
+    ] ],
     [ "mc_solver::utils::UpdateNrVarsData", "structmc__solver_1_1utils_1_1UpdateNrVarsData.html", [
       [ "mc_solver::utils::UpdateNrVarsLambda", "structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html", [
         [ "mc_solver::utils::Update< UpdateNrVarsLambda >", "structmc__solver_1_1utils_1_1Update.html", [

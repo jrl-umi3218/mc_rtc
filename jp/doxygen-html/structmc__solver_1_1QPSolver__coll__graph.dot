@@ -3,11 +3,32 @@ digraph "mc_solver::QPSolver"
  // INTERACTIVE_SVG=YES
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
   Node2 [label="mc_solver::QPSolver",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node3 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" controller_" ,fontname="Helvetica"];
   Node3 [label="mc_control::MCController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1MCController.html",tooltip="MCController is the base class to implement all controllers. It assumes that at least two robots are ..."];
-  Node4 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" datastore_" ,fontname="Helvetica"];
-  Node4 [label="mc_rtc::DataStore",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1DataStore.html",tooltip="Generic data store. "];
-  Node5 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" config_" ,fontname="Helvetica"];
-  Node5 [label="mc_rtc::Configuration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1Configuration.html",tooltip="Simplify access to values hold within a JSON file. "];
+  Node4 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" dynamicsConstraint" ,fontname="Helvetica"];
+  Node4 [label="mc_rtc::unique_ptr\l\< mc_solver::DynamicsConstraint \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmc__rtc_1_1unique__ptr.html"];
+  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="std::unique_ptr\< mc\l_solver::DynamicsConstraint,\l std::default_delete\< mc\l_solver::DynamicsConstraint \> \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node6 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" contactConstraint" ,fontname="Helvetica"];
+  Node6 [label="mc_rtc::unique_ptr\l\< mc_solver::ContactConstraint \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmc__rtc_1_1unique__ptr.html"];
+  Node7 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="std::unique_ptr\< mc\l_solver::ContactConstraint,\l std::default_delete\< mc\l_solver::ContactConstraint \> \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node8 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" compoundJointConstraint" ,fontname="Helvetica"];
+  Node8 [label="mc_rtc::unique_ptr\l\< mc_solver::CompoundJoint\lConstraint \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmc__rtc_1_1unique__ptr.html"];
+  Node9 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="std::unique_ptr\< mc\l_solver::CompoundJointConstraint,\l std::default_delete\< mc_solver\l::CompoundJointConstraint \> \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node10 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" datastore_" ,fontname="Helvetica"];
+  Node10 [label="mc_rtc::DataStore",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1DataStore.html",tooltip="Generic data store. "];
+  Node11 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" selfCollisionConstraint" ,fontname="Helvetica"];
+  Node11 [label="mc_rtc::unique_ptr\l\< mc_solver::CollisionsConstraint \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmc__rtc_1_1unique__ptr.html"];
+  Node12 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="std::unique_ptr\< mc\l_solver::CollisionsConstraint\l , std::default_delete\<mc\l_solver::CollisionsConstraint \>  \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node13 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" kinematicsConstraint" ,fontname="Helvetica"];
+  Node13 [label="mc_rtc::unique_ptr\l\< mc_solver::KinematicsConstraint \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmc__rtc_1_1unique__ptr.html"];
+  Node14 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="std::unique_ptr\< mc\l_solver::KinematicsConstraint,\l std::default_delete\< mc_solver\l::KinematicsConstraint \> \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node15 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" config_" ,fontname="Helvetica"];
+  Node15 [label="mc_rtc::Configuration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1Configuration.html",tooltip="Simplify access to values hold within a JSON file. "];
 }

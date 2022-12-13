@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"include_2mc__observers_2api_8h.html#a5ec028a59707a198d06a6b92110d7ee1":[4,0,0,2,0,2],
+"include_2mc__observers_2api_8h.html#a5f92e3e5bb50345181ceaa0fdc4ed310":[4,0,0,2,0,0],
 "include_2mc__observers_2api_8h.html#a71f5d19aecb89bc7ff66ea90cbec91d3":[4,0,0,2,0,1],
 "include_2mc__observers_2api_8h.html#a933db9b3406c8c221ba3ee7f689e7511":[4,0,0,2,0,3],
 "include_2mc__observers_2api_8h.html#ad87f4c4e93529fdbfdd4a95ef34bbd7a":[4,0,0,2,0,4],
@@ -236,8 +238,8 @@ var NAVTREEINDEX3 =
 "namespacemc__rtc_1_1gui_1_1details.html":[3,0,7,0,0],
 "namespacemc__rtc_1_1gui_1_1internal.html":[2,0,7,1,1],
 "namespacemc__rtc_1_1gui_1_1internal.html":[3,0,7,0,1],
-"namespacemc__rtc_1_1gui_1_1plot.html":[3,0,7,0,2],
 "namespacemc__rtc_1_1gui_1_1plot.html":[2,0,7,1,2],
+"namespacemc__rtc_1_1gui_1_1plot.html":[3,0,7,0,2],
 "namespacemc__rtc_1_1gui_1_1plot_1_1impl.html":[3,0,7,0,2,0],
 "namespacemc__rtc_1_1gui_1_1plot_1_1impl.html":[2,0,7,1,2,0],
 "namespacemc__rtc_1_1internal.html":[3,0,7,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "namespacemc__rtc_1_1log.html":[3,0,7,2],
 "namespacemc__rtc_1_1log_1_1details.html":[2,0,7,4,0],
 "namespacemc__rtc_1_1utils.html":[2,0,7,5],
-"namespacemc__solver.html":[2,0,8],
-"namespacemc__solver.html":[3,0,8],
-"namespacemc__solver_1_1details.html":[2,0,8,0]
+"namespacemc__solver.html":[2,0,8]
 };

@@ -1,5 +1,7 @@
 var NAVTREEINDEX11 =
 {
+"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#abc2551e9efb790f462bf04173f5333cb":[3,0,6,1,1,9],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#abfe6e931e6f6f77dd2ca657c0d5e3840":[3,0,6,1,1,12],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#ad636aa194409ba418d4f4c6377d0fe71":[3,0,6,1,1,5],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#adf774b10bdd24ff8788bb6fffa757719":[3,0,6,1,1,8],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#af5d1903ed4c7cc1a0071edf8752d9e58":[3,0,6,1,1,7],
@@ -247,7 +249,5 @@ var NAVTREEINDEX11 =
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ForceConfig_01_4.html":[3,0,7,20],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1LineConfig_01_4.html":[3,0,7,21],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PointConfig_01_4.html":[3,0,7,22],
-"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PolyhedronConfig_01_4.html":[3,0,7,23],
-"structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html":[3,0,7,24],
-"structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html":[3,0,7,25]
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PolyhedronConfig_01_4.html":[3,0,7,23]
 };

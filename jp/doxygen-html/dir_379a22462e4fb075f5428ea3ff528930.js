@@ -25,6 +25,9 @@ var dir_379a22462e4fb075f5428ea3ff528930 =
       [ "shared", "structmc__rtc_1_1shared.html", "structmc__rtc_1_1shared" ]
     ] ],
     [ "type_name.h", "type__name_8h.html", "type__name_8h" ],
+    [ "unique_ptr.h", "unique__ptr_8h.html", [
+      [ "unique_ptr", "classmc__rtc_1_1unique__ptr.html", "classmc__rtc_1_1unique__ptr" ]
+    ] ],
     [ "utils.h", "utils_8h.html", null ],
     [ "utils_api.h", "utils__api_8h.html", "utils__api_8h" ],
     [ "void_ptr.h", "void__ptr_8h.html", "void__ptr_8h" ]

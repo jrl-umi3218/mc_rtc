@@ -1252,6 +1252,7 @@
     <includes id="DataStore_8h" name="DataStore.h" local="no" imported="no">mc_rtc/DataStore.h</includes>
     <includes id="gui_8h" name="gui.h" local="no" imported="no">mc_rtc/gui.h</includes>
     <includes id="Logger_8h" name="Logger.h" local="no" imported="no">mc_rtc/log/Logger.h</includes>
+    <includes id="unique__ptr_8h" name="unique_ptr.h" local="no" imported="no">mc_rtc/unique_ptr.h</includes>
     <includes id="CollisionsConstraint_8h" name="CollisionsConstraint.h" local="no" imported="no">mc_solver/CollisionsConstraint.h</includes>
     <includes id="CompoundJointConstraint_8h" name="CompoundJointConstraint.h" local="no" imported="no">mc_solver/CompoundJointConstraint.h</includes>
     <includes id="ContactConstraint_8h" name="ContactConstraint.h" local="no" imported="no">mc_solver/ContactConstraint.h</includes>
@@ -4561,6 +4562,13 @@
       <anchor>a8fb61bc6391bc9cd0ef2aa0efff2d641</anchor>
       <arglist>()</arglist>
     </member>
+  </compound>
+  <compound kind="file">
+    <name>unique_ptr.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/</path>
+    <filename>unique__ptr_8h</filename>
+    <class kind="class">mc_rtc::unique_ptr</class>
+    <namespace>mc_rtc</namespace>
   </compound>
   <compound kind="file">
     <name>heatmap.h</name>
@@ -20689,38 +20697,38 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>std::unique_ptr&lt; mc_solver::ContactConstraint &gt;</type>
+      <type>mc_rtc::unique_ptr&lt; mc_solver::ContactConstraint &gt;</type>
       <name>contactConstraint</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a1b4badcf168493fb5f286bff001a9117</anchor>
+      <anchor>a0a24d4d8f93d58d9d6bc387d7585a9f1</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>std::unique_ptr&lt; mc_solver::DynamicsConstraint &gt;</type>
+      <type>mc_rtc::unique_ptr&lt; mc_solver::DynamicsConstraint &gt;</type>
       <name>dynamicsConstraint</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a3c70935748e113c026b160af2281bf6c</anchor>
+      <anchor>a160000a6494473e0002d2fc618406ac7</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>std::unique_ptr&lt; mc_solver::KinematicsConstraint &gt;</type>
+      <type>mc_rtc::unique_ptr&lt; mc_solver::KinematicsConstraint &gt;</type>
       <name>kinematicsConstraint</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a18fbf8dfea4b167f3d4e24a9931aa120</anchor>
+      <anchor>ad24355323dfbaf797edafe04586b9dc9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>std::unique_ptr&lt; mc_solver::CollisionsConstraint &gt;</type>
+      <type>mc_rtc::unique_ptr&lt; mc_solver::CollisionsConstraint &gt;</type>
       <name>selfCollisionConstraint</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>a8d26914822bca3fe00ee42e85f7a7f54</anchor>
+      <anchor>a3f37903af5e6a3806018826f196f28ee</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>std::unique_ptr&lt; mc_solver::CompoundJointConstraint &gt;</type>
+      <type>mc_rtc::unique_ptr&lt; mc_solver::CompoundJointConstraint &gt;</type>
       <name>compoundJointConstraint</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
-      <anchor>af4240035b16cca7624e712eb86795951</anchor>
+      <anchor>a2eb94d4003e90bb71b4d600443045787</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -36630,6 +36638,74 @@
       <arglist>(std::ostream &amp;os) const</arglist>
     </member>
   </compound>
+  <compound kind="class">
+    <name>mc_rtc::unique_ptr</name>
+    <filename>classmc__rtc_1_1unique__ptr.html</filename>
+    <templarg>T</templarg>
+    <templarg>Deleter</templarg>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>classmc__rtc_1_1unique__ptr.html</anchorfile>
+      <anchor>a0d4a44133fd8982ced564945c180879b</anchor>
+      <arglist>(typename std::unique_ptr&lt; T, Deleter &gt;::pointer ptr)</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>unique_ptr&lt; mc_solver::CollisionsConstraint &gt;</name>
+    <filename>classmc__rtc_1_1unique__ptr.html</filename>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>classmc__rtc_1_1unique__ptr.html</anchorfile>
+      <anchor>a0d4a44133fd8982ced564945c180879b</anchor>
+      <arglist>(typename std::unique_ptr&lt; mc_solver::CollisionsConstraint, std::default_delete&lt; mc_solver::CollisionsConstraint &gt; &gt;::pointer ptr)</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>unique_ptr&lt; mc_solver::CompoundJointConstraint &gt;</name>
+    <filename>classmc__rtc_1_1unique__ptr.html</filename>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>classmc__rtc_1_1unique__ptr.html</anchorfile>
+      <anchor>a0d4a44133fd8982ced564945c180879b</anchor>
+      <arglist>(typename std::unique_ptr&lt; mc_solver::CompoundJointConstraint, std::default_delete&lt; mc_solver::CompoundJointConstraint &gt; &gt;::pointer ptr)</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>unique_ptr&lt; mc_solver::ContactConstraint &gt;</name>
+    <filename>classmc__rtc_1_1unique__ptr.html</filename>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>classmc__rtc_1_1unique__ptr.html</anchorfile>
+      <anchor>a0d4a44133fd8982ced564945c180879b</anchor>
+      <arglist>(typename std::unique_ptr&lt; mc_solver::ContactConstraint, std::default_delete&lt; mc_solver::ContactConstraint &gt; &gt;::pointer ptr)</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>unique_ptr&lt; mc_solver::DynamicsConstraint &gt;</name>
+    <filename>classmc__rtc_1_1unique__ptr.html</filename>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>classmc__rtc_1_1unique__ptr.html</anchorfile>
+      <anchor>a0d4a44133fd8982ced564945c180879b</anchor>
+      <arglist>(typename std::unique_ptr&lt; mc_solver::DynamicsConstraint, std::default_delete&lt; mc_solver::DynamicsConstraint &gt; &gt;::pointer ptr)</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>unique_ptr&lt; mc_solver::KinematicsConstraint &gt;</name>
+    <filename>classmc__rtc_1_1unique__ptr.html</filename>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>classmc__rtc_1_1unique__ptr.html</anchorfile>
+      <anchor>a0d4a44133fd8982ced564945c180879b</anchor>
+      <arglist>(typename std::unique_ptr&lt; mc_solver::KinematicsConstraint, std::default_delete&lt; mc_solver::KinematicsConstraint &gt; &gt;::pointer ptr)</arglist>
+    </member>
+  </compound>
   <compound kind="struct">
     <name>mc_solver::utils::Update</name>
     <filename>structmc__solver_1_1utils_1_1Update.html</filename>
@@ -38123,6 +38199,7 @@
     <class kind="struct">mc_rtc::shared</class>
     <class kind="struct">mc_rtc::SharedPtrVectorConstIterator</class>
     <class kind="struct">mc_rtc::SharedPtrVectorIterator</class>
+    <class kind="class">mc_rtc::unique_ptr</class>
     <member kind="typedef">
       <type>std::chrono::duration&lt; double, std::milli &gt;</type>
       <name>duration_ms</name>
