@@ -75,8 +75,8 @@ struct SafetyThresholds
   double MAX_DCM_P_GAIN = 20.; /**< Maximum DCM proportional gain in [Hz] */
   double MAX_COMD_GAIN = 10.; /**< Maximum CoMd gain in [Hz] */
   double MAX_ZMPD_GAIN = 10.; /**< Maximum ZMPd gain in [Hz] */
-  double MAX_DFZ_ADMITTANCE = 5e-4; /**< Maximum admittance in [s] / [kg] for foot force difference control */
-  double MAX_DFZ_DAMPING = 10.; /**< Maximum normalized damping in [Hz] for foot force difference control */
+  double MAX_DF_ADMITTANCE = 5e-4; /**< Maximum admittance in [s] / [kg] for foot force difference control */
+  double MAX_DF_DAMPING = 10.; /**< Maximum normalized damping in [Hz] for foot force difference control */
   double MAX_FDC_RX_VEL = 0.2; /**< Maximum x-axis angular velocity in [rad] / [s] for foot damping control. */
   double MAX_FDC_RY_VEL = 0.2; /**< Maximum y-axis angular velocity in [rad] / [s] for foot damping control. */
   double MAX_FDC_RZ_VEL = 0.2; /**< Maximum z-axis angular velocity in [rad] / [s] for foot damping control. */
@@ -94,8 +94,18 @@ struct SafetyThresholds
     config("MAX_DCM_P_GAIN", MAX_DCM_P_GAIN);
     config("MAX_COMD_GAIN", MAX_COMD_GAIN);
     config("MAX_ZMPD_GAIN", MAX_ZMPD_GAIN);
-    config("MAX_DFZ_ADMITTANCE", MAX_DFZ_ADMITTANCE);
-    config("MAX_DFZ_DAMPING", MAX_DFZ_DAMPING);
+    config("MAX_DF_ADMITTANCE", MAX_DF_ADMITTANCE);
+    if(config.has("MAX_DFZ_ADMITTANCE"))
+    {
+      mc_rtc::log::deprecated("StabilizerConfiguration::SafetyThresholds", "MAX_DFZ_ADMITTANCE", "MAX_DF_ADMITTANCE");
+      config("MAX_DFZ_ADMITTANCE", MAX_DF_ADMITTANCE);
+    }
+    config("MAX_DF_DAMPING", MAX_DF_ADMITTANCE);
+    if(config.has("MAX_DFZ_DAMPING"))
+    {
+      mc_rtc::log::deprecated("StabilizerConfiguration::SafetyThresholds", "MAX_DFZ_DAMPING", "MAX_DF_ADMITTANCE");
+      config("MAX_DFZ_DAMPING", MAX_DF_ADMITTANCE);
+    }
     config("MAX_FDC_RX_VEL", MAX_FDC_RX_VEL);
     config("MAX_FDC_RY_VEL", MAX_FDC_RY_VEL);
     config("MAX_FDC_RZ_VEL", MAX_FDC_RZ_VEL);
@@ -113,8 +123,8 @@ struct SafetyThresholds
     config.add("MAX_DCM_P_GAIN", MAX_DCM_P_GAIN);
     config.add("MAX_COMD_GAIN", MAX_COMD_GAIN);
     config.add("MAX_ZMPD_GAIN", MAX_ZMPD_GAIN);
-    config.add("MAX_DFZ_ADMITTANCE", MAX_DFZ_ADMITTANCE);
-    config.add("MAX_DFZ_DAMPING", MAX_DFZ_DAMPING);
+    config.add("MAX_DF_ADMITTANCE", MAX_DF_ADMITTANCE);
+    config.add("MAX_DF_DAMPING", MAX_DF_DAMPING);
     config.add("MAX_FDC_RX_VEL", MAX_FDC_RX_VEL);
     config.add("MAX_FDC_RY_VEL", MAX_FDC_RY_VEL);
     config.add("MAX_FDC_RZ_VEL", MAX_FDC_RZ_VEL);
@@ -146,6 +156,8 @@ struct DCMBiasEstimatorConfiguration
   /// example modeling errors or carrying an object, but it would be wrong if the disturbance comes from an unexpected
   /// contact, the estimator cannot distinguish between them)
   bool correctCoMPos = false;
+  /// Whether the estimated bias should be used on the dcm
+  bool correctDCM = true;
 
   void load(const mc_rtc::Configuration & config)
   {
@@ -157,6 +169,7 @@ struct DCMBiasEstimatorConfiguration
     config("withDCMBias", withDCMBias);
     config("correctCoMPos", correctCoMPos);
     config("withDCMFilter", withDCMFilter);
+    config("correctDCM", correctDCM);
   }
 
   mc_rtc::Configuration save() const
@@ -169,6 +182,7 @@ struct DCMBiasEstimatorConfiguration
     config.add("comBiasLimit", comBiasLimit);
     config.add("withDCMBias", withDCMBias);
     config.add("correctCoMPos", correctCoMPos);
+    config.add("correctDCM", correctDCM);
     config.add("withDCMFilter", withDCMFilter);
     return config;
   }
@@ -393,8 +407,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   double copVelFilterGain = 0.8; /**< Gain of the low-pass filter on the cop task reference velocity */
   ZMPCCConfiguration zmpcc; /**< Configuration of ZMPCC (CoM admittance) */
 
-  double dfzAdmittance = 1e-4; /**< Admittance for foot force difference control */
-  double dfzDamping = 0.; /**< Damping term in foot force difference control */
+  mc_rbdyn::Gains3d dfAdmittance = {0, 0, 1e-4}; /**< Admittance for foot force difference control */
+  mc_rbdyn::Gains3d dfDamping = 0.; /**< Damping term in foot force difference control */
 
   mc_rbdyn::Gains2d dcmPropGain = 1.; /**< Proportional gain on DCM error */
   mc_rbdyn::Gains2d dcmIntegralGain = 5.; /**< Integral gain on DCM error */
@@ -454,8 +468,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     clampInPlaceAndWarn(dcmPropGain, 0., s.MAX_DCM_P_GAIN, "DCM prop gain");
     clampInPlaceAndWarn(comdErrorGain, 0., s.MAX_COMD_GAIN, "CoMd gain");
     clampInPlaceAndWarn(zmpdGain, 0., s.MAX_ZMPD_GAIN, "ZMPd gain");
-    clampInPlaceAndWarn(dfzAdmittance, 0., s.MAX_DFZ_ADMITTANCE, "DFz admittance");
-    clampInPlaceAndWarn(dfzDamping, 0., s.MAX_DFZ_DAMPING, "DFz admittance");
+    clampInPlaceAndWarn(dfAdmittance, 0., s.MAX_DF_ADMITTANCE, "DF admittance");
+    clampInPlaceAndWarn(dfDamping, 0., s.MAX_DF_DAMPING, "DF admittance");
   }
 
   void load(const mc_rtc::Configuration & config)
@@ -483,8 +497,28 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       admittance("cop", copAdmittance);
       admittance("maxVel", copMaxVel);
       admittance("velFilterGain", mc_filter::utils::clamp(copVelFilterGain, 0, 1));
-      admittance("dfz", dfzAdmittance);
-      admittance("dfz_damping", dfzDamping);
+      if(config.has("dfz"))
+      {
+        mc_rtc::log::warning("[MC_RTC_DEPRECATED][StabilizerConfiguration] dfz is now dimensional, to "
+                             "keep the same behavior use df: [0, 0, dfz]");
+        dfAdmittance.setZero();
+        dfAdmittance.z() = admittance("dfz");
+      }
+      else
+      {
+        admittance("df", dfAdmittance);
+      }
+      if(config.has("dfz_damping"))
+      {
+        mc_rtc::log::warning("[MC_RTC_DEPRECATED][StabilizerConfiguration] dfz_damping is now dimensional, to "
+                             "keep the same behavior use df_damping: [0, 0, dfz_damping]");
+        dfDamping.setZero();
+        dfDamping.z() = admittance("dfz_damping");
+      }
+      else
+      {
+        admittance("df_damping", dfDamping);
+      }
     }
     if(config.has("dcm_tracking"))
     {
@@ -602,8 +636,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
     conf.add("admittance");
     conf("admittance").add("cop", copAdmittance);
-    conf("admittance").add("dfz", dfzAdmittance);
-    conf("admittance").add("dfz_damping", dfzDamping);
+    conf("admittance").add("df", dfAdmittance);
+    conf("admittance").add("df_damping", dfDamping);
     conf("admittance").add("maxVel", copMaxVel);
     conf("admittance").add("velFilterGain", copVelFilterGain);
 

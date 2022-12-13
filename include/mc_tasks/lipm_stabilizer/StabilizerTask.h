@@ -407,6 +407,15 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return measuredDCM_;
   }
 
+  inline const Eigen::Vector2d biasDCM() noexcept
+  {
+    if(c_.dcmBias.withDCMBias)
+    {
+      return dcmEstimator_.getBias();
+    }
+    return Eigen::Vector2d::Zero();
+  }
+
   inline const Eigen::Vector3d & measuredZMP() noexcept
   {
     return measuredZMP_;
@@ -419,7 +428,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 
   inline const Eigen::Vector3d & measuredCoMd() noexcept
   {
-    return measuredCoM_;
+    return measuredCoMd_;
   }
 
   inline const Eigen::Vector3d & comOffsetTarget() noexcept
@@ -632,14 +641,14 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     c_.vdcStiffness = clamp(stiffness, 0., 1e4);
   }
 
-  inline void dfzAdmittance(double dfzAdmittance) noexcept
+  inline void dfAdmittance(Eigen::Vector3d dfAdmittance) noexcept
   {
-    c_.dfzAdmittance = clamp(dfzAdmittance, 0., c_.safetyThresholds.MAX_DFZ_ADMITTANCE);
+    c_.dfAdmittance = clamp(dfAdmittance, 0., c_.safetyThresholds.MAX_DF_ADMITTANCE);
   }
 
-  inline void dfzDamping(double dfzDamping) noexcept
+  inline void dfDamping(Eigen::Vector3d dfDamping) noexcept
   {
-    c_.dfzDamping = clamp(dfzDamping, 0., c_.safetyThresholds.MAX_DFZ_DAMPING);
+    c_.dfDamping = clamp(dfDamping, 0., c_.safetyThresholds.MAX_DF_DAMPING);
   }
 
   inline void fdqpWeights(const FDQPWeights & fdqp) noexcept
@@ -989,13 +998,13 @@ protected:
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_filter::LowPassCompose<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */
-  double dfzForceError_ = 0.; /**< Force error in foot force difference control */
-  double dfzHeightError_ = 0.; /**< Height error in foot force difference control */
+  Eigen::Vector3d dfForceError_ = Eigen::Vector3d::Zero(); /**< Force error in foot force difference control */
+  Eigen::Vector3d dfError_ = Eigen::Vector3d::Zero(); /**< Height error in foot force difference control */
   double dt_ = 0.005; /**< Controller cycle in [s] */
   double leftFootRatio_ = 0.5; /**< Weight distribution ratio (0: all weight on right foot, 1: all on left foot) */
   double mass_ = 38.; /**< Robot mass in [kg] */
   double runTime_ = 0.;
-  double vdcHeightError_ = 0.; /**< Average height error used in vertical drift compensation */
+  double vdcHeightError_ = 0; /**< Average height error used in vertical drift compensation */
   sva::ForceVecd desiredWrench_ = sva::ForceVecd::Zero(); /**< Result of the DCM feedback */
   sva::ForceVecd distribWrench_ = sva::ForceVecd::Zero(); /**< Result of the force distribution QP */
   Eigen::Vector3d distribZMP_ =
