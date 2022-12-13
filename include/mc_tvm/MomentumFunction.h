@@ -78,7 +78,6 @@ struct MC_TVM_DLLAPI MomentumFunction : tvm::function::abstract::Function
   }
 
 private:
-  mc_rbdyn::ConstRobotPtr robot_;
   mc_tvm::Momentum & momentumAlgo_;
   sva::ForceVecd momentum_;
   Eigen::Vector6d refVel_;

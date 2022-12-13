@@ -18,12 +18,12 @@ CompoundJointFunction::CompoundJointFunction(const mc_rbdyn::Robot & robot,
   addOutputDependency<CompoundJointFunction>(Output::B, Update::B);
   addInputDependency<CompoundJointFunction>(Update::B, tvm_robot, Robot::Output::FK);
   auto checkJoint = [&](const std::string & jName) {
-    if(!robot_->hasJoint(jName))
+    if(!robot_.hasJoint(jName))
     {
       mc_rtc::log::error_and_throw("No joint named {} in {}", jName, robot.name());
     }
-    auto qIdx = robot_->jointIndexByName(jName);
-    if(robot_->mb().joint(static_cast<int>(qIdx)).dof() != 1)
+    auto qIdx = robot_.jointIndexByName(jName);
+    if(robot_.mb().joint(static_cast<int>(qIdx)).dof() != 1)
     {
       mc_rtc::log::error_and_throw("Joint {} does not have exactly one dof", jName);
     }
@@ -50,7 +50,7 @@ CompoundJointFunction::CompoundJointFunction(const mc_rbdyn::Robot & robot,
 void CompoundJointFunction::dt(double dt)
 {
   dt_ = dt;
-  auto & tvm_robot = robot_->tvmRobot();
+  auto & tvm_robot = robot_.tvmRobot();
   auto setupJac = [&](size_t idx, double value) {
     const auto & qVar = tvm::dot(tvm_robot.qJoint(idx), 2);
     auto & jac = jacobian_.at(qVar.get());
@@ -62,10 +62,10 @@ void CompoundJointFunction::dt(double dt)
 
 void CompoundJointFunction::updateB()
 {
-  const auto & q1 = robot_->mbc().q[desc_.q1Idx][0];
-  const auto & alpha1 = robot_->mbc().alpha[desc_.q1Idx][0];
-  const auto & q2 = robot_->mbc().q[desc_.q2Idx][0];
-  const auto & alpha2 = robot_->mbc().alpha[desc_.q2Idx][0];
+  const auto & q1 = robot_.mbc().q[desc_.q1Idx][0];
+  const auto & alpha1 = robot_.mbc().alpha[desc_.q1Idx][0];
+  const auto & q2 = robot_.mbc().q[desc_.q2Idx][0];
+  const auto & alpha2 = robot_.mbc().alpha[desc_.q2Idx][0];
   b_(0) = b_cst_ + desc_.P_y * q1 - desc_.P_x * q2 + dt_ * (desc_.P_y * alpha1 - desc_.P_x * alpha2);
 }
 

@@ -13,7 +13,7 @@ namespace mc_tvm
 {
 
 MomentumFunction::MomentumFunction(const mc_rbdyn::Robot & robot)
-: tvm::function::abstract::Function(6), robot_(robot), momentumAlgo_(robot.tvmRobot().momentumAlgo())
+: tvm::function::abstract::Function(6), momentumAlgo_(robot.tvmRobot().momentumAlgo())
 {
   reset();
   // clang-format off

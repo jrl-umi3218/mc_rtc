@@ -35,7 +35,7 @@ TVMKinematicsConstraint::TVMKinematicsConstraint(const mc_rbdyn::Robot & robot,
 
 void TVMKinematicsConstraint::addToSolver(mc_solver::TVMQPSolver & solver)
 {
-  auto & tvm_robot = robot_->tvmRobot();
+  auto & tvm_robot = robot_.tvmRobot();
   /** Joint limits */
   int startParam = tvm_robot.qFloatingBase()->size();
   auto nParams = tvm_robot.qJoints()->size();

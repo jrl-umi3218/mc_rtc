@@ -72,7 +72,7 @@ public:
 protected:
   void updateb();
 
-  mc_rbdyn::ConstRobotPtr robot_;
+  const mc_rbdyn::Robot & robot_;
 
   /** Holds data for the force part of the motion equation */
   struct ForceContact

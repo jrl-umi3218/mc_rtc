@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
-#include <mc_tvm/fwd.h>
+#include <mc_tvm/CoM.h>
+#include <mc_tvm/Robot.h>
 
 #include <mc_rbdyn/fwd.h>
 
@@ -48,7 +48,7 @@ public:
   /** Access the robot this function uses */
   inline const mc_rbdyn::Robot & robot() const noexcept
   {
-    return *robot_;
+    return com_.robot().robot();
   }
 
   /** Access the planes used by this function */
@@ -70,7 +70,6 @@ protected:
   void updateJacobian();
   void updateNormalAcceleration();
 
-  mc_rbdyn::ConstRobotPtr robot_;
   mc_tvm::CoM & com_;
 
   /** Set of planes */

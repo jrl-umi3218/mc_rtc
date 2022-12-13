@@ -78,7 +78,7 @@ protected:
   void updateValue_() override;
   void updateVelocity_() override;
 
-  mc_rbdyn::ConstRobotPtr robot_;
+  const mc_rbdyn::Robot & robot_;
 
   /** Target */
   std::vector<std::vector<double>> posture_;

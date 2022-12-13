@@ -36,7 +36,7 @@ private:
   void updateB();
 
   // Robot
-  mc_rbdyn::ConstRobotPtr robot_;
+  const mc_rbdyn::Robot & robot_;
   // Timestep
   double dt_;
   // Simplified form of the description

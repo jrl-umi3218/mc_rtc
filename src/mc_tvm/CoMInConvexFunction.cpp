@@ -10,7 +10,7 @@ namespace mc_tvm
 {
 
 CoMInConvexFunction::CoMInConvexFunction(const mc_rbdyn::Robot & robot)
-: tvm::function::abstract::Function(0), robot_(robot), com_(robot.tvmRobot().comAlgo())
+: tvm::function::abstract::Function(0), com_(robot.tvmRobot().comAlgo())
 {
   registerUpdates(Update::Value, &CoMInConvexFunction::updateValue, Update::Velocity,
                   &CoMInConvexFunction::updateVelocity, Update::Jacobian, &CoMInConvexFunction::updateJacobian,

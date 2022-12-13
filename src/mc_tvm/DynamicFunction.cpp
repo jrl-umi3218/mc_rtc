@@ -22,7 +22,7 @@ DynamicFunction::DynamicFunction(const mc_rbdyn::Robot & robot)
   addInputDependency<DynamicFunction>(Update::B, tvm_robot, Robot::Output::C);
   addVariable(tvm::dot(tvm_robot.q(), 2), true);
   addVariable(tvm_robot.tau(), true);
-  jacobian_[tvm_robot.tau().get()] = -Eigen::MatrixXd::Identity(robot_->mb().nrDof(), robot_->mb().nrDof());
+  jacobian_[tvm_robot.tau().get()] = -Eigen::MatrixXd::Identity(robot_.mb().nrDof(), robot_.mb().nrDof());
   jacobian_[tvm_robot.tau().get()].properties(tvm::internal::MatrixProperties::MINUS_IDENTITY);
   velocity_.setZero();
 }
@@ -71,10 +71,10 @@ const tvm::VariableVector & DynamicFunction::addContact(const mc_rbdyn::RobotFra
                                                         std::vector<sva::PTransformd> points,
                                                         double dir)
 {
-  if(frame.robot().name() != robot_->name())
+  if(frame.robot().name() != robot_.name())
   {
     mc_rtc::log::error_and_throw<std::runtime_error>(
-        "Attempted to add a contact for {} to dynamic function belonging to {}", frame.robot().name(), robot_->name());
+        "Attempted to add a contact for {} to dynamic function belonging to {}", frame.robot().name(), robot_.name());
   }
   auto & fc = contacts_.emplace_back(frame, std::move(points), dir);
   for(const auto & var : fc.forces_)
@@ -107,19 +107,19 @@ sva::ForceVecd DynamicFunction::contactForce(const mc_rbdyn::RobotFrame & frame)
   }
   else
   {
-    mc_rtc::log::error("No contact at frame {} in dynamic function for {}", frame.name(), robot_->name());
+    mc_rtc::log::error("No contact at frame {} in dynamic function for {}", frame.name(), robot_.name());
     return sva::ForceVecd(Eigen::Vector6d::Zero());
   }
 }
 
 void DynamicFunction::updateb()
 {
-  b_ = robot_->tvmRobot().C();
+  b_ = robot_.tvmRobot().C();
 }
 
 void DynamicFunction::updateJacobian()
 {
-  const auto & robot = robot_->tvmRobot();
+  const auto & robot = robot_.tvmRobot();
   splitJacobian(robot.H(), robot.alphaD());
   for(auto & c : contacts_)
   {

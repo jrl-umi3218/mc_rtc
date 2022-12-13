@@ -18,7 +18,7 @@ namespace mc_solver
 
 struct TVMKinematicsConstraint
 {
-  mc_rbdyn::ConstRobotPtr robot_;
+  const mc_rbdyn::Robot & robot_;
   std::array<double, 3> damper_;
   double velocityPercent_;
   std::vector<tvm::TaskWithRequirementsPtr> constraints_;
