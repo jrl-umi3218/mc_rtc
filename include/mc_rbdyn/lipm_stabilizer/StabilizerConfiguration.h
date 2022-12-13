@@ -468,8 +468,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     clampInPlaceAndWarn(dcmPropGain, 0., s.MAX_DCM_P_GAIN, "DCM prop gain");
     clampInPlaceAndWarn(comdErrorGain, 0., s.MAX_COMD_GAIN, "CoMd gain");
     clampInPlaceAndWarn(zmpdGain, 0., s.MAX_ZMPD_GAIN, "ZMPd gain");
-    clampInPlaceAndWarn(dfAdmittance, 0., s.MAX_DF_ADMITTANCE, "DFz admittance");
-    clampInPlaceAndWarn(dfDamping, 0., s.MAX_DF_DAMPING, "DFz admittance");
+    clampInPlaceAndWarn(dfAdmittance, 0., s.MAX_DF_ADMITTANCE, "DF admittance");
+    clampInPlaceAndWarn(dfDamping, 0., s.MAX_DF_DAMPING, "DF admittance");
   }
 
   void load(const mc_rtc::Configuration & config)
@@ -497,8 +497,28 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       admittance("cop", copAdmittance);
       admittance("maxVel", copMaxVel);
       admittance("velFilterGain", mc_filter::utils::clamp(copVelFilterGain, 0, 1));
-      admittance("dfz", dfAdmittance);
-      admittance("dfz_damping", dfDamping);
+      if(config.has("dfz"))
+      {
+        mc_rtc::log::warning("[MC_RTC_DEPRECATED][StabilizerConfiguration] dfz is now dimensional, to "
+                             "keep the same behavior use df: [0, 0, dfz]");
+        dfAdmittance.setZero();
+        dfAdmittance.z() = admittance("dfz");
+      }
+      else
+      {
+        admittance("df", dfAdmittance);
+      }
+      if(config.has("dfz_damping"))
+      {
+        mc_rtc::log::warning("[MC_RTC_DEPRECATED][StabilizerConfiguration] dfz_damping is now dimensional, to "
+                             "keep the same behavior use df_damping: [0, 0, dfz_damping]");
+        dfDamping.setZero();
+        dfDamping.z() = admittance("dfz_damping");
+      }
+      else
+      {
+        admittance("df_damping", dfDamping);
+      }
     }
     if(config.has("dcm_tracking"))
     {
@@ -616,8 +636,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
     conf.add("admittance");
     conf("admittance").add("cop", copAdmittance);
-    conf("admittance").add("dfz", dfAdmittance);
-    conf("admittance").add("dfz_damping", dfDamping);
+    conf("admittance").add("df", dfAdmittance);
+    conf("admittance").add("df_damping", dfDamping);
     conf("admittance").add("maxVel", copMaxVel);
     conf("admittance").add("velFilterGain", copVelFilterGain);
 
