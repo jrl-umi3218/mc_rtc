@@ -12,6 +12,8 @@ namespace bfs = boost::filesystem;
 
 #include <boost/test/unit_test.hpp>
 
+#include <thread>
+
 #include "utils.h"
 
 bool operator==(const Eigen::Quaterniond & lhs, const Eigen::Quaterniond & rhs)
@@ -507,6 +509,8 @@ BOOST_AUTO_TEST_CASE(TestResume)
       logger.log();
       data.refresh();
     }
+    // Make sure the file will end up with different names
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     logger.start("logger", dt, true);
     path_2 = logger.path();
     BOOST_REQUIRE(path_1 != path_2);
