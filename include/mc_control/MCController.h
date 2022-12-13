@@ -15,6 +15,7 @@
 #include <mc_rtc/DataStore.h>
 #include <mc_rtc/gui.h>
 #include <mc_rtc/log/Logger.h>
+#include <mc_rtc/unique_ptr.h>
 
 #include <mc_solver/CollisionsConstraint.h>
 #include <mc_solver/CompoundJointConstraint.h>
@@ -746,15 +747,15 @@ public:
   /** Controller timestep */
   const double timeStep;
   /** Contact constraint for the main robot */
-  std::unique_ptr<mc_solver::ContactConstraint> contactConstraint;
+  mc_rtc::unique_ptr<mc_solver::ContactConstraint> contactConstraint;
   /** Dynamics constraints for the main robot */
-  std::unique_ptr<mc_solver::DynamicsConstraint> dynamicsConstraint;
+  mc_rtc::unique_ptr<mc_solver::DynamicsConstraint> dynamicsConstraint;
   /** Kinematics constraints for the main robot */
-  std::unique_ptr<mc_solver::KinematicsConstraint> kinematicsConstraint;
+  mc_rtc::unique_ptr<mc_solver::KinematicsConstraint> kinematicsConstraint;
   /** Self collisions constraint for the main robot */
-  std::unique_ptr<mc_solver::CollisionsConstraint> selfCollisionConstraint;
+  mc_rtc::unique_ptr<mc_solver::CollisionsConstraint> selfCollisionConstraint;
   /** Compound joint constraint for the main robot */
-  std::unique_ptr<mc_solver::CompoundJointConstraint> compoundJointConstraint;
+  mc_rtc::unique_ptr<mc_solver::CompoundJointConstraint> compoundJointConstraint;
   /** Posture task for the main robot */
   std::shared_ptr<mc_tasks::PostureTask> postureTask;
   /* Controller's name */
