@@ -148,6 +148,9 @@ public:
   /** Set joint stiffness for the posture task */
   void jointStiffness(const mc_solver::QPSolver & solver, const std::vector<tasks::qp::JointStiffness> & jss);
 
+  /** Set joint weights for the posture task */
+  void jointWeights(const std::map<std::string, double> & jws);
+
   /** Set specific joint targets
    *
    * \param joints Map of joint's name to joint's configuration

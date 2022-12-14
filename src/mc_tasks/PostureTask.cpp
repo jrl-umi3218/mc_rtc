@@ -88,6 +88,10 @@ void PostureTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration
   {
     this->weight(config("weight"));
   }
+  if(config.has("jointWeights"))
+  {
+    this->jointWeights(config("jointWeights"));
+  }
 }
 
 void PostureTask::selectActiveJoints(mc_solver::QPSolver & solver,
@@ -324,6 +328,17 @@ void PostureTask::jointStiffness(const mc_solver::QPSolver & solver, const std::
     default:
       break;
   }
+}
+
+void PostureTask::jointWeights(const std::map<std::string, double> & jws)
+{
+  Eigen::VectorXd dimW = dimWeight();
+  const auto & mb = robots_.robot(rIndex_).mb();
+  for(const auto & jw : jws)
+  {
+    dimW[mb.jointPosInDof(mb.jointIndexByName(jw.first))] = jw.second;
+  }
+  dimWeight(dimW);
 }
 
 void PostureTask::target(const std::map<std::string, std::vector<double>> & joints)
