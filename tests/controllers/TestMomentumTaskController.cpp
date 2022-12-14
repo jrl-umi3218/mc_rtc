@@ -29,8 +29,8 @@ public:
     BOOST_CHECK_EQUAL(robot().name(), "jvrc1");
     solver().addConstraintSet(contactConstraint);
     solver().addConstraintSet(dynamicsConstraint);
-    postureTask->stiffness(1);
-    postureTask->weight(1);
+    postureTask->stiffness(2);
+    postureTask->weight(10);
     solver().addTask(postureTask.get());
     addContact({robot().name(), "ground", "LeftFoot", "AllGround"});
     addContact({robot().name(), "ground", "RightFoot", "AllGround"});

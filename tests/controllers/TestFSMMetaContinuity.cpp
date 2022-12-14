@@ -16,8 +16,11 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestFSMMetaContinuityController : public fsm::Controller
 {
 public:
-  TestFSMMetaContinuityController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & conf)
-  : fsm::Controller(rm, dt, conf)
+  TestFSMMetaContinuityController(mc_rbdyn::RobotModulePtr rm,
+                                  double dt,
+                                  const mc_rtc::Configuration & conf,
+                                  Backend backend)
+  : fsm::Controller(rm, dt, conf, backend)
   {
     datastore().make<unsigned>("ControllerIter", 0u);
     datastore().make<unsigned>("StateIter", 0u);
@@ -38,4 +41,9 @@ public:
 
 } // namespace mc_control
 
-CONTROLLER_CONSTRUCTOR("TestFSMMetaContinuity", mc_control::TestFSMMetaContinuityController)
+using Controller = mc_control::TestFSMMetaContinuityController;
+using Backend = mc_control::MCController::Backend;
+MULTI_CONTROLLERS_CONSTRUCTOR("TestFSMMetaContinuity",
+                              Controller(rm, dt, config, Backend::Tasks),
+                              "TestFSMMetaContinuity_TVM",
+                              Controller(rm, dt, config, Backend::TVM))
