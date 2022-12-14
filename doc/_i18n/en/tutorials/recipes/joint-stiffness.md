@@ -23,7 +23,7 @@ postureTask.jointsStiffness(solver(), stiffnesses);
 {% endraw %}
 ```
 
-In this case, all the regular stiffnesses are set to 2 and all the selected joints' dampings are set to 4.
+In this case, all the regular dampings are set to 2 and all the selected joints' dampings are set to 4.
 
 If you want to set those dampings to another, user-defined value, you will need to use `JointGains`. Note that `JointGains` can be constructed with just a stiffness, in which case it will default to critical damping. This time let's set our stiffness to 4., but our damping to 10.
 
