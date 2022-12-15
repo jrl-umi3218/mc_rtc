@@ -20,6 +20,15 @@
         "$ref": "/../../Tasks/JointGains.json" 
       } 
     },
+    "jointWeights":
+    {
+      "type": "object",
+      "description": "Weights for specific joints",
+      "properties":
+      {
+        "*": { "type": "number", "description": "Joint weight" }
+      }
+    },
     "target":
     {
       "type": "array",

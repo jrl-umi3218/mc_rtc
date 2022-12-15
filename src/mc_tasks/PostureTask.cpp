@@ -88,6 +88,10 @@ void PostureTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration
   {
     this->weight(config("weight"));
   }
+  if(config.has("jointWeights"))
+  {
+    this->jointWeights(config("jointWeights"));
+  }
 }
 
 void PostureTask::selectActiveJoints(mc_solver::QPSolver & solver,
@@ -324,6 +328,31 @@ void PostureTask::jointStiffness(const mc_solver::QPSolver & solver, const std::
     default:
       break;
   }
+}
+
+void PostureTask::jointWeights(const std::map<std::string, double> & jws)
+{
+  Eigen::VectorXd dimW = dimWeight();
+  const auto & robot = robots_.robot(rIndex_);
+  const auto & mb = robot.mb();
+  for(const auto & jw : jws)
+  {
+    if(robot.hasJoint(jw.first))
+    {
+      auto jIndex = mb.jointIndexByName(jw.first);
+      if(mb.joint(jIndex).dof() > 0)
+      {
+        dimW[mb.jointPosInDof(jIndex)] = jw.second;
+      }
+      // No warning, it's probably over specified
+    }
+    else
+    {
+      mc_rtc::log::warning("[PostureTask] No joint named {} in {}, joint weight will have no effect", jw.first,
+                           robot.name());
+    }
+  }
+  dimWeight(dimW);
 }
 
 void PostureTask::target(const std::map<std::string, std::vector<double>> & joints)
