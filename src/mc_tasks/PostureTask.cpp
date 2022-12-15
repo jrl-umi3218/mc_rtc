@@ -333,10 +333,24 @@ void PostureTask::jointStiffness(const mc_solver::QPSolver & solver, const std::
 void PostureTask::jointWeights(const std::map<std::string, double> & jws)
 {
   Eigen::VectorXd dimW = dimWeight();
-  const auto & mb = robots_.robot(rIndex_).mb();
+  const auto & robot = robots_.robot(rIndex_);
+  const auto & mb = robot.mb();
   for(const auto & jw : jws)
   {
-    dimW[mb.jointPosInDof(mb.jointIndexByName(jw.first))] = jw.second;
+    if(robot.hasJoint(jw.first))
+    {
+      auto jIndex = mb.jointIndexByName(jw.first);
+      if(mb.joint(jIndex).dof() > 0)
+      {
+        dimW[mb.jointPosInDof(jIndex)] = jw.second;
+      }
+      // No warning, it's probably over specified
+    }
+    else
+    {
+      mc_rtc::log::warning("[PostureTask] No joint named {} in {}, joint weight will have no effect", jw.first,
+                           robot.name());
+    }
   }
   dimWeight(dimW);
 }
