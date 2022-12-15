@@ -12,6 +12,7 @@ var structmc__tasks_1_1PostureTask =
     [ "inSolver", "structmc__tasks_1_1PostureTask.html#ab65cad427dd26ba032f9512de7fc374c", null ],
     [ "jointGains", "structmc__tasks_1_1PostureTask.html#a4d21d16164f3b18f45923a69a7198423", null ],
     [ "jointStiffness", "structmc__tasks_1_1PostureTask.html#a3933b0c231304b52c0c4dc83080143cb", null ],
+    [ "jointWeights", "structmc__tasks_1_1PostureTask.html#ab631271ec818743e5ea83a7d80bfbd17", null ],
     [ "load", "structmc__tasks_1_1PostureTask.html#ab45e9fac8713b958118a1768429c7785", null ],
     [ "posture", "structmc__tasks_1_1PostureTask.html#a2299c6226e336a265adc283b2a600639", null ],
     [ "posture", "structmc__tasks_1_1PostureTask.html#ad3d36333bd6d95d5bc742ad1de920ab7", null ],

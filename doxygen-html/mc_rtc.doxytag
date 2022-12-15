@@ -25870,6 +25870,13 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>jointWeights</name>
+      <anchorfile>structmc__tasks_1_1PostureTask.html</anchorfile>
+      <anchor>ab631271ec818743e5ea83a7d80bfbd17</anchor>
+      <arglist>(const std::map&lt; std::string, double &gt; &amp;jws)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>target</name>
       <anchorfile>structmc__tasks_1_1PostureTask.html</anchorfile>
       <anchor>acb550b5465420b15d564c8df277b849a</anchor>

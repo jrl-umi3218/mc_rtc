@@ -58,9 +58,9 @@ var NAVTREEINDEX =
 "structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#aa8fe64b962d6123e29fbf76b29b281c9",
 "structmc__solver_1_1QPSolver.html#a47437e01c4e6e215ff7a9fbd966f615f",
 "structmc__tasks_1_1LookAtTFTask.html",
-"structmc__tasks_1_1TransformTask.html#a02daab9367d54190e6a5151d194504b2",
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3ca80b3de904c482671181d285cb0678",
-"traits_8h.html#a3f24a46e2245c7951863c943009a6b3c"
+"structmc__tasks_1_1TransformTask.html",
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3c6c91f136cf063c621fc841bff276ff",
+"traits_8h.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

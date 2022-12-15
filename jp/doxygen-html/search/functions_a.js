@@ -16,5 +16,6 @@ var searchData=
   ['jointstiffness',['jointStiffness',['../structmc__tasks_1_1PostureTask.html#a3933b0c231304b52c0c4dc83080143cb',1,'mc_tasks::PostureTask']]],
   ['jointtorque',['jointTorque',['../structmc__rbdyn_1_1Robot.html#a95798f9588d0656c61558ab20ad935b4',1,'mc_rbdyn::Robot::jointTorque() const'],['../structmc__rbdyn_1_1Robot.html#af946d00c2f9e36ed5c0899f237f35c32',1,'mc_rbdyn::Robot::jointTorque()']]],
   ['jointtorques',['jointTorques',['../structmc__rbdyn_1_1Robot.html#af65b1b51c93d319952e2ae3965e204c8',1,'mc_rbdyn::Robot']]],
+  ['jointweights',['jointWeights',['../structmc__tasks_1_1PostureTask.html#ab631271ec818743e5ea83a7d80bfbd17',1,'mc_tasks::PostureTask']]],
   ['ju',['ju',['../structmc__rbdyn_1_1Robot.html#a112f8dbb672b9911d63f479d57525241',1,'mc_rbdyn::Robot::ju() const'],['../structmc__rbdyn_1_1Robot.html#a28c3d7ef8c743eebe234bf8f4fd418e8',1,'mc_rbdyn::Robot::ju()']]]
 ];
