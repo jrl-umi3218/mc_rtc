@@ -54,7 +54,7 @@ struct MC_CONTROL_DLLAPI TestCanonicalRobotController : public mc_control::Globa
       // to the output robot
       for(const auto & j : gripper.get().activeJoints())
       {
-        BOOST_REQUIRE_CLOSE(commanded, outputRobot.mbc().q[outputRobot.jointIndexByName(j)][0], 1e-10);
+        BOOST_REQUIRE(std::fabs(commanded - outputRobot.mbc().q[outputRobot.jointIndexByName(j)][0]) < 1e-10);
       }
 
       // Check mimics
