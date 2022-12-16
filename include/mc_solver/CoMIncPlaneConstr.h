@@ -12,8 +12,6 @@
 
 #include <mc_rtc/void_ptr.h>
 
-#include <mc/rtc/deprecated.hh>
-
 namespace mc_solver
 {
 
