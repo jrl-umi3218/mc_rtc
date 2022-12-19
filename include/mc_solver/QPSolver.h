@@ -360,6 +360,8 @@ struct formatter<mc_solver::QPSolver::Backend> : public formatter<string_view>
     {
       case Backend::Tasks:
         return formatter<string_view>::format("Tasks", ctx);
+      case Backend::TVM:
+        return formatter<string_view>::format("TVM", ctx);
       case Backend::Unset:
         return formatter<string_view>::format("Unset", ctx);
       default:
