@@ -137,6 +137,30 @@ struct MC_SOLVER_DLLAPI TasksQPSolver final : public QPSolver
     return solver_;
   }
 
+  /** Helper to get a \ref TasksQPSolver from a \ref QPSolver instance
+   *
+   * The caller should make sure the cast is valid by checking the QPSolver backend.
+   *
+   * In debug the program will abort otherwise, in release UB abounds
+   */
+  static inline TasksQPSolver & from_solver(QPSolver & solver) noexcept
+  {
+    assert(solver.backend() == QPSolver::Backend::Tasks);
+    return static_cast<TasksQPSolver &>(solver);
+  }
+
+  /** Helper to get a \ref TasksQPSolver from a \ref QPSolver instance
+   *
+   * The caller should make sure the cast is valid by checking the QPSolver backend.
+   *
+   * In debug the program will abort otherwise, in release UB abounds
+   */
+  static inline const TasksQPSolver & from_solver(const QPSolver & solver) noexcept
+  {
+    assert(solver.backend() == QPSolver::Backend::Tasks);
+    return static_cast<const TasksQPSolver &>(solver);
+  }
+
   double solveTime() final;
 
   double solveAndBuildTime() final;
@@ -200,17 +224,15 @@ private:
  *
  * In debug the program will abort otherwise, in release UB abounds
  */
-inline TasksQPSolver & tasks_solver(QPSolver & solver)
+inline TasksQPSolver & tasks_solver(QPSolver & solver) noexcept
 {
-  assert(solver.backend() == QPSolver::Backend::Tasks);
-  return static_cast<TasksQPSolver &>(solver);
+  return TasksQPSolver::from_solver(solver);
 }
 
 /* const version */
-inline const TasksQPSolver & tasks_solver(const QPSolver & solver)
+inline const TasksQPSolver & tasks_solver(const QPSolver & solver) noexcept
 {
-  assert(solver.backend() == QPSolver::Backend::Tasks);
-  return static_cast<const TasksQPSolver &>(solver);
+  return TasksQPSolver::from_solver(solver);
 }
 
 } // namespace mc_solver
