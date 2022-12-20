@@ -101,7 +101,12 @@ BOOST_AUTO_TEST_CASE(RUN)
     {
       auto sleep_t = update_delay();
       simulateSensors();
-      BOOST_REQUIRE(controller.run());
+      bool r = controller.run();
+      if(!r)
+      {
+        mc_rtc::log::critical("Failed at iter {}", i);
+      }
+      BOOST_REQUIRE(r);
       if(syncWithRealTime)
       {
         std::this_thread::sleep_until(sleep_t);

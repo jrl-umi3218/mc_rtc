@@ -12,6 +12,7 @@
 #include <mc_solver/CoMIncPlaneConstr.h>
 
 #include <mc_tasks/CoMTask.h>
+#include <mc_tasks/OrientationTask.h>
 
 #include <mc_rtc/logging.h>
 
@@ -74,15 +75,17 @@ public:
     BOOST_CHECK_EQUAL(robot().name(), "jvrc1");
     solver().addConstraintSet(contactConstraint);
     solver().addConstraintSet(dynamicsConstraint);
-    postureTask->stiffness(1);
-    postureTask->weight(1);
     solver().addTask(postureTask.get());
     addContact({"jvrc1", "ground", "LeftFoot", "AllGround"});
     addContact({"jvrc1", "ground", "RightFoot", "AllGround"});
     /* Create and add the CoM task with the default stiffness/weight */
     comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0);
-    comTask->stiffness(50);
     solver().addTask(comTask);
+    comTask->stiffness(100.0);
+    comTask->weight(1e5);
+    /** Add an orientation task to keep the chest straight */
+    auto chestTask = std::make_shared<mc_tasks::OrientationTask>(robot().frame("WAIST_R_S"));
+    solver().addTask(chestTask);
     /** Create the constraint */
     comConstraint = std::make_shared<mc_solver::CoMIncPlaneConstr>(robots(), 0, solver().dt());
     solver().addConstraintSet(*comConstraint);
@@ -92,12 +95,14 @@ public:
 
   bool run() override
   {
-    bool ret = MCController::run();
-    BOOST_REQUIRE(ret);
-    nrIter++;
-    if(nrIter > 500 && !expanded)
+    if(!MCController::run())
     {
-      updateConstraint(0.0001);
+      return false;
+    }
+    nrIter++;
+    if(nrIter > 10 && !expanded)
+    {
+      updateConstraint(0.00005);
       if(size > 0.16)
       {
         expanded = true;
@@ -105,14 +110,14 @@ public:
     }
     else if(expanded && !shrinked)
     {
-      updateConstraint(-0.0001);
+      updateConstraint(-0.00005);
       if(size < 0.02)
       {
         shrinked = true;
         mc_rtc::log::success("Finished at iter: {}", nrIter);
       }
     }
-    return ret;
+    return true;
   }
 
   void reset(const ControllerResetData & reset_data) override

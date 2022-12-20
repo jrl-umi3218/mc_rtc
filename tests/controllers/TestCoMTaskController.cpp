@@ -26,14 +26,13 @@ public:
     BOOST_CHECK_EQUAL(robot().name(), "jvrc1");
     solver().addConstraintSet(contactConstraint);
     solver().addConstraintSet(dynamicsConstraint);
-    postureTask->stiffness(1);
-    postureTask->weight(1);
     solver().addTask(postureTask.get());
     solver().setContacts({{robots(), 1, 0, "AllGround", "LeftFoot"}, {robots(), 1, 0, "AllGround", "RightFoot"}});
 
     /* Create and add the CoM task with the default stiffness/weight */
     comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0);
     comTask->stiffness(10);
+    comTask->weight(5000);
     solver().addTask(comTask);
 
     mc_rtc::log::success("Created TestCoMTaskController");
@@ -41,12 +40,7 @@ public:
 
   virtual bool run() override
   {
-    bool ret = MCController::run();
-    if(!ret)
-    {
-      mc_rtc::log::critical("Failed at iter {}", nrIter);
-    }
-    BOOST_REQUIRE(ret);
+    BOOST_REQUIRE(MCController::run());
     nrIter++;
     if(nrIter == 10)
     {
@@ -90,7 +84,7 @@ public:
 
       /* Also reset the joint target in posture task */
       postureTask->reset();
-      postureTask->jointStiffness(solver(), {{"R_KNEE", 1e5}});
+      postureTask->jointStiffness(solver(), {{"R_KNEE", 1e3}});
     }
     if(nrIter == 4000)
     {
@@ -102,7 +96,7 @@ public:
       double current_rkj = robot().mbc().q[robot().jointIndexByName("R_KNEE")][0];
       BOOST_CHECK_SMALL(fabs(orig_rkj - current_rkj), 1e-2);
     }
-    return ret;
+    return true;
   }
 
   virtual void reset(const ControllerResetData & reset_data) override
