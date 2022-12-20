@@ -519,11 +519,14 @@ class PlotYAxis(object):
   def add_plot_xyz(self, x, y, z, y_label, t, style = None):
     return self._plot(self._data()[x], self._data()[y], y_label, style, filter_ = self._data()[t], z = self._data()[z], source = [x, y, z, y_label])
 
-  def add_diff_plot(self, x, y, y_label):
+  def _add_diff_plot(self, x, data, y_label):
     dt = self._data()[x][1] - self._data()[x][0]
-    return self._plot(self._data()[x][1:], np.diff(self._data()[y])/dt, y_label)
+    return self._plot(self._data()[x][1:], np.diff(data) / dt, y_label)
 
-  def _add_rpy_plot(self, x_label, y, idx):
+  def add_diff_plot(self, x, y, y_label):
+    return self._add_diff_plot(x, self._data()[y], y_label)
+
+  def _get_rpy_data(self, y, idx):
     assert (idx >= 0 and idx <= 2),"index must be 0, 1 or 2"
     rpy_label = ['roll', 'pitch', 'yaw']
     y_label = "{}_{}".format(y, rpy_label[idx])
@@ -532,21 +535,45 @@ class PlotYAxis(object):
       fmt = "q"
     qw, qx, qy, qz = [ self._data()[k] for k in [ "{}_{}{}".format(y, fmt, ax) for ax in ["w", "x", "y", "z"] ] ]
     data = [ rpyFromQuat([w, x, y, z])[idx] for w, x, y, z in zip(qw, qx, qy, qz) ]
+    return data, y_label
+
+  def _add_rpy_plot(self, x_label, y, idx):
+    data, y_label = self._get_rpy_data(y, idx)
     return self._plot(self._data()[x_label], data, y_label)
+
+  def _add_rpy_diff_plot(self, x_label, y, idx):
+    data, y_label = self._get_rpy_data(y, idx)
+    y_label += " diff"
+    return self._add_diff_plot(x_label, data, y_label)
 
   def add_roll_plot(self, x, y):
     return self._add_rpy_plot(x, y, 0)
 
+  def add_roll_diff_plot(self, x, y):
+    return self._add_rpy_diff_plot(x, y, 0)
+
   def add_pitch_plot(self, x, y):
     return self._add_rpy_plot(x, y, 1)
 
+  def add_pitch_diff_plot(self, x, y):
+    return self._add_rpy_diff_plot(x, y, 1)
+
   def add_yaw_plot(self, x, y):
     return self._add_rpy_plot(x, y, 2)
+
+  def add_yaw_diff_plot(self, x, y):
+    return self._add_rpy_diff_plot(x, y, 2)
 
   def add_rpy_plot(self, x, y):
     r = self.add_roll_plot(x, y)
     p = self.add_pitch_plot(x, y)
     y = self.add_yaw_plot(x, y)
+    return r or p or y
+
+  def add_rpy_diff_plot(self, x, y):
+    r = self.add_roll_diff_plot(x, y)
+    p = self.add_pitch_diff_plot(x, y)
+    y = self.add_yaw_diff_plot(x, y)
     return r or p or y
 
   def remove_plot(self, y):
@@ -869,6 +896,15 @@ class PlotFigure(object):
   def add_yaw_plot_left(self, x, y):
     return self._left().add_yaw_plot(x, y)
 
+  def add_roll_diff_plot_left(self, x, y):
+    return self._left().add_roll_diff_plot(x, y)
+
+  def add_pitch_diff_plot_left(self, x, y):
+    return self._left().add_pitch_diff_plot(x, y)
+
+  def add_yaw_diff_plot_left(self, x, y):
+    return self._left().add_yaw_diff_plot(x, y)
+
   def add_roll_plot_right(self, x, y):
     return self._right().add_roll_plot(x, y)
 
@@ -878,11 +914,26 @@ class PlotFigure(object):
   def add_yaw_plot_right(self, x, y):
     return self._right().add_yaw_plot(x, y)
 
+  def add_roll_diff_plot_right(self, x, y):
+    return self._right().add_roll_diff_plot(x, y)
+
+  def add_pitch_diff_plot_right(self, x, y):
+    return self._right().add_pitch_diff_plot(x, y)
+
+  def add_yaw_diff_plot_right(self, x, y):
+    return self._right().add_yaw_diff_plot(x, y)
+
   def add_rpy_plot_left(self, x, y):
     return self._left().add_rpy_plot(x, y)
 
+  def add_rpy_diff_plot_left(self, x, y):
+    return self._left().add_rpy_diff_plot(x, y)
+
   def add_rpy_plot_right(self, x, y):
     return self._right().add_rpy_plot(x, y)
+
+  def add_rpy_diff_plot_right(self, x, y):
+    return self._right().add_rpy_diff_plot(x, y)
 
   def _remove_plot(self, SIDE, y_label):
     self.axes[SIDE].remove_plot(y_label)
