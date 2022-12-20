@@ -8,6 +8,8 @@
 #include <boost/test/unit_test.hpp>
 #include <Eigen/Core>
 
+#include <tests_config.h>
+
 BOOST_AUTO_TEST_CASE(TestSequenceInterpolator)
 {
   constexpr double epsilon = 1e-10;

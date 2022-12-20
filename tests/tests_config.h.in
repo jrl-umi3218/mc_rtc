@@ -6,6 +6,13 @@
 
 #include <string>
 
+#include <mc_rtc/logging.h>
+
 static const std::string ROBOTS_BUILD_DIR = "@CMAKE_BINARY_DIR@/@ROBOTS_BUILD_DIR@";
 
 static const std::string MC_BIN_UTILS = "$<TARGET_FILE:mc_bin_utils>";
+
+static bool DISABLE_NOTIFICATIONS = []() {
+  mc_rtc::log::details::disable_notifications();
+  return true;
+}();

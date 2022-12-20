@@ -182,9 +182,19 @@ static inline void do_notify(const std::string & message)
 
 #endif
 
+static bool NOTIFICATIONS_ENABLED = true;
+
+void disable_notifications()
+{
+  NOTIFICATIONS_ENABLED = false;
+}
+
 void notify(const std::string & message)
 {
-  do_notify(message);
+  if(NOTIFICATIONS_ENABLED)
+  {
+    do_notify(message);
+  }
 }
 
 } // namespace details
