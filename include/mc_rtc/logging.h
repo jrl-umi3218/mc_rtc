@@ -39,6 +39,8 @@ MC_RTC_UTILS_DLLAPI spdlog::logger & cerr();
 
 MC_RTC_UTILS_DLLAPI void notify(const std::string & message);
 
+MC_RTC_UTILS_DLLAPI void disable_notifications();
+
 } // namespace details
 
 template<typename ExceptionT = std::runtime_error, typename... Args>
