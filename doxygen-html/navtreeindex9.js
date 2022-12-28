@@ -1,5 +1,6 @@
 var NAVTREEINDEX9 =
 {
+"structmc__rbdyn_1_1JointSensor.html#a5bc82e5bc792b1205bab90bbc0db9ff0":[3,0,6,15,7],
 "structmc__rbdyn_1_1JointSensor.html#a760681e45e716ee3a648d2b833375da4":[3,0,6,15,4],
 "structmc__rbdyn_1_1JointSensor.html#a8146f210db7f5327db2790accce04e0b":[3,0,6,15,2],
 "structmc__rbdyn_1_1JointSensor.html#a94a894a6d608152e9ffd574db02f3aae":[3,0,6,15,8],
@@ -248,6 +249,5 @@ var NAVTREEINDEX9 =
 "structmc__rbdyn_1_1RobotData.html#aaedac65f208c8d20ce463dc27e2dd96e":[3,0,6,25,3],
 "structmc__rbdyn_1_1RobotData.html#acda43b3386e92305df5a1a20b319a43b":[3,0,6,25,12],
 "structmc__rbdyn_1_1RobotData.html#ad35bd605b7b926166d9b5aa6ad517536":[3,0,6,25,10],
-"structmc__rbdyn_1_1RobotData.html#ae164d088f20cb9d263f6952a631578ec":[3,0,6,25,5],
-"structmc__rbdyn_1_1RobotFrame.html":[3,0,6,26]
+"structmc__rbdyn_1_1RobotData.html#ae164d088f20cb9d263f6952a631578ec":[3,0,6,25,5]
 };

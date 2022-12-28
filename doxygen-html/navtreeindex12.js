@@ -1,5 +1,6 @@
 var NAVTREEINDEX12 =
 {
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PolyhedronConfig_01_4.html":[3,0,7,23],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html":[3,0,7,24],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html":[3,0,7,25],
 "structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html":[3,0,7,26],
@@ -248,6 +249,5 @@ var NAVTREEINDEX12 =
 "structmc__rtc_1_1gui_1_1Element.html#ab8e71ecce7dab695777a1a11faf119f7":[3,0,7,0,16,6],
 "structmc__rtc_1_1gui_1_1Element.html#ad2e559a17ad52901a5e726ca03f300c6":[3,0,7,0,16,3],
 "structmc__rtc_1_1gui_1_1ForceConfig.html":[3,0,7,0,17],
-"structmc__rtc_1_1gui_1_1ForceConfig.html#a172deb6bbb037afc2955e6ce0495a1cd":[3,0,7,0,17,6],
-"structmc__rtc_1_1gui_1_1ForceConfig.html#a2d88ac62138a8f3a15a0c48468ec2d51":[3,0,7,0,17,1]
+"structmc__rtc_1_1gui_1_1ForceConfig.html#a172deb6bbb037afc2955e6ce0495a1cd":[3,0,7,0,17,6]
 };

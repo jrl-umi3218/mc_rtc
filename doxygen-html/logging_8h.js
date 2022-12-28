@@ -9,6 +9,7 @@ var logging_8h =
     [ "MC_FMT_STREAMED", "logging_8h.html#a3f0e2902b9317d3be03056aaf139412d", null ],
     [ "cerr", "logging_8h.html#aa8cc2cc8dc25d49fa533f32a67f73c33", null ],
     [ "critical", "logging_8h.html#a82d6969aa78c74fbe4716532661ea0d8", null ],
+    [ "disable_notifications", "logging_8h.html#a61a4f2b21a3c9e57114e8d852bc125ce", null ],
     [ "error", "logging_8h.html#aa189b2ec856ad8f96d632d635efc05ce", null ],
     [ "error_and_throw", "logging_8h.html#a2bad497e8a4c7a7f29f7ab908c83274e", null ],
     [ "info", "logging_8h.html#a2e57684e4d69b10eb5c9f41cf59c11ea", null ],

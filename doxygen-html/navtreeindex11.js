@@ -1,5 +1,6 @@
 var NAVTREEINDEX11 =
 {
+"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a7ffbc94c90b9db18e568822089740ce3":[3,0,6,1,1,0],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#abc2551e9efb790f462bf04173f5333cb":[3,0,6,1,1,9],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#abfe6e931e6f6f77dd2ca657c0d5e3840":[3,0,6,1,1,12],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#ad636aa194409ba418d4f4c6377d0fe71":[3,0,6,1,1,5],
@@ -136,8 +137,8 @@ var NAVTREEINDEX11 =
 "structmc__rtc_1_1Configuration.html#a570dbad850a519f785f15dc8276e2c30":[3,0,7,3,81],
 "structmc__rtc_1_1Configuration.html#a5a589ab5f60fe846b5ae912c8c44eda2":[3,0,7,3,99],
 "structmc__rtc_1_1Configuration.html#a5c9ff27b8d536d10c2b7a8c3cb668d29":[3,0,7,3,123],
-"structmc__rtc_1_1Configuration.html#a60d258128cadfb8b4cc30229d169991b":[3,0,7,3,84],
 "structmc__rtc_1_1Configuration.html#a60d258128cadfb8b4cc30229d169991b":[3,0,7,3,85],
+"structmc__rtc_1_1Configuration.html#a60d258128cadfb8b4cc30229d169991b":[3,0,7,3,84],
 "structmc__rtc_1_1Configuration.html#a638b0308597ed9c9aa09afe70f803cab":[3,0,7,3,127],
 "structmc__rtc_1_1Configuration.html#a6488f8ecfa643aebe3c77e8fd4218160":[3,0,7,3,47],
 "structmc__rtc_1_1Configuration.html#a6a28ad4e71394b56e27687e9d64a8cda":[3,0,7,3,4],
@@ -248,6 +249,5 @@ var NAVTREEINDEX11 =
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1Color_01_4.html":[3,0,7,19],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ForceConfig_01_4.html":[3,0,7,20],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1LineConfig_01_4.html":[3,0,7,21],
-"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PointConfig_01_4.html":[3,0,7,22],
-"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PolyhedronConfig_01_4.html":[3,0,7,23]
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PointConfig_01_4.html":[3,0,7,22]
 };

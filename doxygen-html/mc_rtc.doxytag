@@ -4197,6 +4197,13 @@
       <arglist>(const std::string &amp;message)</arglist>
     </member>
     <member kind="function">
+      <type>MC_RTC_UTILS_DLLAPI void</type>
+      <name>disable_notifications</name>
+      <anchorfile>namespacemc__rtc_1_1log_1_1details.html</anchorfile>
+      <anchor>a61a4f2b21a3c9e57114e8d852bc125ce</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
       <type>void</type>
       <name>error_and_throw</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
@@ -39546,6 +39553,13 @@
       <anchorfile>namespacemc__rtc_1_1log_1_1details.html</anchorfile>
       <anchor>a825688a25acf02d7518a7a1f19c83e04</anchor>
       <arglist>(const std::string &amp;message)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RTC_UTILS_DLLAPI void</type>
+      <name>disable_notifications</name>
+      <anchorfile>namespacemc__rtc_1_1log_1_1details.html</anchorfile>
+      <anchor>a61a4f2b21a3c9e57114e8d852bc125ce</anchor>
+      <arglist>()</arglist>
     </member>
   </compound>
   <compound kind="namespace">
