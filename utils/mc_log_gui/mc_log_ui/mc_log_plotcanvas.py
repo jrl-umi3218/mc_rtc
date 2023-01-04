@@ -331,10 +331,10 @@ class PlotYAxis(object):
       return None
     if frame0 is None:
       frame0, frame = self.getFrameRange()
-    values = iter(self.data.values())
-    value0 = next(values)
-    if np.all(np.isnan(value0[idx][frame0:frame])):
+    values = [value for value in self.data.values() if not np.all(np.isnan(value[idx][frame0:frame]))]
+    if len(values) == 0:
       return None
+    value0 = values[0]
     min_ = np.nanmin(value0[idx][frame0:frame])
     max_ = np.nanmax(value0[idx][frame0:frame])
     for value in values:

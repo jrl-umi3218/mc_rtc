@@ -542,19 +542,20 @@ class MCLogTab(QtWidgets.QWidget):
     if self.data is None:
       return
     bounds = self.rm.bounds()
+    def_bound = [float('nan')]
     def setBounds(prefix):
         for i, jn in enumerate(self.rm.ref_joint_order()):
           if "{}qIn_limits_lower_{}".format(prefix, i) in self.data:
-            self.data["{}qIn_limits_lower_{}".format(prefix, i)].fill(bounds[0][jn][0])
-            self.data["{}qIn_limits_upper_{}".format(prefix, i)].fill(bounds[1][jn][0])
-            self.data["{}qOut_limits_lower_{}".format(prefix, i)].fill(bounds[0][jn][0])
-            self.data["{}qOut_limits_upper_{}".format(prefix, i)].fill(bounds[1][jn][0])
+            self.data["{}qIn_limits_lower_{}".format(prefix, i)].fill(bounds[0].get(jn, def_bound)[0])
+            self.data["{}qIn_limits_upper_{}".format(prefix, i)].fill(bounds[1].get(jn, def_bound)[0])
+            self.data["{}qOut_limits_lower_{}".format(prefix, i)].fill(bounds[0].get(jn, def_bound)[0])
+            self.data["{}qOut_limits_upper_{}".format(prefix, i)].fill(bounds[1].get(jn, def_bound)[0])
           if "{}tauIn_limits_lower_{}".format(prefix, i) in self.data:
-            self.data["{}tauIn_limits_lower_{}".format(prefix, i)].fill(bounds[4][jn][0])
-            self.data["{}tauIn_limits_upper_{}".format(prefix, i)].fill(bounds[5][jn][0])
+            self.data["{}tauIn_limits_lower_{}".format(prefix, i)].fill(bounds[4].get(jn, def_bound)[0])
+            self.data["{}tauIn_limits_upper_{}".format(prefix, i)].fill(bounds[5].get(jn, def_bound)[0])
           if "{}tauOut_limits_lower_{}".format(prefix, i) in self.data:
-            self.data["{}tauOut_limits_lower_{}".format(prefix, i)].fill(bounds[4][jn][0])
-            self.data["{}tauOut_limits_upper_{}".format(prefix, i)].fill(bounds[5][jn][0])
+            self.data["{}tauOut_limits_lower_{}".format(prefix, i)].fill(bounds[4].get(jn, def_bound)[0])
+            self.data["{}tauOut_limits_upper_{}".format(prefix, i)].fill(bounds[5].get(jn, def_bound)[0])
     if len(loaded_files) > 1:
       for f in loaded_files:
         setBounds("{}_".format(f))
