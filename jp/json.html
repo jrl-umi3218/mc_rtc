@@ -133277,7 +133277,7 @@ configs:
   </span><span class="err">//</span><span class="w"> </span><span class="err">This</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">runs</span><span class="w"> </span><span class="err">StateA</span><span class="p">,</span><span class="w"> </span><span class="err">StateB</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">StateC</span><span class="w"> </span><span class="err">until</span><span class="w"> </span><span class="err">they</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">all</span><span class="w"> </span><span class="err">completed</span><span class="w">
   </span><span class="err">//</span><span class="w"> </span><span class="err">Its</span><span class="w"> </span><span class="err">output</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">StateC's</span><span class="w"> </span><span class="err">output</span><span class="w">
   </span><span class="nl">"states"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"StateA"</span><span class="p">,</span><span class="w"> </span><span class="s2">"StateB"</span><span class="p">,</span><span class="w"> </span><span class="s2">"StateC"</span><span class="p">],</span><span class="w">
-  </span><span class="nl">"delay"</span><span class="p">:</span><span class="w">
+  </span><span class="nl">"delays"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="err">//</span><span class="w"> </span><span class="err">StateB</span><span class="w"> </span><span class="err">starts</span><span class="w"> </span><span class="mf">4.5</span><span class="w"> </span><span class="err">seconds</span><span class="w"> </span><span class="err">after</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">started</span><span class="w">
     </span><span class="nl">"StateB"</span><span class="p">:</span><span class="w"> </span><span class="mf">4.5</span><span class="w">
@@ -133299,7 +133299,7 @@ configs:
   // This state runs StateA, StateB and StateC until they are all completed
   // Its output is StateC's output
   "states": ["StateA", "StateB", "StateC"],
-  "delay":
+  "delays":
   {
     // StateB starts 4.5 seconds after the state is started
     "StateB": 4.5
@@ -133334,7 +133334,7 @@ configs:
 <span class="c1"># This state runs StateA, StateB and StateC until they are all completed</span>
 <span class="c1"># Its output is StateC's output</span>
 <span class="na">states</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">StateA</span><span class="pi">,</span> <span class="nv">StateB</span><span class="pi">,</span> <span class="nv">StateC</span><span class="pi">]</span>
-<span class="na">delay</span><span class="pi">:</span>
+<span class="na">delays</span><span class="pi">:</span>
   <span class="c1"># StateB starts 4.5 seconds after the state is started</span>
   <span class="na">StateB</span><span class="pi">:</span> <span class="m">4.5</span>
 <span class="na">configs</span><span class="pi">:</span>
@@ -133348,7 +133348,7 @@ configs:
 # This state runs StateA, StateB and StateC until they are all completed
 # Its output is StateC's output
 states: [StateA, StateB, StateC]
-delay:
+delays:
   # StateB starts 4.5 seconds after the state is started
   StateB: 4.5
 configs:
