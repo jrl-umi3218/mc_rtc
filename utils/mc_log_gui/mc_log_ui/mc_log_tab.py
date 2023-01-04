@@ -180,8 +180,6 @@ class SpecialPlot(object):
       add_fn = self.figure.add_diff_plot_right
     for a in added:
       label = "{}_diff".format(a)
-      if len(added) == 1 and self.label is not None:
-        label = self.label
       if add_fn(self.figure.x_data, a, label):
         self.added.append(label)
   def __add_rpy(self):
@@ -774,13 +772,11 @@ class MCLogTab(QtWidgets.QWidget):
     set_label(figure.y2_label, figure.y2_label_fontsize, p.graph_labels.y2_label)
     def handle_yd(yds, idx):
       for yd in yds:
-        match = re.match("(.*)_(.*)$", yd)
-        if match is None:
-          special(yd, idx, "diff")
-        elif match.group(2) in ["rpy", "r", "p", "y"]:
-          special(match.group(1), idx, match.group(2))
-        else:
-          special(match.group(1), idx, "diff")
+        specials = ['_rpy_diff', '_r_diff', '_p_diff', '_y_diff', '_diff', '_rpy', '_r', '_p', '_y']
+        for s in specials:
+          if yd.endswith(s):
+            special(yd[:yd.rindex(s)], idx, s[1:])
+            break
     handle_yd(p.y1d, 0)
     handle_yd(p.y2d, 1)
     if not isinstance(p.grid1, LineStyle):
