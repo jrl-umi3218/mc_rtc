@@ -962,12 +962,12 @@ class MCLogUI(QtWidgets.QMainWindow):
       if type_ is PlotType.TIME:
         y1 = [convertJointIndex(x) for x in filter(lambda k: convertJointIndex(k) in self.data.keys(), canvas._left().plots.keys())]
         y2 = [convertJointIndex(x) for x in filter(lambda k: convertJointIndex(k) in self.data.keys(), canvas._right().plots.keys())]
-        y1d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 0, tab.specials.values()))
-        y2d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 1, tab.specials.values()))
+        y1d = list(map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 0, tab.specials.values())))
+        y2d = list(map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 1, tab.specials.values())))
       else:
-        y1 = canvas._left().source.values()
+        y1 = list(canvas._left().source.values())
         if canvas._right():
-          y2 = canvas._right().source.values()
+          y2 = list(canvas._right().source.values())
         else:
           y2 = []
         y1d = []
