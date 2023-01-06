@@ -72,6 +72,9 @@ jobs:
         if [[ "${{ matrix.os }}" == "windows-latest" ]]
         then
           ./build_and_install.sh --user-input false --with-python-support false --build-testing false --build-benchmarks true
+        elif [[ "${{ matrix.os }}" == "macos-latest" ]]
+        then
+          ./build_and_install.sh --user-input false --with-python-support false --build-benchmarks true --allow-root true
         else
           ./build_and_install.sh --user-input false --build-benchmarks true --allow-root true
         fi
@@ -101,6 +104,7 @@ jobs:
             - path: jbeder/yaml-cpp
               ref: 29dcf92f870ee51cce8d68f8fcfe228942e8dfe1
               options: -DYAML_CPP_BUILD_TESTS:BOOL=OFF
+        macos-options: -DPYTHON_BINDING:BOOL=OFF
         windows-options: -DPYTHON_BINDING:BOOL=OFF
         github: |
           - path: gabime/spdlog
@@ -127,6 +131,7 @@ jobs:
       with:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
+        macos-options: -DPYTHON_BINDING:BOOL=OFF
         windows-options: -DPYTHON_BINDING:BOOL=OFF
     - name: Build and test (Debug/Fast tests)
       if: matrix.build-type == 'Debug' && github.ref != 'refs/heads/master'
@@ -135,6 +140,7 @@ jobs:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
         options: '-DENABLE_FAST_TESTS:BOOL=ON'
+        macos-options: -DPYTHON_BINDING:BOOL=OFF
     - name: Build with ROS
       if: (matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04') && matrix.build-type != 'script'
       run: |
