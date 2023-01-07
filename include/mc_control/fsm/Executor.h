@@ -31,6 +31,18 @@ struct Controller;
  */
 struct MC_CONTROL_FSM_DLLAPI Executor
 {
+  /** Executor should not be copied or moved
+   *
+   * After init is called, the executor has been added to the GUI/log if it's moved these entries do not refer to an
+   * existing object anymore and this will lead to a crash
+   *
+   */
+  Executor() = default;
+  Executor(const Executor &) = delete;
+  Executor(Executor &&) = delete;
+  Executor & operator=(const Executor &) = delete;
+  Executor & operator=(Executor &&) = delete;
+
   /** Initialize the executor
    *
    * \param ctl Controller using this executor
