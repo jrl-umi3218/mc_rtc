@@ -1,5 +1,10 @@
 var NAVTREEINDEX16 =
 {
+"structmc__tasks_1_1LookAtFrameTask.html#a49f0fece5eb474b86986e9d59c01300c":[3,0,9,9,7],
+"structmc__tasks_1_1LookAtFrameTask.html#a906f567d08a0e34110c750fe791f68f8":[3,0,9,9,2],
+"structmc__tasks_1_1LookAtFrameTask.html#aaa82fc728893b07fc39bd710f5825d7b":[3,0,9,9,0],
+"structmc__tasks_1_1LookAtFrameTask.html#ac4aeca4b3300bd4484051bf041f69efa":[3,0,9,9,3],
+"structmc__tasks_1_1LookAtFrameTask.html#ad198c5944a3e534196c8833781eb3fd8":[3,0,9,9,1],
 "structmc__tasks_1_1LookAtFrameTask.html#ae0a604daef3084247fe5c3fef3926bb3":[3,0,9,9,4],
 "structmc__tasks_1_1LookAtTFTask.html":[3,0,9,11],
 "structmc__tasks_1_1LookAtTFTask.html#a15ea55b0712695f2b46284710b49aad1":[3,0,9,11,2],
@@ -244,10 +249,5 @@ var NAVTREEINDEX16 =
 "structmc__tasks_1_1TrajectoryTaskGeneric.html#ac9d9498669ca0e1a82b0d307105a5e19":[3,0,9,23,43],
 "structmc__tasks_1_1TrajectoryTaskGeneric.html#acbd02ef88c59d27db19186f4eb9208fd":[3,0,9,23,32],
 "structmc__tasks_1_1TrajectoryTaskGeneric.html#ace3e9ff562d04c476047aa635f2be052":[3,0,9,23,3],
-"structmc__tasks_1_1TrajectoryTaskGeneric.html#ad0d2c284eb90a96a10e6e532242512ac":[3,0,9,23,30],
-"structmc__tasks_1_1TrajectoryTaskGeneric.html#ad4f104f2a346ce4663fcf34d5e9d3d67":[3,0,9,23,45],
-"structmc__tasks_1_1TrajectoryTaskGeneric.html#ad7934da95aafbb164740323dad4c90ef":[3,0,9,23,19],
-"structmc__tasks_1_1TrajectoryTaskGeneric.html#ae3ee0f8359302d8ba71d77cc81394cbf":[3,0,9,23,49],
-"structmc__tasks_1_1TrajectoryTaskGeneric.html#aee3d0c1ae39e5ec71c410017d0b3ecec":[3,0,9,23,51],
-"structmc__tasks_1_1TrajectoryTaskGeneric.html#afcf5b9d58fb4102e5e5ef4deb6b91443":[3,0,9,23,0]
+"structmc__tasks_1_1TrajectoryTaskGeneric.html#ad0d2c284eb90a96a10e6e532242512ac":[3,0,9,23,30]
 };

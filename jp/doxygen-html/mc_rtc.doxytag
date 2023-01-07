@@ -13996,6 +13996,41 @@
     <name>mc_control::fsm::Executor</name>
     <filename>structmc__control_1_1fsm_1_1Executor.html</filename>
     <member kind="function">
+      <type></type>
+      <name>Executor</name>
+      <anchorfile>structmc__control_1_1fsm_1_1Executor.html</anchorfile>
+      <anchor>abee5011ac393cbe3234a4914b61656ab</anchor>
+      <arglist>()=default</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Executor</name>
+      <anchorfile>structmc__control_1_1fsm_1_1Executor.html</anchorfile>
+      <anchor>a4c433b7fb3bbbab34dd26267b2d43958</anchor>
+      <arglist>(const Executor &amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Executor</name>
+      <anchorfile>structmc__control_1_1fsm_1_1Executor.html</anchorfile>
+      <anchor>a1f532831204add37900188bef3f40fb1</anchor>
+      <arglist>(Executor &amp;&amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type>Executor &amp;</type>
+      <name>operator=</name>
+      <anchorfile>structmc__control_1_1fsm_1_1Executor.html</anchorfile>
+      <anchor>a045981311f758f434b56cb7187d1cb66</anchor>
+      <arglist>(const Executor &amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type>Executor &amp;</type>
+      <name>operator=</name>
+      <anchorfile>structmc__control_1_1fsm_1_1Executor.html</anchorfile>
+      <anchor>a41d60913b240b6eda0df758c5424affb</anchor>
+      <arglist>(Executor &amp;&amp;)=delete</arglist>
+    </member>
+    <member kind="function">
       <type>void</type>
       <name>init</name>
       <anchorfile>structmc__control_1_1fsm_1_1Executor.html</anchorfile>

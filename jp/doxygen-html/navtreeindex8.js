@@ -1,5 +1,10 @@
 var NAVTREEINDEX8 =
 {
+"structmc__observers_1_1ObserverPipeline.html#a196508f4fadc9c18b17e430877904765":[3,0,4,6,26],
+"structmc__observers_1_1ObserverPipeline.html#a1ff155de33b02e9583105970a7dd7f62":[3,0,4,6,20],
+"structmc__observers_1_1ObserverPipeline.html#a27cfd874cd81d8640f15c525214ed9a4":[3,0,4,6,1],
+"structmc__observers_1_1ObserverPipeline.html#a37430f05658ebc329bb44d1408606ecd":[3,0,4,6,24],
+"structmc__observers_1_1ObserverPipeline.html#a39bca6757576671034b071813416b6fa":[3,0,4,6,3],
 "structmc__observers_1_1ObserverPipeline.html#a41dd41c29dd2edcb2eead263e1aa6212":[3,0,4,6,15],
 "structmc__observers_1_1ObserverPipeline.html#a4c1159cf43b722d4b625136a30bf632c":[3,0,4,6,23],
 "structmc__observers_1_1ObserverPipeline.html#a4fd671cc39489c3b17d28cffcf7c2e77":[3,0,4,6,30],
@@ -244,10 +249,5 @@ var NAVTREEINDEX8 =
 "structmc__rbdyn_1_1GripperSurface.html#a8c620aadf02e4692a512bc250643df80":[3,0,6,14,7],
 "structmc__rbdyn_1_1GripperSurface.html#a8df89e1076a2b0962ea1892b5db0070e":[3,0,6,14,5],
 "structmc__rbdyn_1_1GripperSurface.html#aa40c47e1fd7799f7dec70ad283f1bc5e":[3,0,6,14,3],
-"structmc__rbdyn_1_1GripperSurface.html#acee39c73b63b2e7f72ae116002bb42ad":[3,0,6,14,0],
-"structmc__rbdyn_1_1GripperSurface.html#aeae1f456b4be7ed9cce2cda368f01ed8":[3,0,6,14,1],
-"structmc__rbdyn_1_1JointSensor.html":[3,0,6,15],
-"structmc__rbdyn_1_1JointSensor.html#a0cb1c64c1bad340b0c85d615af6bb5ee":[3,0,6,15,9],
-"structmc__rbdyn_1_1JointSensor.html#a1f6ea7b4b8c8d540834d479a43c68481":[3,0,6,15,12],
-"structmc__rbdyn_1_1JointSensor.html#a5474e649ba72ec2d82c3b196b7ee52f3":[3,0,6,15,6]
+"structmc__rbdyn_1_1GripperSurface.html#acee39c73b63b2e7f72ae116002bb42ad":[3,0,6,14,0]
 };

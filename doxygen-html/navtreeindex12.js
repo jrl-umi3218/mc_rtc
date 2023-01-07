@@ -1,5 +1,10 @@
 var NAVTREEINDEX12 =
 {
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ArrowConfig_01_4.html":[3,0,7,18],
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1Color_01_4.html":[3,0,7,19],
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ForceConfig_01_4.html":[3,0,7,20],
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1LineConfig_01_4.html":[3,0,7,21],
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PointConfig_01_4.html":[3,0,7,22],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PolyhedronConfig_01_4.html":[3,0,7,23],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html":[3,0,7,24],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html":[3,0,7,25],
@@ -244,10 +249,5 @@ var NAVTREEINDEX12 =
 "structmc__rtc_1_1gui_1_1Element.html#a086e5b72ef29fb83ebba494135f0f579":[3,0,7,0,16,0],
 "structmc__rtc_1_1gui_1_1Element.html#a208ba439700a31e9ff94abc76a466472":[3,0,7,0,16,7],
 "structmc__rtc_1_1gui_1_1Element.html#a4f1f84cbf9bafb94cd41824712565f5a":[3,0,7,0,16,5],
-"structmc__rtc_1_1gui_1_1Element.html#a6fcb5cd1168ebfd6b9dc8830df21956f":[3,0,7,0,16,1],
-"structmc__rtc_1_1gui_1_1Element.html#a7b365cbe4764d76aafa03495be0ecd5d":[3,0,7,0,16,8],
-"structmc__rtc_1_1gui_1_1Element.html#ab8e71ecce7dab695777a1a11faf119f7":[3,0,7,0,16,6],
-"structmc__rtc_1_1gui_1_1Element.html#ad2e559a17ad52901a5e726ca03f300c6":[3,0,7,0,16,3],
-"structmc__rtc_1_1gui_1_1ForceConfig.html":[3,0,7,0,17],
-"structmc__rtc_1_1gui_1_1ForceConfig.html#a172deb6bbb037afc2955e6ce0495a1cd":[3,0,7,0,17,6]
+"structmc__rtc_1_1gui_1_1Element.html#a6fcb5cd1168ebfd6b9dc8830df21956f":[3,0,7,0,16,1]
 };
