@@ -21,7 +21,7 @@ CoMInConvexFunction::CoMInConvexFunction(const mc_rbdyn::Robot & robot)
   addOutputDependency<CoMInConvexFunction>(Output::NormalAcceleration, Update::NormalAcceleration);
   addVariable(robot.tvmRobot().q(), false);
   addInputDependency<CoMInConvexFunction>(Update::Value, com_, mc_tvm::CoM::Output::CoM);
-  addInputDependency<CoMInConvexFunction>(Update::Velocity, com_, mc_tvm::CoM::Output::Jacobian);
+  addInputDependency<CoMInConvexFunction>(Update::Velocity, com_, mc_tvm::CoM::Output::Velocity);
   addInputDependency<CoMInConvexFunction>(Update::Jacobian, com_, mc_tvm::CoM::Output::Jacobian);
   addInputDependency<CoMInConvexFunction>(Update::NormalAcceleration, com_, mc_tvm::CoM::Output::NormalAcceleration);
   addInternalDependency<CoMInConvexFunction>(Update::Jacobian, Update::Value);
