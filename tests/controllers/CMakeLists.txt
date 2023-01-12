@@ -64,6 +64,7 @@ macro(controller_test_common NAME)
   set(PYTHON_CONTROLLER_PATH "${CMAKE_BINARY_DIR}/src/mc_control/python")
   set(ROBOT_MODULE_PATH "${CMAKE_BINARY_DIR}/src/mc_robots")
   set(TEST_CONTROLLER_PATH "${CMAKE_CURRENT_BINARY_DIR}/${TEST_CONTROLLER_NAME}")
+  set(TEST_CONTROLLER_PATH_BASE "${TEST_CONTROLLER_PATH}")
   if(CMAKE_CONFIGURATION_TYPES)
     set(OBSERVER_MODULE_PATH "${OBSERVER_MODULE_PATH}/$<CONFIGURATION>")
     set(PYTHON_CONTROLLER_PATH "${PYTHON_CONTROLLER_PATH}/$<CONFIGURATION>")
@@ -131,6 +132,13 @@ macro(controller_test_run NAME NRITER)
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${VARIANT}.yaml"
           INPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${VARIANT}.cmake.yaml")
       endif()
+    endif()
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.jvrc1.in.yaml")
+      configure_file(${NAME}.jvrc1.in.yaml "${TEST_CONTROLLER_PATH_BASE}/${VARIANT}/jvrc1.cmake.yaml")
+      file(GENERATE
+        OUTPUT "${TEST_CONTROLLER_PATH}/${VARIANT}/jvrc1.yaml"
+        INPUT "${TEST_CONTROLLER_PATH_BASE}/${VARIANT}/jvrc1.cmake.yaml"
+      )
     endif()
     if(TARGET ${VARIANT})
       set_target_properties(${VARIANT} PROPERTIES FOLDER tests/controllers/run/details)
@@ -261,6 +269,8 @@ controller_test_run(TestCoMInBoxController 4001)
 controller_test_run(TestCollisionController 2001)
 # mc_global_controller behavior test
 controller_test_run(TestCanonicalRobotController 2001)
+# Configuration test
+controller_test_run(TestRobotConfigurationController 1)
 
 # Test FSM generic state configuration option
 set(FSM_STATES_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/src/mc_control/fsm/states/")
