@@ -25,6 +25,9 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
+#include <boost/filesystem.hpp>
+namespace bfs = boost::filesystem;
+
 #include <array>
 #include <fstream>
 
@@ -62,6 +65,13 @@ Contact Contact::from_mc_rbdyn(const MCController & ctl, const mc_rbdyn::Contact
           contact.r2Surface()->name(),
           contact.friction(),
           dof};
+}
+
+static thread_local std::string MC_CONTROLLER_LOADING_LOCATION = "";
+
+void MCController::set_loading_location(std::string_view location)
+{
+  MC_CONTROLLER_LOADING_LOCATION = location;
 }
 
 MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, Backend backend)
@@ -104,7 +114,8 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
 : qpsolver(make_solver(dt, backend)), outputRobots_(mc_rbdyn::Robots::make()),
   outputRealRobots_(mc_rbdyn::Robots::make()),
   logger_(std::make_shared<mc_rtc::Logger>(mc_rtc::Logger::Policy::NON_THREADED, "", "")),
-  gui_(std::make_shared<mc_rtc::gui::StateBuilder>()), config_(config), timeStep(dt)
+  gui_(std::make_shared<mc_rtc::gui::StateBuilder>()), config_(config), timeStep(dt),
+  loading_location_(MC_CONTROLLER_LOADING_LOCATION)
 {
   /* Load robots */
   qpsolver->logger(logger_);
@@ -969,6 +980,41 @@ void MCController::stop() {}
 Gripper & MCController::gripper(const std::string & robot, const std::string & gripper)
 {
   return robots().robot(robot).gripper(gripper);
+}
+
+mc_rtc::Configuration MCController::robot_config(const mc_rbdyn::Robot & robot) const
+{
+  mc_rtc::Configuration result;
+  bfs::path system_path = bfs::path(loading_location_) / this->name_ / (robot.name() + ".conf");
+#ifndef WIN32
+  bfs::path user_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/controllers";
+#else
+  bfs::path user_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers";
+#endif
+  user_path = user_path / name_ / (robot.name() + ".conf");
+  auto load_conf = [&result](const std::string & path) {
+    result.load(path);
+    mc_rtc::log::info("Controller's robot configuration loaded from {}", path);
+  };
+  auto load_conf_or_yaml = [&load_conf](bfs::path & in) {
+    if(bfs::exists(in))
+    {
+      return load_conf(in.string());
+    }
+    in.replace_extension(".yaml");
+    if(bfs::exists(in))
+    {
+      return load_conf(in.string());
+    }
+    in.replace_extension(".yml");
+    if(bfs::exists(in))
+    {
+      return load_conf(in.string());
+    }
+  };
+  load_conf_or_yaml(system_path);
+  load_conf_or_yaml(user_path);
+  return result;
 }
 
 } // namespace mc_control

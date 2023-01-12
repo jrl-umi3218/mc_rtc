@@ -760,6 +760,27 @@ public:
   std::shared_ptr<mc_tasks::PostureTask> postureTask;
   /* Controller's name */
   std::string name_;
+
+  /** Load a robot specific configuration (if any)
+   *
+   * The following files are loaded (in that order):
+   * - ${loading_location}/${name}/${robot.name()}.conf|yaml
+   * - ${HOME}/.config/mc_rtc/controllers/${name}/${robot.name()}.conf|yaml (Linux/macOS)
+   * - ${APPDATA}/mc_rtc/controllers/${name}/${robot.name()}.conf|yaml (Windows)
+   */
+  mc_rtc::Configuration robot_config(const mc_rbdyn::Robot & robot) const;
+
+  /** Called by \ref mc_rtc::ObjectLoader to inform the controller of its loading location
+   * For example, if the CoM controller is loaded from the library in /usr/local/lib/mc_controller/com.so then this is
+   * /usr/local/lib/mc_controller/
+   *
+   * The value is stored in a thread_local variable and is meant to be used in the constructor of MCController
+   */
+  static void set_loading_location(std::string_view location);
+
+private:
+  /** Stores the loading location provided by the loader via \ref set_loading_location */
+  std::string loading_location_;
 };
 
 namespace details

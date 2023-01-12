@@ -147,6 +147,11 @@ void LTDLHandle::close()
 #endif
 }
 
+std::string LTDLHandle::dir() const
+{
+  return bfs::path(path_).parent_path().string();
+}
+
 Loader::callback_t Loader::default_cb = [](const std::string &, LTDLHandle &) {};
 
 std::string Loader::debug_suffix = "/debug";
