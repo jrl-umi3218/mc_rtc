@@ -109,7 +109,7 @@ $(document).ready(function(){initNavTree('functions_func_u.html','');});
 , <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#a616fc85f14d61c0e6294489bad2e8e0a">mc_tasks::lipm_stabilizer::ZMPCC</a>
 , <a class="el" href="structmc__tasks_1_1LookAtFrameTask.html#a3d6e4349e8e324fbb76419d13c463521">mc_tasks::LookAtFrameTask</a>
 , <a class="el" href="structmc__tasks_1_1LookAtTFTask.html#a15ea55b0712695f2b46284710b49aad1">mc_tasks::LookAtTFTask</a>
-, <a class="el" href="structmc__tasks_1_1MetaTask.html#a570ef153c01abad5d5642b7a16f44d79">mc_tasks::MetaTask</a>
+, <a class="el" href="structmc__tasks_1_1MetaTask.html#a21e9870f7434084d52299f18f8f86da7">mc_tasks::MetaTask</a>
 , <a class="el" href="structmc__tasks_1_1PostureTask.html#a47374edf3d1448c75f6306a0889b22bf">mc_tasks::PostureTask</a>
 , <a class="el" href="structmc__tasks_1_1SmoothTask.html#a2615cd1f68019e4b4b8947c9271e2062">mc_tasks::SmoothTask&lt; objT &gt;</a>
 , <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a6b58c786b84e0d4f82f6e434589c0e80">mc_tasks::SplineTrajectoryTask&lt; Derived &gt;</a>
@@ -128,6 +128,9 @@ $(document).ready(function(){initNavTree('functions_func_u.html','');});
 <li>update_robot_publisher()
 : <a class="el" href="structmc__rtc_1_1ROSBridge.html#a4972e3f6b94d800663017ba05364f172">mc_rtc::ROSBridge</a>
 </li>
+<li>updateb()
+: <a class="el" href="structmc__tvm_1_1DynamicFunction.html#ab4eb8bd4012f724a15c51393573914a9">mc_tvm::DynamicFunction</a>
+</li>
 <li>updateConstrSize()
 : <a class="el" href="structmc__solver_1_1TasksQPSolver.html#ac79c5dba70d636cdc378224c343b2d27">mc_solver::TasksQPSolver</a>
 </li>
@@ -144,9 +147,40 @@ $(document).ready(function(){initNavTree('functions_func_u.html','');});
 <li>updateIndexes()
 : <a class="el" href="structmc__rbdyn_1_1Robots.html#a577b02e4a3e2384c60bfe983ad362448">mc_rbdyn::Robots</a>
 </li>
+<li>updateJacobian()
+: <a class="el" href="classmc__tvm_1_1CollisionFunction.html#a72160c6b52543f69a0538d5cdbabc03f">mc_tvm::CollisionFunction</a>
+, <a class="el" href="structmc__tvm_1_1CoMInConvexFunction.html#a7e05e0f2de547e844a5c5b5e15ef6ce8">mc_tvm::CoMInConvexFunction</a>
+, <a class="el" href="structmc__tvm_1_1DynamicFunction.html#a2b7f718f70ce7400c67f7f309850e32b">mc_tvm::DynamicFunction</a>
+, <a class="el" href="structmc__tvm_1_1GazeFunction.html#a6cf12427404d53a64bf17ef2a9e62cbf">mc_tvm::GazeFunction</a>
+, <a class="el" href="classmc__tvm_1_1JointsSelectorFunction.html#adcd3b4fdbde3f5d99dd914e31bab91a7">mc_tvm::JointsSelectorFunction</a>
+, <a class="el" href="classmc__tvm_1_1OrientationFunction.html#a328ff8be4b3df309caf5926cc9f40bbd">mc_tvm::OrientationFunction</a>
+, <a class="el" href="structmc__tvm_1_1PositionBasedVisServoFunction.html#a1da2035cb39da965731df1ffcd2fa3a0">mc_tvm::PositionBasedVisServoFunction</a>
+, <a class="el" href="classmc__tvm_1_1PositionFunction.html#a0a9941c4208207b79ad9fd4c61a702f6">mc_tvm::PositionFunction</a>
+, <a class="el" href="structmc__tvm_1_1RobotFrame.html#a717bad80165b51da9fb4a33765fb2831">mc_tvm::RobotFrame</a>
+, <a class="el" href="classmc__tvm_1_1TransformFunction.html#a227e3b6090271c9ded8b82dfdf9f6562">mc_tvm::TransformFunction</a>
+, <a class="el" href="classmc__tvm_1_1VectorOrientationFunction.html#a12ee5055b727e351850e7e4834e48c92">mc_tvm::VectorOrientationFunction</a>
+</li>
+<li>updateJacobians()
+: <a class="el" href="structmc__tvm_1_1DynamicFunction_1_1ForceContact.html#a4d7f19c3e9e9599c870e1b90585404f2">mc_tvm::DynamicFunction::ForceContact</a>
+</li>
+<li>updateJDot()
+: <a class="el" href="classmc__tvm_1_1JointsSelectorFunction.html#a7f0678f3c90274aabb3bc51a391a17d2">mc_tvm::JointsSelectorFunction</a>
+, <a class="el" href="structmc__tvm_1_1RobotFrame.html#aa21e608aa91ef692d313c044b7cb805c">mc_tvm::RobotFrame</a>
+</li>
+<li>updateNormalAcceleration()
+: <a class="el" href="classmc__tvm_1_1CollisionFunction.html#a523bb39e53949b915c4e65f28b75a1e6">mc_tvm::CollisionFunction</a>
+, <a class="el" href="structmc__tvm_1_1CoMInConvexFunction.html#afb2503489acaac7adee62163505b7326">mc_tvm::CoMInConvexFunction</a>
+, <a class="el" href="structmc__tvm_1_1GazeFunction.html#a890f53351fed61c1f5b4090bde29d73f">mc_tvm::GazeFunction</a>
+, <a class="el" href="classmc__tvm_1_1OrientationFunction.html#a669f44d6039be0cb7d4d35f732ef83af">mc_tvm::OrientationFunction</a>
+, <a class="el" href="structmc__tvm_1_1PositionBasedVisServoFunction.html#a80ed1123a17fd5b5cbd8d8ed035ea9b1">mc_tvm::PositionBasedVisServoFunction</a>
+, <a class="el" href="classmc__tvm_1_1PositionFunction.html#a51262e8fc439c6c5ffcb9b6b79177241">mc_tvm::PositionFunction</a>
+, <a class="el" href="structmc__tvm_1_1RobotFrame.html#a75c299966804b0861a9f32ab903ab78d">mc_tvm::RobotFrame</a>
+, <a class="el" href="classmc__tvm_1_1TransformFunction.html#aa21b976629a6a17090393f791390f0ae">mc_tvm::TransformFunction</a>
+, <a class="el" href="classmc__tvm_1_1VectorOrientationFunction.html#ad946978d158a134ff404f2a18c3f3857">mc_tvm::VectorOrientationFunction</a>
+</li>
 <li>updateNrVars()
 : <a class="el" href="structmc__solver_1_1details_1_1CompoundJointConstraint.html#ad18a2350451245577b50d4556cc566fa">mc_solver::details::CompoundJointConstraint</a>
-, <a class="el" href="structmc__solver_1_1TasksQPSolver.html#a58443a2b16c89ff6ee257e368a893aaf">mc_solver::TasksQPSolver</a>
+, <a class="el" href="structmc__solver_1_1TasksQPSolver.html#a85e9d39703003fa2862bde2b79eff333">mc_solver::TasksQPSolver</a>
 , <a class="el" href="structmc__solver_1_1utils_1_1Constraint.html#ab383394a69ab62c4fab23378e64868de">mc_solver::utils::Constraint&lt; ConstraintT, UpdateT &gt;</a>
 </li>
 <li>updateNrVarsImpl()
@@ -161,6 +195,36 @@ $(document).ready(function(){initNavTree('functions_func_u.html','');});
 </li>
 <li>updateObservers()
 : <a class="el" href="structmc__observers_1_1ObserverPipeline.html#a4c1159cf43b722d4b625136a30bf632c">mc_observers::ObserverPipeline</a>
+</li>
+<li>updatePosition()
+: <a class="el" href="structmc__tvm_1_1Frame.html#af8cc091e8c093bdaebdcc006aba6a34a">mc_tvm::Frame</a>
+</li>
+<li>updateValue()
+: <a class="el" href="classmc__tvm_1_1CollisionFunction.html#a7493c08428352a052b5d09ecbf12b34a">mc_tvm::CollisionFunction</a>
+, <a class="el" href="structmc__tvm_1_1CoMInConvexFunction.html#a63d84411d467e2be2c76d0e9442ff517">mc_tvm::CoMInConvexFunction</a>
+, <a class="el" href="structmc__tvm_1_1GazeFunction.html#a03a21038f61e035bf05b1ed2f68c9099">mc_tvm::GazeFunction</a>
+, <a class="el" href="classmc__tvm_1_1OrientationFunction.html#aab921b735cfcd97da765b73e33330d8d">mc_tvm::OrientationFunction</a>
+, <a class="el" href="structmc__tvm_1_1PositionBasedVisServoFunction.html#a1c622b86cf6cc80ed885f90b45c13cc8">mc_tvm::PositionBasedVisServoFunction</a>
+, <a class="el" href="classmc__tvm_1_1PositionFunction.html#a53fb98be14baccd4edeecba222f1b411">mc_tvm::PositionFunction</a>
+, <a class="el" href="classmc__tvm_1_1TransformFunction.html#a51c8ce5753f01a0e9c5d5ba5d1988518">mc_tvm::TransformFunction</a>
+, <a class="el" href="classmc__tvm_1_1VectorOrientationFunction.html#a68692c20ff161269d9aac5920bb00bea">mc_tvm::VectorOrientationFunction</a>
+</li>
+<li>updateValue_()
+: <a class="el" href="classmc__tvm_1_1PostureFunction.html#a8fa65370558dfbb40730ad1118071c20">mc_tvm::PostureFunction</a>
+</li>
+<li>updateVelocity()
+: <a class="el" href="classmc__tvm_1_1CollisionFunction.html#a170da4aa7f7bc5393670cdfa959234a8">mc_tvm::CollisionFunction</a>
+, <a class="el" href="structmc__tvm_1_1CoMInConvexFunction.html#a79f5e0a686f3a47a310b4855772ddd5d">mc_tvm::CoMInConvexFunction</a>
+, <a class="el" href="structmc__tvm_1_1Frame.html#a7b7e2b9e307e6a42d1301e3a3d411826">mc_tvm::Frame</a>
+, <a class="el" href="structmc__tvm_1_1GazeFunction.html#a23ac4daf288cf9b74bdb0a165de4a8a8">mc_tvm::GazeFunction</a>
+, <a class="el" href="classmc__tvm_1_1OrientationFunction.html#afb23113b4e069c511d550a6a1cc0a878">mc_tvm::OrientationFunction</a>
+, <a class="el" href="structmc__tvm_1_1PositionBasedVisServoFunction.html#a2f42a80976b991ac3573de1db0b77ac5">mc_tvm::PositionBasedVisServoFunction</a>
+, <a class="el" href="classmc__tvm_1_1PositionFunction.html#a40235ff5dea155619eb76466e2456a9a">mc_tvm::PositionFunction</a>
+, <a class="el" href="classmc__tvm_1_1TransformFunction.html#a04d68ff68f0910e7e664b2feb4d2ea5e">mc_tvm::TransformFunction</a>
+, <a class="el" href="classmc__tvm_1_1VectorOrientationFunction.html#a5e05e4ad3580f2ff302079272f84c6af">mc_tvm::VectorOrientationFunction</a>
+</li>
+<li>updateVelocity_()
+: <a class="el" href="classmc__tvm_1_1PostureFunction.html#ab7a24a7c14627f908afbbb714eda7877">mc_tvm::PostureFunction</a>
 </li>
 </ul>
 </div><!-- contents -->

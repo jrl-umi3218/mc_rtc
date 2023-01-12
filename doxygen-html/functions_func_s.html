@@ -192,7 +192,11 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 <li>setContacts()
 : <a class="el" href="structmc__solver_1_1QPSolver.html#ae628e7f079f7ec8dd5ba2818ffe27adc">mc_solver::QPSolver</a>
 , <a class="el" href="structmc__solver_1_1TasksQPSolver.html#af2b544574a42c1a063f7c762af4686c2">mc_solver::TasksQPSolver</a>
+, <a class="el" href="structmc__solver_1_1TVMQPSolver.html#ac8cb70948b99762572221fe87d3ac243">mc_solver::TVMQPSolver</a>
 , <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a91e33c4eb45fcea0a744aeb63accb306">mc_tasks::lipm_stabilizer::StabilizerTask</a>
+</li>
+<li>setDepthEstimate()
+: <a class="el" href="structmc__tvm_1_1GazeFunction.html#ac9b99cb66f863e32f73074f2263eb42a">mc_tvm::GazeFunction</a>
 </li>
 <li>setEncoderValues()
 : <a class="el" href="structmc__control_1_1MCGlobalController.html#a2703ab87cc9556a1f18cc883113da33c">mc_control::MCGlobalController</a>
@@ -285,10 +289,10 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 : <a class="el" href="structmc__control_1_1Gripper.html#a1627ecadc67cc990de55e11283f2da8b">mc_control::Gripper</a>
 </li>
 <li>setTargetQ()
-: <a class="el" href="structmc__control_1_1Gripper.html#a1e92af3c043c39987da91fb4f53d708e">mc_control::Gripper</a>
+: <a class="el" href="structmc__control_1_1Gripper.html#a1760f434fbb9e5a4b22263f6569af824">mc_control::Gripper</a>
 </li>
 <li>setTargetQ_()
-: <a class="el" href="structmc__control_1_1Gripper.html#a44438b867b1b5a068c94d1c837cacb7e">mc_control::Gripper</a>
+: <a class="el" href="structmc__control_1_1Gripper.html#ad45a2f57cc804d0a072e98b61946de48">mc_control::Gripper</a>
 </li>
 <li>setTargetWrench()
 : <a class="el" href="structmc__tasks_1_1force_1_1ComplianceTask.html#a2b45259a30107a6204afe29de4789d5e">mc_tasks::force::ComplianceTask</a>
@@ -297,7 +301,7 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 : <a class="el" href="structmc__rtc_1_1Logger.html#a986b2719c1337aa9d1e84e2b0b34481c">mc_rtc::Logger</a>
 </li>
 <li>setWrenches()
-: <a class="el" href="structmc__control_1_1MCGlobalController.html#a72e0751e2864a0d6ad5f53baaf227338">mc_control::MCGlobalController</a>
+: <a class="el" href="structmc__control_1_1MCGlobalController.html#a501402db79c4bc10aeb0b6e6afbb70d8">mc_control::MCGlobalController</a>
 </li>
 <li>setZeroTargetWrench()
 : <a class="el" href="structmc__tasks_1_1force_1_1CoPTask.html#ae95ca91c45eb45a1946e84377ddffa8b">mc_tasks::force::CoPTask</a>
@@ -336,14 +340,18 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 <li>solveAndBuildTime()
 : <a class="el" href="structmc__solver_1_1QPSolver.html#a4fdc43b5c12ffef1c046652c45b85fc1">mc_solver::QPSolver</a>
 , <a class="el" href="structmc__solver_1_1TasksQPSolver.html#a5b621d10a942844b56b7e63511bf7f56">mc_solver::TasksQPSolver</a>
+, <a class="el" href="structmc__solver_1_1TVMQPSolver.html#ab8391ed460f7ef2471353e98ec7cb853">mc_solver::TVMQPSolver</a>
 </li>
 <li>solver()
-: <a class="el" href="structmc__control_1_1MCController.html#a2ba815b606908b3c2798234812bbecf4">mc_control::MCController</a>
+: <a class="el" href="structmc__control_1_1details_1_1BackendSpecificController.html#a1d32e86f2fb490c21d8497abce18022f">mc_control::details::BackendSpecificController&lt; backend, SolverT &gt;</a>
+, <a class="el" href="structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html#a82c05dcf942cd6f8a9b48123b6914d9c">mc_control::fsm::details::BackendSpecificController&lt; backend, SolverT &gt;</a>
+, <a class="el" href="structmc__control_1_1MCController.html#a2ba815b606908b3c2798234812bbecf4">mc_control::MCController</a>
 , <a class="el" href="structmc__solver_1_1TasksQPSolver.html#a02c2f1d3959dd68e6d9042eb00cd0428">mc_solver::TasksQPSolver</a>
 </li>
 <li>solveTime()
 : <a class="el" href="structmc__solver_1_1QPSolver.html#ab4a6f65ecfc19ec7c662fee29ed3125f">mc_solver::QPSolver</a>
 , <a class="el" href="structmc__solver_1_1TasksQPSolver.html#a6ccfd376fb7e4bcd5bcfa85fc4bd0369">mc_solver::TasksQPSolver</a>
+, <a class="el" href="structmc__solver_1_1TVMQPSolver.html#ac04df7dc7cec25e02f3bb0e6e21b8832">mc_solver::TVMQPSolver</a>
 </li>
 <li>speed()
 : <a class="el" href="structmc__tasks_1_1AddRemoveContactTask.html#a92268af15885043be699e14dc3683fda">mc_tasks::AddRemoveContactTask</a>
@@ -443,8 +451,8 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 <li>stiffness()
 : <a class="el" href="structmc__tasks_1_1AddRemoveContactTask.html#a48baadecb63cdda817bda05f6e8f1bfa">mc_tasks::AddRemoveContactTask</a>
 , <a class="el" href="structmc__tasks_1_1force_1_1ComplianceTask.html#a449d3d8ab18b84bb0d12b932b8aea91a">mc_tasks::force::ComplianceTask</a>
-, <a class="el" href="structmc__tasks_1_1PostureTask.html#a15a1e19481a9a67cc4c0a9db183f7463">mc_tasks::PostureTask</a>
-, <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a3754c421be82d0d654b1e3c6d6e269fe">mc_tasks::SplineTrajectoryTask&lt; Derived &gt;</a>
+, <a class="el" href="structmc__tasks_1_1PostureTask.html#a5110734784d263558b2ae937f2f74705">mc_tasks::PostureTask</a>
+, <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a05b539bc8a2cb07958b1a6f2e8b1ac66">mc_tasks::SplineTrajectoryTask&lt; Derived &gt;</a>
 , <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#aaec71d54b94af7e896d496d95e066387">mc_tasks::TrajectoryTaskGeneric</a>
 , <a class="el" href="structmc__tasks_1_1TransformTask.html#aed51021240e5eda4c056af715968efb3">mc_tasks::TransformTask</a>
 </li>
@@ -482,7 +490,7 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 <li>style()
 : <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#a9298450fcf5a9549db2df14dc6223e4a">mc_rtc::gui::plot::impl::AbscissaOrdinate&lt; GetXT, GetYT &gt;</a>
 , <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a9f8bf84f326b02b180223b983089e84e">mc_rtc::gui::plot::impl::Ordinate&lt; GetT &gt;</a>
-, <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#a4968cba9d0023d60683f78c1d1cd02eb">mc_rtc::gui::plot::PolygonDescription</a>
+, <a class="el" href="structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#a00a7628372d8f7a8fcb4ae2532c8ca86">mc_rtc::gui::plot::PolygonDescription</a>
 </li>
 <li>success()
 : <a class="el" href="structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html#acaf76f3405b90910b3438e4085f94e00">mc_observers::ObserverPipeline::PipelineObserver</a>
@@ -495,7 +503,7 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 : <a class="el" href="structmc__control_1_1MCController.html#ab071255e2e17b62e05aec6f67d88ce44">mc_control::MCController</a>
 </li>
 <li>surface()
-: <a class="el" href="structmc__rbdyn_1_1Robot.html#a032e4252cb8c2c1d2ab82bd353b1cfb2">mc_rbdyn::Robot</a>
+: <a class="el" href="structmc__rbdyn_1_1Robot.html#aa4b724e51881215dd4293f9578656755">mc_rbdyn::Robot</a>
 </li>
 <li>Surface()
 : <a class="el" href="structmc__rbdyn_1_1Surface.html#a8c4fe07a3ad4392974c63722916b28db">mc_rbdyn::Surface</a>

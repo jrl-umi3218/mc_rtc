@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['h',['H',['../structmc__tvm_1_1Robot.html#af33e3f3207ee3661b0d9eebc6513fc53',1,'mc_tvm::Robot']]],
+  ['h_5f',['h_',['../structmc__tvm_1_1RobotFrame.html#ad2948decfee161d88cb03d5400386633',1,'mc_tvm::RobotFrame']]],
   ['halflength',['halfLength',['../structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a2778ca298df3670ee48b9c2fb269e44c',1,'mc_tasks::lipm_stabilizer::internal::Contact']]],
   ['halfsitting_2eh',['HalfSitting.h',['../HalfSitting_8h.html',1,'']]],
   ['halfsittingstate',['HalfSittingState',['../structmc__control_1_1fsm_1_1HalfSittingState.html',1,'mc_control::fsm']]],
@@ -17,6 +19,8 @@ var searchData=
   ['has_5fconfiguration_5fsave_5fobject',['has_configuration_save_object',['../structmc__rtc_1_1internal_1_1has__configuration__save__object.html',1,'mc_rtc::internal']]],
   ['has_5fobject',['has_object',['../structmc__rtc_1_1ObjectLoader.html#aa0739f917476b8d1af3c3de7b32c1d1b',1,'mc_rtc::ObjectLoader']]],
   ['has_5fobserver',['has_observer',['../structmc__observers_1_1ObserverLoader.html#aac203ca60191fa7e4041339a52baf625',1,'mc_observers::ObserverLoader']]],
+  ['has_5frefaccel_5fv',['has_refAccel_v',['../namespacemc__tasks_1_1details.html#a980685e35817ee139bf44bec647b744b',1,'mc_tasks::details']]],
+  ['has_5frefvel_5fv',['has_refVel_v',['../namespacemc__tasks_1_1details.html#a76f0d5b92ab362dcfc65d4183f34998a',1,'mc_tasks::details']]],
   ['has_5frobot',['has_robot',['../structmc__rbdyn_1_1RobotLoader.html#a3edda7983edda591b3664eef5c450144',1,'mc_rbdyn::RobotLoader']]],
   ['hasactivejoint',['hasActiveJoint',['../structmc__control_1_1Gripper.html#a4df55158c2f68b17313b0eb90e74f227',1,'mc_control::Gripper']]],
   ['hasbody',['hasBody',['../structmc__rbdyn_1_1Robot.html#a8353aa6a66630a85c9249298ed960c6a',1,'mc_rbdyn::Robot']]],
@@ -39,6 +43,8 @@ var searchData=
   ['hasstate',['hasState',['../structmc__control_1_1fsm_1_1StateFactory.html#a1302d798bbbbe79d0d5c9df9a1cdc506',1,'mc_control::fsm::StateFactory']]],
   ['hassurface',['hasSurface',['../structmc__rbdyn_1_1Robot.html#a47874ad9d5abdcd85701b02e2c85cefb',1,'mc_rbdyn::Robot']]],
   ['hasvalues',['hasValues',['../structmc__trajectory_1_1SequenceInterpolator.html#a0b03ecdb30393152c9e511862aad9571',1,'mc_trajectory::SequenceInterpolator']]],
+  ['hat',['hat',['../namespacemc__rbdyn.html#adfd1b3b7507cf3de890aeb3eca8376d0',1,'mc_rbdyn']]],
+  ['hat_2eh',['hat.h',['../hat_8h.html',1,'']]],
   ['head_5fdiam',['head_diam',['../structmc__rtc_1_1gui_1_1ArrowConfig.html#a26256e219f431d46b0294dae46f9a080',1,'mc_rtc::gui::ArrowConfig']]],
   ['head_5flen',['head_len',['../structmc__rtc_1_1gui_1_1ArrowConfig.html#a79bdd719f1213d5d0649b7ea1182b559',1,'mc_rtc::gui::ArrowConfig']]],
   ['heatmap',['heatmap',['../namespacemc__rtc_1_1utils.html#a82fe941770f36f355a999699984b5943',1,'mc_rtc::utils']]],

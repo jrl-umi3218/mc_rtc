@@ -24,9 +24,17 @@ digraph "include/mc_rtc/gui/Checkbox.h"
   Node26 [label="include/mc_control\l/ControllerLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ControllerLoader_8h.html"];
   Node19 -> Node27 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node27 [label="include/mc_control\l/fsm/Controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Controller_8h.html"];
+  Node27 -> Node28 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node28 [label="include/mc_control\l/fsm/TasksController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$fsm_2TasksController_8h.html"];
+  Node27 -> Node29 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 [label="include/mc_control\l/fsm/TVMController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$fsm_2TVMController_8h.html"];
   Node19 -> Node22 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node19 -> Node28 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node28 [label="include/mc_control\l/mc_controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__controller_8h.html"];
-  Node19 -> Node29 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node29 [label="include/mc_control\l/mc_python_controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__python__controller_8h.html"];
+  Node19 -> Node30 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 [label="include/mc_control\l/mc_controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__controller_8h.html"];
+  Node19 -> Node31 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31 [label="include/mc_control\l/mc_python_controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__python__controller_8h.html"];
+  Node19 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32 [label="include/mc_control\l/TasksController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$TasksController_8h.html"];
+  Node19 -> Node33 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node33 [label="include/mc_control\l/TVMController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$TVMController_8h.html"];
 }

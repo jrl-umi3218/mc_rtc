@@ -199,8 +199,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7326b703230a47c253e4a88202d14906"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7934da95aafbb164740323dad4c90ef"><td class="memItemLeft" align="right" valign="top">const Eigen::VectorXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ad7934da95aafbb164740323dad4c90ef">normalAcc</a> () const</td></tr>
 <tr class="separator:ad7934da95aafbb164740323dad4c90ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61edf98f2254cb6e55a86fb2dc568ed7"><td class="memItemLeft" align="right" valign="top">const Eigen::MatrixXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a61edf98f2254cb6e55a86fb2dc568ed7">jac</a> () const</td></tr>
-<tr class="separator:a61edf98f2254cb6e55a86fb2dc568ed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ce1c710fe9e9383a6a8d1a7fd289d98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a2ce1c710fe9e9383a6a8d1a7fd289d98">load</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config) override</td></tr>
 <tr class="memdesc:a2ce1c710fe9e9383a6a8d1a7fd289d98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load parameters from a Configuration object.  <a href="#a2ce1c710fe9e9383a6a8d1a7fd289d98">More...</a><br /></td></tr>
 <tr class="separator:a2ce1c710fe9e9383a6a8d1a7fd289d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -229,9 +227,9 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ac2595654b4e14860f6a9c91fc256017e"><td class="memTemplParams" colspan="2">template&lt;typename ErrorT , typename... Args&gt; </td></tr>
-<tr class="memitem:ac2595654b4e14860f6a9c91fc256017e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#ac2595654b4e14860f6a9c91fc256017e">finalize</a> (Args &amp;&amp;... args)</td></tr>
-<tr class="separator:ac2595654b4e14860f6a9c91fc256017e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b2596e9cfd1aba5fd0490484df228ec"><td class="memTemplParams" colspan="2">template&lt;Backend backend, typename ErrorT , typename... Args&gt; </td></tr>
+<tr class="memitem:a7b2596e9cfd1aba5fd0490484df228ec"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a7b2596e9cfd1aba5fd0490484df228ec">finalize</a> (Args &amp;&amp;... args)</td></tr>
+<tr class="separator:a7b2596e9cfd1aba5fd0490484df228ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86b2a1916777f82da14c037b187f81d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a86b2a1916777f82da14c037b187f81d2">addToGUI</a> (<a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">mc_rtc::gui::StateBuilder</a> &amp;) override</td></tr>
 <tr class="separator:a86b2a1916777f82da14c037b187f81d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b0cd423e4e4f1ff855a85f018e22731"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#a3b0cd423e4e4f1ff855a85f018e22731">addToLogger</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
@@ -815,13 +813,13 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ac2595654b4e14860f6a9c91fc256017e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2595654b4e14860f6a9c91fc256017e">&#9670;&nbsp;</a></span>finalize()</h2>
+<a id="a7b2596e9cfd1aba5fd0490484df228ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b2596e9cfd1aba5fd0490484df228ec">&#9670;&nbsp;</a></span>finalize()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ErrorT , typename... Args&gt; </div>
+template&lt;Backend backend, typename ErrorT , typename... Args&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -853,23 +851,6 @@ template&lt;typename ErrorT , typename... Args&gt; </div>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a61edf98f2254cb6e55a86fb2dc568ed7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61edf98f2254cb6e55a86fb2dc568ed7">&#9670;&nbsp;</a></span>jac()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const Eigen::MatrixXd&amp; mc_tasks::TrajectoryTaskGeneric::jac </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -1813,8 +1794,9 @@ template&lt;typename ErrorT , typename... Args&gt; </div>
 </div><div class="memdoc">
 <p>Pointer to a dynamic wrapper that select specific joints</p>
 <p>In Tasks backend:</p><ul>
-<li>tasks::qp::JointSelector </li>
+<li>tasks::qp::JointSelector</li>
 </ul>
+<p>In TVM backend: <a class="el" href="classmc__tvm_1_1JointsSelectorFunction.html">mc_tvm::JointsSelectorFunction</a> </p>
 
 </div>
 </div>
@@ -1861,7 +1843,10 @@ template&lt;typename ErrorT , typename... Args&gt; </div>
 </div><div class="memdoc">
 <p>Pointer to the trajectory dynamic</p>
 <p>In Tasks backend:</p><ul>
-<li>tasks::qp::TrajectoryTask </li>
+<li>tasks::qp::TrajectoryTask</li>
+</ul>
+<p>In TVM backend:</p><ul>
+<li><a class="el" href="structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html">details::TVMTrajectoryTaskGeneric</a> </li>
 </ul>
 
 </div>

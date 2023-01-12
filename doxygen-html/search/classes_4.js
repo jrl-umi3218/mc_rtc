@@ -9,5 +9,6 @@ var searchData=
   ['deprecatedanchorframe',['DeprecatedAnchorFrame',['../structmc__control_1_1MCController_1_1DeprecatedAnchorFrame.html',1,'mc_control::MCController']]],
   ['device',['Device',['../structmc__rbdyn_1_1Device.html',1,'mc_rbdyn']]],
   ['deviceptrvector',['DevicePtrVector',['../structmc__rbdyn_1_1DevicePtrVector.html',1,'mc_rbdyn']]],
+  ['dynamicfunction',['DynamicFunction',['../structmc__tvm_1_1DynamicFunction.html',1,'mc_tvm']]],
   ['dynamicsconstraint',['DynamicsConstraint',['../structmc__solver_1_1DynamicsConstraint.html',1,'mc_solver']]]
 ];

@@ -76,12 +76,14 @@ var dir_c5d9ba9e59fcda315855869f4a23a264 =
       [ "SplineTrajectoryTask", "structmc__tasks_1_1SplineTrajectoryTask.html", "structmc__tasks_1_1SplineTrajectoryTask" ]
     ] ],
     [ "SurfaceTransformTask.h", "SurfaceTransformTask_8h.html", "SurfaceTransformTask_8h" ],
+    [ "tasks_traits.h", "tasks__traits_8h.html", "tasks__traits_8h" ],
     [ "TrajectoryTaskGeneric.h", "TrajectoryTaskGeneric_8h.html", [
       [ "TrajectoryTaskGeneric", "structmc__tasks_1_1TrajectoryTaskGeneric.html", "structmc__tasks_1_1TrajectoryTaskGeneric" ]
     ] ],
     [ "TransformTask.h", "TransformTask_8h.html", [
       [ "TransformTask", "structmc__tasks_1_1TransformTask.html", "structmc__tasks_1_1TransformTask" ]
     ] ],
+    [ "TVMTrajectoryTaskGeneric.h", "TVMTrajectoryTaskGeneric_8h.html", "TVMTrajectoryTaskGeneric_8h" ],
     [ "VectorOrientationTask.h", "VectorOrientationTask_8h.html", [
       [ "VectorOrientationTask", "structmc__tasks_1_1VectorOrientationTask.html", "structmc__tasks_1_1VectorOrientationTask" ]
     ] ]

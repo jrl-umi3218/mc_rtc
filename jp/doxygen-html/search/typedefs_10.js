@@ -6,6 +6,8 @@ var searchData=
   ['sensorptr',['SensorPtr',['../namespacemc__rbdyn.html#aa1e86054c466a23bfdcb3470f71c8aad',1,'mc_rbdyn']]],
   ['sequenceinterpolator6d',['SequenceInterpolator6d',['../structmc__tasks_1_1SplineTrajectoryTask.html#a8d2ac7fd3779da3324969baf637212bf',1,'mc_tasks::SplineTrajectoryTask']]],
   ['serialize_5ffn',['serialize_fn',['../structmc__rtc_1_1Logger.html#a6fd0d1237a81647e462f7af2b4225d5e',1,'mc_rtc::Logger']]],
+  ['set_5fref_5faccel_5ft',['set_ref_accel_t',['../structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a73ee1f6e3f1e8f4aa472964d15c68a4a',1,'mc_tasks::details::TVMTrajectoryTaskGeneric']]],
+  ['set_5fref_5fvel_5ft',['set_ref_vel_t',['../structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a3be6c87478fbc896cc12f056fdb4101e',1,'mc_tasks::details::TVMTrajectoryTaskGeneric']]],
   ['size_5ftype',['size_type',['../structmc__rbdyn_1_1Robots.html#af0ac255d3220c2726636279edf648921',1,'mc_rbdyn::Robots']]],
   ['spline_5fconstraints_5ft',['spline_constraints_t',['../structmc__trajectory_1_1ExactCubic.html#a808079084680fabc35d41f2fcd2918fa',1,'mc_trajectory::ExactCubic']]],
   ['splinetrajectorybase',['SplineTrajectoryBase',['../structmc__tasks_1_1BSplineTrajectoryTask.html#a81d5a557b19cceddeb5fe7911db9dceb',1,'mc_tasks::BSplineTrajectoryTask::SplineTrajectoryBase()'],['../structmc__tasks_1_1SplineTrajectoryTask.html#a649052a5fbf326990d2b3d20ec66ab19',1,'mc_tasks::SplineTrajectoryTask::SplineTrajectoryBase()']]],

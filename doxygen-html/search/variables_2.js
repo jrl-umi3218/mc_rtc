@@ -10,13 +10,17 @@ var searchData=
   ['biaslimit',['biasLimit',['../structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a35f46c04420cf9d3936ebeb71a2ad0de',1,'mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration']]],
   ['bilateralcontact',['bilateralContact',['../structmc__solver_1_1QPContactPtr.html#a31a08f61bfa921fa79dde45a30f72aa9',1,'mc_solver::QPContactPtr']]],
   ['black',['Black',['../structmc__rtc_1_1gui_1_1Color.html#a30bf9fd63c97d6aafcba351ef24623ce',1,'mc_rtc::gui::Color']]],
+  ['blocks_5f',['blocks_',['../structmc__tvm_1_1DynamicFunction_1_1ForceContact.html#a49b22391e8b1cc096eddca37b995c978',1,'mc_tvm::DynamicFunction::ForceContact::blocks_()'],['../structmc__tvm_1_1RobotFrame.html#a39cd40cec4116ab81c4d350b1fca6a60',1,'mc_tvm::RobotFrame::blocks_()']]],
   ['blue',['Blue',['../structmc__rtc_1_1gui_1_1Color.html#a5a61a49e6fc3a4164027706e24071ae3',1,'mc_rtc::gui::Color']]],
   ['body1',['body1',['../structmc__rbdyn_1_1Collision.html#a169addbd06a09743b06287121884f027',1,'mc_rbdyn::Collision']]],
   ['body2',['body2',['../structmc__rbdyn_1_1Collision.html#afde353de6419a4e248eec0851f664968',1,'mc_rbdyn::Collision']]],
+  ['body_5fframe_5f',['body_frame_',['../classmc__tvm_1_1VectorOrientationFunction.html#a4f42d318c27df526f7c344ede6b788d2',1,'mc_tvm::VectorOrientationFunction']]],
   ['bodybodysensors',['bodyBodySensors',['../structmc__rbdyn_1_1RobotData.html#aaea88c1f821415cf1d63e20fdef5f865',1,'mc_rbdyn::RobotData']]],
   ['bodyid',['bodyId',['../structmc__tasks_1_1AddRemoveContactTask.html#a8846f1a33c20ed70bf425b49027aba12',1,'mc_tasks::AddRemoveContactTask']]],
   ['bodymbcidx_5f',['bodyMbcIdx_',['../structmc__rbdyn_1_1RobotFrame.html#adee19234fa1267ab00958cbb30b4bd1f',1,'mc_rbdyn::RobotFrame']]],
   ['bodysensors',['bodySensors',['../structmc__rbdyn_1_1RobotData.html#a2168b5d056d55ed259dca4795d9f4064',1,'mc_rbdyn::RobotData']]],
   ['bodysensorsindex',['bodySensorsIndex',['../structmc__rbdyn_1_1RobotData.html#a67dc85b79dc89817f8522617b3fd0a3a',1,'mc_rbdyn::RobotData']]],
+  ['bodyvector_5f',['bodyVector_',['../classmc__tvm_1_1VectorOrientationFunction.html#a12e9e89d65cc03db772ef3382162574a',1,'mc_tvm::VectorOrientationFunction']]],
+  ['bodyvectorhat_5f',['bodyVectorHat_',['../classmc__tvm_1_1VectorOrientationFunction.html#abd0a93f0d2e87a1fbf5fd0bb751bd2d0',1,'mc_tvm::VectorOrientationFunction']]],
   ['bspline',['bspline',['../structmc__tasks_1_1BSplineTrajectoryTask.html#ac881b5b505b63c5e89bec2e598c767e0',1,'mc_tasks::BSplineTrajectoryTask::bspline()'],['../structmc__tasks_1_1ExactCubicTrajectoryTask.html#a825212a1055ad43955b8284562905f13',1,'mc_tasks::ExactCubicTrajectoryTask::bspline()']]]
 ];

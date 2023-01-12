@@ -24,9 +24,17 @@ digraph "include/mc_rtc/gui/Visual.h"
   Node76 [label="include/mc_control\l/ControllerLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ControllerLoader_8h.html"];
   Node69 -> Node77 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node77 [label="include/mc_control\l/fsm/Controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Controller_8h.html"];
+  Node77 -> Node78 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node78 [label="include/mc_control\l/fsm/TasksController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$fsm_2TasksController_8h.html"];
+  Node77 -> Node79 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node79 [label="include/mc_control\l/fsm/TVMController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$fsm_2TVMController_8h.html"];
   Node69 -> Node72 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node69 -> Node78 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node78 [label="include/mc_control\l/mc_controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__controller_8h.html"];
-  Node69 -> Node79 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node79 [label="include/mc_control\l/mc_python_controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__python__controller_8h.html"];
+  Node69 -> Node80 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node80 [label="include/mc_control\l/mc_controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__controller_8h.html"];
+  Node69 -> Node81 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node81 [label="include/mc_control\l/mc_python_controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__python__controller_8h.html"];
+  Node69 -> Node82 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node82 [label="include/mc_control\l/TasksController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$TasksController_8h.html"];
+  Node69 -> Node83 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node83 [label="include/mc_control\l/TVMController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$TVMController_8h.html"];
 }

@@ -9,11 +9,15 @@ var searchData=
   ['scale',['scale',['../structmc__rtc_1_1gui_1_1ArrowConfig.html#afa8c14add2dbeefbebee6a86217bfc4e',1,'mc_rtc::gui::ArrowConfig::scale()'],['../structmc__rtc_1_1gui_1_1PointConfig.html#aec3bebebe03aa2f57a8e9dfab49e55a2',1,'mc_rtc::gui::PointConfig::scale()']]],
   ['sdist',['sDist',['../structmc__rbdyn_1_1Collision.html#a2853ab9ab669747303ccda6b22bb7d77',1,'mc_rbdyn::Collision']]],
   ['second',['second',['../structmc__tasks_1_1lipm__stabilizer_1_1ContactDescription.html#a8dad298937c721041146a906fdbddb68',1,'mc_tasks::lipm_stabilizer::ContactDescription']]],
+  ['selector_5f',['selector_',['../structmc__tvm_1_1CollisionFunction_1_1ObjectData.html#a4d34de48fe9791f7c04817024b0fc8e5',1,'mc_tvm::CollisionFunction::ObjectData']]],
   ['selectort_5f',['selectorT_',['../structmc__tasks_1_1TrajectoryTaskGeneric.html#ac1e629f49bb9c961a4f44c66b4b23d18',1,'mc_tasks::TrajectoryTaskGeneric']]],
   ['selfcollisionconstraint',['selfCollisionConstraint',['../structmc__control_1_1MCController.html#a3f37903af5e6a3806018826f196f28ee',1,'mc_control::MCController']]],
   ['sensor_5f',['sensor_',['../structmc__rbdyn_1_1RobotFrame.html#a4cb8f9a941f66cbe0a2bccc17a6155e0',1,'mc_rbdyn::RobotFrame']]],
   ['server_5f',['server_',['../structmc__control_1_1ControllerClient.html#a623d95e96630e3bb80d8a61349a98094',1,'mc_control::ControllerClient']]],
+  ['setrefaccel',['setRefAccel',['../structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a048faf8441384bc7f98b99a2e8e6dffb',1,'mc_tasks::details::TVMTrajectoryTaskGeneric']]],
+  ['setrefvel',['setRefVel',['../structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a118ddccef4122355946277ea19db6cc4',1,'mc_tasks::details::TVMTrajectoryTaskGeneric']]],
   ['shaft_5fdiam',['shaft_diam',['../structmc__rtc_1_1gui_1_1ArrowConfig.html#a863ad38d78a492d921944bd9093a8f83',1,'mc_rtc::gui::ArrowConfig']]],
+  ['shortjacmat_5f',['shortJacMat_',['../structmc__tvm_1_1GazeFunction.html#acf5184f28cd64c8eb4bd52b35d9bdf39',1,'mc_tvm::GazeFunction::shortJacMat_()'],['../structmc__tvm_1_1PositionBasedVisServoFunction.html#af564c2bc549d9f4a4693cb3d8d8941d9',1,'mc_tvm::PositionBasedVisServoFunction::shortJacMat_()'],['../classmc__tvm_1_1TransformFunction.html#a8683e370a63deb781efef9504846efce',1,'mc_tvm::TransformFunction::shortJacMat_()']]],
   ['should_5falways_5frun',['should_always_run',['../structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html#a4acbf002781aa0c45fbd43c8829c0bbd',1,'mc_control::GlobalPlugin::GlobalPluginConfiguration']]],
   ['should_5frun_5fafter',['should_run_after',['../structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html#a5eac14f1a695e60030cd2a104e75168f',1,'mc_control::GlobalPlugin::GlobalPluginConfiguration']]],
   ['should_5frun_5fbefore',['should_run_before',['../structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html#a8d5d8ec0e6f797e19f52c661902581c6',1,'mc_control::GlobalPlugin::GlobalPluginConfiguration']]],
@@ -25,7 +29,8 @@ var searchData=
   ['side_5f',['side_',['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#ae33beeb0efca412dd64fcbad5e984c48',1,'mc_rtc::gui::plot::impl::AbscissaOrdinate::side_()'],['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a73f245b506213662fd3d5f3deb1eb837',1,'mc_rtc::gui::plot::impl::Ordinate::side_()']]],
   ['solid',['Solid',['../plot_2types_8h.html#ae070f931bda093c33a301115abc450b1',1,'types.h']]],
   ['speed_5f',['speed_',['../structmc__tasks_1_1AddRemoveContactTask.html#afcdad65af3391e9059dbfac1db885679',1,'mc_tasks::AddRemoveContactTask']]],
-  ['speedmat',['speedMat',['../structmc__tasks_1_1AddRemoveContactTask.html#ae14972bb1047cfc306dc198a6cb2a09a',1,'mc_tasks::AddRemoveContactTask']]],
+  ['speedmat',['speedMat',['../structmc__tasks_1_1AddRemoveContactTask.html#aa3f4a2997b3c4112f628b0023bf5b668',1,'mc_tasks::AddRemoveContactTask']]],
+  ['speedvec_5f',['speedVec_',['../classmc__tvm_1_1CollisionFunction.html#a60c715766d717b2264aa14011f29ccf6',1,'mc_tvm::CollisionFunction']]],
   ['springsbodies',['springsBodies',['../structmc__rbdyn_1_1Springs.html#a6c66bef3fc4e0dc969d0924fc01e028b',1,'mc_rbdyn::Springs']]],
   ['springsjoints',['springsJoints',['../structmc__rbdyn_1_1Springs.html#acb0fbbe6da7929023e50ef5f4a3471d4',1,'mc_rbdyn::Springs']]],
   ['stabilizertask_5f',['stabilizerTask_',['../structmc__control_1_1fsm_1_1StabilizerStandingState.html#ac1b5a6462db239740800b703e5ef6d38',1,'mc_control::fsm::StabilizerStandingState']]],
@@ -49,5 +54,6 @@ var searchData=
   ['supportmax_5f',['supportMax_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae1133e256a909367f839ecef2528c7be',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['supportmin_5f',['supportMin_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a37b5b7e6f2acd693711f6b1e8c7310db',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['supportpolygons_5f',['supportPolygons_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad55b59e574799dcf11bc7598b8a6cea9',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
-  ['surfacename',['surfaceName',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html#a1c50fb7bcd1942de3e2dcec516a2fcfe',1,'mc_tasks::lipm_stabilizer::StabilizerTask::ExternalWrench']]]
+  ['surfacename',['surfaceName',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html#a1c50fb7bcd1942de3e2dcec516a2fcfe',1,'mc_tasks::lipm_stabilizer::StabilizerTask::ExternalWrench']]],
+  ['surfacevelocity_5f',['surfaceVelocity_',['../structmc__tvm_1_1GazeFunction.html#af08a5022ce754f24900192b872c3f7ed',1,'mc_tvm::GazeFunction']]]
 ];

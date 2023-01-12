@@ -9,12 +9,10 @@ digraph "mc_tasks::AddContactTask"
   Node4 [label="mc_tasks::AddRemoveContactTask",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1AddRemoveContactTask.html",tooltip="Add or remove a contact. "];
   Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 [label="mc_tasks::MetaTask",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1MetaTask.html",tooltip="Represents a generic task. "];
-  Node6 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" robot\nenv" ,fontname="Helvetica"];
-  Node6 [label="mc_rbdyn::Robot",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1Robot.html"];
-  Node7 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" robots" ,fontname="Helvetica"];
-  Node7 [label="mc_rbdyn::Robots",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1Robots.html"];
+  Node6 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" robots" ,fontname="Helvetica"];
+  Node6 [label="mc_rbdyn::Robots",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1Robots.html"];
+  Node7 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="mc_rtc::shared\< Robots \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1shared.html"];
   Node8 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="mc_rtc::shared\< Robots \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1shared.html"];
-  Node9 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="std::conditional\< std\l::is_same\< void , void\l \>::value, std::enable\l_shared_from_this\< Robots\l  \>, void  \>::type",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node8 [label="std::conditional\< std\l::is_same\< void , void\l \>::value, std::enable\l_shared_from_this\< Robots\l  \>, void  \>::type",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

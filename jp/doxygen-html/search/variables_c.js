@@ -1,13 +1,16 @@
 var searchData=
 [
+  ['l_5fimg_5f',['L_img_',['../structmc__tvm_1_1GazeFunction.html#a0988c704abe22b041088a2abd35bfb25',1,'mc_tvm::GazeFunction']]],
+  ['l_5fimg_5fdot_5f',['L_img_dot_',['../structmc__tvm_1_1GazeFunction.html#ab331b4bd0b50d25e0a12d13eb49a5f95',1,'mc_tvm::GazeFunction']]],
+  ['l_5fpbvs_5f',['L_pbvs_',['../structmc__tvm_1_1PositionBasedVisServoFunction.html#a923364e1aafc71e26b4c181e7feabd2d',1,'mc_tvm::PositionBasedVisServoFunction']]],
+  ['l_5fpbvs_5fdot_5f',['L_pbvs_dot_',['../structmc__tvm_1_1PositionBasedVisServoFunction.html#af2a128af9c0b94d7bc55d3d3a9ea0849',1,'mc_tvm::PositionBasedVisServoFunction']]],
+  ['l_5fz_5fdot_5f',['L_Z_dot_',['../structmc__tvm_1_1GazeFunction.html#a2089b01a40331d63b594fd2489bc734d',1,'mc_tvm::GazeFunction']]],
   ['labelname_5f',['labelName_',['../structmc__control_1_1fsm_1_1MessageState.html#a19f38c0a2486d70b98b287fd201581cf',1,'mc_control::fsm::MessageState']]],
   ['lastconfig_5f',['lastConfig_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a4d2037034ff54a5625fc7009aa1c5448',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['left',['Left',['../plot_2types_8h.html#aa149c1d1da2ae1c94f1ae91f4919625a',1,'Left():&#160;types.h'],['../mc__tasks_2lipm__stabilizer_2Contact_8h.html#aa149c1d1da2ae1c94f1ae91f4919625a',1,'Left():&#160;Contact.h']]],
   ['leftfootratio_5f',['leftFootRatio_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a077f98071aa5d9ae2b861aba4edbc606',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['leftfootsurface',['leftFootSurface',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a30cc86b398c8b84bb07fd032e35d76e9',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
   ['lightgray',['LightGray',['../structmc__rtc_1_1gui_1_1Color.html#a3df51c77219b7e3811b711250de18017',1,'mc_rtc::gui::Color']]],
-  ['linveltask',['linVelTask',['../structmc__tasks_1_1AddRemoveContactTask.html#a3e1fc72abbc657ece8ae16faafaffeff',1,'mc_tasks::AddRemoveContactTask']]],
-  ['linveltaskpid',['linVelTaskPid',['../structmc__tasks_1_1AddRemoveContactTask.html#a114af5b6d97905968a79dce1bc86f0ed',1,'mc_tasks::AddRemoveContactTask']]],
   ['log_5f',['log_',['../structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html#aba73be3150abc3f17e20c9f6d638ae19',1,'mc_observers::ObserverPipeline::PipelineObserver']]],
   ['log_5fdirectory',['log_directory',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a8eedde988acfcfba5942a52d69f2b1b8',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['log_5fpolicy',['log_policy',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#acbde34fb861228455a925e57f38b2e6d',1,'mc_control::MCGlobalController::GlobalConfiguration']]],

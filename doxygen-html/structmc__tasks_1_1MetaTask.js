@@ -30,6 +30,7 @@ var structmc__tasks_1_1MetaTask =
     [ "mc_control::CompletionCriteria", "structmc__tasks_1_1MetaTask.html#a93d28090bec75d3e17832041ced6e3f9", null ],
     [ "mc_solver::QPSolver", "structmc__tasks_1_1MetaTask.html#a1f3a8dff16b572ac14d1ab4cf32a9e36", null ],
     [ "mc_solver::TasksQPSolver", "structmc__tasks_1_1MetaTask.html#a0465ff354dd0a25c4bd0aa0785f2652e", null ],
+    [ "mc_solver::TVMQPSolver", "structmc__tasks_1_1MetaTask.html#a65e310b25c25e470b830648347f020f7", null ],
     [ "backend_", "structmc__tasks_1_1MetaTask.html#abde4ba259deee57ffed51fa090aad188", null ],
     [ "iterInSolver_", "structmc__tasks_1_1MetaTask.html#a5bf5a9f30f1497e15abc33faf7a97e5c", null ],
     [ "name_", "structmc__tasks_1_1MetaTask.html#a6e55f0bff9a3d49ba0b92e0a4dff9a6f", null ],

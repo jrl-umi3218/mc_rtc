@@ -40,5 +40,6 @@ var namespacemc__rtc =
     [ "shared", "structmc__rtc_1_1shared.html", "structmc__rtc_1_1shared" ],
     [ "SharedPtrVectorConstIterator", "structmc__rtc_1_1SharedPtrVectorConstIterator.html", "structmc__rtc_1_1SharedPtrVectorConstIterator" ],
     [ "SharedPtrVectorIterator", "structmc__rtc_1_1SharedPtrVectorIterator.html", "structmc__rtc_1_1SharedPtrVectorIterator" ],
-    [ "unique_ptr", "classmc__rtc_1_1unique__ptr.html", "classmc__rtc_1_1unique__ptr" ]
+    [ "unique_ptr", "classmc__rtc_1_1unique__ptr.html", "classmc__rtc_1_1unique__ptr" ],
+    [ "void_ptr_caster", "structmc__rtc_1_1void__ptr__caster.html", "structmc__rtc_1_1void__ptr__caster" ]
 ];

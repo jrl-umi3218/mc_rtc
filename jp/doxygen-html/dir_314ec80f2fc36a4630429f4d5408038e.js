@@ -19,15 +19,16 @@ var dir_314ec80f2fc36a4630429f4d5408038e =
       [ "Flexibility", "structmc__rbdyn_1_1Flexibility.html", "structmc__rbdyn_1_1Flexibility" ]
     ] ],
     [ "ForceSensor.h", "ForceSensor_8h.html", "ForceSensor_8h" ],
-    [ "Frame.h", "Frame_8h.html", [
+    [ "Frame.h", "mc__rbdyn_2Frame_8h.html", [
       [ "Frame", "structmc__rbdyn_1_1Frame.html", "structmc__rbdyn_1_1Frame" ],
       [ "NewFrameToken", "structmc__rbdyn_1_1Frame_1_1NewFrameToken.html", null ]
     ] ],
-    [ "fwd.h", "fwd_8h.html", "fwd_8h" ],
+    [ "fwd.h", "mc__rbdyn_2fwd_8h.html", "mc__rbdyn_2fwd_8h" ],
     [ "Gains.h", "Gains_8h.html", "Gains_8h" ],
     [ "GripperSurface.h", "GripperSurface_8h.html", [
       [ "GripperSurface", "structmc__rbdyn_1_1GripperSurface.html", "structmc__rbdyn_1_1GripperSurface" ]
     ] ],
+    [ "hat.h", "hat_8h.html", "hat_8h" ],
     [ "JointSensor.h", "JointSensor_8h.html", "JointSensor_8h" ],
     [ "Mimic.h", "Mimic_8h.html", "Mimic_8h" ],
     [ "PlanarSurface.h", "PlanarSurface_8h.html", [
@@ -43,7 +44,7 @@ var dir_314ec80f2fc36a4630429f4d5408038e =
     ] ],
     [ "RobotConverterConfig.h", "RobotConverterConfig_8h.html", "RobotConverterConfig_8h" ],
     [ "RobotData.h", "RobotData_8h.html", "RobotData_8h" ],
-    [ "RobotFrame.h", "RobotFrame_8h.html", [
+    [ "RobotFrame.h", "mc__rbdyn_2RobotFrame_8h.html", [
       [ "RobotFrame", "structmc__rbdyn_1_1RobotFrame.html", "structmc__rbdyn_1_1RobotFrame" ],
       [ "NewRobotFrameToken", "structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
     ] ],

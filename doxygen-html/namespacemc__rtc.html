@@ -189,6 +189,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmc__rtc_1_1unique__ptr.html">unique_ptr</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1void__ptr__caster.html">void_ptr_caster</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -219,6 +221,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aa0b92b93372ae4db1cf2eb6ee6cd0828"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
 <tr class="memitem:aa0b92b93372ae4db1cf2eb6ee6cd0828"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d">void_ptr</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#aa0b92b93372ae4db1cf2eb6ee6cd0828">make_void_ptr</a> (Args &amp;&amp;... args)</td></tr>
 <tr class="separator:aa0b92b93372ae4db1cf2eb6ee6cd0828"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05e165ab46d424a119034202cbc79999"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a05e165ab46d424a119034202cbc79999"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d">void_ptr</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a05e165ab46d424a119034202cbc79999">make_void_ptr</a> (std::unique_ptr&lt; T &gt; ptr)</td></tr>
+<tr class="separator:a05e165ab46d424a119034202cbc79999"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -433,7 +438,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="aa0b92b93372ae4db1cf2eb6ee6cd0828"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0b92b93372ae4db1cf2eb6ee6cd0828">&#9670;&nbsp;</a></span>make_void_ptr()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0b92b93372ae4db1cf2eb6ee6cd0828">&#9670;&nbsp;</a></span>make_void_ptr() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -449,6 +454,28 @@ template&lt;typename T , typename... Args&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Creates a new void_ptr holding an object of type T </p>
+
+</div>
+</div>
+<a id="a05e165ab46d424a119034202cbc79999"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05e165ab46d424a119034202cbc79999">&#9670;&nbsp;</a></span>make_void_ptr() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d">void_ptr</a> mc_rtc::make_void_ptr </td>
+          <td>(</td>
+          <td class="paramtype">std::unique_ptr&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>ptr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transfer ownership of a unique_ptr&lt;T&gt; to a void_ptr </p>
 
 </div>
 </div>

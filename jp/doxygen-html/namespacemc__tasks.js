@@ -1,5 +1,6 @@
 var namespacemc__tasks =
 [
+    [ "details", "namespacemc__tasks_1_1details.html", "namespacemc__tasks_1_1details" ],
     [ "force", "namespacemc__tasks_1_1force.html", "namespacemc__tasks_1_1force" ],
     [ "lipm_stabilizer", "namespacemc__tasks_1_1lipm__stabilizer.html", "namespacemc__tasks_1_1lipm__stabilizer" ],
     [ "AddContactTask", "structmc__tasks_1_1AddContactTask.html", "structmc__tasks_1_1AddContactTask" ],

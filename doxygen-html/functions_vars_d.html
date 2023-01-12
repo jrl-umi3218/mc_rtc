@@ -90,6 +90,7 @@ $(document).ready(function(){initNavTree('functions_vars_d.html','');});
 </li>
 <li>data_
 : <a class="el" href="structmc__control_1_1ControllerClient.html#a881be407dfadc093f9ad1dd638922688">mc_control::ControllerClient</a>
+, <a class="el" href="classmc__tvm_1_1CollisionFunction.html#a53589f1e73541287c6744cbd6212498a">mc_tvm::CollisionFunction</a>
 </li>
 <li>datastore_
 : <a class="el" href="structmc__control_1_1MCController.html#a40233bd6dab6721085d266e1dc306de2">mc_control::MCController</a>
@@ -209,6 +210,9 @@ $(document).ready(function(){initNavTree('functions_vars_d.html','');});
 <li>deltaCompVelW_
 : <a class="el" href="structmc__tasks_1_1force_1_1ImpedanceTask.html#adf26c7977065bdefdf4fc00c526bc365">mc_tasks::force::ImpedanceTask</a>
 </li>
+<li>depthEstimate_
+: <a class="el" href="structmc__tvm_1_1GazeFunction.html#aad8ae85ec055f756d888f9f45d7429de">mc_tvm::GazeFunction</a>
+</li>
 <li>desc_
 : <a class="el" href="structmc__observers_1_1Observer.html#a09b5945fa09bf14489d9796d43df60b9">mc_observers::Observer</a>
 , <a class="el" href="structmc__observers_1_1ObserverPipeline.html#adf93df3bebd6b8e6dc341c2c20ba18ee">mc_observers::ObserverPipeline</a>
@@ -234,14 +238,23 @@ $(document).ready(function(){initNavTree('functions_vars_d.html','');});
 <li>dfForceError_
 : <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#af009d6a160e266c013a56d7348ac4c80">mc_tasks::lipm_stabilizer::StabilizerTask</a>
 </li>
+<li>dimWeight_
+: <a class="el" href="structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a0499745e42b86f92a2142130b73d1f83">mc_tasks::details::TVMTrajectoryTaskGeneric</a>
+</li>
 <li>dimWeightInterpolator_
 : <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#ac3865e50155128dd9178c4504fcf908e">mc_tasks::SplineTrajectoryTask&lt; Derived &gt;</a>
+</li>
+<li>dir_
+: <a class="el" href="structmc__tvm_1_1DynamicFunction_1_1ForceContact.html#a570239a35e85169b37d9fba9cd5f0c20">mc_tvm::DynamicFunction::ForceContact</a>
 </li>
 <li>direction_
 : <a class="el" href="structmc__tasks_1_1AddRemoveContactTask.html#aa408d0703b72d18dc3337fe383bcd840">mc_tasks::AddRemoveContactTask</a>
 </li>
 <li>disableConfig_
 : <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8c319bbb0af50167b9628ae561183d5a">mc_tasks::lipm_stabilizer::StabilizerTask</a>
+</li>
+<li>distJac_
+: <a class="el" href="classmc__tvm_1_1CollisionFunction.html#a96815c55c76bdb875d286cd10fd312ae">mc_tvm::CollisionFunction</a>
 </li>
 <li>distribWrench_
 : <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#acea47979a383c106e0eedc05a02e52bb">mc_tasks::lipm_stabilizer::StabilizerTask</a>
@@ -253,7 +266,7 @@ $(document).ready(function(){initNavTree('functions_vars_d.html','');});
 : <a class="el" href="structmc__control_1_1Contact.html#a9aebb4a6b7be2fecc5d3d745ffb239f4">mc_control::Contact</a>
 </li>
 <li>dofMat
-: <a class="el" href="structmc__tasks_1_1AddRemoveContactTask.html#ae0fae793050143ac0f684c83e8146b23">mc_tasks::AddRemoveContactTask</a>
+: <a class="el" href="structmc__tasks_1_1AddRemoveContactTask.html#a29761b946089c0fee472a0e72a4a165b">mc_tasks::AddRemoveContactTask</a>
 </li>
 <li>dt_
 : <a class="el" href="structmc__filter_1_1ExponentialMovingAverage.html#a6a235570200c501307ebc666fcd81e20">mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</a>
@@ -261,17 +274,18 @@ $(document).ready(function(){initNavTree('functions_vars_d.html','');});
 , <a class="el" href="structmc__filter_1_1LowPassCompose.html#a1d92b23e03b65ae1fac33a54ebc7d08a">mc_filter::LowPassCompose&lt; T &gt;</a>
 , <a class="el" href="structmc__observers_1_1Observer.html#adde90bcccecab614f391f6d515d435fa">mc_observers::Observer</a>
 , <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a78355a7b3bb963abe0bc160f0d51bcb9">mc_tasks::lipm_stabilizer::StabilizerTask</a>
+, <a class="el" href="classmc__tvm_1_1CollisionFunction.html#af8093a914fe6183b0754ee50a3939d60">mc_tvm::CollisionFunction</a>
 </li>
 <li>duration_
 : <a class="el" href="structmc__control_1_1fsm_1_1PauseState.html#abf66f94f4a86433976e52ba2751cb60f">mc_control::fsm::PauseState</a>
 , <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a47c76bbfd6ed1275bfada4c8b238af4d">mc_tasks::SplineTrajectoryTask&lt; Derived &gt;</a>
 , <a class="el" href="structmc__trajectory_1_1Spline.html#ad1c51f62601c8adaf5e25ff4df9ce969">mc_trajectory::Spline&lt; T, WaypointsT &gt;</a>
 </li>
+<li>dynamicIsPD_
+: <a class="el" href="structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#aea29b650bf510a48543c2c44cfcf7746">mc_tasks::details::TVMTrajectoryTaskGeneric</a>
+</li>
 <li>dynamicsConstraint
 : <a class="el" href="structmc__control_1_1MCController.html#a160000a6494473e0002d2fc618406ac7">mc_control::MCController</a>
-</li>
-<li>dynamicsConstraints_
-: <a class="el" href="structmc__solver_1_1QPSolver.html#a096dc947c74b8b26ac9c133367bc1210">mc_solver::QPSolver</a>
 </li>
 </ul>
 </div><!-- contents -->

@@ -11,5 +11,7 @@ var searchData=
   ['metataskloader_2eh',['MetaTaskLoader.h',['../MetaTaskLoader_8h.html',1,'']]],
   ['metatasks_2eh',['MetaTasks.h',['../MetaTasks_8h.html',1,'']]],
   ['mimic_2eh',['Mimic.h',['../Mimic_8h.html',1,'']]],
+  ['momentum_2eh',['Momentum.h',['../Momentum_8h.html',1,'']]],
+  ['momentumfunction_2eh',['MomentumFunction.h',['../MomentumFunction_8h.html',1,'']]],
   ['momentumtask_2eh',['MomentumTask.h',['../MomentumTask_8h.html',1,'']]]
 ];

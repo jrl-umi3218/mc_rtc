@@ -48,5 +48,6 @@ var dir_fad12f0f0b10f75a80792b958ab0d808 =
       [ "KinematicsConstraint", "structmc__solver_1_1KinematicsConstraint.html", "structmc__solver_1_1KinematicsConstraint" ]
     ] ],
     [ "QPSolver.h", "QPSolver_8h.html", "QPSolver_8h" ],
-    [ "TasksQPSolver.h", "TasksQPSolver_8h.html", "TasksQPSolver_8h" ]
+    [ "TasksQPSolver.h", "TasksQPSolver_8h.html", "TasksQPSolver_8h" ],
+    [ "TVMQPSolver.h", "TVMQPSolver_8h.html", "TVMQPSolver_8h" ]
 ];

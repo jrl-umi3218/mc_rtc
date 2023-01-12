@@ -97,8 +97,8 @@ Collaboration diagram for mc_control::fsm::Controller:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5e0523baab1c8ec0905f7715115d41c6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Controller.html#a5e0523baab1c8ec0905f7715115d41c6">Controller</a> (std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule.html">mc_rbdyn::RobotModule</a> &gt; rm, double dt, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;<a class="el" href="structmc__control_1_1MCController.html#aca6f0bb79c273474a9e6ed524ff4d33c">config</a>)</td></tr>
-<tr class="separator:a5e0523baab1c8ec0905f7715115d41c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa47963f0a80460bde295a51022277d7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Controller.html#aaa47963f0a80460bde295a51022277d7">Controller</a> (<a class="el" href="namespacemc__rbdyn.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> rm, double dt, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;<a class="el" href="structmc__control_1_1MCController.html#aca6f0bb79c273474a9e6ed524ff4d33c">config</a>, <a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">Backend</a> backend=<a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2eaef615563c8e8ea902c7fcac3cd2c4246">Backend::Tasks</a>)</td></tr>
+<tr class="separator:aaa47963f0a80460bde295a51022277d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18c01ab44c3b2b9ab7025e6999a78e43"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Controller.html#a18c01ab44c3b2b9ab7025e6999a78e43">~Controller</a> () override</td></tr>
 <tr class="separator:a18c01ab44c3b2b9ab7025e6999a78e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af87858917b432bbd4a9c728a4e344d1e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Controller.html#af87858917b432bbd4a9c728a4e344d1e">run</a> () override</td></tr>
@@ -364,8 +364,8 @@ Additional Inherited Members</h2></td></tr>
 <li>self-managed: the FSM takes care of transition, in that case a transition map must be provided. </li>
 </ul>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a5e0523baab1c8ec0905f7715115d41c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e0523baab1c8ec0905f7715115d41c6">&#9670;&nbsp;</a></span>Controller()</h2>
+<a id="aaa47963f0a80460bde295a51022277d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa47963f0a80460bde295a51022277d7">&#9670;&nbsp;</a></span>Controller()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -373,7 +373,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">mc_control::fsm::Controller::Controller </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule.html">mc_rbdyn::RobotModule</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacemc__rbdyn.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a>&#160;</td>
           <td class="paramname"><em>rm</em>, </td>
         </tr>
         <tr>
@@ -386,7 +386,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">Backend</a>&#160;</td>
+          <td class="paramname"><em>backend</em> = <code><a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2eaef615563c8e8ea902c7fcac3cd2c4246">Backend::Tasks</a></code>&#160;</td>
         </tr>
         <tr>
           <td></td>

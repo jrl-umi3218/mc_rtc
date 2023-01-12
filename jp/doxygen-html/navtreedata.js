@@ -7,7 +7,7 @@ var NAVTREE =
       [ "Namespace List", "namespaces.html", "namespaces" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", "namespacemembers_dup" ],
-        [ "Functions", "namespacemembers_func.html", null ],
+        [ "Functions", "namespacemembers_func.html", "namespacemembers_func" ],
         [ "Variables", "namespacemembers_vars.html", null ],
         [ "Typedefs", "namespacemembers_type.html", null ],
         [ "Enumerations", "namespacemembers_enum.html", null ]
@@ -42,25 +42,27 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AbscissaOrdinate_8h.html",
-"MetaTaskLoader_8h_source.html",
-"clamp_8h.html#ae558cb782558a6fe59c9975f5e9dc2b4",
-"include_2mc__observers_2api_8h.html#a5ec028a59707a198d06a6b92110d7ee1",
-"namespacemc__solver.html",
-"structmc__control_1_1ControllerClient.html#af04c2016424462fb277795ac1078073f",
-"structmc__control_1_1MCGlobalController.html#a81d56d40787c8ecff59283a9c85109ca",
-"structmc__control_1_1fsm_1_1StabilizerStandingState.html#aa3d152c14ec40bfb43fbd96c46335d8b",
-"structmc__observers_1_1ObserverPipeline.html#a196508f4fadc9c18b17e430877904765",
-"structmc__rbdyn_1_1GripperSurface.html#aeae1f456b4be7ed9cce2cda368f01ed8",
-"structmc__rbdyn_1_1RobotData.html#aaea88c1f821415cf1d63e20fdef5f865",
-"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a2a8cb02f8574c718d60edde5cb1276a2",
-"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ArrowConfig_01_4.html",
-"structmc__rtc_1_1gui_1_1Element.html#a7b365cbe4764d76aafa03495be0ecd5d",
-"structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#a698a8c16a8dfd0a6c16e00f13ab3b914",
-"structmc__solver_1_1QPSolver.html#a28e05133ff619c24f30a376e951fde51",
-"structmc__tasks_1_1LookAtFrameTask.html#a49f0fece5eb474b86986e9d59c01300c",
-"structmc__tasks_1_1TrajectoryTaskGeneric.html#ad4f104f2a346ce4663fcf34d5e9d3d67",
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a35e9e734fe506e426a866ccbb5b790f5",
-"surface__hull_8h.html#adcd59f0c2e8c9cd94a6f9800c164e723"
+"LookAtTFTask_8h.html",
+"Trajectory_8h.html",
+"deprecated_8h.html",
+"include_2mc__solver_2api_8h.html#ae3c35da4cb012ab2f6caea5696a56dae",
+"namespacemc__solver_1_1utils.html",
+"structmc__control_1_1ControllerClient.html#ac3abb32d07e376cfcd13159a972d377f",
+"structmc__control_1_1MCGlobalController.html#a3ae21b22df5dc2185d3b4f6197f9b887",
+"structmc__control_1_1fsm_1_1PostureState.html#ab68cbf75a3beb22126658a57ca72aef7",
+"structmc__observers_1_1KinematicInertialPoseObserver.html#a99b1513ac739b395e903f8f414ad1b10",
+"structmc__rbdyn_1_1ForceSensor.html#ab419d0879fbcd5e3b88b57a30070f55b",
+"structmc__rbdyn_1_1Robot.html#aeca1f147be470012cb1203f95d5c5abe",
+"structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html",
+"structmc__rtc_1_1Configuration.html#aca0f087d742c71c166993aa5617ec9a7",
+"structmc__rtc_1_1gui_1_1ButtonImpl.html",
+"structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html",
+"structmc__solver_1_1DynamicsConstraint.html#afb2a10971e64329c161cd0ea8af3ea4d",
+"structmc__tasks_1_1BSplineTrajectoryTask.html#ae178d7681e5746a9ba423a9eb3ecbf6e",
+"structmc__tasks_1_1SplineTrajectoryTask.html#aa7147dba544550aa616caa164a40209a",
+"structmc__tasks_1_1force_1_1ImpedanceTask.html#acdc427a08b2669b8010a47f912c31a96",
+"structmc__trajectory_1_1BSpline.html#ae72e0f0db1744ff5a1e7ea8c8a832d5a",
+"structmc__tvm_1_1Robot.html#a4d2a9c17dc29bea48bc76749b3b23ba3"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -109,10 +109,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:afa687c05b49f7f9e74ce03aae501bf6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a668d2463b1d9a83acabf416f584b685c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#a668d2463b1d9a83acabf416f584b685c">addBoundedSpeed</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver, const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;frame, const Eigen::MatrixXd &amp;dof, const Eigen::VectorXd &amp;lowerSpeed, const Eigen::VectorXd &amp;upperSpeed)</td></tr>
 <tr class="separator:a668d2463b1d9a83acabf416f584b685c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b85799a5bb8df9c5344cd9d3f630708"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#a5b85799a5bb8df9c5344cd9d3f630708">removeBoundedSpeed</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver, const std::string &amp;bodyName)</td></tr>
-<tr class="separator:a5b85799a5bb8df9c5344cd9d3f630708"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e22d561dc863cc8d50cb47ce8ba53b2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#a4e22d561dc863cc8d50cb47ce8ba53b2">removeBoundedSpeed</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver, const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;frame)</td></tr>
-<tr class="separator:a4e22d561dc863cc8d50cb47ce8ba53b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af182915f9f2693bd127b50ce9a17ca73"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#af182915f9f2693bd127b50ce9a17ca73">removeBoundedSpeed</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver, const std::string &amp;frameName)</td></tr>
+<tr class="separator:af182915f9f2693bd127b50ce9a17ca73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70c84d6defba583690d9175ca4cf192d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#a70c84d6defba583690d9175ca4cf192d">nrBoundedSpeeds</a> () const</td></tr>
 <tr class="separator:a70c84d6defba583690d9175ca4cf192d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0fffcd8e01c61ced64cf5371999acb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1BoundedSpeedConstr.html#ab0fffcd8e01c61ced64cf5371999acb7">reset</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver)</td></tr>
@@ -467,8 +465,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a5b85799a5bb8df9c5344cd9d3f630708"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b85799a5bb8df9c5344cd9d3f630708">&#9670;&nbsp;</a></span>removeBoundedSpeed() <span class="overload">[1/2]</span></h2>
+<a id="af182915f9f2693bd127b50ce9a17ca73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af182915f9f2693bd127b50ce9a17ca73">&#9670;&nbsp;</a></span>removeBoundedSpeed()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -483,7 +481,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>bodyName</em>&#160;</td>
+          <td class="paramname"><em>frameName</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -492,36 +490,7 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Remove all constraints associated to a body </p>
-
-</div>
-</div>
-<a id="a4e22d561dc863cc8d50cb47ce8ba53b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e22d561dc863cc8d50cb47ce8ba53b2">&#9670;&nbsp;</a></span>removeBoundedSpeed() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_solver::BoundedSpeedConstr::removeBoundedSpeed </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a> &amp;&#160;</td>
-          <td class="paramname"><em>frame</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Remove all constraints associated to a frame </p>
+<p>Remove all constraints associated to a body or a frame </p>
 
 </div>
 </div>

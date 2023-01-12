@@ -106,7 +106,8 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a62bf1f254f95bb13b9b00b855ca74e2e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">Backend</a> { <a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2eac9f88e098f6fe4e4e112eeb05ccb9671">Backend::Unset</a>, 
-<a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2eaef615563c8e8ea902c7fcac3cd2c4246">Backend::Tasks</a>
+<a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2eaef615563c8e8ea902c7fcac3cd2c4246">Backend::Tasks</a>, 
+<a class="el" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2eabac5ddf2deb6882add7482e934c92a2e">Backend::TVM</a>
  }</td></tr>
 <tr class="separator:a62bf1f254f95bb13b9b00b855ca74e2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -172,14 +173,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:acac203b080dfbd7dbc680e4d9e8aaa3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf2cd366ed6fa6e21e9cc6833e94cd70"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#aaf2cd366ed6fa6e21e9cc6833e94cd70">dt</a> () const</td></tr>
 <tr class="separator:aaf2cd366ed6fa6e21e9cc6833e94cd70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26f03d18cabc6bc384e4ca7a8e172637"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#a26f03d18cabc6bc384e4ca7a8e172637">fillTorque</a> (const <a class="el" href="structmc__solver_1_1DynamicsConstraint.html">mc_solver::DynamicsConstraint</a> &amp;dynamicsConstraint)</td></tr>
-<tr class="separator:a26f03d18cabc6bc384e4ca7a8e172637"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4a6f65ecfc19ec7c662fee29ed3125f"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#ab4a6f65ecfc19ec7c662fee29ed3125f">solveTime</a> ()=0</td></tr>
 <tr class="separator:ab4a6f65ecfc19ec7c662fee29ed3125f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fdc43b5c12ffef1c046652c45b85fc1"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#a4fdc43b5c12ffef1c046652c45b85fc1">solveAndBuildTime</a> ()=0</td></tr>
 <tr class="separator:a4fdc43b5c12ffef1c046652c45b85fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2aa91bda7629c31f5db06e0403f7aa2b"><td class="memItemLeft" align="right" valign="top">virtual const Eigen::VectorXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#a2aa91bda7629c31f5db06e0403f7aa2b">result</a> () const =0</td></tr>
-<tr class="separator:a2aa91bda7629c31f5db06e0403f7aa2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d2e5c1529e97fa15bff07a9092b1339"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#a6d2e5c1529e97fa15bff07a9092b1339">logger</a> (std::shared_ptr&lt; <a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &gt; logger)</td></tr>
 <tr class="separator:a6d2e5c1529e97fa15bff07a9092b1339"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae805619eed38900664c15a1f3be7921f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#ae805619eed38900664c15a1f3be7921f">logger</a> () const</td></tr>
@@ -204,12 +201,14 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a7a033b292df7b70b7cad20a6e4057f1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#a7a033b292df7b70b7cad20a6e4057f1a">__fillResult</a> ()</td></tr>
-<tr class="separator:a7a033b292df7b70b7cad20a6e4057f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91c47fed841e680af5c8923c81fafdf0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#a91c47fed841e680af5c8923c81fafdf0">addTaskToGUI</a> (<a class="el" href="structmc__tasks_1_1MetaTask.html">mc_tasks::MetaTask</a> *task)</td></tr>
 <tr class="separator:a91c47fed841e680af5c8923c81fafdf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9d03e836739ebbe8a4fe468c89a1318"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#af9d03e836739ebbe8a4fe468c89a1318">run_impl</a> (FeedbackType fType=FeedbackType::None)=0</td></tr>
 <tr class="separator:af9d03e836739ebbe8a4fe468c89a1318"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0635ccca0bdc72d911c781525cccc41d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#a0635ccca0bdc72d911c781525cccc41d">addDynamicsConstraint</a> (<a class="el" href="structmc__solver_1_1DynamicsConstraint.html">mc_solver::DynamicsConstraint</a> *dynamics)=0</td></tr>
+<tr class="separator:a0635ccca0bdc72d911c781525cccc41d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85d0e4fb301e39c47a0b7ed92a939efe"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#a85d0e4fb301e39c47a0b7ed92a939efe">removeDynamicsConstraint</a> (<a class="el" href="structmc__solver_1_1ConstraintSet.html">mc_solver::ConstraintSet</a> *maybe_dynamics)=0</td></tr>
+<tr class="separator:a85d0e4fb301e39c47a0b7ed92a939efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -225,8 +224,6 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:aa9c11b128edf6d6a2e73551b01dd76f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b3f2393d7a8dc5f700d9040b4283f6c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structmc__tasks_1_1MetaTask.html">mc_tasks::MetaTask</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#a7b3f2393d7a8dc5f700d9040b4283f6c">metaTasks_</a></td></tr>
 <tr class="separator:a7b3f2393d7a8dc5f700d9040b4283f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a096dc947c74b8b26ac9c133367bc1210"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structmc__solver_1_1DynamicsConstraint.html">mc_solver::DynamicsConstraint</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#a096dc947c74b8b26ac9c133367bc1210">dynamicsConstraints_</a></td></tr>
-<tr class="separator:a096dc947c74b8b26ac9c133367bc1210"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb156b608ddea2e15dd1f00efd2bcb6e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::shared_ptr&lt; void &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#abb156b608ddea2e15dd1f00efd2bcb6e">shPtrTasksStorage</a></td></tr>
 <tr class="separator:abb156b608ddea2e15dd1f00efd2bcb6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16aae96dcf217841ba84452ae694421e"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1QPSolver.html#a16aae96dcf217841ba84452ae694421e">logger_</a> = nullptr</td></tr>
@@ -264,6 +261,8 @@ Protected Attributes</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a62bf1f254f95bb13b9b00b855ca74e2eac9f88e098f6fe4e4e112eeb05ccb9671"></a>Unset&#160;</td><td class="fielddoc"><p>Unset </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a62bf1f254f95bb13b9b00b855ca74e2eaef615563c8e8ea902c7fcac3cd2c4246"></a>Tasks&#160;</td><td class="fielddoc"><p>Use Tasks library as a backend </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a62bf1f254f95bb13b9b00b855ca74e2eabac5ddf2deb6882add7482e934c92a2e"></a>TVM&#160;</td><td class="fielddoc"><p>Use TVM library as a backend </p>
 </td></tr>
 </table>
 
@@ -372,32 +371,6 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7a033b292df7b70b7cad20a6e4057f1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a033b292df7b70b7cad20a6e4057f1a">&#9670;&nbsp;</a></span>__fillResult()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_solver::QPSolver::__fillResult </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Update result after the latest <a class="el" href="structmc__solver_1_1QPSolver.html#ab8f45ed05cf2852c592659d496b2acbb">run()</a> </p>
-
-</div>
-</div>
 <a id="a37580a89d1a0d1a862dfb6b7240e6dd0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a37580a89d1a0d1a862dfb6b7240e6dd0">&#9670;&nbsp;</a></span>addConstraintSet() <span class="overload">[1/2]</span></h2>
 
@@ -454,6 +427,33 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a0635ccca0bdc72d911c781525cccc41d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0635ccca0bdc72d911c781525cccc41d">&#9670;&nbsp;</a></span>addDynamicsConstraint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void mc_solver::QPSolver::addDynamicsConstraint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1DynamicsConstraint.html">mc_solver::DynamicsConstraint</a> *&#160;</td>
+          <td class="paramname"><em>dynamics</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This is called when a dynamics constraint is added to the solver </p>
 
 </div>
 </div>
@@ -750,7 +750,7 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Contact force in robot surface frame </dd></dl>
 
-<p>Implemented in <a class="el" href="structmc__solver_1_1TasksQPSolver.html#a4d2fa167f45d6bc49594643bddc48aba">mc_solver::TasksQPSolver</a>.</p>
+<p>Implemented in <a class="el" href="structmc__solver_1_1TasksQPSolver.html#a4d2fa167f45d6bc49594643bddc48aba">mc_solver::TasksQPSolver</a>, and <a class="el" href="structmc__solver_1_1TVMQPSolver.html#ab34dfd037cceedc1bbec2236181e48fa">mc_solver::TVMQPSolver</a>.</p>
 
 </div>
 </div>
@@ -805,25 +805,6 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Gives access to the environment robot in the solver (see <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a>) </p>
-
-</div>
-</div>
-<a id="a26f03d18cabc6bc384e4ca7a8e172637"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26f03d18cabc6bc384e4ca7a8e172637">&#9670;&nbsp;</a></span>fillTorque()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_solver::QPSolver::fillTorque </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmc__solver_1_1DynamicsConstraint.html">mc_solver::DynamicsConstraint</a> &amp;&#160;</td>
-          <td class="paramname"><em>dynamicsConstraint</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Use the dynamics constraint to fill torque in the main robot </p>
 
 </div>
 </div>
@@ -996,6 +977,33 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="a85d0e4fb301e39c47a0b7ed92a939efe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85d0e4fb301e39c47a0b7ed92a939efe">&#9670;&nbsp;</a></span>removeDynamicsConstraint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void mc_solver::QPSolver::removeDynamicsConstraint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmc__solver_1_1ConstraintSet.html">mc_solver::ConstraintSet</a> *&#160;</td>
+          <td class="paramname"><em>maybe_dynamics</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This is called anytime a constraint is removed, the passed constraint is not always a dynamics constraint </p>
+
+</div>
+</div>
 <a id="a28e05133ff619c24f30a376e951fde51"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a28e05133ff619c24f30a376e951fde51">&#9670;&nbsp;</a></span>removeTask() <span class="overload">[1/2]</span></h2>
 
@@ -1046,34 +1054,6 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Remove a task from the solver which was shared with the solver </p>
-
-</div>
-</div>
-<a id="a2aa91bda7629c31f5db06e0403f7aa2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2aa91bda7629c31f5db06e0403f7aa2b">&#9670;&nbsp;</a></span>result()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual const Eigen::VectorXd&amp; mc_solver::QPSolver::result </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Return the solvers result vector. </p><dl class="section return"><dt>Returns</dt><dd>The solvers result vector. </dd></dl>
-
-<p>Implemented in <a class="el" href="structmc__solver_1_1TasksQPSolver.html#abf2275f4139a67556b5cdca4f46ca345">mc_solver::TasksQPSolver</a>.</p>
 
 </div>
 </div>
@@ -1237,6 +1217,7 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Should run the control prroblem and update the control robot accordingly </p>
 
 </div>
 </div>
@@ -1293,7 +1274,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="structmc__solver_1_1TasksQPSolver.html#af2b544574a42c1a063f7c762af4686c2">mc_solver::TasksQPSolver</a>.</p>
+<p>Implemented in <a class="el" href="structmc__solver_1_1TasksQPSolver.html#af2b544574a42c1a063f7c762af4686c2">mc_solver::TasksQPSolver</a>, and <a class="el" href="structmc__solver_1_1TVMQPSolver.html#ac8cb70948b99762572221fe87d3ac243">mc_solver::TVMQPSolver</a>.</p>
 
 </div>
 </div>
@@ -1321,7 +1302,7 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Returns the building and solving time in ms </p>
 
-<p>Implemented in <a class="el" href="structmc__solver_1_1TasksQPSolver.html#a5b621d10a942844b56b7e63511bf7f56">mc_solver::TasksQPSolver</a>.</p>
+<p>Implemented in <a class="el" href="structmc__solver_1_1TasksQPSolver.html#a5b621d10a942844b56b7e63511bf7f56">mc_solver::TasksQPSolver</a>, and <a class="el" href="structmc__solver_1_1TVMQPSolver.html#ab8391ed460f7ef2471353e98ec7cb853">mc_solver::TVMQPSolver</a>.</p>
 
 </div>
 </div>
@@ -1349,7 +1330,7 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Returns the solving time in ms </p>
 
-<p>Implemented in <a class="el" href="structmc__solver_1_1TasksQPSolver.html#a6ccfd376fb7e4bcd5bcfa85fc4bd0369">mc_solver::TasksQPSolver</a>.</p>
+<p>Implemented in <a class="el" href="structmc__solver_1_1TasksQPSolver.html#a6ccfd376fb7e4bcd5bcfa85fc4bd0369">mc_solver::TasksQPSolver</a>, and <a class="el" href="structmc__solver_1_1TVMQPSolver.html#ac04df7dc7cec25e02f3bb0e6e21b8832">mc_solver::TVMQPSolver</a>.</p>
 
 </div>
 </div>
@@ -1437,29 +1418,6 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Can be nullptr if this not associated to any controller </p>
-
-</div>
-</div>
-<a id="a096dc947c74b8b26ac9c133367bc1210"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a096dc947c74b8b26ac9c133367bc1210">&#9670;&nbsp;</a></span>dynamicsConstraints_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="structmc__solver_1_1DynamicsConstraint.html">mc_solver::DynamicsConstraint</a> *&gt; mc_solver::QPSolver::dynamicsConstraints_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Holds dynamics constraint currently in the solver </p>
 
 </div>
 </div>

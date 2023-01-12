@@ -24,5 +24,6 @@ var namespacemc__solver =
     [ "QPContactPtr", "structmc__solver_1_1QPContactPtr.html", "structmc__solver_1_1QPContactPtr" ],
     [ "QPContactPtrWPoints", "structmc__solver_1_1QPContactPtrWPoints.html", "structmc__solver_1_1QPContactPtrWPoints" ],
     [ "QPSolver", "structmc__solver_1_1QPSolver.html", "structmc__solver_1_1QPSolver" ],
-    [ "TasksQPSolver", "structmc__solver_1_1TasksQPSolver.html", "structmc__solver_1_1TasksQPSolver" ]
+    [ "TasksQPSolver", "structmc__solver_1_1TasksQPSolver.html", "structmc__solver_1_1TasksQPSolver" ],
+    [ "TVMQPSolver", "structmc__solver_1_1TVMQPSolver.html", "structmc__solver_1_1TVMQPSolver" ]
 ];

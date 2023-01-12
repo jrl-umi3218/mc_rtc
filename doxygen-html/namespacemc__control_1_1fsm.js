@@ -1,5 +1,6 @@
 var namespacemc__control_1_1fsm =
 [
+    [ "details", "namespacemc__control_1_1fsm_1_1details.html", "namespacemc__control_1_1fsm_1_1details" ],
     [ "AddRemoveContactState", "structmc__control_1_1fsm_1_1AddRemoveContactState.html", "structmc__control_1_1fsm_1_1AddRemoveContactState" ],
     [ "Controller", "structmc__control_1_1fsm_1_1Controller.html", "structmc__control_1_1fsm_1_1Controller" ],
     [ "EnableControllerState", "structmc__control_1_1fsm_1_1EnableControllerState.html", "structmc__control_1_1fsm_1_1EnableControllerState" ],
@@ -16,6 +17,8 @@ var namespacemc__control_1_1fsm =
     [ "StabilizerStandingState", "structmc__control_1_1fsm_1_1StabilizerStandingState.html", "structmc__control_1_1fsm_1_1StabilizerStandingState" ],
     [ "State", "structmc__control_1_1fsm_1_1State.html", "structmc__control_1_1fsm_1_1State" ],
     [ "StateFactory", "structmc__control_1_1fsm_1_1StateFactory.html", "structmc__control_1_1fsm_1_1StateFactory" ],
+    [ "TasksController", "structmc__control_1_1fsm_1_1TasksController.html", null ],
     [ "Transition", "structmc__control_1_1fsm_1_1Transition.html", "structmc__control_1_1fsm_1_1Transition" ],
-    [ "TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", "structmc__control_1_1fsm_1_1TransitionMap" ]
+    [ "TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", "structmc__control_1_1fsm_1_1TransitionMap" ],
+    [ "TVMController", "structmc__control_1_1fsm_1_1TVMController.html", null ]
 ];

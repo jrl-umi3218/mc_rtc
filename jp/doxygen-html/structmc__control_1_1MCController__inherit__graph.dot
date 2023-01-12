@@ -3,9 +3,30 @@ digraph "mc_control::MCController"
  // INTERACTIVE_SVG=YES
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
   Node0 [label="mc_control::MCController",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="mc_control::fsm::Controller",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1fsm_1_1Controller.html"];
+  Node1 [label="mc_control::details\l::BackendSpecificController\l\< MCController::Backend::\lTasks, mc_solver::TasksQPSolver \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1details_1_1BackendSpecificController.html"];
   Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="mc_control::MCPythonController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1MCPythonController.html"];
+  Node2 [label="mc_control::details\l::BackendSpecificController\l\< MCController::Backend::\lTVM, mc_solver::TVMQPSolver \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1details_1_1BackendSpecificController.html"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="mc_control::TVMController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1TVMController.html"];
+  Node0 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="mc_control::details\l::BackendSpecificController\l\< backend, SolverT \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1details_1_1BackendSpecificController.html"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="mc_control::TasksController\l\< MCController::Backend\l::Tasks, mc_solver::TasksQPSolver \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1TasksController.html"];
+  Node0 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="mc_control::fsm::Controller",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1fsm_1_1Controller.html"];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="mc_control::fsm::details\l::BackendSpecificController\l\< MCController::Backend::Tasks,\l mc_solver::TasksQPSolver \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html"];
+  Node7 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="mc_control::fsm::TasksController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1fsm_1_1TasksController.html"];
+  Node6 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="mc_control::fsm::details\l::BackendSpecificController\l\< MCController::Backend::TVM,\l mc_solver::TVMQPSolver \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html"];
+  Node6 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="mc_control::fsm::details\l::BackendSpecificController\l\< backend, SolverT \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html"];
+  Node10 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="mc_control::fsm::TVMController\l\< MCController::Backend::TVM,\l mc_solver::TVMQPSolver \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1fsm_1_1TVMController.html"];
+  Node0 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="mc_control::MCPythonController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1MCPythonController.html"];
 }

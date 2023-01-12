@@ -1,6 +1,8 @@
 var searchData=
 [
   ['c',['C',['../structmc__rbdyn_1_1Flexibility.html#a6937033e6a1e29165b7a1f9b2005232a',1,'mc_rbdyn::Flexibility']]],
+  ['c1_5f',['c1_',['../classmc__tvm_1_1CollisionFunction.html#a39b9f1e0a3cbc9b0946621d4700fad39',1,'mc_tvm::CollisionFunction']]],
+  ['c2_5f',['c2_',['../classmc__tvm_1_1CollisionFunction.html#a14f88b57ff44380f6e6a3b326a4a76cd',1,'mc_tvm::CollisionFunction']]],
   ['c_5f',['c_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa9ae12de4d5a45e87630efb9c45c7121',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['cache_5f',['cache_',['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#a5ebd8b842d24f72c96bd9a19d4274e85',1,'mc_rtc::gui::plot::impl::AbscissaOrdinate::cache_()'],['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a593abcb0579ff5d3cc6f7d7b39bf0a63',1,'mc_rtc::gui::plot::impl::Ordinate::cache_()']]],
   ['calib_5fdir',['calib_dir',['../structmc__rbdyn_1_1RobotModule.html#a2ce60a43b6c7fcf4df10d1777e5021bd',1,'mc_rbdyn::RobotModule']]],
@@ -16,7 +18,7 @@ var searchData=
   ['color_5f',['color_',['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#a86c83c91843a11a26a3404ddb7b4437b',1,'mc_rtc::gui::plot::impl::AbscissaOrdinate::color_()'],['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#ae207af9008ec8b5da6db891ea0ebd79c',1,'mc_rtc::gui::plot::impl::Ordinate::color_()']]],
   ['colormap',['ColorMap',['../structmc__rtc_1_1gui_1_1Color.html#aa0e78cc8d6f0ea185fa70c4a5b95d6c9',1,'mc_rtc::gui::Color']]],
   ['cols',['cols',['../structmc__solver_1_1CollisionsConstraint.html#a8f2dea27de0d2763cf96505ecac6f61c',1,'mc_solver::CollisionsConstraint']]],
-  ['com_5f',['com_',['../structmc__planning_1_1Pendulum.html#ae4b2565ec3cbea0520108495f93a5a69',1,'mc_planning::Pendulum']]],
+  ['com_5f',['com_',['../structmc__planning_1_1Pendulum.html#ae4b2565ec3cbea0520108495f93a5a69',1,'mc_planning::Pendulum::com_()'],['../structmc__tvm_1_1CoMInConvexFunction.html#ac422c9da2108a0ccc05604682b797f2f',1,'mc_tvm::CoMInConvexFunction::com_()']]],
   ['comaccel_5f',['comAccel_',['../structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#a9860625ea9c4d86a42378e66afc72699',1,'mc_tasks::lipm_stabilizer::ZMPCC']]],
   ['comactivejoints',['comActiveJoints',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#af0f590199c5cb9ba6aa7b25f56447811',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
   ['comadmittance',['comAdmittance',['../structmc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration.html#ad6b1427db5969e53c93eda40b82c29c0',1,'mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration']]],
@@ -69,7 +71,7 @@ var searchData=
   ['contact_5fconstraint_5f',['contact_constraint_',['../structmc__control_1_1MCController.html#aae17a7ca719068e77b4e1946582a5841',1,'mc_control::MCController']]],
   ['contactconstraint',['contactConstraint',['../structmc__control_1_1MCController.html#a0a24d4d8f93d58d9d6bc387d7585a9f1',1,'mc_control::MCController']]],
   ['contactdamping',['contactDamping',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a5d438686041a3aedaf93629936510ed8',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
-  ['contacts_5f',['contacts_',['../structmc__control_1_1MCController.html#af791c0b95647f3a3a9f38851e23ea2df',1,'mc_control::MCController::contacts_()'],['../structmc__solver_1_1QPSolver.html#aa9c11b128edf6d6a2e73551b01dd76f9',1,'mc_solver::QPSolver::contacts_()'],['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ac03c45acb87ced70cf86b77ac9bd20ac',1,'mc_tasks::lipm_stabilizer::StabilizerTask::contacts_()']]],
+  ['contacts_5f',['contacts_',['../structmc__control_1_1MCController.html#af791c0b95647f3a3a9f38851e23ea2df',1,'mc_control::MCController::contacts_()'],['../structmc__solver_1_1QPSolver.html#aa9c11b128edf6d6a2e73551b01dd76f9',1,'mc_solver::QPSolver::contacts_()'],['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ac03c45acb87ced70cf86b77ac9bd20ac',1,'mc_tasks::lipm_stabilizer::StabilizerTask::contacts_()'],['../structmc__tvm_1_1DynamicFunction.html#a57366a55b7b0cbc79f501569e9364ba1',1,'mc_tvm::DynamicFunction::contacts_()']]],
   ['contacts_5fchanged_5f',['contacts_changed_',['../structmc__control_1_1MCController.html#a5658afe35311b0458ad2a6795fa41fb1',1,'mc_control::MCController']]],
   ['contacts_5ftable_5f',['contacts_table_',['../structmc__control_1_1MCController.html#a3a4fde3d3917343a367aa14533953be7',1,'mc_control::MCController']]],
   ['contactsensors',['contactSensors',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ab49c31a3200538546f2fca877a7bfe26',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],

@@ -100,8 +100,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0f1097a536c65e610735d3314e86a4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a330391bd86278523ae70830fc2d7e9f9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1DynamicsConstraint.html#a330391bd86278523ae70830fc2d7e9f9">DynamicsConstraint</a> (const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;robots, unsigned int <a class="el" href="structmc__solver_1_1DynamicsConstraint.html#a92463a157ffb06efd45398a8e46dddd3">robotIndex</a>, double timeStep, const std::array&lt; double, 3 &gt; &amp;damper, double velocityPercent=1.0, bool infTorque=false)</td></tr>
 <tr class="separator:a330391bd86278523ae70830fc2d7e9f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0c9886d4eea460ce186378048bdd11f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1DynamicsConstraint.html#ad0c9886d4eea460ce186378048bdd11f">fillJointTorque</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) const</td></tr>
-<tr class="separator:ad0c9886d4eea460ce186378048bdd11f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac888a5f53afab169be85ef6609821c38"><td class="memItemLeft" align="right" valign="top">tasks::qp::MotionConstr &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1DynamicsConstraint.html#ac888a5f53afab169be85ef6609821c38">motionConstr</a> () noexcept</td></tr>
+<tr class="separator:ac888a5f53afab169be85ef6609821c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa987629d0f519973ba2b3c92468c75a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__tvm_1_1DynamicFunction.html">mc_tvm::DynamicFunction</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1DynamicsConstraint.html#aa987629d0f519973ba2b3c92468c75a9">dynamicFunction</a> ()</td></tr>
+<tr class="separator:aa987629d0f519973ba2b3c92468c75a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebe3a1c0ac228a8b688b95dfadf01cac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1DynamicsConstraint.html#aebe3a1c0ac228a8b688b95dfadf01cac">addToSolverImpl</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver) override</td></tr>
 <tr class="separator:aebe3a1c0ac228a8b688b95dfadf01cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d3e0faeab3b3690a4a6c02c15dbc678"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__solver_1_1DynamicsConstraint.html#a8d3e0faeab3b3690a4a6c02c15dbc678">removeFromSolverImpl</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp;solver) override</td></tr>
@@ -295,22 +297,57 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ad0c9886d4eea460ce186378048bdd11f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0c9886d4eea460ce186378048bdd11f">&#9670;&nbsp;</a></span>fillJointTorque()</h2>
+<a id="aa987629d0f519973ba2b3c92468c75a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa987629d0f519973ba2b3c92468c75a9">&#9670;&nbsp;</a></span>dynamicFunction()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_solver::DynamicsConstraint::fillJointTorque </td>
+          <td class="memname"><a class="el" href="structmc__tvm_1_1DynamicFunction.html">mc_tvm::DynamicFunction</a>&amp; mc_solver::DynamicsConstraint::dynamicFunction </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Fill robot().jointTorque after solving the optimization problem </p>
+<p>Returns the <a class="el" href="structmc__tvm_1_1DynamicFunction.html">mc_tvm::DynamicFunction</a></p>
+<p>Assumes the backend was TVM </p>
+
+</div>
+</div>
+<a id="ac888a5f53afab169be85ef6609821c38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac888a5f53afab169be85ef6609821c38">&#9670;&nbsp;</a></span>motionConstr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tasks::qp::MotionConstr&amp; mc_solver::DynamicsConstraint::motionConstr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the tasks::qp::MotionConstr</p>
+<p>This assumes the backend was Tasks </p>
 
 </div>
 </div>
@@ -390,7 +427,10 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Holds the motion constraint implementation</p>
 <p>In Tasks backend:</p><ul>
-<li>tasks::qp::MotionConstr or a derived constraint if the robot has flexibilities </li>
+<li>tasks::qp::MotionConstr or a derived constraint if the robot has flexibilities</li>
+</ul>
+<p>In TVM backend:</p><ul>
+<li><a class="el" href="namespacemc__tvm.html#af181c4775ffd6123afe1286668ccc6d8">mc_tvm::DynamicFunctionPtr</a> </li>
 </ul>
 
 </div>

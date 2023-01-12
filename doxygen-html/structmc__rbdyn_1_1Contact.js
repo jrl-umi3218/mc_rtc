@@ -10,6 +10,8 @@ var structmc__rbdyn_1_1Contact =
     [ "ambiguityId", "structmc__rbdyn_1_1Contact.html#a7f0e946a6448c600a2d4e8758a76e8f2", null ],
     [ "compute_X_r2s_r1s", "structmc__rbdyn_1_1Contact.html#ad0cb15ec589cb49c17ee23c38726a7dd", null ],
     [ "contactId", "structmc__rbdyn_1_1Contact.html#ab3ebb29e5dc9a18a176fd4cc73bdb1c7", null ],
+    [ "dof", "structmc__rbdyn_1_1Contact.html#a0b96511b7c48d57215b888b1e6d24d50", null ],
+    [ "dof", "structmc__rbdyn_1_1Contact.html#a061feb41f009a96d124833706c144af0", null ],
     [ "friction", "structmc__rbdyn_1_1Contact.html#a54b141ffefe0b35cfed175e92d5220ce", null ],
     [ "friction", "structmc__rbdyn_1_1Contact.html#ae7a6d2761bed3b5ddc4f2f61f72000bc", null ],
     [ "isFixed", "structmc__rbdyn_1_1Contact.html#a7cc9fdeb70bb0ce49c00d052513430b2", null ],

@@ -1,5 +1,6 @@
 var namespacemc__control =
 [
+    [ "details", "namespacemc__control_1_1details.html", "namespacemc__control_1_1details" ],
     [ "fsm", "namespacemc__control_1_1fsm.html", "namespacemc__control_1_1fsm" ],
     [ "CompletionCriteria", "structmc__control_1_1CompletionCriteria.html", "structmc__control_1_1CompletionCriteria" ],
     [ "Contact", "structmc__control_1_1Contact.html", "structmc__control_1_1Contact" ],
@@ -15,5 +16,7 @@ var namespacemc__control =
     [ "MCGlobalController", "structmc__control_1_1MCGlobalController.html", "structmc__control_1_1MCGlobalController" ],
     [ "MCPythonController", "structmc__control_1_1MCPythonController.html", "structmc__control_1_1MCPythonController" ],
     [ "PythonRWCallback", "structmc__control_1_1PythonRWCallback.html", "structmc__control_1_1PythonRWCallback" ],
-    [ "SimulationContactPair", "structmc__control_1_1SimulationContactPair.html", "structmc__control_1_1SimulationContactPair" ]
+    [ "SimulationContactPair", "structmc__control_1_1SimulationContactPair.html", "structmc__control_1_1SimulationContactPair" ],
+    [ "TasksController", "structmc__control_1_1TasksController.html", null ],
+    [ "TVMController", "structmc__control_1_1TVMController.html", null ]
 ];

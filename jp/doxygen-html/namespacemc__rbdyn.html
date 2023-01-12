@@ -173,6 +173,8 @@ Typedefs</h2></td></tr>
 <tr class="separator:ac024daf249dfc12f828218d5c2410b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae201c3229c7e6f97eebcda8db1d4233d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#ae201c3229c7e6f97eebcda8db1d4233d">RobotPtr</a> = std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Robot.html">Robot</a> &gt;</td></tr>
 <tr class="separator:ae201c3229c7e6f97eebcda8db1d4233d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a628807423df2a6107db3c5c63eb98d24"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a628807423df2a6107db3c5c63eb98d24">ConstRobotPtr</a> = std::shared_ptr&lt; const <a class="el" href="structmc__rbdyn_1_1Robot.html">Robot</a> &gt;</td></tr>
+<tr class="separator:a628807423df2a6107db3c5c63eb98d24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a52a2394099019321a0411da30ea5f4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a5a52a2394099019321a0411da30ea5f4">RobotFramePtr</a> = std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a> &gt;</td></tr>
 <tr class="separator:a5a52a2394099019321a0411da30ea5f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d750a36f101823e43d108ec5c8231cc"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a1d750a36f101823e43d108ec5c8231cc">ConstRobotFramePtr</a> = std::shared_ptr&lt; const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a> &gt;</td></tr>
@@ -218,6 +220,8 @@ Functions</h2></td></tr>
 <tr class="separator:ac6670e00a7e663e03a4709533a706e89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5aa4dab41fa3cd48e13c4fd628bcb630"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a5aa4dab41fa3cd48e13c4fd628bcb630">operator==</a> (const <a class="el" href="structmc__rbdyn_1_1ForceSensor.html">mc_rbdyn::ForceSensor</a> &amp;lhs, const <a class="el" href="structmc__rbdyn_1_1ForceSensor.html">mc_rbdyn::ForceSensor</a> &amp;rhs)</td></tr>
 <tr class="separator:a5aa4dab41fa3cd48e13c4fd628bcb630"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfd1b3b7507cf3de890aeb3eca8376d0"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#adfd1b3b7507cf3de890aeb3eca8376d0">hat</a> (const Eigen::Vector3d &amp;v)</td></tr>
+<tr class="separator:adfd1b3b7507cf3de890aeb3eca8376d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8925faa2c281c5667b4227aee573c835"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a8925faa2c281c5667b4227aee573c835">operator==</a> (const <a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a> &amp;lhs, const <a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a> &amp;rhs)</td></tr>
 <tr class="separator:a8925faa2c281c5667b4227aee573c835"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc171bbf6f9fa58525ac71fa8c54a2f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#acc171bbf6f9fa58525ac71fa8c54a2f4">operator==</a> (const <a class="el" href="structmc__rbdyn_1_1Mimic.html">Mimic</a> &amp;lhs, const <a class="el" href="structmc__rbdyn_1_1Mimic.html">Mimic</a> &amp;rhs)</td></tr>
@@ -345,6 +349,20 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="namespacemc__rbdyn.html#a1d750a36f101823e43d108ec5c8231cc">mc_rbdyn::ConstRobotFramePtr</a> = typedef std::shared_ptr&lt;const <a class="el" href="structmc__rbdyn_1_1RobotFrame.html">RobotFrame</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a628807423df2a6107db3c5c63eb98d24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a628807423df2a6107db3c5c63eb98d24">&#9670;&nbsp;</a></span>ConstRobotPtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacemc__rbdyn.html#a628807423df2a6107db3c5c63eb98d24">mc_rbdyn::ConstRobotPtr</a> = typedef std::shared_ptr&lt;const <a class="el" href="structmc__rbdyn_1_1Robot.html">Robot</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -748,6 +766,32 @@ Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adfd1b3b7507cf3de890aeb3eca8376d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfd1b3b7507cf3de890aeb3eca8376d0">&#9670;&nbsp;</a></span>hat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Matrix3d mc_rbdyn::hat </td>
+          <td>(</td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>

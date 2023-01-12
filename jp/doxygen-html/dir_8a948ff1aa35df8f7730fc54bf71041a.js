@@ -34,5 +34,11 @@ var dir_8a948ff1aa35df8f7730fc54bf71041a =
     [ "MCController.h", "MCController_8h.html", "MCController_8h" ],
     [ "SimulationContactPair.h", "SimulationContactPair_8h.html", [
       [ "SimulationContactPair", "structmc__control_1_1SimulationContactPair.html", "structmc__control_1_1SimulationContactPair" ]
+    ] ],
+    [ "TasksController.h", "TasksController_8h.html", [
+      [ "TasksController", "structmc__control_1_1TasksController.html", null ]
+    ] ],
+    [ "TVMController.h", "TVMController_8h.html", [
+      [ "TVMController", "structmc__control_1_1TVMController.html", null ]
     ] ]
 ];

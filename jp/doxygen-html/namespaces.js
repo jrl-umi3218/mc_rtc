@@ -11,6 +11,7 @@ var namespaces =
     [ "mc_solver", "namespacemc__solver.html", "namespacemc__solver" ],
     [ "mc_tasks", "namespacemc__tasks.html", "namespacemc__tasks" ],
     [ "mc_trajectory", "namespacemc__trajectory.html", null ],
+    [ "mc_tvm", "namespacemc__tvm.html", null ],
     [ "ros", "namespaceros.html", null ],
     [ "sch", "namespacesch.html", "namespacesch" ],
     [ "std", "namespacestd.html", null ]
