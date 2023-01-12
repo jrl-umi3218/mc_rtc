@@ -50,7 +50,10 @@ struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
 {
   friend struct Executor;
 
-  Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, const mc_rtc::Configuration & config);
+  Controller(mc_rbdyn::RobotModulePtr rm,
+             double dt,
+             const mc_rtc::Configuration & config,
+             Backend backend = Backend::Tasks);
 
   ~Controller() override;
 
@@ -159,6 +162,36 @@ protected:
   /** Main executor */
   Executor executor_;
 };
+
+namespace details
+{
+
+/** Helper to declare backend-specific controllers
+ *
+ * The difference with the default MCController class are:
+ * - the backend is always the one specified here
+ * - solver() returns the solver class specified here
+ */
+template<MCController::Backend backend, typename SolverT>
+struct BackendSpecificController : public Controller
+{
+  BackendSpecificController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config)
+  : Controller(rm, dt, config, backend)
+  {
+  }
+
+  const SolverT & solver() const noexcept
+  {
+    return SolverT::from_solver(MCController::solver());
+  }
+
+  SolverT & solver() noexcept
+  {
+    return SolverT::from_solver(MCController::solver());
+  }
+};
+
+} // namespace details
 
 } // namespace fsm
 

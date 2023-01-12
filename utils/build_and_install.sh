@@ -898,7 +898,7 @@ check_and_clone_git_dependency()
 }
 
 # If the dependencies have already been cloned, check if the local state of the repository is clean before upgrading
-GIT_DEPENDENCIES="loco-3d/ndcurves#v1.1.5 jrl-umi3218/SpaceVecAlg jrl-umi3218/state-observation jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/eigen-quadprog jrl-umi3218/Tasks"
+GIT_DEPENDENCIES="loco-3d/ndcurves#v1.1.5 jrl-umi3218/SpaceVecAlg jrl-umi3218/state-observation jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/eigen-quadprog jrl-umi3218/Tasks jrl-umi3218/tvm"
 if [ "x$SYSTEM_HAS_SPDLOG" == xOFF ]
 then
   GIT_DEPENDENCIES="gabime/spdlog#v1.6.1 $GIT_DEPENDENCIES"
@@ -1237,6 +1237,13 @@ fi
 export DISABLE_NINJA=OFF
 
 build_git_dependency jrl-umi3218/Tasks tasks
+
+export CMAKE_ADDITIONAL_OPTIONS="-DTVM_WITH_QUADPROG:BOOL=ON -DTVM_WITH_ROBOT:BOOL=OFF ${OLD_CMAKE_OPTIONS}"
+if $WITH_LSSOL
+then
+  export CMAKE_ADDITIONAL_OPTIONS="-DTVM_WITH_LSSOL:BOOL=ON ${CMAKE_ADDITIONAL_OPTIONS}"
+fi
+build_git_dependency jrl-umi3218/tvm
 
 if $WITH_ROS_SUPPORT
 then

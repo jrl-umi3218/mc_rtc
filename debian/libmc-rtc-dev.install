@@ -5,6 +5,7 @@ usr/include/mc_robots/*
 usr/include/mc_rtc/*
 usr/include/mc_solver/*
 usr/include/mc_tasks/*
+usr/include/mc_tvm/*
 usr/include/mc_trajectory/*
 usr/include/mc_planning/*
 usr/include/mc_filter/*

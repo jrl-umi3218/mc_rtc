@@ -15,7 +15,7 @@ using DataStore = mc_rtc::DataStore;
 BOOST_AUTO_TEST_CASE(TestDataStore)
 {
   DataStore store;
-  store.make<std::vector<double>>("data", 4, 42.0);
+  store.make<std::vector<double>>("data", size_t{4}, 42.0);
   auto & data = store.get<std::vector<double>>("data");
   BOOST_REQUIRE(data.size() == 4);
   BOOST_CHECK_CLOSE(data[0], 42, 1e-10);
@@ -82,6 +82,7 @@ BOOST_AUTO_TEST_CASE(TestDataStoreInheritance)
   struct A
   {
     A(const std::string & name) : name_(name) {}
+    virtual ~A() = default;
     virtual std::string hello() const
     {
       return "A::Hello " + name_;
@@ -100,6 +101,7 @@ BOOST_AUTO_TEST_CASE(TestDataStoreInheritance)
   struct B : public A
   {
     B(const std::string & name) : A(name) {}
+    ~B() override = default;
     std::string hello() const override
     {
       return "B::Hello " + name_;
@@ -310,7 +312,7 @@ BOOST_AUTO_TEST_CASE(LambdaSugar)
     }
   });
   std::string out;
-  store.call<void, const std::string &, std::string &, size_t>("conversion", "abc#", out, 3);
+  store.call<void, const std::string &, std::string &, size_t>("conversion", "abc#", out, size_t{3});
   BOOST_CHECK(out == "abc#abc#abc#");
 
   double d = 2;

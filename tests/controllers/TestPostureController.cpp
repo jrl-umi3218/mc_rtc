@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #ifdef BOOST_TEST_MAIN
@@ -17,7 +17,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestPostureController : public MCController
 {
 public:
-  TestPostureController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt) : MCController(rm, dt)
+  TestPostureController(mc_rbdyn::RobotModulePtr rm, double dt, Backend backend) : MCController(rm, dt, backend)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().size(), 2);
@@ -25,6 +25,8 @@ public:
     BOOST_CHECK_EQUAL(robot().name(), "jvrc1");
     qpsolver->addConstraintSet(contactConstraint);
     qpsolver->addConstraintSet(kinematicsConstraint);
+    qpsolver->addConstraintSet(selfCollisionConstraint);
+    qpsolver->addConstraintSet(*compoundJointConstraint);
     postureTask->stiffness(200.0);
     qpsolver->addTask(postureTask.get());
     qpsolver->setContacts({});
@@ -80,4 +82,9 @@ private:
 
 } // namespace mc_control
 
-SIMPLE_CONTROLLER_CONSTRUCTOR("TestPostureController", mc_control::TestPostureController)
+using Controller = mc_control::TestPostureController;
+using Backend = mc_control::MCController::Backend;
+MULTI_CONTROLLERS_CONSTRUCTOR("TestPostureController",
+                              Controller(rm, dt, Backend::Tasks),
+                              "TestPostureController_TVM",
+                              Controller(rm, dt, Backend::TVM))

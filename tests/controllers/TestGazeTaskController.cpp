@@ -21,7 +21,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestGazeTaskController : public MCController
 {
 public:
-  TestGazeTaskController(mc_rbdyn::RobotModulePtr rm, double dt) : MCController(rm, dt)
+  TestGazeTaskController(mc_rbdyn::RobotModulePtr rm, double dt, Backend backend) : MCController(rm, dt, backend)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().size(), 2);
@@ -84,4 +84,8 @@ private:
 } // namespace mc_control
 
 using Controller = mc_control::TestGazeTaskController;
-SIMPLE_CONTROLLER_CONSTRUCTOR("TestGazeTaskController", Controller)
+using Backend = mc_control::MCController::Backend;
+MULTI_CONTROLLERS_CONSTRUCTOR("TestGazeTaskController",
+                              Controller(rm, dt, Backend::Tasks),
+                              "TestGazeTaskController_TVM",
+                              Controller(rm, dt, Backend::TVM))

@@ -137,11 +137,35 @@ struct MC_SOLVER_DLLAPI TasksQPSolver final : public QPSolver
     return solver_;
   }
 
+  /** Helper to get a \ref TasksQPSolver from a \ref QPSolver instance
+   *
+   * The caller should make sure the cast is valid by checking the QPSolver backend.
+   *
+   * In debug the program will abort otherwise, in release UB abounds
+   */
+  static inline TasksQPSolver & from_solver(QPSolver & solver) noexcept
+  {
+    assert(solver.backend() == QPSolver::Backend::Tasks);
+    return static_cast<TasksQPSolver &>(solver);
+  }
+
+  /** Helper to get a \ref TasksQPSolver from a \ref QPSolver instance
+   *
+   * The caller should make sure the cast is valid by checking the QPSolver backend.
+   *
+   * In debug the program will abort otherwise, in release UB abounds
+   */
+  static inline const TasksQPSolver & from_solver(const QPSolver & solver) noexcept
+  {
+    assert(solver.backend() == QPSolver::Backend::Tasks);
+    return static_cast<const TasksQPSolver &>(solver);
+  }
+
   double solveTime() final;
 
   double solveAndBuildTime() final;
 
-  const Eigen::VectorXd & result() const final;
+  const Eigen::VectorXd & result() const;
 
 private:
   /** The actual solver instance */
@@ -184,7 +208,14 @@ private:
   std::vector<std::vector<std::vector<double>>> control_q_{};
   std::vector<std::vector<std::vector<double>>> control_alpha_{};
 
+  /** Holds dynamics constraint currently in the solver */
+  std::vector<mc_solver::DynamicsConstraint *> dynamicsConstraints_;
+
   bool run_impl(FeedbackType fType = FeedbackType::None) final;
+
+  void addDynamicsConstraint(mc_solver::DynamicsConstraint * dynamics) final;
+
+  void removeDynamicsConstraint(mc_solver::ConstraintSet * maybe_dynamics) final;
 };
 
 /** Helper to get a \ref TasksQPSolver from a \ref QPSolver instance
@@ -193,17 +224,15 @@ private:
  *
  * In debug the program will abort otherwise, in release UB abounds
  */
-inline TasksQPSolver & tasks_solver(QPSolver & solver)
+inline TasksQPSolver & tasks_solver(QPSolver & solver) noexcept
 {
-  assert(solver.backend() == QPSolver::Backend::Tasks);
-  return static_cast<TasksQPSolver &>(solver);
+  return TasksQPSolver::from_solver(solver);
 }
 
 /* const version */
-inline const TasksQPSolver & tasks_solver(const QPSolver & solver)
+inline const TasksQPSolver & tasks_solver(const QPSolver & solver) noexcept
 {
-  assert(solver.backend() == QPSolver::Backend::Tasks);
-  return static_cast<const TasksQPSolver &>(solver);
+  return TasksQPSolver::from_solver(solver);
 }
 
 } // namespace mc_solver

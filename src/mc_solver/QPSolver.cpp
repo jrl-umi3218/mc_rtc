@@ -59,7 +59,7 @@ void QPSolver::addConstraintSet(ConstraintSet & cs)
   cs.addToSolver(*this);
   if(dynamic_cast<DynamicsConstraint *>(&cs) != nullptr)
   {
-    dynamicsConstraints_.push_back(static_cast<DynamicsConstraint *>(&cs));
+    addDynamicsConstraint(static_cast<DynamicsConstraint *>(&cs));
   }
 }
 
@@ -72,13 +72,7 @@ void QPSolver::removeConstraintSet(ConstraintSet & cs)
         cs.backend(), backend_);
   }
   cs.removeFromSolver(*this);
-  auto it = std::find_if(dynamicsConstraints_.begin(), dynamicsConstraints_.end(), [&cs](DynamicsConstraint * dyn) {
-    return static_cast<ConstraintSet *>(dyn) == static_cast<ConstraintSet *>(&cs);
-  });
-  if(it != dynamicsConstraints_.end())
-  {
-    dynamicsConstraints_.erase(it);
-  }
+  removeDynamicsConstraint(&cs);
 }
 
 void QPSolver::addTask(mc_tasks::MetaTask * task)
@@ -146,20 +140,7 @@ const std::vector<mc_tasks::MetaTask *> & QPSolver::tasks() const
 
 bool QPSolver::run(FeedbackType fType)
 {
-  bool success = run_impl(fType);
-  if(success)
-  {
-    __fillResult();
-  }
-  return success;
-}
-
-void QPSolver::__fillResult()
-{
-  for(const auto & dynamics : dynamicsConstraints_)
-  {
-    fillTorque(*dynamics);
-  }
+  return run_impl(fType);
 }
 
 const mc_rbdyn::Robot & QPSolver::robot() const
@@ -214,19 +195,6 @@ mc_rbdyn::Robots & QPSolver::realRobots()
 double QPSolver::dt() const
 {
   return timeStep;
-}
-
-void QPSolver::fillTorque(const mc_solver::DynamicsConstraint & dynamicsConstraint)
-{
-  if(dynamicsConstraint.inSolver())
-  {
-    dynamicsConstraint.fillJointTorque(*this);
-  }
-  else
-  {
-    auto & robot = robots().robot(dynamicsConstraint.robotIndex());
-    robot.mbc().jointTorque = rbd::vectorToDof(robot.mb(), Eigen::VectorXd::Zero(robot.mb().nrDof()));
-  }
 }
 
 void QPSolver::logger(std::shared_ptr<mc_rtc::Logger> logger)

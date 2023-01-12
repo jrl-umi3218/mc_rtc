@@ -18,7 +18,8 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestCanonicalRobotController : public MCController
 {
 public:
-  TestCanonicalRobotController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt) : MCController(rm, dt)
+  TestCanonicalRobotController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, Backend backend)
+  : MCController(rm, dt, backend)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().size(), 2);
@@ -103,4 +104,9 @@ private:
 
 } // namespace mc_control
 
-SIMPLE_CONTROLLER_CONSTRUCTOR("TestCanonicalRobotController", mc_control::TestCanonicalRobotController)
+using Controller = mc_control::TestCanonicalRobotController;
+using Backend = mc_control::MCController::Backend;
+MULTI_CONTROLLERS_CONSTRUCTOR("TestCanonicalRobotController",
+                              Controller(rm, dt, Backend::Tasks),
+                              "TestCanonicalRobotController_TVM",
+                              Controller(rm, dt, Backend::TVM))

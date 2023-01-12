@@ -124,6 +124,9 @@ private:
    *
    * In Tasks backend:
    * - details::CompoundJointConstraint
+   *
+   * In TVM backend:
+   * - details::TVMCompoundJointConstraint
    */
   mc_rtc::void_ptr constraint_;
 };

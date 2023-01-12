@@ -23,8 +23,8 @@ public:
     solver().addConstraintSet(contactConstraint);
     solver().addConstraintSet(dynamicsConstraint);
     solver().addTask(postureTask.get());
-    solver().setContacts(
-        {mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"), mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
+    addContact({"jvrc1", "ground", "LeftFoot", "AllGround"});
+    addContact({"jvrc1", "ground", "RightFoot", "AllGround"});
     mc_rtc::log::success("Created {}", name_);
   }
 

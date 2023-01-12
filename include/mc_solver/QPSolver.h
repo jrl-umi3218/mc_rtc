@@ -92,7 +92,9 @@ public:
     /** Unset */
     Unset,
     /** Use Tasks library as a backend */
-    Tasks
+    Tasks,
+    /** Use TVM library as a backend */
+    TVM
   };
 
   /** This token is used to give mc_control::MCController access to some internals */
@@ -274,19 +276,11 @@ public:
    */
   double dt() const;
 
-  /** Use the dynamics constraint to fill torque in the main robot */
-  void fillTorque(const mc_solver::DynamicsConstraint & dynamicsConstraint);
-
   /** Returns the solving time in ms */
   virtual double solveTime() = 0;
 
   /** Returns the building and solving time in ms */
   virtual double solveAndBuildTime() = 0;
-
-  /** Return the solvers result vector.
-   * \return The solvers result vector.
-   */
-  virtual const Eigen::VectorXd & result() const = 0;
 
   /** Set the logger for this solver instance */
   void logger(std::shared_ptr<mc_rtc::Logger> logger);
@@ -326,14 +320,8 @@ protected:
   /** Holds MetaTask currently in the solver */
   std::vector<mc_tasks::MetaTask *> metaTasks_;
 
-  /** Holds dynamics constraint currently in the solver */
-  std::vector<mc_solver::DynamicsConstraint *> dynamicsConstraints_;
-
   /** Storage for shared_pointer on tasks */
   std::vector<std::shared_ptr<void>> shPtrTasksStorage;
-
-  /** Update result after the latest run() */
-  void __fillResult();
 
   /** Pointer to the Logger */
   std::shared_ptr<mc_rtc::Logger> logger_ = nullptr;
@@ -346,7 +334,14 @@ protected:
   /** Can be nullptr if this not associated to any controller */
   mc_control::MCController * controller_ = nullptr;
 
+  /** Should run the control prroblem and update the control robot accordingly */
   virtual bool run_impl(FeedbackType fType = FeedbackType::None) = 0;
+
+  /** This is called when a dynamics constraint is added to the solver */
+  virtual void addDynamicsConstraint(mc_solver::DynamicsConstraint * dynamics) = 0;
+
+  /** This is called anytime a constraint is removed, the passed constraint is not always a dynamics constraint */
+  virtual void removeDynamicsConstraint(mc_solver::ConstraintSet * maybe_dynamics) = 0;
 };
 
 } // namespace mc_solver
@@ -365,6 +360,8 @@ struct formatter<mc_solver::QPSolver::Backend> : public formatter<string_view>
     {
       case Backend::Tasks:
         return formatter<string_view>::format("Tasks", ctx);
+      case Backend::TVM:
+        return formatter<string_view>::format("TVM", ctx);
       case Backend::Unset:
         return formatter<string_view>::format("Unset", ctx);
       default:

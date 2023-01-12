@@ -69,6 +69,12 @@ public:
     return robot_;
   }
 
+  /** Returns this frame body index in robot's mbc */
+  inline unsigned int bodyMbcIndex() const noexcept
+  {
+    return bodyMbcIdx_;
+  }
+
   /** The body this frame is attached to */
   const std::string & body() const noexcept;
 
@@ -148,6 +154,13 @@ public:
    */
   RobotFramePtr makeFrame(const std::string & name, const sva::PTransformd & X_p_f, bool baked = false);
 
+  /** Access the associated TVM frame */
+  inline mc_tvm::RobotFrame & tvm_frame() const
+  {
+    /** FIXME Make sure this reinterpret_cast is formally OK, otherwise abandon the inline */
+    return reinterpret_cast<mc_tvm::RobotFrame &>(Frame::tvm_frame());
+  }
+
 protected:
   /** Robot instance this frame belongs to */
   Robot & robot_;
@@ -155,6 +168,8 @@ protected:
   unsigned int bodyMbcIdx_;
   /** Force sensor attached (directly or indirectly) to this frame, nullptr if none */
   const ForceSensor * sensor_ = nullptr;
+
+  void init_tvm_frame() const final;
 };
 
 } // namespace mc_rbdyn

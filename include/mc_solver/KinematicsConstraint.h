@@ -56,6 +56,9 @@ protected:
    * - tasks::qp::JointLimitsConstr for non-damped constraint
    * - tasks::qp::DampedJointLimitsConstr for damped-constraint
    *
+   * In TVM backend:
+   * - internal implementation
+   *
    * The deleter carries the initial type of the constraint
    */
   mc_rtc::void_ptr constraint_;

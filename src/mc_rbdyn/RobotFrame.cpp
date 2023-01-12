@@ -2,6 +2,8 @@
 
 #include <mc_rbdyn/Robot.h>
 
+#include <mc_tvm/RobotFrame.h>
+
 namespace mc_rbdyn
 {
 
@@ -43,11 +45,10 @@ sva::PTransformd RobotFrame::position() const noexcept
 
 sva::MotionVecd RobotFrame::velocity() const noexcept
 {
-  if(!parent_)
-  {
-    return position_ * robot_.mbc().bodyVelW[bodyMbcIdx_];
-  }
-  return position_ * static_cast<RobotFrame *>(parent_.get())->velocity();
+  auto X_0_parent = parent_ ? parent_->position() : robot_.mbc().bodyPosW[bodyMbcIdx_];
+  auto vel = parent_ ? static_cast<RobotFrame *>(parent_.get())->velocity() : robot_.mbc().bodyVelW[bodyMbcIdx_];
+  vel.linear() += -hat(X_0_parent.rotation().transpose() * position_.translation()) * vel.angular();
+  return vel;
 }
 
 const ForceSensor & RobotFrame::forceSensor() const
@@ -123,6 +124,11 @@ sva::PTransformd RobotFrame::X_b_f() const noexcept
     return position_ * static_cast<RobotFrame *>(parent_.get())->X_b_f();
   }
   return position_;
+}
+
+void RobotFrame::init_tvm_frame() const
+{
+  tvm_frame_.reset(new mc_tvm::RobotFrame(mc_tvm::RobotFrame::NewRobotFrameToken{}, *this));
 }
 
 } // namespace mc_rbdyn

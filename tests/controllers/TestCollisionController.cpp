@@ -41,10 +41,11 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestCollisionController : public MCController
 {
 public:
-  TestCollisionController(mc_rbdyn::RobotModulePtr rm, double dt)
+  TestCollisionController(mc_rbdyn::RobotModulePtr rm, double dt, Backend backend)
   : MCController({rm, mc_rbdyn::RobotLoader::get_robot_module("env/ground"),
                   mc_rbdyn::RobotLoader::get_robot_module("object/box")},
-                 dt),
+                 dt,
+                 backend),
     cstr_(robots(), robot("box").robotIndex(), dt)
   {
     // Check that the default constructor loads the robot + ground environment
@@ -134,4 +135,9 @@ private:
 
 } // namespace mc_control
 
-SIMPLE_CONTROLLER_CONSTRUCTOR("TestCollisionController", mc_control::TestCollisionController)
+using Controller = mc_control::TestCollisionController;
+using Backend = mc_control::MCController::Backend;
+MULTI_CONTROLLERS_CONSTRUCTOR("TestCollisionController",
+                              Controller(rm, dt, Backend::Tasks),
+                              "TestCollisionController_TVM",
+                              Controller(rm, dt, Backend::TVM))

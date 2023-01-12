@@ -13,8 +13,9 @@ namespace mc_control
 
 MCEndEffectorController::MCEndEffectorController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module,
                                                  double dt,
-                                                 const mc_rtc::Configuration & config)
-: MCController(robot_module, dt)
+                                                 const mc_rtc::Configuration & config,
+                                                 Backend backend)
+: MCController(robot_module, dt, backend)
 {
   solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(dynamicsConstraint);
@@ -83,3 +84,11 @@ void MCEndEffectorController::reset(const ControllerResetData & reset_data)
 }
 
 } // namespace mc_control
+
+using Controller = mc_control::MCEndEffectorController;
+using Backend = Controller::Backend;
+
+MULTI_CONTROLLERS_CONSTRUCTOR("EndEffector",
+                              Controller(rm, dt, config, Backend::Tasks),
+                              "EndEffector_TVM",
+                              Controller(rm, dt, config, Backend::TVM))

@@ -7,12 +7,17 @@
 #include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/PositionBasedVisServoTask.h>
 
+#include <mc_tvm/PositionBasedVisServoFunction.h>
+
 #include <mc_rtc/deprecated.h>
 
 #include <Eigen/Geometry>
 
 namespace mc_tasks
 {
+
+static inline mc_rtc::void_ptr_caster<tasks::qp::PositionBasedVisServoTask> tasks_error{};
+static inline mc_rtc::void_ptr_caster<mc_tvm::PositionBasedVisServoFunction> tvm_error{};
 
 PositionBasedVisServoTask::PositionBasedVisServoTask(const std::string & bodyName,
                                                      const sva::PTransformd & X_t_s,
@@ -23,15 +28,25 @@ PositionBasedVisServoTask::PositionBasedVisServoTask(const std::string & bodyNam
                                                      double weight)
 : TrajectoryTaskGeneric(robots, robotIndex, stiffness, weight), X_t_s_(X_t_s)
 {
+  name_ = "pbvs_" + robots.robot(robotIndex).name() + "_" + bodyName;
   switch(backend_)
   {
     case Backend::Tasks:
-      finalize<tasks::qp::PositionBasedVisServoTask>(robots.mbs(), static_cast<int>(rIndex), bodyName, X_t_s, X_b_s);
+      finalize<Backend::Tasks, tasks::qp::PositionBasedVisServoTask>(robots.mbs(), static_cast<int>(rIndex), bodyName,
+                                                                     X_t_s, X_b_s);
       break;
+    case Backend::TVM:
+    {
+      const auto & robot = robots.robot(rIndex);
+      const auto & bodyFrame = robot.frame(bodyName);
+      finalize<Backend::TVM, mc_tvm::PositionBasedVisServoFunction>(
+          *robot.makeTemporaryFrame(name_, bodyFrame, X_b_s, true));
+      tvm_error(errorT)->error(X_t_s);
+      break;
+    }
     default:
       mc_rtc::log::error_and_throw("[PBVSTask] Not implemented for solver backend: {}", backend_);
   }
-  name_ = "pbvs_" + robots.robot(robotIndex).name() + "_" + bodyName;
 }
 
 PositionBasedVisServoTask::PositionBasedVisServoTask(const std::string & surfaceName,
@@ -53,8 +68,12 @@ PositionBasedVisServoTask::PositionBasedVisServoTask(const mc_rbdyn::RobotFrame 
   switch(backend_)
   {
     case Backend::Tasks:
-      finalize<tasks::qp::PositionBasedVisServoTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(), X_t_s,
-                                                     frame.X_b_f());
+      finalize<Backend::Tasks, tasks::qp::PositionBasedVisServoTask>(robots.mbs(), static_cast<int>(rIndex),
+                                                                     frame.body(), X_t_s, frame.X_b_f());
+      break;
+    case Backend::TVM:
+      finalize<Backend::TVM, mc_tvm::PositionBasedVisServoFunction>(frame);
+      tvm_error(errorT)->error(X_t_s);
       break;
     default:
       mc_rtc::log::error_and_throw("[PBVSTask] Not implemented for solver backend: {}", backend_);
@@ -75,7 +94,10 @@ void PositionBasedVisServoTask::error(const sva::PTransformd & X_t_s)
   switch(backend_)
   {
     case Backend::Tasks:
-      static_cast<tasks::qp::PositionBasedVisServoTask *>(errorT.get())->error(X_t_s_);
+      tasks_error(errorT)->error(X_t_s_);
+      break;
+    case Backend::TVM:
+      tvm_error(errorT)->error(X_t_s_);
       break;
     default:
       break;
@@ -90,16 +112,30 @@ void PositionBasedVisServoTask::addToLogger(mc_rtc::Logger & logger)
   {
     case Backend::Tasks:
     {
-      logger.addLogEntry(name_ + "_eval", this, [this]() -> sva::PTransformd {
-        Eigen::Vector6d eval = static_cast<tasks::qp::PositionBasedVisServoTask *>(errorT.get())->eval();
+      auto error = tasks_error(errorT);
+      logger.addLogEntry(name_ + "_eval", this, [error]() -> sva::PTransformd {
+        Eigen::Vector6d eval = error->eval();
         Eigen::Vector3d angleAxis = eval.head(3);
         Eigen::Vector3d axis = angleAxis / angleAxis.norm();
         double angle = angleAxis.dot(axis);
         Eigen::Quaterniond quat(Eigen::AngleAxisd(angle, axis));
         return sva::PTransformd(quat, eval.tail(3));
       });
+      break;
     }
-    break;
+    case Backend::TVM:
+    {
+      auto error = tvm_error(errorT);
+      logger.addLogEntry(name_ + "_eval", this, [error]() -> sva::PTransformd {
+        Eigen::Vector6d eval = error->value();
+        Eigen::Vector3d angleAxis = eval.head(3);
+        Eigen::Vector3d axis = angleAxis / angleAxis.norm();
+        double angle = angleAxis.dot(axis);
+        Eigen::Quaterniond quat(Eigen::AngleAxisd(angle, axis));
+        return sva::PTransformd(quat, eval.tail(3));
+      });
+      break;
+    }
     default:
       break;
   }

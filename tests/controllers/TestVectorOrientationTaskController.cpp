@@ -21,7 +21,8 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestVectorOrientationTaskController : public MCController
 {
 public:
-  TestVectorOrientationTaskController(mc_rbdyn::RobotModulePtr rm, double dt) : MCController(rm, dt)
+  TestVectorOrientationTaskController(mc_rbdyn::RobotModulePtr rm, double dt, Backend backend)
+  : MCController(rm, dt, backend)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().size(), 2);
@@ -95,4 +96,8 @@ private:
 } // namespace mc_control
 
 using Controller = mc_control::TestVectorOrientationTaskController;
-SIMPLE_CONTROLLER_CONSTRUCTOR("TestVectorOrientationTaskController", Controller)
+using Backend = mc_control::MCController::Backend;
+MULTI_CONTROLLERS_CONSTRUCTOR("TestVectorOrientationTaskController",
+                              Controller(rm, dt, Backend::Tasks),
+                              "TestVectorOrientationTaskController_TVM",
+                              Controller(rm, dt, Backend::TVM))

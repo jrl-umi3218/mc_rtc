@@ -6,6 +6,8 @@
 
 #include <mc_tasks/SplineTrajectoryTask.h>
 
+#include <mc_tvm/TransformFunction.h>
+
 #include <mc_rtc/gui/Checkbox.h>
 #include <mc_rtc/gui/Rotation.h>
 #include <mc_rtc/gui/Transform.h>
@@ -30,8 +32,11 @@ SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::RobotFrame &
   switch(backend_)
   {
     case Backend::Tasks:
-      finalize<tasks::qp::TransformTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(), frame.position(),
-                                         frame.X_b_f());
+      finalize<Backend::Tasks, tasks::qp::TransformTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(),
+                                                         frame.position(), frame.X_b_f());
+      break;
+    case Backend::TVM:
+      finalize<Backend::TVM, mc_tvm::TransformFunction>(frame);
       break;
     default:
       mc_rtc::log::error_and_throw("[SplineTrajectoryTask] Not implemented for backend: {}", backend_);
@@ -377,6 +382,9 @@ void SplineTrajectoryTask<Derived>::refPose(const sva::PTransformd & target)
     case Backend::Tasks:
       static_cast<tasks::qp::TransformTask *>(errorT.get())->target(target);
       break;
+    case Backend::TVM:
+      static_cast<mc_tvm::TransformFunction *>(errorT.get())->pose(target);
+      break;
     default:
       break;
   }
@@ -389,6 +397,8 @@ const sva::PTransformd & SplineTrajectoryTask<Derived>::refPose() const
   {
     case Backend::Tasks:
       return static_cast<const tasks::qp::TransformTask *>(errorT.get())->target();
+    case Backend::TVM:
+      return static_cast<const mc_tvm::TransformFunction *>(errorT.get())->pose();
     default:
       mc_rtc::log::error_and_throw("Not implemented");
   }

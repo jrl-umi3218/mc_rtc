@@ -60,6 +60,8 @@ private:
    *
    * In Tasks backend:
    * - tasks::qp::ContactConstr
+   *
+   * No-op in TVM backend
    */
   mc_rtc::void_ptr constraint_;
 };

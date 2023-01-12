@@ -1,13 +1,18 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_tasks/OrientationTask.h>
+
+#include <mc_tvm/OrientationFunction.h>
 
 #include <mc_rtc/gui/Rotation.h>
 
 namespace mc_tasks
 {
+
+static inline mc_rtc::void_ptr_caster<tasks::qp::OrientationTask> tasks_error{};
+static inline mc_rtc::void_ptr_caster<mc_tvm::OrientationFunction> tvm_error{};
 
 OrientationTask::OrientationTask(const std::string & bodyName,
                                  const mc_rbdyn::Robots & robots,
@@ -24,8 +29,11 @@ OrientationTask::OrientationTask(const mc_rbdyn::RobotFrame & frame, double stif
   switch(backend_)
   {
     case Backend::Tasks:
-      finalize<tasks::qp::OrientationTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(),
-                                           (frame.X_b_f().inv() * frame.position()).rotation());
+      finalize<Backend::Tasks, tasks::qp::OrientationTask>(robots.mbs(), static_cast<int>(rIndex), frame.body(),
+                                                           (frame.X_b_f().inv() * frame.position()).rotation());
+      break;
+    case Backend::TVM:
+      finalize<Backend::TVM, mc_tvm::OrientationFunction>(frame);
       break;
     default:
       mc_rtc::log::error_and_throw("[OrientationTask] Not implemented for backend: {}", backend_);
@@ -37,7 +45,17 @@ OrientationTask::OrientationTask(const mc_rbdyn::RobotFrame & frame, double stif
 void OrientationTask::reset()
 {
   TrajectoryTaskGeneric::reset();
-  orientation((frame_->X_b_f().inv() * frame_->position()).rotation());
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      orientation((frame_->X_b_f().inv() * frame_->position()).rotation());
+      break;
+    case Backend::TVM:
+      orientation(frame_->position().rotation());
+      break;
+    default:
+      break;
+  }
 }
 
 void OrientationTask::orientation(const Eigen::Matrix3d & ori)
@@ -45,8 +63,10 @@ void OrientationTask::orientation(const Eigen::Matrix3d & ori)
   switch(backend_)
   {
     case Backend::Tasks:
-      static_cast<tasks::qp::OrientationTask *>(errorT.get())
-          ->orientation((frame_->X_b_f().inv() * sva::PTransformd{ori}).rotation());
+      tasks_error(errorT)->orientation((frame_->X_b_f().inv() * sva::PTransformd{ori}).rotation());
+      break;
+    case Backend::TVM:
+      tvm_error(errorT)->orientation(ori);
       break;
     default:
       break;
@@ -58,7 +78,9 @@ Eigen::Matrix3d OrientationTask::orientation()
   switch(backend_)
   {
     case Backend::Tasks:
-      return (frame_->X_b_f() * static_cast<tasks::qp::OrientationTask *>(errorT.get())->orientation()).rotation();
+      return (frame_->X_b_f() * tasks_error(errorT)->orientation()).rotation();
+    case Backend::TVM:
+      return tvm_error(errorT)->orientation();
     default:
       mc_rtc::log::error_and_throw("Not implemented");
   }

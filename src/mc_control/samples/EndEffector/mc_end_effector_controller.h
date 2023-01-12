@@ -18,7 +18,8 @@ struct MC_CONTROL_DLLAPI MCEndEffectorController : public MCController
 public:
   MCEndEffectorController(std::shared_ptr<mc_rbdyn::RobotModule> robot,
                           double dt,
-                          const mc_rtc::Configuration & config);
+                          const mc_rtc::Configuration & config,
+                          Backend backend);
 
   void reset(const ControllerResetData & reset_data) override;
 
@@ -29,5 +30,3 @@ private:
 };
 
 } // namespace mc_control
-
-CONTROLLER_CONSTRUCTOR("EndEffector", mc_control::MCEndEffectorController)

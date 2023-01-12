@@ -6,6 +6,8 @@
 
 #include <mc_tasks/MetaTask.h>
 
+#include <mc_tasks/TVMTrajectoryTaskGeneric.h>
+
 #include <mc_rbdyn/Robots.h>
 
 #include <mc_rtc/logging.h>
@@ -249,8 +251,6 @@ struct MC_TASKS_DLLAPI TrajectoryTaskGeneric : public MetaTask
 
   const Eigen::VectorXd & normalAcc() const;
 
-  const Eigen::MatrixXd & jac() const;
-
   void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 
 protected:
@@ -262,31 +262,48 @@ protected:
    *
    * \param args Arguments passed to the constructor of \ref errorT
    */
-  template<typename ErrorT, typename... Args>
+  template<Backend backend, typename ErrorT, typename... Args>
   inline void finalize(Args &&... args)
   {
+    assert(backend == backend_);
     errorT = mc_rtc::make_void_ptr<ErrorT>(std::forward<Args>(args)...);
-    switch(backend_)
+    if constexpr(backend == Backend::Tasks)
     {
-      case Backend::Tasks:
+      trajectoryT_ = mc_rtc::make_void_ptr<tasks::qp::TrajectoryTask>(
+          robots.mbs(), rIndex, static_cast<ErrorT *>(errorT.get()), stiffness_(0), damping_(0), weight_);
+      auto & trajectory = *static_cast<tasks::qp::TrajectoryTask *>(trajectoryT_.get());
+      stiffness_ = trajectory.stiffness();
+      damping_ = trajectory.damping();
+      if(refVel_.size() != trajectory.refVel().size())
       {
-        trajectoryT_ = mc_rtc::make_void_ptr<tasks::qp::TrajectoryTask>(
-            robots.mbs(), rIndex, static_cast<ErrorT *>(errorT.get()), stiffness_(0), damping_(0), weight_);
-        auto & trajectory = *static_cast<tasks::qp::TrajectoryTask *>(trajectoryT_.get());
-        stiffness_ = trajectory.stiffness();
-        damping_ = trajectory.damping();
-        if(refVel_.size() != trajectory.refVel().size())
-        {
-          refVel_ = trajectory.refVel();
-        }
-        if(refAccel_.size() != trajectory.refAccel().size())
-        {
-          refAccel_ = trajectory.refAccel();
-        }
+        refVel_ = trajectory.refVel();
       }
-      break;
-      default:
-        mc_rtc::log::error_and_throw("[{} task] Not implemented for backend: {}", backend_);
+      if(refAccel_.size() != trajectory.refAccel().size())
+      {
+        refAccel_ = trajectory.refAccel();
+      }
+    }
+    else if constexpr(backend == Backend::TVM)
+    {
+      auto error = static_cast<ErrorT *>(errorT.get());
+      trajectoryT_ = mc_rtc::make_void_ptr<details::TVMTrajectoryTaskGenericPtr>(
+          std::make_shared<details::TVMTrajectoryTaskGeneric>());
+      static_cast<details::TVMTrajectoryTaskGenericPtr *>(trajectoryT_.get())->get()->init<ErrorT>(error);
+      int size = error->size();
+      stiffness_ = Eigen::VectorXd::Constant(size, 1, stiffness_(0));
+      damping_ = Eigen::VectorXd::Constant(size, 1, damping_(0));
+      if constexpr(details::has_refVel_v<ErrorT>)
+      {
+        refVel_ = error->refVel();
+      }
+      if constexpr(details::has_refAccel_v<ErrorT>)
+      {
+        refAccel_ = error->refAccel();
+      }
+    }
+    else
+    {
+      mc_rtc::log::error_and_throw("[{} task] Not implemented for backend: {}", backend_);
     }
   }
 
@@ -312,6 +329,9 @@ protected:
    *
    * In Tasks backend:
    * - tasks::qp::TrajectoryTask
+   *
+   * In TVM backend:
+   * - details::TVMTrajectoryTaskGeneric
    */
   mc_rtc::void_ptr trajectoryT_{nullptr, nullptr};
 
@@ -324,6 +344,9 @@ protected:
    *
    * In Tasks backend:
    * - tasks::qp::JointSelector
+   *
+   * In TVM backend:
+   * mc_tvm::JointsSelectorFunction
    */
   mc_rtc::void_ptr selectorT_{nullptr, nullptr};
 

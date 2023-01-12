@@ -102,11 +102,8 @@ public:
                        const Eigen::VectorXd & lowerSpeed,
                        const Eigen::VectorXd & upperSpeed);
 
-  /** Remove all constraints associated to a body */
-  bool removeBoundedSpeed(QPSolver & solver, const std::string & bodyName);
-
-  /** Remove all constraints associated to a frame */
-  bool removeBoundedSpeed(QPSolver & solver, const mc_rbdyn::RobotFrame & frame);
+  /** Remove all constraints associated to a body or a frame */
+  bool removeBoundedSpeed(QPSolver & solver, const std::string & frameName);
 
   size_t nrBoundedSpeeds() const;
 
@@ -117,6 +114,9 @@ private:
    *
    * In Tasks backend:
    * - tasks::qp::BoundedSpeedConstr
+   *
+   * In TVM backend:
+   * - details::TVMBoundedSpeedConstr
    */
   mc_rtc::void_ptr constraint_;
   unsigned int robotIndex;

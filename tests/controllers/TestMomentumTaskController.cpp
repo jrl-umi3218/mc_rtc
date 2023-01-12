@@ -21,7 +21,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestMomentumTaskController : public MCController
 {
 public:
-  TestMomentumTaskController(mc_rbdyn::RobotModulePtr rm, double dt) : MCController(rm, dt)
+  TestMomentumTaskController(mc_rbdyn::RobotModulePtr rm, double dt, Backend backend) : MCController(rm, dt, backend)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().size(), 2);
@@ -29,8 +29,8 @@ public:
     BOOST_CHECK_EQUAL(robot().name(), "jvrc1");
     solver().addConstraintSet(contactConstraint);
     solver().addConstraintSet(dynamicsConstraint);
-    postureTask->stiffness(1);
-    postureTask->weight(1);
+    postureTask->stiffness(2);
+    postureTask->weight(10);
     solver().addTask(postureTask.get());
     addContact({robot().name(), "ground", "LeftFoot", "AllGround"});
     addContact({robot().name(), "ground", "RightFoot", "AllGround"});
@@ -54,11 +54,6 @@ public:
     nrIter++;
     if(nrIter == 500)
     {
-      // Swap the contact order
-      removeContact({robot().name(), "ground", "LeftFoot", "AllGround"});
-      removeContact({robot().name(), "ground", "RightFoot", "AllGround"});
-      addContact({"ground", robot().name(), "AllGround", "LeftFoot"});
-      addContact({"ground", robot().name(), "AllGround", "RightFoot"});
       momentumTask->momentum(sva::ForceVecd::Zero());
     }
     if(nrIter == 1000)
@@ -98,4 +93,8 @@ private:
 } // namespace mc_control
 
 using Controller = mc_control::TestMomentumTaskController;
-SIMPLE_CONTROLLER_CONSTRUCTOR("TestMomentumTaskController", Controller)
+using Backend = mc_control::MCController::Backend;
+MULTI_CONTROLLERS_CONSTRUCTOR("TestMomentumTaskController",
+                              Controller(rm, dt, Backend::Tasks),
+                              "TestMomentumTaskController_TVM",
+                              Controller(rm, dt, Backend::TVM))

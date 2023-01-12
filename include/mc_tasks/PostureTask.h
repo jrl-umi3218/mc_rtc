@@ -13,7 +13,13 @@
 namespace mc_tasks
 {
 
-/** A posture task for a given robot */
+/** A posture task for a given robot
+ *
+ * Note that eval/speed/dimWeight have different dimensions based on the backend:
+ * - in Tasks, this is robot.mb().nrParams()
+ * - in TVM, this is robot.tvmRobot().qJoints().size()
+ *
+ */
 struct MC_TASKS_DLLAPI PostureTask : public MetaTask
 {
 public:
@@ -29,28 +35,9 @@ public:
    * For simple cases (using 0/1 as weights) prefer \ref selectActiveJoints or \ref selectUnactiveJoints which are
    * simpler to use
    */
-  inline void dimWeight(const Eigen::VectorXd & dimW) override
-  {
-    switch(backend_)
-    {
-      case Backend::Tasks:
-        static_cast<tasks::qp::PostureTask *>(pt_.get())->dimWeight(dimW);
-        break;
-      default:
-        break;
-    }
-  }
+  void dimWeight(const Eigen::VectorXd & dimW) override;
 
-  Eigen::VectorXd dimWeight() const override
-  {
-    switch(backend_)
-    {
-      case Backend::Tasks:
-        return static_cast<tasks::qp::PostureTask *>(pt_.get())->dimWeight();
-      default:
-        mc_rtc::log::error_and_throw("Not implemented");
-    }
-  }
+  Eigen::VectorXd dimWeight() const override;
 
   /*! \brief Select active joints for this task
    *
@@ -85,59 +72,19 @@ public:
    *
    * \p refVel Should be of size nrDof
    */
-  inline void refVel(const Eigen::VectorXd & refVel) noexcept
-  {
-    assert(refVel.size() == robots_.robot(rIndex_).mb().nrDof());
-    switch(backend_)
-    {
-      case Backend::Tasks:
-        static_cast<tasks::qp::PostureTask *>(pt_.get())->refVel(refVel);
-        break;
-      default:
-        break;
-    }
-  }
+  void refVel(const Eigen::VectorXd & refVel) noexcept;
 
   /** Access the reference velocity */
-  inline const Eigen::VectorXd & refVel() const noexcept
-  {
-    switch(backend_)
-    {
-      case Backend::Tasks:
-        return static_cast<tasks::qp::PostureTask *>(pt_.get())->refVel();
-      default:
-        mc_rtc::log::error_and_throw("Not implemented");
-    }
-  }
+  const Eigen::VectorXd & refVel() const noexcept;
 
   /** Change reference acceleration
    *
    * \p refAccel Should be of size nrDof
    */
-  inline void refAccel(const Eigen::VectorXd & refAccel) noexcept
-  {
-    assert(refAccel.size() == robots_.robot(rIndex_).mb().nrDof());
-    switch(backend_)
-    {
-      case Backend::Tasks:
-        static_cast<tasks::qp::PostureTask *>(pt_.get())->refAccel(refAccel);
-        break;
-      default:
-        break;
-    }
-  }
+  void refAccel(const Eigen::VectorXd & refAccel) noexcept;
 
   /** Access the reference acceleration */
-  inline const Eigen::VectorXd & refAccel() const noexcept
-  {
-    switch(backend_)
-    {
-      case Backend::Tasks:
-        return static_cast<tasks::qp::PostureTask *>(pt_.get())->refAccel();
-      default:
-        mc_rtc::log::error_and_throw("Not implemented");
-    }
-  }
+  const Eigen::VectorXd & refAccel() const noexcept;
 
   /** Get current posture objective */
   std::vector<std::vector<double>> posture() const;
@@ -219,6 +166,9 @@ private:
    *
    * In Tasks backend:
    * - tasks::qp::PostureTask
+   *
+   * In TVM backend:
+   * - details::TVMPostureTask
    */
   mc_rtc::void_ptr pt_;
   /** Solver timestep */

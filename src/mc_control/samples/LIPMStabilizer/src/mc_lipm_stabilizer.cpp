@@ -6,7 +6,8 @@
 
 LIPMStabilizerController::LIPMStabilizerController(mc_rbdyn::RobotModulePtr rm,
                                                    double dt,
-                                                   const mc_rtc::Configuration & config)
-: mc_control::fsm::Controller(rm, dt, config)
+                                                   const mc_rtc::Configuration & config,
+                                                   Backend backend)
+: mc_control::fsm::Controller(rm, dt, config, backend)
 {
 }

@@ -14,8 +14,9 @@ namespace mc_control
 
 MCTextController::MCTextController(std::shared_ptr<mc_rbdyn::RobotModule> robot,
                                    double dt,
-                                   const mc_rtc::Configuration & config)
-: MCController(robot, dt)
+                                   const mc_rtc::Configuration & config,
+                                   Backend backend)
+: MCController(robot, dt, backend)
 {
   if(!config.has("Text"))
   {
@@ -40,6 +41,8 @@ void MCTextController::reset(const mc_control::ControllerResetData & data)
     constraints_.push_back(mc_solver::ConstraintSetLoader::load(solver(), c));
     solver().addConstraintSet(*constraints_.back());
   }
+  postureTask->stiffness(2.0);
+  postureTask->weight(10.0);
   solver().addTask(postureTask);
   for(const auto & t : config_("tasks"))
   {
@@ -55,3 +58,8 @@ void MCTextController::reset(const mc_control::ControllerResetData & data)
 }
 
 } // namespace mc_control
+
+MULTI_CONTROLLERS_CONSTRUCTOR("Text",
+                              mc_control::MCTextController(rm, dt, config, mc_control::MCController::Backend::Tasks),
+                              "Text_TVM",
+                              mc_control::MCTextController(rm, dt, config, mc_control::MCController::Backend::TVM))

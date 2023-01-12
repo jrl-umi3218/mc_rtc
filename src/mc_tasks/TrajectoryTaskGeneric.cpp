@@ -6,6 +6,8 @@
 
 #include <mc_solver/TasksQPSolver.h>
 
+#include <mc_tvm/JointsSelectorFunction.h>
+
 #include <mc_rtc/gui/ArrayInput.h>
 #include <mc_rtc/gui/NumberInput.h>
 
@@ -14,37 +16,20 @@
 namespace mc_tasks
 {
 
-static inline tasks::qp::TrajectoryTask * tasks_trajectory(mc_rtc::void_ptr & ptr)
-{
-  return static_cast<tasks::qp::TrajectoryTask *>(ptr.get());
-}
+static inline mc_rtc::void_ptr_caster<tasks::qp::TrajectoryTask> tasks_trajectory{};
+static inline mc_rtc::void_ptr_caster<tasks::qp::HighLevelTask> tasks_error{};
+static inline mc_rtc::void_ptr_caster<tasks::qp::JointsSelector> tasks_selector{};
 
-static inline const tasks::qp::TrajectoryTask * tasks_trajectory(const mc_rtc::void_ptr & ptr)
+static inline details::TVMTrajectoryTaskGeneric * tvm_trajectory(mc_rtc::void_ptr & ptr)
 {
-  return static_cast<const tasks::qp::TrajectoryTask *>(ptr.get());
+  return static_cast<details::TVMTrajectoryTaskGenericPtr *>(ptr.get())->get();
 }
-
-static inline tasks::qp::HighLevelTask * tasks_error(mc_rtc::void_ptr & ptr)
+static inline const details::TVMTrajectoryTaskGeneric * tvm_trajectory(const mc_rtc::void_ptr & ptr)
 {
-  return static_cast<tasks::qp::HighLevelTask *>(ptr.get());
+  return static_cast<const details::TVMTrajectoryTaskGenericPtr *>(ptr.get())->get();
 }
-
-/* Note: this break const-correrctness because eval/speed are not const */
-static inline const tasks::qp::HighLevelTask * tasks_error(const mc_rtc::void_ptr & ptr)
-{
-  return static_cast<tasks::qp::HighLevelTask *>(ptr.get());
-}
-
-static inline tasks::qp::JointsSelector * tasks_selector(mc_rtc::void_ptr & ptr)
-{
-  return static_cast<tasks::qp::JointsSelector *>(ptr.get());
-}
-
-/* Note: this break const-correrctness because eval/speed are not const */
-static inline tasks::qp::JointsSelector * tasks_selector(const mc_rtc::void_ptr & ptr)
-{
-  return static_cast<tasks::qp::JointsSelector *>(ptr.get());
-}
+static inline mc_rtc::void_ptr_caster<tvm::function::abstract::Function> tvm_error{};
+static inline mc_rtc::void_ptr_caster<mc_tvm::JointsSelectorFunction> tvm_selector{};
 
 static inline void set_gains(MetaTask::Backend backend,
                              mc_rtc::void_ptr & traj,
@@ -56,6 +41,24 @@ static inline void set_gains(MetaTask::Backend backend,
     case MetaTask::Backend::Tasks:
       tasks_trajectory(traj)->setGains(s, d);
       break;
+    case MetaTask::Backend::TVM:
+    {
+      auto trajectory = tvm_trajectory(traj);
+      if(trajectory->task_)
+      {
+        if(trajectory->dynamicIsPD_)
+        {
+          auto & PDImpl = static_cast<tvm::task_dynamics::PD::Impl &>(*trajectory->task_->task.taskDynamics());
+          PDImpl.gains(s, d);
+        }
+        else
+        {
+          auto & PImpl = static_cast<tvm::task_dynamics::P::Impl &>(*trajectory->task_->task.taskDynamics());
+          PImpl.gain(s);
+        }
+      }
+      break;
+    }
     default:
       break;
   }
@@ -85,6 +88,13 @@ void TrajectoryTaskGeneric::removeFromSolver(mc_solver::QPSolver & solver)
       case Backend::Tasks:
         tasks_solver(solver).removeTask(tasks_trajectory(trajectoryT_));
         break;
+      case Backend::TVM:
+      {
+        auto trajectory = tvm_trajectory(trajectoryT_);
+        tvm_solver(solver).problem().remove(*trajectory->task_);
+        trajectory->task_.reset();
+        break;
+      }
       default:
         break;
     }
@@ -101,6 +111,38 @@ void TrajectoryTaskGeneric::addToSolver(mc_solver::QPSolver & solver)
       case Backend::Tasks:
         tasks_solver(solver).addTask(tasks_trajectory(trajectoryT_));
         break;
+      case Backend::TVM:
+      {
+        auto addTask = [&, this](auto & error) {
+          auto trajectory = tvm_trajectory(trajectoryT_);
+          tvm::requirements::SolvingRequirements reqs{tvm::requirements::PriorityLevel(1),
+                                                      tvm::requirements::Weight(weight_),
+                                                      tvm::requirements::AnisotropicWeight(trajectory->dimWeight_)};
+          tvm::FunctionPtr error_ptr(&error, [](tvm::function::abstract::Function *) {});
+          if(error.variables()[0]->derivativeNumber() == 0)
+          {
+            trajectory->dynamicIsPD_ = true;
+            trajectory->task_ =
+                tvm_solver(solver).problem().add(error_ptr == 0., tvm::task_dynamics::PD(stiffness_, damping_), reqs);
+          }
+          else
+          {
+            assert(error.variables()[0]->derivativeNumber() == 1);
+            trajectory->dynamicIsPD_ = false;
+            trajectory->task_ =
+                tvm_solver(solver).problem().add(error_ptr == 0., tvm::task_dynamics::P(stiffness_), reqs);
+          }
+        };
+        if(selectorT_)
+        {
+          addTask(*tvm_selector(selectorT_));
+        }
+        else
+        {
+          addTask(*tvm_error(errorT));
+        }
+        break;
+      }
       default:
         break;
     }
@@ -114,6 +156,8 @@ void TrajectoryTaskGeneric::reset()
     {
       case Backend::Tasks:
         return tasks_error(errorT)->dim();
+      case Backend::TVM:
+        return tvm_error(errorT)->size();
       default:
         return 0;
     }
@@ -131,6 +175,15 @@ void TrajectoryTaskGeneric::refVel(const Eigen::VectorXd & vel)
     case Backend::Tasks:
       tasks_trajectory(trajectoryT_)->refVel(vel);
       break;
+    case Backend::TVM:
+    {
+      auto trajectory = tvm_trajectory(trajectoryT_);
+      if(trajectory->setRefVel)
+      {
+        trajectory->setRefVel(errorT.get(), vel);
+      }
+      break;
+    }
     default:
       break;
   }
@@ -149,6 +202,15 @@ void TrajectoryTaskGeneric::refAccel(const Eigen::VectorXd & accel)
     case Backend::Tasks:
       tasks_trajectory(trajectoryT_)->refAccel(accel);
       break;
+    case Backend::TVM:
+    {
+      auto trajectory = tvm_trajectory(trajectoryT_);
+      if(trajectory->setRefAccel)
+      {
+        trajectory->setRefAccel(errorT.get(), accel);
+      }
+      break;
+    }
     default:
       break;
   }
@@ -224,6 +286,15 @@ void TrajectoryTaskGeneric::weight(double w)
     case Backend::Tasks:
       tasks_trajectory(trajectoryT_)->weight(w);
       break;
+    case Backend::TVM:
+    {
+      auto trajectory = tvm_trajectory(trajectoryT_);
+      if(trajectory->task_)
+      {
+        trajectory->task_->requirements.weight() = weight_;
+      }
+      break;
+    }
     default:
       break;
   }
@@ -241,6 +312,21 @@ void TrajectoryTaskGeneric::dimWeight(const Eigen::VectorXd & w)
     case Backend::Tasks:
       tasks_trajectory(trajectoryT_)->dimWeight(w);
       break;
+    case Backend::TVM:
+    {
+      auto traj = tvm_trajectory(trajectoryT_);
+      if(traj->dimWeight_.size() != w.size())
+      {
+        mc_rtc::log::error_and_throw("[{}] Wrong size provided to dimWeight, expected {} got {}", name(),
+                                     traj->dimWeight_.size(), w.size());
+      }
+      traj->dimWeight_ = w;
+      if(traj->task_)
+      {
+        traj->task_->requirements.anisotropicWeight() = w;
+      }
+      break;
+    }
     default:
       break;
   }
@@ -252,6 +338,8 @@ Eigen::VectorXd TrajectoryTaskGeneric::dimWeight() const
   {
     case Backend::Tasks:
       return tasks_trajectory(trajectoryT_)->dimWeight();
+    case Backend::TVM:
+      return tvm_trajectory(trajectoryT_)->dimWeight_;
     default:
       mc_rtc::log::error_and_throw("Not implemented");
   }
@@ -280,8 +368,12 @@ void TrajectoryTaskGeneric::selectActiveJoints(const std::vector<std::string> & 
       trajectoryT_ = mc_rtc::make_void_ptr<tasks::qp::TrajectoryTask>(
           robots.mbs(), static_cast<int>(rIndex), tasks_selector(selectorT_), 1, 2, dimWeight(), weight_);
       set_gains(backend_, trajectoryT_, stiffness_, damping_);
+      break;
     }
-    break;
+    case Backend::TVM:
+      selectorT_ = mc_rtc::make_void_ptr(
+          mc_tvm::JointsSelectorFunction::ActiveJoints(tvm_error(errorT), robots.robot(rIndex), activeJointsName));
+      break;
     default:
       break;
   }
@@ -330,8 +422,12 @@ void TrajectoryTaskGeneric::selectUnactiveJoints(
       trajectoryT_ = mc_rtc::make_void_ptr<tasks::qp::TrajectoryTask>(
           robots.mbs(), static_cast<int>(rIndex), tasks_selector(selectorT_), 1, 2, dimWeight(), weight_);
       set_gains(backend_, trajectoryT_, stiffness_, damping_);
+      break;
     }
-    break;
+    case Backend::TVM:
+      selectorT_ = mc_rtc::make_void_ptr(
+          mc_tvm::JointsSelectorFunction::InactiveJoints(tvm_error(errorT), robots.robot(rIndex), unactiveJointsName));
+      break;
     default:
       break;
   }
@@ -372,8 +468,10 @@ void TrajectoryTaskGeneric::resetJointsSelector()
       trajectoryT_ = mc_rtc::make_void_ptr<tasks::qp::TrajectoryTask>(robots.mbs(), static_cast<int>(rIndex),
                                                                       tasks_error(errorT), 1, 2, dimWeight(), weight_);
       set_gains(backend_, trajectoryT_, stiffness_, damping_);
+      break;
     }
-    break;
+    case Backend::TVM:
+      break;
     default:
       break;
   }
@@ -406,7 +504,15 @@ Eigen::VectorXd TrajectoryTaskGeneric::eval() const
       }
       return tasks_error(errorT)->eval().cwiseProduct(dimWeight);
     }
-    break;
+    case Backend::TVM:
+    {
+      const auto & dimWeight = tvm_trajectory(trajectoryT_)->dimWeight_;
+      if(selectorT_)
+      {
+        return tvm_selector(selectorT_)->value().cwiseProduct(dimWeight);
+      }
+      return tvm_error(errorT)->value().cwiseProduct(dimWeight);
+    }
     default:
       mc_rtc::log::error_and_throw("Not implemented");
   }
@@ -425,7 +531,15 @@ Eigen::VectorXd TrajectoryTaskGeneric::speed() const
       }
       return tasks_error(errorT)->speed().cwiseProduct(dimWeight);
     }
-    break;
+    case Backend::TVM:
+    {
+      const auto & dimWeight = tvm_trajectory(trajectoryT_)->dimWeight_;
+      if(selectorT_)
+      {
+        return tvm_selector(selectorT_)->velocity().cwiseProduct(dimWeight);
+      }
+      return tvm_error(errorT)->velocity().cwiseProduct(dimWeight);
+    }
     default:
       mc_rtc::log::error_and_throw("Not implemented");
   }
@@ -443,25 +557,14 @@ const Eigen::VectorXd & TrajectoryTaskGeneric::normalAcc() const
       }
       return tasks_error(errorT)->normalAcc();
     }
-    break;
-    default:
-      mc_rtc::log::error_and_throw("Not implemented");
-  }
-}
-
-const Eigen::MatrixXd & TrajectoryTaskGeneric::jac() const
-{
-  switch(backend_)
-  {
-    case Backend::Tasks:
+    case Backend::TVM:
     {
       if(selectorT_)
       {
-        return tasks_selector(selectorT_)->jac();
+        return tvm_selector(selectorT_)->normalAcceleration();
       }
-      return tasks_error(errorT)->jac();
+      return tvm_error(errorT)->normalAcceleration();
     }
-    break;
     default:
       mc_rtc::log::error_and_throw("Not implemented");
   }

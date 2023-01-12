@@ -17,6 +17,7 @@ public:
   {
     spdlog::set_level(spdlog::level::err);
     mc_rbdyn::RobotLoader::clear();
+    mc_rtc::Loader::debug_suffix = "";
     mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
     auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
     auto env = mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),

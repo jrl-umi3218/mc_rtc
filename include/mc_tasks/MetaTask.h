@@ -24,8 +24,9 @@ namespace mc_solver
 {
 
 struct TasksQPSolver;
+struct TVMQPSolver;
 
-}
+} // namespace mc_solver
 
 namespace mc_tasks
 {
@@ -39,6 +40,7 @@ struct MC_SOLVER_DLLAPI MetaTask
 {
   friend struct mc_solver::QPSolver;
   friend struct mc_solver::TasksQPSolver;
+  friend struct mc_solver::TVMQPSolver;
   friend struct mc_control::CompletionCriteria;
 
   /** Shortcut for implementation */

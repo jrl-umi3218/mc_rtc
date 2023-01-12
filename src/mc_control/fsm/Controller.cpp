@@ -22,8 +22,8 @@ namespace fsm
 std::unique_ptr<StateFactory> Controller::factory_ptr_;
 #endif
 
-Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, const mc_rtc::Configuration & config)
-: MCController(std::vector<mc_rbdyn::RobotModulePtr>{rm}, dt, config),
+Controller::Controller(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config, Backend backend)
+: MCController(std::vector<mc_rbdyn::RobotModulePtr>{rm}, dt, config, backend),
 #ifndef MC_RTC_BUILD_STATIC
   factory_(config("StatesLibraries", std::vector<std::string>{}),
            config("StatesFiles", std::vector<std::string>{}),

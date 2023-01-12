@@ -5,6 +5,9 @@
 #include <mc_tasks/AddRemoveContactTask.h>
 
 #include <mc_tasks/MetaTaskLoader.h>
+#include <mc_tasks/TrajectoryTaskGeneric.h>
+
+#include <mc_tvm/FrameVelocity.h>
 
 #include <mc_solver/TasksQPSolver.h>
 
@@ -17,24 +20,63 @@
 namespace mc_tasks
 {
 
-AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
+namespace details
+{
+
+struct TasksImpl
+{
+  std::unique_ptr<tasks::qp::LinVelocityTask> linVelTask;
+  std::unique_ptr<tasks::qp::PIDTask> linVelTaskPid;
+};
+
+struct TVMImpl : public mc_tasks::TrajectoryTaskGeneric
+{
+  TVMImpl(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+  : mc_tasks::TrajectoryTaskGeneric(frame, stiffness, weight)
+  {
+    Eigen::Vector6d dof = Eigen::Vector6d::Ones();
+    dof.head(3).setZero();
+    finalize<Backend::TVM, mc_tvm::FrameVelocity>(frame, dof);
+  }
+};
+
+mc_rtc::void_ptr initialize(MetaTask::Backend backend,
+                            const mc_rbdyn::RobotFrame & frame,
+                            double stiffness,
+                            double weight)
+{
+  switch(backend)
+  {
+    case MetaTask::Backend::Tasks:
+      return mc_rtc::make_void_ptr<TasksImpl>();
+    case MetaTask::Backend::TVM:
+      return mc_rtc::make_void_ptr<TVMImpl>(frame, stiffness, weight);
+    default:
+      mc_rtc::log::error_and_throw("[AddRemoveContactTask] Not implemented for solver backend: {}", backend);
+  }
+}
+
+} // namespace details
+
+static inline mc_rtc::void_ptr_caster<details::TasksImpl> tasks_impl{};
+static inline mc_rtc::void_ptr_caster<details::TVMImpl> tvm_impl{};
+
+AddRemoveContactTask::AddRemoveContactTask(const mc_rbdyn::Robots & robots,
                                            std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
-                                           mc_rbdyn::Contact & contact,
+                                           const mc_rbdyn::Contact & contact,
                                            double direction,
                                            double _speed,
                                            double stiffness,
                                            double weight,
                                            Eigen::Vector3d * userT_0_s)
-: robots(robots), robot(robots.robot(contact.r1Index())), env(robots.robot(contact.r2Index())),
-  constSpeedConstr(constSpeedConstr), robotSurf(contact.r1Surface()),
-  robotBodyIndex(robot.bodyIndexByName(robotSurf->bodyName())), targetTf(contact.X_0_r1s(robots)),
-  bodyId(robotSurf->bodyName()), dofMat(Eigen::MatrixXd::Zero(5, 6)), speedMat(Eigen::VectorXd::Zero(5)),
-  stiffness_(stiffness), weight_(weight)
+: robots(robots), robotIndex(contact.r1Index()), envIndex(contact.r2Index()), constSpeedConstr(constSpeedConstr),
+  robotSurf(contact.r1Surface()), robotBodyIndex(robots.robot(robotIndex).bodyIndexByName(robotSurf->bodyName())),
+  targetTf(contact.X_0_r1s(robots)), bodyId(robotSurf->bodyName()), dofMat(Eigen::MatrixXd::Zero(6, 6)),
+  speedMat(Eigen::VectorXd::Zero(6)), stiffness_(stiffness), weight_(weight),
+  impl_(details::initialize(backend_, robots.robot(robotIndex).frame(contact.r1Surface()->name()), stiffness, weight))
 {
-  if(backend_ != Backend::Tasks)
-  {
-    mc_rtc::log::error_and_throw("[AddRemoveContactTask] Only support the Tasks backend");
-  }
+  const auto & robot = robots.robot(robotIndex);
+  const auto & env = robots.robot(envIndex);
   type_ = std::string(direction > 0 ? "removeContact" : "addContact");
   name_ = std::string(direction > 0 ? "remove" : "add") + "_contact_" + robot.name() + "_" + contact.r1Surface()->name()
           + "_" + env.name() + "_" + contact.r2Surface()->name();
@@ -62,17 +104,36 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
   direction_ = direction;
   this->speed_ = _speed;
   targetSpeed = direction * normal * speed_;
-  linVelTask.reset(new tasks::qp::LinVelocityTask(robots.mbs(), 0, robotSurf->bodyName(), targetSpeed,
-                                                  robotSurf->X_b_s().translation())),
-      linVelTaskPid.reset(new tasks::qp::PIDTask(robots.mbs(), 0, linVelTask.get(), stiffness, 0, 0, 0));
-  linVelTaskPid->error(velError());
-  linVelTaskPid->errorI(Eigen::Vector3d(0, 0, 0));
-  linVelTaskPid->errorD(Eigen::Vector3d(0, 0, 0));
   targetVelWeight = weight;
+
+  switch(backend_)
+  {
+    case Backend::Tasks:
+    {
+      auto impl = tasks_impl(impl_);
+      impl->linVelTask.reset(new tasks::qp::LinVelocityTask(robots.mbs(), 0, robotSurf->bodyName(), targetSpeed,
+                                                            robotSurf->X_b_s().translation())),
+          impl->linVelTaskPid.reset(
+              new tasks::qp::PIDTask(robots.mbs(), 0, impl->linVelTask.get(), stiffness, 0, 0, 0));
+      impl->linVelTaskPid->error(velError());
+      impl->linVelTaskPid->errorI(Eigen::Vector3d(0, 0, 0));
+      impl->linVelTaskPid->errorD(Eigen::Vector3d(0, 0, 0));
+      break;
+    }
+    case Backend::TVM:
+    {
+      Eigen::Vector6d refVel = Eigen::Vector6d::Zero();
+      refVel.tail(3) = targetSpeed;
+      tvm_impl(impl_)->refVel(refVel);
+      break;
+    }
+    default:
+      break;
+  }
 }
 
-AddRemoveContactTask::AddRemoveContactTask(mc_solver::QPSolver & solver,
-                                           mc_rbdyn::Contact & contact,
+AddRemoveContactTask::AddRemoveContactTask(const mc_solver::QPSolver & solver,
+                                           const mc_rbdyn::Contact & contact,
                                            double direction,
                                            double _speed,
                                            double stiffness,
@@ -88,16 +149,29 @@ void AddRemoveContactTask::direction(double direction)
 {
   direction_ = direction;
   targetSpeed = direction_ * normal * speed_;
+  if(backend_ == Backend::TVM)
+  {
+    Eigen::Vector6d refVel = Eigen::Vector6d::Zero();
+    refVel.tail(3) = targetSpeed;
+    tvm_impl(impl_)->refVel(refVel);
+  }
 }
 
 void AddRemoveContactTask::speed(double s)
 {
   speed_ = s;
   targetSpeed = direction_ * normal * speed_;
+  if(backend_ == Backend::TVM)
+  {
+    Eigen::Vector6d refVel = Eigen::Vector6d::Zero();
+    refVel.tail(3) = targetSpeed;
+    tvm_impl(impl_)->refVel(refVel);
+  }
 }
 
 Eigen::Vector3d AddRemoveContactTask::velError()
 {
+  const auto & robot = robots.robot(robotIndex);
   Eigen::Vector3d T_b_s = robotSurf->X_b_s().translation();
   Eigen::Matrix3d E_0_b = robot.mbc().bodyPosW[robotBodyIndex].rotation();
 
@@ -108,7 +182,17 @@ Eigen::Vector3d AddRemoveContactTask::velError()
 
 void AddRemoveContactTask::addToSolver(mc_solver::QPSolver & solver)
 {
-  tasks_solver(solver).addTask(linVelTaskPid.get());
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      tasks_solver(solver).addTask(tasks_impl(impl_)->linVelTaskPid.get());
+      break;
+    case Backend::TVM:
+      MetaTask::addToSolver(*tvm_impl(impl_), solver);
+      break;
+    default:
+      break;
+  }
   if(manageConstraint)
   {
     solver.addConstraintSet(*constSpeedConstr);
@@ -118,7 +202,17 @@ void AddRemoveContactTask::addToSolver(mc_solver::QPSolver & solver)
 
 void AddRemoveContactTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
-  tasks_solver(solver).removeTask(linVelTaskPid.get());
+  switch(backend_)
+  {
+    case Backend::Tasks:
+      tasks_solver(solver).removeTask(tasks_impl(impl_)->linVelTaskPid.get());
+      break;
+    case Backend::TVM:
+      MetaTask::removeFromSolver(*tvm_impl(impl_), solver);
+      break;
+    default:
+      break;
+  }
   if(manageConstraint)
   {
     solver.removeConstraintSet(*constSpeedConstr);
@@ -128,28 +222,102 @@ void AddRemoveContactTask::removeFromSolver(mc_solver::QPSolver & solver)
 
 void AddRemoveContactTask::update(mc_solver::QPSolver &)
 {
-  linVelTaskPid->error(velError());
-  linVelTaskPid->weight(std::min(linVelTaskPid->weight() + 0.5, targetVelWeight));
+  switch(backend_)
+  {
+    case Backend::Tasks:
+    {
+      auto linVelTaskPid = tasks_impl(impl_)->linVelTaskPid.get();
+      linVelTaskPid->error(velError());
+      linVelTaskPid->weight(std::min(linVelTaskPid->weight() + 0.5, targetVelWeight));
+      break;
+    }
+    case Backend::TVM:
+    {
+      auto impl = tvm_impl(impl_);
+      impl->weight(std::min(impl->weight() + 0.5, targetVelWeight));
+      break;
+    }
+    default:
+      break;
+  }
 }
 
 void AddRemoveContactTask::dimWeight(const Eigen::VectorXd & dimW)
 {
-  linVelTaskPid->dimWeight(dimW);
+  switch(backend_)
+  {
+    case Backend::Tasks:
+    {
+      auto linVelTaskPid = tasks_impl(impl_)->linVelTaskPid.get();
+      linVelTaskPid->dimWeight(dimW);
+      break;
+    }
+    case Backend::TVM:
+    {
+      auto impl = tvm_impl(impl_);
+      impl->dimWeight(dimW);
+      break;
+    }
+    default:
+      break;
+  }
 }
 
 Eigen::VectorXd AddRemoveContactTask::dimWeight() const
 {
-  return linVelTaskPid->dimWeight();
+  switch(backend_)
+  {
+    case Backend::Tasks:
+    {
+      auto linVelTaskPid = tasks_impl(impl_)->linVelTaskPid.get();
+      return linVelTaskPid->dimWeight();
+    }
+    case Backend::TVM:
+    {
+      auto impl = tvm_impl(impl_);
+      return impl->dimWeight();
+    }
+    default:
+      mc_rtc::log::error_and_throw("Not implemented");
+  }
 }
 
 Eigen::VectorXd AddRemoveContactTask::eval() const
 {
-  return linVelTask->eval();
+  switch(backend_)
+  {
+    case Backend::Tasks:
+    {
+      auto linVelTask = tasks_impl(impl_)->linVelTask.get();
+      return linVelTask->eval();
+    }
+    case Backend::TVM:
+    {
+      auto impl = tvm_impl(impl_);
+      return impl->eval();
+    }
+    default:
+      mc_rtc::log::error_and_throw("Not implemented");
+  }
 }
 
 Eigen::VectorXd AddRemoveContactTask::speed() const
 {
-  return linVelTask->speed();
+  switch(backend_)
+  {
+    case Backend::Tasks:
+    {
+      auto linVelTask = tasks_impl(impl_)->linVelTask.get();
+      return linVelTask->speed();
+    }
+    case Backend::TVM:
+    {
+      auto impl = tvm_impl(impl_);
+      return impl->speed();
+    }
+    default:
+      mc_rtc::log::error_and_throw("Not implemented");
+  }
 }
 
 AddContactTask::AddContactTask(mc_rbdyn::Robots & robots,

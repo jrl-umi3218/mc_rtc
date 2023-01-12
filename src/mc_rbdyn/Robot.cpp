@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_rbdyn/Robot.h>
@@ -12,6 +12,9 @@
 #include <mc_rtc/constants.h>
 #include <mc_rtc/logging.h>
 #include <mc_rtc/pragma.h>
+
+#include <mc_tvm/Convex.h>
+#include <mc_tvm/Robot.h>
 
 #include <RBDyn/CoM.h>
 #include <RBDyn/FA.h>
@@ -310,6 +313,12 @@ Robot::Robot(NewRobotToken,
     forwardAcceleration();
   }
 
+  mass_ = 0.;
+  for(const auto & b : mb().bodies())
+  {
+    mass_ += b.inertia().mass();
+  }
+
   bodyTransforms_.resize(mb().bodies().size());
   const auto & bbts = mbg().bodiesBaseTransform(base_name, base_tf);
   for(size_t i = 0; i < mb().bodies().size(); ++i)
@@ -535,6 +544,12 @@ Robot::Robot(NewRobotToken,
 
   zmp_ = Eigen::Vector3d::Zero();
 }
+
+Robot::~Robot() = default;
+
+Robot::Robot(Robot &&) = default;
+
+Robot & Robot::operator=(Robot &&) = default;
 
 const std::string & Robot::name() const
 {
@@ -1392,16 +1407,6 @@ void mc_rbdyn::Robot::addSurface(SurfacePtr surface, bool doNotReplace)
 
 MC_RTC_diagnostic_pop
 
-double mc_rbdyn::Robot::mass() const
-{
-  double mass = 0.;
-  for(const auto & b : mb().bodies())
-  {
-    mass += b.inertia().mass();
-  }
-  return mass;
-}
-
 void mc_rbdyn::Robot::zmpTarget(const Eigen::Vector3d & zmp)
 {
   zmp_ = zmp;
@@ -1547,6 +1552,16 @@ RobotFrame & Robot::makeFrame(const std::string & name, RobotFrame & parent, sva
   return *frame;
 }
 
+RobotFramePtr Robot::makeTemporaryFrame(const std::string & name,
+                                        const RobotFrame & parent,
+                                        sva::PTransformd X_p_f,
+                                        bool baked) const
+{
+  /* const_cast is OK here because we never created const RobotFrame objects */
+  return std::make_shared<RobotFrame>(RobotFrame::NewRobotFrameToken{}, name, const_cast<RobotFrame &>(parent), X_p_f,
+                                      baked);
+}
+
 const ForceSensor * Robot::findBodyForceSensor(const std::string & body) const
 {
   auto it = bodyForceSensors_.find(body);
@@ -1560,6 +1575,28 @@ const ForceSensor * Robot::findBodyForceSensor(const std::string & body) const
     return &data_->forceSensors[bodyForceSensors_.find(bodyName)->second];
   }
   return nullptr;
+}
+
+mc_tvm::Robot & Robot::tvmRobot() const
+{
+  if(!tvm_robot_)
+  {
+    tvm_robot_.reset(new mc_tvm::Robot(mc_tvm::Robot::NewRobotToken{}, *this));
+  }
+  return *tvm_robot_;
+}
+
+mc_tvm::Convex & Robot::tvmConvex(const std::string & name) const
+{
+  auto it = tvm_convexes_.find(name);
+  if(it == tvm_convexes_.end())
+  {
+    const auto & cvx = convex(name);
+    std::tie(it, std::ignore) = tvm_convexes_.insert(
+        {name, std::unique_ptr<mc_tvm::Convex>{new mc_tvm::Convex(mc_tvm::Convex::NewConvexToken{}, cvx.second,
+                                                                  frame(name), collisionTransform(name))}});
+  }
+  return *it->second;
 }
 
 } // namespace mc_rbdyn

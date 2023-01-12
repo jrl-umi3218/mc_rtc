@@ -5,18 +5,102 @@
 #include <mc_solver/CoMIncPlaneConstr.h>
 
 #include <mc_solver/ConstraintSetLoader.h>
+#include <mc_solver/TVMQPSolver.h>
 #include <mc_solver/TasksQPSolver.h>
 
+#include <mc_tvm/CoMInConvexFunction.h>
+
 #include <Tasks/QPConstr.h>
+
+#include <tvm/task_dynamics/VelocityDamper.h>
 
 namespace mc_solver
 {
 
-/** Helper to cast the constraint */
-static tasks::qp::CoMIncPlaneConstr & tasks_constraint(mc_rtc::void_ptr & ptr)
+namespace details
 {
-  return *static_cast<tasks::qp::CoMIncPlaneConstr *>(ptr.get());
-}
+
+struct TVMCoMIncPlaneConstr
+{
+  mc_tvm::CoMInConvexFunctionPtr function_;
+  tvm::task_dynamics::VelocityDamper::Config config_{0.05, 0.01, 0.1, 0.0};
+  tvm::TaskWithRequirementsPtr constraint_;
+
+  TVMCoMIncPlaneConstr(const mc_rbdyn::Robot & robot) : function_(std::make_shared<mc_tvm::CoMInConvexFunction>(robot))
+  {
+  }
+
+  void addToSolver(mc_solver::TVMQPSolver & solver)
+  {
+    constraint_ = solver.problem().add(function_ >= 0., tvm::task_dynamics::VelocityDamper(solver.dt(), config_),
+                                       {tvm::requirements::PriorityLevel(0)});
+  }
+
+  void removeFromSolver(mc_solver::TVMQPSolver & solver)
+  {
+    solver.problem().remove(*constraint_);
+    constraint_.reset();
+  }
+
+  void setPlanes(mc_solver::TVMQPSolver & solver,
+                 const std::vector<mc_rbdyn::Plane> & planes,
+                 const std::vector<Eigen::Vector3d> & speeds,
+                 const std::vector<Eigen::Vector3d> & normalsDots,
+                 tvm::task_dynamics::VelocityDamper::Config config)
+  {
+    auto isNewConfig = [&]() {
+      return config_.di_ != config.di_ || config_.ds_ != config.ds_ || config_.xsi_ != config.xsi_
+             || config_.xsiOff_ != config.xsiOff_;
+    };
+    bool needInsertion = constraint_ != nullptr && (planes.size() != function_->planes().size() || isNewConfig());
+    config_ = config;
+    if(needInsertion)
+    {
+      removeFromSolver(solver);
+    }
+    const auto & fn_planes = function_->planes();
+    auto update_position = [&, this](size_t i) -> tvm::geometry::Plane & {
+      auto & plane = planes[i];
+      if(i < fn_planes.size())
+      {
+        auto & out = function_->plane(i);
+        out.position(plane.normal, plane.offset);
+        return out;
+      }
+      else
+      {
+        auto out = std::make_shared<tvm::geometry::Plane>(plane.normal, plane.offset);
+        function_->addPlane(out);
+        return *out;
+      }
+    };
+    if(speeds.size() != 0 && speeds.size() == planes.size() && normalsDots.size() == planes.size())
+    {
+      for(size_t i = 0; i < planes.size(); ++i)
+      {
+        auto & fn_plane = update_position(i);
+        fn_plane.velocity(speeds[i], normalsDots[i]);
+      }
+    }
+    else
+    {
+      for(size_t i = 0; i < planes.size(); ++i)
+      {
+        update_position(i);
+      }
+    }
+    if(needInsertion)
+    {
+      addToSolver(solver);
+    }
+  }
+};
+
+} // namespace details
+
+/** Helper to cast the constraint */
+static inline mc_rtc::void_ptr_caster<tasks::qp::CoMIncPlaneConstr> tasks_constraint{};
+static inline mc_rtc::void_ptr_caster<details::TVMCoMIncPlaneConstr> tvm_constraint{};
 
 static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend,
                                         const mc_rbdyn::Robots & robots,
@@ -27,6 +111,8 @@ static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend,
   {
     case QPSolver::Backend::Tasks:
       return mc_rtc::make_void_ptr<tasks::qp::CoMIncPlaneConstr>(robots.mbs(), static_cast<int>(robotIndex), dt);
+    case QPSolver::Backend::TVM:
+      return mc_rtc::make_void_ptr<details::TVMCoMIncPlaneConstr>(robots.robot(robotIndex));
     default:
       mc_rtc::log::error_and_throw("[CoMIncPlaneConstr] Not implemented for solver backend: {}", backend);
   }
@@ -42,11 +128,11 @@ void CoMIncPlaneConstr::addToSolverImpl(QPSolver & solver)
   switch(backend_)
   {
     case QPSolver::Backend::Tasks:
-    {
-      auto & qpsolver = tasks_solver(solver).solver();
-      tasks_constraint(constraint_).addToSolver(solver.robots().mbs(), qpsolver);
-    }
-    break;
+      tasks_constraint(constraint_)->addToSolver(solver.robots().mbs(), tasks_solver(solver).solver());
+      break;
+    case QPSolver::Backend::TVM:
+      tvm_constraint(constraint_)->addToSolver(tvm_solver(solver));
+      break;
     default:
       break;
   }
@@ -57,7 +143,10 @@ void CoMIncPlaneConstr::removeFromSolverImpl(QPSolver & solver)
   switch(backend_)
   {
     case QPSolver::Backend::Tasks:
-      tasks_constraint(constraint_).removeFromSolver(tasks_solver(solver).solver());
+      tasks_constraint(constraint_)->removeFromSolver(tasks_solver(solver).solver());
+      break;
+    case QPSolver::Backend::TVM:
+      tvm_constraint(constraint_)->removeFromSolver(tvm_solver(solver));
       break;
     default:
       break;
@@ -77,7 +166,7 @@ void CoMIncPlaneConstr::setPlanes(QPSolver & solver,
   {
     case QPSolver::Backend::Tasks:
     {
-      auto & constr = tasks_constraint(constraint_);
+      auto & constr = *tasks_constraint(constraint_);
       auto & qpsolver = tasks_solver(solver);
       constr.reset();
       if(speeds.size() != 0 && normalsDots.size() == speeds.size() && planes.size() == speeds.size())
@@ -109,8 +198,12 @@ void CoMIncPlaneConstr::setPlanes(QPSolver & solver,
       }
       constr.updateNrPlanes();
       qpsolver.updateConstrSize();
+      break;
     }
-    break;
+    case QPSolver::Backend::TVM:
+      tvm_constraint(constraint_)
+          ->setPlanes(tvm_solver(solver), planes, speeds, normalsDots, {iDist, sDist, damping, dampingOff});
+      break;
     default:
       break;
   }

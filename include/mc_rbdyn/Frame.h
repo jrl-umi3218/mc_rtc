@@ -6,6 +6,9 @@
 
 #include <mc_rbdyn/api.h>
 #include <mc_rbdyn/fwd.h>
+#include <mc_rbdyn/hat.h>
+
+#include <mc_tvm/fwd.h>
 
 #include <mc_rtc/shared.h>
 
@@ -35,7 +38,7 @@ public:
   /** Constructor for a frame with a parent */
   Frame(NewFrameToken, const std::string & name, Frame & parent, sva::PTransformd X_p_f, bool bake) noexcept;
 
-  virtual ~Frame() = default;
+  virtual ~Frame();
 
   /* Prevent copy and move */
   Frame(const Frame &) = delete;
@@ -85,7 +88,14 @@ public:
   /** Compute the current frame's velocity in inertial frame */
   virtual inline sva::MotionVecd velocity() const noexcept
   {
-    return parent_ ? position_ * parent_->velocity() : velocity_;
+    if(!parent_)
+    {
+      return velocity_;
+    }
+    auto vel = parent_->velocity();
+    auto X_0_p = parent_->position();
+    vel.linear() += -hat(X_0_p.rotation().transpose() * position_.translation()) * vel.angular();
+    return vel;
   }
 
   /** Update the frame's position
@@ -118,6 +128,19 @@ public:
     return parent_;
   }
 
+  /** Access the associated TVM frame
+   *
+   * \see mc_rbdyn::Robot for rational on returning a non-const reference from a const method
+   */
+  inline mc_tvm::Frame & tvm_frame() const
+  {
+    if(!tvm_frame_)
+    {
+      init_tvm_frame();
+    }
+    return *tvm_frame_;
+  }
+
 protected:
   /** Name of the frame */
   std::string name_;
@@ -127,6 +150,13 @@ protected:
   sva::PTransformd position_ = sva::PTransformd::Identity();
   /** Absolute velocity for a frame with no parent, unused otherwise */
   sva::MotionVecd velocity_ = sva::MotionVecd::Zero();
+  /** TVM frame associated to this mc_rbdyn Frame
+   *
+   * mutable to allow initialization in const method
+   */
+  mutable mc_tvm::FramePtr tvm_frame_;
+  /** Initialize the associated tvm Frame */
+  virtual void init_tvm_frame() const;
 };
 
 } // namespace mc_rbdyn
