@@ -759,7 +759,9 @@ public:
   /** Posture task for the main robot */
   std::shared_ptr<mc_tasks::PostureTask> postureTask;
   /* Controller's name */
-  std::string name_;
+  const std::string name_;
+  /** Stores the loading location provided by the loader via \ref set_loading_location */
+  const std::string loading_location_;
 
   /** Load a robot specific configuration (if any)
    *
@@ -778,9 +780,11 @@ public:
    */
   static void set_loading_location(std::string_view location);
 
-private:
-  /** Stores the loading location provided by the loader via \ref set_loading_location */
-  std::string loading_location_;
+  /** Called by \ref mc_rtc::ObjectLoader to set the name of the controller
+   *
+   * The value is stored in a thread_local variable and is meant to be used in the constructor of MCController
+   */
+  static void set_name(std::string_view name);
 };
 
 namespace details

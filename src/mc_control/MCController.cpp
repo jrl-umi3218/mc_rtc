@@ -74,6 +74,13 @@ void MCController::set_loading_location(std::string_view location)
   MC_CONTROLLER_LOADING_LOCATION = location;
 }
 
+static thread_local std::string MC_CONTROLLER_NAME = "";
+
+void MCController::set_name(std::string_view name)
+{
+  MC_CONTROLLER_NAME = name;
+}
+
 MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, Backend backend)
 : MCController(robot, dt, {}, backend)
 {
@@ -114,7 +121,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
 : qpsolver(make_solver(dt, backend)), outputRobots_(mc_rbdyn::Robots::make()),
   outputRealRobots_(mc_rbdyn::Robots::make()),
   logger_(std::make_shared<mc_rtc::Logger>(mc_rtc::Logger::Policy::NON_THREADED, "", "")),
-  gui_(std::make_shared<mc_rtc::gui::StateBuilder>()), config_(config), timeStep(dt),
+  gui_(std::make_shared<mc_rtc::gui::StateBuilder>()), config_(config), timeStep(dt), name_(MC_CONTROLLER_NAME),
   loading_location_(MC_CONTROLLER_LOADING_LOCATION)
 {
   /* Load robots */
