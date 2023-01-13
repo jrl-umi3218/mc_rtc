@@ -1,3 +1,9 @@
+mc-rtc (2.0.0-1debian1) unstable; urgency=medium
+
+  * Upstream update: see CHANGELOG.md
+
+ -- Pierre Gergondet <pierre.gergondet+ppa@gmail.com>  Fri, 13 Jan 2023 10:51:59 +0900
+
 mc-rtc (1.14.2-1debian1) unstable; urgency=medium
 
   * Update upstream: see CHANGELOG.md

@@ -1,0 +1,17 @@
+usr/etc/mc_rtc.yaml
+usr/lib/*/mc_observers/*
+usr/lib/*/mc_robots/*
+usr/lib/*/mc_controller/*
+usr/lib/*/libmc_rtc_loader.so.*
+usr/lib/*/libmc_rtc_utils.so.*
+usr/lib/*/libmc_rbdyn.so.*
+usr/lib/*/libmc_rtc_gui.so.*
+usr/lib/*/libmc_solver.so.*
+usr/lib/*/libmc_trajectory.so.*
+usr/lib/*/libmc_tasks.so.*
+usr/lib/*/libmc_observers.so.*
+usr/lib/*/libmc_control.so.*
+usr/lib/*/libmc_control_client.so.*
+usr/lib/*/libmc_control_fsm.so.*
+usr/lib/*/libmc_planning.so.*
+usr/share/doc/mc_rtc/json/schemas/*

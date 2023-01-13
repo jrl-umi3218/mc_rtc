@@ -72,7 +72,7 @@ Depends: cmake,
          libspdlog-dev,
          libltdl-dev,
          libnotify-dev,
-         libmc-rtc1 (= ${binary:Version}),
+         libmc-rtc (= ${binary:Version}),
          ${misc:Depends}
 Suggests: libmc-rtc-doc
 Description: mc-rtc - Development files
@@ -84,7 +84,7 @@ Description: mc-rtc - Development files
  This package contains development files (headers and shared library
  symbolic link).
 
-Package: libmc-rtc1
+Package: libmc-rtc
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends},
@@ -102,7 +102,7 @@ Description: mc-rtc - Real-time control of robots
 Package: mc-rtc-utils
 Section: science
 Architecture: any
-Depends: libmc-rtc1 (= ${binary:Version}),
+Depends: libmc-rtc (= ${binary:Version}),
          python-git | python3-git,
          python-mc-rtc,
          python3-mc-rtc,
