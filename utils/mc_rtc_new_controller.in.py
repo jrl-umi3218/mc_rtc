@@ -120,8 +120,6 @@ struct {controller_class_name}_DLLAPI {controller_class_name} : public {base_cla
     bool run() override;
 
     void reset(const mc_control::ControllerResetData & reset_data) override;
-private:
-    mc_rtc::Configuration config_;
 }};""".format(controller_class_name = controller_class_name, base_class = base_class, extra_includes = extra_includes))
 
     with open(project_dir + '/src/' + controller_class_name + '.cpp', 'w') as fd:
