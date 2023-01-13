@@ -115,11 +115,11 @@ set_target_properties(${{PROJECT_NAME}} PROPERTIES COMPILE_FLAGS "-D{controller_
 
 struct {controller_class_name}_DLLAPI {controller_class_name} : public {base_class}
 {{
-    {controller_class_name}(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config);
+  {controller_class_name}(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config);
 
-    bool run() override;
+  bool run() override;
 
-    void reset(const mc_control::ControllerResetData & reset_data) override;
+  void reset(const mc_control::ControllerResetData & reset_data) override;
 }};""".format(controller_class_name = controller_class_name, base_class = base_class, extra_includes = extra_includes))
 
     with open(project_dir + '/src/' + controller_class_name + '.cpp', 'w') as fd:
@@ -128,8 +128,7 @@ struct {controller_class_name}_DLLAPI {controller_class_name} : public {base_cla
             base_init += ", config"
         base_init += ')'
         if min_code:
-            min_code = """  config_.load(config);
-  solver().addConstraintSet(contactConstraint);
+            min_code = """  solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(kinematicsConstraint);
   solver().addTask(postureTask);
   solver().setContacts({{}});
