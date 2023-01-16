@@ -766,10 +766,13 @@ public:
   /** Load a robot specific configuration (if any)
    *
    * The following files are loaded (in that order):
-   * - ${loading_location}/${name}/${robot.name()}.conf|yaml
-   * - ${HOME}/.config/mc_rtc/controllers/${name}/${robot.name()}.conf|yaml (Linux/macOS)
-   * - ${APPDATA}/mc_rtc/controllers/${name}/${robot.name()}.conf|yaml (Windows)
+   * - ${loading_location}/${name()}/${robot_name}.conf|yaml
+   * - ${HOME}/.config/mc_rtc/controllers/${name()}/${robot_name}.conf|yaml (Linux/macOS)
+   * - ${APPDATA}/mc_rtc/controllers/${name()}/${robot_name}.conf|yaml (Windows)
    */
+  mc_rtc::Configuration robot_config(const std::string & robot_name) const;
+
+  /** Same as robot_config(robot.module().name) */
   mc_rtc::Configuration robot_config(const mc_rbdyn::Robot & robot) const;
 
   /** Called by \ref mc_rtc::ObjectLoader to inform the controller of its loading location

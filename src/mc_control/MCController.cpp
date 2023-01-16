@@ -991,14 +991,19 @@ Gripper & MCController::gripper(const std::string & robot, const std::string & g
 
 mc_rtc::Configuration MCController::robot_config(const mc_rbdyn::Robot & robot) const
 {
+  return robot_config(robot.module().name);
+}
+
+mc_rtc::Configuration MCController::robot_config(const std::string & robot) const
+{
   mc_rtc::Configuration result;
-  bfs::path system_path = bfs::path(loading_location_) / this->name_ / (robot.module().name + ".conf");
+  bfs::path system_path = bfs::path(loading_location_) / this->name_ / (robot + ".conf");
 #ifndef WIN32
   bfs::path user_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/controllers";
 #else
   bfs::path user_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers";
 #endif
-  user_path = user_path / name_ / (robot.module().name + ".conf");
+  user_path = user_path / name_ / (robot + ".conf");
   auto load_conf = [&result](const std::string & path) {
     result.load(path);
     mc_rtc::log::info("Controller's robot configuration loaded from {}", path);
