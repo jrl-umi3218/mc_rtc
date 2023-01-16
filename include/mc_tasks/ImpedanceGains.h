@@ -204,6 +204,7 @@ struct MC_TASKS_DLLAPI ImpedanceGains
     out.mass().vec(10.0, 10.0);
     out.damper().vec(1000.0, 1000.0);
     out.spring().vec(1000.0, 1000.0);
+    out.wrench().vec(0.0, 0.0);
     return out;
   }
 
