@@ -602,12 +602,25 @@ struct LogEntry : mpack_tree_t
   }
 
   /** Rebuild this log entry with new keys */
-  // FIXME NEED TYPE
   void copy(mc_rtc::MessagePackBuilder & builder, const std::vector<std::string> & keys)
   {
-    mc_rtc::log::error_and_throw("NOT IMPLEMENTED");
     builder.start_array(2);
-    builder.write(keys);
+    if(keys.size() != records_.size())
+    {
+      mc_rtc::log::error_and_throw("Expected to copy {} but has {} records", keys.size(), records_.size());
+    }
+    builder.start_array(keys.size());
+    for(size_t i = 0; i < keys.size(); ++i)
+    {
+      const auto & k = keys[i];
+      const auto & r = records_[i];
+      builder.start_array(3);
+      builder.write(static_cast<uint8_t>(0));
+      builder.write(static_cast<typename std::underlying_type<log::LogType>::type>(r.type));
+      builder.write(k);
+      builder.finish_array();
+    }
+    builder.finish_array();
     copy(builder, mpack_node_array_at(root_, 1));
     builder.finish_array();
   }
@@ -661,14 +674,9 @@ private:
   {
     size_t s = mpack_node_array_length(value);
     builder.start_array(s);
-    static_assert(std::is_same<int32_t, std::underlying_type<LogType>::type>::value,
-                  "LogType should be an int32_t like thing");
-    for(size_t i = 0; i < s; i += 2)
+    for(size_t i = 0; i < s; ++i)
     {
-      assert(mpack_node_type(mpack_node_array_at(value, i)) == mpack_type_int
-             || mpack_node_type(mpack_node_array_at(value, i)) == mpack_type_uint);
-      builder.write(mpack_node_i32(mpack_node_array_at(value, i)));
-      copy_data(builder, mpack_node_array_at(value, i + 1));
+      copy_data(builder, mpack_node_array_at(value, i));
     }
     builder.finish_array();
   }
