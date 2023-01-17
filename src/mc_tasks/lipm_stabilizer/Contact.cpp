@@ -69,6 +69,7 @@ Contact::Contact(const mc_rbdyn::Robot & robot,
       -mu, +mu,  +1,  -Y,  +X, -(X + Y) * mu,
       -mu, -mu,  +1,  -Y,  -X, -(X + Y) * mu;
   // clang-format on
+  wrenchFaceMatrixCoPFree_ << wrenchFaceMatrix_.block(0, 0, 4, 6), wrenchFaceMatrix_.block(8, 0, 8, 6);
 }
 
 void Contact::findSurfaceBoundaries(const mc_rbdyn::Surface & surface)
