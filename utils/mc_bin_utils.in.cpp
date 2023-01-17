@@ -162,6 +162,14 @@ int show(int argc, char * argv[])
   return 0;
 }
 
+void write_magic(std::ofstream & ofs)
+{
+  using Logger = mc_rtc::Logger;
+  ofs.write((const char *)&Logger::magic, sizeof(Logger::magic) - sizeof(uint8_t));
+  const char version = static_cast<uint8_t>(Logger::magic[3] + Logger::version);
+  ofs.write(&version, sizeof(uint8_t));
+}
+
 int split(int argc, char * argv[])
 {
   po::variables_map vm;
@@ -233,7 +241,7 @@ int split(int argc, char * argv[])
         mc_rtc::log::error("Failed to open {} for writing", ss.str());
         return false;
       }
-      ofs.write((const char *)&mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic));
+      write_magic(ofs);
     }
     if(ks.size())
     {
@@ -365,7 +373,7 @@ int extract(int argc, char * argv[])
   bool key_present = false;
   auto callback_extract_key = [&](const std::vector<std::string> & ks,
                                   const std::vector<mc_rtc::log::FlatLog::record> &, double,
-                                  const mc_rtc::log::copy_callback &, const char * data, uint64_t dataSize) {
+                                  const mc_rtc::log::copy_callback & copy, const char * data, uint64_t dataSize) {
     if(ks.size())
     {
       bool key_was_present = key_present;
@@ -379,8 +387,17 @@ int extract(int argc, char * argv[])
           mc_rtc::log::error("Failed to open {} for writing", nfile);
           return false;
         }
-        ofs.write((const char *)&mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic));
-        n++;
+        write_magic(ofs);
+        {
+          std::vector<char> data;
+          mc_rtc::MessagePackBuilder builder(data);
+          copy(builder, ks);
+          uint64_t s = builder.finish();
+          ofs.write((char *)(&s), sizeof(uint64_t));
+          ofs.write(data.data(), static_cast<int>(s));
+          n++;
+          return true;
+        }
       }
       if(key_was_present && !key_present)
       {
@@ -420,8 +437,7 @@ int extract(int argc, char * argv[])
         }
         ss << ".bin";
         ofs.open(ss.str(), std::ofstream::binary);
-        ofs.write((const char *)&mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic));
-        if(!ks.size())
+        write_magic(ofs);
         {
           std::vector<char> data;
           mc_rtc::MessagePackBuilder builder(data);

@@ -18,6 +18,8 @@ namespace mc_rtc
 
 const uint8_t Logger::magic[4] = {0x41, 0x4e, 0x4e, 0x45};
 
+const uint8_t Logger::version = 1;
+
 struct LoggerImpl
 {
   LoggerImpl(const std::string & directory, const std::string & tmpl)
@@ -52,7 +54,10 @@ protected:
   {
     path_ = path;
     log_.open(path, std::ofstream::binary);
-    log_.write((const char *)&Logger::magic, sizeof(Logger::magic));
+    static_assert(sizeof(uint8_t) == sizeof(char));
+    log_.write((const char *)&Logger::magic, sizeof(Logger::magic) - sizeof(uint8_t));
+    const char version = static_cast<uint8_t>(Logger::magic[3] + Logger::version);
+    log_.write(&version, sizeof(uint8_t));
   }
 };
 
@@ -179,6 +184,11 @@ void Logger::setup(const Policy & policy, const std::string & directory, const s
   };
 }
 
+auto Logger::find_entry(const std::string & name) -> std::vector<LogEntry>::iterator
+{
+  return std::find_if(log_entries_.begin(), log_entries_.end(), [&](const auto & e) { return e.key == name; });
+}
+
 void Logger::start(const std::string & ctl_name, double timestep, bool resume, double start_t)
 {
   auto get_log_path = [this, &ctl_name]() {
@@ -224,16 +234,24 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume, d
   }
   if(impl_->log_.is_open())
   {
-    if(!log_entries_.count("t"))
+    if(resume)
+    {
+      // Repeat the added key events
+      for(const auto & e : log_entries_)
+      {
+        log_events_.push_back(KeyAddedEvent{e.type, e.key});
+      }
+    }
+    else
+    {
+      impl_->log_iter_ = start_t;
+    }
+    if(find_entry("t") == log_entries_.end())
     {
       addLogEntry("t", this, [this, timestep]() {
         impl_->log_iter_ += timestep;
         return impl_->log_iter_ - timestep;
       });
-    }
-    if(!resume)
-    {
-      impl_->log_iter_ = start_t;
     }
     impl_->valid_ = true;
   }
@@ -242,8 +260,7 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume, d
     impl_->valid_ = false;
     log::error("Failed to open log file {}", log_path.string());
   }
-  // Force rewrite of the log header
-  log_entries_changed_ = true;
+  // FIXME Maybe resume is broken if we can't reconstruct a full key list
 }
 
 void Logger::open(const std::string & file, double timestep, double start_t)
@@ -251,7 +268,7 @@ void Logger::open(const std::string & file, double timestep, double start_t)
   impl_->initialize(file);
   if(impl_->log_.is_open())
   {
-    if(!log_entries_.count("t"))
+    if(find_entry("t") == log_entries_.end())
     {
       addLogEntry("t", this, [this, timestep]() {
         impl_->log_iter_ += timestep;
@@ -272,24 +289,47 @@ void Logger::log()
 {
   mc_rtc::MessagePackBuilder builder(impl_->data_);
   builder.start_array(2);
-  if(log_entries_changed_)
+  if(log_events_.size())
   {
-    builder.start_array(log_entries_.size());
-    for(auto & e : log_entries_)
+    builder.start_array(log_events_.size());
+    auto event_visitor = [&builder](auto && event) {
+      using T = std::decay_t<decltype(event)>;
+      if constexpr(std::is_same_v<T, KeyAddedEvent>)
+      {
+        builder.start_array(3);
+        builder.write(static_cast<uint8_t>(0));
+        builder.write(static_cast<typename std::underlying_type<log::LogType>::type>(event.type));
+        builder.write(event.key);
+        builder.finish_array();
+      }
+      else if constexpr(std::is_same_v<T, KeyRemovedEvent>)
+      {
+        builder.start_array(2);
+        builder.write(static_cast<uint8_t>(1));
+        builder.write(event.key);
+        builder.finish_array();
+      }
+      else
+      {
+        static_assert(!std::is_same_v<T, T>, "non-exhaustive visitor");
+      }
+    };
+
+    for(auto & e : log_events_)
     {
-      builder.write(e.first);
+      std::visit(event_visitor, e);
     }
     builder.finish_array();
-    log_entries_changed_ = false;
+    log_events_.resize(0);
   }
   else
   {
     builder.write();
   }
-  builder.start_array(2 * log_entries_.size());
+  builder.start_array(log_entries_.size());
   for(auto & e : log_entries_)
   {
-    e.second.log_cb(builder);
+    e.log_cb(builder);
   }
   builder.finish_array();
   builder.finish_array();
@@ -299,10 +339,11 @@ void Logger::log()
 
 void Logger::removeLogEntry(const std::string & name)
 {
-  if(log_entries_.count(name))
+  auto it = find_entry(name);
+  if(it != log_entries_.end())
   {
-    log_entries_changed_ = true;
-    log_entries_.erase(name);
+    log_events_.push_back(KeyRemovedEvent{name});
+    log_entries_.erase(it);
   }
 }
 
@@ -310,9 +351,9 @@ void Logger::removeLogEntries(const void * source)
 {
   for(auto it = log_entries_.begin(); it != log_entries_.end();)
   {
-    if(it->second.source == source)
+    if(it->source == source)
     {
-      log_entries_changed_ = true;
+      log_events_.push_back(KeyRemovedEvent{it->key});
       it = log_entries_.erase(it);
     }
     else

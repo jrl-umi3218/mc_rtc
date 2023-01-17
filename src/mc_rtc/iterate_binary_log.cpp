@@ -32,13 +32,27 @@ bool iterate_binary_log(const std::string & f,
   }
   std::vector<char> buffer(1024);
   ifs.read(buffer.data(), sizeof(mc_rtc::Logger::magic));
-  if(memcmp(buffer.data(), &mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic)) != 0)
+  if(memcmp(buffer.data(), &mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic) - 1) != 0)
   {
     log::error("Log {} is not a valid mc_rtc binary log (Invalid magic number)", f);
     return false;
   }
+  int8_t version = static_cast<int8_t>(buffer.data()[sizeof(mc_rtc::Logger::magic) - 1] - mc_rtc::Logger::magic[3]);
+  if(version < 0)
+  {
+    log::error("Log {} is not a valid mc_rtc binary log (Invalid version number)", f);
+    return false;
+  }
+  if(version > mc_rtc::Logger::version)
+  {
+    log::error("Log {} cannot be read by this version of mc_rtc ({} > {})", version, mc_rtc::Logger::version);
+    return false;
+  }
   size_t t_index = 0;
   bool extract_t = time.size() != 0;
+
+  std::vector<internal::TypedKey> keys;
+
   while(ifs)
   {
     uint64_t entrySize = 0;
@@ -56,40 +70,46 @@ bool iterate_binary_log(const std::string & f,
     {
       break;
     }
-    internal::LogEntry log(buffer, entrySize, extract);
+    bool keys_changed = false;
+    internal::LogEntry log(version, buffer, entrySize, keys, keys_changed, extract);
     if(!log.valid())
     {
       return false;
     }
-    if(extract_t && log.keys().size())
+    if(extract_t)
     {
-      t_index = log.keys().size();
-      for(size_t i = 0; i < log.keys().size(); ++i)
-      {
-        const auto & k = log.keys()[i];
-        if(k == time)
-        {
-          t_index = i;
-        }
-      }
-      if(t_index == log.keys().size())
+      auto t_it = std::find_if(keys.begin(), keys.end(), [&](const auto & k) { return k.key == time; });
+      if(t_it == keys.end())
       {
         log::error("Request time key: {} not found in log", time);
         return false;
       }
-      if(log.records()[t_index].type != LogType::Double)
+      if(t_it->type != LogType::Double)
       {
         log::error("Time key: {} not recording double", time);
         return false;
       }
+      t_index = static_cast<size_t>(std::distance(keys.begin(), t_it));
     }
     double t = -1;
     if(extract_t)
     {
       t = log.getTime(t_index);
     }
+    auto keys_str = [&]() {
+      std::vector<std::string> keys_str;
+      if(keys_changed)
+      {
+        keys_str.reserve(keys.size());
+        for(const auto & k : keys)
+        {
+          keys_str.push_back(k.key);
+        }
+      }
+      return keys_str;
+    }();
     if(!callback(
-           log.keys(), log.records(), t,
+           keys_str, log.records(), t,
            [&log](mc_rtc::MessagePackBuilder & builder, const std::vector<std::string> & keys) {
              log.copy(builder, keys);
            },
@@ -99,7 +119,7 @@ bool iterate_binary_log(const std::string & f,
     }
   }
   return true;
-}
+} // namespace log
 
 bool iterate_binary_log(const std::string & f,
                         const binary_log_callback & callback,

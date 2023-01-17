@@ -3,6 +3,8 @@
 #include <mc_rtc/log/FlatLog.h>
 #include <mc_rtc/logging.h>
 
+#include <optional>
+
 #include "mpack.h"
 
 namespace mc_rtc
@@ -18,6 +20,15 @@ template<typename T>
 void void_deleter(void const * ptr)
 {
   delete static_cast<T const *>(ptr);
+}
+
+inline std::optional<std::string_view> stringFromNode(mpack_node_t node)
+{
+  if(mpack_node_type(node) != mpack_type_str)
+  {
+    return std::nullopt;
+  }
+  return std::string_view(mpack_node_str(node), mpack_node_strlen(node));
 }
 
 inline LogType logTypeFromNode(mpack_node_t node)
@@ -321,6 +332,7 @@ inline FlatLog::record::unique_void_ptr dataFromNode(const LogType & type, mpack
   }
 }
 
+// For version 0, type and data are stored in the node every iteration
 inline FlatLog::record recordFromNode(mpack_node_t node, bool extract_data, size_t idx)
 {
   if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) == 1)
@@ -340,9 +352,35 @@ inline FlatLog::record recordFromNode(mpack_node_t node, bool extract_data, size
   }
 }
 
+// For version 1 and up, only data is stored in the node, type is from events
+inline FlatLog::record recordFromNode(LogType type, mpack_node_t node, bool extract_data, size_t idx)
+{
+  if(extract_data)
+  {
+    auto data = mpack_node_array_at(node, idx);
+    return {type, dataFromNode(type, data)};
+  }
+  else
+  {
+    return {type, {nullptr, void_deleter<int>}};
+  }
+}
+
+struct TypedKey
+{
+  LogType type;
+  std::string key;
+};
+
 struct LogEntry : mpack_tree_t
 {
-  LogEntry(const std::vector<char> & data, size_t size, bool extract_data = true)
+  LogEntry(int8_t version,
+           const std::vector<char> & data,
+           size_t size,
+           std::vector<TypedKey> & keysOut,
+           bool & keysChanged,
+           bool extract_data = true)
+  : version_(version)
   {
     mpack_tree_init_data(this, data.data(), size);
     mpack_tree_parse(this);
@@ -367,42 +405,166 @@ struct LogEntry : mpack_tree_t
       valid_ = false;
       return;
     }
-    auto keys = mpack_node_array_at(root_, 0);
-    if(mpack_node_type(keys) == mpack_type_nil)
+    if(version_ == 0)
     {
+      auto keys = mpack_node_array_at(root_, 0);
+      std::vector<std::string> keys_;
+      if(mpack_node_type(keys) == mpack_type_nil)
+      {
+      }
+      else if(mpack_node_type(keys) == mpack_type_array)
+      {
+        size_t s = mpack_node_array_length(keys);
+        keysOut.clear();
+        keys_.reserve(s);
+        for(size_t i = 0; i < s; ++i)
+        {
+          auto k = stringFromNode(mpack_node_array_at(keys, i));
+          if(!k)
+          {
+            log::error("A key was not a string in log entries");
+            valid_ = false;
+            return;
+          }
+          keys_.push_back(std::string(*k));
+        }
+        keysChanged = true;
+      }
+      else
+      {
+        log::error("MessagePack stored data has keys that are neither an array nor nil");
+        valid_ = false;
+        return;
+      }
+      auto records = mpack_node_array_at(root_, 1);
+      if(mpack_node_type(records) != mpack_type_array)
+      {
+        log::error("MessagePack stored records are not in an array");
+        valid_ = false;
+        return;
+      }
+      size_t s = mpack_node_array_length(records);
+      for(size_t i = 0; i < s / 2; ++i)
+      {
+        records_.push_back(recordFromNode(records, extract_data, 2 * i));
+        if(keys_.size())
+        {
+          keysOut.push_back({records_.back().type, keys_[i]});
+        }
+      }
     }
-    else if(mpack_node_type(keys) == mpack_type_array)
+    else if(version_ == 1)
     {
-      size_t s = mpack_node_array_length(keys);
+      auto events = mpack_node_array_at(root_, 0);
+      if(mpack_node_type(events) == mpack_type_nil)
+      {
+        // No event this time
+      }
+      else if(mpack_node_type(events) == mpack_type_array)
+      {
+        keysChanged = true;
+        size_t s = mpack_node_array_length(events);
+        for(size_t i = 0; i < s; ++i)
+        {
+          auto event = mpack_node_array_at(events, i);
+          if(mpack_node_type(event) != mpack_type_array)
+          {
+            log::error("An event was not an array in the log");
+            valid_ = false;
+            return;
+          }
+          auto event_size = mpack_node_array_length(event);
+          if(event_size < 1)
+          {
+            log::error("Not enough data in event");
+            valid_ = false;
+            return;
+          }
+          auto event_t_node = mpack_node_array_at(event, 0);
+          if(mpack_node_type(event_t_node) != mpack_type_int && mpack_node_type(event_t_node) != mpack_type_uint)
+          {
+            log::error("Event type is not an integer");
+            valid_ = false;
+            return;
+          }
+          uint8_t event_t = mpack_node_u8(event_t_node);
+          if(event_t == 0)
+          {
+            // Add key event
+            if(event_size != 3)
+            {
+              log::error("Add key event should have three entries");
+              valid_ = false;
+              return;
+            }
+            auto type = logTypeFromNode(mpack_node_array_at(event, 1));
+            if(type == LogType::None)
+            {
+              valid_ = false;
+              return;
+            }
+            auto key = stringFromNode(mpack_node_array_at(event, 2));
+            if(!key)
+            {
+              log::error("Add key event's key entry is not a string");
+              valid_ = false;
+              return;
+            }
+            keysOut.push_back({type, std::string(*key)});
+          }
+          else if(event_t == 1)
+          {
+            // Remove key event
+            if(event_size != 2)
+            {
+              log::error("Remove key event should have two entries");
+              valid_ = false;
+              return;
+            }
+            auto key = stringFromNode(mpack_node_array_at(event, 1));
+            if(!key)
+            {
+              log::error("Remove key event's key entry is not a string");
+              valid_ = false;
+              return;
+            }
+            for(auto it = keysOut.begin(); it != keysOut.end(); ++it)
+            {
+              if(it->key == *key)
+              {
+                keysOut.erase(it);
+                break;
+              }
+            }
+          }
+          else
+          {
+            log::error("Unknown event type ({})", event_t);
+            valid_ = false;
+            return;
+          }
+        }
+      }
+      // At this point keysOut is up-to-date
+      // Data is stored in the corresponding order
+      auto records = mpack_node_array_at(root_, 1);
+      if(mpack_node_type(records) != mpack_type_array)
+      {
+        log::error("MessagePack stored records are not in an array");
+        valid_ = false;
+        return;
+      }
+      size_t s = mpack_node_array_length(records);
       for(size_t i = 0; i < s; ++i)
       {
-        auto k = mpack_node_array_at(keys, i);
-        if(mpack_node_type(k) != mpack_type_str)
-        {
-          log::error("A key was not a string in log entries");
-          valid_ = false;
-          return;
-        }
-        keys_.emplace_back(mpack_node_str(k), mpack_node_strlen(k));
+        records_.push_back(recordFromNode(keysOut[i].type, records, extract_data, i));
       }
     }
     else
     {
-      log::error("MessagePack stored data has keys that are neither an array nor nil");
+      log::error("interal::LogEntry cannot handle version: {}", version_);
       valid_ = false;
       return;
-    }
-    auto records = mpack_node_array_at(root_, 1);
-    if(mpack_node_type(records) != mpack_type_array)
-    {
-      log::error("MessagePack stored records are not in an array");
-      valid_ = false;
-      return;
-    }
-    size_t s = mpack_node_array_length(records);
-    for(size_t i = 0; i < s / 2; ++i)
-    {
-      records_.push_back(recordFromNode(records, extract_data, 2 * i));
     }
   }
 
@@ -421,11 +583,6 @@ struct LogEntry : mpack_tree_t
     return valid_;
   }
 
-  const std::vector<std::string> & keys() const
-  {
-    return keys_;
-  }
-
   std::vector<FlatLog::record> & records()
   {
     return records_;
@@ -434,23 +591,46 @@ struct LogEntry : mpack_tree_t
   /** Should only be used to retrieve time values from the log */
   double getTime(size_t idx)
   {
+    assert(valid_);
     auto values = mpack_node_array_at(root_, 1);
-    return mpack_node_double(mpack_node_array_at(values, 2 * idx + 1));
+    if(version_ == 0)
+    {
+      return mpack_node_double(mpack_node_array_at(values, 2 * idx + 1));
+    }
+    else
+    {
+      return mpack_node_double(mpack_node_array_at(values, idx));
+    }
   }
 
   /** Rebuild this log entry with new keys */
   void copy(mc_rtc::MessagePackBuilder & builder, const std::vector<std::string> & keys)
   {
     builder.start_array(2);
-    builder.write(keys);
+    if(keys.size() != records_.size())
+    {
+      mc_rtc::log::error_and_throw("Expected to copy {} but has {} records", keys.size(), records_.size());
+    }
+    builder.start_array(keys.size());
+    for(size_t i = 0; i < keys.size(); ++i)
+    {
+      const auto & k = keys[i];
+      const auto & r = records_[i];
+      builder.start_array(3);
+      builder.write(static_cast<uint8_t>(0));
+      builder.write(static_cast<typename std::underlying_type<log::LogType>::type>(r.type));
+      builder.write(k);
+      builder.finish_array();
+    }
+    builder.finish_array();
     copy(builder, mpack_node_array_at(root_, 1));
     builder.finish_array();
   }
 
 private:
+  int8_t version_ = 0;
   bool valid_ = true;
   mpack_node_t root_;
-  std::vector<std::string> keys_;
   std::vector<FlatLog::record> records_;
 
   void copy_data(mc_rtc::MessagePackBuilder & builder, mpack_node_t data)
@@ -496,14 +676,9 @@ private:
   {
     size_t s = mpack_node_array_length(value);
     builder.start_array(s);
-    static_assert(std::is_same<int32_t, std::underlying_type<LogType>::type>::value,
-                  "LogType should be an int32_t like thing");
-    for(size_t i = 0; i < s; i += 2)
+    for(size_t i = 0; i < s; ++i)
     {
-      assert(mpack_node_type(mpack_node_array_at(value, i)) == mpack_type_int
-             || mpack_node_type(mpack_node_array_at(value, i)) == mpack_type_uint);
-      builder.write(mpack_node_i32(mpack_node_array_at(value, i)));
-      copy_data(builder, mpack_node_array_at(value, i + 1));
+      copy_data(builder, mpack_node_array_at(value, i));
     }
     builder.finish_array();
   }

@@ -120,6 +120,7 @@ struct GetLogType<Eigen::Ref<Type, Options, StrideType>>
 template<typename T>
 struct is_serializable
 {
+  static constexpr LogType type = GetLogType<T>::type;
   static constexpr bool value = GetLogType<T>::type != mc_rtc::log::LogType::None;
 };
 
@@ -167,6 +168,7 @@ struct callback_is_serializable<T, void_t<typename std::result_of<T()>::type>>
 {
   using ret_type = typename std::result_of<T()>::type;
   using base_type = typename std::decay<ret_type>::type;
+  static constexpr LogType log_type = is_serializable<base_type>::type;
   static constexpr bool value = is_serializable<base_type>::value;
 };
 
@@ -176,7 +178,6 @@ struct LogWriter
 {
   static void write(const T & data, mc_rtc::MessagePackBuilder & builder)
   {
-    builder.write(static_cast<typename std::underlying_type<LogType>::type>(GetLogType<T>::type));
     builder.write(data);
   }
 };

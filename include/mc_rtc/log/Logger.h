@@ -10,6 +10,7 @@
 
 #include <memory>
 #include <unordered_map>
+#include <variant>
 
 namespace mc_rtc
 {
@@ -28,6 +29,11 @@ struct MC_RTC_UTILS_DLLAPI Logger
 public:
   /** Magic number used to identify binary logs */
   static const uint8_t magic[4];
+  /** Version of the log format
+   *
+   * This is stored in the binary file as data[3] - magic[3]
+   */
+  static const uint8_t version;
   /** A function that fills LogData vectors */
   typedef std::function<void(mc_rtc::MessagePackBuilder &)> serialize_fn;
   /*! \brief Defines available policies for the logger */
@@ -50,6 +56,24 @@ public:
      */
     THREADED = 1
   };
+
+  /*! \brief Data for a key added event */
+  struct KeyAddedEvent
+  {
+    /** Type of the key being added */
+    log::LogType type;
+    /** Name of the key being added */
+    std::string key;
+  };
+
+  /*! \brief Data for a key removed event */
+  struct KeyRemovedEvent
+  {
+    /** Name of the key being removed */
+    std::string key;
+  };
+
+  using LogEvent = std::variant<KeyAddedEvent, KeyRemovedEvent>;
 
 public:
   /*! \brief Constructor
@@ -137,15 +161,17 @@ public:
   {
     using ret_t = decltype(get_fn());
     using base_t = typename std::decay<ret_t>::type;
-    if(log_entries_.count(name))
+    auto it = find_entry(name);
+    if(it != log_entries_.end())
     {
       log::error("Already logging an entry named {}", name);
       return;
     }
-    log_entries_changed_ = true;
-    log_entries_[name] = {source, [get_fn](mc_rtc::MessagePackBuilder & builder) mutable {
-                            mc_rtc::log::LogWriter<base_t>::write(get_fn(), builder);
-                          }};
+    auto log_type = log::callback_is_serializable<CallbackT>::log_type;
+    log_events_.push_back(KeyAddedEvent{log_type, name});
+    log_entries_.push_back({log_type, name, source, [get_fn](mc_rtc::MessagePackBuilder & builder) mutable {
+                              mc_rtc::log::LogWriter<base_t>::write(get_fn(), builder);
+                            }});
   }
 
   /** Add a log entry from a source and a compile-time pointer to member
@@ -272,6 +298,10 @@ private:
   /** Hold information about a log entry stored in this instance */
   struct LogEntry
   {
+    /** Type of the entry */
+    log::LogType type;
+    /** Name of the entry */
+    std::string key;
     /** What is the data source (can be nullptr) */
     const void * source;
     /** Callback to log data */
@@ -279,10 +309,12 @@ private:
   };
   /** Store implementation detail related to the logging policy */
   std::shared_ptr<LoggerImpl> impl_ = nullptr;
-  /** Set to true when log entries are added or removed */
-  bool log_entries_changed_ = false;
+  /** Events that happened since the last time we wrote to the log */
+  std::vector<LogEvent> log_events_;
   /** Contains all the log entries */
-  std::unordered_map<std::string, LogEntry> log_entries_;
+  std::vector<LogEntry> log_entries_;
+
+  std::vector<LogEntry>::iterator find_entry(const std::string & name);
 
   /** Terminal condition for addLogEntries */
   template<typename SourceT>
