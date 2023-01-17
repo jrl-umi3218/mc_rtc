@@ -3,6 +3,8 @@
 #include <mc_rtc/log/FlatLog.h>
 #include <mc_rtc/logging.h>
 
+#include <optional>
+
 #include "mpack.h"
 
 namespace mc_rtc
