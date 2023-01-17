@@ -304,7 +304,7 @@ void Logger::log()
       }
       else if constexpr(std::is_same_v<T, KeyRemovedEvent>)
       {
-        builder.start_array(3);
+        builder.start_array(2);
         builder.write(static_cast<uint8_t>(1));
         builder.write(event.key);
         builder.finish_array();
