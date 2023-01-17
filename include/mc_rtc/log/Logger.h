@@ -167,8 +167,9 @@ public:
       log::error("Already logging an entry named {}", name);
       return;
     }
-    log_events_.push_back(KeyAddedEvent{log::callback_is_serializable<CallbackT>::log_type, name});
-    log_entries_.push_back({name, source, [get_fn](mc_rtc::MessagePackBuilder & builder) mutable {
+    auto log_type = log::callback_is_serializable<CallbackT>::log_type;
+    log_events_.push_back(KeyAddedEvent{log_type, name});
+    log_entries_.push_back({log_type, name, source, [get_fn](mc_rtc::MessagePackBuilder & builder) mutable {
                               mc_rtc::log::LogWriter<base_t>::write(get_fn(), builder);
                             }});
   }
@@ -297,6 +298,8 @@ private:
   /** Hold information about a log entry stored in this instance */
   struct LogEntry
   {
+    /** Type of the entry */
+    log::LogType type;
     /** Name of the entry */
     std::string key;
     /** What is the data source (can be nullptr) */

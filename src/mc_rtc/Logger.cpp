@@ -234,16 +234,24 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume, d
   }
   if(impl_->log_.is_open())
   {
+    if(resume)
+    {
+      // Repeat the added key events
+      for(const auto & e : log_entries_)
+      {
+        log_events_.push_back(KeyAddedEvent{e.type, e.key});
+      }
+    }
+    else
+    {
+      impl_->log_iter_ = start_t;
+    }
     if(find_entry("t") == log_entries_.end())
     {
       addLogEntry("t", this, [this, timestep]() {
         impl_->log_iter_ += timestep;
         return impl_->log_iter_ - timestep;
       });
-    }
-    if(!resume)
-    {
-      impl_->log_iter_ = start_t;
     }
     impl_->valid_ = true;
   }
