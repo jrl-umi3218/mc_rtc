@@ -402,6 +402,14 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return extWrenches_;
   }
 
+  /*
+   * Return the ZMP from the wrenches distribution
+   **/
+  inline const Eigen::Vector3d & distribZMP() const noexcept
+  {
+    return distribZMP_;
+  }
+
   inline const Eigen::Vector3d & measuredDCM() noexcept
   {
     return measuredDCM_;
