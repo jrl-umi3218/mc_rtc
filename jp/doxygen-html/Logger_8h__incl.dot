@@ -48,4 +48,6 @@ digraph "include/mc_rtc/log/Logger.h"
   Node0 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node20 [label="unordered_map",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node21 [label="variant",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

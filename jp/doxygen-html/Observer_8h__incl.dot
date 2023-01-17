@@ -124,4 +124,6 @@ digraph "include/mc_observers/Observer.h"
   Node43 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node43 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node43 -> Node41 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node43 -> Node45 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node45 [label="variant",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

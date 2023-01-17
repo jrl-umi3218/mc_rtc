@@ -4035,6 +4035,8 @@
     <includes id="logging_8h" name="logging.h" local="no" imported="no">mc_rtc/logging.h</includes>
     <includes id="utils__api_8h" name="utils_api.h" local="no" imported="no">mc_rtc/utils_api.h</includes>
     <class kind="struct">mc_rtc::Logger</class>
+    <class kind="struct">mc_rtc::Logger::KeyAddedEvent</class>
+    <class kind="struct">mc_rtc::Logger::KeyRemovedEvent</class>
     <namespace>mc_rtc</namespace>
     <member kind="define">
       <type>#define</type>
@@ -7998,6 +8000,13 @@
       <name>base_type</name>
       <anchorfile>structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205.html</anchorfile>
       <anchor>af27939ca5ec152a0cdee9547e49359fb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static constexpr LogType</type>
+      <name>log_type</name>
+      <anchorfile>structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205.html</anchorfile>
+      <anchor>a431162f2bebb2de00776c2e91f7e50ef</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" static="yes">
@@ -20361,6 +20370,13 @@
     <filename>structmc__rtc_1_1log_1_1is__serializable.html</filename>
     <templarg>T</templarg>
     <member kind="variable" static="yes">
+      <type>static constexpr LogType</type>
+      <name>type</name>
+      <anchorfile>structmc__rtc_1_1log_1_1is__serializable.html</anchorfile>
+      <anchor>aac6a1e39522eb1812e11c2a4d103c6fe</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
       <type>static constexpr bool</type>
       <name>value</name>
       <anchorfile>structmc__rtc_1_1log_1_1is__serializable.html</anchorfile>
@@ -20617,6 +20633,35 @@
       <name>activeIndex_</name>
       <anchorfile>classmc__tvm_1_1JointsSelectorFunction.html</anchorfile>
       <anchor>ae1ddfd54fe4d1bae85f7e96713a62422</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::Logger::KeyAddedEvent</name>
+    <filename>structmc__rtc_1_1Logger_1_1KeyAddedEvent.html</filename>
+    <member kind="variable">
+      <type>log::LogType</type>
+      <name>type</name>
+      <anchorfile>structmc__rtc_1_1Logger_1_1KeyAddedEvent.html</anchorfile>
+      <anchor>a5f225c76b4e9c18c3f916eae8335dee2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>key</name>
+      <anchorfile>structmc__rtc_1_1Logger_1_1KeyAddedEvent.html</anchorfile>
+      <anchor>a69cb01c2c7ca268506b411d9836aa270</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::Logger::KeyRemovedEvent</name>
+    <filename>structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html</filename>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>key</name>
+      <anchorfile>structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html</anchorfile>
+      <anchor>ab2cdb9dbf11b8a63fce9d79297c2b63f</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -21325,6 +21370,8 @@
   <compound kind="struct">
     <name>mc_rtc::Logger</name>
     <filename>structmc__rtc_1_1Logger.html</filename>
+    <class kind="struct">mc_rtc::Logger::KeyAddedEvent</class>
+    <class kind="struct">mc_rtc::Logger::KeyRemovedEvent</class>
     <member kind="enumeration">
       <type></type>
       <name>Policy</name>
@@ -21339,6 +21386,13 @@
       <name>serialize_fn</name>
       <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
       <anchor>a6fd0d1237a81647e462f7af2b4225d5e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::variant&lt; KeyAddedEvent, KeyRemovedEvent &gt;</type>
+      <name>LogEvent</name>
+      <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
+      <anchor>a3d000eb7adffb8f9a0a016466f232e31</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
@@ -21466,6 +21520,13 @@
       <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
       <anchor>ae70a958cf17138f9b726740deab0d34c</anchor>
       <arglist>[4]</arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static const uint8_t</type>
+      <name>version</name>
+      <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
+      <anchor>a261a53cc69d6192d20ea03ecb94c3f55</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -25444,26 +25505,26 @@
     <filename>structmc__rbdyn_1_1Frame_1_1NewFrameToken.html</filename>
   </compound>
   <compound kind="struct">
-    <name>mc_tvm::RobotFrame::NewRobotFrameToken</name>
-    <filename>structmc__tvm_1_1RobotFrame_1_1NewRobotFrameToken.html</filename>
-    <base>mc_tvm::Frame::NewFrameToken</base>
-  </compound>
-  <compound kind="struct">
     <name>mc_rbdyn::RobotFrame::NewRobotFrameToken</name>
     <filename>structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html</filename>
     <base>mc_rbdyn::Frame::NewFrameToken</base>
+  </compound>
+  <compound kind="struct">
+    <name>mc_tvm::RobotFrame::NewRobotFrameToken</name>
+    <filename>structmc__tvm_1_1RobotFrame_1_1NewRobotFrameToken.html</filename>
+    <base>mc_tvm::Frame::NewFrameToken</base>
   </compound>
   <compound kind="struct">
     <name>mc_rbdyn::Robots::NewRobotsToken</name>
     <filename>structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html</filename>
   </compound>
   <compound kind="struct">
-    <name>mc_rbdyn::Robot::NewRobotToken</name>
-    <filename>structmc__rbdyn_1_1Robot_1_1NewRobotToken.html</filename>
-  </compound>
-  <compound kind="struct">
     <name>mc_tvm::Robot::NewRobotToken</name>
     <filename>structmc__tvm_1_1Robot_1_1NewRobotToken.html</filename>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rbdyn::Robot::NewRobotToken</name>
+    <filename>structmc__rbdyn_1_1Robot_1_1NewRobotToken.html</filename>
   </compound>
   <compound kind="struct">
     <name>mc_rtc::gui::details::NotAGetter</name>

@@ -1,5 +1,11 @@
 var NAVTREEINDEX19 =
 {
+"structmc__tasks_1_1force_1_1ImpedanceTask.html#ab334d38e827d6917708178233c7feb9f":[3,0,9,1,6,21],
+"structmc__tasks_1_1force_1_1ImpedanceTask.html#ab48cd89c0e4d3fe4413d0df8f83ccd3f":[3,0,9,1,6,19],
+"structmc__tasks_1_1force_1_1ImpedanceTask.html#ab5d822a972b518fc10d7e2444d73b3d2":[3,0,9,1,6,5],
+"structmc__tasks_1_1force_1_1ImpedanceTask.html#ab82147120e3992c1f02313025ea8e2c1":[3,0,9,1,6,20],
+"structmc__tasks_1_1force_1_1ImpedanceTask.html#ab8f7ed4e3d9f2393c9d91ef1a7456eae":[3,0,9,1,6,14],
+"structmc__tasks_1_1force_1_1ImpedanceTask.html#acb7157b34fdcca4258a70a6bfd7b7353":[3,0,9,1,6,9],
 "structmc__tasks_1_1force_1_1ImpedanceTask.html#acdc427a08b2669b8010a47f912c31a96":[3,0,9,1,6,41],
 "structmc__tasks_1_1force_1_1ImpedanceTask.html#ad22745f66f514b82fe1aaa047f07d90f":[3,0,9,1,6,1],
 "structmc__tasks_1_1force_1_1ImpedanceTask.html#ad8b7c40175ae9d55ae86d4d89ffabe52":[3,0,9,1,6,22],
@@ -243,11 +249,5 @@ var NAVTREEINDEX19 =
 "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#aced5d5b44832c71dcdde1ebfe46f7c32":[3,0,9,2,0,0,17],
 "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#ad9eaefdf3407007a4c8f3dab5220d45c":[3,0,9,2,0,0,5],
 "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#adee46fe7d5c7596d13f2288c92a7a0c8":[3,0,9,2,0,0,18],
-"structmc__trajectory_1_1BSpline.html":[3,0,10,0],
-"structmc__trajectory_1_1BSpline.html#a206f674c4f9e666083f9aa96b27b7628":[3,0,10,0,3],
-"structmc__trajectory_1_1BSpline.html#a905828c45debcac32ddbd35718a138a1":[3,0,10,0,2],
-"structmc__trajectory_1_1BSpline.html#ab70108d4c7af3ce67b487bcbe11cab5d":[3,0,10,0,6],
-"structmc__trajectory_1_1BSpline.html#abf063597c5e31654040e77dfdd09e545":[3,0,10,0,0],
-"structmc__trajectory_1_1BSpline.html#ac34c7879cd2d0a941a6b303c366d16f4":[3,0,10,0,4],
-"structmc__trajectory_1_1BSpline.html#ada383daeac50ae7ac8b720c6096289f5":[3,0,10,0,1]
+"structmc__trajectory_1_1BSpline.html":[3,0,10,0]
 };

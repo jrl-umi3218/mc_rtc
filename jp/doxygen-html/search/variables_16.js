@@ -13,6 +13,7 @@ var searchData=
   ['velw_5f',['velW_',['../structmc__observers_1_1BodySensorObserver.html#a4d5cc646377a58ef243bf1d6b8c10f5e',1,'mc_observers::BodySensorObserver']]],
   ['verbose',['verbose',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ad3172aea56993c54869ca977f7eed0d1',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration::verbose()'],['../structmc__rtc_1_1ObjectLoader.html#ac2b5e003d3ccd4958a32a83f1981754c',1,'mc_rtc::ObjectLoader::verbose()']]],
   ['verbose_5floader',['verbose_loader',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a02a37bf8e560cc576b7fd7579aeeaf64',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
+  ['version',['version',['../structmc__rtc_1_1Logger.html#a261a53cc69d6192d20ea03ecb94c3f55',1,'mc_rtc::Logger']]],
   ['vertical',['vertical',['../namespacemc__rtc_1_1constants.html#aaaeaab7136aa7d17fa172fde905c2cc7',1,'mc_rtc::constants']]],
   ['vertices_5fconfig',['vertices_config',['../structmc__rtc_1_1gui_1_1PolyhedronConfig.html#aa734896695957f84df0e49e6dc3a5e86',1,'mc_rtc::gui::PolyhedronConfig']]],
   ['vl',['vl',['../structmc__tvm_1_1Limits.html#a6fc408083c8b2d61bb6735c4f9aa23f6',1,'mc_tvm::Limits']]],

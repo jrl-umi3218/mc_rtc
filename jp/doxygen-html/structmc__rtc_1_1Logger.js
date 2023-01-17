@@ -1,5 +1,8 @@
 var structmc__rtc_1_1Logger =
 [
+    [ "KeyAddedEvent", "structmc__rtc_1_1Logger_1_1KeyAddedEvent.html", "structmc__rtc_1_1Logger_1_1KeyAddedEvent" ],
+    [ "KeyRemovedEvent", "structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html", "structmc__rtc_1_1Logger_1_1KeyRemovedEvent" ],
+    [ "LogEvent", "structmc__rtc_1_1Logger.html#a3d000eb7adffb8f9a0a016466f232e31", null ],
     [ "serialize_fn", "structmc__rtc_1_1Logger.html#a6fd0d1237a81647e462f7af2b4225d5e", null ],
     [ "Policy", "structmc__rtc_1_1Logger.html#a0fefb36635930cf5a9db966442756b9b", [
       [ "NON_THREADED", "structmc__rtc_1_1Logger.html#a0fefb36635930cf5a9db966442756b9ba1515271d5edd3952e5aa146109a98e78", null ],

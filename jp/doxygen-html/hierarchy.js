@@ -295,6 +295,8 @@ var hierarchy =
       [ "mc_rtc::SharedPtrVectorIterator< T >", "structmc__rtc_1_1SharedPtrVectorIterator.html", null ]
     ] ],
     [ "mc_rbdyn::JointSensor", "structmc__rbdyn_1_1JointSensor.html", null ],
+    [ "mc_rtc::Logger::KeyAddedEvent", "structmc__rtc_1_1Logger_1_1KeyAddedEvent.html", null ],
+    [ "mc_rtc::Logger::KeyRemovedEvent", "structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html", null ],
     [ "mc_rtc::internal::lambda_traits< T >", "structmc__rtc_1_1internal_1_1lambda__traits.html", null ],
     [ "mc_rtc::internal::lambda_traits< RetT(C::*)(Args...) const >", "structmc__rtc_1_1internal_1_1lambda__traits_3_01RetT_07C_1_1_5_08_07Args_8_8_8_08_01const_01_4.html", null ],
     [ "mc_rtc::internal::lambda_traits< RetT(C::*)(Args...)>", "structmc__rtc_1_1internal_1_1lambda__traits_3_01RetT_07C_1_1_5_08_07Args_8_8_8_08_4.html", null ],
@@ -400,8 +402,8 @@ var hierarchy =
       [ "mc_rbdyn::RobotFrame::NewRobotFrameToken", "structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
     ] ],
     [ "mc_rbdyn::Robots::NewRobotsToken", "structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html", null ],
-    [ "mc_rbdyn::Robot::NewRobotToken", "structmc__rbdyn_1_1Robot_1_1NewRobotToken.html", null ],
     [ "mc_tvm::Robot::NewRobotToken", "structmc__tvm_1_1Robot_1_1NewRobotToken.html", null ],
+    [ "mc_rbdyn::Robot::NewRobotToken", "structmc__rbdyn_1_1Robot_1_1NewRobotToken.html", null ],
     [ "Node", null, [
       [ "mc_tvm::CoM", "structmc__tvm_1_1CoM.html", null ],
       [ "mc_tvm::Convex", "structmc__tvm_1_1Convex.html", null ],

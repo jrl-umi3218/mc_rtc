@@ -55,14 +55,14 @@ var NAVTREEINDEX =
 "structmc__rbdyn_1_1Robot.html#aeca1f147be470012cb1203f95d5c5abe",
 "structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html",
 "structmc__rtc_1_1Configuration.html#aca0f087d742c71c166993aa5617ec9a7",
-"structmc__rtc_1_1gui_1_1ButtonImpl.html",
-"structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html",
-"structmc__solver_1_1DynamicsConstraint.html#afb2a10971e64329c161cd0ea8af3ea4d",
-"structmc__tasks_1_1BSplineTrajectoryTask.html#ae178d7681e5746a9ba423a9eb3ecbf6e",
-"structmc__tasks_1_1SplineTrajectoryTask.html#aa7147dba544550aa616caa164a40209a",
-"structmc__tasks_1_1force_1_1ImpedanceTask.html#acdc427a08b2669b8010a47f912c31a96",
-"structmc__trajectory_1_1BSpline.html#ae72e0f0db1744ff5a1e7ea8c8a832d5a",
-"structmc__tvm_1_1Robot.html#a4d2a9c17dc29bea48bc76749b3b23ba3"
+"structmc__rtc_1_1gui_1_1ArrowImpl.html#a477913abc68cc99cddaf4496166dc412",
+"structmc__rtc_1_1gui_1_1details_1_1ReturnType.html",
+"structmc__solver_1_1DynamicsConstraint.html#a8d3e0faeab3b3690a4a6c02c15dbc678",
+"structmc__tasks_1_1BSplineTrajectoryTask.html#a669d5fdec2578c135db701bba1727403",
+"structmc__tasks_1_1SplineTrajectoryTask.html#a936e06384b9ad6a4cdab2e8545e9b0aa",
+"structmc__tasks_1_1force_1_1ImpedanceTask.html#ab334d38e827d6917708178233c7feb9f",
+"structmc__trajectory_1_1BSpline.html#a206f674c4f9e666083f9aa96b27b7628",
+"structmc__tvm_1_1Robot.html#a140f522827a60d70c64ced97190fb025"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

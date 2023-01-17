@@ -15,6 +15,7 @@ var searchData=
   ['log_5fdirectory',['log_directory',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a8eedde988acfcfba5942a52d69f2b1b8',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['log_5fpolicy',['log_policy',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#acbde34fb861228455a925e57f38b2e6d',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['log_5ftemplate',['log_template',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a0ca07c26b98991be2e1036a78c5f9702',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
+  ['log_5ftype',['log_type',['../structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205.html#a431162f2bebb2de00776c2e91f7e50ef',1,'mc_rtc::log::callback_is_serializable&lt; T, void_t&lt; typename std::result_of&lt; T()&gt;::type &gt; &gt;']]],
   ['logacc_5f',['logAcc_',['../structmc__observers_1_1BodySensorObserver.html#a8237ffd181f9918f0db8c7ab1489b217',1,'mc_observers::BodySensorObserver']]],
   ['logger_5f',['logger_',['../structmc__control_1_1MCController.html#a5de6a08cbbe04ccc032bc4ebbd2773dc',1,'mc_control::MCController::logger_()'],['../structmc__solver_1_1QPSolver.html#a16aae96dcf217841ba84452ae694421e',1,'mc_solver::QPSolver::logger_()']]],
   ['logpos_5f',['logPos_',['../structmc__observers_1_1BodySensorObserver.html#a7e72177501cdb730e9c0b45e9081317a',1,'mc_observers::BodySensorObserver']]],

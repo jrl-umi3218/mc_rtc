@@ -113,8 +113,6 @@ digraph "include/mc_control/fsm/State.h"
   Node77 [label="mc_rtc/gui/api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$include_2mc__rtc_2gui_2api_8h.html"];
   Node75 -> Node78 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node78 [label="mc_rtc/gui/plot.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$plot_8h.html"];
-  Node78 -> Node79 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node79 [label="mc_rtc/gui/plot/Abscissa.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Abscissa_8h.html"];
   Node75 -> Node70 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node75 -> Node87 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node87 [label="StateBuilder.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
@@ -127,17 +125,19 @@ digraph "include/mc_control/fsm/State.h"
   Node88 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node88 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node88 -> Node70 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node88 -> Node90 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node90 [label="variant",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node73 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node73 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node73 -> Node90 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node90 [label="cmath",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node0 -> Node91 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node91 [label="mc_tasks/PostureTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$PostureTask_8h.html"];
-  Node91 -> Node73 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node91 -> Node92 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node92 [label="mc_rtc/void_ptr.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$void__ptr_8h.html"];
-  Node92 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node91 -> Node93 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node93 [label="Tasks/QPTasks.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node73 -> Node91 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node91 [label="cmath",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node92 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node92 [label="mc_tasks/PostureTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$PostureTask_8h.html"];
+  Node92 -> Node73 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node92 -> Node93 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node93 [label="mc_rtc/void_ptr.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$void__ptr_8h.html"];
+  Node93 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node92 -> Node94 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node94 [label="Tasks/QPTasks.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

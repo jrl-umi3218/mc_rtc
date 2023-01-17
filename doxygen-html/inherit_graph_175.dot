@@ -4,7 +4,19 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node237 [label="iterator",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node237 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 [label="mc_rtc::SharedPtrVectorIterator\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1SharedPtrVectorIterator.html"];
+  Node46 [label="type",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node46 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="mc_rtc::shared\< T,\l BaseT \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1shared.html"];
+  Node46 -> Node48 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node48 [label="mc_rtc::shared\< Frame \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1shared.html"];
+  Node48 -> Node49 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 [label="mc_rbdyn::Frame",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1Frame.html"];
+  Node46 -> Node50 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node50 [label="mc_rtc::shared\< RobotFrame,\l Frame \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1shared.html"];
+  Node50 -> Node51 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node51 [label="mc_rbdyn::RobotFrame",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1RobotFrame.html"];
+  Node46 -> Node52 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node52 [label="mc_rtc::shared\< Robots \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1shared.html"];
+  Node52 -> Node53 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node53 [label="mc_rbdyn::Robots",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1Robots.html"];
 }

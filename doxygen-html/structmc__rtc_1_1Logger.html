@@ -85,6 +85,15 @@ $(document).ready(function(){initNavTree('structmc__rtc_1_1Logger.html','');});
 
 <p><code>#include &lt;<a class="el" href="Logger_8h_source.html">mc_rtc/log/Logger.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger_1_1KeyAddedEvent.html">KeyAddedEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data for a key added event.  <a href="structmc__rtc_1_1Logger_1_1KeyAddedEvent.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html">KeyRemovedEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data for a key removed event.  <a href="structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a0fefb36635930cf5a9db966442756b9b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a0fefb36635930cf5a9db966442756b9b">Policy</a> { <a class="el" href="structmc__rtc_1_1Logger.html#a0fefb36635930cf5a9db966442756b9ba1515271d5edd3952e5aa146109a98e78">Policy::NON_THREADED</a> = 0, 
@@ -94,6 +103,8 @@ Public Types</h2></td></tr>
 <tr class="separator:a0fefb36635930cf5a9db966442756b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fd0d1237a81647e462f7af2b4225d5e"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; void(<a class="el" href="structmc__rtc_1_1MessagePackBuilder.html">mc_rtc::MessagePackBuilder</a> &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a6fd0d1237a81647e462f7af2b4225d5e">serialize_fn</a></td></tr>
 <tr class="separator:a6fd0d1237a81647e462f7af2b4225d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d000eb7adffb8f9a0a016466f232e31"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a3d000eb7adffb8f9a0a016466f232e31">LogEvent</a> = std::variant&lt; <a class="el" href="structmc__rtc_1_1Logger_1_1KeyAddedEvent.html">KeyAddedEvent</a>, <a class="el" href="structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html">KeyRemovedEvent</a> &gt;</td></tr>
+<tr class="separator:a3d000eb7adffb8f9a0a016466f232e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -147,12 +158,28 @@ Public Member Functions</h2></td></tr>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:ae70a958cf17138f9b726740deab0d34c"><td class="memItemLeft" align="right" valign="top">static const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#ae70a958cf17138f9b726740deab0d34c">magic</a> [4]</td></tr>
 <tr class="separator:ae70a958cf17138f9b726740deab0d34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a261a53cc69d6192d20ea03ecb94c3f55"><td class="memItemLeft" align="right" valign="top">static const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a261a53cc69d6192d20ea03ecb94c3f55">version</a></td></tr>
+<tr class="separator:a261a53cc69d6192d20ea03ecb94c3f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Logs controller data to disk. </p>
 <p>The user can select a desired logging policy that will impact the behaviour of this class.</p>
 <p>See <a class="el" href="structmc__rtc_1_1Logger.html#a0fefb36635930cf5a9db966442756b9b" title="Defines available policies for the logger. ">mc_rtc::Logger::Policy</a> documentation for details on available policies </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a3d000eb7adffb8f9a0a016466f232e31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d000eb7adffb8f9a0a016466f232e31">&#9670;&nbsp;</a></span>LogEvent</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="structmc__rtc_1_1Logger.html#a3d000eb7adffb8f9a0a016466f232e31">mc_rtc::Logger::LogEvent</a> =  std::variant&lt;<a class="el" href="structmc__rtc_1_1Logger_1_1KeyAddedEvent.html">KeyAddedEvent</a>, <a class="el" href="structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html">KeyRemovedEvent</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a6fd0d1237a81647e462f7af2b4225d5e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6fd0d1237a81647e462f7af2b4225d5e">&#9670;&nbsp;</a></span>serialize_fn</h2>
 
@@ -841,6 +868,30 @@ template&lt;typename T , typename std::enable_if&lt; mc_rtc::log::callback_is_se
 </table>
 </div><div class="memdoc">
 <p>Magic number used to identify binary logs </p>
+
+</div>
+</div>
+<a id="a261a53cc69d6192d20ea03ecb94c3f55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a261a53cc69d6192d20ea03ecb94c3f55">&#9670;&nbsp;</a></span>version</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint8_t mc_rtc::Logger::version</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Version of the log format</p>
+<p>This is stored in the binary file as data[3] - magic[3] </p>
 
 </div>
 </div>

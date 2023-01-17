@@ -3,15 +3,15 @@ digraph "include/mc_tasks/VectorOrientationTask.h"
  // INTERACTIVE_SVG=YES
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node101 [label="include/mc_tasks/VectorOrientation\lTask.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node101 -> Node102 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node102 [label="include/mc_tasks/LookAtTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$LookAtTask_8h.html"];
+  Node102 [label="include/mc_tasks/VectorOrientation\lTask.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node102 -> Node103 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node103 [label="include/mc_tasks/LookAtFrame\lTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$LookAtFrameTask_8h.html"];
+  Node103 [label="include/mc_tasks/LookAtTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$LookAtTask_8h.html"];
   Node103 -> Node104 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node104 [label="include/mc_tasks/LookAtSurface\lTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$LookAtSurfaceTask_8h.html"];
-  Node102 -> Node105 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node105 [label="plugins/ROS/include\l/mc_tasks_ros/LookAtTFTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ros_2LookAtTFTask_8h.html"];
-  Node105 -> Node106 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node106 [label="plugins/ROS/include\l/mc_tasks/LookAtTFTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$LookAtTFTask_8h.html"];
+  Node104 [label="include/mc_tasks/LookAtFrame\lTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$LookAtFrameTask_8h.html"];
+  Node104 -> Node105 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node105 [label="include/mc_tasks/LookAtSurface\lTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$LookAtSurfaceTask_8h.html"];
+  Node103 -> Node106 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node106 [label="plugins/ROS/include\l/mc_tasks_ros/LookAtTFTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ros_2LookAtTFTask_8h.html"];
+  Node106 -> Node107 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node107 [label="plugins/ROS/include\l/mc_tasks/LookAtTFTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$LookAtTFTask_8h.html"];
 }
