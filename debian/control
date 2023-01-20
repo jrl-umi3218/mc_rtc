@@ -87,6 +87,7 @@ Description: mc-rtc - Development files
 Package: libmc-rtc
 Section: libs
 Architecture: any
+Replaces: libmc-rtc1
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          mc-rtc-data
