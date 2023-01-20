@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [2.0.1] - 2023-01-20
+
+### Changes
+
+- [mc_rtc] Update logging format for performance purposes (#330)
+- [utils] Updated style of generated controllers (#328)
+
+### Fixes
+
+- [debian] Correctly superseeds the libmc-rtc1 package
+- [mc_tasks] Initialize target wrench in ImpedanceGains
+
 ## [2.0.0] - 2023-01-13
 
 ### General
@@ -581,7 +593,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.0.1
 [2.0.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.0.0
 [1.14.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.2
 [1.14.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.1
