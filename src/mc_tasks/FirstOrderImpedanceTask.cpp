@@ -16,7 +16,7 @@ FirstOrderImpedanceTask::FirstOrderImpedanceTask(const std::string & surfaceName
                                                  unsigned int robotIndex,
                                                  double stiffness,
                                                  double weight)
-: mc_tasks::force::ImpedanceTask(surfaceName, robots, robotIndex, stiffness, weight)
+: ImpedanceTask(surfaceName, robots, robotIndex, stiffness, weight)
 {
   type_ = "firstOrderImpedance";
   name_ = "first_order_impedance_" + robots.robot(rIndex).name() + "_" + surfaceName;

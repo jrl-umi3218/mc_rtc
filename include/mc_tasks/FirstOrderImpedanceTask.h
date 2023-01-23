@@ -13,7 +13,7 @@ namespace force
 {
 
 /*! \brief Impedance-based damping control of the end-effector. */
-struct FirstOrderImpedanceTask : mc_tasks::force::ImpedanceTask
+struct MC_TASKS_DLLAPI FirstOrderImpedanceTask : ImpedanceTask
 {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
