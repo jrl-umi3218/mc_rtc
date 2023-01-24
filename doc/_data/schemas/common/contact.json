@@ -4,6 +4,11 @@
   "description": "Contact tasks parameters (CoP tasks). These tasks have very high weight to simulate a contact constraint in task space.",
   "properties":
   {
+    "constrainCoP": 
+    {
+      "type": "boolean",
+      "description": "If true, the contact constraint will ensure that the Center of Pressure remains inside the contact region"
+    },
     "weight": { "type": "number", "minimum": 0, "default": 100000 },
     "stiffness":
     {

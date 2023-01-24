@@ -88,6 +88,7 @@ struct MC_TASKS_DLLAPI Contact
    */
   const Eigen::Matrix<double, 16, 6> & wrenchFaceMatrix() const
   {
+
     return wrenchFaceMatrix_;
   }
 
@@ -228,6 +229,8 @@ private:
   double friction_ = 0.7; /**< Friction coefficient for the contact surface */
 
   Eigen::Matrix<double, 16, 6> wrenchFaceMatrix_; /**< Matrix of single-contact wrench cone inequalities */
+  Eigen::Matrix<double, 12, 6>
+      wrenchFaceMatrixCoPFree_; /**< Matrix of single-contact wrench cone inequalities without CoP constraints */
 
   std::vector<Eigen::Vector3d>
       contactPolygon_; /**< Polygon of the surface boundaries along the sagital/lateral plane */

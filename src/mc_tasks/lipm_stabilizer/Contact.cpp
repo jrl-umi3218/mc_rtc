@@ -56,10 +56,6 @@ Contact::Contact(const mc_rbdyn::Robot & robot,
         0,   0,   0,  +1,   0,           -mu,
         0,   0,   0,   0,  -1,           -mu,
         0,   0,   0,   0,  +1,           -mu,
-       -1,   0,   0,   0,   0,            -Y,
-       +1,   0,   0,   0,   0,            -Y,
-        0,  -1,   0,   0,   0,            -X,
-        0,  +1,   0,   0,   0,            -X,
       +mu, +mu,  -1,  -Y,  -X, -(X + Y) * mu,
       +mu, -mu,  -1,  -Y,  +X, -(X + Y) * mu,
       -mu, +mu,  -1,  +Y,  -X, -(X + Y) * mu,
@@ -67,7 +63,11 @@ Contact::Contact(const mc_rbdyn::Robot & robot,
       +mu, +mu,  +1,  +Y,  +X, -(X + Y) * mu,
       +mu, -mu,  +1,  +Y,  -X, -(X + Y) * mu,
       -mu, +mu,  +1,  -Y,  +X, -(X + Y) * mu,
-      -mu, -mu,  +1,  -Y,  -X, -(X + Y) * mu;
+      -mu, -mu,  +1,  -Y,  -X, -(X + Y) * mu,
+       -1,   0,   0,   0,   0,            -Y,
+       +1,   0,   0,   0,   0,            -Y,
+        0,  -1,   0,   0,   0,            -X,
+        0,  +1,   0,   0,   0,            -X;
   // clang-format on
 }
 

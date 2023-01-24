@@ -96,6 +96,8 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
             footTasks.at(ContactState::Left)->maxAngularVel(v);
             footTasks.at(ContactState::Right)->maxAngularVel(v);
           }),
+      Checkbox(
+          "CoP constraints", [this]() { return c_.constrainCoP; }, [this]() { c_.constrainCoP = !c_.constrainCoP; }),
       ArrayInput(
           "Max cop linear velocity [m/s]",
           [this]() -> const Eigen::Vector3d & { return footTasks.at(ContactState::Left)->maxLinearVel(); },

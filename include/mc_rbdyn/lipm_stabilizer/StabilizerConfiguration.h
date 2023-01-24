@@ -402,6 +402,9 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   std::string leftFootSurface; /**< Surface name for the left foot. Origin should be at foot's center */
   std::string rightFootSurface; /**< Surface name for the right foot. Origin should be at foot's center */
 
+  bool constrainCoP = true; /**<If true, the wrench computation constraint the CoP of each contact to be inside the foot
+                               support rectangle. */
+
   Eigen::Vector2d copAdmittance = Eigen::Vector2d::Zero(); /**< Admittance gains for foot damping control */
   sva::MotionVecd copMaxVel{{0.3, 0.3, 0.3}, {0.1, 0.1, 0.1}}; /**< Maximal velocity of the cop tasks */
   double copVelFilterGain = 0.8; /**< Gain of the low-pass filter on the cop task reference velocity */
@@ -577,6 +580,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
       if(tasks.has("contact"))
       {
+        tasks("contact")("constrainCoP", constrainCoP);
         if(tasks("contact").has("damping"))
         {
           try
