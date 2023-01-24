@@ -90,7 +90,6 @@ struct MC_TASKS_DLLAPI Contact
   {
 
     return wrenchFaceMatrix_;
-  
   }
 
   /** Sagittal unit vector of the contact frame.

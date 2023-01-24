@@ -1092,7 +1092,8 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   A_ineq.block(0, 0, cwc_const, 6) = leftContact.wrenchFaceMatrix().block(0, 0, cwc_const, 6) * X_0_lc.dualMatrix();
   // b_ineq.segment(0,cwc_const) is already zero
   // CWC * w_r_rc <= 0
-  A_ineq.block(cwc_const, 6, cwc_const, 6) = rightContact.wrenchFaceMatrix().block(0, 0, cwc_const, 6) * X_0_rc.dualMatrix();
+  A_ineq.block(cwc_const, 6, cwc_const, 6) =
+      rightContact.wrenchFaceMatrix().block(0, 0, cwc_const, 6) * X_0_rc.dualMatrix();
   // b_ineq.segment(cwc_const,cwc_const) is already zero
   // w_l_lc.force().z() >= MIN_DS_PRESSURE
   A_ineq.block(nb_const - 2, 0, 1, 6) = -X_0_lc.dualMatrix().bottomRows<1>();
