@@ -1082,7 +1082,7 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   Eigen::VectorXd c = -A.transpose() * b;
 
   // The CoP constraint represent 4 linear constraints for each foot
-  const int cwc_const = 12 + 4 * int(c_.constrainCoP);
+  const int cwc_const = 12 + (c_.constrainCoP ? 4 : 0);
   const int nb_const = 2 * cwc_const + 2;
   Eigen::Matrix<double, -1, NB_VAR> A_ineq;
   Eigen::VectorXd b_ineq;
