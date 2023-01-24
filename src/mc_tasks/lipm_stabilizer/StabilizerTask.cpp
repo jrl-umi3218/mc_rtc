@@ -1132,7 +1132,7 @@ void StabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
                                     const Contact & contact)
 {
 
-  const int nb_const = 12 + 4 * int(c_.constrainCoP);
+  const int nb_const = 12 + (c_.constrainCoP ? 4 : 0);
   constexpr unsigned NB_VAR = 6;
 
   // Variables
