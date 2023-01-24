@@ -1082,17 +1082,17 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   Eigen::VectorXd c = -A.transpose() * b;
 
   // The CoP constraint represent 4 linear constraints for each foot
-  const int cwc_const = 12 + 4 * int(c_.constrainCoP);
+  const int cwc_const = 12 + (c_.constrainCoP ? 4 : 0);
   const int nb_const = 2 * cwc_const + 2;
   Eigen::Matrix<double, -1, NB_VAR> A_ineq;
   Eigen::VectorXd b_ineq;
   A_ineq.setZero(nb_const, NB_VAR);
   b_ineq.setZero(nb_const);
   // CWC * w_l_lc <= 0
-  A_ineq.block(0, 0, cwc_const, 6) = leftContact.wrenchFaceMatrix(c_.constrainCoP) * X_0_lc.dualMatrix();
+  A_ineq.block(0, 0, cwc_const, 6) = leftContact.wrenchFaceMatrix().block(0, 0, cwc_const, 6) * X_0_lc.dualMatrix();
   // b_ineq.segment(0,cwc_const) is already zero
   // CWC * w_r_rc <= 0
-  A_ineq.block(cwc_const, 6, cwc_const, 6) = rightContact.wrenchFaceMatrix(c_.constrainCoP) * X_0_rc.dualMatrix();
+  A_ineq.block(cwc_const, 6, cwc_const, 6) = rightContact.wrenchFaceMatrix().block(0, 0, cwc_const, 6) * X_0_rc.dualMatrix();
   // b_ineq.segment(cwc_const,cwc_const) is already zero
   // w_l_lc.force().z() >= MIN_DS_PRESSURE
   A_ineq.block(nb_const - 2, 0, 1, 6) = -X_0_lc.dualMatrix().bottomRows<1>();
@@ -1132,7 +1132,7 @@ void StabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
                                     const Contact & contact)
 {
 
-  const int nb_const = 12 + 4 * int(c_.constrainCoP);
+  const int nb_const = 12 + (c_.constrainCoP ? 4 : 0);
   constexpr unsigned NB_VAR = 6;
 
   // Variables
@@ -1153,7 +1153,7 @@ void StabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
   Eigen::Matrix6d Q = Eigen::Matrix6d::Identity();
   Eigen::Vector6d c = -desiredWrench.vector();
 
-  Eigen::MatrixXd A_ineq = contact.wrenchFaceMatrix(c_.constrainCoP) * X_0_c.dualMatrix();
+  Eigen::MatrixXd A_ineq = contact.wrenchFaceMatrix().block(0, 0, nb_const, 6) * X_0_c.dualMatrix();
   Eigen::VectorXd b_ineq;
   b_ineq.setZero(nb_const);
 

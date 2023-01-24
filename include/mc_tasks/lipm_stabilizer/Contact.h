@@ -86,16 +86,11 @@ struct MC_TASKS_DLLAPI Contact
    * \note Uses halfLength_, halfWidth_ computed from the surface points in findSurfaceBoundaries(), friction_: sole
    * friction
    */
-  const Eigen::Matrix<double, -1, 6> wrenchFaceMatrix(const bool CoPcstr = true) const
+  const Eigen::Matrix<double, 16, 6> & wrenchFaceMatrix() const
   {
-    if(CoPcstr)
-    {
-      return wrenchFaceMatrix_;
-    }
-    else
-    {
-      return wrenchFaceMatrixCoPFree_;
-    }
+
+    return wrenchFaceMatrix_;
+  
   }
 
   /** Sagittal unit vector of the contact frame.
