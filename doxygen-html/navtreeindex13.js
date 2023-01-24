@@ -1,5 +1,6 @@
 var NAVTREEINDEX13 =
 {
+"structmc__rtc_1_1Configuration.html#ac6789b021e72956e2e29d4f80e6f1b61":[3,0,7,3,118],
 "structmc__rtc_1_1Configuration.html#aca0f087d742c71c166993aa5617ec9a7":[3,0,7,3,60],
 "structmc__rtc_1_1Configuration.html#acf1ace73ff093e8db22d7301afe54c08":[3,0,7,3,15],
 "structmc__rtc_1_1Configuration.html#ad0a580d2b8dfb6896f79005eccb8f400":[3,0,7,3,50],
@@ -248,6 +249,5 @@ var NAVTREEINDEX13 =
 "structmc__rtc_1_1gui_1_1ArrowConfig.html#afa8c14add2dbeefbebee6a86217bfc4e":[3,0,7,0,5,11],
 "structmc__rtc_1_1gui_1_1ArrowConfig.html#afee2c97534d0d32230344946009da5fe":[3,0,7,0,5,0],
 "structmc__rtc_1_1gui_1_1ArrowImpl.html":[3,0,7,0,6],
-"structmc__rtc_1_1gui_1_1ArrowImpl.html#a106e8180fe61c6a91023ffb29f06ee98":[3,0,7,0,6,2],
-"structmc__rtc_1_1gui_1_1ArrowImpl.html#a3d992464bca9a200b481434aecc0c7a5":[3,0,7,0,6,3]
+"structmc__rtc_1_1gui_1_1ArrowImpl.html#a106e8180fe61c6a91023ffb29f06ee98":[3,0,7,0,6,2]
 };

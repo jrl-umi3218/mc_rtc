@@ -40,6 +40,7 @@ var structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask =
     [ "dfAdmittance", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a69f288875e64cd0d86f876dca9f3ef3e", null ],
     [ "dfDamping", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad95c2c21d090a13680ccd51b542688ac", null ],
     [ "disable", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a45f17fc7c444f8a9ccaebaf287574108", null ],
+    [ "distribZMP", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a81c7f450c61f96aff7ef6002f0048621", null ],
     [ "enable", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a04089abb785bdade64b4c8309c33c4c9", null ],
     [ "eval", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ada370921b62caa185b6eaeaa9638cd06", null ],
     [ "externalWrenchConfiguration", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a7b4d0a866a7eb38fdb14567d4ef78995", null ],

@@ -36416,6 +36416,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
+      <type>bool</type>
+      <name>constrainCoP</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
+      <anchor>a2d41b76eb67c53097283f744a746aa01</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
       <type>Eigen::Vector2d</type>
       <name>copAdmittance</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
@@ -37029,6 +37036,13 @@
       <name>externalWrenches</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>a3300ec93b5d85e099c8530c0ceca8713</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>distribZMP</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a81c7f450c61f96aff7ef6002f0048621</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">

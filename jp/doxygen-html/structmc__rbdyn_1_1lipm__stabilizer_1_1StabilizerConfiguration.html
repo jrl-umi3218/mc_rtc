@@ -118,6 +118,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a30cc86b398c8b84bb07fd032e35d76e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0c774614c0a1f30b19d139295f48c89"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ac0c774614c0a1f30b19d139295f48c89">rightFootSurface</a></td></tr>
 <tr class="separator:ac0c774614c0a1f30b19d139295f48c89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d41b76eb67c53097283f744a746aa01"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a2d41b76eb67c53097283f744a746aa01">constrainCoP</a> = true</td></tr>
+<tr class="separator:a2d41b76eb67c53097283f744a746aa01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5eb02096ad548196e57cd8a5aad7a32"><td class="memItemLeft" align="right" valign="top">Eigen::Vector2d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#af5eb02096ad548196e57cd8a5aad7a32">copAdmittance</a> = Eigen::Vector2d::Zero()</td></tr>
 <tr class="separator:af5eb02096ad548196e57cd8a5aad7a32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a254b96dec351e68787a55ac10130c6d8"><td class="memItemLeft" align="right" valign="top">sva::MotionVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a254b96dec351e68787a55ac10130c6d8">copMaxVel</a> {{0.3, 0.3, 0.3}, {0.1, 0.1, 0.1}}</td></tr>
@@ -407,6 +409,21 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Weight of CoM IK task </p>
+
+</div>
+</div>
+<a id="a2d41b76eb67c53097283f744a746aa01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d41b76eb67c53097283f744a746aa01">&#9670;&nbsp;</a></span>constrainCoP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rbdyn::lipm_stabilizer::StabilizerConfiguration::constrainCoP = true</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If true, the wrench computation constraint the CoP of each contact to be inside the foot support rectangle. </p>
 
 </div>
 </div>

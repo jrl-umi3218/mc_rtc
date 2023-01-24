@@ -11,6 +11,7 @@ var structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration =
     [ "comHeight", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#abd54fe3cf92a100a19f0a5bf408272d6", null ],
     [ "comStiffness", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#abaec169e8fcf147bf63785088fd3c896", null ],
     [ "comWeight", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#abd7dd049c8ac626404fc3af328f09a85", null ],
+    [ "constrainCoP", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a2d41b76eb67c53097283f744a746aa01", null ],
     [ "contactDamping", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a5d438686041a3aedaf93629936510ed8", null ],
     [ "contactStiffness", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a9e3bade64b2388a1ceb550b86699f594", null ],
     [ "contactWeight", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ac682b8740dbc4d8f1af7ec01a3d9062b", null ],

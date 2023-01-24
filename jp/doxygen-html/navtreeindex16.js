@@ -1,5 +1,6 @@
 var NAVTREEINDEX16 =
 {
+"structmc__solver_1_1DynamicsConstraint.html#a330391bd86278523ae70830fc2d7e9f9":[3,0,8,9,1],
 "structmc__solver_1_1DynamicsConstraint.html#a8d3e0faeab3b3690a4a6c02c15dbc678":[3,0,8,9,5],
 "structmc__solver_1_1DynamicsConstraint.html#a92463a157ffb06efd45398a8e46dddd3":[3,0,8,9,6],
 "structmc__solver_1_1DynamicsConstraint.html#aa987629d0f519973ba2b3c92468c75a9":[3,0,8,9,3],
@@ -248,6 +249,5 @@ var NAVTREEINDEX16 =
 "structmc__tasks_1_1BSplineTrajectoryTask.html":[3,0,9,5],
 "structmc__tasks_1_1BSplineTrajectoryTask.html#a559bf605e5d3ee712f3beb4ca867daf0":[3,0,9,5,8],
 "structmc__tasks_1_1BSplineTrajectoryTask.html#a57429fbfc25ba22a34d9881f54b76121":[3,0,9,5,7],
-"structmc__tasks_1_1BSplineTrajectoryTask.html#a5c4c24081d3cfc9ba7d61097f97c968e":[3,0,9,5,4],
-"structmc__tasks_1_1BSplineTrajectoryTask.html#a60f2ef40ea951b8d1b9235dbfda346ca":[3,0,9,5,5]
+"structmc__tasks_1_1BSplineTrajectoryTask.html#a5c4c24081d3cfc9ba7d61097f97c968e":[3,0,9,5,4]
 };

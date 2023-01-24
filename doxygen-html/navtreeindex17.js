@@ -1,5 +1,6 @@
 var NAVTREEINDEX17 =
 {
+"structmc__tasks_1_1BSplineTrajectoryTask.html#a60f2ef40ea951b8d1b9235dbfda346ca":[3,0,9,5,5],
 "structmc__tasks_1_1BSplineTrajectoryTask.html#a669d5fdec2578c135db701bba1727403":[3,0,9,5,1],
 "structmc__tasks_1_1BSplineTrajectoryTask.html#a81a378c092ca9206ea9fa9e14448e979":[3,0,9,5,6],
 "structmc__tasks_1_1BSplineTrajectoryTask.html#a81d5a557b19cceddeb5fe7911db9dceb":[3,0,9,5,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX17 =
 "structmc__tasks_1_1SplineTrajectoryTask.html#a7584b0ee675b53361e1efe97f3069543":[3,0,9,23,47],
 "structmc__tasks_1_1SplineTrajectoryTask.html#a858a3258f5a03499ce341a07230a54ff":[3,0,9,23,21],
 "structmc__tasks_1_1SplineTrajectoryTask.html#a8a915671172878e474be2514db659fb1":[3,0,9,23,35],
-"structmc__tasks_1_1SplineTrajectoryTask.html#a8d2ac7fd3779da3324969baf637212bf":[3,0,9,23,0],
-"structmc__tasks_1_1SplineTrajectoryTask.html#a902ea270230783f5a3a9c61c8e72fa49":[3,0,9,23,28]
+"structmc__tasks_1_1SplineTrajectoryTask.html#a8d2ac7fd3779da3324969baf637212bf":[3,0,9,23,0]
 };
