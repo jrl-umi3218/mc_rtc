@@ -610,19 +610,38 @@ TestServer::TestServer() : xythetaz_(4)
   pconfig.fixed_edge_color = true;
   pconfig.edge_config.color = mc_rtc::gui::Color::LightGray;
   pconfig.edge_config.width = 0.03;
-  static bool publish_as_vertices_triangles = false;
+  static bool publish_as_vertices_triangles = true;
+  static bool publish_colors = true;
   auto send_polyhedron = [=]() {
     builder.removeElement({"GUI Markers", "Polyhedrons"}, "Polyhedron");
     if(publish_as_vertices_triangles)
     {
-      builder.addElement({"GUI Markers", "Polyhedrons"},
-                         mc_rtc::gui::Polyhedron("Polyhedron", pconfig, polyhedron_vertices_fn, polyhedron_indices_fn,
-                                                 polyhedron_vertices_colors_fn));
+      if(publish_colors)
+      {
+        builder.addElement({"GUI Markers", "Polyhedrons"},
+                           mc_rtc::gui::Polyhedron("Polyhedron", pconfig, polyhedron_vertices_fn, polyhedron_indices_fn,
+                                                   polyhedron_vertices_colors_fn));
+      }
+      else
+      {
+        builder.addElement(
+            {"GUI Markers", "Polyhedrons"},
+            mc_rtc::gui::Polyhedron("Polyhedron", pconfig, polyhedron_vertices_fn, polyhedron_indices_fn));
+      }
     }
     else
     {
-      builder.addElement({"GUI Markers", "Polyhedrons"},
-                         mc_rtc::gui::Polyhedron("Polyhedron", pconfig, polyhedron_triangles_fn, polyhedron_colors_fn));
+      if(publish_colors)
+      {
+        builder.addElement(
+            {"GUI Markers", "Polyhedrons"},
+            mc_rtc::gui::Polyhedron("Polyhedron", pconfig, polyhedron_triangles_fn, polyhedron_colors_fn));
+      }
+      else
+      {
+        builder.addElement({"GUI Markers", "Polyhedrons"},
+                           mc_rtc::gui::Polyhedron("Polyhedron", pconfig, polyhedron_triangles_fn));
+      }
     }
   };
   builder.addElement({"GUI Markers", "Polyhedrons"},
@@ -630,6 +649,12 @@ TestServer::TestServer() : xythetaz_(4)
                          "Publish as vertices/indices", []() { return publish_as_vertices_triangles; },
                          [send_polyhedron] {
                            publish_as_vertices_triangles = !publish_as_vertices_triangles;
+                           send_polyhedron();
+                         }),
+                     mc_rtc::gui::Checkbox(
+                         "Publish colors", []() { return publish_colors; },
+                         [send_polyhedron] {
+                           publish_colors = !publish_colors;
                            send_polyhedron();
                          }));
   send_polyhedron();
