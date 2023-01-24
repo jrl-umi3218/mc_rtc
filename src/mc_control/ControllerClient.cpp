@@ -514,10 +514,13 @@ void ControllerClient::polyhedron(const ElementId & id,
     triangles.push_back({vertices[idx[0]], vertices[idx[1]], vertices[idx[2]]});
   }
   std::vector<std::array<mc_rtc::gui::Color, 3>> triangle_colors;
-  triangle_colors.reserve(indices.size());
-  for(const auto & idx : indices)
+  if(colors.size())
   {
-    triangle_colors.push_back({colors[idx[0]], colors[idx[1]], colors[idx[2]]});
+    triangle_colors.reserve(indices.size());
+    for(const auto & idx : indices)
+    {
+      triangle_colors.push_back({colors[idx[0]], colors[idx[1]], colors[idx[2]]});
+    }
   }
   polyhedron(id, triangles, triangle_colors, config);
 }
