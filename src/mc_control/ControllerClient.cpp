@@ -634,7 +634,8 @@ void ControllerClient::handle_polygon(const ElementId & id, const mc_rtc::Config
 
 void ControllerClient::handle_polyhedron_triangles_list(const ElementId & id, const mc_rtc::Configuration & data_)
 {
-  mc_rtc::gui::PolyhedronConfig config(data_[4]);
+  mc_rtc::gui::PolyhedronConfig config;
+  config.fromMessagePack(data_[4]);
 
   std::vector<std::array<Eigen::Vector3d, 3>> triangles;
   std::vector<std::array<mc_rtc::gui::Color, 3>> colors;
@@ -675,7 +676,8 @@ void ControllerClient::handle_polyhedron_triangles_list(const ElementId & id, co
 
 void ControllerClient::handle_polyhedron_vertices_triangles(const ElementId & id, const mc_rtc::Configuration & data_)
 {
-  mc_rtc::gui::PolyhedronConfig config(data_[5]);
+  mc_rtc::gui::PolyhedronConfig config;
+  config.fromMessagePack(data_[5]);
 
   std::vector<Eigen::Vector3d> vertices;
   try
