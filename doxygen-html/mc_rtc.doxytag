@@ -5232,6 +5232,15 @@
     <namespace>mc_tasks</namespace>
   </compound>
   <compound kind="file">
+    <name>FirstOrderImpedanceTask.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_tasks/</path>
+    <filename>FirstOrderImpedanceTask_8h</filename>
+    <includes id="ImpedanceTask_8h" name="ImpedanceTask.h" local="no" imported="no">mc_tasks/ImpedanceTask.h</includes>
+    <class kind="struct">mc_tasks::force::FirstOrderImpedanceTask</class>
+    <namespace>mc_tasks</namespace>
+    <namespace>mc_tasks::force</namespace>
+  </compound>
+  <compound kind="file">
     <name>GazeTask.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_tasks/</path>
     <filename>GazeTask_8h</filename>
@@ -15852,6 +15861,32 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_tasks::force::FirstOrderImpedanceTask</name>
+    <filename>structmc__tasks_1_1force_1_1FirstOrderImpedanceTask.html</filename>
+    <base>mc_tasks::force::ImpedanceTask</base>
+    <member kind="function">
+      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</type>
+      <name>FirstOrderImpedanceTask</name>
+      <anchorfile>structmc__tasks_1_1force_1_1FirstOrderImpedanceTask.html</anchorfile>
+      <anchor>a4bd00e911e76a61218663694f09b7439</anchor>
+      <arglist>(const std::string &amp;surfaceName, const mc_rbdyn::Robots &amp;robots, unsigned robotIndex, double stiffness=5.0, double weight=1000.0)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>FirstOrderImpedanceTask</name>
+      <anchorfile>structmc__tasks_1_1force_1_1FirstOrderImpedanceTask.html</anchorfile>
+      <anchor>aadb7f3eeaae1f09ae6c861580adf6b61</anchor>
+      <arglist>(const mc_rbdyn::RobotFrame &amp;Frame, double stiffness=5.0, double weight=1000.0)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>update</name>
+      <anchorfile>structmc__tasks_1_1force_1_1FirstOrderImpedanceTask.html</anchorfile>
+      <anchor>a1afaeb662f2f13553f323ae4c900d56c</anchor>
+      <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rtc::log::FlatLog</name>
     <filename>structmc__rtc_1_1log_1_1FlatLog.html</filename>
     <class kind="struct">mc_rtc::log::FlatLog::entry</class>
@@ -17052,6 +17087,81 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_tvm::Frame</name>
+    <filename>structmc__tvm_1_1Frame.html</filename>
+    <class kind="struct">mc_tvm::Frame::NewFrameToken</class>
+    <member kind="function">
+      <type></type>
+      <name>Frame</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>a7ceda4d8c8c45be27bd9b808e415f89d</anchor>
+      <arglist>(NewFrameToken, const mc_rbdyn::Frame &amp;frame)</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::PTransformd &amp;</type>
+      <name>position</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>a9bbd1d1ff27e4f5d5ec4f85eec4b93bc</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::MotionVecd &amp;</type>
+      <name>velocity</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>a8f0827e1f5b2f2bc90a3ecbb5afa28e8</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Frame &amp;</type>
+      <name>frame</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>a96c00fb84238c2dca4907934e99c6a95</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>updatePosition</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>af8cc091e8c093bdaebdcc006aba6a34a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>updateVelocity</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>a7b7e2b9e307e6a42d1301e3a3d411826</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>const mc_rbdyn::Frame &amp;</type>
+      <name>frame_</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>a3fc3e7bcafda4e2093869ef4930b57b7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::PTransformd</type>
+      <name>position_</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>a0900471fd77a77c7d40b043e59b912aa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::MotionVecd</type>
+      <name>velocity_</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>acf3584761038bd036b4d18cd72963247</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="friend">
+      <type>friend struct</type>
+      <name>mc_rbdyn::Frame</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>aa42dab4e4f51adfb5fa6af7d25fdcdbc</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rbdyn::Frame</name>
     <filename>structmc__rbdyn_1_1Frame.html</filename>
     <base>shared&lt; Frame &gt;</base>
@@ -17208,81 +17318,6 @@
       <name>tvm_frame_</name>
       <anchorfile>structmc__rbdyn_1_1Frame.html</anchorfile>
       <anchor>a2a73c1e29441f8f488ed7511f24c391f</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>mc_tvm::Frame</name>
-    <filename>structmc__tvm_1_1Frame.html</filename>
-    <class kind="struct">mc_tvm::Frame::NewFrameToken</class>
-    <member kind="function">
-      <type></type>
-      <name>Frame</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>a7ceda4d8c8c45be27bd9b808e415f89d</anchor>
-      <arglist>(NewFrameToken, const mc_rbdyn::Frame &amp;frame)</arglist>
-    </member>
-    <member kind="function">
-      <type>const sva::PTransformd &amp;</type>
-      <name>position</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>a9bbd1d1ff27e4f5d5ec4f85eec4b93bc</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const sva::MotionVecd &amp;</type>
-      <name>velocity</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>a8f0827e1f5b2f2bc90a3ecbb5afa28e8</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Frame &amp;</type>
-      <name>frame</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>a96c00fb84238c2dca4907934e99c6a95</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>updatePosition</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>af8cc091e8c093bdaebdcc006aba6a34a</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>updateVelocity</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>a7b7e2b9e307e6a42d1301e3a3d411826</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>const mc_rbdyn::Frame &amp;</type>
-      <name>frame_</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>a3fc3e7bcafda4e2093869ef4930b57b7</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>sva::PTransformd</type>
-      <name>position_</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>a0900471fd77a77c7d40b043e59b912aa</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>sva::MotionVecd</type>
-      <name>velocity_</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>acf3584761038bd036b4d18cd72963247</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="friend">
-      <type>friend struct</type>
-      <name>mc_rbdyn::Frame</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>aa42dab4e4f51adfb5fa6af7d25fdcdbc</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -25505,14 +25540,14 @@
     <filename>structmc__rbdyn_1_1Frame_1_1NewFrameToken.html</filename>
   </compound>
   <compound kind="struct">
-    <name>mc_rbdyn::RobotFrame::NewRobotFrameToken</name>
-    <filename>structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html</filename>
-    <base>mc_rbdyn::Frame::NewFrameToken</base>
-  </compound>
-  <compound kind="struct">
     <name>mc_tvm::RobotFrame::NewRobotFrameToken</name>
     <filename>structmc__tvm_1_1RobotFrame_1_1NewRobotFrameToken.html</filename>
     <base>mc_tvm::Frame::NewFrameToken</base>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rbdyn::RobotFrame::NewRobotFrameToken</name>
+    <filename>structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html</filename>
+    <base>mc_rbdyn::Frame::NewFrameToken</base>
   </compound>
   <compound kind="struct">
     <name>mc_rbdyn::Robots::NewRobotsToken</name>
@@ -29495,6 +29530,256 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_tvm::Robot</name>
+    <filename>structmc__tvm_1_1Robot.html</filename>
+    <class kind="struct">mc_tvm::Robot::NewRobotToken</class>
+    <member kind="typedef">
+      <type>std::pair&lt; tvm::VariableVector, Eigen::VectorXd &gt;</type>
+      <name>mimic_variables_t</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>afdbbc01ded28505fd7ffe86906a799a6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Robot</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a0663df9947a03d6c22138c3f906469ac</anchor>
+      <arglist>(NewRobotToken, const mc_rbdyn::Robot &amp;robot)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Robot</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a09bfb50b6c1abcd458d4384294e77544</anchor>
+      <arglist>(Robot &amp;&amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type>Robot &amp;</type>
+      <name>operator=</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>ae9368fbfcc5e6bdb8f8cb531d0374455</anchor>
+      <arglist>(Robot &amp;&amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Robot</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>ad5f7d733469c9f86df634791e93b7e9b</anchor>
+      <arglist>(const Robot &amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type>Robot &amp;</type>
+      <name>operator=</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a0069199c9861be52fd3a1e1d1cb0d301</anchor>
+      <arglist>(const Robot &amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>robot</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a727ac53a247ad5e9a18f528f7d121c6c</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const Limits &amp;</type>
+      <name>limits</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a05531f6982b5247fb4c59c4d90c77ab5</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>Limits &amp;</type>
+      <name>limits</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a140f522827a60d70c64ced97190fb025</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const tvm::VariablePtr &amp;</type>
+      <name>q</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a863e4b53fa0fc555ce17b0cd2d78499f</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>tvm::VariablePtr &amp;</type>
+      <name>q</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a4d2a9c17dc29bea48bc76749b3b23ba3</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const tvm::VariablePtr &amp;</type>
+      <name>alpha</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a883f8887c9250b6403bc4e8e17525c3a</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>tvm::VariablePtr &amp;</type>
+      <name>alpha</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>ae42524423b8c9b451f4c6a79fe054e15</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const tvm::VariablePtr &amp;</type>
+      <name>alphaD</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>add7d5d4795ebc89f0cbf613e83a9f75d</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>tvm::VariablePtr &amp;</type>
+      <name>alphaD</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a1dbdfe8f590e81980f28f3387b9c7bd8</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const tvm::VariablePtr &amp;</type>
+      <name>qFloatingBase</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a6f4f4b4dfc7d0d6c146caa9582cde6dc</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>tvm::VariablePtr &amp;</type>
+      <name>qFloatingBase</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a18aae1179892d53880f0571a1effbda8</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const tvm::VariablePtr &amp;</type>
+      <name>qJoints</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a453fb38b6d1f7969fa972e361e2fe8aa</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>tvm::VariablePtr &amp;</type>
+      <name>qJoints</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>af764df8b418c95b495d31f50bd536449</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>tvm::VariablePtr</type>
+      <name>qJoint</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>abdf8f5c4410399bdfdf515039a7bb46b</anchor>
+      <arglist>(size_t jIdx)</arglist>
+    </member>
+    <member kind="function">
+      <type>tvm::VariablePtr</type>
+      <name>qJoint</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>ac75223a1a8b292dacbe8b79b087f604f</anchor>
+      <arglist>(const std::string &amp;jName)</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::map&lt; tvm::VariablePtr, mimic_variables_t &gt; &amp;</type>
+      <name>mimics</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a0983c1b557516f602717805cd6b48ab8</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>std::map&lt; tvm::VariablePtr, mimic_variables_t &gt; &amp;</type>
+      <name>mimics</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>aaed926b037dc3cd6c825e8bb98b765d5</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const tvm::VariablePtr &amp;</type>
+      <name>tau</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a46bc6d2e3fa4820fbc74010bc9ed5129</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>tvm::VariablePtr &amp;</type>
+      <name>tau</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>ab78e413a5551a6bdadf9aef05c0480a9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>const CoM &amp;</type>
+      <name>comAlgo</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a4b77fc18714f9baa433e005b25019bff</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>CoM &amp;</type>
+      <name>comAlgo</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>afa6059c9b6c76962ea6a16ddbcff36a6</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Momentum &amp;</type>
+      <name>momentumAlgo</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>adb99116b257ce988a45c1014bfc271c2</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>Momentum &amp;</type>
+      <name>momentumAlgo</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a928553e8164db803c0ecc3bab591940f</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::MatrixXd &amp;</type>
+      <name>H</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>af33e3f3207ee3661b0d9eebc6513fc53</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::VectorXd &amp;</type>
+      <name>C</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>ae1cf367a11dbb344f58f5ff77a687629</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; sva::MotionVecd &gt; &amp;</type>
+      <name>normalAccB</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>ad433dc0ea980cc12a348d81d4932741a</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>Eigen::DenseIndex</type>
+      <name>refJointIndexToQIndex</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>ad2443dfa13fc3f84b53bd4dde44c0dd5</anchor>
+      <arglist>(size_t jointIndex) const</arglist>
+    </member>
+    <member kind="function">
+      <type>Eigen::DenseIndex</type>
+      <name>refJointIndexToQDotIndex</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a97a81387c3c9520a0864c4f86e9e4ba7</anchor>
+      <arglist>(size_t jointIndex) const</arglist>
+    </member>
+    <member kind="friend">
+      <type>friend struct</type>
+      <name>mc_rbdyn::Robot</name>
+      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
+      <anchor>a5bf7a6383246c9a2d0cb84b5b0e9e3f2</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rbdyn::Robot</name>
     <filename>structmc__rbdyn_1_1Robot.html</filename>
     <class kind="struct">mc_rbdyn::Robot::NewRobotToken</class>
@@ -31501,256 +31786,6 @@
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>abc302e460bc53880eb062681e9e50a54</anchor>
       <arglist>(SensorPtr sensor)</arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>mc_tvm::Robot</name>
-    <filename>structmc__tvm_1_1Robot.html</filename>
-    <class kind="struct">mc_tvm::Robot::NewRobotToken</class>
-    <member kind="typedef">
-      <type>std::pair&lt; tvm::VariableVector, Eigen::VectorXd &gt;</type>
-      <name>mimic_variables_t</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>afdbbc01ded28505fd7ffe86906a799a6</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Robot</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a0663df9947a03d6c22138c3f906469ac</anchor>
-      <arglist>(NewRobotToken, const mc_rbdyn::Robot &amp;robot)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Robot</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a09bfb50b6c1abcd458d4384294e77544</anchor>
-      <arglist>(Robot &amp;&amp;)=delete</arglist>
-    </member>
-    <member kind="function">
-      <type>Robot &amp;</type>
-      <name>operator=</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>ae9368fbfcc5e6bdb8f8cb531d0374455</anchor>
-      <arglist>(Robot &amp;&amp;)=delete</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Robot</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>ad5f7d733469c9f86df634791e93b7e9b</anchor>
-      <arglist>(const Robot &amp;)=delete</arglist>
-    </member>
-    <member kind="function">
-      <type>Robot &amp;</type>
-      <name>operator=</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a0069199c9861be52fd3a1e1d1cb0d301</anchor>
-      <arglist>(const Robot &amp;)=delete</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Robot &amp;</type>
-      <name>robot</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a727ac53a247ad5e9a18f528f7d121c6c</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>const Limits &amp;</type>
-      <name>limits</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a05531f6982b5247fb4c59c4d90c77ab5</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>Limits &amp;</type>
-      <name>limits</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a140f522827a60d70c64ced97190fb025</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const tvm::VariablePtr &amp;</type>
-      <name>q</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a863e4b53fa0fc555ce17b0cd2d78499f</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>tvm::VariablePtr &amp;</type>
-      <name>q</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a4d2a9c17dc29bea48bc76749b3b23ba3</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const tvm::VariablePtr &amp;</type>
-      <name>alpha</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a883f8887c9250b6403bc4e8e17525c3a</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>tvm::VariablePtr &amp;</type>
-      <name>alpha</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>ae42524423b8c9b451f4c6a79fe054e15</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const tvm::VariablePtr &amp;</type>
-      <name>alphaD</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>add7d5d4795ebc89f0cbf613e83a9f75d</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>tvm::VariablePtr &amp;</type>
-      <name>alphaD</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a1dbdfe8f590e81980f28f3387b9c7bd8</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const tvm::VariablePtr &amp;</type>
-      <name>qFloatingBase</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a6f4f4b4dfc7d0d6c146caa9582cde6dc</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>tvm::VariablePtr &amp;</type>
-      <name>qFloatingBase</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a18aae1179892d53880f0571a1effbda8</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const tvm::VariablePtr &amp;</type>
-      <name>qJoints</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a453fb38b6d1f7969fa972e361e2fe8aa</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>tvm::VariablePtr &amp;</type>
-      <name>qJoints</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>af764df8b418c95b495d31f50bd536449</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>tvm::VariablePtr</type>
-      <name>qJoint</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>abdf8f5c4410399bdfdf515039a7bb46b</anchor>
-      <arglist>(size_t jIdx)</arglist>
-    </member>
-    <member kind="function">
-      <type>tvm::VariablePtr</type>
-      <name>qJoint</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>ac75223a1a8b292dacbe8b79b087f604f</anchor>
-      <arglist>(const std::string &amp;jName)</arglist>
-    </member>
-    <member kind="function">
-      <type>const std::map&lt; tvm::VariablePtr, mimic_variables_t &gt; &amp;</type>
-      <name>mimics</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a0983c1b557516f602717805cd6b48ab8</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>std::map&lt; tvm::VariablePtr, mimic_variables_t &gt; &amp;</type>
-      <name>mimics</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>aaed926b037dc3cd6c825e8bb98b765d5</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const tvm::VariablePtr &amp;</type>
-      <name>tau</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a46bc6d2e3fa4820fbc74010bc9ed5129</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>tvm::VariablePtr &amp;</type>
-      <name>tau</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>ab78e413a5551a6bdadf9aef05c0480a9</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>const CoM &amp;</type>
-      <name>comAlgo</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a4b77fc18714f9baa433e005b25019bff</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>CoM &amp;</type>
-      <name>comAlgo</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>afa6059c9b6c76962ea6a16ddbcff36a6</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const Momentum &amp;</type>
-      <name>momentumAlgo</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>adb99116b257ce988a45c1014bfc271c2</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>Momentum &amp;</type>
-      <name>momentumAlgo</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a928553e8164db803c0ecc3bab591940f</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const Eigen::MatrixXd &amp;</type>
-      <name>H</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>af33e3f3207ee3661b0d9eebc6513fc53</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const Eigen::VectorXd &amp;</type>
-      <name>C</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>ae1cf367a11dbb344f58f5ff77a687629</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const std::vector&lt; sva::MotionVecd &gt; &amp;</type>
-      <name>normalAccB</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>ad433dc0ea980cc12a348d81d4932741a</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>Eigen::DenseIndex</type>
-      <name>refJointIndexToQIndex</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>ad2443dfa13fc3f84b53bd4dde44c0dd5</anchor>
-      <arglist>(size_t jointIndex) const</arglist>
-    </member>
-    <member kind="function">
-      <type>Eigen::DenseIndex</type>
-      <name>refJointIndexToQDotIndex</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a97a81387c3c9520a0864c4f86e9e4ba7</anchor>
-      <arglist>(size_t jointIndex) const</arglist>
-    </member>
-    <member kind="friend">
-      <type>friend struct</type>
-      <name>mc_rbdyn::Robot</name>
-      <anchorfile>structmc__tvm_1_1Robot.html</anchorfile>
-      <anchor>a5bf7a6383246c9a2d0cb84b5b0e9e3f2</anchor>
-      <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -43630,6 +43665,7 @@
     <class kind="struct">mc_tasks::force::ComplianceTask</class>
     <class kind="struct">mc_tasks::force::CoPTask</class>
     <class kind="struct">mc_tasks::force::DampingTask</class>
+    <class kind="struct">mc_tasks::force::FirstOrderImpedanceTask</class>
     <class kind="struct">mc_tasks::force::ImpedanceGains</class>
     <class kind="struct">mc_tasks::force::ImpedanceTask</class>
   </compound>

@@ -12,6 +12,7 @@ var searchData=
   ['finish',['finish',['../structmc__rtc_1_1MessagePackBuilder.html#af622ee7709cb33c22d6d40cb34ba71d0',1,'mc_rtc::MessagePackBuilder']]],
   ['finish_5farray',['finish_array',['../structmc__rtc_1_1MessagePackBuilder.html#a296dff689d0fe65aa0925fce937d25c0',1,'mc_rtc::MessagePackBuilder']]],
   ['finish_5fmap',['finish_map',['../structmc__rtc_1_1MessagePackBuilder.html#a276abd82bca94ec432b2cf95a4ba1d3b',1,'mc_rtc::MessagePackBuilder']]],
+  ['firstorderimpedancetask',['FirstOrderImpedanceTask',['../structmc__tasks_1_1force_1_1FirstOrderImpedanceTask.html#a4bd00e911e76a61218663694f09b7439',1,'mc_tasks::force::FirstOrderImpedanceTask::FirstOrderImpedanceTask(const std::string &amp;surfaceName, const mc_rbdyn::Robots &amp;robots, unsigned robotIndex, double stiffness=5.0, double weight=1000.0)'],['../structmc__tasks_1_1force_1_1FirstOrderImpedanceTask.html#aadb7f3eeaae1f09ae6c861580adf6b61',1,'mc_tasks::force::FirstOrderImpedanceTask::FirstOrderImpedanceTask(const mc_rbdyn::RobotFrame &amp;Frame, double stiffness=5.0, double weight=1000.0)']]],
   ['fixcollisiontransforms',['fixCollisionTransforms',['../structmc__rbdyn_1_1Robot.html#a005d9859a7272ac6dbcab9c31aef8092',1,'mc_rbdyn::Robot']]],
   ['fixsurface',['fixSurface',['../structmc__rbdyn_1_1Robot.html#a3d3381189f816f8871e540555a533e64',1,'mc_rbdyn::Robot']]],
   ['fixsurfaces',['fixSurfaces',['../structmc__rbdyn_1_1Robot.html#a218dfb7dbc50f94466e30871869b967d',1,'mc_rbdyn::Robot']]],

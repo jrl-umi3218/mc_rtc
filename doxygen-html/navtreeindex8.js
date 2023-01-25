@@ -1,5 +1,7 @@
 var NAVTREEINDEX8 =
 {
+"structmc__control_1_1fsm_1_1PostureState.html#a83609f4952920e5a7bc53086f86e05b0":[3,0,2,1,12,6],
+"structmc__control_1_1fsm_1_1PostureState.html#aa410943e2e016eda0929852cf14dc771":[3,0,2,1,12,3],
 "structmc__control_1_1fsm_1_1PostureState.html#ab68cbf75a3beb22126658a57ca72aef7":[3,0,2,1,12,2],
 "structmc__control_1_1fsm_1_1PostureState.html#ad64457d552cf564e95bbcd6cfa2b9d5f":[3,0,2,1,12,4],
 "structmc__control_1_1fsm_1_1PostureState.html#ae535f27ff78363840512f7850f51a17e":[3,0,2,1,12,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX8 =
 "structmc__observers_1_1KinematicInertialPoseObserver.html#a5bf8eadeba583a5e22559cba9f68bc7a":[3,0,4,3,7],
 "structmc__observers_1_1KinematicInertialPoseObserver.html#a5f02e8385441a9bd528692217ebe27bc":[3,0,4,3,0],
 "structmc__observers_1_1KinematicInertialPoseObserver.html#a6b6a2d32b41691feec87fbff77276731":[3,0,4,3,4],
-"structmc__observers_1_1KinematicInertialPoseObserver.html#a7c4c9801de6c5b5dfca453e47a13132f":[3,0,4,3,17],
-"structmc__observers_1_1KinematicInertialPoseObserver.html#a91574e17a50e7d77a05835335accc0ec":[3,0,4,3,9],
-"structmc__observers_1_1KinematicInertialPoseObserver.html#a983d036629ae49c8bee92ef45406be13":[3,0,4,3,18]
+"structmc__observers_1_1KinematicInertialPoseObserver.html#a7c4c9801de6c5b5dfca453e47a13132f":[3,0,4,3,17]
 };

@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"debug_8h_source.html":[4,0,0,6,8],
+"deprecated.html":[0],
 "deprecated_8h.html":[4,0,0,6,9],
 "deprecated_8h.html#a44519212b524404c86c6a6f354d58d2c":[4,0,0,6,9,0],
 "deprecated_8h_source.html":[4,0,0,6,9],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "include_2mc__rtc_2gui_2api_8h_source.html":[4,0,0,6,0,2],
 "include_2mc__solver_2api_8h.html":[4,0,0,7,1],
 "include_2mc__solver_2api_8h.html#a1f670c9ef41bde54578a3afc8fd75445":[4,0,0,7,1,0],
-"include_2mc__solver_2api_8h.html#a24ff42006c016a5adc79aec2a1dfc0fe":[4,0,0,7,1,1],
-"include_2mc__solver_2api_8h.html#a85361305f43d765074b5a82afaa82487":[4,0,0,7,1,2],
-"include_2mc__solver_2api_8h.html#ad2b85045fbd2243b5745829691239595":[4,0,0,7,1,4]
+"include_2mc__solver_2api_8h.html#a24ff42006c016a5adc79aec2a1dfc0fe":[4,0,0,7,1,1]
 };

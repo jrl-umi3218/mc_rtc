@@ -1,5 +1,7 @@
 var NAVTREEINDEX9 =
 {
+"structmc__observers_1_1KinematicInertialPoseObserver.html#a91574e17a50e7d77a05835335accc0ec":[3,0,4,3,9],
+"structmc__observers_1_1KinematicInertialPoseObserver.html#a983d036629ae49c8bee92ef45406be13":[3,0,4,3,18],
 "structmc__observers_1_1KinematicInertialPoseObserver.html#a99b1513ac739b395e903f8f414ad1b10":[3,0,4,3,13],
 "structmc__observers_1_1KinematicInertialPoseObserver.html#abea98fd588b27d2e403a9c6016ea483a":[3,0,4,3,3],
 "structmc__observers_1_1KinematicInertialPoseObserver.html#ad2349c169584c20be6c8e80e361f1724":[3,0,4,3,6],
@@ -247,7 +249,5 @@ var NAVTREEINDEX9 =
 "structmc__rbdyn_1_1ForceSensor.html#a95d5b7f0eb0f2eea86ff77013df65787":[3,0,6,11,23],
 "structmc__rbdyn_1_1ForceSensor.html#a9c831a9aa004b7f583de71ab26b8e5f3":[3,0,6,11,22],
 "structmc__rbdyn_1_1ForceSensor.html#aa573d1f10146ae3a17209b404cade3aa":[3,0,6,11,21],
-"structmc__rbdyn_1_1ForceSensor.html#aa6327851fadc1e203db65471072aa3a5":[3,0,6,11,1],
-"structmc__rbdyn_1_1ForceSensor.html#aabd485bbaae60105f88cd5e6590dc06d":[3,0,6,11,17],
-"structmc__rbdyn_1_1ForceSensor.html#ab2f342cd1d41306f103b913de674d5bd":[3,0,6,11,8]
+"structmc__rbdyn_1_1ForceSensor.html#aa6327851fadc1e203db65471072aa3a5":[3,0,6,11,1]
 };

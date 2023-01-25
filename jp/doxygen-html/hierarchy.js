@@ -378,7 +378,9 @@ var hierarchy =
               [ "mc_tasks::force::CoPTask", "structmc__tasks_1_1force_1_1CoPTask.html", null ]
             ] ]
           ] ],
-          [ "mc_tasks::force::ImpedanceTask", "structmc__tasks_1_1force_1_1ImpedanceTask.html", null ]
+          [ "mc_tasks::force::ImpedanceTask", "structmc__tasks_1_1force_1_1ImpedanceTask.html", [
+            [ "mc_tasks::force::FirstOrderImpedanceTask", "structmc__tasks_1_1force_1_1FirstOrderImpedanceTask.html", null ]
+          ] ]
         ] ],
         [ "mc_tasks::VectorOrientationTask", "structmc__tasks_1_1VectorOrientationTask.html", [
           [ "mc_tasks::LookAtTask", "structmc__tasks_1_1LookAtTask.html", [
@@ -510,10 +512,10 @@ var hierarchy =
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html", null ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
     ] ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
     ] ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],

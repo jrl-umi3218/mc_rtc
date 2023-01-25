@@ -31,6 +31,9 @@ var dir_c5d9ba9e59fcda315855869f4a23a264 =
     [ "ExactCubicTrajectoryTask.h", "ExactCubicTrajectoryTask_8h.html", [
       [ "ExactCubicTrajectoryTask", "structmc__tasks_1_1ExactCubicTrajectoryTask.html", "structmc__tasks_1_1ExactCubicTrajectoryTask" ]
     ] ],
+    [ "FirstOrderImpedanceTask.h", "FirstOrderImpedanceTask_8h.html", [
+      [ "FirstOrderImpedanceTask", "structmc__tasks_1_1force_1_1FirstOrderImpedanceTask.html", "structmc__tasks_1_1force_1_1FirstOrderImpedanceTask" ]
+    ] ],
     [ "GazeTask.h", "GazeTask_8h.html", [
       [ "GazeTask", "structmc__tasks_1_1GazeTask.html", "structmc__tasks_1_1GazeTask" ]
     ] ],

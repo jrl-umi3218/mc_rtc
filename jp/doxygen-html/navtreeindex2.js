@@ -1,13 +1,15 @@
 var NAVTREEINDEX2 =
 {
+"TrajectoryTaskGeneric_8h.html":[4,0,0,8,30],
+"TrajectoryTaskGeneric_8h_source.html":[4,0,0,8,30],
 "Trajectory_8h.html":[4,0,0,6,0,27],
 "Trajectory_8h.html#a062a5442d4cabf7a31d7f83008751a6a":[4,0,0,6,0,27,1],
 "Trajectory_8h.html#aa175899f8868d419050975dc9f79ed97":[4,0,0,6,0,27,2],
 "Trajectory_8h_source.html":[4,0,0,6,0,27],
 "TransformFunction_8h.html":[4,0,0,10,23],
 "TransformFunction_8h_source.html":[4,0,0,10,23],
-"TransformTask_8h.html":[4,0,0,8,30],
-"TransformTask_8h_source.html":[4,0,0,8,30],
+"TransformTask_8h.html":[4,0,0,8,31],
+"TransformTask_8h_source.html":[4,0,0,8,31],
 "Transform_8h.html":[4,0,0,6,0,28],
 "Transform_8h.html#a96cb90761dce6d6e3441d779e7184847":[4,0,0,6,0,28,3],
 "Transform_8h.html#aa5342b74063b005e6a03efd66adef74e":[4,0,0,6,0,28,2],
@@ -24,8 +26,8 @@ var NAVTREEINDEX2 =
 "Update_8h_source.html":[4,0,0,7,0,2],
 "VectorOrientationFunction_8h.html":[4,0,0,10,24],
 "VectorOrientationFunction_8h_source.html":[4,0,0,10,24],
-"VectorOrientationTask_8h.html":[4,0,0,8,32],
-"VectorOrientationTask_8h_source.html":[4,0,0,8,32],
+"VectorOrientationTask_8h.html":[4,0,0,8,33],
+"VectorOrientationTask_8h_source.html":[4,0,0,8,33],
 "Visual_8h.html":[4,0,0,6,0,30],
 "Visual_8h.html#a1cf7a01c7c66698472b6299464cd40c5":[4,0,0,6,0,30,1],
 "Visual_8h_source.html":[4,0,0,6,0,30],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "contact__transform_8h.html#ad2a0e2d6fd6cdece777a838b76a7c1da":[4,0,0,4,8,4],
 "contact__transform_8h_source.html":[4,0,0,4,8],
 "debug_8h.html":[4,0,0,6,8],
-"debug_8h.html#a0bd63387904206fef1971ac84987b3bc":[4,0,0,6,8,0],
-"debug_8h_source.html":[4,0,0,6,8],
-"deprecated.html":[0]
+"debug_8h.html#a0bd63387904206fef1971ac84987b3bc":[4,0,0,6,8,0]
 };
