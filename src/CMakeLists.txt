@@ -456,6 +456,7 @@ mc_tasks/ExactCubicTrajectoryTask.cpp
 mc_tasks/ComplianceTask.cpp
 mc_tasks/AdmittanceTask.cpp
 mc_tasks/ImpedanceTask.cpp
+mc_tasks/FirstOrderImpedanceTask.cpp
 mc_tasks/DampingTask.cpp
 mc_tasks/CoPTask.cpp
 mc_tasks/GazeTask.cpp

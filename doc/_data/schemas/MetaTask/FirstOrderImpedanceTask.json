@@ -1,7 +1,7 @@
 {
   "type": "object",
-  "title": "mc_tasks::force::ImpedanceTask",
-  "description": "This task is similar to AdmittanceTask and DampingTask. Unlike those, the robot can adapt to an external force while following a target pose.",
+  "title": "mc_tasks::force::FirstOrderImpedanceTask",
+  "description": "Impedance-based damping control of the provided frame.",
   "allOf":
   [
     {
@@ -19,7 +19,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["impedance"] },
+        "type": { "enum": ["firstOrderImpedance"] },
         "weight": { "default": 1000},
         "stiffness": { "default": 5 },
         "target": { "$ref" : "/../../SpaceVecAlg/PTransformd.json" },

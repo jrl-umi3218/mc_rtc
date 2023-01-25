@@ -287,8 +287,16 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       using Allocator = Eigen::aligned_allocator<mc_tasks::force::ImpedanceTask>;
       const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "impedance");
-      auto t = std::allocate_shared<mc_tasks::force::ImpedanceTask>(Allocator{}, config("surface"), solver.robots(),
-                                                                    robotIndex);
+      const auto & robot = solver.robots().robot(robotIndex);
+      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+        if(config.has("surface"))
+        {
+          mc_rtc::log::deprecated("ImpedanceTask", "surface", "frame");
+          return robot.frame(config("surface"));
+        }
+        return robot.frame(config("frame"));
+      }();
+      auto t = std::allocate_shared<mc_tasks::force::ImpedanceTask>(Allocator{}, frame);
       t->reset();
       t->load(solver, config);
       return t;
