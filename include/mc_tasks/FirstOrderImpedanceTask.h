@@ -33,6 +33,15 @@ public:
                           double stiffness = 5.0,
                           double weight = 1000.0);
 
+  /*! \brief Constructor.
+      \param frame Frame controlled by this task
+      \param stiffness task stiffness
+      \param weight task weight
+
+      \throws If the body the task is attempting to control does not have a sensor attached to it
+   */
+  FirstOrderImpedanceTask(const mc_rbdyn::RobotFrame & Frame, double stiffness = 5.0, double weight = 1000.0);
+
   /*! \brief Update task. */
   void update(mc_solver::QPSolver & solver) override;
 };

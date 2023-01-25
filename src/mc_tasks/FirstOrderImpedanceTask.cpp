@@ -16,10 +16,15 @@ FirstOrderImpedanceTask::FirstOrderImpedanceTask(const std::string & surfaceName
                                                  unsigned int robotIndex,
                                                  double stiffness,
                                                  double weight)
-: ImpedanceTask(surfaceName, robots, robotIndex, stiffness, weight)
+: FirstOrderImpedanceTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight)
+{
+}
+
+FirstOrderImpedanceTask::FirstOrderImpedanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+: ImpedanceTask(frame, stiffness, weight)
 {
   type_ = "firstOrderImpedance";
-  name_ = "first_order_impedance_" + robots.robot(rIndex).name() + "_" + surfaceName;
+  name_ = "first_order_impedance_" + robots.robot(rIndex).name() + "_" + frame.name();
 }
 
 void FirstOrderImpedanceTask::update(mc_solver::QPSolver & solver)
@@ -141,8 +146,16 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       using Allocator = Eigen::aligned_allocator<mc_tasks::force::FirstOrderImpedanceTask>;
       const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "firstOrderImpedance");
-      auto t = std::allocate_shared<mc_tasks::force::FirstOrderImpedanceTask>(Allocator{}, config("surface"),
-                                                                              solver.robots(), robotIndex);
+      const auto & robot = solver.robots().robot(robotIndex);
+      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+        if(config.has("surface"))
+        {
+          mc_rtc::log::deprecated("FirstOrderImpedanceTask", "surface", "frame");
+          return robot.frame(config("surface"));
+        }
+        return robot.frame(config("frame"));
+      }();
+      auto t = std::allocate_shared<mc_tasks::force::FirstOrderImpedanceTask>(Allocator{}, frame);
       t->reset();
       t->load(solver, config);
       return t;
