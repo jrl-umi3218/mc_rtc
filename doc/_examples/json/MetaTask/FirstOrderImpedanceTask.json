@@ -1,5 +1,5 @@
 {
-  "type": "impedance",
+  "type": "firstOrderImpedance",
   "frame": "RightGripper",
   "target":
   {

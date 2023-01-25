@@ -1,4 +1,4 @@
-type: impedance
+type: firstOrderImpedance
 frame: RightGripper
 targetSurface:
   robot: ground
