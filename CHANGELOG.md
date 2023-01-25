@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [2.1.0] - 2023-01-25
+
+### Added
+
+- [mc_tasks] Added an option to disable CoP constraints in the stabilizer (#335)
+- [mc_tasks] Added FirstOrderImpedanceTask (#332)
+
+### Fixes
+
+- [mc_control_client] Fix polyhedron handling (#336)
+- [utils] Fix usage of matplotlib in older versions
+
 ## [2.0.1] - 2023-01-20
 
 ### Changes
@@ -593,7 +605,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.1.0
 [2.0.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.0.1
 [2.0.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.0.0
 [1.14.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.2
