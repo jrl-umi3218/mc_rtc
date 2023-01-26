@@ -153,4 +153,6 @@ publish:
   </li>
 </ol>
 
-<p>These configurations can be accessed via the {% doxygen mc_control::MCController::robot_config(const mc_rbdyn::Robot & robot) %} method.</p>
+<p>By default, these configuration files are automatically loaded into the <pre>robots</pre> section of the controller's configuration, under each robot's module name. This behavior can be disabled or modified through {% doxygen mc_control::ControllerParameters %} that are given to the controller constructor.</p>
+
+<p>These configurations can also be accessed via the {% doxygen mc_control::MCController::robot_config(const mc_rbdyn::Robot & robot) %} method and its overload {% doxygen mc_control::MCController::robot_config(const std::string & name) %} .</p>

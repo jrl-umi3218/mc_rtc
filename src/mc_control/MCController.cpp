@@ -81,23 +81,23 @@ void MCController::set_name(std::string_view name)
   MC_CONTROLLER_NAME = name;
 }
 
-MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, Backend backend)
-: MCController(robot, dt, {}, backend)
+MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, ControllerParameters params)
+: MCController(robot, dt, {}, params)
 {
 }
 
 MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot,
                            double dt,
                            const mc_rtc::Configuration & config,
-                           Backend backend)
-: MCController({robot, mc_rbdyn::RobotLoader::get_robot_module("env/ground")}, dt, config, backend)
+                           ControllerParameters params)
+: MCController({robot, mc_rbdyn::RobotLoader::get_robot_module("env/ground")}, dt, config, params)
 {
 }
 
 MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules,
                            double dt,
-                           Backend backend)
-: MCController(robots_modules, dt, {}, backend)
+                           ControllerParameters params)
+: MCController(robots_modules, dt, {}, params)
 {
 }
 
@@ -117,8 +117,8 @@ static inline std::shared_ptr<mc_solver::QPSolver> make_solver(double dt, MCCont
 MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules,
                            double dt,
                            const mc_rtc::Configuration & config,
-                           Backend backend)
-: qpsolver(make_solver(dt, backend)), outputRobots_(mc_rbdyn::Robots::make()),
+                           ControllerParameters params)
+: qpsolver(make_solver(dt, params.backend_)), outputRobots_(mc_rbdyn::Robots::make()),
   outputRealRobots_(mc_rbdyn::Robots::make()),
   logger_(std::make_shared<mc_rtc::Logger>(mc_rtc::Logger::Policy::NON_THREADED, "", "")),
   gui_(std::make_shared<mc_rtc::gui::StateBuilder>()), config_(config), timeStep(dt), name_(MC_CONTROLLER_NAME),
@@ -131,6 +131,22 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   for(auto rm : robots_modules)
   {
     loadRobot(rm, rm->name);
+  }
+  /* Load robot-specific configuration depending on parameters */
+  auto load_robot_config_into = config;
+  if(params.load_robot_config_)
+  {
+    for(const auto & c : params.load_robot_config_into_)
+    {
+      if(load_robot_config_into.has(c))
+      {
+        load_robot_config_into = load_robot_config_into(c);
+      }
+      else
+      {
+        load_robot_config_into = load_robot_config_into.add(c);
+      }
+    }
   }
 
   if(gui_)
@@ -163,6 +179,21 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
       if(!hasRobot(robotName)) return;
       auto & robot = robots().robot(robotName);
       auto & realRobot = realRobots().robot(robotName);
+      /** Load the robot specific configuration */
+      if(params.load_robot_config_)
+      {
+        const auto & r_name = params.load_robot_config_with_module_name_ ? robot.module().name : robot.name();
+        auto load_into = load_robot_config_into;
+        if(load_into.has(r_name))
+        {
+          load_into = load_into(r_name);
+        }
+        else
+        {
+          load_into = load_into.add(r_name);
+        }
+        load_into.load(robot_config(r_name));
+      }
       /** Set initial robot base pose */
       if(config.has("init_pos"))
       {
