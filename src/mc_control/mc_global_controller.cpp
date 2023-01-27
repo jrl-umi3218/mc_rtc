@@ -116,9 +116,10 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
 
 MCGlobalController::~MCGlobalController()
 {
-  // We clear all datastore before (potentially) unloading any libraries
+  // We clear all datastore and gui before (potentially) unloading any libraries
   for(auto & ctl : controllers)
   {
+    ctl.second->gui()->reset();
     ctl.second->datastore().clear();
   }
 }

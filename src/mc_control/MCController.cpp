@@ -324,6 +324,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
 
 MCController::~MCController()
 {
+  gui()->reset();
   datastore().clear();
 }
 
