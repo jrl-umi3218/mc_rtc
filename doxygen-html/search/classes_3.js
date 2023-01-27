@@ -77,6 +77,7 @@ var searchData=
   ['controller',['Controller',['../structmc__control_1_1fsm_1_1Controller.html',1,'mc_control::fsm']]],
   ['controllerclient',['ControllerClient',['../structmc__control_1_1ControllerClient.html',1,'mc_control']]],
   ['controllerloader',['ControllerLoader',['../structmc__control_1_1ControllerLoader.html',1,'mc_control']]],
+  ['controllerparameters',['ControllerParameters',['../structmc__control_1_1ControllerParameters.html',1,'mc_control']]],
   ['controllerresetdata',['ControllerResetData',['../structmc__control_1_1ControllerResetData.html',1,'mc_control']]],
   ['controllerserver',['ControllerServer',['../structmc__control_1_1ControllerServer.html',1,'mc_control']]],
   ['controllertoken',['ControllerToken',['../structmc__solver_1_1QPSolver_1_1ControllerToken.html',1,'mc_solver::QPSolver']]],

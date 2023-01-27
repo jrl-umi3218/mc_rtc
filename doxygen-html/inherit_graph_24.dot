@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_control::MCGlobalController\l::GlobalConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html",tooltip="Store the controller configuration. "];
+  Node0 [label="mc_control::MCGlobalController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1MCGlobalController.html"];
 }

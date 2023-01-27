@@ -2,7 +2,7 @@ var searchData=
 [
   ['tableimpl',['TableImpl',['../structmc__rtc_1_1gui_1_1details_1_1TableImpl.html',1,'mc_rtc::gui::details']]],
   ['taskcriteria',['TaskCriteria',['../structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html',1,'mc_control::fsm::MetaTasksState']]],
-  ['taskscontroller',['TasksController',['../structmc__control_1_1TasksController.html',1,'mc_control::TasksController'],['../structmc__control_1_1fsm_1_1TasksController.html',1,'mc_control::fsm::TasksController']]],
+  ['taskscontroller',['TasksController',['../structmc__control_1_1fsm_1_1TasksController.html',1,'mc_control::fsm::TasksController'],['../structmc__control_1_1TasksController.html',1,'mc_control::TasksController']]],
   ['tasksqpsolver',['TasksQPSolver',['../structmc__solver_1_1TasksQPSolver.html',1,'mc_solver']]],
   ['trajectoryimpl',['TrajectoryImpl',['../structmc__rtc_1_1gui_1_1TrajectoryImpl.html',1,'mc_rtc::gui']]],
   ['trajectorytaskgeneric',['TrajectoryTaskGeneric',['../structmc__tasks_1_1TrajectoryTaskGeneric.html',1,'mc_tasks']]],

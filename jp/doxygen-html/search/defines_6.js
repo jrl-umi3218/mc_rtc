@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['impl_5fmapping',['IMPL_MAPPING',['../log_2utils_8h.html#a5e23e6dc4a586d5ce355088cf563b4b9',1,'utils.h']]]
+  ['global_5fplugin_5fapi',['GLOBAL_PLUGIN_API',['../GlobalPlugin_8h.html#adda9065a64d1bb53f70cc10616e220fe',1,'GlobalPlugin.h']]]
 ];

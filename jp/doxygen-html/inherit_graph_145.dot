@@ -6,5 +6,5 @@ digraph "Graphical Class Hierarchy"
   rankdir="LR";
   Node61 [label="testnullptr",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node61 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 [label="mc_rtc::internal::has\l_configuration_save_object\l\< T, Args \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1internal_1_1has__configuration__save__object.html"];
+  Node0 [label="mc_rtc::internal::has\l_configuration_load_object\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1internal_1_1has__configuration__load__object.html"];
 }

@@ -6,6 +6,7 @@ var namespacemc__control =
     [ "Contact", "structmc__control_1_1Contact.html", "structmc__control_1_1Contact" ],
     [ "ControllerClient", "structmc__control_1_1ControllerClient.html", "structmc__control_1_1ControllerClient" ],
     [ "ControllerLoader", "structmc__control_1_1ControllerLoader.html", null ],
+    [ "ControllerParameters", "structmc__control_1_1ControllerParameters.html", "structmc__control_1_1ControllerParameters" ],
     [ "ControllerResetData", "structmc__control_1_1ControllerResetData.html", "structmc__control_1_1ControllerResetData" ],
     [ "ControllerServer", "structmc__control_1_1ControllerServer.html", "structmc__control_1_1ControllerServer" ],
     [ "ElementId", "structmc__control_1_1ElementId.html", "structmc__control_1_1ElementId" ],

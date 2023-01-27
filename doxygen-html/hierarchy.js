@@ -134,6 +134,7 @@ var hierarchy =
     [ "mc_solver::utils::ContactWrenchMatrixToLambdaMatrix", "structmc__solver_1_1utils_1_1ContactWrenchMatrixToLambdaMatrix.html", null ],
     [ "mc_control::ControllerClient", "structmc__control_1_1ControllerClient.html", null ],
     [ "mc_control::ControllerLoader", "structmc__control_1_1ControllerLoader.html", null ],
+    [ "mc_control::ControllerParameters", "structmc__control_1_1ControllerParameters.html", null ],
     [ "mc_control::ControllerResetData", "structmc__control_1_1ControllerResetData.html", null ],
     [ "mc_control::ControllerServer", "structmc__control_1_1ControllerServer.html", null ],
     [ "mc_solver::QPSolver::ControllerToken", "structmc__solver_1_1QPSolver_1_1ControllerToken.html", null ],
@@ -512,10 +513,10 @@ var hierarchy =
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html", null ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
     ] ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
     ] ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],

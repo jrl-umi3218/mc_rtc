@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"TasksQPSolver_8h_source.html":[4,0,0,7,16],
 "TrajectoryTaskGeneric_8h.html":[4,0,0,8,30],
 "TrajectoryTaskGeneric_8h_source.html":[4,0,0,8,30],
 "Trajectory_8h.html":[4,0,0,6,0,27],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "contact__transform_8h.html#aca49bff3651cf81d0b834813b80fcdf6":[4,0,0,4,8,3],
 "contact__transform_8h.html#ad2a0e2d6fd6cdece777a838b76a7c1da":[4,0,0,4,8,4],
 "contact__transform_8h_source.html":[4,0,0,4,8],
-"debug_8h.html":[4,0,0,6,8],
-"debug_8h.html#a0bd63387904206fef1971ac84987b3bc":[4,0,0,6,8,0]
+"debug_8h.html":[4,0,0,6,8]
 };

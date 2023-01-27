@@ -11,6 +11,7 @@ var searchData=
   ['leftfootratio_5f',['leftFootRatio_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a077f98071aa5d9ae2b861aba4edbc606',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['leftfootsurface',['leftFootSurface',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a30cc86b398c8b84bb07fd032e35d76e9',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
   ['lightgray',['LightGray',['../structmc__rtc_1_1gui_1_1Color.html#a3df51c77219b7e3811b711250de18017',1,'mc_rtc::gui::Color']]],
+  ['loading_5flocation_5f',['loading_location_',['../structmc__control_1_1MCController.html#a386949ec1993532e88b2fee0719820a6',1,'mc_control::MCController']]],
   ['log_5f',['log_',['../structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html#aba73be3150abc3f17e20c9f6d638ae19',1,'mc_observers::ObserverPipeline::PipelineObserver']]],
   ['log_5fdirectory',['log_directory',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a8eedde988acfcfba5942a52d69f2b1b8',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['log_5fpolicy',['log_policy',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#acbde34fb861228455a925e57f38b2e6d',1,'mc_control::MCGlobalController::GlobalConfiguration']]],

@@ -4,9 +4,17 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node228 [label="LinearFunction",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node228 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 [label="mc_tvm::CompoundJointFunction",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1CompoundJointFunction.html"];
-  Node228 -> Node230 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node230 [label="mc_tvm::DynamicFunction",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1DynamicFunction.html"];
+  Node147 [label="Node",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node147 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="mc_tvm::CoM",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1CoM.html"];
+  Node147 -> Node149 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node149 [label="mc_tvm::Convex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1Convex.html"];
+  Node147 -> Node150 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node150 [label="mc_tvm::Frame",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1Frame.html"];
+  Node150 -> Node151 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node151 [label="mc_tvm::RobotFrame",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1RobotFrame.html"];
+  Node147 -> Node152 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node152 [label="mc_tvm::Momentum",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1Momentum.html"];
+  Node147 -> Node153 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node153 [label="mc_tvm::Robot",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1Robot.html"];
 }

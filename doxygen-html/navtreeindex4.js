@@ -1,5 +1,6 @@
 var NAVTREEINDEX4 =
 {
+"include_2mc__solver_2api_8h.html#a24ff42006c016a5adc79aec2a1dfc0fe":[4,0,0,7,1,1],
 "include_2mc__solver_2api_8h.html#a85361305f43d765074b5a82afaa82487":[4,0,0,7,1,2],
 "include_2mc__solver_2api_8h.html#ad2b85045fbd2243b5745829691239595":[4,0,0,7,1,4],
 "include_2mc__solver_2api_8h.html#ae3c35da4cb012ab2f6caea5696a56dae":[4,0,0,7,1,3],
@@ -248,6 +249,5 @@ var NAVTREEINDEX4 =
 "namespacemc__rtc_1_1log_1_1details.html":[2,0,7,4,0],
 "namespacemc__rtc_1_1utils.html":[2,0,7,5],
 "namespacemc__solver.html":[2,0,8],
-"namespacemc__solver.html":[3,0,8],
-"namespacemc__solver_1_1details.html":[3,0,8,0]
+"namespacemc__solver.html":[3,0,8]
 };

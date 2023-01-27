@@ -1,5 +1,17 @@
 var NAVTREEINDEX16 =
 {
+"structmc__solver_1_1ConstraintSet.html#aec90699d0bd3179f9258ff09fcf5cca0":[3,0,8,6,8],
+"structmc__solver_1_1ConstraintSet.html#afa2c09323d080bd537cd08b97399e25f":[3,0,8,6,9],
+"structmc__solver_1_1ConstraintSetLoader.html":[3,0,8,7],
+"structmc__solver_1_1ContactConstraint.html":[3,0,8,8],
+"structmc__solver_1_1ContactConstraint.html#a059aae518fa197d296c9dcb9c56521a5":[3,0,8,8,4],
+"structmc__solver_1_1ContactConstraint.html#a544f184a51c137915111ec31c7f03826":[3,0,8,8,1],
+"structmc__solver_1_1ContactConstraint.html#aa06cba392d88e851509f3ee9663fb248":[3,0,8,8,3],
+"structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30":[3,0,8,8,0],
+"structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30a15d06b5b0997a0a5e17eccd053c7c652":[3,0,8,8,0,1],
+"structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30a75ced229938828d7cf205928657fd137":[3,0,8,8,0,2],
+"structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30acbc392a30777e1fa953eea2c011ea2c3":[3,0,8,8,0,0],
+"structmc__solver_1_1ContactConstraint.html#accd5d499f2b4ff1bf588c04e4b520024":[3,0,8,8,2],
 "structmc__solver_1_1DynamicsConstraint.html":[3,0,8,9],
 "structmc__solver_1_1DynamicsConstraint.html#a0f1097a536c65e610735d3314e86a4e3":[3,0,8,9,0],
 "structmc__solver_1_1DynamicsConstraint.html#a330391bd86278523ae70830fc2d7e9f9":[3,0,8,9,1],
@@ -237,17 +249,5 @@ var NAVTREEINDEX16 =
 "structmc__tasks_1_1AddRemoveContactTask.html#aa3f4a2997b3c4112f628b0023bf5b668":[3,0,9,4,24],
 "structmc__tasks_1_1AddRemoveContactTask.html#aa408d0703b72d18dc3337fe383bcd840":[3,0,9,4,14],
 "structmc__tasks_1_1AddRemoveContactTask.html#aa5772dda1ca644ea76a477785ea3689d":[3,0,9,4,20],
-"structmc__tasks_1_1AddRemoveContactTask.html#aa8bfc9dfa1a28c979fbdd675542a07f2":[3,0,9,4,17],
-"structmc__tasks_1_1AddRemoveContactTask.html#ab421f9378ae251f53925cf179825626e":[3,0,9,4,13],
-"structmc__tasks_1_1AddRemoveContactTask.html#ab82ee19830fb670624e5c3734950e61a":[3,0,9,4,0],
-"structmc__tasks_1_1AddRemoveContactTask.html#ac356d531abfb403e1d7f66fcb3189bce":[3,0,9,4,10],
-"structmc__tasks_1_1AddRemoveContactTask.html#ac46066f1cc163f34fcbb8c45e7593536":[3,0,9,4,18],
-"structmc__tasks_1_1AddRemoveContactTask.html#acdd2290d6e07d8778d1bb92feb96d973":[3,0,9,4,26],
-"structmc__tasks_1_1AddRemoveContactTask.html#ad4c4be286affbb126d787a5356e7bf96":[3,0,9,4,25],
-"structmc__tasks_1_1AddRemoveContactTask.html#ada37890a73d853a1ce3c257a76c8f545":[3,0,9,4,1],
-"structmc__tasks_1_1AddRemoveContactTask.html#ae60e21511e6e1379af325184a7459781":[3,0,9,4,7],
-"structmc__tasks_1_1AddRemoveContactTask.html#aedf7fdb3cd7157deb1c56bc19bf31573":[3,0,9,4,8],
-"structmc__tasks_1_1AddRemoveContactTask.html#afcdad65af3391e9059dbfac1db885679":[3,0,9,4,23],
-"structmc__tasks_1_1BSplineTrajectoryTask.html":[3,0,9,5],
-"structmc__tasks_1_1BSplineTrajectoryTask.html#a559bf605e5d3ee712f3beb4ca867daf0":[3,0,9,5,8]
+"structmc__tasks_1_1AddRemoveContactTask.html#aa8bfc9dfa1a28c979fbdd675542a07f2":[3,0,9,4,17]
 };

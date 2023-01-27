@@ -13,7 +13,8 @@ var NAVTREEINDEX1 =
 "LowPass_8h.html":[4,0,0,1,3],
 "LowPass_8h_source.html":[4,0,0,1,3],
 "MCController_8h.html":[4,0,0,0,17],
-"MCController_8h.html#a26817757133aa8127df9f7c6a90bafb1":[4,0,0,0,17,4],
+"MCController_8h.html#a1e047de867e9db669dc83c611266fd98":[4,0,0,0,17,5],
+"MCController_8h.html#a26817757133aa8127df9f7c6a90bafb1":[4,0,0,0,17,6],
 "MCController_8h_source.html":[4,0,0,0,17],
 "MessagePackBuilder_8h.html":[4,0,0,6,16],
 "MessagePackBuilder_8h.html#a11741a3b42edf962a451b31c84ec9c16":[4,0,0,6,16,7],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "TasksController_8h_source.html":[4,0,0,0,19],
 "TasksQPSolver_8h.html":[4,0,0,7,16],
 "TasksQPSolver_8h.html#a5abdc1715119d0de677d6942c18c88d3":[4,0,0,7,16,2],
-"TasksQPSolver_8h.html#a872e96c8071f94103eb253899e73347f":[4,0,0,7,16,1],
-"TasksQPSolver_8h_source.html":[4,0,0,7,16]
+"TasksQPSolver_8h.html#a872e96c8071f94103eb253899e73347f":[4,0,0,7,16,1]
 };

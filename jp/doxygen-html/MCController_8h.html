@@ -116,6 +116,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerResetData.html">mc_control::ControllerResetData</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains information allowing the controller to start smoothly from the current state of the robot.  <a href="structmc__control_1_1ControllerResetData.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerParameters.html">mc_control::ControllerParameters</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extra parameters that influence the creator construction.  <a href="structmc__control_1_1ControllerParameters.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCController.html">mc_control::MCController</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structmc__control_1_1MCController.html" title="MCController is the base class to implement all controllers. It assumes that at least two robots are ...">MCController</a> is the base class to implement all controllers. It assumes that at least two robots are provided. The first is considered as the "main" robot. Some common constraints and a posture task are defined (but not added to the solver) for this robot.  <a href="structmc__control_1_1MCController.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,10 +138,46 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:a1e047de867e9db669dc83c611266fd98"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="MCController_8h.html#a1e047de867e9db669dc83c611266fd98">ADD_PARAMETER</a>(TYPE,  NAME,  DEFAULT)</td></tr>
+<tr class="separator:a1e047de867e9db669dc83c611266fd98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26817757133aa8127df9f7c6a90bafb1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="MCController_8h.html#a26817757133aa8127df9f7c6a90bafb1">CONTROLLER_MODULE_API</a></td></tr>
 <tr class="separator:a26817757133aa8127df9f7c6a90bafb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a1e047de867e9db669dc83c611266fd98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e047de867e9db669dc83c611266fd98">&#9670;&nbsp;</a></span>ADD_PARAMETER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ADD_PARAMETER</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">TYPE, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">NAME, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">DEFAULT&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">TYPE NAME##_ = DEFAULT;                  \</div><div class="line">  ControllerParameters &amp; NAME(TYPE value)  \</div><div class="line">  {                                        \</div><div class="line">    NAME##_ = value;                       \</div><div class="line">    return *<span class="keyword">this</span>;                          \</div><div class="line">  }</div></div><!-- fragment -->
+</div>
+</div>
 <a id="a26817757133aa8127df9f7c6a90bafb1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a26817757133aa8127df9f7c6a90bafb1">&#9670;&nbsp;</a></span>CONTROLLER_MODULE_API</h2>
 

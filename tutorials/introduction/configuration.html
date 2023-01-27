@@ -40,7 +40,7 @@
 
 <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
 
-    <title>Tutorials - Configuring mc_rtc - mc_rtc</title>
+    <title>Tutorials - Configuring mc_rtc and its components - mc_rtc</title>
   </head>
 
   <body>
@@ -125,7 +125,7 @@
                         
                       
                         
-                        <li><strong>Configuring mc_rtc</strong></li>
+                        <li><strong>Configuring mc_rtc and its components</strong></li>
                           
                         
                       
@@ -336,6 +336,11 @@
 <li class="toc-entry toc-h4"><a href="#sample-configuration">Sample configuration</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h2"><a href="#controller-configuration">Controller configuration</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#controller-s-robot-specific-configuration">Controller&#39;s robot specific configuration</a></li>
+</ul>
+</li>
 </ul>
               
             </div>
@@ -344,7 +349,7 @@
       </div>
       <div class="col-9" id="tutorial-content">
         
-        <h1>Configuring mc_rtc</h1>
+        <h1>Configuring mc_rtc and its components</h1>
         
 
         <p>Regardless of the interface you use, general options for mc_rtc are provided through the configuration files present on your system. Morever, some interfaces will let you specify another configuration file (often on the command line).</p>
@@ -562,6 +567,54 @@ The following options control the way mc_rtc loads additional modules from libra
   <span class="na">timestep</span><span class="pi">:</span> <span class="s">0.01</span></code></pre></figure>
   </div>
 </div>
+
+<h2 id="controller-configuration">Controller configuration</h2>
+
+
+<p>For a given controller <code class="highlight language-bash" data-lang="bash">NAME</code>, the following configuration files are loaded:</p>
+
+<ol>
+  <li><code class="highlight language-bash" data-lang="bash"><span class="k">${</span><span class="nv">NAME_RUNTIME_LOCATION</span><span class="k">}</span>/etc/<span class="k">${</span><span class="nv">NAME</span><span class="k">}</span>.yaml</code></li>
+  <li>
+    <ul>
+      <li>Linux/MacOS: <code class="highlight language-bash" data-lang="bash"><span class="k">${</span><span class="nv">HOME</span><span class="k">}</span>/.config/mc_rtc/controllers/<span class="k">${</span><span class="nv">NAME</span><span class="k">}</span>.yaml</code></li>
+      <li>Windows: <code class="highlight language-msshell" data-lang="msshell"><span class="o">%</span><span class="n">APPDATA</span><span class="o">%</span><span class="nx">/mc_rtc/controllers/</span><span class="o">%</span><span class="nx">NAME</span><span class="o">%.</span><span class="nf">yaml</span></code></li>
+    </ul>
+  </li>
+</ol>
+
+<p>The configuration loaded from those files is available in the <code class="highlight language-bash" data-lang="bash">configuration</code> parameter of the controller constructor. You can check the 
+  
+
+  
+    
+    
+
+  
+    <a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a>
+    
+ tutorial for more information on the configuration object.</p>
+
+<h4 id="controller-s-robot-specific-configuration">Controller's robot specific configuration</h4>
+
+
+<p>Controller can also access a robot's specific configuration &mdash; for example to set specific gains.</p>
+
+<p>For a given controller <code class="highlight language-bash" data-lang="bash">NAME</code> and a given robot's module named <code class="highlight language-bash" data-lang="bash">ROBOT</code>, the following configuration files are loaded:</p>
+
+<ol>
+  <li><code class="highlight language-bash" data-lang="bash"><span class="k">${</span><span class="nv">NAME_RUNTIME_LOCATION</span><span class="k">}</span>/<span class="k">${</span><span class="nv">NAME</span><span class="k">}</span>/<span class="k">${</span><span class="nv">ROBOT</span><span class="k">}</span>.yaml</code></li>
+  <li>
+    <ul>
+      <li>Linux/MacOS: <code class="highlight language-bash" data-lang="bash"><span class="k">${</span><span class="nv">HOME</span><span class="k">}</span>/.config/mc_rtc/controllers/<span class="k">${</span><span class="nv">NAME</span><span class="k">}</span>/<span class="k">${</span><span class="nv">ROBOT</span><span class="k">}</span>.yaml</code></li>
+      <li>Windows: <code class="highlight language-msshell" data-lang="msshell"><span class="o">%</span><span class="n">APPDATA</span><span class="o">%</span><span class="nx">/mc_rtc/controllers/</span><span class="o">%</span><span class="nx">NAME</span><span class="o">%</span><span class="nx">/</span><span class="o">%</span><span class="nx">ROBOT</span><span class="o">%.</span><span class="nf">yaml</span></code></li>
+    </ul>
+  </li>
+</ol>
+
+<p>By default, these configuration files are automatically loaded into the <pre>robots</pre> section of the controller's configuration, under each robot's module name. This behavior can be disabled or modified through <a href="/mc_rtc/doxygen.html#structmc__control_1_1ControllerParameters" target="blank_"><code>mc_control::ControllerParameters</code></a> that are given to the controller constructor.</p>
+
+<p>These configurations can also be accessed via the <a href="/mc_rtc/doxygen.html#structmc__control_1_1MCController#a57eef25de6183e0e9ee95c56b52e2b30" target="blank_"><code>mc_control::MCController::robot_config(const mc_rbdyn::Robot & robot)</code></a> method and its overload <a href="/mc_rtc/doxygen.html#structmc__control_1_1MCController#a57eef25de6183e0e9ee95c56b52e2b30" target="blank_"><code>mc_control::MCController::robot_config(const std::string & name)</code></a> .</p>
 
 
 

@@ -1,6 +1,7 @@
 var NAVTREEINDEX5 =
 {
 "namespacemc__solver_1_1details.html":[2,0,8,0],
+"namespacemc__solver_1_1details.html":[3,0,8,0],
 "namespacemc__solver_1_1utils.html":[2,0,8,1],
 "namespacemc__solver_1_1utils.html":[3,0,8,1],
 "namespacemc__tasks.html":[2,0,9],
@@ -248,6 +249,5 @@ var NAVTREEINDEX5 =
 "structmc__control_1_1ControllerClient.html#aae3f415ab7a4cd6bfdd69ecfb2d78833":[3,0,2,4,86],
 "structmc__control_1_1ControllerClient.html#aae5889005ac498f95d2517bafbecff0e":[3,0,2,4,61],
 "structmc__control_1_1ControllerClient.html#aaf37cf840f4ecec192fb6fdfe02ed017":[3,0,2,4,22],
-"structmc__control_1_1ControllerClient.html#aaf45cba73871dd0a268e73569db3230d":[3,0,2,4,44],
-"structmc__control_1_1ControllerClient.html#ab0dd6c14e71101fda3c7cfaf169424d7":[3,0,2,4,29]
+"structmc__control_1_1ControllerClient.html#aaf45cba73871dd0a268e73569db3230d":[3,0,2,4,44]
 };
