@@ -133,13 +133,15 @@ macro(controller_test_run NAME NRITER)
           INPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${VARIANT}.cmake.yaml")
       endif()
     endif()
-    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.jvrc1.in.yaml")
-      configure_file(${NAME}.jvrc1.in.yaml "${TEST_CONTROLLER_PATH_BASE}/${VARIANT}/jvrc1.cmake.yaml")
-      file(GENERATE
-        OUTPUT "${TEST_CONTROLLER_PATH}/${VARIANT}/jvrc1.yaml"
-        INPUT "${TEST_CONTROLLER_PATH_BASE}/${VARIANT}/jvrc1.cmake.yaml"
-      )
-    endif()
+    foreach(ROBOT jvrc1 jvrc2)
+      if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.${ROBOT}.in.yaml")
+        configure_file(${NAME}.${ROBOT}.in.yaml "${TEST_CONTROLLER_PATH_BASE}/${VARIANT}/${ROBOT}.cmake.yaml")
+        file(GENERATE
+          OUTPUT "${TEST_CONTROLLER_PATH}/${VARIANT}/${ROBOT}.yaml"
+          INPUT "${TEST_CONTROLLER_PATH_BASE}/${VARIANT}/${ROBOT}.cmake.yaml"
+        )
+      endif()
+    endforeach()
     if(TARGET ${VARIANT})
       set_target_properties(${VARIANT} PROPERTIES FOLDER tests/controllers/run/details)
     endif()

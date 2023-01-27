@@ -148,6 +148,27 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
       }
     }
   }
+  auto load_robot_config = [&](const mc_rbdyn::Robot & robot) {
+    /** Load the robot specific configuration */
+    if(params.load_robot_config_)
+    {
+      const auto & r_name = params.load_robot_config_with_module_name_ ? robot.module().name : robot.name();
+      auto load_into = load_robot_config_into;
+      if(load_into.has(r_name))
+      {
+        load_into = load_into(r_name);
+      }
+      else
+      {
+        load_into = load_into.add(r_name);
+      }
+      load_into.load(robot_config(r_name));
+    }
+  };
+  for(const auto & r : robots())
+  {
+    load_robot_config(r);
+  }
 
   if(gui_)
   {
@@ -179,21 +200,6 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
       if(!hasRobot(robotName)) return;
       auto & robot = robots().robot(robotName);
       auto & realRobot = realRobots().robot(robotName);
-      /** Load the robot specific configuration */
-      if(params.load_robot_config_)
-      {
-        const auto & r_name = params.load_robot_config_with_module_name_ ? robot.module().name : robot.name();
-        auto load_into = load_robot_config_into;
-        if(load_into.has(r_name))
-        {
-          load_into = load_into(r_name);
-        }
-        else
-        {
-          load_into = load_into.add(r_name);
-        }
-        load_into.load(robot_config(r_name));
-      }
       /** Set initial robot base pose */
       if(config.has("init_pos"))
       {
@@ -261,7 +267,8 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
         {
           mc_rtc::log::error_and_throw("Failed to load {} as specified in configuration", name);
         }
-        loadRobot(rm, name);
+        auto & robot = loadRobot(rm, name);
+        load_robot_config(robot);
         init_robot(name, cr.second);
       }
     }
