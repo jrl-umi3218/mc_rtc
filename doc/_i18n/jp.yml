@@ -80,6 +80,7 @@ tutorials:
             # ROSディストリビューションのミラーがセットアップされているものと仮定
             sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools
     configuration:
+      # FIXME Outdated translation
       title: 設定
     running-a-controller:
       title: コントローラの実行

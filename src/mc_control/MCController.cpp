@@ -25,6 +25,9 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
+#include <boost/filesystem.hpp>
+namespace bfs = boost::filesystem;
+
 #include <array>
 #include <fstream>
 
@@ -64,23 +67,37 @@ Contact Contact::from_mc_rbdyn(const MCController & ctl, const mc_rbdyn::Contact
           dof};
 }
 
-MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, Backend backend)
-: MCController(robot, dt, {}, backend)
+static thread_local std::string MC_CONTROLLER_LOADING_LOCATION = "";
+
+void MCController::set_loading_location(std::string_view location)
+{
+  MC_CONTROLLER_LOADING_LOCATION = location;
+}
+
+static thread_local std::string MC_CONTROLLER_NAME = "";
+
+void MCController::set_name(std::string_view name)
+{
+  MC_CONTROLLER_NAME = name;
+}
+
+MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, ControllerParameters params)
+: MCController(robot, dt, {}, params)
 {
 }
 
 MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot,
                            double dt,
                            const mc_rtc::Configuration & config,
-                           Backend backend)
-: MCController({robot, mc_rbdyn::RobotLoader::get_robot_module("env/ground")}, dt, config, backend)
+                           ControllerParameters params)
+: MCController({robot, mc_rbdyn::RobotLoader::get_robot_module("env/ground")}, dt, config, params)
 {
 }
 
 MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules,
                            double dt,
-                           Backend backend)
-: MCController(robots_modules, dt, {}, backend)
+                           ControllerParameters params)
+: MCController(robots_modules, dt, {}, params)
 {
 }
 
@@ -100,11 +117,12 @@ static inline std::shared_ptr<mc_solver::QPSolver> make_solver(double dt, MCCont
 MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules,
                            double dt,
                            const mc_rtc::Configuration & config,
-                           Backend backend)
-: qpsolver(make_solver(dt, backend)), outputRobots_(mc_rbdyn::Robots::make()),
+                           ControllerParameters params)
+: qpsolver(make_solver(dt, params.backend_)), outputRobots_(mc_rbdyn::Robots::make()),
   outputRealRobots_(mc_rbdyn::Robots::make()),
   logger_(std::make_shared<mc_rtc::Logger>(mc_rtc::Logger::Policy::NON_THREADED, "", "")),
-  gui_(std::make_shared<mc_rtc::gui::StateBuilder>()), config_(config), timeStep(dt)
+  gui_(std::make_shared<mc_rtc::gui::StateBuilder>()), config_(config), timeStep(dt), name_(MC_CONTROLLER_NAME),
+  loading_location_(MC_CONTROLLER_LOADING_LOCATION)
 {
   /* Load robots */
   qpsolver->logger(logger_);
@@ -113,6 +131,43 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   for(auto rm : robots_modules)
   {
     loadRobot(rm, rm->name);
+  }
+  /* Load robot-specific configuration depending on parameters */
+  auto load_robot_config_into = config;
+  if(params.load_robot_config_)
+  {
+    for(const auto & c : params.load_robot_config_into_)
+    {
+      if(load_robot_config_into.has(c))
+      {
+        load_robot_config_into = load_robot_config_into(c);
+      }
+      else
+      {
+        load_robot_config_into = load_robot_config_into.add(c);
+      }
+    }
+  }
+  auto load_robot_config = [&](const mc_rbdyn::Robot & robot) {
+    /** Load the robot specific configuration */
+    if(params.load_robot_config_)
+    {
+      const auto & r_name = params.load_robot_config_with_module_name_ ? robot.module().name : robot.name();
+      auto load_into = load_robot_config_into;
+      if(load_into.has(r_name))
+      {
+        load_into = load_into(r_name);
+      }
+      else
+      {
+        load_into = load_into.add(r_name);
+      }
+      load_into.load(robot_config(r_name));
+    }
+  };
+  for(const auto & r : robots())
+  {
+    load_robot_config(r);
   }
 
   if(gui_)
@@ -212,7 +267,8 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
         {
           mc_rtc::log::error_and_throw("Failed to load {} as specified in configuration", name);
         }
-        loadRobot(rm, name);
+        auto & robot = loadRobot(rm, name);
+        load_robot_config(robot);
         init_robot(name, cr.second);
       }
     }
@@ -969,6 +1025,46 @@ void MCController::stop() {}
 Gripper & MCController::gripper(const std::string & robot, const std::string & gripper)
 {
   return robots().robot(robot).gripper(gripper);
+}
+
+mc_rtc::Configuration MCController::robot_config(const mc_rbdyn::Robot & robot) const
+{
+  return robot_config(robot.module().name);
+}
+
+mc_rtc::Configuration MCController::robot_config(const std::string & robot) const
+{
+  mc_rtc::Configuration result;
+  bfs::path system_path = bfs::path(loading_location_) / this->name_ / (robot + ".conf");
+#ifndef WIN32
+  bfs::path user_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/controllers";
+#else
+  bfs::path user_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers";
+#endif
+  user_path = user_path / name_ / (robot + ".conf");
+  auto load_conf = [&result](const std::string & path) {
+    result.load(path);
+    mc_rtc::log::info("Controller's robot configuration loaded from {}", path);
+  };
+  auto load_conf_or_yaml = [&load_conf](bfs::path & in) {
+    if(bfs::exists(in))
+    {
+      return load_conf(in.string());
+    }
+    in.replace_extension(".yaml");
+    if(bfs::exists(in))
+    {
+      return load_conf(in.string());
+    }
+    in.replace_extension(".yml");
+    if(bfs::exists(in))
+    {
+      return load_conf(in.string());
+    }
+  };
+  load_conf_or_yaml(system_path);
+  load_conf_or_yaml(user_path);
+  return result;
 }
 
 } // namespace mc_control

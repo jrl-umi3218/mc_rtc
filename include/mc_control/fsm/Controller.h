@@ -53,7 +53,7 @@ struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
   Controller(mc_rbdyn::RobotModulePtr rm,
              double dt,
              const mc_rtc::Configuration & config,
-             Backend backend = Backend::Tasks);
+             ControllerParameters params = {});
 
   ~Controller() override;
 
@@ -175,8 +175,11 @@ namespace details
 template<MCController::Backend backend, typename SolverT>
 struct BackendSpecificController : public Controller
 {
-  BackendSpecificController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config)
-  : Controller(rm, dt, config, backend)
+  BackendSpecificController(mc_rbdyn::RobotModulePtr rm,
+                            double dt,
+                            const mc_rtc::Configuration & config,
+                            ControllerParameters params = {})
+  : Controller(rm, dt, config, params.backend(backend))
   {
   }
 

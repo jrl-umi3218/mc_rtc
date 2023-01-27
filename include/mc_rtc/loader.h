@@ -117,6 +117,9 @@ struct MC_RTC_LOADER_DLLAPI LTDLHandle
     return path_;
   }
 
+  /** Access the library folder location */
+  std::string dir() const;
+
 private:
   std::string path_;
   std::string rpath_;

@@ -48,6 +48,35 @@ struct MC_CONTROL_DLLAPI ControllerResetData
   const std::vector<std::vector<double>> q;
 };
 
+/** \brief Extra parameters that influence the creator construction */
+struct MC_CONTROL_DLLAPI ControllerParameters
+{
+  inline ControllerParameters() = default;
+  inline ControllerParameters(const ControllerParameters &) = default;
+  inline ControllerParameters(ControllerParameters &&) = default;
+  inline ControllerParameters & operator=(const ControllerParameters &) = default;
+  inline ControllerParameters & operator=(ControllerParameters &&) = default;
+
+#define ADD_PARAMETER(TYPE, NAME, DEFAULT) \
+  TYPE NAME##_ = DEFAULT;                  \
+  ControllerParameters & NAME(TYPE value)  \
+  {                                        \
+    NAME##_ = value;                       \
+    return *this;                          \
+  }
+  /** Backend used by this controller */
+  ADD_PARAMETER(mc_solver::QPSolver::Backend, backend, mc_solver::QPSolver::Backend::Tasks)
+  /** Whether to automatically load the robots' specific configuration (true by default) */
+  ADD_PARAMETER(bool, load_robot_config, true)
+  /** Where to load the robots' configuration config("robots") by default */
+  ADD_PARAMETER(std::vector<std::string>, load_robot_config_into, {"robots"})
+  /** Use the module name to find robot's specific values if true (default), use the robot's name otherwise */
+  ADD_PARAMETER(bool, load_robot_config_with_module_name, true)
+
+  /** For backward compatibility purpose */
+  inline ControllerParameters(mc_solver::QPSolver::Backend backend) : backend_(backend) {}
+};
+
 struct MCGlobalController;
 
 /** \class MCController
@@ -620,9 +649,9 @@ protected:
    *
    * \param dt Timestep of the controller
    *
-   * \param backend Backend for the solver
+   * \param params Extra-parameters for the constructor
    */
-  MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, Backend backend = Backend::Tasks);
+  MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, ControllerParameters params = {});
 
   /** Builds a controller with a single robot. The env/ground environment is automatically added
    *
@@ -632,12 +661,12 @@ protected:
    *
    * \param config Configuration of the controller
    *
-   * \param backend Backend for the solver
+   * \param params Extra-parameters for the constructor
    */
   MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot,
                double dt,
                const mc_rtc::Configuration & config,
-               Backend backend = Backend::Tasks);
+               ControllerParameters params = {});
 
   /** Builds a controller with multiple robots
    *
@@ -645,11 +674,11 @@ protected:
    *
    * \param dt Timestep of the controller
    *
-   * \param backend Backend for the solver
+   * \param params Extra-parameters for the constructor
    */
   MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules,
                double dt,
-               Backend backend = Backend::Tasks);
+               ControllerParameters params = {});
 
   /** Builds a controller with multiple robots
    *
@@ -659,12 +688,12 @@ protected:
    *
    * \param config Controller configuration
    *
-   * \param backend Backend for the solver
+   * \param params Extra-parameters for the constructor
    */
   MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules,
                double dt,
                const mc_rtc::Configuration & config,
-               Backend backend = Backend::Tasks);
+               ControllerParameters params = {});
 
   /** Load an additional robot into the controller
    *
@@ -759,7 +788,35 @@ public:
   /** Posture task for the main robot */
   std::shared_ptr<mc_tasks::PostureTask> postureTask;
   /* Controller's name */
-  std::string name_;
+  const std::string name_;
+  /** Stores the loading location provided by the loader via \ref set_loading_location */
+  const std::string loading_location_;
+
+  /** Load a robot specific configuration (if any)
+   *
+   * The following files are loaded (in that order):
+   * - ${loading_location}/${name()}/${robot_name}.conf|yaml
+   * - ${HOME}/.config/mc_rtc/controllers/${name()}/${robot_name}.conf|yaml (Linux/macOS)
+   * - ${APPDATA}/mc_rtc/controllers/${name()}/${robot_name}.conf|yaml (Windows)
+   */
+  mc_rtc::Configuration robot_config(const std::string & robot_name) const;
+
+  /** Same as robot_config(robot.module().name) */
+  mc_rtc::Configuration robot_config(const mc_rbdyn::Robot & robot) const;
+
+  /** Called by \ref mc_rtc::ObjectLoader to inform the controller of its loading location
+   * For example, if the CoM controller is loaded from the library in /usr/local/lib/mc_controller/com.so then this is
+   * /usr/local/lib/mc_controller/
+   *
+   * The value is stored in a thread_local variable and is meant to be used in the constructor of MCController
+   */
+  static void set_loading_location(std::string_view location);
+
+  /** Called by \ref mc_rtc::ObjectLoader to set the name of the controller
+   *
+   * The value is stored in a thread_local variable and is meant to be used in the constructor of MCController
+   */
+  static void set_name(std::string_view name);
 };
 
 namespace details
@@ -781,8 +838,9 @@ struct BackendSpecificController : public MCController
 
   BackendSpecificController(const std::vector<mc_rbdyn::RobotModulePtr> & robots,
                             double dt,
-                            const mc_rtc::Configuration & config = {})
-  : MCController(robots, dt, config, backend)
+                            const mc_rtc::Configuration & config = {},
+                            ControllerParameters params = {})
+  : MCController(robots, dt, config, params.backend(backend))
   {
   }
 

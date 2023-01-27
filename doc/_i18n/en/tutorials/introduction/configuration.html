@@ -120,3 +120,39 @@ publish:
 {% endhighlight %}
   </div>
 </div>
+
+{% include h2.html title="Controller configuration" %}
+
+<p>For a given controller {% ihighlight bash %}NAME{% endihighlight %}, the following configuration files are loaded:</p>
+
+<ol>
+  <li>{% ihighlight bash %}${NAME_RUNTIME_LOCATION}/etc/${NAME}.yaml{% endihighlight %}</li>
+  <li>
+    <ul>
+      <li>Linux/MacOS: {% ihighlight bash %}${HOME}/.config/mc_rtc/controllers/${NAME}.yaml{% endihighlight %}</li>
+      <li>Windows: {% ihighlight msshell %}%APPDATA%/mc_rtc/controllers/%NAME%.yaml{% endihighlight %}</li>
+    </ul>
+  </li>
+</ol>
+
+<p>The configuration loaded from those files is available in the {% ihighlight bash %}configuration{% endihighlight %} parameter of the controller constructor. You can check the {% include link_tutorial.html category="usage" tutorial="mc_rtc_configuration" %} tutorial for more information on the configuration object.</p>
+
+{% include h4.html title="Controller's robot specific configuration" %}
+
+<p>Controller can also access a robot's specific configuration &mdash; for example to set specific gains.</p>
+
+<p>For a given controller {% ihighlight bash %}NAME{% endihighlight %} and a given robot's module named {% ihighlight bash %}ROBOT{% endihighlight %}, the following configuration files are loaded:</p>
+
+<ol>
+  <li>{% ihighlight bash %}${NAME_RUNTIME_LOCATION}/${NAME}/${ROBOT}.yaml{% endihighlight %}</li>
+  <li>
+    <ul>
+      <li>Linux/MacOS: {% ihighlight bash %}${HOME}/.config/mc_rtc/controllers/${NAME}/${ROBOT}.yaml{% endihighlight %}</li>
+      <li>Windows: {% ihighlight msshell %}%APPDATA%/mc_rtc/controllers/%NAME%/%ROBOT%.yaml{% endihighlight %}</li>
+    </ul>
+  </li>
+</ol>
+
+<p>By default, these configuration files are automatically loaded into the <pre>robots</pre> section of the controller's configuration, under each robot's module name. This behavior can be disabled or modified through {% doxygen mc_control::ControllerParameters %} that are given to the controller constructor.</p>
+
+<p>These configurations can also be accessed via the {% doxygen mc_control::MCController::robot_config(const mc_rbdyn::Robot & robot) %} method and its overload {% doxygen mc_control::MCController::robot_config(const std::string & name) %} .</p>

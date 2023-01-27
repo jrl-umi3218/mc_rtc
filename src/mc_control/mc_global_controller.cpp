@@ -989,7 +989,6 @@ bool MCGlobalController::AddController(const std::string & name)
       controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep,
                                                            config.controllers_configs[name]);
     }
-    controllers[name]->name_ = name;
     controllers[name]->datastore().make_call("Global::EnableController",
                                              [this](const std::string & name) { return EnableController(name); });
     if(config.enable_log)

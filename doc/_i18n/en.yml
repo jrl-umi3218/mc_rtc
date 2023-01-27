@@ -80,7 +80,7 @@ tutorials:
             # Assuming you have a ROS distribution mirror setup
             sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools
     configuration:
-      title: Configuring mc_rtc
+      title: Configuring mc_rtc and its components
     running-a-controller:
       title: Running a controller
     first-controller:

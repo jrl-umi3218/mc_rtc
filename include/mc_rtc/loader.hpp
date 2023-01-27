@@ -11,6 +11,35 @@
 namespace mc_rtc
 {
 
+namespace details
+{
+
+struct has_set_loading_location
+{
+  template<typename T, std::enable_if_t<std::is_same_v<void, decltype(T::set_loading_location(""))>, int> = 0>
+  static std::true_type test(T * p);
+
+  template<typename T>
+  static std::false_type test(...);
+};
+
+template<typename T>
+inline constexpr bool has_set_loading_location_v = decltype(has_set_loading_location::test<T>(nullptr))::value;
+
+struct has_set_name
+{
+  template<typename T, std::enable_if_t<std::is_same_v<void, decltype(T::set_name(""))>, int> = 0>
+  static std::true_type test(T * p);
+
+  template<typename T>
+  static std::false_type test(...);
+};
+
+template<typename T>
+inline constexpr bool has_set_name_v = decltype(has_set_name::test<T>(nullptr))::value;
+
+} // namespace details
+
 template<typename SymT>
 SymT LTDLHandle::get_symbol(const std::string & name)
 {
@@ -144,6 +173,14 @@ T * ObjectLoader<T>::create_from_handles(const std::string & name, Args... args)
   if(create_fn == nullptr)
   {
     mc_rtc::log::error_and_throw<LoaderException>("Failed to resolve create symbol in {}", handles_[name]->path());
+  }
+  if constexpr(details::has_set_loading_location_v<T>)
+  {
+    T::set_loading_location(handles_[name]->dir());
+  }
+  if constexpr(details::has_set_name_v<T>)
+  {
+    T::set_name(name);
   }
   T * ptr = create_fn(name, args...);
   if(ptr == nullptr)
