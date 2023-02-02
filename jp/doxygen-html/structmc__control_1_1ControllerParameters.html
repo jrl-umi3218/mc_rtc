@@ -200,7 +200,10 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Backend used by this controller Whether to automatically load the robots' specific configuration (true by default) Where to load the robots' configuration config("robots") by default Use the module name to find robot's specific values if true (default), use the robot's name otherwise For backward compatibility purpose </p>
+<p>Backend used by this controller Whether to automatically load the robots' specific configuration (true by default) If true, the robot's config is loaded directly into the provided section, otherwise it is nested under the robot's module name Use the module name to find robot's specific values if true (default), use the robot's name otherwise Where to load the robots' configuration, config("robots") by default Extra configuration file to look for and load into the specified section, furthermore:</p><ul>
+<li>the search path matches robots' configuration files</li>
+<li>they are loaded after the robots' configuration files provided at construction and before the robots' specific file for dynamically specified robots, this is done to allow extra configuration files to load new robots when overwrite_config is true and the configuration are loaded into the rootFor backward compatibility purpose </li>
+</ul>
 
 </div>
 </div>
