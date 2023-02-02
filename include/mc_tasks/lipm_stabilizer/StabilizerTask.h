@@ -336,6 +336,16 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    *
    * \see targetCoM()
    **/
+
+
+  void horizonReference(const std::vector<Eigen::Vector2d> & ref , const double delta)
+  {
+    horizonZmpRef_ = ref;
+    horizonDelta_ = delta;
+    horizonCoPDistribution_ = true;
+
+  }
+
   inline const Eigen::Vector3d & targetCoMRaw() const noexcept
   {
     return comTargetRaw_;
@@ -777,6 +787,17 @@ private:
    */
   void distributeWrench(const sva::ForceVecd & desiredWrench);
 
+  /**
+   * @brief Generate a CoP reference for each contact under the future zmp refence along a horizon.
+   * The dynamic of the contact CoPreference zmp is expected to follow a 1st order dynamic w.r.t the CoP reference
+   * The dynamic of the contact CoP is expected to follow a 1st order dynamic w.r.t the CoP reference using prameter lambda_CoP
+   * 
+   * @param zmp_ref  each zmp reference piecewise constant over duration/zmp_ref vector lenght in the world frame
+   * @param duration horizon duration
+   */
+  void distributeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref,const double duration);
+  
+
   /** Project desired wrench to single support foot.
    *
    * \param desiredWrench Desired resultant reaction wrench.
@@ -1018,6 +1039,12 @@ protected:
   Eigen::Vector3d distribZMP_ =
       Eigen::Vector3d::Zero(); /**< ZMP corresponding to force distribution result (desired ZMP) */
   sva::PTransformd zmpFrame_ = sva::PTransformd::Identity(); /**< Frame in which the ZMP is computed */
+
+  std::vector<Eigen::Vector2d> horizonZmpRef_; /**< Future ZMP reference during tHorizon */
+  double horizonDelta_ = 0.05;
+  bool horizonCoPDistribution_ = false;
+  Eigen::Vector2d modeledCoPLeft_ = Eigen::Vector2d::Zero();
+  Eigen::Vector2d modeledCoPRight_ = Eigen::Vector2d::Zero();
 };
 
 extern template void StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::target>(
