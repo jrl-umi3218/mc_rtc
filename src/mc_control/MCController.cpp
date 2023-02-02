@@ -154,13 +154,16 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
     {
       const auto & r_name = params.load_robot_config_with_module_name_ ? robot.module().name : robot.name();
       auto load_into = load_robot_config_into;
-      if(load_into.has(r_name))
+      if(!params.overwrite_config_)
       {
-        load_into = load_into(r_name);
-      }
-      else
-      {
-        load_into = load_into.add(r_name);
+        if(load_into.has(r_name))
+        {
+          load_into = load_into(r_name);
+        }
+        else
+        {
+          load_into = load_into.add(r_name);
+        }
       }
       load_into.load(robot_config(r_name));
     }
@@ -168,6 +171,23 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   for(const auto & r : robots())
   {
     load_robot_config(r);
+  }
+  /** Load extra configuration files */
+  for(const auto & e : params.extra_configurations_)
+  {
+    auto load_into = load_robot_config_into;
+    if(!params.overwrite_config_)
+    {
+      if(load_into.has(e))
+      {
+        load_into = load_into(e);
+      }
+      else
+      {
+        load_into = load_into.add(e);
+      }
+    }
+    load_into.load(robot_config(e));
   }
 
   if(gui_)

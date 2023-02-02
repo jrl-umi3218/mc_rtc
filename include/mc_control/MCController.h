@@ -68,10 +68,20 @@ struct MC_CONTROL_DLLAPI ControllerParameters
   ADD_PARAMETER(mc_solver::QPSolver::Backend, backend, mc_solver::QPSolver::Backend::Tasks)
   /** Whether to automatically load the robots' specific configuration (true by default) */
   ADD_PARAMETER(bool, load_robot_config, true)
-  /** Where to load the robots' configuration config("robots") by default */
-  ADD_PARAMETER(std::vector<std::string>, load_robot_config_into, {"robots"})
+  /** If true, the robot's config is loaded directly into the provided section, otherwise it is nested under the robot's
+   * module name */
+  ADD_PARAMETER(bool, overwrite_config, false)
   /** Use the module name to find robot's specific values if true (default), use the robot's name otherwise */
   ADD_PARAMETER(bool, load_robot_config_with_module_name, true)
+  /** Where to load the robots' configuration, config("robots") by default */
+  ADD_PARAMETER(std::vector<std::string>, load_robot_config_into, {"robots"})
+  /** Extra configuration file to look for and load into the specified section, furthermore:
+   * - the search path matches robots' configuration files
+   * - they are loaded after the robots' configuration files provided at construction and before the robots' specific
+   * file for dynamically specified robots, this is done to allow extra configuration files to load new robots when \ref
+   * overwrite_config is true and the configuration are loaded into the root
+   */
+  ADD_PARAMETER(std::vector<std::string>, extra_configurations, {})
 
   /** For backward compatibility purpose */
   inline ControllerParameters(mc_solver::QPSolver::Backend backend) : backend_(backend) {}
