@@ -1261,23 +1261,25 @@ void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench
   bool solutionFound = qpSolver_.solve(Q, c, Aeq, beq, Aineq, bineq, /* isDecomp = */ false);
   if(!solutionFound)
   {
-    mc_rtc::log::error("[{}] DS force distribution QP: solver found no solution",name());
+    mc_rtc::log::error("[{}] DS force/CoP distribution QP: solver found no solution",name());
     return;
   }
 
   Eigen::VectorXd x = qpSolver_.result();
   Eigen::Vector2d leftCoP(x.segment(0,2));
   Eigen::Vector2d rightCoP(x.segment(2 * nbReferences,2));
+  Eigen::Vector2d leftForce_xy = x.segment(4 * nbReferences,2);
+  Eigen::Vector2d rightForce_xy = x.segment(4 * nbReferences + 2,2);
   modeledCoPLeft_ = leftCoP + (footTasks[ContactState::Left]->measuredCoP() - leftCoP) * exp(-c_.lambdaCoP.x() * dt_);
   modeledCoPRight_ = rightCoP + (footTasks[ContactState::Right]->measuredCoP() - rightCoP) * exp(-c_.lambdaCoP.y() * dt_);
 
   const double fz_left = (1 - first_ratio) * fz_tot;
   const double fz_right = (first_ratio) * fz_tot;
 
-  sva::ForceVecd w_l_lc = sva::ForceVecd{Eigen::Vector3d{leftCoP.y() * fz_left , - leftCoP.x() * fz_left , 0},
-                                         Eigen::Vector3d{0,0 , fz_left}};
-  sva::ForceVecd w_r_rc = sva::ForceVecd{Eigen::Vector3d{rightCoP.y() * fz_left , - rightCoP.x() * fz_left , 0},
-                                         Eigen::Vector3d{0,0 , fz_right}};
+  sva::ForceVecd w_l_lc = sva::ForceVecd{Eigen::Vector3d{leftCoP.y()  * fz_left  , -leftCoP.x()  * fz_left  , 0},
+                                         Eigen::Vector3d{leftForce_xy.x(),leftForce_xy.y() , fz_left}};
+  sva::ForceVecd w_r_rc = sva::ForceVecd{Eigen::Vector3d{rightCoP.y() * fz_right , -rightCoP.x() * fz_right , 0},
+                                         Eigen::Vector3d{rightForce_xy.x(),rightForce_xy.y() , fz_right}};
 
 
   footTasks[ContactState::Left]->targetCoP(leftCoP);
