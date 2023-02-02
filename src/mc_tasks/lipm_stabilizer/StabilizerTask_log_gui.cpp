@@ -98,7 +98,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
           }),
       Checkbox(
           "CoP constraints", [this]() { return c_.constrainCoP; }, [this]() { c_.constrainCoP = !c_.constrainCoP; }),
-          
+
       ArrayInput(
           "Foot CoP lambda", {"CoPx", "CoPy"},
           [this]() -> Eigen::Vector2d {
@@ -467,8 +467,6 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   MC_RTC_LOG_HELPER(name_ + "_target_pendulum_zmp", zmpTarget_);
   MC_RTC_LOG_HELPER(name_ + "_target_pendulum_zmpd", zmpdTarget_);
   MC_RTC_LOG_HELPER(name_ + "_target_stabilizer_zmp", distribZMP_);
-
-
 
   logger.addLogEntry(name_ + "_contactState", this, [this]() -> int {
     if(inDoubleSupport())

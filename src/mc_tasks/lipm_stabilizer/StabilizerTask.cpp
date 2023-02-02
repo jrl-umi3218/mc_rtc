@@ -577,7 +577,6 @@ void StabilizerTask::computeLeftFootRatio()
     Eigen::Vector3d t_lankle_rankle = rankle - lankle;
     double d_proj = t_lankle_com.dot(t_lankle_rankle.normalized());
     leftFootRatio_ = clamp(d_proj / t_lankle_rankle.norm(), 0., 1.);
-    
   }
   else if(inContact(ContactState::Left))
   {
@@ -774,7 +773,7 @@ void StabilizerTask::run()
   {
     if(horizonCoPDistribution_)
     {
-      distributeCoPonHorizon(desiredWrench_,horizonZmpRef_,horizonDelta_);
+      distributeCoPonHorizon(desiredWrench_, horizonZmpRef_, horizonDelta_);
       horizonCoPDistribution_ = false;
     }
     else
@@ -1137,28 +1136,29 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   footTasks[ContactState::Right]->targetForce(w_r_rc.force());
 }
 
-void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench, const std::vector<Eigen::Vector2d> & zmp_ref,const double delta)
+void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench,
+                                            const std::vector<Eigen::Vector2d> & zmp_ref,
+                                            const double delta)
 {
   // Variables
   // ---------
   // sequence [ul_1_x,ul_1_y, ..., ul_n_x,ul_n_y,ur_1_x,ur_1_y, ..., ur_n_x,ur_n_y,f_l_x,f_l_y,f_r_x,f_r_y]
-  // [ur_i_x,ur_i_y]: Right CoP reference in the foot frame at the ith iteration 
+  // [ur_i_x,ur_i_y]: Right CoP reference in the foot frame at the ith iteration
   // [ul_i_x,ul_i_y]: Left  CoP reference in the foot frame at the ith iteration
   // Objective
   // ---------
   // Weighted minimization of the following tasks:
-  // 
+  //
   // [ur_i_x,ur_i_y] == [0,0] -- minimize the CoP position for each foot
   // f_l_x + f_r_x = desiredWrench_fx
   // f_l_y + f_r_y = desiredWrench_fy
   //
   // Constraints
   // -----------
-  // (fr_i_z * ur_i_x + fl_i_z * ul_i_x)/(fl_i_z + fr_i_z) == zmp_ref_i  -- CoP reference must match zmp reference (same for y)
-  // CoP within the contact polygone
+  // (fr_i_z * ur_i_x + fl_i_z * ul_i_x)/(fl_i_z + fr_i_z) == zmp_ref_i  -- CoP reference must match zmp reference (same
+  // for y) CoP within the contact polygone
   //  -- left foot wrench within contact wrench cone
   //  -- right foot wrench within contact wrench cone
- 
 
   if(zmp_ref.size() == 0)
   {
@@ -1174,122 +1174,119 @@ void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench
   const Eigen::Vector3d t_lankle_rankle = rankle - lankle;
 
   const int nbReferences = static_cast<int>(zmp_ref.size());
-  const int nbVariables = 2 * 2 * nbReferences + 4 ;
+  const int nbVariables = 2 * 2 * nbReferences + 4;
   const int nbIneqCstr = 8 * nbReferences + 2 * 2 + 2 * 2;
-  const int nbEqCstr = 2 * nbReferences ;
-  Eigen::MatrixXd Aeq = Eigen::MatrixXd::Zero( nbEqCstr , nbVariables);
+  const int nbEqCstr = 2 * nbReferences;
+  Eigen::MatrixXd Aeq = Eigen::MatrixXd::Zero(nbEqCstr, nbVariables);
   Eigen::VectorXd beq = Eigen::VectorXd::Zero(Aeq.rows());
 
-  Eigen::MatrixXd Aineq = Eigen::MatrixXd::Zero( nbIneqCstr , nbVariables);
+  Eigen::MatrixXd Aineq = Eigen::MatrixXd::Zero(nbIneqCstr, nbVariables);
   Eigen::VectorXd bineq = Eigen::VectorXd::Zero(Aineq.rows());
-  Eigen::MatrixXd normals = Eigen::MatrixXd::Zero( 4 , 2); //normals matrix for CoP constraints
+  Eigen::MatrixXd normals = Eigen::MatrixXd::Zero(4, 2); // normals matrix for CoP constraints
   Eigen::VectorXd offsetLeft = Eigen::VectorXd::Zero(normals.rows());
   Eigen::VectorXd offsetRight = Eigen::VectorXd::Zero(normals.rows());
-  normals << 1,0,
-            -1,0,
-             0,1,
-             0,-1;
-  offsetLeft << leftContact.halfLength() , leftContact.halfLength(), 
-                leftContact.halfWidth()  , leftContact.halfWidth();
+  normals << 1, 0, -1, 0, 0, 1, 0, -1;
+  offsetLeft << leftContact.halfLength(), leftContact.halfLength(), leftContact.halfWidth(), leftContact.halfWidth();
 
-  offsetRight << rightContact.halfLength() , rightContact.halfLength(), 
-                 rightContact.halfWidth()  , rightContact.halfWidth();
+  offsetRight << rightContact.halfLength(), rightContact.halfLength(), rightContact.halfWidth(),
+      rightContact.halfWidth();
 
   const double fz_tot = robot().mass() * constants::GRAVITY;
-  //The vertical forces are splitted using the ratio obtained between the reference zmp pose and the contact pose;
+  // The vertical forces are splitted using the ratio obtained between the reference zmp pose and the contact pose;
   double first_ratio = 0.5;
-  for (Eigen::Index i = 0 ; i < nbReferences ; i++ )
-  {   
-   
-    Eigen::Vector2d t_lankle_com = zmp_ref[i] - lankle.segment(0,2);
-    double d_proj = t_lankle_com.dot(t_lankle_rankle.segment(0,2).normalized());
+  for(Eigen::Index i = 0; i < nbReferences; i++)
+  {
+
+    Eigen::Vector2d t_lankle_com = zmp_ref[i] - lankle.segment(0, 2);
+    double d_proj = t_lankle_com.dot(t_lankle_rankle.segment(0, 2).normalized());
     // 1 : rightfoot 0 : leftFoot
     double ratio = clamp(d_proj / t_lankle_rankle.norm(), 0., 1.);
 
-    if(i==0){first_ratio = ratio;}
-
-    Aeq.block(2 * i, 2 * i, 2 , 2) = X_0_lc.inv().rotation().block(0,0,2,2) * (1 - ratio);
-    Aeq.block(2 * i, 2 * (nbReferences +  i), 2 , 2) = X_0_rc.inv().rotation().block(0,0,2,2) * ratio;
-    beq.segment(2 * i,2) = zmp_ref[i] - X_0_lc.translation().segment(0,2) * (1-ratio) - X_0_rc.translation().segment(0,2) * (ratio);
-
-    
-    //Convert the CoP reference into the modeled CoP
-    Eigen::MatrixXd Acop  = Eigen::MatrixXd::Zero( 2, nbVariables);
-    double t_k = 0;
-    for (Eigen::Index k = 0 ; k <= i ; k++)
+    if(i == 0)
     {
-      
-      Acop(0, 2 * k) = (1 - exp(-c_.lambdaCoP.x() * delta)) * exp(-c_.lambdaCoP.x() * t_k) ;
-      Acop(1, 2 * k + 1) = (1 - exp(-c_.lambdaCoP.y() * delta)) * exp(-c_.lambdaCoP.y() * t_k) ;
+      first_ratio = ratio;
+    }
+
+    Aeq.block(2 * i, 2 * i, 2, 2) = X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio);
+    Aeq.block(2 * i, 2 * (nbReferences + i), 2, 2) = X_0_rc.inv().rotation().block(0, 0, 2, 2) * ratio;
+    beq.segment(2 * i, 2) =
+        zmp_ref[i] - X_0_lc.translation().segment(0, 2) * (1 - ratio) - X_0_rc.translation().segment(0, 2) * (ratio);
+
+    // Convert the CoP reference into the modeled CoP
+    Eigen::MatrixXd Acop = Eigen::MatrixXd::Zero(2, nbVariables);
+    double t_k = 0;
+    for(Eigen::Index k = 0; k <= i; k++)
+    {
+
+      Acop(0, 2 * k) = (1 - exp(-c_.lambdaCoP.x() * delta)) * exp(-c_.lambdaCoP.x() * t_k);
+      Acop(1, 2 * k + 1) = (1 - exp(-c_.lambdaCoP.y() * delta)) * exp(-c_.lambdaCoP.y() * t_k);
       t_k += delta;
     }
     Eigen::Matrix2d exp_mat;
-    exp_mat << exp(-c_.lambdaCoP.x() * t_k ) , 0, 0,exp(-c_.lambdaCoP.y() * t_k ) ;
-    bineq.segment( 4 * i , 4) = offsetLeft - normals * exp_mat * footTasks[ContactState::Left]->measuredCoP();
-    Aineq.block(4 * i , 0 , 4 , nbVariables) = normals * Acop; 
-    Aineq.block(4 * ( i + nbReferences), 0 , 4 , nbVariables) = normals * Acop; 
-    bineq.segment( 4 * (nbReferences +  i ) , 4) = offsetRight - normals * exp_mat *footTasks[ContactState::Right]->measuredCoP();
-
-
+    exp_mat << exp(-c_.lambdaCoP.x() * t_k), 0, 0, exp(-c_.lambdaCoP.y() * t_k);
+    bineq.segment(4 * i, 4) = offsetLeft - normals * exp_mat * footTasks[ContactState::Left]->measuredCoP();
+    Aineq.block(4 * i, 0, 4, nbVariables) = normals * Acop;
+    Aineq.block(4 * (i + nbReferences), 0, 4, nbVariables) = normals * Acop;
+    bineq.segment(4 * (nbReferences + i), 4) =
+        offsetRight - normals * exp_mat * footTasks[ContactState::Right]->measuredCoP();
   }
 
-  Aineq.block(8*nbReferences,4 * nbReferences,4,4) = Eigen::Matrix4d::Identity();
-  bineq.segment(8*nbReferences,2) = Eigen::Vector2d::Ones() * leftContact.friction() * fz_tot * (1 - first_ratio);
-  bineq.segment(8*nbReferences + 2,2) = Eigen::Vector2d::Ones() * rightContact.friction() * fz_tot * (first_ratio);
+  Aineq.block(8 * nbReferences, 4 * nbReferences, 4, 4) = Eigen::Matrix4d::Identity();
+  bineq.segment(8 * nbReferences, 2) = Eigen::Vector2d::Ones() * leftContact.friction() * fz_tot * (1 - first_ratio);
+  bineq.segment(8 * nbReferences + 2, 2) = Eigen::Vector2d::Ones() * rightContact.friction() * fz_tot * (first_ratio);
 
-  Aineq.block(8*nbReferences + 4,4 * nbReferences,4,4) = -Eigen::Matrix4d::Identity();
-  bineq.segment(8*nbReferences + 4,2) = Eigen::Vector2d::Ones() * leftContact.friction() * fz_tot * (1 - first_ratio);
-  bineq.segment(8*nbReferences + 6,2) = Eigen::Vector2d::Ones() * rightContact.friction() * fz_tot * (first_ratio);
+  Aineq.block(8 * nbReferences + 4, 4 * nbReferences, 4, 4) = -Eigen::Matrix4d::Identity();
+  bineq.segment(8 * nbReferences + 4, 2) =
+      Eigen::Vector2d::Ones() * leftContact.friction() * fz_tot * (1 - first_ratio);
+  bineq.segment(8 * nbReferences + 6, 2) = Eigen::Vector2d::Ones() * rightContact.friction() * fz_tot * (first_ratio);
 
-  Eigen::MatrixXd M_force = Eigen::MatrixXd::Zero(2 , nbVariables);
-  M_force.block(0,4*nbReferences,2,2) = Eigen::Matrix2d::Identity();
-  M_force.block(0,4*nbReferences + 2,2,2) = Eigen::Matrix2d::Identity();
-  Eigen::MatrixXd b_force = desiredWrench.force().segment(3,2);
+  Eigen::MatrixXd M_force = Eigen::MatrixXd::Zero(2, nbVariables);
+  M_force.block(0, 4 * nbReferences, 2, 2) = Eigen::Matrix2d::Identity();
+  M_force.block(0, 4 * nbReferences + 2, 2, 2) = Eigen::Matrix2d::Identity();
+  Eigen::MatrixXd b_force = desiredWrench.force().segment(3, 2);
 
-  Eigen::MatrixXd M_cop = Eigen::MatrixXd::Zero(4 * nbReferences , nbVariables);
-  M_cop.block(0,0,4 * nbReferences,4 * nbReferences) = Eigen::MatrixXd::Identity(4*nbReferences,4*nbReferences);
+  Eigen::MatrixXd M_cop = Eigen::MatrixXd::Zero(4 * nbReferences, nbVariables);
+  M_cop.block(0, 0, 4 * nbReferences, 4 * nbReferences) = Eigen::MatrixXd::Identity(4 * nbReferences, 4 * nbReferences);
 
-  Eigen::MatrixXd Q = M_cop.transpose() * M_cop + M_force.transpose() * M_force + 1e-12 * Eigen::MatrixXd::Identity(nbVariables , nbVariables);
-  Eigen::VectorXd c = (- M_force.transpose() * b_force);
+  Eigen::MatrixXd Q = M_cop.transpose() * M_cop + M_force.transpose() * M_force
+                      + 1e-12 * Eigen::MatrixXd::Identity(nbVariables, nbVariables);
+  Eigen::VectorXd c = (-M_force.transpose() * b_force);
 
   // Eigen::MatrixXd Q = Eigen::MatrixXd::Identity(nbVariables , nbVariables);
   // Eigen::VectorXd c = Eigen::VectorXd::Zero(nbVariables);
 
-
-  qpSolver_.problem( nbVariables, nbEqCstr, nbIneqCstr);
+  qpSolver_.problem(nbVariables, nbEqCstr, nbIneqCstr);
 
   bool solutionFound = qpSolver_.solve(Q, c, Aeq, beq, Aineq, bineq, /* isDecomp = */ false);
   if(!solutionFound)
   {
-    mc_rtc::log::error("[{}] DS force/CoP distribution QP: solver found no solution",name());
+    mc_rtc::log::error("[{}] DS force/CoP distribution QP: solver found no solution", name());
     return;
   }
 
   Eigen::VectorXd x = qpSolver_.result();
-  Eigen::Vector2d leftCoP(x.segment(0,2));
-  Eigen::Vector2d rightCoP(x.segment(2 * nbReferences,2));
-  Eigen::Vector2d leftForce_xy = x.segment(4 * nbReferences,2);
-  Eigen::Vector2d rightForce_xy = x.segment(4 * nbReferences + 2,2);
+  Eigen::Vector2d leftCoP(x.segment(0, 2));
+  Eigen::Vector2d rightCoP(x.segment(2 * nbReferences, 2));
+  Eigen::Vector2d leftForce_xy = x.segment(4 * nbReferences, 2);
+  Eigen::Vector2d rightForce_xy = x.segment(4 * nbReferences + 2, 2);
   modeledCoPLeft_ = leftCoP + (footTasks[ContactState::Left]->measuredCoP() - leftCoP) * exp(-c_.lambdaCoP.x() * dt_);
-  modeledCoPRight_ = rightCoP + (footTasks[ContactState::Right]->measuredCoP() - rightCoP) * exp(-c_.lambdaCoP.y() * dt_);
+  modeledCoPRight_ =
+      rightCoP + (footTasks[ContactState::Right]->measuredCoP() - rightCoP) * exp(-c_.lambdaCoP.y() * dt_);
 
   const double fz_left = (1 - first_ratio) * fz_tot;
-  const double fz_right = (first_ratio) * fz_tot;
+  const double fz_right = (first_ratio)*fz_tot;
 
-  sva::ForceVecd w_l_lc = sva::ForceVecd{Eigen::Vector3d{leftCoP.y()  * fz_left  , -leftCoP.x()  * fz_left  , 0},
-                                         Eigen::Vector3d{leftForce_xy.x(),leftForce_xy.y() , fz_left}};
-  sva::ForceVecd w_r_rc = sva::ForceVecd{Eigen::Vector3d{rightCoP.y() * fz_right , -rightCoP.x() * fz_right , 0},
-                                         Eigen::Vector3d{rightForce_xy.x(),rightForce_xy.y() , fz_right}};
-
+  sva::ForceVecd w_l_lc = sva::ForceVecd{Eigen::Vector3d{leftCoP.y() * fz_left, -leftCoP.x() * fz_left, 0},
+                                         Eigen::Vector3d{leftForce_xy.x(), leftForce_xy.y(), fz_left}};
+  sva::ForceVecd w_r_rc = sva::ForceVecd{Eigen::Vector3d{rightCoP.y() * fz_right, -rightCoP.x() * fz_right, 0},
+                                         Eigen::Vector3d{rightForce_xy.x(), rightForce_xy.y(), fz_right}};
 
   footTasks[ContactState::Left]->targetCoP(leftCoP);
   footTasks[ContactState::Left]->targetForce(w_l_lc.force());
   footTasks[ContactState::Right]->targetCoP(rightCoP);
   footTasks[ContactState::Right]->targetForce(w_r_rc.force());
 
-
   distribWrench_ = X_0_lc.inv().dualMul(w_l_lc) + X_0_rc.inv().dualMul(w_r_rc);
-
 }
 
 void StabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,

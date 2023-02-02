@@ -337,13 +337,11 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * \see targetCoM()
    **/
 
-
-  void horizonReference(const std::vector<Eigen::Vector2d> & ref , const double delta)
+  void horizonReference(const std::vector<Eigen::Vector2d> & ref, const double delta)
   {
     horizonZmpRef_ = ref;
     horizonDelta_ = delta;
     horizonCoPDistribution_ = true;
-
   }
 
   inline const Eigen::Vector3d & targetCoMRaw() const noexcept
@@ -790,13 +788,15 @@ private:
   /**
    * @brief Generate a CoP reference for each contact under the future zmp refence along a horizon.
    * The dynamic of the contact CoPreference zmp is expected to follow a 1st order dynamic w.r.t the CoP reference
-   * The dynamic of the contact CoP is expected to follow a 1st order dynamic w.r.t the CoP reference using prameter lambda_CoP
-   * 
+   * The dynamic of the contact CoP is expected to follow a 1st order dynamic w.r.t the CoP reference using prameter
+   * lambda_CoP
+   *
    * @param zmp_ref  each zmp reference piecewise constant over duration/zmp_ref vector lenght in the world frame
    * @param delta horizon timestep
    */
-  void distributeCoPonHorizon(const sva::ForceVecd & desiredWrench, const std::vector<Eigen::Vector2d> & zmp_ref,const double delta);
-  
+  void distributeCoPonHorizon(const sva::ForceVecd & desiredWrench,
+                              const std::vector<Eigen::Vector2d> & zmp_ref,
+                              const double delta);
 
   /** Project desired wrench to single support foot.
    *
