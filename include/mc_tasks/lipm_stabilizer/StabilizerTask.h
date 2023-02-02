@@ -793,9 +793,9 @@ private:
    * The dynamic of the contact CoP is expected to follow a 1st order dynamic w.r.t the CoP reference using prameter lambda_CoP
    * 
    * @param zmp_ref  each zmp reference piecewise constant over duration/zmp_ref vector lenght in the world frame
-   * @param duration horizon duration
+   * @param delta horizon timestep
    */
-  void distributeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref,const double duration);
+  void distributeCoPonHorizon(const sva::ForceVecd & desiredWrench, const std::vector<Eigen::Vector2d> & zmp_ref,const double delta);
   
 
   /** Project desired wrench to single support foot.
