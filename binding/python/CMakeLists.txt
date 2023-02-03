@@ -158,6 +158,7 @@ function(make_cython_bindings PACKAGE)
       set_target_properties(${TARGET_NAME} PROPERTIES
         CXX_VISIBILITY_PRESET default
         PREFIX ""
+        DEBUG_POSTFIX ""
         OUTPUT_NAME ${LIB_OUTPUT_NAME}
         LIBRARY_OUTPUT_DIRECTORY ${MOD_OUTPUT_DIRECTORY}
         RUNTIME_OUTPUT_DIRECTORY ${MOD_OUTPUT_DIRECTORY})
