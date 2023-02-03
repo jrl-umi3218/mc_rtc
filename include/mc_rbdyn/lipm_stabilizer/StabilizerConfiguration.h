@@ -501,7 +501,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     {
       auto admittance = config("admittance");
       admittance("cop", copAdmittance);
-      admittance("copLambda",lambdaCoP);
+      admittance("copLambda", lambdaCoP);
       admittance("maxVel", copMaxVel);
       admittance("velFilterGain", mc_filter::utils::clamp(copVelFilterGain, 0, 1));
       if(admittance.has("dfz"))
