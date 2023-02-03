@@ -1156,7 +1156,8 @@ void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench
   // Constraints
   // -----------
   // (fr_i_z * ur_i_x + fl_i_z * ul_i_x)/(fl_i_z + fr_i_z) == zmp_ref_i  -- CoP reference must match zmp reference (same
-  // for y) CoP within the contact polygone
+  // for y) 
+  //  CoP within the contact polygone
   //  -- left foot wrench within contact wrench cone
   //  -- right foot wrench within contact wrench cone
 
@@ -1172,6 +1173,12 @@ void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench
   const Eigen::Vector3d & lankle = contacts_.at(ContactState::Left).anklePose().translation();
   const Eigen::Vector3d & rankle = contacts_.at(ContactState::Right).anklePose().translation();
   const Eigen::Vector3d t_lankle_rankle = rankle - lankle;
+  Eigen::Vector2d measuredLeftCoP  = clamp(footTasks[ContactState::Left]->measuredCoP(),
+                                        Eigen::Vector2d{-leftContact.halfLength()*1,-leftContact.halfWidth()*1},
+                                        Eigen::Vector2d{leftContact.halfLength()*1,leftContact.halfWidth()*1});
+  Eigen::Vector2d measuredRightCoP = clamp(footTasks[ContactState::Right]->measuredCoP(),
+                                        Eigen::Vector2d{-rightContact.halfLength()*1,-rightContact.halfWidth()*1},
+                                        Eigen::Vector2d{rightContact.halfLength()*1,rightContact.halfWidth()*1});
 
   const int nbReferences = static_cast<int>(zmp_ref.size());
   const int nbVariables = 2 * 2 * nbReferences + 4;
