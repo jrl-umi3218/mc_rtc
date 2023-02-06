@@ -430,6 +430,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
   Eigen::Vector2d lambdaCoP =
       Eigen::Vector2d::Ones() * 100; /**< 1st order gain constant between a reference CoP and the real */
+  double delayCoP = 0;
 
   std::string torsoBodyName; /**< Name of the torso body */
   double torsoPitch = 0; /**< Target world pitch angle for the torso */
@@ -502,6 +503,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       auto admittance = config("admittance");
       admittance("cop", copAdmittance);
       admittance("copLambda", lambdaCoP);
+      admittance("copDelay",delayCoP);
       admittance("maxVel", copMaxVel);
       admittance("velFilterGain", mc_filter::utils::clamp(copVelFilterGain, 0, 1));
       if(admittance.has("dfz"))

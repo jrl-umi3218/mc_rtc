@@ -105,6 +105,9 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
             return {c_.lambdaCoP.x(), c_.lambdaCoP.y()};
           },
           [this](const Eigen::Vector2d & a) { c_.lambdaCoP = a; }),
+      NumberInput(
+          "Admittance Delay", [this]() { return c_.delayCoP; },
+          [this](double d) { c_.delayCoP = d; }),
       ArrayInput(
           "Max cop linear velocity [m/s]",
           [this]() -> const Eigen::Vector3d & { return footTasks.at(ContactState::Left)->maxLinearVel(); },

@@ -1181,6 +1181,16 @@ void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench
             Eigen::Vector2d{-rightContact.halfLength() * 1, -rightContact.halfWidth() * 1},
             Eigen::Vector2d{rightContact.halfLength() * 1, rightContact.halfWidth() * 1});
 
+  const Eigen::Vector2d currentCoPTargetLeft = footTasks[ContactState::Left]->targetCoP();
+  const Eigen::Vector2d currentCoPTargetRight = footTasks[ContactState::Right]->targetCoP();
+  Eigen::Vector2d measuredLeftCoP_delayed;
+  measuredLeftCoP_delayed.x() = measuredLeftCoP.x() * exp(-c_.lambdaCoP.x() * c_.delayCoP) + (1 - exp(-c_.lambdaCoP.x() * c_.delayCoP)) * currentCoPTargetLeft.x();
+  measuredLeftCoP_delayed.y() = measuredLeftCoP.y() * exp(-c_.lambdaCoP.y() * c_.delayCoP) + (1 - exp(-c_.lambdaCoP.y() * c_.delayCoP)) * currentCoPTargetLeft.y();
+
+  Eigen::Vector2d measuredRightCoP_delayed;
+  measuredRightCoP_delayed.x() = measuredRightCoP.x() * exp(-c_.lambdaCoP.x() * c_.delayCoP) + (1 - exp(-c_.lambdaCoP.x() * c_.delayCoP)) * currentCoPTargetRight.x();
+  measuredRightCoP_delayed.y() = measuredRightCoP.y() * exp(-c_.lambdaCoP.y() * c_.delayCoP) + (1 - exp(-c_.lambdaCoP.y() * c_.delayCoP)) * currentCoPTargetRight.y();
+
   const int nbReferences = static_cast<int>(zmp_ref.size());
   const int nbVariables = 2 * 2 * nbReferences + 0;
   const int nbIneqCstr = 8 * nbReferences + 2 * 2 + 2 * 2;
@@ -1236,26 +1246,35 @@ void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench
     Eigen::MatrixXd Acop = Eigen::MatrixXd::Zero(2, 2 * nbReferences);
     double t = static_cast<double>(i) * delta;
     Eigen::Matrix2d exp_mat;
-    exp_mat << exp(-c_.lambdaCoP.x() * (t + delta)), 0, 0, exp(-c_.lambdaCoP.y() * (t + delta));
+    exp_mat << exp(-c_.lambdaCoP.x() * (t + delta - c_.delayCoP)), 0, 0, exp(-c_.lambdaCoP.y() * (t + delta - c_.delayCoP));
     for(Eigen::Index k = 0; k <= i; k++)
     {
-      Acop(0, 2 * k) = (1 - exp(-c_.lambdaCoP.x() * delta)) * exp(-c_.lambdaCoP.x() * t);
-      Acop(1, 2 * k + 1) = (1 - exp(-c_.lambdaCoP.y() * delta)) * exp(-c_.lambdaCoP.y() * t);
+      if(k == 0)
+      {
+        Acop(0, 2 * k) = (1 - exp(-c_.lambdaCoP.x() * (delta - c_.delayCoP))) * exp(-c_.lambdaCoP.x() * t);
+        Acop(1, 2 * k + 1) = (1 - exp(-c_.lambdaCoP.y() *  (delta - c_.delayCoP))) * exp(-c_.lambdaCoP.y() * t);
+      }
+      else
+      {
+        Acop(0, 2 * k) = (1 - exp(-c_.lambdaCoP.x() * delta)) * exp(-c_.lambdaCoP.x() * t);
+        Acop(1, 2 * k + 1) = (1 - exp(-c_.lambdaCoP.y() * delta)) * exp(-c_.lambdaCoP.y() * t);
+      }
       t -= delta;
     }
 
     // Acop * x = cop in foot frame
-    Aeq.block(2 * i, 0, 2, 2 * nbReferences) = X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * Acop;
+    Aeq.block(2 * i, 0, 2, 2 * nbReferences)                = X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * Acop;
     Aeq.block(2 * i, 2 * nbReferences, 2, 2 * nbReferences) = X_0_rc.inv().rotation().block(0, 0, 2, 2) * ratio * Acop;
-    beq.segment(2 * i, 2) = zmp_ref[i] - X_0_lc.translation().segment(0, 2) * (1 - ratio)
-                            - X_0_rc.translation().segment(0, 2) * (ratio)-X_0_lc.inv().rotation().block(0, 0, 2, 2)
-                                  * (1 - ratio) * exp_mat * measuredLeftCoP
-                            - X_0_rc.inv().rotation().block(0, 0, 2, 2) * (ratio)*exp_mat * measuredRightCoP;
+    beq.segment(2 * i, 2) = zmp_ref[i] 
+                            - X_0_lc.translation().segment(0, 2) * (1 - ratio)
+                            - X_0_rc.translation().segment(0, 2) * (ratio)
+                             -X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * exp_mat * measuredLeftCoP_delayed
+                            - X_0_rc.inv().rotation().block(0, 0, 2, 2) * (ratio) *exp_mat * measuredRightCoP_delayed;
 
     Aineq.block(4 * i, 0, 4, 2 * nbReferences) = normals * Acop;
 
-    bineq.segment(4 * i, 4) = offsetLeft - normals * exp_mat * (1 - ratio) * measuredLeftCoP;
-    bineq.segment(4 * (nbReferences + i), 4) = offsetRight - normals * exp_mat * ratio * measuredRightCoP;
+    bineq.segment(4 * i, 4) = offsetLeft - normals * exp_mat * (1 - ratio) * measuredLeftCoP_delayed;
+    bineq.segment(4 * (nbReferences + i), 4) = offsetRight - normals * exp_mat * ratio * measuredRightCoP_delayed;
   }
   Aineq.block(4 * nbReferences, 2 * nbReferences, 4 * nbReferences, 2 * nbReferences) =
       Aineq.block(0, 0, 4 * nbReferences, 2 * nbReferences);
@@ -1311,10 +1330,10 @@ void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench
   // Eigen::Vector2d rightForce_xy = x.segment(4 * nbReferences + 2, 2);
   Eigen::Vector2d leftForce_xy = Eigen::Vector2d::Zero();
   Eigen::Vector2d rightForce_xy = Eigen::Vector2d::Zero();
-  modeledCoPLeft_.x() = (leftCoP + (measuredLeftCoP - leftCoP) * exp(-c_.lambdaCoP.x() * dt_)).x();
-  modeledCoPLeft_.y() = (leftCoP + (measuredLeftCoP - leftCoP) * exp(-c_.lambdaCoP.y() * dt_)).y();
-  modeledCoPRight_.x() = (rightCoP + (measuredRightCoP - rightCoP) * exp(-c_.lambdaCoP.x() * dt_)).x();
-  modeledCoPRight_.y() = (rightCoP + (measuredRightCoP - rightCoP) * exp(-c_.lambdaCoP.y() * dt_)).y();
+  modeledCoPLeft_.x() = (currentCoPTargetLeft + (measuredLeftCoP - currentCoPTargetLeft) * exp(-c_.lambdaCoP.x() * dt_)).x();
+  modeledCoPLeft_.y() = (currentCoPTargetLeft + (measuredLeftCoP - currentCoPTargetLeft) * exp(-c_.lambdaCoP.y() * dt_)).y();
+  modeledCoPRight_.x() = (currentCoPTargetRight + (measuredRightCoP - currentCoPTargetRight) * exp(-c_.lambdaCoP.x() * dt_)).x();
+  modeledCoPRight_.y() = (currentCoPTargetRight + (measuredRightCoP - currentCoPTargetRight) * exp(-c_.lambdaCoP.y() * dt_)).y();
 
   const double fz_left = (1 - first_ratio) * fz_tot;
   const double fz_right = (first_ratio)*fz_tot;
