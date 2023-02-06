@@ -773,7 +773,7 @@ void StabilizerTask::run()
   {
     if(horizonCoPDistribution_)
     {
-      distributeCoPonHorizon(desiredWrench_, horizonZmpRef_, horizonDelta_);
+      distributeCoPonHorizon(desiredWrench_, horizonZmpRef_,horizonURef_, horizonDelta_);
       horizonCoPDistribution_ = false;
     }
     else
@@ -1137,7 +1137,7 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
 }
 
 void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench,
-                                            const std::vector<Eigen::Vector2d> & zmp_ref,
+                                            const std::vector<Eigen::Vector2d> & zmp_ref,const std::vector<Eigen::Vector2d> & u_ref,
                                             const double delta)
 {
   // Variables
@@ -1168,11 +1168,14 @@ void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench
 
   const auto & leftContact = contacts_.at(ContactState::Left);
   const auto & rightContact = contacts_.at(ContactState::Right);
+  const double fz_tot = robot().mass() * constants::GRAVITY;
+  const double safety_ratio = c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot;
+  
   const sva::PTransformd & X_0_lc = leftContact.surfacePose();
   const sva::PTransformd & X_0_rc = rightContact.surfacePose();
   const Eigen::Vector3d & lankle = contacts_.at(ContactState::Left).anklePose().translation();
   const Eigen::Vector3d & rankle = contacts_.at(ContactState::Right).anklePose().translation();
-  const Eigen::Vector3d t_lankle_rankle = rankle - lankle;
+  const Eigen::Vector2d t_lankle_rankle = (rankle - lankle).segment(0,2);
   Eigen::Vector2d measuredLeftCoP = clamp(footTasks[ContactState::Left]->measuredCoP(),
                                           Eigen::Vector2d{-leftContact.halfLength() * 1, -leftContact.halfWidth() * 1},
                                           Eigen::Vector2d{leftContact.halfLength() * 1, leftContact.halfWidth() * 1});
@@ -1209,21 +1212,23 @@ void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench
   offsetRight << rightContact.halfLength(), rightContact.halfLength(), rightContact.halfWidth(),
       rightContact.halfWidth();
 
-  const double fz_tot = robot().mass() * constants::GRAVITY;
+
+  Eigen::Vector2d t_lankle_zmp = (u_ref[0].segment(0,2) - lankle);
   const double lankle_rankle = t_lankle_rankle.norm();
+  double d_proj = t_lankle_zmp.dot(t_lankle_rankle.segment(0, 2).normalized());
   // The vertical forces are splitted using the ratio obtained between the reference zmp pose and the contact pose;
-  double first_ratio = 0.5;
+  double first_ratio = clamp(d_proj / lankle_rankle, 0.025, .975);
   for(Eigen::Index i = 0; i < nbReferences; i++)
   {
 
-    Eigen::Vector2d t_lankle_com = zmp_ref[i] - lankle.segment(0, 2);
-    double d_proj = t_lankle_com.dot(t_lankle_rankle.segment(0, 2).normalized());
+    t_lankle_zmp = u_ref[i] - lankle.segment(0, 2);
+    d_proj = t_lankle_zmp.dot(t_lankle_rankle.segment(0, 2).normalized());
     // 1 : rightfoot 0 : leftFoot
-    double ratio = clamp(d_proj / lankle_rankle, 0., 1.);
+    double ratio = clamp(d_proj / lankle_rankle, 0.025, .975);
 
     if(i == 0)
     {
-      first_ratio = ratio;
+      ratio = first_ratio;
       // if(first_ratio == 1)
       // {
       //   mc_rtc::log::warning("[{}] DS force/CoP distribution QP: puting wrench on right Foot", name());

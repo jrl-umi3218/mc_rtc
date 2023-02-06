@@ -337,9 +337,10 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * \see targetCoM()
    **/
 
-  void horizonReference(const std::vector<Eigen::Vector2d> & ref, const double delta)
+  void horizonReference(const std::vector<Eigen::Vector2d> & ref,const std::vector<Eigen::Vector2d> & u_ref, const double delta)
   {
     horizonZmpRef_ = ref;
+    horizonURef_ = u_ref;
     horizonDelta_ = delta;
     horizonCoPDistribution_ = true;
   }
@@ -795,7 +796,7 @@ private:
    * @param delta horizon timestep
    */
   void distributeCoPonHorizon(const sva::ForceVecd & desiredWrench,
-                              const std::vector<Eigen::Vector2d> & zmp_ref,
+                              const std::vector<Eigen::Vector2d> & zmp_ref,const std::vector<Eigen::Vector2d> & u_ref,
                               const double delta);
 
   /** Project desired wrench to single support foot.
@@ -1041,6 +1042,7 @@ protected:
   sva::PTransformd zmpFrame_ = sva::PTransformd::Identity(); /**< Frame in which the ZMP is computed */
 
   std::vector<Eigen::Vector2d> horizonZmpRef_; /**< Future ZMP reference during tHorizon */
+  std::vector<Eigen::Vector2d> horizonURef_; /**< Future ZMP reference during tHorizon */
   double horizonDelta_ = 0.05;
   bool horizonCoPDistribution_ = false;
   Eigen::Vector2d modeledCoPLeft_ = Eigen::Vector2d::Zero();
