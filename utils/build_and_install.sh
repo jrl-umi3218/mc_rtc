@@ -636,6 +636,27 @@ then
   else
     echo_log "-- [WARNING] This script does not support your OS: ${OS}, assuming you have installed the required system dependencies already"
   fi
+  if [ $OS = Ubuntu ]
+  then
+    if [[ ! -f /etc/apt/sources.list.d/kitware.list ]]
+    then
+      wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | ${REQUIRED_SUDO} tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+      echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ $(lsb_release -sc) main" | ${REQUIRED_SUDO} tee /etc/apt/sources.list.d/kitware.list >/dev/null
+      ${REQUIRED_SUDO} apt-get update
+      ${REQUIRED_SUDO} apt-get upgrade -y cmake cmake-curses-gui
+    fi
+  fi
+  if [ $OS = Debian ]
+  then
+    CMAKE_VERSION="3.25.2"
+    CMAKE_VERSION_FULL="${CMAKE_VERSION}-linux-$(uname -m)"
+    if [ ! -f cmake-${CMAKE_VERSION_FULL}.sh ]
+    then
+      wget -O cmake-${CMAKE_VERSION_FULL}.sh https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION_FULL}.sh
+      chmod +x cmake-${CMAKE_VERSION_FULL}.sh
+      ${REQUIRED_SUDO} ./cmake-${CMAKE_VERSION_FULL}.sh --skip-license --prefix=/usr --exclude-subdir
+    fi
+  fi
 else
   export OS=Windows
   if [ "x$WITH_PYTHON_SUPPORT" == xON ] && $NOT_CLONE_ONLY

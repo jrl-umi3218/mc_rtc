@@ -49,19 +49,13 @@ add_fsm_state_simple(EnableController)
 
 # PythonState
 if(${PYTHON_BINDING})
-  get_cython_libraries(mc_rtc cython_libs)
-  get_python_names(python_names)
-  list(LENGTH python_names NSTATES)
-  math(EXPR NSTATES "${NSTATES} - 1")
-  foreach(i RANGE ${NSTATES})
-    list(GET python_names ${i} PYTHON_NAME)
-    list(GET cython_libs ${i} CYTHON_LIB)
+  foreach(PYTHON_NAME ${PYTHON_BINDING_VERSIONS})
     set(SRC "${CMAKE_CURRENT_BINARY_DIR}/generated/${PYTHON_NAME}State.cpp")
     configure_file(PythonState.cpp "${SRC}")
     add_library(${PYTHON_NAME}State SHARED "${SRC}")
     set_target_properties(${PYTHON_NAME}State PROPERTIES PREFIX "")
     set_target_properties(${PYTHON_NAME}State PROPERTIES FOLDER controllers/fsm/states)
-    target_link_libraries(${PYTHON_NAME}State PUBLIC ${CYTHON_LIB} mc_control_fsm)
+    target_link_libraries(${PYTHON_NAME}State PUBLIC mc_control_fsm_${PYTHON_NAME})
     install(TARGETS ${PYTHON_NAME}State
       ARCHIVE DESTINATION "${MC_FSM_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
       LIBRARY DESTINATION "${MC_FSM_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"

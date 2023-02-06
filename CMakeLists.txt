@@ -2,7 +2,7 @@
 # Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.15)
 if(POLICY CMP0063)
   cmake_policy(SET CMP0063 NEW)
 endif()
@@ -32,6 +32,27 @@ include(cmake/base.cmake)
 include(cmake/cython/cython.cmake)
 include(cmake/msvc-specific.cmake)
 include(cmake/version-script.cmake)
+
+if(PYTHON_BINDING)
+  set(PYTHON_BINDING_VERSIONS)
+  if(PYTHON_BINDING_FORCE_PYTHON2 OR PYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3)
+    list(APPEND PYTHON_BINDING_VERSIONS Python2)
+  endif()
+  if(PYTHON_BINDING_FORCE_PYTHON3 OR PYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3)
+    list(APPEND PYTHON_BINDING_VERSIONS Python3)
+  endif()
+  list(LENGTH PYTHON_BINDING_VERSIONS N_PYTHON_BINDING_VERSIONS)
+  if(N_PYTHON_BINDING_VERSIONS EQUAL 0)
+    list(APPEND PYTHON_BINDING_VERSIONS Python)
+    find_program(DEFAULT_PYTHON_EXECUTABLE python)
+    if(DEFAULT_PYTHON_EXECUTABLE)
+      set(Python_EXECUTABLE ${DEFAULT_PYTHON_EXECUTABLE})
+    endif()
+  endif()
+  foreach(PYTHON_VERSION ${PYTHON_BINDING_VERSIONS})
+    find_package(${PYTHON_VERSION} REQUIRED COMPONENTS Interpreter Development NumPy)
+  endforeach()
+endif()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
