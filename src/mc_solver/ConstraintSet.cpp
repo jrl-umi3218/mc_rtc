@@ -48,7 +48,7 @@ void ConstraintSet::removeFromSolver(mc_solver::QPSolver & solver)
   {
     return;
   }
-  inSolver_ = true;
+  inSolver_ = false;
   removeFromSolverImpl(solver);
   switch(solver.backend())
   {
