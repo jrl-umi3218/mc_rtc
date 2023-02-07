@@ -785,11 +785,15 @@ void StabilizerTask::run()
   {
     saturateWrench(desiredWrench_, footTasks[ContactState::Left], contacts_.at(ContactState::Left));
     footTasks[ContactState::Right]->setZeroTargetWrench();
+    delayedTargetCoPRight_ = footTasks[ContactState::Right]->targetCoP();
+    delayedTargetFzRight_ = footTasks[ContactState::Right]->targetWrench().force().z();
   }
   else
   {
     saturateWrench(desiredWrench_, footTasks[ContactState::Right], contacts_.at(ContactState::Right));
     footTasks[ContactState::Left]->setZeroTargetWrench();
+    delayedTargetCoPLeft_ = footTasks[ContactState::Left]->targetCoP();
+    delayedTargetFzLeft_ = footTasks[ContactState::Left]->targetWrench().force().z();
   }
 
   distribZMP_ = mc_rbdyn::zmp(distribWrench_, zmpFrame_);
@@ -1195,11 +1199,6 @@ void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench
     modeledCoPRight_ = measuredRightCoP;
     modeledFzLeft_ = measuredFzLeft;
     modeledFzRight_ = measuredFzRight;
-
-    delayedTargetCoPLeft_ = footTasks[ContactState::Left]->targetCoP();
-    delayedTargetCoPRight_ = footTasks[ContactState::Right]->targetCoP();
-    delayedTargetFzLeft_ = footTasks[ContactState::Left]->targetWrench().force().z();
-    delayedTargetFzRight_ = footTasks[ContactState::Right]->targetWrench().force().z();
   
     Eigen::Vector3d targetForceLeft = Eigen::Vector3d::Zero();
     Eigen::Vector3d targetForceRight = Eigen::Vector3d::Zero();
@@ -1391,6 +1390,13 @@ void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench
                                           targetForceLeft};
     sva::ForceVecd w_r_rc = sva::ForceVecd{Eigen::Vector3d{rightCoP.y() * targetForceRight.z(), -rightCoP.x() * targetForceRight.z(), 0},
                                           targetForceRight};
+   
+
+    delayedTargetCoPLeft_ = footTasks[ContactState::Left]->targetCoP();
+    delayedTargetCoPRight_ = footTasks[ContactState::Right]->targetCoP();
+    delayedTargetFzLeft_ = footTasks[ContactState::Left]->targetWrench().force().z();
+    delayedTargetFzRight_ = footTasks[ContactState::Right]->targetWrench().force().z();
+
     footTasks[ContactState::Left]->targetCoP(leftCoP);
     footTasks[ContactState::Left]->targetForce(w_l_lc.force());
     footTasks[ContactState::Right]->targetCoP(rightCoP);
