@@ -20,6 +20,8 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TVMController
 : public details::BackendSpecificController<MCController::Backend::TVM, mc_solver::TVMQPSolver>
 {
+  using details::BackendSpecificController<MCController::Backend::TVM,
+                                           mc_solver::TVMQPSolver>::BackendSpecificController;
 };
 
 } // namespace mc_control

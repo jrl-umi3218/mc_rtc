@@ -20,6 +20,8 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TasksController
 : public details::BackendSpecificController<MCController::Backend::Tasks, mc_solver::TasksQPSolver>
 {
+  using details::BackendSpecificController<MCController::Backend::Tasks,
+                                           mc_solver::TasksQPSolver>::BackendSpecificController;
 };
 
 } // namespace mc_control

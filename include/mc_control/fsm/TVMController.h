@@ -15,6 +15,8 @@ namespace mc_control::fsm
 struct MC_CONTROL_FSM_DLLAPI TVMController
 : public details::BackendSpecificController<MCController::Backend::TVM, mc_solver::TVMQPSolver>
 {
+  using details::BackendSpecificController<MCController::Backend::TVM,
+                                           mc_solver::TVMQPSolver>::BackendSpecificController;
 };
 
 } // namespace mc_control::fsm
