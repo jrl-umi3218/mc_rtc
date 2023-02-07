@@ -1047,6 +1047,16 @@ protected:
   bool horizonCoPDistribution_ = false;
   Eigen::Vector2d modeledCoPLeft_ = Eigen::Vector2d::Zero();
   Eigen::Vector2d modeledCoPRight_ = Eigen::Vector2d::Zero();
+  Eigen::Vector2d delayedTargetCoPLeft_ = Eigen::Vector2d::Zero();
+  Eigen::Vector2d delayedTargetCoPRight_ = Eigen::Vector2d::Zero();
+  double delayedTargetFzLeft_ = 0;
+  double delayedTargetFzRight_ = 0;
+
+  double tComputation_ = 0; /**< time when the distribution has been computed*/
+  double modeledFzRight_ = 0;
+  double modeledFzLeft_ = 0;
+  double desiredFzLeft_ = 0;
+  double desiredFzRight_ = 0;
 };
 
 extern template void StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::target>(

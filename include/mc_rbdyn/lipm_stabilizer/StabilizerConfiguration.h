@@ -428,8 +428,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   Eigen::Vector3d comDimWeight = Eigen::Vector3d::Ones(); /**< Dimensional weight of CoM IK task */
   double comHeight = 0.84; /**< Desired height of the CoM */
 
-  Eigen::Vector2d lambdaCoP =
-      Eigen::Vector2d::Ones() * 100; /**< 1st order gain constant between a reference CoP and the real */
+  Eigen::Vector3d lambdaCoP =
+      Eigen::Vector3d::Ones() * 100; /**< 1st order gain constant between a reference CoP and the real */
   double delayCoP = 0;
 
   std::string torsoBodyName; /**< Name of the torso body */

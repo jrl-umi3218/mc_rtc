@@ -100,11 +100,11 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
           "CoP constraints", [this]() { return c_.constrainCoP; }, [this]() { c_.constrainCoP = !c_.constrainCoP; }),
 
       ArrayInput(
-          "Foot CoP lambda", {"CoPx", "CoPy"},
-          [this]() -> Eigen::Vector2d {
-            return {c_.lambdaCoP.x(), c_.lambdaCoP.y()};
+          "Foot CoP lambda", {"CoPx", "CoPy","f"},
+          [this]() -> Eigen::Vector3d {
+            return {c_.lambdaCoP.x(), c_.lambdaCoP.y(),c_.lambdaCoP.z()};
           },
-          [this](const Eigen::Vector2d & a) { c_.lambdaCoP = a; }),
+          [this](const Eigen::Vector3d & a) { c_.lambdaCoP = a; }),
       NumberInput(
           "Admittance Delay", [this]() { return c_.delayCoP; },
           [this](double d) { c_.delayCoP = d; }),
@@ -452,9 +452,14 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
                      [this]() { return std::pow(c_.fdqpWeights.pressureSqrt, 2); });
   logger.addLogEntry(name_ + "_vdc_frequency", this, [this]() { return c_.vdcFrequency; });
   logger.addLogEntry(name_ + "_vdc_stiffness", this, [this]() { return c_.vdcStiffness; });
-  logger.addLogEntry(name_ + "_model_cop_lambda", this, [this]() { return c_.lambdaCoP; });
-  logger.addLogEntry(name_ + "_model_cop_left", this, [this]() { return modeledCoPLeft_; });
-  logger.addLogEntry(name_ + "_model_cop_right", this, [this]() { return modeledCoPRight_; });
+  logger.addLogEntry(name_ + "_admittance_model_cop_lambda", this, [this]() { return c_.lambdaCoP; });
+  logger.addLogEntry(name_ + "_admittance_model_cop_left", this, [this]() { return modeledCoPLeft_; });
+  logger.addLogEntry(name_ + "_admittance_model_cop_right", this, [this]() { return modeledCoPRight_; });
+  logger.addLogEntry(name_ + "_admittance_model_fz_left", this, [this]() { return modeledFzLeft_; });
+  logger.addLogEntry(name_ + "_admittance_model_fz_right", this, [this]() { return modeledFzRight_; });
+  logger.addLogEntry(name_ + "_admittance_desired_fz_left", this, [this]() { return desiredFzLeft_; });
+  logger.addLogEntry(name_ + "_admittance_desired_fz_right", this, [this]() { return desiredFzRight_; });
+  logger.addLogEntry(name_ + "_admittance_model_delay", this, [this]() { return c_.delayCoP; });
   MC_RTC_LOG_HELPER(name_ + "_desired_wrench", desiredWrench_);
   MC_RTC_LOG_HELPER(name_ + "_wrench", distribWrench_);
   MC_RTC_LOG_HELPER(name_ + "_support_min", supportMin_);
