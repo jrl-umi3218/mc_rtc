@@ -1181,7 +1181,7 @@ void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench
   const Eigen::Vector2d t_lankle_rankle = (rankle - lankle).segment(0,2);
 
 
-  if(t_ - tComputation_ > c_.delayCoP)
+  if(t_ - tComputation_ > delta)
   {
     tComputation_ = t_;
     delayedTargetCoPLeft_ = footTasks[ContactState::Left]->targetCoP();
@@ -1189,7 +1189,7 @@ void StabilizerTask::distributeCoPonHorizon(const sva::ForceVecd & desiredWrench
     delayedTargetFzLeft_ = footTasks[ContactState::Left]->targetWrench().force().z();
     delayedTargetFzRight_ = footTasks[ContactState::Right]->targetWrench().force().z();
   }
-  double t_delay = (c_.delayCoP - (t_ - tComputation_ ));
+  double t_delay = clamp((c_.delayCoP - (t_ - tComputation_ )),0,c_.delayCoP);
 
 
   const Eigen::Vector2d measuredRightCoP =
