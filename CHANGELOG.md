@@ -2,6 +2,24 @@
 
 ## [Unreleased]
 
+## [2.2.0] - 2023-02-08
+
+### Added
+
+- [mc_control] Add support for robot's specific configuration automated loading (#327)
+- [mc_control] Add support for configuration overwrite (#339)
+
+### Changes
+
+- [mc_rtc] Change notification emergency level so they disappear automatically
+
+### Fixes
+
+- [bindings] Improve incremental builds (#340)
+- [mc_control] Fix potential segfault on exit due to libraries unloading
+- [mc_control] Expose constructors for backend specific controllers
+- [mc_solver] Fix inSolver logic for ConstraintSet
+
 ## [2.1.0] - 2023-01-25
 
 ### Added
@@ -605,7 +623,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.2.0
 [2.1.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.1.0
 [2.0.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.0.1
 [2.0.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.0.0
