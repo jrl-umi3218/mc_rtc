@@ -239,20 +239,22 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
                               fmt::format("robots/{}/init_pos", robot().name()));
       init_robot(robot().name(), config);
     }
-    auto config_robots = config("robots", std::map<std::string, mc_rtc::Configuration>{});
-    for(const auto & cr : config_robots)
+    auto config_robots = config("robots", mc_rtc::Configuration{});
+    auto config_robots_keys = config_robots.keys();
+    for(const auto & rname : config_robots_keys)
     {
-      if(cr.first == robot().name())
+      auto rconfig = config_robots(rname);
+      if(rname == robot().name())
       {
-        if(config.has("init_pos") && cr.second.has("init_pos"))
+        if(config.has("init_pos") && rconfig.has("init_pos"))
         {
           mc_rtc::log::error_and_throw("You have both a global \"init_pos\" entry and a \"robots/{}/init_pos\" entry "
                                        "in your FSM configuration. Please use \"robots/{}/init_pos\" only.",
                                        robot().name(), robot().name());
         }
-        init_robot(cr.first, cr.second);
+        init_robot(rname, rconfig);
       }
-      else if(!cr.second.has("module"))
+      else if(!rconfig.has("module"))
       {
         // This is not the main robot but the configuration does not have a
         // robot module specified. This can happen if the user intended his
@@ -263,9 +265,8 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
       }
       else
       {
-        const auto & name = cr.first;
-        std::string module = cr.second("module");
-        auto params = cr.second("params", std::vector<std::string>{});
+        std::string module = rconfig("module");
+        auto params = rconfig("params", std::vector<std::string>{});
         mc_rbdyn::RobotModulePtr rm = nullptr;
         if(params.size() == 0)
         {
@@ -285,11 +286,11 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
         }
         if(!rm)
         {
-          mc_rtc::log::error_and_throw("Failed to load {} as specified in configuration", name);
+          mc_rtc::log::error_and_throw("Failed to load {} as specified in configuration", rname);
         }
-        auto & robot = loadRobot(rm, name);
+        auto & robot = loadRobot(rm, rname);
         load_robot_config(robot);
-        init_robot(name, cr.second);
+        init_robot(rname, rconfig);
       }
     }
     mc_rtc::log::info("Robots loaded in controller:");
