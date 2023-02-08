@@ -528,7 +528,7 @@ void StabilizerTask::addContact(ContactState contactState, const Contact & conta
   supportPolygons_.push_back(contact.polygon());
 
   // Configure support foot task
-  footTask->reset();
+  // footTask->reset();
   footTask->weight(c_.contactWeight);
   footTask->targetPose(contact.surfacePose());
 
