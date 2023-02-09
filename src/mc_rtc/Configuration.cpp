@@ -25,19 +25,19 @@ inline std::string to_lower(const std::string & in)
 namespace mc_rtc
 {
 
-bool Configuration::Json::isArray() const
+bool Configuration::Json::isArray() const noexcept
 {
   assert(value_);
   return static_cast<const internal::RapidJSONValue *>(value_)->IsArray();
 }
 
-bool Configuration::Json::isObject() const
+bool Configuration::Json::isObject() const noexcept
 {
   assert(value_);
   return static_cast<const internal::RapidJSONValue *>(value_)->IsObject();
 }
 
-std::vector<std::string> Configuration::Json::keys() const
+std::vector<std::string> Configuration::Json::keys() const noexcept
 {
   assert(isObject());
   std::vector<std::string> ret;
@@ -85,7 +85,7 @@ bool findPath(const internal::RapidJSONValue * root, const internal::RapidJSONVa
 
 } // namespace
 
-void Configuration::Json::path(std::string & out) const
+void Configuration::Json::path(std::string & out) const noexcept
 {
   assert(doc_.get());
   assert(value_);
@@ -109,7 +109,7 @@ bool Configuration::empty() const
   return value->IsNull();
 }
 
-size_t Configuration::Json::size() const
+size_t Configuration::Json::size() const noexcept
 {
   assert(value_);
   auto value = static_cast<const internal::RapidJSONValue *>(value_);
@@ -130,7 +130,14 @@ Configuration::Json Configuration::Json::operator[](const std::string & key) con
   return {static_cast<void *>(&(*value)[key]), doc_};
 }
 
-bool Configuration::Json::isNumeric() const
+bool Configuration::Json::isString() const noexcept
+{
+  assert(value_);
+  auto value = static_cast<internal::RapidJSONValue *>(value_);
+  return value->IsString();
+}
+
+bool Configuration::Json::isNumeric() const noexcept
 {
   assert(value_);
   auto value = static_cast<internal::RapidJSONValue *>(value_);

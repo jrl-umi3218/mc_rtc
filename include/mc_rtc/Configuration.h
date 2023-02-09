@@ -116,25 +116,27 @@ private:
   struct MC_RTC_UTILS_DLLAPI Json
   {
     /** True if the underlying value is an array */
-    bool isArray() const;
+    bool isArray() const noexcept;
     /** Size of the array, 0 if the array is empty or the value is not an array */
-    size_t size() const;
+    size_t size() const noexcept;
     /** Access element at the provided index
      *
      * \throws If idx >= size()
      */
     Json operator[](size_t idx) const;
     /** True if the underlying value is an object */
-    bool isObject() const;
+    bool isObject() const noexcept;
     /** Key of the object, empty if the object is or if the value is not an object */
-    std::vector<std::string> keys() const;
+    std::vector<std::string> keys() const noexcept;
     /** Access element at the provided key
      *
      * \throws If key does not belong in keys()
      */
     Json operator[](const std::string & key) const;
+    /** True if the value is a string */
+    bool isString() const noexcept;
     /** True if the value is numeric */
-    bool isNumeric() const;
+    bool isNumeric() const noexcept;
     /** Access the value as a double
      *
      * \throws If isNumeric() is false
@@ -144,7 +146,7 @@ private:
      *
      * \note This requires searching through the whole document for this value and is not very efficient
      */
-    void path(std::string & out) const;
+    void path(std::string & out) const noexcept;
     /** Actually a RapidJSON value */
     void * value_;
     /** Actually a RapidJSON document (root) */
@@ -777,6 +779,30 @@ public:
    *
    */
   size_t size() const;
+
+  /*! \brief Returns true if the underlying value is an array */
+  inline bool isArray() const noexcept
+  {
+    return v.isArray();
+  }
+
+  /*! \brief Returns true if the underlying value is an object */
+  inline bool isObject() const noexcept
+  {
+    return v.isObject();
+  }
+
+  /*! \brief Returns true if the underlying value is a string */
+  inline bool isString() const noexcept
+  {
+    return v.isString();
+  }
+
+  /*! \brief Returns true if the underlying value is numeric */
+  inline bool isNumeric() const noexcept
+  {
+    return v.isNumeric();
+  }
 
   /*! \brief If the stored value is an array, return a Configuration element
    * for the i-th element.
