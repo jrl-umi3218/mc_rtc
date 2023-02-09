@@ -10075,6 +10075,34 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
+      <type>bool</type>
+      <name>isArray</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a8f15dd954d0832c59e7f11c449a2afaf</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>isObject</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a73cf712b3cb39a947fc26ec2a7e83c75</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>isString</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>abf3f64466ba6029fa274d5d1bb536113</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>isNumeric</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a75e3c78e014ad6e5b66cf3a9f82dbb9b</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
       <type>Configuration</type>
       <name>operator[]</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>

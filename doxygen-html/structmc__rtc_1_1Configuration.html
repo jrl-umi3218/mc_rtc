@@ -259,6 +259,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a08e9130c96815bb8fe1092d69b9ea67a"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Configuration.html#a08e9130c96815bb8fe1092d69b9ea67a">size</a> () const</td></tr>
 <tr class="memdesc:a08e9130c96815bb8fe1092d69b9ea67a"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the stored value is an array, returns its size, otherwise returns 0.  <a href="#a08e9130c96815bb8fe1092d69b9ea67a">More...</a><br /></td></tr>
 <tr class="separator:a08e9130c96815bb8fe1092d69b9ea67a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f15dd954d0832c59e7f11c449a2afaf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Configuration.html#a8f15dd954d0832c59e7f11c449a2afaf">isArray</a> () const noexcept</td></tr>
+<tr class="memdesc:a8f15dd954d0832c59e7f11c449a2afaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the underlying value is an array.  <a href="#a8f15dd954d0832c59e7f11c449a2afaf">More...</a><br /></td></tr>
+<tr class="separator:a8f15dd954d0832c59e7f11c449a2afaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73cf712b3cb39a947fc26ec2a7e83c75"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Configuration.html#a73cf712b3cb39a947fc26ec2a7e83c75">isObject</a> () const noexcept</td></tr>
+<tr class="memdesc:a73cf712b3cb39a947fc26ec2a7e83c75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the underlying value is an object.  <a href="#a73cf712b3cb39a947fc26ec2a7e83c75">More...</a><br /></td></tr>
+<tr class="separator:a73cf712b3cb39a947fc26ec2a7e83c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf3f64466ba6029fa274d5d1bb536113"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Configuration.html#abf3f64466ba6029fa274d5d1bb536113">isString</a> () const noexcept</td></tr>
+<tr class="memdesc:abf3f64466ba6029fa274d5d1bb536113"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the underlying value is a string.  <a href="#abf3f64466ba6029fa274d5d1bb536113">More...</a><br /></td></tr>
+<tr class="separator:abf3f64466ba6029fa274d5d1bb536113"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75e3c78e014ad6e5b66cf3a9f82dbb9b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Configuration.html#a75e3c78e014ad6e5b66cf3a9f82dbb9b">isNumeric</a> () const noexcept</td></tr>
+<tr class="memdesc:a75e3c78e014ad6e5b66cf3a9f82dbb9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the underlying value is numeric.  <a href="#a75e3c78e014ad6e5b66cf3a9f82dbb9b">More...</a><br /></td></tr>
+<tr class="separator:a75e3c78e014ad6e5b66cf3a9f82dbb9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af63d0b9fe005fd5fea2078a17c62b2e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1Configuration.html">Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Configuration.html#af63d0b9fe005fd5fea2078a17c62b2e7">operator[]</a> (size_t i) const</td></tr>
 <tr class="memdesc:af63d0b9fe005fd5fea2078a17c62b2e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the stored value is an array, return a <a class="el" href="structmc__rtc_1_1Configuration.html" title="Simplify access to values hold within a JSON file. ">Configuration</a> element for the i-th element.  <a href="#af63d0b9fe005fd5fea2078a17c62b2e7">More...</a><br /></td></tr>
 <tr class="separator:af63d0b9fe005fd5fea2078a17c62b2e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2323,6 +2335,33 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="a8f15dd954d0832c59e7f11c449a2afaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f15dd954d0832c59e7f11c449a2afaf">&#9670;&nbsp;</a></span>isArray()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rtc::Configuration::isArray </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if the underlying value is an array. </p>
+
+</div>
+</div>
 <a id="a983c430fc82d271e83397cc546197c6d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a983c430fc82d271e83397cc546197c6d">&#9670;&nbsp;</a></span>isMember()</h2>
 
@@ -2347,6 +2386,87 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if key is part of the configuration </dd></dl>
+
+</div>
+</div>
+<a id="a75e3c78e014ad6e5b66cf3a9f82dbb9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75e3c78e014ad6e5b66cf3a9f82dbb9b">&#9670;&nbsp;</a></span>isNumeric()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rtc::Configuration::isNumeric </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if the underlying value is numeric. </p>
+
+</div>
+</div>
+<a id="a73cf712b3cb39a947fc26ec2a7e83c75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73cf712b3cb39a947fc26ec2a7e83c75">&#9670;&nbsp;</a></span>isObject()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rtc::Configuration::isObject </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if the underlying value is an object. </p>
+
+</div>
+</div>
+<a id="abf3f64466ba6029fa274d5d1bb536113"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf3f64466ba6029fa274d5d1bb536113">&#9670;&nbsp;</a></span>isString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rtc::Configuration::isString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if the underlying value is a string. </p>
 
 </div>
 </div>

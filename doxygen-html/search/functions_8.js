@@ -42,9 +42,13 @@ var searchData=
   ['is_5fnot_5fabscissa',['is_not_Abscissa',['../namespacemc__rtc_1_1gui_1_1plot.html#ad9dd006fddf621ad45bc2ed39819cb7b',1,'mc_rtc::gui::plot::is_not_Abscissa()'],['../namespacemc__rtc_1_1gui_1_1plot.html#a807bb49afba6fffd36b8eaeb1f305805',1,'mc_rtc::gui::plot::is_not_Abscissa()']]],
   ['is_5fvalid_5fhash',['is_valid_hash',['../namespacemc__rtc_1_1internal.html#a759676405e1815363e6d9094dd1919b1',1,'mc_rtc::internal::is_valid_hash(std::size_t h)'],['../namespacemc__rtc_1_1internal.html#a0f0cc0f5914bc62d93b19fda0ed53e75',1,'mc_rtc::internal::is_valid_hash(std::size_t h)']]],
   ['is_5fvalid_5fname',['is_valid_name',['../namespacemc__rtc_1_1internal.html#ae1593091ff32313db1baa24bf770172c',1,'mc_rtc::internal::is_valid_name(const std::string &amp;name)'],['../namespacemc__rtc_1_1internal.html#a149f9b7b1184a0044b4f351e534e26ef',1,'mc_rtc::internal::is_valid_name(const std::string &amp;name)']]],
+  ['isarray',['isArray',['../structmc__rtc_1_1Configuration.html#a8f15dd954d0832c59e7f11c449a2afaf',1,'mc_rtc::Configuration']]],
   ['isfixed',['isFixed',['../structmc__rbdyn_1_1Contact.html#a7cc9fdeb70bb0ce49c00d052513430b2',1,'mc_rbdyn::Contact']]],
   ['ismember',['isMember',['../structmc__rtc_1_1Configuration.html#a983c430fc82d271e83397cc546197c6d',1,'mc_rtc::Configuration']]],
   ['isnone',['isNone',['../structmc__rbdyn_1_1Collision.html#a664a8719f81b8fee2d2b26cd3cf645ab',1,'mc_rbdyn::Collision']]],
+  ['isnumeric',['isNumeric',['../structmc__rtc_1_1Configuration.html#a75e3c78e014ad6e5b66cf3a9f82dbb9b',1,'mc_rtc::Configuration']]],
+  ['isobject',['isObject',['../structmc__rtc_1_1Configuration.html#a73cf712b3cb39a947fc26ec2a7e83c75',1,'mc_rtc::Configuration']]],
+  ['isstring',['isString',['../structmc__rtc_1_1Configuration.html#abf3f64466ba6029fa274d5d1bb536113',1,'mc_rtc::Configuration']]],
   ['iterate_5fbinary_5flog',['iterate_binary_log',['../namespacemc__rtc_1_1log.html#ae939074ac3cce1fde0bb5e0ea7e90c86',1,'mc_rtc::log::iterate_binary_log(const std::string &amp;fpath, const binary_log_copy_callback &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)'],['../namespacemc__rtc_1_1log.html#a51b18863af2ea7f3e981b32be6b2174f',1,'mc_rtc::log::iterate_binary_log(const std::string &amp;fpath, const binary_log_callback &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)']]],
   ['iterinsolver',['iterInSolver',['../structmc__tasks_1_1MetaTask.html#a0cc220528fbda2fd29effb73dd45de71',1,'mc_tasks::MetaTask']]]
 ];
