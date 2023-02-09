@@ -1091,7 +1091,7 @@ void ControllerClient::handle_table(const ElementId & id,
 {
   auto format_data = [&](const mc_rtc::Configuration & entry, size_t i) {
     const auto & f = i < format.size() ? format[i] : "{}";
-    if(entry[i].size()) // likely a string
+    if(entry[i].isString())
     {
       try
       {
