@@ -41,10 +41,19 @@ void TVMKinematicsConstraint::addToSolver(mc_solver::TVMQPSolver & solver)
   auto nParams = tvm_robot.qJoints()->size();
   auto ql = tvm_robot.limits().ql.segment(startParam, nParams);
   auto qu = tvm_robot.limits().qu.segment(startParam, nParams);
+  Eigen::VectorXd di = damper_[0] * (qu - ql);
+  Eigen::VectorXd ds = damper_[1] * (qu - ql);
+  for(int i = 0; i < nParams; ++i)
+  {
+    if(std::isinf(di(i)))
+    {
+      di(i) = 0.01;
+      ds(i) = 0.005;
+    }
+  }
   auto jl = solver.problem().add(
       ql <= tvm_robot.qJoints() <= qu,
-      tvm::task_dynamics::VelocityDamper(solver.dt(), {damper_[0] * (qu - ql), damper_[1] * (qu - ql),
-                                                       Eigen::VectorXd::Constant(nParams, 1, 0),
+      tvm::task_dynamics::VelocityDamper(solver.dt(), {di, ds, Eigen::VectorXd::Constant(nParams, 1, 0),
                                                        Eigen::VectorXd::Constant(nParams, 1, damper_[2])}),
       {tvm::requirements::PriorityLevel(0)});
   constraints_.push_back(jl);
