@@ -100,14 +100,13 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
           "CoP constraints", [this]() { return c_.constrainCoP; }, [this]() { c_.constrainCoP = !c_.constrainCoP; }),
 
       ArrayInput(
-          "Foot CoP lambda", {"CoPx", "CoPy","f"},
+          "Foot CoP lambda", {"CoPx", "CoPy", "f"},
           [this]() -> Eigen::Vector3d {
-            return {c_.lambdaCoP.x(), c_.lambdaCoP.y(),c_.lambdaCoP.z()};
+            return {c_.lambdaCoP.x(), c_.lambdaCoP.y(), c_.lambdaCoP.z()};
           },
           [this](const Eigen::Vector3d & a) { c_.lambdaCoP = a; }),
       NumberInput(
-          "Admittance Delay", [this]() { return c_.delayCoP; },
-          [this](double d) { c_.delayCoP = d; }),
+          "Admittance Delay", [this]() { return c_.delayCoP; }, [this](double d) { c_.delayCoP = d; }),
       ArrayInput(
           "Max cop linear velocity [m/s]",
           [this]() -> const Eigen::Vector3d & { return footTasks.at(ContactState::Left)->maxLinearVel(); },

@@ -794,8 +794,7 @@ private:
    * @param zmp_ref  each zmp reference piecewise constant over delta vector lenght in the world frame
    * @param delta horizon timestep
    */
-  void distributeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref,
-                              const double delta);
+  void distributeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref, const double delta);
 
   /** Project desired wrench to single support foot.
    *
@@ -1039,7 +1038,7 @@ protected:
       Eigen::Vector3d::Zero(); /**< ZMP corresponding to force distribution result (desired ZMP) */
   sva::PTransformd zmpFrame_ = sva::PTransformd::Identity(); /**< Frame in which the ZMP is computed */
 
-  //CoP distribution over an horizon
+  // CoP distribution over an horizon
   //{
   std::vector<Eigen::Vector2d> horizonZmpRef_; /**< Future ZMP reference during tHorizon */
   double horizonDelta_ = 0.05;
