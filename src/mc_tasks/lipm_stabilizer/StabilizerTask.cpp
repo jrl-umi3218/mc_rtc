@@ -683,8 +683,8 @@ void StabilizerTask::computeWrenchOffsetAndCoefficient(const mc_rbdyn::Robot & r
   {
     computeExternalContact(robot, extWrench.surfaceName, extWrench.*TargetOrMeasured, pos, force, moment);
 
-    offset_gamma.x() += (pos.z() - zmpTarget_.z()) * force.x() - pos.x() * force.z() + moment.y();
-    offset_gamma.y() += (pos.z() - zmpTarget_.z()) * force.y() - pos.y() * force.z() - moment.x();
+    offset_gamma.x() += (pos.z() - zmpTarget_.z()) * force.x() + (zmpTarget_.x() - pos.x()) * force.z() + moment.y();
+    offset_gamma.y() += (pos.z() - zmpTarget_.z()) * force.y() + (zmpTarget_.y() - pos.y()) * force.z() - moment.x();
 
     coef_kappa -= force.z();
   }
