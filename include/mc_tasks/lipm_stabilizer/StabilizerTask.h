@@ -337,10 +337,9 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * \see targetCoM()
    **/
 
-  void horizonReference(const std::vector<Eigen::Vector2d> & ref,const std::vector<Eigen::Vector2d> & u_ref, const double delta)
+  void horizonReference(const std::vector<Eigen::Vector2d> & ref, const double delta)
   {
     horizonZmpRef_ = ref;
-    horizonURef_ = u_ref;
     horizonDelta_ = delta;
     horizonCoPDistribution_ = true;
   }
@@ -792,11 +791,10 @@ private:
    * The dynamic of the contact CoP is expected to follow a 1st order dynamic w.r.t the CoP reference using prameter
    * lambda_CoP
    *
-   * @param zmp_ref  each zmp reference piecewise constant over duration/zmp_ref vector lenght in the world frame
+   * @param zmp_ref  each zmp reference piecewise constant over delta vector lenght in the world frame
    * @param delta horizon timestep
    */
-  void distributeCoPonHorizon(const sva::ForceVecd & desiredWrench,
-                              const std::vector<Eigen::Vector2d> & zmp_ref,const std::vector<Eigen::Vector2d> & u_ref,
+  void distributeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref,
                               const double delta);
 
   /** Project desired wrench to single support foot.
@@ -1041,12 +1039,14 @@ protected:
       Eigen::Vector3d::Zero(); /**< ZMP corresponding to force distribution result (desired ZMP) */
   sva::PTransformd zmpFrame_ = sva::PTransformd::Identity(); /**< Frame in which the ZMP is computed */
 
+  //CoP distribution over an horizon
+  //{
   std::vector<Eigen::Vector2d> horizonZmpRef_; /**< Future ZMP reference during tHorizon */
-  std::vector<Eigen::Vector2d> horizonURef_; /**< Future ZMP reference during tHorizon */
   double horizonDelta_ = 0.05;
   bool horizonCoPDistribution_ = false;
   Eigen::Vector2d modeledCoPLeft_ = Eigen::Vector2d::Zero();
   Eigen::Vector2d modeledCoPRight_ = Eigen::Vector2d::Zero();
+
   Eigen::Vector2d delayedTargetCoPLeft_ = Eigen::Vector2d::Zero();
   Eigen::Vector2d delayedTargetCoPRight_ = Eigen::Vector2d::Zero();
   double delayedTargetFzLeft_ = 0;
@@ -1057,6 +1057,7 @@ protected:
   double modeledFzLeft_ = 0;
   double desiredFzLeft_ = 0;
   double desiredFzRight_ = 0;
+  //}
 };
 
 extern template void StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::target>(
