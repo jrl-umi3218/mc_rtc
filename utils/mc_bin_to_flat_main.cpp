@@ -21,6 +21,11 @@ int main(int argc, char * argv[])
     usage(argv[0]);
     return 1;
   }
+  if(bfs::path(argv[1]).filename().extension().string() != ".bin")
+  {
+    mc_rtc::log::error("Input file name (\"{}\") should end with .bin", argv[1]);
+    return 1;
+  }
   std::string in = argv[1];
   std::string out = "";
   if(argc == 3)
