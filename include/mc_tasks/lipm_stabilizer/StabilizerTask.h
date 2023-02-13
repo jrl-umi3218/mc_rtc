@@ -457,7 +457,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return comOffsetMeasured_;
   }
 
-  inline const double zmpCoeffMEasured() const noexcept
+  inline const double zmpCoeffMeasured() const noexcept
   {
     return zmpCoefMeasured_;
   }
