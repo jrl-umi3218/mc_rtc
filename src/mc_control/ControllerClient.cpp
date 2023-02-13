@@ -553,7 +553,7 @@ void ControllerClient::handle_trajectory(const ElementId & id, const mc_rtc::Con
   {
     config.fromMessagePack(data_[4]);
   }
-  if(data.size())
+  if(data.isArray())
   {
     try
     {
