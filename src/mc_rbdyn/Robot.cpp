@@ -407,6 +407,13 @@ Robot::Robot(NewRobotToken,
     {
       collisionTransforms_[b.name()] = sva::PTransformd::Identity();
     }
+    for(const auto & [body, visuals] : module_._visual)
+    {
+      if(visuals.size() && hasBody(body))
+      {
+        collisionTransforms_[body] = visuals[0].origin;
+      }
+    }
     for(const auto & p : module_.collisionTransforms())
     {
       collisionTransforms_[p.first] = p.second;
