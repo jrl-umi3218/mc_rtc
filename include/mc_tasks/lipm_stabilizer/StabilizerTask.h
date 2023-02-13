@@ -457,6 +457,11 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return comOffsetMeasured_;
   }
 
+  inline const double zmpCoeffMEasured() const noexcept
+  {
+    return zmpCoefMeasured_;
+  }
+
   inline bool inContact(ContactState state) const noexcept
   {
     return contacts_.count(state);
