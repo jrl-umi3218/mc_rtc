@@ -243,7 +243,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
     auto config_robots_keys = config_robots.keys();
     for(const auto & rname : config_robots_keys)
     {
-      auto rconfig = config_robots(rname);
+      auto rconfig = config("robots")(rname);
       if(rname == robot().name())
       {
         if(config.has("init_pos") && rconfig.has("init_pos"))
@@ -290,6 +290,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
         }
         auto & robot = loadRobot(rm, rname);
         load_robot_config(robot);
+        rconfig = config("robots")(rname);
         init_robot(rname, rconfig);
       }
     }
