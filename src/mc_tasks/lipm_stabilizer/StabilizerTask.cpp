@@ -1263,22 +1263,21 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   desiredFzLeft_ = f_z_desired_left;
   desiredFzRight_ = f_z_desired_right;
 
-  double f_z_ref_left = f_z_desired_left - measuredLeftCoP_delayed.z() * exp(-c_.lambdaCoP.z() * (delta - c_.delayCoP));
-  f_z_ref_left /= (1 - exp(-c_.lambdaCoP.z() * (delta - c_.delayCoP)));
+  double f_z_ref_left = f_z_desired_left - measuredLeftCoP_delayed.z() * exp(-c_.lambdaCoP.z() * (delta - t_delay));
+  f_z_ref_left /= (1 - exp(-c_.lambdaCoP.z() * (delta - t_delay)));
 
-  double f_z_ref_right =
-      f_z_desired_right - measuredRightCoP_delayed.z() * exp(-c_.lambdaCoP.z() * (delta - c_.delayCoP));
-  f_z_ref_right /= (1 - exp(-c_.lambdaCoP.z() * (delta - c_.delayCoP)));
+  double f_z_ref_right = f_z_desired_right - measuredRightCoP_delayed.z() * exp(-c_.lambdaCoP.z() * (delta - t_delay));
+  f_z_ref_right /= (1 - exp(-c_.lambdaCoP.z() * (delta - t_delay)));
 
   double ratio = (f_z_ref_right / (f_z_ref_left + f_z_ref_right));
 
   targetForceLeft.z() = f_z_ref_left;
   targetForceRight.z() = f_z_ref_right;
 
-  double f_z_left_i = f_z_desired_left * exp(-c_.lambdaCoP.z() * c_.delayCoP)
-                      + (1 - exp(-c_.lambdaCoP.z() * c_.delayCoP)) * f_z_ref_left;
-  double f_z_right_i = f_z_desired_right * exp(-c_.lambdaCoP.z() * c_.delayCoP)
-                       + (1 - exp(-c_.lambdaCoP.z() * c_.delayCoP)) * f_z_ref_right;
+  double f_z_left_i =
+      f_z_desired_left * exp(-c_.lambdaCoP.z() * delta) + (1 - exp(-c_.lambdaCoP.z() * delta)) * f_z_ref_left;
+  double f_z_right_i =
+      f_z_desired_right * exp(-c_.lambdaCoP.z() * delta) + (1 - exp(-c_.lambdaCoP.z() * delta)) * f_z_ref_right;
 
   for(Eigen::Index i = 0; i < nbReferences; i++)
   {
@@ -1304,10 +1303,10 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
       f_z_ref_right = f_z_desired_right - f_z_right_i * exp(-c_.lambdaCoP.z() * (delta - c_.delayCoP));
       f_z_ref_right /= (1 - exp(-c_.lambdaCoP.z() * (delta - c_.delayCoP)));
 
-      f_z_left_i = f_z_desired_left * exp(-c_.lambdaCoP.z() * c_.delayCoP)
-                   + (1 - exp(-c_.lambdaCoP.z() * c_.delayCoP)) * f_z_ref_left;
-      f_z_right_i = f_z_desired_right * exp(-c_.lambdaCoP.z() * c_.delayCoP)
-                    + (1 - exp(-c_.lambdaCoP.z() * c_.delayCoP)) * f_z_ref_right;
+      f_z_left_i =
+          f_z_desired_left * exp(-c_.lambdaCoP.z() * delta) + (1 - exp(-c_.lambdaCoP.z() * delta)) * f_z_ref_left;
+      f_z_right_i =
+          f_z_desired_right * exp(-c_.lambdaCoP.z() * delta) + (1 - exp(-c_.lambdaCoP.z() * delta)) * f_z_ref_right;
       ratio = (f_z_ref_right / (f_z_ref_left + f_z_ref_right));
     }
 
@@ -1315,14 +1314,16 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
     Eigen::MatrixXd Acop = Eigen::MatrixXd::Zero(2, 2 * nbReferences);
     double t = static_cast<double>(i) * delta;
     Eigen::Matrix2d exp_mat;
-    exp_mat << exp(-c_.lambdaCoP.x() * (t + delta - c_.delayCoP)), 0, 0,
-        exp(-c_.lambdaCoP.y() * (t + delta - c_.delayCoP));
+    exp_mat << exp(-c_.lambdaCoP.x() * (t + delta - (i == 0 ? t_delay : c_.delayCoP))), 0, 0,
+        exp(-c_.lambdaCoP.y() * (t + delta - (i == 0 ? t_delay : c_.delayCoP)));
     for(Eigen::Index k = 0; k <= i; k++)
     {
       if(k == i)
       {
-        Acop(0, 2 * k) = (1 - exp(-c_.lambdaCoP.x() * (delta - c_.delayCoP))) * exp(-c_.lambdaCoP.x() * t);
-        Acop(1, 2 * k + 1) = (1 - exp(-c_.lambdaCoP.y() * (delta - c_.delayCoP))) * exp(-c_.lambdaCoP.y() * t);
+        Acop(0, 2 * k) =
+            (1 - exp(-c_.lambdaCoP.x() * (delta - (i == 0 ? t_delay : c_.delayCoP)))) * exp(-c_.lambdaCoP.x() * t);
+        Acop(1, 2 * k + 1) =
+            (1 - exp(-c_.lambdaCoP.y() * (delta - (i == 0 ? t_delay : c_.delayCoP)))) * exp(-c_.lambdaCoP.y() * t);
       }
       else
       {
