@@ -412,6 +412,7 @@ Robot::Robot(NewRobotToken,
       collisionTransforms_[p.first] = p.second;
     }
     fixCollisionTransforms();
+    fixSCH(*this, this->convexes_, this->collisionTransforms_);
   }
 
   if(!params.data_)
