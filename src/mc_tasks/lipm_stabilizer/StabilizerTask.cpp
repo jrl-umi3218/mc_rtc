@@ -1160,6 +1160,10 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   // -----------
   //
   //  CoP within the contact polygone
+  //
+  // The decision variable are organised such as :
+  // indx i of the left CoP reference : 2 * i
+  // indx i of the right CoP reference : 2 * (n + i)
 
   if(zmp_ref.size() == 0)
   {
@@ -1183,15 +1187,14 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   const Eigen::Vector3d & rankle = contacts_.at(ContactState::Right).anklePose().translation();
   const Eigen::Vector2d t_lankle_rankle = (rankle - lankle).segment(0, 2);
 
-  const Eigen::Vector2d measuredRightCoP =
-      clamp(footTasks[ContactState::Right]->measuredCoP(),
-            Eigen::Vector2d{-rightContact.halfLength() * 1, -rightContact.halfWidth() * 1},
-            Eigen::Vector2d{rightContact.halfLength() * 1, rightContact.halfWidth() * 1});
+  // The measured CoP is clamped in contact polygon
+  const Eigen::Vector2d measuredRightCoP = clamp(footTasks[ContactState::Right]->measuredCoP(),
+                                                 Eigen::Vector2d{-rightContact.halfLength(), -rightContact.halfWidth()},
+                                                 Eigen::Vector2d{rightContact.halfLength(), rightContact.halfWidth()});
   const double measuredFzLeft = footTasks[ContactState::Left]->measuredWrench().force().z();
-  const Eigen::Vector2d measuredLeftCoP =
-      clamp(footTasks[ContactState::Left]->measuredCoP(),
-            Eigen::Vector2d{-leftContact.halfLength() * 1, -leftContact.halfWidth() * 1},
-            Eigen::Vector2d{leftContact.halfLength() * 1, leftContact.halfWidth() * 1});
+  const Eigen::Vector2d measuredLeftCoP = clamp(footTasks[ContactState::Left]->measuredCoP(),
+                                                Eigen::Vector2d{-leftContact.halfLength(), -leftContact.halfWidth()},
+                                                Eigen::Vector2d{leftContact.halfLength(), leftContact.halfWidth()});
   const double measuredFzRight = footTasks[ContactState::Right]->measuredWrench().force().z();
 
   modeledCoPLeft_ = measuredLeftCoP;
@@ -1199,6 +1202,8 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   modeledFzLeft_ = measuredFzLeft;
   modeledFzRight_ = measuredFzRight;
 
+  // We consider an input to be considered as the reference for the delay
+  // At every sampling period
   if(t_ - tComputation_ > delta)
   {
     tComputation_ = t_;
@@ -1229,12 +1234,15 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
                                  + (1 - exp(-c_.lambdaCoP.z() * t_delay)) * delayedTargetFzRight_;
 
   const int nbReferences = static_cast<int>(zmp_ref.size());
-  const int nbVariables = 2 * 2 * nbReferences;
-  const int nbIneqCstr = 8 * nbReferences + 2 * 2 + 2 * 2;
+  const int nbVariables = 2 * 2 * nbReferences; // Each reference induce 2 CoP which has 2 coordinates x y
+  const int nbIneqCstr = 8 * nbReferences; // Each CoP has 4 cstr to remain bounded in contact polygone
   const int nbEqCstr = 2 * nbReferences;
+
+  // Task to meet the CoPs to the reference ZMP
   Eigen::MatrixXd Mcop = Eigen::MatrixXd::Zero(nbEqCstr, nbVariables);
   Eigen::VectorXd bcop = Eigen::VectorXd::Zero(Mcop.rows());
 
+  // Task to regulate the CoPs under the foot ankle
   const Eigen::MatrixXd McopReg = Eigen::MatrixXd::Identity(nbVariables, nbVariables);
   Eigen::VectorXd bcopReg = Eigen::VectorXd::Zero(McopReg.rows());
 
@@ -1263,6 +1271,7 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   desiredFzLeft_ = f_z_desired_left;
   desiredFzRight_ = f_z_desired_right;
 
+  // We modeled the vertical forces to also follow a 1st order behavior between the reference and the state
   double f_z_ref_left = f_z_desired_left - measuredLeftCoP_delayed.z() * exp(-c_.lambdaCoP.z() * (delta - t_delay));
   f_z_ref_left /= (1 - exp(-c_.lambdaCoP.z() * (delta - t_delay)));
 
@@ -1287,7 +1296,7 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
 
     t_lankle_zmp = zmp_ref[i] - lankle.segment(0, 2);
     d_proj = t_lankle_zmp.dot(t_lankle_rankle.segment(0, 2).normalized());
-    // 1 : rightfoot 0 : leftFoot
+    // ratio = 1 : fz on rightfoot, 0 on leftFoot
     ratio_desired = clamp(d_proj / lankle_rankle, c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot,
                           1 - (c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot));
 
@@ -1310,7 +1319,8 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
       ratio = (f_z_ref_right / (f_z_ref_left + f_z_ref_right));
     }
 
-    // Convert the CoP reference into the modeled CoP
+    // Acop convert the CoP reference into the modeled CoP
+    // Acop * x = cop i in foot frame (left/right)
     Eigen::MatrixXd Acop = Eigen::MatrixXd::Zero(2, 2 * nbReferences);
     double t = static_cast<double>(i) * delta;
     Eigen::Matrix2d exp_mat;
@@ -1333,7 +1343,6 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
       t -= delta;
     }
 
-    // Acop * x = cop in foot frame
     Mcop.block(2 * i, 0, 2, 2 * nbReferences) = X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * Acop;
     Mcop.block(2 * i, 2 * nbReferences, 2, 2 * nbReferences) = X_0_rc.inv().rotation().block(0, 0, 2, 2) * ratio * Acop;
     bcop.segment(2 * i, 2) =
@@ -1370,8 +1379,7 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   Eigen::VectorXd x = qpSolver_.result();
   Eigen::Vector2d leftCoP(x.segment(0, 2));
   Eigen::Vector2d rightCoP(x.segment(2 * nbReferences, 2));
-  // targetForceLeft.segment(0,2) = x.segment(4 * nbReferences, 2);
-  // targetForceRight.segment(0,2) = x.segment(4 * nbReferences + 2, 2);
+
   sva::ForceVecd w_l_lc = sva::ForceVecd{
       Eigen::Vector3d{leftCoP.y() * targetForceLeft.z(), -leftCoP.x() * targetForceLeft.z(), 0}, targetForceLeft};
   sva::ForceVecd w_r_rc = sva::ForceVecd{

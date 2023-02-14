@@ -336,14 +336,6 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    *
    * \see targetCoM()
    **/
-
-  void horizonReference(const std::vector<Eigen::Vector2d> & ref, const double delta)
-  {
-    horizonZmpRef_ = ref;
-    horizonDelta_ = delta;
-    horizonCoPDistribution_ = true;
-  }
-
   inline const Eigen::Vector3d & targetCoMRaw() const noexcept
   {
     return comTargetRaw_;
@@ -383,6 +375,20 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   inline const Eigen::Vector3d & targetZMPVelocity() const noexcept
   {
     return zmpdTarget_;
+  }
+
+  /**
+   * @brief Set the reference zmp sequence to distribute between the CoP task (Only in double support)
+   *
+   * @param ref Reference zmp sequence
+   * @param delta Sequence sampling time
+   *
+   */
+  void horizonReference(const std::vector<Eigen::Vector2d> & ref, const double delta)
+  {
+    horizonZmpRef_ = ref;
+    horizonDelta_ = delta;
+    horizonCoPDistribution_ = true;
   }
 
   /**
@@ -792,9 +798,11 @@ private:
 
   /**
    * @brief Generate a CoP reference for each contact under the future zmp refence along a horizon.
-   * The dynamic of the contact CoPreference zmp is expected to follow a 1st order dynamic w.r.t the CoP reference
    * The dynamic of the contact CoP is expected to follow a 1st order dynamic w.r.t the CoP reference using prameter
    * lambda_CoP
+   *
+   * The desired vertical forces are computed using the ratio (p_left - zmp_ref) / (p_left - p_right).
+   * This choice limits the torque at each contact ankle
    *
    * @param zmp_ref  each zmp reference piecewise constant over delta vector lenght in the world frame
    * @param delta horizon timestep
@@ -1046,21 +1054,22 @@ protected:
   // CoP distribution over an horizon
   //{
   std::vector<Eigen::Vector2d> horizonZmpRef_; /**< Future ZMP reference during tHorizon */
-  double horizonDelta_ = 0.05;
-  bool horizonCoPDistribution_ = false;
-  Eigen::Vector2d modeledCoPLeft_ = Eigen::Vector2d::Zero();
-  Eigen::Vector2d modeledCoPRight_ = Eigen::Vector2d::Zero();
+  double horizonDelta_ = 0.05; /**< Sequence sampling period */
+  bool horizonCoPDistribution_ =
+      false; /**<Is set to true when a new zmp sequence is provided and overided classical distribution */
+  Eigen::Vector2d modeledCoPLeft_ = Eigen::Vector2d::Zero(); /**< Used for logging*/
+  Eigen::Vector2d modeledCoPRight_ = Eigen::Vector2d::Zero(); /**< Used for logging*/
 
-  Eigen::Vector2d delayedTargetCoPLeft_ = Eigen::Vector2d::Zero();
-  Eigen::Vector2d delayedTargetCoPRight_ = Eigen::Vector2d::Zero();
-  double delayedTargetFzLeft_ = 0;
-  double delayedTargetFzRight_ = 0;
+  Eigen::Vector2d delayedTargetCoPLeft_ = Eigen::Vector2d::Zero(); /**< Considered target for the delay*/
+  Eigen::Vector2d delayedTargetCoPRight_ = Eigen::Vector2d::Zero(); /**< Considered target for the delay*/
+  double delayedTargetFzLeft_ = 0; /**< Considered target for the delay*/
+  double delayedTargetFzRight_ = 0; /**< Considered target for the delay*/
 
-  double tComputation_ = 0; /**< time when the distribution has been computed*/
-  double modeledFzRight_ = 0;
-  double modeledFzLeft_ = 0;
-  double desiredFzLeft_ = 0;
-  double desiredFzRight_ = 0;
+  double tComputation_ = 0; /**< time when the distribution has been computed */
+  double modeledFzRight_ = 0; /**< Used for logging*/
+  double modeledFzLeft_ = 0; /**< Used for logging*/
+  double desiredFzLeft_ = 0; /**< Used for logging*/
+  double desiredFzRight_ = 0; /**< Used for logging*/
   //}
 };
 
