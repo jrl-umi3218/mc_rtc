@@ -6,17 +6,15 @@
 
 /** This file contains some utility template metaprogramming functions for the GUI */
 
+#include <mc_rbdyn/rpy_utils.h>
+
+#include <SpaceVecAlg/SpaceVecAlg>
+
 #include <array>
 #include <type_traits>
 #include <vector>
 
-namespace mc_rtc
-{
-
-namespace gui
-{
-
-namespace details
+namespace mc_rtc::gui::details
 {
 
 /** Same as std::void_t */
@@ -127,8 +125,101 @@ struct is_array_or_vector<std::array<T, N>>
   };
 };
 
-} // namespace details
+/** Given a type provides appropriate labels.
+ *
+ * The following types are supported:
+ * - Eigen::Vector3d -> {"x", "y", "z"}
+ * - Eigen::Quaterniond -> {"w", "x", "y", "z"}
+ * - sva::MotionVecd -> {"wx", "wy", "wz", "vx", "vy", "vz"}
+ * - sva::ForceVecd -> {"cx", "cy", "cz", "fx", "fy", "fz"}
+ * - sva::ImpedanceVecd -> {"cx", "cy", "cz", "fx", "fy", "fz"}
+ */
+template<typename T>
+struct Labels
+{
+  static constexpr bool has_labels = false;
+};
 
-} // namespace gui
+template<>
+struct Labels<Eigen::Vector3d>
+{
+  static constexpr bool has_labels = true;
+  inline static const std::vector<std::string> labels = {"x", "y", "z"};
+};
 
-} // namespace mc_rtc
+template<>
+struct Labels<Eigen::Quaterniond>
+{
+  static constexpr bool has_labels = true;
+  inline static const std::vector<std::string> labels = {"w", "x", "y", "z"};
+};
+
+template<>
+struct Labels<sva::MotionVecd>
+{
+  static constexpr bool has_labels = true;
+  inline static const std::vector<std::string> labels = {"wx", "wy", "wz", "vx", "vy", "vz"};
+};
+
+template<>
+struct Labels<sva::ForceVecd>
+{
+  static constexpr bool has_labels = true;
+  inline static const std::vector<std::string> labels = {"cx", "cy", "cz", "fx", "fy", "fz"};
+};
+
+template<>
+struct Labels<sva::ImpedanceVecd>
+{
+  static constexpr bool has_labels = true;
+  inline static const std::vector<std::string> labels = {"cx", "cy", "cz", "fx", "fy", "fz"};
+};
+
+template<bool Degrees>
+struct RPYLabels
+{
+  inline static const std::vector<std::string> labels = {"r [deg]", "p [deg]", "y [deg]"};
+};
+
+template<>
+struct RPYLabels<false>
+{
+  inline static const std::vector<std::string> labels = {"r [rad]", "p [rad]", "y [rad]"};
+};
+
+/** Wrap a temporary value into a callback */
+template<typename T>
+auto read(const T && value)
+{
+  return [value]() -> const T & { return value; };
+}
+
+/** Read RPY angles from a value */
+template<typename T>
+auto read_rpy(const T && value)
+{
+  return [value]() { return mc_rbdyn::rpyFromRotation(value); };
+}
+
+/** Wrap a variable into a callback */
+template<typename T>
+auto read(const T & value)
+{
+  return [&value]() -> const T & { return value; };
+}
+
+/** Read RPY angles from a variable */
+template<typename T>
+auto read_rpy(const T & value)
+{
+  return [&value]() { return mc_rbdyn::rpyFromRotation(value); };
+}
+
+/** Make a setter callback for a variable */
+template<typename T>
+auto write(T & value)
+{
+  return [&value](const T & v) { value = v; };
+}
+
+} // namespace mc_rtc::gui::details

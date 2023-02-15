@@ -16,17 +16,44 @@ cdef extern from "<memory>" namespace "std" nogil:
     T * get()
 
 cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
-
   cdef cppclass Element:
     Element()
     const string& name()
 
+cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui::details":
+  cdef cppclass CheckboxImpl[GetT, SetT](Element):
+    pass
+
   cdef cppclass LabelImpl[T](Element):
     pass
-  cdef LabelImpl[T] Label[T](const string&, T)
 
   cdef cppclass ArrayLabelImpl[T](Element):
     pass
+
+  cdef cppclass IntegerInputImpl[GetT, SetT](Element):
+    pass
+
+  cdef cppclass NumberInputImpl[GetT, SetT](Element):
+    pass
+
+  cdef cppclass NumberSliderImpl[GetT, SetT](Element):
+    pass
+
+  cdef cppclass StringInputImpl[GetT, SetT](Element):
+    pass
+
+  cdef cppclass ArrayInputImpl[GetT, SetT](Element):
+    pass
+
+  cdef cppclass ComboInputImpl[GetT, SetT](Element):
+    pass
+
+  cdef cppclass DataComboInputImpl[GetT, SetT](Element):
+    pass
+
+cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
+  cdef LabelImpl[T] Label[T](const string&, T)
+
   cdef ArrayLabelImpl[T] ArrayLabel[T](const string&, T)
   cdef ArrayLabelImpl[T] ArrayLabel[T](const string&, const vector[string]&, T)
 
@@ -34,37 +61,21 @@ cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
     pass
   cdef ButtonImpl[T] Button[T](const string&, T)
 
-  cdef cppclass CheckboxImpl[GetT, SetT](Element):
-    pass
   cdef CheckboxImpl[GetT, SetT] Checkbox[GetT, SetT](const string&, GetT, SetT)
 
-  cdef cppclass StringInputImpl[GetT, SetT](Element):
-    pass
   cdef StringInputImpl[GetT, SetT] StringInput[GetT, SetT](const string&, GetT, SetT)
 
-  cdef cppclass IntegerInputImpl[GetT, SetT](Element):
-    pass
   cdef IntegerInputImpl[GetT, SetT] IntegerInput[GetT, SetT](const string&, GetT, SetT)
 
-  cdef cppclass NumberInputImpl[GetT, SetT](Element):
-    pass
   cdef NumberInputImpl[GetT, SetT] NumberInput[GetT, SetT](const string&, GetT, SetT)
 
-  cdef cppclass NumberSliderImpl[GetT, SetT](Element):
-    pass
   cdef NumberSliderImpl[GetT, SetT] NumberSlider[GetT, SetT](const string&, GetT, SetT, double, double)
 
-  cdef cppclass ArrayInputImpl[GetT, SetT](Element):
-    pass
   cdef ArrayInputImpl[GetT, SetT] ArrayInput[GetT, SetT](const string&, GetT, SetT)
   cdef ArrayInputImpl[GetT, SetT] ArrayInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
 
-  cdef cppclass ComboInputImpl[GetT, SetT](Element):
-    pass
   cdef ComboInputImpl[GetT, SetT] ComboInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
 
-  cdef cppclass DataComboInputImpl[GetT, SetT](Element):
-    pass
   cdef DataComboInputImpl[GetT, SetT] DataComboInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
 
   cdef cppclass Point3DROImpl[GetT](Element):

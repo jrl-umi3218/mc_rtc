@@ -33,6 +33,7 @@
 #include <mc_rtc/gui/Transform.h>
 #include <mc_rtc/gui/Visual.h>
 #include <mc_rtc/gui/XYTheta.h>
-#include <mc_rtc/gui/helpers.h>
+
+#include <mc_rtc/gui/Input.h>
 
 #include <mc_rtc/gui/plot.h>

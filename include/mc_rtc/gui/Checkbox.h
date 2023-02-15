@@ -7,10 +7,10 @@
 #include <mc_rtc/gui/details/traits.h>
 #include <mc_rtc/gui/elements.h>
 
-namespace mc_rtc
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** Checkbox display a toggable checkbox
@@ -36,13 +36,19 @@ struct CheckboxImpl : public VoidCallbackElement<DataElement<GetT>, Callback>
   CheckboxImpl() {}
 };
 
+} // namespace details
+
 /** Helper function to create a Checkbox */
 template<typename GetT, typename Callback>
-CheckboxImpl<GetT, Callback> Checkbox(const std::string & name, GetT get_fn, Callback cb)
+auto Checkbox(const std::string & name, GetT get_fn, Callback cb)
 {
-  return CheckboxImpl<GetT, Callback>(name, get_fn, cb);
+  return details::CheckboxImpl(name, get_fn, cb);
 }
 
-} // namespace gui
+/** Helper function to create a Checkbox from a variable, the callback flips the variable state */
+inline auto Checkbox(const std::string & name, bool & value)
+{
+  return details::CheckboxImpl(name, details::read(value), [&value]() { value = !value; });
+}
 
-} // namespace mc_rtc
+} // namespace mc_rtc::gui

@@ -321,7 +321,6 @@ set(mc_rtc_gui_SRC
 
 set(mc_rtc_gui_HDR
   ../include/mc_rtc/gui/api.h
-  ../include/mc_rtc/gui/helpers.h
   ../include/mc_rtc/gui/StateBuilder.h
   ../include/mc_rtc/gui/StateBuilder.hpp
   ../include/mc_rtc/gui/ArrayInput.h
@@ -335,6 +334,7 @@ set(mc_rtc_gui_HDR
   ../include/mc_rtc/gui/Force.h
   ../include/mc_rtc/gui/Form.h
   ../include/mc_rtc/gui/IntegerInput.h
+  ../include/mc_rtc/gui/Input.h
   ../include/mc_rtc/gui/Label.h
   ../include/mc_rtc/gui/NumberInput.h
   ../include/mc_rtc/gui/NumberSlider.h

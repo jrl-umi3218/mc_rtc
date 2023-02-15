@@ -105,4 +105,18 @@ inline Eigen::Vector3d rpyFromQuat(const Eigen::Quaterniond & quat)
   return rpyFromMat(quat.toRotationMatrix());
 }
 
+/** Generic version that can handle a Quaternion or Matrix and returns the RPY angles */
+template<typename T>
+Eigen::Vector3d rpyFromRotation(const T & value)
+{
+  if constexpr(std::is_same_v<T, Eigen::Quaterniond>)
+  {
+    return rpyFromQuat(value);
+  }
+  else
+  {
+    return rpyFromMat(value);
+  }
+}
+
 } // namespace mc_rbdyn

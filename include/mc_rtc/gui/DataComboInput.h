@@ -6,10 +6,10 @@
 
 #include <mc_rtc/gui/elements.h>
 
-namespace mc_rtc
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** DataComboInput should behave like ComboInput but the data source is stored
@@ -47,16 +47,19 @@ private:
   std::vector<std::string> data_ref_;
 };
 
+} // namespace details
+
 /** Helper function to build a DataComboInputImpl */
 template<typename GetT, typename SetT>
-DataComboInputImpl<GetT, SetT> DataComboInput(const std::string & name,
-                                              const std::vector<std::string> & values,
-                                              GetT get_fn,
-                                              SetT set_fn)
+auto DataComboInput(const std::string & name, const std::vector<std::string> & values, GetT get_fn, SetT set_fn)
 {
-  return DataComboInputImpl<GetT, SetT>(name, values, get_fn, set_fn);
+  return details::DataComboInputImpl(name, values, get_fn, set_fn);
 }
 
-} // namespace gui
+/** Helper function to build a DataComboInputImpl from a variable */
+inline auto DataComboInput(const std::string & name, const std::vector<std::string> & values, std::string & value)
+{
+  return DataComboInput(name, values, details::read(value), details::write(value));
+}
 
-} // namespace mc_rtc
+} // namespace mc_rtc::gui

@@ -4,13 +4,12 @@
 
 #pragma once
 
-#include <mc_rtc/gui/details/traits.h>
 #include <mc_rtc/gui/elements.h>
 
-namespace mc_rtc
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** ComboInput should display a combo box with the set of choices provided by values
@@ -49,16 +48,19 @@ private:
   std::vector<std::string> values_;
 };
 
+} // namespace details
+
 /** Helper function to create a ComboInputImpl */
 template<typename GetT, typename SetT>
-ComboInputImpl<GetT, SetT> ComboInput(const std::string & name,
-                                      const std::vector<std::string> & values,
-                                      GetT get_fn,
-                                      SetT set_fn)
+auto ComboInput(const std::string & name, const std::vector<std::string> & values, GetT get_fn, SetT set_fn)
 {
-  return ComboInputImpl<GetT, SetT>(name, values, get_fn, set_fn);
+  return details::ComboInputImpl(name, values, get_fn, set_fn);
 }
 
-} // namespace gui
+/** Helper function to create a ComboInputImpl from a variable */
+inline auto ComboInput(const std::string & name, const std::vector<std::string> & values, std::string & value)
+{
+  return ComboInput(name, values, details::read(value), details::write(value));
+}
 
-} // namespace mc_rtc
+} // namespace mc_rtc::gui
