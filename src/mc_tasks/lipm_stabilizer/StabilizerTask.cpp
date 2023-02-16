@@ -607,8 +607,6 @@ void StabilizerTask::setExternalWrenches(const std::vector<std::string> & surfac
   }
 
   computeWrenchOffsetAndCoefficient<&ExternalWrench::target>(robot(), comOffsetTarget_, zmpCoefTarget_);
-  comTarget_ = comTargetRaw_ - comOffsetErrCoM_;
-  if(c_.extWrench.addExpectedCoMOffset) { comTarget_ -= comOffsetTarget_; }
 }
 
 template<sva::ForceVecd StabilizerTask::ExternalWrench::*TargetOrMeasured>
@@ -617,17 +615,7 @@ void StabilizerTask::computeWrenchOffsetAndCoefficient(const mc_rbdyn::Robot & r
                                                        double & coef_kappa) const
 {
   offset_gamma.setZero();
-  coef_kappa = 0;
-  Eigen::Vector3d pos, force, moment;
-  for(const auto & extWrench : extWrenches_)
-  {
-    computeExternalContact(robot, extWrench.surfaceName, extWrench.*TargetOrMeasured, pos, force, moment);
-
-    offset_gamma.x() += (pos.z() - zmpTarget_.z()) * force.x() - pos.x() * force.z() + moment.y();
-    offset_gamma.y() += (pos.z() - zmpTarget_.z()) * force.y() - pos.y() * force.z() - moment.x();
-
-    coef_kappa -= force.z();
-  }
+  coef_kappa = 1;
   double verticalComAcc = comddTarget_.z() + constants::gravity.z();
   double verticalComAccThre = 1e-3;
   if(std::abs(verticalComAcc) < verticalComAccThre)
@@ -637,14 +625,21 @@ void StabilizerTask::computeWrenchOffsetAndCoefficient(const mc_rbdyn::Robot & r
                          verticalComAcc);
     verticalComAcc = verticalComAcc >= 0 ? verticalComAccThre : -verticalComAccThre;
   }
-
   // \zeta in Murooka et al. RAL 2019
   double zeta = robot.mass() * verticalComAcc;
 
-  offset_gamma /= zeta;
+  Eigen::Vector3d pos, force, moment;
+  for(const auto & extWrench : extWrenches_)
+  {
+    computeExternalContact(robot, extWrench.surfaceName, extWrench.*TargetOrMeasured, pos, force, moment);
 
-  coef_kappa /= zeta;
-  coef_kappa += 1.;
+    offset_gamma.x() += (pos.z() - zmpTarget_.z()) * force.x() + (zmpTarget_.x() - pos.x()) * force.z() + moment.y();
+    offset_gamma.y() += (pos.z() - zmpTarget_.z()) * force.y() + (zmpTarget_.y() - pos.y()) * force.z() - moment.x();
+
+    coef_kappa -= force.z() / zeta;
+  }
+
+  offset_gamma /= zeta;
 }
 
 template<sva::ForceVecd StabilizerTask::ExternalWrench::*TargetOrMeasured>
@@ -745,6 +740,8 @@ void StabilizerTask::run()
   updateCoMTaskZMPCC();
   updateFootForceDifferenceControl();
 
+  if(c_.extWrench.addExpectedCoMOffset) { comTarget_ -= comOffsetTarget_; }
+
   comTask->com(comTarget_);
   comTask->refVel(comdTarget_);
   comTask->refAccel(comddTarget_);
@@ -792,6 +789,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
     }
     else { extWrench.measured = extWrench.target; }
   }
+  computeWrenchOffsetAndCoefficient<&ExternalWrench::target>(robot(), comOffsetTarget_, zmpCoefTarget_);
   computeWrenchOffsetAndCoefficient<&ExternalWrench::measured>(realRobot(), comOffsetMeasured_, zmpCoefMeasured_);
 
   if(inTheAir_)
@@ -829,7 +827,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
         {
           /// We have to send the oppopsite of the offset because the error is target - measured
           dcmEstimator_.setInputs(-measuredDCM_.head<2>(), -measuredZMP_.head<2>(), waistOrientation,
-                                  -comOffsetMeasured_.head<2>(), zmpCoefMeasured_);
+                                  -comOffsetMeasured_.head<2>(), 1);
         }
         else { dcmEstimator_.setInputs(-measuredDCM_.head<2>(), -measuredZMP_.head<2>(), waistOrientation); }
       }
