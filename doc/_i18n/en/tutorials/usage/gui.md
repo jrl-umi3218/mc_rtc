@@ -140,6 +140,16 @@ ArrayInput("Your array", {"vx", "vy", "vz"}, v3_);
 
 In Python, the labels go at the end of the parameter list.
 
+##### `Input`
+
+`Input` is a general helper, it takes a variable as an input and will select the appropriate one among `StringInput`, `NumberInput`, `IntegerInput` or `ArrayInput`.
+
+```cpp
+Input("String input", s_); // If s_ is an std::string this will be a StringInput
+
+Input("Array input", v3_); // If v3_ is vector-like this will be an ArrayInput
+```
+
 ##### `ComboInput`/`DataComboInput`
 
 These elements create a dialog to choose a value from a list of string, in `ComboInput` you provide this list of strings, in `DataComboInput`, you provide a reference to an entry in the GUI state data map.
