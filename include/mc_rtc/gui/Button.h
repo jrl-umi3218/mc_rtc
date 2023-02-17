@@ -6,10 +6,10 @@
 
 #include <mc_rtc/gui/elements.h>
 
-namespace mc_rtc
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** Button should provide a clickable button
@@ -34,13 +34,13 @@ struct ButtonImpl : public VoidCallbackElement<Element, Callback>
   ButtonImpl() {}
 };
 
+} // namespace details
+
 /** Helper function to create a ButtonImpl */
 template<typename Callback>
-ButtonImpl<Callback> Button(const std::string & name, Callback cb)
+auto Button(const std::string & name, Callback cb)
 {
-  return ButtonImpl<Callback>(name, cb);
+  return details::ButtonImpl(name, cb);
 }
 
-} // namespace gui
-
-} // namespace mc_rtc
+} // namespace mc_rtc::gui

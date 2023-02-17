@@ -7,10 +7,10 @@
 #include <mc_rtc/gui/details/traits.h>
 #include <mc_rtc/gui/elements.h>
 
-namespace mc_rtc
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** Create a user-defined form
@@ -120,6 +120,8 @@ private:
   size_t data_size_;
 };
 
+} // namespace details
+
 template<typename Derived, Elements element>
 struct FormElement
 {
@@ -153,7 +155,7 @@ protected:
   bool required_;
 };
 
-namespace internal
+namespace details
 {
 
 /** This helper class avoids forming reference to void arguments */
@@ -218,24 +220,24 @@ private:
   bool has_def_;
 };
 
-} // namespace internal
+} // namespace details
 
-#define MAKE_DATA_INPUT_HELPER(DATAT, ELEMENT, FNAME)                                                        \
-  inline internal::FormDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required)              \
-  {                                                                                                          \
-    return {name, required};                                                                                 \
-  }                                                                                                          \
-                                                                                                             \
-  inline internal::FormDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required, DATAT value) \
-  {                                                                                                          \
-    return {name, required, internal::CallbackOrValue<DATAT, void>{value}};                                  \
-  }                                                                                                          \
-                                                                                                             \
-  template<typename Callback, typename std::enable_if<details::is_getter<Callback>(), int>::type = 0>        \
-  inline internal::FormDataInput<DATAT, ELEMENT, Callback> FNAME(const std::string & name, bool required,    \
-                                                                 Callback callback)                          \
-  {                                                                                                          \
-    return {name, required, internal::CallbackOrValue<DATAT, Callback>{callback}};                           \
+#define MAKE_DATA_INPUT_HELPER(DATAT, ELEMENT, FNAME)                                                       \
+  inline details::FormDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required)              \
+  {                                                                                                         \
+    return {name, required};                                                                                \
+  }                                                                                                         \
+                                                                                                            \
+  inline details::FormDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required, DATAT value) \
+  {                                                                                                         \
+    return {name, required, details::CallbackOrValue<DATAT, void>{value}};                                  \
+  }                                                                                                         \
+                                                                                                            \
+  template<typename Callback, typename std::enable_if<details::is_getter<Callback>(), int>::type = 0>       \
+  inline details::FormDataInput<DATAT, ELEMENT, Callback> FNAME(const std::string & name, bool required,    \
+                                                                Callback callback)                          \
+  {                                                                                                         \
+    return {name, required, details::CallbackOrValue<DATAT, Callback>{callback}};                           \
   }
 
 MAKE_DATA_INPUT_HELPER(bool, Elements::Checkbox, FormCheckbox)
@@ -245,7 +247,7 @@ MAKE_DATA_INPUT_HELPER(std::string, Elements::StringInput, FormStringInput)
 
 #undef MAKE_DATA_INPUT_HELPER
 
-namespace internal
+namespace details
 {
 
 template<typename T, typename DataCallback = void>
@@ -289,31 +291,31 @@ private:
   bool has_def_;
 };
 
-} // namespace internal
+} // namespace details
 
 template<typename T>
-inline internal::FormArrayInput<T> FormArrayInput(const std::string & name, bool required, bool fixed_size = false)
+details::FormArrayInput<T> FormArrayInput(const std::string & name, bool required, bool fixed_size = false)
 {
   return {name, required, fixed_size};
 }
 
 template<typename T, typename std::enable_if<!details::is_getter<T>(), int>::type = 0>
-inline internal::FormArrayInput<T> FormArrayInput(const std::string & name,
-                                                  bool required,
-                                                  const T & value,
-                                                  bool fixed_size = true)
+inline details::FormArrayInput<T> FormArrayInput(const std::string & name,
+                                                 bool required,
+                                                 const T & value,
+                                                 bool fixed_size = true)
 {
-  return {name, required, internal::CallbackOrValue<T, void>{value}, fixed_size};
+  return {name, required, details::CallbackOrValue<T, void>{value}, fixed_size};
 }
 
 template<typename Callback, typename std::enable_if<details::is_getter<Callback>(), int>::type = 0>
-inline internal::FormArrayInput<details::ReturnTypeT<Callback>, Callback> FormArrayInput(const std::string & name,
-                                                                                         bool required,
-                                                                                         Callback callback,
-                                                                                         bool fixed_size = true)
+inline details::FormArrayInput<details::ReturnTypeT<Callback>, Callback> FormArrayInput(const std::string & name,
+                                                                                        bool required,
+                                                                                        Callback callback,
+                                                                                        bool fixed_size = true)
 {
   using ReturnT = details::ReturnTypeT<Callback>;
-  return {name, required, internal::CallbackOrValue<ReturnT, Callback>{callback}, fixed_size};
+  return {name, required, details::CallbackOrValue<ReturnT, Callback>{callback}, fixed_size};
 }
 
 struct FormComboInput : public FormElement<FormComboInput, Elements::ComboInput>
@@ -382,11 +384,9 @@ private:
 
 /** Helper to create a Form element */
 template<typename Callback, typename... Args>
-FormImpl<Callback> Form(const std::string & name, Callback cb, Args &&... args)
+auto Form(const std::string & name, Callback cb, Args &&... args)
 {
-  return FormImpl<Callback>(name, cb, std::forward<Args>(args)...);
+  return details::FormImpl(name, cb, std::forward<Args>(args)...);
 }
 
-} // namespace gui
-
-} // namespace mc_rtc
+} // namespace mc_rtc::gui

@@ -8,10 +8,10 @@
 #include <mc_rtc/gui/elements.h>
 #include <mc_rtc/gui/types.h>
 
-namespace mc_rtc
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** An XYTheta element represents an oriented point in the XY plane.
@@ -76,20 +76,20 @@ struct XYThetaImpl : public CommonInputImpl<GetT, SetT>
   XYThetaImpl() {}
 };
 
+} // namespace details
+
 /** Helper function to create an XYTheta element (read-only) */
-template<typename GetT>
-XYThetaROImpl<GetT> XYTheta(const std::string & name, GetT get_fn)
+template<typename GetT, std::enable_if_t<std::is_invocable_v<GetT>, int> = 0>
+auto XYTheta(const std::string & name, GetT get_fn)
 {
-  return XYThetaROImpl<GetT>(name, get_fn);
+  return details::XYThetaROImpl(name, get_fn);
 }
 
 /** Helper function to create an XYTheta element */
 template<typename GetT, typename SetT>
-XYThetaImpl<GetT, SetT> XYTheta(const std::string & name, GetT get_fn, SetT set_fn)
+auto XYTheta(const std::string & name, GetT get_fn, SetT set_fn)
 {
-  return XYThetaImpl<GetT, SetT>(name, get_fn, set_fn);
+  return details::XYThetaImpl(name, get_fn, set_fn);
 }
 
-} // namespace gui
-
-} // namespace mc_rtc
+} // namespace mc_rtc::gui

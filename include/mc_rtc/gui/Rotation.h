@@ -8,10 +8,10 @@
 #include <mc_rtc/gui/elements.h>
 #include <mc_rtc/gui/types.h>
 
-namespace mc_rtc
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** Rotation display a widget that shows the rotation
@@ -84,20 +84,20 @@ struct RotationImpl : public CommonInputImpl<GetT, SetT>
   RotationImpl() {}
 };
 
+} // namespace details
+
 /** Helper function to create a Rotation element (read-only) */
 template<typename GetT>
-RotationROImpl<GetT> Rotation(const std::string & name, GetT get_fn)
+auto Rotation(const std::string & name, GetT get_fn)
 {
-  return RotationROImpl<GetT>(name, get_fn);
+  return details::RotationROImpl(name, get_fn);
 }
 
 /** Helper function to create a Rotation element (writable) */
 template<typename GetT, typename SetT>
-RotationImpl<GetT, SetT> Rotation(const std::string & name, GetT get_fn, SetT set_fn)
+auto Rotation(const std::string & name, GetT get_fn, SetT set_fn)
 {
-  return RotationImpl<GetT, SetT>(name, get_fn, set_fn);
+  return details::RotationImpl(name, get_fn, set_fn);
 }
 
-} // namespace gui
-
-} // namespace mc_rtc
+} // namespace mc_rtc::gui

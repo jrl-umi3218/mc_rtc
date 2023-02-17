@@ -8,10 +8,10 @@
 #include <mc_rtc/gui/elements.h>
 #include <mc_rtc/gui/types.h>
 
-namespace mc_rtc
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** Point3D should display a 3D point in the environment
@@ -98,34 +98,62 @@ private:
   PointConfig config_;
 };
 
+} // namespace details
+
 /** Helper function to create a Point3DROImpl */
-template<typename GetT>
-Point3DROImpl<GetT> Point3D(const std::string & name, GetT get_fn)
+template<typename GetT, std::enable_if_t<std::is_invocable_v<GetT>, int> = 0>
+auto Point3D(const std::string & name, GetT get_fn)
 {
-  return Point3DROImpl<GetT>(name, {}, get_fn);
+  return details::Point3DROImpl(name, {}, get_fn);
 }
 
 /** Helper function to create a Point3DImpl */
 template<typename GetT, typename SetT>
-Point3DImpl<GetT, SetT> Point3D(const std::string & name, GetT get_fn, SetT set_fn)
+auto Point3D(const std::string & name, GetT get_fn, SetT set_fn)
 {
-  return Point3DImpl<GetT, SetT>(name, {}, get_fn, set_fn);
+  return details::Point3DImpl(name, {}, get_fn, set_fn);
 }
 
 /** Helper function to create a Point3DROImpl with configuration */
-template<typename GetT>
-Point3DROImpl<GetT> Point3D(const std::string & name, const PointConfig & config, GetT get_fn)
+template<typename GetT, std::enable_if_t<std::is_invocable_v<GetT>, int> = 0>
+auto Point3D(const std::string & name, const PointConfig & config, GetT get_fn)
 {
-  return Point3DROImpl<GetT>(name, config, get_fn);
+  return details::Point3DROImpl(name, config, get_fn);
 }
 
 /** Helper function to create a Point3DImpl with configuration */
 template<typename GetT, typename SetT>
-Point3DImpl<GetT, SetT> Point3D(const std::string & name, const PointConfig & config, GetT get_fn, SetT set_fn)
+auto Point3D(const std::string & name, const PointConfig & config, GetT get_fn, SetT set_fn)
 {
-  return Point3DImpl<GetT, SetT>(name, config, get_fn, set_fn);
+  return details::Point3DImpl(name, config, get_fn, set_fn);
 }
 
-} // namespace gui
+/** Helper function to build a Point3D from a variable */
+template<typename T>
+auto Point3DRO(const std::string & name, T && value)
+{
+  return Point3D(name, details::read(std::forward<T>(value)));
+}
 
-} // namespace mc_rtc
+/** Helper function to build a Point3D from a variable */
+template<typename T>
+auto Point3DRO(const std::string & name, const PointConfig & config, T && value)
+{
+  return Point3D(name, config, details::read(std::forward<T>(value)));
+}
+
+/** Helper function to build a Point3D from a variable */
+template<typename T, std::enable_if_t<!std::is_invocable_v<T>, int> = 0>
+auto Point3D(const std::string & name, T & value)
+{
+  return Point3D(name, details::read(value), details::write(value));
+}
+
+/** Helper function to build a Point3D from a variable */
+template<typename T, std::enable_if_t<!std::is_invocable_v<T>, int> = 0>
+auto Point3D(const std::string & name, const PointConfig & config, T & value)
+{
+  return Point3D(name, config, details::read(value), details::write(value));
+}
+
+} // namespace mc_rtc::gui

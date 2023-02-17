@@ -8,10 +8,10 @@
 #include <mc_rtc/gui/elements.h>
 #include <mc_rtc/gui/types.h>
 
-namespace mc_rtc
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** Transform display a widget that shows a 6D frame
@@ -88,20 +88,34 @@ struct TransformImpl : public CommonInputImpl<GetT, SetT>
   TransformImpl() {}
 };
 
+} // namespace details
+
 /** Helper function to create a Transform element (read-only) */
-template<typename GetT>
-TransformROImpl<GetT> Transform(const std::string & name, GetT get_fn)
+template<typename GetT, std::enable_if_t<std::is_invocable_v<GetT>, int> = 0>
+auto Transform(const std::string & name, GetT get_fn)
 {
-  return TransformROImpl<GetT>(name, get_fn);
+  return details::TransformROImpl(name, get_fn);
 }
 
 /** Helper function to create a Transform element (editable) */
 template<typename GetT, typename SetT>
-TransformImpl<GetT, SetT> Transform(const std::string & name, GetT get_fn, SetT set_fn)
+auto Transform(const std::string & name, GetT get_fn, SetT set_fn)
 {
-  return TransformImpl<GetT, SetT>(name, get_fn, set_fn);
+  return details::TransformImpl(name, get_fn, set_fn);
 }
 
-} // namespace gui
+/** Helper function to create a read-only transform display from a variable */
+template<typename T>
+auto TransformRO(const std::string & name, T && value)
+{
+  return Transform(name, details::read(std::forward<T>(value)));
+}
 
-} // namespace mc_rtc
+/** Helper function to create a writable transform element from a variable */
+template<typename T, std::enable_if_t<!std::is_invocable_v<T>, int> = 0>
+auto Transform(const std::string & name, T & value)
+{
+  return Transform(name, details::read(value), details::write(value));
+}
+
+} // namespace mc_rtc::gui

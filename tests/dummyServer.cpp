@@ -19,6 +19,7 @@
 
 #include "utils.h"
 
+
 void setColor(rbd::parsers::Visual & visual, const mc_rtc::gui::Color & color)
 {
   rbd::parsers::Material mat;
@@ -518,12 +519,20 @@ TestServer::TestServer() : xythetaz_(4)
           "Interactive Rotation", [this]() { return rotInteractive_; },
           [this](const Eigen::Quaterniond & q) { rotInteractive_.rotation() = q; }));
 
+  builder.addElement({"GUI Markers", "Transforms", "Simple syntax"},
+                     mc_rtc::gui::TransformRO("ReadOnly Transform", static_),
+                     mc_rtc::gui::Transform("Interactive Transform", interactive_));
+
   builder.addElement(
       {"GUI Markers", "Point3D"},
       mc_rtc::gui::Point3D("ReadOnly", mc_rtc::gui::PointConfig({1., 0., 0.}, 0.08), [this]() { return v3_; }),
       mc_rtc::gui::Point3D(
           "Interactive", mc_rtc::gui::PointConfig({0., 1., 0.}, 0.08), [this]() { return vInt_; },
           [this](const Eigen::Vector3d & v) { vInt_ = v; }));
+
+  builder.addElement({"GUI Markers", "Point3D", "Simple syntax"},
+                     mc_rtc::gui::Point3DRO("ReadOnly", const_cast<const Eigen::Vector3d &>(v3_)),
+                     mc_rtc::gui::Point3D("Interactive", vInt_));
 
   auto orange = mc_rtc::gui::Color(1.0, 0.5, 0.0);
   auto pstyle = mc_rtc::gui::LineConfig(mc_rtc::gui::Color::Cyan, 0.1, mc_rtc::gui::LineStyle::Dotted);

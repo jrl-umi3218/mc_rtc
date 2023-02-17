@@ -8,10 +8,10 @@
 #include <mc_rtc/gui/elements.h>
 #include <mc_rtc/gui/types.h>
 
-namespace mc_rtc
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** Arrow should display an arrow from the point at the start to the point at the end
@@ -95,46 +95,37 @@ private:
   SetEnd set_end_fn_;
 };
 
-/** Helper function to create an ArrowImpl */
-template<typename GetStart, typename GetEnd>
-ArrowROImpl<GetStart, GetEnd> Arrow(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn)
-{
-  return ArrowROImpl<GetStart, GetEnd>(name, {}, get_start_fn, get_end_fn);
-}
+} // namespace details
 
 /** Helper function to create an ArrowImpl */
 template<typename GetStart, typename GetEnd>
-ArrowROImpl<GetStart, GetEnd> Arrow(const std::string & name,
-                                    const ArrowConfig & config,
-                                    GetStart get_start_fn,
-                                    GetEnd get_end_fn)
+auto Arrow(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn)
 {
-  return ArrowROImpl<GetStart, GetEnd>(name, config, get_start_fn, get_end_fn);
+  return details::ArrowROImpl(name, {}, get_start_fn, get_end_fn);
+}
+
+/** Helper function to create an ArrowImpl */
+template<typename GetStart, typename GetEnd>
+auto Arrow(const std::string & name, const ArrowConfig & config, GetStart get_start_fn, GetEnd get_end_fn)
+{
+  return details::ArrowROImpl(name, config, get_start_fn, get_end_fn);
 }
 
 template<typename GetStart, typename SetStart, typename GetEnd, typename SetEnd>
-ArrowImpl<GetStart, SetStart, GetEnd, SetEnd> Arrow(const std::string & name,
-                                                    GetStart get_start_fn,
-                                                    SetStart set_start_fn,
-                                                    GetEnd get_end_fn,
-                                                    SetEnd set_end_fn)
+auto Arrow(const std::string & name, GetStart get_start_fn, SetStart set_start_fn, GetEnd get_end_fn, SetEnd set_end_fn)
 {
-  return ArrowImpl<GetStart, SetStart, GetEnd, SetEnd>(name, ArrowConfig{}, get_start_fn, set_start_fn, get_end_fn,
-                                                       set_end_fn);
+  return details::ArrowImpl(name, ArrowConfig{}, get_start_fn, set_start_fn, get_end_fn, set_end_fn);
 }
 
 template<typename GetStart, typename SetStart, typename GetEnd, typename SetEnd>
-ArrowImpl<GetStart, SetStart, GetEnd, SetEnd> Arrow(const std::string & name,
-                                                    const ArrowConfig & config,
-                                                    GetStart get_start_fn,
-                                                    SetStart set_start_fn,
-                                                    GetEnd get_end_fn,
-                                                    SetEnd set_end_fn)
+auto Arrow(const std::string & name,
+           const ArrowConfig & config,
+           GetStart get_start_fn,
+           SetStart set_start_fn,
+           GetEnd get_end_fn,
+           SetEnd set_end_fn)
 {
-  return ArrowImpl<GetStart, SetStart, GetEnd, SetEnd>(name, config, get_start_fn, set_start_fn, get_end_fn,
-                                                       set_end_fn);
+  return details::ArrowImpl(name, config, get_start_fn, set_start_fn, get_end_fn, set_end_fn);
 }
 
-} // namespace gui
-
-} // namespace mc_rtc
+} // namespace mc_rtc::gui

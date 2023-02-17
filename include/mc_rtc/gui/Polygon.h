@@ -8,10 +8,10 @@
 #include <mc_rtc/gui/elements.h>
 #include <mc_rtc/gui/types.h>
 
-namespace mc_rtc
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** Polygon should display a polygon or a set of polygons
@@ -54,27 +54,27 @@ private:
   LineConfig config_;
 };
 
+} // namespace details
+
 /** Helper function to build a PolygonImpl */
 template<typename GetT>
-PolygonImpl<GetT> Polygon(const std::string & name, GetT get_fn)
+auto Polygon(const std::string & name, GetT get_fn)
 {
-  return PolygonImpl<GetT>(name, {}, get_fn);
+  return details::PolygonImpl(name, {}, get_fn);
 }
 
 /** Helper function to build a PolygonImpl */
 template<typename GetT>
-PolygonImpl<GetT> Polygon(const std::string & name, const Color & color, GetT get_fn)
+auto Polygon(const std::string & name, const Color & color, GetT get_fn)
 {
-  return PolygonImpl<GetT>(name, color, get_fn);
+  return details::PolygonImpl(name, color, get_fn);
 }
 
 /** Helper function to build a PolygonImpl */
 template<typename GetT>
-PolygonImpl<GetT> Polygon(const std::string & name, const LineConfig & config, GetT get_fn)
+auto Polygon(const std::string & name, const LineConfig & config, GetT get_fn)
 {
-  return PolygonImpl<GetT>(name, config, get_fn);
+  return details::PolygonImpl(name, config, get_fn);
 }
 
-} // namespace gui
-
-} // namespace mc_rtc
+} // namespace mc_rtc::gui

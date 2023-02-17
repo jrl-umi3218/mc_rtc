@@ -21,6 +21,9 @@ cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
     const string& name()
 
 cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui::details":
+  cdef cppclass ButtonImpl[T](Element):
+    pass
+
   cdef cppclass CheckboxImpl[GetT, SetT](Element):
     pass
 
@@ -51,14 +54,33 @@ cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui::details":
   cdef cppclass DataComboInputImpl[GetT, SetT](Element):
     pass
 
+  cdef cppclass Point3DROImpl[GetT](Element):
+    pass
+
+  cdef cppclass Point3DImpl[GetT, SetT](Element):
+    pass
+
+  cdef cppclass RotationROImpl[GetT](Element):
+    pass
+
+  cdef cppclass RotationImpl[GetT, SetT](Element):
+    pass
+
+  cdef cppclass TransformROImpl[GetT](Element):
+    pass
+  cdef cppclass TransformImpl[GetT, SetT](Element):
+    pass
+
+  cdef cppclass FormImpl[Callback](Element):
+    # C++ method is a template method but this does not work well here
+    void addElement(...)
+
 cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
   cdef LabelImpl[T] Label[T](const string&, T)
 
   cdef ArrayLabelImpl[T] ArrayLabel[T](const string&, T)
   cdef ArrayLabelImpl[T] ArrayLabel[T](const string&, const vector[string]&, T)
 
-  cdef cppclass ButtonImpl[T](Element):
-    pass
   cdef ButtonImpl[T] Button[T](const string&, T)
 
   cdef CheckboxImpl[GetT, SetT] Checkbox[GetT, SetT](const string&, GetT, SetT)
@@ -78,25 +100,13 @@ cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
 
   cdef DataComboInputImpl[GetT, SetT] DataComboInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
 
-  cdef cppclass Point3DROImpl[GetT](Element):
-    pass
   cdef Point3DROImpl[GetT] Point3DRO"mc_rtc::gui::Point3D"[GetT](const string&, GetT)
-  cdef cppclass Point3DImpl[GetT, SetT](Element):
-    pass
   cdef Point3DImpl[GetT,SetT] Point3D[GetT,SetT](const string&, GetT, SetT)
 
-  cdef cppclass RotationROImpl[GetT](Element):
-    pass
   cdef RotationROImpl[GetT] RotationRO"mc_rtc::gui::Rotation"[GetT](const string&, GetT)
-  cdef cppclass RotationImpl[GetT, SetT](Element):
-    pass
   cdef RotationImpl[GetT,SetT] Rotation[GetT,SetT](const string&, GetT, SetT)
 
-  cdef cppclass TransformROImpl[GetT](Element):
-    pass
   cdef TransformROImpl[GetT] TransformRO"mc_rtc::gui::Transform"[GetT](const string&, GetT)
-  cdef cppclass TransformImpl[GetT, SetT](Element):
-    pass
   cdef TransformImpl[GetT,SetT] Transform[GetT,SetT](const string&, GetT, SetT)
 
   cdef cppclass FormComboInput:
@@ -107,9 +117,6 @@ cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
     FormDataComboInput()
     FormDataComboInput(const string&, cppbool, const vector[string]&, cppbool)
 
-  cdef cppclass FormImpl[Callback](Element):
-    # C++ method is a template method but this does not work well here
-    void addElement(...)
   cdef FormImpl[Callback] Form[Callback](const string&, Callback)
 
   cdef cppclass StateBuilder:

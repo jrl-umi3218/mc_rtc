@@ -8,10 +8,7 @@
 #include <mc_rtc/gui/elements.h>
 #include <mc_rtc/gui/types.h>
 
-namespace mc_rtc
-{
-
-namespace gui
+namespace mc_rtc::gui
 {
 
 namespace details
@@ -248,6 +245,4 @@ auto Polyhedron(const std::string & name,
   return details::ColoredPolyhedronImpl<decltype(poly), GetColorT>(std::move(poly), get_color_fn);
 }
 
-} // namespace gui
-
-} // namespace mc_rtc
+} // namespace mc_rtc::gui
