@@ -72,6 +72,12 @@ ArrayLabel("Some strings", []() { return {"a", "b", "c"}; });
 // Display a vector with labels
 ArrayLabel("Vector", {"x", "y", "z"}, []() { return Eigen::Vector3d::Zero(); });
 
+// Display a label from a variable
+Label("My variable", var_);
+
+// Display an ArrayLabel from a variable
+ArrayLabel("My array", array_);
+
 // Some elements have associated labels, e.g. Force also adds an ArrayLabel
 Force("LeftFoot", [this]() { return this->robot().surfaceWrench("LFullSole"); }, [this]() { return this->robot().surfacePose("LFullSole"); }),
 Force("RightFoot", [this]() { return this->robot().surfaceWrench("RFullSole"); }, [this]() { return this->robot().surfacePose("RFullSole"); }),
@@ -98,6 +104,9 @@ This element display a checkbox. Its status depends on the value you provide, wh
 
 ```cpp
 Checkbox("Check me", [this]() { return status_; }, [this]() { status_ = !status_; });
+
+// Created a from a boolean variable
+Checkbox("Check me", status_);
 ```
 
 ##### `StringInput`/`IntegerInput`/`NumberInput`/`ArrayInput`
@@ -108,6 +117,11 @@ These elements provide inputs for the user. You should use the representation th
 StringInput("Your name", [this]() { return name_; }, [this](const std::string & n){ name_ = n; });
 
 NumberInput("Weight", [this]() { return w_; }, [this](double w){ w_ = w; });
+
+// Created from appropriate variables
+StringInput("Your name", name_);
+
+NumberInput("Weight", w_);
 ```
 
 `ArrayInput` accepts an additional parameter to add labels to the data. It also assumes that the array size is fixed.
@@ -116,6 +130,12 @@ NumberInput("Weight", [this]() { return w_; }, [this](double w){ w_ = w; });
 ArrayInput("Your array", {"x", "y", "z"},
            [this]() { return v3_; },
            [this](const Eigen::Vector3d & v) { v3_ = v; });
+
+// Created from the variable, labels are added automatically
+ArrayInput("Your array", v3_);
+
+// Overriding the default labels
+ArrayInput("Your array", {"vx", "vy", "vz"}, v3_);
 ```
 
 In Python, the labels go at the end of the parameter list.
@@ -148,6 +168,9 @@ These elements will display two things:
 // Read-only variant does not provide a callback to set the data
 Point3D("Point", [this]() { return v3_; });
 
+// Read-only variant from a variable (only available for Point3D and Transform)
+Point3DRO("Point", v3_);
+
 // Read-write variant
 
 // Note that even though we want to display a rotation, we need to provide a
@@ -155,6 +178,9 @@ Point3D("Point", [this]() { return v3_; });
 Rotation("Rot",
          [this]() { return sva::PTransformd{rot_, pos_} },
          [this](const Eigen::Matrix3d & rot) { rot_ = rot; });
+
+// Read-write variant from a variable
+Transform("Transform", pt_);
 ```
 
 ##### `Trajectory`
@@ -292,55 +318,6 @@ In that example, the content of the `Surface` combo box will change depending on
 ##### A note on callbacks
 
 Every callback call triggered by the user interaction happens after an iteration of the controller and before the next. You don't have to worry about concurrency here.
-
-### GUI Helpers
-
-The above sections presented the generic way of creating GUI elements. While you can do everything this way, the syntax is cumbersome. One of the most common use-case of the GUI is to display/modify member variables. This use case can be simplified with helper functions:
-
-```cpp
-// Some member variables
-// These must remain in scope for as long as the GUI elements using them are in the GUI.
-Eigen::Matrix3d rot_ = Eigen::Matrix3d::Identity();
-std::vector<double> array_{0,1,2,3};
-bool check_ = true;
-double slide_ = 0;
-std::string combo_{"Value C"};
-
-gui()->addElement({"Category"},
-  mc_rtc::gui::make_input_element("Rotation RPY (deg)", rot), // Displays an RPY input expressed in degrees
-  mc_rtc::gui::make_rpy_input_rad("Rotation RPY (rad)", rot), // Displays an RPY input expressed in radians
-  mc_rtc::gui::make_input_element("Array", array_), // Displays an array input
-  mc_rtc::gui::make_input_element("CheckBox", check_), // Displays a checkbox
-  mc_rtc::gui::make_number_slider("Slider", slide_, -100, 100), // Displays a numer slider with bounds [-100;100]
-  mc_rtc::gui::make_input_element("Combo", {"Value A", "Value B", "Value C"}, combo_); // Creates a ComboBox
-)
-```
-
-Note that these helpers will automatically select the most appropriate GUI elements based on the provided type. In case where multiple elements may be suitable for a given type `make_input_element` displays the most generic element for that type. You may explicitely choose a more suitable type:
-
-```cpp
-double value = 42;
-gui()->addElement({"Category"},
-  mc_rtc::gui::make_input_element("Number Input", value), // will display a simple number input
-  mc_rtc::gui::make_number_slider("Number Slider", value, -100, 100) // will display a number slider instead
-  );
-```
-
-The above helpers are strictly equivalent to their lambda function counterpart, for example:
-
-```cpp
-mc_rtc::gui::make_input_element("Number Input", value)
-// is the same as
-mc_rtc::gui::NumberInput("Number Input",
-  [&value]()
-  {
-    return value;
-  },
-  [&value](const double & newValue)
-  {
-    value = newValue;
-  });
-```
 
 ### Remove elements from the GUI
 
