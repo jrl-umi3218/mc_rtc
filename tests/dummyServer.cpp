@@ -6,6 +6,7 @@
 
 #include <mc_rtc/gui.h>
 #include <mc_rtc/utils/heatmap.h>
+#include <mc_rtc/visual_utils.h>
 
 #include <SpaceVecAlg/Conversions.h>
 
@@ -18,57 +19,6 @@
 #endif
 
 #include "utils.h"
-
-
-void setColor(rbd::parsers::Visual & visual, const mc_rtc::gui::Color & color)
-{
-  rbd::parsers::Material mat;
-  rbd::parsers::Material::Color col;
-  col.r = color.r;
-  col.g = color.g;
-  col.b = color.b;
-  col.a = color.a;
-  mat.type = rbd::parsers::Material::Type::COLOR;
-  mat.data = col;
-  visual.material = mat;
-}
-
-rbd::parsers::Visual makeSphere(double radius)
-{
-  rbd::parsers::Geometry::Sphere s;
-  s.radius = radius;
-  rbd::parsers::Visual out;
-  out.origin = sva::PTransformd::Identity();
-  out.geometry.type = rbd::parsers::Geometry::Type::SPHERE;
-  out.geometry.data = s;
-  setColor(out, {1, 0, 0, 0.2});
-  return out;
-}
-
-rbd::parsers::Visual makeCylinder(double radius, double length)
-{
-  rbd::parsers::Geometry::Cylinder c;
-  c.length = length;
-  c.radius = radius;
-  rbd::parsers::Visual out;
-  out.origin = sva::PTransformd::Identity();
-  out.geometry.type = rbd::parsers::Geometry::Type::CYLINDER;
-  out.geometry.data = c;
-  setColor(out, {0, 1, 0, 0.2});
-  return out;
-}
-
-rbd::parsers::Visual makeBox(const Eigen::Vector3d & dim)
-{
-  rbd::parsers::Geometry::Box b;
-  b.size = dim;
-  rbd::parsers::Visual out;
-  out.origin = sva::PTransformd::Identity();
-  out.geometry.type = rbd::parsers::Geometry::Type::BOX;
-  out.geometry.data = b;
-  setColor(out, {0, 0, 1, 0.2});
-  return out;
-}
 
 sva::PTransformd lookAt(const Eigen::Vector3d & position, const Eigen::Vector3d & target, const Eigen::Vector3d & up)
 {
@@ -888,42 +838,42 @@ void TestServer::switch_visual(const std::string & choice)
                                      [this](const std::string & c) { switch_visual(c); }));
   if(choice == "sphere")
   {
-    visual_ = makeSphere(sphereRadius_);
+    visual_ = mc_rtc::makeVisualSphere(sphereRadius_, {1, 0, 0, 0.2});
     builder.addElement({"Visual"}, mc_rtc::gui::NumberInput(
                                        "radius", [this]() { return sphereRadius_; },
                                        [this](double r) {
-                                         auto & v = boost::get<rbd::parsers::Geometry::Sphere>(visual_.geometry.data);
-                                         v.radius = r;
+                                         auto & s = mc_rtc::getVisualSphere(visual_);
+                                         s.radius = r;
                                          sphereRadius_ = r;
                                        }));
   }
   else if(choice == "box")
   {
-    visual_ = makeBox(boxDim_);
+    visual_ = mc_rtc::makeVisualBox(boxDim_, {0, 0, 1, 0.2});
     builder.addElement({"Visual"},
                        mc_rtc::gui::ArrayInput(
                            "dimensions", {"x", "y", "z"}, [this]() -> const Eigen::Vector3d & { return boxDim_; },
                            [this](const Eigen::Vector3d & v) {
-                             auto & b = boost::get<rbd::parsers::Geometry::Box>(visual_.geometry.data);
+                             auto & b = mc_rtc::getVisualBox(visual_);
                              b.size = v;
                              boxDim_ = v;
                            }));
   }
   else if(choice == "cylinder")
   {
-    visual_ = makeCylinder(cylinderRadius_, cylinderLength_);
+    visual_ = mc_rtc::makeVisualCylinder(cylinderRadius_, cylinderLength_, {0, 1, 0, 0.2});
     builder.addElement({"Visual"},
                        mc_rtc::gui::NumberInput(
                            "radius", [this]() { return cylinderRadius_; },
                            [this](double r) {
-                             auto & c = boost::get<rbd::parsers::Geometry::Cylinder>(visual_.geometry.data);
+                             auto & c = mc_rtc::getVisualCylinder(visual_);
                              c.radius = r;
                              cylinderRadius_ = r;
                            }),
                        mc_rtc::gui::NumberInput(
                            "length", [this]() { return cylinderLength_; },
                            [this](double r) {
-                             auto & c = boost::get<rbd::parsers::Geometry::Cylinder>(visual_.geometry.data);
+                             auto & c = mc_rtc::getVisualCylinder(visual_);
                              c.length = r;
                              cylinderLength_ = r;
                            }));

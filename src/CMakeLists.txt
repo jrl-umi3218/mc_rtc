@@ -126,6 +126,7 @@ set(mc_rtc_utils_HDR
   ../include/mc_rtc/deprecated.h
   ../include/mc_rtc/pragma.h
   ../include/mc_rtc/shared.h
+  ../include/mc_rtc/visual_utils.h
   ../include/mc_rtc/utils/heatmap.h
 )
 
