@@ -25,7 +25,7 @@ struct LowPassFiniteDifferences : public LowPass<T>
    */
   LowPassFiniteDifferences(double dt, double period) : LowPassT(dt, period)
   {
-    LowPassT::reset(T::Zero(), T::Zero());
+    LowPassT::reset(T::Zero());
   }
 
   /** Reset filter to initial rest value.
