@@ -1232,6 +1232,9 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
                                  + (1 - exp(-c_.lambdaCoP.y() * t_delay)) * delayedTargetCoPRight_.y();
   measuredRightCoP_delayed.z() = measuredFzRight * exp(-c_.lambdaCoP.z() * t_delay)
                                  + (1 - exp(-c_.lambdaCoP.z() * t_delay)) * delayedTargetFzRight_;
+  
+  clampInPlace(measuredLeftCoP_delayed.z() ,0,fz_tot);
+  clampInPlace(measuredRightCoP_delayed.z(),0,fz_tot);
 
   const int nbReferences = static_cast<int>(zmp_ref.size());
   const int nbVariables = 2 * 2 * nbReferences; // Each reference induce 2 CoP which has 2 coordinates x y
