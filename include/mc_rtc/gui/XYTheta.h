@@ -18,48 +18,22 @@ namespace details
  *
  * Altitude can be provided optionally.
  *
- * This element is not editable
+ * This element is editable if \tparam SetT is not nullptr_t
  *
- * \tparam GetT Should return a double array of size 3 (x, y, theta) or 4 (x, y, theta, z)
+ * \tparam GetT Should return a double array of size 3nullptr (x, y, theta) or 4 (x, y, theta, z)
  *
- */
-template<typename GetT>
-struct XYThetaROImpl : public DataElement<GetT>
-{
-  static constexpr auto type = Elements::XYTheta;
-
-  XYThetaROImpl(const std::string & name, GetT get_fn) : DataElement<GetT>(name, get_fn) {}
-
-  /** Invalid element */
-  XYThetaROImpl() {}
-
-  constexpr static size_t write_size()
-  {
-    return DataElement<GetT>::write_size() + 1;
-  }
-
-  void write(mc_rtc::MessagePackBuilder & builder)
-  {
-    DataElement<GetT>::write(builder);
-    builder.write(true); // Is read-only
-  }
-};
-
-/** An XYTheta element represents an oriented point in the XY plane.
- *
- * Altitude can be provided optionally.
- *
- * This element is editable
- *
- * \tparam GetT Should return a double array of size 3 (x, y, theta) or 4 (x, y, theta, z)
+ * \tparam SetT Should accept an Eigen::Vector4d that will contain (x, y, theta, z)
  *
  */
-template<typename GetT, typename SetT>
+template<typename GetT, typename SetT = std::nullptr_t>
 struct XYThetaImpl : public CommonInputImpl<GetT, SetT>
 {
   static constexpr auto type = Elements::XYTheta;
 
-  XYThetaImpl(const std::string & name, GetT get_fn, SetT set_fn) : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn) {}
+  XYThetaImpl(const std::string & name, GetT get_fn, SetT set_fn = nullptr)
+  : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn)
+  {
+  }
 
   constexpr static size_t write_size()
   {
@@ -69,7 +43,8 @@ struct XYThetaImpl : public CommonInputImpl<GetT, SetT>
   void write(mc_rtc::MessagePackBuilder & builder)
   {
     CommonInputImpl<GetT, SetT>::write(builder);
-    builder.write(false); // Is read-only
+    // True for read-only
+    builder.write(std::is_same_v<SetT, std::nullptr_t>);
   }
 
   /** Invalid element */
@@ -82,7 +57,7 @@ struct XYThetaImpl : public CommonInputImpl<GetT, SetT>
 template<typename GetT, std::enable_if_t<std::is_invocable_v<GetT>, int> = 0>
 auto XYTheta(const std::string & name, GetT get_fn)
 {
-  return details::XYThetaROImpl(name, get_fn);
+  return details::XYThetaImpl(name, get_fn);
 }
 
 /** Helper function to create an XYTheta element */

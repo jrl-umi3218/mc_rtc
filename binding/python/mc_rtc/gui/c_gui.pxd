@@ -15,6 +15,10 @@ cdef extern from "<memory>" namespace "std" nogil:
     shared_ptr(const shared_ptr[T]&)
     T * get()
 
+cdef extern from "<cstddef>" namespace "std":
+  cdef cppclass nullptr_t:
+    pass
+
 cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
   cdef cppclass Element:
     Element()
@@ -54,20 +58,12 @@ cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui::details":
   cdef cppclass DataComboInputImpl[GetT, SetT](Element):
     pass
 
-  cdef cppclass Point3DROImpl[GetT](Element):
-    pass
-
   cdef cppclass Point3DImpl[GetT, SetT](Element):
-    pass
-
-  cdef cppclass RotationROImpl[GetT](Element):
     pass
 
   cdef cppclass RotationImpl[GetT, SetT](Element):
     pass
 
-  cdef cppclass TransformROImpl[GetT](Element):
-    pass
   cdef cppclass TransformImpl[GetT, SetT](Element):
     pass
 
@@ -100,13 +96,13 @@ cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
 
   cdef DataComboInputImpl[GetT, SetT] DataComboInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
 
-  cdef Point3DROImpl[GetT] Point3DRO"mc_rtc::gui::Point3D"[GetT](const string&, GetT)
+  cdef Point3DImpl[GetT, nullptr_t] Point3DRO"mc_rtc::gui::Point3D"[GetT, nullptr_t](const string&, GetT, void *)
   cdef Point3DImpl[GetT,SetT] Point3D[GetT,SetT](const string&, GetT, SetT)
 
-  cdef RotationROImpl[GetT] RotationRO"mc_rtc::gui::Rotation"[GetT](const string&, GetT)
+  cdef RotationImpl[GetT, nullptr_t] RotationRO"mc_rtc::gui::Rotation"[GetT, nullptr_t](const string&, GetT)
   cdef RotationImpl[GetT,SetT] Rotation[GetT,SetT](const string&, GetT, SetT)
 
-  cdef TransformROImpl[GetT] TransformRO"mc_rtc::gui::Transform"[GetT](const string&, GetT)
+  cdef TransformImpl[GetT, nullptr_t] TransformRO"mc_rtc::gui::Transform"[GetT, nullptr_t](const string&, GetT)
   cdef TransformImpl[GetT,SetT] Transform[GetT,SetT](const string&, GetT, SetT)
 
   cdef cppclass FormComboInput:

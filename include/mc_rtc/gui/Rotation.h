@@ -16,54 +16,21 @@ namespace details
 
 /** Rotation display a widget that shows the rotation
  *
- * This rotation is not editable.
+ * This element is editable if \tparam SetT is not nullptr_t
  *
- * This will also create a quaternion ArrayLabel with labels {"qw", "qx", "qy", "qz"}
- *
- * \tparam GetT Must return an sva::PTransformd (to display the rotation somewhere)
- */
-template<typename GetT>
-struct RotationROImpl : public DataElement<GetT>
-{
-  static constexpr auto type = Elements::Rotation;
-
-  RotationROImpl(const std::string & name, GetT get_fn) : DataElement<GetT>(name, get_fn)
-  {
-    static_assert(details::CheckReturnType<GetT, sva::PTransformd>::value,
-                  "RotationROImpl getter should return an sva::PTransformd");
-  }
-
-  constexpr static size_t write_size()
-  {
-    return DataElement<GetT>::write_size() + 1;
-  }
-
-  void write(mc_rtc::MessagePackBuilder & builder)
-  {
-    DataElement<GetT>::write(builder);
-    builder.write(true); // Is read-only
-  }
-
-  /** Invalid element */
-  RotationROImpl() {}
-};
-
-/** Rotation display a widget that shows the rotation
- *
- * This rotation is editable.
- *
- * This will also create a quaternion ArrayInput with labels {"qw", "qx", "qy", "qz"}
+ * This will also create a quaternion ArrayLabel/ArrayInput with labels {"qw", "qx", "qy", "qz"}
  *
  * \tparam GetT Must return an sva::PTransformd (to display the rotation somewhere)
  *
  * \tparam SetT Should accept a rotation as an Eigen::Quaterniond
  */
-template<typename GetT, typename SetT>
+template<typename GetT, typename SetT = std::nullptr_t>
 struct RotationImpl : public CommonInputImpl<GetT, SetT>
 {
   static constexpr auto type = Elements::Rotation;
 
-  RotationImpl(const std::string & name, GetT get_fn, SetT set_fn) : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn)
+  RotationImpl(const std::string & name, GetT get_fn, SetT set_fn = nullptr)
+  : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn)
   {
     static_assert(details::CheckReturnType<GetT, sva::PTransformd>::value,
                   "RotationImpl getter should return an sva::PTransformd");
@@ -77,7 +44,8 @@ struct RotationImpl : public CommonInputImpl<GetT, SetT>
   void write(mc_rtc::MessagePackBuilder & builder)
   {
     CommonInputImpl<GetT, SetT>::write(builder);
-    builder.write(false); // Is read-only
+    // True for read-only
+    builder.write(std::is_same_v<SetT, std::nullptr_t>);
   }
 
   /** Invalid element */
@@ -90,7 +58,7 @@ struct RotationImpl : public CommonInputImpl<GetT, SetT>
 template<typename GetT>
 auto Rotation(const std::string & name, GetT get_fn)
 {
-  return details::RotationROImpl(name, get_fn);
+  return details::RotationImpl(name, get_fn);
 }
 
 /** Helper function to create a Rotation element (writable) */

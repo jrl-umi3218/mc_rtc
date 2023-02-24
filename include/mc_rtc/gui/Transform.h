@@ -16,45 +16,9 @@ namespace details
 
 /** Transform display a widget that shows a 6D frame
  *
- * This transformation is not editable.
+ * This element is editable if \tparam SetT is not nullptr_t
  *
- * This will also create an ArrayLabel with labels {"qw", "qx", "qy",
- * "qz", "tx", "ty", "tz"}
- *
- * \tparam GetT Must return an sva::PTransformd
- *
- */
-template<typename GetT>
-struct TransformROImpl : public DataElement<GetT>
-{
-  static constexpr auto type = Elements::Transform;
-
-  TransformROImpl(const std::string & name, GetT get_fn) : DataElement<GetT>(name, get_fn)
-  {
-    static_assert(details::CheckReturnType<GetT, sva::PTransformd>::value,
-                  "TransformImpl getter should return an sva::PTransformd");
-  }
-
-  constexpr static size_t write_size()
-  {
-    return DataElement<GetT>::write_size() + 1;
-  }
-
-  void write(mc_rtc::MessagePackBuilder & builder)
-  {
-    DataElement<GetT>::write(builder);
-    builder.write(true); // Is read-only
-  }
-
-  /** Invalid element */
-  TransformROImpl() {}
-};
-
-/** Transform display a widget that shows a 6D frame
- *
- * This transformation is editable.
- *
- * This will also create an ArrayInput with labels {"qw", "qx", "qy",
+ * This will also create an ArrayLabel/ArrayInput with labels {"qw", "qx", "qy",
  * "qz", "tx", "ty", "tz"}
  *
  * \tparam GetT Must return an sva::PTransformd
@@ -62,12 +26,13 @@ struct TransformROImpl : public DataElement<GetT>
  * \tparam SetT Should accept an sva::PTransformd
  *
  */
-template<typename GetT, typename SetT>
+template<typename GetT, typename SetT = std::nullptr_t>
 struct TransformImpl : public CommonInputImpl<GetT, SetT>
 {
   static constexpr auto type = Elements::Transform;
 
-  TransformImpl(const std::string & name, GetT get_fn, SetT set_fn) : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn)
+  TransformImpl(const std::string & name, GetT get_fn, SetT set_fn = nullptr)
+  : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn)
   {
     static_assert(details::CheckReturnType<GetT, sva::PTransformd>::value,
                   "TransformImpl getter should return an sva::PTransformd");
@@ -94,7 +59,7 @@ struct TransformImpl : public CommonInputImpl<GetT, SetT>
 template<typename GetT, std::enable_if_t<std::is_invocable_v<GetT>, int> = 0>
 auto Transform(const std::string & name, GetT get_fn)
 {
-  return details::TransformROImpl(name, get_fn);
+  return details::TransformImpl(name, get_fn);
 }
 
 /** Helper function to create a Transform element (editable) */
