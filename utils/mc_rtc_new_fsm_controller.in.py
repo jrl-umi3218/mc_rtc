@@ -56,12 +56,10 @@ collisions:
   useMinimal: true
 # Initial set of contacts
 contacts:
-- r1: jvrc1
-  r2: ground
+- r2: ground
   r1Surface: LeftFoot
   r2Surface: AllGround
-- r1: jvrc1
-  r2: ground
+- r2: ground
   r1Surface: RightFoot
   r2Surface: AllGround
 
