@@ -57,76 +57,14 @@ states:
     # Note that in order for the stabilizer to work, roll and pitch DoF need to be free to allow for admittance
     # control of the feet, and vertical DoF to allow for foot force-difference control.
     AddContacts:
-    - r1: hrp2_drc
-      r2: ground
+    - r2: ground
       r1Surface: LeftFoot
       r2Surface: AllGround
       dof: [0, 0, 1, 1, 1, 0]
-    - r1: hrp2_drc
-      r2: ground
+    - r2: ground
       r1Surface: RightFoot
       r2Surface: AllGround
       dof: [0, 0, 1, 1, 1, 0]
-
-    StabilizerConfig:
-      enabled: true
-
-      ###########################
-      ## Stabilizer configuration
-      ###########################
-      # Default values for these robot-specific parameters are set in the corresponding robot module.
-      # You may choose to override any of them here, with due caution.
-      hrp2_drc:
-        leftFootSurface: LeftFoot
-        rightFootSurface: RightFoot
-        friction: 0.8
-        torsoBodyName: CHEST_LINK1
-        # Configuration  of the QP tasks used by the stabilizer
-        tasks:
-          com:
-            stiffness: [1000, 1000, 100]
-            weight: 1000
-            active_joints: [Root, RLEG_JOINT0, RLEG_JOINT1, RLEG_JOINT2, RLEG_JOINT3, RLEG_JOINT4, RLEG_JOINT5, LLEG_JOINT0, LLEG_JOINT1, LLEG_JOINT2, LLEG_JOINT3, LLEG_JOINT4, LLEG_JOINT5]
-            height: 0.87
-          contact:
-            damping: 300
-            stiffness: 1
-            weight: 10000
-
-        # Weights for the force-distribution QP
-        fdqp_weights:
-          net_wrench: 10000
-          ankle_torque: 100
-          pressure: 1
-
-        # Vertical drift frequency
-        vdc:
-          frequency: 1
-          stiffness: 1000
-
-        # Admittance coefficients (force-control)
-        admittance:
-          cop: [0.001, 0.001]
-
-        ########################
-        # Gains for DCM tracking
-        ########################
-        # These are the main gains of the stabilizer.
-        dcm_tracking:
-          gains:
-            prop: 3
-            integral: 20
-            deriv: 0.5
-          derivator_time_constant: 5
-          integrator_time_constant: 30
-
-      # Change some parameters for another robot
-      jvrc1:
-        dcm_tracking:
-          gains:
-            prop: 4
-            integral: 10
-            deriv: 0.5
 
   ###
   # Simple foot lifting
@@ -191,18 +129,36 @@ states:
   LIPMStabilizer::Stabilized::LiftRightFoot:
     base: Parallel
     states: [Stabilizer::LeftSupport, LIPMStabilizer::LiftRightFoot]
+    RemoveContacts:
+      - r2: ground
+        r1Surface: RightFoot
+        r2Surface: AllGround
 
   LIPMStabilizer::Stabilized::LiftLeftFoot:
     base: Parallel
     states: [Stabilizer::RightSupport, LIPMStabilizer::LiftLeftFoot]
+    RemoveContacts:
+      - r2: ground
+        r1Surface: LeftFoot
+        r2Surface: AllGround
 
   LIPMStabilizer::Stabilized::PutRightFoot:
     base: Parallel
     states: [Stabilizer::LeftSupport, LIPMStabilizer::PutRightFoot]
+    AddContactsAfter:
+      - r2: ground
+        r1Surface: RightFoot
+        r2Surface: AllGround
+        dof: [0, 0, 1, 1, 1, 0]
 
   LIPMStabilizer::Stabilized::PutLeftFoot:
     base: Parallel
     states: [Stabilizer::RightSupport, LIPMStabilizer::PutLeftFoot]
+    AddContactsAfter:
+      - r2: ground
+        r1Surface: LeftFoot
+        r2Surface: AllGround
+        dof: [0, 0, 1, 1, 1, 0]
 
   LIPMStabilizer::Stabilized::StayLeft:
     base: Stabilizer::GoLeft
@@ -293,10 +249,28 @@ states:
   LIPMStabilizer::Stabilized::LeftFootTrajectory:
     base: Parallel
     states: [Stabilizer::RightSupport, LIPMStabilizer::LeftFootTrajectory]
+    RemoveContacts:
+      - r2: ground
+        r1Surface: LeftFoot
+        r2Surface: AllGround
+    AddContactsAfter:
+      - r2: ground
+        r1Surface: LeftFoot
+        r2Surface: AllGround
+        dof: [0, 0, 1, 1, 1, 0]
 
   LIPMStabilizer::Stabilized::RightFootTrajectory:
     base: Parallel
     states: [Stabilizer::LeftSupport, LIPMStabilizer::RightFootTrajectory]
+    RemoveContacts:
+      - r2: ground
+        r1Surface: RightFoot
+        r2Surface: AllGround
+    AddContactsAfter:
+      - r2: ground
+        r1Surface: RightFoot
+        r2Surface: AllGround
+        dof: [0, 0, 1, 1, 1, 0]
 
   LIPMStabilizer::WalkingFSM::RightStep:
     base: Meta
@@ -347,10 +321,28 @@ states:
   LIPMStabilizer::Stabilized::LeftFootBackwardTrajectory:
     base: Parallel
     states: [Stabilizer::RightSupport, LIPMStabilizer::LeftFootBackwardTrajectory]
+    RemoveContacts:
+      - r2: ground
+        r1Surface: LeftFoot
+        r2Surface: AllGround
+    AddContactsAfter:
+      - r2: ground
+        r1Surface: LeftFoot
+        r2Surface: AllGround
+        dof: [0, 0, 1, 1, 1, 0]
 
   LIPMStabilizer::Stabilized::RightFootBackwardTrajectory:
     base: Parallel
     states: [Stabilizer::LeftSupport, LIPMStabilizer::RightFootBackwardTrajectory]
+    RemoveContacts:
+      - r2: ground
+        r1Surface: RightFoot
+        r2Surface: AllGround
+    AddContactsAfter:
+      - r2: ground
+        r1Surface: RightFoot
+        r2Surface: AllGround
+        dof: [0, 0, 1, 1, 1, 0]
 
   LIPMStabilizer::WalkingFSM::RightBackwardStep:
     base: Meta
@@ -384,20 +376,20 @@ states:
 ###
 transitions:
   # Stand from left to right support and lift and put down feet
-- [LIPMStabilizer::Pause_2s, OK, Stabilizer::Standing, Auto]
-- [Stabilizer::Standing, Lift feet, LIPMStabilizer::StandingFSM::AlternateFeetLifting, Auto]
-- [LIPMStabilizer::StandingFSM::AlternateFeetLifting, OK, Stabilizer::Standing, Auto]
+- [LIPMStabilizer::Pause_2s, OK, LIPMStabilizer::CustomConfiguration, Auto]
+- [LIPMStabilizer::CustomConfiguration, Lift feet, LIPMStabilizer::StandingFSM::AlternateFeetLifting, Auto]
+- [LIPMStabilizer::StandingFSM::AlternateFeetLifting, OK, LIPMStabilizer::CustomConfiguration, Auto]
   # Stand from left to right support and lift and put down feet (manual user input)
-- [Stabilizer::Standing, Lift feet (Manual), LIPMStabilizer::StandingFSM::AlternateFeetLiftingManual, Auto]
-- [LIPMStabilizer::StandingFSM::AlternateFeetLiftingManual, OK, Stabilizer::Standing, Auto]
+- [LIPMStabilizer::CustomConfiguration, Lift feet (Manual), LIPMStabilizer::StandingFSM::AlternateFeetLiftingManual, Auto]
+- [LIPMStabilizer::StandingFSM::AlternateFeetLiftingManual, OK, LIPMStabilizer::CustomConfiguration, Auto]
   # Walk one step forward in a stabilized semi quasi-static way
-- [Stabilizer::Standing, Step Forward, LIPMStabilizer::WalkingFSM::StepForward, Auto]
-- [LIPMStabilizer::WalkingFSM::StepForward, OK, Stabilizer::Standing, Auto]
+- [LIPMStabilizer::CustomConfiguration, Step Forward, LIPMStabilizer::WalkingFSM::StepForward, Auto]
+- [LIPMStabilizer::WalkingFSM::StepForward, OK, LIPMStabilizer::CustomConfiguration, Auto]
   # Walk one step backwards in a stabilized semi quasi-static way
-- [Stabilizer::Standing, Step Backward, LIPMStabilizer::WalkingFSM::StepBackward, Auto]
-- [LIPMStabilizer::WalkingFSM::StepBackward, OK, Stabilizer::Standing, Auto]
-#   # Go back to list of choices
-- [Stabilizer::GoCenter, OK, Stabilizer::Standing]
+- [LIPMStabilizer::CustomConfiguration, Step Backward, LIPMStabilizer::WalkingFSM::StepBackward, Auto]
+- [LIPMStabilizer::WalkingFSM::StepBackward, OK, LIPMStabilizer::CustomConfiguration, Auto]
+  # Go back to list of choices
+- [Stabilizer::GoCenter, OK, LIPMStabilizer::CustomConfiguration]
 
 # Initial state
 init: @LIPMStabilizer_INIT_STATE@
