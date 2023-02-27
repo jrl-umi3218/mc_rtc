@@ -915,6 +915,29 @@ void TestServer::switch_visual(const std::string & choice)
   builder.addElement({"Visual"}, mc_rtc::gui::Visual(
                                      choice, [this]() -> const rbd::parsers::Visual & { return visual_; },
                                      [this]() -> const sva::PTransformd & { return visualPos_; }));
+  builder.addElement({"Visual", "Sphere"},
+                     mc_rtc::gui::Sphere(
+                         "Fixed radius/Fixed color", 0.25, []() { return sva::PTransformd(Eigen::Vector3d(-1, 0, 1)); },
+                         mc_rtc::gui::Color::Blue),
+                     mc_rtc::gui::Sphere(
+                         "Fixed radius/Varying color", 0.25,
+                         []() { return sva::PTransformd(Eigen::Vector3d(-1, 1, 1)); },
+                         [this]() {
+                           auto color = mc_rtc::gui::Color::Yellow;
+                           color.a = (1 + cos(t_)) / 2;
+                           return color;
+                         }),
+                     mc_rtc::gui::Sphere(
+                         "Varying radius/Fixed color", [this]() { return 0.25 * (1 + (1 + cos(t_)) / 2); },
+                         []() { return sva::PTransformd(Eigen::Vector3d(-1, 2, 1)); }),
+                     mc_rtc::gui::Sphere(
+                         "Varying radius/Varying color", [this]() { return 0.25 * (1 + (1 + sin(t_)) / 2); },
+                         []() { return sva::PTransformd(Eigen::Vector3d(-1, 3, 1)); },
+                         [this]() {
+                           auto color = mc_rtc::gui::Color::Green;
+                           color.a = (1 + sin(t_)) / 2;
+                           return color;
+                         }));
 }
 
 template<typename T>

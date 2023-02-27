@@ -97,34 +97,6 @@ struct CheckReturnType<GetT, T, Args...>
   static constexpr bool value = CheckReturnType<GetT, T>::value || CheckReturnType<GetT, Args...>::value;
 };
 
-/** Check whether type is an std::array or std::vector */
-template<typename T>
-struct is_array_or_vector
-{
-  enum
-  {
-    value = false
-  };
-};
-
-template<typename T, typename A>
-struct is_array_or_vector<std::vector<T, A>>
-{
-  enum
-  {
-    value = true
-  };
-};
-
-template<typename T, std::size_t N>
-struct is_array_or_vector<std::array<T, N>>
-{
-  enum
-  {
-    value = true
-  };
-};
-
 /** Given a type provides appropriate labels.
  *
  * The following types are supported:
@@ -220,6 +192,20 @@ template<typename T>
 auto write(T & value)
 {
   return [&value](const T & v) { value = v; };
+}
+
+/** If \tparam T is callable returns value_or_cb() otherwise return value_or_cb */
+template<typename T>
+auto GetValueOrCallbackValue(const T & value_or_cb)
+{
+  if constexpr(std::is_invocable_v<T>)
+  {
+    return value_or_cb();
+  }
+  else
+  {
+    return value_or_cb;
+  }
 }
 
 } // namespace mc_rtc::gui::details
