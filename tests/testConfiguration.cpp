@@ -220,8 +220,11 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     config("int", i);
     BOOST_CHECK(i.has_value() && i.value() == 42);
 
-    std::optional<int> j = config("double").operator std::optional<int>();
+    auto j = config("double").operator std::optional<int>();
     BOOST_CHECK(!j.has_value());
+
+    auto k = config("double", std::optional<int>{std::nullopt});
+    BOOST_CHECK(k == std::nullopt);
   }
 
   /* unsigned int tests */

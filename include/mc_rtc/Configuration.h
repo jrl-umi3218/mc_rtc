@@ -622,7 +622,7 @@ public:
    * Returns nullopt if the conversion fails
    */
   template<typename T>
-  operator std::optional<T>() const
+  explicit operator std::optional<T>() const
   {
     try
     {
