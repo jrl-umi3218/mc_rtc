@@ -617,6 +617,24 @@ public:
     return ConfigurationLoader<T>::load(*this);
   }
 
+  /*! \brief Retrieves an optional<T>
+   *
+   * Returns nullopt if the conversion fails
+   */
+  template<typename T>
+  operator std::optional<T>() const
+  {
+    try
+    {
+      return this->convert<T>();
+    }
+    catch(Exception & exc)
+    {
+      exc.silence();
+      return std::nullopt;
+    }
+  }
+
   /*! \brief Creates an empty configuration */
   Configuration();
 
@@ -826,7 +844,7 @@ public:
   {
     try
     {
-      return (*this)[i];
+      return (*this)[i].convert<T>();
     }
     catch(Exception & exc)
     {
@@ -852,7 +870,7 @@ public:
   {
     try
     {
-      v = (*this)(key);
+      v = (*this)(key).convert<T>();
     }
     catch(Exception & exc)
     {
@@ -875,7 +893,7 @@ public:
   {
     try
     {
-      return (*this)(key);
+      return (*this)(key).convert<T>();
     }
     catch(Exception & exc)
     {
@@ -1623,6 +1641,19 @@ public:
 private:
   Json v;
   Configuration(const Json & v);
+
+  template<typename T>
+  T convert() const
+  {
+    if constexpr(std::is_same_v<T, Configuration>)
+    {
+      return *this;
+    }
+    else
+    {
+      return this->operator T();
+    }
+  }
 };
 
 struct MC_RTC_UTILS_DLLAPI ConfigurationArrayIterator
