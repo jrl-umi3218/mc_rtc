@@ -11,6 +11,7 @@
 #include <mc_rtc/gui/ArrayInput.h>
 #include <mc_rtc/gui/ArrayLabel.h>
 #include <mc_rtc/gui/Arrow.h>
+#include <mc_rtc/gui/Box.h>
 #include <mc_rtc/gui/Button.h>
 #include <mc_rtc/gui/Checkbox.h>
 #include <mc_rtc/gui/ComboInput.h>

@@ -22,15 +22,12 @@ auto Sphere(const std::string & name,
             GetPos get_pos_fn,
             GetColor color_fn = mc_rtc::gui::Color::Red)
 {
-  constexpr bool has_radius_cb = std::is_invocable_v<GetRadius>;
-  constexpr bool has_color_cb = std::is_invocable_v<GetColor>;
-  double radius = details::GetValueOrCallbackValue(radius_fn);
-  mc_rtc::gui::Color color = details::GetValueOrCallbackValue(color_fn);
-  auto sphere = mc_rtc::makeVisualSphere(radius, color);
+  auto sphere =
+      mc_rtc::makeVisualSphere(details::GetValueOrCallbackValue(radius_fn), details::GetValueOrCallbackValue(color_fn));
   std::function<rbd::parsers::Visual &()> get_visual_fn = [sphere]() mutable -> rbd::parsers::Visual & {
     return sphere;
   };
-  if constexpr(has_radius_cb)
+  if constexpr(std::is_invocable_v<GetRadius>)
   {
     get_visual_fn = [get_visual_fn, radius_fn]() -> rbd::parsers::Visual & {
       auto & sphere = get_visual_fn();
@@ -38,7 +35,7 @@ auto Sphere(const std::string & name,
       return sphere;
     };
   }
-  if constexpr(has_color_cb)
+  if constexpr(std::is_invocable_v<GetColor>)
   {
     get_visual_fn = [get_visual_fn, color_fn]() -> rbd::parsers::Visual & {
       auto & visual = get_visual_fn();
