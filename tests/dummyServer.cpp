@@ -915,6 +915,37 @@ void TestServer::switch_visual(const std::string & choice)
   builder.addElement({"Visual"}, mc_rtc::gui::Visual(
                                      choice, [this]() -> const rbd::parsers::Visual & { return visual_; },
                                      [this]() -> const sva::PTransformd & { return visualPos_; }));
+  builder.addElement({"Visual", "Cylinder"},
+                     mc_rtc::gui::Cylinder(
+                         "Fixed size/Fixed color", {0.125, 1.0},
+                         []() { return sva::PTransformd(Eigen::Vector3d(-3, 0, 1)); }, mc_rtc::gui::Color::Blue),
+                     mc_rtc::gui::Cylinder(
+                         "Fixed size/Varying color", {0.125, 1.0},
+                         []() { return sva::PTransformd(Eigen::Vector3d(-3, 1, 1)); },
+                         [this]() {
+                           auto color = mc_rtc::gui::Color::Yellow;
+                           color.a = (1 + cos(t_)) / 2;
+                           return color;
+                         }),
+                     mc_rtc::gui::Cylinder(
+                         "Varying size/Fixed color",
+                         [this]() -> mc_rtc::gui::CylinderParameters {
+                           double m = (1 + (1 + cos(t_)) / 2);
+                           return {0.125 * m, 0.5 * m};
+                         },
+                         []() { return sva::PTransformd(Eigen::Vector3d(-3, 2, 1)); }),
+                     mc_rtc::gui::Cylinder(
+                         "Varying size/Varying color",
+                         [this]() -> mc_rtc::gui::CylinderParameters {
+                           double m = (1 + (1 + sin(t_)) / 2);
+                           return {0.125 * m, 0.5 * m};
+                         },
+                         []() { return sva::PTransformd(Eigen::Vector3d(-3, 3, 1)); },
+                         [this]() {
+                           auto color = mc_rtc::gui::Color::Green;
+                           color.a = (1 + sin(t_)) / 2;
+                           return color;
+                         }));
   builder.addElement(
       {"Visual", "Box"},
       mc_rtc::gui::Box(
