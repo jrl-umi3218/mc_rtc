@@ -6,6 +6,8 @@
 
 /** This file contains some utility template metaprogramming functions for the GUI */
 
+#include <mc_rtc/constants.h>
+
 #include <mc_rbdyn/rpy_utils.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
@@ -167,10 +169,19 @@ auto read(const T && value)
 }
 
 /** Read RPY angles from a value */
-template<typename T>
+template<bool Degrees, typename T>
 auto read_rpy(const T && value)
 {
-  return [value]() { return mc_rbdyn::rpyFromRotation(value); };
+  return [value]() {
+    if constexpr(Degrees)
+    {
+      return mc_rbdyn::rpyFromRotation(value) * 180. / mc_rtc::constants::PI;
+    }
+    else
+    {
+      return mc_rbdyn::rpyFromRotation(value);
+    }
+  };
 }
 
 /** Wrap a variable into a callback */
@@ -181,10 +192,19 @@ auto read(const T & value)
 }
 
 /** Read RPY angles from a variable */
-template<typename T>
+template<bool Degrees, typename T>
 auto read_rpy(const T & value)
 {
-  return [&value]() { return mc_rbdyn::rpyFromRotation(value); };
+  return [&value]() {
+    if constexpr(Degrees)
+    {
+      return mc_rbdyn::rpyFromRotation(value) * 180. / mc_rtc::constants::PI;
+    }
+    else
+    {
+      return mc_rbdyn::rpyFromRotation(value);
+    }
+  };
 }
 
 /** Make a setter callback for a variable */

@@ -105,8 +105,17 @@ auto ArrayInput(const std::string & name, T & value)
 template<bool Degrees = true, typename T>
 auto RPYInput(const std::string & name, T & value)
 {
-  return ArrayInput(name, details::RPYLabels<Degrees>::labels, details::read_rpy(value),
-                    [&value](const Eigen::Vector3d & rpy) { value = mc_rbdyn::rpyToMat(rpy); });
+  return ArrayInput(name, details::RPYLabels<Degrees>::labels, details::read_rpy<Degrees>(value),
+                    [&value](const Eigen::Vector3d & rpy) {
+                      if constexpr(Degrees)
+                      {
+                        value = mc_rbdyn::rpyToMat(rpy * mc_rtc::constants::PI / 180.);
+                      }
+                      else
+                      {
+                        value = mc_rbdyn::rpyToMat(rpy);
+                      }
+                    });
 }
 
 } // namespace mc_rtc::gui

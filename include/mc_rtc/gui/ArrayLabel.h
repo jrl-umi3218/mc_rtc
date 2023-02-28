@@ -102,7 +102,7 @@ auto ArrayLabel(const std::string & name, T && value)
 template<bool Degrees = true, typename T>
 auto RPYLabel(const std::string & name, T && value)
 {
-  return ArrayLabel(name, details::RPYLabels<Degrees>::labels, details::read_rpy(std::forward<T>(value)));
+  return ArrayLabel(name, details::RPYLabels<Degrees>::labels, details::read_rpy<Degrees>(std::forward<T>(value)));
 }
 
 } // namespace mc_rtc::gui
