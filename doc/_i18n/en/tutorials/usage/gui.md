@@ -268,6 +268,36 @@ XYTheta("XYThetaOnGround", [this]() -> std::array<double, 3> { return {x, y, the
 XYTheta("XYTheta", [this]() -> std::array<double, 4> { return {x, y, theta, z}; });
 ```
 
+##### `Visual`
+
+This element allows to display a `Visual` element. Two callbacks are expected, the first must return an `rbd::parsers::Visual` element and the second must return the position (origin) of the `Visual` element.
+
+```cpp
+#include <mc_rtc/visual_utils.h>
+
+Visual("Visual", [this]() { return mc_rtc::makeVisualSphere(0.15, Color::Blue); }, [this]() { return visual_pos_; });
+```
+
+As `rbd::parsers::Visual` API is not the easiest to work with, several helpers are provided in [`mc_rtc/visual_utils.h`](https://github.com/jrl-umi3218/mc_rtc/blob/master/include/mc_rtc/visual_utils.h) to assist with their creation.
+
+Furthermore, helpers are provided to display primitives:
+
+```cpp
+// For all these helpers, the color is the last argument and can be either a fixed value or a callback
+
+// Display a sphere (radius is fixed or provided by a callback)
+Sphere("Sphere", [this]() { return radius_; }, [this]() { return pos_; });
+
+// Display a box ([x, y, z] dimensions are fixed or provided by a callback)
+Box("Sphere", [this]() { return size_; }, [this]() { return pos_; });
+
+// Display a cylinder (CylinderParameter is {radius, length}, it is fixed or provided by a callback)
+Sphere("Sphere", [this]() -> CylinderParameter { {radius_, length_}; }, [this]() { return pos_; });
+
+// Display an ellipsoid ([x, y, z] dimensions are fixed or provided by a callback)
+Ellispsoid("Ellipsoid", [this]() { return size_; }, [this]() { return pos_; });
+```
+
 ##### `Table`
 
 This element allows to display a table with arbitrary data in it. The data callback must return an object that could be represented as an array of array such as an `std::vector<std::vector<double>>` or an `std::vector<std::tuple<X, Y, Z>>`
