@@ -60,11 +60,13 @@ digraph "include/mc_rtc/Configuration.h"
   Node0 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node23 [label="optional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node23 [label="string_view",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node24 [label="unordered_set",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node24 [label="string_view",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node25 [label="unordered_set",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

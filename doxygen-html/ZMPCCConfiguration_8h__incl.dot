@@ -64,12 +64,14 @@ digraph "include/mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h"
   Node2 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node25 [label="optional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node2 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node25 [label="string_view",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node2 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node26 [label="unordered_set",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node26 [label="string_view",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node2 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node27 [label="unordered_set",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node2 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

@@ -1,5 +1,6 @@
 var NAVTREEINDEX20 =
 {
+"structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#af7d8d84e9eabf8762d42feae2ce8457d":[3,0,9,2,3,17],
 "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html":[3,0,9,2,0,0],
 "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a16f8c6cb34189692495e7afafb0b2ced":[3,0,9,2,0,0,21],
 "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a1a221647a888696d4d1837961e1b7a6d":[3,0,9,2,0,0,7],
@@ -248,6 +249,5 @@ var NAVTREEINDEX20 =
 "structmc__tvm_1_1MomentumFunction.html#af973a8d6a9f5ec6db41cd84308c46269":[3,0,11,14,7],
 "structmc__tvm_1_1PositionBasedVisServoFunction.html":[3,0,11,16],
 "structmc__tvm_1_1PositionBasedVisServoFunction.html#a07f17aa78aacb1056605ea3df64e6eef":[3,0,11,16,2],
-"structmc__tvm_1_1PositionBasedVisServoFunction.html#a1c622b86cf6cc80ed885f90b45c13cc8":[3,0,11,16,7],
-"structmc__tvm_1_1PositionBasedVisServoFunction.html#a1da2035cb39da965731df1ffcd2fa3a0":[3,0,11,16,5]
+"structmc__tvm_1_1PositionBasedVisServoFunction.html#a1c622b86cf6cc80ed885f90b45c13cc8":[3,0,11,16,7]
 };

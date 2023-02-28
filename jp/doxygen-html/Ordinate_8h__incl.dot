@@ -70,16 +70,18 @@ digraph "include/mc_rtc/gui/plot/Ordinate.h"
   Node5 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node28 [label="optional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node5 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node28 [label="string_view",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node5 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node29 [label="unordered_set",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node29 [label="string_view",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node5 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 [label="unordered_set",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node5 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node30 [label="mc_rtc/gui/api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$include_2mc__rtc_2gui_2api_8h.html"];
+  Node4 -> Node31 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31 [label="mc_rtc/gui/api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$include_2mc__rtc_2gui_2api_8h.html"];
   Node4 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 -> Node31 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node31 [label="limits",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node32 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32 [label="limits",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

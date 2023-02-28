@@ -9978,6 +9978,13 @@
     </member>
     <member kind="function">
       <type></type>
+      <name>operator std::optional&lt; T &gt;</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a6ad690bd5d97d2dd902ad243d1891832</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
       <name>Configuration</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
       <anchor>a56857d79e0d10c4347e20ee425987970</anchor>
@@ -11901,8 +11908,8 @@
       <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</type>
       <name>Contact</name>
       <anchorfile>structmc__control_1_1Contact.html</anchorfile>
-      <anchor>a283065dd4842ba24809e230b6ea3559d</anchor>
-      <arglist>(const std::string &amp;r1, const std::string &amp;r2, const std::string &amp;r1Surface, const std::string &amp;r2Surface, double friction=mc_rbdyn::Contact::defaultFriction, const Eigen::Vector6d &amp;dof=Eigen::Vector6d::Ones())</arglist>
+      <anchor>aa60a2901df9bc2de77f7f42282edf035</anchor>
+      <arglist>(const std::optional&lt; std::string &gt; &amp;r1, const std::optional&lt; std::string &gt; &amp;r2, const std::string &amp;r1Surface, const std::string &amp;r2Surface, double friction=mc_rbdyn::Contact::defaultFriction, const Eigen::Vector6d &amp;dof=Eigen::Vector6d::Ones())</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -11933,17 +11940,17 @@
       <arglist>(const MCController &amp;, const mc_rbdyn::Contact &amp;)</arglist>
     </member>
     <member kind="variable">
-      <type>std::string</type>
+      <type>std::optional&lt; std::string &gt;</type>
       <name>r1</name>
       <anchorfile>structmc__control_1_1Contact.html</anchorfile>
-      <anchor>a01542c772433ddc699d2284e62c64d6e</anchor>
+      <anchor>a8c2071dd5b22cda3ca23783b524ce060</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>std::string</type>
+      <type>std::optional&lt; std::string &gt;</type>
       <name>r2</name>
       <anchorfile>structmc__control_1_1Contact.html</anchorfile>
-      <anchor>a64280f798573e84d972b579f58e74160</anchor>
+      <anchor>a6fcb0b1d485b941fea26550ae9342f9f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">

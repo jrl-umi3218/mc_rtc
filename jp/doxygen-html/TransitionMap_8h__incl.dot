@@ -62,8 +62,6 @@ digraph "include/mc_control/fsm/TransitionMap.h"
   Node27 [label="spdlog/fmt/fmt.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node25 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node28 [label="spdlog/fmt/ostr.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node25 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node29 [label="spdlog/logger.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node11 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node11 -> Node32 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node32 [label="mc_rbdyn/rpy_utils.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$rpy__utils_8h.html"];
@@ -75,12 +73,14 @@ digraph "include/mc_control/fsm/TransitionMap.h"
   Node11 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node11 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node11 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node34 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node34 [label="optional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node11 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node11 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node11 -> Node34 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node34 [label="string_view",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node11 -> Node35 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node35 [label="unordered_set",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node35 [label="string_view",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node11 -> Node36 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36 [label="unordered_set",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node11 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node75 -> Node77 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node77 [label="mc_rtc/gui/StateBuilder.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$StateBuilder_8h.html"];
@@ -147,5 +147,5 @@ digraph "include/mc_control/fsm/TransitionMap.h"
   Node108 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 -> Node35 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node36 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

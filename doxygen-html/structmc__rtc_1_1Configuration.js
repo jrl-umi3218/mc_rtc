@@ -79,6 +79,7 @@ var structmc__rtc_1_1Configuration =
     [ "operator mc_rbdyn::Gains6d", "structmc__rtc_1_1Configuration.html#a157e0ee8843fa29aa11dd4a959c77608", null ],
     [ "operator std::array< T, N >", "structmc__rtc_1_1Configuration.html#aa4af8f372da0ca5bc835588c737c5877", null ],
     [ "operator std::map< std::string, T, C, A >", "structmc__rtc_1_1Configuration.html#ac26424cf2ed968f1999a3277ab4f7835", null ],
+    [ "operator std::optional< T >", "structmc__rtc_1_1Configuration.html#a6ad690bd5d97d2dd902ad243d1891832", null ],
     [ "operator std::pair< T1, T2 >", "structmc__rtc_1_1Configuration.html#a552f9761ab8458992b1ef20ad9019602", null ],
     [ "operator std::set< T, C, A >", "structmc__rtc_1_1Configuration.html#a7cb85c50202da3906f0af969eb4af6d9", null ],
     [ "operator std::string", "structmc__rtc_1_1Configuration.html#aec19d5037e1fead68093f2f2edee4592", null ],

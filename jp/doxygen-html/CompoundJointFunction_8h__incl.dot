@@ -66,18 +66,20 @@ digraph "include/mc_tvm/CompoundJointFunction.h"
   Node3 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node26 [label="optional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node3 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node26 [label="string_view",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node3 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node27 [label="unordered_set",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node27 [label="string_view",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node28 [label="unordered_set",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node3 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node28 [label="mc_rbdyn/fwd.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__rbdyn_2fwd_8h.html"];
-  Node28 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node29 [label="tvm/function/abstract\l/LinearFunction.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node29 [label="mc_rbdyn/fwd.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__rbdyn_2fwd_8h.html"];
+  Node29 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 [label="tvm/function/abstract\l/LinearFunction.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

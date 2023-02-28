@@ -1,11 +1,11 @@
 var searchData=
 [
   ['r',['r',['../structmc__rtc_1_1gui_1_1Color.html#af5fa54af25cd633fec4abb5cd14c0b17',1,'mc_rtc::gui::Color']]],
-  ['r1',['r1',['../structmc__control_1_1Contact.html#a01542c772433ddc699d2284e62c64d6e',1,'mc_control::Contact']]],
+  ['r1',['r1',['../structmc__control_1_1Contact.html#a8c2071dd5b22cda3ca23783b524ce060',1,'mc_control::Contact']]],
   ['r1index',['r1Index',['../structmc__solver_1_1CollisionsConstraint.html#a0fbd97c53f4fb31297e1abd61fa304b2',1,'mc_solver::CollisionsConstraint']]],
   ['r1joints',['r1Joints',['../structmc__rbdyn_1_1Collision.html#a7dbc635314d1e44f1cbd7c7a380281d3',1,'mc_rbdyn::Collision']]],
   ['r1surface',['r1Surface',['../structmc__control_1_1Contact.html#aa9df2c031fd0ae28d6a4036008b83296',1,'mc_control::Contact']]],
-  ['r2',['r2',['../structmc__control_1_1Contact.html#a64280f798573e84d972b579f58e74160',1,'mc_control::Contact']]],
+  ['r2',['r2',['../structmc__control_1_1Contact.html#a6fcb0b1d485b941fea26550ae9342f9f',1,'mc_control::Contact']]],
   ['r2index',['r2Index',['../structmc__solver_1_1CollisionsConstraint.html#a0dc1390b5fc625595ded740a9e12afd2',1,'mc_solver::CollisionsConstraint']]],
   ['r2joints',['r2Joints',['../structmc__rbdyn_1_1Collision.html#a61143aeca6bba9864fb2101795ed0a89',1,'mc_rbdyn::Collision']]],
   ['r2surface',['r2Surface',['../structmc__control_1_1Contact.html#a52ff892b5567c32098304acd96a91af2',1,'mc_control::Contact']]],
