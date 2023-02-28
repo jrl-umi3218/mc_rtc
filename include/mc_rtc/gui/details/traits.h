@@ -172,7 +172,7 @@ auto read(const T && value)
 template<bool Degrees, typename T>
 auto read_rpy(const T && value)
 {
-  return [value]() {
+  return [value]() -> Eigen::Vector3d {
     if constexpr(Degrees)
     {
       return mc_rbdyn::rpyFromRotation(value) * 180. / mc_rtc::constants::PI;
@@ -195,7 +195,7 @@ auto read(const T & value)
 template<bool Degrees, typename T>
 auto read_rpy(const T & value)
 {
-  return [&value]() {
+  return [&value]() -> Eigen::Vector3d {
     if constexpr(Degrees)
     {
       return mc_rbdyn::rpyFromRotation(value) * 180. / mc_rtc::constants::PI;
