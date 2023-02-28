@@ -176,6 +176,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
   /*! Check that accessing a non-existing entry throws */
   BOOST_CHECK_THROW(config("NONE"), mc_rtc::Configuration::Exception);
 
+  BOOST_CHECK(config("NONE", std::optional<mc_rtc::Configuration>{}) == std::nullopt);
+
   /* int tests */
   {
     /*! Check that we can access a direct int entry */
@@ -208,6 +210,21 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     int g = 0;
     config("dict")("int", g);
     BOOST_CHECK_EQUAL(g, 42);
+
+    /*! Similar checks with optional */
+
+    std::optional<int> h = config("int");
+    BOOST_CHECK(h.has_value() && h.value() == 42);
+
+    std::optional<int> i;
+    config("int", i);
+    BOOST_CHECK(i.has_value() && i.value() == 42);
+
+    auto j = config("double").operator std::optional<int>();
+    BOOST_CHECK(!j.has_value());
+
+    auto k = config("double", std::optional<int>{std::nullopt});
+    BOOST_CHECK(k == std::nullopt);
   }
 
   /* unsigned int tests */

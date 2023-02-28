@@ -36,7 +36,8 @@ namespace mc_rtc
 
 mc_control::Contact ConfigurationLoader<mc_control::Contact>::load(const mc_rtc::Configuration & config)
 {
-  return mc_control::Contact(config("r1"), config("r2"), config("r1Surface"), config("r2Surface"),
+  return mc_control::Contact(config("r1", std::optional<std::string>{}), config("r2", std::optional<std::string>{}),
+                             config("r1Surface"), config("r2Surface"),
                              config("friction", mc_rbdyn::Contact::defaultFriction),
                              config("dof", Eigen::Vector6d::Ones().eval()));
 }
@@ -880,10 +881,12 @@ void MCController::updateContacts()
     size_t table_idx = 0;
     for(const auto & c : contacts_)
     {
-      ensureValidContact(c.r1, c.r1Surface);
-      ensureValidContact(c.r2, c.r2Surface);
-      auto r1Index = robot(c.r1).robotIndex();
-      auto r2Index = robot(c.r2).robotIndex();
+      const auto & r1 = c.r1.has_value() ? c.r1.value() : robot().name();
+      const auto & r2 = c.r2.has_value() ? c.r2.value() : robot().name();
+      ensureValidContact(r1, c.r1Surface);
+      ensureValidContact(r2, c.r2Surface);
+      auto r1Index = robot(r1).robotIndex();
+      auto r2Index = robot(r2).robotIndex();
       contacts.emplace_back(robots(), r1Index, r2Index, c.r1Surface, c.r2Surface, c.friction);
       contacts.back().dof(c.dof);
       if(solver().backend() == Backend::Tasks)
@@ -892,9 +895,9 @@ void MCController::updateContacts()
         contact_constraint_->contactConstr()->addDofContact(cId, c.dof.asDiagonal());
       }
       auto & table_data = contacts_table_[table_idx];
-      std::get<0>(table_data) = c.r1;
+      std::get<0>(table_data) = r1;
       std::get<1>(table_data) = c.r1Surface;
-      std::get<2>(table_data) = c.r2;
+      std::get<2>(table_data) = r2;
       std::get<3>(table_data) = c.r2Surface;
       std::get<4>(table_data) = fmt::format("{}", MC_FMT_STREAMED(c.dof.transpose()));
       std::get<5>(table_data) = c.friction;
@@ -906,7 +909,9 @@ void MCController::updateContacts()
       gui_->removeCategory({"Contacts", "Remove"});
       for(const auto & c : contacts_)
       {
-        std::string bName = c.r1 + "::" + c.r1Surface + " & " + c.r2 + "::" + c.r2Surface;
+        const auto & r1 = c.r1.has_value() ? c.r1.value() : robot().name();
+        const auto & r2 = c.r2.has_value() ? c.r2.value() : robot().name();
+        std::string bName = r1 + "::" + c.r1Surface + " & " + r2 + "::" + c.r2Surface;
         gui_->addElement({"Contacts", "Remove"}, mc_rtc::gui::Button(bName, [this, &c]() { removeContact(c); }));
       }
     }
@@ -989,26 +994,27 @@ void MCController::addContact(const Contact & c)
   ContactSet::iterator it;
   std::tie(it, inserted) = contacts_.insert(c);
   contacts_changed_ |= inserted;
+  const auto & r1 = c.r1.has_value() ? c.r1.value() : robot().name();
+  const auto & r2 = c.r2.has_value() ? c.r2.value() : robot().name();
   if(!inserted)
   {
     if(it->dof != c.dof)
     {
-      mc_rtc::log::info("Changed contact DoF {}::{}/{}::{} to {}", c.r1, c.r1Surface, c.r2, c.r2Surface,
+      mc_rtc::log::info("Changed contact DoF {}::{}/{}::{} to {}", r1, c.r1Surface, r2, c.r2Surface,
                         MC_FMT_STREAMED(c.dof.transpose()));
       it->dof = c.dof;
       contacts_changed_ = true;
     }
     if(it->friction != c.friction)
     {
-      mc_rtc::log::info("Changed contact friction {}::{}/{}::{} to {}", c.r1, c.r1Surface, c.r2, c.r2Surface,
-                        c.friction);
+      mc_rtc::log::info("Changed contact friction {}::{}/{}::{} to {}", r1, c.r1Surface, r2, c.r2Surface, c.friction);
       it->friction = c.friction;
       contacts_changed_ = true;
     }
   }
   else
   {
-    mc_rtc::log::info("Add contact {}::{}/{}::{} (DoF: {})", c.r1, c.r1Surface, c.r2, c.r2Surface,
+    mc_rtc::log::info("Add contact {}::{}/{}::{} (DoF: {})", r1, c.r1Surface, r2, c.r2Surface,
                       MC_FMT_STREAMED(c.dof.transpose()));
   }
 }
@@ -1018,7 +1024,9 @@ void MCController::removeContact(const Contact & c)
   contacts_changed_ |= static_cast<bool>(contacts_.erase(c));
   if(contacts_changed_)
   {
-    mc_rtc::log::info("Remove contact {}::{}/{}::{}", c.r1, c.r1Surface, c.r2, c.r2Surface);
+    const auto & r1 = c.r1.has_value() ? c.r1.value() : robot().name();
+    const auto & r2 = c.r2.has_value() ? c.r2.value() : robot().name();
+    mc_rtc::log::info("Remove contact {}::{}/{}::{}", r1, c.r1Surface, r2, c.r2Surface);
   }
 }
 

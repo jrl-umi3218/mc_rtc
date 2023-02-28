@@ -19,13 +19,15 @@ struct MCController;
  *
  * A lightweight variant of mc_rbdyn::Contact meant to simplify contact manipulations
  *
+ * If \ref r1 or \ref r2 is std::nullopt then the controller will use the main robot instead
+ *
  */
 struct MC_CONTROL_DLLAPI Contact
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  Contact(const std::string & r1,
-          const std::string & r2,
+  Contact(const std::optional<std::string> & r1,
+          const std::optional<std::string> & r2,
           const std::string & r1Surface,
           const std::string & r2Surface,
           double friction = mc_rbdyn::Contact::defaultFriction,
@@ -34,8 +36,8 @@ struct MC_CONTROL_DLLAPI Contact
   {
   }
 
-  std::string r1;
-  std::string r2;
+  std::optional<std::string> r1;
+  std::optional<std::string> r2;
   std::string r1Surface;
   std::string r2Surface;
   mutable double friction;
@@ -78,7 +80,7 @@ struct hash<mc_control::Contact>
       h ^= std::hash<std::string>{}(surface) + 0x9e3779b9 + (h << 6) + (h >> 2);
       return h;
     };
-    return hash_combine(c.r1, c.r1Surface) ^ hash_combine(c.r2, c.r2Surface);
+    return hash_combine(c.r1.value_or(""), c.r1Surface) ^ hash_combine(c.r2.value_or(""), c.r2Surface);
   }
 };
 

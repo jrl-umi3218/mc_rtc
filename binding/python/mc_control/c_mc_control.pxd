@@ -29,13 +29,19 @@ cdef extern from "<memory>" namespace "std" nogil:
     unique_ptr(T*)
     T* get()
 
+cdef extern from "<optional>" namespace "std" nogil:
+  cdef cppclass optional[T]:
+    cppbool has_value()
+    T& value()
+    optional& operator=(T&)
+
 cdef extern from "<mc_control/Contact.h>" namespace "mc_control":
   cdef cppclass Contact:
     Contact()
     Contact(const string&, const string&, const string&, const string&, double)
     Contact(const string&, const string&, const string&, const string&, double, const Vector6d)
-    string r1
-    string r2
+    optional[string] r1
+    optional[string] r2
     string r1Surface
     string r2Surface
     double friction

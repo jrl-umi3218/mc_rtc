@@ -69,11 +69,14 @@ cdef class Contact(object):
       self.__ctor__(*args)
   property r1:
     def __get__(self):
-      return self.impl.r1
+      if self.impl.r1.has_value():
+        return self.impl.r1.value()
+      else:
+        return None
     def __set__(self, r1):
       if isinstance(r1, unicode):
         r1 = r1.encode(u'ascii')
-      self.impl.r1 = r1
+      self.impl.r1 = <string>(r1)
   property r1Surface:
     def __get__(self):
       return self.impl.r1Surface
@@ -83,11 +86,14 @@ cdef class Contact(object):
       self.impl.r1Surface = r1Surface
   property r2:
     def __get__(self):
-      return self.impl.r2
+      if self.impl.r2.has_value():
+        return self.impl.r2.value()
+      else:
+        return None
     def __set__(self, r2):
       if isinstance(r2, unicode):
         r2 = r2.encode(u'ascii')
-      self.impl.r2 = r2
+      self.impl.r2 = <string>(r2)
   property r2Surface:
     def __get__(self):
       return self.impl.r2Surface
