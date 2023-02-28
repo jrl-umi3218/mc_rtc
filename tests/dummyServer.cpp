@@ -915,6 +915,32 @@ void TestServer::switch_visual(const std::string & choice)
   builder.addElement({"Visual"}, mc_rtc::gui::Visual(
                                      choice, [this]() -> const rbd::parsers::Visual & { return visual_; },
                                      [this]() -> const sva::PTransformd & { return visualPos_; }));
+  builder.addElement(
+      {"Visual", "Ellipsoid"},
+      mc_rtc::gui::Ellipsoid(
+          "Fixed size/Fixed color", Eigen::Vector3d(0.25, 0.5, 1.0),
+          []() { return sva::PTransformd(Eigen::Vector3d(-4, 0, 1)); }, mc_rtc::gui::Color::Blue),
+      mc_rtc::gui::Ellipsoid(
+          "Fixed size/Varying color", Eigen::Vector3d(0.25, 0.5, 1.0),
+          []() { return sva::PTransformd(Eigen::Vector3d(-4, 1, 1)); },
+          [this]() {
+            auto color = mc_rtc::gui::Color::Yellow;
+            color.a = (1 + cos(t_)) / 2;
+            return color;
+          }),
+      mc_rtc::gui::Ellipsoid(
+          "Varying size/Fixed color",
+          [this]() -> Eigen::Vector3d { return Eigen::Vector3d(0.25, 0.5, 1.0) * (1 + (1 + cos(t_)) / 2); },
+          []() { return sva::PTransformd(Eigen::Vector3d(-4, 2, 1)); }),
+      mc_rtc::gui::Ellipsoid(
+          "Varying size/Varying color",
+          [this]() -> Eigen::Vector3d { return Eigen::Vector3d(0.25, 0.5, 1.0) * (1 + (1 + sin(t_)) / 2); },
+          []() { return sva::PTransformd(Eigen::Vector3d(-4, 3, 1)); },
+          [this]() {
+            auto color = mc_rtc::gui::Color::Green;
+            color.a = (1 + sin(t_)) / 2;
+            return color;
+          }));
   builder.addElement({"Visual", "Cylinder"},
                      mc_rtc::gui::Cylinder(
                          "Fixed size/Fixed color", {0.125, 1.0},

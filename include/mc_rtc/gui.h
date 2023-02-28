@@ -17,6 +17,7 @@
 #include <mc_rtc/gui/ComboInput.h>
 #include <mc_rtc/gui/Cylinder.h>
 #include <mc_rtc/gui/DataComboInput.h>
+#include <mc_rtc/gui/Ellipsoid.h>
 #include <mc_rtc/gui/Force.h>
 #include <mc_rtc/gui/Form.h>
 #include <mc_rtc/gui/IntegerInput.h>
