@@ -72,6 +72,12 @@ ArrayLabel("Some strings", []() { return {"a", "b", "c"}; });
 // Display a vector with labels
 ArrayLabel("Vector", {"x", "y", "z"}, []() { return Eigen::Vector3d::Zero(); });
 
+// Display a label from a variable
+Label("My variable", var_);
+
+// Display an ArrayLabel from a variable
+ArrayLabel("My array", array_);
+
 // Some elements have associated labels, e.g. Force also adds an ArrayLabel
 Force("LeftFoot", [this]() { return this->robot().surfaceWrench("LFullSole"); }, [this]() { return this->robot().surfacePose("LFullSole"); }),
 Force("RightFoot", [this]() { return this->robot().surfaceWrench("RFullSole"); }, [this]() { return this->robot().surfacePose("RFullSole"); }),
@@ -98,6 +104,9 @@ This element display a checkbox. Its status depends on the value you provide, wh
 
 ```cpp
 Checkbox("Check me", [this]() { return status_; }, [this]() { status_ = !status_; });
+
+// Created a from a boolean variable
+Checkbox("Check me", status_);
 ```
 
 ##### `StringInput`/`IntegerInput`/`NumberInput`/`ArrayInput`
@@ -108,6 +117,11 @@ These elements provide inputs for the user. You should use the representation th
 StringInput("Your name", [this]() { return name_; }, [this](const std::string & n){ name_ = n; });
 
 NumberInput("Weight", [this]() { return w_; }, [this](double w){ w_ = w; });
+
+// Created from appropriate variables
+StringInput("Your name", name_);
+
+NumberInput("Weight", w_);
 ```
 
 `ArrayInput` accepts an additional parameter to add labels to the data. It also assumes that the array size is fixed.
@@ -116,9 +130,25 @@ NumberInput("Weight", [this]() { return w_; }, [this](double w){ w_ = w; });
 ArrayInput("Your array", {"x", "y", "z"},
            [this]() { return v3_; },
            [this](const Eigen::Vector3d & v) { v3_ = v; });
+
+// Created from the variable, labels are added automatically
+ArrayInput("Your array", v3_);
+
+// Overriding the default labels
+ArrayInput("Your array", {"vx", "vy", "vz"}, v3_);
 ```
 
 In Python, the labels go at the end of the parameter list.
+
+##### `Input`
+
+`Input` is a general helper, it takes a variable as an input and will select the appropriate one among `StringInput`, `NumberInput`, `IntegerInput` or `ArrayInput`.
+
+```cpp
+Input("String input", s_); // If s_ is an std::string this will be a StringInput
+
+Input("Array input", v3_); // If v3_ is vector-like this will be an ArrayInput
+```
 
 ##### `ComboInput`/`DataComboInput`
 
@@ -148,6 +178,9 @@ These elements will display two things:
 // Read-only variant does not provide a callback to set the data
 Point3D("Point", [this]() { return v3_; });
 
+// Read-only variant from a variable (only available for Point3D and Transform)
+Point3DRO("Point", v3_);
+
 // Read-write variant
 
 // Note that even though we want to display a rotation, we need to provide a
@@ -155,6 +188,9 @@ Point3D("Point", [this]() { return v3_; });
 Rotation("Rot",
          [this]() { return sva::PTransformd{rot_, pos_} },
          [this](const Eigen::Matrix3d & rot) { rot_ = rot; });
+
+// Read-write variant from a variable
+Transform("Transform", pt_);
 ```
 
 ##### `Trajectory`
@@ -230,6 +266,36 @@ XYTheta("XYThetaOnGround", [this]() -> std::array<double, 3> { return {x, y, the
 
 // Specify the height with a 4th element
 XYTheta("XYTheta", [this]() -> std::array<double, 4> { return {x, y, theta, z}; });
+```
+
+##### `Visual`
+
+This element allows to display a `Visual` element. Two callbacks are expected, the first must return an `rbd::parsers::Visual` element and the second must return the position (origin) of the `Visual` element.
+
+```cpp
+#include <mc_rtc/visual_utils.h>
+
+Visual("Visual", [this]() { return mc_rtc::makeVisualSphere(0.15, Color::Blue); }, [this]() { return visual_pos_; });
+```
+
+As `rbd::parsers::Visual` API is not the easiest to work with, several helpers are provided in [`mc_rtc/visual_utils.h`](https://github.com/jrl-umi3218/mc_rtc/blob/master/include/mc_rtc/visual_utils.h) to assist with their creation.
+
+Furthermore, helpers are provided to display primitives:
+
+```cpp
+// For all these helpers, the color is the last argument and can be either a fixed value or a callback
+
+// Display a sphere (radius is fixed or provided by a callback)
+Sphere("Sphere", [this]() { return radius_; }, [this]() { return pos_; });
+
+// Display a box ([x, y, z] dimensions are fixed or provided by a callback)
+Box("Sphere", [this]() { return size_; }, [this]() { return pos_; });
+
+// Display a cylinder (CylinderParameter is {radius, length}, it is fixed or provided by a callback)
+Sphere("Sphere", [this]() -> CylinderParameter { {radius_, length_}; }, [this]() { return pos_; });
+
+// Display an ellipsoid ([x, y, z] dimensions are fixed or provided by a callback)
+Ellispsoid("Ellipsoid", [this]() { return size_; }, [this]() { return pos_; });
 ```
 
 ##### `Table`

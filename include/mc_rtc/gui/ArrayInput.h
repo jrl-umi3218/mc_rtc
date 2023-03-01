@@ -6,10 +6,12 @@
 
 #include <mc_rtc/gui/elements.h>
 
-namespace mc_rtc
+#include <mc_rbdyn/rpy_utils.h>
+
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** ArrayInput should display an array (\see ArrayLabel) and
@@ -53,23 +55,67 @@ private:
   std::vector<std::string> labels_;
 };
 
+} // namespace details
+
 /** Helper function to create an ArrayInput element (no labels) */
 template<typename GetT, typename SetT>
-ArrayInputImpl<GetT, SetT> ArrayInput(const std::string & name, GetT get_fn, SetT set_fn)
+auto ArrayInput(const std::string & name, GetT get_fn, SetT set_fn)
 {
-  return ArrayInputImpl<GetT, SetT>(name, get_fn, set_fn);
+  return details::ArrayInputImpl(name, get_fn, set_fn);
 }
 
 /** Helper function to create an ArrayInput element (with labels) */
 template<typename GetT, typename SetT>
-ArrayInputImpl<GetT, SetT> ArrayInput(const std::string & name,
-                                      const std::vector<std::string> & labels,
-                                      GetT get_fn,
-                                      SetT set_fn)
+auto ArrayInput(const std::string & name, const std::vector<std::string> & labels, GetT get_fn, SetT set_fn)
 {
-  return ArrayInputImpl<GetT, SetT>(name, labels, get_fn, set_fn);
+  return details::ArrayInputImpl(name, labels, get_fn, set_fn);
 }
 
-} // namespace gui
+/** Helper function to build an ArrayInput from a variable */
+template<typename T>
+auto ArrayInput(const std::string & name, const std::vector<std::string> & labels, T & value)
+{
+  return details::ArrayInputImpl(name, labels, details::read(value), details::write(value));
+}
 
-} // namespace mc_rtc
+/** Helper function to build an ArrayInput from a variable
+ *
+ * Labels are automatically added for certain types, see \ref details::Labels<T>
+ */
+template<typename T>
+auto ArrayInput(const std::string & name, T & value)
+{
+  using Labels = details::Labels<std::decay_t<T>>;
+  auto read = details::read(value);
+  auto write = details::write(value);
+  if constexpr(Labels::has_labels)
+  {
+    return ArrayInput(name, Labels::labels, read, write);
+  }
+  else
+  {
+    return ArrayInput(name, read, write);
+  }
+}
+
+/** Creates an input for a rotation using RPY angles
+ *
+ * Defaults to degrees inputs, can be changed via the \tparam Degrees template parameter
+ */
+template<bool Degrees = true, typename T>
+auto RPYInput(const std::string & name, T & value)
+{
+  return ArrayInput(name, details::RPYLabels<Degrees>::labels, details::read_rpy<Degrees>(value),
+                    [&value](const Eigen::Vector3d & rpy) {
+                      if constexpr(Degrees)
+                      {
+                        value = mc_rbdyn::rpyToMat(rpy * mc_rtc::constants::PI / 180.);
+                      }
+                      else
+                      {
+                        value = mc_rbdyn::rpyToMat(rpy);
+                      }
+                    });
+}
+
+} // namespace mc_rtc::gui

@@ -126,6 +126,7 @@ set(mc_rtc_utils_HDR
   ../include/mc_rtc/deprecated.h
   ../include/mc_rtc/pragma.h
   ../include/mc_rtc/shared.h
+  ../include/mc_rtc/visual_utils.h
   ../include/mc_rtc/utils/heatmap.h
 )
 
@@ -326,14 +327,18 @@ set(mc_rtc_gui_HDR
   ../include/mc_rtc/gui/ArrayInput.h
   ../include/mc_rtc/gui/ArrayLabel.h
   ../include/mc_rtc/gui/Arrow.h
+  ../include/mc_rtc/gui/Box.h
   ../include/mc_rtc/gui/Button.h
   ../include/mc_rtc/gui/Checkbox.h
   ../include/mc_rtc/gui/ComboInput.h
+  ../include/mc_rtc/gui/Cylinder.h
   ../include/mc_rtc/gui/DataComboInput.h
   ../include/mc_rtc/gui/elements.h
+  ../include/mc_rtc/gui/Ellipsoid.h
   ../include/mc_rtc/gui/Force.h
   ../include/mc_rtc/gui/Form.h
   ../include/mc_rtc/gui/IntegerInput.h
+  ../include/mc_rtc/gui/Input.h
   ../include/mc_rtc/gui/Label.h
   ../include/mc_rtc/gui/NumberInput.h
   ../include/mc_rtc/gui/NumberSlider.h
@@ -341,6 +346,7 @@ set(mc_rtc_gui_HDR
   ../include/mc_rtc/gui/Polygon.h
   ../include/mc_rtc/gui/Rotation.h
   ../include/mc_rtc/gui/Schema.h
+  ../include/mc_rtc/gui/Sphere.h
   ../include/mc_rtc/gui/StringInput.h
   ../include/mc_rtc/gui/Trajectory.h
   ../include/mc_rtc/gui/Transform.h

@@ -6,10 +6,10 @@
 
 #include <mc_rtc/gui/elements.h>
 
-namespace mc_rtc
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** Label should display data
@@ -29,13 +29,20 @@ struct LabelImpl : public DataElement<GetT>
   LabelImpl() {}
 };
 
+} // namespace details
+
 /** Helper function to create a Label element */
-template<typename GetT>
-LabelImpl<GetT> Label(const std::string & name, GetT get_fn)
+template<typename GetT, std::enable_if_t<std::is_invocable_v<GetT>, int> = 0>
+auto Label(const std::string & name, GetT get_fn)
 {
-  return LabelImpl<GetT>(name, get_fn);
+  return details::LabelImpl(name, get_fn);
 }
 
-} // namespace gui
+/** Helper function to create a Label element from a variable */
+template<typename T, std::enable_if_t<!std::is_invocable_v<T>, int> = 0>
+auto Label(const std::string & name, T && value)
+{
+  return details::LabelImpl(name, details::read(std::forward<T>(value)));
+}
 
-} // namespace mc_rtc
+} // namespace mc_rtc::gui

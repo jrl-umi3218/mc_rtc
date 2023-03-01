@@ -5,7 +5,9 @@
 #pragma once
 
 #include <mc_rtc/MessagePackBuilder.h>
+
 #include <mc_rtc/gui/api.h>
+#include <mc_rtc/gui/details/traits.h>
 
 /** This header contains the base block of all elements in the GUI system. For the implementation details of specific
  * elements look into their dedicated header */
@@ -158,6 +160,23 @@ struct CallbackElement : public ElementT
 
 protected:
   Callback cb_;
+};
+
+/** Specialization for disabling the callback
+ *
+ * This allows to unify the implementation of elements that implement a read-only version
+ */
+template<typename ElementT>
+struct CallbackElement<ElementT, std::nullptr_t> : public ElementT
+{
+  template<typename... Args>
+  CallbackElement(const std::string & name, std::nullptr_t, Args &&... args)
+  : ElementT(name, std::forward<Args>(args)...)
+  {
+  }
+
+  /** Invalid element */
+  CallbackElement() {}
 };
 
 /** Saves typing for the most common case */

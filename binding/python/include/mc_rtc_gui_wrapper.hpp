@@ -38,7 +38,7 @@ void_cb make_void_cb(T fn, Cb cb)
 }
 
 template<typename Callback>
-using Form = mc_rtc::gui::FormImpl<Callback>;
+using Form = mc_rtc::gui::details::FormImpl<Callback>;
 
 template<typename Callback>
 void add_form_checkbox(Form<Callback> & form, const std::string & name, bool required)

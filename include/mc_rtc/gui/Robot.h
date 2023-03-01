@@ -10,10 +10,7 @@
 
 #include <mc_rbdyn/Robot.h>
 
-namespace mc_rtc
-{
-
-namespace gui
+namespace mc_rtc::gui
 {
 
 namespace details
@@ -59,11 +56,9 @@ private:
 
 /** Helper function to create a RobotImpl */
 template<typename GetT>
-details::RobotImpl<GetT> Robot(const std::string & name, GetT get_fn)
+auto Robot(const std::string & name, GetT get_fn)
 {
-  return details::RobotImpl<GetT>(name, get_fn);
+  return details::RobotImpl(name, get_fn);
 }
 
-} // namespace gui
-
-} // namespace mc_rtc
+} // namespace mc_rtc::gui

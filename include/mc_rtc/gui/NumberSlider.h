@@ -6,10 +6,10 @@
 
 #include <mc_rtc/gui/elements.h>
 
-namespace mc_rtc
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** NumberSlider should display a number slider with minimum
@@ -49,13 +49,20 @@ private:
   double max_;
 };
 
+} // namespace details
+
 /** Helper function to create a NumberSliderImpl */
 template<typename GetT, typename SetT>
-NumberSliderImpl<GetT, SetT> NumberSlider(const std::string & name, GetT get_fn, SetT set_fn, double min, double max)
+auto NumberSlider(const std::string & name, GetT get_fn, SetT set_fn, double min, double max)
 {
-  return NumberSliderImpl<GetT, SetT>(name, get_fn, set_fn, min, max);
+  return details::NumberSliderImpl(name, get_fn, set_fn, min, max);
 }
 
-} // namespace gui
+/** Helper function to create a NumberSlider from a variable */
+template<typename T>
+auto NumberSlider(const std::string & name, T & value, double min, double max)
+{
+  return details::NumberSliderImpl(name, details::read(value), details::write(value), min, max);
+}
 
-} // namespace mc_rtc
+} // namespace mc_rtc::gui

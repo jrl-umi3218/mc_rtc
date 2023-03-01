@@ -6,10 +6,10 @@
 
 #include <mc_rtc/gui/elements.h>
 
-namespace mc_rtc
+namespace mc_rtc::gui
 {
 
-namespace gui
+namespace details
 {
 
 /** This element should implement a dialog to input a number */
@@ -27,12 +27,20 @@ struct NumberInputImpl : public CommonInputImpl<GetT, SetT>
   NumberInputImpl() {}
 };
 
+} // namespace details
+
 /** Helper function to create a NumberInputImpl */
 template<typename GetT, typename SetT>
-NumberInputImpl<GetT, SetT> NumberInput(const std::string & name, GetT get_fn, SetT set_fn)
+auto NumberInput(const std::string & name, GetT get_fn, SetT set_fn)
 {
-  return NumberInputImpl<GetT, SetT>(name, get_fn, set_fn);
+  return details::NumberInputImpl(name, get_fn, set_fn);
 }
-} // namespace gui
 
-} // namespace mc_rtc
+/** Helper function to create a NumberInputImpl from a variable */
+template<typename T>
+auto NumberInput(const std::string & name, T & value)
+{
+  return details::NumberInputImpl(name, details::read(value), details::write(value));
+}
+
+} // namespace mc_rtc::gui

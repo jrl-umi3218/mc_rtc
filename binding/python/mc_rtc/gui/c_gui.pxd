@@ -15,77 +15,94 @@ cdef extern from "<memory>" namespace "std" nogil:
     shared_ptr(const shared_ptr[T]&)
     T * get()
 
-cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
+cdef extern from "<cstddef>" namespace "std":
+  cdef cppclass nullptr_t:
+    pass
 
+cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
   cdef cppclass Element:
     Element()
     const string& name()
 
-  cdef cppclass LabelImpl[T](Element):
-    pass
-  cdef LabelImpl[T] Label[T](const string&, T)
-
-  cdef cppclass ArrayLabelImpl[T](Element):
-    pass
-  cdef ArrayLabelImpl[T] ArrayLabel[T](const string&, T)
-  cdef ArrayLabelImpl[T] ArrayLabel[T](const string&, const vector[string]&, T)
-
+cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui::details":
   cdef cppclass ButtonImpl[T](Element):
     pass
-  cdef ButtonImpl[T] Button[T](const string&, T)
 
   cdef cppclass CheckboxImpl[GetT, SetT](Element):
     pass
-  cdef CheckboxImpl[GetT, SetT] Checkbox[GetT, SetT](const string&, GetT, SetT)
 
-  cdef cppclass StringInputImpl[GetT, SetT](Element):
+  cdef cppclass LabelImpl[T](Element):
     pass
-  cdef StringInputImpl[GetT, SetT] StringInput[GetT, SetT](const string&, GetT, SetT)
+
+  cdef cppclass ArrayLabelImpl[T](Element):
+    pass
 
   cdef cppclass IntegerInputImpl[GetT, SetT](Element):
     pass
-  cdef IntegerInputImpl[GetT, SetT] IntegerInput[GetT, SetT](const string&, GetT, SetT)
 
   cdef cppclass NumberInputImpl[GetT, SetT](Element):
     pass
-  cdef NumberInputImpl[GetT, SetT] NumberInput[GetT, SetT](const string&, GetT, SetT)
 
   cdef cppclass NumberSliderImpl[GetT, SetT](Element):
     pass
-  cdef NumberSliderImpl[GetT, SetT] NumberSlider[GetT, SetT](const string&, GetT, SetT, double, double)
+
+  cdef cppclass StringInputImpl[GetT, SetT](Element):
+    pass
 
   cdef cppclass ArrayInputImpl[GetT, SetT](Element):
     pass
-  cdef ArrayInputImpl[GetT, SetT] ArrayInput[GetT, SetT](const string&, GetT, SetT)
-  cdef ArrayInputImpl[GetT, SetT] ArrayInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
 
   cdef cppclass ComboInputImpl[GetT, SetT](Element):
     pass
-  cdef ComboInputImpl[GetT, SetT] ComboInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
 
   cdef cppclass DataComboInputImpl[GetT, SetT](Element):
     pass
-  cdef DataComboInputImpl[GetT, SetT] DataComboInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
 
-  cdef cppclass Point3DROImpl[GetT](Element):
-    pass
-  cdef Point3DROImpl[GetT] Point3DRO"mc_rtc::gui::Point3D"[GetT](const string&, GetT)
   cdef cppclass Point3DImpl[GetT, SetT](Element):
     pass
-  cdef Point3DImpl[GetT,SetT] Point3D[GetT,SetT](const string&, GetT, SetT)
 
-  cdef cppclass RotationROImpl[GetT](Element):
-    pass
-  cdef RotationROImpl[GetT] RotationRO"mc_rtc::gui::Rotation"[GetT](const string&, GetT)
   cdef cppclass RotationImpl[GetT, SetT](Element):
     pass
-  cdef RotationImpl[GetT,SetT] Rotation[GetT,SetT](const string&, GetT, SetT)
 
-  cdef cppclass TransformROImpl[GetT](Element):
-    pass
-  cdef TransformROImpl[GetT] TransformRO"mc_rtc::gui::Transform"[GetT](const string&, GetT)
   cdef cppclass TransformImpl[GetT, SetT](Element):
     pass
+
+  cdef cppclass FormImpl[Callback](Element):
+    # C++ method is a template method but this does not work well here
+    void addElement(...)
+
+cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
+  cdef LabelImpl[T] Label[T](const string&, T)
+
+  cdef ArrayLabelImpl[T] ArrayLabel[T](const string&, T)
+  cdef ArrayLabelImpl[T] ArrayLabel[T](const string&, const vector[string]&, T)
+
+  cdef ButtonImpl[T] Button[T](const string&, T)
+
+  cdef CheckboxImpl[GetT, SetT] Checkbox[GetT, SetT](const string&, GetT, SetT)
+
+  cdef StringInputImpl[GetT, SetT] StringInput[GetT, SetT](const string&, GetT, SetT)
+
+  cdef IntegerInputImpl[GetT, SetT] IntegerInput[GetT, SetT](const string&, GetT, SetT)
+
+  cdef NumberInputImpl[GetT, SetT] NumberInput[GetT, SetT](const string&, GetT, SetT)
+
+  cdef NumberSliderImpl[GetT, SetT] NumberSlider[GetT, SetT](const string&, GetT, SetT, double, double)
+
+  cdef ArrayInputImpl[GetT, SetT] ArrayInput[GetT, SetT](const string&, GetT, SetT)
+  cdef ArrayInputImpl[GetT, SetT] ArrayInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
+
+  cdef ComboInputImpl[GetT, SetT] ComboInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
+
+  cdef DataComboInputImpl[GetT, SetT] DataComboInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
+
+  cdef Point3DImpl[GetT, nullptr_t] Point3DRO"mc_rtc::gui::Point3D"[GetT, nullptr_t](const string&, GetT, void *)
+  cdef Point3DImpl[GetT,SetT] Point3D[GetT,SetT](const string&, GetT, SetT)
+
+  cdef RotationImpl[GetT, nullptr_t] RotationRO"mc_rtc::gui::Rotation"[GetT, nullptr_t](const string&, GetT)
+  cdef RotationImpl[GetT,SetT] Rotation[GetT,SetT](const string&, GetT, SetT)
+
+  cdef TransformImpl[GetT, nullptr_t] TransformRO"mc_rtc::gui::Transform"[GetT, nullptr_t](const string&, GetT)
   cdef TransformImpl[GetT,SetT] Transform[GetT,SetT](const string&, GetT, SetT)
 
   cdef cppclass FormComboInput:
@@ -96,9 +113,6 @@ cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
     FormDataComboInput()
     FormDataComboInput(const string&, cppbool, const vector[string]&, cppbool)
 
-  cdef cppclass FormImpl[Callback](Element):
-    # C++ method is a template method but this does not work well here
-    void addElement(...)
   cdef FormImpl[Callback] Form[Callback](const string&, Callback)
 
   cdef cppclass StateBuilder:

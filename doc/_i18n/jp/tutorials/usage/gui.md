@@ -6,6 +6,10 @@ GUI機能では、コントローラーをリモートで操作するための�
 - GUIに要素を追加する
 - GUIから要素を削除する
 
+{% comment %}FIXME Missing example with variable inputs and documentation about Input{% endcomment %}
+
+{% comment %}FIXME Missing Visual{% endcomment %}
+
 ### GUIにアクセスする
 
 GUIはサーバー/クライアントモデルで動作します。コントローラーがサーバーとなり、リモートインターフェイスがクライアントとなります。そのため、コントローラー側のコードでは、GUIサーバーからクライアントに送信されるデータのみが出力されます。このデータは、`mc_rtc::gui::StateBuilder`インターフェイスを通じて追加されます。

@@ -11,10 +11,13 @@
 #include <mc_rtc/gui/ArrayInput.h>
 #include <mc_rtc/gui/ArrayLabel.h>
 #include <mc_rtc/gui/Arrow.h>
+#include <mc_rtc/gui/Box.h>
 #include <mc_rtc/gui/Button.h>
 #include <mc_rtc/gui/Checkbox.h>
 #include <mc_rtc/gui/ComboInput.h>
+#include <mc_rtc/gui/Cylinder.h>
 #include <mc_rtc/gui/DataComboInput.h>
+#include <mc_rtc/gui/Ellipsoid.h>
 #include <mc_rtc/gui/Force.h>
 #include <mc_rtc/gui/Form.h>
 #include <mc_rtc/gui/IntegerInput.h>
@@ -27,11 +30,14 @@
 #include <mc_rtc/gui/Robot.h>
 #include <mc_rtc/gui/Rotation.h>
 #include <mc_rtc/gui/Schema.h>
+#include <mc_rtc/gui/Sphere.h>
 #include <mc_rtc/gui/StringInput.h>
 #include <mc_rtc/gui/Table.h>
 #include <mc_rtc/gui/Trajectory.h>
 #include <mc_rtc/gui/Transform.h>
 #include <mc_rtc/gui/Visual.h>
 #include <mc_rtc/gui/XYTheta.h>
+
+#include <mc_rtc/gui/Input.h>
 
 #include <mc_rtc/gui/plot.h>
