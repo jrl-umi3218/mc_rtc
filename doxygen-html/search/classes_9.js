@@ -12,7 +12,7 @@ var searchData=
   ['inequalityconstraintforce',['InequalityConstraintForce',['../structmc__solver_1_1InequalityConstraintForce.html',1,'mc_solver']]],
   ['inequalityconstraintlambda',['InequalityConstraintLambda',['../structmc__solver_1_1InequalityConstraintLambda.html',1,'mc_solver']]],
   ['inequalityconstraintrobot',['InequalityConstraintRobot',['../structmc__solver_1_1InequalityConstraintRobot.html',1,'mc_solver']]],
-  ['integerinputimpl',['IntegerInputImpl',['../structmc__rtc_1_1gui_1_1IntegerInputImpl.html',1,'mc_rtc::gui']]],
+  ['integerinputimpl',['IntegerInputImpl',['../structmc__rtc_1_1gui_1_1details_1_1IntegerInputImpl.html',1,'mc_rtc::gui::details']]],
   ['interpolatedrotation',['InterpolatedRotation',['../structmc__trajectory_1_1InterpolatedRotation.html',1,'mc_trajectory']]],
   ['is_5fserializable',['is_serializable',['../structmc__rtc_1_1log_1_1is__serializable.html',1,'mc_rtc::log']]],
   ['is_5fserializable_5fgetter',['is_serializable_getter',['../structmc__rtc_1_1log_1_1is__serializable__getter.html',1,'mc_rtc::log']]],

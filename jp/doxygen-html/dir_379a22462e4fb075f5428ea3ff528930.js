@@ -30,5 +30,6 @@ var dir_379a22462e4fb075f5428ea3ff528930 =
     ] ],
     [ "utils.h", "utils_8h.html", null ],
     [ "utils_api.h", "utils__api_8h.html", "utils__api_8h" ],
+    [ "visual_utils.h", "visual__utils_8h.html", "visual__utils_8h" ],
     [ "void_ptr.h", "void__ptr_8h.html", "void__ptr_8h" ]
 ];

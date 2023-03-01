@@ -1,0 +1,11 @@
+digraph "mc_rtc::gui::details::ArrowImpl&lt; GetStart, SetStart, GetEnd, SetEnd &gt;"
+{
+ // INTERACTIVE_SVG=YES
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node3 [label="mc_rtc::gui::details\l::ArrowImpl\< GetStart,\l SetStart, GetEnd, SetEnd \>",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="mc_rtc::gui::details\l::ArrowROImpl\< GetStart,\l GetEnd \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1ArrowROImpl.html"];
+  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="mc_rtc::gui::Element",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1Element.html"];
+}

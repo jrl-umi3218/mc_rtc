@@ -329,6 +329,7 @@
 <li class="toc-entry toc-h5"><a href="#button">Button</a></li>
 <li class="toc-entry toc-h5"><a href="#checkbox">Checkbox</a></li>
 <li class="toc-entry toc-h5"><a href="#stringinputintegerinputnumberinputarrayinput">StringInput/IntegerInput/NumberInput/ArrayInput</a></li>
+<li class="toc-entry toc-h5"><a href="#input">Input</a></li>
 <li class="toc-entry toc-h5"><a href="#comboinputdatacomboinput">ComboInput/DataComboInput</a></li>
 <li class="toc-entry toc-h5"><a href="#point3drotationtransform">Point3D/Rotation/Transform</a></li>
 <li class="toc-entry toc-h5"><a href="#trajectory">Trajectory</a></li>
@@ -337,6 +338,7 @@
 <li class="toc-entry toc-h5"><a href="#force">Force</a></li>
 <li class="toc-entry toc-h5"><a href="#arrow">Arrow</a></li>
 <li class="toc-entry toc-h5"><a href="#xytheta">XYTheta</a></li>
+<li class="toc-entry toc-h5"><a href="#visual">Visual</a></li>
 <li class="toc-entry toc-h5"><a href="#table">Table</a></li>
 <li class="toc-entry toc-h5"><a href="#form">Form</a></li>
 <li class="toc-entry toc-h5"><a href="#a-note-on-callbacks">A note on callbacks</a></li>
@@ -432,6 +434,12 @@
 <span class="c1">// Display a vector with labels</span>
 <span class="n">ArrayLabel</span><span class="p">(</span><span class="s">"Vector"</span><span class="p">,</span> <span class="p">{</span><span class="s">"x"</span><span class="p">,</span> <span class="s">"y"</span><span class="p">,</span> <span class="s">"z"</span><span class="p">},</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span> <span class="p">});</span>
 
+<span class="c1">// Display a label from a variable</span>
+<span class="n">Label</span><span class="p">(</span><span class="s">"My variable"</span><span class="p">,</span> <span class="n">var_</span><span class="p">);</span>
+
+<span class="c1">// Display an ArrayLabel from a variable</span>
+<span class="n">ArrayLabel</span><span class="p">(</span><span class="s">"My array"</span><span class="p">,</span> <span class="n">array_</span><span class="p">);</span>
+
 <span class="c1">// Some elements have associated labels, e.g. Force also adds an ArrayLabel</span>
 <span class="n">Force</span><span class="p">(</span><span class="s">"LeftFoot"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"LFullSole"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LFullSole"</span><span class="p">);</span> <span class="p">}),</span>
 <span class="n">Force</span><span class="p">(</span><span class="s">"RightFoot"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"RFullSole"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"RFullSole"</span><span class="p">);</span> <span class="p">}),</span>
@@ -455,6 +463,9 @@
 <p>This element display a checkbox. Its status depends on the value you provide, when you click it that value will be flipped.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Checkbox</span><span class="p">(</span><span class="s">"Check me"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">status_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="n">status_</span> <span class="o">=</span> <span class="o">!</span><span class="n">status_</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Created a from a boolean variable</span>
+<span class="n">Checkbox</span><span class="p">(</span><span class="s">"Check me"</span><span class="p">,</span> <span class="n">status_</span><span class="p">);</span>
 </code></pre></div></div>
 
 <h5 id="stringinputintegerinputnumberinputarrayinput"><code class="language-plaintext highlighter-rouge">StringInput</code>/<code class="language-plaintext highlighter-rouge">IntegerInput</code>/<code class="language-plaintext highlighter-rouge">NumberInput</code>/<code class="language-plaintext highlighter-rouge">ArrayInput</code></h5>
@@ -464,6 +475,11 @@
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">StringInput</span><span class="p">(</span><span class="s">"Your name"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">n</span><span class="p">){</span> <span class="n">name_</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span> <span class="p">});</span>
 
 <span class="n">NumberInput</span><span class="p">(</span><span class="s">"Weight"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">w_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="kt">double</span> <span class="n">w</span><span class="p">){</span> <span class="n">w_</span> <span class="o">=</span> <span class="n">w</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Created from appropriate variables</span>
+<span class="n">StringInput</span><span class="p">(</span><span class="s">"Your name"</span><span class="p">,</span> <span class="n">name_</span><span class="p">);</span>
+
+<span class="n">NumberInput</span><span class="p">(</span><span class="s">"Weight"</span><span class="p">,</span> <span class="n">w_</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">ArrayInput</code> accepts an additional parameter to add labels to the data. It also assumes that the array size is fixed.</p>
@@ -471,9 +487,24 @@
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ArrayInput</span><span class="p">(</span><span class="s">"Your array"</span><span class="p">,</span> <span class="p">{</span><span class="s">"x"</span><span class="p">,</span> <span class="s">"y"</span><span class="p">,</span> <span class="s">"z"</span><span class="p">},</span>
            <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">v3_</span><span class="p">;</span> <span class="p">},</span>
            <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&amp;</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">v3_</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Created from the variable, labels are added automatically</span>
+<span class="n">ArrayInput</span><span class="p">(</span><span class="s">"Your array"</span><span class="p">,</span> <span class="n">v3_</span><span class="p">);</span>
+
+<span class="c1">// Overriding the default labels</span>
+<span class="n">ArrayInput</span><span class="p">(</span><span class="s">"Your array"</span><span class="p">,</span> <span class="p">{</span><span class="s">"vx"</span><span class="p">,</span> <span class="s">"vy"</span><span class="p">,</span> <span class="s">"vz"</span><span class="p">},</span> <span class="n">v3_</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>In Python, the labels go at the end of the parameter list.</p>
+
+<h5 id="input"><code class="language-plaintext highlighter-rouge">Input</code></h5>
+
+<p><code class="language-plaintext highlighter-rouge">Input</code> is a general helper, it takes a variable as an input and will select the appropriate one among <code class="language-plaintext highlighter-rouge">StringInput</code>, <code class="language-plaintext highlighter-rouge">NumberInput</code>, <code class="language-plaintext highlighter-rouge">IntegerInput</code> or <code class="language-plaintext highlighter-rouge">ArrayInput</code>.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Input</span><span class="p">(</span><span class="s">"String input"</span><span class="p">,</span> <span class="n">s_</span><span class="p">);</span> <span class="c1">// If s_ is an std::string this will be a StringInput</span>
+
+<span class="n">Input</span><span class="p">(</span><span class="s">"Array input"</span><span class="p">,</span> <span class="n">v3_</span><span class="p">);</span> <span class="c1">// If v3_ is vector-like this will be an ArrayInput</span>
+</code></pre></div></div>
 
 <h5 id="comboinputdatacomboinput"><code class="language-plaintext highlighter-rouge">ComboInput</code>/<code class="language-plaintext highlighter-rouge">DataComboInput</code></h5>
 
@@ -503,6 +534,9 @@
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Read-only variant does not provide a callback to set the data</span>
 <span class="n">Point3D</span><span class="p">(</span><span class="s">"Point"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">v3_</span><span class="p">;</span> <span class="p">});</span>
 
+<span class="c1">// Read-only variant from a variable (only available for Point3D and Transform)</span>
+<span class="n">Point3DRO</span><span class="p">(</span><span class="s">"Point"</span><span class="p">,</span> <span class="n">v3_</span><span class="p">);</span>
+
 <span class="c1">// Read-write variant</span>
 
 <span class="c1">// Note that even though we want to display a rotation, we need to provide a</span>
@@ -510,6 +544,9 @@
 <span class="n">Rotation</span><span class="p">(</span><span class="s">"Rot"</span><span class="p">,</span>
          <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">{</span><span class="n">rot_</span><span class="p">,</span> <span class="n">pos_</span><span class="p">}</span> <span class="p">},</span>
          <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span> <span class="o">&amp;</span> <span class="n">rot</span><span class="p">)</span> <span class="p">{</span> <span class="n">rot_</span> <span class="o">=</span> <span class="n">rot</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Read-write variant from a variable</span>
+<span class="n">Transform</span><span class="p">(</span><span class="s">"Transform"</span><span class="p">,</span> <span class="n">pt_</span><span class="p">);</span>
 </code></pre></div></div>
 
 <h5 id="trajectory"><code class="language-plaintext highlighter-rouge">Trajectory</code></h5>
@@ -583,6 +620,34 @@
 
 <span class="c1">// Specify the height with a 4th element</span>
 <span class="n">XYTheta</span><span class="p">(</span><span class="s">"XYTheta"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">4</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">z</span><span class="p">};</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="visual"><code class="language-plaintext highlighter-rouge">Visual</code></h5>
+
+<p>This element allows to display a <code class="language-plaintext highlighter-rouge">Visual</code> element. Two callbacks are expected, the first must return an <code class="language-plaintext highlighter-rouge">rbd::parsers::Visual</code> element and the second must return the position (origin) of the <code class="language-plaintext highlighter-rouge">Visual</code> element.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;mc_rtc/visual_utils.h&gt;
+</span>
+<span class="n">Visual</span><span class="p">(</span><span class="s">"Visual"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">makeVisualSphere</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">Color</span><span class="o">::</span><span class="n">Blue</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">visual_pos_</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<p>As <code class="language-plaintext highlighter-rouge">rbd::parsers::Visual</code> API is not the easiest to work with, several helpers are provided in <a href="https://github.com/jrl-umi3218/mc_rtc/blob/master/include/mc_rtc/visual_utils.h"><code class="language-plaintext highlighter-rouge">mc_rtc/visual_utils.h</code></a> to assist with their creation.</p>
+
+<p>Furthermore, helpers are provided to display primitives:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// For all these helpers, the color is the last argument and can be either a fixed value or a callback</span>
+
+<span class="c1">// Display a sphere (radius is fixed or provided by a callback)</span>
+<span class="n">Sphere</span><span class="p">(</span><span class="s">"Sphere"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">radius_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">pos_</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Display a box ([x, y, z] dimensions are fixed or provided by a callback)</span>
+<span class="n">Box</span><span class="p">(</span><span class="s">"Sphere"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">size_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">pos_</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Display a cylinder (CylinderParameter is {radius, length}, it is fixed or provided by a callback)</span>
+<span class="n">Sphere</span><span class="p">(</span><span class="s">"Sphere"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="n">CylinderParameter</span> <span class="p">{</span> <span class="p">{</span><span class="n">radius_</span><span class="p">,</span> <span class="n">length_</span><span class="p">};</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">pos_</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Display an ellipsoid ([x, y, z] dimensions are fixed or provided by a callback)</span>
+<span class="n">Ellispsoid</span><span class="p">(</span><span class="s">"Ellipsoid"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">size_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">pos_</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
 
 <h5 id="table"><code class="language-plaintext highlighter-rouge">Table</code></h5>

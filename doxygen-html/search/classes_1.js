@@ -13,10 +13,10 @@ var searchData=
   ['are_5fstrings_3c_20t_20_3e',['are_strings&lt; T &gt;',['../structmc__rbdyn_1_1details_1_1are__strings_3_01T_01_4.html',1,'mc_rbdyn::details']]],
   ['are_5fstrings_3c_20t_2c_20args_2e_2e_2e_20_3e',['are_strings&lt; T, Args... &gt;',['../structmc__rbdyn_1_1details_1_1are__strings_3_01T_00_01Args_8_8_8_01_4.html',1,'mc_rbdyn::details']]],
   ['args_5ft',['args_t',['../structmc__rtc_1_1internal_1_1args__t.html',1,'mc_rtc::internal']]],
-  ['arrayinputimpl',['ArrayInputImpl',['../structmc__rtc_1_1gui_1_1ArrayInputImpl.html',1,'mc_rtc::gui']]],
-  ['arraylabelimpl',['ArrayLabelImpl',['../structmc__rtc_1_1gui_1_1ArrayLabelImpl.html',1,'mc_rtc::gui']]],
+  ['arrayinputimpl',['ArrayInputImpl',['../structmc__rtc_1_1gui_1_1details_1_1ArrayInputImpl.html',1,'mc_rtc::gui::details']]],
+  ['arraylabelimpl',['ArrayLabelImpl',['../structmc__rtc_1_1gui_1_1details_1_1ArrayLabelImpl.html',1,'mc_rtc::gui::details']]],
   ['arrowconfig',['ArrowConfig',['../structmc__rtc_1_1gui_1_1ArrowConfig.html',1,'mc_rtc::gui']]],
-  ['arrowimpl',['ArrowImpl',['../structmc__rtc_1_1gui_1_1ArrowImpl.html',1,'mc_rtc::gui']]],
-  ['arrowroimpl',['ArrowROImpl',['../structmc__rtc_1_1gui_1_1ArrowROImpl.html',1,'mc_rtc::gui']]],
+  ['arrowimpl',['ArrowImpl',['../structmc__rtc_1_1gui_1_1details_1_1ArrowImpl.html',1,'mc_rtc::gui::details']]],
+  ['arrowroimpl',['ArrowROImpl',['../structmc__rtc_1_1gui_1_1details_1_1ArrowROImpl.html',1,'mc_rtc::gui::details']]],
   ['axisconfiguration',['AxisConfiguration',['../structmc__rtc_1_1gui_1_1plot_1_1AxisConfiguration.html',1,'mc_rtc::gui::plot']]]
 ];

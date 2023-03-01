@@ -1183,6 +1183,7 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Access MultiBody representation of the robot </p>
 
 </div>
 </div>
@@ -3058,6 +3059,21 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Returns the joint index in the mbc of the joint with index jointIndex in refJointOrder</p>
+<dl class="section note"><dt>Note</dt><dd>Joint indices can be -1 for joints present in refJointOrder but not in the robot's mbc (such as filtered joints in some robot modules)</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">jointIndex</td><td>Joint index in refJointOrder</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>joint index in the mbc</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>jointIndex &gt;= refJointOrder.size() </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

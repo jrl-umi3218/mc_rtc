@@ -20,9 +20,9 @@ var hierarchy =
     [ "mc_rbdyn::Base", "structmc__rbdyn_1_1Base.html", null ],
     [ "mc_rtc::log::callback_is_serializable< T, typename >", "structmc__rtc_1_1log_1_1callback__is__serializable.html", null ],
     [ "mc_rtc::log::callback_is_serializable< T, void_t< typename std::result_of< T()>::type > >", "structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205.html", null ],
-    [ "mc_rtc::gui::internal::CallbackOrValue< T, Callback >", "structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html", null ],
-    [ "mc_rtc::gui::internal::CallbackOrValue< T, DataCallback >", "structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html", null ],
-    [ "mc_rtc::gui::internal::CallbackOrValue< T, void >", "structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue_3_01T_00_01void_01_4.html", null ],
+    [ "mc_rtc::gui::details::CallbackOrValue< T, Callback >", "structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html", null ],
+    [ "mc_rtc::gui::details::CallbackOrValue< T, DataCallback >", "structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html", null ],
+    [ "mc_rtc::gui::details::CallbackOrValue< T, void >", "structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue_3_01T_00_01void_01_4.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, Args >", "structmc__rtc_1_1gui_1_1details_1_1CheckReturnType.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, T >", "structmc__rtc_1_1gui_1_1details_1_1CheckReturnType_3_01GetT_00_01T_01_4.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, T, Args... >", "structmc__rtc_1_1gui_1_1details_1_1CheckReturnType_3_01GetT_00_01T_00_01Args_8_8_8_01_4.html", null ],
@@ -138,6 +138,7 @@ var hierarchy =
     [ "mc_control::ControllerResetData", "structmc__control_1_1ControllerResetData.html", null ],
     [ "mc_control::ControllerServer", "structmc__control_1_1ControllerServer.html", null ],
     [ "mc_solver::QPSolver::ControllerToken", "structmc__solver_1_1QPSolver_1_1ControllerToken.html", null ],
+    [ "mc_rtc::gui::CylinderParameters", "structmc__rtc_1_1gui_1_1CylinderParameters.html", null ],
     [ "mc_rtc::DataStore", "structmc__rtc_1_1DataStore.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html", null ],
     [ "mc_control::fsm::ParallelState::DelayedState", "structmc__control_1_1fsm_1_1ParallelState_1_1DelayedState.html", null ],
@@ -147,45 +148,44 @@ var hierarchy =
     ] ],
     [ "mc_rtc::gui::Element", "structmc__rtc_1_1gui_1_1Element.html", [
       [ "mc_rtc::gui::CallbackElement< Element, Callback >", "structmc__rtc_1_1gui_1_1CallbackElement.html", [
-        [ "mc_rtc::gui::FormImpl< Callback >", "structmc__rtc_1_1gui_1_1FormImpl.html", null ],
-        [ "mc_rtc::gui::SchemaImpl< Callback >", "structmc__rtc_1_1gui_1_1SchemaImpl.html", null ],
+        [ "mc_rtc::gui::details::FormImpl< Callback >", "structmc__rtc_1_1gui_1_1details_1_1FormImpl.html", null ],
+        [ "mc_rtc::gui::details::SchemaImpl< Callback >", "structmc__rtc_1_1gui_1_1details_1_1SchemaImpl.html", null ],
         [ "mc_rtc::gui::VoidCallbackElement< Element, Callback >", "structmc__rtc_1_1gui_1_1VoidCallbackElement.html", [
-          [ "mc_rtc::gui::ButtonImpl< Callback >", "structmc__rtc_1_1gui_1_1ButtonImpl.html", null ]
+          [ "mc_rtc::gui::details::ButtonImpl< Callback >", "structmc__rtc_1_1gui_1_1details_1_1ButtonImpl.html", null ]
         ] ]
-      ] ],
-      [ "mc_rtc::gui::ArrowROImpl< GetStart, GetEnd >", "structmc__rtc_1_1gui_1_1ArrowROImpl.html", [
-        [ "mc_rtc::gui::ArrowImpl< GetStart, SetStart, GetEnd, SetEnd >", "structmc__rtc_1_1gui_1_1ArrowImpl.html", null ]
       ] ],
       [ "mc_rtc::gui::DataElement< GetT >", "structmc__rtc_1_1gui_1_1DataElement.html", [
         [ "mc_rtc::gui::CallbackElement< DataElement< GetT >, Callback >", "structmc__rtc_1_1gui_1_1CallbackElement.html", [
           [ "mc_rtc::gui::VoidCallbackElement< DataElement< GetT >, Callback >", "structmc__rtc_1_1gui_1_1VoidCallbackElement.html", [
-            [ "mc_rtc::gui::CheckboxImpl< GetT, Callback >", "structmc__rtc_1_1gui_1_1CheckboxImpl.html", null ]
+            [ "mc_rtc::gui::details::CheckboxImpl< GetT, Callback >", "structmc__rtc_1_1gui_1_1details_1_1CheckboxImpl.html", null ]
           ] ]
         ] ],
         [ "mc_rtc::gui::CallbackElement< DataElement< GetT >, SetT >", "structmc__rtc_1_1gui_1_1CallbackElement.html", [
           [ "mc_rtc::gui::CommonInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1CommonInputImpl.html", [
-            [ "mc_rtc::gui::ArrayInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1ArrayInputImpl.html", null ],
-            [ "mc_rtc::gui::ComboInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1ComboInputImpl.html", null ],
-            [ "mc_rtc::gui::DataComboInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1DataComboInputImpl.html", null ],
-            [ "mc_rtc::gui::IntegerInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1IntegerInputImpl.html", null ],
-            [ "mc_rtc::gui::NumberInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1NumberInputImpl.html", null ],
-            [ "mc_rtc::gui::NumberSliderImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1NumberSliderImpl.html", null ],
-            [ "mc_rtc::gui::Point3DImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1Point3DImpl.html", null ],
-            [ "mc_rtc::gui::RotationImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1RotationImpl.html", null ],
-            [ "mc_rtc::gui::StringInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1StringInputImpl.html", null ],
-            [ "mc_rtc::gui::TransformImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1TransformImpl.html", null ],
-            [ "mc_rtc::gui::XYThetaImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1XYThetaImpl.html", null ]
+            [ "mc_rtc::gui::details::ArrayInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1ArrayInputImpl.html", null ],
+            [ "mc_rtc::gui::details::ComboInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1ComboInputImpl.html", null ],
+            [ "mc_rtc::gui::details::DataComboInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1DataComboInputImpl.html", null ],
+            [ "mc_rtc::gui::details::IntegerInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1IntegerInputImpl.html", null ],
+            [ "mc_rtc::gui::details::NumberInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1NumberInputImpl.html", null ],
+            [ "mc_rtc::gui::details::NumberSliderImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1NumberSliderImpl.html", null ],
+            [ "mc_rtc::gui::details::Point3DImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1Point3DImpl.html", null ],
+            [ "mc_rtc::gui::details::RotationImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1RotationImpl.html", null ],
+            [ "mc_rtc::gui::details::StringInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1StringInputImpl.html", null ],
+            [ "mc_rtc::gui::details::TransformImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1TransformImpl.html", null ],
+            [ "mc_rtc::gui::details::XYThetaImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html", null ]
           ] ]
         ] ],
-        [ "mc_rtc::gui::LabelImpl< GetT >", "structmc__rtc_1_1gui_1_1LabelImpl.html", [
-          [ "mc_rtc::gui::ArrayLabelImpl< GetT >", "structmc__rtc_1_1gui_1_1ArrayLabelImpl.html", null ]
+        [ "mc_rtc::gui::details::LabelImpl< GetT >", "structmc__rtc_1_1gui_1_1details_1_1LabelImpl.html", [
+          [ "mc_rtc::gui::details::ArrayLabelImpl< GetT >", "structmc__rtc_1_1gui_1_1details_1_1ArrayLabelImpl.html", null ]
         ] ],
-        [ "mc_rtc::gui::Point3DROImpl< GetT >", "structmc__rtc_1_1gui_1_1Point3DROImpl.html", null ],
-        [ "mc_rtc::gui::PolygonImpl< GetT >", "structmc__rtc_1_1gui_1_1PolygonImpl.html", null ],
-        [ "mc_rtc::gui::RotationROImpl< GetT >", "structmc__rtc_1_1gui_1_1RotationROImpl.html", null ],
-        [ "mc_rtc::gui::TrajectoryImpl< GetT >", "structmc__rtc_1_1gui_1_1TrajectoryImpl.html", null ],
-        [ "mc_rtc::gui::TransformROImpl< GetT >", "structmc__rtc_1_1gui_1_1TransformROImpl.html", null ],
-        [ "mc_rtc::gui::XYThetaROImpl< GetT >", "structmc__rtc_1_1gui_1_1XYThetaROImpl.html", null ]
+        [ "mc_rtc::gui::details::PolygonImpl< GetT >", "structmc__rtc_1_1gui_1_1details_1_1PolygonImpl.html", null ],
+        [ "mc_rtc::gui::details::TrajectoryImpl< GetT >", "structmc__rtc_1_1gui_1_1details_1_1TrajectoryImpl.html", null ]
+      ] ],
+      [ "mc_rtc::gui::details::ArrowROImpl< GetStart, GetEnd >", "structmc__rtc_1_1gui_1_1details_1_1ArrowROImpl.html", [
+        [ "mc_rtc::gui::details::ArrowImpl< GetStart, SetStart, GetEnd, SetEnd >", "structmc__rtc_1_1gui_1_1details_1_1ArrowImpl.html", null ]
+      ] ],
+      [ "mc_rtc::gui::details::ForceROImpl< GetForce, GetSurface >", "structmc__rtc_1_1gui_1_1details_1_1ForceROImpl.html", [
+        [ "mc_rtc::gui::details::ForceImpl< GetForce, GetSurface, SetForce >", "structmc__rtc_1_1gui_1_1details_1_1ForceImpl.html", null ]
       ] ],
       [ "mc_rtc::gui::details::PolyhedronTrianglesListImpl< GetTrianglesT >", "structmc__rtc_1_1gui_1_1details_1_1PolyhedronTrianglesListImpl.html", null ],
       [ "mc_rtc::gui::details::PolyhedronVerticesTrianglesImpl< GetVerticesT, GetTrianglesT >", "structmc__rtc_1_1gui_1_1details_1_1PolyhedronVerticesTrianglesImpl.html", null ],
@@ -194,10 +194,7 @@ var hierarchy =
       [ "mc_rtc::gui::details::TableImpl< GetHeader, GetData >", "structmc__rtc_1_1gui_1_1details_1_1TableImpl.html", [
         [ "mc_rtc::gui::details::FormattedTableImpl< GetHeader, GetFormat, GetData >", "structmc__rtc_1_1gui_1_1details_1_1FormattedTableImpl.html", null ]
       ] ],
-      [ "mc_rtc::gui::details::VisualImpl< GetVisual, GetPos >", "structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html", null ],
-      [ "mc_rtc::gui::ForceROImpl< GetForce, GetSurface >", "structmc__rtc_1_1gui_1_1ForceROImpl.html", [
-        [ "mc_rtc::gui::ForceImpl< GetForce, GetSurface, SetForce >", "structmc__rtc_1_1gui_1_1ForceImpl.html", null ]
-      ] ]
+      [ "mc_rtc::gui::details::VisualImpl< GetVisual, GetPos >", "structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html", null ]
     ] ],
     [ "mc_control::ElementId", "structmc__control_1_1ElementId.html", null ],
     [ "mc_rtc::log::FlatLog::entry", "structmc__rtc_1_1log_1_1FlatLog_1_1entry.html", null ],
@@ -224,7 +221,7 @@ var hierarchy =
     ] ],
     [ "mc_rtc::gui::FormElement< Derived, element >", "structmc__rtc_1_1gui_1_1FormElement.html", null ],
     [ "mc_rtc::gui::FormElement< FormArrayInput< T, DataCallback >, Elements::ArrayInput >", "structmc__rtc_1_1gui_1_1FormElement.html", [
-      [ "mc_rtc::gui::internal::FormArrayInput< T, DataCallback >", "structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html", null ]
+      [ "mc_rtc::gui::details::FormArrayInput< T, DataCallback >", "structmc__rtc_1_1gui_1_1details_1_1FormArrayInput.html", null ]
     ] ],
     [ "mc_rtc::gui::FormElement< FormComboInput, Elements::ComboInput >", "structmc__rtc_1_1gui_1_1FormElement.html", [
       [ "mc_rtc::gui::FormComboInput", "structmc__rtc_1_1gui_1_1FormComboInput.html", null ]
@@ -233,7 +230,7 @@ var hierarchy =
       [ "mc_rtc::gui::FormDataComboInput", "structmc__rtc_1_1gui_1_1FormDataComboInput.html", null ]
     ] ],
     [ "mc_rtc::gui::FormElement< FormDataInput< T, element, DataCallback >, element >", "structmc__rtc_1_1gui_1_1FormElement.html", [
-      [ "mc_rtc::gui::internal::FormDataInput< T, element, DataCallback >", "structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html", null ]
+      [ "mc_rtc::gui::details::FormDataInput< T, element, DataCallback >", "structmc__rtc_1_1gui_1_1details_1_1FormDataInput.html", null ]
     ] ],
     [ "mc_rbdyn::RobotModule::FrameDescription", "structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html", null ],
     [ "Function", null, [
@@ -298,6 +295,12 @@ var hierarchy =
     [ "mc_rbdyn::JointSensor", "structmc__rbdyn_1_1JointSensor.html", null ],
     [ "mc_rtc::Logger::KeyAddedEvent", "structmc__rtc_1_1Logger_1_1KeyAddedEvent.html", null ],
     [ "mc_rtc::Logger::KeyRemovedEvent", "structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html", null ],
+    [ "mc_rtc::gui::details::Labels< T >", "structmc__rtc_1_1gui_1_1details_1_1Labels.html", null ],
+    [ "mc_rtc::gui::details::Labels< Eigen::Quaterniond >", "structmc__rtc_1_1gui_1_1details_1_1Labels_3_01Eigen_1_1Quaterniond_01_4.html", null ],
+    [ "mc_rtc::gui::details::Labels< Eigen::Vector3d >", "structmc__rtc_1_1gui_1_1details_1_1Labels_3_01Eigen_1_1Vector3d_01_4.html", null ],
+    [ "mc_rtc::gui::details::Labels< sva::ForceVecd >", "structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1ForceVecd_01_4.html", null ],
+    [ "mc_rtc::gui::details::Labels< sva::ImpedanceVecd >", "structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1ImpedanceVecd_01_4.html", null ],
+    [ "mc_rtc::gui::details::Labels< sva::MotionVecd >", "structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1MotionVecd_01_4.html", null ],
     [ "mc_rtc::internal::lambda_traits< T >", "structmc__rtc_1_1internal_1_1lambda__traits.html", null ],
     [ "mc_rtc::internal::lambda_traits< RetT(C::*)(Args...) const >", "structmc__rtc_1_1internal_1_1lambda__traits_3_01RetT_07C_1_1_5_08_07Args_8_8_8_08_01const_01_4.html", null ],
     [ "mc_rtc::internal::lambda_traits< RetT(C::*)(Args...)>", "structmc__rtc_1_1internal_1_1lambda__traits_3_01RetT_07C_1_1_5_08_07Args_8_8_8_08_4.html", null ],
@@ -405,8 +408,8 @@ var hierarchy =
       [ "mc_rbdyn::RobotFrame::NewRobotFrameToken", "structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
     ] ],
     [ "mc_rbdyn::Robots::NewRobotsToken", "structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html", null ],
-    [ "mc_tvm::Robot::NewRobotToken", "structmc__tvm_1_1Robot_1_1NewRobotToken.html", null ],
     [ "mc_rbdyn::Robot::NewRobotToken", "structmc__rbdyn_1_1Robot_1_1NewRobotToken.html", null ],
+    [ "mc_tvm::Robot::NewRobotToken", "structmc__tvm_1_1Robot_1_1NewRobotToken.html", null ],
     [ "Node", null, [
       [ "mc_tvm::CoM", "structmc__tvm_1_1CoM.html", null ],
       [ "mc_tvm::Convex", "structmc__tvm_1_1Convex.html", null ],
@@ -470,6 +473,8 @@ var hierarchy =
     [ "mc_rbdyn::RobotModule", "structmc__rbdyn_1_1RobotModule.html", null ],
     [ "mc_rtc::RobotPublisher", "structmc__rtc_1_1RobotPublisher.html", null ],
     [ "mc_rtc::ROSBridge", "structmc__rtc_1_1ROSBridge.html", null ],
+    [ "mc_rtc::gui::details::RPYLabels< Degrees >", "structmc__rtc_1_1gui_1_1details_1_1RPYLabels.html", null ],
+    [ "mc_rtc::gui::details::RPYLabels< false >", "structmc__rtc_1_1gui_1_1details_1_1RPYLabels_3_01false_01_4.html", null ],
     [ "mc_rbdyn::RobotModule::Gripper::Safety", "structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::SafetyThresholds", "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html", null ],
     [ "mc_trajectory::SequenceInterpolator< Value, InterpolationFunction >", "structmc__trajectory_1_1SequenceInterpolator.html", null ],
@@ -513,10 +518,10 @@ var hierarchy =
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html", null ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
     ] ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
     ] ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],
@@ -576,7 +581,8 @@ var hierarchy =
     [ "ElementT", null, [
       [ "mc_rtc::gui::CallbackElement< ElementT, Callback >", "structmc__rtc_1_1gui_1_1CallbackElement.html", [
         [ "mc_rtc::gui::VoidCallbackElement< ElementT, Callback >", "structmc__rtc_1_1gui_1_1VoidCallbackElement.html", null ]
-      ] ]
+      ] ],
+      [ "mc_rtc::gui::CallbackElement< ElementT, std::nullptr_t >", "structmc__rtc_1_1gui_1_1CallbackElement_3_01ElementT_00_01std_1_1nullptr__t_01_4.html", null ]
     ] ],
     [ "UpdateNrVars", null, [
       [ "mc_solver::utils::Update< UpdateNrVars >", "structmc__solver_1_1utils_1_1Update.html", null ]

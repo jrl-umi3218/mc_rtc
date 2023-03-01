@@ -270,6 +270,9 @@ Functions</h2></td></tr>
 <tr class="separator:a0948fb6dc9382e116f65c76261d26ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a058cd1f189f02e2c4986b6aacffa8195"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a058cd1f189f02e2c4986b6aacffa8195">rpyFromQuat</a> (const Eigen::Quaterniond &amp;quat)</td></tr>
 <tr class="separator:a058cd1f189f02e2c4986b6aacffa8195"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12c74da7af6d09dc0dc20742d6de982a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a12c74da7af6d09dc0dc20742d6de982a"><td class="memTemplItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a12c74da7af6d09dc0dc20742d6de982a">rpyFromRotation</a> (const T &amp;value)</td></tr>
+<tr class="separator:a12c74da7af6d09dc0dc20742d6de982a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf1399b68c68126e373f564e95bc7531"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sch::S_Object *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#adf1399b68c68126e373f564e95bc7531">surface_to_sch</a> (const <a class="el" href="structmc__rbdyn_1_1Surface.html">mc_rbdyn::Surface</a> &amp;surface, const double &amp;depth=0.01, const unsigned int &amp;slice=8)</td></tr>
 <tr class="separator:adf1399b68c68126e373f564e95bc7531"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3db1776d4f8f36e1eb2a8c51bc157867"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sch::S_Object *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a3db1776d4f8f36e1eb2a8c51bc157867">sch_polyhedron</a> (const std::vector&lt; sva::PTransformd &gt; &amp;points)</td></tr>
@@ -1447,6 +1450,27 @@ quaternions, and rotation vectors". </p>
 <dl class="section return"><dt>Returns</dt><dd>rpy Vector of roll-pitch-yaw angles (Euler sequence (0, 1, 2)).</dd></dl>
 <p>Be careful that Eigen's conversion to rotation matrices is the OPPOSITE of that from "Representing attitude: Euler angles, unit quaternions, and
 rotation vectors", i.e. we need to transpose/flip signs from Equation (290) of this paper. </p>
+
+</div>
+</div>
+<a id="a12c74da7af6d09dc0dc20742d6de982a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12c74da7af6d09dc0dc20742d6de982a">&#9670;&nbsp;</a></span>rpyFromRotation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_rbdyn::rpyFromRotation </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Generic version that can handle a Quaternion or Matrix and returns the RPY angles </p>
 
 </div>
 </div>

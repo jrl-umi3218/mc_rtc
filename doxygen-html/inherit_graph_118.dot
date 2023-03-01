@@ -4,5 +4,7 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_rtc::gui::details\l::ReturnTypeImpl\< GetT,\l is_getter \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl.html"];
+  Node122 [label="PolyhedronT",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node122 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="mc_rtc::gui::details\l::ColoredPolyhedronImpl\l\< PolyhedronT, GetColorT \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1ColoredPolyhedronImpl.html"];
 }

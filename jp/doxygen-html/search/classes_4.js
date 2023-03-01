@@ -1,7 +1,7 @@
 var searchData=
 [
   ['dampingtask',['DampingTask',['../structmc__tasks_1_1force_1_1DampingTask.html',1,'mc_tasks::force']]],
-  ['datacomboinputimpl',['DataComboInputImpl',['../structmc__rtc_1_1gui_1_1DataComboInputImpl.html',1,'mc_rtc::gui']]],
+  ['datacomboinputimpl',['DataComboInputImpl',['../structmc__rtc_1_1gui_1_1details_1_1DataComboInputImpl.html',1,'mc_rtc::gui::details']]],
   ['dataelement',['DataElement',['../structmc__rtc_1_1gui_1_1DataElement.html',1,'mc_rtc::gui']]],
   ['datastore',['DataStore',['../structmc__rtc_1_1DataStore.html',1,'mc_rtc']]],
   ['dcmbiasestimatorconfiguration',['DCMBiasEstimatorConfiguration',['../structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html',1,'mc_rbdyn::lipm_stabilizer']]],

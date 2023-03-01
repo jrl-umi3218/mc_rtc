@@ -2,7 +2,7 @@ var searchData=
 [
   ['safety',['Safety',['../structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety.html',1,'mc_rbdyn::RobotModule::Gripper']]],
   ['safetythresholds',['SafetyThresholds',['../structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html',1,'mc_rbdyn::lipm_stabilizer']]],
-  ['schemaimpl',['SchemaImpl',['../structmc__rtc_1_1gui_1_1SchemaImpl.html',1,'mc_rtc::gui']]],
+  ['schemaimpl',['SchemaImpl',['../structmc__rtc_1_1gui_1_1details_1_1SchemaImpl.html',1,'mc_rtc::gui::details']]],
   ['sequenceinterpolator',['SequenceInterpolator',['../structmc__trajectory_1_1SequenceInterpolator.html',1,'mc_trajectory']]],
   ['sequenceinterpolator_3c_20eigen_3a_3avector6d_2c_20mc_5ftrajectory_3a_3alinearinterpolation_3c_20eigen_3a_3avector6d_20_3e_20_3e',['SequenceInterpolator&lt; Eigen::Vector6d, mc_trajectory::LinearInterpolation&lt; Eigen::Vector6d &gt; &gt;',['../structmc__trajectory_1_1SequenceInterpolator.html',1,'mc_trajectory']]],
   ['shared',['shared',['../structmc__rtc_1_1shared.html',1,'mc_rtc']]],
@@ -31,6 +31,6 @@ var searchData=
   ['statictableimpl',['StaticTableImpl',['../structmc__rtc_1_1gui_1_1details_1_1StaticTableImpl.html',1,'mc_rtc::gui::details']]],
   ['stationaryoffset',['StationaryOffset',['../structmc__filter_1_1StationaryOffset.html',1,'mc_filter']]],
   ['stationaryoffset_3c_20eigen_3a_3avector3d_20_3e',['StationaryOffset&lt; Eigen::Vector3d &gt;',['../structmc__filter_1_1StationaryOffset.html',1,'mc_filter']]],
-  ['stringinputimpl',['StringInputImpl',['../structmc__rtc_1_1gui_1_1StringInputImpl.html',1,'mc_rtc::gui']]],
+  ['stringinputimpl',['StringInputImpl',['../structmc__rtc_1_1gui_1_1details_1_1StringInputImpl.html',1,'mc_rtc::gui::details']]],
   ['surface',['Surface',['../structmc__rbdyn_1_1Surface.html',1,'mc_rbdyn']]]
 ];

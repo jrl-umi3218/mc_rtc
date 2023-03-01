@@ -78,6 +78,7 @@ $(document).ready(function(){initNavTree('ArrayInput_8h.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="elements_8h_source.html">mc_rtc/gui/elements.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="rpy__utils_8h_source.html">mc_rbdyn/rpy_utils.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for ArrayInput.h:</div>
 <div class="dyncontent">
@@ -97,24 +98,33 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1ArrayInputImpl.html">mc_rtc::gui::ArrayInputImpl&lt; GetT, SetT &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1details_1_1ArrayInputImpl.html">mc_rtc::gui::details::ArrayInputImpl&lt; GetT, SetT &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:namespacemc__rtc"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html">mc_rtc</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemc__rtc_1_1gui"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html">mc_rtc::gui</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemc__rtc_1_1gui_1_1details"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui_1_1details.html">mc_rtc::gui::details</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ad70775c90f4b00f10abc4c5a5721e557"><td class="memTemplParams" colspan="2">template&lt;typename GetT , typename SetT &gt; </td></tr>
-<tr class="memitem:ad70775c90f4b00f10abc4c5a5721e557"><td class="memTemplItemLeft" align="right" valign="top">ArrayInputImpl&lt; GetT, SetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#ad70775c90f4b00f10abc4c5a5721e557">mc_rtc::gui::ArrayInput</a> (const std::string &amp;name, GetT get_fn, SetT set_fn)</td></tr>
-<tr class="separator:ad70775c90f4b00f10abc4c5a5721e557"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f24f6599b905f3caf6ad3ec29def6bf"><td class="memTemplParams" colspan="2">template&lt;typename GetT , typename SetT &gt; </td></tr>
-<tr class="memitem:a7f24f6599b905f3caf6ad3ec29def6bf"><td class="memTemplItemLeft" align="right" valign="top">ArrayInputImpl&lt; GetT, SetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a7f24f6599b905f3caf6ad3ec29def6bf">mc_rtc::gui::ArrayInput</a> (const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, GetT get_fn, SetT set_fn)</td></tr>
-<tr class="separator:a7f24f6599b905f3caf6ad3ec29def6bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4313cdcffffd6387e206ad8c6847158a"><td class="memTemplParams" colspan="2">template&lt;typename GetT , typename SetT &gt; </td></tr>
+<tr class="memitem:a4313cdcffffd6387e206ad8c6847158a"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a4313cdcffffd6387e206ad8c6847158a">mc_rtc::gui::ArrayInput</a> (const std::string &amp;name, GetT get_fn, SetT set_fn)</td></tr>
+<tr class="separator:a4313cdcffffd6387e206ad8c6847158a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8bffdd5a1b3821447ab83eedca4746b"><td class="memTemplParams" colspan="2">template&lt;typename GetT , typename SetT &gt; </td></tr>
+<tr class="memitem:ab8bffdd5a1b3821447ab83eedca4746b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#ab8bffdd5a1b3821447ab83eedca4746b">mc_rtc::gui::ArrayInput</a> (const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, GetT get_fn, SetT set_fn)</td></tr>
+<tr class="separator:ab8bffdd5a1b3821447ab83eedca4746b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadf1f65f938b3b2c224c38db8b15d1d9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aadf1f65f938b3b2c224c38db8b15d1d9"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#aadf1f65f938b3b2c224c38db8b15d1d9">mc_rtc::gui::ArrayInput</a> (const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, T &amp;value)</td></tr>
+<tr class="separator:aadf1f65f938b3b2c224c38db8b15d1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee4787f1f1f30ffeaad47156b8886d55"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aee4787f1f1f30ffeaad47156b8886d55"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#aee4787f1f1f30ffeaad47156b8886d55">mc_rtc::gui::ArrayInput</a> (const std::string &amp;name, T &amp;value)</td></tr>
+<tr class="separator:aee4787f1f1f30ffeaad47156b8886d55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d25ab9b82dfa7006a49dff6d454f6b3"><td class="memTemplParams" colspan="2">template&lt;bool Degrees = true, typename T &gt; </td></tr>
+<tr class="memitem:a8d25ab9b82dfa7006a49dff6d454f6b3"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a8d25ab9b82dfa7006a49dff6d454f6b3">mc_rtc::gui::RPYInput</a> (const std::string &amp;name, T &amp;value)</td></tr>
+<tr class="separator:a8d25ab9b82dfa7006a49dff6d454f6b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

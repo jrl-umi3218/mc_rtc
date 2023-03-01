@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_tasks::SmoothTask\l\< objT \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1SmoothTask.html",tooltip="SmoothTask allows to smoothly reach a final weight and objective for a given task. "];
+  Node0 [label="mc_tasks::force::details\l::ImpedanceVecd\< StrictlyPositive \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html"];
 }

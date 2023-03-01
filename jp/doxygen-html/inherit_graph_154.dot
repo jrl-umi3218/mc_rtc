@@ -4,5 +4,7 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_rtc::log::FlatLog\l::entry",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1log_1_1FlatLog_1_1entry.html"];
+  Node59 [label="testnullptr",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node59 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="mc_rtc::internal::has\l_configuration_load_object\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1internal_1_1has__configuration__load__object.html"];
 }

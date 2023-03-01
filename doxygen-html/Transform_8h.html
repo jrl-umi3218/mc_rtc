@@ -99,26 +99,30 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1TransformROImpl.html">mc_rtc::gui::TransformROImpl&lt; GetT &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1TransformImpl.html">mc_rtc::gui::TransformImpl&lt; GetT, SetT &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1details_1_1TransformImpl.html">mc_rtc::gui::details::TransformImpl&lt; GetT, SetT &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:namespacemc__rtc"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html">mc_rtc</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemc__rtc_1_1gui"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html">mc_rtc::gui</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemc__rtc_1_1gui_1_1details"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui_1_1details.html">mc_rtc::gui::details</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa5342b74063b005e6a03efd66adef74e"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
-<tr class="memitem:aa5342b74063b005e6a03efd66adef74e"><td class="memTemplItemLeft" align="right" valign="top">TransformROImpl&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#aa5342b74063b005e6a03efd66adef74e">mc_rtc::gui::Transform</a> (const std::string &amp;name, GetT get_fn)</td></tr>
-<tr class="separator:aa5342b74063b005e6a03efd66adef74e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96cb90761dce6d6e3441d779e7184847"><td class="memTemplParams" colspan="2">template&lt;typename GetT , typename SetT &gt; </td></tr>
-<tr class="memitem:a96cb90761dce6d6e3441d779e7184847"><td class="memTemplItemLeft" align="right" valign="top">TransformImpl&lt; GetT, SetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a96cb90761dce6d6e3441d779e7184847">mc_rtc::gui::Transform</a> (const std::string &amp;name, GetT get_fn, SetT set_fn)</td></tr>
-<tr class="separator:a96cb90761dce6d6e3441d779e7184847"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22c1d24ef3fa6948e0fae099b81b26b1"><td class="memTemplParams" colspan="2">template&lt;typename GetT , std::enable_if_t&lt; std::is_invocable_v&lt; GetT &gt;, int &gt;  = 0&gt; </td></tr>
+<tr class="memitem:a22c1d24ef3fa6948e0fae099b81b26b1"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a22c1d24ef3fa6948e0fae099b81b26b1">mc_rtc::gui::Transform</a> (const std::string &amp;name, GetT get_fn)</td></tr>
+<tr class="separator:a22c1d24ef3fa6948e0fae099b81b26b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20dc810293b5fa7f356b314ba20c331c"><td class="memTemplParams" colspan="2">template&lt;typename GetT , typename SetT &gt; </td></tr>
+<tr class="memitem:a20dc810293b5fa7f356b314ba20c331c"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a20dc810293b5fa7f356b314ba20c331c">mc_rtc::gui::Transform</a> (const std::string &amp;name, GetT get_fn, SetT set_fn)</td></tr>
+<tr class="separator:a20dc810293b5fa7f356b314ba20c331c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ca063d69f3bf5357403b7dfd75b5917"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a5ca063d69f3bf5357403b7dfd75b5917"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a5ca063d69f3bf5357403b7dfd75b5917">mc_rtc::gui::TransformRO</a> (const std::string &amp;name, T &amp;&amp;value)</td></tr>
+<tr class="separator:a5ca063d69f3bf5357403b7dfd75b5917"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf73d7ff4aad9e07fd1c40d6e11ba9bd"><td class="memTemplParams" colspan="2">template&lt;typename T , std::enable_if_t&lt;!std::is_invocable_v&lt; T &gt;, int &gt;  = 0&gt; </td></tr>
+<tr class="memitem:aaf73d7ff4aad9e07fd1c40d6e11ba9bd"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#aaf73d7ff4aad9e07fd1c40d6e11ba9bd">mc_rtc::gui::Transform</a> (const std::string &amp;name, T &amp;value)</td></tr>
+<tr class="separator:aaf73d7ff4aad9e07fd1c40d6e11ba9bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

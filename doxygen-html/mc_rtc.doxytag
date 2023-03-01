@@ -2170,14 +2170,13 @@
     <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
     <includes id="mc__rbdyn_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rbdyn/Robot.h</includes>
     <class kind="struct">mc_rtc::gui::details::RobotImpl</class>
-    <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::gui</namespace>
     <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>details::RobotImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Robot</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a62100aa06fcd2571172fe1f3f2d1183a</anchor>
+      <anchor>a4960c76995e58d4b10b4339800ef777a</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
   </compound>
@@ -2487,6 +2486,13 @@
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
       <anchor>a058cd1f189f02e2c4986b6aacffa8195</anchor>
       <arglist>(const Eigen::Quaterniond &amp;quat)</arglist>
+    </member>
+    <member kind="function">
+      <type>Eigen::Vector3d</type>
+      <name>rpyFromRotation</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a12c74da7af6d09dc0dc20742d6de982a</anchor>
+      <arglist>(const T &amp;value)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -2834,10 +2840,13 @@
     <includes id="ArrayInput_8h" name="ArrayInput.h" local="no" imported="no">mc_rtc/gui/ArrayInput.h</includes>
     <includes id="ArrayLabel_8h" name="ArrayLabel.h" local="no" imported="no">mc_rtc/gui/ArrayLabel.h</includes>
     <includes id="Arrow_8h" name="Arrow.h" local="no" imported="no">mc_rtc/gui/Arrow.h</includes>
+    <includes id="Box_8h" name="Box.h" local="no" imported="no">mc_rtc/gui/Box.h</includes>
     <includes id="Button_8h" name="Button.h" local="no" imported="no">mc_rtc/gui/Button.h</includes>
     <includes id="Checkbox_8h" name="Checkbox.h" local="no" imported="no">mc_rtc/gui/Checkbox.h</includes>
     <includes id="ComboInput_8h" name="ComboInput.h" local="no" imported="no">mc_rtc/gui/ComboInput.h</includes>
+    <includes id="Cylinder_8h" name="Cylinder.h" local="no" imported="no">mc_rtc/gui/Cylinder.h</includes>
     <includes id="DataComboInput_8h" name="DataComboInput.h" local="no" imported="no">mc_rtc/gui/DataComboInput.h</includes>
+    <includes id="Ellipsoid_8h" name="Ellipsoid.h" local="no" imported="no">mc_rtc/gui/Ellipsoid.h</includes>
     <includes id="Force_8h" name="Force.h" local="no" imported="no">mc_rtc/gui/Force.h</includes>
     <includes id="Form_8h" name="Form.h" local="no" imported="no">mc_rtc/gui/Form.h</includes>
     <includes id="IntegerInput_8h" name="IntegerInput.h" local="no" imported="no">mc_rtc/gui/IntegerInput.h</includes>
@@ -2850,12 +2859,14 @@
     <includes id="mc__rtc_2gui_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rtc/gui/Robot.h</includes>
     <includes id="Rotation_8h" name="Rotation.h" local="no" imported="no">mc_rtc/gui/Rotation.h</includes>
     <includes id="Schema_8h" name="Schema.h" local="no" imported="no">mc_rtc/gui/Schema.h</includes>
+    <includes id="Sphere_8h" name="Sphere.h" local="no" imported="no">mc_rtc/gui/Sphere.h</includes>
     <includes id="StringInput_8h" name="StringInput.h" local="no" imported="no">mc_rtc/gui/StringInput.h</includes>
     <includes id="Table_8h" name="Table.h" local="no" imported="no">mc_rtc/gui/Table.h</includes>
     <includes id="Trajectory_8h" name="Trajectory.h" local="no" imported="no">mc_rtc/gui/Trajectory.h</includes>
     <includes id="Transform_8h" name="Transform.h" local="no" imported="no">mc_rtc/gui/Transform.h</includes>
     <includes id="Visual_8h" name="Visual.h" local="no" imported="no">mc_rtc/gui/Visual.h</includes>
     <includes id="XYTheta_8h" name="XYTheta.h" local="no" imported="no">mc_rtc/gui/XYTheta.h</includes>
+    <includes id="Input_8h" name="Input.h" local="no" imported="no">mc_rtc/gui/Input.h</includes>
     <includes id="plot_8h" name="plot.h" local="no" imported="no">mc_rtc/gui/plot.h</includes>
   </compound>
   <compound kind="file">
@@ -2863,22 +2874,44 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>ArrayInput_8h</filename>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
-    <class kind="struct">mc_rtc::gui::ArrayInputImpl</class>
-    <namespace>mc_rtc</namespace>
+    <includes id="rpy__utils_8h" name="rpy_utils.h" local="no" imported="no">mc_rbdyn/rpy_utils.h</includes>
+    <class kind="struct">mc_rtc::gui::details::ArrayInputImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>ArrayInputImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>ArrayInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ad70775c90f4b00f10abc4c5a5721e557</anchor>
+      <anchor>a4313cdcffffd6387e206ad8c6847158a</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ArrayInputImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>ArrayInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a7f24f6599b905f3caf6ad3ec29def6bf</anchor>
+      <anchor>ab8bffdd5a1b3821447ab83eedca4746b</anchor>
       <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, GetT get_fn, SetT set_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>ArrayInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>aadf1f65f938b3b2c224c38db8b15d1d9</anchor>
+      <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>ArrayInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>aee4787f1f1f30ffeaad47156b8886d55</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>RPYInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a8d25ab9b82dfa7006a49dff6d454f6b3</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -2886,22 +2919,43 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>ArrayLabel_8h</filename>
     <includes id="Label_8h" name="Label.h" local="no" imported="no">mc_rtc/gui/Label.h</includes>
-    <class kind="struct">mc_rtc::gui::ArrayLabelImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::ArrayLabelImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>ArrayLabelImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>ArrayLabel</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a308b0967f9f6dc43f0f27bcc7d1c2b69</anchor>
+      <anchor>a83cda74a29056812f66078a869042f0d</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ArrayLabelImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>ArrayLabel</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ab51ab91bf57f9e53c1b5c69ab3d8bc61</anchor>
+      <anchor>a6f1a4d5f3a023f69ae4d6396c518eb1f</anchor>
       <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, GetT get_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>ArrayLabel</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>ae65fcbdf9993486fe67db9589d9e3e9b</anchor>
+      <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>ArrayLabel</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a9f3dc8be4a38ce092e49198dfd3019c2</anchor>
+      <arglist>(const std::string &amp;name, T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>RPYLabel</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a8c020c342a5ad4a419e3ba8f77c1a2b4</anchor>
+      <arglist>(const std::string &amp;name, T &amp;&amp;value)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -2911,37 +2965,52 @@
     <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
     <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
-    <class kind="struct">mc_rtc::gui::ArrowROImpl</class>
-    <class kind="struct">mc_rtc::gui::ArrowImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::ArrowROImpl</class>
+    <class kind="struct">mc_rtc::gui::details::ArrowImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>ArrowROImpl&lt; GetStart, GetEnd &gt;</type>
+      <type>auto</type>
       <name>Arrow</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aae7d8d2d90a01712f0f57ba5f5ec0faf</anchor>
+      <anchor>ab661d87b48858e4925029bd6c72290b7</anchor>
       <arglist>(const std::string &amp;name, GetStart get_start_fn, GetEnd get_end_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ArrowROImpl&lt; GetStart, GetEnd &gt;</type>
+      <type>auto</type>
       <name>Arrow</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ab5cef94f254edfaaa52e300ef9d9287b</anchor>
+      <anchor>a26b235beda7821339526e15be9a24207</anchor>
       <arglist>(const std::string &amp;name, const ArrowConfig &amp;config, GetStart get_start_fn, GetEnd get_end_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ArrowImpl&lt; GetStart, SetStart, GetEnd, SetEnd &gt;</type>
+      <type>auto</type>
       <name>Arrow</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a910fc94e100370b4eaa72737398268aa</anchor>
+      <anchor>aeea1cfdf3c961af4e6d72e57a2b8f5e4</anchor>
       <arglist>(const std::string &amp;name, GetStart get_start_fn, SetStart set_start_fn, GetEnd get_end_fn, SetEnd set_end_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ArrowImpl&lt; GetStart, SetStart, GetEnd, SetEnd &gt;</type>
+      <type>auto</type>
       <name>Arrow</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a35479664be1d4b8d4c55baf5e76e16ae</anchor>
+      <anchor>a593df3b65775e66174f249167989cc42</anchor>
       <arglist>(const std::string &amp;name, const ArrowConfig &amp;config, GetStart get_start_fn, SetStart set_start_fn, GetEnd get_end_fn, SetEnd set_end_fn)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>Box.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
+    <filename>Box_8h</filename>
+    <includes id="Visual_8h" name="Visual.h" local="no" imported="no">mc_rtc/gui/Visual.h</includes>
+    <includes id="visual__utils_8h" name="visual_utils.h" local="no" imported="no">mc_rtc/visual_utils.h</includes>
+    <namespace>mc_rtc::gui</namespace>
+    <member kind="function">
+      <type>auto</type>
+      <name>Box</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a4987bdea795397d1ef7f45b699276001</anchor>
+      <arglist>(const std::string &amp;name, GetSize size_fn, GetPos get_pos_fn, GetColor color_fn=mc_rtc::gui::Color::Red)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -2949,14 +3018,14 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>Button_8h</filename>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
-    <class kind="struct">mc_rtc::gui::ButtonImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::ButtonImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>ButtonImpl&lt; Callback &gt;</type>
+      <type>auto</type>
       <name>Button</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a7d2e7edd5eaf913a973c519cdd6affa2</anchor>
+      <anchor>a3922223d3d3c252717cd99d9d2044b7b</anchor>
       <arglist>(const std::string &amp;name, Callback cb)</arglist>
     </member>
   </compound>
@@ -2966,32 +3035,61 @@
     <filename>Checkbox_8h</filename>
     <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
-    <class kind="struct">mc_rtc::gui::CheckboxImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::CheckboxImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>CheckboxImpl&lt; GetT, Callback &gt;</type>
+      <type>auto</type>
       <name>Checkbox</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>afc7e12ae3accc04250d14da90634986b</anchor>
+      <anchor>a9b784400f2c5e8ff20469e4ec247774e</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, Callback cb)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Checkbox</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>af89298b8d21083f2b84b56aaec8a3f2c</anchor>
+      <arglist>(const std::string &amp;name, bool &amp;value)</arglist>
     </member>
   </compound>
   <compound kind="file">
     <name>ComboInput.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>ComboInput_8h</filename>
-    <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
-    <class kind="struct">mc_rtc::gui::ComboInputImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::ComboInputImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>ComboInputImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>ComboInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aea7948a0427bfd1acd2a28803e5559e1</anchor>
+      <anchor>a5c49da1a16daa1ebcf4b68baaede7f2a</anchor>
       <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;values, GetT get_fn, SetT set_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>ComboInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a3465f740f220bfd7fbfd33a6b0c7cceb</anchor>
+      <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;values, std::string &amp;value)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>Cylinder.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
+    <filename>Cylinder_8h</filename>
+    <includes id="Visual_8h" name="Visual.h" local="no" imported="no">mc_rtc/gui/Visual.h</includes>
+    <includes id="visual__utils_8h" name="visual_utils.h" local="no" imported="no">mc_rtc/visual_utils.h</includes>
+    <class kind="struct">mc_rtc::gui::CylinderParameters</class>
+    <namespace>mc_rtc::gui</namespace>
+    <member kind="function">
+      <type>auto</type>
+      <name>Cylinder</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a8927fe282b3719f775516cd283f030f1</anchor>
+      <arglist>(const std::string &amp;name, GetParams params_fn, GetPos get_pos_fn, GetColor color_fn=mc_rtc::gui::Color::Red)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -2999,21 +3097,30 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>DataComboInput_8h</filename>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
-    <class kind="struct">mc_rtc::gui::DataComboInputImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::DataComboInputImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>DataComboInputImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>DataComboInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a5baa34dd8ac370b60f3ffbf0b2fd9dda</anchor>
+      <anchor>a6712660bb262bd87490a66e1e5a3111d</anchor>
       <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;values, GetT get_fn, SetT set_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>DataComboInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a845ebbcb2ed72ed15c96f7d2677c83d8</anchor>
+      <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;values, std::string &amp;value)</arglist>
     </member>
   </compound>
   <compound kind="file">
     <name>traits.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/details/</path>
     <filename>traits_8h</filename>
+    <includes id="constants_8h" name="constants.h" local="no" imported="no">mc_rtc/constants.h</includes>
+    <includes id="rpy__utils_8h" name="rpy_utils.h" local="no" imported="no">mc_rbdyn/rpy_utils.h</includes>
     <class kind="struct">mc_rtc::gui::details::NotAGetter</class>
     <class kind="struct">mc_rtc::gui::details::ReturnTypeImpl</class>
     <class kind="struct">mc_rtc::gui::details::ReturnTypeImpl&lt; GetT, false &gt;</class>
@@ -3021,8 +3128,14 @@
     <class kind="struct">mc_rtc::gui::details::CheckReturnType</class>
     <class kind="struct">mc_rtc::gui::details::CheckReturnType&lt; GetT, T &gt;</class>
     <class kind="struct">mc_rtc::gui::details::CheckReturnType&lt; GetT, T, Args... &gt;</class>
-    <namespace>mc_rtc</namespace>
-    <namespace>mc_rtc::gui</namespace>
+    <class kind="struct">mc_rtc::gui::details::Labels</class>
+    <class kind="struct">mc_rtc::gui::details::Labels&lt; Eigen::Vector3d &gt;</class>
+    <class kind="struct">mc_rtc::gui::details::Labels&lt; Eigen::Quaterniond &gt;</class>
+    <class kind="struct">mc_rtc::gui::details::Labels&lt; sva::MotionVecd &gt;</class>
+    <class kind="struct">mc_rtc::gui::details::Labels&lt; sva::ForceVecd &gt;</class>
+    <class kind="struct">mc_rtc::gui::details::Labels&lt; sva::ImpedanceVecd &gt;</class>
+    <class kind="struct">mc_rtc::gui::details::RPYLabels</class>
+    <class kind="struct">mc_rtc::gui::details::RPYLabels&lt; false &gt;</class>
     <namespace>mc_rtc::gui::details</namespace>
     <member kind="typedef">
       <type>void</type>
@@ -3059,6 +3172,48 @@
       <anchor>a3f24a46e2245c7951863c943009a6b3c</anchor>
       <arglist>()</arglist>
     </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>read</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>aa90a6a7d888d3e6cd89d0d3145147c49</anchor>
+      <arglist>(const T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>read_rpy</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>a525f80286b88635cab1cffe4dfa8d378</anchor>
+      <arglist>(const T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>read</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>a8cc3f398aa314eda86c9e95c9c398eab</anchor>
+      <arglist>(const T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>read_rpy</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>adc6021c4cfdf829779413fd40767cc14</anchor>
+      <arglist>(const T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>write</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>afd2e4edc42e47fce8e0a1721dbc8475a</anchor>
+      <arglist>(T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>GetValueOrCallbackValue</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>a063ab3ae51c7861effacdad6ad481fb7</anchor>
+      <arglist>(const T &amp;value_or_cb)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>elements.h</name>
@@ -3066,9 +3221,11 @@
     <filename>elements_8h</filename>
     <includes id="MessagePackBuilder_8h" name="MessagePackBuilder.h" local="no" imported="no">mc_rtc/MessagePackBuilder.h</includes>
     <includes id="include_2mc__rtc_2gui_2api_8h" name="api.h" local="no" imported="no">mc_rtc/gui/api.h</includes>
+    <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
     <class kind="struct">mc_rtc::gui::Element</class>
     <class kind="struct">mc_rtc::gui::DataElement</class>
     <class kind="struct">mc_rtc::gui::CallbackElement</class>
+    <class kind="struct">mc_rtc::gui::CallbackElement&lt; ElementT, std::nullptr_t &gt;</class>
     <class kind="struct">mc_rtc::gui::CommonInputImpl</class>
     <class kind="struct">mc_rtc::gui::VoidCallbackElement</class>
     <namespace>mc_rtc</namespace>
@@ -3108,42 +3265,57 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>Ellipsoid.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
+    <filename>Ellipsoid_8h</filename>
+    <includes id="Visual_8h" name="Visual.h" local="no" imported="no">mc_rtc/gui/Visual.h</includes>
+    <includes id="visual__utils_8h" name="visual_utils.h" local="no" imported="no">mc_rtc/visual_utils.h</includes>
+    <namespace>mc_rtc::gui</namespace>
+    <member kind="function">
+      <type>auto</type>
+      <name>Ellipsoid</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>ae67a4398c9f4f57046dfff656b21fd3e</anchor>
+      <arglist>(const std::string &amp;name, GetSize size_fn, GetPos get_pos_fn, GetColor color_fn=mc_rtc::gui::Color::Red)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>Force.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>Force_8h</filename>
     <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
     <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
-    <class kind="struct">mc_rtc::gui::ForceROImpl</class>
-    <class kind="struct">mc_rtc::gui::ForceImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::ForceROImpl</class>
+    <class kind="struct">mc_rtc::gui::details::ForceImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>ForceROImpl&lt; GetForce, GetSurface &gt;</type>
+      <type>auto</type>
       <name>Force</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a1dfaa55db99fac62693744326d7f1cb9</anchor>
+      <anchor>a0835d78a1dcbd37120da29bec0db7d6c</anchor>
       <arglist>(const std::string &amp;name, GetForce get_force_fn, GetSurface get_surface_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ForceROImpl&lt; GetForce, GetSurface &gt;</type>
+      <type>auto</type>
       <name>Force</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ae5e645b29b00acb907a3080e35a66697</anchor>
+      <anchor>ac86ab4962367a0184fc96280c4db2d6c</anchor>
       <arglist>(const std::string &amp;name, const ForceConfig &amp;config, GetForce get_force_fn, GetSurface get_surface_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ForceImpl&lt; GetForce, GetSurface, SetForce &gt;</type>
+      <type>auto</type>
       <name>Force</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aed7593a02cc0bcc3b045e2c85a3a2284</anchor>
+      <anchor>af3f14b5a8ea04402657f3c378b902662</anchor>
       <arglist>(const std::string &amp;name, GetForce get_force_fn, SetForce set_force_fn, GetSurface get_surface_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ForceImpl&lt; GetForce, GetSurface, SetForce &gt;</type>
+      <type>auto</type>
       <name>Force</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>af532dce0703aff08a435a2c53182de1b</anchor>
+      <anchor>a8f4e1b0e4eeb2e50718dcbfa43788ae4</anchor>
       <arglist>(const std::string &amp;name, const ForceConfig &amp;config, GetForce get_force_fn, SetForce set_force_fn, GetSurface get_surface_fn)</arglist>
     </member>
   </compound>
@@ -3153,17 +3325,16 @@
     <filename>Form_8h</filename>
     <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
-    <class kind="struct">mc_rtc::gui::FormImpl</class>
+    <class kind="struct">mc_rtc::gui::details::FormImpl</class>
     <class kind="struct">mc_rtc::gui::FormElement</class>
-    <class kind="struct">mc_rtc::gui::internal::CallbackOrValue</class>
-    <class kind="struct">mc_rtc::gui::internal::CallbackOrValue&lt; T, void &gt;</class>
-    <class kind="struct">mc_rtc::gui::internal::FormDataInput</class>
-    <class kind="struct">mc_rtc::gui::internal::FormArrayInput</class>
+    <class kind="struct">mc_rtc::gui::details::CallbackOrValue</class>
+    <class kind="struct">mc_rtc::gui::details::CallbackOrValue&lt; T, void &gt;</class>
+    <class kind="struct">mc_rtc::gui::details::FormDataInput</class>
+    <class kind="struct">mc_rtc::gui::details::FormArrayInput</class>
     <class kind="struct">mc_rtc::gui::FormComboInput</class>
     <class kind="struct">mc_rtc::gui::FormDataComboInput</class>
-    <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::gui</namespace>
-    <namespace>mc_rtc::gui::internal</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="define">
       <type>#define</type>
       <name>MAKE_DATA_INPUT_HELPER</name>
@@ -3172,32 +3343,50 @@
       <arglist>(DATAT, ELEMENT, FNAME)</arglist>
     </member>
     <member kind="function">
-      <type>internal::FormArrayInput&lt; T &gt;</type>
+      <type>details::FormArrayInput&lt; T &gt;</type>
       <name>FormArrayInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a7dfdb12d58d770f35ea3c3643d2ac95c</anchor>
+      <anchor>a2aea12248e83169f7b0b437aedf98d67</anchor>
       <arglist>(const std::string &amp;name, bool required, bool fixed_size=false)</arglist>
     </member>
     <member kind="function">
-      <type>internal::FormArrayInput&lt; T &gt;</type>
+      <type>details::FormArrayInput&lt; T &gt;</type>
       <name>FormArrayInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a373b1db44b534128d823f218885daaa4</anchor>
+      <anchor>acdcd1ea52f0e035794bfb0437eeb9e3b</anchor>
       <arglist>(const std::string &amp;name, bool required, const T &amp;value, bool fixed_size=true)</arglist>
     </member>
     <member kind="function">
-      <type>internal::FormArrayInput&lt; details::ReturnTypeT&lt; Callback &gt;, Callback &gt;</type>
+      <type>details::FormArrayInput&lt; details::ReturnTypeT&lt; Callback &gt;, Callback &gt;</type>
       <name>FormArrayInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aa4362ee6c9e772360facce9dea5d1874</anchor>
+      <anchor>acb8b16d54a9fbe74acb9a14c5e18c113</anchor>
       <arglist>(const std::string &amp;name, bool required, Callback callback, bool fixed_size=true)</arglist>
     </member>
     <member kind="function">
-      <type>FormImpl&lt; Callback &gt;</type>
+      <type>auto</type>
       <name>Form</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a94d2215e324dad2adb958327c16bf167</anchor>
+      <anchor>a18a02cae038137efb06943a9cd0f4b15</anchor>
       <arglist>(const std::string &amp;name, Callback cb, Args &amp;&amp;... args)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>Input.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
+    <filename>Input_8h</filename>
+    <includes id="ArrayInput_8h" name="ArrayInput.h" local="no" imported="no">mc_rtc/gui/ArrayInput.h</includes>
+    <includes id="Checkbox_8h" name="Checkbox.h" local="no" imported="no">mc_rtc/gui/Checkbox.h</includes>
+    <includes id="IntegerInput_8h" name="IntegerInput.h" local="no" imported="no">mc_rtc/gui/IntegerInput.h</includes>
+    <includes id="NumberInput_8h" name="NumberInput.h" local="no" imported="no">mc_rtc/gui/NumberInput.h</includes>
+    <includes id="StringInput_8h" name="StringInput.h" local="no" imported="no">mc_rtc/gui/StringInput.h</includes>
+    <namespace>mc_rtc::gui</namespace>
+    <member kind="function">
+      <type>auto</type>
+      <name>Input</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a33c22de96faf2fb284d26f0bbb1dbb27</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -3205,15 +3394,22 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>IntegerInput_8h</filename>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
-    <class kind="struct">mc_rtc::gui::IntegerInputImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::IntegerInputImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>IntegerInputImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>IntegerInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ac4f13804b0853d4e3ee9d53afed5b06c</anchor>
+      <anchor>a202fcb64716aa3818dc46e885f6c77f4</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>IntegerInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a99831401cdf4f24b3aae858c7609c0a8</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -3221,15 +3417,22 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>Label_8h</filename>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
-    <class kind="struct">mc_rtc::gui::LabelImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::LabelImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>LabelImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Label</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a4b4617f09036971e7ccbf6917ee37c19</anchor>
+      <anchor>a6aa81320a4cc314743df937de903758a</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Label</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a1f9c1f400fbda1285f1e439341fa7bb5</anchor>
+      <arglist>(const std::string &amp;name, T &amp;&amp;value)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -3237,15 +3440,22 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>NumberInput_8h</filename>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
-    <class kind="struct">mc_rtc::gui::NumberInputImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::NumberInputImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>NumberInputImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>NumberInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a42ba0a1ea0c4890a7941cf76892e1268</anchor>
+      <anchor>a320502193505116660b40b8f4529c572</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>NumberInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a508859b12b4bf784013ee4a3b140f9e5</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -3253,15 +3463,22 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>NumberSlider_8h</filename>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
-    <class kind="struct">mc_rtc::gui::NumberSliderImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::NumberSliderImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>NumberSliderImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>NumberSlider</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a5c6714af47a8cb199c7345ed1c2e8ffe</anchor>
+      <anchor>ad0bc50f60f006520eb6f364f3238f04c</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn, double min, double max)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>NumberSlider</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>af6eb24453357e4c87f01cc295c939bbc</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value, double min, double max)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -3380,28 +3597,28 @@
     <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
     <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
-    <class kind="struct">mc_rtc::gui::PolygonImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::PolygonImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>PolygonImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Polygon</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ac7c7c596bdb09e8c01e26e8fb53ce360</anchor>
+      <anchor>a555c888ea7f1fd36dd259b37f8d59881</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>PolygonImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Polygon</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a2b137bae8372a9a84cdb28508e7de1dd</anchor>
+      <anchor>a18c082e2034cba5b64559b2dc551cbd6</anchor>
       <arglist>(const std::string &amp;name, const Color &amp;color, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>PolygonImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Polygon</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aed41b5cb5e5b9e7fff1670617e2584be</anchor>
+      <anchor>aef94cdf61f9ad68c2ee0a6a0b5e97467</anchor>
       <arglist>(const std::string &amp;name, const LineConfig &amp;config, GetT get_fn)</arglist>
     </member>
   </compound>
@@ -3558,37 +3775,64 @@
     <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
     <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
-    <class kind="struct">mc_rtc::gui::Point3DROImpl</class>
-    <class kind="struct">mc_rtc::gui::Point3DImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::Point3DImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>Point3DROImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Point3D</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ac40c7c59cc19e0fe7be9d8a5a8564f74</anchor>
+      <anchor>a937e49d90c0fdbd9274bf757ba5aa52f</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>Point3DImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>Point3D</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a0c1802e2d8623ee22fffc408e69eaf56</anchor>
+      <anchor>a3f26fdae8b0cf6ed346426edc99baf4c</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
-      <type>Point3DROImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Point3D</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ad2db10f53541f7b6a925d724023de7ee</anchor>
+      <anchor>a2898e1d53ebbac94fbd3ab7976c8529b</anchor>
       <arglist>(const std::string &amp;name, const PointConfig &amp;config, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>Point3DImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>Point3D</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a6a9e684830b60a463c848a290d2b910b</anchor>
+      <anchor>a017439e224cd149a0c8dab318009d7f0</anchor>
       <arglist>(const std::string &amp;name, const PointConfig &amp;config, GetT get_fn, SetT set_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Point3DRO</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>ab8dadc9cb0e56db972d52eb7796723d7</anchor>
+      <arglist>(const std::string &amp;name, T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Point3DRO</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a42804bd06ec80f92149b72b736083388</anchor>
+      <arglist>(const std::string &amp;name, const PointConfig &amp;config, T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Point3D</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>ab562b03245368834ca26c737cb9390e9</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Point3D</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>abced6dd1e176684c90ee90ea65a3953a</anchor>
+      <arglist>(const std::string &amp;name, const PointConfig &amp;config, T &amp;value)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -3601,7 +3845,6 @@
     <class kind="struct">mc_rtc::gui::details::PolyhedronTrianglesListImpl</class>
     <class kind="struct">mc_rtc::gui::details::PolyhedronVerticesTrianglesImpl</class>
     <class kind="struct">mc_rtc::gui::details::ColoredPolyhedronImpl</class>
-    <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::gui</namespace>
     <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
@@ -3661,22 +3904,21 @@
     <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
     <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
-    <class kind="struct">mc_rtc::gui::RotationROImpl</class>
-    <class kind="struct">mc_rtc::gui::RotationImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::RotationImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>RotationROImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Rotation</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a9dc809d7e99978fe3f5e2439d1a20771</anchor>
+      <anchor>a609e22c82ab9d29f5ca8240c5df19098</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>RotationImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>Rotation</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a6440392ea4b48778f6d4012e0400ee5b</anchor>
+      <anchor>a9c7bbab93f9f7a32fccd0dcc6682ba88</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
   </compound>
@@ -3685,15 +3927,30 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>Schema_8h</filename>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
-    <class kind="struct">mc_rtc::gui::SchemaImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::SchemaImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>SchemaImpl&lt; Callback &gt;</type>
+      <type>auto</type>
       <name>Schema</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a0c892f6b2ba9e06d4bda32a16b76b75b</anchor>
+      <anchor>a009aa8888aec7cfb619bbabb0d2d281a</anchor>
       <arglist>(const std::string &amp;name, const std::string &amp;schema, Callback cb)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>Sphere.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
+    <filename>Sphere_8h</filename>
+    <includes id="Visual_8h" name="Visual.h" local="no" imported="no">mc_rtc/gui/Visual.h</includes>
+    <includes id="visual__utils_8h" name="visual_utils.h" local="no" imported="no">mc_rtc/visual_utils.h</includes>
+    <namespace>mc_rtc::gui</namespace>
+    <member kind="function">
+      <type>auto</type>
+      <name>Sphere</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>ae7607d52214da0247d8704240c656341</anchor>
+      <arglist>(const std::string &amp;name, GetRadius radius_fn, GetPos get_pos_fn, GetColor color_fn=mc_rtc::gui::Color::Red)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -3721,15 +3978,22 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>StringInput_8h</filename>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
-    <class kind="struct">mc_rtc::gui::StringInputImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::StringInputImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>StringInputImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>StringInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a4f8c1eb018c71e856f48cee90d7ea65d</anchor>
+      <anchor>ad566b8221fbdd646567aa1a449c2fc71</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>StringInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a3356d437092efcf6bf1ffbd55d01c945</anchor>
+      <arglist>(const std::string &amp;name, std::string &amp;value)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -3742,35 +4006,34 @@
     <class kind="struct">mc_rtc::gui::details::TableImpl</class>
     <class kind="struct">mc_rtc::gui::details::FormattedTableImpl</class>
     <class kind="struct">mc_rtc::gui::details::StaticTableImpl</class>
-    <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::gui</namespace>
     <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>details::StaticTableImpl&lt; GetData &gt;</type>
+      <type>auto</type>
       <name>Table</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a05cd899ebf8c1a1bf56acd3f44ce0b57</anchor>
+      <anchor>a5be26ccbcce1c72450d9edb782637f3a</anchor>
       <arglist>(const std::string &amp;name, std::vector&lt; std::string &gt; header, GetData get_data_fn)</arglist>
     </member>
     <member kind="function">
-      <type>details::StaticTableImpl&lt; GetData &gt;</type>
+      <type>auto</type>
       <name>Table</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a2d55934be28cf780ebdd662095eb5d1a</anchor>
+      <anchor>aa0ba1ce8dd5859999263b8652284feca</anchor>
       <arglist>(const std::string &amp;name, std::vector&lt; std::string &gt; header, std::vector&lt; std::string &gt; format, GetData get_data_fn)</arglist>
     </member>
     <member kind="function">
-      <type>details::TableImpl&lt; GetHeader, GetData &gt;</type>
+      <type>auto</type>
       <name>Table</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a25d7b1c4f525b8357ff241d726e506b2</anchor>
+      <anchor>aef5cd9a8896a0127fd93edba09a4a070</anchor>
       <arglist>(const std::string &amp;name, GetHeader get_header_fn, GetData get_data_fn)</arglist>
     </member>
     <member kind="function">
-      <type>details::FormattedTableImpl&lt; GetHeader, GetFormat, GetData &gt;</type>
+      <type>auto</type>
       <name>Table</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a6785282ae9524556f7069b9a87076eef</anchor>
+      <anchor>a5cd90246cbf572b34829d2360d359898</anchor>
       <arglist>(const std::string &amp;name, GetHeader get_header_fn, GetFormat get_format_fn, GetData get_data_fn)</arglist>
     </member>
   </compound>
@@ -3781,21 +4044,21 @@
     <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
     <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
-    <class kind="struct">mc_rtc::gui::TrajectoryImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::TrajectoryImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>TrajectoryImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Trajectory</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a062a5442d4cabf7a31d7f83008751a6a</anchor>
+      <anchor>af571dd02c78ffb0f64b87a65921721c9</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>TrajectoryImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Trajectory</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aa175899f8868d419050975dc9f79ed97</anchor>
+      <anchor>a3e388a8f888c1774a76e1aa8c28fb760</anchor>
       <arglist>(const std::string &amp;name, const LineConfig &amp;config, GetT get_fn)</arglist>
     </member>
   </compound>
@@ -3806,23 +4069,36 @@
     <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
     <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
-    <class kind="struct">mc_rtc::gui::TransformROImpl</class>
-    <class kind="struct">mc_rtc::gui::TransformImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::TransformImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>TransformROImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Transform</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aa5342b74063b005e6a03efd66adef74e</anchor>
+      <anchor>a22c1d24ef3fa6948e0fae099b81b26b1</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>TransformImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>Transform</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a96cb90761dce6d6e3441d779e7184847</anchor>
+      <anchor>a20dc810293b5fa7f356b314ba20c331c</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>TransformRO</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a5ca063d69f3bf5357403b7dfd75b5917</anchor>
+      <arglist>(const std::string &amp;name, T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Transform</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>aaf73d7ff4aad9e07fd1c40d6e11ba9bd</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -3835,14 +4111,13 @@
     <includes id="configuration__io_8h" name="configuration_io.h" local="no" imported="no">mc_rbdyn/configuration_io.h</includes>
     <includes id="MessagePackBuilder_8h" name="MessagePackBuilder.h" local="yes" imported="no">mc_rtc/MessagePackBuilder.h</includes>
     <class kind="struct">mc_rtc::gui::details::VisualImpl</class>
-    <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::gui</namespace>
     <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>details::VisualImpl&lt; GetVisual, GetPos &gt;</type>
+      <type>auto</type>
       <name>Visual</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a1cf7a01c7c66698472b6299464cd40c5</anchor>
+      <anchor>a7deefae95adb215604611789804c9126</anchor>
       <arglist>(const std::string &amp;name, GetVisual get_visual_fn, GetPos get_pos_fn)</arglist>
     </member>
   </compound>
@@ -3853,22 +4128,21 @@
     <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
     <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
-    <class kind="struct">mc_rtc::gui::XYThetaROImpl</class>
-    <class kind="struct">mc_rtc::gui::XYThetaImpl</class>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::gui::details::XYThetaImpl</class>
     <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
     <member kind="function">
-      <type>XYThetaROImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>XYTheta</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aaaa2ebe2ecb490f266fe541318646561</anchor>
+      <anchor>a24043937b89b5895dcb0e2e33aaaf60e</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>XYThetaImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>XYTheta</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a98fa40132858d1d9c0091acb36ce9f32</anchor>
+      <anchor>a331f8537aac06378da9dbbb7162684ed</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
   </compound>
@@ -4836,6 +5110,105 @@
       <name>MC_RTC_UTILS_LOCAL</name>
       <anchorfile>utils__api_8h.html</anchorfile>
       <anchor>af3c7cdf1557399d0a6334aef3b20a746</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>visual_utils.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/</path>
+    <filename>visual__utils_8h</filename>
+    <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
+    <namespace>mc_rtc</namespace>
+    <namespace>mc_rtc::details</namespace>
+    <member kind="function">
+      <type>void</type>
+      <name>setVisualColor</name>
+      <anchorfile>namespacemc__rtc_1_1details.html</anchorfile>
+      <anchor>a7a5690abf7ba73d622fd2d86a9acc961</anchor>
+      <arglist>(rbd::parsers::Visual &amp;visual, const mc_rtc::gui::Color &amp;color)</arglist>
+    </member>
+    <member kind="function">
+      <type>rbd::parsers::Visual</type>
+      <name>makeVisual</name>
+      <anchorfile>namespacemc__rtc_1_1details.html</anchorfile>
+      <anchor>a3cf01b97be6ca7d88d3eb084ba4e2464</anchor>
+      <arglist>(const DataT &amp;data, const mc_rtc::gui::Color &amp;color)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto &amp;</type>
+      <name>getVisualGeometry</name>
+      <anchorfile>namespacemc__rtc_1_1details.html</anchorfile>
+      <anchor>a61b3fb864661bf614da2c33d27669b84</anchor>
+      <arglist>(rbd::parsers::Visual &amp;visual)</arglist>
+    </member>
+    <member kind="function">
+      <type>rbd::parsers::Visual</type>
+      <name>makeVisualSphere</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a3f2e3cb6db6610b54eaae481a25daf19</anchor>
+      <arglist>(double radius, const mc_rtc::gui::Color &amp;color)</arglist>
+    </member>
+    <member kind="function">
+      <type>rbd::parsers::Visual</type>
+      <name>makeVisualCylinder</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>aa2d10e7b9779943a641cb502ad841733</anchor>
+      <arglist>(double radius, double length, const mc_rtc::gui::Color &amp;color)</arglist>
+    </member>
+    <member kind="function">
+      <type>rbd::parsers::Visual</type>
+      <name>makeVisualBox</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a3ce6a1fbc6cbfa50125c3f80b1cd0851</anchor>
+      <arglist>(const Eigen::Vector3d &amp;dim, const mc_rtc::gui::Color &amp;color)</arglist>
+    </member>
+    <member kind="function">
+      <type>rbd::parsers::Visual</type>
+      <name>makeVisualMesh</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a1d213977773e9bf5489f5fa974220724</anchor>
+      <arglist>(const std::string &amp;path, double scale)</arglist>
+    </member>
+    <member kind="function">
+      <type>rbd::parsers::Visual</type>
+      <name>makeVisualSuperellispoid</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a96ffc71a55eba088e4e6e07923a9ae8e</anchor>
+      <arglist>(const Eigen::Vector3d &amp;size, double epsilon1, double epsilon2, const mc_rtc::gui::Color &amp;color)</arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>getVisualSphere</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a843f254562021dea3c2b5b083d28ca52</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>getVisualCylinder</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a187da46010df0d4e991e20ddcd5c260d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>getVisualBox</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a4b751eb2bc1cb409cce6f4de3756b33d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>getVisualMesh</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a6ca6953c5b05b9e2075e25db87d00b11</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>getVisualSuperellipsoid</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ae300a0fa7cf45de07dd30dd160f010de</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -6796,99 +7169,99 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::ArrayInputImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1ArrayInputImpl.html</filename>
-    <templarg>GetT</templarg>
-    <templarg>SetT</templarg>
+    <name>mc_rtc::gui::details::ArrayInputImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1ArrayInputImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::CommonInputImpl</base>
     <member kind="function">
       <type></type>
       <name>ArrayInputImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrayInputImpl.html</anchorfile>
-      <anchor>aa25c4430a4386d5d792f4cb6614f87bb</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrayInputImpl.html</anchorfile>
+      <anchor>aa430fdb74c7bf4d724520d1fa6a38cd2</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>ArrayInputImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrayInputImpl.html</anchorfile>
-      <anchor>ac26b5be350a65134eda4f0719f2328d8</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrayInputImpl.html</anchorfile>
+      <anchor>ade29ce339034aac882aac4fe035002a1</anchor>
       <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrayInputImpl.html</anchorfile>
-      <anchor>aec0a1f87e9dbf0e954634ca4d9e17922</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrayInputImpl.html</anchorfile>
+      <anchor>a0c65114cd227ece9bd2845d4b6587b1b</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;writer)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>ArrayInputImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrayInputImpl.html</anchorfile>
-      <anchor>a91070d8d8f19e1ee2ae32c3438184647</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrayInputImpl.html</anchorfile>
+      <anchor>aefe5d99832e3f4734cfc1108315b32f3</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrayInputImpl.html</anchorfile>
-      <anchor>a497495027c99ecdbbb5c015283d008a9</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrayInputImpl.html</anchorfile>
+      <anchor>a7df51530d5ebda5bf657b4a76f2c78b1</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrayInputImpl.html</anchorfile>
-      <anchor>ac0959fbabfc2ed01f4c312d1f807791f</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrayInputImpl.html</anchorfile>
+      <anchor>a7dfc996c16dc2d3dcc9a94b35fa9d314</anchor>
       <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::ArrayLabelImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1ArrayLabelImpl.html</filename>
-    <templarg>GetT</templarg>
-    <base>mc_rtc::gui::LabelImpl</base>
+    <name>mc_rtc::gui::details::ArrayLabelImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1ArrayLabelImpl.html</filename>
+    <templarg></templarg>
+    <base>mc_rtc::gui::details::LabelImpl</base>
     <member kind="function">
       <type></type>
       <name>ArrayLabelImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrayLabelImpl.html</anchorfile>
-      <anchor>a11eeb4f728745ce49936ade3b34d4efe</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrayLabelImpl.html</anchorfile>
+      <anchor>ad7c7aa1590652f334828d543e98262ae</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>ArrayLabelImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrayLabelImpl.html</anchorfile>
-      <anchor>aad484a9e2c383641335beb67a978c088</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrayLabelImpl.html</anchorfile>
+      <anchor>a3c45749c24d4e74542b43c47c17a23a1</anchor>
       <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, GetT get_fn)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>ArrayLabelImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrayLabelImpl.html</anchorfile>
-      <anchor>a02d3815aeb09dea7b6fa6a19d1128fb2</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrayLabelImpl.html</anchorfile>
+      <anchor>a610f514f50391abbdbedbb7ed580ed14</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrayLabelImpl.html</anchorfile>
-      <anchor>a94beffccdc20b934bba9da0653e84961</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrayLabelImpl.html</anchorfile>
+      <anchor>abddc59505d55e391f2fe2b9c66452c14</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;writer)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrayLabelImpl.html</anchorfile>
-      <anchor>ad160afb68a84367222d9ddaf3da0e5d4</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrayLabelImpl.html</anchorfile>
+      <anchor>a5e1b412a69c9d1da4fa2a51c4f4df628</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrayLabelImpl.html</anchorfile>
-      <anchor>adb6228965c592d3ef019d87703f41aaf</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrayLabelImpl.html</anchorfile>
+      <anchor>a8fb73684e26a60fc7b925133df94c7b0</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -7002,81 +7375,81 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::ArrowImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1ArrowImpl.html</filename>
-    <templarg>GetStart</templarg>
-    <templarg>SetStart</templarg>
-    <templarg>GetEnd</templarg>
-    <templarg>SetEnd</templarg>
-    <base>mc_rtc::gui::ArrowROImpl</base>
+    <name>mc_rtc::gui::details::ArrowImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1ArrowImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
+    <templarg></templarg>
+    <templarg></templarg>
+    <base>mc_rtc::gui::details::ArrowROImpl</base>
     <member kind="function">
       <type></type>
       <name>ArrowImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrowImpl.html</anchorfile>
-      <anchor>aa433a79021362f7338be283a44f58cf6</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrowImpl.html</anchorfile>
+      <anchor>a940d3fead0df49c2d9cc21ce471aec34</anchor>
       <arglist>(const std::string &amp;name, const ArrowConfig &amp;config, GetStart get_start_fn, SetStart set_start_fn, GetEnd get_end_fn, SetEnd set_end_fn)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>ArrowImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrowImpl.html</anchorfile>
-      <anchor>a477913abc68cc99cddaf4496166dc412</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrowImpl.html</anchorfile>
+      <anchor>a83ecea9836306af1fcfc03a71e24420a</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrowImpl.html</anchorfile>
-      <anchor>a3d992464bca9a200b481434aecc0c7a5</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrowImpl.html</anchorfile>
+      <anchor>ae7a59135b7c2cb06bb3f6012200030cd</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>handleRequest</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrowImpl.html</anchorfile>
-      <anchor>a106e8180fe61c6a91023ffb29f06ee98</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrowImpl.html</anchorfile>
+      <anchor>ac1988d8f2686fadbf8ba81a2f0394002</anchor>
       <arglist>(const mc_rtc::Configuration &amp;data)</arglist>
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::ArrowROImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1ArrowROImpl.html</filename>
-    <templarg>GetStart</templarg>
-    <templarg>GetEnd</templarg>
+    <name>mc_rtc::gui::details::ArrowROImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1ArrowROImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::Element</base>
     <member kind="function">
       <type></type>
       <name>ArrowROImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrowROImpl.html</anchorfile>
-      <anchor>a2931391d13181c75b69b122a0977a4a3</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrowROImpl.html</anchorfile>
+      <anchor>a96e065d2664c09a6b953d1fd04ba82dc</anchor>
       <arglist>(const std::string &amp;name, const ArrowConfig &amp;config, GetStart get_start_fn, GetEnd get_end_fn)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>ArrowROImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrowROImpl.html</anchorfile>
-      <anchor>ab3973c42d423404df611627b43a1197f</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrowROImpl.html</anchorfile>
+      <anchor>ab6a7c54df8b60d6ec457d051398aa124</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrowROImpl.html</anchorfile>
-      <anchor>a7840f5c07db4b91e69e7a4b54fcc1a4f</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrowROImpl.html</anchorfile>
+      <anchor>afc5408803b58b5c955ea7d3106ea9abf</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder, bool ro=true)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrowROImpl.html</anchorfile>
-      <anchor>a057d3112dd2282d30d59514ce55fdb3f</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrowROImpl.html</anchorfile>
+      <anchor>ae77de5a80133475539c63621ae19fd6c</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ArrowROImpl.html</anchorfile>
-      <anchor>a20358219220c836e9e56f425c9f33390</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ArrowROImpl.html</anchorfile>
+      <anchor>a05d22b6de3dd771472476263f1a4ba3d</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -7962,29 +8335,29 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::ButtonImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1ButtonImpl.html</filename>
-    <templarg>Callback</templarg>
+    <name>mc_rtc::gui::details::ButtonImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1ButtonImpl.html</filename>
+    <templarg></templarg>
     <base>VoidCallbackElement&lt; Element, Callback &gt;</base>
     <member kind="function">
       <type></type>
       <name>ButtonImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ButtonImpl.html</anchorfile>
-      <anchor>a6a2a14b50f174bfa4b780b9ce5b1f6d2</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ButtonImpl.html</anchorfile>
+      <anchor>a7674603a850f48a1f584549c9f1ccb68</anchor>
       <arglist>(const std::string &amp;name, Callback cb, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>ButtonImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ButtonImpl.html</anchorfile>
-      <anchor>a7000759c96ebcc16419cae8ff7cb311f</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ButtonImpl.html</anchorfile>
+      <anchor>a29d87f5aa73cdc57b7188ed7593f9604</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ButtonImpl.html</anchorfile>
-      <anchor>ac31b264c88f746ffcf7579b769d5fc8a</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ButtonImpl.html</anchorfile>
+      <anchor>ae86ae3ab9a02955cbeb4137c2888f8fb</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -8168,87 +8541,106 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::internal::CallbackOrValue</name>
-    <filename>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html</filename>
+    <name>mc_rtc::gui::CallbackElement&lt; ElementT, std::nullptr_t &gt;</name>
+    <filename>structmc__rtc_1_1gui_1_1CallbackElement_3_01ElementT_00_01std_1_1nullptr__t_01_4.html</filename>
+    <templarg></templarg>
+    <member kind="function">
+      <type></type>
+      <name>CallbackElement</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1CallbackElement_3_01ElementT_00_01std_1_1nullptr__t_01_4.html</anchorfile>
+      <anchor>a10e8fe6773402a62caa0e10ba67ac77a</anchor>
+      <arglist>(const std::string &amp;name, std::nullptr_t, Args &amp;&amp;... args)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>CallbackElement</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1CallbackElement_3_01ElementT_00_01std_1_1nullptr__t_01_4.html</anchorfile>
+      <anchor>a9feabd8218b298fb9b7161f0fbbe6f2c</anchor>
+      <arglist>()</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::CallbackOrValue</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html</filename>
     <templarg>T</templarg>
     <templarg>Callback</templarg>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html</anchorfile>
-      <anchor>ab1c34352d195bd90bf1b79e629a7a1eb</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html</anchorfile>
+      <anchor>ac59bb78744f3cf287d2d9099061b988d</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="variable">
       <type>Callback</type>
       <name>callback</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html</anchorfile>
-      <anchor>a58ffa374d2a4923cc81fe2ba78cc5b91</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html</anchorfile>
+      <anchor>af3a829e1c7cc555885856838dbc83a64</anchor>
       <arglist></arglist>
     </member>
   </compound>
   <compound kind="class">
     <name>CallbackOrValue&lt; T, DataCallback &gt;</name>
-    <filename>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html</filename>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html</filename>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html</anchorfile>
-      <anchor>ab1c34352d195bd90bf1b79e629a7a1eb</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html</anchorfile>
+      <anchor>ac59bb78744f3cf287d2d9099061b988d</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="variable">
       <type>DataCallback</type>
       <name>callback</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html</anchorfile>
-      <anchor>a58ffa374d2a4923cc81fe2ba78cc5b91</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html</anchorfile>
+      <anchor>af3a829e1c7cc555885856838dbc83a64</anchor>
       <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::internal::CallbackOrValue&lt; T, void &gt;</name>
-    <filename>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue_3_01T_00_01void_01_4.html</filename>
+    <name>mc_rtc::gui::details::CallbackOrValue&lt; T, void &gt;</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue_3_01T_00_01void_01_4.html</filename>
     <templarg></templarg>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue_3_01T_00_01void_01_4.html</anchorfile>
-      <anchor>af20d46f3ac1c9449266272fd08cbec77</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue_3_01T_00_01void_01_4.html</anchorfile>
+      <anchor>ab5b0eae6beccc82f643696b3d2f0c336</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="variable">
       <type>T</type>
       <name>value</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue_3_01T_00_01void_01_4.html</anchorfile>
-      <anchor>a2a6873e05d8a167aa180ef97ad503ec2</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue_3_01T_00_01void_01_4.html</anchorfile>
+      <anchor>a9b0a0d853d5d667f1675bb0e6d8396f6</anchor>
       <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::CheckboxImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1CheckboxImpl.html</filename>
-    <templarg>GetT</templarg>
-    <templarg>Callback</templarg>
+    <name>mc_rtc::gui::details::CheckboxImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1CheckboxImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>VoidCallbackElement&lt; DataElement&lt; GetT &gt;, Callback &gt;</base>
     <member kind="function">
       <type></type>
       <name>CheckboxImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1CheckboxImpl.html</anchorfile>
-      <anchor>a2be8a9d91abdab7867e3ef29903aa18a</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1CheckboxImpl.html</anchorfile>
+      <anchor>ac4ec2c54bb2276e2c2ebc56ccf9d0ad8</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, Callback cb)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>CheckboxImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1CheckboxImpl.html</anchorfile>
-      <anchor>a49e606784d3c5c64ebf3dc493491e99d</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1CheckboxImpl.html</anchorfile>
+      <anchor>abeedc6cf8233e61be8a5028237509c61</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1CheckboxImpl.html</anchorfile>
-      <anchor>a39f960415eb48979416b212d6f08c453</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1CheckboxImpl.html</anchorfile>
+      <anchor>a18c590e534da646ae1d87b07986852da</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -8983,44 +9375,44 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::ComboInputImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1ComboInputImpl.html</filename>
-    <templarg>GetT</templarg>
-    <templarg>SetT</templarg>
+    <name>mc_rtc::gui::details::ComboInputImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1ComboInputImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::CommonInputImpl</base>
     <member kind="function">
       <type></type>
       <name>ComboInputImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ComboInputImpl.html</anchorfile>
-      <anchor>a878cc6bcd8c591901875a5bc50ca3d8d</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ComboInputImpl.html</anchorfile>
+      <anchor>afa20094ad9e5b0779af1de5a09a331d9</anchor>
       <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;values, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ComboInputImpl.html</anchorfile>
-      <anchor>a8634db0eae6c2bb845b8521c2866676d</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ComboInputImpl.html</anchorfile>
+      <anchor>a6069ffb6dad46c357e089d3fbfb4fbb0</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;writer)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>ComboInputImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ComboInputImpl.html</anchorfile>
-      <anchor>a9a8d446bb306476504480f7b0438905d</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ComboInputImpl.html</anchorfile>
+      <anchor>aed5c5af534c01e3317280e82e9f69d65</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ComboInputImpl.html</anchorfile>
-      <anchor>a8227eaf335ae36ca1739cfc97eabe8f2</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ComboInputImpl.html</anchorfile>
+      <anchor>ae5f2753ef2ba859fa8b80b20dcf9108c</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ComboInputImpl.html</anchorfile>
-      <anchor>af26181127e4bd175ee0e474d79b41b91</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ComboInputImpl.html</anchorfile>
+      <anchor>a6f927a5a96d8936183593c677396eceb</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -13643,6 +14035,24 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::gui::CylinderParameters</name>
+    <filename>structmc__rtc_1_1gui_1_1CylinderParameters.html</filename>
+    <member kind="variable">
+      <type>double</type>
+      <name>radius</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1CylinderParameters.html</anchorfile>
+      <anchor>a71d38bcd40c65aa16e30a241b7a10c3f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>length</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1CylinderParameters.html</anchorfile>
+      <anchor>a9fb3c42eaa3f48060b6766ec829bce83</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rbdyn::CylindricalSurface</name>
     <filename>structmc__rbdyn_1_1CylindricalSurface.html</filename>
     <base>mc_rbdyn::Surface</base>
@@ -13730,44 +14140,44 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::DataComboInputImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1DataComboInputImpl.html</filename>
-    <templarg>GetT</templarg>
-    <templarg>SetT</templarg>
+    <name>mc_rtc::gui::details::DataComboInputImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1DataComboInputImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::CommonInputImpl</base>
     <member kind="function">
       <type></type>
       <name>DataComboInputImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1DataComboInputImpl.html</anchorfile>
-      <anchor>a571856b4ac446cb847df167cca1bb5ae</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1DataComboInputImpl.html</anchorfile>
+      <anchor>a3c2bc6379979204027104f7eaebdecfe</anchor>
       <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;data_ref, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1DataComboInputImpl.html</anchorfile>
-      <anchor>ad79979e960ca7b50f5f9b2d0cf94d90d</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1DataComboInputImpl.html</anchorfile>
+      <anchor>a4ef5ebcaeab08731ad0315787a43722c</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>DataComboInputImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1DataComboInputImpl.html</anchorfile>
-      <anchor>a5316b6d565ef6e59a40f112d3682ea74</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1DataComboInputImpl.html</anchorfile>
+      <anchor>afb840d6fdf333535681c0edad9827b39</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1DataComboInputImpl.html</anchorfile>
-      <anchor>a439d4fefa96b4619041a43f8b2109255</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1DataComboInputImpl.html</anchorfile>
+      <anchor>aa3352f7357f37d393d8f6cb2f678f7c5</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1DataComboInputImpl.html</anchorfile>
-      <anchor>a066cabfbd0d24dcb5981be55147377a7</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1DataComboInputImpl.html</anchorfile>
+      <anchor>a4019cdcd4407734929751bc32cbc7b92</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -16296,80 +16706,80 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::ForceImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1ForceImpl.html</filename>
-    <templarg>GetForce</templarg>
-    <templarg>GetSurface</templarg>
-    <templarg>SetForce</templarg>
-    <base>mc_rtc::gui::ForceROImpl</base>
+    <name>mc_rtc::gui::details::ForceImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1ForceImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
+    <templarg></templarg>
+    <base>mc_rtc::gui::details::ForceROImpl</base>
     <member kind="typedef">
       <type>ForceROImpl&lt; GetForce, GetSurface &gt;</type>
       <name>ForceRO</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ForceImpl.html</anchorfile>
-      <anchor>a2ea650ce54d73f9bb231f2cce99163ea</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ForceImpl.html</anchorfile>
+      <anchor>ac9352283d5757a742180310561daac3b</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>ForceImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ForceImpl.html</anchorfile>
-      <anchor>a7c1e5d0c24fad518cbb13c6949dba69e</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ForceImpl.html</anchorfile>
+      <anchor>a9be7bb880c53648be0a22ce2fbf943bb</anchor>
       <arglist>(const std::string &amp;name, const ForceConfig &amp;config, GetForce get_force_fn, SetForce set_force_fn, GetSurface get_surface_fn)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ForceImpl.html</anchorfile>
-      <anchor>a19167cf6d2a2c0f0f14195e94098a11f</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ForceImpl.html</anchorfile>
+      <anchor>af6378420bac0bacb09623ec1680ee6ba</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>handleRequest</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ForceImpl.html</anchorfile>
-      <anchor>a5a2a4971fe40e6b8805eb914392fb508</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ForceImpl.html</anchorfile>
+      <anchor>ac9c8e724499257f3ea21001c6930c6c7</anchor>
       <arglist>(const mc_rtc::Configuration &amp;data)</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ForceImpl.html</anchorfile>
-      <anchor>a797c984faf37cff730edb2391a106968</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ForceImpl.html</anchorfile>
+      <anchor>aa13592db364caf84322fe62132b64145</anchor>
       <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::ForceROImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1ForceROImpl.html</filename>
-    <templarg>GetForce</templarg>
-    <templarg>GetSurface</templarg>
+    <name>mc_rtc::gui::details::ForceROImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1ForceROImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::Element</base>
     <member kind="function">
       <type></type>
       <name>ForceROImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ForceROImpl.html</anchorfile>
-      <anchor>afdf45b2767925077d95a3ef1bd372864</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ForceROImpl.html</anchorfile>
+      <anchor>a2c1846c83dbbac829d5ec02818783d89</anchor>
       <arglist>(const std::string &amp;name, const ForceConfig &amp;config, GetForce get_force_fn, GetSurface get_surface_fn)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ForceROImpl.html</anchorfile>
-      <anchor>a57c555bb17d91446dfa6fc4b3c3721f1</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ForceROImpl.html</anchorfile>
+      <anchor>a51f3125393430bf6861fdfaa3e859993</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder, bool ro=true)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ForceROImpl.html</anchorfile>
-      <anchor>a482f092b89cba7f1e6441d796104d013</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ForceROImpl.html</anchorfile>
+      <anchor>afb36a6713732f41d89380d5e202b37d8</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1ForceROImpl.html</anchorfile>
-      <anchor>abb6a80d44f1efee54399c80f0486615c</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ForceROImpl.html</anchorfile>
+      <anchor>ae92c9c1e33ce0ab3230135a6a3c2cb2b</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -16603,60 +17013,60 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::internal::FormArrayInput</name>
-    <filename>structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html</filename>
+    <name>mc_rtc::gui::details::FormArrayInput</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1FormArrayInput.html</filename>
     <templarg></templarg>
     <templarg></templarg>
     <base>FormElement&lt; FormArrayInput&lt; T, DataCallback &gt;, Elements::ArrayInput &gt;</base>
     <member kind="function">
       <type></type>
       <name>FormArrayInput</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html</anchorfile>
-      <anchor>af517a86e04b875b627267946781d8556</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormArrayInput.html</anchorfile>
+      <anchor>a682f8342f5f83fe2f9ae4475e29c6c10</anchor>
       <arglist>(const std::string &amp;name, bool required, CallbackOrValue&lt; T, DataCallback &gt; def, bool fixed_size=true)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>FormArrayInput</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html</anchorfile>
-      <anchor>a851d4d522cb326acd8c55394d3b84045</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormArrayInput.html</anchorfile>
+      <anchor>a82d5450563edadbecd3a5faa49258cc9</anchor>
       <arglist>(const std::string &amp;name, bool required, bool fixed_size=false)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write_</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html</anchorfile>
-      <anchor>a83d0420bfef59b5241a90d4e9b237d59</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormArrayInput.html</anchorfile>
+      <anchor>a989ba2d425071c5e21c052c59fd08984</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>FormArrayInput</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html</anchorfile>
-      <anchor>a0687cfd302655e5ba432ad1bd537c39c</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormArrayInput.html</anchorfile>
+      <anchor>a770d9cd1174af98d841fb546138eec37</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size_</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html</anchorfile>
-      <anchor>a377487cbabe8532fe9a44f60cf12b511</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormArrayInput.html</anchorfile>
+      <anchor>a39cd0034e5ce7aa3249a8e634f929397</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr bool</type>
       <name>is_dynamic</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html</anchorfile>
-      <anchor>a1868e72270b01246f6d53338c6724476</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormArrayInput.html</anchorfile>
+      <anchor>a9311a156e9a9a7a550c68d68f5b71481</anchor>
       <arglist>()</arglist>
     </member>
   </compound>
   <compound kind="struct">
     <name>mc_rtc::gui::details::FormattedTableImpl</name>
     <filename>structmc__rtc_1_1gui_1_1details_1_1FormattedTableImpl.html</filename>
-    <templarg>GetHeader</templarg>
-    <templarg>GetFormat</templarg>
-    <templarg>GetData</templarg>
+    <templarg></templarg>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::details::TableImpl</base>
     <member kind="function">
       <type></type>
@@ -16776,8 +17186,8 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::internal::FormDataInput</name>
-    <filename>structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html</filename>
+    <name>mc_rtc::gui::details::FormDataInput</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1FormDataInput.html</filename>
     <templarg></templarg>
     <templarg>element</templarg>
     <templarg></templarg>
@@ -16785,43 +17195,43 @@
     <member kind="function">
       <type></type>
       <name>FormDataInput</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html</anchorfile>
-      <anchor>ac223f2e4ec0a180c08c7c140ab9405f3</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormDataInput.html</anchorfile>
+      <anchor>ab153c8d3acb593c39cfbc07085c47cfe</anchor>
       <arglist>(const std::string &amp;name, bool required, CallbackOrValue&lt; T, DataCallback &gt; def)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>FormDataInput</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html</anchorfile>
-      <anchor>a184ed24b34fd350ca04c995556db1da4</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormDataInput.html</anchorfile>
+      <anchor>a9b8603b2e575f47e82f0ffc3ccb8c394</anchor>
       <arglist>(const std::string &amp;name, bool required)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write_</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html</anchorfile>
-      <anchor>af0e449bbcd40ba9f5b0891d997d3cb62</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormDataInput.html</anchorfile>
+      <anchor>a778339670b095f9e03247e5da22d5ac7</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>FormDataInput</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html</anchorfile>
-      <anchor>ac7750dd445ee8f13c96e40be241a7980</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormDataInput.html</anchorfile>
+      <anchor>aee1c6ce5f3976cdb94533bb83b4bb0de</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size_</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html</anchorfile>
-      <anchor>ab51fec44170fe661080cc755a059a949</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormDataInput.html</anchorfile>
+      <anchor>a36c6dfa233194c5c80e4bff79b42588b</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr bool</type>
       <name>is_dynamic</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html</anchorfile>
-      <anchor>a47f140750a6a361b3e75df982b1c01f1</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormDataInput.html</anchorfile>
+      <anchor>a6f87fccacce84c12f685d7a559233da8</anchor>
       <arglist>()</arglist>
     </member>
   </compound>
@@ -17128,50 +17538,50 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::FormImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1FormImpl.html</filename>
-    <templarg>Callback</templarg>
+    <name>mc_rtc::gui::details::FormImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1FormImpl.html</filename>
+    <templarg></templarg>
     <base>CallbackElement&lt; Element, Callback &gt;</base>
     <member kind="function">
       <type></type>
       <name>FormImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormImpl.html</anchorfile>
-      <anchor>a0a9bdbcc3e4a6c161caf9f0dbf347c32</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormImpl.html</anchorfile>
+      <anchor>a43f86eadc22b5c5884d4b8e5e5e2799a</anchor>
       <arglist>(const std::string &amp;name, Callback cb, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>addElement</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormImpl.html</anchorfile>
-      <anchor>ab9e4a119c65afeb42213d0e4a6fd7019</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormImpl.html</anchorfile>
+      <anchor>abc19f98f7851e8b555a88536c1d437c5</anchor>
       <arglist>(T &amp;&amp;element)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormImpl.html</anchorfile>
-      <anchor>a45371b1cc879901474c65fdee5f56808</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormImpl.html</anchorfile>
+      <anchor>ac13290da831bfe99270087f9b0cf18fc</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>FormImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormImpl.html</anchorfile>
-      <anchor>af03aec651081a3257a860feb38246c1d</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormImpl.html</anchorfile>
+      <anchor>a89e0676a2eeb0ab4a50dfa481b0680c7</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormImpl.html</anchorfile>
-      <anchor>acf9c033b7b7440e437a3327795424f02</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormImpl.html</anchorfile>
+      <anchor>acda3b37fc5418005216bc1b7ea4c8934</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormImpl.html</anchorfile>
-      <anchor>a49d4514deb2452ef6908eda1daacf629</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1FormImpl.html</anchorfile>
+      <anchor>a06232bb5e22472282d64a1e2353c6259</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -20408,30 +20818,30 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::IntegerInputImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1IntegerInputImpl.html</filename>
-    <templarg>GetT</templarg>
-    <templarg>SetT</templarg>
+    <name>mc_rtc::gui::details::IntegerInputImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1IntegerInputImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::CommonInputImpl</base>
     <member kind="function">
       <type></type>
       <name>IntegerInputImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1IntegerInputImpl.html</anchorfile>
-      <anchor>abb43e816875fdb07339135c65fa7982e</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1IntegerInputImpl.html</anchorfile>
+      <anchor>a1ff54212ac2d9cdf70d859f3a6a45d42</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>IntegerInputImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1IntegerInputImpl.html</anchorfile>
-      <anchor>a5b3e150b460bd7c5b4fc426a1d08e370</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1IntegerInputImpl.html</anchorfile>
+      <anchor>a6e64af65dac41e6c7c44d2e1db473749</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1IntegerInputImpl.html</anchorfile>
-      <anchor>ad03092ac48c1ea07ce3ee119e000229b</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1IntegerInputImpl.html</anchorfile>
+      <anchor>a0604283f59674ad361fcf93a99e382b4</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -21043,29 +21453,131 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::LabelImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1LabelImpl.html</filename>
-    <templarg>GetT</templarg>
+    <name>mc_rtc::gui::details::LabelImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1LabelImpl.html</filename>
+    <templarg></templarg>
     <base>mc_rtc::gui::DataElement</base>
     <member kind="function">
       <type></type>
       <name>LabelImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1LabelImpl.html</anchorfile>
-      <anchor>a8d875328b3e6dcc3d22287cdc7b65d9f</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1LabelImpl.html</anchorfile>
+      <anchor>ad0243d0be71346982d81c0f7e20b614d</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>LabelImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1LabelImpl.html</anchorfile>
-      <anchor>aa27962fafec53add87be74c45388891a</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1LabelImpl.html</anchorfile>
+      <anchor>af1cd66e067406dbfe49a2be5d705152b</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1LabelImpl.html</anchorfile>
-      <anchor>a4701d75e61153ae03eb9137a254e603f</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1LabelImpl.html</anchorfile>
+      <anchor>aa4d6c72241da2b4c8e3e5b7c395bdc07</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::Labels</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1Labels.html</filename>
+    <templarg></templarg>
+    <member kind="variable" static="yes">
+      <type>static constexpr bool</type>
+      <name>has_labels</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Labels.html</anchorfile>
+      <anchor>a3e63ca1d5909a1ad9193a4c67bded1e7</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::Labels&lt; Eigen::Quaterniond &gt;</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01Eigen_1_1Quaterniond_01_4.html</filename>
+    <member kind="variable" static="yes">
+      <type>static constexpr bool</type>
+      <name>has_labels</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01Eigen_1_1Quaterniond_01_4.html</anchorfile>
+      <anchor>aab4d76dde324e4be6011743a887a52e8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static const std::vector&lt; std::string &gt;</type>
+      <name>labels</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01Eigen_1_1Quaterniond_01_4.html</anchorfile>
+      <anchor>a2d0f469be8ea944daecb4291619f182f</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::Labels&lt; Eigen::Vector3d &gt;</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01Eigen_1_1Vector3d_01_4.html</filename>
+    <member kind="variable" static="yes">
+      <type>static constexpr bool</type>
+      <name>has_labels</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01Eigen_1_1Vector3d_01_4.html</anchorfile>
+      <anchor>aa6a673d4cd12980d14160eb439ef48fc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static const std::vector&lt; std::string &gt;</type>
+      <name>labels</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01Eigen_1_1Vector3d_01_4.html</anchorfile>
+      <anchor>aed611ca46ea534ecfdbe00dab98e7e4f</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::Labels&lt; sva::ForceVecd &gt;</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1ForceVecd_01_4.html</filename>
+    <member kind="variable" static="yes">
+      <type>static constexpr bool</type>
+      <name>has_labels</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1ForceVecd_01_4.html</anchorfile>
+      <anchor>a229d76942026d0476450f35a198463bb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static const std::vector&lt; std::string &gt;</type>
+      <name>labels</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1ForceVecd_01_4.html</anchorfile>
+      <anchor>a59e66252d0d3d3432feb9786f4e688cf</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::Labels&lt; sva::ImpedanceVecd &gt;</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1ImpedanceVecd_01_4.html</filename>
+    <member kind="variable" static="yes">
+      <type>static constexpr bool</type>
+      <name>has_labels</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1ImpedanceVecd_01_4.html</anchorfile>
+      <anchor>ab3d5ed793a67de4465e8d4a034381708</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static const std::vector&lt; std::string &gt;</type>
+      <name>labels</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1ImpedanceVecd_01_4.html</anchorfile>
+      <anchor>a93b2d135263e504d1935e541bf7034e5</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::Labels&lt; sva::MotionVecd &gt;</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1MotionVecd_01_4.html</filename>
+    <member kind="variable" static="yes">
+      <type>static constexpr bool</type>
+      <name>has_labels</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1MotionVecd_01_4.html</anchorfile>
+      <anchor>a5e6276997114805935d9a6cf1db060b8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static const std::vector&lt; std::string &gt;</type>
+      <name>labels</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1MotionVecd_01_4.html</anchorfile>
+      <anchor>afc0d282370693c629cac47f44e240d70</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -25685,84 +26197,84 @@
     <filename>structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html</filename>
   </compound>
   <compound kind="struct">
-    <name>mc_tvm::Robot::NewRobotToken</name>
-    <filename>structmc__tvm_1_1Robot_1_1NewRobotToken.html</filename>
-  </compound>
-  <compound kind="struct">
     <name>mc_rbdyn::Robot::NewRobotToken</name>
     <filename>structmc__rbdyn_1_1Robot_1_1NewRobotToken.html</filename>
+  </compound>
+  <compound kind="struct">
+    <name>mc_tvm::Robot::NewRobotToken</name>
+    <filename>structmc__tvm_1_1Robot_1_1NewRobotToken.html</filename>
   </compound>
   <compound kind="struct">
     <name>mc_rtc::gui::details::NotAGetter</name>
     <filename>structmc__rtc_1_1gui_1_1details_1_1NotAGetter.html</filename>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::NumberInputImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1NumberInputImpl.html</filename>
-    <templarg>GetT</templarg>
-    <templarg>SetT</templarg>
+    <name>mc_rtc::gui::details::NumberInputImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1NumberInputImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::CommonInputImpl</base>
     <member kind="function">
       <type></type>
       <name>NumberInputImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1NumberInputImpl.html</anchorfile>
-      <anchor>adc6a76d29546ffa6d09e6e244cde1310</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1NumberInputImpl.html</anchorfile>
+      <anchor>a87f89fdb83a9084dae58396a4b0a5ae6</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>NumberInputImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1NumberInputImpl.html</anchorfile>
-      <anchor>a33da2f6fd4d4ffeb4ed07e93094b002f</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1NumberInputImpl.html</anchorfile>
+      <anchor>ada43b4eb8e03e7d5713bba1f92ca0e45</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1NumberInputImpl.html</anchorfile>
-      <anchor>ae1b80d0abc5e1d9e04ff01069779aaf4</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1NumberInputImpl.html</anchorfile>
+      <anchor>a9b8242abaaedb83d393ef7e37a164082</anchor>
       <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::NumberSliderImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1NumberSliderImpl.html</filename>
-    <templarg>GetT</templarg>
-    <templarg>SetT</templarg>
+    <name>mc_rtc::gui::details::NumberSliderImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1NumberSliderImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::CommonInputImpl</base>
     <member kind="function">
       <type></type>
       <name>NumberSliderImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1NumberSliderImpl.html</anchorfile>
-      <anchor>ad32d76eae5aae6d20a58743e4744947d</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1NumberSliderImpl.html</anchorfile>
+      <anchor>a31ec26adacc75b84306592469c5f403d</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn, double min, double max)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>NumberSliderImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1NumberSliderImpl.html</anchorfile>
-      <anchor>a63a81dc88237bae8b029eaf615b0acdb</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1NumberSliderImpl.html</anchorfile>
+      <anchor>a7bf44508b3375573ec5b6b2bb051f1ad</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1NumberSliderImpl.html</anchorfile>
-      <anchor>a8e216317bf0a49f9f776b0a81d708c71</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1NumberSliderImpl.html</anchorfile>
+      <anchor>ac6aa6c500a898535c451675c1a029bb5</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;writer)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1NumberSliderImpl.html</anchorfile>
-      <anchor>a3a7ce274a193ddbde40a23f4391e38eb</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1NumberSliderImpl.html</anchorfile>
+      <anchor>a64121f785f55f97e923da7795fc879a7</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1NumberSliderImpl.html</anchorfile>
-      <anchor>ad6ef847b456858e8283667379b82dda0</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1NumberSliderImpl.html</anchorfile>
+      <anchor>af917412c420694edb5edc82697ac8dde</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -27345,85 +27857,44 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::Point3DImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1Point3DImpl.html</filename>
-    <templarg>GetT</templarg>
-    <templarg>SetT</templarg>
+    <name>mc_rtc::gui::details::Point3DImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1Point3DImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::CommonInputImpl</base>
     <member kind="function">
       <type></type>
       <name>Point3DImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1Point3DImpl.html</anchorfile>
-      <anchor>aebb2b0f65583cdb425856d7589a325d9</anchor>
-      <arglist>(const std::string &amp;name, const PointConfig &amp;config, GetT get_fn, SetT set_fn)</arglist>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Point3DImpl.html</anchorfile>
+      <anchor>a91cea2e47264f6f10fb3ec3dfcf2fe11</anchor>
+      <arglist>(const std::string &amp;name, const PointConfig &amp;config, GetT get_fn, SetT set_fn=nullptr)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>Point3DImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1Point3DImpl.html</anchorfile>
-      <anchor>a81ef40f7c6064e0c1888601141f88cfd</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Point3DImpl.html</anchorfile>
+      <anchor>aedd83efe7ed95edf56f2e9e0b5f286b8</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1Point3DImpl.html</anchorfile>
-      <anchor>a9101fdc36b843f5a6e93eb033095de14</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Point3DImpl.html</anchorfile>
+      <anchor>a04d5fc2ef55cc278fdc7709d11459e3b</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1Point3DImpl.html</anchorfile>
-      <anchor>a0c1fd00806f16e62c3ee1140799ac02c</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Point3DImpl.html</anchorfile>
+      <anchor>a76302ae81931aa014792b8c905cbc88b</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1Point3DImpl.html</anchorfile>
-      <anchor>a0471c69344137b9065b0c26db9d43639</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>mc_rtc::gui::Point3DROImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1Point3DROImpl.html</filename>
-    <templarg>GetT</templarg>
-    <base>mc_rtc::gui::DataElement</base>
-    <member kind="function">
-      <type></type>
-      <name>Point3DROImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1Point3DROImpl.html</anchorfile>
-      <anchor>adbfe7a2b3ff83932027e08f0c95d663b</anchor>
-      <arglist>(const std::string &amp;name, const PointConfig &amp;config, GetT get_fn)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1Point3DROImpl.html</anchorfile>
-      <anchor>a2b4d2003ac770437919c754325d04134</anchor>
-      <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Point3DROImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1Point3DROImpl.html</anchorfile>
-      <anchor>a3a11467db7f88a9eab78a93aee90227b</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static constexpr size_t</type>
-      <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1Point3DROImpl.html</anchorfile>
-      <anchor>abe5261acb5b704491064407a9b734b6b</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="variable" static="yes">
-      <type>static constexpr auto</type>
-      <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1Point3DROImpl.html</anchorfile>
-      <anchor>a91b7374b66df426ff377ec34f124e73b</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1Point3DImpl.html</anchorfile>
+      <anchor>a86fc2ca21663c2412a7b0bdeba9ff436</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -27686,43 +28157,43 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::PolygonImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1PolygonImpl.html</filename>
-    <templarg>GetT</templarg>
+    <name>mc_rtc::gui::details::PolygonImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1PolygonImpl.html</filename>
+    <templarg></templarg>
     <base>mc_rtc::gui::DataElement</base>
     <member kind="function">
       <type></type>
       <name>PolygonImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1PolygonImpl.html</anchorfile>
-      <anchor>a413d53c3e929a5449f01e6519af45598</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolygonImpl.html</anchorfile>
+      <anchor>a7b4fd4878fcaa4de8134307e72311c34</anchor>
       <arglist>(const std::string &amp;name, const LineConfig &amp;config, GetT get_fn)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>PolygonImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1PolygonImpl.html</anchorfile>
-      <anchor>a9c908c6704072d862688c0dcd3f1de73</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolygonImpl.html</anchorfile>
+      <anchor>ac6cfafc32ba1a1cf6d47a89665190bb3</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1PolygonImpl.html</anchorfile>
-      <anchor>a1896414f0415b4fa49e11934bde4c612</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolygonImpl.html</anchorfile>
+      <anchor>a3f21b4b83cf805e3b5642a37fd54a51b</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1PolygonImpl.html</anchorfile>
-      <anchor>af8c8a207d5a4859a307ba1a213515562</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolygonImpl.html</anchorfile>
+      <anchor>a3434712a897b11c4d16041bf8a5e99ce</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1PolygonImpl.html</anchorfile>
-      <anchor>a121a2efa2d2ab80bd1ef5f528ec2bb36</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1PolygonImpl.html</anchorfile>
+      <anchor>a55974449b436ac3119b01524d5699b73</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -32177,6 +32648,131 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_tvm::RobotFrame</name>
+    <filename>structmc__tvm_1_1RobotFrame.html</filename>
+    <base>mc_tvm::Frame</base>
+    <class kind="struct">mc_tvm::RobotFrame::NewRobotFrameToken</class>
+    <member kind="function">
+      <type></type>
+      <name>RobotFrame</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a180f24508483d020ade6aeabae644d09</anchor>
+      <arglist>(NewRobotFrameToken, const mc_rbdyn::RobotFrame &amp;frame)</arglist>
+    </member>
+    <member kind="function">
+      <type>const tvm::internal::MatrixWithProperties &amp;</type>
+      <name>jacobian</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a00716e444025c382da74be44d3df4940</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::MotionVecd &amp;</type>
+      <name>normalAcceleration</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a8cb1e954e920e2bd05c365defa9b67e3</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const tvm::internal::MatrixWithProperties &amp;</type>
+      <name>JDot</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a9d7c9662ee1b362c6a07fa041f919fc8</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const rbd::Jacobian &amp;</type>
+      <name>rbdJacobian</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a16b0b4f8711176311d767f08161f08c8</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::RobotFrame &amp;</type>
+      <name>frame</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a3f92ee53ad6d5db07eadfa532722c374</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>updateJacobian</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a717bad80165b51da9fb4a33765fb2831</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>updateNormalAcceleration</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a75c299966804b0861a9f32ab903ab78d</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>updateJDot</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>aa21e608aa91ef692d313c044b7cb805c</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Matrix3d</type>
+      <name>h_</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>ad2948decfee161d88cb03d5400386633</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>rbd::Jacobian</type>
+      <name>jac_</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a027298a7d5e79f596ea548941332aadc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>rbd::Blocks</type>
+      <name>blocks_</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a39cd40cec4116ab81c4d350b1fca6a60</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::MatrixXd</type>
+      <name>jacTmp_</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a7c2aa9bd736e94ab71b84043bed57264</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>tvm::internal::MatrixWithProperties</type>
+      <name>jacobian_</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>ae0ee03929ed4c7ef9dd29f49061e3d3e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::MotionVecd</type>
+      <name>normalAcceleration_</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>ab8e4f2a97bb8286702968f2a73e3f7c7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>tvm::internal::MatrixWithProperties</type>
+      <name>jacDot_</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>aad4a278bb84f7a8279800b88706c228d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="friend">
+      <type>friend struct</type>
+      <name>mc_rbdyn::RobotFrame</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a48c246b2297ef56ace9fbaf5ef9d4113</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rbdyn::RobotFrame</name>
     <filename>structmc__rbdyn_1_1RobotFrame.html</filename>
     <base>shared&lt; RobotFrame, Frame &gt;</base>
@@ -32344,134 +32940,9 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_tvm::RobotFrame</name>
-    <filename>structmc__tvm_1_1RobotFrame.html</filename>
-    <base>mc_tvm::Frame</base>
-    <class kind="struct">mc_tvm::RobotFrame::NewRobotFrameToken</class>
-    <member kind="function">
-      <type></type>
-      <name>RobotFrame</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a180f24508483d020ade6aeabae644d09</anchor>
-      <arglist>(NewRobotFrameToken, const mc_rbdyn::RobotFrame &amp;frame)</arglist>
-    </member>
-    <member kind="function">
-      <type>const tvm::internal::MatrixWithProperties &amp;</type>
-      <name>jacobian</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a00716e444025c382da74be44d3df4940</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const sva::MotionVecd &amp;</type>
-      <name>normalAcceleration</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a8cb1e954e920e2bd05c365defa9b67e3</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const tvm::internal::MatrixWithProperties &amp;</type>
-      <name>JDot</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a9d7c9662ee1b362c6a07fa041f919fc8</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const rbd::Jacobian &amp;</type>
-      <name>rbdJacobian</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a16b0b4f8711176311d767f08161f08c8</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::RobotFrame &amp;</type>
-      <name>frame</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a3f92ee53ad6d5db07eadfa532722c374</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>updateJacobian</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a717bad80165b51da9fb4a33765fb2831</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>updateNormalAcceleration</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a75c299966804b0861a9f32ab903ab78d</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>updateJDot</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>aa21e608aa91ef692d313c044b7cb805c</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>Eigen::Matrix3d</type>
-      <name>h_</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>ad2948decfee161d88cb03d5400386633</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>rbd::Jacobian</type>
-      <name>jac_</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a027298a7d5e79f596ea548941332aadc</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>rbd::Blocks</type>
-      <name>blocks_</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a39cd40cec4116ab81c4d350b1fca6a60</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>Eigen::MatrixXd</type>
-      <name>jacTmp_</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a7c2aa9bd736e94ab71b84043bed57264</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>tvm::internal::MatrixWithProperties</type>
-      <name>jacobian_</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>ae0ee03929ed4c7ef9dd29f49061e3d3e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>sva::MotionVecd</type>
-      <name>normalAcceleration_</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>ab8e4f2a97bb8286702968f2a73e3f7c7</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>tvm::internal::MatrixWithProperties</type>
-      <name>jacDot_</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>aad4a278bb84f7a8279800b88706c228d</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="friend">
-      <type>friend struct</type>
-      <name>mc_rbdyn::RobotFrame</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a48c246b2297ef56ace9fbaf5ef9d4113</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
     <name>mc_rtc::gui::details::RobotImpl</name>
     <filename>structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html</filename>
-    <templarg>GetT</templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::Element</base>
     <member kind="function">
       <type></type>
@@ -33752,85 +34223,67 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::RotationImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1RotationImpl.html</filename>
-    <templarg>GetT</templarg>
-    <templarg>SetT</templarg>
+    <name>mc_rtc::gui::details::RotationImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1RotationImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::CommonInputImpl</base>
     <member kind="function">
       <type></type>
       <name>RotationImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1RotationImpl.html</anchorfile>
-      <anchor>a7661413981acb1ca272bd40dcbdfec76</anchor>
-      <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RotationImpl.html</anchorfile>
+      <anchor>a219b8add4156c6806dd60319dab1bfba</anchor>
+      <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn=nullptr)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1RotationImpl.html</anchorfile>
-      <anchor>a5db74bd06e02788dcf943ecb1ba51267</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RotationImpl.html</anchorfile>
+      <anchor>a6cbfb529f87b69dee11b97f44d3bc435</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>RotationImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1RotationImpl.html</anchorfile>
-      <anchor>ad38cdbde21b335061f261683a3540046</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RotationImpl.html</anchorfile>
+      <anchor>ac81b2a674027f8d0ac906b5fb9fe6f8a</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1RotationImpl.html</anchorfile>
-      <anchor>a90964aa0cd30be5f543ca7a75433d17a</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RotationImpl.html</anchorfile>
+      <anchor>a72181c46d144567bc614580145d048aa</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1RotationImpl.html</anchorfile>
-      <anchor>acc77cdef75bb1767eb3e80c2db36afc0</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RotationImpl.html</anchorfile>
+      <anchor>af934eb6b0c16c313a9418ee949589651</anchor>
       <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::RotationROImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1RotationROImpl.html</filename>
-    <templarg>GetT</templarg>
-    <base>mc_rtc::gui::DataElement</base>
-    <member kind="function">
-      <type></type>
-      <name>RotationROImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1RotationROImpl.html</anchorfile>
-      <anchor>a09c1c750a2be23f5554b148d0bdc0355</anchor>
-      <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1RotationROImpl.html</anchorfile>
-      <anchor>ac51a9c31ab21b7f4fab3c2888cc728a6</anchor>
-      <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>RotationROImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1RotationROImpl.html</anchorfile>
-      <anchor>a4fd7310d27046f65c062596a31abda2b</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static constexpr size_t</type>
-      <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1RotationROImpl.html</anchorfile>
-      <anchor>afc5b2ee991da77eae0a2ef1623ca19c9</anchor>
-      <arglist>()</arglist>
-    </member>
+    <name>mc_rtc::gui::details::RPYLabels</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1RPYLabels.html</filename>
+    <templarg>Degrees</templarg>
     <member kind="variable" static="yes">
-      <type>static constexpr auto</type>
-      <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1RotationROImpl.html</anchorfile>
-      <anchor>aa295eb5ebba63beadb8f2d9f9348b0fa</anchor>
+      <type>static const std::vector&lt; std::string &gt;</type>
+      <name>labels</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RPYLabels.html</anchorfile>
+      <anchor>a5a6e74b403b5fa8f3074c2efcd8c8d2d</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::RPYLabels&lt; false &gt;</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1RPYLabels_3_01false_01_4.html</filename>
+    <member kind="variable" static="yes">
+      <type>static const std::vector&lt; std::string &gt;</type>
+      <name>labels</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RPYLabels_3_01false_01_4.html</anchorfile>
+      <anchor>a115570751f126ca8e00e0ae6ad28d97e</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -34039,36 +34492,36 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::SchemaImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1SchemaImpl.html</filename>
-    <templarg>Callback</templarg>
+    <name>mc_rtc::gui::details::SchemaImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1SchemaImpl.html</filename>
+    <templarg></templarg>
     <base>CallbackElement&lt; Element, Callback &gt;</base>
     <member kind="function">
       <type></type>
       <name>SchemaImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1SchemaImpl.html</anchorfile>
-      <anchor>a3b43196dfda7475d0924cc29e2db22fb</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1SchemaImpl.html</anchorfile>
+      <anchor>a0667a258d1e49216ed48808323abfcc0</anchor>
       <arglist>(const std::string &amp;name, const std::string &amp;schema, Callback cb)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1SchemaImpl.html</anchorfile>
-      <anchor>ac2fad63fbecf2126101c4bb4bfca5397</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1SchemaImpl.html</anchorfile>
+      <anchor>a21c8d4d7413059875a2983deb12fb11b</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1SchemaImpl.html</anchorfile>
-      <anchor>ad53e00175461bd0bd4facd164cabf656</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1SchemaImpl.html</anchorfile>
+      <anchor>addc874c770ee0b7073c4b9253df711e4</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1SchemaImpl.html</anchorfile>
-      <anchor>a2e77582fcb4cdc8af5919f0d3f8ffa0d</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1SchemaImpl.html</anchorfile>
+      <anchor>aafe4f30a89fb7552d93a7ab050accb7c</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -38752,7 +39205,7 @@
   <compound kind="struct">
     <name>mc_rtc::gui::details::StaticTableImpl</name>
     <filename>structmc__rtc_1_1gui_1_1details_1_1StaticTableImpl.html</filename>
-    <templarg>GetData</templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::Element</base>
     <member kind="function">
       <type></type>
@@ -38891,30 +39344,30 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::StringInputImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1StringInputImpl.html</filename>
-    <templarg>GetT</templarg>
-    <templarg>SetT</templarg>
+    <name>mc_rtc::gui::details::StringInputImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1StringInputImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::CommonInputImpl</base>
     <member kind="function">
       <type></type>
       <name>StringInputImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1StringInputImpl.html</anchorfile>
-      <anchor>a7bb61ec13b057633c8fde818c5013a52</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1StringInputImpl.html</anchorfile>
+      <anchor>a0d37e362837979f12d8cc46bd6d844de</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>StringInputImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1StringInputImpl.html</anchorfile>
-      <anchor>a350ed0e71968dfab7a2abe8ff9429b68</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1StringInputImpl.html</anchorfile>
+      <anchor>adfe69234aca7ff68c82d2070ad2e6054</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1StringInputImpl.html</anchorfile>
-      <anchor>a252d8382e7f5b9df9d46d805f8265fa1</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1StringInputImpl.html</anchorfile>
+      <anchor>ad724ec366de466183da81e21ab1f03bc</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -39058,8 +39511,8 @@
   <compound kind="struct">
     <name>mc_rtc::gui::details::TableImpl</name>
     <filename>structmc__rtc_1_1gui_1_1details_1_1TableImpl.html</filename>
-    <templarg>GetHeader</templarg>
-    <templarg>GetData</templarg>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::Element</base>
     <member kind="function">
       <type></type>
@@ -39299,43 +39752,43 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::TrajectoryImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1TrajectoryImpl.html</filename>
-    <templarg>GetT</templarg>
+    <name>mc_rtc::gui::details::TrajectoryImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1TrajectoryImpl.html</filename>
+    <templarg></templarg>
     <base>mc_rtc::gui::DataElement</base>
     <member kind="function">
       <type></type>
       <name>TrajectoryImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TrajectoryImpl.html</anchorfile>
-      <anchor>aa5739c5b73ee002d3bd0857c1daf5695</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1TrajectoryImpl.html</anchorfile>
+      <anchor>a84d88898a71d9c1ea4f6cadf97c14aaa</anchor>
       <arglist>(const std::string &amp;name, const LineConfig &amp;config, GetT get_fn)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>TrajectoryImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TrajectoryImpl.html</anchorfile>
-      <anchor>ad07155be02930a5f4ca5ad25527f5180</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1TrajectoryImpl.html</anchorfile>
+      <anchor>ab646a8a1b8a29968f92e7108ad00f120</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TrajectoryImpl.html</anchorfile>
-      <anchor>ab4ad9750f804e593ee1fcc52e35ff0e1</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1TrajectoryImpl.html</anchorfile>
+      <anchor>aa199eb479db09e1f802b987df4747df9</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TrajectoryImpl.html</anchorfile>
-      <anchor>addbe3e273eb652e9b31e8fb2d15d0738</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1TrajectoryImpl.html</anchorfile>
+      <anchor>a80c817b2d7fad3cea556b5a44493a761</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TrajectoryImpl.html</anchorfile>
-      <anchor>ad6c1b7129408a35fa938b3a4e594e669</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1TrajectoryImpl.html</anchorfile>
+      <anchor>a539bce9375eeb46b06620127723b246a</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -39874,85 +40327,44 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::TransformImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1TransformImpl.html</filename>
-    <templarg>GetT</templarg>
-    <templarg>SetT</templarg>
+    <name>mc_rtc::gui::details::TransformImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1TransformImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::CommonInputImpl</base>
     <member kind="function">
       <type></type>
       <name>TransformImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TransformImpl.html</anchorfile>
-      <anchor>a1483ccb550b761697c786f561b11e970</anchor>
-      <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1TransformImpl.html</anchorfile>
+      <anchor>a37574a4e26576ff8a15fc47c3079a2f2</anchor>
+      <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn=nullptr)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TransformImpl.html</anchorfile>
-      <anchor>aec9c9d90b11609bfa840aa7c3fd1a19c</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1TransformImpl.html</anchorfile>
+      <anchor>a0b81cb90416352db74107806a1ca6fb4</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>TransformImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TransformImpl.html</anchorfile>
-      <anchor>acaf2d26843df186ed2ca354b90586163</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1TransformImpl.html</anchorfile>
+      <anchor>a6abe15a569f607ca10832bc2d193ce5b</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TransformImpl.html</anchorfile>
-      <anchor>a7f8b306036dedba08cb160068ea9b759</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1TransformImpl.html</anchorfile>
+      <anchor>a8407d1a37c83a76adf3b8a4994a1ddcb</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TransformImpl.html</anchorfile>
-      <anchor>aeb03ff7486f988cc5a2f0ef8d96e793b</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>mc_rtc::gui::TransformROImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1TransformROImpl.html</filename>
-    <templarg>GetT</templarg>
-    <base>mc_rtc::gui::DataElement</base>
-    <member kind="function">
-      <type></type>
-      <name>TransformROImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TransformROImpl.html</anchorfile>
-      <anchor>ad88471593f6707749be38dc161ba68d3</anchor>
-      <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TransformROImpl.html</anchorfile>
-      <anchor>a1fd1a86ab5dcbdae0718bf032aba51d3</anchor>
-      <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>TransformROImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TransformROImpl.html</anchorfile>
-      <anchor>addc021aab7f8a9deb4df511d332797df</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static constexpr size_t</type>
-      <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TransformROImpl.html</anchorfile>
-      <anchor>aa2d9aff3c8adfcf000c577c9e15df210</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="variable" static="yes">
-      <type>static constexpr auto</type>
-      <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1TransformROImpl.html</anchorfile>
-      <anchor>acc345b440558ab6f45437f2db8b23e53</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1TransformImpl.html</anchorfile>
+      <anchor>a79cd940b8e948931c5f3d09c39cc2043</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -40918,8 +41330,8 @@
   <compound kind="struct">
     <name>mc_rtc::gui::details::VisualImpl</name>
     <filename>structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html</filename>
-    <templarg>GetVisual</templarg>
-    <templarg>GetPos</templarg>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::Element</base>
     <member kind="function">
       <type></type>
@@ -41096,85 +41508,44 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::XYThetaImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1XYThetaImpl.html</filename>
-    <templarg>GetT</templarg>
-    <templarg>SetT</templarg>
+    <name>mc_rtc::gui::details::XYThetaImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
     <base>mc_rtc::gui::CommonInputImpl</base>
     <member kind="function">
       <type></type>
       <name>XYThetaImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1XYThetaImpl.html</anchorfile>
-      <anchor>a6de2e9a332b75b696ddbd1167dc31d1b</anchor>
-      <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html</anchorfile>
+      <anchor>afffd6bd73b006c8ec2d58980f3b58175</anchor>
+      <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn=nullptr)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1XYThetaImpl.html</anchorfile>
-      <anchor>a247757b0f4f2f7537cd966304f6395fc</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html</anchorfile>
+      <anchor>ac1a02fb9c9a48766c28b3233577b93af</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>XYThetaImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1XYThetaImpl.html</anchorfile>
-      <anchor>ad69684bdac6275e7cd47e84f786cac2d</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html</anchorfile>
+      <anchor>a066ce33a70c11c014db3a247aa29a3e7</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1XYThetaImpl.html</anchorfile>
-      <anchor>ada9a5e8aafdff45f17263ae02a574970</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html</anchorfile>
+      <anchor>a71f4f16a9ec75fce5f5831a29233f9ef</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1XYThetaImpl.html</anchorfile>
-      <anchor>a3db5a65e4c481b435a71e15ac8715c26</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>mc_rtc::gui::XYThetaROImpl</name>
-    <filename>structmc__rtc_1_1gui_1_1XYThetaROImpl.html</filename>
-    <templarg>GetT</templarg>
-    <base>mc_rtc::gui::DataElement</base>
-    <member kind="function">
-      <type></type>
-      <name>XYThetaROImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1XYThetaROImpl.html</anchorfile>
-      <anchor>ac0153847ff6a36d76c47cae5292be192</anchor>
-      <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>XYThetaROImpl</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1XYThetaROImpl.html</anchorfile>
-      <anchor>a17aa4be99cbd7e12a198638912b80726</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>write</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1XYThetaROImpl.html</anchorfile>
-      <anchor>a2a9635b525b47f997fffcf697ae4b2f5</anchor>
-      <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static constexpr size_t</type>
-      <name>write_size</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1XYThetaROImpl.html</anchorfile>
-      <anchor>a10d9c0c5738157dac5fdb0e5dec24c21</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="variable" static="yes">
-      <type>static constexpr auto</type>
-      <name>type</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1XYThetaROImpl.html</anchorfile>
-      <anchor>aff70a2c515c79366813abd70e1d09996</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html</anchorfile>
+      <anchor>ac288ac8312bd3449bb53872ae14030db</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -42022,6 +42393,13 @@
       <arglist>(const Eigen::Quaterniond &amp;quat)</arglist>
     </member>
     <member kind="function">
+      <type>Eigen::Vector3d</type>
+      <name>rpyFromRotation</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a12c74da7af6d09dc0dc20742d6de982a</anchor>
+      <arglist>(const T &amp;value)</arglist>
+    </member>
+    <member kind="function">
       <type>MC_RBDYN_DLLAPI sch::S_Object *</type>
       <name>surface_to_sch</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
@@ -42124,6 +42502,7 @@
     <name>mc_rtc</name>
     <filename>namespacemc__rtc.html</filename>
     <namespace>mc_rtc::constants</namespace>
+    <namespace>mc_rtc::details</namespace>
     <namespace>mc_rtc::gui</namespace>
     <namespace>mc_rtc::internal</namespace>
     <namespace>mc_rtc::io</namespace>
@@ -42232,6 +42611,41 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
+      <type>rbd::parsers::Visual</type>
+      <name>makeVisualSphere</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a3f2e3cb6db6610b54eaae481a25daf19</anchor>
+      <arglist>(double radius, const mc_rtc::gui::Color &amp;color)</arglist>
+    </member>
+    <member kind="function">
+      <type>rbd::parsers::Visual</type>
+      <name>makeVisualCylinder</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>aa2d10e7b9779943a641cb502ad841733</anchor>
+      <arglist>(double radius, double length, const mc_rtc::gui::Color &amp;color)</arglist>
+    </member>
+    <member kind="function">
+      <type>rbd::parsers::Visual</type>
+      <name>makeVisualBox</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a3ce6a1fbc6cbfa50125c3f80b1cd0851</anchor>
+      <arglist>(const Eigen::Vector3d &amp;dim, const mc_rtc::gui::Color &amp;color)</arglist>
+    </member>
+    <member kind="function">
+      <type>rbd::parsers::Visual</type>
+      <name>makeVisualMesh</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a1d213977773e9bf5489f5fa974220724</anchor>
+      <arglist>(const std::string &amp;path, double scale)</arglist>
+    </member>
+    <member kind="function">
+      <type>rbd::parsers::Visual</type>
+      <name>makeVisualSuperellispoid</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a96ffc71a55eba088e4e6e07923a9ae8e</anchor>
+      <arglist>(const Eigen::Vector3d &amp;size, double epsilon1, double epsilon2, const mc_rtc::gui::Color &amp;color)</arglist>
+    </member>
+    <member kind="function">
       <type>void_ptr</type>
       <name>make_void_ptr</name>
       <anchorfile>namespacemc__rtc.html</anchorfile>
@@ -42294,6 +42708,41 @@
       <anchor>a9003469324d75c8934d51654d98ef862</anchor>
       <arglist></arglist>
     </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>getVisualSphere</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a843f254562021dea3c2b5b083d28ca52</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>getVisualCylinder</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a187da46010df0d4e991e20ddcd5c260d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>getVisualBox</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a4b751eb2bc1cb409cce6f4de3756b33d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>getVisualMesh</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a6ca6953c5b05b9e2075e25db87d00b11</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>getVisualSuperellipsoid</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ae300a0fa7cf45de07dd30dd160f010de</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="namespace">
     <name>mc_rtc::constants</name>
@@ -42342,53 +42791,52 @@
     </member>
   </compound>
   <compound kind="namespace">
+    <name>mc_rtc::details</name>
+    <filename>namespacemc__rtc_1_1details.html</filename>
+    <member kind="function">
+      <type>void</type>
+      <name>setVisualColor</name>
+      <anchorfile>namespacemc__rtc_1_1details.html</anchorfile>
+      <anchor>a7a5690abf7ba73d622fd2d86a9acc961</anchor>
+      <arglist>(rbd::parsers::Visual &amp;visual, const mc_rtc::gui::Color &amp;color)</arglist>
+    </member>
+    <member kind="function">
+      <type>rbd::parsers::Visual</type>
+      <name>makeVisual</name>
+      <anchorfile>namespacemc__rtc_1_1details.html</anchorfile>
+      <anchor>a3cf01b97be6ca7d88d3eb084ba4e2464</anchor>
+      <arglist>(const DataT &amp;data, const mc_rtc::gui::Color &amp;color)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto &amp;</type>
+      <name>getVisualGeometry</name>
+      <anchorfile>namespacemc__rtc_1_1details.html</anchorfile>
+      <anchor>a61b3fb864661bf614da2c33d27669b84</anchor>
+      <arglist>(rbd::parsers::Visual &amp;visual)</arglist>
+    </member>
+  </compound>
+  <compound kind="namespace">
     <name>mc_rtc::gui</name>
     <filename>namespacemc__rtc_1_1gui.html</filename>
     <namespace>mc_rtc::gui::details</namespace>
-    <namespace>mc_rtc::gui::internal</namespace>
     <namespace>mc_rtc::gui::plot</namespace>
-    <class kind="struct">mc_rtc::gui::ArrayInputImpl</class>
-    <class kind="struct">mc_rtc::gui::ArrayLabelImpl</class>
     <class kind="struct">mc_rtc::gui::ArrowConfig</class>
-    <class kind="struct">mc_rtc::gui::ArrowImpl</class>
-    <class kind="struct">mc_rtc::gui::ArrowROImpl</class>
-    <class kind="struct">mc_rtc::gui::ButtonImpl</class>
     <class kind="struct">mc_rtc::gui::CallbackElement</class>
-    <class kind="struct">mc_rtc::gui::CheckboxImpl</class>
+    <class kind="struct">mc_rtc::gui::CallbackElement&lt; ElementT, std::nullptr_t &gt;</class>
     <class kind="struct">mc_rtc::gui::Color</class>
-    <class kind="struct">mc_rtc::gui::ComboInputImpl</class>
     <class kind="struct">mc_rtc::gui::CommonInputImpl</class>
-    <class kind="struct">mc_rtc::gui::DataComboInputImpl</class>
+    <class kind="struct">mc_rtc::gui::CylinderParameters</class>
     <class kind="struct">mc_rtc::gui::DataElement</class>
     <class kind="struct">mc_rtc::gui::Element</class>
     <class kind="struct">mc_rtc::gui::ForceConfig</class>
-    <class kind="struct">mc_rtc::gui::ForceImpl</class>
-    <class kind="struct">mc_rtc::gui::ForceROImpl</class>
     <class kind="struct">mc_rtc::gui::FormComboInput</class>
     <class kind="struct">mc_rtc::gui::FormDataComboInput</class>
     <class kind="struct">mc_rtc::gui::FormElement</class>
-    <class kind="struct">mc_rtc::gui::FormImpl</class>
-    <class kind="struct">mc_rtc::gui::IntegerInputImpl</class>
-    <class kind="struct">mc_rtc::gui::LabelImpl</class>
     <class kind="struct">mc_rtc::gui::LineConfig</class>
-    <class kind="struct">mc_rtc::gui::NumberInputImpl</class>
-    <class kind="struct">mc_rtc::gui::NumberSliderImpl</class>
-    <class kind="struct">mc_rtc::gui::Point3DImpl</class>
-    <class kind="struct">mc_rtc::gui::Point3DROImpl</class>
     <class kind="struct">mc_rtc::gui::PointConfig</class>
-    <class kind="struct">mc_rtc::gui::PolygonImpl</class>
     <class kind="struct">mc_rtc::gui::PolyhedronConfig</class>
-    <class kind="struct">mc_rtc::gui::RotationImpl</class>
-    <class kind="struct">mc_rtc::gui::RotationROImpl</class>
-    <class kind="struct">mc_rtc::gui::SchemaImpl</class>
     <class kind="struct">mc_rtc::gui::StateBuilder</class>
-    <class kind="struct">mc_rtc::gui::StringInputImpl</class>
-    <class kind="struct">mc_rtc::gui::TrajectoryImpl</class>
-    <class kind="struct">mc_rtc::gui::TransformImpl</class>
-    <class kind="struct">mc_rtc::gui::TransformROImpl</class>
     <class kind="struct">mc_rtc::gui::VoidCallbackElement</class>
-    <class kind="struct">mc_rtc::gui::XYThetaImpl</class>
-    <class kind="struct">mc_rtc::gui::XYThetaROImpl</class>
     <member kind="enumeration">
       <type></type>
       <name>Elements</name>
@@ -42441,220 +42889,367 @@
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a23166295a3983f35cb0fa510b4c156c9a90c09393a4c0970bc9a6703ad527781c">Dotted</enumvalue>
     </member>
     <member kind="function">
-      <type>ArrayInputImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>ArrayInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ad70775c90f4b00f10abc4c5a5721e557</anchor>
+      <anchor>a4313cdcffffd6387e206ad8c6847158a</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ArrayInputImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>ArrayInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a7f24f6599b905f3caf6ad3ec29def6bf</anchor>
+      <anchor>ab8bffdd5a1b3821447ab83eedca4746b</anchor>
       <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ArrayLabelImpl&lt; GetT &gt;</type>
+      <type>auto</type>
+      <name>ArrayInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>aadf1f65f938b3b2c224c38db8b15d1d9</anchor>
+      <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>ArrayInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>aee4787f1f1f30ffeaad47156b8886d55</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>RPYInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a8d25ab9b82dfa7006a49dff6d454f6b3</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>ArrayLabel</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a308b0967f9f6dc43f0f27bcc7d1c2b69</anchor>
+      <anchor>a83cda74a29056812f66078a869042f0d</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ArrayLabelImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>ArrayLabel</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ab51ab91bf57f9e53c1b5c69ab3d8bc61</anchor>
+      <anchor>a6f1a4d5f3a023f69ae4d6396c518eb1f</anchor>
       <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ArrowROImpl&lt; GetStart, GetEnd &gt;</type>
+      <type>auto</type>
+      <name>ArrayLabel</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>ae65fcbdf9993486fe67db9589d9e3e9b</anchor>
+      <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>ArrayLabel</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a9f3dc8be4a38ce092e49198dfd3019c2</anchor>
+      <arglist>(const std::string &amp;name, T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>RPYLabel</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a8c020c342a5ad4a419e3ba8f77c1a2b4</anchor>
+      <arglist>(const std::string &amp;name, T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>Arrow</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aae7d8d2d90a01712f0f57ba5f5ec0faf</anchor>
+      <anchor>ab661d87b48858e4925029bd6c72290b7</anchor>
       <arglist>(const std::string &amp;name, GetStart get_start_fn, GetEnd get_end_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ArrowROImpl&lt; GetStart, GetEnd &gt;</type>
+      <type>auto</type>
       <name>Arrow</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ab5cef94f254edfaaa52e300ef9d9287b</anchor>
+      <anchor>a26b235beda7821339526e15be9a24207</anchor>
       <arglist>(const std::string &amp;name, const ArrowConfig &amp;config, GetStart get_start_fn, GetEnd get_end_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ArrowImpl&lt; GetStart, SetStart, GetEnd, SetEnd &gt;</type>
+      <type>auto</type>
       <name>Arrow</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a910fc94e100370b4eaa72737398268aa</anchor>
+      <anchor>aeea1cfdf3c961af4e6d72e57a2b8f5e4</anchor>
       <arglist>(const std::string &amp;name, GetStart get_start_fn, SetStart set_start_fn, GetEnd get_end_fn, SetEnd set_end_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ArrowImpl&lt; GetStart, SetStart, GetEnd, SetEnd &gt;</type>
+      <type>auto</type>
       <name>Arrow</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a35479664be1d4b8d4c55baf5e76e16ae</anchor>
+      <anchor>a593df3b65775e66174f249167989cc42</anchor>
       <arglist>(const std::string &amp;name, const ArrowConfig &amp;config, GetStart get_start_fn, SetStart set_start_fn, GetEnd get_end_fn, SetEnd set_end_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ButtonImpl&lt; Callback &gt;</type>
+      <type>auto</type>
+      <name>Box</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a4987bdea795397d1ef7f45b699276001</anchor>
+      <arglist>(const std::string &amp;name, GetSize size_fn, GetPos get_pos_fn, GetColor color_fn=mc_rtc::gui::Color::Red)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>Button</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a7d2e7edd5eaf913a973c519cdd6affa2</anchor>
+      <anchor>a3922223d3d3c252717cd99d9d2044b7b</anchor>
       <arglist>(const std::string &amp;name, Callback cb)</arglist>
     </member>
     <member kind="function">
-      <type>CheckboxImpl&lt; GetT, Callback &gt;</type>
+      <type>auto</type>
       <name>Checkbox</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>afc7e12ae3accc04250d14da90634986b</anchor>
+      <anchor>a9b784400f2c5e8ff20469e4ec247774e</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, Callback cb)</arglist>
     </member>
     <member kind="function">
-      <type>ComboInputImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
+      <name>Checkbox</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>af89298b8d21083f2b84b56aaec8a3f2c</anchor>
+      <arglist>(const std::string &amp;name, bool &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>ComboInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aea7948a0427bfd1acd2a28803e5559e1</anchor>
+      <anchor>a5c49da1a16daa1ebcf4b68baaede7f2a</anchor>
       <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;values, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
-      <type>DataComboInputImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
+      <name>ComboInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a3465f740f220bfd7fbfd33a6b0c7cceb</anchor>
+      <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;values, std::string &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Cylinder</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a8927fe282b3719f775516cd283f030f1</anchor>
+      <arglist>(const std::string &amp;name, GetParams params_fn, GetPos get_pos_fn, GetColor color_fn=mc_rtc::gui::Color::Red)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>DataComboInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a5baa34dd8ac370b60f3ffbf0b2fd9dda</anchor>
+      <anchor>a6712660bb262bd87490a66e1e5a3111d</anchor>
       <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;values, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ForceROImpl&lt; GetForce, GetSurface &gt;</type>
+      <type>auto</type>
+      <name>DataComboInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a845ebbcb2ed72ed15c96f7d2677c83d8</anchor>
+      <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;values, std::string &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Ellipsoid</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>ae67a4398c9f4f57046dfff656b21fd3e</anchor>
+      <arglist>(const std::string &amp;name, GetSize size_fn, GetPos get_pos_fn, GetColor color_fn=mc_rtc::gui::Color::Red)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>Force</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a1dfaa55db99fac62693744326d7f1cb9</anchor>
+      <anchor>a0835d78a1dcbd37120da29bec0db7d6c</anchor>
       <arglist>(const std::string &amp;name, GetForce get_force_fn, GetSurface get_surface_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ForceROImpl&lt; GetForce, GetSurface &gt;</type>
+      <type>auto</type>
       <name>Force</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ae5e645b29b00acb907a3080e35a66697</anchor>
+      <anchor>ac86ab4962367a0184fc96280c4db2d6c</anchor>
       <arglist>(const std::string &amp;name, const ForceConfig &amp;config, GetForce get_force_fn, GetSurface get_surface_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ForceImpl&lt; GetForce, GetSurface, SetForce &gt;</type>
+      <type>auto</type>
       <name>Force</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aed7593a02cc0bcc3b045e2c85a3a2284</anchor>
+      <anchor>af3f14b5a8ea04402657f3c378b902662</anchor>
       <arglist>(const std::string &amp;name, GetForce get_force_fn, SetForce set_force_fn, GetSurface get_surface_fn)</arglist>
     </member>
     <member kind="function">
-      <type>ForceImpl&lt; GetForce, GetSurface, SetForce &gt;</type>
+      <type>auto</type>
       <name>Force</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>af532dce0703aff08a435a2c53182de1b</anchor>
+      <anchor>a8f4e1b0e4eeb2e50718dcbfa43788ae4</anchor>
       <arglist>(const std::string &amp;name, const ForceConfig &amp;config, GetForce get_force_fn, SetForce set_force_fn, GetSurface get_surface_fn)</arglist>
     </member>
     <member kind="function">
-      <type>internal::FormArrayInput&lt; T &gt;</type>
+      <type>details::FormArrayInput&lt; T &gt;</type>
       <name>FormArrayInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a7dfdb12d58d770f35ea3c3643d2ac95c</anchor>
+      <anchor>a2aea12248e83169f7b0b437aedf98d67</anchor>
       <arglist>(const std::string &amp;name, bool required, bool fixed_size=false)</arglist>
     </member>
     <member kind="function">
-      <type>internal::FormArrayInput&lt; T &gt;</type>
+      <type>details::FormArrayInput&lt; T &gt;</type>
       <name>FormArrayInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a373b1db44b534128d823f218885daaa4</anchor>
+      <anchor>acdcd1ea52f0e035794bfb0437eeb9e3b</anchor>
       <arglist>(const std::string &amp;name, bool required, const T &amp;value, bool fixed_size=true)</arglist>
     </member>
     <member kind="function">
-      <type>internal::FormArrayInput&lt; details::ReturnTypeT&lt; Callback &gt;, Callback &gt;</type>
+      <type>details::FormArrayInput&lt; details::ReturnTypeT&lt; Callback &gt;, Callback &gt;</type>
       <name>FormArrayInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aa4362ee6c9e772360facce9dea5d1874</anchor>
+      <anchor>acb8b16d54a9fbe74acb9a14c5e18c113</anchor>
       <arglist>(const std::string &amp;name, bool required, Callback callback, bool fixed_size=true)</arglist>
     </member>
     <member kind="function">
-      <type>FormImpl&lt; Callback &gt;</type>
+      <type>auto</type>
       <name>Form</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a94d2215e324dad2adb958327c16bf167</anchor>
+      <anchor>a18a02cae038137efb06943a9cd0f4b15</anchor>
       <arglist>(const std::string &amp;name, Callback cb, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
-      <type>IntegerInputImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
+      <name>Input</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a33c22de96faf2fb284d26f0bbb1dbb27</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>IntegerInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ac4f13804b0853d4e3ee9d53afed5b06c</anchor>
+      <anchor>a202fcb64716aa3818dc46e885f6c77f4</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
-      <type>LabelImpl&lt; GetT &gt;</type>
+      <type>auto</type>
+      <name>IntegerInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a99831401cdf4f24b3aae858c7609c0a8</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>Label</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a4b4617f09036971e7ccbf6917ee37c19</anchor>
+      <anchor>a6aa81320a4cc314743df937de903758a</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>NumberInputImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
+      <name>Label</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a1f9c1f400fbda1285f1e439341fa7bb5</anchor>
+      <arglist>(const std::string &amp;name, T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>NumberInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a42ba0a1ea0c4890a7941cf76892e1268</anchor>
+      <anchor>a320502193505116660b40b8f4529c572</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
-      <type>NumberSliderImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
+      <name>NumberInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a508859b12b4bf784013ee4a3b140f9e5</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>NumberSlider</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a5c6714af47a8cb199c7345ed1c2e8ffe</anchor>
+      <anchor>ad0bc50f60f006520eb6f364f3238f04c</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn, double min, double max)</arglist>
     </member>
     <member kind="function">
-      <type>Point3DROImpl&lt; GetT &gt;</type>
+      <type>auto</type>
+      <name>NumberSlider</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>af6eb24453357e4c87f01cc295c939bbc</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value, double min, double max)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>Point3D</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ac40c7c59cc19e0fe7be9d8a5a8564f74</anchor>
+      <anchor>a937e49d90c0fdbd9274bf757ba5aa52f</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>Point3DImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>Point3D</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a0c1802e2d8623ee22fffc408e69eaf56</anchor>
+      <anchor>a3f26fdae8b0cf6ed346426edc99baf4c</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
-      <type>Point3DROImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Point3D</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ad2db10f53541f7b6a925d724023de7ee</anchor>
+      <anchor>a2898e1d53ebbac94fbd3ab7976c8529b</anchor>
       <arglist>(const std::string &amp;name, const PointConfig &amp;config, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>Point3DImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>Point3D</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a6a9e684830b60a463c848a290d2b910b</anchor>
+      <anchor>a017439e224cd149a0c8dab318009d7f0</anchor>
       <arglist>(const std::string &amp;name, const PointConfig &amp;config, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
-      <type>PolygonImpl&lt; GetT &gt;</type>
+      <type>auto</type>
+      <name>Point3DRO</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>ab8dadc9cb0e56db972d52eb7796723d7</anchor>
+      <arglist>(const std::string &amp;name, T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Point3DRO</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a42804bd06ec80f92149b72b736083388</anchor>
+      <arglist>(const std::string &amp;name, const PointConfig &amp;config, T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Point3D</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>ab562b03245368834ca26c737cb9390e9</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Point3D</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>abced6dd1e176684c90ee90ea65a3953a</anchor>
+      <arglist>(const std::string &amp;name, const PointConfig &amp;config, T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>Polygon</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ac7c7c596bdb09e8c01e26e8fb53ce360</anchor>
+      <anchor>a555c888ea7f1fd36dd259b37f8d59881</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>PolygonImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Polygon</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a2b137bae8372a9a84cdb28508e7de1dd</anchor>
+      <anchor>a18c082e2034cba5b64559b2dc551cbd6</anchor>
       <arglist>(const std::string &amp;name, const Color &amp;color, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>PolygonImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Polygon</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aed41b5cb5e5b9e7fff1670617e2584be</anchor>
+      <anchor>aef94cdf61f9ad68c2ee0a6a0b5e97467</anchor>
       <arglist>(const std::string &amp;name, const LineConfig &amp;config, GetT get_fn)</arglist>
     </member>
     <member kind="function">
@@ -42707,136 +43302,199 @@
       <arglist>(const std::string &amp;name, const PolyhedronConfig &amp;config, GetVerticesT get_vertices_fn, GetTrianglesT get_triangles_fn, GetColorT get_color_fn)</arglist>
     </member>
     <member kind="function">
-      <type>details::RobotImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Robot</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a62100aa06fcd2571172fe1f3f2d1183a</anchor>
+      <anchor>a4960c76995e58d4b10b4339800ef777a</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>RotationROImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Rotation</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a9dc809d7e99978fe3f5e2439d1a20771</anchor>
+      <anchor>a609e22c82ab9d29f5ca8240c5df19098</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>RotationImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>Rotation</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a6440392ea4b48778f6d4012e0400ee5b</anchor>
+      <anchor>a9c7bbab93f9f7a32fccd0dcc6682ba88</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
-      <type>SchemaImpl&lt; Callback &gt;</type>
+      <type>auto</type>
       <name>Schema</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a0c892f6b2ba9e06d4bda32a16b76b75b</anchor>
+      <anchor>a009aa8888aec7cfb619bbabb0d2d281a</anchor>
       <arglist>(const std::string &amp;name, const std::string &amp;schema, Callback cb)</arglist>
     </member>
     <member kind="function">
-      <type>StringInputImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
+      <name>Sphere</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>ae7607d52214da0247d8704240c656341</anchor>
+      <arglist>(const std::string &amp;name, GetRadius radius_fn, GetPos get_pos_fn, GetColor color_fn=mc_rtc::gui::Color::Red)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>StringInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a4f8c1eb018c71e856f48cee90d7ea65d</anchor>
+      <anchor>ad566b8221fbdd646567aa1a449c2fc71</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
-      <type>details::StaticTableImpl&lt; GetData &gt;</type>
+      <type>auto</type>
+      <name>StringInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a3356d437092efcf6bf1ffbd55d01c945</anchor>
+      <arglist>(const std::string &amp;name, std::string &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>Table</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a05cd899ebf8c1a1bf56acd3f44ce0b57</anchor>
+      <anchor>a5be26ccbcce1c72450d9edb782637f3a</anchor>
       <arglist>(const std::string &amp;name, std::vector&lt; std::string &gt; header, GetData get_data_fn)</arglist>
     </member>
     <member kind="function">
-      <type>details::StaticTableImpl&lt; GetData &gt;</type>
+      <type>auto</type>
       <name>Table</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a2d55934be28cf780ebdd662095eb5d1a</anchor>
+      <anchor>aa0ba1ce8dd5859999263b8652284feca</anchor>
       <arglist>(const std::string &amp;name, std::vector&lt; std::string &gt; header, std::vector&lt; std::string &gt; format, GetData get_data_fn)</arglist>
     </member>
     <member kind="function">
-      <type>details::TableImpl&lt; GetHeader, GetData &gt;</type>
+      <type>auto</type>
       <name>Table</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a25d7b1c4f525b8357ff241d726e506b2</anchor>
+      <anchor>aef5cd9a8896a0127fd93edba09a4a070</anchor>
       <arglist>(const std::string &amp;name, GetHeader get_header_fn, GetData get_data_fn)</arglist>
     </member>
     <member kind="function">
-      <type>details::FormattedTableImpl&lt; GetHeader, GetFormat, GetData &gt;</type>
+      <type>auto</type>
       <name>Table</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a6785282ae9524556f7069b9a87076eef</anchor>
+      <anchor>a5cd90246cbf572b34829d2360d359898</anchor>
       <arglist>(const std::string &amp;name, GetHeader get_header_fn, GetFormat get_format_fn, GetData get_data_fn)</arglist>
     </member>
     <member kind="function">
-      <type>TrajectoryImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Trajectory</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a062a5442d4cabf7a31d7f83008751a6a</anchor>
+      <anchor>af571dd02c78ffb0f64b87a65921721c9</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>TrajectoryImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Trajectory</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aa175899f8868d419050975dc9f79ed97</anchor>
+      <anchor>a3e388a8f888c1774a76e1aa8c28fb760</anchor>
       <arglist>(const std::string &amp;name, const LineConfig &amp;config, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>TransformROImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>Transform</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aa5342b74063b005e6a03efd66adef74e</anchor>
+      <anchor>a22c1d24ef3fa6948e0fae099b81b26b1</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>TransformImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>Transform</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a96cb90761dce6d6e3441d779e7184847</anchor>
+      <anchor>a20dc810293b5fa7f356b314ba20c331c</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
-      <type>details::VisualImpl&lt; GetVisual, GetPos &gt;</type>
+      <type>auto</type>
+      <name>TransformRO</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a5ca063d69f3bf5357403b7dfd75b5917</anchor>
+      <arglist>(const std::string &amp;name, T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>Transform</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>aaf73d7ff4aad9e07fd1c40d6e11ba9bd</anchor>
+      <arglist>(const std::string &amp;name, T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>Visual</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a1cf7a01c7c66698472b6299464cd40c5</anchor>
+      <anchor>a7deefae95adb215604611789804c9126</anchor>
       <arglist>(const std::string &amp;name, GetVisual get_visual_fn, GetPos get_pos_fn)</arglist>
     </member>
     <member kind="function">
-      <type>XYThetaROImpl&lt; GetT &gt;</type>
+      <type>auto</type>
       <name>XYTheta</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>aaaa2ebe2ecb490f266fe541318646561</anchor>
+      <anchor>a24043937b89b5895dcb0e2e33aaaf60e</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
     <member kind="function">
-      <type>XYThetaImpl&lt; GetT, SetT &gt;</type>
+      <type>auto</type>
       <name>XYTheta</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a98fa40132858d1d9c0091acb36ce9f32</anchor>
+      <anchor>a331f8537aac06378da9dbbb7162684ed</anchor>
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
   </compound>
   <compound kind="namespace">
     <name>mc_rtc::gui::details</name>
     <filename>namespacemc__rtc_1_1gui_1_1details.html</filename>
+    <class kind="struct">mc_rtc::gui::details::ArrayInputImpl</class>
+    <class kind="struct">mc_rtc::gui::details::ArrayLabelImpl</class>
+    <class kind="struct">mc_rtc::gui::details::ArrowImpl</class>
+    <class kind="struct">mc_rtc::gui::details::ArrowROImpl</class>
+    <class kind="struct">mc_rtc::gui::details::ButtonImpl</class>
+    <class kind="struct">mc_rtc::gui::details::CallbackOrValue</class>
+    <class kind="struct">mc_rtc::gui::details::CallbackOrValue&lt; T, void &gt;</class>
+    <class kind="struct">mc_rtc::gui::details::CheckboxImpl</class>
     <class kind="struct">mc_rtc::gui::details::CheckReturnType</class>
     <class kind="struct">mc_rtc::gui::details::CheckReturnType&lt; GetT, T &gt;</class>
     <class kind="struct">mc_rtc::gui::details::CheckReturnType&lt; GetT, T, Args... &gt;</class>
     <class kind="struct">mc_rtc::gui::details::ColoredPolyhedronImpl</class>
+    <class kind="struct">mc_rtc::gui::details::ComboInputImpl</class>
+    <class kind="struct">mc_rtc::gui::details::DataComboInputImpl</class>
+    <class kind="struct">mc_rtc::gui::details::ForceImpl</class>
+    <class kind="struct">mc_rtc::gui::details::ForceROImpl</class>
+    <class kind="struct">mc_rtc::gui::details::FormArrayInput</class>
     <class kind="struct">mc_rtc::gui::details::FormattedTableImpl</class>
+    <class kind="struct">mc_rtc::gui::details::FormDataInput</class>
+    <class kind="struct">mc_rtc::gui::details::FormImpl</class>
+    <class kind="struct">mc_rtc::gui::details::IntegerInputImpl</class>
+    <class kind="struct">mc_rtc::gui::details::LabelImpl</class>
+    <class kind="struct">mc_rtc::gui::details::Labels</class>
+    <class kind="struct">mc_rtc::gui::details::Labels&lt; Eigen::Quaterniond &gt;</class>
+    <class kind="struct">mc_rtc::gui::details::Labels&lt; Eigen::Vector3d &gt;</class>
+    <class kind="struct">mc_rtc::gui::details::Labels&lt; sva::ForceVecd &gt;</class>
+    <class kind="struct">mc_rtc::gui::details::Labels&lt; sva::ImpedanceVecd &gt;</class>
+    <class kind="struct">mc_rtc::gui::details::Labels&lt; sva::MotionVecd &gt;</class>
     <class kind="struct">mc_rtc::gui::details::NotAGetter</class>
+    <class kind="struct">mc_rtc::gui::details::NumberInputImpl</class>
+    <class kind="struct">mc_rtc::gui::details::NumberSliderImpl</class>
+    <class kind="struct">mc_rtc::gui::details::Point3DImpl</class>
+    <class kind="struct">mc_rtc::gui::details::PolygonImpl</class>
     <class kind="struct">mc_rtc::gui::details::PolyhedronTrianglesListImpl</class>
     <class kind="struct">mc_rtc::gui::details::PolyhedronVerticesTrianglesImpl</class>
     <class kind="struct">mc_rtc::gui::details::ReturnType</class>
     <class kind="struct">mc_rtc::gui::details::ReturnTypeImpl</class>
     <class kind="struct">mc_rtc::gui::details::ReturnTypeImpl&lt; GetT, false &gt;</class>
     <class kind="struct">mc_rtc::gui::details::RobotImpl</class>
+    <class kind="struct">mc_rtc::gui::details::RotationImpl</class>
+    <class kind="struct">mc_rtc::gui::details::RPYLabels</class>
+    <class kind="struct">mc_rtc::gui::details::RPYLabels&lt; false &gt;</class>
+    <class kind="struct">mc_rtc::gui::details::SchemaImpl</class>
     <class kind="struct">mc_rtc::gui::details::StaticTableImpl</class>
+    <class kind="struct">mc_rtc::gui::details::StringInputImpl</class>
     <class kind="struct">mc_rtc::gui::details::TableImpl</class>
+    <class kind="struct">mc_rtc::gui::details::TrajectoryImpl</class>
+    <class kind="struct">mc_rtc::gui::details::TransformImpl</class>
     <class kind="struct">mc_rtc::gui::details::VisualImpl</class>
+    <class kind="struct">mc_rtc::gui::details::XYThetaImpl</class>
     <member kind="typedef">
       <type>void</type>
       <name>void_t</name>
@@ -42872,14 +43530,48 @@
       <anchor>a3f24a46e2245c7951863c943009a6b3c</anchor>
       <arglist>()</arglist>
     </member>
-  </compound>
-  <compound kind="namespace">
-    <name>mc_rtc::gui::internal</name>
-    <filename>namespacemc__rtc_1_1gui_1_1internal.html</filename>
-    <class kind="struct">mc_rtc::gui::internal::CallbackOrValue</class>
-    <class kind="struct">mc_rtc::gui::internal::CallbackOrValue&lt; T, void &gt;</class>
-    <class kind="struct">mc_rtc::gui::internal::FormArrayInput</class>
-    <class kind="struct">mc_rtc::gui::internal::FormDataInput</class>
+    <member kind="function">
+      <type>auto</type>
+      <name>read</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>aa90a6a7d888d3e6cd89d0d3145147c49</anchor>
+      <arglist>(const T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>read_rpy</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>a525f80286b88635cab1cffe4dfa8d378</anchor>
+      <arglist>(const T &amp;&amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>read</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>a8cc3f398aa314eda86c9e95c9c398eab</anchor>
+      <arglist>(const T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>read_rpy</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>adc6021c4cfdf829779413fd40767cc14</anchor>
+      <arglist>(const T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>write</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>afd2e4edc42e47fce8e0a1721dbc8475a</anchor>
+      <arglist>(T &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>GetValueOrCallbackValue</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>a063ab3ae51c7861effacdad6ad481fb7</anchor>
+      <arglist>(const T &amp;value_or_cb)</arglist>
+    </member>
   </compound>
   <compound kind="namespace">
     <name>mc_rtc::gui::plot</name>

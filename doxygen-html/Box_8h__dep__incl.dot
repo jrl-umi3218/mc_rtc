@@ -1,0 +1,40 @@
+digraph "include/mc_rtc/gui/Box.h"
+{
+ // INTERACTIVE_SVG=YES
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node70 [label="include/mc_rtc/gui\l/Box.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node70 -> Node71 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node71 [label="include/mc_rtc/gui.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$gui_8h.html"];
+  Node71 -> Node72 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node72 [label="include/mc_control\l/MCController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$MCController_8h.html"];
+  Node72 -> Node73 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node73 [label="include/mc_control\l/ControllerServer.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ControllerServer_8h.html"];
+  Node73 -> Node74 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node74 [label="include/mc_control\l/ControllerClient.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ControllerClient_8h.html"];
+  Node73 -> Node75 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node75 [label="include/mc_control\l/mc_global_controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__global__controller_8h.html"];
+  Node75 -> Node76 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node76 [label="include/mc_control\l/GlobalPlugin.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$GlobalPlugin_8h.html"];
+  Node76 -> Node77 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node77 [label="include/mc_control\l/GlobalPluginLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$GlobalPluginLoader_8h.html"];
+  Node76 -> Node78 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node78 [label="include/mc_control\l/GlobalPluginMacros.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$GlobalPluginMacros_8h.html"];
+  Node72 -> Node79 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node79 [label="include/mc_control\l/ControllerLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ControllerLoader_8h.html"];
+  Node72 -> Node80 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node80 [label="include/mc_control\l/fsm/Controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Controller_8h.html"];
+  Node80 -> Node81 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node81 [label="include/mc_control\l/fsm/TasksController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$fsm_2TasksController_8h.html"];
+  Node80 -> Node82 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node82 [label="include/mc_control\l/fsm/TVMController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$fsm_2TVMController_8h.html"];
+  Node72 -> Node75 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node72 -> Node83 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node83 [label="include/mc_control\l/mc_controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__controller_8h.html"];
+  Node72 -> Node84 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node84 [label="include/mc_control\l/mc_python_controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__python__controller_8h.html"];
+  Node72 -> Node85 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node85 [label="include/mc_control\l/TasksController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$TasksController_8h.html"];
+  Node72 -> Node86 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node86 [label="include/mc_control\l/TVMController.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$TVMController_8h.html"];
+}

@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_rtc::gui::FormElement\l\< Derived, element \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1FormElement.html"];
+  Node0 [label="mc_rtc::gui::details\l::Labels\< Eigen::Vector3d \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1Labels_3_01Eigen_1_1Vector3d_01_4.html"];
 }

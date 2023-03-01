@@ -478,15 +478,12 @@ Setters to reconfigure the stabilizer online</h2></td></tr>
 <tr class="memdesc:aa8e7a8dde0d29233a6eee898f128361a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parameters for the external wrenches.  <a href="#aa8e7a8dde0d29233a6eee898f128361a">More...</a><br /></td></tr>
 <tr class="separator:aa8e7a8dde0d29233a6eee898f128361a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7709c43f16a9b418ecf2619d69821a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ac7709c43f16a9b418ecf2619d69821a6">addToSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
-<tr class="memdesc:ac7709c43f16a9b418ecf2619d69821a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the task to a solver.  <a href="#ac7709c43f16a9b418ecf2619d69821a6">More...</a><br /></td></tr>
 <tr class="separator:ac7709c43f16a9b418ecf2619d69821a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bef48c5f1f58cf958f55c9fb2c9e6e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1bef48c5f1f58cf958f55c9fb2c9e6e1">removeFromSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
-<tr class="memdesc:a1bef48c5f1f58cf958f55c9fb2c9e6e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the task from a solver.  <a href="#a1bef48c5f1f58cf958f55c9fb2c9e6e1">More...</a><br /></td></tr>
 <tr class="separator:a1bef48c5f1f58cf958f55c9fb2c9e6e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47f242d0db7ed96a17dc3aea2726c473"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a47f242d0db7ed96a17dc3aea2726c473">removeFromGUI</a> (<a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">mc_rtc::gui::StateBuilder</a> &amp;) override</td></tr>
 <tr class="separator:a47f242d0db7ed96a17dc3aea2726c473"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5015b2c830f229580727098d7b769d1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a5015b2c830f229580727098d7b769d1d">update</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;) override</td></tr>
-<tr class="memdesc:a5015b2c830f229580727098d7b769d1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the task.  <a href="#a5015b2c830f229580727098d7b769d1d">More...</a><br /></td></tr>
 <tr class="separator:a5015b2c830f229580727098d7b769d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0806e753efb5d4a75ea474d775ccadf4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a0806e753efb5d4a75ea474d775ccadf4">addToLogger</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;) override</td></tr>
 <tr class="separator:a0806e753efb5d4a75ea474d775ccadf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -682,9 +679,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Add elements to the GUI through the helper</p>
-<p>This will be called by the solver when the task is added.</p>
-<p>The default implementation adds the type of the task under the {"Tasks", name_} category. </p>
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 <p>Reimplemented from <a class="el" href="structmc__tasks_1_1MetaTask.html#a6be5d66b0aba0cac4f65093d5d3b7c7f">mc_tasks::MetaTask</a>.</p>
 
@@ -748,14 +743,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Add the task to a solver. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>Solver where to add the task </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 <p>Implements <a class="el" href="structmc__tasks_1_1MetaTask.html#a87fbfd10dd81b8ce64a7a9f82d80d078">mc_tasks::MetaTask</a>.</p>
 
@@ -903,6 +891,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -929,6 +918,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -955,6 +945,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1031,6 +1022,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1057,6 +1049,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1198,6 +1191,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1224,6 +1218,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1250,6 +1245,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1276,6 +1272,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1302,6 +1299,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1328,6 +1326,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1353,6 +1352,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1440,6 +1440,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1466,6 +1467,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1508,6 +1510,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1550,6 +1553,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1576,6 +1580,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1602,6 +1607,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1628,6 +1634,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1833,6 +1840,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -1859,6 +1867,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -2161,6 +2170,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -2187,6 +2197,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -2257,9 +2268,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Remove elements from the GUI through the helper</p>
-<p>This will be called by the solver when the task is removed.</p>
-<p>The default implementation removes the {"Tasks", name_} category. </p>
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 <p>Reimplemented from <a class="el" href="structmc__tasks_1_1MetaTask.html#a44d85f3f65abc8a5f8965efec40ebe7d">mc_tasks::MetaTask</a>.</p>
 
@@ -2288,9 +2297,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Remove entries from the logger</p>
-<p>This will be called by the solver when the task is removed.</p>
-<p>The default implementation removes everything registered with the <a class="el" href="structmc__tasks_1_1MetaTask.html" title="Represents a generic task. ">MetaTask</a> instance as a source, it is likely good enough </p>
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 <p>Reimplemented from <a class="el" href="structmc__tasks_1_1MetaTask.html#a1db4ea4e03d00823e7ee10b444a697b1">mc_tasks::MetaTask</a>.</p>
 
@@ -2319,14 +2326,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Remove the task from a solver. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>Solver from which to remove the task </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 <p>Implements <a class="el" href="structmc__tasks_1_1MetaTask.html#afa7c055d8cef8f4a8bb1e76689445130">mc_tasks::MetaTask</a>.</p>
 
@@ -2881,6 +2881,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -2907,6 +2908,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -2933,6 +2935,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -2949,7 +2952,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::update </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -2959,15 +2962,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Update the task. </p>
-<p>This function (usually) has to be called at every iteration of the solver once it has been added. It should update the state of the task.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>Solver in which the task is inserted </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 <p>Implements <a class="el" href="structmc__tasks_1_1MetaTask.html#a21e9870f7434084d52299f18f8f86da7">mc_tasks::MetaTask</a>.</p>
 
@@ -2996,6 +2991,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -3022,6 +3018,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -3091,6 +3088,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -3113,6 +3111,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -3319,6 +3318,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -3364,6 +3364,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -3386,6 +3387,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -3431,6 +3433,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -3453,6 +3456,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -3497,6 +3501,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -3542,6 +3547,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -3586,6 +3592,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -3608,6 +3615,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -3814,6 +3822,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -3836,6 +3845,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Sum of target (expected) external wrenches </p>
 
 </div>
 </div>
@@ -3927,6 +3937,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -4041,6 +4052,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -4063,6 +4075,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -4085,6 +4098,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -4131,6 +4145,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -4201,6 +4216,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -4223,6 +4239,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -4291,6 +4308,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -4313,6 +4331,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -4335,6 +4354,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -4357,6 +4377,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -4401,6 +4422,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -4423,6 +4445,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -4629,6 +4652,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -4674,6 +4698,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>

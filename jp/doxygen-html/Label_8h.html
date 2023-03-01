@@ -97,21 +97,24 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1LabelImpl.html">mc_rtc::gui::LabelImpl&lt; GetT &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1details_1_1LabelImpl.html">mc_rtc::gui::details::LabelImpl&lt; GetT &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:namespacemc__rtc"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html">mc_rtc</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemc__rtc_1_1gui"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html">mc_rtc::gui</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemc__rtc_1_1gui_1_1details"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui_1_1details.html">mc_rtc::gui::details</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a4b4617f09036971e7ccbf6917ee37c19"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
-<tr class="memitem:a4b4617f09036971e7ccbf6917ee37c19"><td class="memTemplItemLeft" align="right" valign="top">LabelImpl&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a4b4617f09036971e7ccbf6917ee37c19">mc_rtc::gui::Label</a> (const std::string &amp;name, GetT get_fn)</td></tr>
-<tr class="separator:a4b4617f09036971e7ccbf6917ee37c19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6aa81320a4cc314743df937de903758a"><td class="memTemplParams" colspan="2">template&lt;typename GetT , std::enable_if_t&lt; std::is_invocable_v&lt; GetT &gt;, int &gt;  = 0&gt; </td></tr>
+<tr class="memitem:a6aa81320a4cc314743df937de903758a"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a6aa81320a4cc314743df937de903758a">mc_rtc::gui::Label</a> (const std::string &amp;name, GetT get_fn)</td></tr>
+<tr class="separator:a6aa81320a4cc314743df937de903758a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f9c1f400fbda1285f1e439341fa7bb5"><td class="memTemplParams" colspan="2">template&lt;typename T , std::enable_if_t&lt;!std::is_invocable_v&lt; T &gt;, int &gt;  = 0&gt; </td></tr>
+<tr class="memitem:a1f9c1f400fbda1285f1e439341fa7bb5"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a1f9c1f400fbda1285f1e439341fa7bb5">mc_rtc::gui::Label</a> (const std::string &amp;name, T &amp;&amp;value)</td></tr>
+<tr class="separator:a1f9c1f400fbda1285f1e439341fa7bb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

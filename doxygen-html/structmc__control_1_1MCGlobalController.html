@@ -261,6 +261,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a0dca39c45c9a87e08d48b6d34c75c44a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the main robot's actual joint velocities (control+real)  <a href="#a0dca39c45c9a87e08d48b6d34c75c44a">More...</a><br /></td></tr>
 <tr class="separator:a0dca39c45c9a87e08d48b6d34c75c44a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10908456431ff240d54fb48cf6ddfdbd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController.html#a10908456431ff240d54fb48cf6ddfdbd">setEncoderVelocities</a> (const std::string &amp;robotName, const std::vector&lt; double &gt; &amp;eVelocities)</td></tr>
+<tr class="memdesc:a10908456431ff240d54fb48cf6ddfdbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the main robot position sensor (control+real)  <a href="#a10908456431ff240d54fb48cf6ddfdbd">More...</a><br /></td></tr>
 <tr class="separator:a10908456431ff240d54fb48cf6ddfdbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a893f4ffae6fbc419efff45b53ef6ffd2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController.html#a893f4ffae6fbc419efff45b53ef6ffd2">setJointTorques</a> (const std::vector&lt; double &gt; &amp;tValues)</td></tr>
 <tr class="memdesc:a893f4ffae6fbc419efff45b53ef6ffd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the main robot's actual joint torques (control+real)  <a href="#a893f4ffae6fbc419efff45b53ef6ffd2">More...</a><br /></td></tr>
@@ -1196,6 +1197,20 @@ Protected Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the main robot position sensor (control+real) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>Position given by a sensor </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>the robot does not have any body sensor </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

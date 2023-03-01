@@ -1,0 +1,13 @@
+digraph "mc_rtc::gui::details::ArrayLabelImpl&lt; GetT &gt;"
+{
+ // INTERACTIVE_SVG=YES
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node0 [label="mc_rtc::gui::details\l::ArrayLabelImpl\< GetT \>",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="mc_rtc::gui::details\l::LabelImpl\< GetT \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1LabelImpl.html"];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="mc_rtc::gui::DataElement\l\< GetT \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1DataElement.html"];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="mc_rtc::gui::Element",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1Element.html"];
+}

@@ -112,8 +112,8 @@ digraph "include/mc_control/fsm/State.h"
   Node75 -> Node76 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node76 [label="mc_rtc/gui/elements.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$elements_8h.html"];
   Node76 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node75 -> Node78 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node78 [label="mc_rtc/gui/plot.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$plot_8h.html"];
+  Node75 -> Node79 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node79 [label="mc_rtc/gui/plot.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$plot_8h.html"];
   Node75 -> Node70 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node75 -> Node87 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node87 [label="StateBuilder.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];

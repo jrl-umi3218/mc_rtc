@@ -97,24 +97,33 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1ArrayLabelImpl.html">mc_rtc::gui::ArrayLabelImpl&lt; GetT &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1details_1_1ArrayLabelImpl.html">mc_rtc::gui::details::ArrayLabelImpl&lt; GetT &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:namespacemc__rtc"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html">mc_rtc</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemc__rtc_1_1gui"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html">mc_rtc::gui</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemc__rtc_1_1gui_1_1details"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui_1_1details.html">mc_rtc::gui::details</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a308b0967f9f6dc43f0f27bcc7d1c2b69"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
-<tr class="memitem:a308b0967f9f6dc43f0f27bcc7d1c2b69"><td class="memTemplItemLeft" align="right" valign="top">ArrayLabelImpl&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a308b0967f9f6dc43f0f27bcc7d1c2b69">mc_rtc::gui::ArrayLabel</a> (const std::string &amp;name, GetT get_fn)</td></tr>
-<tr class="separator:a308b0967f9f6dc43f0f27bcc7d1c2b69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab51ab91bf57f9e53c1b5c69ab3d8bc61"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
-<tr class="memitem:ab51ab91bf57f9e53c1b5c69ab3d8bc61"><td class="memTemplItemLeft" align="right" valign="top">ArrayLabelImpl&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#ab51ab91bf57f9e53c1b5c69ab3d8bc61">mc_rtc::gui::ArrayLabel</a> (const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, GetT get_fn)</td></tr>
-<tr class="separator:ab51ab91bf57f9e53c1b5c69ab3d8bc61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83cda74a29056812f66078a869042f0d"><td class="memTemplParams" colspan="2">template&lt;typename GetT , std::enable_if_t&lt; std::is_invocable_v&lt; GetT &gt;, int &gt;  = 0&gt; </td></tr>
+<tr class="memitem:a83cda74a29056812f66078a869042f0d"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a83cda74a29056812f66078a869042f0d">mc_rtc::gui::ArrayLabel</a> (const std::string &amp;name, GetT get_fn)</td></tr>
+<tr class="separator:a83cda74a29056812f66078a869042f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f1a4d5f3a023f69ae4d6396c518eb1f"><td class="memTemplParams" colspan="2">template&lt;typename GetT , std::enable_if_t&lt; std::is_invocable_v&lt; GetT &gt;, int &gt;  = 0&gt; </td></tr>
+<tr class="memitem:a6f1a4d5f3a023f69ae4d6396c518eb1f"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a6f1a4d5f3a023f69ae4d6396c518eb1f">mc_rtc::gui::ArrayLabel</a> (const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, GetT get_fn)</td></tr>
+<tr class="separator:a6f1a4d5f3a023f69ae4d6396c518eb1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae65fcbdf9993486fe67db9589d9e3e9b"><td class="memTemplParams" colspan="2">template&lt;typename T , std::enable_if_t&lt;!std::is_invocable_v&lt; T &gt;, int &gt;  = 0&gt; </td></tr>
+<tr class="memitem:ae65fcbdf9993486fe67db9589d9e3e9b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#ae65fcbdf9993486fe67db9589d9e3e9b">mc_rtc::gui::ArrayLabel</a> (const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, T &amp;&amp;value)</td></tr>
+<tr class="separator:ae65fcbdf9993486fe67db9589d9e3e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f3dc8be4a38ce092e49198dfd3019c2"><td class="memTemplParams" colspan="2">template&lt;typename T , std::enable_if_t&lt;!std::is_invocable_v&lt; T &gt;, int &gt;  = 0&gt; </td></tr>
+<tr class="memitem:a9f3dc8be4a38ce092e49198dfd3019c2"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a9f3dc8be4a38ce092e49198dfd3019c2">mc_rtc::gui::ArrayLabel</a> (const std::string &amp;name, T &amp;&amp;value)</td></tr>
+<tr class="separator:a9f3dc8be4a38ce092e49198dfd3019c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c020c342a5ad4a419e3ba8f77c1a2b4"><td class="memTemplParams" colspan="2">template&lt;bool Degrees = true, typename T &gt; </td></tr>
+<tr class="memitem:a8c020c342a5ad4a419e3ba8f77c1a2b4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a8c020c342a5ad4a419e3ba8f77c1a2b4">mc_rtc::gui::RPYLabel</a> (const std::string &amp;name, T &amp;&amp;value)</td></tr>
+<tr class="separator:a8c020c342a5ad4a419e3ba8f77c1a2b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
