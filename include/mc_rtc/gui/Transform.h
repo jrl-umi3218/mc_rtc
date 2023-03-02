@@ -46,7 +46,8 @@ struct TransformImpl : public CommonInputImpl<GetT, SetT>
   void write(mc_rtc::MessagePackBuilder & builder)
   {
     CommonInputImpl<GetT, SetT>::write(builder);
-    builder.write(false); // Is read-only
+    // True for read-only
+    builder.write(std::is_same_v<SetT, std::nullptr_t>);
   }
 
   /** Invalid element */
