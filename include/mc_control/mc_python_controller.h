@@ -27,6 +27,10 @@ public:
 
   std::function<bool()> run_callback;
   std::function<void(const ControllerResetData &)> reset_callback;
+  std::function<bool()> handle_python_error;
+
+private:
+  bool python_failed_ = false;
 };
 
 } // namespace mc_control

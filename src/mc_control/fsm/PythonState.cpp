@@ -10,29 +10,60 @@ namespace mc_control
 namespace fsm
 {
 
+void PythonState::update_python_failed()
+{
+  python_failed_ = handle_python_error();
+}
+
 void PythonState::configure(const mc_rtc::Configuration & config)
 {
-  configure_(config);
+  if(!python_failed_)
+  {
+    configure_(config);
+    update_python_failed();
+  }
 }
 
 void PythonState::start(Controller & ctl)
 {
-  start_(ctl);
+  if(!python_failed_)
+  {
+    start_(ctl);
+    update_python_failed();
+  }
 }
 
 bool PythonState::run(Controller & ctl)
 {
-  return run_(ctl);
+  if(!python_failed_)
+  {
+    bool ret = run_(ctl);
+    update_python_failed();
+    if(python_failed_)
+    {
+      return false;
+    }
+    return ret;
+  }
+  return false;
 }
 
 void PythonState::teardown(Controller & ctl)
 {
-  teardown_(ctl);
+  if(!python_failed_)
+  {
+    teardown_(ctl);
+    update_python_failed();
+  }
 }
 
 void PythonState::stop(Controller & ctl)
 {
-  stop_(ctl);
+  if(!python_failed_)
+  {
+    stop_(ctl);
+    update_python_failed();
+  }
 }
 
 } // namespace fsm

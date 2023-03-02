@@ -30,6 +30,12 @@ struct MC_CONTROL_FSM_DLLAPI PythonState : public State
   std::function<bool(Controller &)> run_ = [](Controller &) { return false; };
   std::function<void(Controller &)> teardown_ = [](Controller &) {};
   std::function<void(Controller &)> stop_ = [](Controller &) {};
+  std::function<bool()> handle_python_error;
+
+private:
+  void update_python_failed();
+
+  bool python_failed_ = false;
 };
 
 } // namespace fsm

@@ -120,8 +120,19 @@ extern "C"
     PyErr_Print();
 
     PyGILState_Release(gstate);
-    MCControllerObject * res = (MCControllerObject *)(c_obj);
-    return res->base;
+    MCPythonControllerObject * res = (MCPythonControllerObject *)(c_obj);
+    res->impl->handle_python_error = []() -> bool {
+      auto gstate = PyGILState_Ensure();
+      auto error = PyErr_Occurred();
+      if(error)
+      {
+        mc_rtc::log::error("[PythonController] Fatal error in Python module");
+        PyErr_Print();
+      }
+      PyGILState_Release(gstate);
+      return error != nullptr;
+    };
+    return res->impl;
   }
   void LOAD_GLOBAL() {}
 }

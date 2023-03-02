@@ -69,6 +69,17 @@ extern "C"
 
     PyGILState_Release(gstate);
     auto res = reinterpret_cast<PythonStateObject *>(s_obj);
+    res->impl->handle_python_error = []() -> bool {
+      auto gstate = PyGILState_Ensure();
+      auto error = PyErr_Occurred();
+      if(error)
+      {
+        mc_rtc::log::error("[PythonState] Fatal error in Python module");
+        PyErr_Print();
+      }
+      PyGILState_Release(gstate);
+      return error != nullptr;
+    };
     return res->impl;
   }
 }
