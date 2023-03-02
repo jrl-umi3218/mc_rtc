@@ -9,6 +9,8 @@ cimport c_gui
 cimport mc_rtc.mc_rtc as mc_rtc
 cimport mc_rtc.c_mc_rtc as c_mc_rtc
 
+cimport sva.sva as sva
+
 from cython.operator cimport dereference as deref
 
 from libcpp.vector cimport vector
@@ -224,7 +226,7 @@ cdef class Transform(Element):
       self.ro_impl = c_gui.TransformRO[c_gui.get_fn, c_gui.nullptr_t](name, c_gui.make_getter(python_to_conf, get_fn), NULL)
       self.base = &self.ro_impl
     else:
-      self._cb_ret_type = [float]
+      self._cb_ret_type = sva.PTransformd
       self.impl = c_gui.Transform[c_gui.get_fn,c_gui.set_fn](name, c_gui.make_getter(python_to_conf, get_fn), c_gui.make_setter(conf_to_python_list, set_fn, self._cb_ret_type))
       self.base = &self.impl
 
