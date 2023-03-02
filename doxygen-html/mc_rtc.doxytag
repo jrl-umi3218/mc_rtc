@@ -24895,6 +24895,13 @@
       <anchor>a912a0dc9659948113b9eca0605c2cd12</anchor>
       <arglist></arglist>
     </member>
+    <member kind="variable">
+      <type>std::function&lt; bool()&gt;</type>
+      <name>handle_python_error</name>
+      <anchorfile>structmc__control_1_1MCPythonController.html</anchorfile>
+      <anchor>afe2cc3822c59f94152f8e7b713b1353b</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="struct">
     <name>mc_rtc::MessagePackBuilder</name>
@@ -29444,6 +29451,13 @@
       <name>stop_</name>
       <anchorfile>structmc__control_1_1fsm_1_1PythonState.html</anchorfile>
       <anchor>a181b94b4ed108722e7433849cc08184d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::function&lt; bool()&gt;</type>
+      <name>handle_python_error</name>
+      <anchorfile>structmc__control_1_1fsm_1_1PythonState.html</anchorfile>
+      <anchor>a46184b1bec1fbd5c6d29876205997190</anchor>
       <arglist></arglist>
     </member>
   </compound>

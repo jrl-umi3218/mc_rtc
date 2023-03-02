@@ -1,5 +1,7 @@
 var NAVTREEINDEX16 =
 {
+"structmc__solver_1_1BoundedSpeedConstr.html#a70c84d6defba583690d9175ca4cf192d":[3,0,8,2,6],
+"structmc__solver_1_1BoundedSpeedConstr.html#ab0fffcd8e01c61ced64cf5371999acb7":[3,0,8,2,9],
 "structmc__solver_1_1BoundedSpeedConstr.html#abcd47fff771a0c7357bd5b682398b3df":[3,0,8,2,1],
 "structmc__solver_1_1BoundedSpeedConstr.html#af182915f9f2693bd127b50ce9a17ca73":[3,0,8,2,7],
 "structmc__solver_1_1BoundedSpeedConstr.html#afa687c05b49f7f9e74ce03aae501bf6c":[3,0,8,2,3],
@@ -247,7 +249,5 @@ var NAVTREEINDEX16 =
 "structmc__solver_1_1utils_1_1Update.html#a8f658eb01d91768ab6a4e9b095a894de":[3,0,8,1,6,4],
 "structmc__solver_1_1utils_1_1Update.html#ab889dcd5361a420fe976146c40f56533":[3,0,8,1,6,5],
 "structmc__solver_1_1utils_1_1Update.html#ab8ad71dd3414ee8bccc766c7bc8b4dc3":[3,0,8,1,6,2],
-"structmc__solver_1_1utils_1_1Update.html#ad172325243564a16279d9392bd86efa5":[3,0,8,1,6,0],
-"structmc__solver_1_1utils_1_1Update.html#adcc1dc8dc0563b2e14f962f26afbfa5f":[3,0,8,1,6,3],
-"structmc__solver_1_1utils_1_1UpdateForce.html":[3,0,8,1,7]
+"structmc__solver_1_1utils_1_1Update.html#ad172325243564a16279d9392bd86efa5":[3,0,8,1,6,0]
 };

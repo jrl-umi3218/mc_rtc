@@ -1,5 +1,7 @@
 var NAVTREEINDEX9 =
 {
+"structmc__observers_1_1EncoderObserver.html#a03e8f96f2c3140443c6a60bc0d9a607c":[3,0,4,1,3],
+"structmc__observers_1_1EncoderObserver.html#a088c5ec59d2288b6a3499c8aae54853b":[3,0,4,1,18],
 "structmc__observers_1_1EncoderObserver.html#a12831fe5df2163a7f517b95c3158a5ba":[3,0,4,1,14],
 "structmc__observers_1_1EncoderObserver.html#a2186bef7a7415c523bd7930d2ab8de16":[3,0,4,1,9],
 "structmc__observers_1_1EncoderObserver.html#a2477d2b4531716700f65cea898a74274":[3,0,4,1,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX9 =
 "structmc__rbdyn_1_1CylindricalSurface.html#ae129c776f6d6bdc8b84151121747a46f":[3,0,6,7,7],
 "structmc__rbdyn_1_1CylindricalSurface.html#af7ea1fd2bee8c3d0dacbae34d5242422":[3,0,6,7,3],
 "structmc__rbdyn_1_1Device.html":[3,0,6,8],
-"structmc__rbdyn_1_1Device.html#a018981488a410e62be4605726f953507":[3,0,6,8,16],
-"structmc__rbdyn_1_1Device.html#a0f7c7a08133ec941b3cb8d12dacee6b3":[3,0,6,8,12],
-"structmc__rbdyn_1_1Device.html#a10e51518c0cd7afd26b71fa6d39ae80d":[3,0,6,8,2]
+"structmc__rbdyn_1_1Device.html#a018981488a410e62be4605726f953507":[3,0,6,8,16]
 };
