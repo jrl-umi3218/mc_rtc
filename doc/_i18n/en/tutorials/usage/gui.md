@@ -289,10 +289,10 @@ Furthermore, helpers are provided to display primitives:
 Sphere("Sphere", [this]() { return radius_; }, [this]() { return pos_; });
 
 // Display a box ([x, y, z] dimensions are fixed or provided by a callback)
-Box("Sphere", [this]() { return size_; }, [this]() { return pos_; });
+Box("Box", [this]() { return size_; }, [this]() { return pos_; });
 
-// Display a cylinder (CylinderParameter is {radius, length}, it is fixed or provided by a callback)
-Sphere("Sphere", [this]() -> CylinderParameter { {radius_, length_}; }, [this]() { return pos_; });
+// Display a cylinder (CylinderParameters is {radius, length}, it is fixed or provided by a callback)
+Cylinder("Cylinder", [this]() -> CylinderParameters { {radius_, length_}; }, [this]() { return pos_; });
 
 // Display an ellipsoid ([x, y, z] dimensions are fixed or provided by a callback)
 Ellispsoid("Ellipsoid", [this]() { return size_; }, [this]() { return pos_; });
