@@ -2,6 +2,33 @@
 
 ## [Unreleased]
 
+## [2.3.0] - 2023-03-07
+
+### Changes
+
+- [mc_control] `r1` and/or `r2` are now optional when specifying a contact via YAML, it is interpreted as `MainRobot` (#349)
+
+### Added
+
+- [mc_rtc] Add simple queries for Configuration (`isArray`, `isObject`, `isString`, `isNumeric`)
+- [mc_rtc] Introduce helpers for working with member variables in GUI (#299)
+- [mc_rtc] Introduce helpers to work with visual elements in GUI (#299)
+- [mc_rtc] Add support for `std::optional<T>` in Configuration (#349)
+
+### Fixes
+
+- [bindings] Unhandled Python exceptions thrown from Python controllers and states are now shown
+- [bindings] GUI Transform callbacks now receive a sva.PTransformd object instead of an empty list
+- [doc] Documentation fixes (#344/#354)
+- [mc_control] Fix lifetime bugs introduced by robot's specific configuration handling
+- [mc_control_client] Correctly detect strings in `Table` formatting
+- [mc_control_client] Improve handling of `Trajectory` messages
+- [mc_filter] Fix `LowPassFiniteDifferences` reset
+- [mc_rbdyn] Fix various issues with handling of collision transforms (#347)
+- [mc_solver] Handle continuous joints in TVM backend
+- [mc_solver] Fix joint velocity limits in TVM backend
+- [utils] Avoid apt upgrades
+
 ## [2.2.0] - 2023-02-08
 
 ### Added
@@ -623,7 +650,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.3.0
 [2.2.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.2.0
 [2.1.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.1.0
 [2.0.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.0.1
