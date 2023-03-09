@@ -1517,8 +1517,7 @@ void StabilizerTask::updateFootForceDifferenceControl()
 {
   auto leftFootTask = footTasks[ContactState::Left];
   auto rightFootTask = footTasks[ContactState::Right];
-  if(!inDoubleSupport() || inTheAir_ || leftFootTask->targetForce().norm() <= c_.safetyThresholds.MIN_DS_PRESSURE
-     || rightFootTask->targetForce().norm() <= c_.safetyThresholds.MIN_DS_PRESSURE)
+  if(!inDoubleSupport() || inTheAir_)
   {
     dfForceError_ = Eigen::Vector3d::Zero();
     dfError_ = Eigen::Vector3d::Zero();
