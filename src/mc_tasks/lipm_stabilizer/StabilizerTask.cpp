@@ -1281,15 +1281,23 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   double f_z_ref_right = f_z_desired_right - measuredRightCoP_delayed.z() * exp(-c_.lambdaCoP.z() * (delta - t_delay));
   f_z_ref_right /= (1 - exp(-c_.lambdaCoP.z() * (delta - t_delay)));
 
+  double f_z_ref_left_corr = fz_tot - f_z_ref_right;
+  double f_z_ref_right_corr = fz_tot - f_z_ref_left;
+
+  f_z_ref_left = (f_z_ref_left + f_z_ref_left_corr)/2;
+  f_z_ref_right = (f_z_ref_right + f_z_ref_right_corr)/2;
+
+  // mc_rtc::log::info("err {}",f_z_ref_left + f_z_ref_right - fz_tot);
+
   double ratio = (f_z_ref_right / (f_z_ref_left + f_z_ref_right));
 
   targetForceLeft.z() = f_z_ref_left;
   targetForceRight.z() = f_z_ref_right;
 
   double f_z_left_i =
-      f_z_desired_left * exp(-c_.lambdaCoP.z() * delta) + (1 - exp(-c_.lambdaCoP.z() * delta)) * f_z_ref_left;
+      f_z_desired_left ;
   double f_z_right_i =
-      f_z_desired_right * exp(-c_.lambdaCoP.z() * delta) + (1 - exp(-c_.lambdaCoP.z() * delta)) * f_z_ref_right;
+      f_z_desired_right ;
 
   for(Eigen::Index i = 0; i < nbReferences; i++)
   {
@@ -1297,14 +1305,14 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
     bcopReg.segment(2 * i, 2) = t_lc_lankle.segment(0, 2);
     bcopReg.segment(2 * (i + nbReferences), 2) = t_rc_rankle.segment(0, 2);
 
-    t_lankle_zmp = zmp_ref[i] - lankle.segment(0, 2);
-    d_proj = t_lankle_zmp.dot(t_lankle_rankle.segment(0, 2).normalized());
-    // ratio = 1 : fz on rightfoot, 0 on leftFoot
-    ratio_desired = clamp(d_proj / lankle_rankle, c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot,
-                          1 - (c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot));
-
     if(i != 0)
     {
+
+      t_lankle_zmp = zmp_ref[i] - lankle.segment(0, 2);
+      d_proj = t_lankle_zmp.dot(t_lankle_rankle.segment(0, 2).normalized());
+      // ratio = 1 : fz on rightfoot, 0 on leftFoot
+      ratio_desired = clamp(d_proj / lankle_rankle, c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot,
+                            1 - (c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot));
 
       f_z_desired_left = (1 - ratio_desired) * fz_tot;
       f_z_desired_right = ratio_desired * fz_tot;
