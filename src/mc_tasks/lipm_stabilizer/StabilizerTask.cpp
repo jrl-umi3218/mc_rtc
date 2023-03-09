@@ -1324,14 +1324,15 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
       f_z_ref_right /= (1 - exp(-c_.lambdaCoP.z() * (delta - c_.delayCoP)));
 
       f_z_left_i =
-          f_z_desired_left * exp(-c_.lambdaCoP.z() * delta) + (1 - exp(-c_.lambdaCoP.z() * delta)) * f_z_ref_left;
+          f_z_desired_left;
       f_z_right_i =
-          f_z_desired_right * exp(-c_.lambdaCoP.z() * delta) + (1 - exp(-c_.lambdaCoP.z() * delta)) * f_z_ref_right;
+          f_z_desired_right;
       ratio = (f_z_ref_right / (f_z_ref_left + f_z_ref_right));
+
     }
 
     // Acop convert the CoP reference into the modeled CoP
-    // Acop * x = cop i in foot frame (left/right)
+    // Acop * x + cop_0 * e^(-lambda t_i) = cop i in foot frame (left/right)
     Eigen::MatrixXd Acop = Eigen::MatrixXd::Zero(2, 2 * nbReferences);
     double t = static_cast<double>(i) * delta;
     Eigen::Matrix2d exp_mat;
@@ -1354,13 +1355,15 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
       t -= delta;
     }
 
+    //zmp_i = (cop_l * f_z_l + cop_r * f_z_r)/f_z
     Mcop.block(2 * i, 0, 2, 2 * nbReferences) = X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * Acop;
     Mcop.block(2 * i, 2 * nbReferences, 2, 2 * nbReferences) = X_0_rc.inv().rotation().block(0, 0, 2, 2) * ratio * Acop;
     bcop.segment(2 * i, 2) =
-        zmp_ref[i] - X_0_lc.translation().segment(0, 2) * (1 - ratio)
-        - X_0_rc.translation().segment(0, 2) * (ratio)-X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * exp_mat
-              * measuredLeftCoP_delayed.segment(0, 2)
-        - X_0_rc.inv().rotation().block(0, 0, 2, 2) * (ratio)*exp_mat * measuredRightCoP_delayed.segment(0, 2);
+        zmp_ref[i] 
+        - X_0_lc.translation().segment(0, 2) * (1 - ratio)
+        - X_0_rc.translation().segment(0, 2) * (ratio)
+        - X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * exp_mat * measuredLeftCoP_delayed.segment(0, 2)
+        - X_0_rc.inv().rotation().block(0, 0, 2, 2) * (ratio) * exp_mat * measuredRightCoP_delayed.segment(0, 2);
 
     Aineq.block(4 * i, 0, 4, 2 * nbReferences) = normals * Acop;
 
