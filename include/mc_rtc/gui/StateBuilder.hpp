@@ -96,7 +96,7 @@ void StateBuilder::addElement(SourceT * source,
 {
   size_t rem = stacking == ElementsStacking::Vertical ? 0 : sizeof...(args);
   addElementImpl(source, category, stacking, element, rem);
-  addElement(category, stacking, args...);
+  addElement(source, category, stacking, args...);
 }
 
 template<typename T>
