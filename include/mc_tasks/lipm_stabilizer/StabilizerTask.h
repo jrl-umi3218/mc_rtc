@@ -438,6 +438,15 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return Eigen::Vector2d::Zero();
   }
 
+  inline const Eigen::Vector2d filteredDCM() noexcept
+  {
+    if(c_.dcmBias.withDCMBias)
+    {
+      return dcmEstimator_.getUnbiasedDCM();
+    }
+    return measuredDCM_.segment(0,2);
+  }
+
   inline const Eigen::Vector3d & measuredZMP() noexcept
   {
     return measuredZMP_;
@@ -505,6 +514,11 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   inline void torsoPitch(double pitch) noexcept
   {
     c_.torsoPitch = pitch;
+  }
+
+  inline double omega()
+  {
+    return omega_;
   }
 
   inline void torsoWeight(double weight) noexcept
@@ -968,7 +982,7 @@ protected:
   Eigen::Vector3d zmpTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d zmpdTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d dcmTarget_ = Eigen::Vector3d::Zero();
-  double omega_;
+  double omega_ = 3.4;
 
   double t_ = 0.; /**< Time elapsed since the task is running */
 
