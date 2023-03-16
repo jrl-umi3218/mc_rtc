@@ -107,6 +107,7 @@ set(mc_rtc_utils_SRC
 set(mc_rtc_utils_HDR
   "${VERSION_HEADER}"
   mc_rtc/internals/json.h
+  mc_rtc/internals/msgpack.h
   mc_rtc/internals/yaml.h
   mc_rtc/internals/LogEntry.h
   ../include/mc_rtc/Configuration.h

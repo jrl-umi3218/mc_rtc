@@ -60,6 +60,10 @@ void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder, 
   {
     mc_rtc::log::error("Invokation of the following method failed\n{}\n", config.dump(true));
   }
+  if(logger_)
+  {
+    logger_->addGUIEvent({std::move(category), std::move(name), data});
+  }
 }
 
 void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder)

@@ -849,12 +849,6 @@ bool MCGlobalController::run()
       robot.module().controlToCanonicalPostProcess(robot, outputRobot);
       robot.module().controlToCanonicalPostProcess(realRobot, outputRealRobot);
     }
-    if(config.enable_log)
-    {
-      auto start_log_t = clock::now();
-      controller_->logger().log();
-      log_dt = clock::now() - start_log_t;
-    }
     if(server_)
     {
       auto start_gui_t = clock::now();
@@ -874,6 +868,12 @@ bool MCGlobalController::run()
       auto start_t = clock::now();
       plugin.plugin->after(*this);
       plugin.plugin_after_dt = clock::now() - start_t;
+    }
+    if(config.enable_log)
+    {
+      auto start_log_t = clock::now();
+      controller_->logger().log();
+      log_dt = clock::now() - start_log_t;
     }
   }
   else
@@ -1066,6 +1066,7 @@ void MCGlobalController::start_log()
 {
   controller_->logger().start(current_ctrl, controller_->timeStep);
   setup_log();
+  server_->set_logger(controller_->logger_);
 }
 
 void MCGlobalController::refreshLog()

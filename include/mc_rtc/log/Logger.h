@@ -8,6 +8,8 @@
 #include <mc_rtc/logging.h>
 #include <mc_rtc/utils_api.h>
 
+#include <mc_rtc/Configuration.h>
+
 #include <memory>
 #include <unordered_map>
 #include <variant>
@@ -73,7 +75,18 @@ public:
     std::string key;
   };
 
-  using LogEvent = std::variant<KeyAddedEvent, KeyRemovedEvent>;
+  /*! \brief GUI callback event */
+  struct GUIEvent
+  {
+    /** Category of the item */
+    std::vector<std::string> category;
+    /** Name of the time */
+    std::string name;
+    /** Payload of the callback */
+    mc_rtc::Configuration data;
+  };
+
+  using LogEvent = std::variant<KeyAddedEvent, KeyRemovedEvent, GUIEvent>;
 
 public:
   /*! \brief Constructor
@@ -256,6 +269,15 @@ public:
   {
     addLogEntry(name, source, get_fn);
     addLogEntries(source, std::forward<Args>(args)...);
+  }
+
+  /** Add a GUI event to the log
+   *
+   * \param event Event being added to the log
+   */
+  inline void addGUIEvent(GUIEvent && event)
+  {
+    log_events_.push_back(std::move(event));
   }
 
   /** Remove a log entry from the log

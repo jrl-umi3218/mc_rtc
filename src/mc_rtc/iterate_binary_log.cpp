@@ -7,14 +7,11 @@ namespace bfs = boost::filesystem;
 #include "internals/LogEntry.h"
 #include <fstream>
 
-namespace mc_rtc
-{
-
-namespace log
+namespace mc_rtc::log
 {
 
 bool iterate_binary_log(const std::string & f,
-                        const binary_log_copy_callback & callback,
+                        const iterate_binary_log_callback & callback,
                         bool extract,
                         const std::string & time)
 {
@@ -71,7 +68,8 @@ bool iterate_binary_log(const std::string & f,
       break;
     }
     bool keys_changed = false;
-    internal::LogEntry log(version, buffer, entrySize, keys, keys_changed, extract);
+    std::vector<Logger::GUIEvent> events;
+    internal::LogEntry log(version, buffer, entrySize, keys, events, keys_changed, extract);
     if(!log.valid())
     {
       return false;
@@ -91,7 +89,7 @@ bool iterate_binary_log(const std::string & f,
       }
       t_index = static_cast<size_t>(std::distance(keys.begin(), t_it));
     }
-    double t = -1;
+    std::optional<double> t;
     if(extract_t)
     {
       t = log.getTime(t_index);
@@ -108,32 +106,15 @@ bool iterate_binary_log(const std::string & f,
       }
       return keys_str;
     }();
-    if(!callback(
-           keys_str, log.records(), t,
-           [&log](mc_rtc::MessagePackBuilder & builder, const std::vector<std::string> & keys) {
-             log.copy(builder, keys);
-           },
-           buffer.data(), entrySize))
+    if(!callback(IterateBinaryLogData{keys_str, log.records(), events, t,
+                                      [&log](mc_rtc::MessagePackBuilder & builder,
+                                             const std::vector<std::string> & keys) { log.copy(builder, keys); },
+                                      buffer.data(), entrySize}))
     {
       return false;
     }
   }
   return true;
-} // namespace log
-
-bool iterate_binary_log(const std::string & f,
-                        const binary_log_callback & callback,
-                        bool extract,
-                        const std::string & time)
-{
-  return iterate_binary_log(
-      f,
-      binary_log_copy_callback([&callback](const std::vector<std::string> & keys, std::vector<FlatLog::record> & data,
-                                           double t, const copy_callback &, const char *,
-                                           size_t) mutable { return callback(keys, data, t); }),
-      extract, time);
 }
 
-} // namespace log
-
-} // namespace mc_rtc
+} // namespace mc_rtc::log

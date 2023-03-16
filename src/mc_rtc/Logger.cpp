@@ -309,6 +309,15 @@ void Logger::log()
         builder.write(event.key);
         builder.finish_array();
       }
+      else if constexpr(std::is_same_v<T, GUIEvent>)
+      {
+        builder.start_array(4);
+        builder.write(static_cast<uint8_t>(2));
+        builder.write(event.category);
+        builder.write(event.name);
+        builder.write(event.data);
+        builder.finish_array();
+      }
       else
       {
         static_assert(!std::is_same_v<T, T>, "non-exhaustive visitor");
