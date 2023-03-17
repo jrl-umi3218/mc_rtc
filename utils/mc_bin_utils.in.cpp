@@ -85,6 +85,26 @@ void addToLogger(const TypedKey & key, const mc_rtc::log::FlatLog & log, mc_rtc:
 #undef HANDLE_CASE
 }
 
+void print_string_vector(const std::vector<std::string> & v)
+{
+  for(size_t i = 0; i < v.size(); ++i)
+  {
+    if(i == 0)
+    {
+      std::cout << "[";
+    }
+    std::cout << " " << v[i];
+    if(i == v.size() - 1)
+    {
+      std::cout << " ]";
+    }
+    else
+    {
+      std::cout << ",";
+    }
+  }
+}
+
 } // namespace
 
 void usage()
@@ -102,9 +122,11 @@ int show(int argc, char * argv[])
 {
   po::variables_map vm;
   po::options_description tool("mc_bin_utils show options");
+  bool print_events = false;
   // clang-format off
   tool.add_options()
     ("help", "Produce this message")
+    ("print-events", po::bool_switch(&print_events), "Show GUI events in the log")
     ("in", po::value<std::string>(), "Input file");
   // clang-format on
   po::positional_options_description pos;
@@ -123,41 +145,73 @@ int show(int argc, char * argv[])
   double start_t = 0;
   double end_t = 0;
   size_t n = 0;
-  auto callback = [&](const std::vector<std::string> & ks, const std::vector<mc_rtc::log::FlatLog::record> & records,
-                      double t) {
+  size_t n_events = 0;
+  double dt = 0;
+  std::vector<std::vector<mc_rtc::Logger::GUIEvent>> events;
+  auto callback = [&](mc_rtc::log::IterateBinaryLogData data) {
     if(n++ == 0)
     {
-      start_t = t;
+      start_t = *data.time;
     }
-    end_t = t;
-    if(ks.size())
+    end_t = *data.time;
+    if(n == 2)
     {
-      for(size_t i = 0; i < ks.size(); ++i)
+      dt = end_t - start_t;
+    }
+    if(data.keys.size())
+    {
+      for(size_t i = 0; i < data.keys.size(); ++i)
       {
-        const std::string & k = ks[i];
-        const mc_rtc::log::FlatLog::record & r = records[i];
+        const std::string & k = data.keys[i];
+        const mc_rtc::log::FlatLog::record & r = data.records[i];
         keys.insert(std::make_pair(k, r.type));
       }
     }
+    if(print_events)
+    {
+      events.push_back(data.gui_events);
+    }
+    n_events += data.gui_events.size();
     return true;
   };
-  if(!mc_rtc::log::iterate_binary_log(in, mc_rtc::log::binary_log_callback(callback), false))
+  if(!mc_rtc::log::iterate_binary_log(in, mc_rtc::log::iterate_binary_log_callback(callback), false))
   {
     return 1;
   }
   std::cout << in << " summary\n";
   std::cout << "Entries: " << keys.size() << "\n";
+  std::cout << "GUI events: " << n_events << "\n";
   if(start_t != end_t)
   {
     std::cout << "Start time: " << start_t << "s\n";
     std::cout << "End time: " << end_t << "s\n";
     std::cout << "Duration: " << (end_t - start_t) << "s\n";
+    std::cout << "Timestep: " << dt << "s\n";
   }
   std::cout << "Entry size: " << n << "\n";
   std::cout << "Available entries:\n";
   for(const auto & e : keys)
   {
     std::cout << "- " << e.first << " (" << mc_rtc::log::LogTypeName(e.second) << ")\n";
+  }
+  if(print_events)
+  {
+    for(size_t i = 0; i < events.size(); ++i)
+    {
+      if(events[i].size() == 0)
+      {
+        continue;
+      }
+      std::cout << "Events at t = " << (i * dt) << ":\n";
+      for(const auto & e : events[i])
+      {
+        std::cout << "- category: ";
+        print_string_vector(e.category);
+        std::cout << "\n";
+        std::cout << "  name: " << e.name << "\n";
+        std::cout << "  data: " << e.data.dump(true, true) << "\n";
+      }
+    }
   }
   return 0;
 }
