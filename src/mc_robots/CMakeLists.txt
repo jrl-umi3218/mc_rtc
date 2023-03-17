@@ -15,9 +15,9 @@ macro(add_robot robot_base)
     target_link_libraries(${robot_base} PUBLIC mc_rbdyn)
     target_include_directories(${robot_base} PRIVATE "../../include/mc_robots")
     install(TARGETS ${robot_base}
-      ARCHIVE DESTINATION "${MC_ROBOTS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
-      LIBRARY DESTINATION "${MC_ROBOTS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
-      RUNTIME DESTINATION "${MC_ROBOTS_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+      ARCHIVE DESTINATION "${MC_ROBOTS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>"
+      LIBRARY DESTINATION "${MC_ROBOTS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>"
+      RUNTIME DESTINATION "${MC_ROBOTS_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>"
     )
   endif()
 endmacro()
