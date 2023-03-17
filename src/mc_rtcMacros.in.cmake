@@ -109,7 +109,13 @@ endmacro()
 
 
 # -- States --
-mc_rtc_set_prefix(STATES_DEFAULT mc_controller/fsm/states)
+if(MC_RTC_HONOR_INSTALL_PREFIX)
+  set(MC_RTC_HONOR_INSTALL_PREFIX OFF)
+  mc_rtc_set_prefix(STATES_DEFAULT mc_controller/fsm/states)
+  set(MC_RTC_HONOR_INSTALL_PREFIX ON)
+else()
+  mc_rtc_set_prefix(STATES_DEFAULT mc_controller/fsm/states)
+endif()
 mc_rtc_set_prefix(STATES mc_controller/${PROJECT_NAME}/states)
 
 macro(add_fsm_state state_name)
