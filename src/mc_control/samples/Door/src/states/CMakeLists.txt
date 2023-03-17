@@ -11,9 +11,9 @@ macro(add_fsm_state state_name state_SRC state_HDR)
     target_link_libraries(${state_name} PUBLIC mc_rtc::mc_control_fsm)
 
     install(TARGETS ${state_name}
-      ARCHIVE DESTINATION "${MC_Door_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
-      LIBRARY DESTINATION "${MC_Door_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
-      RUNTIME DESTINATION "${MC_Door_STATES_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+      ARCHIVE DESTINATION "${MC_Door_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>"
+      LIBRARY DESTINATION "${MC_Door_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>"
+      RUNTIME DESTINATION "${MC_Door_STATES_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>"
     )
   endif()
 endmacro()

@@ -64,6 +64,12 @@ if(NOT DEFINED MC_RTC_INSTALL_PREFIX)
   set(MC_RTC_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 endif()
 
+if(WIN32)
+  set(MC_RTC_LOADER_DEBUG_SUFFIX "/debug")
+else()
+  set(MC_RTC_LOADER_DEBUG_SUFFIX "")
+endif()
+
 option(GENERATE_COVERAGE "Generate coverage data" FALSE)
 if("${CMAKE_CXX_FLAGS}" MATCHES "--coverage")
   set(GENERATE_COVERAGE TRUE CACHE BOOL "Generate coverage data" FORCE)
