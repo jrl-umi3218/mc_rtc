@@ -61,6 +61,15 @@ struct MC_CONTROL_DLLAPI ControllerServer
     logger_ = logger;
   }
 
+  /** Set requests to handle on the next iteration */
+  inline void push_requests(const std::vector<mc_rtc::Logger::GUIEvent> & requests)
+  {
+    for(const auto & r : requests)
+    {
+      requests_.push_back(r);
+    }
+  }
+
 private:
   unsigned int iter_;
   unsigned int rate_;
@@ -72,6 +81,8 @@ private:
   size_t buffer_size_ = 0;
 
   std::shared_ptr<mc_rtc::Logger> logger_;
+
+  std::vector<mc_rtc::Logger::GUIEvent> requests_;
 };
 
 } // namespace mc_control

@@ -49,8 +49,9 @@ void FlatLog::appendBin(const std::string & f)
   std::vector<size_t> currentIndexes = {};
   std::vector<size_t> missingIndexes = {};
   size_t size = data_.size() ? data_[0].records.size() : 0;
-  mc_rtc::log::binary_log_callback callback = [&](const std::vector<std::string> & ks,
-                                                  std::vector<mc_rtc::log::FlatLog::record> & records, double) {
+  mc_rtc::log::iterate_binary_log_callback callback = [&](IterateBinaryLogData data) {
+    const auto & ks = data.keys;
+    auto & records = data.records;
     if(ks.size())
     {
       for(const auto & k : missingIndexes)
@@ -76,6 +77,7 @@ void FlatLog::appendBin(const std::string & f)
       auto & out = data_[currentIndexes[i]].records;
       out.push_back(std::move(records[i]));
     }
+    gui_events_.push_back(std::move(data.gui_events));
     size += 1;
     return true;
   };

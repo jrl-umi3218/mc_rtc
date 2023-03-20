@@ -3,11 +3,32 @@
 namespace mc_control
 {
 
-/** Get the encoders of a robot from the given log at the given time */
-std::vector<double> get_encoders(const mc_rtc::log::FlatLog & log, const std::string & robot, bool is_main, double t)
+template<typename StrT>
+std::string log_entry(const StrT & entry, const std::string & robot, bool is_main)
 {
-  // FIXME Implement
-  return {};
+  if(is_main)
+  {
+    return entry;
+  }
+  return fmt::format("{}_{}", robot, entry);
+}
+
+/** Get a log entry for a robot from the given log at the given time */
+template<typename GetT = std::vector<double>>
+GetT get(const mc_rtc::log::FlatLog & log,
+         const std::string & entry,
+         const std::string & robot,
+         bool is_main,
+         size_t idx,
+         const GetT & def = {})
+{
+  return log.get<GetT>(log_entry(entry, robot, is_main), idx, def);
+}
+
+/** Get the encoders of a robot from the given log at the given time */
+std::vector<double> get_encoders(const mc_rtc::log::FlatLog & log, const std::string & robot, bool is_main, size_t idx)
+{
+  return get(log, "qIn", robot, is_main, idx);
 }
 
 /** Get the encoders of a robot from the robot's configuration */
@@ -32,10 +53,17 @@ std::vector<double> get_encoders(const mc_rbdyn::Robot & robot)
 }
 
 /** Get the floating base position from the given log at the given time */
-sva::PTransformd get_posW(const mc_rtc::log::FlatLog & log, const std::string & robot, bool is_main, double t)
+std::optional<sva::PTransformd> get_posW(const mc_rtc::log::FlatLog & log,
+                                         const std::string & robot,
+                                         bool is_main,
+                                         size_t idx)
 {
-  // FIXME Implement
-  return sva::PTransformd::Identity();
+  auto entry = log_entry("ff", robot, is_main);
+  if(!log.has(entry))
+  {
+    return std::nullopt;
+  }
+  return log.get(entry, idx, sva::PTransformd::Identity());
 }
 
 /** Get the initial state of all robots from the given log */
@@ -48,8 +76,13 @@ auto get_initial_state(const mc_rtc::log::FlatLog & log,
   auto & bases = out.second;
   for(const auto & r : robots)
   {
-    encoders[r] = get_encoders(log, r, r == main, 0.0);
-    bases[r] = get_posW(log, r, r == main, 0.0);
+    bool is_main = r == main;
+    encoders[r] = get_encoders(log, r, is_main, 0);
+    auto posW = get_posW(log, r, is_main, 0);
+    if(posW)
+    {
+      bases[r] = *posW;
+    }
   }
   return out;
 }
@@ -147,6 +180,7 @@ void Ticker::run()
   using duration_us = std::chrono::duration<double, std::micro>;
   auto dt = duration_us(1e6 * gc_.timestep());
 
+  replay_done_ = false;
   running_ = true;
   iters_ = 0;
   elapsed_t_ = 0.0;
@@ -178,10 +212,11 @@ void Ticker::run()
       // FIXME Implement compensation
       std::this_thread::sleep_until(now + dt);
     }
-    if(replay_ && config_.replay_configuration.stop_after_log && iters_ >= replay_->log.size())
+    if(replay_ && config_.replay_configuration.stop_after_log && iters_ == replay_->log.size() && !replay_done_)
     {
-      mc_rtc::log::success("Finihed replaying log");
-      running_ = false;
+      replay_done_ = true;
+      config_.step_by_step = true;
+      mc_rtc::log::success("Log replay finished, pausing replay now");
     }
   }
 }
@@ -210,7 +245,72 @@ void Ticker::simulate_sensors()
 {
   if(replay_ && iters_ < replay_->log.size())
   {
-    // FIXME Implement sensor playback
+    const auto & log = replay_->log;
+    if(config_.replay_configuration.with_inputs)
+    {
+      for(const auto & r : gc_.controller().robots())
+      {
+        bool is_main = r.name() == gc_.controller().robot().name();
+        // Restore joint level readings
+        if(r.refJointOrder().size())
+        {
+          gc_.setEncoderValues(r.name(), get_encoders(replay_->log, r.name(), is_main, iters_));
+          gc_.setEncoderVelocities(r.name(), get(log, "alphaIn", r.name(), is_main, iters_));
+          gc_.setJointTorques(r.name(), get(log, "tauIn", r.name(), is_main, iters_));
+        }
+        // Restore force sensor readings
+        std::map<std::string, sva::ForceVecd> wrenches;
+        for(const auto & fs : r.forceSensors())
+        {
+          wrenches[fs.name()] = get(log, fs.name(), r.name(), is_main, iters_, sva::ForceVecd::Zero());
+        }
+        gc_.setWrenches(r.name(), wrenches);
+        // Restore body sensor readings
+        std::map<std::string, Eigen::Vector3d> poses;
+        mc_control::MCGlobalController::QuaternionMap oris;
+        std::map<std::string, Eigen::Vector3d> linearVels;
+        std::map<std::string, Eigen::Vector3d> angularVels;
+        std::map<std::string, Eigen::Vector3d> linearAccels;
+        std::map<std::string, Eigen::Vector3d> angularAccels;
+        static auto def_quat = Eigen::Quaterniond(1.0, 0.0, 0.0, 0.0);
+        static Eigen::Vector3d def_vec = Eigen::Vector3d::Zero();
+        for(const auto & bs : r.bodySensors())
+        {
+          poses[bs.name()] = get(log, bs.name() + "_position", r.name(), is_main, iters_, def_vec);
+          oris[bs.name()] = get(log, bs.name() + "_orientation", r.name(), is_main, iters_, def_quat);
+          linearVels[bs.name()] = get(log, bs.name() + "_linearVelocity", r.name(), is_main, iters_, def_vec);
+          angularVels[bs.name()] = get(log, bs.name() + "_angularVelocity", r.name(), is_main, iters_, def_vec);
+          linearAccels[bs.name()] = get(log, bs.name() + "_linearAcceleration", r.name(), is_main, iters_, def_vec);
+          angularAccels[bs.name()] = get(log, bs.name() + "_angularAcceleration", r.name(), is_main, iters_, def_vec);
+        }
+        gc_.setSensorPositions(r.name(), poses);
+        gc_.setSensorOrientations(r.name(), oris);
+        gc_.setSensorLinearVelocities(r.name(), linearVels);
+        gc_.setSensorAngularVelocities(r.name(), angularVels);
+        gc_.setSensorLinearAccelerations(r.name(), linearAccels);
+        gc_.setSensorAngularAccelerations(r.name(), angularAccels);
+        // Restore joint sensor readings
+        std::map<std::string, double> motorTemps;
+        std::map<std::string, double> driverTemps;
+        std::map<std::string, double> motorCurrents;
+        for(const auto & js : r.jointSensors())
+        {
+          motorTemps[js.joint()] =
+              get(log, "JointSensor_" + js.joint() + "_motorTemperature", r.name(), is_main, iters_, 0.0);
+          driverTemps[js.joint()] =
+              get(log, "JointSensor_" + js.joint() + "_driverTemperature", r.name(), is_main, iters_, 0.0);
+          motorCurrents[js.joint()] =
+              get(log, "JointSensor_" + js.joint() + "_motorCurrent", r.name(), is_main, iters_, 0.0);
+        }
+        gc_.setJointMotorTemperatures(r.name(), motorTemps);
+        gc_.setJointDriverTemperatures(r.name(), driverTemps);
+        gc_.setJointMotorCurrents(r.name(), motorCurrents);
+      }
+    }
+    if(config_.replay_configuration.with_gui_inputs)
+    {
+      gc_.server().push_requests(log.guiEvents()[iters_]);
+    }
   }
   else
   {

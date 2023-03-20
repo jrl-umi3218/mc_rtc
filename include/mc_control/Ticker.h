@@ -96,6 +96,9 @@ protected:
   /** True while running */
   bool running_ = true;
 
+  /** True when the replay is done */
+  bool replay_done_ = false;
+
   /** Number of steps remaning before going back to pause */
   size_t rem_steps_ = 0;
 

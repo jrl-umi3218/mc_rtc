@@ -584,6 +584,12 @@ void MCGlobalController::setSensorAngularAccelerations(const std::map<std::strin
   setSensorAngularAccelerations(controller().robot(), accels);
 }
 
+void MCGlobalController::setSensorAngularAccelerations(const std::string & name,
+                                                       const std::map<std::string, Eigen::Vector3d> & accels)
+{
+  setSensorAngularAccelerations(controller().robot(name), accels);
+}
+
 void MCGlobalController::setSensorAngularAccelerations(mc_rbdyn::Robot & robot,
                                                        const std::map<std::string, Eigen::Vector3d> & accels)
 {
@@ -1066,7 +1072,10 @@ void MCGlobalController::start_log()
 {
   controller_->logger().start(current_ctrl, controller_->timeStep);
   setup_log();
-  server_->set_logger(controller_->logger_);
+  if(server_)
+  {
+    server_->set_logger(controller_->logger_);
+  }
 }
 
 void MCGlobalController::refreshLog()

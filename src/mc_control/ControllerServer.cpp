@@ -68,6 +68,22 @@ void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder, 
 
 void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder)
 {
+  for(auto & r : requests_)
+  {
+    if(!gui_builder.handleRequest(r.category, r.name, r.data))
+    {
+      mc_rtc::Configuration config;
+      config.add("category", r.category);
+      config.add("name", r.name);
+      config.add("data", r.data);
+      mc_rtc::log::error("Invokation of the following method failed\n{}\n", config.dump(true));
+    }
+    if(logger_)
+    {
+      logger_->addGUIEvent(std::move(r));
+    }
+  }
+  requests_.resize(0);
 #ifndef MC_RTC_DISABLE_NETWORK
   /*FIXME Avoid freeing the message constantly */
   void * buf = nullptr;
