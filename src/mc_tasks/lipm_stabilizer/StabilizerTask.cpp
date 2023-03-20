@@ -1172,7 +1172,7 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
 
   const auto & leftContact = contacts_.at(ContactState::Left);
   const auto & rightContact = contacts_.at(ContactState::Right);
-  const double fz_tot = robot().mass() * constants::GRAVITY;
+  const double fz_tot = robot().mass() * constants::GRAVITY; //Vertical force applied by gravity on the whole robot
 
   const sva::PTransformd & X_0_lc = leftContact.surfacePose();
   const sva::PTransformd & X_0_rc = rightContact.surfacePose();
@@ -1191,16 +1191,14 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   const Eigen::Vector2d measuredRightCoP = clamp(footTasks[ContactState::Right]->measuredCoP(),
                                                  Eigen::Vector2d{-rightContact.halfLength(), -rightContact.halfWidth()},
                                                  Eigen::Vector2d{rightContact.halfLength(), rightContact.halfWidth()});
-  const double measuredFzLeft = footTasks[ContactState::Left]->measuredWrench().force().z();
+  const double measuredFzLeft = clamp(footTasks[ContactState::Left]->measuredWrench().force().z(),0,fz_tot);
   const Eigen::Vector2d measuredLeftCoP = clamp(footTasks[ContactState::Left]->measuredCoP(),
                                                 Eigen::Vector2d{-leftContact.halfLength(), -leftContact.halfWidth()},
                                                 Eigen::Vector2d{leftContact.halfLength(), leftContact.halfWidth()});
-  const double measuredFzRight = footTasks[ContactState::Right]->measuredWrench().force().z();
+  const double measuredFzRight = clamp(footTasks[ContactState::Right]->measuredWrench().force().z(),0,fz_tot);
 
-  modeledCoPLeft_ = measuredLeftCoP;
-  modeledCoPRight_ = measuredRightCoP;
-  modeledFzLeft_ = measuredFzLeft;
-  modeledFzRight_ = measuredFzRight;
+
+  // double fz_tot = clamp( measuredFzRight + measuredFzLeft,0. ,robot().mass() * constants::GRAVITY );
 
   // We consider an input to be considered as the reference for the delay
   // At every sampling period
@@ -1211,6 +1209,10 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
     delayedTargetCoPRight_ = footTasks[ContactState::Right]->targetCoP();
     delayedTargetFzLeft_ = footTasks[ContactState::Left]->targetWrench().force().z();
     delayedTargetFzRight_ = footTasks[ContactState::Right]->targetWrench().force().z();
+    modeledCoPLeft_ = measuredLeftCoP;
+    modeledCoPRight_ = measuredRightCoP;
+    modeledFzLeft_ = measuredFzLeft;
+    modeledFzRight_ = measuredFzRight;
   }
   double t_delay = clamp((c_.delayCoP - (t_ - tComputation_)), 0, c_.delayCoP);
 
@@ -1252,9 +1254,9 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   Eigen::MatrixXd Aineq = Eigen::MatrixXd::Zero(nbIneqCstr, nbVariables);
   Eigen::VectorXd bineq = Eigen::VectorXd::Zero(Aineq.rows());
 
-  Eigen::MatrixXd normals = Eigen::MatrixXd::Zero(4, 2); // normals matrix for CoP constraints
-  Eigen::VectorXd offsetLeft = Eigen::VectorXd::Zero(normals.rows());
-  Eigen::VectorXd offsetRight = Eigen::VectorXd::Zero(normals.rows());
+  Eigen::Matrix<double,4,2> normals; // normals matrix for CoP constraints
+  Eigen::Vector4d offsetLeft = Eigen::Vector4d::Zero();
+  Eigen::Vector4d offsetRight = Eigen::Vector4d::Zero();
   normals << 1, 0, -1, 0, 0, 1, 0, -1;
 
   offsetLeft << leftContact.halfLength(), leftContact.halfLength(), leftContact.halfWidth(), leftContact.halfWidth();
@@ -1281,15 +1283,23 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   double f_z_ref_right = f_z_desired_right - measuredRightCoP_delayed.z() * exp(-c_.lambdaCoP.z() * (delta - t_delay));
   f_z_ref_right /= (1 - exp(-c_.lambdaCoP.z() * (delta - t_delay)));
 
-  double f_z_ref_left_corr = fz_tot - f_z_ref_right;
-  double f_z_ref_right_corr = fz_tot - f_z_ref_left;
+  // mc_rtc::log::info("sum ref {}",f_z_ref_left + f_z_ref_right);
+  // mc_rtc::log::info("sum des {}",f_z_desired_left + f_z_desired_right);
+  // mc_rtc::log::info("sum meas delay {}",(measuredRightCoP_delayed + measuredLeftCoP_delayed).z());
+  // mc_rtc::log::info("sum meas {}",measuredFzRight + measuredFzLeft);
+  // mc_rtc::log::info("fz tot{}",fz_tot);
 
-  f_z_ref_left = (f_z_ref_left + f_z_ref_left_corr)/2;
-  f_z_ref_right = (f_z_ref_right + f_z_ref_right_corr)/2;
+  // double f_z_ref_left_corr = fz_tot - f_z_ref_right;
+  // double f_z_ref_right_corr = fz_tot - f_z_ref_left;
+
+  // f_z_ref_left = (f_z_ref_left + f_z_ref_left_corr)/2;
+  // f_z_ref_right = (f_z_ref_right + f_z_ref_right_corr)/2;
 
   // mc_rtc::log::info("err {}",f_z_ref_left + f_z_ref_right - fz_tot);
 
   double ratio = (f_z_ref_right / (f_z_ref_left + f_z_ref_right));
+  ratio = ratio_desired;
+
 
   targetForceLeft.z() = f_z_ref_left;
   targetForceRight.z() = f_z_ref_right;
@@ -1328,6 +1338,7 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
       f_z_right_i =
           f_z_desired_right;
       ratio = (f_z_ref_right / (f_z_ref_left + f_z_ref_right));
+      ratio = ratio_desired;
 
     }
 
