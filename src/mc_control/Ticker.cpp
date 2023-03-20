@@ -138,6 +138,7 @@ Ticker::Ticker(const Configuration & config) : config_(config), gc_(config_.mc_r
 
 void Ticker::reset()
 {
+  config_.step_by_step = false;
   do_reset_ = true;
 }
 
@@ -147,6 +148,8 @@ bool Ticker::step()
   {
     do_reset_ = false;
     elapsed_t_ = 0.0;
+    iters_ = 0;
+    replay_done_ = false;
     simulate_sensors();
     if(replay_)
     {

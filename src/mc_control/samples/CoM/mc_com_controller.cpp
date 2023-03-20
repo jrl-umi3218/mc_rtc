@@ -54,9 +54,8 @@ void MCCoMController::reset(const ControllerResetData & reset_data)
   comTask->reset();
   solver().addTask(comTask);
   qpsolver->addConstraintSet(dynamicsConstraint);
-  solver().setContacts(
-      {mc_rbdyn::Contact(robots(), env().robotIndex(), robot().robotIndex(), "AllGround", leftFootSurface_),
-       mc_rbdyn::Contact(robots(), env().robotIndex(), robot().robotIndex(), "AllGround", rightFootSurface_)});
+  addContact(Contact{env().name(), robot().name(), "AllGround", leftFootSurface_});
+  addContact(Contact{env().name(), robot().name(), "AllGround", rightFootSurface_});
 }
 
 } // namespace mc_control
