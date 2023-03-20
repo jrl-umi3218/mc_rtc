@@ -31,6 +31,9 @@ add_mc_rtc_utils(mc_old_bin_to_flat mc_old_bin_to_flat.cpp)
 
 add_mc_rtc_utils(mc_json_to_yaml mc_json_to_yaml.cpp)
 
+add_mc_rtc_utils(mc_rtc_ticker mc_rtc_ticker.cpp)
+target_link_libraries(mc_rtc_ticker PUBLIC Boost::program_options Boost::disable_autolinking)
+
 configure_file(mc_bin_utils.in.cpp "${CMAKE_CURRENT_BINARY_DIR}/mc_bin_utils.cpp")
 set(mc_bin_utils_SRC
   "${CMAKE_CURRENT_BINARY_DIR}/mc_bin_utils.cpp"

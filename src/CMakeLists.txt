@@ -586,6 +586,7 @@ mc_control/mc_global_controller_configuration.cpp
 mc_control/mc_global_controller_gui.cpp
 mc_control/mc_global_controller_services.cpp
 mc_solver/QPSolver_setContacts.cpp
+mc_control/Ticker.cpp
 )
 
 if(MC_RTC_BUILD_STATIC)
@@ -603,6 +604,7 @@ set(mc_control_HDR
 ../include/mc_control/GlobalPluginMacros.h
 ../include/mc_control/GlobalPlugin_fwd.h
 ../include/mc_control/MCController.h
+../include/mc_control/Ticker.h
 ../include/mc_control/mc_controller.h
 ../include/mc_control/mc_python_controller.h
 ../include/mc_control/SimulationContactPair.h
