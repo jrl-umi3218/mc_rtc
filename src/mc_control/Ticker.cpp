@@ -59,6 +59,14 @@ std::optional<sva::PTransformd> get_posW(const mc_rtc::log::FlatLog & log,
                                          size_t idx)
 {
   auto entry = log_entry("ff", robot, is_main);
+  if(log.meta())
+  {
+    auto it = log.meta()->init.find(robot);
+    if(it != log.meta()->init.end())
+    {
+      return it->second;
+    }
+  }
   if(!log.has(entry))
   {
     return std::nullopt;
