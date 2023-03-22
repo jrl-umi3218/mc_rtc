@@ -10,6 +10,7 @@
  */
 
 #include <mc_rtc/config.h>
+#include <mc_rtc/io_utils.h>
 #include <mc_rtc/log/FlatLog.h>
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/log/iterate_binary_log.h>
@@ -148,6 +149,7 @@ int show(int argc, char * argv[])
   size_t n_events = 0;
   double dt = 0;
   std::vector<std::vector<mc_rtc::Logger::GUIEvent>> events;
+  std::optional<mc_rtc::Logger::Meta> meta;
   auto callback = [&](mc_rtc::log::IterateBinaryLogData data) {
     if(n++ == 0)
     {
@@ -167,6 +169,10 @@ int show(int argc, char * argv[])
         keys.insert(std::make_pair(k, r.type));
       }
     }
+    if(!meta && data.meta)
+    {
+      meta = data.meta;
+    }
     if(print_events)
     {
       events.push_back(data.gui_events);
@@ -179,6 +185,16 @@ int show(int argc, char * argv[])
     return 1;
   }
   std::cout << in << " summary\n";
+  if(!meta)
+  {
+    std::cout << "(no meta information)\n";
+  }
+  else
+  {
+    std::cout << "Timestep: " << meta->timestep << "\n";
+    std::cout << "MainRobot: " << meta->main_robot << "\n";
+    std::cout << "MainRobotParams: " << mc_rtc::io::to_string(meta->main_robot_module) << "\n";
+  }
   std::cout << "Entries: " << keys.size() << "\n";
   std::cout << "GUI events: " << n_events << "\n";
   if(start_t != end_t)
