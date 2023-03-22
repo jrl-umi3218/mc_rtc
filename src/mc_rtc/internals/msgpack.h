@@ -131,7 +131,8 @@ inline mc_rtc::Configuration fromMessagePack(mpack_node_t root)
   }
   else
   {
-    log::error("Cannot convert from MessagePack if the root type is not a map or an array");
+    fromMessagePack(config, "data", root);
+    config = config("data");
   }
   return config;
 }
