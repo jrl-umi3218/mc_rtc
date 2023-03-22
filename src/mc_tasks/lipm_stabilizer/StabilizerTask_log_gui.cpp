@@ -408,6 +408,42 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   MC_RTC_LOG_HELPER(name_ + "_error_df_force", dfForceError_);
   MC_RTC_LOG_HELPER(name_ + "_error_df_eval", dfError_);
   MC_RTC_LOG_HELPER(name_ + "_error_vdc", vdcHeightError_);
+  logger.addLogEntry(name_ + "_support_left_max", this, [this]() -> Eigen::Vector2d
+  {   
+    if(inContact(ContactState::Left))
+    {
+        const auto & contact = contacts_.at(ContactState::Left);
+        return Eigen::Vector2d{contact.halfLength(),contact.halfWidth()}; 
+    }
+    return Eigen::Vector2d::Zero();
+  });
+  logger.addLogEntry(name_ + "_support_left_min", this, [this]() -> Eigen::Vector2d
+  { 
+    if(inContact(ContactState::Left))
+    {
+        const auto & contact = contacts_.at(ContactState::Left);
+        return Eigen::Vector2d{-contact.halfLength(),-contact.halfWidth()}; 
+    }
+    return Eigen::Vector2d::Zero();
+  });
+  logger.addLogEntry(name_ + "_support_right_max", this, [this]() -> Eigen::Vector2d  
+  {   
+    if(inContact(ContactState::Right))
+    {
+        const auto & contact = contacts_.at(ContactState::Right);
+        return Eigen::Vector2d{contact.halfLength(),contact.halfWidth()}; 
+    }
+    return Eigen::Vector2d::Zero();
+  });
+  logger.addLogEntry(name_ + "_support_right_min", this, [this]() -> Eigen::Vector2d 
+  {   
+    if(inContact(ContactState::Right))
+    {
+        const auto & contact = contacts_.at(ContactState::Right);
+        return Eigen::Vector2d{-contact.halfLength(),-contact.halfWidth()}; 
+    }
+    return Eigen::Vector2d::Zero();
+  });
   logger.addLogEntry(name_ + "_admittance_cop", this, [this]() -> const Eigen::Vector2d & { return c_.copAdmittance; });
   logger.addLogEntry(name_ + "_admittance_df", this, [this]() { return c_.dfAdmittance; });
   logger.addLogEntry(name_ + "_dcmDerivator_filtered", this, [this]() { return dcmDerivator_.eval(); });

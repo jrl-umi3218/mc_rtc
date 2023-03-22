@@ -1079,11 +1079,12 @@ protected:
   double delayedTargetFzLeft_ = 0; /**< Considered target for the delay*/
   double delayedTargetFzRight_ = 0; /**< Considered target for the delay*/
 
-  double tComputation_ = 0; /**< time when the distribution has been computed */
-  double modeledFzRight_ = 0; /**< Used for logging*/
-  double modeledFzLeft_ = 0; /**< Used for logging*/
-  double desiredFzLeft_ = 0; /**< Used for logging*/
-  double desiredFzRight_ = 0; /**< Used for logging*/
+  double tComputation_ = 0.; /**< time when the distribution has been computed */
+  double modeledFzRight_ = 0.; /**< Used for logging*/
+  double modeledFzLeft_ = 0.; /**< Used for logging*/
+  double desiredFzLeft_ = 0.; /**< Used for logging*/
+  double desiredFzRight_ = 0.; /**< Used for logging*/
+  Eigen::Vector2d errQPzmp = Eigen::Vector2d::Zero();
   //}
 };
 
