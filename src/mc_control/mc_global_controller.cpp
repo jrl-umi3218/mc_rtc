@@ -1086,6 +1086,15 @@ void MCGlobalController::refreshLog()
 
 void MCGlobalController::setup_log()
 {
+  auto & meta = controller_->logger().meta();
+  meta.timestep = controller_->timeStep;
+  meta.main_robot = controller_->robot().name();
+  meta.main_robot_module = controller_->robot().module().parameters();
+  meta.init.clear();
+  for(const auto & r : controller_->robots())
+  {
+    meta.init[r.name()] = r.posW();
+  }
   if(setup_logger_.count(current_ctrl))
   {
     return;

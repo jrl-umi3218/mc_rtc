@@ -293,7 +293,7 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
   template<typename KeyT, typename T, typename C, typename A>
   void write(const std::map<KeyT, T, C, A> & m)
   {
-    start_map(m.count());
+    start_map(m.size());
     for(const auto & p : m)
     {
       write(p.first);

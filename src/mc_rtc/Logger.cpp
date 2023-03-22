@@ -260,7 +260,7 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume, d
     impl_->valid_ = false;
     log::error("Failed to open log file {}", log_path.string());
   }
-  // FIXME Maybe resume is broken if we can't reconstruct a full key list
+  log_events_.push_back(StartEvent{});
 }
 
 void Logger::open(const std::string & file, double timestep, double start_t)
@@ -283,6 +283,7 @@ void Logger::open(const std::string & file, double timestep, double start_t)
     impl_->valid_ = false;
     log::error("Failed to open log file {}", file);
   }
+  log_events_.push_back(StartEvent{});
 }
 
 void Logger::log()
@@ -292,7 +293,7 @@ void Logger::log()
   if(log_events_.size())
   {
     builder.start_array(log_events_.size());
-    auto event_visitor = [&builder](auto && event) {
+    auto event_visitor = [&builder, this](auto && event) {
       using T = std::decay_t<decltype(event)>;
       if constexpr(std::is_same_v<T, KeyAddedEvent>)
       {
@@ -316,6 +317,16 @@ void Logger::log()
         builder.write(event.category);
         builder.write(event.name);
         builder.write(event.data);
+        builder.finish_array();
+      }
+      else if constexpr(std::is_same_v<T, StartEvent>)
+      {
+        builder.start_array(5);
+        builder.write(static_cast<uint8_t>(3));
+        builder.write(meta_.timestep);
+        builder.write(meta_.main_robot);
+        builder.write(meta_.main_robot_module);
+        builder.write(meta_.init);
         builder.finish_array();
       }
       else
