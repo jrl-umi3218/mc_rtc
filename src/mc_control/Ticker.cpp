@@ -1,5 +1,8 @@
 #include <mc_control/Ticker.h>
 
+#include <boost/filesystem.hpp>
+namespace bfs = boost::filesystem;
+
 namespace mc_control
 {
 
@@ -111,9 +114,10 @@ std::vector<std::string> get_robots(const mc_control::MCGlobalController & gc)
 
 Ticker::Ticker(const Configuration & config) : config_(config), gc_(config_.mc_rtc_configuration)
 {
-  const auto & replay_c = config_.replay_configuration;
+  auto & replay_c = config_.replay_configuration;
   if(!replay_c.log.empty())
   {
+    replay_c.log = bfs::system_complete(replay_c.log).string();
     std::map<std::string, std::string> log_to_datastore;
     if(!replay_c.with_datastore_config.empty())
     {
@@ -253,6 +257,13 @@ void Ticker::setup_gui()
   auto button = [&, this](size_t n) { return mc_rtc::gui::Button(text(n), [this, n]() { rem_steps_ += n; }); };
   gui.addElement(this, {"Ticker"}, mc_rtc::gui::ElementsStacking::Horizontal, button(1), button(5), button(10),
                  button(50), button(100));
+  if(replay_)
+  {
+    gui.addElement(this, {"Ticker"}, mc_rtc::gui::Label("Replay", config_.replay_configuration.log),
+                   mc_rtc::gui::NumberSlider(
+                       "Replay time", [this]() { return elapsed_t_; }, [](double) {}, 0.0,
+                       static_cast<double>(replay_->log.size()) * dt));
+  }
 }
 
 void Ticker::simulate_sensors()
