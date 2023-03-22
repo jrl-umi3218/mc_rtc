@@ -77,7 +77,10 @@ auto get_initial_state(const mc_rtc::log::FlatLog & log,
   for(const auto & r : robots)
   {
     bool is_main = r == main;
-    encoders[r] = get_encoders(log, r, is_main, 0);
+    if(log.has(log_entry("qIn", r, is_main)))
+    {
+      encoders[r] = get_encoders(log, r, is_main, 0);
+    }
     auto posW = get_posW(log, r, is_main, 0);
     if(posW)
     {
