@@ -29,6 +29,8 @@ struct MC_RTC_UTILS_DLLAPI IterateBinaryLogData
   const char * raw_data;
   /** Size of the raw data buffer */
   size_t raw_data_size;
+  /** Meta data extracted in the log (if any) */
+  const std::optional<Logger::Meta> & meta;
 };
 
 using iterate_binary_log_callback = std::function<bool(IterateBinaryLogData)>;

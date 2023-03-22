@@ -50,6 +50,10 @@ void FlatLog::appendBin(const std::string & f)
   std::vector<size_t> missingIndexes = {};
   size_t size = data_.size() ? data_[0].records.size() : 0;
   mc_rtc::log::iterate_binary_log_callback callback = [&](IterateBinaryLogData data) {
+    if(!meta_ && data.meta)
+    {
+      meta_ = data.meta;
+    }
     const auto & ks = data.keys;
     auto & records = data.records;
     if(ks.size())

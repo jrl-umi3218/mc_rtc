@@ -394,6 +394,7 @@ struct LogEntry : mpack_tree_t
   LogEntry(int8_t version,
            const std::vector<char> & data,
            size_t size,
+           std::optional<Logger::Meta> & metaOut,
            std::vector<TypedKey> & keysOut,
            std::vector<Logger::GUIEvent> & eventsOut,
            bool & keysChanged,
@@ -574,6 +575,23 @@ struct LogEntry : mpack_tree_t
               return;
             }
             eventsOut.push_back({category.value(), std::string(name.value()), data});
+          }
+          else if(event_t == 3)
+          {
+            // StartEvent event
+            if(event_size != 5)
+            {
+              log::error("Start event should have five entries");
+              valid_ = false;
+              return;
+            }
+            mc_rtc::Configuration data = ::mc_rtc::internal::fromMessagePack(event);
+            Logger::Meta meta;
+            meta.timestep = data[1];
+            meta.main_robot = data[2].operator std::string();
+            meta.main_robot_module = data[3];
+            meta.init = data[4];
+            metaOut = meta;
           }
           else
           {

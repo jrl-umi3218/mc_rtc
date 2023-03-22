@@ -49,6 +49,7 @@ bool iterate_binary_log(const std::string & f,
   bool extract_t = time.size() != 0;
 
   std::vector<internal::TypedKey> keys;
+  std::optional<Logger::Meta> meta;
 
   while(ifs)
   {
@@ -69,7 +70,7 @@ bool iterate_binary_log(const std::string & f,
     }
     bool keys_changed = false;
     std::vector<Logger::GUIEvent> events;
-    internal::LogEntry log(version, buffer, entrySize, keys, events, keys_changed, extract);
+    internal::LogEntry log(version, buffer, entrySize, meta, keys, events, keys_changed, extract);
     if(!log.valid())
     {
       return false;
@@ -109,7 +110,7 @@ bool iterate_binary_log(const std::string & f,
     if(!callback(IterateBinaryLogData{keys_str, log.records(), events, t,
                                       [&log](mc_rtc::MessagePackBuilder & builder,
                                              const std::vector<std::string> & keys) { log.copy(builder, keys); },
-                                      buffer.data(), entrySize}))
+                                      buffer.data(), entrySize, meta}))
     {
       return false;
     }

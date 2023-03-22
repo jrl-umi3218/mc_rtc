@@ -123,9 +123,19 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
   template<typename T>
   const T * getRaw(const std::string & entry, size_t i) const;
 
+  /** Returns all the GUI events that happened during the log recording */
   inline const std::vector<std::vector<Logger::GUIEvent>> & guiEvents() const noexcept
   {
     return gui_events_;
+  }
+
+  /** Returns the meta information contained in the log
+   *
+   * nullopt when the file does not contain such information
+   */
+  inline const std::optional<Logger::Meta> & meta() const noexcept
+  {
+    return meta_;
   }
 
   struct record
@@ -149,6 +159,7 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
 private:
   std::vector<entry> data_;
   std::vector<std::vector<Logger::GUIEvent>> gui_events_;
+  std::optional<Logger::Meta> meta_;
 
   /** Retrieve records for a given entry */
   const std::vector<record> & at(const std::string & entry) const;
