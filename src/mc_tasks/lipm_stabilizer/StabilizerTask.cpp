@@ -1254,6 +1254,15 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   measuredRightCoP_delayed.z() = measuredFzRight * exp(-c_.lambdaCoP.z() * t_delay)
                                  + (1 - exp(-c_.lambdaCoP.z() * t_delay)) * delayedTargetFzRight_;
   
+  if(supportFoot_ == ContactState::Left)
+  {
+    measuredLeftCoP_delayed.z() = fz_tot - measuredRightCoP_delayed.z();
+  }
+  else
+  {
+    measuredRightCoP_delayed.z() = fz_tot - measuredLeftCoP_delayed.z();
+  }
+  
   clampInPlace(measuredLeftCoP_delayed.z() ,0,fz_tot);
   clampInPlace(measuredRightCoP_delayed.z(),0,fz_tot);
 
