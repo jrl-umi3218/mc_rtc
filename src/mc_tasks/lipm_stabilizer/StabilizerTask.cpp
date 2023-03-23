@@ -1289,7 +1289,7 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
 
   // Task to regulate de CoP velocity
   Eigen::MatrixXd McopVel = Eigen::MatrixXd::Zero(nbVariables, nbVariables);
-  Eigen::VectorXd bcopVel = Eigen::VectorXd::Zero(McopReg.rows());
+  Eigen::VectorXd bcopVel = Eigen::VectorXd::Zero(McopVel.rows());
 
   // Task to regulate the CoPs difference
   Eigen::MatrixXd McopDiff = Eigen::MatrixXd::Zero(2 * nbReferences, nbVariables);
