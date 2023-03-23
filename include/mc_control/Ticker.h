@@ -79,9 +79,21 @@ struct MC_CONTROL_DLLAPI Ticker
   void run();
 
   /** Elapsed simulation time since the last reset */
-  double elapsed_time() const noexcept
+  inline double elapsed_time() const noexcept
   {
     return static_cast<double>(iters_) * gc_.timestep();
+  }
+
+  /** Access the controller (const) */
+  inline const mc_control::MCGlobalController & controller() const noexcept
+  {
+    return gc_;
+  }
+
+  /** Access the controller */
+  inline mc_control::MCGlobalController & controller() noexcept
+  {
+    return gc_;
   }
 
 protected:
