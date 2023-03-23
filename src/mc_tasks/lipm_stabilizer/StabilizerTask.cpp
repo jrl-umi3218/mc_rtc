@@ -37,7 +37,7 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
   extWrenchSumLowPass_(dt, /* cutoffPeriod = */ 0.05), comOffsetLowPass_(dt, /* cutoffPeriod = */ 0.05),
   comOffsetLowPassCoM_(dt, /* cutoffPeriod = */ 1.0), comOffsetDerivator_(dt, /* timeConstant = */ 1.),
   dcmIntegrator_(dt, /* timeConstant = */ 15.), dcmDerivator_(dt, /* timeConstant = */ 1.), dt_(dt),
-  fSumFilter_(dt, /* cutoffPeriod = */ 1.),
+  fSumFilter_(dt, /* cutoffPeriod = */ 2.),
   mass_(robots.robot(robotIndex).mass())
 {
   type_ = "lipm_stabilizer";
@@ -765,10 +765,18 @@ void StabilizerTask::run()
       mc_rtc::log::error("[{}] ZMP computation failed, keeping previous value {}", name(),
                          MC_FMT_STREAMED(measuredZMP_.transpose()));
     }
+    sva::ForceVecd wrench = sva::ForceVecd::Zero();
+    for(const auto & footT : footTasks)
+    {
+      wrench += footT.second->measuredWrench();
+    }
+    fSumFilter_.update(wrench.force());
   }
   else
   {
     measuredNetWrench_ = sva::ForceVecd::Zero();
+    fSumFilter_.update(Eigen::Vector3d{0,0,robot().mass() * constants::GRAVITY});
+
   }
   desiredWrench_ = computeDesiredWrench();
 
@@ -782,11 +790,7 @@ void StabilizerTask::run()
     else
     {
       distributeWrench(desiredWrench_);
-      distribZMP_ = mc_rbdyn::zmp(distribWrench_, zmpFrame_);
     }
-    fSumFilter_.update(
-      (footTasks[ContactState::Left]->measuredWrench() + footTasks[ContactState::Right]->measuredWrench()).force()
-      );
   }
   else
   {
@@ -797,9 +801,6 @@ void StabilizerTask::run()
       footTasks[ContactState::Right]->setZeroTargetWrench();
       delayedTargetCoPRight_ = footTasks[ContactState::Right]->targetCoP();
       delayedTargetFzRight_ = footTasks[ContactState::Right]->targetWrench().force().z();
-      fSumFilter_.update(
-        (footTasks[ContactState::Left]->measuredWrench()).force()
-        );
     }
     else
     {
@@ -807,14 +808,10 @@ void StabilizerTask::run()
       footTasks[ContactState::Left]->setZeroTargetWrench();
       delayedTargetCoPLeft_ = footTasks[ContactState::Left]->targetCoP();
       delayedTargetFzLeft_ = footTasks[ContactState::Left]->targetWrench().force().z();
-      fSumFilter_.update(
-        (footTasks[ContactState::Right]->measuredWrench()).force()
-        );
     }
-    distribZMP_ = mc_rbdyn::zmp(distribWrench_, zmpFrame_);
     
-
   }
+  distribZMP_ = mc_rbdyn::zmp(distribWrench_, zmpFrame_);
 
   updateCoMTaskZMPCC();
   updateFootForceDifferenceControl();
