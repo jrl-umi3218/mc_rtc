@@ -42,6 +42,42 @@ MCGlobalController::MCGlobalController(const std::string & conf, std::shared_ptr
 MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
 : config(conf), current_ctrl(""), next_ctrl(""), controller_(nullptr), next_controller_(nullptr)
 {
+  // Display configuration information
+  if(conf.enable_gui_server)
+  {
+    mc_rtc::log::info("GUI server enabled");
+    mc_rtc::log::info("Will serve data on:");
+    for(const auto & pub_uri : conf.gui_server_pub_uris)
+    {
+      mc_rtc::log::info("- {}", pub_uri);
+    }
+    mc_rtc::log::info("Will handle requests on:");
+    for(const auto & rep_uri : conf.gui_server_rep_uris)
+    {
+      mc_rtc::log::info("- {}", rep_uri);
+    }
+  }
+  else
+  {
+    mc_rtc::log::info("GUI server disabled");
+  }
+  {
+    std::string plugin_str;
+    for(const auto & p : conf.global_plugins)
+    {
+      if(plugin_str.size())
+      {
+        plugin_str += ", ";
+      }
+      plugin_str += p;
+      if(std::find(conf.global_plugins_autoload.begin(), conf.global_plugins_autoload.end(), p)
+         != conf.global_plugins_autoload.end())
+      {
+        plugin_str += " (autoload)";
+      }
+    }
+    mc_rtc::log::info("Enabled plugins: {}", plugin_str);
+  }
   // Loading plugins
   config.load_plugin_configs();
   try

@@ -886,6 +886,7 @@ public:
 
     std::vector<std::string> global_plugin_paths = {};
     std::vector<std::string> global_plugins = {};
+    std::vector<std::string> global_plugins_autoload = {};
     std::unordered_map<std::string, mc_rtc::Configuration> global_plugin_configs;
 
     std::vector<std::string> controller_module_paths = {};

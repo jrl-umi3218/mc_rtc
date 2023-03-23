@@ -133,7 +133,12 @@ std::vector<std::string> get_robots(const mc_control::MCGlobalController & gc)
   return out;
 }
 
-Ticker::Ticker(const Configuration & config) : config_(config), gc_(config_.mc_rtc_configuration)
+auto get_gc_configuration = [](const Ticker::Configuration & config) {
+  mc_control::MCGlobalController::GlobalConfiguration out(config.mc_rtc_configuration);
+  return out;
+};
+
+Ticker::Ticker(const Configuration & config) : config_(config), gc_(get_gc_configuration(config))
 {
   auto & replay_c = config_.replay_configuration;
   if(!replay_c.log.empty())
