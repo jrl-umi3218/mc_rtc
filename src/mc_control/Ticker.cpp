@@ -55,6 +55,27 @@ std::vector<double> get_encoders(const mc_rbdyn::Robot & robot)
   return q;
 }
 
+/** Get the encoders' velocities of a robot from the robot's configuration */
+std::vector<double> get_encoders_velocities(const mc_rbdyn::Robot & robot)
+{
+  std::vector<double> alpha;
+  alpha.reserve(robot.refJointOrder().size());
+  for(size_t i = 0; i < robot.refJointOrder().size(); ++i)
+  {
+    auto mbcIdx = robot.jointIndexInMBC(i);
+    if(mbcIdx == -1)
+    {
+      alpha.push_back(0.0);
+      continue;
+    }
+    for(const auto & qi : robot.mbc().alpha[static_cast<size_t>(mbcIdx)])
+    {
+      alpha.push_back(qi);
+    }
+  }
+  return alpha;
+}
+
 /** Get the floating base position from the given log at the given time */
 std::optional<sva::PTransformd> get_posW(const mc_rtc::log::FlatLog & log,
                                          const std::string & robot,
@@ -386,6 +407,12 @@ void Ticker::simulate_sensors()
     for(const auto & r : gc_.controller().robots())
     {
       gc_.setEncoderValues(r.name(), get_encoders(r));
+      gc_.setEncoderVelocities(r.name(), get_encoders_velocities(r));
+      if(r.hasBodySensor("FloatingBase"))
+      {
+        gc_.setSensorPositions(r.name(), {{"FloatingBase", r.posW().translation()}});
+        gc_.setSensorOrientations(r.name(), {{"FloatingBase", Eigen::Quaterniond{r.posW().rotation()}}});
+      }
     }
   }
 }
