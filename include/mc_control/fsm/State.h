@@ -100,7 +100,7 @@ struct MC_CONTROL_FSM_DLLAPI State
 
   /** Returns the output of the state, should only be consulted once run has
    * returned true */
-  const std::string & output()
+  const std::string & output() const noexcept
   {
     return output_;
   }
