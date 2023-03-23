@@ -38722,8 +38722,8 @@
       <type>const std::string &amp;</type>
       <name>output</name>
       <anchorfile>structmc__control_1_1fsm_1_1State.html</anchorfile>
-      <anchor>a0a94b4c21887b3bc710d040a31c5a2dc</anchor>
-      <arglist>()</arglist>
+      <anchor>af4dd1bbc4333cf7bf788b48879885293</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const std::string &amp;</type>
