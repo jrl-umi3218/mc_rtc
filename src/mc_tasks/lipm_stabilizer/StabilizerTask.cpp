@@ -1404,7 +1404,7 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
         offsetRight - normals * exp_mat * measuredRightCoP_delayed.segment(0, 2);
     
     McopDiff(2 * i , 2 * i) = 1;
-    McopDiff(2 * ( nbReferences + i),2 * ( nbReferences + i) ) = -1;
+    McopDiff(2 * i , 2 * ( nbReferences + i) ) = -1;
   }
 
   Aineq.block(4 * nbReferences, 2 * nbReferences, 4 * nbReferences, 2 * nbReferences) =
