@@ -17,6 +17,7 @@ int main(int argc, char * argv[])
       ("step-by-step,S", po::bool_switch(&config.step_by_step), "Start the ticker in step-by-step mode")
       ("run-for", po::value<double>(&config.run_for), "Run for the specified time (seconds)")
       ("no-sync,s", po::bool_switch(&config.no_sync), "Synchronize ticker time with real time")
+      ("sync-ratio,r", po::value<double>(&config.sync_ratio), "Sim/real ratio for synchronization purpose")
       ("replay-log,l", po::value<std::string>(&config.replay_configuration.log), "Log to replay")
       ("datastore-mapping,m", po::value<std::string>(&config.replay_configuration.with_datastore_config), "Mapping of log keys to datastore")
       ("replay-gui-inputs-only,g", po::bool_switch(&only_gui_inputs), "Only replay the GUI inputs")
@@ -43,6 +44,10 @@ int main(int argc, char * argv[])
       }
       config.replay_configuration.with_inputs = false;
       config.replay_configuration.with_outputs = false;
+    }
+    if(config.sync_ratio <= 0)
+    {
+      mc_rtc::log::error_and_throw("sync-ratio must be strictly positive");
     }
   }
   mc_control::Ticker ticker(config);
