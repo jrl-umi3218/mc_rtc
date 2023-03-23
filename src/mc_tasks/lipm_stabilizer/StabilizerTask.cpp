@@ -1293,6 +1293,7 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
 
   // Task to regulate the CoPs difference
   Eigen::MatrixXd McopDiff = Eigen::MatrixXd::Zero(2 * nbReferences, nbVariables);
+  Eigen::VectorXd bcopDiff = Eigen::VectorXd::Zero(McopDiff.rows());
   // McopDiff.block(0,0,2 * nbReferences,2 * nbReferences).diagonal() = Eigen::VectorXd::Ones(2 * nbReferences);
   // McopDiff.block(0,2 * nbReferences,2 * nbReferences,2 * nbReferences).diagonal() = -Eigen::VectorXd::Ones(2 * nbReferences);
 
@@ -1395,8 +1396,9 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
     bineq.segment(4 * i, 4) = offsetLeft - normals * exp_mat * measuredLeftCoP_delayed.segment(0, 2);
     bineq.segment(4 * (nbReferences + i), 4) = offsetRight - normals * exp_mat * measuredRightCoP_delayed.segment(0, 2);
 
-    McopDiff(2 * i, 2 * i) = 1;
-    McopDiff(2 * i, 2 * (nbReferences + i)) = -1;
+    McopDiff.block(2 * i,0, 2, 2 * nbReferences ) = Acop;
+    McopDiff.block(2 * i, 2 * nbReferences, 2, 2 * nbReferences ) = -Acop;
+    bcopDiff.segment(2 * i , 2 ) = exp_mat * (measuredLeftCoP_delayed - measuredRightCoP_delayed).segment(0, 2);
 
     Eigen::Matrix2d lambda_mat = Eigen::Matrix2d::Identity();
     lambda_mat.diagonal() *= c_.lambdaCoP.segment(0, 2);
@@ -1412,13 +1414,14 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   McopVel.block(2 * nbReferences, 2 * nbReferences, 2 * nbReferences, 2 * nbReferences) =
       McopVel.block(0, 0, 2 * nbReferences, 2 * nbReferences);
 
-  Eigen::MatrixXd Q = Mcop.transpose() * Mcop;
-  // Q+= 1e-6 * McopDiff.transpose() * McopDiff;
+  Eigen::MatrixXd Q = 1e2 * Mcop.transpose() * Mcop;
+  Q += 0e-2 * McopDiff.transpose() * McopDiff;
   Q += 1e-8 * McopReg.transpose() * McopReg;
-  Q += 1e-4 * McopVel.transpose() * McopVel;
-  Eigen::VectorXd c = (-Mcop.transpose() * bcop);
-  c += 1e-8 * (-McopReg.transpose() * bcopReg);
-  c += 1e-4 * McopVel.transpose() * bcopVel;
+  Q += 0e-2 * McopVel.transpose() * McopVel;
+  Eigen::VectorXd c = 1e2 * (-Mcop.transpose() * bcop);
+  c += 0e-2 * (McopDiff.transpose() * bcopDiff);
+  c += 1e-8* (-McopReg.transpose() * bcopReg);
+  c += 0e-2 * McopVel.transpose() * bcopVel;
 
   qpSolver_.problem(nbVariables, 0, nbIneqCstr);
   Eigen::MatrixXd Aeq(0, 0);
