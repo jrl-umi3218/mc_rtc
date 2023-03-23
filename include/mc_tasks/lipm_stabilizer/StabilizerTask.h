@@ -474,6 +474,11 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return measuredCoMd_;
   }
 
+  inline const Eigen::Vector3d & measuredFilteredNetForces() noexcept
+  {
+    return fSumFilter_.eval();
+  }
+
   inline const Eigen::Vector3d & comOffsetTarget() noexcept
   {
     return comOffsetTarget_;

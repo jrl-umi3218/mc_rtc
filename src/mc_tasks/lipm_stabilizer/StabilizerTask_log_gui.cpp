@@ -486,6 +486,8 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_df_damping", this, [this]() { return c_.dfDamping; });
   logger.addLogEntry(name_ + "_forcesSum", this,
                      [this]() -> const Eigen::Vector3d & { return fSumFilter_.eval(); });
+  logger.addLogEntry(name_ + "_forcesSum_cutOffPeriod", this,
+                     [this]() -> const double { return c_.fSumFilter_T; });
   logger.addLogEntry(name_ + "_fdqp_weights_ankleTorque", this,
                      [this]() { return std::pow(c_.fdqpWeights.ankleTorqueSqrt, 2); });
   logger.addLogEntry(name_ + "_fdqp_weights_netWrench", this,

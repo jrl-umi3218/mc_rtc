@@ -423,6 +423,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       15.; /**< Time window for exponential moving average filter of the DCM integrator */
   double dcmDerivatorTimeConstant = 1.; /**< Cutoff Period of the DCM derivator filter */
 
+  double fSumFilter_T = 20.; /**<Cutoff Period of the estimation of the sum of forces*/
+
   std::vector<std::string> comActiveJoints; /**< Joints used by CoM IK task */
   Eigen::Vector3d comStiffness = {1000., 1000., 100.}; /**< Stiffness of CoM IK task */
   double comWeight = 1000.; /**< Weight of CoM IK task */

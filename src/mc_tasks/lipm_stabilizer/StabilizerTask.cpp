@@ -352,6 +352,8 @@ void StabilizerTask::configure_(mc_solver::QPSolver & solver)
   dcmDerivator_.cutoffPeriod(c_.dcmDerivatorTimeConstant);
   dcmIntegrator_.timeConstant(c_.dcmIntegratorTimeConstant);
   dcmIntegrator_.saturation(c_.safetyThresholds.MAX_AVERAGE_DCM_ERROR);
+  
+  fSumFilter_.cutoffPeriod(c_.fSumFilter_T);
 
   extWrenchSumLowPass_.cutoffPeriod(c_.extWrench.extWrenchSumLowPassCutoffPeriod);
   comOffsetLowPass_.cutoffPeriod(c_.extWrench.comOffsetLowPassCutoffPeriod);
@@ -768,7 +770,8 @@ void StabilizerTask::run()
     sva::ForceVecd wrench = sva::ForceVecd::Zero();
     for(const auto & footT : footTasks)
     {
-      wrench += footT.second->measuredWrench();
+      sva::PTransformd X_0_foot = footT.second->surfacePose();
+      wrench += X_0_foot.inv().dualMul(footT.second->measuredWrench());
     }
     fSumFilter_.update(wrench.force());
   }
