@@ -1410,8 +1410,8 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   Aineq.block(4 * nbReferences, 2 * nbReferences, 4 * nbReferences, 2 * nbReferences) =
       Aineq.block(0, 0, 4 * nbReferences, 2 * nbReferences);
 
-  Eigen::MatrixXd Q = Mcop.transpose() * Mcop + 1e-4 * McopDiff.transpose() * McopDiff + 1e-4* (McopReg.transpose() * McopReg);
-  Eigen::VectorXd c = (-Mcop.transpose() * bcop) + 1e-4 * (-McopReg.transpose() * bcopReg);
+  Eigen::MatrixXd Q = Mcop.transpose() * Mcop + 1e-6 * McopDiff.transpose() * McopDiff + 1e-6 * (McopReg.transpose() * McopReg);
+  Eigen::VectorXd c = (-Mcop.transpose() * bcop) + 1e-6 * (-McopReg.transpose() * bcopReg);
 
   qpSolver_.problem(nbVariables, 0, nbIneqCstr);
   Eigen::MatrixXd Aeq(0, 0);
