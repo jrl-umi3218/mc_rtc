@@ -1266,6 +1266,14 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   clampInPlace(measuredLeftCoP_delayed.z() ,0,fz_tot);
   clampInPlace(measuredRightCoP_delayed.z(),0,fz_tot);
 
+  measuredLeftCoP_delayed.segment(0,2)= clamp( Eigen::Vector2d{measuredLeftCoP_delayed.x(),measuredLeftCoP_delayed.y()} ,
+                                                  Eigen::Vector2d{-leftContact.halfLength(), -leftContact.halfWidth()},
+                                                  Eigen::Vector2d{leftContact.halfLength(), leftContact.halfWidth()});
+  measuredRightCoP_delayed.segment(0,2)= clamp( Eigen::Vector2d{measuredRightCoP_delayed.x(),measuredRightCoP_delayed.y()} ,
+                                                  Eigen::Vector2d{-rightContact.halfLength(), -rightContact.halfWidth()},
+                                                  Eigen::Vector2d{rightContact.halfLength(), rightContact.halfWidth()});
+
+
   const int nbReferences = static_cast<int>(zmp_ref.size());
   const int nbVariables = 2 * 2 * nbReferences; // Each reference induce 2 CoP which has 2 coordinates x y
   const int nbIneqCstr = 8 * nbReferences; // Each CoP has 4 cstr to remain bounded in contact polygone
@@ -1379,11 +1387,12 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
         - X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * exp_mat * measuredLeftCoP_delayed.segment(0, 2)
         - X_0_rc.inv().rotation().block(0, 0, 2, 2) * (ratio) * exp_mat * measuredRightCoP_delayed.segment(0, 2);
 
+    //CoP must remain bounded in polygon cstr
     Aineq.block(4 * i, 0, 4, 2 * nbReferences) = normals * Acop;
 
-    bineq.segment(4 * i, 4) = offsetLeft - normals * exp_mat * (1 - ratio) * measuredLeftCoP_delayed.segment(0, 2);
+    bineq.segment(4 * i, 4) = offsetLeft - normals * exp_mat  * measuredLeftCoP_delayed.segment(0, 2);
     bineq.segment(4 * (nbReferences + i), 4) =
-        offsetRight - normals * exp_mat * ratio * measuredRightCoP_delayed.segment(0, 2);
+        offsetRight - normals * exp_mat * measuredRightCoP_delayed.segment(0, 2);
   }
 
   Aineq.block(4 * nbReferences, 2 * nbReferences, 4 * nbReferences, 2 * nbReferences) =
