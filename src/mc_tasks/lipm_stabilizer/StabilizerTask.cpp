@@ -1306,9 +1306,9 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   offsetRight << rightContact.halfLength(), rightContact.halfLength(), rightContact.halfWidth(),
       rightContact.halfWidth();
 
-  Eigen::Vector2d t_lankle_zmp = (zmp_ref[0].segment(0, 2) - lankle);
+  Eigen::Vector2d t_lankle_zmp = zmp_ref[0] - lankle.segment(0, 2);
   const double lankle_rankle = t_lankle_rankle.norm();
-  double d_proj = t_lankle_zmp.dot(t_lankle_rankle.segment(0, 2).normalized());
+  double d_proj = t_lankle_zmp.dot(t_lankle_rankle.normalized());
   // The vertical forces are splitted using the ratio obtained between the reference zmp pose and the contact pose;
   double ratio_desired = clamp(d_proj / lankle_rankle, c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot,
                                1 - (c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot));
@@ -1341,7 +1341,7 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
     {
 
       t_lankle_zmp = zmp_ref[i] - lankle.segment(0, 2);
-      d_proj = t_lankle_zmp.dot(t_lankle_rankle.segment(0, 2).normalized());
+      d_proj = t_lankle_zmp.dot(t_lankle_rankle.normalized());
       // ratio = 1 : fz on rightfoot, 0 on leftFoot
       ratio_desired = clamp(d_proj / lankle_rankle, c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot,
                             1 - (c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot));
@@ -1417,6 +1417,10 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   Eigen::Vector2d leftCoP(x.segment(0, 2));
   Eigen::Vector2d rightCoP(x.segment(2 * nbReferences, 2));
 
+  //distribZMP_.segment(0,2) = (Mcop * x - bcop).segment(0,2) + zmp_ref[0] ;
+
+  errQPzmp = (Mcop * x - bcop).segment(0,2);
+  
   sva::ForceVecd w_l_lc = sva::ForceVecd{
       Eigen::Vector3d{leftCoP.y() * targetForceLeft.z(), -leftCoP.x() * targetForceLeft.z(), 0}, targetForceLeft};
   sva::ForceVecd w_r_rc = sva::ForceVecd{
