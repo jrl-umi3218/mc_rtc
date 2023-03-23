@@ -14,4 +14,5 @@ usr/lib/*/libmc_control.so.*
 usr/lib/*/libmc_control_client.so.*
 usr/lib/*/libmc_control_fsm.so.*
 usr/lib/*/libmc_planning.so.*
+usr/lib/*/mc_plugins/Replay.so
 usr/share/doc/mc_rtc/json/schemas/*

@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015-2023 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 #pragma once
 
 #include <mc_control/mc_global_controller.h>
@@ -99,12 +103,7 @@ struct MC_CONTROL_DLLAPI Ticker
 protected:
   Configuration config_;
   mc_control::MCGlobalController gc_;
-  struct ReplayData
-  {
-    mc_rtc::log::FlatLog log;
-    std::map<std::string, std::string> log_to_datastore;
-  };
-  std::optional<ReplayData> replay_;
+  std::shared_ptr<mc_rtc::log::FlatLog> log_;
 
   /** Number of steps taken since the last reset */
   size_t iters_ = 0;

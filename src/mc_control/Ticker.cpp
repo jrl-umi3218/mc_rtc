@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015-2023 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 #include <mc_control/Ticker.h>
 
 #include <boost/filesystem.hpp>
@@ -135,6 +139,20 @@ std::vector<std::string> get_robots(const mc_control::MCGlobalController & gc)
 
 auto get_gc_configuration = [](const Ticker::Configuration & config) {
   mc_control::MCGlobalController::GlobalConfiguration out(config.mc_rtc_configuration);
+  if(config.replay_configuration.log.size())
+  {
+    auto it = std::find(out.global_plugins.begin(), out.global_plugins.end(), "Replay");
+    if(it != out.global_plugins.end())
+    {
+      out.global_plugins.erase(it);
+    }
+    out.global_plugins.insert(out.global_plugins.begin(), "Replay");
+    auto replay_c = out.config.add("Replay");
+    replay_c.add("with-inputs", config.replay_configuration.with_inputs);
+    replay_c.add("with-gui-inputs", config.replay_configuration.with_gui_inputs);
+    replay_c.add("with-outputs", config.replay_configuration.with_outputs);
+    replay_c.add("with-datastore-config", config.replay_configuration.with_datastore_config);
+  }
   return out;
 };
 
@@ -150,15 +168,16 @@ Ticker::Ticker(const Configuration & config) : config_(config), gc_(get_gc_confi
       log_to_datastore =
           mc_rtc::Configuration(replay_c.with_datastore_config).operator std::map<std::string, std::string>();
     }
-    replay_ = ReplayData{mc_rtc::log::FlatLog(replay_c.log), log_to_datastore};
+    log_ = std::make_shared<mc_rtc::log::FlatLog>(replay_c.log);
+    gc_.controller().datastore().make<decltype(log_)>("Replay::Log", log_);
   }
   simulate_sensors();
-  if(replay_)
+  if(log_)
   {
     // Check that the replay timestep matches the configured one
-    if(replay_->log.size() > 1)
+    if(log_->size() > 1)
     {
-      double dt = replay_->log.get("t", 1, 0.0) - replay_->log.get("t", 0, 0.0);
+      double dt = log_->get("t", 1, 0.0) - log_->get("t", 0, 0.0);
       if(dt != gc_.timestep())
       {
         mc_rtc::log::error_and_throw("Controller timestep ({}) is different from replay timestep ({})", gc_.timestep(),
@@ -166,7 +185,7 @@ Ticker::Ticker(const Configuration & config) : config_(config), gc_(get_gc_confi
       }
     }
     // Do the initialization
-    auto [encoders, attitudes] = get_initial_state(replay_->log, get_robots(gc_), gc_.controller().robot().name());
+    auto [encoders, attitudes] = get_initial_state(*log_, get_robots(gc_), gc_.controller().robot().name());
     gc_.init(encoders, attitudes);
   }
   else
@@ -191,9 +210,9 @@ bool Ticker::step()
     iters_ = 0;
     replay_done_ = false;
     simulate_sensors();
-    if(replay_)
+    if(log_)
     {
-      auto [encoders, attitudes] = get_initial_state(replay_->log, get_robots(gc_), gc_.controller().robot().name());
+      auto [encoders, attitudes] = get_initial_state(*log_, get_robots(gc_), gc_.controller().robot().name());
       gc_.reset(encoders, attitudes);
     }
     else
@@ -205,12 +224,6 @@ bool Ticker::step()
   }
   simulate_sensors();
   bool r = gc_.run();
-  if(replay_)
-  {
-    // FIXME For replay output to work we need to:
-    // - Insert a plugin at the start of the global plugin list (overwrite the output robot for every plugins)
-    // - Publish GUI robots ourselves
-  }
   iters_++;
   return r;
 }
@@ -271,7 +284,7 @@ void Ticker::run()
       std::this_thread::sleep_for(std::chrono::milliseconds(10));
       reset_sync();
     }
-    if(replay_ && config_.replay_configuration.stop_after_log && iters_ == replay_->log.size() && !replay_done_)
+    if(log_ && config_.replay_configuration.stop_after_log && iters_ == log_->size() && !replay_done_)
     {
       replay_done_ = true;
       config_.step_by_step = true;
@@ -327,85 +340,20 @@ void Ticker::setup_gui()
   };
   gui.addElement(this, {"Ticker"}, mc_rtc::gui::ElementsStacking::Horizontal, button(1), button(5), button(10),
                  button(50), button(100));
-  if(replay_)
+  if(log_)
   {
     gui.addElement(this, {"Ticker"}, mc_rtc::gui::Label("Replay", config_.replay_configuration.log),
                    mc_rtc::gui::NumberSlider(
                        "Replay time", [this]() { return elapsed_time(); }, [](double) {}, 0.0,
-                       static_cast<double>(replay_->log.size()) * dt));
+                       static_cast<double>(log_->size()) * dt));
   }
 }
 
 void Ticker::simulate_sensors()
 {
-  if(replay_ && iters_ < replay_->log.size())
+  if(log_ && iters_ < log_->size())
   {
-    const auto & log = replay_->log;
-    if(config_.replay_configuration.with_inputs)
-    {
-      for(const auto & r : gc_.controller().robots())
-      {
-        bool is_main = r.name() == gc_.controller().robot().name();
-        // Restore joint level readings
-        if(r.refJointOrder().size())
-        {
-          gc_.setEncoderValues(r.name(), get_encoders(replay_->log, r.name(), is_main, iters_));
-          gc_.setEncoderVelocities(r.name(), get(log, "alphaIn", r.name(), is_main, iters_));
-          gc_.setJointTorques(r.name(), get(log, "tauIn", r.name(), is_main, iters_));
-        }
-        // Restore force sensor readings
-        std::map<std::string, sva::ForceVecd> wrenches;
-        for(const auto & fs : r.forceSensors())
-        {
-          wrenches[fs.name()] = get(log, fs.name(), r.name(), is_main, iters_, sva::ForceVecd::Zero());
-        }
-        gc_.setWrenches(r.name(), wrenches);
-        // Restore body sensor readings
-        std::map<std::string, Eigen::Vector3d> poses;
-        mc_control::MCGlobalController::QuaternionMap oris;
-        std::map<std::string, Eigen::Vector3d> linearVels;
-        std::map<std::string, Eigen::Vector3d> angularVels;
-        std::map<std::string, Eigen::Vector3d> linearAccels;
-        std::map<std::string, Eigen::Vector3d> angularAccels;
-        static auto def_quat = Eigen::Quaterniond(1.0, 0.0, 0.0, 0.0);
-        static Eigen::Vector3d def_vec = Eigen::Vector3d::Zero();
-        for(const auto & bs : r.bodySensors())
-        {
-          poses[bs.name()] = get(log, bs.name() + "_position", r.name(), is_main, iters_, def_vec);
-          oris[bs.name()] = get(log, bs.name() + "_orientation", r.name(), is_main, iters_, def_quat);
-          linearVels[bs.name()] = get(log, bs.name() + "_linearVelocity", r.name(), is_main, iters_, def_vec);
-          angularVels[bs.name()] = get(log, bs.name() + "_angularVelocity", r.name(), is_main, iters_, def_vec);
-          linearAccels[bs.name()] = get(log, bs.name() + "_linearAcceleration", r.name(), is_main, iters_, def_vec);
-          angularAccels[bs.name()] = get(log, bs.name() + "_angularAcceleration", r.name(), is_main, iters_, def_vec);
-        }
-        gc_.setSensorPositions(r.name(), poses);
-        gc_.setSensorOrientations(r.name(), oris);
-        gc_.setSensorLinearVelocities(r.name(), linearVels);
-        gc_.setSensorAngularVelocities(r.name(), angularVels);
-        gc_.setSensorLinearAccelerations(r.name(), linearAccels);
-        gc_.setSensorAngularAccelerations(r.name(), angularAccels);
-        // Restore joint sensor readings
-        std::map<std::string, double> motorTemps;
-        std::map<std::string, double> driverTemps;
-        std::map<std::string, double> motorCurrents;
-        for(const auto & js : r.jointSensors())
-        {
-          motorTemps[js.joint()] =
-              get(log, "JointSensor_" + js.joint() + "_motorTemperature", r.name(), is_main, iters_, 0.0);
-          driverTemps[js.joint()] =
-              get(log, "JointSensor_" + js.joint() + "_driverTemperature", r.name(), is_main, iters_, 0.0);
-          motorCurrents[js.joint()] =
-              get(log, "JointSensor_" + js.joint() + "_motorCurrent", r.name(), is_main, iters_, 0.0);
-        }
-        gc_.setJointMotorTemperatures(r.name(), motorTemps);
-        gc_.setJointDriverTemperatures(r.name(), driverTemps);
-        gc_.setJointMotorCurrents(r.name(), motorCurrents);
-      }
-    }
-    if(config_.replay_configuration.with_gui_inputs)
-    {
-      gc_.server().push_requests(log.guiEvents()[iters_]);
-    }
+    // Sensors are handled by the Replay plugin
   }
   else
   {
