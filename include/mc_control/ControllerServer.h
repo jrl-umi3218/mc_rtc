@@ -70,6 +70,9 @@ struct MC_CONTROL_DLLAPI ControllerServer
     }
   }
 
+  /** Update the rate of the server */
+  void update_rate(double dt, double server_dt);
+
 private:
   unsigned int iter_;
   unsigned int rate_;

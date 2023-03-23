@@ -36,6 +36,8 @@ struct MC_CONTROL_DLLAPI Ticker
     double run_for = std::numeric_limits<double>::infinity();
     /** Disable ticker time synchronization with real time */
     bool no_sync = false;
+    /** Target ratio for sim/real */
+    double sync_ratio = 1.0;
     /** Replay configuration */
     struct Replay
     {
@@ -76,6 +78,12 @@ struct MC_CONTROL_DLLAPI Ticker
   /** Run as many iterations as configured */
   void run();
 
+  /** Elapsed simulation time since the last reset */
+  double elapsed_time() const noexcept
+  {
+    return static_cast<double>(iters_) * gc_.timestep();
+  }
+
 protected:
   Configuration config_;
   mc_control::MCGlobalController gc_;
@@ -89,8 +97,8 @@ protected:
   /** Number of steps taken since the last reset */
   size_t iters_ = 0;
 
-  /** Time the instance has run for since the last reset */
-  double elapsed_t_ = 0.0;
+  /** Current sim/real ratio */
+  double sim_real_ratio_ = 1.0;
 
   /** Do a reset on the next iteration */
   std::atomic<bool> do_reset_ = false;
@@ -102,7 +110,7 @@ protected:
   bool replay_done_ = false;
 
   /** Number of steps remaning before going back to pause */
-  size_t rem_steps_ = 0;
+  int64_t rem_steps_ = 0;
 
   void simulate_sensors();
 

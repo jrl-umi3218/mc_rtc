@@ -162,7 +162,6 @@ bool Ticker::step()
   if(do_reset_)
   {
     do_reset_ = false;
-    elapsed_t_ = 0.0;
     iters_ = 0;
     replay_done_ = false;
     simulate_sensors();
@@ -187,7 +186,6 @@ bool Ticker::step()
     // - Publish GUI robots ourselves
   }
   iters_++;
-  elapsed_t_ += gc_.timestep();
   return r;
 }
 
@@ -196,39 +194,56 @@ void Ticker::run()
   using clock = std::conditional_t<std::chrono::high_resolution_clock::is_steady, std::chrono::high_resolution_clock,
                                    std::chrono::steady_clock>;
   using duration_us = std::chrono::duration<double, std::micro>;
-  auto dt = duration_us(1e6 * gc_.timestep());
 
   replay_done_ = false;
   running_ = true;
   iters_ = 0;
-  elapsed_t_ = 0.0;
+  double sim_elapsed_t = 0.0;
+  double real_elapsed_t = 0.0;
 
-  while(running_ && elapsed_t_ < config_.run_for)
+  double target_ratio = config_.sync_ratio;
+  gc_.server().update_rate(gc_.timestep() / target_ratio, gc_.configuration().gui_timestep);
+
+  auto start_ticker = clock::now();
+
+  auto reset_sync = [&]() {
+    real_elapsed_t = 0.0;
+    sim_elapsed_t = 0.0;
+    start_ticker = clock::now();
+  };
+
+  while(running_ && elapsed_time() < config_.run_for)
   {
-    auto now = clock::now();
-    if(config_.step_by_step)
+    if(config_.sync_ratio != target_ratio || do_reset_)
     {
-      if(rem_steps_ > 0)
+      target_ratio = config_.sync_ratio;
+      gc_.server().update_rate(gc_.timestep() / target_ratio, gc_.configuration().gui_timestep);
+      reset_sync();
+    }
+    if((config_.step_by_step && rem_steps_ > 0) || !config_.step_by_step)
+    {
+      rem_steps_--;
+      step();
+      sim_elapsed_t += gc_.timestep();
+      auto end_step = clock::now();
+      real_elapsed_t = duration_us{end_step - start_ticker}.count() / 1e6;
+      sim_real_ratio_ = sim_elapsed_t / real_elapsed_t;
+      if(!config_.no_sync)
       {
-        rem_steps_--;
-        step();
-      }
-      else
-      {
-        // Only update the GUI
-        gc_.running = false;
-        gc_.run();
-        gc_.running = true;
+        // sim_elased_t / (real_elapsed_t + delay) = target_ratio
+        // delay = sim / ratio - real;
+        double delay = sim_elapsed_t / target_ratio - real_elapsed_t;
+        std::this_thread::sleep_for(duration_us(1e6 * delay));
       }
     }
     else
     {
-      step();
-    }
-    if(!config_.no_sync)
-    {
-      // FIXME Implement compensation
-      std::this_thread::sleep_until(now + dt);
+      // Only update the GUI
+      gc_.running = false;
+      gc_.run();
+      gc_.running = true;
+      std::this_thread::sleep_for(std::chrono::milliseconds(10));
+      reset_sync();
     }
     if(replay_ && config_.replay_configuration.stop_after_log && iters_ == replay_->log.size() && !replay_done_)
     {
@@ -251,25 +266,46 @@ void Ticker::setup_gui()
 {
   auto & gui = *gc_.controller().gui();
   gui.removeElements(this);
-  gui.addElement(this, {"Ticker"}, mc_rtc::gui::Button("Stop", [this]() { running_ = false; }),
-                 mc_rtc::gui::Button("Reset", [this]() { reset(); }),
-                 mc_rtc::gui::Checkbox(
-                     "Sync with real-time", [this]() { return !config_.no_sync; },
-                     [this]() { config_.no_sync = !config_.no_sync; }),
-                 mc_rtc::gui::Checkbox("Step by step", config_.step_by_step));
+  gui.addElement(
+      this, {"Ticker"}, mc_rtc::gui::Button("Stop", [this]() { running_ = false; }),
+      mc_rtc::gui::Button("Reset", [this]() { reset(); }),
+      mc_rtc::gui::Checkbox(
+          "Synchronize", [this]() { return !config_.no_sync; }, [this]() { config_.no_sync = !config_.no_sync; }));
+  gui.addElement(this, {"Ticker"}, mc_rtc::gui::ElementsStacking::Horizontal,
+                 mc_rtc::gui::Label("Ratio", [this]() { return fmt::format("{:0.2f}", sim_real_ratio_); }),
+                 mc_rtc::gui::NumberInput(
+                     "Target ratio", [this]() { return config_.sync_ratio; },
+                     [this](double r) {
+                       if(r <= 0.0)
+                       {
+                         r = 1.0 / 1024.0;
+                       }
+                       config_.sync_ratio = r;
+                     }),
+                 mc_rtc::gui::Button("x2", [this]() { config_.sync_ratio *= 2.0; }),
+                 mc_rtc::gui::Button("/2", [this]() { config_.sync_ratio /= 2.0; }));
+  gui.addElement(this, {"Ticker"}, mc_rtc::gui::Checkbox("Step by step", config_.step_by_step));
   auto dt = gc_.timestep();
   auto text = [&](size_t n) {
     size_t n_ms = static_cast<size_t>(std::ceil(static_cast<double>(n * 1000) * dt));
     return fmt::format("+{}ms", n_ms);
   };
-  auto button = [&, this](size_t n) { return mc_rtc::gui::Button(text(n), [this, n]() { rem_steps_ += n; }); };
+  auto button = [&, this](size_t n) {
+    return mc_rtc::gui::Button(text(n), [this, n]() {
+      if(rem_steps_ < 0)
+      {
+        rem_steps_ = 0;
+      }
+      rem_steps_ += n;
+    });
+  };
   gui.addElement(this, {"Ticker"}, mc_rtc::gui::ElementsStacking::Horizontal, button(1), button(5), button(10),
                  button(50), button(100));
   if(replay_)
   {
     gui.addElement(this, {"Ticker"}, mc_rtc::gui::Label("Replay", config_.replay_configuration.log),
                    mc_rtc::gui::NumberSlider(
-                       "Replay time", [this]() { return elapsed_t_; }, [](double) {}, 0.0,
+                       "Replay time", [this]() { return elapsed_time(); }, [](double) {}, 0.0,
                        static_cast<double>(replay_->log.size()) * dt));
   }
 }
