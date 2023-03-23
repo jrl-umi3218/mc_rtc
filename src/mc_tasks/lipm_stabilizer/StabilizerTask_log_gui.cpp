@@ -450,6 +450,8 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   });
   logger.addLogEntry(name_ + "_admittance_cop", this, [this]() -> const Eigen::Vector2d & { return c_.copAdmittance; });
   logger.addLogEntry(name_ + "_admittance_cop_QPerr", this, [this]() -> const Eigen::Vector2d & { return errQPzmp; });
+  logger.addLogEntry(name_ + "_admittance_cop_left_QP", this, [this]() -> const Eigen::Vector2d & { return QPCoPLeft_; });
+  logger.addLogEntry(name_ + "_admittance_cop_right_QP", this, [this]() -> const Eigen::Vector2d & { return QPCoPRight_; });
   logger.addLogEntry(name_ + "_admittance_df", this, [this]() { return c_.dfAdmittance; });
   logger.addLogEntry(name_ + "_admittance_df_support_foot", this, [this]() { return c_.dfAdmittanceSupportFoot; });
   logger.addLogEntry(name_ + "_dcmDerivator_filtered", this, [this]() { return dcmDerivator_.eval(); });
