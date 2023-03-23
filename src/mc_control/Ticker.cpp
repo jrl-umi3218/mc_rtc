@@ -234,7 +234,15 @@ void Ticker::run()
     {
       replay_done_ = true;
       config_.step_by_step = true;
-      mc_rtc::log::success("Log replay finished, pausing replay now");
+      if(config_.replay_configuration.exit_after_log)
+      {
+        running_ = false;
+        mc_rtc::log::success("Log replay finished, exit replay now");
+      }
+      else
+      {
+        mc_rtc::log::success("Log replay finished, pausing replay now");
+      }
     }
   }
 }

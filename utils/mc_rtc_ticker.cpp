@@ -20,6 +20,7 @@ int main(int argc, char * argv[])
       ("replay-log,l", po::value<std::string>(&config.replay_configuration.log), "Log to replay")
       ("datastore-mapping,m", po::value<std::string>(&config.replay_configuration.with_datastore_config), "Mapping of log keys to datastore")
       ("replay-gui-inputs-only,g", po::bool_switch(&only_gui_inputs), "Only replay the GUI inputs")
+      ("exit-after-replay,e", po::bool_switch(&config.replay_configuration.exit_after_log), "Exit after log replay")
       ("replay-no-outputs", po::bool_switch(&no_replay_outputs), "Disable outputs replay");
     // clang-format on
     po::variables_map vm;

@@ -52,6 +52,8 @@ struct MC_CONTROL_DLLAPI Ticker
       bool with_outputs = true;
       /** If true, stops when the log is finished, otherwise continue to run afterwards */
       bool stop_after_log = true;
+      /** If true, exit when the log is finished, otherwise continue to run afterwards */
+      bool exit_after_log = false;
     };
     Replay replay_configuration = {};
   };
