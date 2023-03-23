@@ -21,19 +21,6 @@ macro(AddLogTest NAME CTL_NAME NRITER UTILS_BIN_DIR)
   endif()
 endmacro()
 
-macro(mc_rtc_add_test)
-cmake_parse_arguments(MC_RTC_TEST "" "NAME;COMMAND" "" ${ARGN} )
-string(REPLACE ";" " " CMD_ARGS "${MC_RTC_TEST_UNPARSED_ARGUMENTS}") #Not robust to having ';' inside an arg. Could use list(JOIN ...) in CMake>=3.12
-add_test(${ARGN})
-
-# Adding a project configuration file (for MSVC only)
-string(REPLACE "<CONFIG>" "(Configuration)" CMD_ARGS ${CMD_ARGS})
-string(REPLACE "<CONFIGURATION>" "(Configuration)" CMD_ARGS ${CMD_ARGS})
-generate_msvc_dot_user_file(NAME ${MC_RTC_TEST_NAME}
-                            COMMAND "$(SolutionDir)tests/$(Configuration)/${MC_RTC_TEST_COMMAND}.exe"
-                            COMMAND_ARGS ${CMD_ARGS})
-endmacro()
-
 macro(controller_test_common NAME)
   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.in.cpp)
     set(${NAME}_SRC ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/${NAME}.cpp)
@@ -107,7 +94,7 @@ macro(controller_test_construction_failure NAME)
     set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf")
   endif()
   set_target_properties(${NAME} PROPERTIES FOLDER tests/controllers/failure)
-  mc_rtc_add_test(NAME ${NAME} COMMAND test_controller_ticker --run_test=CONSTRUCTION_FAILURE -- ${CONFIG_OUT})
+  add_global_controller_test_construction_failure(${NAME} ${CONFIG_OUT})
 endmacro()
 
 macro(controller_test_run NAME NRITER)
@@ -150,16 +137,7 @@ macro(controller_test_run NAME NRITER)
     else()
       set(ACTUALITER ${NRITER})
     endif()
-    mc_rtc_add_test(NAME ${VARIANT} COMMAND test_controller_ticker --run_test=RUN -- ${CONFIG_OUT} ${ACTUALITER})
-    # Add a custom target to run the controller in real-time and to run the test in IDE
-    add_custom_target(
-      controller-test-run-${VARIANT}
-      COMMAND test_controller_ticker --run_test=RUN -- ${CONFIG_OUT} ${NRITER} "" 1
-      DEPENDS ${NAME}
-      VERBATIM
-      USES_TERMINAL
-    )
-    set_target_properties(controller-test-run-${VARIANT} PROPERTIES FOLDER tests/controllers/run)
+    add_global_controller_test_run(${VARIANT} ${CONFIG_OUT} ${ACTUALITER} "")
   endmacro()
   setup_test_run(${NAME})
   set(VARIANT "${NAME}_TVM")
@@ -220,7 +198,7 @@ if(NOT DEFINED PYTHON_DEB_ROOT)
   else()
     set(NRITER 1500)
   endif()
-  add_test(NAME TestPostureControllerThreaded COMMAND test_controller_ticker --run_test=RUN -- "${CONFIG_OUT}" ${NRITER})
+  add_global_controller_test_run(TestPostureControllerThreaded ${CONFIG_OUT} ${NRITER} "")
   AddLogTest(TestPostureControllerThreadedLog "TestPostureController" ${NRITER} "${UTILS_BIN_DIR}")
   setup_test_log_fixture(TestPostureControllerThreaded TestPostureControllerThreadedLog)
 
@@ -249,7 +227,7 @@ if(NOT DEFINED PYTHON_DEB_ROOT)
   else()
     set(NRITER 1200)
   endif()
-  mc_rtc_add_test(NAME TestControllerSwitch COMMAND test_controller_ticker --run_test=RUN -- "${CONFIG_OUT}" ${NRITER} TestPostureController2)
+  add_global_controller_test_run(TestControllerSwitch ${CONFIG_OUT} ${NRITER} TestPostureController2)
   AddLogTest(TestControllerSwitchLog1 "TestPostureController" ${NRITER} "${UTILS_BIN_DIR}")
   AddLogTest(TestControllerSwitchLog2 "TestPostureController2" ${NRITER} "${UTILS_BIN_DIR}")
   setup_test_log_fixture(TestControllerSwitch "TestControllerSwitchLog1;TestControllerSwitchLog2")
@@ -332,7 +310,7 @@ macro(controller_sample_test_run NAME PATH_SUFFIX NRITER)
   else()
     set(ACTUALITER ${NRITER})
   endif()
-  add_test(NAME "TestSampleController_${NAME}" COMMAND test_controller_ticker --run_test=RUN -- ${CONFIG_OUT} ${ACTUALITER})
+  add_global_controller_test_run(SampleController_${NAME} ${CONFIG_OUT} ${ACTUALITER} "")
 endmacro()
 
 controller_sample_test_run(CoM "" 1000)
@@ -467,7 +445,7 @@ if(CMAKE_CONFIGURATION_TYPES)
       INPUT "${TEST_CONTROLLER_PATH_BASE}/etc/TestPluginController_2_3/plugins/Plugin${I}.yaml")
   endforeach()
 endif()
-mc_rtc_add_test(NAME TestPluginController COMMAND test_controller_ticker --run_test=RUN -- "${CONFIG_OUT}" 5 TestPluginController_2_3)
+add_global_controller_test_run(TestPluginController ${CONFIG_OUT} 5 TestPluginController_2_3)
 
 # Test Python bindings
 if(PYTHON_BINDING AND NOT APPLE)
@@ -510,7 +488,7 @@ if(PYTHON_BINDING AND NOT APPLE)
     else()
       set(NRITER 400)
     endif()
-    add_test(NAME "Test${PYTHON}Controller" COMMAND ${CMAKE_COMMAND} -E env "PYTHONPATH=${PYTHONPATH}${PATH_SEP}$ENV{PYTHONPATH}" ${CMAKE_COMMAND} -E env "${LDPATH_VAR}=${LDPATH}${PATH_SEP}${LDPATH_CONTROL}${PATH_SEP}$ENV{${LDPATH_VAR}}" $<TARGET_FILE:test_controller_ticker> --run_test=RUN -- "${CONFIG_OUT}" ${NRITER} "")
+    add_global_controller_test_run(Test${PYTHON}Controller ${CONFIG_OUT} ${NRITER} "" ${CMAKE_COMMAND} -E env "PYTHONPATH=${PYTHONPATH}${PATH_SEP}$ENV{PYTHONPATH}" ${CMAKE_COMMAND} -E env "${LDPATH_VAR}=${LDPATH}${PATH_SEP}${LDPATH_CONTROL}${PATH_SEP}$ENV{${LDPATH_VAR}}")
     if(NOT DEFINED PYTHON_DEB_ROOT)
       AddLogTest(Test${PYTHON}Log "${TEST_CONTROLLER_NAME}" ${NRITER} "${UTILS_BIN_DIR}")
       setup_test_log_fixture(Test${PYTHON}Controller Test${PYTHON}Log)

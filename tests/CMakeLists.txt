@@ -114,16 +114,41 @@ file(GENERATE
 # -- Controllers and robots tests -- #
 ######################################
 
-add_executable(test_controller_ticker test_controller_ticker.cpp)
-set_target_properties(test_controller_ticker PROPERTIES FOLDER tests/ticker)
-target_link_libraries(test_controller_ticker PUBLIC mc_control Boost::unit_test_framework Boost::disable_autolinking)
-if(NOT Boost_USE_STATIC_LIBS)
-  target_link_libraries(test_controller_ticker PUBLIC Boost::dynamic_linking)
-endif()
-target_compile_definitions(test_controller_ticker PRIVATE -DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
-target_include_directories(test_controller_ticker PRIVATE ${CONFIG_HEADER_INCLUDE_DIR})
-# Adding a project configuration file (for MSVC only)
-generate_msvc_dot_user_file(test_controller_ticker)
+function(add_global_controller_tester NAME)
+  add_library(${NAME} OBJECT ${NAME}.cpp)
+  set_target_properties(${NAME} PROPERTIES FOLDER tests/ticker)
+  target_link_libraries(${NAME} PUBLIC mc_control Boost::unit_test_framework Boost::disable_autolinking)
+  if(NOT Boost_USE_STATIC_LIBS)
+    target_link_libraries(${NAME} PUBLIC Boost::dynamic_linking)
+  endif()
+  target_compile_definitions(${NAME} PRIVATE -DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
+  target_include_directories(${NAME} PRIVATE ${CONFIG_HEADER_INCLUDE_DIR})
+endfunction()
+
+add_global_controller_tester(test_global_controller_construction_failure)
+add_global_controller_tester(test_global_controller_run)
+
+function(add_global_controller_test NAME TEST_MAIN TEST_NAME CONFIGURATION_FILE RUN_ITER NEXT_CONTROLLER)
+  set(CONFIG_CPP_INT_OUT ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/config.in.cpp)
+  set(CONFIG_CPP_OUT ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/$<CONFIG>/config.cpp)
+  configure_file(${PROJECT_SOURCE_DIR}/tests/test_global_controller_config.in.cpp ${CONFIG_CPP_INT_OUT})
+  file(GENERATE
+    OUTPUT ${CONFIG_CPP_OUT}
+    INPUT ${CONFIG_CPP_INT_OUT}
+  )
+  add_executable(${TEST_NAME} ${CONFIG_CPP_OUT})
+  target_link_libraries(${TEST_NAME} PUBLIC ${TEST_MAIN})
+  add_test(NAME ${NAME} COMMAND ${ARGN} $<TARGET_FILE:${TEST_NAME}>)
+  generate_msvc_dot_user_file(NAME ${TEST_NAME})
+endfunction()
+
+function(add_global_controller_test_construction_failure NAME CONFIGURATION_FILE)
+  add_global_controller_test(${NAME} test_global_controller_construction_failure ConstructionFailure_${NAME} ${CONFIGURATION_FILE} 0 "" ${ARGN})
+endfunction()
+
+function(add_global_controller_test_run NAME CONFIGURATION_FILE NRITER NEXTCTL)
+  add_global_controller_test(${NAME} test_global_controller_run ControllerRun_${NAME} ${CONFIGURATION_FILE} ${NRITER} "${NEXTCTL}" ${ARGN})
+endfunction()
 
 add_executable(test_controller_restart test_controller_restart.cpp)
 set_target_properties(test_controller_restart PROPERTIES FOLDER tests/ticker)
