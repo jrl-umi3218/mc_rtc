@@ -352,6 +352,7 @@ int extract(int argc, char * argv[])
   std::vector<std::string> extract_keys = {};
   double from = 0;
   double to = std::numeric_limits<double>::infinity();
+  bool extract_events = false;
   po::variables_map vm;
   po::options_description tool("mc_bin_utils extract options");
   // clang-format off
@@ -361,6 +362,7 @@ int extract(int argc, char * argv[])
     ("out", po::value<std::string>(&out), "Output template")
     ("key", po::value<std::string>(&key)->default_value(""), "Extract parts of the log where the given key is present")
     ("keys", po::value<std::vector<std::string>>(&extract_keys)->multitoken(), "Extract the given keys from the log")
+    ("events", po::bool_switch(&extract_events), "Extract events from the log")
     ("from", po::value<double>(&from)->default_value(0), "Start time")
     ("to", po::value<double>(&to)->default_value(std::numeric_limits<double>::infinity()), "End time");
   // clang-format on
@@ -379,11 +381,14 @@ int extract(int argc, char * argv[])
     std::cout << "  mc_bin_utils extract in.bin out --key MyKey\n\n";
     std::cout << "  # Extract the provided keys and create a new log\n";
     std::cout << "  mc_bin_utils extract in.bin out --keys LeftFootForceSensor RightFootForceSensor\n";
+    std::cout << "  # Extract the GUI events and nothing else\n";
+    std::cout << "  mc_bin_utils extract in.bin out --events\n";
   };
-  std::bitset<3> options;
+  std::bitset<4> options;
   options[0] = key.size() != 0;
   options[1] = extract_keys.size() != 0;
   options[2] = (from != 0 || to != std::numeric_limits<double>::infinity());
+  options[3] = extract_events;
   if(vm.count("help") || !vm.count("in") || !vm.count("out") || options.count() == 0)
   {
     extract_usage();
@@ -391,7 +396,7 @@ int extract(int argc, char * argv[])
   }
   if(options.count() != 1)
   {
-    std::cout << "key, keys and from/to options are mutually exclusive\n";
+    std::cout << "events, key, keys and from/to options are mutually exclusive\n";
     return 1;
   }
   if(from < 0)
@@ -439,6 +444,10 @@ int extract(int argc, char * argv[])
     ss << out << "_" << std::setfill('0') << std::setw(static_cast<int>(width)) << (i + 1) << ".bin";
     return ss.str();
   };
+  if(out.size() > 4 && out.substr(out.size() - 4) == ".bin")
+  {
+    out = out.substr(0, out.size() - 4);
+  }
   std::ofstream ofs;
   bool key_present = false;
   auto callback_extract_key = [&](const std::vector<std::string> & ks,
@@ -648,6 +657,45 @@ int extract(int argc, char * argv[])
       {
         logger.log();
       }
+    }
+  }
+  if(extract_events)
+  {
+    auto log = mc_rtc::log::FlatLog{in};
+    if(log.size() < 1)
+    {
+      std::cout << in << " is empty\n";
+      return 1;
+    }
+    double dt = 0;
+    if(!log.meta())
+    {
+      if(log.size() == 1)
+      {
+        dt = 0.005;
+      }
+      else
+      {
+        dt = *log.getRaw<double>("t", 1) - *log.getRaw<double>("t", 0);
+      }
+    }
+    else
+    {
+      dt = log.meta()->timestep;
+    }
+    mc_rtc::Logger logger(mc_rtc::Logger::Policy::NON_THREADED, "", "");
+    if(log.meta())
+    {
+      logger.meta() = *log.meta();
+    }
+    logger.open(out_name(0), dt, 0);
+    for(const auto & events : log.guiEvents())
+    {
+      for(const auto & e : events)
+      {
+        logger.addGUIEvent(mc_rtc::Logger::GUIEvent{e});
+      }
+      logger.log();
     }
   }
   return 0;
