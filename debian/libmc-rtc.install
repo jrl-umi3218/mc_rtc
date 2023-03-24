@@ -15,4 +15,9 @@ usr/lib/*/libmc_control_client.so.*
 usr/lib/*/libmc_control_fsm.so.*
 usr/lib/*/libmc_planning.so.*
 usr/lib/*/mc_plugins/Replay.so
+usr/lib/*/libfsm_sample.so
+usr/lib/*/libmc_door_sample.so
+usr/lib/*/liblipm_stabilizer.so
+usr/lib/*/libadmittance_sample.so
+usr/lib/*/libexternal_forces.so
 usr/share/doc/mc_rtc/json/schemas/*
