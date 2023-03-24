@@ -1315,11 +1315,11 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   const double lankle_rankle = t_lankle_rankle.norm();
   double d_proj = t_lankle_zmp.dot(t_lankle_rankle.normalized());
   // The vertical forces are splitted using the ratio obtained between the reference zmp pose and the contact pose;
-  double ratio_desired = clamp(d_proj / lankle_rankle, c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot,
+  double ratio = clamp(d_proj / lankle_rankle, c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot,
                                1 - (c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot));
 
-  desiredFzLeft_  = (1 - ratio_desired) * fz_tot;
-  desiredFzRight_ = ratio_desired * fz_tot;
+  desiredFzLeft_  = (1 - ratio) * fz_tot;
+  desiredFzRight_ = ratio * fz_tot;
 
   // We modeled the vertical forces to also follow a 1st order behavior between the reference and the state
   targetForceLeft.z() = desiredFzLeft_ - measuredLeftCoP_delayed.z() * exp(-c_.lambdaCoP.z() * (delta - t_delay));
@@ -1328,7 +1328,6 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   targetForceRight.z() = desiredFzRight_ - measuredRightCoP_delayed.z() * exp(-c_.lambdaCoP.z() * (delta - t_delay));
   targetForceRight.z() /= (1 - exp(-c_.lambdaCoP.z() * (delta - t_delay)));
 
-  double ratio = ratio_desired;
   const double ratio0 = ratio;
 
   for(Eigen::Index i = 0; i < nbReferences; i++)
@@ -1373,10 +1372,11 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
     Mcop.block(2 * i, 0, 2, 2 * nbReferences) = X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * Acop;
     Mcop.block(2 * i, 2 * nbReferences, 2, 2 * nbReferences) = X_0_rc.inv().rotation().block(0, 0, 2, 2) * ratio * Acop;
     bcop.segment(2 * i, 2) =
-        zmp_ref[i] - X_0_lc.translation().segment(0, 2) * (1 - ratio)
-        - X_0_rc.translation().segment(0, 2) * (ratio)-X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * exp_mat
-              * measuredLeftCoP_delayed.segment(0, 2)
-        - X_0_rc.inv().rotation().block(0, 0, 2, 2) * (ratio)*exp_mat * measuredRightCoP_delayed.segment(0, 2);
+        zmp_ref[i] 
+        - X_0_lc.translation().segment(0, 2) * (1 - ratio)
+        - X_0_rc.translation().segment(0, 2) * (ratio)
+        - X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * exp_mat * measuredLeftCoP_delayed.segment(0, 2)
+        - X_0_rc.inv().rotation().block(0, 0, 2, 2) * (ratio) * exp_mat * measuredRightCoP_delayed.segment(0, 2);
 
     // McopReg.block(2 * i, 0, 2, 2 * nbReferences) = Acop;
     // McopReg.block(2 * (nbReferences + i), 2 * nbReferences, 2, 2 * nbReferences) = Acop;
@@ -1415,11 +1415,11 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
       McopVel.block(0, 0, 2 * nbReferences, 2 * nbReferences);
 
   Eigen::MatrixXd Q = 1e2 * Mcop.transpose() * Mcop;
-  Q += 0e-2 * McopDiff.transpose() * McopDiff;
+  Q += 0e-8 * McopDiff.transpose() * McopDiff;
   Q += 1e-8 * McopReg.transpose() * McopReg;
   Q += 0e-2 * McopVel.transpose() * McopVel;
   Eigen::VectorXd c = 1e2 * (-Mcop.transpose() * bcop);
-  c += 0e-2 * (McopDiff.transpose() * bcopDiff);
+  c += 0e-8 * (McopDiff.transpose() * bcopDiff);
   c += 1e-8* (-McopReg.transpose() * bcopReg);
   c += 0e-2 * McopVel.transpose() * bcopVel;
 
@@ -1452,9 +1452,9 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   QPCoPLeft_ = exp_mat * measuredLeftCoP_delayed.segment(0, 2)  + (Eigen::Matrix2d::Identity() - exp_mat ) * leftCoP;
   QPCoPRight_ = exp_mat * measuredRightCoP_delayed.segment(0, 2) + (Eigen::Matrix2d::Identity() - exp_mat ) * rightCoP;
 
-  // mc_rtc::log::info("check  {}",(1-ratio0) * ( X_0_lc.translation().y() + QPCoPLeft_.y()) 
-  //                               + ratio0 * ( X_0_rc.translation().y() + QPCoPRight_.y()) 
-  //                               - zmp_ref[0].y()  );
+  distribCheck_ = (1-ratio0) * ( X_0_lc.translation().segment(0,2) + QPCoPLeft_) 
+                  + ratio0 * ( X_0_rc.translation().segment(0,2) + QPCoPRight_) 
+                  - zmp_ref[0]; 
 
 
   // mc_rtc::log::info(zmp_ref[0] 

@@ -1109,6 +1109,7 @@ protected:
   Eigen::Vector2d errQPzmp = Eigen::Vector2d::Zero();
   Eigen::Vector2d QPCoPLeft_ = Eigen::Vector2d::Zero();
   Eigen::Vector2d QPCoPRight_ = Eigen::Vector2d::Zero();
+  Eigen::Vector2d distribCheck_ = Eigen::Vector2d::Zero();
   mc_filter::LowPass<Eigen::Vector3d> fSumFilter_; 
   ContactState supportFoot_ = ContactState::Left; /**< Future support foot  */
 

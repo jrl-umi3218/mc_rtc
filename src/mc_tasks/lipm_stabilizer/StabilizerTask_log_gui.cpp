@@ -449,6 +449,7 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
     return Eigen::Vector2d::Zero();
   });
   logger.addLogEntry(name_ + "_admittance_cop", this, [this]() -> const Eigen::Vector2d & { return c_.copAdmittance; });
+  logger.addLogEntry(name_ + "_admittance_cop_DistribError", this, [this]() -> const Eigen::Vector2d & { return distribCheck_; });
   logger.addLogEntry(name_ + "_admittance_cop_QPerr", this, [this]() -> const Eigen::Vector2d & { return errQPzmp; });
   logger.addLogEntry(name_ + "_admittance_cop_left_QP", this, [this]() -> const Eigen::Vector2d & { return QPCoPLeft_; });
   logger.addLogEntry(name_ + "_admittance_cop_right_QP", this, [this]() -> const Eigen::Vector2d & { return QPCoPRight_; });
