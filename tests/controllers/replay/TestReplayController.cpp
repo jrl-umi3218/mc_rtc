@@ -48,7 +48,12 @@ public:
     if constexpr(Play)
     {
       BOOST_REQUIRE(datastore().has("iter"));
-      BOOST_REQUIRE(datastore().template get<size_t>("iter") == iters_);
+      uint64_t log_iter = datastore().template get<uint64_t>("iter");
+      if(log_iter != iters_)
+      {
+        mc_rtc::log::critical("{} != {}", log_iter, iters_);
+      }
+      BOOST_REQUIRE(log_iter == iters_);
     }
     return ret;
   }
@@ -70,7 +75,7 @@ public:
   }
 
 private:
-  size_t iters_ = 0;
+  uint64_t iters_ = 0;
 };
 
 } // namespace mc_control
