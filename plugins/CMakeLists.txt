@@ -16,9 +16,9 @@ macro(add_plugin plugin)
       RUNTIME DESTINATION "${MC_PLUGINS_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>"
     )
   endif()
-  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/autoload/${plugin}.yaml" "${plugin}")
+  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/stage/autoload/${plugin}.yaml" "${plugin}")
   if(AUTOLOAD_${plugin}_PLUGIN)
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/autoload/${plugin}.yaml"
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/stage/autoload/${plugin}.yaml"
       DESTINATION "${MC_PLUGINS_RUNTIME_INSTALL_PREFIX}/autoload/")
   endif()
 endmacro()
