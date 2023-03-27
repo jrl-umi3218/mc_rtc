@@ -32,7 +32,7 @@ public:
     qpsolver->setContacts({});
   }
 
-  virtual bool run() override
+  bool run() override
   {
     if constexpr(Play)
     {
@@ -58,7 +58,7 @@ public:
     return ret;
   }
 
-  virtual void reset(const ControllerResetData & reset_data) override
+  void reset(const ControllerResetData & reset_data) override
   {
     MCController::reset(reset_data);
     if constexpr(Play)
@@ -71,6 +71,14 @@ public:
     {
       REPLAY_PATH = logger().path();
       logger().addLogEntry("iter", [this]() { return iters_; });
+    }
+  }
+
+  void stop() override
+  {
+    if constexpr(!Play)
+    {
+      logger().flush();
     }
   }
 
