@@ -431,8 +431,15 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   Eigen::Vector3d comDimWeight = Eigen::Vector3d::Ones(); /**< Dimensional weight of CoM IK task */
   double comHeight = 0.84; /**< Desired height of the CoM */
 
+  std::vector<std::string> leftCopActiveJoints; /**< Joints used by CoP Admittance task */
+  std::vector<std::string> rightCopActiveJoints; /**< Joints used by CoP Admittance task */
+
+
+  Eigen::Vector2d copSlope = Eigen::Vector2d::Zero();
+  Eigen::Vector2d lambdaCoPSupportFoot = Eigen::Vector2d::Ones() * 100;
   Eigen::Vector3d lambdaCoP =
       Eigen::Vector3d::Ones() * 100; /**< 1st order gain constant between a reference CoP and the real */
+
   double delayCoP = 0;
 
   std::string torsoBodyName; /**< Name of the torso body */
@@ -507,6 +514,17 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       auto admittance = config("admittance");
       admittance("cop", copAdmittance);
       admittance("copLambda", lambdaCoP);
+      lambdaCoPSupportFoot = lambdaCoP.segment(0,2);
+      admittance("copLambdaSupportFoot", lambdaCoPSupportFoot);
+      leftCopActiveJoints = comActiveJoints;
+      rightCopActiveJoints = comActiveJoints;
+      if(admittance.has("copActiveJoints"))
+      {
+        auto copJoints = admittance("copActiveJoints");
+        copJoints("left",leftCopActiveJoints);
+        copJoints("right",rightCopActiveJoints);
+      }
+      admittance("copSlope", copSlope);
       admittance("copDelay", delayCoP);
       admittance("maxVel", copMaxVel);
       admittance("velFilterGain", mc_filter::utils::clamp(copVelFilterGain, 0, 1));
