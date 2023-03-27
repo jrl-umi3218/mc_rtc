@@ -150,19 +150,19 @@ void Replay::init(mc_control::MCGlobalController & gc, const mc_rtc::Configurati
   do_config("with-inputs", with_inputs_, "replay sensor inputs");
   do_config("with-gui-inputs", with_gui_inputs_, "replay GUI inputs");
   do_config("with-outputs", with_outputs_, "replay controller output");
-  if(config_str.size())
-  {
-    mc_rtc::log::info("[Replay] Will {}", config_str);
-  }
-  else
-  {
-    mc_rtc::log::warning("[Replay] Configured to do nothing?");
-  }
   std::string with_datastore_config = config("with-datastore-config", std::string(""));
   if(!with_datastore_config.empty())
   {
     mc_rtc::log::info("[Replay] Loading log to datastore configuration from {}", with_datastore_config);
     log_to_datastore_ = mc_rtc::Configuration(with_datastore_config).operator std::map<std::string, std::string>();
+  }
+  if(config_str.size())
+  {
+    mc_rtc::log::info("[Replay] Will {}", config_str);
+  }
+  else if(log_to_datastore_.empty())
+  {
+    mc_rtc::log::warning("[Replay] Configured to do nothing?");
   }
   ctl_name_ = gc.controller().name_;
   reset(gc);
@@ -176,6 +176,21 @@ void Replay::reset(mc_control::MCGlobalController & gc)
     mc_rtc::log::warning(
         "[Replay] Reset with a different controller than the initial one, jumping to the end of the log");
     iters_ = log_->size();
+  }
+  // Initialize datastore
+  datastore_updates_.clear();
+  for(auto it = log_to_datastore_.begin(); it != log_to_datastore_.end();)
+  {
+    const auto & [log_entry, ds_entry] = *it;
+    if(!log_->has(log_entry))
+    {
+      mc_rtc::log::error("[Replay] Requested to map {} to {} but {} is not in the log", log_entry, ds_entry, log_entry);
+      it = log_to_datastore_.erase(it);
+      continue;
+    }
+    datastore_updates_.push_back(
+        {log_entry, ds_entry, make_update_datastore_fn(*log_, log_entry, gc.controller().datastore(), ds_entry)});
+    ++it;
   }
   // Run once to fill the initial sensors
   before(gc);
@@ -254,7 +269,10 @@ void Replay::before(mc_control::MCGlobalController & gc)
   {
     gc.server().push_requests(log.guiEvents()[iters_]);
   }
-  // FIXME Handle log_to_datastore
+  for(auto & update_ds : datastore_updates_)
+  {
+    update_ds.update(*log_, update_ds.log_entry, iters_, gc.controller().datastore(), update_ds.log_entry);
+  }
 }
 
 void Replay::after(mc_control::MCGlobalController & gc)

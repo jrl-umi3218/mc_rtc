@@ -35,6 +35,12 @@ struct Replay : public mc_control::GlobalPlugin
 
   void after(mc_control::MCGlobalController & gc) override;
 
+  using update_datastore_fn_t = void (*)(const mc_rtc::log::FlatLog & log,
+                                         const std::string & log_entry,
+                                         size_t idx,
+                                         mc_rtc::DataStore & ds,
+                                         const std::string & ds_entry);
+
 private:
   std::string ctl_name_;
   size_t iters_ = 0;
@@ -43,6 +49,13 @@ private:
   bool with_gui_inputs_ = true;
   bool with_outputs_ = true;
   std::map<std::string, std::string> log_to_datastore_;
+  struct DataStoreUpdate
+  {
+    std::string log_entry;
+    std::string ds_entry;
+    update_datastore_fn_t update;
+  };
+  std::vector<DataStoreUpdate> datastore_updates_;
 };
 
 } // namespace mc_plugin

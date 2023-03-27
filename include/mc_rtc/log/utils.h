@@ -182,6 +182,49 @@ struct LogWriter
   }
 };
 
+/** Provide a correspondance from a log type to a C++ type */
+template<LogType type>
+struct log_type_to_type
+{
+  static_assert(static_cast<std::underlying_type_t<LogType>>(type)
+                    == std::numeric_limits<std::underlying_type_t<LogType>>::max(),
+                "This must be specialized for the provided LogType value");
+};
+
+#define IMPL_MAPPING(ENUMV, CPPT)         \
+  template<>                              \
+  struct log_type_to_type<LogType::ENUMV> \
+  {                                       \
+    using type = CPPT;                    \
+  }
+
+IMPL_MAPPING(Bool, bool);
+IMPL_MAPPING(Int8_t, int8_t);
+IMPL_MAPPING(Int16_t, int16_t);
+IMPL_MAPPING(Int32_t, int32_t);
+IMPL_MAPPING(Int64_t, int64_t);
+IMPL_MAPPING(Uint8_t, uint8_t);
+IMPL_MAPPING(Uint16_t, uint16_t);
+IMPL_MAPPING(Uint32_t, uint32_t);
+IMPL_MAPPING(Uint64_t, uint64_t);
+IMPL_MAPPING(Float, float);
+IMPL_MAPPING(Double, double);
+IMPL_MAPPING(String, std::string);
+IMPL_MAPPING(Vector2d, Eigen::Vector2d);
+IMPL_MAPPING(Vector3d, Eigen::Vector3d);
+IMPL_MAPPING(Vector6d, Eigen::Vector6d);
+IMPL_MAPPING(VectorXd, Eigen::VectorXd);
+IMPL_MAPPING(Quaterniond, Eigen::Quaterniond);
+IMPL_MAPPING(PTransformd, sva::PTransformd);
+IMPL_MAPPING(ForceVecd, sva::ForceVecd);
+IMPL_MAPPING(MotionVecd, sva::MotionVecd);
+IMPL_MAPPING(VectorDouble, std::vector<double>);
+
+#undef IMPL_MAPPING
+
+template<LogType type>
+using log_type_to_type_t = typename log_type_to_type<type>::type;
+
 } // namespace log
 
 } // namespace mc_rtc
