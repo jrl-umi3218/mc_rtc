@@ -36,15 +36,91 @@ GetT get(const mc_rtc::log::FlatLog & log,
   return log.get<GetT>(log_entry(entry, robot, is_main), idx, def);
 }
 
+template<typename CppT>
+void update_datastore_fn(const mc_rtc::log::FlatLog & log,
+                         const std::string & log_entry,
+                         size_t idx,
+                         mc_rtc::DataStore & ds,
+                         const std::string & ds_entry)
+{
+  ds.assign(ds_entry, *log.getRaw<CppT>(log_entry, idx));
+}
+
+template<typename CppT>
+void init_datastore(const mc_rtc::log::FlatLog & log,
+                    const std::string & log_entry,
+                    mc_rtc::DataStore & ds,
+                    const std::string & ds_entry)
+{
+  ds.make<CppT>(ds_entry, *log.getRaw<CppT>(log_entry, 0));
+}
+
+Replay::update_datastore_fn_t make_update_datastore_fn(const mc_rtc::log::FlatLog & log,
+                                                       const std::string & log_entry,
+                                                       mc_rtc::DataStore & ds,
+                                                       const std::string & ds_entry)
+{
+  auto type = log.type(log_entry);
+  switch(type)
+  {
+#define HANDLE_CASE(T)                                                     \
+  case mc_rtc::log::LogType::T:                                            \
+  {                                                                        \
+    using CppT = mc_rtc::log::log_type_to_type_t<mc_rtc::log::LogType::T>; \
+    init_datastore<CppT>(log, log_entry, ds, ds_entry);                    \
+    return update_datastore_fn<CppT>;                                      \
+  }
+    HANDLE_CASE(Bool)
+    HANDLE_CASE(Int8_t)
+    HANDLE_CASE(Int16_t)
+    HANDLE_CASE(Int32_t)
+    HANDLE_CASE(Int64_t)
+    HANDLE_CASE(Uint8_t)
+    HANDLE_CASE(Uint16_t)
+    HANDLE_CASE(Uint32_t)
+    HANDLE_CASE(Uint64_t)
+    HANDLE_CASE(Float)
+    HANDLE_CASE(Double)
+    HANDLE_CASE(String)
+    HANDLE_CASE(Vector2d)
+    HANDLE_CASE(Vector3d)
+    HANDLE_CASE(Vector6d)
+    HANDLE_CASE(VectorXd)
+    HANDLE_CASE(Quaterniond)
+    HANDLE_CASE(PTransformd)
+    HANDLE_CASE(ForceVecd)
+    HANDLE_CASE(MotionVecd)
+    HANDLE_CASE(VectorDouble)
+#undef HANDLE_CASE
+    default:
+      mc_rtc::log::error_and_throw("Cannot convert {} to C++ type automatically", LogTypeName(type));
+  }
+}
+
 } // namespace
 
 void Replay::init(mc_control::MCGlobalController & gc, const mc_rtc::Configuration & config)
 {
-  if(config.empty() && gc.configuration().config.has("Replay"))
+  if(config.empty())
   {
-    return init(gc, gc.configuration().config("Replay"));
+    if(gc.controller().config().has("Replay"))
+    {
+      auto replay_cfg = gc.controller().config()("Replay");
+      if(!replay_cfg.empty())
+      {
+        return init(gc, replay_cfg);
+      }
+    }
+    if(gc.configuration().config.has("Replay"))
+    {
+      auto replay_cfg = gc.configuration().config("Replay");
+      if(!replay_cfg.empty())
+      {
+        return init(gc, replay_cfg);
+      }
+    }
   }
-  const auto & ds = gc.controller().datastore();
+  auto & ds = gc.controller().datastore();
   if(ds.has("Replay::Log"))
   {
     log_ = ds.get<decltype(log_)>("Replay::Log");
@@ -57,6 +133,7 @@ void Replay::init(mc_control::MCGlobalController & gc, const mc_rtc::Configurati
           "[Replay] No log specified in the plugin configuration and no log available in the datastore at Replay::Log");
     }
     log_ = std::make_shared<mc_rtc::log::FlatLog>(config("log").operator std::string());
+    ds.make<decltype(log_)>("Replay::Log", log_);
   }
   std::string config_str;
   auto do_config = [&](const char * key, bool & check, std::string_view msg) {
