@@ -1,0 +1,21 @@
+MainRobot: JVRC1NoHands
+
+Enabled: [TestReplayController_Record, TestReplayController_Play]
+
+ObserverPipelines: []
+
+Timestep: 0.005
+
+Log: true
+LogPolicy: non-threaded
+LogDirectory: @CMAKE_CURRENT_BINARY_DIR@/logs
+LogTemplate: mc-rtc-test
+
+ClearControllerModulePath: true
+ControllerModulePaths: [$<TARGET_FILE_DIR:TestReplayController>]
+ClearRobotModulePath: true
+RobotModulePaths: [$<TARGET_FILE_DIR:jvrc1>]
+ClearObserverModulePath: true
+ObserverModulePaths: []
+ClearGlobalPluginPath: true
+GlobalPluginPaths: [$<TARGET_FILE_DIR:Replay>]

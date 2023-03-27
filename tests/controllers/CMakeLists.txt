@@ -496,3 +496,5 @@ if(PYTHON_BINDING AND NOT APPLE)
   endforeach()
   unset(OBSERVER_PIPELINES)
 endif()
+
+add_subdirectory(replay)
