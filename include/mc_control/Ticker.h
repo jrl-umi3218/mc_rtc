@@ -55,7 +55,7 @@ struct MC_CONTROL_DLLAPI Ticker
        * the name to name correspondance */
       std::string with_datastore_config = "";
       /** If true, replay the outputs from the log to the controller */
-      bool with_outputs = true;
+      bool with_outputs = false;
       /** If true, stops when the log is finished, otherwise continue to run afterwards */
       bool stop_after_log = true;
       /** If true, exit when the log is finished, otherwise continue to run afterwards */

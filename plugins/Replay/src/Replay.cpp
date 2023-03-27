@@ -36,6 +36,29 @@ GetT get(const mc_rtc::log::FlatLog & log,
   return log.get<GetT>(log_entry(entry, robot, is_main), idx, def);
 }
 
+/** Get the a robot's state from the log */
+void log_to_robot(const mc_rtc::log::FlatLog & log, mc_rbdyn::Robot & robot, bool is_main, size_t idx)
+{
+  if(robot.mb().nrDof() == 0)
+  {
+    return;
+  }
+  auto qOut = get(log, "qOut", robot.name(), is_main, idx);
+  for(size_t i = 0; i < qOut.size(); ++i)
+  {
+    auto mbcIdx = robot.jointIndexInMBC(i);
+    if(mbcIdx == -1 || robot.mb().joint(mbcIdx).dof() == 0)
+    {
+      continue;
+    }
+    robot.mbc().q[static_cast<size_t>(mbcIdx)][0] = qOut[i];
+  }
+  if(robot.mb().joint(0).dof() == 6)
+  {
+    robot.posW(get<sva::PTransformd>(log, "ff", robot.name(), is_main, idx));
+  }
+}
+
 template<typename CppT>
 void update_datastore_fn(const mc_rtc::log::FlatLog & log,
                          const std::string & log_entry,
@@ -135,6 +158,10 @@ void Replay::init(mc_control::MCGlobalController & gc, const mc_rtc::Configurati
     log_ = std::make_shared<mc_rtc::log::FlatLog>(config("log").operator std::string());
     ds.make<decltype(log_)>("Replay::Log", log_);
   }
+  if(log_->size() == 0)
+  {
+    mc_rtc::log::error_and_throw("[Replay] Cannot replay an empty log");
+  }
   std::string config_str;
   auto do_config = [&](const char * key, bool & check, std::string_view msg) {
     config(key, check);
@@ -175,7 +202,19 @@ void Replay::reset(mc_control::MCGlobalController & gc)
   {
     mc_rtc::log::warning(
         "[Replay] Reset with a different controller than the initial one, jumping to the end of the log");
-    iters_ = log_->size();
+    iters_ = log_->size() - 1;
+  }
+  if(with_outputs_)
+  {
+    robots_ = mc_rbdyn::Robots::make();
+    // Note: we copy the output robots here not the control robots
+    gc.robots().copy(*robots_);
+    gc.controller().gui()->removeCategory({"Robots"});
+    for(const auto & r : *robots_)
+    {
+      gc.controller().gui()->addElement({"Robots"},
+                                        mc_rtc::gui::Robot(r.name(), [&r]() -> const mc_rbdyn::Robot & { return r; }));
+    }
   }
   // Initialize datastore
   datastore_updates_.clear();
@@ -199,10 +238,6 @@ void Replay::reset(mc_control::MCGlobalController & gc)
 
 void Replay::before(mc_control::MCGlobalController & gc)
 {
-  if(iters_ >= log_->size())
-  {
-    return;
-  }
   const auto & log = *log_;
   if(with_inputs_)
   {
@@ -279,10 +314,16 @@ void Replay::after(mc_control::MCGlobalController & gc)
 {
   if(with_outputs_)
   {
-    // FIXME implement
-    (void)gc;
+    for(auto & r : *robots_)
+    {
+      log_to_robot(*log_, r, r.name() == gc.controller().robot().name(), iters_);
+      gc.robot(r.name()).mbc() = r.mbc();
+    }
   }
-  iters_++;
+  if(iters_ + 1 < log_->size())
+  {
+    iters_++;
+  }
 }
 
 } // namespace mc_plugin

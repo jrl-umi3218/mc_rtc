@@ -7,7 +7,7 @@ int main(int argc, char * argv[])
 {
   mc_control::Ticker::Configuration config;
   {
-    bool no_replay_outputs = false;
+    bool replay_outputs = false;
     bool only_gui_inputs = false;
     po::options_description desc("mc_rtc_ticker options");
     // clang-format off
@@ -22,7 +22,7 @@ int main(int argc, char * argv[])
       ("datastore-mapping,m", po::value<std::string>(&config.replay_configuration.with_datastore_config), "Mapping of log keys to datastore")
       ("replay-gui-inputs-only,g", po::bool_switch(&only_gui_inputs), "Only replay the GUI inputs")
       ("exit-after-replay,e", po::bool_switch(&config.replay_configuration.exit_after_log), "Exit after log replay")
-      ("replay-no-outputs", po::bool_switch(&no_replay_outputs), "Disable outputs replay");
+      ("replay-outputs", po::bool_switch(&replay_outputs), "Enable outputs replay (override controller)");
     // clang-format on
     po::variables_map vm;
     po::store(po::command_line_parser(argc, argv).options(desc).run(), vm);
@@ -32,15 +32,15 @@ int main(int argc, char * argv[])
       std::cout << desc << "\n";
       return 0;
     }
-    if(no_replay_outputs)
+    if(replay_outputs)
     {
-      config.replay_configuration.with_outputs = false;
+      config.replay_configuration.with_outputs = true;
     }
     if(only_gui_inputs)
     {
-      if(no_replay_outputs)
+      if(replay_outputs)
       {
-        mc_rtc::log::warning("--replay-no-outputs is redudant with --replay-gui-inputs-only");
+        mc_rtc::log::error_and_throw("--replay-outputs is contradictory with --replay-gui-inputs-only");
       }
       config.replay_configuration.with_inputs = false;
       config.replay_configuration.with_outputs = false;

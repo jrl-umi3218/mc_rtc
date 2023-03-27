@@ -149,9 +149,15 @@ auto get_gc_configuration = [](const Ticker::Configuration & config) {
     out.global_plugins.insert(out.global_plugins.begin(), "Replay");
     auto replay_c = out.config.add("Replay");
     replay_c.add("with-inputs", config.replay_configuration.with_inputs);
-    replay_c.add("with-gui-inputs", config.replay_configuration.with_gui_inputs);
+    replay_c.add("with-gui-inputs",
+                 config.replay_configuration.with_gui_inputs && !config.replay_configuration.with_outputs);
     replay_c.add("with-outputs", config.replay_configuration.with_outputs);
     replay_c.add("with-datastore-config", config.replay_configuration.with_datastore_config);
+    if(config.replay_configuration.with_outputs)
+    {
+      out.enabled_controllers = {"Passthrough"};
+      out.initial_controller = "Passthrough";
+    }
   }
   return out;
 };
