@@ -350,7 +350,7 @@ void Ticker::setup_gui()
   {
     gui.addElement(this, {"Ticker"}, mc_rtc::gui::Label("Replay", config_.replay_configuration.log),
                    mc_rtc::gui::NumberSlider(
-                       "Replay time", [this]() { return elapsed_time(); }, [](double) {}, 0.0,
+                       "Replay time", [this]() { return elapsed_time(); }, [this](double t) { set_time(t); }, 0.0,
                        static_cast<double>(log_->size()) * dt));
   }
 }
@@ -373,6 +373,16 @@ void Ticker::simulate_sensors()
         gc_.setSensorOrientations(r.name(), {{"FloatingBase", Eigen::Quaterniond{r.posW().rotation()}}});
       }
     }
+  }
+}
+
+void Ticker::set_time(double t)
+{
+  if(log_ && config_.replay_configuration.with_outputs)
+  {
+    size_t iter = static_cast<size_t>(std::floor(t / gc_.timestep()));
+    iters_ = std::max<size_t>(std::min<size_t>(iter, log_->size() - 1), 0);
+    gc_.controller().datastore().call("Replay::iter", iters_);
   }
 }
 

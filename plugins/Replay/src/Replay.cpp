@@ -231,6 +231,7 @@ void Replay::reset(mc_control::MCGlobalController & gc)
         {log_entry, ds_entry, make_update_datastore_fn(*log_, log_entry, gc.controller().datastore(), ds_entry)});
     ++it;
   }
+  gc.controller().datastore().make_call("Replay::iter", [this](size_t iter) { iters_ = iter; });
   // Run once to fill the initial sensors
   before(gc);
   iters_ = 0;

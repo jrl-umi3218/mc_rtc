@@ -126,6 +126,8 @@ protected:
   void simulate_sensors();
 
   void setup_gui();
+
+  void set_time(double t);
 };
 
 } // namespace mc_control
