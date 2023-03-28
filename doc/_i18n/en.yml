@@ -111,6 +111,8 @@ tutorials:
   tools:
     title: Framework tools
     desc: These tutorials introduce useful tools developed around mc_rtc
+    mc_rtc_ticker-and-replay:
+      title: mc_rtc_ticker and the Replay plugin
     mc_log_utils:
       title: Log manipulation
     mc_log_ui:

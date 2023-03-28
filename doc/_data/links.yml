@@ -26,3 +26,5 @@ mc_rtc_data:
   url: https://github.com/jrl-umi3218/mc_rtc_data
 Eigen:
   url: https://eigen.tuxfamily.org
+mc_rtc-magnum:
+  url: https://github.com/gergondet/mc_rtc-magnum

@@ -1,0 +1,42 @@
+<h4>前提条件</h4>
+
+<p>コントローラを視覚化して操作するには2つのオプションがあります:</p>
+
+<ol>
+  <li>{% link mc_rtc_ros %}で利用可能なRViZパネルを使用する</li>
+  <li>{% link mc_rtc-magnum %}</a>のようなスタンドアロンのビジュアライザを使用する</li>
+</ol>
+
+<h4>ディスプレイインターフェイスの実行</h4>
+
+<h6>RViZを使用する</h6>
+
+<p><span class=&quot;text-monospace&quot;>roscore</span>が既に実行されているか、<span class=&quot;text-monospace&quot;>ROS_MASTER_URI</span>がアクティブなマスターを指していると仮定します。</p>
+
+<p>次のコマンドを実行して、必要なmc_rtc専用パネルとロボットモデルとともにRViZを起動します。</p>
+
+{% highlight bash %}
+$ roslaunch mc_rtc_ticker display.launch
+{% endhighlight %}
+
+<p>シミュレーションに2つ以上のロボットがある場合は、新しいRobotModelをシーンに追加する必要があります。ロボットの説明は、パラメータ<code>/control/env_N</code>（Nはロボットインデックスです）で公開されます。</p>
+
+<h6>mc_rtc-magnumを使用する</h6>
+
+<p>パッケージをインストールした後、次のコマンドを実行してください。</p>
+
+{% highlight bash %}
+$ mc-rtc-magnum
+{% endhighlight %}
+
+<h4>コントローラの実行</h4>
+
+<p>コントローラを実行するには、次のコマンドを使用します。</p>
+
+{% highlight bash %}
+$ mc_rtc_ticker
+{% endhighlight %}
+
+<p>ディスプレイインターフェイスを再起動せずにコントローラを再起動できることに注意してください。</p>
+
+<p>tickerにはさらに多くの機能があります。 {% include link_tutorial.html category="tools" tutorial="mc_rtc_ticker-and-replay" %}チュートリアルを参照してください。</p>
