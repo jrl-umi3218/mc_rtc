@@ -26,5 +26,6 @@ var searchData=
   ['globalpluginloader',['GlobalPluginLoader',['../structmc__control_1_1GlobalPluginLoader.html',1,'mc_control']]],
   ['gripper',['Gripper',['../structmc__control_1_1Gripper.html',1,'mc_control::Gripper'],['../structmc__rbdyn_1_1RobotModule_1_1Gripper.html',1,'mc_rbdyn::RobotModule::Gripper']]],
   ['grippers',['Grippers',['../structmc__control_1_1fsm_1_1Grippers.html',1,'mc_control::fsm']]],
-  ['grippersurface',['GripperSurface',['../structmc__rbdyn_1_1GripperSurface.html',1,'mc_rbdyn']]]
+  ['grippersurface',['GripperSurface',['../structmc__rbdyn_1_1GripperSurface.html',1,'mc_rbdyn']]],
+  ['guievent',['GUIEvent',['../structmc__rtc_1_1Logger_1_1GUIEvent.html',1,'mc_rtc::Logger']]]
 ];

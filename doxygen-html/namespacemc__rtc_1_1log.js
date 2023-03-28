@@ -12,5 +12,7 @@ var namespacemc__rtc_1_1log =
     [ "is_serializable_getter< MethodRetT(T::*)() const >", "structmc__rtc_1_1log_1_1is__serializable__getter_3_01MethodRetT_07T_1_1_5_08_07_08_01const_01_4.html", null ],
     [ "is_serializable_member", "structmc__rtc_1_1log_1_1is__serializable__member.html", null ],
     [ "is_serializable_member< MemberT T::* >", "structmc__rtc_1_1log_1_1is__serializable__member_3_01MemberT_01T_1_1_5_01_4.html", null ],
+    [ "IterateBinaryLogData", "structmc__rtc_1_1log_1_1IterateBinaryLogData.html", "structmc__rtc_1_1log_1_1IterateBinaryLogData" ],
+    [ "log_type_to_type", "structmc__rtc_1_1log_1_1log__type__to__type.html", null ],
     [ "LogWriter", "structmc__rtc_1_1log_1_1LogWriter.html", null ]
 ];

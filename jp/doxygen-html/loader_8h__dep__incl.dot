@@ -31,10 +31,12 @@ digraph "include/mc_rtc/loader.h"
   Node36 [label="include/mc_control\l/GlobalPluginLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$GlobalPluginLoader_8h.html"];
   Node35 -> Node37 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node37 [label="include/mc_control\l/GlobalPluginMacros.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$GlobalPluginMacros_8h.html"];
+  Node34 -> Node38 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 [label="include/mc_control\l/Ticker.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Ticker_8h.html"];
   Node24 -> Node34 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node24 -> Node36 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node24 -> Node38 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node38 [label="include/mc_observers\l/ObserverLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ObserverLoader_8h.html"];
   Node24 -> Node39 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node39 [label="include/mc_rbdyn/RobotLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotLoader_8h.html"];
+  Node39 [label="include/mc_observers\l/ObserverLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ObserverLoader_8h.html"];
+  Node24 -> Node40 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node40 [label="include/mc_rbdyn/RobotLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotLoader_8h.html"];
 }

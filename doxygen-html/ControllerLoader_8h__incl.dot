@@ -47,6 +47,7 @@ digraph "include/mc_control/ControllerLoader.h"
   Node17 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 [label="mc_rtc/utils_api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$utils__api_8h.html"];
   Node54 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node54 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node54 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node54 -> Node52 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node34 -> Node36 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

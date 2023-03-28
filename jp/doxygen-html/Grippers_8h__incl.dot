@@ -77,6 +77,7 @@ digraph "include/mc_control/fsm/states/Grippers.h"
   Node76 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node74 -> Node89 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node89 [label="mc_rtc/log/Logger.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Logger_8h.html"];
+  Node89 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node89 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node74 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node74 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

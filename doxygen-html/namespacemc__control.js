@@ -19,5 +19,6 @@ var namespacemc__control =
     [ "PythonRWCallback", "structmc__control_1_1PythonRWCallback.html", "structmc__control_1_1PythonRWCallback" ],
     [ "SimulationContactPair", "structmc__control_1_1SimulationContactPair.html", "structmc__control_1_1SimulationContactPair" ],
     [ "TasksController", "structmc__control_1_1TasksController.html", null ],
+    [ "Ticker", "structmc__control_1_1Ticker.html", "structmc__control_1_1Ticker" ],
     [ "TVMController", "structmc__control_1_1TVMController.html", null ]
 ];

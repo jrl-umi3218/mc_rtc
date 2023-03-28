@@ -27,6 +27,7 @@ var searchData=
   ['shptrtasksstorage',['shPtrTasksStorage',['../structmc__solver_1_1QPSolver.html#abb156b608ddea2e15dd1f00efd2bcb6e',1,'mc_solver::QPSolver']]],
   ['sid',['sid',['../structmc__control_1_1ElementId.html#a5753e9c679e8109c6bce7c9a02dd5c37',1,'mc_control::ElementId']]],
   ['side_5f',['side_',['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#ae33beeb0efca412dd64fcbad5e984c48',1,'mc_rtc::gui::plot::impl::AbscissaOrdinate::side_()'],['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a73f245b506213662fd3d5f3deb1eb837',1,'mc_rtc::gui::plot::impl::Ordinate::side_()']]],
+  ['sim_5freal_5fratio_5f',['sim_real_ratio_',['../structmc__control_1_1Ticker.html#abc8e8c3924337e5e7ada16e458207cfb',1,'mc_control::Ticker']]],
   ['solid',['Solid',['../plot_2types_8h.html#ae070f931bda093c33a301115abc450b1',1,'types.h']]],
   ['speed_5f',['speed_',['../structmc__tasks_1_1AddRemoveContactTask.html#afcdad65af3391e9059dbfac1db885679',1,'mc_tasks::AddRemoveContactTask']]],
   ['speedmat',['speedMat',['../structmc__tasks_1_1AddRemoveContactTask.html#aa3f4a2997b3c4112f628b0023bf5b668',1,'mc_tasks::AddRemoveContactTask']]],
@@ -38,11 +39,13 @@ var searchData=
   ['start_5fpoint_5fscale',['start_point_scale',['../structmc__rtc_1_1gui_1_1ArrowConfig.html#ad8499dc509f0c00ce757ed3bb46e2797',1,'mc_rtc::gui::ArrowConfig']]],
   ['state',['state',['../structmc__control_1_1fsm_1_1Transition.html#a9fc7e260a07a8da86ee5724d47f9664a',1,'mc_control::fsm::Transition']]],
   ['states_5f',['states_',['../structmc__control_1_1fsm_1_1ParallelState.html#ac2033713e5e43d503b3eac997bd4f36b',1,'mc_control::fsm::ParallelState']]],
+  ['step_5fby_5fstep',['step_by_step',['../structmc__control_1_1Ticker_1_1Configuration.html#afffda8b966f8cf4ffb730a4b317d1533',1,'mc_control::Ticker::Configuration']]],
   ['stepo',['stepO',['../structmc__tasks_1_1SmoothTask.html#aade06f21c4fbdee53fc75491a02c7db4',1,'mc_tasks::SmoothTask']]],
   ['stepw',['stepW',['../structmc__tasks_1_1SmoothTask.html#a28924d882b21a72fe7998f0ed7ab9d6c',1,'mc_tasks::SmoothTask']]],
   ['stiffness_5f',['stiffness_',['../structmc__tasks_1_1AddRemoveContactTask.html#ad4c4be286affbb126d787a5356e7bf96',1,'mc_tasks::AddRemoveContactTask::stiffness_()'],['../structmc__tasks_1_1TrajectoryTaskGeneric.html#ae3ee0f8359302d8ba71d77cc81394cbf',1,'mc_tasks::TrajectoryTaskGeneric::stiffness_()']]],
   ['stiffnessinterpolator_5f',['stiffnessInterpolator_',['../structmc__tasks_1_1SplineTrajectoryTask.html#a7584b0ee675b53361e1efe97f3069543',1,'mc_tasks::SplineTrajectoryTask']]],
   ['stop_5f',['stop_',['../structmc__control_1_1fsm_1_1PythonState.html#a181b94b4ed108722e7433849cc08184d',1,'mc_control::fsm::PythonState']]],
+  ['stop_5fafter_5flog',['stop_after_log',['../structmc__control_1_1Ticker_1_1Configuration_1_1Replay.html#a6f73fce0484689054816e54ba8299161',1,'mc_control::Ticker::Configuration::Replay']]],
   ['style',['style',['../structmc__rtc_1_1gui_1_1LineConfig.html#a2678eadbdc5908c80e0dcc9c39941a14',1,'mc_rtc::gui::LineConfig']]],
   ['style_5f',['style_',['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#ad56c269ffbd0cbf144af4b4ff066bd59',1,'mc_rtc::gui::plot::impl::AbscissaOrdinate::style_()'],['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a859f99683fcc0f5acf120cd6e0f84dbc',1,'mc_rtc::gui::plot::impl::Ordinate::style_()']]],
   ['sub_5fsocket_5f',['sub_socket_',['../structmc__control_1_1ControllerClient.html#ae3cb858a8d61b53bb9acadcf0f967972',1,'mc_control::ControllerClient']]],
@@ -55,5 +58,6 @@ var searchData=
   ['supportmin_5f',['supportMin_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a37b5b7e6f2acd693711f6b1e8c7310db',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['supportpolygons_5f',['supportPolygons_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad55b59e574799dcf11bc7598b8a6cea9',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['surfacename',['surfaceName',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html#a1c50fb7bcd1942de3e2dcec516a2fcfe',1,'mc_tasks::lipm_stabilizer::StabilizerTask::ExternalWrench']]],
-  ['surfacevelocity_5f',['surfaceVelocity_',['../structmc__tvm_1_1GazeFunction.html#af08a5022ce754f24900192b872c3f7ed',1,'mc_tvm::GazeFunction']]]
+  ['surfacevelocity_5f',['surfaceVelocity_',['../structmc__tvm_1_1GazeFunction.html#af08a5022ce754f24900192b872c3f7ed',1,'mc_tvm::GazeFunction']]],
+  ['sync_5fratio',['sync_ratio',['../structmc__control_1_1Ticker_1_1Configuration.html#a6aa66504fbfe23a71688c86b33bd98fd',1,'mc_control::Ticker::Configuration']]]
 ];

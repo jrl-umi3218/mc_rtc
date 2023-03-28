@@ -109,20 +109,29 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1log_1_1is__serializable__member_3_01MemberT_01T_1_1_5_01_4.html">is_serializable_member&lt; MemberT T::* &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1log_1_1IterateBinaryLogData.html">IterateBinaryLogData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1log_1_1log__type__to__type.html">log_type_to_type</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1log_1_1LogWriter.html">LogWriter</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a2e5bbb4664bc287ec78732a63a7cd646"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a2e5bbb4664bc287ec78732a63a7cd646">binary_log_callback</a> = std::function&lt; bool(const std::vector&lt; std::string &gt; &amp;, std::vector&lt; <a class="el" href="structmc__rtc_1_1log_1_1FlatLog_1_1record.html">FlatLog::record</a> &gt; &amp;, double)&gt;</td></tr>
-<tr class="separator:a2e5bbb4664bc287ec78732a63a7cd646"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c09aed839e3ee87a5be3e286a3e8903"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a9c09aed839e3ee87a5be3e286a3e8903">copy_callback</a> = std::function&lt; void(<a class="el" href="structmc__rtc_1_1MessagePackBuilder.html">mc_rtc::MessagePackBuilder</a> &amp;, const std::vector&lt; std::string &gt; &amp;)&gt;</td></tr>
 <tr class="separator:a9c09aed839e3ee87a5be3e286a3e8903"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accba0888f9f79d606fd31d276650c8ce"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#accba0888f9f79d606fd31d276650c8ce">iterate_binary_log_callback</a> = std::function&lt; bool(<a class="el" href="structmc__rtc_1_1log_1_1IterateBinaryLogData.html">IterateBinaryLogData</a>)&gt;</td></tr>
+<tr class="separator:accba0888f9f79d606fd31d276650c8ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e5bbb4664bc287ec78732a63a7cd646"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a2e5bbb4664bc287ec78732a63a7cd646">binary_log_callback</a> = std::function&lt; bool(const std::vector&lt; std::string &gt; &amp;, std::vector&lt; <a class="el" href="structmc__rtc_1_1log_1_1FlatLog_1_1record.html">FlatLog::record</a> &gt; &amp;, double)&gt;</td></tr>
+<tr class="separator:a2e5bbb4664bc287ec78732a63a7cd646"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c86e8f30b914960080029679897a749"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a1c86e8f30b914960080029679897a749">binary_log_copy_callback</a> = std::function&lt; bool(const std::vector&lt; std::string &gt; &amp;, std::vector&lt; <a class="el" href="structmc__rtc_1_1log_1_1FlatLog_1_1record.html">FlatLog::record</a> &gt; &amp;, double, const <a class="el" href="namespacemc__rtc_1_1log.html#a9c09aed839e3ee87a5be3e286a3e8903">copy_callback</a> &amp;, const char *, uint64_t)&gt;</td></tr>
 <tr class="separator:a1c86e8f30b914960080029679897a749"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50801f83a6ed3945d8cc199c9b3c4ce3"><td class="memTemplParams" colspan="2">template&lt;typename... &gt; </td></tr>
 <tr class="memitem:a50801f83a6ed3945d8cc199c9b3c4ce3"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a50801f83a6ed3945d8cc199c9b3c4ce3">void_t</a> = void</td></tr>
 <tr class="separator:a50801f83a6ed3945d8cc199c9b3c4ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2561dc95c0d9e75798fb81317aceae8b"><td class="memTemplParams" colspan="2">template&lt;LogType type&gt; </td></tr>
+<tr class="memitem:a2561dc95c0d9e75798fb81317aceae8b"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a2561dc95c0d9e75798fb81317aceae8b">log_type_to_type_t</a> = typename <a class="el" href="structmc__rtc_1_1log_1_1log__type__to__type.html">log_type_to_type</a>&lt; type &gt;::type</td></tr>
+<tr class="separator:a2561dc95c0d9e75798fb81317aceae8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -162,10 +171,12 @@ Enumerations</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a44519212b524404c86c6a6f354d58d2c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a44519212b524404c86c6a6f354d58d2c">deprecated</a> (const std::string &amp;source, const std::string &amp;old, const std::string &amp;replace)</td></tr>
 <tr class="separator:a44519212b524404c86c6a6f354d58d2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae939074ac3cce1fde0bb5e0ea7e90c86"><td class="memItemLeft" align="right" valign="top">bool <a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#ae939074ac3cce1fde0bb5e0ea7e90c86">iterate_binary_log</a> (const std::string &amp;fpath, const <a class="el" href="namespacemc__rtc_1_1log.html#a1c86e8f30b914960080029679897a749">binary_log_copy_callback</a> &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</td></tr>
-<tr class="separator:ae939074ac3cce1fde0bb5e0ea7e90c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51b18863af2ea7f3e981b32be6b2174f"><td class="memItemLeft" align="right" valign="top">bool <a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a51b18863af2ea7f3e981b32be6b2174f">iterate_binary_log</a> (const std::string &amp;fpath, const <a class="el" href="namespacemc__rtc_1_1log.html#a2e5bbb4664bc287ec78732a63a7cd646">binary_log_callback</a> &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</td></tr>
-<tr class="separator:a51b18863af2ea7f3e981b32be6b2174f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70dfcae1b3566ebd23adecd27752e15f"><td class="memItemLeft" align="right" valign="top">bool <a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a70dfcae1b3566ebd23adecd27752e15f">iterate_binary_log</a> (const std::string &amp;fpath, const <a class="el" href="namespacemc__rtc_1_1log.html#accba0888f9f79d606fd31d276650c8ce">iterate_binary_log_callback</a> &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</td></tr>
+<tr class="separator:a70dfcae1b3566ebd23adecd27752e15f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4167ee6992725b9b1545f55118560002"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a4167ee6992725b9b1545f55118560002">iterate_binary_log</a> (const std::string &amp;fpath, const <a class="el" href="namespacemc__rtc_1_1log.html#a1c86e8f30b914960080029679897a749">binary_log_copy_callback</a> &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</td></tr>
+<tr class="separator:a4167ee6992725b9b1545f55118560002"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a2dd6ca6dfa01179bbe077ab11abc67"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a5a2dd6ca6dfa01179bbe077ab11abc67">iterate_binary_log</a> (const std::string &amp;fpath, const <a class="el" href="namespacemc__rtc_1_1log.html#a2e5bbb4664bc287ec78732a63a7cd646">binary_log_callback</a> &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</td></tr>
+<tr class="separator:a5a2dd6ca6dfa01179bbe077ab11abc67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9979086ae04c2369f6ea39d42ec2fcb6"><td class="memItemLeft" align="right" valign="top">const char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a9979086ae04c2369f6ea39d42ec2fcb6">LogTypeNames</a> ()</td></tr>
 <tr class="separator:a9979086ae04c2369f6ea39d42ec2fcb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6351f9d1bb2bb7f8f3508cc9f0e36e5e"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a6351f9d1bb2bb7f8f3508cc9f0e36e5e">LogTypeName</a> (<a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549">LogType</a> t)</td></tr>
@@ -218,6 +229,48 @@ Functions</h2></td></tr>
 <tr class="separator:a5dc69800593dae0a5002db3668e9294d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0c490e185c40165c27a46a5a22517f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#aa0c490e185c40165c27a46a5a22517f3">IMPL_MAPPING</a> (<a class="el" href="namespacemc__rbdyn.html#a63313c08848a1cdd1461b077c1a83a4b">mc_rbdyn::Gains6d</a>, Vector6d)</td></tr>
 <tr class="separator:aa0c490e185c40165c27a46a5a22517f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa770174431aaede54b4a01e08165626a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#aa770174431aaede54b4a01e08165626a">IMPL_MAPPING</a> (Bool, bool)</td></tr>
+<tr class="separator:aa770174431aaede54b4a01e08165626a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11675a0ce13cffedbcc3dbd318bd3639"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a11675a0ce13cffedbcc3dbd318bd3639">IMPL_MAPPING</a> (Int8_t, int8_t)</td></tr>
+<tr class="separator:a11675a0ce13cffedbcc3dbd318bd3639"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe59f9c40d3c25aa89c76d64aeb775f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#afe59f9c40d3c25aa89c76d64aeb775f7">IMPL_MAPPING</a> (Int16_t, int16_t)</td></tr>
+<tr class="separator:afe59f9c40d3c25aa89c76d64aeb775f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c21e883086791393e66aa5c6c60c930"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a2c21e883086791393e66aa5c6c60c930">IMPL_MAPPING</a> (Int32_t, int32_t)</td></tr>
+<tr class="separator:a2c21e883086791393e66aa5c6c60c930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae98539796954d0182fc058c5febb8426"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#ae98539796954d0182fc058c5febb8426">IMPL_MAPPING</a> (Int64_t, int64_t)</td></tr>
+<tr class="separator:ae98539796954d0182fc058c5febb8426"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94ec5409bb680c48009715ed25fe8fba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a94ec5409bb680c48009715ed25fe8fba">IMPL_MAPPING</a> (Uint8_t, uint8_t)</td></tr>
+<tr class="separator:a94ec5409bb680c48009715ed25fe8fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae403dd2d70d85e7a43e1ae139fd9f707"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#ae403dd2d70d85e7a43e1ae139fd9f707">IMPL_MAPPING</a> (Uint16_t, uint16_t)</td></tr>
+<tr class="separator:ae403dd2d70d85e7a43e1ae139fd9f707"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6ad3063ec6ee57aa397cf636107bcde"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#ac6ad3063ec6ee57aa397cf636107bcde">IMPL_MAPPING</a> (Uint32_t, uint32_t)</td></tr>
+<tr class="separator:ac6ad3063ec6ee57aa397cf636107bcde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa603c0eea52c8d772e74a50dccf32aee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#aa603c0eea52c8d772e74a50dccf32aee">IMPL_MAPPING</a> (Uint64_t, uint64_t)</td></tr>
+<tr class="separator:aa603c0eea52c8d772e74a50dccf32aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2b4cb02d945c594daa26c4d9feeee4f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#ad2b4cb02d945c594daa26c4d9feeee4f">IMPL_MAPPING</a> (Float, float)</td></tr>
+<tr class="separator:ad2b4cb02d945c594daa26c4d9feeee4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabb7abc763b27e418df7d0096ddd3f84"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#aabb7abc763b27e418df7d0096ddd3f84">IMPL_MAPPING</a> (Double, double)</td></tr>
+<tr class="separator:aabb7abc763b27e418df7d0096ddd3f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac49fedfcc933f1af2554fc26f509e247"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#ac49fedfcc933f1af2554fc26f509e247">IMPL_MAPPING</a> (String, std::string)</td></tr>
+<tr class="separator:ac49fedfcc933f1af2554fc26f509e247"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a343b18ebc60f4f13bdcaf7050ad61140"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a343b18ebc60f4f13bdcaf7050ad61140">IMPL_MAPPING</a> (Vector2d, <a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549ae9b0a766c9aba1f88f69157593dcade3">Eigen::Vector2d</a>)</td></tr>
+<tr class="separator:a343b18ebc60f4f13bdcaf7050ad61140"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a045770b65be467c0c0d9ed24e4515d13"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a045770b65be467c0c0d9ed24e4515d13">IMPL_MAPPING</a> (Vector3d, <a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549abd18c4378a1b42df9061eb5bd43755c9">Eigen::Vector3d</a>)</td></tr>
+<tr class="separator:a045770b65be467c0c0d9ed24e4515d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae04e0fcaf17c7eaff04302c9177bbffe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#ae04e0fcaf17c7eaff04302c9177bbffe">IMPL_MAPPING</a> (Vector6d, <a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549ada57d50e3cb02d10e15d0dab71fb846f">Eigen::Vector6d</a>)</td></tr>
+<tr class="separator:ae04e0fcaf17c7eaff04302c9177bbffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2155b830cb24a83a16d9cf3587081c22"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a2155b830cb24a83a16d9cf3587081c22">IMPL_MAPPING</a> (VectorXd, <a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549ab2e07f7f9214839944e939b29de2252b">Eigen::VectorXd</a>)</td></tr>
+<tr class="separator:a2155b830cb24a83a16d9cf3587081c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37157b4ed2a24a508597aedb6ae92711"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a37157b4ed2a24a508597aedb6ae92711">IMPL_MAPPING</a> (Quaterniond, <a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549a9dea906d4e9243ea050120f8f4a1f1c9">Eigen::Quaterniond</a>)</td></tr>
+<tr class="separator:a37157b4ed2a24a508597aedb6ae92711"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a247ef2ae83ef97cd37dd65bb1923f9f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a247ef2ae83ef97cd37dd65bb1923f9f7">IMPL_MAPPING</a> (PTransformd, <a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549a2ec69636c565a422c59d7fc675bcd836">sva::PTransformd</a>)</td></tr>
+<tr class="separator:a247ef2ae83ef97cd37dd65bb1923f9f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03cf386c809be063b97c246e66aaa63f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a03cf386c809be063b97c246e66aaa63f">IMPL_MAPPING</a> (ForceVecd, <a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549a9fd99a0871090c0c75a35ac57944e044">sva::ForceVecd</a>)</td></tr>
+<tr class="separator:a03cf386c809be063b97c246e66aaa63f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d1fe5988de68906c71b868317bdeeb1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a0d1fe5988de68906c71b868317bdeeb1">IMPL_MAPPING</a> (MotionVecd, <a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549a08efd42d00b69280268271026472b237">sva::MotionVecd</a>)</td></tr>
+<tr class="separator:a0d1fe5988de68906c71b868317bdeeb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8df0101c1870d2156a9009ab9019d154"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a8df0101c1870d2156a9009ab9019d154">IMPL_MAPPING</a> (VectorDouble, std::vector&lt; double &gt;)</td></tr>
+<tr class="separator:a8df0101c1870d2156a9009ab9019d154"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2bad497e8a4c7a7f29f7ab908c83274e"><td class="memTemplParams" colspan="2">template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </td></tr>
 <tr class="memitem:a2bad497e8a4c7a7f29f7ab908c83274e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1log.html#a2bad497e8a4c7a7f29f7ab908c83274e">error_and_throw</a> (Args &amp;&amp;... args)</td></tr>
 <tr class="separator:a2bad497e8a4c7a7f29f7ab908c83274e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -277,6 +330,36 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="namespacemc__rtc_1_1log.html#a9c09aed839e3ee87a5be3e286a3e8903">mc_rtc::log::copy_callback</a> = typedef std::function&lt;void(<a class="el" href="structmc__rtc_1_1MessagePackBuilder.html">mc_rtc::MessagePackBuilder</a> &amp;, const std::vector&lt;std::string&gt; &amp;)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="accba0888f9f79d606fd31d276650c8ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#accba0888f9f79d606fd31d276650c8ce">&#9670;&nbsp;</a></span>iterate_binary_log_callback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacemc__rtc_1_1log.html#accba0888f9f79d606fd31d276650c8ce">mc_rtc::log::iterate_binary_log_callback</a> = typedef std::function&lt;bool(<a class="el" href="structmc__rtc_1_1log_1_1IterateBinaryLogData.html">IterateBinaryLogData</a>)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2561dc95c0d9e75798fb81317aceae8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2561dc95c0d9e75798fb81317aceae8b">&#9670;&nbsp;</a></span>log_type_to_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;LogType type&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacemc__rtc_1_1log.html#a2561dc95c0d9e75798fb81317aceae8b">mc_rtc::log::log_type_to_type_t</a> = typedef typename <a class="el" href="structmc__rtc_1_1log_1_1log__type__to__type.html">log_type_to_type</a>&lt;type&gt;::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -444,7 +527,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a9aa92bc1668b9218bf395ae4fc92e795"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9aa92bc1668b9218bf395ae4fc92e795">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[1/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9aa92bc1668b9218bf395ae4fc92e795">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[1/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -472,7 +555,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a4a530e246a423018eb4757de9a38fe0a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a530e246a423018eb4757de9a38fe0a">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[2/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a530e246a423018eb4757de9a38fe0a">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[2/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -500,7 +583,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a701b7606804a3db8de4c0e7a52d928c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a701b7606804a3db8de4c0e7a52d928c0">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[3/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a701b7606804a3db8de4c0e7a52d928c0">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[3/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -528,7 +611,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a2bf6ab72f6469b3269f31e5bba5a2e53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2bf6ab72f6469b3269f31e5bba5a2e53">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[4/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bf6ab72f6469b3269f31e5bba5a2e53">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[4/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -556,7 +639,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a8bfaf29781e441da25c30cbeba3acf09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bfaf29781e441da25c30cbeba3acf09">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[5/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bfaf29781e441da25c30cbeba3acf09">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[5/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -584,7 +667,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a9e592f5c13ba9f39d5b1a71a53bdfd8e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e592f5c13ba9f39d5b1a71a53bdfd8e">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[6/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e592f5c13ba9f39d5b1a71a53bdfd8e">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[6/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -612,7 +695,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a70fc3b45c7d5e2602b6c0967efa4b4f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70fc3b45c7d5e2602b6c0967efa4b4f0">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[7/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a70fc3b45c7d5e2602b6c0967efa4b4f0">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[7/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -640,7 +723,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a5725243119abb09aa142128b7fc9f40f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5725243119abb09aa142128b7fc9f40f">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[8/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5725243119abb09aa142128b7fc9f40f">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[8/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -668,7 +751,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="ad6b297b2129cec68c11ffa52c448d8ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6b297b2129cec68c11ffa52c448d8ae">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[9/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6b297b2129cec68c11ffa52c448d8ae">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[9/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -696,7 +779,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a7349ebfd4a26447bfa3c1d087924b8ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7349ebfd4a26447bfa3c1d087924b8ed">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[10/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7349ebfd4a26447bfa3c1d087924b8ed">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[10/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -724,7 +807,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a254cbef473857a8f7300c4893e025070"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a254cbef473857a8f7300c4893e025070">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[11/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a254cbef473857a8f7300c4893e025070">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[11/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -752,7 +835,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a209c2c06d48dddd58e98eb20b6537fbf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a209c2c06d48dddd58e98eb20b6537fbf">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[12/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a209c2c06d48dddd58e98eb20b6537fbf">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[12/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -780,7 +863,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a3832207f7dfe9bb0a76bd55c40141aa0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3832207f7dfe9bb0a76bd55c40141aa0">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[13/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3832207f7dfe9bb0a76bd55c40141aa0">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[13/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -808,7 +891,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a8a95695038f7381e9ff63fb77021fe22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a95695038f7381e9ff63fb77021fe22">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[14/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a95695038f7381e9ff63fb77021fe22">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[14/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -836,7 +919,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="abde1c442a27ca22960f0a2c42c12e1e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abde1c442a27ca22960f0a2c42c12e1e5">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[15/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abde1c442a27ca22960f0a2c42c12e1e5">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[15/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -864,7 +947,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a40e42a14f68a8cacf3f5c14bdc235422"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40e42a14f68a8cacf3f5c14bdc235422">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[16/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a40e42a14f68a8cacf3f5c14bdc235422">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[16/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -892,7 +975,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a77ff7d3e9889df9292a6575c95b473a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77ff7d3e9889df9292a6575c95b473a8">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[17/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a77ff7d3e9889df9292a6575c95b473a8">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[17/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -920,7 +1003,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a85a6ea306358c1ae94b79e65b22cb252"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85a6ea306358c1ae94b79e65b22cb252">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[18/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a85a6ea306358c1ae94b79e65b22cb252">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[18/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -948,7 +1031,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a42e9d70a432b1bc02a1f5dcff729bfb5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42e9d70a432b1bc02a1f5dcff729bfb5">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[19/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a42e9d70a432b1bc02a1f5dcff729bfb5">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[19/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -976,7 +1059,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a70d34eabb941deeb9f0dea2280ae1201"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70d34eabb941deeb9f0dea2280ae1201">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[20/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a70d34eabb941deeb9f0dea2280ae1201">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[20/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1004,7 +1087,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="aae268af9ba09c4178e3d3711b5e3a32a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae268af9ba09c4178e3d3711b5e3a32a">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[21/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aae268af9ba09c4178e3d3711b5e3a32a">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[21/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1032,7 +1115,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a924ed0ac7a53f8d0f36281e6e9d337a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a924ed0ac7a53f8d0f36281e6e9d337a5">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[22/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a924ed0ac7a53f8d0f36281e6e9d337a5">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[22/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1060,7 +1143,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="a5dc69800593dae0a5002db3668e9294d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5dc69800593dae0a5002db3668e9294d">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[23/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5dc69800593dae0a5002db3668e9294d">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[23/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1088,7 +1171,7 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
 </div>
 </div>
 <a id="aa0c490e185c40165c27a46a5a22517f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0c490e185c40165c27a46a5a22517f3">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[24/24]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0c490e185c40165c27a46a5a22517f3">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[24/45]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1103,6 +1186,594 @@ template&lt;typename ExceptionT  = std::runtime_error, typename... Args&gt; </di
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Vector6d&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa770174431aaede54b4a01e08165626a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa770174431aaede54b4a01e08165626a">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[25/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Bool&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a11675a0ce13cffedbcc3dbd318bd3639"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11675a0ce13cffedbcc3dbd318bd3639">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[26/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Int8_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afe59f9c40d3c25aa89c76d64aeb775f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe59f9c40d3c25aa89c76d64aeb775f7">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[27/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Int16_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2c21e883086791393e66aa5c6c60c930"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c21e883086791393e66aa5c6c60c930">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[28/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Int32_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae98539796954d0182fc058c5febb8426"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae98539796954d0182fc058c5febb8426">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[29/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Int64_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int64_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a94ec5409bb680c48009715ed25fe8fba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94ec5409bb680c48009715ed25fe8fba">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[30/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Uint8_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae403dd2d70d85e7a43e1ae139fd9f707"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae403dd2d70d85e7a43e1ae139fd9f707">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[31/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Uint16_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac6ad3063ec6ee57aa397cf636107bcde"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6ad3063ec6ee57aa397cf636107bcde">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[32/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Uint32_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa603c0eea52c8d772e74a50dccf32aee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa603c0eea52c8d772e74a50dccf32aee">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[33/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Uint64_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad2b4cb02d945c594daa26c4d9feeee4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2b4cb02d945c594daa26c4d9feeee4f">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[34/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Float&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aabb7abc763b27e418df7d0096ddd3f84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabb7abc763b27e418df7d0096ddd3f84">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[35/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Double&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac49fedfcc933f1af2554fc26f509e247"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac49fedfcc933f1af2554fc26f509e247">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[36/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a343b18ebc60f4f13bdcaf7050ad61140"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a343b18ebc60f4f13bdcaf7050ad61140">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[37/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Vector2d&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549ae9b0a766c9aba1f88f69157593dcade3">Eigen::Vector2d</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a045770b65be467c0c0d9ed24e4515d13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a045770b65be467c0c0d9ed24e4515d13">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[38/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Vector3d&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549abd18c4378a1b42df9061eb5bd43755c9">Eigen::Vector3d</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae04e0fcaf17c7eaff04302c9177bbffe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae04e0fcaf17c7eaff04302c9177bbffe">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[39/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Vector6d&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549ada57d50e3cb02d10e15d0dab71fb846f">Eigen::Vector6d</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2155b830cb24a83a16d9cf3587081c22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2155b830cb24a83a16d9cf3587081c22">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[40/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">VectorXd&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549ab2e07f7f9214839944e939b29de2252b">Eigen::VectorXd</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a37157b4ed2a24a508597aedb6ae92711"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37157b4ed2a24a508597aedb6ae92711">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[41/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">Quaterniond&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549a9dea906d4e9243ea050120f8f4a1f1c9">Eigen::Quaterniond</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a247ef2ae83ef97cd37dd65bb1923f9f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a247ef2ae83ef97cd37dd65bb1923f9f7">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[42/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">PTransformd&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549a2ec69636c565a422c59d7fc675bcd836">sva::PTransformd</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a03cf386c809be063b97c246e66aaa63f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03cf386c809be063b97c246e66aaa63f">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[43/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">ForceVecd&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549a9fd99a0871090c0c75a35ac57944e044">sva::ForceVecd</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0d1fe5988de68906c71b868317bdeeb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d1fe5988de68906c71b868317bdeeb1">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[44/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">MotionVecd&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549a08efd42d00b69280268271026472b237">sva::MotionVecd</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8df0101c1870d2156a9009ab9019d154"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8df0101c1870d2156a9009ab9019d154">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[45/45]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">VectorDouble&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; double &gt;&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -1135,14 +1806,61 @@ template&lt;typename... Args&gt; </div>
 
 </div>
 </div>
-<a id="ae939074ac3cce1fde0bb5e0ea7e90c86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae939074ac3cce1fde0bb5e0ea7e90c86">&#9670;&nbsp;</a></span>iterate_binary_log() <span class="overload">[1/2]</span></h2>
+<a id="a70dfcae1b3566ebd23adecd27752e15f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70dfcae1b3566ebd23adecd27752e15f">&#9670;&nbsp;</a></span>iterate_binary_log() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool <a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> mc_rtc::log::iterate_binary_log </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>fpath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacemc__rtc_1_1log.html#accba0888f9f79d606fd31d276650c8ce">iterate_binary_log_callback</a> &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>extract</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>time</em> = <code>&quot;t&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Iterate over a given binary log data</p>
+<p>For each entry in the log, this will call the provided callback see <a class="el" href="structmc__rtc_1_1log_1_1IterateBinaryLogData.html">IterateBinaryLogData</a> for a documentation of the data available</p>
+<p>If the callback returns false the parsing is interrupted.</p>
+<dl class="section return"><dt>Returns</dt><dd>True if the parsing was successful, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a4167ee6992725b9b1545f55118560002"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4167ee6992725b9b1545f55118560002">&#9670;&nbsp;</a></span>iterate_binary_log() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rtc::log::iterate_binary_log </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>fpath</em>, </td>
@@ -1171,39 +1889,27 @@ template&lt;typename... Args&gt; </div>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Iterate over a given binary log data</p>
-<p>For each entry in the log, this will call the provided callback. The callback has six arguments:</p>
-<ul>
-<li>the first are the keys of the entry, note that this is empty if there has been no change since the previous entry</li>
-<li>the second is the data corresponding to the keys. The index of a key in the keys vector give the index for the corresponding data. This index may change when keys are updated</li>
-<li>the third is the value for the time entry</li>
-<li>the fourth is a copy callback that can be used to obtain a copy of the data with provided keys</li>
-<li>the fifth is a pointer to the raw buffer data</li>
-<li>the sixth is the size of this buffer</li>
-</ul>
-<p>If the callback returns false, parsing is aborted</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">fpath</td><td>Path to the binary log file</td></tr>
-    <tr><td class="paramname">callback</td><td>Called for every entry in the log</td></tr>
-    <tr><td class="paramname">extract</td><td>If true, data is available as their original C++ type, if false, no data is available. Skipping extraction is much faster</td></tr>
-    <tr><td class="paramname">time</td><td>Key used as time source. If that key doesn't exist or if it's not a Double record, the parsing will fail. If this parameter is empty, no extraction is attempted and the third callback parameter is always -1</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if parsing was sucessful, false otherwise </dd></dl>
+<p>Provided for backward compatibility </p>
 
 </div>
 </div>
-<a id="a51b18863af2ea7f3e981b32be6b2174f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51b18863af2ea7f3e981b32be6b2174f">&#9670;&nbsp;</a></span>iterate_binary_log() <span class="overload">[2/2]</span></h2>
+<a id="a5a2dd6ca6dfa01179bbe077ab11abc67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a2dd6ca6dfa01179bbe077ab11abc67">&#9670;&nbsp;</a></span>iterate_binary_log() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> mc_rtc::log::iterate_binary_log </td>
+          <td class="memname">bool mc_rtc::log::iterate_binary_log </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>fpath</em>, </td>
@@ -1232,9 +1938,13 @@ template&lt;typename... Args&gt; </div>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Iterate over a given binary log data</p>
-<p>This function has the same functionality as its overload but the callback doesn't have to bother with the copy callback. </p>
+<p>Provided for backward compatibility </p>
 
 </div>
 </div>

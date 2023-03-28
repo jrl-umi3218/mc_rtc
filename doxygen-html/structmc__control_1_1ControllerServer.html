@@ -93,6 +93,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a38c2d4255f3f4db5c9315f3c7468b87f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f21b40efd63fa7a522ef961daad027f"><td class="memItemLeft" align="right" valign="top">std::pair&lt; const char *, size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerServer.html#a9f21b40efd63fa7a522ef961daad027f">data</a> () const</td></tr>
 <tr class="separator:a9f21b40efd63fa7a522ef961daad027f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b6ea35a313795468d422ba43c391a8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerServer.html#a2b6ea35a313795468d422ba43c391a8c">set_logger</a> (std::shared_ptr&lt; <a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &gt; logger) noexcept</td></tr>
+<tr class="separator:a2b6ea35a313795468d422ba43c391a8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0222d9d282c5e61c4694410114c181a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerServer.html#a0222d9d282c5e61c4694410114c181a1">push_requests</a> (const std::vector&lt; <a class="el" href="structmc__rtc_1_1Logger_1_1GUIEvent.html">mc_rtc::Logger::GUIEvent</a> &gt; &amp;requests)</td></tr>
+<tr class="separator:a0222d9d282c5e61c4694410114c181a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77ce811b87dba51cca927267cfb94dec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerServer.html#a77ce811b87dba51cca927267cfb94dec">update_rate</a> (double dt, double server_dt)</td></tr>
+<tr class="separator:a77ce811b87dba51cca927267cfb94dec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Serves data and allow interaction with the controllers</p>
@@ -252,6 +258,89 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Publish the current GUI state </p>
+
+</div>
+</div>
+<a id="a0222d9d282c5e61c4694410114c181a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0222d9d282c5e61c4694410114c181a1">&#9670;&nbsp;</a></span>push_requests()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_control::ControllerServer::push_requests </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="structmc__rtc_1_1Logger_1_1GUIEvent.html">mc_rtc::Logger::GUIEvent</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>requests</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set requests to handle on the next iteration </p>
+
+</div>
+</div>
+<a id="a2b6ea35a313795468d422ba43c391a8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b6ea35a313795468d422ba43c391a8c">&#9670;&nbsp;</a></span>set_logger()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_control::ControllerServer::set_logger </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &gt;&#160;</td>
+          <td class="paramname"><em>logger</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Attach a logger to the server </p>
+
+</div>
+</div>
+<a id="a77ce811b87dba51cca927267cfb94dec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77ce811b87dba51cca927267cfb94dec">&#9670;&nbsp;</a></span>update_rate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_control::ControllerServer::update_rate </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>server_dt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Update the rate of the server </p>
 
 </div>
 </div>

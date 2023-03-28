@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"classmc__tvm_1_1VectorOrientationFunction.html#ad946978d158a134ff404f2a18c3f3857":[3,0,11,22,13],
+"classmc__tvm_1_1VectorOrientationFunction.html#ad9efb02b909b29f7cf131623fdced574":[3,0,11,22,7],
 "classmc__tvm_1_1VectorOrientationFunction.html#ae89b0d1262e817f3183ce9664d9801cc":[3,0,11,22,9],
 "classmc__tvm_1_1VectorOrientationFunction.html#aeee579e7115ace1f147192f42e170844":[3,0,11,22,1],
 "client__api_8h.html":[4,0,0,0,2],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "include_2mc__observers_2api_8h.html#a5ec028a59707a198d06a6b92110d7ee1":[4,0,0,2,0,2],
 "include_2mc__observers_2api_8h.html#a5f92e3e5bb50345181ceaa0fdc4ed310":[4,0,0,2,0,0],
 "include_2mc__observers_2api_8h.html#a71f5d19aecb89bc7ff66ea90cbec91d3":[4,0,0,2,0,1],
-"include_2mc__observers_2api_8h.html#a933db9b3406c8c221ba3ee7f689e7511":[4,0,0,2,0,3],
-"include_2mc__observers_2api_8h.html#ad87f4c4e93529fdbfdd4a95ef34bbd7a":[4,0,0,2,0,4],
-"include_2mc__observers_2api_8h.html#adde8be25d8f40acd541ed21395a5c73a":[4,0,0,2,0,5]
+"include_2mc__observers_2api_8h.html#a933db9b3406c8c221ba3ee7f689e7511":[4,0,0,2,0,3]
 };

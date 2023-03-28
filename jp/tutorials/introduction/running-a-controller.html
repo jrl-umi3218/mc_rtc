@@ -188,6 +188,10 @@
                     <ul>
                       
                         
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_rtc_ticker-and-replay.html">mc_rtc_tickerとReplayプラグイン"</a></li>
+                        
+                      
+                        
                         <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
                         
                       
@@ -336,7 +340,7 @@
 <ul class="nav nav-tabs" id="interfaceTab" role="tablist">
   
     <li class="nav-item">
-      <a class="nav-link active" id="rosTab" data-toggle="tab" href="#rosTabContent" role="tab" aria-controls="rosTabContent" aria-selected="true">ROS (mc_rtc_ticker)</a>
+      <a class="nav-link active" id="tickerTab" data-toggle="tab" href="#tickerTabContent" role="tab" aria-controls="tickerTabContent" aria-selected="true">Open-loop (mc_rtc_ticker)</a>
     </li>
   
     <li class="nav-item">
@@ -350,30 +354,45 @@
 </ul>
 <div class="tab-content" id="interfaceTabContent">
   
-    <div class="tab-pane show active" id="rosTabContent" role="tabpanel" arial-labelledby="rosTab">
+    <div class="tab-pane show active" id="tickerTabContent" role="tabpanel" arial-labelledby="tickerTab">
       <div class="card bg-light">
         <div class="card-body">
           <h4>前提条件</h4>
 
-<p>mc_rtc_tickerを使用してROS内でコントローラーを実行するには、ROSのサポート付きでmc_rtcをビルドする必要があります。また、<a href="https://github.com/jrl-umi3218/mc_rtc_ros" target="blank_">mc_rtc_ros</a>も必要です。</p>
+<p>コントローラを視覚化して操作するには2つのオプションがあります:</p>
 
-<p>ここでは、<span class="text-monospace">roscore</span>が既に実行されているか、<span class="text-monospace">ROS_MASTER_URI</span>がアクティブなマスターを指していることを前提に説明します。</p>
+<ol>
+  <li><a href="https://github.com/jrl-umi3218/mc_rtc_ros" target="blank_">mc_rtc_ros</a>で利用可能なRViZパネルを使用する</li>
+  <li><a href="https://github.com/gergondet/mc_rtc-magnum" target="blank_">mc_rtc-magnum</a></a>のようなスタンドアロンのビジュアライザを使用する</li>
+</ol>
 
-<h4>表示インターフェイスを実行する</h4>
+<h4>ディスプレイインターフェイスの実行</h4>
 
-<p>以下のコマンドを実行します。すると、mc_rtcの専用パネルと使用するロボットのモデルが読み込まれた状態でRVizが起動します。</p>
+<h6>RViZを使用する</h6>
+
+<p><span class=&quot;text-monospace&quot;>roscore</span>が既に実行されているか、<span class=&quot;text-monospace&quot;>ROS_MASTER_URI</span>がアクティブなマスターを指していると仮定します。</p>
+
+<p>次のコマンドを実行して、必要なmc_rtc専用パネルとロボットモデルとともにRViZを起動します。</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>roslaunch mc_rtc_ticker display.launch</code></pre></figure>
 
-<p>2台以上のロボットをシミュレートする場合は、新しいロボットモデルをシーンに追加する必要があります。ロボットに関する記述は、パラメーター<code>/control/env_N</code>にパブリッシュされます。ここで、Nはロボットのインデックスです。</p>
+<p>シミュレーションに2つ以上のロボットがある場合は、新しいRobotModelをシーンに追加する必要があります。ロボットの説明は、パラメータ<code>/control/env_N</code>（Nはロボットインデックスです）で公開されます。</p>
 
-<h4>コントローラーを実行する</h4>
+<h6>mc_rtc-magnumを使用する</h6>
 
-<p>コントローラーを実行するには、以下のコマンドを実行します。</p>
+<p>パッケージをインストールした後、次のコマンドを実行してください。</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rosrun mc_rtc_ticker mc_rtc_ticker</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mc-rtc-magnum</code></pre></figure>
 
-<p>なお、表示インターフェイスを再起動せずにコントローラーを再起動することができます。</p>
+<h4>コントローラの実行</h4>
+
+<p>コントローラを実行するには、次のコマンドを使用します。</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mc_rtc_ticker</code></pre></figure>
+
+<p>ディスプレイインターフェイスを再起動せずにコントローラを再起動できることに注意してください。</p>
+
+<p>tickerにはさらに多くの機能があります。 <a href="/mc_rtc/jp/tutorials/tools/mc_rtc_ticker-and-replay.html">mc_rtc_tickerとReplayプラグイン"</a>チュートリアルを参照してください。</p>
 
         </div>
       </div>
@@ -392,6 +411,8 @@
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># シミュレーションファイルがインストールされているディレクトリに移動する</span>
 <span class="nv">$ </span><span class="nb">cd</span> /usr/local/share/hrpsys/samples/JVRC1
+<span class="c"># omniNamesサービスを再起動する</span>
+<span class="nv">$ </span>./clear-omninames.sh
 <span class="c"># シミュレーションファイルを開く</span>
 <span class="nv">$ </span>choreonoid sim_mc.cnoid</code></pre></figure>
 

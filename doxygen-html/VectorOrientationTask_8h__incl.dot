@@ -91,6 +91,7 @@ digraph "include/mc_tasks/VectorOrientationTask.h"
   Node48 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node47 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node47 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node47 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node47 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node47 -> Node45 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node50 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

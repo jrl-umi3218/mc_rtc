@@ -188,6 +188,10 @@
                     <ul>
                       
                         
+                        <li><a href="/mc_rtc/tutorials/tools/mc_rtc_ticker-and-replay.html">mc_rtc_ticker and the Replay plugin</a></li>
+                        
+                      
+                        
                         <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
                         
                       
@@ -336,7 +340,7 @@
 <ul class="nav nav-tabs" id="interfaceTab" role="tablist">
   
     <li class="nav-item">
-      <a class="nav-link active" id="rosTab" data-toggle="tab" href="#rosTabContent" role="tab" aria-controls="rosTabContent" aria-selected="true">ROS (mc_rtc_ticker)</a>
+      <a class="nav-link active" id="tickerTab" data-toggle="tab" href="#tickerTabContent" role="tab" aria-controls="tickerTabContent" aria-selected="true">Open-loop (mc_rtc_ticker)</a>
     </li>
   
     <li class="nav-item">
@@ -350,16 +354,23 @@
 </ul>
 <div class="tab-content" id="interfaceTabContent">
   
-    <div class="tab-pane show active" id="rosTabContent" role="tabpanel" arial-labelledby="rosTab">
+    <div class="tab-pane show active" id="tickerTabContent" role="tabpanel" arial-labelledby="tickerTab">
       <div class="card bg-light">
         <div class="card-body">
           <h4>Pre-requisites</h4>
 
-<p>To run a controller in ROS using mc_rtc_ticker you need to have build mc_rtc with ROS support. You will also need <a href="https://github.com/jrl-umi3218/mc_rtc_ros" target="blank_">mc_rtc_ros</a>.</p>
+<p>There is two options to visualize the controller and interact with it:</p>
 
-<p>We assume <span class="text-monospace">roscore</span> is already running or that <span class="text-monospace">ROS_MASTER_URI</span> points to an active master.</p>
+<ol>
+  <li>Using the RViZ panel available in <a href="https://github.com/jrl-umi3218/mc_rtc_ros" target="blank_">mc_rtc_ros</a>. mc_rtc must have been built with ROS support.</li>
+  <li>Use a stand-alone visualizer such as <a href="https://github.com/gergondet/mc_rtc-magnum" target="blank_">mc_rtc-magnum</a></li>
+</ol>
 
 <h4>Runing the display interface</h4>
+
+<h6>Using RViZ</h6>
+
+<p>We assume <span class="text-monospace">roscore</span> is already running or that <span class="text-monospace">ROS_MASTER_URI</span> points to an active master.</p>
 
 <p>Run the following command to start RViZ along with mc_rtc dedicated panel and the robot model you need:</p>
 
@@ -367,13 +378,21 @@
 
 <p>If your simulation has more than two robots, you should add a new RobotModel to the scene. The description of the robot is published in the parameter <code>/control/env_N</code> where N is the robot index.</p>
 
+<h6>Using mc_rtc-magnum</h6>
+
+<p>After installing the package, simply run the following command:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mc-rtc-magnum</code></pre></figure>
+
 <h4>Running the controller</h4>
 
 <p>To run the controller, use the following command:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rosrun mc_rtc_ticker mc_rtc_ticker</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mc_rtc_ticker</code></pre></figure>
 
 <p>Note that you can restart the controller without restarting the display interface.</p>
+
+<p>The ticker has many more functionalities, see the <a href="/mc_rtc/tutorials/tools/mc_rtc_ticker-and-replay.html">mc_rtc_ticker and the Replay plugin</a> tutorial.</p>
 
         </div>
       </div>
@@ -392,6 +411,8 @@
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Go to the directory where the simulation file has been installed</span>
 <span class="nv">$ </span><span class="nb">cd</span> /usr/local/share/hrpsys/samples/JVRC1
+<span class="c"># Restart omniNames services</span>
+<span class="nv">$ </span>./clear-omninames.sh
 <span class="c"># Open the simulation file</span>
 <span class="nv">$ </span>choreonoid sim_mc.cnoid</code></pre></figure>
 

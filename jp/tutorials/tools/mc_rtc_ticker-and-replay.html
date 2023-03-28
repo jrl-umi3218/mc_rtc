@@ -1,0 +1,485 @@
+
+
+
+
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - mc_rtc_tickerとReplayプラグイン" - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/tools/mc_rtc_ticker-and-replay.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><strong>mc_rtc_tickerとReplayプラグイン"</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h4"><a href="#mc_rtc_tickerのオプション">mc_rtc_tickerのオプション</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#-f-file--mc-config-file">-f [file]/--mc-config [file]</a></li>
+<li class="toc-entry toc-h5"><a href="#-s--step-by-step">-S/--step-by-step</a></li>
+<li class="toc-entry toc-h5"><a href="#--run-for-time">--run-for [time]</a></li>
+<li class="toc-entry toc-h5"><a href="#-s--no-sync">-s/--no-sync</a></li>
+<li class="toc-entry toc-h5"><a href="#-r-ratio--sync-ratio-ratio">-r [ratio]/--sync-ratio [ratio]</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h4"><a href="#リプレイ機能">リプレイ機能</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#-l-log--replay-loglog">-l [log]/--replay-log[log]</a></li>
+<li class="toc-entry toc-h5"><a href="#-m-yaml--datastore-mapping-yaml">-m [yaml]/--datastore-mapping [yaml]</a></li>
+<li class="toc-entry toc-h5"><a href="#-g--replay-gui-inputs-only">-g/--replay-gui-inputs-only</a></li>
+<li class="toc-entry toc-h5"><a href="#-e--exit-after-replay">-e/--exit-after-replay</a></li>
+<li class="toc-entry toc-h5"><a href="#--replay-outputs">--replay-outputs</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h4"><a href="#replayプラグインの使用">Replayプラグインの使用</a></li>
+<li class="toc-entry toc-h4"><a href="#replayがアクティブであることを検出する">Replayがアクティブであることを検出する</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>mc_rtc_tickerとReplayプラグイン"</h1>
+        
+
+        <p>mc_rtc_tickerの使用法を <a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a> チュートリアルで紹介しました。このセクションでは、mc_rtc_tickerの追加機能、リプレイオプション、および「Replay」プラグインの使用について説明します。</p>
+
+<h4 id="mc_rtc_tickerのオプション">mc_rtc_tickerのオプション</h4>
+
+<p>mc_rtc_tickerには、次のオプションがあります。</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mc_rtc_ticker <span class="nt">--help</span>
+mc_rtc_ticker options:
+<span class="nt">--help</span> ヘルプメッセージを表示します
+<span class="nt">-f</span> <span class="o">[</span> <span class="nt">--mc-config</span> <span class="o">]</span> arg mc_rtcに与えられる設定
+<span class="nt">-S</span> <span class="o">[</span> <span class="nt">--step-by-step</span> <span class="o">]</span> ステップバイステップモードでTickerを開始します
+<span class="nt">--run-for</span> arg 指定された時間（秒）間Tickerを実行します
+<span class="nt">-s</span> <span class="o">[</span> <span class="nt">--no-sync</span> <span class="o">]</span> Ticker時間をリアルタイムと同期させません
+<span class="nt">-r</span> <span class="o">[</span> <span class="nt">--sync-ratio</span> <span class="o">]</span> arg 同期目的のSim / Real比率
+<span class="nt">-l</span> <span class="o">[</span> <span class="nt">--replay-log</span> <span class="o">]</span> arg リプレイログ
+<span class="nt">-m</span> <span class="o">[</span> <span class="nt">--datastore-mapping</span> <span class="o">]</span> arg ログキーからデータストアへのマッピング
+<span class="nt">-g</span> <span class="o">[</span> <span class="nt">--replay-gui-inputs-only</span> <span class="o">]</span> GUI入力のみをリプレイします
+<span class="nt">-e</span> <span class="o">[</span> <span class="nt">--exit-after-replay</span> <span class="o">]</span> ログリプレイ後に終了します
+<span class="nt">--replay-outputs</span> 出力リプレイを有効にします（コントローラをオーバーライドします）</code></pre></figure>
+
+<h5 id="-f-file--mc-config-file"><code class="language-plaintext highlighter-rouge">-f [file]</code>/<code class="language-plaintext highlighter-rouge">--mc-config [file]</code></h5>
+
+<p>このオプションを使用すると、mc_rtcを構成するために使用されるmc_rtc構成ファイルをオーバーライドできます。提供された<code class="language-plaintext highlighter-rouge">file</code>は、通常のファイルの後にmc_rtcを構成するために使用されます。</p>
+
+<h5 id="-s--step-by-step"><code class="language-plaintext highlighter-rouge">-S</code>/<code class="language-plaintext highlighter-rouge">--step-by-step</code></h5>
+
+<p>このオプションは、ステップバイステップモードでコントローラを開始します。このモードでは、コントローラは、一定数のイテレーションのステップが指示されるまで実行されません。これはGUIを介して行うことができます。</p>
+
+<h5 id="--run-for-time"><code class="language-plaintext highlighter-rouge">--run-for [time]</code></h5>
+
+<p>指定された<code class="language-plaintext highlighter-rouge">time</code>の期間（秒）Tickerを実行して終了します。</p>
+
+<h5 id="-s--no-sync"><code class="language-plaintext highlighter-rouge">-s</code>/<code class="language-plaintext highlighter-rouge">--no-sync</code></h5>
+
+<p>通常、ティッカーはリアルタイムクロックとシミュレーション時間を同期させ、リアルタイムで1秒経過すると、シミュレーションでも1秒経過するようにします。このオプションを使用すると、同期機構が無効になり、シミュレーション時間は可能な限り速く実行されます。</p>
+
+<h5 id="-r-ratio--sync-ratio-ratio"><code class="language-plaintext highlighter-rouge">-r [ratio]</code>/<code class="language-plaintext highlighter-rouge">--sync-ratio [ratio]</code></h5>
+
+<p>ターゲットシミュレーション時間/リアルタイムの比率を制御します。たとえば、値が0.5の場合、シミュレーションで1秒経過すると、リアルタイムで2秒経過します。ただし、比率が2の場合、シミュレーションで1秒経過すると、リアルタイムで0.5秒が経過します（CPUがその速度で実行できる場合）。</p>
+
+<h4 id="リプレイ機能">リプレイ機能</h4>
+
+<p>以下のオプションは、リプレイ機能に関連しています。リプレイモードでは、ログが読み込まれ、コントローラにいくつかのデータを提供するために使用できます。</p>
+
+<h5 id="-l-log--replay-loglog"><code class="language-plaintext highlighter-rouge">-l [log]</code>/<code class="language-plaintext highlighter-rouge">--replay-log[log]</code></h5>
+
+<p>このオプションは、指定された <code class="language-plaintext highlighter-rouge">log</code> 引数をログとして使用してリプレイモードを有効にします。デフォルトでは、これによりすべてのセンサー入力とGUIの相互作用が再生され、プラグイン、観測パイプライン、およびこれらの入力を使用してコントローラが実行されます。リプレイモードの動作は、次のオプションで微調整できます。</p>
+
+<h5 id="-m-yaml--datastore-mapping-yaml"><code class="language-plaintext highlighter-rouge">-m [yaml]</code>/<code class="language-plaintext highlighter-rouge">--datastore-mapping [yaml]</code></h5>
+
+<p>このオプションを使用すると、ログからデータストアにデータを転送するためのログからデータストアへのマッピングを指定できます。リプレイは、ログからデータを取得してデータストアに入れます。データストアに表示されるデータの種類は、ログのデータの種類に依存します。</p>
+
+<p>例えば:</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># キーはログのエントリーであり、値はデータストアのエントリーです。</span>
+<span class="na">ff</span><span class="pi">:</span> <span class="s">Log::FloatingBaseControl</span>
+<span class="na">ff_real</span><span class="pi">:</span> <span class="s">Log::FloatingBaseReal</span></code></pre></figure>
+
+<p>この機能の目的は、リプレイ中にコントローラに接続されていないシステムからの入力データを再生できるようにすることです。</p>
+
+<h5 id="-g--replay-gui-inputs-only"><code class="language-plaintext highlighter-rouge">-g</code>/<code class="language-plaintext highlighter-rouge">--replay-gui-inputs-only</code></h5>
+
+<p>センサーの入力とGUIの入力の両方を再生する代わりに、GUIの入力のみを再生します。</p>
+
+<h5 id="-e--exit-after-replay"><code class="language-plaintext highlighter-rouge">-e</code>/<code class="language-plaintext highlighter-rouge">--exit-after-replay</code></h5>
+
+<p>再生終了時に、Tickerを終了します。デフォルトの動作は、ログの最後でステップバイステップモードを有効にすることです。</p>
+
+<h5 id="--replay-outputs"><code class="language-plaintext highlighter-rouge">--replay-outputs</code></h5>
+
+<p>このオプションは、コントローラをループから削除し、以前のコントローラの出力を再生します。</p>
+
+<h4 id="replayプラグインの使用">Replayプラグインの使用</h4>
+
+<p>TickerのReplayモードに加えて、Replayプラグインも利用可能です。プラグインは、mc_rtcの構成またはコントローラの構成に以下のエントリを追加して有効化および構成することができます。</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Plugins</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Replay</span><span class="pi">]</span>
+<span class="na">Replay</span><span class="pi">:</span>
+  <span class="na">log</span><span class="pi">:</span> <span class="s">/path/to/log.bin</span>
+  <span class="na">with-inputs</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">with-gui-inputs</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">with-outputs</span><span class="pi">:</span> <span class="no">false</span>
+  <span class="na">with-datastore-config</span><span class="pi">:</span> <span class="s">/path/to/datastore-to-replay.yaml</span></code></pre></figure>
+
+<p>このReplayプラグインの最も一般的な構成は、以前のログからGUI入力を再生してシミュレーション環境で使用することです。</p>
+
+<h4 id="replayがアクティブであることを検出する">Replayがアクティブであることを検出する</h4>
+
+<p>TickerのReplayまたはReplayプラグインを介してコントローラで再生が実行されている場合、コントローラには<code class="language-plaintext highlighter-rouge">Replay::Log</code>エントリがあり、再生されている<code class="language-plaintext highlighter-rouge">mc_rtc::log::FlatLog</code>オブジェクトへの共有ポインタが含まれています。</p>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">次のチュートリアル: ログの操作</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

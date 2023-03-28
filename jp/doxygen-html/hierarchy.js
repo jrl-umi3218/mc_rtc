@@ -34,6 +34,7 @@ var hierarchy =
     [ "mc_rtc::Configuration", "structmc__rtc_1_1Configuration.html", [
       [ "mc_rtc::ConfigurationFile", "structmc__rtc_1_1ConfigurationFile.html", null ]
     ] ],
+    [ "mc_control::Ticker::Configuration", "structmc__control_1_1Ticker_1_1Configuration.html", null ],
     [ "mc_rtc::ConfigurationArrayIterator", "structmc__rtc_1_1ConfigurationArrayIterator.html", null ],
     [ "mc_rtc::ConfigurationLoader< T >", "structmc__rtc_1_1ConfigurationLoader.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_control::Contact >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1Contact_01_4.html", null ],
@@ -266,6 +267,7 @@ var hierarchy =
     [ "mc_control::GlobalPluginLoader", "structmc__control_1_1GlobalPluginLoader.html", null ],
     [ "mc_control::Gripper", "structmc__control_1_1Gripper.html", null ],
     [ "mc_rbdyn::RobotModule::Gripper", "structmc__rbdyn_1_1RobotModule_1_1Gripper.html", null ],
+    [ "mc_rtc::Logger::GUIEvent", "structmc__rtc_1_1Logger_1_1GUIEvent.html", null ],
     [ "mc_solver::GenericLoader< Derived, T >::Handle", "structmc__solver_1_1GenericLoader_1_1Handle.html", null ],
     [ "std::hash< mc_control::Contact >", "structstd_1_1hash_3_01mc__control_1_1Contact_01_4.html", null ],
     [ "IdentityFunction", null, [
@@ -289,6 +291,7 @@ var hierarchy =
     [ "mc_rtc::log::is_serializable_getter< MethodRetT(T::*)() const >", "structmc__rtc_1_1log_1_1is__serializable__getter_3_01MethodRetT_07T_1_1_5_08_07_08_01const_01_4.html", null ],
     [ "mc_rtc::log::is_serializable_member< T >", "structmc__rtc_1_1log_1_1is__serializable__member.html", null ],
     [ "mc_rtc::log::is_serializable_member< MemberT T::* >", "structmc__rtc_1_1log_1_1is__serializable__member_3_01MemberT_01T_1_1_5_01_4.html", null ],
+    [ "mc_rtc::log::IterateBinaryLogData", "structmc__rtc_1_1log_1_1IterateBinaryLogData.html", null ],
     [ "iterator", null, [
       [ "mc_rtc::SharedPtrVectorIterator< T >", "structmc__rtc_1_1SharedPtrVectorIterator.html", null ]
     ] ],
@@ -316,6 +319,7 @@ var hierarchy =
     [ "mc_rtc::gui::LineConfig", "structmc__rtc_1_1gui_1_1LineConfig.html", null ],
     [ "mc_rtc::Loader", "structmc__rtc_1_1Loader.html", null ],
     [ "mc_rbdyn::LoadRobotParameters", "structmc__rbdyn_1_1LoadRobotParameters.html", null ],
+    [ "mc_rtc::log::log_type_to_type< type >", "structmc__rtc_1_1log_1_1log__type__to__type.html", null ],
     [ "mc_rtc::Logger", "structmc__rtc_1_1Logger.html", null ],
     [ "mc_rtc::log::LogWriter< T >", "structmc__rtc_1_1log_1_1LogWriter.html", null ],
     [ "mc_filter::LowPass< T >", "structmc__filter_1_1LowPass.html", [
@@ -357,6 +361,7 @@ var hierarchy =
     ] ],
     [ "mc_control::MCGlobalController", "structmc__control_1_1MCGlobalController.html", null ],
     [ "mc_rtc::MessagePackBuilder", "structmc__rtc_1_1MessagePackBuilder.html", null ],
+    [ "mc_rtc::Logger::Meta", "structmc__rtc_1_1Logger_1_1Meta.html", null ],
     [ "mc_tasks::MetaTask", "structmc__tasks_1_1MetaTask.html", [
       [ "mc_tasks::AddRemoveContactTask", "structmc__tasks_1_1AddRemoveContactTask.html", [
         [ "mc_tasks::AddContactTask", "structmc__tasks_1_1AddContactTask.html", null ],
@@ -408,8 +413,8 @@ var hierarchy =
       [ "mc_rbdyn::RobotFrame::NewRobotFrameToken", "structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
     ] ],
     [ "mc_rbdyn::Robots::NewRobotsToken", "structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html", null ],
-    [ "mc_rbdyn::Robot::NewRobotToken", "structmc__rbdyn_1_1Robot_1_1NewRobotToken.html", null ],
     [ "mc_tvm::Robot::NewRobotToken", "structmc__tvm_1_1Robot_1_1NewRobotToken.html", null ],
+    [ "mc_rbdyn::Robot::NewRobotToken", "structmc__rbdyn_1_1Robot_1_1NewRobotToken.html", null ],
     [ "Node", null, [
       [ "mc_tvm::CoM", "structmc__tvm_1_1CoM.html", null ],
       [ "mc_tvm::Convex", "structmc__tvm_1_1Convex.html", null ],
@@ -462,6 +467,7 @@ var hierarchy =
     [ "mc_rbdyn::QuadraticGenerator", "structmc__rbdyn_1_1QuadraticGenerator.html", null ],
     [ "mc_rtc::gui::plot::Range", "structmc__rtc_1_1gui_1_1plot_1_1Range.html", null ],
     [ "mc_rtc::log::FlatLog::record", "structmc__rtc_1_1log_1_1FlatLog_1_1record.html", null ],
+    [ "mc_control::Ticker::Configuration::Replay", "structmc__control_1_1Ticker_1_1Configuration_1_1Replay.html", null ],
     [ "mc_rtc::gui::details::ReturnType< GetT >", "structmc__rtc_1_1gui_1_1details_1_1ReturnType.html", null ],
     [ "mc_rtc::gui::details::ReturnTypeImpl< GetT, is_getter >", "structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl.html", null ],
     [ "mc_rtc::gui::details::ReturnTypeImpl< GetT, false >", "structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl_3_01GetT_00_01false_01_4.html", null ],
@@ -493,6 +499,7 @@ var hierarchy =
     ] ],
     [ "mc_rbdyn::Springs", "structmc__rbdyn_1_1Springs.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::StabilizerConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html", null ],
+    [ "mc_rtc::Logger::StartEvent", "structmc__rtc_1_1Logger_1_1StartEvent.html", null ],
     [ "mc_control::fsm::State", "structmc__control_1_1fsm_1_1State.html", [
       [ "mc_control::fsm::AddRemoveContactState", "structmc__control_1_1fsm_1_1AddRemoveContactState.html", null ],
       [ "mc_control::fsm::EnableControllerState", "structmc__control_1_1fsm_1_1EnableControllerState.html", null ],
@@ -523,6 +530,7 @@ var hierarchy =
     [ "testnullptr", null, [
       [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
     ] ],
+    [ "mc_control::Ticker", "structmc__control_1_1Ticker.html", null ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],
     [ "true_type", null, [

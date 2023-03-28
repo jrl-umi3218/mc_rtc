@@ -4,5 +4,11 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_rtc::gui::details\l::CallbackOrValue\< T,\l Callback \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html"];
+  Node465 [label="ElementT",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node465 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="mc_rtc::gui::CallbackElement\l\< ElementT, Callback \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1CallbackElement.html"];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="mc_rtc::gui::VoidCallback\lElement\< ElementT, Callback \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1VoidCallbackElement.html"];
+  Node465 -> Node468 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node468 [label="mc_rtc::gui::CallbackElement\l\< ElementT, std::nullptr_t \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1CallbackElement_3_01ElementT_00_01std_1_1nullptr__t_01_4.html"];
 }

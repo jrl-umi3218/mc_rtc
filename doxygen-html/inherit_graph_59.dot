@@ -4,5 +4,11 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_rbdyn::lipm_stabilizer\l::ExternalWrenchConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html",tooltip="Parameters for the external wrenches. "];
+  Node212 [label="Matrix",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node212 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="mc_rbdyn::Gains\< 2 \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1Gains.html"];
+  Node212 -> Node214 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node214 [label="mc_rbdyn::Gains\< 3 \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1Gains.html"];
+  Node212 -> Node215 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node215 [label="mc_rbdyn::Gains\< N \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1Gains.html"];
 }

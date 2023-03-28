@@ -1,0 +1,485 @@
+
+
+
+
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>Tutorials - mc_rtc_ticker and the Replay plugin - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">Online demonstration</a>
+    </div>
+    
+      
+      
+      
+      EN
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+        <a href="/mc_rtc/jp/tutorials/tools/mc_rtc_ticker-and-replay.html">
+      
+      JP
+      
+        </a>
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>Introduction</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc and its components</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Framework usage</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/global-plugins.html">Using global plugins</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Framework tools</li>
+                    <ul>
+                      
+                        
+                        <li><strong>mc_rtc_ticker and the Replay plugin</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Control recipes</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm-main-states.html">Main FSM states</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/datastore.html">DataStore: Sharing Objects</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/observers.html">State Observation Pipelines</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/lipm-stabilizer.html">Using the LIPM Stabilizer</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Samples</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/samples/list-of-samples.html">Available sample controllers</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/samples/sample-admittance.html">Admittance sample controller</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Advanced topics</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-plugin.html">Implement a new plugin for mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/support-mc-rtc-build-static.html">Supporting MC_RTC_BUILD_STATIC in your code</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h4"><a href="#mc_rtc_ticker-options">mc_rtc_ticker options</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#-f-file--mc-config-file">-f [file]/--mc-config [file]</a></li>
+<li class="toc-entry toc-h5"><a href="#-s--step-by-step">-S/--step-by-step</a></li>
+<li class="toc-entry toc-h5"><a href="#--run-for-time">--run-for [time]</a></li>
+<li class="toc-entry toc-h5"><a href="#-s--no-sync">-s/--no-sync</a></li>
+<li class="toc-entry toc-h5"><a href="#-r-ratio--sync-ratio-ratio">-r [ratio]/--sync-ratio [ratio]</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h4"><a href="#replay-functionality">Replay functionality</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#-l-log--replay-loglog">-l [log]/--replay-log[log]</a></li>
+<li class="toc-entry toc-h5"><a href="#-m-yaml--datastore-mapping-yaml">-m [yaml]/--datastore-mapping [yaml]</a></li>
+<li class="toc-entry toc-h5"><a href="#-g--replay-gui-inputs-only">-g/--replay-gui-inputs-only</a></li>
+<li class="toc-entry toc-h5"><a href="#-e--exit-after-replay">-e/--exit-after-replay</a></li>
+<li class="toc-entry toc-h5"><a href="#--replay-outputs">--replay-outputs</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h4"><a href="#using-the-replay-plugin">Using the Replay plugin</a></li>
+<li class="toc-entry toc-h4"><a href="#detecting-the-replay-is-active">Detecting the Replay is active</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>mc_rtc_ticker and the Replay plugin</h1>
+        
+
+        <p>We have introduced the use of mc_rtc_ticker in the <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a> tutorial. In this section we will highlight the extra functionalities available in mc_rtc_ticker, the replay option it offers and the use of the “Replay” plugin.</p>
+
+<h4 id="mc_rtc_ticker-options">mc_rtc_ticker options</h4>
+
+<p>mc_rtc_ticker accepts the following options:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mc_rtc_ticker <span class="nt">--help</span>
+mc_rtc_ticker options:
+  <span class="nt">--help</span>                           Show this <span class="nb">help </span>message
+  <span class="nt">-f</span> <span class="o">[</span> <span class="nt">--mc-config</span> <span class="o">]</span> arg           Configuration given to mc_rtc
+  <span class="nt">-S</span> <span class="o">[</span> <span class="nt">--step-by-step</span> <span class="o">]</span>            Start the ticker <span class="k">in </span>step-by-step mode
+  <span class="nt">--run-for</span> arg                    Run <span class="k">for </span>the specified <span class="nb">time</span> <span class="o">(</span>seconds<span class="o">)</span>
+  <span class="nt">-s</span> <span class="o">[</span> <span class="nt">--no-sync</span> <span class="o">]</span>                 Synchronize ticker <span class="nb">time </span>with real <span class="nb">time</span>
+  <span class="nt">-r</span> <span class="o">[</span> <span class="nt">--sync-ratio</span> <span class="o">]</span> arg          Sim/real ratio <span class="k">for </span>synchronization purpose
+  <span class="nt">-l</span> <span class="o">[</span> <span class="nt">--replay-log</span> <span class="o">]</span> arg          Log to replay
+  <span class="nt">-m</span> <span class="o">[</span> <span class="nt">--datastore-mapping</span> <span class="o">]</span> arg   Mapping of log keys to datastore
+  <span class="nt">-g</span> <span class="o">[</span> <span class="nt">--replay-gui-inputs-only</span> <span class="o">]</span>  Only replay the GUI inputs
+  <span class="nt">-e</span> <span class="o">[</span> <span class="nt">--exit-after-replay</span> <span class="o">]</span>       Exit after log replay
+  <span class="nt">--replay-outputs</span>                 Enable outputs replay <span class="o">(</span>override controller<span class="o">)</span></code></pre></figure>
+
+<h5 id="-f-file--mc-config-file"><code class="language-plaintext highlighter-rouge">-f [file]</code>/<code class="language-plaintext highlighter-rouge">--mc-config [file]</code></h5>
+
+<p>This option allows to override the mc_rtc configuration file used to configure mc_rtc. The provided <code class="language-plaintext highlighter-rouge">file</code> is used to configure mc_rtc after the usual files.</p>
+
+<h5 id="-s--step-by-step"><code class="language-plaintext highlighter-rouge">-S</code>/<code class="language-plaintext highlighter-rouge">--step-by-step</code></h5>
+
+<p>This option starts the controller in step-by-step mode. In this mode, the controller does not run unless it is instructed to step for a number of iterations. This can be done via the GUI.</p>
+
+<h5 id="--run-for-time"><code class="language-plaintext highlighter-rouge">--run-for [time]</code></h5>
+
+<p>Run the ticker for the specified <code class="language-plaintext highlighter-rouge">time</code> duration (in seconds) and exit.</p>
+
+<h5 id="-s--no-sync"><code class="language-plaintext highlighter-rouge">-s</code>/<code class="language-plaintext highlighter-rouge">--no-sync</code></h5>
+
+<p>Normally the ticker synchronizes the real-time clock and the simulation time such that if one second passed in real-time, one second passed in the simulation. With this option, the synchronization mechanism is disabled and the simulation time will run as fast as possible.</p>
+
+<h5 id="-r-ratio--sync-ratio-ratio"><code class="language-plaintext highlighter-rouge">-r [ratio]</code>/<code class="language-plaintext highlighter-rouge">--sync-ratio [ratio]</code></h5>
+
+<p>Controls the target simulation-time/real-time ratio. For example, with a value of 0.5, when one second passes in the simulation, 2 seconds have passed in real-time but with a ratio of 2, when one second passes in the simulation, 0.5 second will have passed in real-time (provided the CPU is able to run that fast).</p>
+
+<h4 id="replay-functionality">Replay functionality</h4>
+
+<p>The following options are related to the replay functionality. In replay mode, a log is loaded and can be used to provide some data to the controller.</p>
+
+<h5 id="-l-log--replay-loglog"><code class="language-plaintext highlighter-rouge">-l [log]</code>/<code class="language-plaintext highlighter-rouge">--replay-log[log]</code></h5>
+
+<p>This option enables the replay-mode using the provided <code class="language-plaintext highlighter-rouge">log</code> argument as a log. By default, this will replay all sensors’ inputs and GUI interaction with and run the plugins, observation pipelines and controllers with these inputs. The behavior of the replay mode can be fine-tuned by the following options.</p>
+
+<h5 id="-m-yaml--datastore-mapping-yaml"><code class="language-plaintext highlighter-rouge">-m [yaml]</code>/<code class="language-plaintext highlighter-rouge">--datastore-mapping [yaml]</code></h5>
+
+<p>This option allows to specify a log-to-datastore mapping. The replay will take data from the log and put them in the datastore. The type of data presented in the datastore depends on the type of data in the log.</p>
+
+<p>Example configuration:</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># Keys are entry in the log, values are entry in the datastore</span>
+<span class="na">ff</span><span class="pi">:</span> <span class="s">Log::FloatingBaseControl</span>
+<span class="na">ff_real</span><span class="pi">:</span> <span class="s">Log::FloatingBaseReal</span></code></pre></figure>
+
+<p>The intent of this functionality is to allow to replay inputs data from systems that are not necessarily connected to the controller during replay.</p>
+
+<h5 id="-g--replay-gui-inputs-only"><code class="language-plaintext highlighter-rouge">-g</code>/<code class="language-plaintext highlighter-rouge">--replay-gui-inputs-only</code></h5>
+
+<p>Instead of replaying both the sensors inputs and the GUI inputs, this replays the GUI inputs only.</p>
+
+<h5 id="-e--exit-after-replay"><code class="language-plaintext highlighter-rouge">-e</code>/<code class="language-plaintext highlighter-rouge">--exit-after-replay</code></h5>
+
+<p>Exit the ticker at the end of the replay. The default behavior is to enable the step-by-step mode at the end of the log.</p>
+
+<h5 id="--replay-outputs"><code class="language-plaintext highlighter-rouge">--replay-outputs</code></h5>
+
+<p>This option removes the controller from the loop and replay the outputs of the previous controller.</p>
+
+<h4 id="using-the-replay-plugin">Using the Replay plugin</h4>
+
+<p>In addition to the Replay mode of the ticker, a <code class="language-plaintext highlighter-rouge">Replay</code> plugin is also available. The plugin can be enabled and configured by adding the following entries to either the configuration of mc_rtc or the configuration of the controller:</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Plugins</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Replay</span><span class="pi">]</span>
+<span class="na">Replay</span><span class="pi">:</span>
+  <span class="na">log</span><span class="pi">:</span> <span class="s">/path/to/log.bin</span>
+  <span class="na">with-inputs</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">with-gui-inputs</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">with-outputs</span><span class="pi">:</span> <span class="no">false</span>
+  <span class="na">with-datastore-config</span><span class="pi">:</span> <span class="s">/path/to/datastore-to-replay.yaml</span></code></pre></figure>
+
+<p>The most common configuration of this replay plugin is to replay GUI inputs from a previous log in a simulation environment.</p>
+
+<h4 id="detecting-the-replay-is-active">Detecting the Replay is active</h4>
+
+<p>When a replay is being played in the controller, either through the ticker’s replay or via the Replay plugin, the <code class="language-plaintext highlighter-rouge">Replay::Log</code> entry is available in the controller and contains a shared pointer to the <code class="language-plaintext highlighter-rouge">mc_rtc::log::FlatLog</code> object being replayed.</p>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Next tutorial: Log manipulation</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/credits.html">Credits</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

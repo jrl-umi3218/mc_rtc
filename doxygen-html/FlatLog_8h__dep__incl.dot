@@ -3,7 +3,9 @@ digraph "include/mc_rtc/log/FlatLog.h"
  // INTERACTIVE_SVG=YES
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node18 [label="include/mc_rtc/log\l/FlatLog.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node18 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node19 [label="include/mc_rtc/log\l/iterate_binary_log.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$iterate__binary__log_8h.html"];
+  Node33 [label="include/mc_rtc/log\l/FlatLog.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node33 -> Node34 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node34 [label="include/mc_control\l/Ticker.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Ticker_8h.html"];
+  Node33 -> Node35 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node35 [label="include/mc_rtc/log\l/iterate_binary_log.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$iterate__binary__log_8h.html"];
 }

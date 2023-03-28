@@ -4,11 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node457 [label="ElementT",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node457 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 [label="mc_rtc::gui::CallbackElement\l\< ElementT, Callback \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1CallbackElement.html"];
-  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="mc_rtc::gui::VoidCallback\lElement\< ElementT, Callback \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1VoidCallbackElement.html"];
-  Node457 -> Node460 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node460 [label="mc_rtc::gui::CallbackElement\l\< ElementT, std::nullptr_t \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1CallbackElement_3_01ElementT_00_01std_1_1nullptr__t_01_4.html"];
+  Node0 [label="mc_rtc::ConfigurationLoader\l\< void \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html"];
 }

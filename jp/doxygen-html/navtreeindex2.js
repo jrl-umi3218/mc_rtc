@@ -11,8 +11,8 @@ var NAVTREEINDEX2 =
 "Surface_8h.html":[4,0,0,4,35],
 "Surface_8h.html#a848cf0b2e8f6ca6f18ceba1769d9a426":[4,0,0,4,35,1],
 "Surface_8h_source.html":[4,0,0,4,35],
-"TVMController_8h.html":[4,0,0,0,20],
-"TVMController_8h_source.html":[4,0,0,0,20],
+"TVMController_8h.html":[4,0,0,0,21],
+"TVMController_8h_source.html":[4,0,0,0,21],
 "TVMQPSolver_8h.html":[4,0,0,7,17],
 "TVMQPSolver_8h.html#aa8880c7b3b89f3256f848c45c4baf87e":[4,0,0,7,17,1],
 "TVMQPSolver_8h.html#ad9b799fc8f7724cfac400ee9f2c1c0df":[4,0,0,7,17,2],
@@ -34,6 +34,8 @@ var NAVTREEINDEX2 =
 "TasksQPSolver_8h.html#a5abdc1715119d0de677d6942c18c88d3":[4,0,0,7,16,2],
 "TasksQPSolver_8h.html#a872e96c8071f94103eb253899e73347f":[4,0,0,7,16,1],
 "TasksQPSolver_8h_source.html":[4,0,0,7,16],
+"Ticker_8h.html":[4,0,0,0,20],
+"Ticker_8h_source.html":[4,0,0,0,20],
 "TrajectoryTaskGeneric_8h.html":[4,0,0,8,30],
 "TrajectoryTaskGeneric_8h_source.html":[4,0,0,8,30],
 "Trajectory_8h.html":[4,0,0,6,0,32],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "classmc__tvm_1_1VectorOrientationFunction.html#ab5dc3853ef36a209adf9ed45f73a03e3":[3,0,11,22,26],
 "classmc__tvm_1_1VectorOrientationFunction.html#abd0a93f0d2e87a1fbf5fd0bb751bd2d0":[3,0,11,22,19],
 "classmc__tvm_1_1VectorOrientationFunction.html#acfbe4473cfb5e2e9526e36fe51adf2d5":[3,0,11,22,6],
-"classmc__tvm_1_1VectorOrientationFunction.html#ad66d842fd85d9a9c9b2c8b600178ddf9":[3,0,11,22,4],
-"classmc__tvm_1_1VectorOrientationFunction.html#ad946978d158a134ff404f2a18c3f3857":[3,0,11,22,13],
-"classmc__tvm_1_1VectorOrientationFunction.html#ad9efb02b909b29f7cf131623fdced574":[3,0,11,22,7]
+"classmc__tvm_1_1VectorOrientationFunction.html#ad66d842fd85d9a9c9b2c8b600178ddf9":[3,0,11,22,4]
 };

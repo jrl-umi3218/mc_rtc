@@ -71,6 +71,7 @@ digraph "include/mc_control/fsm/states/Posture.h"
   Node48 [label="mc_rtc/log/Logger.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Logger_8h.html"];
   Node48 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node48 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node48 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node48 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node48 -> Node46 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 -> Node51 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

@@ -77,6 +77,7 @@ digraph "include/mc_tasks/CoPTask.h"
   Node51 [label="mc_rtc/log/Logger.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Logger_8h.html"];
   Node51 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node51 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node51 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node51 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node15 -> Node54 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node54 [label="mc_solver/QPSolver.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$QPSolver_8h.html"];

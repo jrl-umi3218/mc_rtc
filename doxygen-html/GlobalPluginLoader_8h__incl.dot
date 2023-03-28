@@ -91,6 +91,7 @@ digraph "include/mc_control/GlobalPluginLoader.h"
   Node4 -> Node154 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 -> Node33 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 -> Node57 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node164 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

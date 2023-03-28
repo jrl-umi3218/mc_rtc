@@ -14,6 +14,7 @@ var structmc__control_1_1MCGlobalController_1_1GlobalConfiguration =
     [ "global_plugin_configs", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a71b30a62cbfd288deb840dd294a181ec", null ],
     [ "global_plugin_paths", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a66adac4c10fc9599308e15741a15f0a6", null ],
     [ "global_plugins", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a9b7cb460139df0aa576f76bfb45e4bc2", null ],
+    [ "global_plugins_autoload", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a27279fba33e00bc1e4f16edc0db7f160", null ],
     [ "gui_server_pub_uris", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a669bd8f5926553a0091c2f2118d5d5cb", null ],
     [ "gui_server_rep_uris", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a86b0d00d5943bf98a345f513b03f5388", null ],
     [ "gui_timestep", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#aefc4cb0145c34e7595b346186ed8a2d6", null ],

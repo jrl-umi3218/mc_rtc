@@ -891,6 +891,7 @@
     <filename>ControllerServer_8h</filename>
     <includes id="MCController_8h" name="MCController.h" local="no" imported="no">mc_control/MCController.h</includes>
     <includes id="StateBuilder_8h" name="StateBuilder.h" local="no" imported="no">mc_rtc/gui/StateBuilder.h</includes>
+    <includes id="Logger_8h" name="Logger.h" local="no" imported="no">mc_rtc/log/Logger.h</includes>
     <class kind="struct">mc_control::ControllerServer</class>
     <namespace>mc_control</namespace>
   </compound>
@@ -1378,6 +1379,17 @@
     <includes id="SCHAddon_8h" name="SCHAddon.h" local="no" imported="no">mc_rbdyn/SCHAddon.h</includes>
     <includes id="surface__hull_8h" name="surface_hull.h" local="no" imported="no">mc_rbdyn/surface_hull.h</includes>
     <class kind="struct">mc_control::SimulationContactPair</class>
+    <namespace>mc_control</namespace>
+  </compound>
+  <compound kind="file">
+    <name>Ticker.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/</path>
+    <filename>Ticker_8h</filename>
+    <includes id="mc__global__controller_8h" name="mc_global_controller.h" local="no" imported="no">mc_control/mc_global_controller.h</includes>
+    <includes id="FlatLog_8h" name="FlatLog.h" local="no" imported="no">mc_rtc/log/FlatLog.h</includes>
+    <class kind="struct">mc_control::Ticker</class>
+    <class kind="struct">mc_control::Ticker::Configuration</class>
+    <class kind="struct">mc_control::Ticker::Configuration::Replay</class>
     <namespace>mc_control</namespace>
   </compound>
   <compound kind="file">
@@ -4257,6 +4269,7 @@
     <name>FlatLog.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/log/</path>
     <filename>FlatLog_8h</filename>
+    <includes id="Logger_8h" name="Logger.h" local="no" imported="no">mc_rtc/log/Logger.h</includes>
     <includes id="log_2utils_8h" name="utils.h" local="no" imported="no">mc_rtc/log/utils.h</includes>
     <includes id="utils__api_8h" name="utils_api.h" local="no" imported="no">mc_rtc/utils_api.h</includes>
     <class kind="struct">mc_rtc::log::FlatLog</class>
@@ -4271,20 +4284,27 @@
     <filename>iterate__binary__log_8h</filename>
     <includes id="MessagePackBuilder_8h" name="MessagePackBuilder.h" local="no" imported="no">mc_rtc/MessagePackBuilder.h</includes>
     <includes id="FlatLog_8h" name="FlatLog.h" local="no" imported="no">mc_rtc/log/FlatLog.h</includes>
-    <namespace>mc_rtc</namespace>
+    <class kind="struct">mc_rtc::log::IterateBinaryLogData</class>
     <namespace>mc_rtc::log</namespace>
-    <member kind="typedef">
-      <type>std::function&lt; bool(const std::vector&lt; std::string &gt; &amp;, std::vector&lt; FlatLog::record &gt; &amp;, double)&gt;</type>
-      <name>binary_log_callback</name>
-      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a2e5bbb4664bc287ec78732a63a7cd646</anchor>
-      <arglist></arglist>
-    </member>
     <member kind="typedef">
       <type>std::function&lt; void(mc_rtc::MessagePackBuilder &amp;, const std::vector&lt; std::string &gt; &amp;)&gt;</type>
       <name>copy_callback</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
       <anchor>a9c09aed839e3ee87a5be3e286a3e8903</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::function&lt; bool(IterateBinaryLogData)&gt;</type>
+      <name>iterate_binary_log_callback</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>accba0888f9f79d606fd31d276650c8ce</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::function&lt; bool(const std::vector&lt; std::string &gt; &amp;, std::vector&lt; FlatLog::record &gt; &amp;, double)&gt;</type>
+      <name>binary_log_callback</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a2e5bbb4664bc287ec78732a63a7cd646</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -4298,14 +4318,21 @@
       <type>bool MC_RTC_UTILS_DLLAPI</type>
       <name>iterate_binary_log</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>ae939074ac3cce1fde0bb5e0ea7e90c86</anchor>
+      <anchor>a70dfcae1b3566ebd23adecd27752e15f</anchor>
+      <arglist>(const std::string &amp;fpath, const iterate_binary_log_callback &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>iterate_binary_log</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a4167ee6992725b9b1545f55118560002</anchor>
       <arglist>(const std::string &amp;fpath, const binary_log_copy_callback &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</arglist>
     </member>
     <member kind="function">
-      <type>bool MC_RTC_UTILS_DLLAPI</type>
+      <type>bool</type>
       <name>iterate_binary_log</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a51b18863af2ea7f3e981b32be6b2174f</anchor>
+      <anchor>a5a2dd6ca6dfa01179bbe077ab11abc67</anchor>
       <arglist>(const std::string &amp;fpath, const binary_log_callback &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</arglist>
     </member>
   </compound>
@@ -4316,9 +4343,13 @@
     <includes id="log_2utils_8h" name="utils.h" local="no" imported="no">mc_rtc/log/utils.h</includes>
     <includes id="logging_8h" name="logging.h" local="no" imported="no">mc_rtc/logging.h</includes>
     <includes id="utils__api_8h" name="utils_api.h" local="no" imported="no">mc_rtc/utils_api.h</includes>
+    <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
     <class kind="struct">mc_rtc::Logger</class>
     <class kind="struct">mc_rtc::Logger::KeyAddedEvent</class>
     <class kind="struct">mc_rtc::Logger::KeyRemovedEvent</class>
+    <class kind="struct">mc_rtc::Logger::GUIEvent</class>
+    <class kind="struct">mc_rtc::Logger::StartEvent</class>
+    <class kind="struct">mc_rtc::Logger::Meta</class>
     <namespace>mc_rtc</namespace>
     <member kind="define">
       <type>#define</type>
@@ -4352,6 +4383,7 @@
     <class kind="struct">mc_rtc::log::callback_is_serializable</class>
     <class kind="struct">mc_rtc::log::callback_is_serializable&lt; T, void_t&lt; typename std::result_of&lt; T()&gt;::type &gt; &gt;</class>
     <class kind="struct">mc_rtc::log::LogWriter</class>
+    <class kind="struct">mc_rtc::log::log_type_to_type</class>
     <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::log</namespace>
     <member kind="define">
@@ -4361,11 +4393,25 @@
       <anchor>a5e23e6dc4a586d5ce355088cf563b4b9</anchor>
       <arglist>(CPPT, ENUMV)</arglist>
     </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>log_2utils_8h.html</anchorfile>
+      <anchor>a7b505639727dc8657060d966a447774c</anchor>
+      <arglist>(ENUMV, CPPT)</arglist>
+    </member>
     <member kind="typedef">
       <type>void</type>
       <name>void_t</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
       <anchor>a50801f83a6ed3945d8cc199c9b3c4ce3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>typename log_type_to_type&lt; type &gt;::type</type>
+      <name>log_type_to_type_t</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a2561dc95c0d9e75798fb81317aceae8b</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumeration">
@@ -4578,6 +4624,153 @@
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
       <anchor>aa0c490e185c40165c27a46a5a22517f3</anchor>
       <arglist>(mc_rbdyn::Gains6d, Vector6d)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>aa770174431aaede54b4a01e08165626a</anchor>
+      <arglist>(Bool, bool)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a11675a0ce13cffedbcc3dbd318bd3639</anchor>
+      <arglist>(Int8_t, int8_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>afe59f9c40d3c25aa89c76d64aeb775f7</anchor>
+      <arglist>(Int16_t, int16_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a2c21e883086791393e66aa5c6c60c930</anchor>
+      <arglist>(Int32_t, int32_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>ae98539796954d0182fc058c5febb8426</anchor>
+      <arglist>(Int64_t, int64_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a94ec5409bb680c48009715ed25fe8fba</anchor>
+      <arglist>(Uint8_t, uint8_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>ae403dd2d70d85e7a43e1ae139fd9f707</anchor>
+      <arglist>(Uint16_t, uint16_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>ac6ad3063ec6ee57aa397cf636107bcde</anchor>
+      <arglist>(Uint32_t, uint32_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>aa603c0eea52c8d772e74a50dccf32aee</anchor>
+      <arglist>(Uint64_t, uint64_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>ad2b4cb02d945c594daa26c4d9feeee4f</anchor>
+      <arglist>(Float, float)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>aabb7abc763b27e418df7d0096ddd3f84</anchor>
+      <arglist>(Double, double)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>ac49fedfcc933f1af2554fc26f509e247</anchor>
+      <arglist>(String, std::string)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a343b18ebc60f4f13bdcaf7050ad61140</anchor>
+      <arglist>(Vector2d, Eigen::Vector2d)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a045770b65be467c0c0d9ed24e4515d13</anchor>
+      <arglist>(Vector3d, Eigen::Vector3d)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>ae04e0fcaf17c7eaff04302c9177bbffe</anchor>
+      <arglist>(Vector6d, Eigen::Vector6d)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a2155b830cb24a83a16d9cf3587081c22</anchor>
+      <arglist>(VectorXd, Eigen::VectorXd)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a37157b4ed2a24a508597aedb6ae92711</anchor>
+      <arglist>(Quaterniond, Eigen::Quaterniond)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a247ef2ae83ef97cd37dd65bb1923f9f7</anchor>
+      <arglist>(PTransformd, sva::PTransformd)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a03cf386c809be063b97c246e66aaa63f</anchor>
+      <arglist>(ForceVecd, sva::ForceVecd)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a0d1fe5988de68906c71b868317bdeeb1</anchor>
+      <arglist>(MotionVecd, sva::MotionVecd)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a8df0101c1870d2156a9009ab9019d154</anchor>
+      <arglist>(VectorDouble, std::vector&lt; double &gt;)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -11141,6 +11334,53 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_control::Ticker::Configuration</name>
+    <filename>structmc__control_1_1Ticker_1_1Configuration.html</filename>
+    <class kind="struct">mc_control::Ticker::Configuration::Replay</class>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>mc_rtc_configuration</name>
+      <anchorfile>structmc__control_1_1Ticker_1_1Configuration.html</anchorfile>
+      <anchor>ae0e1da99c175930cc138eec55d49b853</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>step_by_step</name>
+      <anchorfile>structmc__control_1_1Ticker_1_1Configuration.html</anchorfile>
+      <anchor>afffda8b966f8cf4ffb730a4b317d1533</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>run_for</name>
+      <anchorfile>structmc__control_1_1Ticker_1_1Configuration.html</anchorfile>
+      <anchor>a1e006e136d75d76dc946431db52ac1b6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>no_sync</name>
+      <anchorfile>structmc__control_1_1Ticker_1_1Configuration.html</anchorfile>
+      <anchor>a11a40ada8b788cc66cc1f279edfaa6d1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>sync_ratio</name>
+      <anchorfile>structmc__control_1_1Ticker_1_1Configuration.html</anchorfile>
+      <anchor>a6aa66504fbfe23a71688c86b33bd98fd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>Replay</type>
+      <name>replay_configuration</name>
+      <anchorfile>structmc__control_1_1Ticker_1_1Configuration.html</anchorfile>
+      <anchor>a0a339189fc6131871afedf65e7bfcd9a</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rtc::ConfigurationArrayIterator</name>
     <filename>structmc__rtc_1_1ConfigurationArrayIterator.html</filename>
     <member kind="function">
@@ -13845,6 +14085,27 @@
       <anchor>a9f21b40efd63fa7a522ef961daad027f</anchor>
       <arglist>() const</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>set_logger</name>
+      <anchorfile>structmc__control_1_1ControllerServer.html</anchorfile>
+      <anchor>a2b6ea35a313795468d422ba43c391a8c</anchor>
+      <arglist>(std::shared_ptr&lt; mc_rtc::Logger &gt; logger) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>push_requests</name>
+      <anchorfile>structmc__control_1_1ControllerServer.html</anchorfile>
+      <anchor>a0222d9d282c5e61c4694410114c181a1</anchor>
+      <arglist>(const std::vector&lt; mc_rtc::Logger::GUIEvent &gt; &amp;requests)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>update_rate</name>
+      <anchorfile>structmc__control_1_1ControllerServer.html</anchorfile>
+      <anchor>a77ce811b87dba51cca927267cfb94dec</anchor>
+      <arglist>(double dt, double server_dt)</arglist>
+    </member>
   </compound>
   <compound kind="struct">
     <name>mc_solver::QPSolver::ControllerToken</name>
@@ -16523,6 +16784,20 @@
       <anchor>a956945a4e75e5814a1910b5b560e9283</anchor>
       <arglist>(const std::string &amp;entry, size_t i) const</arglist>
     </member>
+    <member kind="function">
+      <type>const std::vector&lt; std::vector&lt; Logger::GUIEvent &gt; &gt; &amp;</type>
+      <name>guiEvents</name>
+      <anchorfile>structmc__rtc_1_1log_1_1FlatLog.html</anchorfile>
+      <anchor>ad1b26e3c1e38fac12edf862041ae6194</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::optional&lt; Logger::Meta &gt; &amp;</type>
+      <name>meta</name>
+      <anchorfile>structmc__rtc_1_1log_1_1FlatLog.html</anchorfile>
+      <anchor>a751fc2b2a4293f4ee2900cc75732d251</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
   </compound>
   <compound kind="struct">
     <name>mc_rbdyn::Flexibility</name>
@@ -17586,6 +17861,81 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_tvm::Frame</name>
+    <filename>structmc__tvm_1_1Frame.html</filename>
+    <class kind="struct">mc_tvm::Frame::NewFrameToken</class>
+    <member kind="function">
+      <type></type>
+      <name>Frame</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>a7ceda4d8c8c45be27bd9b808e415f89d</anchor>
+      <arglist>(NewFrameToken, const mc_rbdyn::Frame &amp;frame)</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::PTransformd &amp;</type>
+      <name>position</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>a9bbd1d1ff27e4f5d5ec4f85eec4b93bc</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::MotionVecd &amp;</type>
+      <name>velocity</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>a8f0827e1f5b2f2bc90a3ecbb5afa28e8</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Frame &amp;</type>
+      <name>frame</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>a96c00fb84238c2dca4907934e99c6a95</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>updatePosition</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>af8cc091e8c093bdaebdcc006aba6a34a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>updateVelocity</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>a7b7e2b9e307e6a42d1301e3a3d411826</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>const mc_rbdyn::Frame &amp;</type>
+      <name>frame_</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>a3fc3e7bcafda4e2093869ef4930b57b7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::PTransformd</type>
+      <name>position_</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>a0900471fd77a77c7d40b043e59b912aa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::MotionVecd</type>
+      <name>velocity_</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>acf3584761038bd036b4d18cd72963247</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="friend">
+      <type>friend struct</type>
+      <name>mc_rbdyn::Frame</name>
+      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
+      <anchor>aa42dab4e4f51adfb5fa6af7d25fdcdbc</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rbdyn::Frame</name>
     <filename>structmc__rbdyn_1_1Frame.html</filename>
     <base>shared&lt; Frame &gt;</base>
@@ -17742,81 +18092,6 @@
       <name>tvm_frame_</name>
       <anchorfile>structmc__rbdyn_1_1Frame.html</anchorfile>
       <anchor>a2a73c1e29441f8f488ed7511f24c391f</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>mc_tvm::Frame</name>
-    <filename>structmc__tvm_1_1Frame.html</filename>
-    <class kind="struct">mc_tvm::Frame::NewFrameToken</class>
-    <member kind="function">
-      <type></type>
-      <name>Frame</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>a7ceda4d8c8c45be27bd9b808e415f89d</anchor>
-      <arglist>(NewFrameToken, const mc_rbdyn::Frame &amp;frame)</arglist>
-    </member>
-    <member kind="function">
-      <type>const sva::PTransformd &amp;</type>
-      <name>position</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>a9bbd1d1ff27e4f5d5ec4f85eec4b93bc</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const sva::MotionVecd &amp;</type>
-      <name>velocity</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>a8f0827e1f5b2f2bc90a3ecbb5afa28e8</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::Frame &amp;</type>
-      <name>frame</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>a96c00fb84238c2dca4907934e99c6a95</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>updatePosition</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>af8cc091e8c093bdaebdcc006aba6a34a</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>updateVelocity</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>a7b7e2b9e307e6a42d1301e3a3d411826</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>const mc_rbdyn::Frame &amp;</type>
-      <name>frame_</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>a3fc3e7bcafda4e2093869ef4930b57b7</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>sva::PTransformd</type>
-      <name>position_</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>a0900471fd77a77c7d40b043e59b912aa</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>sva::MotionVecd</type>
-      <name>velocity_</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>acf3584761038bd036b4d18cd72963247</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="friend">
-      <type>friend struct</type>
-      <name>mc_rbdyn::Frame</name>
-      <anchorfile>structmc__tvm_1_1Frame.html</anchorfile>
-      <anchor>aa42dab4e4f51adfb5fa6af7d25fdcdbc</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -18799,6 +19074,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
+      <type>std::vector&lt; std::string &gt;</type>
+      <name>global_plugins_autoload</name>
+      <anchorfile>structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html</anchorfile>
+      <anchor>a27279fba33e00bc1e4f16edc0db7f160</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
       <type>std::unordered_map&lt; std::string, mc_rtc::Configuration &gt;</type>
       <name>global_plugin_configs</name>
       <anchorfile>structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html</anchorfile>
@@ -19634,6 +19916,31 @@
       <anchorfile>structmc__rbdyn_1_1GripperSurface.html</anchorfile>
       <anchor>a88a3339b86716f672000736fefbb267a</anchor>
       <arglist>() const</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::Logger::GUIEvent</name>
+    <filename>structmc__rtc_1_1Logger_1_1GUIEvent.html</filename>
+    <member kind="variable">
+      <type>std::vector&lt; std::string &gt;</type>
+      <name>category</name>
+      <anchorfile>structmc__rtc_1_1Logger_1_1GUIEvent.html</anchorfile>
+      <anchor>abfe19d4390e5e40ba8436482d31c3963</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>name</name>
+      <anchorfile>structmc__rtc_1_1Logger_1_1GUIEvent.html</anchorfile>
+      <anchor>a0f10775c504705d32b86cadc64f93c28</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>mc_rtc::Configuration</type>
+      <name>data</name>
+      <anchorfile>structmc__rtc_1_1Logger_1_1GUIEvent.html</anchorfile>
+      <anchor>a12763e52080303936e94aa71e1793bc4</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -20974,6 +21281,66 @@
     <templarg></templarg>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::log::IterateBinaryLogData</name>
+    <filename>structmc__rtc_1_1log_1_1IterateBinaryLogData.html</filename>
+    <member kind="variable">
+      <type>const std::vector&lt; std::string &gt; &amp;</type>
+      <name>keys</name>
+      <anchorfile>structmc__rtc_1_1log_1_1IterateBinaryLogData.html</anchorfile>
+      <anchor>acb85602dd9f879ebad0b47b33b2d9529</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; FlatLog::record &gt; &amp;</type>
+      <name>records</name>
+      <anchorfile>structmc__rtc_1_1log_1_1IterateBinaryLogData.html</anchorfile>
+      <anchor>a3e314425b49f11964e4bba451179d80e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; Logger::GUIEvent &gt; &amp;</type>
+      <name>gui_events</name>
+      <anchorfile>structmc__rtc_1_1log_1_1IterateBinaryLogData.html</anchorfile>
+      <anchor>ad9baaf27e9913cbaf8efb2ee60ef6b96</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::optional&lt; double &gt;</type>
+      <name>time</name>
+      <anchorfile>structmc__rtc_1_1log_1_1IterateBinaryLogData.html</anchorfile>
+      <anchor>a3db9fd05afaf6af9d0f1575a32a4b0f0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const copy_callback &amp;</type>
+      <name>copy_cb</name>
+      <anchorfile>structmc__rtc_1_1log_1_1IterateBinaryLogData.html</anchorfile>
+      <anchor>aab2b1a76c240e4cf3f182a051351e08b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const char *</type>
+      <name>raw_data</name>
+      <anchorfile>structmc__rtc_1_1log_1_1IterateBinaryLogData.html</anchorfile>
+      <anchor>a48287d95ef4bd5424fa4b2c832468e2e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>size_t</type>
+      <name>raw_data_size</name>
+      <anchorfile>structmc__rtc_1_1log_1_1IterateBinaryLogData.html</anchorfile>
+      <anchor>adfe30d5885c6684b3a8c0ef15bd5efd8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const std::optional&lt; Logger::Meta &gt; &amp;</type>
+      <name>meta</name>
+      <anchorfile>structmc__rtc_1_1log_1_1IterateBinaryLogData.html</anchorfile>
+      <anchor>a020f82174e62c280ec64fb9150034e84</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rbdyn::JointSensor</name>
     <filename>structmc__rbdyn_1_1JointSensor.html</filename>
     <member kind="function">
@@ -22004,10 +22371,18 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::log::log_type_to_type</name>
+    <filename>structmc__rtc_1_1log_1_1log__type__to__type.html</filename>
+    <templarg>type</templarg>
+  </compound>
+  <compound kind="struct">
     <name>mc_rtc::Logger</name>
     <filename>structmc__rtc_1_1Logger.html</filename>
+    <class kind="struct">mc_rtc::Logger::GUIEvent</class>
     <class kind="struct">mc_rtc::Logger::KeyAddedEvent</class>
     <class kind="struct">mc_rtc::Logger::KeyRemovedEvent</class>
+    <class kind="struct">mc_rtc::Logger::Meta</class>
+    <class kind="struct">mc_rtc::Logger::StartEvent</class>
     <member kind="enumeration">
       <type></type>
       <name>Policy</name>
@@ -22025,10 +22400,10 @@
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>std::variant&lt; KeyAddedEvent, KeyRemovedEvent &gt;</type>
+      <type>std::variant&lt; KeyAddedEvent, KeyRemovedEvent, GUIEvent, StartEvent &gt;</type>
       <name>LogEvent</name>
       <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
-      <anchor>a3d000eb7adffb8f9a0a016466f232e31</anchor>
+      <anchor>a3318dce8133e681fa99ccb9846cd9309</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
@@ -22051,6 +22426,20 @@
       <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
       <anchor>a986b2719c1337aa9d1e84e2b0b34481c</anchor>
       <arglist>(const Policy &amp;policy, const std::string &amp;directory, const std::string &amp;tmpl)</arglist>
+    </member>
+    <member kind="function">
+      <type>Meta &amp;</type>
+      <name>meta</name>
+      <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
+      <anchor>a84c1f9deeea57b96bf403d07100a7d36</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Meta &amp;</type>
+      <name>meta</name>
+      <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
+      <anchor>a011c5b72b4abffc58c3852476416d1ae</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -22107,6 +22496,13 @@
       <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
       <anchor>a6c2708ce7007adcfe7eca5cc3d8f1801</anchor>
       <arglist>(const SourceT *source, const std::string &amp;name, CallbackT &amp;&amp;get_fn, Args &amp;&amp;... args)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>addGUIEvent</name>
+      <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
+      <anchor>a6d0513663a7abdaff28305f411765d95</anchor>
+      <arglist>(GUIEvent &amp;&amp;event)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -25529,6 +25925,38 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::Logger::Meta</name>
+    <filename>structmc__rtc_1_1Logger_1_1Meta.html</filename>
+    <member kind="variable">
+      <type>double</type>
+      <name>timestep</name>
+      <anchorfile>structmc__rtc_1_1Logger_1_1Meta.html</anchorfile>
+      <anchor>ab19e8897f59d32d5da4592893c316118</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>main_robot</name>
+      <anchorfile>structmc__rtc_1_1Logger_1_1Meta.html</anchorfile>
+      <anchor>a509d404dd41820cde2a4a4c16b9fc5a7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; std::string &gt;</type>
+      <name>main_robot_module</name>
+      <anchorfile>structmc__rtc_1_1Logger_1_1Meta.html</anchorfile>
+      <anchor>aa2bfe7db469f9895af09978d8696bdb2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::map&lt; std::string, sva::PTransformd &gt;</type>
+      <name>init</name>
+      <anchorfile>structmc__rtc_1_1Logger_1_1Meta.html</anchorfile>
+      <anchor>ac8282390c3f555dd49533985cdf46ab2</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_control::fsm::MetaState</name>
     <filename>structmc__control_1_1fsm_1_1MetaState.html</filename>
     <base>mc_control::fsm::State</base>
@@ -26204,12 +26632,12 @@
     <filename>structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html</filename>
   </compound>
   <compound kind="struct">
-    <name>mc_rbdyn::Robot::NewRobotToken</name>
-    <filename>structmc__rbdyn_1_1Robot_1_1NewRobotToken.html</filename>
-  </compound>
-  <compound kind="struct">
     <name>mc_tvm::Robot::NewRobotToken</name>
     <filename>structmc__tvm_1_1Robot_1_1NewRobotToken.html</filename>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rbdyn::Robot::NewRobotToken</name>
+    <filename>structmc__rbdyn_1_1Robot_1_1NewRobotToken.html</filename>
   </compound>
   <compound kind="struct">
     <name>mc_rtc::gui::details::NotAGetter</name>
@@ -30106,6 +30534,59 @@
       <anchorfile>structmc__tasks_1_1RemoveContactTask.html</anchorfile>
       <anchor>a2015e5fecd242b335889e417ef01f98b</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, mc_rbdyn::Contact &amp;contact, double speed=0.01, double stiffness=2, double weight=1000, Eigen::Vector3d *userT_0_s=nullptr)</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_control::Ticker::Configuration::Replay</name>
+    <filename>structmc__control_1_1Ticker_1_1Configuration_1_1Replay.html</filename>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>log</name>
+      <anchorfile>structmc__control_1_1Ticker_1_1Configuration_1_1Replay.html</anchorfile>
+      <anchor>a8756ef147176332ae459930573660ede</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>with_inputs</name>
+      <anchorfile>structmc__control_1_1Ticker_1_1Configuration_1_1Replay.html</anchorfile>
+      <anchor>a73680e607bd4b2f3387c794e57264549</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>with_gui_inputs</name>
+      <anchorfile>structmc__control_1_1Ticker_1_1Configuration_1_1Replay.html</anchorfile>
+      <anchor>a5d77781d2071fbd81a5346754a23ffed</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>with_datastore_config</name>
+      <anchorfile>structmc__control_1_1Ticker_1_1Configuration_1_1Replay.html</anchorfile>
+      <anchor>a6565129137bce97a78dabc8a6a65a092</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>with_outputs</name>
+      <anchorfile>structmc__control_1_1Ticker_1_1Configuration_1_1Replay.html</anchorfile>
+      <anchor>a46147a871f12bf44a34768f16347eb3c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>stop_after_log</name>
+      <anchorfile>structmc__control_1_1Ticker_1_1Configuration_1_1Replay.html</anchorfile>
+      <anchor>a6f73fce0484689054816e54ba8299161</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>exit_after_log</name>
+      <anchorfile>structmc__control_1_1Ticker_1_1Configuration_1_1Replay.html</anchorfile>
+      <anchor>a0baf977c18bf9ca67fdf05c51ce98ede</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -38659,6 +39140,10 @@
       <arglist></arglist>
     </member>
   </compound>
+  <compound kind="struct">
+    <name>mc_rtc::Logger::StartEvent</name>
+    <filename>structmc__rtc_1_1Logger_1_1StartEvent.html</filename>
+  </compound>
   <compound kind="class">
     <name>mc_control::fsm::State</name>
     <filename>structmc__control_1_1fsm_1_1State.html</filename>
@@ -39583,14 +40068,14 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_control::fsm::TasksController</name>
-    <filename>structmc__control_1_1fsm_1_1TasksController.html</filename>
-    <base>BackendSpecificController&lt; MCController::Backend::Tasks, mc_solver::TasksQPSolver &gt;</base>
-  </compound>
-  <compound kind="struct">
     <name>mc_control::TasksController</name>
     <filename>structmc__control_1_1TasksController.html</filename>
     <base>mc_control::details::BackendSpecificController</base>
+  </compound>
+  <compound kind="struct">
+    <name>mc_control::fsm::TasksController</name>
+    <filename>structmc__control_1_1fsm_1_1TasksController.html</filename>
+    <base>BackendSpecificController&lt; MCController::Backend::Tasks, mc_solver::TasksQPSolver &gt;</base>
   </compound>
   <compound kind="struct">
     <name>mc_solver::TasksQPSolver</name>
@@ -39763,6 +40248,144 @@
       <anchorfile>structmc__solver_1_1TasksQPSolver.html</anchorfile>
       <anchor>a22fc891d36a56b4c2ecfc3d14fa86fcd</anchor>
       <arglist>(const QPSolver &amp;solver) noexcept</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_control::Ticker</name>
+    <filename>structmc__control_1_1Ticker.html</filename>
+    <class kind="struct">mc_control::Ticker::Configuration</class>
+    <member kind="function">
+      <type></type>
+      <name>Ticker</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>aa420d65c7d8a4ebdbde2d6704e414711</anchor>
+      <arglist>(const Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>af57b19c75f07ff5e05331e869ee19b44</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>step</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>a62ad01b0fc7d907618b10afb67c6ec59</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>run</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>a1998ef0f665e93db398011cd3c4888d9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>elapsed_time</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>acd071764c08457b4da48e207f931c042</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_control::MCGlobalController &amp;</type>
+      <name>controller</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>af5d8f9d3590a0bfc0705705f34538043</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_control::MCGlobalController &amp;</type>
+      <name>controller</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>a9e8b3ddaac5cf0672c352346abe58126</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>simulate_sensors</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>ab264b06fa788bcbfc3a3e2b5fd6e6233</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>setup_gui</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>a382d8380f617fa216d41cc0798db14c0</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>set_time</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>abb5ef7d4300ce9c9c69e989d6fc33012</anchor>
+      <arglist>(double t)</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Configuration</type>
+      <name>config_</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>abfc9323fc0d54e5cbacde3c4cff8f90a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_control::MCGlobalController</type>
+      <name>gc_</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>a11bb62db68faa9beb1d64e6f2cc701b5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::shared_ptr&lt; mc_rtc::log::FlatLog &gt;</type>
+      <name>log_</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>a8e7616146fdfcc4978634b7e1f2ed21e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>size_t</type>
+      <name>iters_</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>a249c0c480c267fae35c477f5e9883938</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>sim_real_ratio_</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>abc8e8c3924337e5e7ada16e458207cfb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::atomic&lt; bool &gt;</type>
+      <name>do_reset_</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>ad70d97b2ffbdad1c1eed798702d5cf7e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>running_</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>a0eef2572d3b914d68dc202016d4e4959</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>replay_done_</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>ad6859b8fc6a761d7f330d232776e709c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>int64_t</type>
+      <name>rem_steps_</name>
+      <anchorfile>structmc__control_1_1Ticker.html</anchorfile>
+      <anchor>a84e0e700174c296a97fc28af37e071e3</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -41783,6 +42406,7 @@
     <class kind="struct">mc_control::PythonRWCallback</class>
     <class kind="struct">mc_control::SimulationContactPair</class>
     <class kind="struct">mc_control::TasksController</class>
+    <class kind="struct">mc_control::Ticker</class>
     <class kind="struct">mc_control::TVMController</class>
     <member kind="typedef">
       <type>mc_rtc::Configuration</type>
@@ -43879,19 +44503,28 @@
     <class kind="struct">mc_rtc::log::is_serializable_getter&lt; MethodRetT(T::*)() const &gt;</class>
     <class kind="struct">mc_rtc::log::is_serializable_member</class>
     <class kind="struct">mc_rtc::log::is_serializable_member&lt; MemberT T::* &gt;</class>
+    <class kind="struct">mc_rtc::log::IterateBinaryLogData</class>
+    <class kind="struct">mc_rtc::log::log_type_to_type</class>
     <class kind="struct">mc_rtc::log::LogWriter</class>
-    <member kind="typedef">
-      <type>std::function&lt; bool(const std::vector&lt; std::string &gt; &amp;, std::vector&lt; FlatLog::record &gt; &amp;, double)&gt;</type>
-      <name>binary_log_callback</name>
-      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a2e5bbb4664bc287ec78732a63a7cd646</anchor>
-      <arglist></arglist>
-    </member>
     <member kind="typedef">
       <type>std::function&lt; void(mc_rtc::MessagePackBuilder &amp;, const std::vector&lt; std::string &gt; &amp;)&gt;</type>
       <name>copy_callback</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
       <anchor>a9c09aed839e3ee87a5be3e286a3e8903</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::function&lt; bool(IterateBinaryLogData)&gt;</type>
+      <name>iterate_binary_log_callback</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>accba0888f9f79d606fd31d276650c8ce</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::function&lt; bool(const std::vector&lt; std::string &gt; &amp;, std::vector&lt; FlatLog::record &gt; &amp;, double)&gt;</type>
+      <name>binary_log_callback</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a2e5bbb4664bc287ec78732a63a7cd646</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -43906,6 +44539,13 @@
       <name>void_t</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
       <anchor>a50801f83a6ed3945d8cc199c9b3c4ce3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>typename log_type_to_type&lt; type &gt;::type</type>
+      <name>log_type_to_type_t</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a2561dc95c0d9e75798fb81317aceae8b</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumeration">
@@ -43948,14 +44588,21 @@
       <type>bool MC_RTC_UTILS_DLLAPI</type>
       <name>iterate_binary_log</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>ae939074ac3cce1fde0bb5e0ea7e90c86</anchor>
+      <anchor>a70dfcae1b3566ebd23adecd27752e15f</anchor>
+      <arglist>(const std::string &amp;fpath, const iterate_binary_log_callback &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>iterate_binary_log</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a4167ee6992725b9b1545f55118560002</anchor>
       <arglist>(const std::string &amp;fpath, const binary_log_copy_callback &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</arglist>
     </member>
     <member kind="function">
-      <type>bool MC_RTC_UTILS_DLLAPI</type>
+      <type>bool</type>
       <name>iterate_binary_log</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a51b18863af2ea7f3e981b32be6b2174f</anchor>
+      <anchor>a5a2dd6ca6dfa01179bbe077ab11abc67</anchor>
       <arglist>(const std::string &amp;fpath, const binary_log_callback &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</arglist>
     </member>
     <member kind="function">
@@ -44139,6 +44786,153 @@
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
       <anchor>aa0c490e185c40165c27a46a5a22517f3</anchor>
       <arglist>(mc_rbdyn::Gains6d, Vector6d)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>aa770174431aaede54b4a01e08165626a</anchor>
+      <arglist>(Bool, bool)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a11675a0ce13cffedbcc3dbd318bd3639</anchor>
+      <arglist>(Int8_t, int8_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>afe59f9c40d3c25aa89c76d64aeb775f7</anchor>
+      <arglist>(Int16_t, int16_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a2c21e883086791393e66aa5c6c60c930</anchor>
+      <arglist>(Int32_t, int32_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>ae98539796954d0182fc058c5febb8426</anchor>
+      <arglist>(Int64_t, int64_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a94ec5409bb680c48009715ed25fe8fba</anchor>
+      <arglist>(Uint8_t, uint8_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>ae403dd2d70d85e7a43e1ae139fd9f707</anchor>
+      <arglist>(Uint16_t, uint16_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>ac6ad3063ec6ee57aa397cf636107bcde</anchor>
+      <arglist>(Uint32_t, uint32_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>aa603c0eea52c8d772e74a50dccf32aee</anchor>
+      <arglist>(Uint64_t, uint64_t)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>ad2b4cb02d945c594daa26c4d9feeee4f</anchor>
+      <arglist>(Float, float)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>aabb7abc763b27e418df7d0096ddd3f84</anchor>
+      <arglist>(Double, double)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>ac49fedfcc933f1af2554fc26f509e247</anchor>
+      <arglist>(String, std::string)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a343b18ebc60f4f13bdcaf7050ad61140</anchor>
+      <arglist>(Vector2d, Eigen::Vector2d)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a045770b65be467c0c0d9ed24e4515d13</anchor>
+      <arglist>(Vector3d, Eigen::Vector3d)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>ae04e0fcaf17c7eaff04302c9177bbffe</anchor>
+      <arglist>(Vector6d, Eigen::Vector6d)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a2155b830cb24a83a16d9cf3587081c22</anchor>
+      <arglist>(VectorXd, Eigen::VectorXd)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a37157b4ed2a24a508597aedb6ae92711</anchor>
+      <arglist>(Quaterniond, Eigen::Quaterniond)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a247ef2ae83ef97cd37dd65bb1923f9f7</anchor>
+      <arglist>(PTransformd, sva::PTransformd)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a03cf386c809be063b97c246e66aaa63f</anchor>
+      <arglist>(ForceVecd, sva::ForceVecd)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a0d1fe5988de68906c71b868317bdeeb1</anchor>
+      <arglist>(MotionVecd, sva::MotionVecd)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a8df0101c1870d2156a9009ab9019d154</anchor>
+      <arglist>(VectorDouble, std::vector&lt; double &gt;)</arglist>
     </member>
     <member kind="function">
       <type>void</type>

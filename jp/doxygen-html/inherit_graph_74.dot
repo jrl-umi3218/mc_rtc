@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_rbdyn::RobotLoader",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1RobotLoader.html",tooltip="Load RobotModule instances from shared libraries. "];
+  Node0 [label="mc_rbdyn::RobotConverter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1RobotConverter.html",tooltip="Copies all common properties from one robot to another encoders, sensors, etc) "];
 }

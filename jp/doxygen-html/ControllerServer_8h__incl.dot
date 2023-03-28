@@ -45,14 +45,19 @@ digraph "include/mc_control/ControllerServer.h"
   Node37 -> Node53 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node53 [label="StateBuilder.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node35 -> Node54 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node54 [label="mc_rtc/log/Logger.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Logger_8h.html"];
+  Node54 [label="mc_rtc/log/Logger.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Logger_8h.html"];
+  Node54 -> Node55 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node55 [label="mc_rtc/log/utils.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$log_2utils_8h.html"];
   Node54 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node17 [label="mc_rtc/logging.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$logging_8h.html"];
   Node17 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 [label="mc_rtc/utils_api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$utils__api_8h.html"];
   Node54 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node54 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node54 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node54 -> Node52 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node54 -> Node56 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 [label="variant",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node34 -> Node36 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node34 -> Node37 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node34 -> Node54 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -113,11 +118,6 @@ digraph "include/mc_control/ControllerServer.h"
   Node96 -> Node118 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node118 [label="mc_rtc/gui/ComboInput.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ComboInput_8h.html"];
   Node118 -> Node38 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node96 -> Node119 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node119 [label="mc_rtc/gui/Cylinder.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Cylinder_8h.html"];
-  Node96 -> Node120 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node120 [label="mc_rtc/gui/DataComboInput.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$DataComboInput_8h.html"];
-  Node120 -> Node38 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node96 -> Node43 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 -> Node54 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 -> Node140 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -147,6 +147,7 @@ digraph "include/mc_control/ControllerServer.h"
   Node157 [label="mc_tasks/PostureTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$PostureTask_8h.html"];
   Node1 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node37 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node54 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

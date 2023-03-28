@@ -76,6 +76,7 @@ digraph "include/mc_tasks/SurfaceTransformTask.h"
   Node48 [label="mc_rtc/log/Logger.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Logger_8h.html"];
   Node48 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node48 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node48 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node48 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 -> Node51 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node51 [label="mc_solver/QPSolver.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$QPSolver_8h.html"];

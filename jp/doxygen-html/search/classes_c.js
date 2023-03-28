@@ -19,6 +19,7 @@ var searchData=
   ['loader',['Loader',['../structmc__rtc_1_1Loader.html',1,'mc_rtc']]],
   ['loaderexception',['LoaderException',['../structmc__rtc_1_1LoaderException.html',1,'mc_rtc']]],
   ['loadrobotparameters',['LoadRobotParameters',['../structmc__rbdyn_1_1LoadRobotParameters.html',1,'mc_rbdyn']]],
+  ['log_5ftype_5fto_5ftype',['log_type_to_type',['../structmc__rtc_1_1log_1_1log__type__to__type.html',1,'mc_rtc::log']]],
   ['logger',['Logger',['../structmc__rtc_1_1Logger.html',1,'mc_rtc']]],
   ['logwriter',['LogWriter',['../structmc__rtc_1_1log_1_1LogWriter.html',1,'mc_rtc::log']]],
   ['lookatframetask',['LookAtFrameTask',['../structmc__tasks_1_1LookAtFrameTask.html',1,'mc_tasks']]],

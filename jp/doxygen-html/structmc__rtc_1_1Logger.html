@@ -87,11 +87,20 @@ $(document).ready(function(){initNavTree('structmc__rtc_1_1Logger.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger_1_1GUIEvent.html">GUIEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GUI callback event.  <a href="structmc__rtc_1_1Logger_1_1GUIEvent.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger_1_1KeyAddedEvent.html">KeyAddedEvent</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data for a key added event.  <a href="structmc__rtc_1_1Logger_1_1KeyAddedEvent.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html">KeyRemovedEvent</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data for a key removed event.  <a href="structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger_1_1Meta.html">Meta</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log meta data written in the first call to <a class="el" href="namespacemc__rtc_1_1log.html">log</a> after a call to .  <a href="structmc__rtc_1_1Logger_1_1Meta.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger_1_1StartEvent.html">StartEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start event.  <a href="structmc__rtc_1_1Logger_1_1StartEvent.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -103,8 +112,8 @@ Public Types</h2></td></tr>
 <tr class="separator:a0fefb36635930cf5a9db966442756b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fd0d1237a81647e462f7af2b4225d5e"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; void(<a class="el" href="structmc__rtc_1_1MessagePackBuilder.html">mc_rtc::MessagePackBuilder</a> &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a6fd0d1237a81647e462f7af2b4225d5e">serialize_fn</a></td></tr>
 <tr class="separator:a6fd0d1237a81647e462f7af2b4225d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d000eb7adffb8f9a0a016466f232e31"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a3d000eb7adffb8f9a0a016466f232e31">LogEvent</a> = std::variant&lt; <a class="el" href="structmc__rtc_1_1Logger_1_1KeyAddedEvent.html">KeyAddedEvent</a>, <a class="el" href="structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html">KeyRemovedEvent</a> &gt;</td></tr>
-<tr class="separator:a3d000eb7adffb8f9a0a016466f232e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3318dce8133e681fa99ccb9846cd9309"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a3318dce8133e681fa99ccb9846cd9309">LogEvent</a> = std::variant&lt; <a class="el" href="structmc__rtc_1_1Logger_1_1KeyAddedEvent.html">KeyAddedEvent</a>, <a class="el" href="structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html">KeyRemovedEvent</a>, <a class="el" href="structmc__rtc_1_1Logger_1_1GUIEvent.html">GUIEvent</a>, <a class="el" href="structmc__rtc_1_1Logger_1_1StartEvent.html">StartEvent</a> &gt;</td></tr>
+<tr class="separator:a3318dce8133e681fa99ccb9846cd9309"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -117,6 +126,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a986b2719c1337aa9d1e84e2b0b34481c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a986b2719c1337aa9d1e84e2b0b34481c">setup</a> (const <a class="el" href="structmc__rtc_1_1Logger.html#a0fefb36635930cf5a9db966442756b9b">Policy</a> &amp;policy, const std::string &amp;directory, const std::string &amp;tmpl)</td></tr>
 <tr class="memdesc:a986b2719c1337aa9d1e84e2b0b34481c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup the constructor configuration.  <a href="#a986b2719c1337aa9d1e84e2b0b34481c">More...</a><br /></td></tr>
 <tr class="separator:a986b2719c1337aa9d1e84e2b0b34481c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84c1f9deeea57b96bf403d07100a7d36"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1Logger_1_1Meta.html">Meta</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a84c1f9deeea57b96bf403d07100a7d36">meta</a> () noexcept</td></tr>
+<tr class="memdesc:a84c1f9deeea57b96bf403d07100a7d36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access the log's metadata.  <a href="#a84c1f9deeea57b96bf403d07100a7d36">More...</a><br /></td></tr>
+<tr class="separator:a84c1f9deeea57b96bf403d07100a7d36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a011c5b72b4abffc58c3852476416d1ae"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rtc_1_1Logger_1_1Meta.html">Meta</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a011c5b72b4abffc58c3852476416d1ae">meta</a> () const noexcept</td></tr>
+<tr class="memdesc:a011c5b72b4abffc58c3852476416d1ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access the log's metadata (const)  <a href="#a011c5b72b4abffc58c3852476416d1ae">More...</a><br /></td></tr>
+<tr class="separator:a011c5b72b4abffc58c3852476416d1ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93a57921c9019097a0903b86d0ba7571"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a93a57921c9019097a0903b86d0ba7571">start</a> (const std::string &amp;ctl_name, double timestep, bool resume=false, double start_t=0.0)</td></tr>
 <tr class="memdesc:a93a57921c9019097a0903b86d0ba7571"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start logging.  <a href="#a93a57921c9019097a0903b86d0ba7571">More...</a><br /></td></tr>
 <tr class="separator:a93a57921c9019097a0903b86d0ba7571"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,6 +156,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6c2708ce7007adcfe7eca5cc3d8f1801"><td class="memTemplParams" colspan="2">template&lt;typename SourceT , typename CallbackT , typename... Args&gt; </td></tr>
 <tr class="memitem:a6c2708ce7007adcfe7eca5cc3d8f1801"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a6c2708ce7007adcfe7eca5cc3d8f1801">addLogEntries</a> (const SourceT *source, const std::string &amp;name, CallbackT &amp;&amp;get_fn, Args &amp;&amp;... args)</td></tr>
 <tr class="separator:a6c2708ce7007adcfe7eca5cc3d8f1801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d0513663a7abdaff28305f411765d95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a6d0513663a7abdaff28305f411765d95">addGUIEvent</a> (<a class="el" href="structmc__rtc_1_1Logger_1_1GUIEvent.html">GUIEvent</a> &amp;&amp;event)</td></tr>
+<tr class="separator:a6d0513663a7abdaff28305f411765d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b1427e1251ebbd90947468fc4bdf964"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a2b1427e1251ebbd90947468fc4bdf964">removeLogEntry</a> (const std::string &amp;name)</td></tr>
 <tr class="separator:a2b1427e1251ebbd90947468fc4bdf964"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5299ba868f3a7b643978caa1620f19fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a5299ba868f3a7b643978caa1620f19fe">removeLogEntries</a> (const void *source)</td></tr>
@@ -166,14 +183,14 @@ Static Public Attributes</h2></td></tr>
 <p>The user can select a desired logging policy that will impact the behaviour of this class.</p>
 <p>See <a class="el" href="structmc__rtc_1_1Logger.html#a0fefb36635930cf5a9db966442756b9b" title="Defines available policies for the logger. ">mc_rtc::Logger::Policy</a> documentation for details on available policies </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a3d000eb7adffb8f9a0a016466f232e31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d000eb7adffb8f9a0a016466f232e31">&#9670;&nbsp;</a></span>LogEvent</h2>
+<a id="a3318dce8133e681fa99ccb9846cd9309"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3318dce8133e681fa99ccb9846cd9309">&#9670;&nbsp;</a></span>LogEvent</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="structmc__rtc_1_1Logger.html#a3d000eb7adffb8f9a0a016466f232e31">mc_rtc::Logger::LogEvent</a> =  std::variant&lt;<a class="el" href="structmc__rtc_1_1Logger_1_1KeyAddedEvent.html">KeyAddedEvent</a>, <a class="el" href="structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html">KeyRemovedEvent</a>&gt;</td>
+          <td class="memname">using <a class="el" href="structmc__rtc_1_1Logger.html#a3318dce8133e681fa99ccb9846cd9309">mc_rtc::Logger::LogEvent</a> =  std::variant&lt;<a class="el" href="structmc__rtc_1_1Logger_1_1KeyAddedEvent.html">KeyAddedEvent</a>, <a class="el" href="structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html">KeyRemovedEvent</a>, <a class="el" href="structmc__rtc_1_1Logger_1_1GUIEvent.html">GUIEvent</a>, <a class="el" href="structmc__rtc_1_1Logger_1_1StartEvent.html">StartEvent</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -293,6 +310,39 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a6d0513663a7abdaff28305f411765d95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d0513663a7abdaff28305f411765d95">&#9670;&nbsp;</a></span>addGUIEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rtc::Logger::addGUIEvent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmc__rtc_1_1Logger_1_1GUIEvent.html">GUIEvent</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>event</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Add a GUI event to the log</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>Event being added to the log </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a6c2708ce7007adcfe7eca5cc3d8f1801"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6c2708ce7007adcfe7eca5cc3d8f1801">&#9670;&nbsp;</a></span>addLogEntries()</h2>
 
@@ -588,6 +638,60 @@ template&lt;typename T , typename std::enable_if&lt; mc_rtc::log::callback_is_se
 
 <p>Log controller's data. </p>
 <p>Print controller data to the log. </p>
+
+</div>
+</div>
+<a id="a84c1f9deeea57b96bf403d07100a7d36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84c1f9deeea57b96bf403d07100a7d36">&#9670;&nbsp;</a></span>meta() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rtc_1_1Logger_1_1Meta.html">Meta</a>&amp; mc_rtc::Logger::meta </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Access the log's metadata. </p>
+
+</div>
+</div>
+<a id="a011c5b72b4abffc58c3852476416d1ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a011c5b72b4abffc58c3852476416d1ae">&#9670;&nbsp;</a></span>meta() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structmc__rtc_1_1Logger_1_1Meta.html">Meta</a>&amp; mc_rtc::Logger::meta </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Access the log's metadata (const) </p>
 
 </div>
 </div>

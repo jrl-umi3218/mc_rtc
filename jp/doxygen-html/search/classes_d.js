@@ -5,6 +5,7 @@ var searchData=
   ['mcpythoncontroller',['MCPythonController',['../structmc__control_1_1MCPythonController.html',1,'mc_control']]],
   ['messagepackbuilder',['MessagePackBuilder',['../structmc__rtc_1_1MessagePackBuilder.html',1,'mc_rtc']]],
   ['messagestate',['MessageState',['../structmc__control_1_1fsm_1_1MessageState.html',1,'mc_control::fsm']]],
+  ['meta',['Meta',['../structmc__rtc_1_1Logger_1_1Meta.html',1,'mc_rtc::Logger']]],
   ['metastate',['MetaState',['../structmc__control_1_1fsm_1_1MetaState.html',1,'mc_control::fsm']]],
   ['metatask',['MetaTask',['../structmc__tasks_1_1MetaTask.html',1,'mc_tasks']]],
   ['metataskloader',['MetaTaskLoader',['../structmc__tasks_1_1MetaTaskLoader.html',1,'mc_tasks']]],

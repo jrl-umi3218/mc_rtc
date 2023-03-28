@@ -38,6 +38,11 @@ var dir_8a948ff1aa35df8f7730fc54bf71041a =
     [ "TasksController.h", "TasksController_8h.html", [
       [ "TasksController", "structmc__control_1_1TasksController.html", null ]
     ] ],
+    [ "Ticker.h", "Ticker_8h.html", [
+      [ "Ticker", "structmc__control_1_1Ticker.html", "structmc__control_1_1Ticker" ],
+      [ "Configuration", "structmc__control_1_1Ticker_1_1Configuration.html", "structmc__control_1_1Ticker_1_1Configuration" ],
+      [ "Replay", "structmc__control_1_1Ticker_1_1Configuration_1_1Replay.html", "structmc__control_1_1Ticker_1_1Configuration_1_1Replay" ]
+    ] ],
     [ "TVMController.h", "TVMController_8h.html", [
       [ "TVMController", "structmc__control_1_1TVMController.html", null ]
     ] ]

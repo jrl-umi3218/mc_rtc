@@ -31,7 +31,7 @@ var searchData=
   ['compoundjointconstraintdescription',['CompoundJointConstraintDescription',['../structmc__rbdyn_1_1CompoundJointConstraintDescription.html',1,'mc_rbdyn']]],
   ['compoundjointfunction',['CompoundJointFunction',['../structmc__tvm_1_1CompoundJointFunction.html',1,'mc_tvm']]],
   ['comtask',['CoMTask',['../structmc__tasks_1_1CoMTask.html',1,'mc_tasks']]],
-  ['configuration',['Configuration',['../structmc__rtc_1_1Configuration.html',1,'mc_rtc']]],
+  ['configuration',['Configuration',['../structmc__rtc_1_1Configuration.html',1,'mc_rtc::Configuration'],['../structmc__control_1_1Ticker_1_1Configuration.html',1,'mc_control::Ticker::Configuration']]],
   ['configurationarrayiterator',['ConfigurationArrayIterator',['../structmc__rtc_1_1ConfigurationArrayIterator.html',1,'mc_rtc']]],
   ['configurationfile',['ConfigurationFile',['../structmc__rtc_1_1ConfigurationFile.html',1,'mc_rtc']]],
   ['configurationloader',['ConfigurationLoader',['../structmc__rtc_1_1ConfigurationLoader.html',1,'mc_rtc']]],

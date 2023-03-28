@@ -123,6 +123,7 @@ digraph "include/mc_control/fsm/states/HalfSitting.h"
   Node90 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node89 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node89 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node89 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node89 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node89 -> Node71 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node89 -> Node91 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
