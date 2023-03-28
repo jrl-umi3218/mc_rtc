@@ -58,8 +58,19 @@ std::string make_log_ref()
   mc_rtc::Logger logger(Policy::NON_THREADED, bfs::temp_directory_path().string(), "mc-rtc-test");
   logger.start("log-utils", 0.001);
   auto log_s = [&](size_t sec) {
+    size_t n_events = 1;
     for(size_t i = 0; i < sec * 1000; ++i)
     {
+      if(i % 247 == 0)
+      {
+        mc_rtc::Configuration data;
+        for(size_t j = 0; j < n_events; ++j)
+        {
+          data.add("data", i + j);
+          logger.addGUIEvent(mc_rtc::Logger::GUIEvent{{"My", "Category"}, "MyObject", data("data")});
+        }
+        n_events += 1;
+      }
       logger.log();
     }
   };
@@ -261,6 +272,58 @@ bool check_extract_keys(const std::string & path)
   return do_return(true);
 }
 
+bool check_extract_events(const std::string & path)
+{
+  auto out = fmt::format("{}/mc-rtc-test-log-utils-extract-events", bfs::temp_directory_path().string());
+  auto extract_cmd = fmt::format("{} extract --events {} {}", MC_BIN_UTILS, path, out);
+  int err = system(extract_cmd.c_str());
+  if(err != 0)
+  {
+    mc_rtc::log::critical("Execution failed: {}", extract_cmd);
+    return false;
+  }
+  auto path_out = out + ".bin";
+  if(!bfs::exists(path_out))
+  {
+    mc_rtc::log::critical("No output file after command: {}", extract_cmd);
+  }
+  bool ret = false;
+  auto flat_in = mc_rtc::log::FlatLog(path);
+  auto flat_out = mc_rtc::log::FlatLog(path_out);
+  if(flat_in.size() != flat_out.size())
+  {
+    mc_rtc::log::critical("Flat size of output ({}) is different from the input ({})", flat_out.size(), flat_in.size());
+    goto do_cleanup_extract_events;
+  }
+  if(flat_out.entries() != std::set<std::string>{"t"})
+  {
+    mc_rtc::log::critical("Output log has more entries than expected");
+    goto do_cleanup_extract_events;
+  }
+  for(size_t i = 0; i < flat_out.size(); ++i)
+  {
+    if(flat_out.guiEvents()[i].size() != flat_in.guiEvents()[i].size())
+    {
+      mc_rtc::log::critical("Different events at iteration {} between input and output", i);
+      goto do_cleanup_extract_events;
+    }
+    for(size_t j = 0; j < flat_out.guiEvents()[i].size(); ++j)
+    {
+      const auto & lhs = flat_out.guiEvents()[i][j];
+      const auto & rhs = flat_in.guiEvents()[i][j];
+      if(lhs.category != rhs.category || lhs.name != rhs.name
+         || lhs.data.operator size_t() != rhs.data.operator size_t())
+      {
+        mc_rtc::log::critical("Different events at iteration {} between intput and output");
+      }
+    }
+  }
+  ret = true;
+do_cleanup_extract_events:
+  bfs::remove(path_out);
+  return ret;
+}
+
 int main()
 {
   mc_rtc::log::info("mc_bin_utils at {}", MC_BIN_UTILS);
@@ -276,6 +339,7 @@ int main()
   do_check(check_extract_time);
   do_check(check_extract_key);
   do_check(check_extract_keys);
+  do_check(check_extract_events);
   do_cleanup(log);
   return 0;
 }

@@ -122,7 +122,7 @@ private:
   /** Publication details */
   bool running;
   uint32_t seq;
-  CircularBuffer<RobotStateData, 128> msgs;
+  CircularBuffer<RobotStateData, 1024> msgs;
   double rate;
   unsigned int skip;
   std::thread th;

@@ -9,5 +9,6 @@ usr/bin/mc_rtc_new_controller
 usr/bin/mc_rtc_new_fsm_controller
 usr/bin/mc_log_ui
 usr/bin/mc_plot_logs
+usr/bin/mc_rtc_ticker
 usr/share/applications/mc_log_ui.desktop
 usr/share/icons/*

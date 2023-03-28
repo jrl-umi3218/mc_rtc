@@ -32,7 +32,7 @@ macro(robot_test_construction_failure NAME)
   else()
     set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf")
   endif()
-  add_test(NAME ${NAME} COMMAND test_controller_ticker --run_test=CONSTRUCTION_FAILURE -- ${CONFIG_OUT})
+  add_global_controller_test_construction_failure(${NAME} ${CONFIG_OUT})
 endmacro()
 
 robot_test_construction_failure(NotARobot)

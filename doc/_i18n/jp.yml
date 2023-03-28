@@ -112,6 +112,8 @@ tutorials:
   tools:
     title: ツール
     desc: これらのチュートリアルはmc_rtc関連の便利なツールを紹介します。
+    mc_rtc_ticker-and-replay:
+      title: mc_rtc_tickerとReplayプラグイン"
     mc_log_utils:
       title: ログの操作
     mc_log_ui:

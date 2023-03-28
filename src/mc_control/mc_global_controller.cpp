@@ -42,6 +42,42 @@ MCGlobalController::MCGlobalController(const std::string & conf, std::shared_ptr
 MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
 : config(conf), current_ctrl(""), next_ctrl(""), controller_(nullptr), next_controller_(nullptr)
 {
+  // Display configuration information
+  if(conf.enable_gui_server)
+  {
+    mc_rtc::log::info("GUI server enabled");
+    mc_rtc::log::info("Will serve data on:");
+    for(const auto & pub_uri : conf.gui_server_pub_uris)
+    {
+      mc_rtc::log::info("- {}", pub_uri);
+    }
+    mc_rtc::log::info("Will handle requests on:");
+    for(const auto & rep_uri : conf.gui_server_rep_uris)
+    {
+      mc_rtc::log::info("- {}", rep_uri);
+    }
+  }
+  else
+  {
+    mc_rtc::log::info("GUI server disabled");
+  }
+  {
+    std::string plugin_str;
+    for(const auto & p : conf.global_plugins)
+    {
+      if(plugin_str.size())
+      {
+        plugin_str += ", ";
+      }
+      plugin_str += p;
+      if(std::find(conf.global_plugins_autoload.begin(), conf.global_plugins_autoload.end(), p)
+         != conf.global_plugins_autoload.end())
+      {
+        plugin_str += " (autoload)";
+      }
+    }
+    mc_rtc::log::info("Enabled plugins: {}", plugin_str);
+  }
   // Loading plugins
   config.load_plugin_configs();
   try
@@ -584,6 +620,12 @@ void MCGlobalController::setSensorAngularAccelerations(const std::map<std::strin
   setSensorAngularAccelerations(controller().robot(), accels);
 }
 
+void MCGlobalController::setSensorAngularAccelerations(const std::string & name,
+                                                       const std::map<std::string, Eigen::Vector3d> & accels)
+{
+  setSensorAngularAccelerations(controller().robot(name), accels);
+}
+
 void MCGlobalController::setSensorAngularAccelerations(mc_rbdyn::Robot & robot,
                                                        const std::map<std::string, Eigen::Vector3d> & accels)
 {
@@ -849,12 +891,6 @@ bool MCGlobalController::run()
       robot.module().controlToCanonicalPostProcess(robot, outputRobot);
       robot.module().controlToCanonicalPostProcess(realRobot, outputRealRobot);
     }
-    if(config.enable_log)
-    {
-      auto start_log_t = clock::now();
-      controller_->logger().log();
-      log_dt = clock::now() - start_log_t;
-    }
     if(server_)
     {
       auto start_gui_t = clock::now();
@@ -874,6 +910,12 @@ bool MCGlobalController::run()
       auto start_t = clock::now();
       plugin.plugin->after(*this);
       plugin.plugin_after_dt = clock::now() - start_t;
+    }
+    if(config.enable_log)
+    {
+      auto start_log_t = clock::now();
+      controller_->logger().log();
+      log_dt = clock::now() - start_log_t;
     }
   }
   else
@@ -1066,6 +1108,10 @@ void MCGlobalController::start_log()
 {
   controller_->logger().start(current_ctrl, controller_->timeStep);
   setup_log();
+  if(server_)
+  {
+    server_->set_logger(controller_->logger_);
+  }
 }
 
 void MCGlobalController::refreshLog()
@@ -1076,6 +1122,15 @@ void MCGlobalController::refreshLog()
 
 void MCGlobalController::setup_log()
 {
+  auto & meta = controller_->logger().meta();
+  meta.timestep = controller_->timeStep;
+  meta.main_robot = controller_->robot().name();
+  meta.main_robot_module = controller_->robot().module().parameters();
+  meta.init.clear();
+  for(const auto & r : controller_->robots())
+  {
+    meta.init[r.name()] = r.posW();
+  }
   if(setup_logger_.count(current_ctrl))
   {
     return;

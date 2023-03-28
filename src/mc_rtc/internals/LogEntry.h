@@ -5,15 +5,9 @@
 
 #include <optional>
 
-#include "mpack.h"
+#include "msgpack.h"
 
-namespace mc_rtc
-{
-
-namespace log
-{
-
-namespace internal
+namespace mc_rtc::log::internal
 {
 
 template<typename T>
@@ -29,6 +23,29 @@ inline std::optional<std::string_view> stringFromNode(mpack_node_t node)
     return std::nullopt;
   }
   return std::string_view(mpack_node_str(node), mpack_node_strlen(node));
+}
+
+inline std::optional<std::vector<std::string>> stringVectorFromNode(mpack_node_t node)
+{
+  if(mpack_node_type(node) != mpack_type_array)
+  {
+    mc_rtc::log::error("[stringVectorFromNode] mpack_node does not contain a vector of string");
+    return std::nullopt;
+  }
+  std::vector<std::string> out;
+  size_t s = mpack_node_array_length(node);
+  out.reserve(s);
+  for(size_t i = 0; i < s; ++i)
+  {
+    auto str = stringFromNode(mpack_node_array_at(node, i));
+    if(!str)
+    {
+      mc_rtc::log::error("[stringVectorFromNode] mpack_node is not a string");
+      return std::nullopt;
+    }
+    out.push_back(std::string(str.value()));
+  }
+  return out;
 }
 
 inline LogType logTypeFromNode(mpack_node_t node)
@@ -377,7 +394,9 @@ struct LogEntry : mpack_tree_t
   LogEntry(int8_t version,
            const std::vector<char> & data,
            size_t size,
+           std::optional<Logger::Meta> & metaOut,
            std::vector<TypedKey> & keysOut,
+           std::vector<Logger::GUIEvent> & eventsOut,
            bool & keysChanged,
            bool extract_data = true)
   : version_(version)
@@ -537,6 +556,43 @@ struct LogEntry : mpack_tree_t
               }
             }
           }
+          else if(event_t == 2)
+          {
+            // GUI event event
+            if(event_size != 4)
+            {
+              log::error("GUI event should have four entries");
+              valid_ = false;
+              return;
+            }
+            auto category = stringVectorFromNode(mpack_node_array_at(event, 1));
+            auto name = stringFromNode(mpack_node_array_at(event, 2));
+            mc_rtc::Configuration data = ::mc_rtc::internal::fromMessagePack(mpack_node_array_at(event, 3));
+            if(!category || !name)
+            {
+              log::error("GUI event is illformed");
+              valid_ = false;
+              return;
+            }
+            eventsOut.push_back({category.value(), std::string(name.value()), data});
+          }
+          else if(event_t == 3)
+          {
+            // StartEvent event
+            if(event_size != 5)
+            {
+              log::error("Start event should have five entries");
+              valid_ = false;
+              return;
+            }
+            mc_rtc::Configuration data = ::mc_rtc::internal::fromMessagePack(event);
+            Logger::Meta meta;
+            meta.timestep = data[1];
+            meta.main_robot = data[2].operator std::string();
+            meta.main_robot_module = data[3];
+            meta.init = data[4];
+            metaOut = meta;
+          }
           else
           {
             log::error("Unknown event type ({})", event_t);
@@ -684,8 +740,4 @@ private:
   }
 };
 
-} // namespace internal
-
-} // namespace log
-
-} // namespace mc_rtc
+} // namespace mc_rtc::log::internal

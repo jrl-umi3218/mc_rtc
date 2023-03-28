@@ -10,6 +10,7 @@
  */
 
 #include <mc_rtc/config.h>
+#include <mc_rtc/io_utils.h>
 #include <mc_rtc/log/FlatLog.h>
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/log/iterate_binary_log.h>
@@ -85,6 +86,26 @@ void addToLogger(const TypedKey & key, const mc_rtc::log::FlatLog & log, mc_rtc:
 #undef HANDLE_CASE
 }
 
+void print_string_vector(const std::vector<std::string> & v)
+{
+  for(size_t i = 0; i < v.size(); ++i)
+  {
+    if(i == 0)
+    {
+      std::cout << "[";
+    }
+    std::cout << " " << v[i];
+    if(i == v.size() - 1)
+    {
+      std::cout << " ]";
+    }
+    else
+    {
+      std::cout << ",";
+    }
+  }
+}
+
 } // namespace
 
 void usage()
@@ -102,9 +123,11 @@ int show(int argc, char * argv[])
 {
   po::variables_map vm;
   po::options_description tool("mc_bin_utils show options");
+  bool print_events = false;
   // clang-format off
   tool.add_options()
     ("help", "Produce this message")
+    ("print-events", po::bool_switch(&print_events), "Show GUI events in the log")
     ("in", po::value<std::string>(), "Input file");
   // clang-format on
   po::positional_options_description pos;
@@ -123,41 +146,88 @@ int show(int argc, char * argv[])
   double start_t = 0;
   double end_t = 0;
   size_t n = 0;
-  auto callback = [&](const std::vector<std::string> & ks, const std::vector<mc_rtc::log::FlatLog::record> & records,
-                      double t) {
+  size_t n_events = 0;
+  double dt = 0;
+  std::vector<std::vector<mc_rtc::Logger::GUIEvent>> events;
+  std::optional<mc_rtc::Logger::Meta> meta;
+  auto callback = [&](mc_rtc::log::IterateBinaryLogData data) {
     if(n++ == 0)
     {
-      start_t = t;
+      start_t = *data.time;
     }
-    end_t = t;
-    if(ks.size())
+    end_t = *data.time;
+    if(n == 2)
     {
-      for(size_t i = 0; i < ks.size(); ++i)
+      dt = end_t - start_t;
+    }
+    if(data.keys.size())
+    {
+      for(size_t i = 0; i < data.keys.size(); ++i)
       {
-        const std::string & k = ks[i];
-        const mc_rtc::log::FlatLog::record & r = records[i];
+        const std::string & k = data.keys[i];
+        const mc_rtc::log::FlatLog::record & r = data.records[i];
         keys.insert(std::make_pair(k, r.type));
       }
     }
+    if(!meta && data.meta)
+    {
+      meta = data.meta;
+    }
+    if(print_events)
+    {
+      events.push_back(data.gui_events);
+    }
+    n_events += data.gui_events.size();
     return true;
   };
-  if(!mc_rtc::log::iterate_binary_log(in, mc_rtc::log::binary_log_callback(callback), false))
+  if(!mc_rtc::log::iterate_binary_log(in, mc_rtc::log::iterate_binary_log_callback(callback), false))
   {
     return 1;
   }
   std::cout << in << " summary\n";
+  if(!meta)
+  {
+    std::cout << "(no meta information)\n";
+  }
+  else
+  {
+    std::cout << "Timestep: " << meta->timestep << "\n";
+    std::cout << "MainRobot: " << meta->main_robot << "\n";
+    std::cout << "MainRobotParams: " << mc_rtc::io::to_string(meta->main_robot_module) << "\n";
+  }
   std::cout << "Entries: " << keys.size() << "\n";
+  std::cout << "GUI events: " << n_events << "\n";
   if(start_t != end_t)
   {
     std::cout << "Start time: " << start_t << "s\n";
     std::cout << "End time: " << end_t << "s\n";
     std::cout << "Duration: " << (end_t - start_t) << "s\n";
+    std::cout << "Timestep: " << dt << "s\n";
   }
   std::cout << "Entry size: " << n << "\n";
   std::cout << "Available entries:\n";
   for(const auto & e : keys)
   {
     std::cout << "- " << e.first << " (" << mc_rtc::log::LogTypeName(e.second) << ")\n";
+  }
+  if(print_events)
+  {
+    for(size_t i = 0; i < events.size(); ++i)
+    {
+      if(events[i].size() == 0)
+      {
+        continue;
+      }
+      std::cout << "Events at t = " << (i * dt) << ":\n";
+      for(const auto & e : events[i])
+      {
+        std::cout << "- category: ";
+        print_string_vector(e.category);
+        std::cout << "\n";
+        std::cout << "  name: " << e.name << "\n";
+        std::cout << "  data: " << e.data.dump(true, true) << "\n";
+      }
+    }
   }
   return 0;
 }
@@ -282,6 +352,7 @@ int extract(int argc, char * argv[])
   std::vector<std::string> extract_keys = {};
   double from = 0;
   double to = std::numeric_limits<double>::infinity();
+  bool extract_events = false;
   po::variables_map vm;
   po::options_description tool("mc_bin_utils extract options");
   // clang-format off
@@ -291,6 +362,7 @@ int extract(int argc, char * argv[])
     ("out", po::value<std::string>(&out), "Output template")
     ("key", po::value<std::string>(&key)->default_value(""), "Extract parts of the log where the given key is present")
     ("keys", po::value<std::vector<std::string>>(&extract_keys)->multitoken(), "Extract the given keys from the log")
+    ("events", po::bool_switch(&extract_events), "Extract events from the log")
     ("from", po::value<double>(&from)->default_value(0), "Start time")
     ("to", po::value<double>(&to)->default_value(std::numeric_limits<double>::infinity()), "End time");
   // clang-format on
@@ -309,11 +381,14 @@ int extract(int argc, char * argv[])
     std::cout << "  mc_bin_utils extract in.bin out --key MyKey\n\n";
     std::cout << "  # Extract the provided keys and create a new log\n";
     std::cout << "  mc_bin_utils extract in.bin out --keys LeftFootForceSensor RightFootForceSensor\n";
+    std::cout << "  # Extract the GUI events and nothing else\n";
+    std::cout << "  mc_bin_utils extract in.bin out --events\n";
   };
-  std::bitset<3> options;
+  std::bitset<4> options;
   options[0] = key.size() != 0;
   options[1] = extract_keys.size() != 0;
   options[2] = (from != 0 || to != std::numeric_limits<double>::infinity());
+  options[3] = extract_events;
   if(vm.count("help") || !vm.count("in") || !vm.count("out") || options.count() == 0)
   {
     extract_usage();
@@ -321,7 +396,7 @@ int extract(int argc, char * argv[])
   }
   if(options.count() != 1)
   {
-    std::cout << "key, keys and from/to options are mutually exclusive\n";
+    std::cout << "events, key, keys and from/to options are mutually exclusive\n";
     return 1;
   }
   if(from < 0)
@@ -369,6 +444,10 @@ int extract(int argc, char * argv[])
     ss << out << "_" << std::setfill('0') << std::setw(static_cast<int>(width)) << (i + 1) << ".bin";
     return ss.str();
   };
+  if(out.size() > 4 && out.substr(out.size() - 4) == ".bin")
+  {
+    out = out.substr(0, out.size() - 4);
+  }
   std::ofstream ofs;
   bool key_present = false;
   auto callback_extract_key = [&](const std::vector<std::string> & ks,
@@ -578,6 +657,45 @@ int extract(int argc, char * argv[])
       {
         logger.log();
       }
+    }
+  }
+  if(extract_events)
+  {
+    auto log = mc_rtc::log::FlatLog{in};
+    if(log.size() < 1)
+    {
+      std::cout << in << " is empty\n";
+      return 1;
+    }
+    double dt = 0;
+    if(!log.meta())
+    {
+      if(log.size() == 1)
+      {
+        dt = 0.005;
+      }
+      else
+      {
+        dt = *log.getRaw<double>("t", 1) - *log.getRaw<double>("t", 0);
+      }
+    }
+    else
+    {
+      dt = log.meta()->timestep;
+    }
+    mc_rtc::Logger logger(mc_rtc::Logger::Policy::NON_THREADED, "", "");
+    if(log.meta())
+    {
+      logger.meta() = *log.meta();
+    }
+    logger.open(out_name(0), dt, 0);
+    for(const auto & events : log.guiEvents())
+    {
+      for(const auto & e : events)
+      {
+        logger.addGUIEvent(mc_rtc::Logger::GUIEvent{e});
+      }
+      logger.log();
     }
   }
   return 0;

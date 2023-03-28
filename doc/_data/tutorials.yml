@@ -36,6 +36,8 @@
   id: tools
   tutorials:
     -
+      id: mc_rtc_ticker-and-replay
+    -
       id: mc_log_utils
     -
       id: mc_log_ui

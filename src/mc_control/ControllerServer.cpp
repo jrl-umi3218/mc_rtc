@@ -20,7 +20,7 @@ ControllerServer::ControllerServer(double dt,
                                    const std::vector<std::string> & pull_bind_uri)
 {
   iter_ = 0;
-  rate_ = static_cast<unsigned int>(ceil(server_dt / dt));
+  update_rate(dt, server_dt);
 #ifndef MC_RTC_DISABLE_NETWORK
   auto init_socket = [](int & socket, int proto, const std::vector<std::string> & uris, const std::string & name) {
     socket = nn_socket(AF_SP, proto);
@@ -60,10 +60,30 @@ void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder, 
   {
     mc_rtc::log::error("Invokation of the following method failed\n{}\n", config.dump(true));
   }
+  if(logger_)
+  {
+    logger_->addGUIEvent({std::move(category), std::move(name), data});
+  }
 }
 
 void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder)
 {
+  for(auto & r : requests_)
+  {
+    if(!gui_builder.handleRequest(r.category, r.name, r.data))
+    {
+      mc_rtc::Configuration config;
+      config.add("category", r.category);
+      config.add("name", r.name);
+      config.add("data", r.data);
+      mc_rtc::log::error("Invokation of the following method failed\n{}\n", config.dump(true));
+    }
+    if(logger_)
+    {
+      logger_->addGUIEvent(std::move(r));
+    }
+  }
+  requests_.resize(0);
 #ifndef MC_RTC_DISABLE_NETWORK
   /*FIXME Avoid freeing the message constantly */
   void * buf = nullptr;
@@ -107,6 +127,15 @@ void ControllerServer::publish(mc_rtc::gui::StateBuilder & gui_builder)
 std::pair<const char *, size_t> ControllerServer::data() const
 {
   return {buffer_.data(), buffer_size_};
+}
+
+void ControllerServer::update_rate(double dt, double server_dt)
+{
+  if(server_dt < dt)
+  {
+    server_dt = dt;
+  }
+  rate_ = static_cast<unsigned int>(ceil(server_dt / dt));
 }
 
 } // namespace mc_control

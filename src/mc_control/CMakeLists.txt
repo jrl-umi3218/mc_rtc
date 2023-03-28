@@ -2,11 +2,11 @@
 # Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-macro(add_controller controller_name controller_SRC controller_HDR)
+macro(add_controller controller_name)
   if(MC_RTC_BUILD_STATIC)
-    target_sources(mc_control PRIVATE ${controller_SRC} ${controller_HDR})
+    target_sources(mc_control PRIVATE ${ARGN})
   else()
-    add_library(${controller_name} SHARED ${controller_SRC} ${controller_HDR})
+    add_library(${controller_name} SHARED ${ARGN})
     set_target_properties(${controller_name} PROPERTIES FOLDER controllers)
     set_target_properties(${controller_name} PROPERTIES COMPILE_FLAGS
       "-DMC_CONTROL_EXPORTS" PREFIX "")
@@ -55,6 +55,7 @@ if(${BUILD_CONTROLLER_SAMPLES})
 endif()
 
 add_subdirectory(HalfSitPose)
+add_subdirectory(Passthrough)
 
 if(${PYTHON_BINDING})
   add_subdirectory(python)

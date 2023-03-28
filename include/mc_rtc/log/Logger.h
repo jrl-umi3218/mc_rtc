@@ -8,6 +8,8 @@
 #include <mc_rtc/logging.h>
 #include <mc_rtc/utils_api.h>
 
+#include <mc_rtc/Configuration.h>
+
 #include <memory>
 #include <unordered_map>
 #include <variant>
@@ -73,7 +75,41 @@ public:
     std::string key;
   };
 
-  using LogEvent = std::variant<KeyAddedEvent, KeyRemovedEvent>;
+  /*! \brief GUI callback event */
+  struct GUIEvent
+  {
+    /** Category of the item */
+    std::vector<std::string> category;
+    /** Name of the time */
+    std::string name;
+    /** Payload of the callback */
+    mc_rtc::Configuration data;
+  };
+
+  /*! \brief Start event
+   *
+   * By construction this should appear only once in the log
+   *
+   * In the current implementation this writes \ref Meta into the log
+   */
+  struct StartEvent
+  {
+  };
+
+  using LogEvent = std::variant<KeyAddedEvent, KeyRemovedEvent, GUIEvent, StartEvent>;
+
+  /*! \brief Log meta data written in the first call to \ref log after a call to \start */
+  struct Meta
+  {
+    /** Timestep of the log */
+    double timestep;
+    /** Name of the main robot this reports */
+    std::string main_robot;
+    /** Module parameters for the main robot */
+    std::vector<std::string> main_robot_module;
+    /** Initial position of robots in the world */
+    std::map<std::string, sva::PTransformd> init;
+  };
 
 public:
   /*! \brief Constructor
@@ -98,6 +134,18 @@ public:
    * \param tmpl Log file template
    */
   void setup(const Policy & policy, const std::string & directory, const std::string & tmpl);
+
+  /*! \brief Access the log's metadata */
+  inline Meta & meta() noexcept
+  {
+    return meta_;
+  }
+
+  /*! \brief Access the log's metadata (const) */
+  inline const Meta & meta() const noexcept
+  {
+    return meta_;
+  }
 
   /*! \brief Start logging
    *
@@ -258,6 +306,15 @@ public:
     addLogEntries(source, std::forward<Args>(args)...);
   }
 
+  /** Add a GUI event to the log
+   *
+   * \param event Event being added to the log
+   */
+  inline void addGUIEvent(GUIEvent && event)
+  {
+    log_events_.push_back(std::move(event));
+  }
+
   /** Remove a log entry from the log
    *
    * This has no effect if the log entry does not exist.
@@ -309,6 +366,8 @@ private:
   };
   /** Store implementation detail related to the logging policy */
   std::shared_ptr<LoggerImpl> impl_ = nullptr;
+  /** Meta data for this instance */
+  Meta meta_;
   /** Events that happened since the last time we wrote to the log */
   std::vector<LogEvent> log_events_;
   /** Contains all the log entries */

@@ -7,6 +7,7 @@
 #include <mc_control/MCController.h>
 
 #include <mc_rtc/gui/StateBuilder.h>
+#include <mc_rtc/log/Logger.h>
 
 #include <string>
 #include <vector>
@@ -54,6 +55,24 @@ struct MC_CONTROL_DLLAPI ControllerServer
   /** Get latest published data */
   std::pair<const char *, size_t> data() const;
 
+  /** Attach a logger to the server */
+  inline void set_logger(std::shared_ptr<mc_rtc::Logger> logger) noexcept
+  {
+    logger_ = logger;
+  }
+
+  /** Set requests to handle on the next iteration */
+  inline void push_requests(const std::vector<mc_rtc::Logger::GUIEvent> & requests)
+  {
+    for(const auto & r : requests)
+    {
+      requests_.push_back(r);
+    }
+  }
+
+  /** Update the rate of the server */
+  void update_rate(double dt, double server_dt);
+
 private:
   unsigned int iter_;
   unsigned int rate_;
@@ -63,6 +82,10 @@ private:
 
   std::vector<char> buffer_;
   size_t buffer_size_ = 0;
+
+  std::shared_ptr<mc_rtc::Logger> logger_;
+
+  std::vector<mc_rtc::Logger::GUIEvent> requests_;
 };
 
 } // namespace mc_control

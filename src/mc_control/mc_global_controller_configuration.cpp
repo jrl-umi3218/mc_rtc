@@ -166,18 +166,6 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   //  Plugins  //
   ///////////////
   config("GlobalPluginPaths", global_plugin_paths);
-  std::string plugin_str = "";
-  auto append_plugin = [&plugin_str](const std::string & p, bool autoload) {
-    if(plugin_str.size())
-    {
-      plugin_str += ", ";
-    }
-    plugin_str += p;
-    if(autoload)
-    {
-      plugin_str += " (autoload)";
-    }
-  };
   if(!config("ClearGlobalPluginPath", false))
   {
     global_plugin_paths.insert(global_plugin_paths.begin(), mc_rtc::MC_PLUGINS_INSTALL_PREFIX);
@@ -199,7 +187,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
         if(std::find(global_plugins.begin(), global_plugins.end(), plugin) == global_plugins.end())
         {
           global_plugins.push_back(ss.str());
-          append_plugin(global_plugins.back(), true);
+          global_plugins_autoload.push_back(global_plugins.back());
         }
       }
     }
@@ -210,10 +198,8 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     if(std::find(global_plugins.begin(), global_plugins.end(), p) == global_plugins.end())
     {
       global_plugins.push_back(p);
-      append_plugin(p, false);
     }
   }
-  mc_rtc::log::info("Enabled plugins: {}", plugin_str);
 
   ///////////////////
   //  Controllers  //
@@ -334,24 +320,6 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   else
   {
     enable_gui_server = false;
-  }
-  if(enable_gui_server)
-  {
-    mc_rtc::log::info("GUI server enabled");
-    mc_rtc::log::info("Will serve data on:");
-    for(const auto & pub_uri : gui_server_pub_uris)
-    {
-      mc_rtc::log::info("- {}", pub_uri);
-    }
-    mc_rtc::log::info("Will handle requests on:");
-    for(const auto & rep_uri : gui_server_rep_uris)
-    {
-      mc_rtc::log::info("- {}", rep_uri);
-    }
-  }
-  else
-  {
-    mc_rtc::log::info("GUI server disabled");
   }
 }
 

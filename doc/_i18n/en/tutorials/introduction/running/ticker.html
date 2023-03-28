@@ -1,0 +1,42 @@
+<h4>Pre-requisites</h4>
+
+<p>There is two options to visualize the controller and interact with it:</p>
+
+<ol>
+  <li>Using the RViZ panel available in {% link mc_rtc_ros %}. mc_rtc must have been built with ROS support.</li>
+  <li>Use a stand-alone visualizer such as {% link mc_rtc-magnum %}</li>
+</ol>
+
+<h4>Runing the display interface</h4>
+
+<h6>Using RViZ</h6>
+
+<p>We assume <span class="text-monospace">roscore</span> is already running or that <span class="text-monospace">ROS_MASTER_URI</span> points to an active master.</p>
+
+<p>Run the following command to start RViZ along with mc_rtc dedicated panel and the robot model you need:</p>
+
+{% highlight bash %}
+$ roslaunch mc_rtc_ticker display.launch
+{% endhighlight %}
+
+<p>If your simulation has more than two robots, you should add a new RobotModel to the scene. The description of the robot is published in the parameter <code>/control/env_N</code> where N is the robot index.</p>
+
+<h6>Using mc_rtc-magnum</h6>
+
+<p>After installing the package, simply run the following command:</p>
+
+{% highlight bash %}
+$ mc-rtc-magnum
+{% endhighlight %}
+
+<h4>Running the controller</h4>
+
+<p>To run the controller, use the following command:</p>
+
+{% highlight bash %}
+$ mc_rtc_ticker
+{% endhighlight %}
+
+<p>Note that you can restart the controller without restarting the display interface.</p>
+
+<p>The ticker has many more functionalities, see the {% include link_tutorial.html category="tools" tutorial="mc_rtc_ticker-and-replay" %} tutorial.</p>
