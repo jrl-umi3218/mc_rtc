@@ -377,6 +377,16 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return zmpdTarget_;
   }
 
+  inline const ContactState & supportFoot() const noexcept
+  {
+    return supportFoot_;
+  }
+
+  void supportFoot(const ContactState & foot)
+  {
+    supportFoot_ = foot;
+  }
+
   /**
    * @brief Set the reference zmp sequence to distribute between the CoP task (Only in double support)
    *
@@ -444,7 +454,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     {
       return dcmEstimator_.getUnbiasedDCM();
     }
-    return measuredDCM_.segment(0,2);
+    return measuredDCM_.segment(0, 2);
   }
 
   inline const Eigen::Vector3d & measuredZMP() noexcept
@@ -1084,16 +1094,18 @@ protected:
   double delayedTargetFzLeft_ = 0; /**< Considered target for the delay*/
   double delayedTargetFzRight_ = 0; /**< Considered target for the delay*/
 
-  double tComputation_ = 0.; /**< time when the distribution has been computed */
+  double tComputation_ = 0.; /**< time when the Horizon based force distribution has been computed */
   double modeledFzRight_ = 0.; /**< Used for logging*/
   double modeledFzLeft_ = 0.; /**< Used for logging*/
   double desiredFzLeft_ = 0.; /**< Used for logging*/
   double desiredFzRight_ = 0.; /**< Used for logging*/
-  Eigen::Vector2d errQPzmp = Eigen::Vector2d::Zero();
-  Eigen::Vector2d QPCoPLeft_ = Eigen::Vector2d::Zero();
-  Eigen::Vector2d QPCoPRight_ = Eigen::Vector2d::Zero();
-  Eigen::Vector2d distribCheck_ = Eigen::Vector2d::Zero();
-  mc_filter::LowPass<Eigen::Vector3d> fSumFilter_; 
+  Eigen::Vector2d QPCoPLeft_ =
+      Eigen::Vector2d::Zero(); /**<Get the next modeled CoP by the Horizon based force distribution QP */
+  Eigen::Vector2d QPCoPRight_ =
+      Eigen::Vector2d::Zero(); /**<Get the next modeled CoP by the Horizon based force distribution QP */
+  Eigen::Vector2d distribCheck_ = Eigen::Vector2d::Zero(); /**<Error between the computed ZMP byt the  Horizon based
+                                                              force distribution QP and the reference zmp>*/
+  mc_filter::LowPass<Eigen::Vector3d> fSumFilter_; /**<Low pass filter that sum the forces on both foot>*/
   ContactState supportFoot_ = ContactState::Left; /**< Future support foot  */
 
   //}
