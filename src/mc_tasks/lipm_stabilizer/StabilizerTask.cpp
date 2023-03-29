@@ -243,7 +243,10 @@ void StabilizerTask::updateContacts(mc_solver::QPSolver & solver)
     for(const auto contactState : addContacts_)
     {
       auto footTask = footTasks[contactState];
-      footTask->selectActiveJoints(contactState == ContactState::Left ? c_.leftCopActiveJoints : c_.rightCopActiveJoints);
+      footTask->selectActiveJoints(
+          contactState == ContactState::Left
+              ? (c_.leftCopActiveJoints.size() ? c_.leftCopActiveJoints : c_.comActiveJoints)
+              : (c_.rightCopActiveJoints.size() ? c_.rightCopActiveJoints : c_.comActiveJoints));
       if(c_.verbose)
       {
         mc_rtc::log::info("{}: Adding contact {}", name(), footTask->surface());
