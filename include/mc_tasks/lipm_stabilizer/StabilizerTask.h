@@ -377,18 +377,6 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return zmpdTarget_;
   }
 
-  /* Return the defined support foot */
-  inline const ContactState supportFoot() const noexcept
-  {
-    return supportFoot_;
-  }
-
-  /* Return the defined support foot */
-  void supportFoot(const ContactState & foot )
-  {
-    supportFoot_ = foot;
-  }
-
   /**
    * @brief Set the reference zmp sequence to distribute between the CoP task (Only in double support)
    *
@@ -702,11 +690,6 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   inline void dfAdmittance(Eigen::Vector3d dfAdmittance) noexcept
   {
     c_.dfAdmittance = clamp(dfAdmittance, 0., c_.safetyThresholds.MAX_DF_ADMITTANCE);
-  }
-
-  inline void dfAdmittanceSupportFoot(Eigen::Vector3d dfAdmittance) noexcept
-  {
-    c_.dfAdmittanceSupportFoot = clamp(dfAdmittance, 0., c_.safetyThresholds.MAX_DF_ADMITTANCE);
   }
 
   inline void dfDamping(Eigen::Vector3d dfDamping) noexcept

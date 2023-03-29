@@ -56,10 +56,6 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
           [this]() -> Eigen::Vector3d { return c_.dfAdmittance; },
           [this](const Eigen::Vector3d & a) { dfAdmittance(a); }),
       ArrayInput(
-          "Foot force difference Admittance Support Foot", {"Fx", "Fy", "Fz"},
-          [this]() -> Eigen::Vector3d { return c_.dfAdmittanceSupportFoot; },
-          [this](const Eigen::Vector3d & a) { dfAdmittanceSupportFoot(a); }),
-      ArrayInput(
           "DCM P gains", {"x", "y"}, [this]() -> const Eigen::Vector2d & { return c_.dcmPropGain; },
           [this](const Eigen::Vector2d & gains) { dcmGains(gains, c_.dcmIntegralGain, c_.dcmDerivGain); }),
       ArrayInput(
@@ -454,7 +450,6 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_admittance_cop_left_QP", this, [this]() -> const Eigen::Vector2d & { return QPCoPLeft_; });
   logger.addLogEntry(name_ + "_admittance_cop_right_QP", this, [this]() -> const Eigen::Vector2d & { return QPCoPRight_; });
   logger.addLogEntry(name_ + "_admittance_df", this, [this]() { return c_.dfAdmittance; });
-  logger.addLogEntry(name_ + "_admittance_df_support_foot", this, [this]() { return c_.dfAdmittanceSupportFoot; });
   logger.addLogEntry(name_ + "_dcmDerivator_filtered", this, [this]() { return dcmDerivator_.eval(); });
   logger.addLogEntry(name_ + "_dcmDerivator_input_lp", this, [this]() { return dcmDerivator_.input_lp(); });
   logger.addLogEntry(name_ + "_dcmDerivator_input_hp", this, [this]() { return dcmDerivator_.input_hp(); });

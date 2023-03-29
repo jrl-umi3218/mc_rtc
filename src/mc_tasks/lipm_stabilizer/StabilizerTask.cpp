@@ -118,7 +118,6 @@ void StabilizerTask::reset()
   comOffsetLowPass_.reset(Eigen::Vector3d::Zero());
   comOffsetLowPassCoM_.reset(Eigen::Vector3d::Zero());
   comOffsetDerivator_.reset(Eigen::Vector3d::Zero());
-  fSumFilter_.reset(Eigen::Vector3d{0,0,robot().mass() * mc_rtc::constants::GRAVITY});
 
   dcmDerivator_.reset(Eigen::Vector3d::Zero());
   dcmIntegrator_.reset(Eigen::Vector3d::Zero());
@@ -317,8 +316,7 @@ void StabilizerTask::disable()
   disableConfig_.dcmPropGain = 0.;
   disableConfig_.comdErrorGain = 0.;
   disableConfig_.zmpdGain = 0.;
-  disableConfig_.dfAdmittance.setZero();
-  disableConfig_.dfAdmittanceSupportFoot.setZero();
+  disableConfig_.dfAdmittance = 0.;
   disableConfig_.vdcFrequency = 0.;
   disableConfig_.vdcStiffness = 0.;
   zmpcc_.enabled(false);
@@ -795,7 +793,7 @@ void StabilizerTask::run()
       distributeWrench(desiredWrench_);
     }
   }
-  else
+  else if(inContact(ContactState::Left))
   {
     tComputation_ = 0.;
     if(inContact(ContactState::Left))
@@ -1191,7 +1189,7 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
 
   const auto & leftContact = contacts_.at(ContactState::Left);
   const auto & rightContact = contacts_.at(ContactState::Right);
-  const double fz_tot = fSumFilter_.eval().z(); //Vertical force applied by gravity on the whole robot
+  const double fz_tot = robot().mass() * constants::GRAVITY; //Vertical force applied by gravity on the whole robot
 
   const sva::PTransformd & X_0_lc = leftContact.surfacePose();
   const sva::PTransformd & X_0_rc = rightContact.surfacePose();
@@ -1594,15 +1592,6 @@ void StabilizerTask::updateFootForceDifferenceControl()
     return;
   }
 
-  ContactState swingFoot = ContactState::Left;
-  double sgn = -1;
-  if (supportFoot_ == ContactState::Left)
-  {
-    swingFoot = ContactState::Right;
-    sgn = 1;
-  }
-
-
   sva::PTransformd T_0_L(leftFootTask->surfacePose().rotation());
   sva::PTransformd T_0_R(rightFootTask->surfacePose().rotation());
 
@@ -1625,25 +1614,18 @@ void StabilizerTask::updateFootForceDifferenceControl()
   vdcHeightError_ = ((LT_d + RT_d) - (LT + RT)).z();
 
   Eigen::Vector3d gainAdmittance = Eigen::Vector3d{c_.dfAdmittance.x(), c_.dfAdmittance.y(), c_.dfAdmittance.z()};
-  Eigen::Vector3d gainAdmittanceSupportFoot = Eigen::Vector3d{c_.dfAdmittanceSupportFoot.x(), c_.dfAdmittanceSupportFoot.y(), c_.dfAdmittanceSupportFoot.z()};
-
   Eigen::Vector3d gainDamping = Eigen::Vector3d{c_.dfDamping.x(), c_.dfDamping.y(), c_.dfDamping.z()};
 
   Eigen::Vector3d df_ctrl =
       R_0_fb_yaw.transpose()
       * (gainAdmittance.cwiseProduct(R_0_fb_yaw * dfForceError_) - gainDamping.cwiseProduct(R_0_fb_yaw * dfError_));
 
-  Eigen::Vector3d df_ctrl_supportFoot =
-      R_0_fb_yaw.transpose()
-      * (gainAdmittanceSupportFoot.cwiseProduct(R_0_fb_yaw * dfForceError_) - gainDamping.cwiseProduct(R_0_fb_yaw * dfError_));
-
   double dz_vdc = c_.vdcFrequency * vdcHeightError_;
   sva::MotionVecd velF = {{0., 0., 0.}, df_ctrl};
-  sva::MotionVecd velF_SupportFoot = {{0., 0., 0.}, df_ctrl_supportFoot};
   sva::MotionVecd velT = {{0., 0., 0.}, {0, 0, dz_vdc}};
   // T_0_{L/R} transforms a MotionVecd variable from world frame to surface frame
-  footTasks[supportFoot_]->refVelB(0.5 * (T_0_L * (velT - sgn * velF_SupportFoot)));
-  footTasks[swingFoot]->refVelB(0.5 * (T_0_R * (velT + sgn * velF)));
+  leftFootTask->refVelB(0.5 * (T_0_L * (velT - velF)));
+  rightFootTask->refVelB(0.5 * (T_0_R * (velT + velF)));
 }
 
 template void StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::target>(

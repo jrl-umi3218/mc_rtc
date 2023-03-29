@@ -411,7 +411,6 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   ZMPCCConfiguration zmpcc; /**< Configuration of ZMPCC (CoM admittance) */
 
   mc_rbdyn::Gains3d dfAdmittance = {0, 0, 1e-4}; /**< Admittance for foot force difference control */
-  mc_rbdyn::Gains3d dfAdmittanceSupportFoot = {0, 0, 1e-4}; /**< Admittance for foot force difference control for the future support foot, by default set to dfAdmittance */
   mc_rbdyn::Gains3d dfDamping = 0.; /**< Damping term in foot force difference control */
 
   mc_rbdyn::Gains2d dcmPropGain = 1.; /**< Proportional gain on DCM error */
@@ -479,7 +478,6 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     clampInPlaceAndWarn(comdErrorGain, 0., s.MAX_COMD_GAIN, "CoMd gain");
     clampInPlaceAndWarn(zmpdGain, 0., s.MAX_ZMPD_GAIN, "ZMPd gain");
     clampInPlaceAndWarn(dfAdmittance, 0., s.MAX_DF_ADMITTANCE, "DF admittance");
-    clampInPlaceAndWarn(dfAdmittanceSupportFoot, 0., s.MAX_DF_ADMITTANCE, "DF admittance");
     clampInPlaceAndWarn(dfDamping, 0., s.MAX_DF_DAMPING, "DF admittance");
   }
 
@@ -520,12 +518,6 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       else
       {
         admittance("df", dfAdmittance);
-
-      }
-      dfAdmittanceSupportFoot = dfAdmittance; 
-      if(admittance.has("dfSupportFoot"))
-      {
-        dfAdmittanceSupportFoot = admittance("dfSupportFoot");
       }
       if(admittance.has("dfz_damping"))
       {
@@ -657,7 +649,6 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf.add("admittance");
     conf("admittance").add("cop", copAdmittance);
     conf("admittance").add("df", dfAdmittance);
-    conf("admittance").add("dfSupportFoot", dfAdmittanceSupportFoot);
     conf("admittance").add("df_damping", dfDamping);
     conf("admittance").add("maxVel", copMaxVel);
     conf("admittance").add("velFilterGain", copVelFilterGain);
