@@ -1602,7 +1602,7 @@ mc_tvm::Convex & Robot::tvmConvex(const std::string & name) const
     const auto & cvx = convex(name);
     std::tie(it, std::ignore) = tvm_convexes_.insert(
         {name, std::unique_ptr<mc_tvm::Convex>{new mc_tvm::Convex(mc_tvm::Convex::NewConvexToken{}, cvx.second,
-                                                                  frame(name), collisionTransform(name))}});
+                                                                  frame(cvx.first), collisionTransform(name))}});
   }
   return *it->second;
 }
