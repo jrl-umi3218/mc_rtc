@@ -792,7 +792,7 @@ void StabilizerTask::run()
       distributeWrench(desiredWrench_);
     }
   }
-  else if(inContact(ContactState::Left))
+  else
   {
     tComputation_ = 0.;
     if(inContact(ContactState::Left))
