@@ -57,6 +57,53 @@ struct MC_RBDYN_DLLAPI FDQPWeights
   }
 };
 
+/** Weights for CoP distribution over horizon (FDMPC). */
+struct MC_RBDYN_DLLAPI FDMPCWeights
+{
+
+  FDMPCWeights()
+  {
+    cop_ = 100;
+    copRegulation_ = 1e-8;
+    copDiff_ = 1e-8;
+  }
+
+  FDMPCWeights(double cop, double copReg, double copDiff)
+  {
+    cop_ = cop;
+    copRegulation_ = copReg;
+    copDiff_ = copDiff;
+  }
+  double cop_;
+  double copRegulation_;
+  double copDiff_;
+
+  void load(const mc_rtc::Configuration & config)
+  {
+    if(config.has("cop"))
+    {
+      cop_ = static_cast<double>(config("cop"));
+    }
+    if(config.has("cop_regulation"))
+    {
+      copRegulation_ = static_cast<double>(config("cop_regulation"));
+    }
+    if(config.has("cop_diff"))
+    {
+      copDiff_ = static_cast<double>(config("cop_diff"));
+    }
+  }
+
+  mc_rtc::Configuration save() const
+  {
+    mc_rtc::Configuration config;
+    config.add("cop", cop_);
+    config.add("cop_regulation", copRegulation_);
+    config.add("cop_diff", copDiff_);
+    return config;
+  }
+};
+
 /**
  * @brief Stabilizer safety thresholds
  *
@@ -318,6 +365,25 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::FDQPWeights>
 };
 
 /**
+ * @brief Read CoP distribution over horizon QP weights from configuration.
+ */
+template<>
+struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::FDMPCWeights>
+{
+  static mc_rbdyn::lipm_stabilizer::FDMPCWeights load(const mc_rtc::Configuration & config)
+  {
+    mc_rbdyn::lipm_stabilizer::FDMPCWeights weights;
+    weights.load(config);
+    return weights;
+  }
+
+  static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::FDMPCWeights & weights)
+  {
+    return weights.save();
+  }
+};
+
+/**
  * @brief Read-write stabilizer safety thresholds from configuration
  */
 template<>
@@ -397,6 +463,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
   SafetyThresholds safetyThresholds;
   FDQPWeights fdqpWeights;
+  FDMPCWeights fdmpcWeights;
 
   double friction = 0.7; /**< Friction coefficient. Same for both feet */
   std::string leftFootSurface; /**< Surface name for the left foot. Origin should be at foot's center */
@@ -422,7 +489,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       15.; /**< Time window for exponential moving average filter of the DCM integrator */
   double dcmDerivatorTimeConstant = 1.; /**< Cutoff Period of the DCM derivator filter */
 
-  double fSumFilter_T = 20.; /**<Cutoff Period of the estimation of the sum of forces*/
+  double fSumFilterTimeConstant = 20.; /**<Cutoff Period of the estimation of the sum of forces*/
 
   std::vector<std::string> comActiveJoints; /**< Joints used by CoM IK task */
   Eigen::Vector3d comStiffness = {1000., 1000., 100.}; /**< Stiffness of CoM IK task */
@@ -430,9 +497,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   Eigen::Vector3d comDimWeight = Eigen::Vector3d::Ones(); /**< Dimensional weight of CoM IK task */
   double comHeight = 0.84; /**< Desired height of the CoM */
 
-  Eigen::Vector3d lambda_CoP_Fz =
-      Eigen::Vector3d::Ones()
-      * 100; /**< 1st order gain constant between a reference CoP and vertical force and the real */
+  /**< 1st order gain constant between a reference CoP and vertical force and the real */
+  Eigen::Vector3d copFzLambda = 100.0 * Eigen::Vector3d::Ones();
   double delayCoP = 0;
 
   std::string torsoBodyName; /**< Name of the torso body */
@@ -496,6 +562,11 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       fdqpWeights.load(config("fdqp_weights"));
     }
 
+    if(config.has("fdmpc_weights"))
+    {
+      fdmpcWeights.load(config("fdmpc_weights"));
+    }
+
     config("friction", friction);
     config("leftFootSurface", leftFootSurface);
     config("rightFootSurface", rightFootSurface);
@@ -505,7 +576,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     {
       auto admittance = config("admittance");
       admittance("cop", copAdmittance);
-      admittance("copFzLambda", lambda_CoP_Fz);
+      admittance("copFzLambda", copFzLambda);
       admittance("copFzDelay", delayCoP);
       admittance("maxVel", copMaxVel);
       admittance("velFilterGain", mc_filter::utils::clamp(copVelFilterGain, 0, 1));
@@ -641,6 +712,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
     conf.add("safety_tresholds", safetyThresholds);
     conf.add("fdqp_weights", fdqpWeights);
+    conf.add("fdmpc_weights", fdmpcWeights);
 
     conf.add("friction", friction);
     conf.add("leftFootSurface", leftFootSurface);
