@@ -377,12 +377,14 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return zmpdTarget_;
   }
 
-  inline const ContactState & supportFoot() const noexcept
+  /* Return the defined support foot */
+  inline const ContactState supportFoot() const noexcept
   {
     return supportFoot_;
   }
 
-  void supportFoot(const ContactState & foot)
+  /* Return the defined support foot */
+  void supportFoot(const ContactState & foot )
   {
     supportFoot_ = foot;
   }

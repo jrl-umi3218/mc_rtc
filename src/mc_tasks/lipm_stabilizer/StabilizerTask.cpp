@@ -117,6 +117,7 @@ void StabilizerTask::reset()
   comOffsetLowPass_.reset(Eigen::Vector3d::Zero());
   comOffsetLowPassCoM_.reset(Eigen::Vector3d::Zero());
   comOffsetDerivator_.reset(Eigen::Vector3d::Zero());
+  fSumFilter_.reset(Eigen::Vector3d{0,0,robot().mass() * mc_rtc::constants::GRAVITY});
 
   dcmDerivator_.reset(Eigen::Vector3d::Zero());
   dcmIntegrator_.reset(Eigen::Vector3d::Zero());
@@ -315,7 +316,7 @@ void StabilizerTask::disable()
   disableConfig_.dcmPropGain = 0.;
   disableConfig_.comdErrorGain = 0.;
   disableConfig_.zmpdGain = 0.;
-  disableConfig_.dfAdmittance = 0.;
+  disableConfig_.dfAdmittance.setZero();
   disableConfig_.vdcFrequency = 0.;
   disableConfig_.vdcStiffness = 0.;
   zmpcc_.enabled(false);
@@ -1183,14 +1184,14 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
 
   const auto & leftContact = contacts_.at(ContactState::Left);
   const auto & rightContact = contacts_.at(ContactState::Right);
-  const double fz_tot = robot().mass() * constants::GRAVITY; // Vertical force applied by gravity on the whole robot
+  const double fz_tot = fSumFilter_.eval().z(); //Vertical force applied by gravity on the whole robot
 
   const sva::PTransformd & X_0_lc = leftContact.surfacePose();
   const sva::PTransformd & X_0_rc = rightContact.surfacePose();
 
   // translation vector from contact center to contact ankle in contact frame
   //{
-  const Eigen::Vector3d t_rankle_rc = (X_0_rc * contacts_.at(ContactState::Right).anklePose().inv()).translation();
+  const Eigen::Vector3d t_rankle_rc = (X_0_rc * contacts_.at(ContactState::Right).anklePose().inv() ).translation();
   const Eigen::Vector3d t_lankle_lc = (X_0_lc * contacts_.at(ContactState::Left).anklePose().inv()).translation();
   //}
 
@@ -1202,13 +1203,16 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   const Eigen::Vector2d measuredRightCoP = clamp(footTasks[ContactState::Right]->measuredCoP(),
                                                  Eigen::Vector2d{-rightContact.halfLength(), -rightContact.halfWidth()},
                                                  Eigen::Vector2d{rightContact.halfLength(), rightContact.halfWidth()});
-  const double measuredFzLeft = clamp(footTasks[ContactState::Left]->measuredWrench().force().z(), 0, fz_tot);
+  const double measuredFzLeft = clamp(X_0_rc.inv().dualMul(footTasks[ContactState::Left]->measuredWrench()).force().z(),0,fz_tot);
   const Eigen::Vector2d measuredLeftCoP = clamp(footTasks[ContactState::Left]->measuredCoP(),
                                                 Eigen::Vector2d{-leftContact.halfLength(), -leftContact.halfWidth()},
                                                 Eigen::Vector2d{leftContact.halfLength(), leftContact.halfWidth()});
-  const double measuredFzRight = clamp(footTasks[ContactState::Right]->measuredWrench().force().z(), 0, fz_tot);
+  const double measuredFzRight = clamp(X_0_lc.inv().dualMul(footTasks[ContactState::Right]->measuredWrench()).force().z(),0,fz_tot);
 
-  // We consider an input to be the reference for the delay
+
+  // double fz_tot = clamp( measuredFzRight + measuredFzLeft,0. ,robot().mass() * constants::GRAVITY );
+
+  // We consider an input to be considered as the reference for the delay
   // At every sampling period
   if(t_ - tComputation_ > delta || tComputation_ == 0.)
   {
