@@ -605,6 +605,12 @@ std::pair<int, mc_rbdyn::Collision> CollisionsConstraint::__popCollId(const std:
   return std::pair<unsigned int, mc_rbdyn::Collision>(0, mc_rbdyn::Collision());
 }
 
+bool CollisionsConstraint::hasCollision(const std::string & c1, const std::string & c2) const noexcept
+{
+  auto it = std::find_if(cols.begin(), cols.end(), [&](const auto & c) { return c.body1 == c1 && c.body2 == c2; });
+  return it != cols.end();
+}
+
 } // namespace mc_solver
 
 namespace

@@ -237,6 +237,15 @@ public:
                      const std::string & r2,
                      const std::vector<mc_rbdyn::Collision> & collisions);
 
+  /** Returns true if the given collision is active */
+  bool hasCollision(const std::string & r1, const std::string & r2, const mc_rbdyn::Collision & col) const noexcept;
+
+  /** Returns true if the given collision is active */
+  bool hasCollision(const std::string & r1,
+                    const std::string & r2,
+                    const std::string & c1,
+                    const std::string & c2) const noexcept;
+
   /** Remove collisions-pair between two robots
    *
    * If the r1-r2 collision manager does not exist yet, this has no

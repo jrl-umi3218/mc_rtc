@@ -62,6 +62,7 @@ public:
     addContact({"jvrc1", "ground", "LeftFoot", "AllGround"});
     addContact({"jvrc1", "ground", "RightFoot", "AllGround"});
     addCollisions("jvrc1", "box", {{"R_WRIST_Y_S", "box", iDist, sDist, 0}});
+    BOOST_REQUIRE(hasCollision("jvrc1", "box", "R_WRIST_Y_S", "box"));
     mc_rtc::log::success("Created TestCollisionController");
   }
 
@@ -74,21 +75,26 @@ public:
     {
       resetBox();
       removeCollisions("jvrc1", "box");
+      BOOST_REQUIRE(!hasCollision("jvrc1", "box", "R_WRIST_Y_S", "box"));
       std::vector<std::string> arm_joints = {"R_SHOULDER_P", "R_SHOULDER_R", "R_SHOULDER_Y", "R_ELBOW_P",
                                              "R_ELBOW_Y",    "R_WRIST_R",    "R_WRIST_Y"};
       addCollisions("jvrc1", "box", {{"R_WRIST_Y_S", "box", iDist, sDist, 0, arm_joints}});
+      BOOST_REQUIRE(hasCollision("jvrc1", "box", "R_WRIST_Y_S", "box"));
     }
     if(nrIter == 1000)
     {
       resetBox();
       removeCollisions("jvrc1", "box");
+      BOOST_REQUIRE(!hasCollision("jvrc1", "box", "R_WRIST_Y_S", "box"));
       std::vector<std::string> arm_joints = {"R_SHOULDER_P"};
       addCollisions("jvrc1", "box", {{"R_WRIST_Y_S", "box", iDist, sDist, 0, arm_joints}});
+      BOOST_REQUIRE(hasCollision("jvrc1", "box", "R_WRIST_Y_S", "box"));
     }
     if(nrIter == 1500)
     {
       resetBox();
       removeCollisions("jvrc1", "box");
+      BOOST_REQUIRE(!hasCollision("jvrc1", "box", "R_WRIST_Y_S", "box"));
       std::vector<std::string> arm_joints = {"R_SHOULDER_P", "R_SHOULDER_R", "R_SHOULDER_Y", "R_ELBOW_P",
                                              "R_ELBOW_Y",    "R_WRIST_R",    "R_WRIST_Y"};
       std::vector<std::string> selected_joints = {"Root"};
@@ -100,6 +106,7 @@ public:
         }
       }
       addCollisions("jvrc1", "box", {{"R_WRIST_Y_S", "box", iDist, sDist, 0, selected_joints}});
+      BOOST_REQUIRE(hasCollision("jvrc1", "box", "R_WRIST_Y_S", "box"));
     }
     return ret;
   }

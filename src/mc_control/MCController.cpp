@@ -960,6 +960,31 @@ void MCController::addCollisions(const std::string & r1,
   cc->addCollisions(solver(), collisions);
 }
 
+bool MCController::hasCollision(const std::string & r1,
+                                const std::string & r2,
+                                const mc_rbdyn::Collision & col) const noexcept
+{
+  return hasCollision(r1, r2, col.body1, col.body2);
+}
+
+bool MCController::hasCollision(const std::string & r1,
+                                const std::string & r2,
+                                const std::string & c1,
+                                const std::string & c2) const noexcept
+{
+  auto it = collision_constraints_.find({r1, r2});
+  if(it != collision_constraints_.end())
+  {
+    return it->second->hasCollision(c1, c2);
+  }
+  it = collision_constraints_.find({r2, r1});
+  if(it != collision_constraints_.end())
+  {
+    return it->second->hasCollision(c2, c1);
+  }
+  return false;
+}
+
 void MCController::removeCollisions(const std::string & r1,
                                     const std::string & r2,
                                     const std::vector<mc_rbdyn::Collision> & collisions)

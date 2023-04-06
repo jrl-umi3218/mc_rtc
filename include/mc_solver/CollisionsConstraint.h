@@ -83,6 +83,9 @@ public:
    */
   void addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols);
 
+  /** Returns true if the given collision is in this constraint */
+  bool hasCollision(const std::string & c1, const std::string & c2) const noexcept;
+
   /** Remove all collisions from the constraint */
   void reset();
 
