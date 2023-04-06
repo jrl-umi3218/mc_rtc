@@ -173,11 +173,11 @@ bool CollisionsConstraint::removeCollision(QPSolver & solver, const std::string 
     if(monitored_.count(p.first))
     {
       toggleCollisionMonitor(p.first);
-      category_.push_back("Monitors");
-      std::string name = "Monitor " + p.second.body1 + "/" + p.second.body2;
-      gui_->removeElement(category_, name);
-      category_.pop_back();
     }
+    category_.push_back("Monitors");
+    std::string name = "Monitor " + p.second.body1 + "/" + p.second.body2;
+    gui_->removeElement(category_, name);
+    category_.pop_back();
     cols.erase(std::find(cols.begin(), cols.end(), p.second));
     switch(backend_)
     {
@@ -241,11 +241,11 @@ bool CollisionsConstraint::removeCollisionByBody(QPSolver & solver,
       if(monitored_.count(out.first))
       {
         toggleCollisionMonitor(out.first);
-        category_.push_back("Monitors");
-        std::string name = "Monitor " + out.second.body1 + "/" + out.second.body2;
-        gui_->removeElement(category_, name);
-        category_.pop_back();
       }
+      category_.push_back("Monitors");
+      std::string name = "Monitor " + out.second.body1 + "/" + out.second.body2;
+      gui_->removeElement(category_, name);
+      category_.pop_back();
     }
   }
   for(const auto & it : toRm)
