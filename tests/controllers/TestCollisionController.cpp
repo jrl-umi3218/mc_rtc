@@ -15,6 +15,8 @@
 
 #include <mc_rtc/logging.h>
 
+#include <sch/S_Object/S_Sphere.h>
+
 #include <boost/test/unit_test.hpp>
 
 #ifndef M_PI
@@ -54,6 +56,26 @@ public:
     BOOST_REQUIRE_EQUAL(robot().name(), "jvrc1");
     // Check that the box is loaded
     BOOST_REQUIRE(robots().hasRobot("box"));
+
+    // Add a bunch of collision objects to the ground
+    for(size_t i = 0; i < 10; ++i)
+    {
+      auto & g = robot("ground");
+      auto & b = g.mb().body(0).name();
+      g.addConvex(fmt::format("object{}", i), b, std::make_shared<sch::S_Sphere>(1.0));
+    }
+    // Check the wildcard adding
+    addCollisions("jvrc1", "ground", {{"R_WRIST_Y_S", "object*", iDist, sDist, 0}});
+    for(size_t i = 0; i < 10; ++i)
+    {
+      BOOST_REQUIRE(hasCollision("jvrc1", "ground", "R_WRIST_Y_S", fmt::format("object{}", i)));
+    }
+    // Check the wildcard removing
+    removeCollisions("jvrc1", "ground", {{"R_WRIST_Y_S", "object*", iDist, sDist, 0}});
+    for(size_t i = 0; i < 10; ++i)
+    {
+      BOOST_REQUIRE(!hasCollision("jvrc1", "ground", "R_WRIST_Y_S", fmt::format("object{}", i)));
+    }
 
     solver().addConstraintSet(contactConstraint);
     solver().addConstraintSet(kinematicsConstraint);

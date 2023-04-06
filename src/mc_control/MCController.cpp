@@ -977,10 +977,13 @@ bool MCController::hasCollision(const std::string & r1,
   {
     return it->second->hasCollision(c1, c2);
   }
-  it = collision_constraints_.find({r2, r1});
-  if(it != collision_constraints_.end())
+  if(r1 != r2)
   {
-    return it->second->hasCollision(c2, c1);
+    it = collision_constraints_.find({r2, r1});
+    if(it != collision_constraints_.end())
+    {
+      return it->second->hasCollision(c2, c1);
+    }
   }
   return false;
 }

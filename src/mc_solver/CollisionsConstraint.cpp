@@ -144,6 +144,41 @@ struct TVMCollisionConstraint
 static inline mc_rtc::void_ptr_caster<tasks::qp::CollisionConstr> tasks_constraint{};
 static inline mc_rtc::void_ptr_caster<details::TVMCollisionConstraint> tvm_constraint{};
 
+/** Helper for wildcard
+ *
+ * Returns false if body is not a wildcard
+ *
+ * Throws if body is a wildcard but there's no match in robot
+ */
+template<typename Callback>
+bool handle_wildcard(const mc_rbdyn::Robot & robot, const std::string & body, Callback cb)
+{
+  if(body.back() != '*')
+  {
+    return false;
+  }
+  std::string search = body.substr(0, body.size() - 1);
+  bool match = false;
+  for(const auto & convex : robot.convexes())
+  {
+    const auto & cName = convex.first;
+    if(cName.size() < search.size())
+    {
+      continue;
+    }
+    if(cName.substr(0, search.size()) == search)
+    {
+      match = true;
+      cb(cName);
+    }
+  }
+  if(!match)
+  {
+    mc_rtc::log::error_and_throw("No match found for collision wildcard {} in {}", body, robot.name());
+  }
+  return true;
+}
+
 static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend, const mc_rbdyn::Robots & robots, double timeStep)
 {
   switch(backend)
@@ -167,6 +202,15 @@ CollisionsConstraint::CollisionsConstraint(const mc_rbdyn::Robots & robots,
 
 bool CollisionsConstraint::removeCollision(QPSolver & solver, const std::string & b1Name, const std::string & b2Name)
 {
+  const auto & robots = solver.robots();
+  const mc_rbdyn::Robot & r1 = robots.robot(r1Index);
+  const mc_rbdyn::Robot & r2 = robots.robot(r2Index);
+  auto on_b1_wildcard = [&](const std::string & nb1) { removeCollision(solver, nb1, b2Name); };
+  auto on_b2_wildcard = [&](const std::string & nb2) { removeCollision(solver, b1Name, nb2); };
+  if(handle_wildcard(r1, b1Name, on_b1_wildcard) || handle_wildcard(r2, b2Name, on_b2_wildcard))
+  {
+    return true;
+  }
   auto p = __popCollId(b1Name, b2Name);
   if(!p.second.isNone())
   {
@@ -283,44 +327,17 @@ void CollisionsConstraint::__addCollision(mc_solver::QPSolver & solver, const mc
     mc_rtc::log::error("Attempted to add a collision without a specific body");
     return;
   }
-  auto replace_b1 = [](const mc_rbdyn::Collision & col, const std::string & b) {
-    auto out = col;
-    out.body1 = b;
-    return out;
+  auto on_b1_wildcard = [&](const std::string & nb1) {
+    auto nCol = col;
+    nCol.body1 = nb1;
+    __addCollision(solver, nCol);
   };
-  auto replace_b2 = [](const mc_rbdyn::Collision & col, const std::string & b) {
-    auto out = col;
-    out.body2 = b;
-    return out;
+  auto on_b2_wildcard = [&](const std::string & nb2) {
+    auto nCol = col;
+    nCol.body2 = nb2;
+    __addCollision(solver, nCol);
   };
-  auto handle_wildcard = [&, this](const mc_rbdyn::Robot & robot, const std::string & body, bool is_b1) {
-    if(body.back() != '*')
-    {
-      return false;
-    }
-    std::string search = body.substr(0, body.size() - 1);
-    bool match = false;
-    for(const auto & convex : robot.convexes())
-    {
-      const auto & cName = convex.first;
-      if(cName.size() < search.size())
-      {
-        continue;
-      }
-      if(cName.substr(0, search.size()) == search)
-      {
-        match = true;
-        auto nCol = is_b1 ? replace_b1(col, cName) : replace_b2(col, cName);
-        __addCollision(solver, nCol);
-      }
-    }
-    if(!match)
-    {
-      mc_rtc::log::error_and_throw("No match found for collision wildcard {} in {}", body, robot.name());
-    }
-    return true;
-  };
-  if(handle_wildcard(r1, col.body1, true) || handle_wildcard(r2, col.body2, false))
+  if(handle_wildcard(r1, col.body1, on_b1_wildcard) || handle_wildcard(r2, col.body2, on_b2_wildcard))
   {
     return;
   }
