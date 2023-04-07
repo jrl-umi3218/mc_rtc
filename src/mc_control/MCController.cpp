@@ -500,7 +500,7 @@ void MCController::addRobotToLog(const mc_rbdyn::Robot & r)
                          [this, name]() -> const std::vector<double> & { return robot(name).jointTorques(); });
     std::vector<double> qOut(robot(name).refJointOrder().size(), 0);
     logger().addLogEntry(entry("qOut"), [this, name, qOut]() mutable -> const std::vector<double> & {
-      auto & robot = this->robot(name);
+      auto & robot = this->outputRobot(name);
       for(size_t i = 0; i < qOut.size(); ++i)
       {
         auto mbcIndex = robot.jointIndexInMBC(i);
@@ -513,7 +513,7 @@ void MCController::addRobotToLog(const mc_rbdyn::Robot & r)
     });
     auto & alphaOut = qOut;
     logger().addLogEntry(entry("alphaOut"), [this, name, alphaOut]() mutable -> const std::vector<double> & {
-      auto & robot = this->robot(name);
+      auto & robot = this->outputRobot(name);
       for(size_t i = 0; i < alphaOut.size(); ++i)
       {
         auto mbcIndex = robot.jointIndexInMBC(i);
@@ -526,7 +526,7 @@ void MCController::addRobotToLog(const mc_rbdyn::Robot & r)
     });
     auto & alphaDOut = qOut;
     logger().addLogEntry(entry("alphaDOut"), [this, name, alphaDOut]() mutable -> const std::vector<double> & {
-      auto & robot = this->robot(name);
+      auto & robot = this->outputRobot(name);
       for(size_t i = 0; i < alphaDOut.size(); ++i)
       {
         auto mbcIndex = robot.jointIndexInMBC(i);
@@ -539,7 +539,7 @@ void MCController::addRobotToLog(const mc_rbdyn::Robot & r)
     });
     auto & tauOut = qOut;
     logger().addLogEntry(entry("tauOut"), [this, name, tauOut]() mutable -> const std::vector<double> & {
-      auto & robot = this->robot(name);
+      auto & robot = this->outputRobot(name);
       for(size_t i = 0; i < tauOut.size(); ++i)
       {
         auto mbcIndex = robot.jointIndexInMBC(i);
@@ -555,9 +555,10 @@ void MCController::addRobotToLog(const mc_rbdyn::Robot & r)
   if(robot(name).mb().joint(0).dof() == 6)
   {
     logger().addLogEntry(entry("ff"),
-                         [this, name]() -> const sva::PTransformd & { return robot(name).mbc().bodyPosW[0]; });
-    logger().addLogEntry(entry("ff_real"),
-                         [this, name]() -> const sva::PTransformd & { return realRobot(name).mbc().bodyPosW[0]; });
+                         [this, name]() -> const sva::PTransformd & { return outputRobot(name).mbc().bodyPosW[0]; });
+    logger().addLogEntry(entry("ff_real"), [this, name]() -> const sva::PTransformd & {
+      return outputRealRobot(name).mbc().bodyPosW[0];
+    });
   }
   // Log all force sensors
   for(const auto & fs : robot(name).forceSensors())
