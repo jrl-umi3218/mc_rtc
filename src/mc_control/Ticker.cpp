@@ -257,6 +257,8 @@ void Ticker::run()
     start_ticker = clock::now();
   };
 
+  bool was_no_sync = config_.no_sync;
+
   while(running_ && elapsed_time() < config_.run_for)
   {
     if(config_.sync_ratio != target_ratio || do_reset_)
@@ -275,6 +277,10 @@ void Ticker::run()
       sim_real_ratio_ = sim_elapsed_t / real_elapsed_t;
       if(!config_.no_sync)
       {
+        if(was_no_sync)
+        {
+          reset_sync();
+        }
         // sim_elased_t / (real_elapsed_t + delay) = target_ratio
         // delay = sim / ratio - real;
         double delay = sim_elapsed_t / target_ratio - real_elapsed_t;
@@ -290,6 +296,7 @@ void Ticker::run()
       std::this_thread::sleep_for(std::chrono::milliseconds(10));
       reset_sync();
     }
+    was_no_sync = config_.no_sync;
     if(log_ && config_.replay_configuration.stop_after_log && iters_ == log_->size() && !replay_done_)
     {
       replay_done_ = true;
