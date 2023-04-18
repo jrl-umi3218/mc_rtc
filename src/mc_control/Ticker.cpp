@@ -370,7 +370,7 @@ void Ticker::simulate_sensors()
   }
   else
   {
-    for(const auto & r : gc_.controller().robots())
+    for(const auto & r : gc_.controller().outputRobots())
     {
       gc_.setEncoderValues(r.name(), get_encoders(r));
       gc_.setEncoderVelocities(r.name(), get_encoders_velocities(r));
