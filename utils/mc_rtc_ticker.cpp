@@ -9,6 +9,7 @@ int main(int argc, char * argv[])
   {
     bool replay_outputs = false;
     bool only_gui_inputs = false;
+    bool continue_after_replay = false;
     po::options_description desc("mc_rtc_ticker options");
     // clang-format off
     desc.add_options()
@@ -21,6 +22,7 @@ int main(int argc, char * argv[])
       ("replay-log,l", po::value<std::string>(&config.replay_configuration.log), "Log to replay")
       ("datastore-mapping,m", po::value<std::string>(&config.replay_configuration.with_datastore_config), "Mapping of log keys to datastore")
       ("replay-gui-inputs-only,g", po::bool_switch(&only_gui_inputs), "Only replay the GUI inputs")
+      ("continue-after-replay,c", po::bool_switch(&continue_after_replay), "Continue after log replay")
       ("exit-after-replay,e", po::bool_switch(&config.replay_configuration.exit_after_log), "Exit after log replay")
       ("replay-outputs", po::bool_switch(&replay_outputs), "Enable outputs replay (override controller)");
     // clang-format on
@@ -49,6 +51,7 @@ int main(int argc, char * argv[])
     {
       mc_rtc::log::error_and_throw("sync-ratio must be strictly positive");
     }
+    config.replay_configuration.stop_after_log = !continue_after_replay;
   }
   mc_control::Ticker ticker(config);
   ticker.run();
