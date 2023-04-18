@@ -364,7 +364,7 @@ void Ticker::setup_gui()
 
 void Ticker::simulate_sensors()
 {
-  if(log_ && iters_ < log_->size())
+  if(log_ && iters_ < log_->size() && config_.replay_configuration.with_inputs)
   {
     // Sensors are handled by the Replay plugin
   }
