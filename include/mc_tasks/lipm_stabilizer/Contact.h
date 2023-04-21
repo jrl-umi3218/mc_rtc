@@ -133,6 +133,11 @@ struct MC_TASKS_DLLAPI Contact
     return halfLength_;
   }
 
+  double friction() const
+  {
+    return friction_;
+  }
+
   /**
    * World position of projected ankle frame into surface frame.
    * Orientation is that of the target contact frame.

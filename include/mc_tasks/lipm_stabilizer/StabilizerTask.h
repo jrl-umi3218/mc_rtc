@@ -377,6 +377,34 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return zmpdTarget_;
   }
 
+  /* Return the current support foot */
+  inline const ContactState supportFoot() const noexcept
+  {
+    return supportFoot_;
+  }
+
+  /* Set the current support foot */
+  inline void supportFoot(const ContactState & foot) noexcept
+  {
+    supportFoot_ = foot;
+  }
+
+  /**
+   * @brief Set the reference zmp sequence to distribute between the CoP task (Only in double support)
+   *
+   * It is advised to provide the future support foot name when using this method using the supportFoot method
+   *
+   * @param ref Reference zmp sequence
+   * @param delta Sequence sampling time
+   *
+   */
+  inline void horizonReference(const std::vector<Eigen::Vector2d> & ref, const double delta) noexcept
+  {
+    horizonZmpRef_ = ref;
+    horizonDelta_ = delta;
+    horizonCoPDistribution_ = true;
+  }
+
   /**
    * @brief Set the wrench that the robot expects to receive from the external contacts.
    *
@@ -424,6 +452,15 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return Eigen::Vector2d::Zero();
   }
 
+  inline Eigen::Vector2d filteredDCM() const noexcept
+  {
+    if(c_.dcmBias.withDCMBias)
+    {
+      return dcmEstimator_.getUnbiasedDCM();
+    }
+    return measuredDCM_.segment(0, 2);
+  }
+
   inline const Eigen::Vector3d & measuredZMP() noexcept
   {
     return measuredZMP_;
@@ -439,6 +476,11 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return measuredCoMd_;
   }
 
+  inline const Eigen::Vector3d & measuredFilteredNetForces() const noexcept
+  {
+    return fSumFilter_.eval();
+  }
+
   inline const Eigen::Vector3d & comOffsetTarget() noexcept
   {
     return comOffsetTarget_;
@@ -447,6 +489,11 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   inline const Eigen::Vector3d & comOffsetMeasured() const noexcept
   {
     return comOffsetMeasured_;
+  }
+
+  inline const double zmpCoeffMeasured() const noexcept
+  {
+    return zmpCoefMeasured_;
   }
 
   inline bool inContact(ContactState state) const noexcept
@@ -486,6 +533,11 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   inline void torsoPitch(double pitch) noexcept
   {
     c_.torsoPitch = pitch;
+  }
+
+  inline double omega() const
+  {
+    return omega_;
   }
 
   inline void torsoWeight(double weight) noexcept
@@ -777,6 +829,21 @@ private:
    */
   void distributeWrench(const sva::ForceVecd & desiredWrench);
 
+  /**
+   * @brief Generate a CoP reference for each contact under the future zmp refence along a horizon.
+   * The dynamic of the contact CoP is expected to follow a 1st order dynamic w.r.t the CoP reference using prameter
+   * lambda_CoP
+   *
+   * The desired vertical forces are computed using the ratio (p_left - zmp_ref) / (p_left - p_right).
+   * This choice limits the torque at each contact ankle
+   *
+   * It is advised to provide the future support foot name when using this method using supportFoot method
+   *
+   * @param zmp_ref  each zmp reference piecewise constant over delta vector lenght in the world frame
+   * @param delta horizon timestep
+   */
+  void distributeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref, double delta);
+
   /** Project desired wrench to single support foot.
    *
    * \param desiredWrench Desired resultant reaction wrench.
@@ -936,7 +1003,7 @@ protected:
   Eigen::Vector3d zmpTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d zmpdTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d dcmTarget_ = Eigen::Vector3d::Zero();
-  double omega_;
+  double omega_ = 3.4;
 
   double t_ = 0.; /**< Time elapsed since the task is running */
 
@@ -1018,6 +1085,36 @@ protected:
   Eigen::Vector3d distribZMP_ =
       Eigen::Vector3d::Zero(); /**< ZMP corresponding to force distribution result (desired ZMP) */
   sva::PTransformd zmpFrame_ = sva::PTransformd::Identity(); /**< Frame in which the ZMP is computed */
+
+  // CoP distribution over an horizon
+  //{
+  std::vector<Eigen::Vector2d> horizonZmpRef_; /**< Future ZMP reference during tHorizon */
+  double horizonDelta_ = 0.05; /**< Sequence sampling period */
+  /**<Is set to true when a new zmp sequence is provided and overided classical distribution */
+  bool horizonCoPDistribution_ = false;
+  Eigen::Vector2d modeledCoPLeft_ = Eigen::Vector2d::Zero(); /**< Used for logging*/
+  Eigen::Vector2d modeledCoPRight_ = Eigen::Vector2d::Zero(); /**< Used for logging*/
+
+  Eigen::Vector2d delayedTargetCoPLeft_ = Eigen::Vector2d::Zero(); /**< Considered target for the delay*/
+  Eigen::Vector2d delayedTargetCoPRight_ = Eigen::Vector2d::Zero(); /**< Considered target for the delay*/
+  double delayedTargetFzLeft_ = 0; /**< Considered target for the delay*/
+  double delayedTargetFzRight_ = 0; /**< Considered target for the delay*/
+
+  double tComputation_ = 0.; /**< time when the Horizon based force distribution has been computed */
+  double modeledFzRight_ = 0.; /**< Used for logging*/
+  double modeledFzLeft_ = 0.; /**< Used for logging*/
+  double desiredFzLeft_ = 0.; /**< Used for logging*/
+  double desiredFzRight_ = 0.; /**< Used for logging*/
+  Eigen::Vector2d QPCoPLeft_ =
+      Eigen::Vector2d::Zero(); /**<Get the next modeled CoP by the Horizon based force distribution QP */
+  Eigen::Vector2d QPCoPRight_ =
+      Eigen::Vector2d::Zero(); /**<Get the next modeled CoP by the Horizon based force distribution QP */
+  /**<Error between the computed ZMP byt the  Horizon based force distribution QP and the reference zmp>*/
+  Eigen::Vector2d distribCheck_ = Eigen::Vector2d::Zero();
+  mc_filter::LowPass<Eigen::Vector3d> fSumFilter_; /**<Low pass filter that sum the forces on both feet>*/
+  ContactState supportFoot_ = ContactState::Left; /**< Future support foot  */
+
+  //}
 };
 
 extern template void StabilizerTask::computeWrenchOffsetAndCoefficient<&StabilizerTask::ExternalWrench::target>(

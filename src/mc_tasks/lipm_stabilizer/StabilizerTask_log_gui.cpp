@@ -98,6 +98,15 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
           }),
       Checkbox(
           "CoP constraints", [this]() { return c_.constrainCoP; }, [this]() { c_.constrainCoP = !c_.constrainCoP; }),
+
+      ArrayInput(
+          "Foot CoP lambda", {"CoPx", "CoPy", "f"},
+          [this]() -> Eigen::Vector3d {
+            return {c_.copFzLambda.x(), c_.copFzLambda.y(), c_.copFzLambda.z()};
+          },
+          [this](const Eigen::Vector3d & a) { c_.copFzLambda = a; }),
+      NumberInput(
+          "Admittance Delay", [this]() { return c_.delayCoP; }, [this](double d) { c_.delayCoP = d; }),
       ArrayInput(
           "Max cop linear velocity [m/s]",
           [this]() -> const Eigen::Vector3d & { return footTasks.at(ContactState::Left)->maxLinearVel(); },
@@ -399,7 +408,45 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   MC_RTC_LOG_HELPER(name_ + "_error_df_force", dfForceError_);
   MC_RTC_LOG_HELPER(name_ + "_error_df_eval", dfError_);
   MC_RTC_LOG_HELPER(name_ + "_error_vdc", vdcHeightError_);
+  logger.addLogEntry(name_ + "_support_left_max", this, [this]() -> Eigen::Vector2d {
+    if(inContact(ContactState::Left))
+    {
+      const auto & contact = contacts_.at(ContactState::Left);
+      return Eigen::Vector2d{contact.halfLength(), contact.halfWidth()};
+    }
+    return Eigen::Vector2d::Zero();
+  });
+  logger.addLogEntry(name_ + "_support_left_min", this, [this]() -> Eigen::Vector2d {
+    if(inContact(ContactState::Left))
+    {
+      const auto & contact = contacts_.at(ContactState::Left);
+      return Eigen::Vector2d{-contact.halfLength(), -contact.halfWidth()};
+    }
+    return Eigen::Vector2d::Zero();
+  });
+  logger.addLogEntry(name_ + "_support_right_max", this, [this]() -> Eigen::Vector2d {
+    if(inContact(ContactState::Right))
+    {
+      const auto & contact = contacts_.at(ContactState::Right);
+      return Eigen::Vector2d{contact.halfLength(), contact.halfWidth()};
+    }
+    return Eigen::Vector2d::Zero();
+  });
+  logger.addLogEntry(name_ + "_support_right_min", this, [this]() -> Eigen::Vector2d {
+    if(inContact(ContactState::Right))
+    {
+      const auto & contact = contacts_.at(ContactState::Right);
+      return Eigen::Vector2d{-contact.halfLength(), -contact.halfWidth()};
+    }
+    return Eigen::Vector2d::Zero();
+  });
   logger.addLogEntry(name_ + "_admittance_cop", this, [this]() -> const Eigen::Vector2d & { return c_.copAdmittance; });
+  logger.addLogEntry(name_ + "_admittance_cop_DistribError", this,
+                     [this]() -> const Eigen::Vector2d & { return distribCheck_; });
+  logger.addLogEntry(name_ + "_admittance_cop_left_QP", this,
+                     [this]() -> const Eigen::Vector2d & { return QPCoPLeft_; });
+  logger.addLogEntry(name_ + "_admittance_cop_right_QP", this,
+                     [this]() -> const Eigen::Vector2d & { return QPCoPRight_; });
   logger.addLogEntry(name_ + "_admittance_df", this, [this]() { return c_.dfAdmittance; });
   logger.addLogEntry(name_ + "_dcmDerivator_filtered", this, [this]() { return dcmDerivator_.eval(); });
   logger.addLogEntry(name_ + "_dcmDerivator_input_lp", this, [this]() { return dcmDerivator_.input_lp(); });
@@ -434,6 +481,9 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_extWrench_ZMPCoefMeasured", this,
                      [this]() -> const double & { return zmpCoefMeasured_; });
   logger.addLogEntry(name_ + "_df_damping", this, [this]() { return c_.dfDamping; });
+  logger.addLogEntry(name_ + "_forcesSum", this, [this]() -> const Eigen::Vector3d & { return fSumFilter_.eval(); });
+  logger.addLogEntry(name_ + "_forcesSum_cutOffPeriod", this,
+                     [this]() -> const double { return c_.fSumFilterTimeConstant; });
   logger.addLogEntry(name_ + "_fdqp_weights_ankleTorque", this,
                      [this]() { return std::pow(c_.fdqpWeights.ankleTorqueSqrt, 2); });
   logger.addLogEntry(name_ + "_fdqp_weights_netWrench", this,
@@ -442,6 +492,19 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
                      [this]() { return std::pow(c_.fdqpWeights.pressureSqrt, 2); });
   logger.addLogEntry(name_ + "_vdc_frequency", this, [this]() { return c_.vdcFrequency; });
   logger.addLogEntry(name_ + "_vdc_stiffness", this, [this]() { return c_.vdcStiffness; });
+  logger.addLogEntry(name_ + "_fdmpc_model_cop_lambda", this,
+                     [this]() -> Eigen::Vector2d { return c_.copFzLambda.segment(0, 2); });
+  logger.addLogEntry(name_ + "_fdmpc_model_cop_left", this, [this]() { return modeledCoPLeft_; });
+  logger.addLogEntry(name_ + "_fdmpc_model_cop_right", this, [this]() { return modeledCoPRight_; });
+  logger.addLogEntry(name_ + "_fdmpc_model_fz_lambda", this, [this]() -> double { return c_.copFzLambda.z(); });
+  logger.addLogEntry(name_ + "_fdmpc_model_fz_left", this, [this]() { return modeledFzLeft_; });
+  logger.addLogEntry(name_ + "_fdmpc_model_fz_right", this, [this]() { return modeledFzRight_; });
+  logger.addLogEntry(name_ + "_fdmpc_desired_fz_left", this, [this]() { return desiredFzLeft_; });
+  logger.addLogEntry(name_ + "_fdmpc_desired_fz_right", this, [this]() { return desiredFzRight_; });
+  logger.addLogEntry(name_ + "_fdmpc_model_delay", this, [this]() { return c_.delayCoP; });
+  logger.addLogEntry(name_ + "_fdmpc_weights_cop", this, [this]() { return c_.fdmpcWeights.cop_; });
+  logger.addLogEntry(name_ + "_fdmpc_weights_copDiff", this, [this]() { return c_.fdmpcWeights.copDiff_; });
+  logger.addLogEntry(name_ + "_fdmpc_weights_copReg", this, [this]() { return c_.fdmpcWeights.copRegulation_; });
   MC_RTC_LOG_HELPER(name_ + "_desired_wrench", desiredWrench_);
   MC_RTC_LOG_HELPER(name_ + "_wrench", distribWrench_);
   MC_RTC_LOG_HELPER(name_ + "_support_min", supportMin_);
