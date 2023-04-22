@@ -77,11 +77,14 @@ class TreeView(object):
         l.parent = self
     for l in self.leafs:
       l.simplify()
+    data_leafs = [l for l in self.leafs if l.hasData]
+    numeric_leafs = [l for l in data_leafs if re.match("^[0-9]+$", l.name)]
+    if len(data_leafs) == len(numeric_leafs) and len(numeric_leafs) > 9:
+      numeric_leafs.sort(key = lambda x: int(x.name))
+      self.leafs = numeric_leafs + [l for l in self.leafs if not l.hasData]
   def update_y_selector(self, ySelector, parent, baseModelIdx = None):
     row = 0
     needExpand = False
-    if all([l.name.isdigit() for l in self.leafs]):
-      self.leafs.sort(key = lambda x: x.name)
     for l in self.leafs:
       l.widgets.append(MCLogTreeWidgetItem(parent, l.name, l.dataName, l.hasData))
       if baseModelIdx is not None:
