@@ -418,7 +418,9 @@ class MCLogTab(QtWidgets.QWidget):
     self.ui.y1Selector.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
     self.ui.y2Selector.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
     self.y1Selected = []
+    self.y1SelectedItems = []
     self.y2Selected = []
+    self.y2SelectedItems = []
 
     self.XYCanvas = PlotCanvasWithToolbar(self, PlotType.XY)
     self.ui.verticalLayout.insertWidget(0, self.XYCanvas)
@@ -570,11 +572,11 @@ class MCLogTab(QtWidgets.QWidget):
 
   @QtCore.Slot(QtWidgets.QTreeWidgetItem, int)
   def on_y1Selector_itemClicked(self, item, col):
-    self.y1Selected = self.itemSelectionChanged(self.ui.y1Selector, self.y1Selected, 0)
+    self.y1Selected, self.y1SelectedItems = self.itemSelectionChanged(self.ui.y1Selector, self.y1Selected, self.y1SelectedItems, 0)
 
   @QtCore.Slot(QtWidgets.QTreeWidgetItem, int)
   def on_y2Selector_itemClicked(self, item, col):
-    self.y2Selected = self.itemSelectionChanged(self.ui.y2Selector, self.y2Selected, 1)
+    self.y2Selected, self.y2SelectedItems = self.itemSelectionChanged(self.ui.y2Selector, self.y2Selected, self.y2SelectedItems, 0)
 
   @QtCore.Slot(QtCore.QPoint)
   def on_y1Selector_customContextMenuRequested(self, point):
@@ -584,14 +586,12 @@ class MCLogTab(QtWidgets.QWidget):
   def on_y2Selector_customContextMenuRequested(self, point):
     self.showCustomMenu(self.ui.y2Selector, point, 1)
 
-  def itemSelectionChanged(self, ySelector, prevSelected, idx):
+  def itemSelectionChanged(self, ySelector, prevSelected, prevSelectedItems, idx):
     if idx == 0:
       add_fn = self.ui.canvas.add_plot_left
-    else:
-      add_fn = self.ui.canvas.add_plot_right
-    if idx == 0:
       remove_fn = self.ui.canvas.remove_plot_left
     else:
+      add_fn = self.ui.canvas.add_plot_right
       remove_fn = self.ui.canvas.remove_plot_right
     selected_items = [(i.actualText,i.hasData) for i in ySelector.selectedItems()]
     def is_selected(s, x):
@@ -607,14 +607,23 @@ class MCLogTab(QtWidgets.QWidget):
         itm += 1
       return None
     legends = [itm.legendText for itm in [ find_item(s) for s in selected ] ]
-    for s,l in zip(selected, legends):
-      if s not in prevSelected:
-        add_fn(self.x_data, s, l)
+    to_be_added = [ (s,l) for s,l in zip(selected, legends) if s not in prevSelected ]
+    if len(to_be_added) > 7:
+      reply = QtWidgets.QMessageBox.question(self, 'Warning', 'You are trying to add many ({}) entries at once. Are you sure?'.format(len(to_be_added)), QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No, QtWidgets.QMessageBox.No)
+      if reply == QtWidgets.QMessageBox.No:
+        selection = ySelector.selectionModel()
+        for itm in ySelector.selectedItems():
+          if itm not in prevSelectedItems:
+            selection.select(ySelector.indexFromItem(itm), QtCore.QItemSelectionModel.Deselect)
+        ySelector.setSelectionModel(selection)
+        return prevSelected, prevSelectedItems
+    for s,l in to_be_added:
+      add_fn(self.x_data, s, l)
     for s in prevSelected:
       if s not in selected:
         remove_fn(s)
     self.ui.canvas.draw()
-    return selected
+    return selected, ySelector.selectedItems()
 
   def update_y_selectors(self):
     canvas = self.ui.canvas
@@ -743,7 +752,9 @@ class MCLogTab(QtWidgets.QWidget):
       for y,yl in zip(y2, y2_label):
         tab.tree_view.select(y, tab.ui.y2Selector, 1)
       tab.y1Selected = y1
+      tab.y1SelectedItems = tab.ui.y1Selector.selectedItems()
       tab.y2Selected = y2
+      tab.y2SelectedItems = tab.ui.y2Selector.selectedItems()
     elif type_ is PlotType.XY:
       if len(y1_label):
         tab.XYSelector1.removeButton.show()
