@@ -883,8 +883,6 @@ mc_rbdyn::S_ObjectPtr ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::load(const mc_
   {
     auto p1 = schPointFromConfig(config("p1"));
     auto p2 = schPointFromConfig(config("p2"));
-    mc_rtc::log::critical("Loaded p1: {} {} {}", p1.m_x, p1.m_y, p1.m_z);
-    mc_rtc::log::critical("Loaded p2: {} {} {}", p2.m_x, p2.m_y, p2.m_z);
     return std::make_shared<sch::S_Cylinder>(p1, p2, config("radius"));
   }
   else if(type == "point")
