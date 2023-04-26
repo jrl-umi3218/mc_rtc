@@ -1,6 +1,4 @@
-{
-  % raw %
-}
+{% raw %}
 #include "MyRobot.h"
 
 #include <RBDyn/parsers/urdf.h>
@@ -32,6 +30,4 @@ MyRobotModule::MyRobotModule(bool fixed) : mc_rbdyn::RobotModule(MY_PATH, "my_ro
   _commonSelfCollisions = _minimalSelfCollisions;
   _grippers = {{"l_gripper", {"L_UTHUMB"}, true}, {"r_gripper", {"R_UTHUMB"}, false}};
 }
-{
-  % endraw %
-}
+{% endraw %}

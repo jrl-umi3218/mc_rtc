@@ -17,6 +17,8 @@ repos:
     'types_or': [c++, c]
     exclude: |
       (?x)^(
+          doc/_i18n/en/tutorials/advanced/new-robot/robot_module.cpp|
+          doc/_i18n/jp/tutorials/advanced/new-robot/robot_module.cpp|
           utils/mc_bin_flatbuffers/.*
       )$
 - repo: https://github.com/pre-commit/pre-commit-hooks
