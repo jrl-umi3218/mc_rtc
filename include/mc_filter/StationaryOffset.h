@@ -46,19 +46,13 @@ struct StationaryOffset
   {
     average_.append(value);
     filteredValue_ = value - average_.eval();
-    if(saturation_ > 0.)
-    {
-      utils::clampInPlace(filteredValue_, -saturation_, saturation_);
-    }
+    if(saturation_ > 0.) { utils::clampInPlace(filteredValue_, -saturation_, saturation_); }
   }
 
   /** Get output value where the stationary offset has been filtered.
    *
    */
-  const VectorT & eval() const
-  {
-    return filteredValue_;
-  }
+  const VectorT & eval() const { return filteredValue_; }
 
   /** Reset everything to an initial value
    *
@@ -73,29 +67,20 @@ struct StationaryOffset
   /** Get time constant of the filter.
    *
    */
-  double timeConstant() const
-  {
-    return average_.timeConstant();
-  }
+  double timeConstant() const { return average_.timeConstant(); }
 
   /** Update time constant.
    *
    * \param T New time constant of the filter.
    *
    */
-  void timeConstant(double T)
-  {
-    average_.timeConstant(T);
-  }
+  void timeConstant(double T) { average_.timeConstant(T); }
 
   /** Set output saturation; disable by providing a negative value.
    *
    * \param limit Output will saturate between -limit and +limit.
    */
-  void saturation(double limit)
-  {
-    saturation_ = limit;
-  }
+  void saturation(double limit) { saturation_ = limit; }
 
 private:
   VectorT filteredValue_ = VectorT::Zero();

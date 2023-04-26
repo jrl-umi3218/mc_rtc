@@ -17,10 +17,7 @@ namespace
 template<typename StrT>
 std::string log_entry(const StrT & entry, const std::string & robot, bool is_main)
 {
-  if(is_main)
-  {
-    return entry;
-  }
+  if(is_main) { return entry; }
   return fmt::format("{}_{}", robot, entry);
 }
 
@@ -39,24 +36,15 @@ GetT get(const mc_rtc::log::FlatLog & log,
 /** Get the a robot's state from the log */
 void log_to_robot(const mc_rtc::log::FlatLog & log, mc_rbdyn::Robot & robot, bool is_main, size_t idx)
 {
-  if(robot.mb().nrDof() == 0)
-  {
-    return;
-  }
+  if(robot.mb().nrDof() == 0) { return; }
   auto qOut = get(log, "qOut", robot.name(), is_main, idx);
   for(size_t i = 0; i < qOut.size(); ++i)
   {
     auto mbcIdx = robot.jointIndexInMBC(i);
-    if(mbcIdx == -1 || robot.mb().joint(mbcIdx).dof() == 0)
-    {
-      continue;
-    }
+    if(mbcIdx == -1 || robot.mb().joint(mbcIdx).dof() == 0) { continue; }
     robot.mbc().q[static_cast<size_t>(mbcIdx)][0] = qOut[i];
   }
-  if(robot.mb().joint(0).dof() == 6)
-  {
-    robot.posW(get<sva::PTransformd>(log, "ff", robot.name(), is_main, idx));
-  }
+  if(robot.mb().joint(0).dof() == 6) { robot.posW(get<sva::PTransformd>(log, "ff", robot.name(), is_main, idx)); }
 }
 
 template<typename CppT>
@@ -129,25 +117,16 @@ void Replay::init(mc_control::MCGlobalController & gc, const mc_rtc::Configurati
     if(gc.controller().config().has("Replay"))
     {
       auto replay_cfg = gc.controller().config()("Replay");
-      if(!replay_cfg.empty())
-      {
-        return init(gc, replay_cfg);
-      }
+      if(!replay_cfg.empty()) { return init(gc, replay_cfg); }
     }
     if(gc.configuration().config.has("Replay"))
     {
       auto replay_cfg = gc.configuration().config("Replay");
-      if(!replay_cfg.empty())
-      {
-        return init(gc, replay_cfg);
-      }
+      if(!replay_cfg.empty()) { return init(gc, replay_cfg); }
     }
   }
   auto & ds = gc.controller().datastore();
-  if(ds.has("Replay::Log"))
-  {
-    log_ = ds.get<decltype(log_)>("Replay::Log");
-  }
+  if(ds.has("Replay::Log")) { log_ = ds.get<decltype(log_)>("Replay::Log"); }
   else
   {
     if(!config.has("log"))
@@ -158,19 +137,14 @@ void Replay::init(mc_control::MCGlobalController & gc, const mc_rtc::Configurati
     log_ = std::make_shared<mc_rtc::log::FlatLog>(config("log").operator std::string());
     ds.make<decltype(log_)>("Replay::Log", log_);
   }
-  if(log_->size() == 0)
-  {
-    mc_rtc::log::error_and_throw("[Replay] Cannot replay an empty log");
-  }
+  if(log_->size() == 0) { mc_rtc::log::error_and_throw("[Replay] Cannot replay an empty log"); }
   std::string config_str;
-  auto do_config = [&](const char * key, bool & check, std::string_view msg) {
+  auto do_config = [&](const char * key, bool & check, std::string_view msg)
+  {
     config(key, check);
     if(check)
     {
-      if(config_str.size())
-      {
-        config_str += ", ";
-      }
+      if(config_str.size()) { config_str += ", "; }
       config_str += msg;
     }
   };
@@ -183,14 +157,8 @@ void Replay::init(mc_control::MCGlobalController & gc, const mc_rtc::Configurati
     mc_rtc::log::info("[Replay] Loading log to datastore configuration from {}", with_datastore_config);
     log_to_datastore_ = mc_rtc::Configuration(with_datastore_config).operator std::map<std::string, std::string>();
   }
-  if(config_str.size())
-  {
-    mc_rtc::log::info("[Replay] Will {}", config_str);
-  }
-  else if(log_to_datastore_.empty())
-  {
-    mc_rtc::log::warning("[Replay] Configured to do nothing?");
-  }
+  if(config_str.size()) { mc_rtc::log::info("[Replay] Will {}", config_str); }
+  else if(log_to_datastore_.empty()) { mc_rtc::log::warning("[Replay] Configured to do nothing?"); }
   ctl_name_ = gc.controller().name_;
   reset(gc);
 }
@@ -301,10 +269,7 @@ void Replay::before(mc_control::MCGlobalController & gc)
       gc.setJointMotorCurrents(r.name(), motorCurrents);
     }
   }
-  if(with_gui_inputs_)
-  {
-    gc.server().push_requests(log.guiEvents()[iters_]);
-  }
+  if(with_gui_inputs_) { gc.server().push_requests(log.guiEvents()[iters_]); }
   for(auto & update_ds : datastore_updates_)
   {
     update_ds.update(*log_, update_ds.log_entry, iters_, gc.controller().datastore(), update_ds.log_entry);
@@ -321,10 +286,7 @@ void Replay::after(mc_control::MCGlobalController & gc)
       gc.robot(r.name()).mbc() = r.mbc();
     }
   }
-  if(iters_ + 1 < log_->size())
-  {
-    iters_++;
-  }
+  if(iters_ + 1 < log_->size()) { iters_++; }
 }
 
 } // namespace mc_plugin

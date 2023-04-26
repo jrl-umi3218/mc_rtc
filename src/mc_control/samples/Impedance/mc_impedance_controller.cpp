@@ -99,9 +99,8 @@ void MCImpedanceController::addGUI()
     circleSamples[i] = circleTrajectory(angle);
   }
   gui()->addElement({"Impedance"}, mc_rtc::gui::Trajectory("Circle Trajectory",
-                                                           [circleSamples]() -> const std::vector<Eigen::Vector3d> & {
-                                                             return circleSamples;
-                                                           }));
+                                                           [circleSamples]() -> const std::vector<Eigen::Vector3d> &
+                                                           { return circleSamples; }));
 }
 
 void MCImpedanceController::stop()

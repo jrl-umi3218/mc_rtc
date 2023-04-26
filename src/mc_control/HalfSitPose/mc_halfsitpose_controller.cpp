@@ -27,10 +27,7 @@ MCHalfSitPoseController::MCHalfSitPoseController(std::shared_ptr<mc_rbdyn::Robot
     {
       auto jIndex = robot().jointIndexByName(j);
       const auto & jTarget = halfSit.at(j);
-      if(halfSitPose[jIndex].size() == jTarget.size())
-      {
-        halfSitPose[jIndex] = jTarget;
-      }
+      if(halfSitPose[jIndex].size() == jTarget.size()) { halfSitPose[jIndex] = jTarget; }
     }
   }
 

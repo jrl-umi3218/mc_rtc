@@ -113,10 +113,7 @@ bool random_bool()
 std::vector<double> random_vector()
 {
   std::vector<double> v(random_size());
-  for(size_t i = 0; i < v.size(); ++i)
-  {
-    v[i] = rnd();
-  }
+  for(size_t i = 0; i < v.size(); ++i) { v[i] = rnd(); }
   return v;
 }
 

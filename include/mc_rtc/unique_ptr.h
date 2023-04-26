@@ -21,10 +21,7 @@ class unique_ptr : public std::unique_ptr<T, Deleter>
 public:
   using std::unique_ptr<T, Deleter>::unique_ptr;
 
-  void reset(typename std::unique_ptr<T, Deleter>::pointer ptr)
-  {
-    std::unique_ptr<T, Deleter>::reset(ptr);
-  }
+  void reset(typename std::unique_ptr<T, Deleter>::pointer ptr) { std::unique_ptr<T, Deleter>::reset(ptr); }
 };
 
 } // namespace mc_rtc

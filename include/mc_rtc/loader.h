@@ -44,10 +44,7 @@ struct MC_RTC_LOADER_DLLAPI LoaderException : public std::exception
 public:
   LoaderException(const std::string & what) : what_(what) {}
 
-  virtual const char * what() const noexcept override
-  {
-    return what_.c_str();
-  }
+  virtual const char * what() const noexcept override { return what_.c_str(); }
 
 private:
   std::string what_;
@@ -100,22 +97,13 @@ struct MC_RTC_LOADER_DLLAPI LTDLHandle
   SymT get_symbol(const std::string & name);
 
   /** True if the library is valid */
-  inline bool valid() const
-  {
-    return valid_;
-  }
+  inline bool valid() const { return valid_; }
 
   /** Returns a list of available classes provided by this library */
-  inline const std::vector<std::string> & classes() const
-  {
-    return classes_;
-  }
+  inline const std::vector<std::string> & classes() const { return classes_; }
 
   /** Access the path to the library */
-  inline const std::string & path() const
-  {
-    return path_;
-  }
+  inline const std::string & path() const { return path_; }
 
   /** Access the library folder location */
   std::string dir() const;

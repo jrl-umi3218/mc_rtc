@@ -55,34 +55,13 @@ rbd::Joint::Type ConfigurationLoader<rbd::Joint::Type>::load(const mc_rtc::Confi
 {
   std::string type = "";
   config("type", type);
-  if(type == "rev")
-  {
-    return rbd::Joint::Type::Rev;
-  }
-  if(type == "prism")
-  {
-    return rbd::Joint::Type::Prism;
-  }
-  if(type == "spherical")
-  {
-    return rbd::Joint::Type::Spherical;
-  }
-  if(type == "planar")
-  {
-    return rbd::Joint::Type::Planar;
-  }
-  if(type == "cylindrical")
-  {
-    return rbd::Joint::Type::Cylindrical;
-  }
-  if(type == "free")
-  {
-    return rbd::Joint::Type::Free;
-  }
-  if(type == "fixed")
-  {
-    return rbd::Joint::Type::Fixed;
-  }
+  if(type == "rev") { return rbd::Joint::Type::Rev; }
+  if(type == "prism") { return rbd::Joint::Type::Prism; }
+  if(type == "spherical") { return rbd::Joint::Type::Spherical; }
+  if(type == "planar") { return rbd::Joint::Type::Planar; }
+  if(type == "cylindrical") { return rbd::Joint::Type::Cylindrical; }
+  if(type == "free") { return rbd::Joint::Type::Free; }
+  if(type == "fixed") { return rbd::Joint::Type::Fixed; }
   mc_rtc::log::error_and_throw("{} was stored as joint type, cannot comprehend that", type);
 }
 
@@ -231,10 +210,7 @@ mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::s
     config.add("X_b_motor", gs->X_b_motor());
     config.add("motorMaxTorque", gs->motorMaxTorque());
   }
-  else
-  {
-    mc_rtc::log::error_and_throw("Cannot serialize a surface of type {}", s->type());
-  }
+  else { mc_rtc::log::error_and_throw("Cannot serialize a surface of type {}", s->type()); }
   return config;
 }
 
@@ -398,10 +374,7 @@ rbd::Joint ConfigurationLoader<rbd::Joint>::load(const mc_rtc::Configuration & c
 {
   rbd::Joint j{config("type"), config("axis"), config("forward"), config("name")};
   bool isMimic = config("isMimic");
-  if(isMimic)
-  {
-    j.makeMimic(config("mimicName"), config("mimicMultiplier"), config("mimicOffset"));
-  }
+  if(isMimic) { j.makeMimic(config("mimicName"), config("mimicMultiplier"), config("mimicOffset")); }
   return j;
 }
 
@@ -466,10 +439,7 @@ Eigen::Matrix<double, 6, Eigen::Dynamic> ConfigurationLoader<Eigen::Matrix<doubl
   }
   for(Eigen::DenseIndex i = 0; i < 6; ++i)
   {
-    for(Eigen::DenseIndex j = 0; j < m.cols(); ++j)
-    {
-      m(i, j) = data[static_cast<size_t>(m.cols() * i + j)];
-    }
+    for(Eigen::DenseIndex j = 0; j < m.cols(); ++j) { m(i, j) = data[static_cast<size_t>(m.cols() * i + j)]; }
   }
   return m;
 }
@@ -482,10 +452,7 @@ mc_rtc::Configuration ConfigurationLoader<Eigen::Matrix<double, 6, Eigen::Dynami
   auto data = config.array("data", static_cast<size_t>(6 * m.cols()));
   for(Eigen::DenseIndex i = 0; i < 6; ++i)
   {
-    for(Eigen::DenseIndex j = 0; j < m.cols(); ++j)
-    {
-      data.push(m(i, j));
-    }
+    for(Eigen::DenseIndex j = 0; j < m.cols(); ++j) { data.push(m(i, j)); }
   }
   return config;
 }
@@ -557,16 +524,10 @@ mc_rbdyn::RobotModule::Gripper loadGripper(const mc_rtc::Configuration & config,
   if(config.has("safety"))
   {
     const mc_rbdyn::RobotModule::Gripper::Safety & safety = config("safety");
-    if(config.has("mimics"))
-    {
-      return {name, joints, reverse_limits, safety, config("mimics")};
-    }
+    if(config.has("mimics")) { return {name, joints, reverse_limits, safety, config("mimics")}; }
     return {name, joints, reverse_limits, safety};
   }
-  if(config.has("mimics"))
-  {
-    return {name, joints, reverse_limits, safety, config("mimics")};
-  }
+  if(config.has("mimics")) { return {name, joints, reverse_limits, safety, config("mimics")}; }
   return {name, joints, reverse_limits};
 }
 
@@ -586,15 +547,9 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::Gripper>::save(
   config.add("joints", rmg.joints);
   config.add("reverse_limits", rmg.reverse_limits);
   auto safety = rmg.safety();
-  if(safety)
-  {
-    config.add("safety", *safety);
-  }
+  if(safety) { config.add("safety", *safety); }
   auto mimics = rmg.mimics();
-  if(mimics)
-  {
-    config.add("mimics", *mimics);
-  }
+  if(mimics) { config.add("mimics", *mimics); }
   return config;
 }
 
@@ -857,7 +812,8 @@ mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Visual>::save(const rbd:
 
 mc_rbdyn::S_ObjectPtr ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::load(const mc_rtc::Configuration & config)
 {
-  auto schPointFromConfig = [](const mc_rtc::Configuration & c) {
+  auto schPointFromConfig = [](const mc_rtc::Configuration & c)
+  {
     sch::Point3 p;
     p[0] = c[0];
     p[1] = c[1];
@@ -865,40 +821,28 @@ mc_rbdyn::S_ObjectPtr ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::load(const mc_
     return p;
   };
   std::string type = config("type");
-  if(type == "box")
-  {
-    return std::make_shared<sch::S_Box>(config("width"), config("height"), config("depth"));
-  }
+  if(type == "box") { return std::make_shared<sch::S_Box>(config("width"), config("height"), config("depth")); }
   else if(type == "capsule")
   {
     auto p1 = schPointFromConfig(config("p1"));
     auto p2 = schPointFromConfig(config("p2"));
     return std::make_shared<sch::S_Capsule>(p1, p2, config("radius"));
   }
-  else if(type == "cone")
-  {
-    return std::make_shared<sch::S_Cone>(config("angle"), config("height"));
-  }
+  else if(type == "cone") { return std::make_shared<sch::S_Cone>(config("angle"), config("height")); }
   else if(type == "cylinder")
   {
     auto p1 = schPointFromConfig(config("p1"));
     auto p2 = schPointFromConfig(config("p2"));
     return std::make_shared<sch::S_Cylinder>(p1, p2, config("radius"));
   }
-  else if(type == "point")
-  {
-    return std::make_shared<sch::S_Point>();
-  }
+  else if(type == "point") { return std::make_shared<sch::S_Point>(); }
   else if(type == "polyhedron")
   {
     auto out = std::make_shared<sch::S_Polyhedron>();
     out->constructFromFile(config("filename"));
     return out;
   }
-  else if(type == "sphere")
-  {
-    return std::make_shared<sch::S_Sphere>(config("radius"));
-  }
+  else if(type == "sphere") { return std::make_shared<sch::S_Sphere>(config("radius")); }
   else if(type == "stp-bv")
   {
     auto out = std::make_shared<sch::STP_BV>();
@@ -922,7 +866,8 @@ mc_rbdyn::S_ObjectPtr ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::load(const mc_
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::save(const mc_rbdyn::S_ObjectPtr & object)
 {
   mc_rtc::Configuration out;
-  auto schPointToConfig = [&out](const sch::Point3 & p, const std::string & name) {
+  auto schPointToConfig = [&out](const sch::Point3 & p, const std::string & name)
+  {
     auto pOut = out.array(name, 3);
     pOut.push(p[0]);
     pOut.push(p[1]);
@@ -932,10 +877,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::save(const mc_
   if(type == sch::S_Object::TBox)
   {
     auto box = dynamic_cast<sch::S_Box *>(object.get());
-    if(!box)
-    {
-      goto failed_cast;
-    }
+    if(!box) { goto failed_cast; }
     double width, height, depth;
     box->getBoxParameters(width, height, depth);
     out.add("type", "box");
@@ -946,10 +888,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::save(const mc_
   else if(type == sch::S_Object::TCapsule)
   {
     auto capsule = dynamic_cast<sch::S_Capsule *>(object.get());
-    if(!capsule)
-    {
-      goto failed_cast;
-    }
+    if(!capsule) { goto failed_cast; }
     out.add("type", "capsule");
     schPointToConfig(capsule->getP1(), "p1");
     schPointToConfig(capsule->getP2(), "p2");
@@ -958,10 +897,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::save(const mc_
   else if(type == sch::S_Object::TCone)
   {
     auto cone = dynamic_cast<sch::S_Cone *>(object.get());
-    if(!cone)
-    {
-      goto failed_cast;
-    }
+    if(!cone) { goto failed_cast; }
     out.add("type", "cone");
     out.add("angle", cone->getAngle());
     out.add("height", cone->getHeight());
@@ -969,26 +905,17 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::save(const mc_
   else if(type == sch::S_Object::TCylinder)
   {
     auto cylinder = dynamic_cast<sch::S_Cylinder *>(object.get());
-    if(!cylinder)
-    {
-      goto failed_cast;
-    }
+    if(!cylinder) { goto failed_cast; }
     out.add("type", "cylinder");
     schPointToConfig(cylinder->getP1(), "p1");
     schPointToConfig(cylinder->getP2(), "p2");
     out.add("radius", cylinder->getRadius());
   }
-  else if(type == sch::S_Object::TPoint)
-  {
-    out.add("type", "point");
-  }
+  else if(type == sch::S_Object::TPoint) { out.add("type", "point"); }
   else if(type == sch::S_Object::TSphere)
   {
     auto sphere = dynamic_cast<sch::S_Sphere *>(object.get());
-    if(!sphere)
-    {
-      goto failed_cast;
-    }
+    if(!sphere) { goto failed_cast; }
     out.add("type", "sphere");
     out.add("radius", sphere->getRadius());
   }
@@ -1000,10 +927,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::save(const mc_
   else if(type == sch::S_Object::TSuperellipsoid)
   {
     auto se = dynamic_cast<sch::S_Superellipsoid *>(object.get());
-    if(!se)
-    {
-      goto failed_cast;
-    }
+    if(!se) { goto failed_cast; }
     double a, b, c, epsilon1, epsilon2;
     se->getEllipsoidParameter(a, b, c, epsilon1, epsilon2);
     out.add("type", "superellipsoid");
@@ -1013,10 +937,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::save(const mc_
     out.add("epsilon1", epsilon1);
     out.add("epsilon2", epsilon2);
   }
-  else
-  {
-    mc_rtc::log::error_and_throw("New sch-core object type is not handled by this save function");
-  }
+  else { mc_rtc::log::error_and_throw("New sch-core object type is not handled by this save function"); }
   return out;
 failed_cast:
   mc_rtc::log::error_and_throw("Failed to cast the object to its deduced type");
@@ -1026,14 +947,12 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
 {
   bfs::path path((std::string)config("path"));
   std::string name = config("name");
-  bfs::path urdf_path = [&]() {
+  bfs::path urdf_path = [&]()
+  {
     if(config.has("urdf_path"))
     {
       bfs::path out(static_cast<std::string>(config("urdf_path")));
-      if(!out.is_absolute())
-      {
-        return path / out;
-      }
+      if(!out.is_absolute()) { return path / out; }
       return out;
     }
     return path / "urdf" / fmt::format("{}.urdf", name);
@@ -1073,10 +992,7 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   if(config.has("accelerationBounds"))
   {
     mc_rbdyn::RobotModule::bounds_t aBounds = config("accelerationBounds");
-    if(aBounds.size() != 2)
-    {
-      mc_rtc::log::error_and_throw("accelerationBounds entry should be an array of size 2");
-    }
+    if(aBounds.size() != 2) { mc_rtc::log::error_and_throw("accelerationBounds entry should be an array of size 2"); }
     rm._accelerationBounds.resize(2);
     rm._accelerationBounds[0] = aBounds[0];
     rm._accelerationBounds[1] = aBounds[1];
@@ -1084,10 +1000,7 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   if(config.has("jerkBounds"))
   {
     mc_rbdyn::RobotModule::bounds_t jBounds = config("jerkBounds");
-    if(jBounds.size() != 2)
-    {
-      mc_rtc::log::error_and_throw("jerkBounds entry should be an array of size 2");
-    }
+    if(jBounds.size() != 2) { mc_rtc::log::error_and_throw("jerkBounds entry should be an array of size 2"); }
     rm._jerkBounds.resize(2);
     rm._jerkBounds[0] = jBounds[0];
     rm._jerkBounds[1] = jBounds[1];
@@ -1107,30 +1020,21 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   if(config.has("rsdf_dir"))
   {
     bfs::path rsdf_dir((std::string)config("rsdf_dir"));
-    if(!rsdf_dir.is_absolute())
-    {
-      rsdf_dir = path / rsdf_dir;
-    }
+    if(!rsdf_dir.is_absolute()) { rsdf_dir = path / rsdf_dir; }
     rm.rsdf_dir = rsdf_dir.string();
   }
   config("convexHulls", rm._convexHull);
   for(auto & cH : rm._convexHull)
   {
     bfs::path chPath(cH.second.second);
-    if(!chPath.is_absolute())
-    {
-      cH.second.second = (path / chPath).string();
-    }
+    if(!chPath.is_absolute()) { cH.second.second = (path / chPath).string(); }
   }
   config("collisionObjects", rm._collisionObjects);
   config("stpbvHulls", rm._stpbvHull);
   for(auto & sH : rm._stpbvHull)
   {
     bfs::path stPath(sH.second.second);
-    if(!stPath.is_absolute())
-    {
-      sH.second.second = (path / stPath).string();
-    }
+    if(!stPath.is_absolute()) { sH.second.second = (path / stPath).string(); }
   }
   config("flexibilities", rm._flexibility);
   config("forceSensors", rm._forceSensors);
@@ -1144,31 +1048,16 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   /* Those cannot be empty */
   config("stance", rm._stance);
   rm.expand_stance();
-  if(config.has("ref_joint_order"))
-  {
-    rm._ref_joint_order = config("ref_joint_order");
-  }
-  else
-  {
-    rm.make_default_ref_joint_order();
-  }
+  if(config.has("ref_joint_order")) { rm._ref_joint_order = config("ref_joint_order"); }
+  else { rm.make_default_ref_joint_order(); }
 
-  if(config.has("gripperSafety"))
-  {
-    rm._gripperSafety = config("gripperSafety");
-  }
+  if(config.has("gripperSafety")) { rm._gripperSafety = config("gripperSafety"); }
   if(config.has("grippers"))
   {
     std::vector<mc_rtc::Configuration> grippers = config("grippers");
-    for(auto & g : grippers)
-    {
-      rm._grippers.push_back(loadGripper(g, rm.gripperSafety()));
-    }
+    for(auto & g : grippers) { rm._grippers.push_back(loadGripper(g, rm.gripperSafety())); }
   }
-  if(config.has("lipmStabilizer"))
-  {
-    rm._lipmStabilizerConfig.load(config("lipmStabilizer"));
-  }
+  if(config.has("lipmStabilizer")) { rm._lipmStabilizerConfig.load(config("lipmStabilizer")); }
 
   rm._frames = config("frames", std::vector<mc_rbdyn::RobotModule::FrameDescription>{});
 
@@ -1220,30 +1109,15 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
     mc_rtc::log::error_and_throw("Wrong number ({}) of _torqueDerivativeBounds entries in RobotModule",
                                  rm._torqueDerivativeBounds.size());
   }
-  if(rm._accelerationBounds.size() == 2)
-  {
-    config.add("accelerationBounds", rm._accelerationBounds);
-  }
-  if(rm._jerkBounds.size() == 2)
-  {
-    config.add("jerkBounds", rm._jerkBounds);
-  }
-  if(rm._torqueDerivativeBounds.size() == 2)
-  {
-    config.add("torqueDerivativeBounds", rm._torqueDerivativeBounds);
-  }
+  if(rm._accelerationBounds.size() == 2) { config.add("accelerationBounds", rm._accelerationBounds); }
+  if(rm._jerkBounds.size() == 2) { config.add("jerkBounds", rm._jerkBounds); }
+  if(rm._torqueDerivativeBounds.size() == 2) { config.add("torqueDerivativeBounds", rm._torqueDerivativeBounds); }
   config.add("stance", rm._stance);
   auto cHs = rm._convexHull;
-  for(auto & cH : cHs)
-  {
-    cH.second.second = relative(cH.second.second, rm.path).string();
-  }
+  for(auto & cH : cHs) { cH.second.second = relative(cH.second.second, rm.path).string(); }
   config.add("convexHulls", cHs);
   auto sHs = rm._convexHull;
-  for(auto & sH : sHs)
-  {
-    sH.second.second = relative(sH.second.second, rm.path).string();
-  }
+  for(auto & sH : sHs) { sH.second.second = relative(sH.second.second, rm.path).string(); }
   config.add("collisionObjects", rm._collisionObjects);
   config.add("stpbvHulls", rm._stpbvHull);
   config.add("flexibilities", rm._flexibility);
@@ -1258,10 +1132,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   config.add("default_attitude", rm._default_attitude);
   config.add("gripperSafety", rm._gripperSafety);
   config.add("lipmStabilizer", rm._lipmStabilizerConfig);
-  if(rm._compoundJoints.size())
-  {
-    config.add("compoundJoints", rm._compoundJoints);
-  }
+  if(rm._compoundJoints.size()) { config.add("compoundJoints", rm._compoundJoints); }
   return config;
 }
 
@@ -1286,10 +1157,7 @@ mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Con
   const auto r2Index = robotIndexFromConfig(config, robots, "contact", false, "r2Index", "r2", robots.robot(1).name());
   sva::PTransformd X_r2s_r1s = sva::PTransformd::Identity();
   bool isFixed = config("isFixed");
-  if(isFixed)
-  {
-    X_r2s_r1s = config("X_r2s_r1s");
-  }
+  if(isFixed) { X_r2s_r1s = config("X_r2s_r1s"); }
   std::string r1Surface = config("r1Surface");
   sva::PTransformd X_b_s = robots.robot(r1Index).surface(r1Surface).X_b_s();
   config("X_b_s", X_b_s);
@@ -1298,10 +1166,7 @@ mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Con
   const auto & r1 = robots.robot(r1Index);
   mc_rbdyn::Contact out(robots, r1Index, r2Index, config("r1Surface"), config("r2Surface"), X_r2s_r1s, X_b_s, friction,
                         ambiguityId);
-  if(r1.mb().nrDof() == 0)
-  {
-    out = out.swap(robots);
-  }
+  if(r1.mb().nrDof() == 0) { out = out.swap(robots); }
   return out;
 }
 
@@ -1316,10 +1181,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Contact>::save(const mc_rbdy
   config.add("X_b_s", c.X_b_s());
   config.add("ambiguityId", c.ambiguityId());
   config.add("isFixed", c.isFixed());
-  if(c.isFixed())
-  {
-    config.add("X_r2s_r1s", c.X_r2s_r1s());
-  }
+  if(c.isFixed()) { config.add("X_r2s_r1s", c.X_r2s_r1s()); }
   return config;
 }
 
@@ -1329,10 +1191,7 @@ tasks::qp::JointGains ConfigurationLoader<tasks::qp::JointGains>::load(const mc_
   {
     return tasks::qp::JointGains(config("jointName"), config("stiffness"), config("damping"));
   }
-  else
-  {
-    return tasks::qp::JointGains(config("jointName"), config("stiffness"));
-  }
+  else { return tasks::qp::JointGains(config("jointName"), config("stiffness")); }
 }
 
 mc_rtc::Configuration ConfigurationLoader<tasks::qp::JointGains>::save(const tasks::qp::JointGains & jg)

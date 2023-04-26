@@ -174,18 +174,9 @@ void ImpedanceTask::reset()
 
 void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
-  if(config.has("gains"))
-  {
-    gains_ = config("gains");
-  }
-  if(config.has("wrench"))
-  {
-    targetWrench(config("wrench"));
-  }
-  if(config.has("cutoffPeriod"))
-  {
-    cutoffPeriod(config("cutoffPeriod"));
-  }
+  if(config.has("gains")) { gains_ = config("gains"); }
+  if(config.has("wrench")) { targetWrench(config("wrench")); }
+  if(config.has("cutoffPeriod")) { cutoffPeriod(config("cutoffPeriod")); }
   TransformTask::load(solver, config);
   // The TransformTask::load function above only sets
   // the TrajectoryTaskGeneric's target, but not the compliance target, so we
@@ -284,11 +275,13 @@ namespace
 
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "impedance",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
       using Allocator = Eigen::aligned_allocator<mc_tasks::force::ImpedanceTask>;
       const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "impedance");
       const auto & robot = solver.robots().robot(robotIndex);
-      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
+      {
         if(config.has("surface"))
         {
           mc_rtc::log::deprecated("ImpedanceTask", "surface", "frame");

@@ -49,16 +49,10 @@ namespace
 {
 bool isValidPosture(const std::vector<std::vector<double>> & ref, const std::vector<std::vector<double>> & in)
 {
-  if(ref.size() != in.size())
-  {
-    return false;
-  }
+  if(ref.size() != in.size()) { return false; }
   for(size_t i = 0; i < ref.size(); ++i)
   {
-    if(ref[i].size() != in[i].size())
-    {
-      return false;
-    }
+    if(ref[i].size() != in[i].size()) { return false; }
   }
   return true;
 }

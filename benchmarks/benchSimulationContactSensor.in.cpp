@@ -31,10 +31,7 @@ public:
     robots_->removeRobot("ground");
   }
 
-  mc_rbdyn::Robots & get_robots()
-  {
-    return *robots_;
-  }
+  mc_rbdyn::Robots & get_robots() { return *robots_; }
 
   mc_rbdyn::RobotsPtr robots_;
 };

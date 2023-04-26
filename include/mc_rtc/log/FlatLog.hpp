@@ -20,19 +20,13 @@ namespace details
 template<typename T>
 struct CheckLogType
 {
-  static bool check(const LogType & t)
-  {
-    return t == mc_rtc::log::GetLogType<T>::type;
-  }
+  static bool check(const LogType & t) { return t == mc_rtc::log::GetLogType<T>::type; }
 };
 
 template<typename T>
 const T * record_cast(const FlatLog::record & r)
 {
-  if(CheckLogType<T>::check(r.type))
-  {
-    return static_cast<const T *>(r.data.get());
-  }
+  if(CheckLogType<T>::check(r.type)) { return static_cast<const T *>(r.data.get()); }
   return nullptr;
 }
 
@@ -40,10 +34,7 @@ template<typename T>
 bool convert(const FlatLog::record & r, T & out)
 {
   const T * ptr = record_cast<T>(r);
-  if(ptr)
-  {
-    out = *ptr;
-  }
+  if(ptr) { out = *ptr; }
   return ptr;
 }
 
@@ -60,10 +51,7 @@ std::vector<const T *> FlatLog::getRaw(const std::string & entry) const
   std::vector<const T *> ret;
   const auto & data = at(entry);
   ret.reserve(data.size());
-  for(const auto & r : data)
-  {
-    ret.push_back(details::record_cast<T>(r));
-  }
+  for(const auto & r : data) { ret.push_back(details::record_cast<T>(r)); }
   return ret;
 }
 
@@ -77,10 +65,7 @@ std::vector<T> FlatLog::get(const std::string & entry, const T & def) const
   }
   const auto & data = at(entry);
   std::vector<T> ret(data.size(), def);
-  for(size_t i = 0; i < data.size(); ++i)
-  {
-    details::convert<T>(data[i], ret[i]);
-  }
+  for(size_t i = 0; i < data.size(); ++i) { details::convert<T>(data[i], ret[i]); }
   return ret;
 }
 
@@ -97,10 +82,7 @@ inline std::vector<bool> FlatLog::get(const std::string & entry, const bool & de
   for(size_t i = 0; i < data.size(); ++i)
   {
     const bool * ptr = details::record_cast<bool>(data[i]);
-    if(ptr)
-    {
-      ret[i] = *ptr;
-    }
+    if(ptr) { ret[i] = *ptr; }
   }
   return ret;
 }
@@ -120,10 +102,7 @@ std::vector<T> FlatLog::get(const std::string & entry) const
   while(start_i < data.size())
   {
     const auto & r = data[start_i];
-    if(details::convert<T>(r, def))
-    {
-      break;
-    }
+    if(details::convert<T>(r, def)) { break; }
     start_i++;
   }
   if(start_i == data.size())
@@ -145,10 +124,7 @@ template<typename T>
 T FlatLog::get(const std::string & entry, size_t i, const T & def) const
 {
   const T * data = getRaw<T>(entry, i);
-  if(data)
-  {
-    return *data;
-  }
+  if(data) { return *data; }
   return def;
 }
 

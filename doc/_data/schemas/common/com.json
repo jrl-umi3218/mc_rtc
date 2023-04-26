@@ -4,8 +4,8 @@
   "description": "CoM task parameters. The CoM task should have a higher importance than all other active tasks. Too low gains will degrade the stabilizer's tracking performance",
   "properties":
   {
-    "stiffness":  
-    { 
+    "stiffness":
+    {
       "title": "Eigen::Vector3d",
       "type": "array",
       "items":

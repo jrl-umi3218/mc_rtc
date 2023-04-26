@@ -8,32 +8,48 @@ macro(add_controller controller_name)
   else()
     add_library(${controller_name} SHARED ${ARGN})
     set_target_properties(${controller_name} PROPERTIES FOLDER controllers)
-    set_target_properties(${controller_name} PROPERTIES COMPILE_FLAGS
-      "-DMC_CONTROL_EXPORTS" PREFIX "")
+    set_target_properties(
+      ${controller_name} PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS" PREFIX ""
+    )
     target_link_libraries(${controller_name} PUBLIC mc_control)
-    install(TARGETS ${controller_name}
-      ARCHIVE DESTINATION "${MC_CONTROLLER_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>"
-      LIBRARY DESTINATION "${MC_CONTROLLER_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>"
-      RUNTIME DESTINATION "${MC_CONTROLLER_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>"
+    install(
+      TARGETS ${controller_name}
+      ARCHIVE
+        DESTINATION
+          "${MC_CONTROLLER_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>"
+      LIBRARY
+        DESTINATION
+          "${MC_CONTROLLER_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>"
+      RUNTIME
+        DESTINATION
+          "${MC_CONTROLLER_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>"
     )
   endif()
 endmacro()
 
 macro(add_fsm_controller controller_name controller_SRC controller_HDR)
   if(MC_RTC_BUILD_STATIC)
-    target_sources(mc_control_fsm PRIVATE ${controller_SRC} ${controller_HDR} ${CMAKE_CURRENT_SOURCE_DIR}/lib.cpp)
+    target_sources(
+      mc_control_fsm PRIVATE ${controller_SRC} ${controller_HDR}
+                             ${CMAKE_CURRENT_SOURCE_DIR}/lib.cpp
+    )
   else()
     add_library(${controller_name} SHARED ${controller_SRC} ${controller_HDR})
-    set_target_properties(${controller_name} PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
+    set_target_properties(
+      ${controller_name} PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
+    )
     target_link_libraries(${controller_name} PUBLIC mc_control_fsm)
-    install(TARGETS ${controller_name}
+    install(
+      TARGETS ${controller_name}
       RUNTIME DESTINATION "${MC_RTC_BINDIR}"
       LIBRARY DESTINATION "${MC_RTC_LIBDIR}"
       ARCHIVE DESTINATION "${MC_RTC_LIBDIR}"
     )
 
     add_controller(${controller_name}_controller ${CMAKE_CURRENT_SOURCE_DIR}/lib.cpp "")
-    set_target_properties(${controller_name}_controller PROPERTIES FOLDER controllers/fsm)
+    set_target_properties(
+      ${controller_name}_controller PROPERTIES FOLDER controllers/fsm
+    )
     target_link_libraries(${controller_name}_controller PUBLIC mc_control_fsm)
     target_link_libraries(${controller_name}_controller PUBLIC ${controller_name})
   endif()

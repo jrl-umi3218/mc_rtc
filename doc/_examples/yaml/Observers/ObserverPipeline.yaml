@@ -4,7 +4,7 @@
 # This pipeline does the following:
 # Encoder:
 #   - Joint position is obtained from encoder sensors, joint velocity is estimated by finite differences of position.
-#   - Forward kinematics and velocity is computed (required by the BodySensor and KinematicInertial observers to 
+#   - Forward kinematics and velocity is computed (required by the BodySensor and KinematicInertial observers to
 #     obtain the transformation from sensor to the floating base)
 # BodySensor:
 #   - Only logs the values provided by the \"FloatingBase\" body sensor.

@@ -19,10 +19,7 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
   robot_ = config("robot", ctl.robot().name());
   updateRobot_ = config("updateRobot", static_cast<std::string>(robot_));
   fbSensorName_ = config("bodySensor", ctl.robot(robot_).bodySensor().name());
-  if(!ctl.robots().hasRobot(robot_))
-  {
-    mc_rtc::log::error_and_throw("[{}] No robot named {}", name(), robot_);
-  }
+  if(!ctl.robots().hasRobot(robot_)) { mc_rtc::log::error_and_throw("[{}] No robot named {}", name(), robot_); }
   auto & robot = ctl.robot(robot_);
   if(!ctl.robots().hasRobot(updateRobot_))
   {
@@ -32,14 +29,8 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
   auto updateConfig = config("method", std::string{"sensor"});
   if(!updateConfig.empty())
   {
-    if(updateConfig == "sensor")
-    {
-      updateFrom_ = Update::Sensor;
-    }
-    else
-    {
-      updateFrom_ = Update::Control;
-    }
+    if(updateConfig == "sensor") { updateFrom_ = Update::Sensor; }
+    else { updateFrom_ = Update::Control; }
   }
 
   if(updateFrom_ == Update::Sensor)
@@ -142,14 +133,8 @@ bool BodySensorObserver::run(const mc_control::MCController & ctl)
 void BodySensorObserver::update(mc_control::MCController & ctl)
 {
   auto & realRobot = ctl.realRobots().robot(updateRobot_);
-  if(updatePose_)
-  {
-    realRobot.posW(posW_);
-  }
-  if(updateVel_)
-  {
-    realRobot.velW(velW_);
-  }
+  if(updatePose_) { realRobot.posW(posW_); }
+  if(updateVel_) { realRobot.velW(velW_); }
 }
 
 void BodySensorObserver::addToLogger(const mc_control::MCController &,
@@ -157,83 +142,73 @@ void BodySensorObserver::addToLogger(const mc_control::MCController &,
                                      const std::string & category)
 {
   auto cat = category + "_" + fbSensorName_;
-  if(logPos_)
-  {
-    MC_RTC_LOG_HELPER(cat + "_posW", posW_);
-  }
-  if(logVel_)
-  {
-    MC_RTC_LOG_HELPER(cat + "_velW", velW_);
-  }
-  if(logAcc_)
-  {
-    MC_RTC_LOG_HELPER(cat + "_accW", accW_);
-  }
+  if(logPos_) { MC_RTC_LOG_HELPER(cat + "_posW", posW_); }
+  if(logVel_) { MC_RTC_LOG_HELPER(cat + "_velW", velW_); }
+  if(logAcc_) { MC_RTC_LOG_HELPER(cat + "_accW", accW_); }
 }
 
 void BodySensorObserver::addToGUI(const mc_control::MCController & ctl,
                                   mc_rtc::gui::StateBuilder & gui,
                                   const std::vector<std::string> & category)
 {
-  auto showPose = [this, &gui, category]() {
+  auto showPose = [this, &gui, category]()
+  {
     if(guiPos_)
     {
       gui.addElement(category, mc_rtc::gui::Transform("Pose", [this]() -> const sva::PTransformd & { return posW_; }));
     }
-    else
-    {
-      gui.removeElement(category, "Pose");
-    }
+    else { gui.removeElement(category, "Pose"); }
   };
-  auto showVel = [this, &gui, category]() {
+  auto showVel = [this, &gui, category]()
+  {
     if(guiVel_)
     {
       gui.addElement(category,
                      mc_rtc::gui::Arrow(
                          "Velocity", guiVelConfig_, [this]() -> const Eigen::Vector3d & { return posW_.translation(); },
-                         [this]() -> Eigen::Vector3d {
+                         [this]() -> Eigen::Vector3d
+                         {
                            Eigen::Vector3d end = posW_.translation() + velW_.linear();
                            return end;
                          }));
     }
-    else
-    {
-      gui.removeElement(category, "Velocity");
-    }
+    else { gui.removeElement(category, "Velocity"); }
   };
-  auto showAcc = [this, &gui, category]() {
+  auto showAcc = [this, &gui, category]()
+  {
     if(guiAcc_)
     {
       gui.addElement(category, mc_rtc::gui::Arrow(
                                    "Acceleration", guiAccConfig_,
                                    [this]() -> const Eigen::Vector3d & { return posW_.translation(); },
-                                   [this]() -> Eigen::Vector3d {
+                                   [this]() -> Eigen::Vector3d
+                                   {
                                      Eigen::Vector3d end = posW_.translation() + accW_.linear();
                                      return end;
                                    }));
     }
-    else
-    {
-      gui.removeElement(category, "Acceleration");
-    }
+    else { gui.removeElement(category, "Acceleration"); }
   };
 
   gui.addElement(category,
                  mc_rtc::gui::Checkbox(
                      "Show pose", [this]() { return guiPos_; },
-                     [this, showPose]() {
+                     [this, showPose]()
+                     {
                        guiPos_ = !guiPos_;
                        showPose();
                      }),
                  mc_rtc::gui::Checkbox(
                      "Show velocity", [this]() { return guiVel_; },
-                     [this, showVel]() {
+                     [this, showVel]()
+                     {
                        guiVel_ = !guiVel_;
                        showVel();
                      }),
                  mc_rtc::gui::Checkbox(
                      "Show acceleration", [this]() { return guiAcc_; },
-                     [this, showAcc]() {
+                     [this, showAcc]()
+                     {
                        guiAcc_ = !guiAcc_;
                        showAcc();
                      }));

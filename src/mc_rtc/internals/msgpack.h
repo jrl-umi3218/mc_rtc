@@ -101,10 +101,7 @@ inline void fromMessagePack(mc_rtc::Configuration config, mpack_node_t node)
 
 inline void fromMessagePackArray(mc_rtc::Configuration config, mpack_node_t node)
 {
-  for(size_t i = 0; i < mpack_node_array_length(node); ++i)
-  {
-    fromMessagePack(config, mpack_node_array_at(node, i));
-  }
+  for(size_t i = 0; i < mpack_node_array_length(node); ++i) { fromMessagePack(config, mpack_node_array_at(node, i)); }
 }
 
 inline void fromMessagePackMap(mc_rtc::Configuration config, mpack_node_t node)
@@ -120,10 +117,7 @@ inline void fromMessagePackMap(mc_rtc::Configuration config, mpack_node_t node)
 inline mc_rtc::Configuration fromMessagePack(mpack_node_t root)
 {
   mc_rtc::Configuration config;
-  if(mpack_node_type(root) == mpack_type_map)
-  {
-    fromMessagePackMap(config, root);
-  }
+  if(mpack_node_type(root) == mpack_type_map) { fromMessagePackMap(config, root); }
   else if(mpack_node_type(root) == mpack_type_array)
   {
     config = mc_rtc::Configuration::rootArray();

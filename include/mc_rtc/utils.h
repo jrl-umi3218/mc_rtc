@@ -53,26 +53,17 @@ public:
   bool pop(T & item)
   {
     const size_t head = head_;
-    if(head == tail_)
-    {
-      return false;
-    }
+    if(head == tail_) { return false; }
     item = data_[head];
     head_ = increment(head);
     return true;
   }
 
   /** Returns true if the buffer is empty */
-  bool empty()
-  {
-    return head_ == tail_;
-  }
+  bool empty() { return head_ == tail_; }
 
 private:
-  size_t increment(size_t idx) const
-  {
-    return (idx + 1) % Capacity;
-  }
+  size_t increment(size_t idx) const { return (idx + 1) % Capacity; }
 
   T data_[Capacity];
   std::atomic_size_t tail_;

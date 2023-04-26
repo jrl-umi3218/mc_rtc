@@ -1,4 +1,6 @@
-{% raw %}
+{
+  % raw %
+}
 #include "MyRobot.h"
 
 #include <RBDyn/parsers/urdf.h>
@@ -13,10 +15,7 @@ MyRobotModule::MyRobotModule(bool fixed) : mc_rbdyn::RobotModule(MY_PATH, "my_ro
                                    0.,    0.,    0., 0.,   0.,    -0.052, 0.17,  0.,   -0.52, 0.,   0.,    0.,    0.,
                                    0.,    0.,    0., 0.,   0.,    0.,     0.,    0.,   0.,    0.,   0.};
   const auto & rjo = ref_joint_order();
-  for(size_t i = 0; i < rjo.size(); ++i)
-  {
-    _stance[rjo[i]] = {default_q[i]};
-  }
+  for(size_t i = 0; i < rjo.size(); ++i) { _stance[rjo[i]] = {default_q[i]}; }
   _default_attitude = {{1., 0., 0., 0., 0., 0., 0.8275}};
   _forceSensors.push_back(mc_rbdyn::ForceSensor("RightFootForceSensor", "R_ANKLE_P_S", sva::PTransformd::Identity()));
   _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftFootForceSensor", "L_ANKLE_P_S", sva::PTransformd::Identity()));
@@ -33,4 +32,6 @@ MyRobotModule::MyRobotModule(bool fixed) : mc_rbdyn::RobotModule(MY_PATH, "my_ro
   _commonSelfCollisions = _minimalSelfCollisions;
   _grippers = {{"l_gripper", {"L_UTHUMB"}, true}, {"r_gripper", {"R_UTHUMB"}, false}};
 }
-{% endraw %}
+{
+  % endraw %
+}

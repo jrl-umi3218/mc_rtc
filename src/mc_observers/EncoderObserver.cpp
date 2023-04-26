@@ -23,18 +23,9 @@ void EncoderObserver::configure(const mc_control::MCController & ctl, const mc_r
                                  updateRobot_);
   }
   const std::string & position = config("position", std::string("encoderValues"));
-  if(position == "control")
-  {
-    posUpdate_ = PosUpdate::Control;
-  }
-  else if(position == "encoderValues")
-  {
-    posUpdate_ = PosUpdate::EncoderValues;
-  }
-  else if(position == "none")
-  {
-    posUpdate_ = PosUpdate::None;
-  }
+  if(position == "control") { posUpdate_ = PosUpdate::Control; }
+  else if(position == "encoderValues") { posUpdate_ = PosUpdate::EncoderValues; }
+  else if(position == "none") { posUpdate_ = PosUpdate::None; }
   else
   {
     mc_rtc::log::error_and_throw(
@@ -44,22 +35,10 @@ void EncoderObserver::configure(const mc_control::MCController & ctl, const mc_r
   }
 
   const std::string & velocity = config("velocity", std::string("encoderFiniteDifferences"));
-  if(velocity == "control")
-  {
-    velUpdate_ = VelUpdate::Control;
-  }
-  else if(velocity == "encoderFiniteDifferences")
-  {
-    velUpdate_ = VelUpdate::EncoderFiniteDifferences;
-  }
-  else if(velocity == "encoderVelocities")
-  {
-    velUpdate_ = VelUpdate::EncoderVelocities;
-  }
-  else if(velocity == "none")
-  {
-    velUpdate_ = VelUpdate::None;
-  }
+  if(velocity == "control") { velUpdate_ = VelUpdate::Control; }
+  else if(velocity == "encoderFiniteDifferences") { velUpdate_ = VelUpdate::EncoderFiniteDifferences; }
+  else if(velocity == "encoderVelocities") { velUpdate_ = VelUpdate::EncoderVelocities; }
+  else if(velocity == "none") { velUpdate_ = VelUpdate::None; }
   else
   {
     mc_rtc::log::error_and_throw(
@@ -109,10 +88,7 @@ bool EncoderObserver::run(const mc_control::MCController & ctl)
     {
       prevEncoders_ = enc;
       encodersVelocity_.resize(enc.size());
-      for(unsigned i = 0; i < enc.size(); ++i)
-      {
-        encodersVelocity_[i] = 0;
-      }
+      for(unsigned i = 0; i < enc.size(); ++i) { encodersVelocity_[i] = 0; }
     }
   }
   if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
@@ -143,20 +119,11 @@ void EncoderObserver::update(mc_control::MCController & ctl)
     {
       size_t jidx = static_cast<size_t>(joint_index);
       // Update position
-      if(posUpdate_ == PosUpdate::Control)
-      {
-        realRobot.mbc().q[jidx][0] = robot.mbc().q[jidx][0];
-      }
-      else if(posUpdate_ == PosUpdate::EncoderValues)
-      {
-        realRobot.mbc().q[jidx][0] = q[i];
-      }
+      if(posUpdate_ == PosUpdate::Control) { realRobot.mbc().q[jidx][0] = robot.mbc().q[jidx][0]; }
+      else if(posUpdate_ == PosUpdate::EncoderValues) { realRobot.mbc().q[jidx][0] = q[i]; }
 
       // Update velocity
-      if(velUpdate_ == VelUpdate::Control)
-      {
-        realRobot.mbc().alpha[jidx][0] = robot.mbc().alpha[jidx][0];
-      }
+      if(velUpdate_ == VelUpdate::Control) { realRobot.mbc().alpha[jidx][0] = robot.mbc().alpha[jidx][0]; }
       else if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
       {
         realRobot.mbc().alpha[jidx][0] = encodersVelocity_[i];
@@ -167,14 +134,8 @@ void EncoderObserver::update(mc_control::MCController & ctl)
       }
     }
   }
-  if(computeFK_ && posUpdate_ != PosUpdate::None)
-  {
-    realRobot.forwardKinematics();
-  }
-  if(computeFV_ && velUpdate_ != VelUpdate::None)
-  {
-    realRobot.forwardVelocity();
-  }
+  if(computeFK_ && posUpdate_ != PosUpdate::None) { realRobot.forwardKinematics(); }
+  if(computeFV_ && velUpdate_ != VelUpdate::None) { realRobot.forwardVelocity(); }
 }
 
 void EncoderObserver::addToLogger(const mc_control::MCController & ctl,
@@ -192,14 +153,12 @@ void EncoderObserver::addToLogger(const mc_control::MCController & ctl,
     {
       std::vector<double> qOut(ctl.robot(robot_).refJointOrder().size(), 0);
       logger.addLogEntry(category + "_controlValues", this,
-                         [this, &ctl, qOut]() mutable -> const std::vector<double> & {
+                         [this, &ctl, qOut]() mutable -> const std::vector<double> &
+                         {
                            for(size_t i = 0; i < qOut.size(); ++i)
                            {
                              auto jIdx = ctl.robot(robot_).jointIndexInMBC(i);
-                             if(jIdx != -1)
-                             {
-                               qOut[i] = ctl.robot(robot_).mbc().alpha[static_cast<size_t>(jIdx)][0];
-                             }
+                             if(jIdx != -1) { qOut[i] = ctl.robot(robot_).mbc().alpha[static_cast<size_t>(jIdx)][0]; }
                            }
                            return qOut;
                          });
@@ -214,22 +173,20 @@ void EncoderObserver::addToLogger(const mc_control::MCController & ctl,
     }
     else if(velUpdate_ == VelUpdate::EncoderVelocities)
     {
-      logger.addLogEntry(category + "_encoderVelocities", this, [this, &ctl]() -> const std::vector<double> & {
-        return ctl.robot(robot_).encoderVelocities();
-      });
+      logger.addLogEntry(category + "_encoderVelocities", this,
+                         [this, &ctl]() -> const std::vector<double> &
+                         { return ctl.robot(robot_).encoderVelocities(); });
     }
     else if(velUpdate_ == VelUpdate::Control)
     {
       std::vector<double> alpha(ctl.robot(robot_).refJointOrder().size(), 0);
       logger.addLogEntry(category + "_controlVelocities", this,
-                         [this, &ctl, alpha]() mutable -> const std::vector<double> & {
+                         [this, &ctl, alpha]() mutable -> const std::vector<double> &
+                         {
                            for(size_t i = 0; i < alpha.size(); ++i)
                            {
                              auto jIdx = ctl.robot(robot_).jointIndexInMBC(i);
-                             if(jIdx != -1)
-                             {
-                               alpha[i] = ctl.robot(robot_).mbc().alpha[static_cast<size_t>(jIdx)][0];
-                             }
+                             if(jIdx != -1) { alpha[i] = ctl.robot(robot_).mbc().alpha[static_cast<size_t>(jIdx)][0]; }
                            }
                            return alpha;
                          });

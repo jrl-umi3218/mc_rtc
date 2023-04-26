@@ -74,10 +74,7 @@ public:
 
   void removeFromSolverImpl(QPSolver & solver) override;
 
-  inline unsigned int robotIndex() const noexcept
-  {
-    return robotIndex_;
-  }
+  inline unsigned int robotIndex() const noexcept { return robotIndex_; }
 
 protected:
   /** Holds the motion constraint implementation

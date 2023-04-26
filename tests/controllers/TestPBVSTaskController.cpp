@@ -50,16 +50,10 @@ public:
     auto X_t_s = X_0_s * object_.inv();
     pbvsTask->error(X_t_s);
     bool ret = MCController::run();
-    if(!ret)
-    {
-      mc_rtc::log::critical("Failed at iter: {}", nrIter);
-    }
+    if(!ret) { mc_rtc::log::critical("Failed at iter: {}", nrIter); }
     BOOST_CHECK(ret);
     nrIter++;
-    if(nrIter == 500)
-    {
-      pbvsTask->stiffness(1000);
-    }
+    if(nrIter == 500) { pbvsTask->stiffness(1000); }
     if(nrIter == 1000)
     {
       /* Check that the task is "finished" */

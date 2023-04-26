@@ -16,7 +16,7 @@
           "type": "object",
           "title": "Grippers configuration",
           "description": "Map of gripper name -> gripper configuration",
-          "properties": 
+          "properties":
           {
             "*": { "$ref": "/../../mc_control/generic_gripper.json" }
           }

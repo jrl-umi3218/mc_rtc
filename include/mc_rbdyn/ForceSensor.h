@@ -51,55 +51,34 @@ public:
   ~ForceSensor() noexcept override;
 
   /** Return the sensor's parent body */
-  inline const std::string & parentBody() const
-  {
-    return Device::parent();
-  }
+  inline const std::string & parentBody() const { return Device::parent(); }
 
   /** Return the transformation from the parent body to the sensor (model) */
-  inline const sva::PTransformd & X_p_f() const
-  {
-    return Device::X_p_s();
-  }
+  inline const sva::PTransformd & X_p_f() const { return Device::X_p_s(); }
 
   /** Return the sensor pose in the inertial frame (convenience function) */
-  inline sva::PTransformd X_0_f(const mc_rbdyn::Robot & robot) const
-  {
-    return Device::X_0_s(robot);
-  }
+  inline sva::PTransformd X_0_f(const mc_rbdyn::Robot & robot) const { return Device::X_0_s(robot); }
 
   /** Return the current wrench */
-  inline const sva::ForceVecd & wrench() const
-  {
-    return wrench_;
-  }
+  inline const sva::ForceVecd & wrench() const { return wrench_; }
 
   /** Return the force reading
    *
    * Shortcut for wrench().force()
    */
-  inline const Eigen::Vector3d & force() const
-  {
-    return wrench().force();
-  }
+  inline const Eigen::Vector3d & force() const { return wrench().force(); }
 
   /** Return the couple reading
    *
    * Shortcut for wrench().couple()
    */
-  inline const Eigen::Vector3d & couple() const
-  {
-    return wrench().couple();
-  }
+  inline const Eigen::Vector3d & couple() const { return wrench().couple(); }
 
   /** Set the current wrench expressed in sensor frame
    *
    * @param wrench New wrench reading
    */
-  inline void wrench(const sva::ForceVecd & wrench)
-  {
-    wrench_ = wrench;
-  }
+  inline void wrench(const sva::ForceVecd & wrench) { wrench_ = wrench; }
 
   /** Return a gravity-free wrench in sensor frame
    *

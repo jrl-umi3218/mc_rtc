@@ -89,10 +89,7 @@ void TransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
     const auto robotIndex = robotIndexFromConfig(c, solver.robots(), name());
     target(robots.robot(robotIndex).frame(c("frame")), c("offset", sva::PTransformd::Identity()));
   }
-  else if(config.has("target"))
-  {
-    X_0_t = config("target");
-  }
+  else if(config.has("target")) { X_0_t = config("target"); }
   else if(config.has("relative"))
   {
     const auto & robot = robotFromConfig(config("relative"), solver.robots(), name());
@@ -108,14 +105,8 @@ void TransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
   }
   else
   {
-    if(config.has("targetPosition"))
-    {
-      X_0_t.translation() = config("targetPosition");
-    }
-    if(config.has("targetRotation"))
-    {
-      X_0_t.rotation() = config("targetRotation");
-    }
+    if(config.has("targetPosition")) { X_0_t.translation() = config("targetPosition"); }
+    if(config.has("targetRotation")) { X_0_t.rotation() = config("targetRotation"); }
   }
 
   if(config.has("moveWorld"))
@@ -210,20 +201,15 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> TransformTask::bu
         dof(i) = 0.;
         target(i) = 0.;
       }
-      else if(target(i) < 0)
-      {
-        dof(i) = -1.;
-      }
+      else if(target(i) < 0) { dof(i) = -1.; }
     }
-    return [dof, target](const mc_tasks::MetaTask & t, std::string & out) {
+    return [dof, target](const mc_tasks::MetaTask & t, std::string & out)
+    {
       const auto & self = static_cast<const mc_tasks::TransformTask &>(t);
       Eigen::Vector6d w = self.robots.robot(self.rIndex).surfaceWrench(self.surface()).vector();
       for(int i = 0; i < 6; ++i)
       {
-        if(dof(i) * fabs(w(i)) < target(i))
-        {
-          return false;
-        }
+        if(dof(i) * fabs(w(i)) < target(i)) { return false; }
       }
       out += "wrench";
       return true;
@@ -251,16 +237,14 @@ static mc_tasks::MetaTaskPtr loadTransformTask(mc_solver::QPSolver & solver, con
 {
   const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "transform");
   const auto & robot = solver.robots().robot(robotIndex);
-  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
+  {
     if(config.has("surface"))
     {
       mc_rtc::log::deprecated("TransformTask", "surface", "frame");
       return robot.frame(config("surface"));
     }
-    else
-    {
-      return robot.frame(config("frame"));
-    }
+    else { return robot.frame(config("frame")); }
   }();
   auto t = std::make_shared<mc_tasks::TransformTask>(frame);
   t->load(solver, config);
@@ -269,7 +253,8 @@ static mc_tasks::MetaTaskPtr loadTransformTask(mc_solver::QPSolver & solver, con
 
 static auto reg_dep = mc_tasks::MetaTaskLoader::register_load_function(
     "surfaceTransform",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
       mc_rtc::log::deprecated("TaskLoading", "surfaceTransform", "transform");
       return loadTransformTask(solver, config);
     });

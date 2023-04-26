@@ -23,10 +23,7 @@ int main(int argc, char * argv[])
   }
   std::string in = argv[1];
   std::string out = "";
-  if(argc == 3)
-  {
-    out = argv[2];
-  }
+  if(argc == 3) { out = argv[2]; }
   else
   {
     out = bfs::path(argv[1]).filename().replace_extension(".flat").string();

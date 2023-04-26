@@ -182,8 +182,10 @@ namespace
 
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "gaze",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = [&]() {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
+      auto t = [&]()
+      {
         if(config.has("body"))
         {
           return std::make_shared<mc_tasks::GazeTask>(config("body"), Eigen::Vector3d{0, 0, 1},

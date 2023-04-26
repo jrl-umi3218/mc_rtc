@@ -70,7 +70,8 @@ namespace
 {
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "bspline_trajectory",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
       sva::PTransformd finalTarget_;
       mc_tasks::BSplineTrajectoryTask::waypoints_t waypoints;
       std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
@@ -139,7 +140,8 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
         oriWp = config("oriWaypoints", std::vector<std::pair<double, Eigen::Matrix3d>>{});
       }
 
-      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
+      {
         if(config.has("surface"))
         {
           mc_rtc::log::deprecated("ExactCubicTrajectoryTask", "surface", "frame");

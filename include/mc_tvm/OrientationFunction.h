@@ -31,46 +31,25 @@ public:
   void reset();
 
   /** Get the current objective */
-  inline const Eigen::Matrix3d & orientation() const noexcept
-  {
-    return ori_;
-  }
+  inline const Eigen::Matrix3d & orientation() const noexcept { return ori_; }
 
   /** Set the objective */
-  inline void orientation(const Eigen::Matrix3d & ori) noexcept
-  {
-    ori_ = ori;
-  }
+  inline void orientation(const Eigen::Matrix3d & ori) noexcept { ori_ = ori; }
 
   /** Get the current objective */
-  inline const Eigen::Vector3d & refVel() const noexcept
-  {
-    return refVel_;
-  }
+  inline const Eigen::Vector3d & refVel() const noexcept { return refVel_; }
 
   /** Set the objective */
-  inline void refVel(const Eigen::Vector3d & refVel) noexcept
-  {
-    refVel_ = refVel;
-  }
+  inline void refVel(const Eigen::Vector3d & refVel) noexcept { refVel_ = refVel; }
 
   /** Get the current objective */
-  inline const Eigen::Vector3d & refAccel() const noexcept
-  {
-    return refAccel_;
-  }
+  inline const Eigen::Vector3d & refAccel() const noexcept { return refAccel_; }
 
   /** Set the objective */
-  inline void refAccel(const Eigen::Vector3d & refAccel) noexcept
-  {
-    refAccel_ = refAccel;
-  }
+  inline void refAccel(const Eigen::Vector3d & refAccel) noexcept { refAccel_ = refAccel; }
 
   /** Access the frame */
-  inline const mc_rbdyn::RobotFrame & frame() const noexcept
-  {
-    return *robot_frame_;
-  }
+  inline const mc_rbdyn::RobotFrame & frame() const noexcept { return *robot_frame_; }
 
 protected:
   void updateValue();

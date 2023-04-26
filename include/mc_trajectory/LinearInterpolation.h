@@ -27,10 +27,7 @@ struct LinearInterpolation
    * - v2 for t = 1
    * - value linearly interpolated between v1 and v2 otherwise
    */
-  T operator()(const T & v1, const T & v2, double t) const
-  {
-    return (1 - t) * v1 + t * v2;
-  }
+  T operator()(const T & v1, const T & v2, double t) const { return (1 - t) * v1 + t * v2; }
 };
 
 } // namespace mc_trajectory

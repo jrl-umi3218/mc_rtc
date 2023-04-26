@@ -426,16 +426,10 @@ public:
     if(v.isArray())
     {
       std::vector<T, A> ret;
-      for(size_t i = 0; i < v.size(); ++i)
-      {
-        ret.push_back(Configuration(v[i]));
-      }
+      for(size_t i = 0; i < v.size(); ++i) { ret.push_back(Configuration(v[i])); }
       return ret;
     }
-    else
-    {
-      throw Configuration::Exception("Stored Json value is not a vector", v);
-    }
+    else { throw Configuration::Exception("Stored Json value is not a vector", v); }
   }
 
   /*! \brief Retrieve an array instance
@@ -450,16 +444,10 @@ public:
     if(v.isArray() && v.size() == N)
     {
       std::array<T, N> ret;
-      for(size_t i = 0; i < N; ++i)
-      {
-        ret[i] = Configuration(v[i]);
-      }
+      for(size_t i = 0; i < N; ++i) { ret[i] = Configuration(v[i]); }
       return ret;
     }
-    else
-    {
-      throw Configuration::Exception("Stored Json value is not an array or its size is incorrect", v);
-    }
+    else { throw Configuration::Exception("Stored Json value is not an array or its size is incorrect", v); }
   }
 
   /*! \brief Retrieve a pair instance
@@ -470,14 +458,8 @@ public:
   template<class T1, class T2>
   operator std::pair<T1, T2>() const
   {
-    if(v.isArray() && v.size() == 2)
-    {
-      return std::make_pair<T1, T2>(Configuration(v[0]), Configuration(v[1]));
-    }
-    else
-    {
-      throw Configuration::Exception("Stored Json value is not an array of size 2", v);
-    }
+    if(v.isArray() && v.size() == 2) { return std::make_pair<T1, T2>(Configuration(v[0]), Configuration(v[1])); }
+    else { throw Configuration::Exception("Stored Json value is not an array of size 2", v); }
   }
 
   /*! \brief Retrieve a string-indexed map instance
@@ -500,10 +482,7 @@ public:
       }
       return ret;
     }
-    else
-    {
-      throw Configuration::Exception("Stored Json value is not an object", v);
-    }
+    else { throw Configuration::Exception("Stored Json value is not an object", v); }
   }
 
   /*! \brief Retrieve a set of objects
@@ -521,17 +500,11 @@ public:
       for(size_t i = 0; i < v.size(); ++i)
       {
         auto ins = ret.insert(Configuration(v[i]));
-        if(!ins.second)
-        {
-          throw Configuration::Exception("Stored Json set does not hold unique values", v);
-        }
+        if(!ins.second) { throw Configuration::Exception("Stored Json set does not hold unique values", v); }
       }
       return ret;
     }
-    else
-    {
-      throw Configuration::Exception("Stored Json value is not an array", v);
-    }
+    else { throw Configuration::Exception("Stored Json value is not an array", v); }
   }
 
   /*! \brief Retrieve an unordered set of objects
@@ -549,17 +522,11 @@ public:
       for(size_t i = 0; i < v.size(); ++i)
       {
         auto ins = ret.insert(Configuration(v[i]));
-        if(!ins.second)
-        {
-          throw Configuration::Exception("Stored Json set does not hold unique values", v);
-        }
+        if(!ins.second) { throw Configuration::Exception("Stored Json set does not hold unique values", v); }
       }
       return ret;
     }
-    else
-    {
-      throw Configuration::Exception("Stored Json value is not an array", v);
-    }
+    else { throw Configuration::Exception("Stored Json value is not an array", v); }
   }
 
   /** Integral type conversions
@@ -569,42 +536,15 @@ public:
   template<typename T, typename std::enable_if<internal::is_integral_v<T>, int>::type = 0>
   operator T() const
   {
-    if constexpr(internal::is_like_int8_t<T>)
-    {
-      return static_cast<T>(this->operator int8_t());
-    }
-    else if constexpr(internal::is_like_int16_t<T>)
-    {
-      return static_cast<T>(this->operator int16_t());
-    }
-    else if constexpr(internal::is_like_int32_t<T>)
-    {
-      return static_cast<T>(this->operator int32_t());
-    }
-    else if constexpr(internal::is_like_int64_t<T>)
-    {
-      return static_cast<T>(this->operator int64_t());
-    }
-    else if constexpr(internal::is_like_uint8_t<T>)
-    {
-      return static_cast<T>(this->operator uint8_t());
-    }
-    else if constexpr(internal::is_like_uint16_t<T>)
-    {
-      return static_cast<T>(this->operator uint16_t());
-    }
-    else if constexpr(internal::is_like_uint32_t<T>)
-    {
-      return static_cast<T>(this->operator uint32_t());
-    }
-    else if constexpr(internal::is_like_uint64_t<T>)
-    {
-      return static_cast<T>(this->operator uint64_t());
-    }
-    else
-    {
-      static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
-    }
+    if constexpr(internal::is_like_int8_t<T>) { return static_cast<T>(this->operator int8_t()); }
+    else if constexpr(internal::is_like_int16_t<T>) { return static_cast<T>(this->operator int16_t()); }
+    else if constexpr(internal::is_like_int32_t<T>) { return static_cast<T>(this->operator int32_t()); }
+    else if constexpr(internal::is_like_int64_t<T>) { return static_cast<T>(this->operator int64_t()); }
+    else if constexpr(internal::is_like_uint8_t<T>) { return static_cast<T>(this->operator uint8_t()); }
+    else if constexpr(internal::is_like_uint16_t<T>) { return static_cast<T>(this->operator uint16_t()); }
+    else if constexpr(internal::is_like_uint32_t<T>) { return static_cast<T>(this->operator uint32_t()); }
+    else if constexpr(internal::is_like_uint64_t<T>) { return static_cast<T>(this->operator uint64_t()); }
+    else { static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size"); }
   }
 
   /*! \brief User-defined conversions
@@ -800,28 +740,16 @@ public:
   size_t size() const;
 
   /*! \brief Returns true if the underlying value is an array */
-  inline bool isArray() const noexcept
-  {
-    return v.isArray();
-  }
+  inline bool isArray() const noexcept { return v.isArray(); }
 
   /*! \brief Returns true if the underlying value is an object */
-  inline bool isObject() const noexcept
-  {
-    return v.isObject();
-  }
+  inline bool isObject() const noexcept { return v.isObject(); }
 
   /*! \brief Returns true if the underlying value is a string */
-  inline bool isString() const noexcept
-  {
-    return v.isString();
-  }
+  inline bool isString() const noexcept { return v.isString(); }
 
   /*! \brief Returns true if the underlying value is numeric */
-  inline bool isNumeric() const noexcept
-  {
-    return v.isNumeric();
-  }
+  inline bool isNumeric() const noexcept { return v.isNumeric(); }
 
   /*! \brief If the stored value is an array, return a Configuration element
    * for the i-th element.
@@ -1306,42 +1234,15 @@ public:
   template<typename T, typename std::enable_if<internal::is_integral_v<T>, int>::type = 0>
   void push(const T & value)
   {
-    if constexpr(internal::is_like_int8_t<T>)
-    {
-      push(static_cast<int8_t>(value));
-    }
-    else if constexpr(internal::is_like_int16_t<T>)
-    {
-      push(static_cast<int16_t>(value));
-    }
-    else if constexpr(internal::is_like_int32_t<T>)
-    {
-      push(static_cast<int32_t>(value));
-    }
-    else if constexpr(internal::is_like_int64_t<T>)
-    {
-      push(static_cast<int64_t>(value));
-    }
-    else if constexpr(internal::is_like_uint8_t<T>)
-    {
-      push(static_cast<uint8_t>(value));
-    }
-    else if constexpr(internal::is_like_uint16_t<T>)
-    {
-      push(static_cast<uint16_t>(value));
-    }
-    else if constexpr(internal::is_like_uint32_t<T>)
-    {
-      push(static_cast<uint32_t>(value));
-    }
-    else if constexpr(internal::is_like_uint64_t<T>)
-    {
-      push(static_cast<uint64_t>(value));
-    }
-    else
-    {
-      static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
-    }
+    if constexpr(internal::is_like_int8_t<T>) { push(static_cast<int8_t>(value)); }
+    else if constexpr(internal::is_like_int16_t<T>) { push(static_cast<int16_t>(value)); }
+    else if constexpr(internal::is_like_int32_t<T>) { push(static_cast<int32_t>(value)); }
+    else if constexpr(internal::is_like_int64_t<T>) { push(static_cast<int64_t>(value)); }
+    else if constexpr(internal::is_like_uint8_t<T>) { push(static_cast<uint8_t>(value)); }
+    else if constexpr(internal::is_like_uint16_t<T>) { push(static_cast<uint16_t>(value)); }
+    else if constexpr(internal::is_like_uint32_t<T>) { push(static_cast<uint32_t>(value)); }
+    else if constexpr(internal::is_like_uint64_t<T>) { push(static_cast<uint64_t>(value)); }
+    else { static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size"); }
   }
 
   /*! \brief Add a vector into the JSON document
@@ -1356,10 +1257,7 @@ public:
   void add(const std::string & key, const std::vector<T, A> & value, Args &&... args)
   {
     Configuration v = array(key, value.size());
-    for(const auto & vi : value)
-    {
-      v.push(vi, std::forward<Args>(args)...);
-    }
+    for(const auto & vi : value) { v.push(vi, std::forward<Args>(args)...); }
   }
 
   /*! \brief Add an array into the JSON document
@@ -1374,10 +1272,7 @@ public:
   void add(const std::string & key, const std::array<T, N> & value, Args &&... args)
   {
     Configuration v = array(key, N);
-    for(const auto & vi : value)
-    {
-      v.push(vi, std::forward<Args>(args)...);
-    }
+    for(const auto & vi : value) { v.push(vi, std::forward<Args>(args)...); }
   }
 
   /*! \brief Add a pair into the JSON document
@@ -1411,10 +1306,7 @@ public:
   void add(const std::string & key, const std::map<std::string, T, C, A> & value, Args &&... args)
   {
     Configuration v = add(key);
-    for(const auto & el : value)
-    {
-      v.add(el.first, el.second, std::forward<Args>(args)...);
-    }
+    for(const auto & el : value) { v.add(el.first, el.second, std::forward<Args>(args)...); }
   }
 
   /*! \brief Add a set into the JSON document
@@ -1429,10 +1321,7 @@ public:
   void add(const std::string & key, const std::set<T, C, A> & value, Args &&... args)
   {
     Configuration v = array(key, value.size());
-    for(const auto & v : value)
-    {
-      v.push(*v, std::forward<Args>(args)...);
-    }
+    for(const auto & v : value) { v.push(*v, std::forward<Args>(args)...); }
   }
 
   /*! \brief Add an unordered set into the JSON document
@@ -1451,10 +1340,7 @@ public:
   void add(const std::string & key, const std::unordered_set<T, H, E, A> & value, Args &&... args)
   {
     Configuration v = array(key, value.size());
-    for(const auto & v : value)
-    {
-      v.push(*v, std::forward<Args>(args)...);
-    }
+    for(const auto & v : value) { v.push(*v, std::forward<Args>(args)...); }
   }
 
   /** Integral type conversions
@@ -1466,42 +1352,15 @@ public:
   template<typename T, typename std::enable_if<internal::is_integral_v<T>, int>::type = 0>
   void add(const std::string & key, const T & value)
   {
-    if constexpr(internal::is_like_int8_t<T>)
-    {
-      add(key, static_cast<int8_t>(value));
-    }
-    else if constexpr(internal::is_like_int16_t<T>)
-    {
-      add(key, static_cast<int16_t>(value));
-    }
-    else if constexpr(internal::is_like_int32_t<T>)
-    {
-      add(key, static_cast<int32_t>(value));
-    }
-    else if constexpr(internal::is_like_int64_t<T>)
-    {
-      add(key, static_cast<int64_t>(value));
-    }
-    else if constexpr(internal::is_like_uint8_t<T>)
-    {
-      add(key, static_cast<uint8_t>(value));
-    }
-    else if constexpr(internal::is_like_uint16_t<T>)
-    {
-      add(key, static_cast<uint16_t>(value));
-    }
-    else if constexpr(internal::is_like_uint32_t<T>)
-    {
-      add(key, static_cast<uint32_t>(value));
-    }
-    else if constexpr(internal::is_like_uint64_t<T>)
-    {
-      add(key, static_cast<uint64_t>(value));
-    }
-    else
-    {
-      static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
-    }
+    if constexpr(internal::is_like_int8_t<T>) { add(key, static_cast<int8_t>(value)); }
+    else if constexpr(internal::is_like_int16_t<T>) { add(key, static_cast<int16_t>(value)); }
+    else if constexpr(internal::is_like_int32_t<T>) { add(key, static_cast<int32_t>(value)); }
+    else if constexpr(internal::is_like_int64_t<T>) { add(key, static_cast<int64_t>(value)); }
+    else if constexpr(internal::is_like_uint8_t<T>) { add(key, static_cast<uint8_t>(value)); }
+    else if constexpr(internal::is_like_uint16_t<T>) { add(key, static_cast<uint16_t>(value)); }
+    else if constexpr(internal::is_like_uint32_t<T>) { add(key, static_cast<uint32_t>(value)); }
+    else if constexpr(internal::is_like_uint64_t<T>) { add(key, static_cast<uint64_t>(value)); }
+    else { static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size"); }
   }
 
   /*! \brief User-defined conversion
@@ -1529,10 +1388,7 @@ public:
   void push(const std::vector<T, A> & value, Args &&... args)
   {
     Configuration v = array(value.size());
-    for(const auto & vi : value)
-    {
-      v.push(vi, std::forward<Args>(args)...);
-    }
+    for(const auto & vi : value) { v.push(vi, std::forward<Args>(args)...); }
   }
 
   /*! \brief Push an array into the JSON document
@@ -1543,10 +1399,7 @@ public:
   void push(const std::array<T, N> & value, Args &&... args)
   {
     Configuration v = array(N);
-    for(const auto & vi : value)
-    {
-      v.push(vi, std::forward<Args>(args)...);
-    }
+    for(const auto & vi : value) { v.push(vi, std::forward<Args>(args)...); }
   }
 
   /*! \brief Push a pair into the JSON document
@@ -1572,10 +1425,7 @@ public:
   void push(const std::map<std::string, T, C, A> & value, Args &&... args)
   {
     Configuration v = object();
-    for(const auto & el : value)
-    {
-      v.add(el.first, el.second, std::forward<Args>(args)...);
-    }
+    for(const auto & el : value) { v.add(el.first, el.second, std::forward<Args>(args)...); }
   }
 
   /*! \brief Push a set into the JSON document
@@ -1590,10 +1440,7 @@ public:
   void push(const std::set<T, C, A> & value, Args &&... args)
   {
     Configuration v = array(value.size());
-    for(const auto & v : value)
-    {
-      v.push(*v, std::forward<Args>(args)...);
-    }
+    for(const auto & v : value) { v.push(*v, std::forward<Args>(args)...); }
   }
 
   /*! \brief Push an unordered set into the JSON document
@@ -1612,10 +1459,7 @@ public:
   void push(const std::unordered_set<T, H, E, A> & value, Args &&... args)
   {
     Configuration v = array(value.size());
-    for(const auto & v : value)
-    {
-      v.push(*v, std::forward<Args>(args)...);
-    }
+    for(const auto & v : value) { v.push(*v, std::forward<Args>(args)...); }
   }
 
   /** Remove a given element
@@ -1646,14 +1490,8 @@ private:
   template<typename T>
   T convert() const
   {
-    if constexpr(std::is_same_v<T, Configuration>)
-    {
-      return *this;
-    }
-    else
-    {
-      return this->operator T();
-    }
+    if constexpr(std::is_same_v<T, Configuration>) { return *this; }
+    else { return this->operator T(); }
   }
 };
 
@@ -1705,10 +1543,7 @@ struct MC_RTC_UTILS_DLLAPI ConfigurationFile : public Configuration
   using Configuration::save;
 
   /** Access the path where this configuration is stored */
-  inline const std::string & path() const noexcept
-  {
-    return path_;
-  }
+  inline const std::string & path() const noexcept { return path_; }
 
 private:
   std::string path_;

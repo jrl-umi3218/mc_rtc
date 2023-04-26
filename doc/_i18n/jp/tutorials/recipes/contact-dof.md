@@ -97,7 +97,7 @@ tasks::qp::contactId cId = contact.contactId(robots());
 // reset()で以下を実行
 Eigen::Matrix6d dof = Eigen::Matrix6d::Identity();
 dof(5,5) = 0;
- 
+
 tasks::qp::ContactId ContactId = mc_rbdyn::Contact(robots(), 0, 1, "RightFoot", "AllGround").contactId(robots());
 contactConstraint().contactConstr->addDofContact(ContactId, dof);
 contactConstraint().contactConstr->updateDofContacts();

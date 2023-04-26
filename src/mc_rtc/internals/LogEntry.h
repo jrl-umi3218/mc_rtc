@@ -18,10 +18,7 @@ void void_deleter(void const * ptr)
 
 inline std::optional<std::string_view> stringFromNode(mpack_node_t node)
 {
-  if(mpack_node_type(node) != mpack_type_str)
-  {
-    return std::nullopt;
-  }
+  if(mpack_node_type(node) != mpack_type_str) { return std::nullopt; }
   return std::string_view(mpack_node_str(node), mpack_node_strlen(node));
 }
 
@@ -82,10 +79,7 @@ struct DataFromNode
     static bool convert(mpack_node_t node, CPPT & out) \
     {                                                  \
       const auto t = mpack_node_type(node);            \
-      if(CONDITION)                                    \
-      {                                                \
-        return false;                                  \
-      }                                                \
+      if(CONDITION) { return false; }                  \
       out = MPACKGET(node);                            \
       return true;                                     \
     }                                                  \
@@ -107,10 +101,7 @@ struct DataFromNode<double>
 {
   static bool convert(mpack_node_t node, double & out)
   {
-    if(mpack_node_type(node) != mpack_type_float && mpack_node_type(node) != mpack_type_double)
-    {
-      return false;
-    }
+    if(mpack_node_type(node) != mpack_type_float && mpack_node_type(node) != mpack_type_double) { return false; }
     out = mpack_node_double(node);
     return true;
   }
@@ -121,10 +112,7 @@ struct DataFromNode<std::string>
 {
   static bool convert(mpack_node_t node, std::string & out)
   {
-    if(mpack_node_type(node) != mpack_type_str)
-    {
-      return false;
-    }
+    if(mpack_node_type(node) != mpack_type_str) { return false; }
     out = std::string(mpack_node_str(node), mpack_node_strlen(node));
     return true;
   }
@@ -141,10 +129,7 @@ struct DataFromNode<Eigen::Vector2d>
 {
   static bool convert(mpack_node_t node, Eigen::Vector2d & v)
   {
-    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 2)
-    {
-      return false;
-    }
+    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 2) { return false; }
     v.x() = node_at(node, 0);
     v.y() = node_at(node, 1);
     return true;
@@ -156,10 +141,7 @@ struct DataFromNode<Eigen::Vector3d>
 {
   static bool convert(mpack_node_t node, Eigen::Vector3d & v)
   {
-    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 3)
-    {
-      return false;
-    }
+    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 3) { return false; }
     v.x() = node_at(node, 0);
     v.y() = node_at(node, 1);
     v.z() = node_at(node, 2);
@@ -172,14 +154,8 @@ struct DataFromNode<Eigen::Vector6d>
 {
   static bool convert(mpack_node_t node, Eigen::Vector6d & v)
   {
-    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 6)
-    {
-      return false;
-    }
-    for(Eigen::DenseIndex i = 0; i < v.size(); ++i)
-    {
-      v(i) = node_at(node, static_cast<size_t>(i));
-    }
+    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 6) { return false; }
+    for(Eigen::DenseIndex i = 0; i < v.size(); ++i) { v(i) = node_at(node, static_cast<size_t>(i)); }
     return true;
   }
 };
@@ -189,15 +165,9 @@ struct DataFromNode<Eigen::VectorXd>
 {
   static bool convert(mpack_node_t node, Eigen::VectorXd & v)
   {
-    if(mpack_node_type(node) != mpack_type_array)
-    {
-      return false;
-    }
+    if(mpack_node_type(node) != mpack_type_array) { return false; }
     v.resize(static_cast<int>(mpack_node_array_length(node)));
-    for(Eigen::DenseIndex i = 0; i < v.size(); ++i)
-    {
-      v(i) = node_at(node, static_cast<size_t>(i));
-    }
+    for(Eigen::DenseIndex i = 0; i < v.size(); ++i) { v(i) = node_at(node, static_cast<size_t>(i)); }
     return true;
   }
 };
@@ -207,10 +177,7 @@ struct DataFromNode<Eigen::Quaterniond>
 {
   static bool convert(mpack_node_t node, Eigen::Quaterniond & q)
   {
-    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 4)
-    {
-      return false;
-    }
+    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 4) { return false; }
     q.w() = node_at(node, 0);
     q.x() = node_at(node, 1);
     q.y() = node_at(node, 2);
@@ -224,10 +191,7 @@ struct DataFromNode<sva::PTransformd>
 {
   static bool convert(mpack_node_t node, sva::PTransformd & out)
   {
-    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 12)
-    {
-      return false;
-    }
+    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 12) { return false; }
     out.rotation() << node_at(node, 0), node_at(node, 1), node_at(node, 2), node_at(node, 3), node_at(node, 4),
         node_at(node, 5), node_at(node, 6), node_at(node, 7), node_at(node, 8);
     out.translation() << node_at(node, 9), node_at(node, 10), node_at(node, 11);
@@ -240,10 +204,7 @@ struct DataFromNode<sva::ForceVecd>
 {
   static bool convert(mpack_node_t node, sva::ForceVecd & out)
   {
-    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 6)
-    {
-      return false;
-    }
+    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 6) { return false; }
     out.couple() << node_at(node, 0), node_at(node, 1), node_at(node, 2);
     out.force() << node_at(node, 3), node_at(node, 4), node_at(node, 5);
     return true;
@@ -255,10 +216,7 @@ struct DataFromNode<sva::MotionVecd>
 {
   static bool convert(mpack_node_t node, sva::MotionVecd & out)
   {
-    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 6)
-    {
-      return false;
-    }
+    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 6) { return false; }
     out.angular() << node_at(node, 0), node_at(node, 1), node_at(node, 2);
     out.linear() << node_at(node, 3), node_at(node, 4), node_at(node, 5);
     return true;
@@ -270,15 +228,9 @@ struct DataFromNode<std::vector<double, A>>
 {
   static bool convert(mpack_node_t node, std::vector<double, A> & out)
   {
-    if(mpack_node_type(node) != mpack_type_array)
-    {
-      return false;
-    }
+    if(mpack_node_type(node) != mpack_type_array) { return false; }
     out.resize(mpack_node_array_length(node));
-    for(size_t i = 0; i < out.size(); ++i)
-    {
-      out[i] = node_at(node, i);
-    }
+    for(size_t i = 0; i < out.size(); ++i) { out[i] = node_at(node, i); }
     return true;
   }
 };
@@ -289,10 +241,7 @@ struct PointerFromNode
   static FlatLog::record::unique_void_ptr convert(mpack_node_t node)
   {
     FlatLog::record::unique_void_ptr ret{new T{}, void_deleter<T>};
-    if(DataFromNode<T>::convert(node, *static_cast<T *>(ret.get())))
-    {
-      return ret;
-    }
+    if(DataFromNode<T>::convert(node, *static_cast<T *>(ret.get()))) { return ret; }
     return {nullptr, void_deleter<int>};
   }
 };
@@ -363,10 +312,7 @@ inline FlatLog::record recordFromNode(mpack_node_t node, bool extract_data, size
     auto data = mpack_node_array_at(node, idx + 1);
     return {type, dataFromNode(type, data)};
   }
-  else
-  {
-    return {type, {nullptr, void_deleter<int>}};
-  }
+  else { return {type, {nullptr, void_deleter<int>}}; }
 }
 
 // For version 1 and up, only data is stored in the node, type is from events
@@ -377,10 +323,7 @@ inline FlatLog::record recordFromNode(LogType type, mpack_node_t node, bool extr
     auto data = mpack_node_array_at(node, idx);
     return {type, dataFromNode(type, data)};
   }
-  else
-  {
-    return {type, {nullptr, void_deleter<int>}};
-  }
+  else { return {type, {nullptr, void_deleter<int>}}; }
 }
 
 struct TypedKey
@@ -413,14 +356,8 @@ struct LogEntry : mpack_tree_t
     if(mpack_node_type(root_) != mpack_type_array || mpack_node_array_length(root_) != 2)
     {
       log::error("MessagePack stored data does not appear to be an array of size 2");
-      if(mpack_node_type(root_) != mpack_type_array)
-      {
-        log::warning("Not an array");
-      }
-      else
-      {
-        log::warning("Array of size: {}", mpack_node_array_length(root_));
-      }
+      if(mpack_node_type(root_) != mpack_type_array) { log::warning("Not an array"); }
+      else { log::warning("Array of size: {}", mpack_node_array_length(root_)); }
       valid_ = false;
       return;
     }
@@ -428,9 +365,7 @@ struct LogEntry : mpack_tree_t
     {
       auto keys = mpack_node_array_at(root_, 0);
       std::vector<std::string> keys_;
-      if(mpack_node_type(keys) == mpack_type_nil)
-      {
-      }
+      if(mpack_node_type(keys) == mpack_type_nil) {}
       else if(mpack_node_type(keys) == mpack_type_array)
       {
         size_t s = mpack_node_array_length(keys);
@@ -466,10 +401,7 @@ struct LogEntry : mpack_tree_t
       for(size_t i = 0; i < s / 2; ++i)
       {
         records_.push_back(recordFromNode(records, extract_data, 2 * i));
-        if(keys_.size())
-        {
-          keysOut.push_back({records_.back().type, keys_[i]});
-        }
+        if(keys_.size()) { keysOut.push_back({records_.back().type, keys_[i]}); }
       }
     }
     else if(version_ == 1)
@@ -611,10 +543,7 @@ struct LogEntry : mpack_tree_t
         return;
       }
       size_t s = mpack_node_array_length(records);
-      for(size_t i = 0; i < s; ++i)
-      {
-        records_.push_back(recordFromNode(keysOut[i].type, records, extract_data, i));
-      }
+      for(size_t i = 0; i < s; ++i) { records_.push_back(recordFromNode(keysOut[i].type, records, extract_data, i)); }
     }
     else
     {
@@ -624,39 +553,24 @@ struct LogEntry : mpack_tree_t
     }
   }
 
-  ~LogEntry()
-  {
-    mpack_tree_destroy(this);
-  }
+  ~LogEntry() { mpack_tree_destroy(this); }
 
   LogEntry(const LogEntry &) = delete;
   LogEntry & operator=(const LogEntry &) = delete;
   LogEntry(LogEntry &&) = default;
   LogEntry & operator=(LogEntry &&) = default;
 
-  bool valid() const
-  {
-    return valid_;
-  }
+  bool valid() const { return valid_; }
 
-  std::vector<FlatLog::record> & records()
-  {
-    return records_;
-  }
+  std::vector<FlatLog::record> & records() { return records_; }
 
   /** Should only be used to retrieve time values from the log */
   double getTime(size_t idx)
   {
     assert(valid_);
     auto values = mpack_node_array_at(root_, 1);
-    if(version_ == 0)
-    {
-      return mpack_node_double(mpack_node_array_at(values, 2 * idx + 1));
-    }
-    else
-    {
-      return mpack_node_double(mpack_node_array_at(values, idx));
-    }
+    if(version_ == 0) { return mpack_node_double(mpack_node_array_at(values, 2 * idx + 1)); }
+    else { return mpack_node_double(mpack_node_array_at(values, idx)); }
   }
 
   /** Rebuild this log entry with new keys */
@@ -713,10 +627,7 @@ private:
         break;
       case mpack_type_array:
         builder.start_array(mpack_node_array_length(data));
-        for(size_t i = 0; i < mpack_node_array_length(data); ++i)
-        {
-          copy_data(builder, mpack_node_array_at(data, i));
-        }
+        for(size_t i = 0; i < mpack_node_array_length(data); ++i) { copy_data(builder, mpack_node_array_at(data, i)); }
         builder.finish_array();
         break;
       case mpack_type_map:
@@ -732,10 +643,7 @@ private:
   {
     size_t s = mpack_node_array_length(value);
     builder.start_array(s);
-    for(size_t i = 0; i < s; ++i)
-    {
-      copy_data(builder, mpack_node_array_at(value, i));
-    }
+    for(size_t i = 0; i < s; ++i) { copy_data(builder, mpack_node_array_at(value, i)); }
     builder.finish_array();
   }
 };

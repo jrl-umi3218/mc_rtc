@@ -13,10 +13,7 @@ static inline void updateVar(const std::vector<std::vector<double>> & value, tvm
   for(size_t i = 0; i < value.size(); ++i)
   {
     Eigen::DenseIndex size = static_cast<Eigen::DenseIndex>(value[i].size());
-    if(size == 0)
-    {
-      continue;
-    }
+    if(size == 0) { continue; }
     Eigen::Map<const Eigen::VectorXd> qi(value[i].data(), size);
     var.set(idx, size, qi);
     idx += size;
@@ -62,14 +59,16 @@ Robot::Robot(NewRobotToken, const mc_rbdyn::Robot & robot)
     std::unordered_map<size_t, mimic_variables_t> mimicFollowers;
     const auto & joints = robot.mb().joints();
     // Returns true if the provided joint is a leader in a mimic relationship
-    auto isMimicLeader = [&](std::string_view jName) {
+    auto isMimicLeader = [&](std::string_view jName)
+    {
       return std::find_if(robot.mb().joints().begin(), robot.mb().joints().end(),
                           [&](const auto & j) { return j.isMimic() && j.mimicName() == jName; })
              != robot.mb().joints().end();
     };
     // Returns a mimic block, i.e. following a given mimic joint all joints that follow that are also mimic of the same
     // joint
-    auto getMimicBlock = [&](size_t startIdx) -> std::tuple<int, int, size_t> {
+    auto getMimicBlock = [&](size_t startIdx) -> std::tuple<int, int, size_t>
+    {
       const auto & mimicJ = joints[startIdx];
       size_t endIdx = startIdx;
       int params = mimicJ.params();
@@ -83,10 +82,7 @@ Robot::Robot(NewRobotToken, const mc_rbdyn::Robot & robot)
           params += j.params();
           dof += j.dof();
         }
-        else
-        {
-          break;
-        }
+        else { break; }
       }
       return {params, dof, endIdx};
     };
@@ -107,10 +103,7 @@ Robot::Robot(NewRobotToken, const mc_rbdyn::Robot & robot)
         tvm::VariablePtr var =
             q_->subvariable(tvm::Space(dof, params), fmt::format("{}...{}", j.name(), joints[endIdx].name()),
                             tvm::Space(nDof, nParams));
-        if(!mimicFollowers.count(leaderIdx))
-        {
-          mimicFollowers[leaderIdx].second.resize(0);
-        }
+        if(!mimicFollowers.count(leaderIdx)) { mimicFollowers[leaderIdx].second.resize(0); }
         mimicFollowers[leaderIdx].first.add(var);
         auto & mult = mimicFollowers[leaderIdx].second;
         auto newM = Eigen::VectorXd(mult.size() + var->size());
@@ -129,10 +122,7 @@ Robot::Robot(NewRobotToken, const mc_rbdyn::Robot & robot)
       nParams += j.params();
       nDof += j.dof();
     }
-    for(auto & m : mimicLeaders)
-    {
-      mimics_[m.second] = mimicFollowers[m.first];
-    }
+    for(auto & m : mimicLeaders) { mimics_[m.second] = mimicFollowers[m.first]; }
   }
   tau_ = tvm::Space(robot.mb().nrDof()).createVariable(robot.name() + "_tau");
   dq_ = tvm::dot(q_, 1);
@@ -201,10 +191,7 @@ void Robot::updateFA()
 
 void Robot::updateNormalAcceleration()
 {
-  if(robot_.mb().nrDof() == 0)
-  {
-    return;
-  }
+  if(robot_.mb().nrDof() == 0) { return; }
   const auto & pred = robot_.mb().predecessors();
   const auto & succ = robot_.mb().successors();
   for(int i = 0; i < robot_.mb().nrJoints(); ++i)
@@ -215,10 +202,7 @@ void Robot::updateNormalAcceleration()
     auto succ_i = static_cast<size_t>(succ[static_cast<size_t>(i)]);
     auto pred_i = pred[static_cast<size_t>(i)];
     normalAccB_[succ_i] = vb_i.cross(vj_i);
-    if(pred_i != -1)
-    {
-      normalAccB_[succ_i] += X_p_i * normalAccB_[static_cast<size_t>(pred_i)];
-    }
+    if(pred_i != -1) { normalAccB_[succ_i] += X_p_i * normalAccB_[static_cast<size_t>(pred_i)]; }
   }
 }
 

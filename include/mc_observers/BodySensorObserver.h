@@ -63,16 +63,10 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
   void update(mc_control::MCController & ctl) override;
 
   /*! \brief Get floating-base pose in the world frame. */
-  const sva::PTransformd & posW() const
-  {
-    return posW_;
-  }
+  const sva::PTransformd & posW() const { return posW_; }
 
   /*! \brief Get floating-base velocity in the world frame. */
-  const sva::MotionVecd & velW() const
-  {
-    return velW_;
-  }
+  const sva::MotionVecd & velW() const { return velW_; }
 
 protected:
   void addToLogger(const mc_control::MCController &, mc_rtc::Logger &, const std::string & category) override;

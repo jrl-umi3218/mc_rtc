@@ -76,10 +76,7 @@ std::vector<mc_rbdyn::Mimic> gripperMimics(const std::vector<std::string> & join
   {
     for(const auto & m : mimics)
     {
-      if(m.joint == gripperName)
-      {
-        res.push_back(m);
-      }
+      if(m.joint == gripperName) { res.push_back(m); }
     }
   }
 
@@ -107,15 +104,13 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
   active_joints = jointNames;
   mult.resize(0);
   _q.resize(0);
-  auto getReferenceIdx = [&](const std::string & joint) {
+  auto getReferenceIdx = [&](const std::string & joint)
+  {
     const auto & rjo = robot.refJointOrder();
     for(size_t i = 0; i < rjo.size(); ++i)
     {
       const auto & rji = rjo[i];
-      if(rji == joint)
-      {
-        return i;
-      }
+      if(rji == joint) { return i; }
     }
     mc_rtc::log::error_and_throw("Active joint {} for {} is not part of the reference joint order", joint,
                                  robot.name());
@@ -158,13 +153,11 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
     offset.push_back(0.0);
   }
   names = jointNames;
-  auto getActiveIdx = [this](const std::string & joint) {
+  auto getActiveIdx = [this](const std::string & joint)
+  {
     for(size_t i = 0; i < active_joints.size(); ++i)
     {
-      if(active_joints[i] == joint)
-      {
-        return i;
-      }
+      if(active_joints[i] == joint) { return i; }
     }
     mc_rtc::log::error_and_throw("Trying to mimic non existant joint: {}", joint);
   };
@@ -192,19 +185,10 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
     if(robot.hasJoint(name))
     {
       auto jIndex = static_cast<int>(robot.jointIndexByName(name));
-      if(robot.mb().joint(jIndex).dof() == 1)
-      {
-        joints_mbc_idx.push_back(jIndex);
-      }
-      else
-      {
-        joints_mbc_idx.push_back(-1);
-      }
+      if(robot.mb().joint(jIndex).dof() == 1) { joints_mbc_idx.push_back(jIndex); }
+      else { joints_mbc_idx.push_back(-1); }
     }
-    else
-    {
-      joints_mbc_idx.push_back(-1);
-    }
+    else { joints_mbc_idx.push_back(-1); }
   }
 }
 
@@ -225,19 +209,13 @@ void Gripper::restoreConfig()
 
 void Gripper::configure(const mc_rtc::Configuration & config)
 {
-  if(config.has("safety"))
-  {
-    config_.load(config("safety"));
-  }
+  if(config.has("safety")) { config_.load(config("safety")); }
   if(config.has("opening"))
   {
     try
     {
       std::map<std::string, double> jointsOpening = config("opening");
-      for(const auto & jOpen : jointsOpening)
-      {
-        setTargetOpening(jOpen.first, jOpen.second);
-      }
+      for(const auto & jOpen : jointsOpening) { setTargetOpening(jOpen.first, jOpen.second); }
     }
     catch(mc_rtc::Configuration::Exception & e)
     {
@@ -259,10 +237,7 @@ void Gripper::configure(const mc_rtc::Configuration & config)
     try
     {
       std::map<std::string, double> jointTargets = config("target");
-      for(const auto & jTarget : jointTargets)
-      {
-        setTargetQ(jTarget.first, jTarget.second);
-      }
+      for(const auto & jTarget : jointTargets) { setTargetQ(jTarget.first, jTarget.second); }
     }
     catch(mc_rtc::Configuration::Exception & e)
     {
@@ -309,10 +284,7 @@ void Gripper::setTargetQ(const std::vector<double> & targetQ)
     mc_rtc::log::error_and_throw("Attempted to set gripper target with {} DoF but this gripper only has {} active DoFs",
                                  targetQ.size(), active_joints.size());
   }
-  for(size_t i = 0; i < targetQ.size(); ++i)
-  {
-    targetQIn[i] = clampQ(i, targetQ[i]);
-  }
+  for(size_t i = 0; i < targetQ.size(); ++i) { targetQIn[i] = clampQ(i, targetQ[i]); }
   this->targetQ = &targetQIn;
 }
 
@@ -341,19 +313,13 @@ void Gripper::setTargetQ(size_t activeJointId, double targetQ)
 
 void Gripper::setTargetQ_(size_t activeJointId, double targetQ)
 {
-  if(!this->targetQ)
-  {
-    setTargetQ_(curPosition());
-  }
+  if(!this->targetQ) { setTargetQ_(curPosition()); }
   targetQIn[activeJointId] = targetQ;
 }
 
 void Gripper::setTargetOpening(double targetOpening)
 {
-  for(size_t i = 0; i < active_joints.size(); ++i)
-  {
-    setTargetOpening(i, targetOpening);
-  }
+  for(size_t i = 0; i < active_joints.size(); ++i) { setTargetOpening(i, targetOpening); }
 }
 
 void Gripper::setTargetOpening(const std::string & jointName, double targetOpening)
@@ -425,10 +391,7 @@ double Gripper::percentVMAX() const
 std::vector<double> Gripper::curPosition() const
 {
   std::vector<double> res(active_joints.size());
-  for(size_t i = 0; i < res.size(); ++i)
-  {
-    res[i] = curPosition(i);
-  }
+  for(size_t i = 0; i < res.size(); ++i) { res[i] = curPosition(i); }
   return res;
 }
 
@@ -440,10 +403,7 @@ double Gripper::curPosition(size_t jointId) const
 std::vector<double> Gripper::curOpening() const
 {
   std::vector<double> res(percentOpen.size());
-  for(size_t i = 0; i < res.size(); ++i)
-  {
-    res[i] = curOpening(i);
-  }
+  for(size_t i = 0; i < res.size(); ++i) { res[i] = curOpening(i); }
   return res;
 }
 
@@ -467,14 +427,8 @@ double Gripper::curOpening(size_t jointId) const
 
 double Gripper::targetOpening(size_t jointId) const
 {
-  if(targetQ)
-  {
-    return ((*targetQ)[jointId] - closeP[jointId]) / (openP[jointId] - closeP[jointId]);
-  }
-  else
-  {
-    return curOpening(jointId);
-  }
+  if(targetQ) { return ((*targetQ)[jointId] - closeP[jointId]) / (openP[jointId] - closeP[jointId]); }
+  else { return curOpening(jointId); }
 }
 
 void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & real)
@@ -501,24 +455,15 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & re
       }
       reached = reached && i_reached;
     }
-    if(reached)
-    {
-      targetQ = nullptr;
-    }
+    if(reached) { targetQ = nullptr; }
   }
   const auto & q = robot.encoderValues();
   auto currentQ = curPosition();
   if(q.size())
   {
-    for(size_t i = 0; i < active_joints_idx.size(); ++i)
-    {
-      actualQ[i] = q[active_joints_idx[i]];
-    }
+    for(size_t i = 0; i < active_joints_idx.size(); ++i) { actualQ[i] = q[active_joints_idx[i]]; }
   }
-  else
-  {
-    actualQ = currentQ;
-  }
+  else { actualQ = currentQ; }
   for(size_t i = 0; i < active_joints.size(); ++i)
   {
     _q[i] = currentQ[i];
@@ -546,14 +491,8 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & re
       {
         mc_rtc::log::warning("Gripper safety triggered on {}", names[i]);
         overCommandLimit[i] = true;
-        if(reversed_)
-        {
-          actualQ[i] = actualQ[i] + config_.releaseSafetyOffset;
-        }
-        else
-        {
-          actualQ[i] = actualQ[i] - config_.releaseSafetyOffset;
-        }
+        if(reversed_) { actualQ[i] = actualQ[i] + config_.releaseSafetyOffset; }
+        else { actualQ[i] = actualQ[i] - config_.releaseSafetyOffset; }
         setTargetQ_(actualQ);
       }
     }

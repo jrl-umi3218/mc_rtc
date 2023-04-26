@@ -35,4 +35,3 @@ cp build_and_install_user_config.sample.sh build_and_install_user_config.sh
 ## はじめましょう
 
 スクリプトの処理が成功すれば、作業は完了です。[次のセクション]({{site.baseurl}}/tutorials/introduction/configuration.html)に進んでください。
-

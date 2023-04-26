@@ -46,22 +46,13 @@ public:
   Frame(NewFrameToken, const mc_rbdyn::Frame & frame);
 
   /** The frame's position in world coordinates */
-  inline const sva::PTransformd & position() const noexcept
-  {
-    return position_;
-  }
+  inline const sva::PTransformd & position() const noexcept { return position_; }
 
   /** The frame's velocity in world coordinates */
-  inline const sva::MotionVecd & velocity() const noexcept
-  {
-    return velocity_;
-  }
+  inline const sva::MotionVecd & velocity() const noexcept { return velocity_; }
 
   /** Returns the associated mc_rbdyn Frame */
-  inline const mc_rbdyn::Frame & frame() const noexcept
-  {
-    return frame_;
-  }
+  inline const mc_rbdyn::Frame & frame() const noexcept { return frame_; }
 
 protected:
   /** Parent instance */

@@ -92,16 +92,16 @@ void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
   bspline.addToGUI(gui, {"Tasks", name_});
 
-  gui.addElement(
-      {"Tasks", name_, "Velocity Constraints"},
-      mc_rtc::gui::Arrow(
-          "Initial", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
-          [this]() -> Eigen::Vector3d { return initialPose_.translation(); },
-          [this]() -> Eigen::Vector3d { return initialPose_.translation() + bspline.init_vel(); }),
-      mc_rtc::gui::Arrow(
-          "Final", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
-          [this]() -> Eigen::Vector3d { return SplineTrajectoryBase::target().translation(); },
-          [this]() -> Eigen::Vector3d { return SplineTrajectoryBase::target().translation() + bspline.end_vel(); }));
+  gui.addElement({"Tasks", name_, "Velocity Constraints"},
+                 mc_rtc::gui::Arrow(
+                     "Initial", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
+                     [this]() -> Eigen::Vector3d { return initialPose_.translation(); },
+                     [this]() -> Eigen::Vector3d { return initialPose_.translation() + bspline.init_vel(); }),
+                 mc_rtc::gui::Arrow(
+                     "Final", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
+                     [this]() -> Eigen::Vector3d { return SplineTrajectoryBase::target().translation(); },
+                     [this]() -> Eigen::Vector3d
+                     { return SplineTrajectoryBase::target().translation() + bspline.end_vel(); }));
 }
 
 } // namespace mc_tasks
@@ -110,7 +110,8 @@ namespace
 {
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "exact_cubic_trajectory",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
       sva::PTransformd finalTarget_;
       std::vector<std::pair<double, Eigen::Vector3d>> waypoints;
       std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
@@ -175,10 +176,7 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
           // Control points defined in world coordinates
           std::vector<std::pair<double, Eigen::Vector3d>> controlPoints = config("controlPoints");
           waypoints.resize(controlPoints.size());
-          for(unsigned int i = 0; i < controlPoints.size(); ++i)
-          {
-            waypoints[i] = controlPoints[i];
-          }
+          for(unsigned int i = 0; i < controlPoints.size(); ++i) { waypoints[i] = controlPoints[i]; }
         }
         init_vel = config("init_vel", Eigen::Vector3d::Zero().eval());
         init_acc = config("init_acc", Eigen::Vector3d::Zero().eval());
@@ -187,7 +185,8 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
         oriWp = config("oriWaypoints", std::vector<std::pair<double, Eigen::Matrix3d>>{});
       }
 
-      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
+      {
         if(config.has("surface"))
         {
           mc_rtc::log::deprecated("ExactCubicTrajectoryTask", "surface", "frame");

@@ -150,15 +150,9 @@ public:
   /** If this is a contact r1::s1/r2::s2, this returns r2::s2/r1::s1 */
   Contact swap(const mc_rbdyn::Robots & robots) const;
 
-  inline const Eigen::Vector6d & dof() const noexcept
-  {
-    return dof_;
-  }
+  inline const Eigen::Vector6d & dof() const noexcept { return dof_; }
 
-  inline void dof(const Eigen::Vector6d & dof) noexcept
-  {
-    dof_ = dof;
-  }
+  inline void dof(const Eigen::Vector6d & dof) noexcept { dof_ = dof; }
 
   bool operator==(const Contact & rhs) const;
   bool operator!=(const Contact & rhs) const;

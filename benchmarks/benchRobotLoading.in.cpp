@@ -17,7 +17,8 @@ public:
   {
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused-variable")
-    static bool initialized = []() {
+    static bool initialized = []()
+    {
       spdlog::set_level(spdlog::level::err);
       mc_rbdyn::RobotLoader::clear();
       mc_rtc::Loader::debug_suffix = "";
@@ -32,20 +33,14 @@ public:
 
 BENCHMARK_DEFINE_F(RobotLoadingFixture, RobotModuleLoading)(benchmark::State & state)
 {
-  while(state.KeepRunning())
-  {
-    auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
-  }
+  while(state.KeepRunning()) { auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1"); }
 }
 BENCHMARK_REGISTER_F(RobotLoadingFixture, RobotModuleLoading)->Unit(benchmark::kMicrosecond);
 
 BENCHMARK_DEFINE_F(RobotLoadingFixture, RobotCreation)(benchmark::State & state)
 {
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
-  while(state.KeepRunning())
-  {
-    auto robots = mc_rbdyn::loadRobot(*rm);
-  }
+  while(state.KeepRunning()) { auto robots = mc_rbdyn::loadRobot(*rm); }
 }
 BENCHMARK_REGISTER_F(RobotLoadingFixture, RobotCreation)->Unit(benchmark::kMicrosecond);
 
@@ -57,10 +52,7 @@ BENCHMARK_DEFINE_F(RobotLoadingFixture, RobotCopy)(benchmark::State & state)
   while(state.KeepRunning())
   {
     auto robots_copy = mc_rbdyn::Robots::make();
-    for(const auto & r : robots)
-    {
-      robots_copy->robotCopy(r, r.name());
-    }
+    for(const auto & r : robots) { robots_copy->robotCopy(r, r.name()); }
   }
 }
 BENCHMARK_REGISTER_F(RobotLoadingFixture, RobotCopy)->Unit(benchmark::kMicrosecond);

@@ -35,46 +35,25 @@ public:
   void reset();
 
   /** Get the current objective */
-  inline const sva::PTransformd & pose() const noexcept
-  {
-    return pose_;
-  }
+  inline const sva::PTransformd & pose() const noexcept { return pose_; }
 
   /** Set the objective */
-  inline void pose(const sva::PTransformd & pose) noexcept
-  {
-    pose_ = pose;
-  }
+  inline void pose(const sva::PTransformd & pose) noexcept { pose_ = pose; }
 
   /** Get the current objective */
-  inline const Eigen::Vector6d & refVel() const noexcept
-  {
-    return refVel_;
-  }
+  inline const Eigen::Vector6d & refVel() const noexcept { return refVel_; }
 
   /** Set the objective */
-  inline void refVel(const Eigen::Vector6d & refVel) noexcept
-  {
-    refVel_ = refVel;
-  }
+  inline void refVel(const Eigen::Vector6d & refVel) noexcept { refVel_ = refVel; }
 
   /** Get the current objective */
-  inline const Eigen::Vector6d & refAccel() const noexcept
-  {
-    return refAccel_;
-  }
+  inline const Eigen::Vector6d & refAccel() const noexcept { return refAccel_; }
 
   /** Set the objective */
-  inline void refAccel(const Eigen::Vector6d & refAccel) noexcept
-  {
-    refAccel_ = refAccel;
-  }
+  inline void refAccel(const Eigen::Vector6d & refAccel) noexcept { refAccel_ = refAccel; }
 
   /** Get the frame */
-  inline const mc_rbdyn::RobotFrame & frame() const noexcept
-  {
-    return *frame_;
-  }
+  inline const mc_rbdyn::RobotFrame & frame() const noexcept { return *frame_; }
 
 protected:
   void updateValue();

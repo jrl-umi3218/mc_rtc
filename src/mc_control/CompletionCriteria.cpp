@@ -34,7 +34,8 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CompletionCriteri
     assert(goal > 0);
     size_t start_iter = task.iterInSolver();
     size_t goal_iter = start_iter + static_cast<size_t>(std::ceil(goal / dt));
-    return [goal_iter](const mc_tasks::MetaTask & t, std::string & out) {
+    return [goal_iter](const mc_tasks::MetaTask & t, std::string & out)
+    {
       if(t.iterInSolver() > goal_iter)
       {
         out += "timeout";
@@ -47,7 +48,8 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CompletionCriteri
   {
     double norm = config("eval");
     assert(norm > 0);
-    return [norm](const mc_tasks::MetaTask & t, std::string & out) {
+    return [norm](const mc_tasks::MetaTask & t, std::string & out)
+    {
       if(t.eval().norm() < norm)
       {
         out += "eval";
@@ -60,7 +62,8 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CompletionCriteri
   {
     double norm = config("speed");
     assert(norm > 0);
-    return [norm](const mc_tasks::MetaTask & t, std::string & out) {
+    return [norm](const mc_tasks::MetaTask & t, std::string & out)
+    {
       if(t.speed().norm() < norm)
       {
         out += "speed";
@@ -74,15 +77,10 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CompletionCriteri
     std::array<mc_rtc::Configuration, 2> conds = config("OR");
     auto lhs = build(task, dt, conds[0]);
     auto rhs = build(task, dt, conds[1]);
-    return [lhs, rhs](const mc_tasks::MetaTask & t, std::string & out) {
-      if(lhs(t, out))
-      {
-        return true;
-      }
-      else if(rhs(t, out))
-      {
-        return true;
-      }
+    return [lhs, rhs](const mc_tasks::MetaTask & t, std::string & out)
+    {
+      if(lhs(t, out)) { return true; }
+      else if(rhs(t, out)) { return true; }
       return false;
     };
   }
@@ -91,7 +89,8 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CompletionCriteri
     std::array<mc_rtc::Configuration, 2> conds = config("AND");
     auto lhs = build(task, dt, conds[0]);
     auto rhs = build(task, dt, conds[1]);
-    return [lhs, rhs](const mc_tasks::MetaTask & t, std::string & out) {
+    return [lhs, rhs](const mc_tasks::MetaTask & t, std::string & out)
+    {
       if(lhs(t, out))
       {
         out += " AND ";

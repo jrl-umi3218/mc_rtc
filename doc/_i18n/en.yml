@@ -158,7 +158,7 @@ tutorials:
     title: Samples
     desc: This section explains the sample controllers
     list-of-samples :
-      title: Available sample controllers 
+      title: Available sample controllers
     sample-admittance:
       title: Admittance sample controller
   advanced:

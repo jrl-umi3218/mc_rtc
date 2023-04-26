@@ -104,14 +104,8 @@ SizedEntries write_header(std::ofstream & ofs,
         continue;
     }
     // clang-format on
-    if(++i != entries.size())
-    {
-      ofs << ';';
-    }
-    else
-    {
-      ofs << '\n';
-    }
+    if(++i != entries.size()) { ofs << ';'; }
+    else { ofs << '\n'; }
     out[e.first] = {e.second, s};
   }
   return out;
@@ -166,17 +160,11 @@ void write_data<Eigen::VectorXd>(std::ofstream & ofs, const Eigen::VectorXd & da
   for(long i = 0; i < data.size(); ++i)
   {
     ofs << data(i);
-    if(i + 1 != static_cast<long>(fsize))
-    {
-      ofs << ';';
-    }
+    if(i + 1 != static_cast<long>(fsize)) { ofs << ';'; }
   }
   for(long i = data.size(); i < static_cast<long>(fsize); ++i)
   {
-    if(i + 1 != static_cast<long>(fsize))
-    {
-      ofs << ';';
-    }
+    if(i + 1 != static_cast<long>(fsize)) { ofs << ';'; }
   }
 }
 
@@ -186,17 +174,11 @@ void write_data<std::vector<double>>(std::ofstream & ofs, const std::vector<doub
   for(size_t i = 0; i < data.size(); ++i)
   {
     ofs << data[i];
-    if(i + 1 != fsize)
-    {
-      ofs << ';';
-    }
+    if(i + 1 != fsize) { ofs << ';'; }
   }
   for(size_t i = data.size(); i < fsize; ++i)
   {
-    if(i + 1 != fsize)
-    {
-      ofs << ';';
-    }
+    if(i + 1 != fsize) { ofs << ';'; }
   }
 }
 
@@ -228,16 +210,10 @@ void write_data(std::ofstream & ofs,
                 size_t fsize)
 {
   const T * data = log.getRaw<T>(entry, idx);
-  if(data)
-  {
-    write_data<T>(ofs, *data, fsize);
-  }
+  if(data) { write_data<T>(ofs, *data, fsize); }
   else
   {
-    for(size_t i = 0; i < fsize - 1; ++i)
-    {
-      ofs << ';';
-    }
+    for(size_t i = 0; i < fsize - 1; ++i) { ofs << ';'; }
   }
 }
 
@@ -314,14 +290,8 @@ void write_data(std::ofstream & ofs, const mc_rtc::log::FlatLog & log, const Siz
       case mc_rtc::log::LogType::None:
         continue;
     }
-    if(++i != entries.size())
-    {
-      ofs << ';';
-    }
-    else
-    {
-      ofs << '\n';
-    }
+    if(++i != entries.size()) { ofs << ';'; }
+    else { ofs << '\n'; }
   }
 }
 
@@ -329,13 +299,7 @@ void mc_bin_to_log(const std::string & in, const std::string & out, const std::v
 {
   mc_rtc::log::FlatLog log(in);
   std::ofstream ofs(out);
-  if(!ofs.is_open())
-  {
-    mc_rtc::log::error_and_throw("Failed to open {} for conversion from bin to log", out);
-  }
+  if(!ofs.is_open()) { mc_rtc::log::error_and_throw("Failed to open {} for conversion from bin to log", out); }
   auto entries = write_header(ofs, log, entriesFilter);
-  for(size_t i = 0; i < log.size(); ++i)
-  {
-    write_data(ofs, log, entries, i);
-  }
+  for(size_t i = 0; i < log.size(); ++i) { write_data(ofs, log, entries, i); }
 }

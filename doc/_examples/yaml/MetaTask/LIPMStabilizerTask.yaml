@@ -73,8 +73,7 @@ jvrc1:
   torsoBodyName: WAIST_R_S
   tasks:
     com:
-      active_joints:
-      [
+      active_joints: [
        Root,
        R_HIP_Y, R_HIP_R, R_HIP_P, R_KNEE, R_ANKLE_P, R_ANKLE_R,
        L_HIP_Y, L_HIP_R, L_HIP_P, L_KNEE, L_ANKLE_P, L_ANKLE_R

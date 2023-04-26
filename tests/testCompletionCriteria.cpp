@@ -19,10 +19,7 @@ const double dt = 0.005;
 mc_rbdyn::Robots & get_robots()
 {
   static mc_rbdyn::RobotsPtr robots_ptr = nullptr;
-  if(robots_ptr)
-  {
-    return *robots_ptr;
-  }
+  if(robots_ptr) { return *robots_ptr; }
   configureRobotLoader();
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   robots_ptr = mc_rbdyn::loadRobot(*rm);
@@ -34,14 +31,8 @@ struct MockTask : public mc_tasks::CoMTask
 {
   MockTask() : mc_tasks::CoMTask(get_robots(), 0) {}
 
-  Eigen::VectorXd eval() const override
-  {
-    return eval_;
-  }
-  Eigen::VectorXd speed() const override
-  {
-    return speed_;
-  }
+  Eigen::VectorXd eval() const override { return eval_; }
+  Eigen::VectorXd speed() const override { return speed_; }
 
   std::function<bool(const mc_tasks::MetaTask & t, std::string & out)> buildCompletionCriteria(
       double dt,
@@ -50,7 +41,8 @@ struct MockTask : public mc_tasks::CoMTask
     if(config.has("MYCRITERIA"))
     {
       Eigen::Vector3d myCrit = config("MYCRITERIA");
-      return [myCrit](const mc_tasks::MetaTask & t, std::string & out) {
+      return [myCrit](const mc_tasks::MetaTask & t, std::string & out)
+      {
         MC_RTC_diagnostic_push
         MC_RTC_diagnostic_ignored(GCC, "-Wunused-value")
         BOOST_REQUIRE_NO_THROW(dynamic_cast<const MockTask &>(t));
@@ -148,16 +140,20 @@ BOOST_AUTO_TEST_CASE(TestEvalAndSpeed)
   double norm = 1e-3;
   mc_rtc::Configuration config;
   auto AND = config.array("AND", 2);
-  AND.push([norm]() {
-    mc_rtc::Configuration c;
-    c.add("eval", norm);
-    return c;
-  }());
-  AND.push([norm]() {
-    mc_rtc::Configuration c;
-    c.add("speed", norm);
-    return c;
-  }());
+  AND.push(
+      [norm]()
+      {
+        mc_rtc::Configuration c;
+        c.add("eval", norm);
+        return c;
+      }());
+  AND.push(
+      [norm]()
+      {
+        mc_rtc::Configuration c;
+        c.add("speed", norm);
+        return c;
+      }());
   mc_control::CompletionCriteria criteria;
   criteria.configure(task, dt, config);
   task.eval_ = Eigen::Vector3d::UnitZ();
@@ -179,16 +175,20 @@ BOOST_AUTO_TEST_CASE(TestEvalOrSpeed)
   double norm = 1e-3;
   mc_rtc::Configuration config;
   auto OR = config.array("OR", 2);
-  OR.push([norm]() {
-    mc_rtc::Configuration c;
-    c.add("eval", norm);
-    return c;
-  }());
-  OR.push([norm]() {
-    mc_rtc::Configuration c;
-    c.add("speed", norm);
-    return c;
-  }());
+  OR.push(
+      [norm]()
+      {
+        mc_rtc::Configuration c;
+        c.add("eval", norm);
+        return c;
+      }());
+  OR.push(
+      [norm]()
+      {
+        mc_rtc::Configuration c;
+        c.add("speed", norm);
+        return c;
+      }());
   mc_control::CompletionCriteria criteria;
   criteria.configure(task, dt, config);
   task.eval_ = Eigen::Vector3d::UnitZ();
@@ -213,26 +213,34 @@ BOOST_AUTO_TEST_CASE(TestEvalAndSpeedOrTimeout)
   double timeout = 5.0;
   mc_rtc::Configuration config;
   auto OR = config.array("OR", 2);
-  OR.push([norm]() {
-    mc_rtc::Configuration c;
-    auto AND = c.array("AND", 2);
-    AND.push([norm]() {
-      mc_rtc::Configuration c;
-      c.add("eval", norm);
-      return c;
-    }());
-    AND.push([norm]() {
-      mc_rtc::Configuration c;
-      c.add("speed", norm);
-      return c;
-    }());
-    return c;
-  }());
-  OR.push([timeout]() {
-    mc_rtc::Configuration c;
-    c.add("timeout", timeout);
-    return c;
-  }());
+  OR.push(
+      [norm]()
+      {
+        mc_rtc::Configuration c;
+        auto AND = c.array("AND", 2);
+        AND.push(
+            [norm]()
+            {
+              mc_rtc::Configuration c;
+              c.add("eval", norm);
+              return c;
+            }());
+        AND.push(
+            [norm]()
+            {
+              mc_rtc::Configuration c;
+              c.add("speed", norm);
+              return c;
+            }());
+        return c;
+      }());
+  OR.push(
+      [timeout]()
+      {
+        mc_rtc::Configuration c;
+        c.add("timeout", timeout);
+        return c;
+      }());
   mc_control::CompletionCriteria criteria;
   criteria.configure(task, dt, config);
   // criteria <=> (eval().norm() < norm && speed().norm() < 1e-3) || timeout)

@@ -28,10 +28,7 @@ void HalfSittingState::start(Controller & ctl)
     {
       auto jIndex = robot.jointIndexByName(j);
       const auto & jTarget = halfSit.at(j);
-      if(posture[jIndex].size() == jTarget.size())
-      {
-        posture[jIndex] = jTarget;
-      }
+      if(posture[jIndex].size() == jTarget.size()) { posture[jIndex] = jTarget; }
     }
   }
   postureTask->posture(posture);

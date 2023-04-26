@@ -80,10 +80,7 @@ AddRemoveContactTask::AddRemoveContactTask(const mc_rbdyn::Robots & robots,
   type_ = std::string(direction > 0 ? "removeContact" : "addContact");
   name_ = std::string(direction > 0 ? "remove" : "add") + "_contact_" + robot.name() + "_" + contact.r1Surface()->name()
           + "_" + env.name() + "_" + contact.r2Surface()->name();
-  for(int i = 0; i < 5; ++i)
-  {
-    dofMat(i, i) = 1;
-  }
+  for(int i = 0; i < 5; ++i) { dofMat(i, i) = 1; }
   normal = targetTf.rotation().row(2);
 
   if(userT_0_s)
@@ -193,10 +190,7 @@ void AddRemoveContactTask::addToSolver(mc_solver::QPSolver & solver)
     default:
       break;
   }
-  if(manageConstraint)
-  {
-    solver.addConstraintSet(*constSpeedConstr);
-  }
+  if(manageConstraint) { solver.addConstraintSet(*constSpeedConstr); }
   constSpeedConstr->addBoundedSpeed(solver, bodyId, robotSurf->X_b_s().translation(), dofMat, speedMat);
 }
 
@@ -213,10 +207,7 @@ void AddRemoveContactTask::removeFromSolver(mc_solver::QPSolver & solver)
     default:
       break;
   }
-  if(manageConstraint)
-  {
-    solver.removeConstraintSet(*constSpeedConstr);
-  }
+  if(manageConstraint) { solver.removeConstraintSet(*constSpeedConstr); }
   constSpeedConstr->removeBoundedSpeed(solver, bodyId);
 }
 

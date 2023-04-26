@@ -69,10 +69,7 @@ struct SequenceInterpolator
    *
    * @throws std::runtime_error If values are invalid
    */
-  SequenceInterpolator(const TimedValueVector & values)
-  {
-    this->values(values);
-  }
+  SequenceInterpolator(const TimedValueVector & values) { this->values(values); }
 
   /**
    * \anchor setValues
@@ -100,25 +97,16 @@ struct SequenceInterpolator
   }
 
   /** Interpolation values */
-  inline const TimedValueVector & values() const noexcept
-  {
-    return values_;
-  }
+  inline const TimedValueVector & values() const noexcept { return values_; }
 
   /**
    * When true, this interpolator is in a valid state and \ref compute will
    * always return a valid value.
    */
-  inline bool hasValues() const noexcept
-  {
-    return values_.size();
-  }
+  inline bool hasValues() const noexcept { return values_.size(); }
 
   /** Clears all values */
-  void clear()
-  {
-    values_.clear();
-  }
+  void clear() { values_.clear(); }
 
   /**
    * Compute interpolated value at the provided time
@@ -135,20 +123,11 @@ struct SequenceInterpolator
    */
   Value compute(double currTime)
   {
-    if(values_.empty())
-    {
-      mc_rtc::log::error_and_throw("SequenceInterpolator requires at least one value");
-    }
+    if(values_.empty()) { mc_rtc::log::error_and_throw("SequenceInterpolator requires at least one value"); }
 
     // Check for out-of-bound access
-    if(currTime >= values_.back().first)
-    {
-      return values_.back().second;
-    }
-    else if(currTime <= values_.front().first)
-    {
-      return values_.front().second;
-    }
+    if(currTime >= values_.back().first) { return values_.back().second; }
+    else if(currTime <= values_.front().first) { return values_.front().second; }
 
     /*
      * Efficiently update interval index and associated cached values:
@@ -158,11 +137,9 @@ struct SequenceInterpolator
      * Note that we don't need to check indices bounds here as they are valid by
      * construction.
      */
-    auto updateIndex = [this, currTime]() {
-      if(values_[prevIndex_].first < currTime && values_[nextIndex_].first >= currTime)
-      {
-        return;
-      }
+    auto updateIndex = [this, currTime]()
+    {
+      if(values_[prevIndex_].first < currTime && values_[nextIndex_].first >= currTime) { return; }
       else if(values_[nextIndex_].first < currTime && values_[nextIndex_ + 1].first >= currTime)
       {
         ++prevIndex_;

@@ -31,15 +31,9 @@ struct MC_SOLVER_DLLAPI ConstraintSet
   /** Virtual destructor */
   virtual ~ConstraintSet() {}
 
-  inline bool inSolver() const noexcept
-  {
-    return inSolver_;
-  }
+  inline bool inSolver() const noexcept { return inSolver_; }
 
-  inline QPSolver::Backend backend() const noexcept
-  {
-    return backend_;
-  }
+  inline QPSolver::Backend backend() const noexcept { return backend_; }
 
 protected:
   /** Should take care of the actual insertion into a concrete solver */

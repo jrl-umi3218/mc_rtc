@@ -27,10 +27,7 @@ struct Gains : public Eigen::Matrix<double, N, 1>
 
   using Eigen::Matrix<double, N, 1>::Matrix;
 
-  Gains(double value)
-  {
-    this->setConstant(value);
-  }
+  Gains(double value) { this->setConstant(value); }
 };
 
 using Gains2d = Gains<2>;

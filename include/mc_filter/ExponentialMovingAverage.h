@@ -60,45 +60,30 @@ struct ExponentialMovingAverage
   void append(const VectorT & value)
   {
     average_ += alpha_ * (value - average_);
-    if(saturation_ > 0.)
-    {
-      utils::clampInPlace(average_, -saturation_, saturation_);
-    }
+    if(saturation_ > 0.) { utils::clampInPlace(average_, -saturation_, saturation_); }
   }
 
   /** Evaluate the smoothed statistic.
    *
    */
-  const VectorT & eval() const
-  {
-    return average_;
-  }
+  const VectorT & eval() const { return average_; }
 
   /** Set output saturation; disable by providing a negative value.
    *
    * \param limit Output will saturate between -limit and +limit.
    */
-  void saturation(double limit)
-  {
-    saturation_ = limit;
-  }
+  void saturation(double limit) { saturation_ = limit; }
 
   /** Reset average to provided value.
    *
    * \param initVal initial value of the average
    */
-  void reset(const VectorT & initVal)
-  {
-    average_ = initVal;
-  }
+  void reset(const VectorT & initVal) { average_ = initVal; }
 
   /** Get time constant of the filter.
    *
    */
-  double timeConstant() const
-  {
-    return timeConstant_;
-  }
+  double timeConstant() const { return timeConstant_; }
 
   /** Update time constant.
    *

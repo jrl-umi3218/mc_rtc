@@ -24,15 +24,10 @@ auto Sphere(const std::string & name,
 {
   auto sphere =
       mc_rtc::makeVisualSphere(details::GetValueOrCallbackValue(radius_fn), details::GetValueOrCallbackValue(color_fn));
-  auto get_visual_fn = [=]() mutable -> const rbd::parsers::Visual & {
-    if constexpr(std::is_invocable_v<GetRadius>)
-    {
-      mc_rtc::getVisualSphere(sphere).radius = radius_fn();
-    }
-    if constexpr(std::is_invocable_v<GetColor>)
-    {
-      mc_rtc::details::setVisualColor(sphere, color_fn());
-    }
+  auto get_visual_fn = [=]() mutable -> const rbd::parsers::Visual &
+  {
+    if constexpr(std::is_invocable_v<GetRadius>) { mc_rtc::getVisualSphere(sphere).radius = radius_fn(); }
+    if constexpr(std::is_invocable_v<GetColor>) { mc_rtc::details::setVisualColor(sphere, color_fn()); }
     return sphere;
   };
   return Visual(name, get_visual_fn, get_pos_fn);

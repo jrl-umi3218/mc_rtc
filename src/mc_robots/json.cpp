@@ -33,9 +33,11 @@ extern "C"
 namespace
 {
 
-static auto registered = []() {
+static auto registered = []()
+{
   using fn_t = std::function<mc_rbdyn::RobotModule *(const std::string &)>;
-  fn_t callback = [](const std::string & path) {
+  fn_t callback = [](const std::string & path)
+  {
     mc_rtc::Configuration config(path);
     mc_rbdyn::RobotModule rm(config);
     return new mc_rbdyn::RobotModule(rm);

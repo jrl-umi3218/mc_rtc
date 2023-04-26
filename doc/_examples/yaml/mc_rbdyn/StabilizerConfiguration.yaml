@@ -25,7 +25,7 @@ fdqp_weights:
 admittance:
   cop: [0.001, 0.001]
 
-# Gains on DCM error 
+# Gains on DCM error
 dcm_tracking:
   gains:
     prop: 3

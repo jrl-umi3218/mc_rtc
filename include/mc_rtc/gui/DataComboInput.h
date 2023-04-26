@@ -29,10 +29,7 @@ struct DataComboInputImpl : public CommonInputImpl<GetT, SetT>
   {
   }
 
-  static constexpr size_t write_size()
-  {
-    return CommonInputImpl<GetT, SetT>::write_size() + 1;
-  }
+  static constexpr size_t write_size() { return CommonInputImpl<GetT, SetT>::write_size() + 1; }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {

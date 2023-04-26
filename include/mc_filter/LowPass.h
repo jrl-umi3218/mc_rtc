@@ -28,16 +28,10 @@ struct LowPass
    * \param period Cutoff period.
    *
    */
-  LowPass(double dt, double period = 0) : cutoffPeriod_(period), dt_(dt)
-  {
-    reset(T::Zero());
-  }
+  LowPass(double dt, double period = 0) : cutoffPeriod_(period), dt_(dt) { reset(T::Zero()); }
 
   /** Get cutoff period. */
-  double cutoffPeriod() const
-  {
-    return cutoffPeriod_;
-  }
+  double cutoffPeriod() const { return cutoffPeriod_; }
 
   /** Set cutoff period.
    *
@@ -61,10 +55,7 @@ struct LowPass
    * \param pos New position.
    *
    */
-  void reset(const T & value)
-  {
-    eval_ = value;
-  }
+  void reset(const T & value) { eval_ = value; }
 
   /** Update velocity estimate from new position value.
    *
@@ -80,18 +71,12 @@ struct LowPass
   /** Get filtered velocity.
    *
    */
-  const T & eval() const
-  {
-    return eval_;
-  }
+  const T & eval() const { return eval_; }
 
   /** Get sampling period.
    *
    */
-  double dt() const
-  {
-    return dt_;
-  }
+  double dt() const { return dt_; }
 
   /** Set sampling period.
    *

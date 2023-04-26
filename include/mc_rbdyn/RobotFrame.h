@@ -58,22 +58,13 @@ public:
   RobotFrame(NewRobotFrameToken, const std::string & name, RobotFrame & parent, sva::PTransformd X_p_f, bool baked);
 
   /** The robot to which this frame belongs (const) */
-  inline const Robot & robot() const noexcept
-  {
-    return robot_;
-  }
+  inline const Robot & robot() const noexcept { return robot_; }
 
   /** The robot to which this frame belongs */
-  inline Robot & robot() noexcept
-  {
-    return robot_;
-  }
+  inline Robot & robot() noexcept { return robot_; }
 
   /** Returns this frame body index in robot's mbc */
-  inline unsigned int bodyMbcIndex() const noexcept
-  {
-    return bodyMbcIdx_;
-  }
+  inline unsigned int bodyMbcIndex() const noexcept { return bodyMbcIdx_; }
 
   /** The body this frame is attached to */
   const std::string & body() const noexcept;
@@ -85,10 +76,7 @@ public:
   sva::MotionVecd velocity() const noexcept final;
 
   /** Returns the transformation from the parent's frame/body to the frame */
-  inline const sva::PTransformd & X_p_f() const noexcept
-  {
-    return position_;
-  }
+  inline const sva::PTransformd & X_p_f() const noexcept { return position_; }
 
   /** Compute the transformation from the body to this frame */
   sva::PTransformd X_b_f() const noexcept;
@@ -107,10 +95,7 @@ public:
   }
 
   /** True if the frame has a force sensor (direct or indirect) attached */
-  inline bool hasForceSensor() const noexcept
-  {
-    return sensor_;
-  }
+  inline bool hasForceSensor() const noexcept { return sensor_; }
 
   /** Returns the force sensor attached to the frame (const)
    *

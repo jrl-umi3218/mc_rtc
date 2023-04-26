@@ -39,7 +39,8 @@ void ROSPlugin::reset(mc_control::MCGlobalController & controller)
   }
   if(publish_env)
   {
-    auto publish_env = [&controller](const std::string & prefix, mc_rbdyn::Robots & robots, bool use_real) {
+    auto publish_env = [&controller](const std::string & prefix, mc_rbdyn::Robots & robots, bool use_real)
+    {
       for(size_t i = 1; i < robots.size(); ++i)
       {
         mc_rtc::ROSBridge::init_robot_publisher(prefix + "_" + std::to_string(i), controller.timestep(),
@@ -47,10 +48,7 @@ void ROSPlugin::reset(mc_control::MCGlobalController & controller)
       }
     };
     publish_env("control/env", controller.controller().outputRobots(), false);
-    if(publish_real)
-    {
-      publish_env("real/env", controller.controller().outputRealRobots(), true);
-    }
+    if(publish_real) { publish_env("real/env", controller.controller().outputRealRobots(), true); }
   }
   if(publish_real)
   {
@@ -68,7 +66,8 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
   // Publish environment state
   if(publish_env)
   {
-    auto update_env = [this, &controller](const std::string & prefix, mc_rbdyn::Robots & robots) {
+    auto update_env = [this, &controller](const std::string & prefix, mc_rbdyn::Robots & robots)
+    {
       for(size_t i = 1; i < robots.size(); ++i)
       {
         mc_rtc::ROSBridge::update_robot_publisher(prefix + "_" + std::to_string(i), controller.timestep(),
@@ -77,10 +76,7 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
       published_env = std::max<size_t>(publish_env, robots.size() - 1);
     };
     update_env("control/env", controller.controller().outputRobots());
-    if(publish_real)
-    {
-      update_env("real/env", controller.controller().outputRealRobots());
-    }
+    if(publish_real) { update_env("real/env", controller.controller().outputRealRobots()); }
   }
   // Publish real robot
   if(publish_real)

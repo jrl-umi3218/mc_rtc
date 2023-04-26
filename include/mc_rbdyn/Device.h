@@ -46,58 +46,31 @@ struct MC_RBDYN_DLLAPI Device
   virtual ~Device() noexcept = default;
 
   /** Returns the name of the sensor */
-  inline const std::string & name() const
-  {
-    return name_;
-  }
+  inline const std::string & name() const { return name_; }
 
   /** Returns the type of the sensor */
-  inline const std::string & type() const
-  {
-    return type_;
-  }
+  inline const std::string & type() const { return type_; }
 
   /** Returns the parent body of the sensor */
-  inline const std::string & parent() const
-  {
-    return parent_;
-  }
+  inline const std::string & parent() const { return parent_; }
 
   /** Change the parent body of the sensor */
-  inline void parent(const std::string & p)
-  {
-    parent_ = p;
-  }
+  inline void parent(const std::string & p) { parent_ = p; }
 
   /** Returns the transformation from the parent body to the device */
-  inline const sva::PTransformd & X_p_d() const
-  {
-    return X_p_s_;
-  }
+  inline const sva::PTransformd & X_p_d() const { return X_p_s_; }
 
   /** Returns the transformation from the parent body to the sensor */
-  inline const sva::PTransformd & X_p_s() const
-  {
-    return X_p_s_;
-  }
+  inline const sva::PTransformd & X_p_s() const { return X_p_s_; }
 
   /** Change the parent to device transformation */
-  inline void X_p_d(const sva::PTransformd & pt)
-  {
-    X_p_s_ = pt;
-  }
+  inline void X_p_d(const sva::PTransformd & pt) { X_p_s_ = pt; }
 
   /** Change the parent to sensor transformation */
-  inline void X_p_s(const sva::PTransformd & pt)
-  {
-    X_p_s_ = pt;
-  }
+  inline void X_p_s(const sva::PTransformd & pt) { X_p_s_ = pt; }
 
   /** Returns the deviec position in the inertial frame (convenience function) */
-  inline sva::PTransformd X_0_d(const mc_rbdyn::Robot & robot) const
-  {
-    return X_0_s(robot);
-  }
+  inline sva::PTransformd X_0_d(const mc_rbdyn::Robot & robot) const { return X_0_s(robot); }
 
   /** Returns the sensor position in the inertial frame (convenience function) */
   sva::PTransformd X_0_s(const mc_rbdyn::Robot & robot) const;

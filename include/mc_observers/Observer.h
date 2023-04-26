@@ -95,18 +95,12 @@ struct MC_OBSERVERS_DLLAPI Observer
    *
    * @param name Name of the observer
    */
-  inline void name(const std::string & name)
-  {
-    name_ = name;
-  }
+  inline void name(const std::string & name) { name_ = name; }
 
   /**
    * @brief Returns the observer's name
    */
-  inline const std::string & name() const noexcept
-  {
-    return name_;
-  }
+  inline const std::string & name() const noexcept { return name_; }
 
   /*! \brief Add observer entries to the logger under the categrory "category + name()". */
   void addToLogger_(const mc_control::MCController & ctl, mc_rtc::Logger & logger, const std::string & category = "")
@@ -149,27 +143,15 @@ struct MC_OBSERVERS_DLLAPI Observer
    *
    * \returns Short description of the observer.
    */
-  inline const std::string & desc() const noexcept
-  {
-    return desc_;
-  }
+  inline const std::string & desc() const noexcept { return desc_; }
 
-  inline const std::string type() const noexcept
-  {
-    return type_;
-  }
+  inline const std::string type() const noexcept { return type_; }
 
   /*! Informative message about the last error */
-  inline const std::string & error() const noexcept
-  {
-    return error_;
-  }
+  inline const std::string & error() const noexcept { return error_; }
 
   /*! Controller timestep */
-  inline double dt() const noexcept
-  {
-    return dt_;
-  }
+  inline double dt() const noexcept { return dt_; }
 
 protected:
   /*! \brief Add observer from logger

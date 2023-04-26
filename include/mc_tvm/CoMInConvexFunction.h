@@ -46,16 +46,10 @@ public:
   void reset();
 
   /** Access the robot this function uses */
-  inline const mc_rbdyn::Robot & robot() const noexcept
-  {
-    return com_.robot().robot();
-  }
+  inline const mc_rbdyn::Robot & robot() const noexcept { return com_.robot().robot(); }
 
   /** Access the planes used by this function */
-  inline const std::vector<tvm::geometry::PlanePtr> & planes() noexcept
-  {
-    return planes_;
-  }
+  inline const std::vector<tvm::geometry::PlanePtr> & planes() noexcept { return planes_; }
 
   /** Access a pane at the given index */
   inline tvm::geometry::Plane & plane(size_t i) noexcept

@@ -49,25 +49,13 @@ struct CompoundJointConstraint : public tasks::qp::ConstraintFunction<tasks::qp:
                                const std::vector<rbd::MultiBodyConfig> & mbcs,
                                const tasks::qp::SolverData & data) override;
 
-  inline const Eigen::MatrixXd & AInEq() const override
-  {
-    return A_;
-  }
+  inline const Eigen::MatrixXd & AInEq() const override { return A_; }
 
-  inline int maxInEq() const override
-  {
-    return static_cast<int>(descs_.size());
-  }
+  inline int maxInEq() const override { return static_cast<int>(descs_.size()); }
 
-  inline std::string nameInEq() const override
-  {
-    return name_;
-  }
+  inline std::string nameInEq() const override { return name_; }
 
-  inline const Eigen::VectorXd & bInEq() const override
-  {
-    return b_;
-  }
+  inline const Eigen::VectorXd & bInEq() const override { return b_; }
 
   std::string descInEq(const std::vector<rbd::MultiBody> & mbs, int i) override;
 

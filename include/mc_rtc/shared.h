@@ -28,10 +28,7 @@ struct shared : public std::conditional<std::is_same<BaseT, void>::value, std::e
 {
   static_assert(std::is_same<BaseT, void>::value || std::is_base_of<shared<BaseT>, BaseT>::value,
                 "shared<T, BaseT> requires a void base or a base that derives from shared<BaseT>");
-  operator std::shared_ptr<T>()
-  {
-    return std::static_pointer_cast<T>(static_cast<T *>(this)->shared_from_this());
-  }
+  operator std::shared_ptr<T>() { return std::static_pointer_cast<T>(static_cast<T *>(this)->shared_from_this()); }
 
   operator std::shared_ptr<const T>() const
   {

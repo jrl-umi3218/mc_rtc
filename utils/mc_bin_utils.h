@@ -25,14 +25,8 @@ inline std::map<std::string, mc_rtc::log::LogType> entries(const mc_rtc::log::Fl
       continue;
     }
     auto t = log.type(e);
-    if(t != mc_rtc::log::LogType::None)
-    {
-      ret[e] = t;
-    }
-    else
-    {
-      mc_rtc::log::warning("{} cannot be converted into a flat log", e);
-    }
+    if(t != mc_rtc::log::LogType::None) { ret[e] = t; }
+    else { mc_rtc::log::warning("{} cannot be converted into a flat log", e); }
   }
   return ret;
 }
@@ -43,10 +37,7 @@ inline size_t VectorXdEntrySize(const mc_rtc::log::FlatLog & log, const std::str
   auto data = log.getRaw<Eigen::VectorXd>(entry);
   for(const auto & v : data)
   {
-    if(v)
-    {
-      s = std::max<size_t>(s, static_cast<size_t>(v->size()));
-    }
+    if(v) { s = std::max<size_t>(s, static_cast<size_t>(v->size())); }
   }
   return s;
 }
@@ -57,10 +48,7 @@ inline size_t VectorEntrySize(const mc_rtc::log::FlatLog & log, const std::strin
   auto data = log.getRaw<std::vector<double>>(entry);
   for(const auto & v : data)
   {
-    if(v)
-    {
-      s = std::max<size_t>(s, v->size());
-    }
+    if(v) { s = std::max<size_t>(s, v->size()); }
   }
   return s;
 }

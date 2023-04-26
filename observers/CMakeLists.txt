@@ -4,4 +4,3 @@ foreach(observer_dir ${observer_dirs})
     add_subdirectory(${observer_dir})
   endif()
 endforeach()
-

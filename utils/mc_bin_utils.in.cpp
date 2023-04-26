@@ -45,10 +45,7 @@ struct TypedKey
     return lhs.type == rhs.type && lhs.key == rhs.key;
   }
 
-  friend inline bool operator!=(const TypedKey & lhs, const TypedKey & rhs)
-  {
-    return !(lhs == rhs);
-  }
+  friend inline bool operator!=(const TypedKey & lhs, const TypedKey & rhs) { return !(lhs == rhs); }
 };
 
 void addToLogger(const TypedKey & key, const mc_rtc::log::FlatLog & log, mc_rtc::Logger & logger, size_t & idx)
@@ -90,19 +87,10 @@ void print_string_vector(const std::vector<std::string> & v)
 {
   for(size_t i = 0; i < v.size(); ++i)
   {
-    if(i == 0)
-    {
-      std::cout << "[";
-    }
+    if(i == 0) { std::cout << "["; }
     std::cout << " " << v[i];
-    if(i == v.size() - 1)
-    {
-      std::cout << " ]";
-    }
-    else
-    {
-      std::cout << ",";
-    }
+    if(i == v.size() - 1) { std::cout << " ]"; }
+    else { std::cout << ","; }
   }
 }
 
@@ -150,16 +138,11 @@ int show(int argc, char * argv[])
   double dt = 0;
   std::vector<std::vector<mc_rtc::Logger::GUIEvent>> events;
   std::optional<mc_rtc::Logger::Meta> meta;
-  auto callback = [&](mc_rtc::log::IterateBinaryLogData data) {
-    if(n++ == 0)
-    {
-      start_t = *data.time;
-    }
+  auto callback = [&](mc_rtc::log::IterateBinaryLogData data)
+  {
+    if(n++ == 0) { start_t = *data.time; }
     end_t = *data.time;
-    if(n == 2)
-    {
-      dt = end_t - start_t;
-    }
+    if(n == 2) { dt = end_t - start_t; }
     if(data.keys.size())
     {
       for(size_t i = 0; i < data.keys.size(); ++i)
@@ -169,26 +152,14 @@ int show(int argc, char * argv[])
         keys.insert(std::make_pair(k, r.type));
       }
     }
-    if(!meta && data.meta)
-    {
-      meta = data.meta;
-    }
-    if(print_events)
-    {
-      events.push_back(data.gui_events);
-    }
+    if(!meta && data.meta) { meta = data.meta; }
+    if(print_events) { events.push_back(data.gui_events); }
     n_events += data.gui_events.size();
     return true;
   };
-  if(!mc_rtc::log::iterate_binary_log(in, mc_rtc::log::iterate_binary_log_callback(callback), false))
-  {
-    return 1;
-  }
+  if(!mc_rtc::log::iterate_binary_log(in, mc_rtc::log::iterate_binary_log_callback(callback), false)) { return 1; }
   std::cout << in << " summary\n";
-  if(!meta)
-  {
-    std::cout << "(no meta information)\n";
-  }
+  if(!meta) { std::cout << "(no meta information)\n"; }
   else
   {
     std::cout << "Timestep: " << meta->timestep << "\n";
@@ -206,18 +177,12 @@ int show(int argc, char * argv[])
   }
   std::cout << "Entry size: " << n << "\n";
   std::cout << "Available entries:\n";
-  for(const auto & e : keys)
-  {
-    std::cout << "- " << e.first << " (" << mc_rtc::log::LogTypeName(e.second) << ")\n";
-  }
+  for(const auto & e : keys) { std::cout << "- " << e.first << " (" << mc_rtc::log::LogTypeName(e.second) << ")\n"; }
   if(print_events)
   {
     for(size_t i = 0; i < events.size(); ++i)
     {
-      if(events[i].size() == 0)
-      {
-        continue;
-      }
+      if(events[i].size() == 0) { continue; }
       std::cout << "Events at t = " << (i * dt) << ":\n";
       for(const auto & e : events[i])
       {
@@ -291,20 +256,15 @@ int split(int argc, char * argv[])
   size_t desired_size = part_size;
   std::ofstream ofs;
   auto callback = [&](const std::vector<std::string> & ks, const std::vector<mc_rtc::log::FlatLog::record> &, double,
-                      const mc_rtc::log::copy_callback & copy, const char * data, uint64_t dataSize) {
+                      const mc_rtc::log::copy_callback & copy, const char * data, uint64_t dataSize)
+  {
     // Start a new part if no data has been written
     if(written == 0)
     {
-      if(ofs.is_open())
-      {
-        ofs.close();
-      }
+      if(ofs.is_open()) { ofs.close(); }
       std::stringstream ss;
       ss << out << "_" << std::setfill('0') << std::setw(static_cast<int>(width)) << ++part << ".bin";
-      if(part == parts)
-      {
-        desired_size = size;
-      }
+      if(part == parts) { desired_size = size; }
       ofs.open(ss.str(), std::ofstream::binary);
       if(!ofs)
       {
@@ -313,10 +273,7 @@ int split(int argc, char * argv[])
       }
       write_magic(ofs);
     }
-    if(ks.size())
-    {
-      keys = ks;
-    }
+    if(ks.size()) { keys = ks; }
     else if(written == 0) // Started a new part but split on an entry with no keys
     {
       std::vector<char> data;
@@ -331,16 +288,10 @@ int split(int argc, char * argv[])
     ofs.write((char *)&dataSize, sizeof(uint64_t));
     ofs.write(data, static_cast<int>(dataSize * sizeof(char)));
     written += sizeof(uint64_t) + dataSize * sizeof(char);
-    if(written >= desired_size)
-    {
-      written = 0;
-    }
+    if(written >= desired_size) { written = 0; }
     return true;
   };
-  if(!mc_rtc::log::iterate_binary_log(in, mc_rtc::log::binary_log_copy_callback(callback), false))
-  {
-    return 1;
-  }
+  if(!mc_rtc::log::iterate_binary_log(in, mc_rtc::log::binary_log_copy_callback(callback), false)) { return 1; }
   return 0;
 }
 
@@ -371,7 +322,8 @@ int extract(int argc, char * argv[])
   pos.add("out", 1);
   po::store(po::command_line_parser(argc, argv).options(tool).positional(pos).run(), vm);
   po::notify(vm);
-  auto extract_usage = [&tool]() {
+  auto extract_usage = [&tool]()
+  {
     std::cout << "Usage: mc_bin_utils extract [in] [out]\n\n";
     std::cout << tool << "\n\n";
     std::cout << "Examples:\n\n";
@@ -411,7 +363,8 @@ int extract(int argc, char * argv[])
   }
   size_t width = 0;
   size_t n = 0;
-  auto rename_all = [&out](size_t prev_w, size_t w) {
+  auto rename_all = [&out](size_t prev_w, size_t w)
+  {
     if(prev_w == 0)
     {
       bfs::path old(out + ".bin");
@@ -429,30 +382,23 @@ int extract(int argc, char * argv[])
       bfs::rename({ss_old.str()}, {ss_new.str()});
     }
   };
-  auto out_name = [&](size_t i) {
-    if(i == 0)
-    {
-      return out + ".bin";
-    }
+  auto out_name = [&](size_t i)
+  {
+    if(i == 0) { return out + ".bin"; }
     auto prev_width = width;
     width = std::to_string(i + 1).size();
-    if(width != prev_width)
-    {
-      rename_all(prev_width, width);
-    }
+    if(width != prev_width) { rename_all(prev_width, width); }
     std::stringstream ss;
     ss << out << "_" << std::setfill('0') << std::setw(static_cast<int>(width)) << (i + 1) << ".bin";
     return ss.str();
   };
-  if(out.size() > 4 && out.substr(out.size() - 4) == ".bin")
-  {
-    out = out.substr(0, out.size() - 4);
-  }
+  if(out.size() > 4 && out.substr(out.size() - 4) == ".bin") { out = out.substr(0, out.size() - 4); }
   std::ofstream ofs;
   bool key_present = false;
   auto callback_extract_key = [&](const std::vector<std::string> & ks,
                                   const std::vector<mc_rtc::log::FlatLog::record> &, double,
-                                  const mc_rtc::log::copy_callback & copy, const char * data, uint64_t dataSize) {
+                                  const mc_rtc::log::copy_callback & copy, const char * data, uint64_t dataSize)
+  {
     if(ks.size())
     {
       bool key_was_present = key_present;
@@ -478,10 +424,7 @@ int extract(int argc, char * argv[])
           return true;
         }
       }
-      if(key_was_present && !key_present)
-      {
-        ofs.close();
-      }
+      if(key_was_present && !key_present) { ofs.close(); }
     }
     if(key_present)
     {
@@ -494,26 +437,18 @@ int extract(int argc, char * argv[])
   double final_t = 0;
   auto callback_extract_from_to = [&](const std::vector<std::string> & ks,
                                       const std::vector<mc_rtc::log::FlatLog::record> &, double t,
-                                      const mc_rtc::log::copy_callback & copy, const char * data, uint64_t dataSize) {
+                                      const mc_rtc::log::copy_callback & copy, const char * data, uint64_t dataSize)
+  {
     final_t = t;
-    if(ks.size())
-    {
-      keys = ks;
-    }
+    if(ks.size()) { keys = ks; }
     if(t >= from && t <= to)
     {
       if(!ofs.is_open())
       {
         std::stringstream ss;
         ss << out << "_from_" << from << "_to_";
-        if(to == std::numeric_limits<double>::infinity())
-        {
-          ss << "end";
-        }
-        else
-        {
-          ss << to;
-        }
+        if(to == std::numeric_limits<double>::infinity()) { ss << "end"; }
+        else { ss << to; }
         ss << ".bin";
         ofs.open(ss.str(), std::ofstream::binary);
         write_magic(ofs);
@@ -538,10 +473,7 @@ int extract(int argc, char * argv[])
     {
       return 1;
     }
-    if(n == 0)
-    {
-      std::cout << "No key " << key << " in this log file\n";
-    }
+    if(n == 0) { std::cout << "No key " << key << " in this log file\n"; }
   }
   if(from != 0 || to != std::numeric_limits<double>::infinity())
   {
@@ -549,10 +481,7 @@ int extract(int argc, char * argv[])
     {
       return 1;
     }
-    if(!ofs.is_open())
-    {
-      std::cout << "Provided start time is higher than last time recorded: " << final_t << "\n";
-    }
+    if(!ofs.is_open()) { std::cout << "Provided start time is higher than last time recorded: " << final_t << "\n"; }
   }
   if(extract_keys.size())
   {
@@ -565,10 +494,7 @@ int extract(int argc, char * argv[])
     // Remove "t" from the extract_keys as we will implicitly extract it
     {
       auto it = std::find(extract_keys.begin(), extract_keys.end(), "t");
-      if(it != extract_keys.end())
-      {
-        extract_keys.erase(it);
-      }
+      if(it != extract_keys.end()) { extract_keys.erase(it); }
     }
     std::vector<std::string> wildcards;
     for(auto it = extract_keys.begin(); it != extract_keys.end();)
@@ -581,35 +507,20 @@ int extract(int argc, char * argv[])
       }
       if(!log.has(key))
       {
-        if(key.back() == '*')
-        {
-          wildcards.push_back(std::string{key, 0, key.size() - 1});
-        }
-        else
-        {
-          std::cout << *it << " is not in " << in << "\n";
-        }
+        if(key.back() == '*') { wildcards.push_back(std::string{key, 0, key.size() - 1}); }
+        else { std::cout << *it << " is not in " << in << "\n"; }
         it = extract_keys.erase(it);
       }
-      else
-      {
-        ++it;
-      }
+      else { ++it; }
     }
     for(const auto & key : wildcards)
     {
       auto size_before = extract_keys.size();
       for(const auto & k : log.entries())
       {
-        if(boost::algorithm::starts_with(k, key))
-        {
-          extract_keys.push_back(k);
-        }
+        if(boost::algorithm::starts_with(k, key)) { extract_keys.push_back(k); }
       }
-      if(extract_keys.size() == size_before)
-      {
-        std::cout << "No match for wildcard " << key << "* in " << in << "\n";
-      }
+      if(extract_keys.size() == size_before) { std::cout << "No match for wildcard " << key << "* in " << in << "\n"; }
     }
     if(extract_keys.empty())
     {
@@ -617,15 +528,13 @@ int extract(int argc, char * argv[])
       return 1;
     }
     // Returns the keys in the log at iteration i
-    auto get_keys_in_log = [&](size_t i) {
+    auto get_keys_in_log = [&](size_t i)
+    {
       std::vector<TypedKey> out;
       for(const auto & k : extract_keys)
       {
         auto type = log.type(k, i);
-        if(type != mc_rtc::log::LogType::None)
-        {
-          out.push_back({k, type});
-        }
+        if(type != mc_rtc::log::LogType::None) { out.push_back({k, type}); }
       }
       return out;
     };
@@ -643,20 +552,11 @@ int extract(int argc, char * argv[])
           std::string file = out_name(n++);
           logger.open(file, timestep, start_t);
         }
-        for(const auto & k : prev_keys_in_log)
-        {
-          logger.removeLogEntry(k.key);
-        }
-        for(const auto & k : keys_in_log)
-        {
-          addToLogger(k, log, logger, i);
-        }
+        for(const auto & k : prev_keys_in_log) { logger.removeLogEntry(k.key); }
+        for(const auto & k : keys_in_log) { addToLogger(k, log, logger, i); }
         prev_keys_in_log = keys_in_log;
       }
-      if(keys_in_log.size())
-      {
-        logger.log();
-      }
+      if(keys_in_log.size()) { logger.log(); }
     }
   }
   if(extract_events)
@@ -670,31 +570,16 @@ int extract(int argc, char * argv[])
     double dt = 0;
     if(!log.meta())
     {
-      if(log.size() == 1)
-      {
-        dt = 0.005;
-      }
-      else
-      {
-        dt = *log.getRaw<double>("t", 1) - *log.getRaw<double>("t", 0);
-      }
+      if(log.size() == 1) { dt = 0.005; }
+      else { dt = *log.getRaw<double>("t", 1) - *log.getRaw<double>("t", 0); }
     }
-    else
-    {
-      dt = log.meta()->timestep;
-    }
+    else { dt = log.meta()->timestep; }
     mc_rtc::Logger logger(mc_rtc::Logger::Policy::NON_THREADED, "", "");
-    if(log.meta())
-    {
-      logger.meta() = *log.meta();
-    }
+    if(log.meta()) { logger.meta() = *log.meta(); }
     logger.open(out_name(0), dt, 0);
     for(const auto & events : log.guiEvents())
     {
-      for(const auto & e : events)
-      {
-        logger.addGUIEvent(mc_rtc::Logger::GUIEvent{e});
-      }
+      for(const auto & e : events) { logger.addGUIEvent(mc_rtc::Logger::GUIEvent{e}); }
       logger.log();
     }
   }
@@ -740,10 +625,7 @@ int convert(int argc, char * argv[])
   if(vm.count("format"))
   {
     format = vm["format"].as<std::string>();
-    if(format[0] != '.')
-    {
-      format = "." + format;
-    }
+    if(format[0] != '.') { format = "." + format; }
     if(format != ".bag" && format != ".csv" && format != ".flat")
     {
       mc_rtc::log::error("Unsupported format {}", format);
@@ -756,10 +638,7 @@ int convert(int argc, char * argv[])
     {
       mc_rtc::log::warning("Command-line specified format clashes with file extension, trusting the provided format");
     }
-    else
-    {
-      format = ext;
-    }
+    else { format = ext; }
   }
   else if(ext == ".log" || ext == ".csv")
   {
@@ -767,10 +646,7 @@ int convert(int argc, char * argv[])
     {
       mc_rtc::log::warning("Command-line specified format clashes with file extension, trusting the provided format");
     }
-    else
-    {
-      format = ext;
-    }
+    else { format = ext; }
   }
   else if(ext == ".flat")
   {
@@ -778,10 +654,7 @@ int convert(int argc, char * argv[])
     {
       mc_rtc::log::warning("Command-line specified format clashes with file extension, trusting the provided format");
     }
-    else
-    {
-      format = ext;
-    }
+    else { format = ext; }
   }
   else
   {
@@ -797,27 +670,15 @@ int convert(int argc, char * argv[])
     return 1;
   }
   std::vector<std::string> entries;
-  if(vm.count("entries"))
-  {
-    entries = vm["entries"].as<std::vector<std::string>>();
-  }
+  if(vm.count("entries")) { entries = vm["entries"].as<std::vector<std::string>>(); }
 
-  if(format == ".flat")
-  {
-    mc_bin_to_flat(in, out_p.string(), entries);
-  }
-  else if(format == ".csv" || format == ".log")
-  {
-    mc_bin_to_log(in, out_p.string(), entries);
-  }
+  if(format == ".flat") { mc_bin_to_flat(in, out_p.string(), entries); }
+  else if(format == ".csv" || format == ".log") { mc_bin_to_log(in, out_p.string(), entries); }
   else if(format == ".bag")
   {
     if(bfs::exists(MC_BIN_TO_ROSBAG))
     {
-      if(vm.count("dt"))
-      {
-        dt = vm["dt"].as<double>();
-      }
+      if(vm.count("dt")) { dt = vm["dt"].as<double>(); }
       if(vm.count("entries"))
       {
         mc_rtc::log::critical(
@@ -825,15 +686,9 @@ int convert(int argc, char * argv[])
         exit(1);
       }
       std::string cmd = MC_BIN_TO_ROSBAG.string() + " " + in + " " + out_p.string() + " " + std::to_string(dt);
-      if(system(cmd.c_str()) != 0)
-      {
-        mc_rtc::log::error("The following conversion call failed: {}", cmd);
-      }
+      if(system(cmd.c_str()) != 0) { mc_rtc::log::error("The following conversion call failed: {}", cmd); }
     }
-    else
-    {
-      mc_rtc::log::error("mc_rtc is not build with ROS support, bag conversion is not available");
-    }
+    else { mc_rtc::log::error("mc_rtc is not build with ROS support, bag conversion is not available"); }
   }
   return 0;
 }
@@ -848,22 +703,10 @@ int main(int argc, char * argv[])
   std::string tool = argv[1];
   argc = argc - 1;
   argv = &argv[1];
-  if(tool == "show")
-  {
-    return show(argc, argv);
-  }
-  else if(tool == "split")
-  {
-    return split(argc, argv);
-  }
-  else if(tool == "extract")
-  {
-    return extract(argc, argv);
-  }
-  else if(tool == "convert")
-  {
-    return convert(argc, argv);
-  }
+  if(tool == "show") { return show(argc, argv); }
+  else if(tool == "split") { return split(argc, argv); }
+  else if(tool == "extract") { return extract(argc, argv); }
+  else if(tool == "convert") { return convert(argc, argv); }
   else
   {
     usage();

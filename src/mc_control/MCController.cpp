@@ -129,27 +129,19 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   qpsolver->logger(logger_);
   qpsolver->gui(gui_);
   qpsolver->controller(this);
-  for(auto rm : robots_modules)
-  {
-    loadRobot(rm, rm->name);
-  }
+  for(auto rm : robots_modules) { loadRobot(rm, rm->name); }
   /* Load robot-specific configuration depending on parameters */
   auto load_robot_config_into = config;
   if(params.load_robot_config_)
   {
     for(const auto & c : params.load_robot_config_into_)
     {
-      if(load_robot_config_into.has(c))
-      {
-        load_robot_config_into = load_robot_config_into(c);
-      }
-      else
-      {
-        load_robot_config_into = load_robot_config_into.add(c);
-      }
+      if(load_robot_config_into.has(c)) { load_robot_config_into = load_robot_config_into(c); }
+      else { load_robot_config_into = load_robot_config_into.add(c); }
     }
   }
-  auto load_robot_config = [&](const mc_rbdyn::Robot & robot) {
+  auto load_robot_config = [&](const mc_rbdyn::Robot & robot)
+  {
     /** Load the robot specific configuration */
     if(params.load_robot_config_)
     {
@@ -157,36 +149,21 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
       auto load_into = load_robot_config_into;
       if(!params.overwrite_config_)
       {
-        if(load_into.has(r_name))
-        {
-          load_into = load_into(r_name);
-        }
-        else
-        {
-          load_into = load_into.add(r_name);
-        }
+        if(load_into.has(r_name)) { load_into = load_into(r_name); }
+        else { load_into = load_into.add(r_name); }
       }
       load_into.load(robot_config(r_name));
     }
   };
-  for(const auto & r : robots())
-  {
-    load_robot_config(r);
-  }
+  for(const auto & r : robots()) { load_robot_config(r); }
   /** Load extra configuration files */
   for(const auto & e : params.extra_configurations_)
   {
     auto load_into = load_robot_config_into;
     if(!params.overwrite_config_)
     {
-      if(load_into.has(e))
-      {
-        load_into = load_into(e);
-      }
-      else
-      {
-        load_into = load_into.add(e);
-      }
+      if(load_into.has(e)) { load_into = load_into(e); }
+      else { load_into = load_into.add(e); }
     }
     load_into.load(robot_config(e));
   }
@@ -194,17 +171,20 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   if(gui_)
   {
     gui_->addElement({"Global", "Add task"},
-                     mc_rtc::gui::Schema("Add MetaTask", "MetaTask", [this](const mc_rtc::Configuration & config) {
-                       try
-                       {
-                         auto t = mc_tasks::MetaTaskLoader::load(this->solver(), config);
-                         this->solver().addTask(t);
-                       }
-                       catch(...)
-                       {
-                         mc_rtc::log::error("Failed to load MetaTask from request\n{}", config.dump(true));
-                       }
-                     }));
+                     mc_rtc::gui::Schema("Add MetaTask", "MetaTask",
+                                         [this](const mc_rtc::Configuration & config)
+                                         {
+                                           try
+                                           {
+                                             auto t = mc_tasks::MetaTaskLoader::load(this->solver(), config);
+                                             this->solver().addTask(t);
+                                           }
+                                           catch(...)
+                                           {
+                                             mc_rtc::log::error("Failed to load MetaTask from request\n{}",
+                                                                config.dump(true));
+                                           }
+                                         }));
   }
   /* Initialize constraints and tasks */
   contactConstraint.reset(new mc_solver::ContactConstraint(dt));
@@ -217,7 +197,8 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   postureTask = std::make_shared<mc_tasks::PostureTask>(solver(), 0, 10.0, 5.0);
   /** Load additional robots from the configuration */
   {
-    auto init_robot = [&](const std::string & robotName, const mc_rtc::Configuration & config) {
+    auto init_robot = [&](const std::string & robotName, const mc_rtc::Configuration & config)
+    {
       if(!hasRobot(robotName)) return;
       auto & robot = robots().robot(robotName);
       auto & realRobot = realRobots().robot(robotName);
@@ -269,14 +250,8 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
         std::string module = rconfig("module");
         auto params = rconfig("params", std::vector<std::string>{});
         mc_rbdyn::RobotModulePtr rm = nullptr;
-        if(params.size() == 0)
-        {
-          rm = mc_rbdyn::RobotLoader::get_robot_module(module);
-        }
-        else if(params.size() == 1)
-        {
-          rm = mc_rbdyn::RobotLoader::get_robot_module(module, params.at(0));
-        }
+        if(params.size() == 0) { rm = mc_rbdyn::RobotLoader::get_robot_module(module); }
+        else if(params.size() == 1) { rm = mc_rbdyn::RobotLoader::get_robot_module(module, params.at(0)); }
         else if(params.size() == 2)
         {
           rm = mc_rbdyn::RobotLoader::get_robot_module(module, params.at(0), params.at(1));
@@ -285,10 +260,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
         {
           mc_rtc::log::error_and_throw("Controller only handles robot modules that require two parameters at most");
         }
-        if(!rm)
-        {
-          mc_rtc::log::error_and_throw("Failed to load {} as specified in configuration", rname);
-        }
+        if(!rm) { mc_rtc::log::error_and_throw("Failed to load {} as specified in configuration", rname); }
         auto & robot = loadRobot(rm, rname);
         load_robot_config(robot);
         rconfig = config("robots")(rname);
@@ -296,10 +268,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
       }
     }
     mc_rtc::log::info("Robots loaded in controller:");
-    for(const auto & r : robots())
-    {
-      mc_rtc::log::info("- {}", r.name());
-    }
+    for(const auto & r : robots()) { mc_rtc::log::info("- {}", r.name()); }
   }
   /** Load global constraints (robots' kinematics/dynamics constraints and contact constraint */
   {
@@ -325,10 +294,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
     auto config_collisions = config("collisions", std::vector<mc_rtc::Configuration>{});
     for(auto & config_cc : config_collisions)
     {
-      if(!config_cc.has("type"))
-      {
-        config_cc.add("type", "collision");
-      }
+      if(!config_cc.has("type")) { config_cc.add("type", "collision"); }
       auto cc = mc_solver::ConstraintSetLoader::load<mc_solver::CollisionsConstraint>(solver(), config_cc);
       auto & r1 = robots().robot(cc->r1Index);
       auto & r2 = robots().robot(cc->r2Index);
@@ -337,10 +303,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
     }
   }
   /** Create contacts */
-  if(config.has("contacts"))
-  {
-    contacts_ = config("contacts");
-  }
+  if(config.has("contacts")) { contacts_ = config("contacts"); }
   contacts_changed_ = true;
   mc_rtc::log::info("MCController(base) ready");
 }
@@ -356,10 +319,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
   // Load canonical robot model (for output and display)
   mc_rbdyn::RobotModulePtr canonicalModule = nullptr;
   const auto & cp = rm->canonicalParameters();
-  if(cp == rm->parameters())
-  {
-    canonicalModule = rm;
-  }
+  if(cp == rm->parameters()) { canonicalModule = rm; }
   else
   {
     canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp);
@@ -381,11 +341,9 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
   params.warn_on_missing_files(false).data(robot.data());
   loadRobot(rm, name, realRobots(), params);
   std::string urdf;
-  auto loadUrdf = [&canonicalModule, &urdf]() -> const std::string & {
-    if(urdf.size())
-    {
-      return urdf;
-    }
+  auto loadUrdf = [&canonicalModule, &urdf]() -> const std::string &
+  {
+    if(urdf.size()) { return urdf; }
     const auto & urdfPath = canonicalModule->urdf_path;
     std::ifstream ifs(urdfPath);
     if(ifs.is_open())
@@ -419,10 +377,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
   loadRobot(canonicalModule, name, *outputRealRobots_, params);
   addRobotToLog(robot);
   addRobotToGUI(robot);
-  if(solver().backend() == Backend::Tasks)
-  {
-    tasks_solver(solver()).updateNrVars();
-  }
+  if(solver().backend() == Backend::Tasks) { tasks_solver(solver()).updateNrVars(); }
   converters_.emplace_back(robot, outputRobot, robot.module().controlToCanonicalConfig);
   return robot;
 }
@@ -442,44 +397,23 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
 
 void MCController::addRobotToGUI(const mc_rbdyn::Robot & r)
 {
-  if(!gui_)
-  {
-    return;
-  }
+  if(!gui_) { return; }
   auto data = gui_->data();
-  if(!data.has("robots"))
-  {
-    data.array("robots");
-  }
-  if(!data.has("bodies"))
-  {
-    data.add("bodies");
-  }
-  if(!data.has("surfaces"))
-  {
-    data.add("surfaces");
-  }
-  if(!data.has("joints"))
-  {
-    data.add("joints");
-  }
-  if(!data.has("frames"))
-  {
-    data.add("frames");
-  }
+  if(!data.has("robots")) { data.array("robots"); }
+  if(!data.has("bodies")) { data.add("bodies"); }
+  if(!data.has("surfaces")) { data.add("surfaces"); }
+  if(!data.has("joints")) { data.add("joints"); }
+  if(!data.has("frames")) { data.add("frames"); }
   data("robots").push(r.name());
   auto bs = data("bodies").array(r.name());
-  for(const auto & b : r.mb().bodies())
-  {
-    bs.push(b.name());
-  }
+  for(const auto & b : r.mb().bodies()) { bs.push(b.name()); }
   data("surfaces").add(r.name(), r.availableSurfaces());
   data("joints").add(r.name(), r.module().ref_joint_order());
   data("frames").add(r.name(), r.frames());
   auto name = r.name();
-  gui()->addElement({"Robots"}, mc_rtc::gui::Robot(r.name(), [name, this]() -> const mc_rbdyn::Robot & {
-                      return this->outputRobot(name);
-                    }));
+  gui()->addElement(
+      {"Robots"},
+      mc_rtc::gui::Robot(r.name(), [name, this]() -> const mc_rbdyn::Robot & { return this->outputRobot(name); }));
 }
 
 void MCController::addRobotToLog(const mc_rbdyn::Robot & r)
@@ -499,100 +433,97 @@ void MCController::addRobotToLog(const mc_rbdyn::Robot & r)
     logger().addLogEntry(entry("tauIn"),
                          [this, name]() -> const std::vector<double> & { return robot(name).jointTorques(); });
     std::vector<double> qOut(robot(name).refJointOrder().size(), 0);
-    logger().addLogEntry(entry("qOut"), [this, name, qOut]() mutable -> const std::vector<double> & {
-      auto & robot = this->outputRobot(name);
-      for(size_t i = 0; i < qOut.size(); ++i)
-      {
-        auto mbcIndex = robot.jointIndexInMBC(i);
-        if(mbcIndex != -1)
-        {
-          qOut[i] = robot.mbc().q[static_cast<size_t>(mbcIndex)][0];
-        }
-      }
-      return qOut;
-    });
+    logger().addLogEntry(entry("qOut"),
+                         [this, name, qOut]() mutable -> const std::vector<double> &
+                         {
+                           auto & robot = this->outputRobot(name);
+                           for(size_t i = 0; i < qOut.size(); ++i)
+                           {
+                             auto mbcIndex = robot.jointIndexInMBC(i);
+                             if(mbcIndex != -1) { qOut[i] = robot.mbc().q[static_cast<size_t>(mbcIndex)][0]; }
+                           }
+                           return qOut;
+                         });
     auto & alphaOut = qOut;
-    logger().addLogEntry(entry("alphaOut"), [this, name, alphaOut]() mutable -> const std::vector<double> & {
-      auto & robot = this->outputRobot(name);
-      for(size_t i = 0; i < alphaOut.size(); ++i)
-      {
-        auto mbcIndex = robot.jointIndexInMBC(i);
-        if(mbcIndex != -1)
-        {
-          alphaOut[i] = robot.mbc().alpha[static_cast<size_t>(mbcIndex)][0];
-        }
-      }
-      return alphaOut;
-    });
+    logger().addLogEntry(entry("alphaOut"),
+                         [this, name, alphaOut]() mutable -> const std::vector<double> &
+                         {
+                           auto & robot = this->outputRobot(name);
+                           for(size_t i = 0; i < alphaOut.size(); ++i)
+                           {
+                             auto mbcIndex = robot.jointIndexInMBC(i);
+                             if(mbcIndex != -1) { alphaOut[i] = robot.mbc().alpha[static_cast<size_t>(mbcIndex)][0]; }
+                           }
+                           return alphaOut;
+                         });
     auto & alphaDOut = qOut;
-    logger().addLogEntry(entry("alphaDOut"), [this, name, alphaDOut]() mutable -> const std::vector<double> & {
-      auto & robot = this->outputRobot(name);
-      for(size_t i = 0; i < alphaDOut.size(); ++i)
-      {
-        auto mbcIndex = robot.jointIndexInMBC(i);
-        if(mbcIndex != -1)
-        {
-          alphaDOut[i] = robot.mbc().alphaD[static_cast<size_t>(mbcIndex)][0];
-        }
-      }
-      return alphaDOut;
-    });
+    logger().addLogEntry(entry("alphaDOut"),
+                         [this, name, alphaDOut]() mutable -> const std::vector<double> &
+                         {
+                           auto & robot = this->outputRobot(name);
+                           for(size_t i = 0; i < alphaDOut.size(); ++i)
+                           {
+                             auto mbcIndex = robot.jointIndexInMBC(i);
+                             if(mbcIndex != -1) { alphaDOut[i] = robot.mbc().alphaD[static_cast<size_t>(mbcIndex)][0]; }
+                           }
+                           return alphaDOut;
+                         });
     auto & tauOut = qOut;
-    logger().addLogEntry(entry("tauOut"), [this, name, tauOut]() mutable -> const std::vector<double> & {
-      auto & robot = this->outputRobot(name);
-      for(size_t i = 0; i < tauOut.size(); ++i)
-      {
-        auto mbcIndex = robot.jointIndexInMBC(i);
-        if(mbcIndex != -1)
-        {
-          tauOut[i] = robot.mbc().jointTorque[static_cast<size_t>(mbcIndex)][0];
-        }
-      }
-      return tauOut;
-    });
+    logger().addLogEntry(entry("tauOut"),
+                         [this, name, tauOut]() mutable -> const std::vector<double> &
+                         {
+                           auto & robot = this->outputRobot(name);
+                           for(size_t i = 0; i < tauOut.size(); ++i)
+                           {
+                             auto mbcIndex = robot.jointIndexInMBC(i);
+                             if(mbcIndex != -1)
+                             {
+                               tauOut[i] = robot.mbc().jointTorque[static_cast<size_t>(mbcIndex)][0];
+                             }
+                           }
+                           return tauOut;
+                         });
   }
   // Log the floating base position and its estimation if the robot has one
   if(robot(name).mb().joint(0).dof() == 6)
   {
     logger().addLogEntry(entry("ff"),
                          [this, name]() -> const sva::PTransformd & { return outputRobot(name).mbc().bodyPosW[0]; });
-    logger().addLogEntry(entry("ff_real"), [this, name]() -> const sva::PTransformd & {
-      return outputRealRobot(name).mbc().bodyPosW[0];
-    });
+    logger().addLogEntry(entry("ff_real"),
+                         [this, name]() -> const sva::PTransformd &
+                         { return outputRealRobot(name).mbc().bodyPosW[0]; });
   }
   // Log all force sensors
   for(const auto & fs : robot(name).forceSensors())
   {
     const auto & fs_name = fs.name();
-    logger().addLogEntry(entry_str(fs.name()), [this, name, fs_name]() -> const sva::ForceVecd & {
-      return robot(name).forceSensor(fs_name).wrench();
-    });
+    logger().addLogEntry(entry_str(fs.name()),
+                         [this, name, fs_name]() -> const sva::ForceVecd &
+                         { return robot(name).forceSensor(fs_name).wrench(); });
   }
   // Log all body sensors
   const auto & bodySensors = robot(name).bodySensors();
   for(size_t i = 0; i < bodySensors.size(); ++i)
   {
     const auto & bs_name = bodySensors[i].name();
-    logger().addLogEntry(entry_str(bs_name + "_position"), [this, name, bs_name]() -> const Eigen::Vector3d & {
-      return robot(name).bodySensor(bs_name).position();
-    });
-    logger().addLogEntry(entry_str(bs_name + "_orientation"), [this, name, bs_name]() -> const Eigen::Quaterniond & {
-      return robot(name).bodySensor(bs_name).orientation();
-    });
-    logger().addLogEntry(entry_str(bs_name + "_linearVelocity"), [this, name, bs_name]() -> const Eigen::Vector3d & {
-      return robot(name).bodySensor(bs_name).linearVelocity();
-    });
-    logger().addLogEntry(entry_str(bs_name + "_angularVelocity"), [this, name, bs_name]() -> const Eigen::Vector3d & {
-      return robot(name).bodySensor(bs_name).angularVelocity();
-    });
+    logger().addLogEntry(entry_str(bs_name + "_position"),
+                         [this, name, bs_name]() -> const Eigen::Vector3d &
+                         { return robot(name).bodySensor(bs_name).position(); });
+    logger().addLogEntry(entry_str(bs_name + "_orientation"),
+                         [this, name, bs_name]() -> const Eigen::Quaterniond &
+                         { return robot(name).bodySensor(bs_name).orientation(); });
+    logger().addLogEntry(entry_str(bs_name + "_linearVelocity"),
+                         [this, name, bs_name]() -> const Eigen::Vector3d &
+                         { return robot(name).bodySensor(bs_name).linearVelocity(); });
+    logger().addLogEntry(entry_str(bs_name + "_angularVelocity"),
+                         [this, name, bs_name]() -> const Eigen::Vector3d &
+                         { return robot(name).bodySensor(bs_name).angularVelocity(); });
     logger().addLogEntry(entry_str(bs_name + "_linearAcceleration"),
-                         [this, name, bs_name]() -> const Eigen::Vector3d & {
-                           return robot(name).bodySensor(bs_name).linearAcceleration();
-                         });
+                         [this, name, bs_name]() -> const Eigen::Vector3d &
+                         { return robot(name).bodySensor(bs_name).linearAcceleration(); });
     logger().addLogEntry(entry_str(bs_name + "_angularAcceleration"),
-                         [this, name, bs_name]() -> const Eigen::Vector3d & {
-                           return robot(name).bodySensor(bs_name).angularAcceleration();
-                         });
+                         [this, name, bs_name]() -> const Eigen::Vector3d &
+                         { return robot(name).bodySensor(bs_name).angularAcceleration(); });
   }
   // Log all joint sensors
   for(const auto & js : robot(name).jointSensors())
@@ -630,10 +561,7 @@ void MCController::removeRobot(const std::string & name)
       logger().removeLogEntry(entry("ff"));
       logger().removeLogEntry(entry("ff_real"));
     }
-    for(const auto & fs : robot.forceSensors())
-    {
-      logger().removeLogEntry(entry_str(fs.name()));
-    }
+    for(const auto & fs : robot.forceSensors()) { logger().removeLogEntry(entry_str(fs.name())); }
     for(const auto & bs : robot.bodySensors())
     {
       logger().removeLogEntry(entry_str(bs.name() + "_position"));
@@ -665,10 +593,7 @@ void MCController::removeRobot(const std::string & name)
   outputRobots().removeRobot(name);
   realRobots().removeRobot(name);
   robots().removeRobot(name);
-  if(solver().backend() == Backend::Tasks)
-  {
-    tasks_solver(solver()).updateNrVars();
-  }
+  if(solver().backend() == Backend::Tasks) { tasks_solver(solver()).updateNrVars(); }
 }
 
 void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
@@ -697,14 +622,8 @@ void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
     observerPipelines_.emplace_back(*this);
     auto & pipeline = observerPipelines_.back();
     pipeline.create(pipelineConfig, timeStep);
-    if(pipelineConfig("log", true))
-    {
-      pipeline.addToLogger(logger());
-    }
-    if(pipelineConfig("gui", false))
-    {
-      pipeline.addToGUI(*gui());
-    }
+    if(pipelineConfig("log", true)) { pipeline.addToLogger(logger()); }
+    if(pipelineConfig("gui", false)) { pipeline.addToGUI(*gui()); }
   }
 }
 
@@ -714,26 +633,17 @@ bool MCController::resetObserverPipelines()
   for(auto & pipeline : observerPipelines_)
   {
     pipeline.reset();
-    if(desc.size())
-    {
-      desc += "\n";
-    }
+    if(desc.size()) { desc += "\n"; }
     desc += "- " + pipeline.desc();
   }
-  if(desc.size())
-  {
-    mc_rtc::log::success("[MCController::{}] State observation pipelines:\n{}", name_, desc);
-  }
+  if(desc.size()) { mc_rtc::log::success("[MCController::{}] State observation pipelines:\n{}", name_, desc); }
   return true;
 }
 
 bool MCController::runObserverPipelines()
 {
   bool success = true;
-  for(auto & pipeline : observerPipelines_)
-  {
-    success = pipeline.run() && success;
-  }
+  for(auto & pipeline : observerPipelines_) { success = pipeline.run() && success; }
   return success;
 }
 
@@ -759,14 +669,8 @@ const mc_observers::ObserverPipeline & MCController::observerPipeline(const std:
   auto pipelineIt =
       std::find_if(observerPipelines_.begin(), observerPipelines_.end(),
                    [&name](const mc_observers::ObserverPipeline & pipeline) { return pipeline.name() == name; });
-  if(pipelineIt != observerPipelines_.end())
-  {
-    return *pipelineIt;
-  }
-  else
-  {
-    mc_rtc::log::error_and_throw("Observer pipeline {} does not exist", name);
-  }
+  if(pipelineIt != observerPipelines_.end()) { return *pipelineIt; }
+  else { mc_rtc::log::error_and_throw("Observer pipeline {} does not exist", name); }
 }
 
 mc_observers::ObserverPipeline & MCController::observerPipeline(const std::string & name)
@@ -830,13 +734,14 @@ void MCController::reset(const ControllerResetData & reset_data)
   updateContacts();
   if(gui_)
   {
-    gui_->addElement({"Contacts"}, mc_rtc::gui::Table(
-                                       "Contacts", {"R1", "S1", "R2", "S2", "DoF", "Friction"},
-                                       [this]() -> const std::vector<ContactTableDataT> & { return contacts_table_; }));
+    gui_->addElement({"Contacts"}, mc_rtc::gui::Table("Contacts", {"R1", "S1", "R2", "S2", "DoF", "Friction"},
+                                                      [this]() -> const std::vector<ContactTableDataT> &
+                                                      { return contacts_table_; }));
     gui_->addElement({"Contacts", "Add"},
                      mc_rtc::gui::Form(
                          "Add contact",
-                         [this](const mc_rtc::Configuration & data) {
+                         [this](const mc_rtc::Configuration & data)
+                         {
                            std::string r0 = data("R0");
                            std::string r1 = data("R1");
                            std::string r0Surface = data("R0 surface");
@@ -860,12 +765,10 @@ void MCController::updateContacts()
   if(contacts_changed_ && contact_constraint_)
   {
     std::vector<mc_rbdyn::Contact> contacts;
-    if(solver().backend() == Backend::Tasks)
-    {
-      contact_constraint_->contactConstr()->resetDofContacts();
-    }
+    if(solver().backend() == Backend::Tasks) { contact_constraint_->contactConstr()->resetDofContacts(); }
 
-    auto ensureValidContact = [this](const std::string & robotName, const std::string & surfaceName) {
+    auto ensureValidContact = [this](const std::string & robotName, const std::string & surfaceName)
+    {
       if(!hasRobot(robotName))
       {
         const auto availableRobots =
@@ -916,10 +819,7 @@ void MCController::updateContacts()
         gui_->addElement({"Contacts", "Remove"}, mc_rtc::gui::Button(bName, [this, &c]() { removeContact(c); }));
       }
     }
-    if(solver().backend() == Backend::Tasks)
-    {
-      contact_constraint_->contactConstr()->updateDofContacts();
-    }
+    if(solver().backend() == Backend::Tasks) { contact_constraint_->contactConstr()->updateDofContacts(); }
   }
   contacts_changed_ = false;
 }
@@ -932,10 +832,7 @@ void MCController::addCollisions(const std::string & r1,
   {
     std::vector<mc_rbdyn::Collision> swapped;
     swapped.reserve(collisions.size());
-    for(const auto & c : collisions)
-    {
-      swapped.push_back({c.body2, c.body1, c.iDist, c.sDist, c.damping});
-    }
+    for(const auto & c : collisions) { swapped.push_back({c.body2, c.body1, c.iDist, c.sDist, c.damping}); }
     addCollisions(r2, r1, swapped);
     return;
   }
@@ -954,10 +851,7 @@ void MCController::addCollisions(const std::string & r1,
   }
   auto & cc = collision_constraints_[{r1, r2}];
   mc_rtc::log::info("Add collisions {}/{}", r1, r2);
-  for(const auto & c : collisions)
-  {
-    mc_rtc::log::info("- {}::{}/{}::{}", r1, c.body1, r2, c.body2);
-  }
+  for(const auto & c : collisions) { mc_rtc::log::info("- {}::{}/{}::{}", r1, c.body1, r2, c.body2); }
   cc->addCollisions(solver(), collisions);
 }
 
@@ -974,17 +868,11 @@ bool MCController::hasCollision(const std::string & r1,
                                 const std::string & c2) const noexcept
 {
   auto it = collision_constraints_.find({r1, r2});
-  if(it != collision_constraints_.end())
-  {
-    return it->second->hasCollision(c1, c2);
-  }
+  if(it != collision_constraints_.end()) { return it->second->hasCollision(c1, c2); }
   if(r1 != r2)
   {
     it = collision_constraints_.find({r2, r1});
-    if(it != collision_constraints_.end())
-    {
-      return it->second->hasCollision(c2, c1);
-    }
+    if(it != collision_constraints_.end()) { return it->second->hasCollision(c2, c1); }
   }
   return false;
 }
@@ -993,25 +881,16 @@ void MCController::removeCollisions(const std::string & r1,
                                     const std::string & r2,
                                     const std::vector<mc_rbdyn::Collision> & collisions)
 {
-  if(!collision_constraints_.count({r1, r2}))
-  {
-    return;
-  }
+  if(!collision_constraints_.count({r1, r2})) { return; }
   auto & cc = collision_constraints_[{r1, r2}];
   mc_rtc::log::info("Remove collisions {}/{}", r1, r2);
-  for(const auto & c : collisions)
-  {
-    mc_rtc::log::info("- {}::{}/{}::{}", r1, c.body1, r2, c.body2);
-  }
+  for(const auto & c : collisions) { mc_rtc::log::info("- {}::{}/{}::{}", r1, c.body1, r2, c.body2); }
   cc->removeCollisions(solver(), collisions);
 }
 
 void MCController::removeCollisions(const std::string & r1, const std::string & r2)
 {
-  if(!collision_constraints_.count({r1, r2}))
-  {
-    return;
-  }
+  if(!collision_constraints_.count({r1, r2})) { return; }
   auto & cc = collision_constraints_[{r1, r2}];
   mc_rtc::log::info("Remove all collisions {}/{}", r1, r2);
   cc->reset();
@@ -1102,25 +981,18 @@ mc_rtc::Configuration MCController::robot_config(const std::string & robot) cons
   bfs::path user_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers";
 #endif
   user_path = user_path / name_ / (robot + ".conf");
-  auto load_conf = [&result](const std::string & path) {
+  auto load_conf = [&result](const std::string & path)
+  {
     result.load(path);
     mc_rtc::log::info("Controller's robot configuration loaded from {}", path);
   };
-  auto load_conf_or_yaml = [&load_conf](bfs::path & in) {
-    if(bfs::exists(in))
-    {
-      return load_conf(in.string());
-    }
+  auto load_conf_or_yaml = [&load_conf](bfs::path & in)
+  {
+    if(bfs::exists(in)) { return load_conf(in.string()); }
     in.replace_extension(".yaml");
-    if(bfs::exists(in))
-    {
-      return load_conf(in.string());
-    }
+    if(bfs::exists(in)) { return load_conf(in.string()); }
     in.replace_extension(".yml");
-    if(bfs::exists(in))
-    {
-      return load_conf(in.string());
-    }
+    if(bfs::exists(in)) { return load_conf(in.string()); }
   };
   load_conf_or_yaml(system_path);
   load_conf_or_yaml(user_path);

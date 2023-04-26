@@ -50,16 +50,10 @@ public:
   Convex & operator=(const Convex &) = delete;
 
   /** Access the underlying SCH object */
-  inline mc_rbdyn::S_ObjectPtr convex() noexcept
-  {
-    return object_;
-  }
+  inline mc_rbdyn::S_ObjectPtr convex() noexcept { return object_; }
 
   /** Access the associated frame */
-  inline const mc_rbdyn::RobotFrame & frame()
-  {
-    return *frame_;
-  }
+  inline const mc_rbdyn::RobotFrame & frame() { return *frame_; }
 
 private:
   mc_rbdyn::S_ObjectPtr object_;

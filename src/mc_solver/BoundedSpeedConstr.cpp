@@ -42,9 +42,11 @@ struct TVMBoundedSpeedConstr
 
   std::vector<BoundedSpeedData>::iterator getData(const mc_rbdyn::RobotFrame & frame)
   {
-    return std::find_if(data_.begin(), data_.end(), [&](const auto & d) {
-      return d.fn->frame().name() == frame.name() && d.fn->frame().robot().name() == frame.robot().name();
-    });
+    return std::find_if(data_.begin(), data_.end(),
+                        [&](const auto & d) {
+                          return d.fn->frame().name() == frame.name()
+                                 && d.fn->frame().robot().name() == frame.robot().name();
+                        });
   }
 
   void addBoundedSpeed(TVMQPSolver * solver,
@@ -68,10 +70,7 @@ struct TVMBoundedSpeedConstr
     else
     {
       data_.push_back({std::make_shared<mc_tvm::FrameVelocity>(frame, dof), lowerSpeed, upperSpeed});
-      if(solver)
-      {
-        addBoundedSpeed(*solver, data_.back());
-      }
+      if(solver) { addBoundedSpeed(*solver, data_.back()); }
     }
   }
 
@@ -82,43 +81,28 @@ struct TVMBoundedSpeedConstr
     {
       if(it->fn->frame().name() == frame)
       {
-        if(solver)
-        {
-          removeBoundedSpeed(*solver, *it);
-        }
+        if(solver) { removeBoundedSpeed(*solver, *it); }
         it = data_.erase(it);
         r = true;
       }
-      else
-      {
-        ++it;
-      }
+      else { ++it; }
     }
     return r;
   }
 
   void addToSolver(TVMQPSolver & solver)
   {
-    for(auto & d : data_)
-    {
-      addBoundedSpeed(solver, d);
-    }
+    for(auto & d : data_) { addBoundedSpeed(solver, d); }
   }
 
   void removeFromSolver(TVMQPSolver & solver)
   {
-    for(auto & d : data_)
-    {
-      removeBoundedSpeed(solver, d);
-    }
+    for(auto & d : data_) { removeBoundedSpeed(solver, d); }
   }
 
   void reset(TVMQPSolver * solver)
   {
-    if(solver)
-    {
-      removeFromSolver(*solver);
-    }
+    if(solver) { removeFromSolver(*solver); }
     data_.clear();
   }
 
@@ -358,7 +342,8 @@ namespace
 
 static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
     "boundedSpeed",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
       const auto & robot = robotFromConfig(config, solver.robots(), "boundedSpeed");
       auto ret = std::make_shared<mc_solver::BoundedSpeedConstr>(solver.robots(), robot.robotIndex(), solver.dt());
       if(config.has("constraints"))
@@ -374,13 +359,11 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
               Eigen::Vector6d v = c_dof;
               dof = v.asDiagonal();
             }
-            else
-            {
-              dof = c_dof;
-            }
+            else { dof = c_dof; }
           }
           Eigen::VectorXd lowerSpeed;
-          Eigen::VectorXd upperSpeed = [&]() -> Eigen::VectorXd {
+          Eigen::VectorXd upperSpeed = [&]() -> Eigen::VectorXd
+          {
             if(c.has("speed"))
             {
               lowerSpeed = c("speed");
@@ -403,10 +386,7 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
             ret->addBoundedSpeed(solver, c("body"), c("bodyPoint", Eigen::Vector3d::Zero().eval()), dof, lowerSpeed,
                                  upperSpeed);
           }
-          else
-          {
-            ret->addBoundedSpeed(solver, robot.frame(c("frame")), dof, lowerSpeed, upperSpeed);
-          }
+          else { ret->addBoundedSpeed(solver, robot.frame(c("frame")), dof, lowerSpeed, upperSpeed); }
         }
       }
       return ret;

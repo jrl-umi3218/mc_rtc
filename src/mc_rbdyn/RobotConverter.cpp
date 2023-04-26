@@ -13,10 +13,7 @@ RobotConverter::RobotConverter(const mc_rbdyn::Robot & inputRobot,
 : config_(config)
 {
   precompute(inputRobot, outputRobot);
-  if(config_.encodersToOutMbcOnce_ && !config_.encodersToOutMbc_)
-  {
-    encodersToOutput(inputRobot, outputRobot);
-  }
+  if(config_.encodersToOutMbcOnce_ && !config_.encodersToOutMbc_) { encodersToOutput(inputRobot, outputRobot); }
   convert(inputRobot, outputRobot);
 }
 
@@ -28,10 +25,7 @@ void RobotConverter::precompute(const mc_rbdyn::Robot & inputRobot, const mc_rbd
     for(const auto & joint : inputRobot.mb().joints())
     {
       // Skip fixed joints in the input robot
-      if(joint.dof() == 0)
-      {
-        continue;
-      }
+      if(joint.dof() == 0) { continue; }
       // Otherwise we can copy the joint from control to canonical if it has the same dof
       const auto & jname = joint.name();
       if(outputRobot.hasJoint(jname)
@@ -49,15 +43,9 @@ void RobotConverter::precompute(const mc_rbdyn::Robot & inputRobot, const mc_rbd
     for(size_t i = 0; i < rjo.size(); ++i)
     {
       const auto & jname = rjo[i];
-      if(!outputRobot.hasJoint(jname))
-      {
-        continue;
-      }
+      if(!outputRobot.hasJoint(jname)) { continue; }
       auto outputJIndex = outputRobot.jointIndexInMBC(i);
-      if(outputRobot.mb().joint(outputJIndex).dof() == 1)
-      {
-        commonEncoderToJointIndices_.push_back({i, outputJIndex});
-      }
+      if(outputRobot.mb().joint(outputJIndex).dof() == 1) { commonEncoderToJointIndices_.push_back({i, outputJIndex}); }
     }
   }
 
@@ -90,22 +78,14 @@ void RobotConverter::encodersToOutput(const mc_rbdyn::Robot & inputRobot, mc_rbd
 void RobotConverter::convert(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot & outputRobot) const
 {
   // Copy the encoders into outputRobot
-  if(config_.encodersToOutMbc_)
-  {
-    encodersToOutput(inputRobot, outputRobot);
-  }
+  if(config_.encodersToOutMbc_) { encodersToOutput(inputRobot, outputRobot); }
 
   // Copy the common mbc joints into outputRobot
-  auto copyMbc = [this](bool doit, const std::vector<std::vector<double>> & input,
-                        std::vector<std::vector<double>> & output) {
-    if(!doit)
-    {
-      return;
-    }
-    for(const auto & commonIndices : commonJointIndices_)
-    {
-      output[commonIndices.second] = input[commonIndices.first];
-    }
+  auto copyMbc =
+      [this](bool doit, const std::vector<std::vector<double>> & input, std::vector<std::vector<double>> & output)
+  {
+    if(!doit) { return; }
+    for(const auto & commonIndices : commonJointIndices_) { output[commonIndices.second] = input[commonIndices.first]; }
   };
   if(config_.mbcToOutMbc_)
   {

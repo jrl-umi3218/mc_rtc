@@ -60,14 +60,8 @@ inline bool loadData(const char * data, RapidJSONDocument & document, const std:
     std::stringstream ss;
     ss << GetParseError(res.Code()) << std::endl;
     ss << "Position: " << res.Offset();
-    if(path.size())
-    {
-      log::error("Failed to read configuration file: {}", path);
-    }
-    else
-    {
-      log::error("Failed to read raw json data: {}", data);
-    }
+    if(path.size()) { log::error("Failed to read configuration file: {}", path); }
+    else { log::error("Failed to read raw json data: {}", data); }
     log::warning(ss.str());
     return false;
   }
@@ -155,32 +149,17 @@ inline static void toMessagePack(const RapidJSONValue & value, MessagePackBuilde
       break;
     case rapidjson::kArrayType:
       builder.start_array(value.Size());
-      for(auto it = value.Begin(); it != value.End(); ++it)
-      {
-        toMessagePack(*it, builder);
-      }
+      for(auto it = value.Begin(); it != value.End(); ++it) { toMessagePack(*it, builder); }
       builder.finish_array();
       break;
     case rapidjson::kStringType:
       builder.write(value.GetString(), value.GetStringLength());
       break;
     case rapidjson::kNumberType:
-      if(value.IsInt())
-      {
-        builder.write(value.GetInt());
-      }
-      else if(value.IsUint())
-      {
-        builder.write(value.GetUint());
-      }
-      else if(value.IsInt64())
-      {
-        builder.write(value.GetInt64());
-      }
-      else if(value.IsUint64())
-      {
-        builder.write(value.GetUint64());
-      }
+      if(value.IsInt()) { builder.write(value.GetInt()); }
+      else if(value.IsUint()) { builder.write(value.GetUint()); }
+      else if(value.IsInt64()) { builder.write(value.GetInt64()); }
+      else if(value.IsUint64()) { builder.write(value.GetUint64()); }
       else // Assume double
       {
         builder.write(value.GetDouble());
@@ -280,10 +259,7 @@ inline RapidJSONValue toJSON(const Eigen::VectorXd & value, RapidJSONDocument::A
 {
   RapidJSONValue ret(rapidjson::kArrayType);
   ret.Reserve(static_cast<size_t>(value.size()), allocator);
-  for(Eigen::VectorXd::Index i = 0; i < value.size(); ++i)
-  {
-    ret.PushBack(value(i), allocator);
-  }
+  for(Eigen::VectorXd::Index i = 0; i < value.size(); ++i) { ret.PushBack(value(i), allocator); }
   return ret;
 }
 
@@ -306,10 +282,7 @@ inline RapidJSONValue toJSON(const Eigen::Matrix3d & value, RapidJSONDocument::A
   ret.Reserve(9, allocator);
   for(int i = 0; i < 3; ++i)
   {
-    for(int j = 0; j < 3; ++j)
-    {
-      ret.PushBack(value(i, j), allocator);
-    }
+    for(int j = 0; j < 3; ++j) { ret.PushBack(value(i, j), allocator); }
   }
   return ret;
 }
@@ -321,10 +294,7 @@ inline RapidJSONValue toJSON(const Eigen::Matrix6d & value, RapidJSONDocument::A
   ret.Reserve(36, allocator);
   for(int i = 0; i < 6; ++i)
   {
-    for(int j = 0; j < 6; ++j)
-    {
-      ret.PushBack(value(i, j), allocator);
-    }
+    for(int j = 0; j < 6; ++j) { ret.PushBack(value(i, j), allocator); }
   }
   return ret;
 }
@@ -338,10 +308,7 @@ inline RapidJSONValue toJSON(const Eigen::MatrixXd & value, RapidJSONDocument::A
   {
     RapidJSONValue row(rapidjson::kArrayType);
     row.Reserve(static_cast<size_t>(value.cols()), allocator);
-    for(int j = 0; j < value.cols(); ++j)
-    {
-      row.PushBack(value(i, j), allocator);
-    }
+    for(int j = 0; j < value.cols(); ++j) { row.PushBack(value(i, j), allocator); }
     ret.PushBack(row, allocator);
   }
   return ret;

@@ -23,13 +23,7 @@ extern "C"
   ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & name)
   {
     // At this point name must be one of the supported robots
-    if(name == "MyRobot")
-    {
-      return new MyRobot(false);
-    }
-    else
-    {
-      return new MyRobot(true);
-    }
+    if(name == "MyRobot") { return new MyRobot(false); }
+    else { return new MyRobot(true); }
   }
 }

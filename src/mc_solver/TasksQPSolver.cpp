@@ -73,10 +73,7 @@ void TasksQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Con
   for(auto & c : contacts_)
   {
     const auto & r1 = robots().robot(c.r1Index());
-    if(r1.mb().nrDof() == 0)
-    {
-      c = c.swap(robots());
-    }
+    if(r1.mb().nrDof() == 0) { c = c.swap(robots()); }
   }
   if(logger_)
   {
@@ -102,9 +99,8 @@ void TasksQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Con
                        mc_rtc::gui::Force(
                            fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S),
                            [this, &contact]() { return desiredContactForce(contact); },
-                           [this, &contact]() {
-                             return robots().robot(contact.r1Index()).surfacePose(contact.r1Surface()->name());
-                           }));
+                           [this, &contact]()
+                           { return robots().robot(contact.r1Index()).surfacePose(contact.r1Surface()->name()); }));
     }
   }
   uniContacts_.clear();
@@ -151,10 +147,7 @@ const sva::ForceVecd TasksQPSolver::desiredContactForce(const mc_rbdyn::Contact 
                                    contact.r1Surface()->name());
     }
   }
-  else
-  {
-    mc_rtc::log::error_and_throw("QPSolver - cannot handle cases where qp_contact.first != -1");
-  }
+  else { mc_rtc::log::error_and_throw("QPSolver - cannot handle cases where qp_contact.first != -1"); }
 }
 
 bool TasksQPSolver::run_impl(FeedbackType fType)
@@ -256,16 +249,10 @@ bool TasksQPSolver::runJointsFeedback(bool wVelocity)
       for(size_t j = 0; j < robot.refJointOrder().size(); ++j)
       {
         const auto & jN = robot.refJointOrder()[j];
-        if(!robot.hasJoint(jN))
-        {
-          continue;
-        }
+        if(!robot.hasJoint(jN)) { continue; }
         auto jI = robot.jointIndexByName(jN);
         robot.mbc().q[jI][0] = encoders[j];
-        if(wVelocity)
-        {
-          robot.mbc().alpha[jI][0] = encoders_alpha_[i][j];
-        }
+        if(wVelocity) { robot.mbc().alpha[jI][0] = encoders_alpha_[i][j]; }
       }
       robot.forwardKinematics();
       robot.forwardVelocity();
@@ -400,10 +387,7 @@ void TasksQPSolver::removeDynamicsConstraint(mc_solver::ConstraintSet * cs)
 {
   auto it = std::find_if(dynamicsConstraints_.begin(), dynamicsConstraints_.end(),
                          [&cs](DynamicsConstraint * dyn) { return static_cast<ConstraintSet *>(dyn) == cs; });
-  if(it != dynamicsConstraints_.end())
-  {
-    dynamicsConstraints_.erase(it);
-  }
+  if(it != dynamicsConstraints_.end()) { dynamicsConstraints_.erase(it); }
 }
 
 } // namespace mc_solver

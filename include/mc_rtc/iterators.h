@@ -22,15 +22,9 @@ struct SharedPtrVectorIterator : public std::vector<std::shared_ptr<T>>::iterato
   using pointer = T *;
   using reference = T &;
 
-  reference operator*() const noexcept
-  {
-    return **static_cast<const iterator_t &>(*this);
-  }
+  reference operator*() const noexcept { return **static_cast<const iterator_t &>(*this); }
 
-  pointer operator->() const noexcept
-  {
-    return static_cast<const iterator_t &>(*this)->get();
-  }
+  pointer operator->() const noexcept { return static_cast<const iterator_t &>(*this)->get(); }
 };
 
 /** A const_iterator over std::vector<std::shared_ptr<T>> but it exposes const T references/pointers instead of the
@@ -46,15 +40,9 @@ struct SharedPtrVectorConstIterator : public std::vector<std::shared_ptr<T>>::co
   using pointer = const T *;
   using reference = const T &;
 
-  reference operator*() const noexcept
-  {
-    return **static_cast<const iterator_t &>(*this);
-  }
+  reference operator*() const noexcept { return **static_cast<const iterator_t &>(*this); }
 
-  pointer operator->() const noexcept
-  {
-    return static_cast<const iterator_t &>(*this)->get();
-  }
+  pointer operator->() const noexcept { return static_cast<const iterator_t &>(*this)->get(); }
 };
 
 } // namespace mc_rtc

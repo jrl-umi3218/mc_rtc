@@ -59,11 +59,8 @@ private:
   std::vector<double> v = random_vector();
 
 public:
-#define DEFINE_GETTER(MEMBER)                               \
-  auto get_##MEMBER() const->const decltype(this->MEMBER) & \
-  {                                                         \
-    return this->MEMBER;                                    \
-  }
+#define DEFINE_GETTER(MEMBER) \
+  auto get_##MEMBER() const->const decltype(this->MEMBER) & { return this->MEMBER; }
   DEFINE_GETTER(b)
   DEFINE_GETTER(d)
   DEFINE_GETTER(s)
@@ -78,15 +75,9 @@ public:
   DEFINE_GETTER(v)
 #undef DEFINE_GETTER
 
-#define DEFINE_GET_AS_REF(MEMBER)                                               \
-  auto get_##MEMBER##_as_ref() const->Eigen::Ref<decltype(this->MEMBER)>        \
-  {                                                                             \
-    return this->MEMBER;                                                        \
-  }                                                                             \
-  auto get_##MEMBER##_as_cref() const->Eigen::Ref<const decltype(this->MEMBER)> \
-  {                                                                             \
-    return this->MEMBER;                                                        \
-  }
+#define DEFINE_GET_AS_REF(MEMBER)                                                                 \
+  auto get_##MEMBER##_as_ref() const->Eigen::Ref<decltype(this->MEMBER)> { return this->MEMBER; } \
+  auto get_##MEMBER##_as_cref() const->Eigen::Ref<const decltype(this->MEMBER)> { return this->MEMBER; }
   DEFINE_GET_AS_REF(v2d)
   DEFINE_GET_AS_REF(v3d)
   DEFINE_GET_AS_REF(v6d)
@@ -94,10 +85,7 @@ public:
 #undef DEFINE_GET_AS_REF
 
   /** Change data */
-  void refresh()
-  {
-    *this = LogData{};
-  }
+  void refresh() { *this = LogData{}; }
 
   void addToLogger(mc_rtc::Logger & logger, bool withSource)
   {
@@ -332,164 +320,188 @@ BOOST_AUTO_TEST_CASE(TestLogger)
     logger.start("logger", 1.0);
     size_t iter = 1;
     /** Iteration 1 only time */
-    check(logger, [&](const mc_rtc::log::FlatLog & log) {
-      BOOST_REQUIRE(log.entries() == std::set<std::string>{"t"});
-      BOOST_REQUIRE(log.size() == iter);
-      auto t0 = log.getRaw<double>("t", 0);
-      BOOST_REQUIRE(t0 && *t0 == 0.0);
-      iter++;
-    });
+    check(logger,
+          [&](const mc_rtc::log::FlatLog & log)
+          {
+            BOOST_REQUIRE(log.entries() == std::set<std::string>{"t"});
+            BOOST_REQUIRE(log.size() == iter);
+            auto t0 = log.getRaw<double>("t", 0);
+            BOOST_REQUIRE(t0 && *t0 == 0.0);
+            iter++;
+          });
     /** Iteration 2, add callbacks without a source */
     LogData data;
     data.addToLogger(logger, false);
     /** Malloc is allowed in this test because we provided naive callbacks */
-    check<true>(logger, [&](const mc_rtc::log::FlatLog & log) {
-      std::set<std::string> entries = {"t",
-                                       "bool",
-                                       "double",
-                                       "std::string",
-                                       "Eigen::Vector2d",
-                                       "Eigen::Vector3d",
-                                       "Eigen::Vector6d",
-                                       "Eigen::VectorXd",
-                                       "Eigen::Quaterniond",
-                                       "sva::PTransformd",
-                                       "sva::ForceVecd",
-                                       "sva::MotionVecd",
-                                       "std::vector<double>",
-                                       "v2d_as_ref",
-                                       "v2d_as_cref",
-                                       "v3d_as_ref",
-                                       "v3d_as_cref",
-                                       "v6d_as_ref",
-                                       "v6d_as_cref",
-                                       "vxd_as_ref",
-                                       "vxd_as_cref"};
-      BOOST_REQUIRE(log.entries() == entries);
-      BOOST_REQUIRE(log.size() == iter);
-      data.check_empty(log, 0);
-      data.check(log);
-      iter++;
-    });
+    check<true>(logger,
+                [&](const mc_rtc::log::FlatLog & log)
+                {
+                  std::set<std::string> entries = {"t",
+                                                   "bool",
+                                                   "double",
+                                                   "std::string",
+                                                   "Eigen::Vector2d",
+                                                   "Eigen::Vector3d",
+                                                   "Eigen::Vector6d",
+                                                   "Eigen::VectorXd",
+                                                   "Eigen::Quaterniond",
+                                                   "sva::PTransformd",
+                                                   "sva::ForceVecd",
+                                                   "sva::MotionVecd",
+                                                   "std::vector<double>",
+                                                   "v2d_as_ref",
+                                                   "v2d_as_cref",
+                                                   "v3d_as_ref",
+                                                   "v3d_as_cref",
+                                                   "v6d_as_ref",
+                                                   "v6d_as_cref",
+                                                   "vxd_as_ref",
+                                                   "vxd_as_cref"};
+                  BOOST_REQUIRE(log.entries() == entries);
+                  BOOST_REQUIRE(log.size() == iter);
+                  data.check_empty(log, 0);
+                  data.check(log);
+                  iter++;
+                });
     /** Iteration 3, remove everything "manually" */
     data.removeFromLogger(logger);
-    check(logger, [&](const mc_rtc::log::FlatLog & log) {
-      BOOST_REQUIRE(log.size() == iter);
-      data.check_empty(log);
-      iter++;
-    });
+    check(logger,
+          [&](const mc_rtc::log::FlatLog & log)
+          {
+            BOOST_REQUIRE(log.size() == iter);
+            data.check_empty(log);
+            iter++;
+          });
     /** Iteration 4, add everything with a source */
     data.addToLogger(logger, true);
     /** Malloc is allowed in this test because we provided naive callbacks */
-    check<true>(logger, [&](const mc_rtc::log::FlatLog & log) {
-      BOOST_REQUIRE(log.size() == iter);
-      data.check(log);
-      iter++;
-    });
+    check<true>(logger,
+                [&](const mc_rtc::log::FlatLog & log)
+                {
+                  BOOST_REQUIRE(log.size() == iter);
+                  data.check(log);
+                  iter++;
+                });
     /** Iteration 5, remove everything via the source */
     logger.removeLogEntries(&data);
-    check(logger, [&](const mc_rtc::log::FlatLog & log) {
-      BOOST_REQUIRE(log.size() == iter);
-      data.check_empty(log);
-      iter++;
-    });
+    check(logger,
+          [&](const mc_rtc::log::FlatLog & log)
+          {
+            BOOST_REQUIRE(log.size() == iter);
+            data.check_empty(log);
+            iter++;
+          });
     /** Iteration 6 to 100, refresh data and check everything is ok */
     data.addToLogger(logger, true);
     for(iter = 6; iter <= 100; ++iter)
     {
       /** Malloc is allowed in this test because we provided naive callbacks */
-      check<true>(logger, [&](const mc_rtc::log::FlatLog & log) {
-        BOOST_REQUIRE(log.size() == iter);
-        data.check(log);
-        data.refresh();
-      });
+      check<true>(logger,
+                  [&](const mc_rtc::log::FlatLog & log)
+                  {
+                    BOOST_REQUIRE(log.size() == iter);
+                    data.check(log);
+                    data.refresh();
+                  });
     }
     /** Iteration 101, remove the data once more */
     logger.removeLogEntries(&data);
-    check(logger, [&](const mc_rtc::log::FlatLog & log) {
-      BOOST_REQUIRE(log.size() == iter);
-      data.check_empty(log);
-      iter++;
-    });
+    check(logger,
+          [&](const mc_rtc::log::FlatLog & log)
+          {
+            BOOST_REQUIRE(log.size() == iter);
+            data.check_empty(log);
+            iter++;
+          });
     /** Iteration 102 to 150, add from pointer to member, refresh data and check everything is ok */
     data.addToLoggerWithMemberPointer(logger);
     for(iter = 102; iter <= 150; ++iter)
     {
-      check(logger, [&](const mc_rtc::log::FlatLog & log) {
-        BOOST_REQUIRE(log.size() == iter);
-        data.check(log);
-        data.refresh();
-      });
+      check(logger,
+            [&](const mc_rtc::log::FlatLog & log)
+            {
+              BOOST_REQUIRE(log.size() == iter);
+              data.check(log);
+              data.refresh();
+            });
     }
     /** Iteration 151, remove the data once more */
     logger.removeLogEntries(&data);
-    check(logger, [&](const mc_rtc::log::FlatLog & log) {
-      BOOST_REQUIRE(log.size() == iter);
-      data.check_empty(log);
-      iter++;
-    });
+    check(logger,
+          [&](const mc_rtc::log::FlatLog & log)
+          {
+            BOOST_REQUIRE(log.size() == iter);
+            data.check_empty(log);
+            iter++;
+          });
     /** Iteration 152 to 200, add from pointer to method, refresh data and check everything is ok */
     data.addToLoggerWithGetter(logger);
     for(iter = 152; iter <= 200; ++iter)
     {
-      check(logger, [&](const mc_rtc::log::FlatLog & log) {
-        BOOST_REQUIRE(log.size() == iter);
-        data.check(log);
-        data.refresh();
-      });
+      check(logger,
+            [&](const mc_rtc::log::FlatLog & log)
+            {
+              BOOST_REQUIRE(log.size() == iter);
+              data.check(log);
+              data.refresh();
+            });
     }
     /** Iteration 201, remove the data once more */
     logger.removeLogEntries(&data);
-    check(logger, [&](const mc_rtc::log::FlatLog & log) {
-      BOOST_REQUIRE(log.size() == iter);
-      data.check_empty(log);
-      iter++;
-    });
+    check(logger,
+          [&](const mc_rtc::log::FlatLog & log)
+          {
+            BOOST_REQUIRE(log.size() == iter);
+            data.check_empty(log);
+            iter++;
+          });
     /** Iteration 202 to 250, add from fast pointer to member, refresh data and check everything is ok */
     data.addToLoggerWithMemberPointerMacro(logger);
     for(iter = 202; iter <= 250; ++iter)
     {
-      check(logger, [&](const mc_rtc::log::FlatLog & log) {
-        BOOST_REQUIRE(log.size() == iter);
-        data.check(log);
-        data.refresh();
-      });
+      check(logger,
+            [&](const mc_rtc::log::FlatLog & log)
+            {
+              BOOST_REQUIRE(log.size() == iter);
+              data.check(log);
+              data.refresh();
+            });
     }
     /** Iteration 251, remove the data once more */
     logger.removeLogEntries(&data);
-    check(logger, [&](const mc_rtc::log::FlatLog & log) {
-      BOOST_REQUIRE(log.size() == iter);
-      data.check_empty(log);
-      iter++;
-    });
+    check(logger,
+          [&](const mc_rtc::log::FlatLog & log)
+          {
+            BOOST_REQUIRE(log.size() == iter);
+            data.check_empty(log);
+            iter++;
+          });
     /** Iteration 252 to 300, add from fast pointer to method, refresh data and check everything is ok */
     data.addToLoggerWithGetterMacro(logger);
     for(iter = 252; iter <= 200; ++iter)
     {
-      check(logger, [&](const mc_rtc::log::FlatLog & log) {
-        BOOST_REQUIRE(log.size() == iter);
-        data.check(log);
-        data.refresh();
-      });
+      check(logger,
+            [&](const mc_rtc::log::FlatLog & log)
+            {
+              BOOST_REQUIRE(log.size() == iter);
+              data.check(log);
+              data.refresh();
+            });
     }
     /** Iteration 301, remove the data once more */
     logger.removeLogEntries(&data);
-    check(logger, [&](const mc_rtc::log::FlatLog & log) {
-      BOOST_REQUIRE(log.size() == iter);
-      data.check_empty(log);
-      iter++;
-    });
+    check(logger,
+          [&](const mc_rtc::log::FlatLog & log)
+          {
+            BOOST_REQUIRE(log.size() == iter);
+            data.check_empty(log);
+            iter++;
+          });
     path = logger.path();
   }
   auto latest = bfs::temp_directory_path() / "mc-rtc-test-logger-latest.bin";
-  if(bfs::exists(latest))
-  {
-    bfs::remove(latest);
-  }
-  if(bfs::exists(path))
-  {
-    bfs::remove(path);
-  }
+  if(bfs::exists(latest)) { bfs::remove(latest); }
+  if(bfs::exists(path)) { bfs::remove(path); }
 }
 
 BOOST_AUTO_TEST_CASE(TestResume)
@@ -521,10 +533,7 @@ BOOST_AUTO_TEST_CASE(TestResume)
     }
   }
   auto latest = bfs::temp_directory_path() / "mc-rtc-test-logger-latest.bin";
-  if(bfs::exists(latest))
-  {
-    bfs::remove(latest);
-  }
+  if(bfs::exists(latest)) { bfs::remove(latest); }
   {
     BOOST_REQUIRE(bfs::exists(path_1));
     BOOST_REQUIRE(bfs::exists(path_2));

@@ -53,20 +53,11 @@ public:
                                                                 const mc_rbdyn::Robot & robot,
                                                                 const std::vector<std::string> & inactiveJoints);
 
-  inline const Eigen::VectorXd & value() const override
-  {
-    return f_->value();
-  }
+  inline const Eigen::VectorXd & value() const override { return f_->value(); }
 
-  inline const Eigen::VectorXd & velocity() const override
-  {
-    return f_->velocity();
-  }
+  inline const Eigen::VectorXd & velocity() const override { return f_->velocity(); }
 
-  inline const Eigen::VectorXd & normalAcceleration() const override
-  {
-    return f_->normalAcceleration();
-  }
+  inline const Eigen::VectorXd & normalAcceleration() const override { return f_->normalAcceleration(); }
 
 protected:
   /** Constructor

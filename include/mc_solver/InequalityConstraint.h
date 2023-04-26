@@ -54,10 +54,7 @@ struct InequalityConstraint : public Constraint<tasks::qp::Inequality, UpdateT>
   {
   }
 
-  const Eigen::MatrixXd & AInEq() const override
-  {
-    return this->AFull_;
-  }
+  const Eigen::MatrixXd & AInEq() const override { return this->AFull_; }
 
   std::string descInEq(const std::vector<rbd::MultiBody> &, int i) override
   {

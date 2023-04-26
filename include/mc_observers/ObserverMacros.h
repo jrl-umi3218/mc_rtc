@@ -56,7 +56,8 @@
 #  define EXPORT_OBSERVER_MODULE(NAME, TYPE)                                                                           \
     namespace                                                                                                          \
     {                                                                                                                  \
-    static auto registered = []() {                                                                                    \
+    static auto registered = []()                                                                                      \
+    {                                                                                                                  \
       using fn_t = std::function<TYPE *(const double &)>;                                                              \
       mc_observers::ObserverLoader::register_object(NAME, fn_t([](const double & dt) { return new TYPE(NAME, dt); })); \
       return true;                                                                                                     \

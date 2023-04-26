@@ -55,26 +55,14 @@ bool iterate_binary_log(const std::string & f,
   {
     uint64_t entrySize = 0;
     ifs.read((char *)&entrySize, sizeof(uint64_t));
-    if(!ifs)
-    {
-      break;
-    }
-    while(buffer.size() < entrySize)
-    {
-      buffer.resize(2 * buffer.size());
-    }
+    if(!ifs) { break; }
+    while(buffer.size() < entrySize) { buffer.resize(2 * buffer.size()); }
     ifs.read(buffer.data(), static_cast<int>(entrySize));
-    if(!ifs)
-    {
-      break;
-    }
+    if(!ifs) { break; }
     bool keys_changed = false;
     std::vector<Logger::GUIEvent> events;
     internal::LogEntry log(version, buffer, entrySize, meta, keys, events, keys_changed, extract);
-    if(!log.valid())
-    {
-      return false;
-    }
+    if(!log.valid()) { return false; }
     if(extract_t)
     {
       auto t_it = std::find_if(keys.begin(), keys.end(), [&](const auto & k) { return k.key == time; });
@@ -91,19 +79,14 @@ bool iterate_binary_log(const std::string & f,
       t_index = static_cast<size_t>(std::distance(keys.begin(), t_it));
     }
     std::optional<double> t;
-    if(extract_t)
+    if(extract_t) { t = log.getTime(t_index); }
+    auto keys_str = [&]()
     {
-      t = log.getTime(t_index);
-    }
-    auto keys_str = [&]() {
       std::vector<std::string> keys_str;
       if(keys_changed)
       {
         keys_str.reserve(keys.size());
-        for(const auto & k : keys)
-        {
-          keys_str.push_back(k.key);
-        }
+        for(const auto & k : keys) { keys_str.push_back(k.key); }
       }
       return keys_str;
     }();

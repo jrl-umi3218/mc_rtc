@@ -52,10 +52,7 @@ void MomentumTask::reset()
 /*! \brief Load parameters from a Configuration object */
 void MomentumTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
-  if(config.has("momentum"))
-  {
-    this->momentum(config("momentum"));
-  }
+  if(config.has("momentum")) { this->momentum(config("momentum")); }
   TrajectoryBase::load(solver, config);
 }
 
@@ -128,9 +125,8 @@ void MomentumTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
     case Backend::TVM:
     {
       gui.addElement({"Tasks", name_}, mc_rtc::gui::ArrayLabel("momentum", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                                               [this]() -> const sva::ForceVecd & {
-                                                                 return tvm_error(errorT)->algo().momentum();
-                                                               }));
+                                                               [this]() -> const sva::ForceVecd &
+                                                               { return tvm_error(errorT)->algo().momentum(); }));
       break;
     }
     default:
@@ -145,7 +141,8 @@ namespace
 
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "momentum",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
       auto robotIndex = robotIndexFromConfig(config, solver.robots(), "MomentumTask");
       auto t = std::make_shared<mc_tasks::MomentumTask>(solver.robots(), robotIndex);
       t->load(solver, config);

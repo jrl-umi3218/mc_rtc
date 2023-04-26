@@ -190,40 +190,20 @@ namespace
 
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "compliance",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
       Eigen::Matrix6d dof = Eigen::Matrix6d::Identity();
       config("dof", dof);
       auto t = std::shared_ptr<mc_tasks::force::ComplianceTask>(new mc_tasks::force::ComplianceTask(
           solver.robots(), robotIndexFromConfig(config, solver.robots(), "compliance"), config("body"), solver.dt(),
           dof));
-      if(config.has("stiffness"))
-      {
-        t->stiffness(config("stiffness"));
-      }
-      if(config.has("weight"))
-      {
-        t->weight(config("weight"));
-      }
-      if(config.has("forceThresh"))
-      {
-        t->forceThresh(config("forceThresh"));
-      }
-      if(config.has("torqueThresh"))
-      {
-        t->torqueThresh(config("torqueThresh"));
-      }
-      if(config.has("forceGain"))
-      {
-        t->forceGain(config("forceGain"));
-      }
-      if(config.has("torqueGain"))
-      {
-        t->torqueGain(config("torqueGain"));
-      }
-      if(config.has("wrench"))
-      {
-        t->setTargetWrench(config("wrench"));
-      }
+      if(config.has("stiffness")) { t->stiffness(config("stiffness")); }
+      if(config.has("weight")) { t->weight(config("weight")); }
+      if(config.has("forceThresh")) { t->forceThresh(config("forceThresh")); }
+      if(config.has("torqueThresh")) { t->torqueThresh(config("torqueThresh")); }
+      if(config.has("forceGain")) { t->forceGain(config("forceGain")); }
+      if(config.has("torqueGain")) { t->torqueGain(config("torqueGain")); }
+      if(config.has("wrench")) { t->setTargetWrench(config("wrench")); }
       t->load(solver, config);
       return t;
     });

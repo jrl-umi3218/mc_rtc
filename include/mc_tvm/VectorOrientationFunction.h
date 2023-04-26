@@ -34,61 +34,34 @@ public:
   void reset();
 
   /** Get the current objective */
-  inline const Eigen::Vector3d & target() const noexcept
-  {
-    return target_;
-  }
+  inline const Eigen::Vector3d & target() const noexcept { return target_; }
 
   /** Set the objective */
-  inline void target(const Eigen::Vector3d & target) noexcept
-  {
-    target_ = target;
-  }
+  inline void target(const Eigen::Vector3d & target) noexcept { target_ = target; }
 
   /** Get the current frame vector (in frame coordinates) */
-  inline const Eigen::Vector3d & frameVector() const noexcept
-  {
-    return frameVectorIn_;
-  }
+  inline const Eigen::Vector3d & frameVector() const noexcept { return frameVectorIn_; }
 
   /** Set the frame vector */
   void frameVector(const Eigen::Vector3d & frameVector) noexcept;
 
   /** Returns the current value of frame vector in world coordinates */
-  inline const Eigen::Vector3d & actual() const noexcept
-  {
-    return actualVector_;
-  }
+  inline const Eigen::Vector3d & actual() const noexcept { return actualVector_; }
 
   /** Get the current objective */
-  inline const Eigen::Vector3d & refVel() const noexcept
-  {
-    return refVel_;
-  }
+  inline const Eigen::Vector3d & refVel() const noexcept { return refVel_; }
 
   /** Set the objective */
-  inline void refVel(const Eigen::Vector3d & refVel) noexcept
-  {
-    refVel_ = refVel;
-  }
+  inline void refVel(const Eigen::Vector3d & refVel) noexcept { refVel_ = refVel; }
 
   /** Get the current objective */
-  inline const Eigen::Vector3d & refAccel() const noexcept
-  {
-    return refAccel_;
-  }
+  inline const Eigen::Vector3d & refAccel() const noexcept { return refAccel_; }
 
   /** Set the objective */
-  inline void refAccel(const Eigen::Vector3d & refAccel) noexcept
-  {
-    refAccel_ = refAccel;
-  }
+  inline void refAccel(const Eigen::Vector3d & refAccel) noexcept { refAccel_ = refAccel; }
 
   /** Access the frame */
-  inline const mc_rbdyn::RobotFrame & frame() const noexcept
-  {
-    return *frame_;
-  }
+  inline const mc_rbdyn::RobotFrame & frame() const noexcept { return *frame_; }
 
 protected:
   void updateValue();

@@ -95,18 +95,12 @@ public:
 
   bool run() override
   {
-    if(!MCController::run())
-    {
-      return false;
-    }
+    if(!MCController::run()) { return false; }
     nrIter++;
     if(nrIter > 10 && !expanded)
     {
       updateConstraint(0.00005);
-      if(size > 0.16)
-      {
-        expanded = true;
-      }
+      if(size > 0.16) { expanded = true; }
     }
     else if(expanded && !shrinked)
     {
@@ -131,10 +125,10 @@ public:
     comConstraint->setPlanes(solver(), makeCube(origin, size));
     /* Draw the box */
     poly = makeCubePolygon(robot().com(), size);
-    gui()->addElement(
-        {"Constraints", "CoMBox"},
-        mc_rtc::gui::Polygon("polygon", mc_rtc::gui::Color::Red,
-                             [this]() -> const std::vector<std::vector<Eigen::Vector3d>> & { return poly; }));
+    gui()->addElement({"Constraints", "CoMBox"},
+                      mc_rtc::gui::Polygon("polygon", mc_rtc::gui::Color::Red,
+                                           [this]() -> const std::vector<std::vector<Eigen::Vector3d>> &
+                                           { return poly; }));
   }
 
   void updateConstraint(double spd)
@@ -143,10 +137,7 @@ public:
     auto planes = makeCube(origin, size);
     std::vector<Eigen::Vector3d> speeds(planes.size());
     std::vector<Eigen::Vector3d> normalDots(planes.size(), Eigen::Vector3d::Zero());
-    for(size_t i = 0; i < planes.size(); ++i)
-    {
-      speeds[i] = -planes[i].normal * spd;
-    }
+    for(size_t i = 0; i < planes.size(); ++i) { speeds[i] = -planes[i].normal * spd; }
     poly = makeCubePolygon(origin, size);
     comConstraint->setPlanes(solver(), planes, speeds, normalDots);
   }

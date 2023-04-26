@@ -39,10 +39,7 @@ struct PolygonImpl : public DataElement<GetT>
   /** Invalid element */
   PolygonImpl() {}
 
-  static constexpr size_t write_size()
-  {
-    return DataElement<GetT>::write_size() + Color::write_size();
-  }
+  static constexpr size_t write_size() { return DataElement<GetT>::write_size() + Color::write_size(); }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {

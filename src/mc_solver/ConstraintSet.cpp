@@ -19,10 +19,7 @@ void ConstraintSet::addToSolver(mc_solver::QPSolver & solver)
         "[ConstraintSet::addToSolver] Creation backend ({}) is different from this solver backend ({})", backend_,
         solver.backend());
   }
-  if(inSolver_)
-  {
-    return;
-  }
+  if(inSolver_) { return; }
   inSolver_ = true;
   addToSolverImpl(solver);
   switch(solver.backend())
@@ -44,10 +41,7 @@ void ConstraintSet::removeFromSolver(mc_solver::QPSolver & solver)
         "[ConstraintSet::removeFromSolver] Creation backend ({}) is different from this solver backend ({})", backend_,
         solver.backend());
   }
-  if(!inSolver_)
-  {
-    return;
-  }
+  if(!inSolver_) { return; }
   inSolver_ = false;
   removeFromSolverImpl(solver);
   switch(solver.backend())

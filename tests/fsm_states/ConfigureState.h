@@ -12,17 +12,11 @@ struct MC_CONTROL_FSM_STATE_DLLAPI ConfigureState : mc_control::fsm::State
 
   void start(mc_control::fsm::Controller &) override {}
 
-  bool run(mc_control::fsm::Controller &) override
-  {
-    return false;
-  }
+  bool run(mc_control::fsm::Controller &) override { return false; }
 
   void teardown(mc_control::fsm::Controller &) override {}
 
-  unsigned int value() const
-  {
-    return value_;
-  }
+  unsigned int value() const { return value_; }
 
   static std::string ExpectedStateName;
 

@@ -86,136 +86,78 @@ struct MC_TASKS_DLLAPI Contact
    * \note Uses halfLength_, halfWidth_ computed from the surface points in findSurfaceBoundaries(), friction_: sole
    * friction
    */
-  const Eigen::Matrix<double, 16, 6> & wrenchFaceMatrix() const
-  {
-
-    return wrenchFaceMatrix_;
-  }
+  const Eigen::Matrix<double, 16, 6> & wrenchFaceMatrix() const { return wrenchFaceMatrix_; }
 
   /** Sagittal unit vector of the contact frame.
    *
    */
-  Eigen::Vector3d sagittal() const
-  {
-    return surfacePose_.rotation().row(0);
-  }
+  Eigen::Vector3d sagittal() const { return surfacePose_.rotation().row(0); }
 
   /** Lateral unit vector of the contact frame.
    *
    */
-  Eigen::Vector3d lateral() const
-  {
-    return surfacePose_.rotation().row(1);
-  }
+  Eigen::Vector3d lateral() const { return surfacePose_.rotation().row(1); }
 
   /** Normal unit vector of the contact frame.
    *
    */
-  Eigen::Vector3d normal() const
-  {
-    return surfacePose_.rotation().row(2);
-  }
+  Eigen::Vector3d normal() const { return surfacePose_.rotation().row(2); }
   /** Shorthand for position.
    *
    */
-  const Eigen::Vector3d & position() const
-  {
-    return surfacePose_.translation();
-  }
+  const Eigen::Vector3d & position() const { return surfacePose_.translation(); }
 
-  double halfWidth() const
-  {
-    return halfWidth_;
-  }
+  double halfWidth() const { return halfWidth_; }
 
-  double halfLength() const
-  {
-    return halfLength_;
-  }
+  double halfLength() const { return halfLength_; }
 
-  double friction() const
-  {
-    return friction_;
-  }
+  double friction() const { return friction_; }
 
   /**
    * World position of projected ankle frame into surface frame.
    * Orientation is that of the target contact frame.
    */
-  const sva::PTransformd & anklePose() const
-  {
-    return anklePose_;
-  }
+  const sva::PTransformd & anklePose() const { return anklePose_; }
 
-  Eigen::Vector3d sagital()
-  {
-    return surfacePose_.rotation().row(0);
-  }
+  Eigen::Vector3d sagital() { return surfacePose_.rotation().row(0); }
 
-  Eigen::Vector3d lateral()
-  {
-    return surfacePose_.rotation().row(1);
-  }
+  Eigen::Vector3d lateral() { return surfacePose_.rotation().row(1); }
 
-  Eigen::Vector3d vertical()
-  {
-    return surfacePose_.rotation().row(2);
-  }
+  Eigen::Vector3d vertical() { return surfacePose_.rotation().row(2); }
 
-  const std::string & surfaceName() const
-  {
-    return surfaceName_;
-  }
+  const std::string & surfaceName() const { return surfaceName_; }
 
-  const sva::PTransformd & surfacePose() const
-  {
-    return surfacePose_;
-  }
+  const sva::PTransformd & surfacePose() const { return surfacePose_; }
 
   /**
    * @brief Returns the contact polygon defined by the 4 vertices of the min/max
    * coordinates along the surface's sagital and normal direction
    */
-  const std::vector<Eigen::Vector3d> & polygon() const
-  {
-    return contactPolygon_;
-  }
+  const std::vector<Eigen::Vector3d> & polygon() const { return contactPolygon_; }
 
   /**
    * @brief World coordinates of the point furthest back in the surface's
    * sagital direction
    */
-  double xmin() const
-  {
-    return xyMin_.x();
-  }
+  double xmin() const { return xyMin_.x(); }
 
   /**
    * @brief World coordinates of the point furthest front in the surface's
    * sagital direction
    */
-  double xmax() const
-  {
-    return xyMax_.x();
-  }
+  double xmax() const { return xyMax_.x(); }
 
   /**
    * @brief World coordinates of the point furthest right in the surface's
    * lateral direction
    */
-  double ymin() const
-  {
-    return xyMin_.y();
-  }
+  double ymin() const { return xyMin_.y(); }
 
   /**
    * @brief World coordinates of the point furthest left in the surface's
    * lateral direction
    */
-  double ymax() const
-  {
-    return xyMax_.y();
-  }
+  double ymax() const { return xyMax_.y(); }
 
 private:
   /**
@@ -269,18 +211,9 @@ struct ConfigurationLoader<mc_tasks::lipm_stabilizer::ContactState>
   {
     using ContactState = mc_tasks::lipm_stabilizer::ContactState;
     const std::string & s = config;
-    if(s == "Left")
-    {
-      return ContactState::Left;
-    }
-    else if(s == "Right")
-    {
-      return ContactState::Right;
-    }
-    else
-    {
-      mc_rtc::log::error_and_throw("ContactState should be one of [Left, Right], {} requested.", s);
-    }
+    if(s == "Left") { return ContactState::Left; }
+    else if(s == "Right") { return ContactState::Right; }
+    else { mc_rtc::log::error_and_throw("ContactState should be one of [Left, Right], {} requested.", s); }
   }
 
   static mc_rtc::Configuration save(const mc_tasks::lipm_stabilizer::ContactState & contact)

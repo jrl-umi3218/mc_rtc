@@ -48,18 +48,17 @@ struct TVMCoMIncPlaneConstr
                  const std::vector<Eigen::Vector3d> & normalsDots,
                  tvm::task_dynamics::VelocityDamper::Config config)
   {
-    auto isNewConfig = [&]() {
+    auto isNewConfig = [&]()
+    {
       return config_.di_ != config.di_ || config_.ds_ != config.ds_ || config_.xsi_ != config.xsi_
              || config_.xsiOff_ != config.xsiOff_;
     };
     bool needInsertion = constraint_ != nullptr && (planes.size() != function_->planes().size() || isNewConfig());
     config_ = config;
-    if(needInsertion)
-    {
-      removeFromSolver(solver);
-    }
+    if(needInsertion) { removeFromSolver(solver); }
     const auto & fn_planes = function_->planes();
-    auto update_position = [&, this](size_t i) -> tvm::geometry::Plane & {
+    auto update_position = [&, this](size_t i) -> tvm::geometry::Plane &
+    {
       auto & plane = planes[i];
       if(i < fn_planes.size())
       {
@@ -84,15 +83,9 @@ struct TVMCoMIncPlaneConstr
     }
     else
     {
-      for(size_t i = 0; i < planes.size(); ++i)
-      {
-        update_position(i);
-      }
+      for(size_t i = 0; i < planes.size(); ++i) { update_position(i); }
     }
-    if(needInsertion)
-    {
-      addToSolver(solver);
-    }
+    if(needInsertion) { addToSolver(solver); }
   }
 };
 
@@ -216,7 +209,8 @@ namespace
 
 static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
     "CoMIncPlane",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
       auto ret = std::make_shared<mc_solver::CoMIncPlaneConstr>(
           solver.robots(), robotIndexFromConfig(config, solver.robots(), "CoMIncPlane"), solver.dt());
       return ret;

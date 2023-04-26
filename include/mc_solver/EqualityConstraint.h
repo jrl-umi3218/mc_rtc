@@ -54,10 +54,7 @@ struct EqualityConstraint : public Constraint<tasks::qp::Equality, UpdateT>
   {
   }
 
-  const Eigen::MatrixXd & AEq() const override
-  {
-    return this->AFull_;
-  }
+  const Eigen::MatrixXd & AEq() const override { return this->AFull_; }
 
   std::string descEq(const std::vector<rbd::MultiBody> &, int i) override
   {

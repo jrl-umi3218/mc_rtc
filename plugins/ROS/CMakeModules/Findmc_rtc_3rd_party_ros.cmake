@@ -4,9 +4,8 @@
 
 # Try to find ROS and some required ROS packages
 #
-# If everything if found:
-# - ROSCPP_FOUND is true
-# - you can link with mc_rtc_3rd_party::ROS
+# If everything if found: - ROSCPP_FOUND is true - you can link with
+# mc_rtc_3rd_party::ROS
 #
 
 if(NOT TARGET mc_rtc_3rd_party::ROS)
@@ -43,9 +42,10 @@ if(NOT TARGET mc_rtc_3rd_party::ROS)
     endforeach()
     list(REMOVE_DUPLICATES MC_RTC_ROS_FULL_LIBRARIES)
     add_library(mc_rtc_3rd_party::ROS INTERFACE IMPORTED)
-    set_target_properties(mc_rtc_3rd_party::ROS PROPERTIES
-      INTERFACE_LINK_LIBRARIES "${MC_RTC_ROS_FULL_LIBRARIES}"
-      INTERFACE_INCLUDE_DIRECTORIES "${MC_RTC_ROS_INCLUDE_DIRS}"
+    set_target_properties(
+      mc_rtc_3rd_party::ROS
+      PROPERTIES INTERFACE_LINK_LIBRARIES "${MC_RTC_ROS_FULL_LIBRARIES}"
+                 INTERFACE_INCLUDE_DIRECTORIES "${MC_RTC_ROS_INCLUDE_DIRS}"
     )
     message("-- Found ROS libraries: ${MC_RTC_ROS_FULL_LIBRARIES}")
     message("-- Found ROS include directories: ${MC_RTC_ROS_INCLUDE_DIRS}")

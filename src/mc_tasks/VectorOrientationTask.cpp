@@ -147,32 +147,29 @@ void VectorOrientationTask::addToLogger(mc_rtc::Logger & logger)
 void VectorOrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryBase::addToGUI(gui);
-  gui.addElement(
-      {"Tasks", name_},
-      mc_rtc::gui::ArrayInput(
-          "Target Direction", {"x", "y", "z"}, [this]() { return targetVector(); },
-          [this](const Eigen::Vector3d & target) { targetVector(target); }),
-      mc_rtc::gui::Arrow(
-          "Actual", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 0., 1.)),
-          [this]() -> Eigen::Vector3d { return frame_->position().translation(); },
-          [this]() -> Eigen::Vector3d { return frame_->position().translation() + .25 * actual(); }),
-      mc_rtc::gui::Arrow(
-          "Target", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(1., 0., 0.)),
-          [this]() -> Eigen::Vector3d { return frame_->position().translation(); },
-          [this]() -> Eigen::Vector3d { return frame_->position().translation() + .25 * targetVector(); }),
-      mc_rtc::gui::Point3D(
-          "Arrow end point",
-          [this]() -> Eigen::Vector3d { return frame_->position().translation() + .25 * targetVector(); },
-          [this](const Eigen::Vector3d & point) { targetVector(point - frame_->position().translation()); }));
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::ArrayInput(
+                     "Target Direction", {"x", "y", "z"}, [this]() { return targetVector(); },
+                     [this](const Eigen::Vector3d & target) { targetVector(target); }),
+                 mc_rtc::gui::Arrow(
+                     "Actual", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 0., 1.)),
+                     [this]() -> Eigen::Vector3d { return frame_->position().translation(); },
+                     [this]() -> Eigen::Vector3d { return frame_->position().translation() + .25 * actual(); }),
+                 mc_rtc::gui::Arrow(
+                     "Target", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(1., 0., 0.)),
+                     [this]() -> Eigen::Vector3d { return frame_->position().translation(); },
+                     [this]() -> Eigen::Vector3d { return frame_->position().translation() + .25 * targetVector(); }),
+                 mc_rtc::gui::Point3D(
+                     "Arrow end point",
+                     [this]() -> Eigen::Vector3d { return frame_->position().translation() + .25 * targetVector(); },
+                     [this](const Eigen::Vector3d & point)
+                     { targetVector(point - frame_->position().translation()); }));
 }
 
 void VectorOrientationTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   TrajectoryBase::load(solver, config);
-  if(config.has("targetVector"))
-  {
-    targetVector(config("targetVector"));
-  }
+  if(config.has("targetVector")) { targetVector(config("targetVector")); }
   if(config.has("relativeVector"))
   {
     Eigen::Matrix3d E_0_r = frame_->robot().posW().rotation().transpose();
@@ -188,8 +185,10 @@ namespace
 
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "vectorOrientation",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = [&]() {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
+      auto t = [&]()
+      {
         if(config.has("body"))
         {
           return std::make_shared<mc_tasks::VectorOrientationTask>(

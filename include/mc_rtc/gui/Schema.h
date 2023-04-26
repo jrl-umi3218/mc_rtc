@@ -29,10 +29,7 @@ struct SchemaImpl : public CallbackElement<Element, Callback>
   {
   }
 
-  static constexpr size_t write_size()
-  {
-    return CallbackElement<Element, Callback>::write_size() + 1;
-  }
+  static constexpr size_t write_size() { return CallbackElement<Element, Callback>::write_size() + 1; }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {

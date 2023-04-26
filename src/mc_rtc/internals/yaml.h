@@ -111,17 +111,11 @@ inline bool fromYAMLSequence(const YAML::Node & node, Configuration out)
     }
     else if(ni.IsSequence())
     {
-      if(!fromYAMLSequence(ni, out.array(ni.size())))
-      {
-        return false;
-      }
+      if(!fromYAMLSequence(ni, out.array(ni.size()))) { return false; }
     }
     else if(ni.IsMap())
     {
-      if(!fromYAMLMap(ni, out.object()))
-      {
-        return false;
-      }
+      if(!fromYAMLMap(ni, out.object())) { return false; }
     }
     else
     {
@@ -140,18 +134,12 @@ inline bool fromYAMLMap(const YAML::Node & node, Configuration out)
                                [](const YAML::detail::iterator_value & it) { return it.first.Scalar() == "<<"; });
   if(merge_it != node.end())
   {
-    if(!fromYAMLMap(merge_it->second, out))
-    {
-      return false;
-    }
+    if(!fromYAMLMap(merge_it->second, out)) { return false; }
   }
   for(const auto & it : node)
   {
     const auto & key = it.first.Scalar();
-    if(key == "<<")
-    {
-      continue;
-    }
+    if(key == "<<") { continue; }
     const YAML::Node & n = it.second;
     if(n.IsScalar())
     {
@@ -165,17 +153,11 @@ inline bool fromYAMLMap(const YAML::Node & node, Configuration out)
     }
     else if(n.IsSequence())
     {
-      if(!fromYAMLSequence(n, out.array(key, n.size())))
-      {
-        return false;
-      }
+      if(!fromYAMLSequence(n, out.array(key, n.size()))) { return false; }
     }
     else if(n.IsMap())
     {
-      if(!fromYAMLMap(n, key == "<<" ? out : out.add(key)))
-      {
-        return false;
-      }
+      if(!fromYAMLMap(n, key == "<<" ? out : out.add(key))) { return false; }
     }
     else
     {
@@ -201,14 +183,8 @@ inline bool YAMLToJSON(const YAML::Node & node, Configuration & out)
     out = mc_rtc::Configuration::rootArray();
     return fromYAMLSequence(node, out);
   }
-  else if(node.IsMap())
-  {
-    return fromYAMLMap(node, out);
-  }
-  else if(node.IsNull())
-  {
-    return true;
-  }
+  else if(node.IsMap()) { return fromYAMLMap(node, out); }
+  else if(node.IsNull()) { return true; }
   else
   {
     log::error("Cannot convert from YAML if the root type is not a map or a sequence");
@@ -288,15 +264,9 @@ inline void dumpYAML(const mc_rtc::Configuration & in, YAML::Emitter & out)
         break;
       }
     }
-    if(allScalar)
-    {
-      out << YAML::Flow;
-    }
+    if(allScalar) { out << YAML::Flow; }
     out << YAML::BeginSeq;
-    for(size_t i = 0; i < sz; ++i)
-    {
-      dumpYAML(in[i], out);
-    }
+    for(size_t i = 0; i < sz; ++i) { dumpYAML(in[i], out); }
     out << YAML::EndSeq;
   }
   else
@@ -316,22 +286,10 @@ inline void dumpYAML(const mc_rtc::Configuration & in, YAML::Emitter & out)
     else
     {
       auto dump = in.dump();
-      if(dump == "[]")
-      {
-        out << YAML::Flow << YAML::BeginSeq << YAML::EndSeq;
-      }
-      else if(dump == "{}")
-      {
-        out << YAML::Flow << YAML::BeginMap << YAML::EndMap;
-      }
-      else if(dump[0] == '"' && dump[dump.size() - 1] == '"')
-      {
-        out << dump.substr(1, dump.size() - 2);
-      }
-      else
-      {
-        out << dump;
-      }
+      if(dump == "[]") { out << YAML::Flow << YAML::BeginSeq << YAML::EndSeq; }
+      else if(dump == "{}") { out << YAML::Flow << YAML::BeginMap << YAML::EndMap; }
+      else if(dump[0] == '"' && dump[dump.size() - 1] == '"') { out << dump.substr(1, dump.size() - 2); }
+      else { out << dump; }
     }
   }
 }
@@ -342,10 +300,7 @@ inline std::string dumpYAML(const mc_rtc::Configuration & in)
 {
   YAML::Emitter out;
   dumpYAML(in, out);
-  if(!out.good())
-  {
-    log::error("YAML dump error:\n{}", out.GetLastError());
-  }
+  if(!out.good()) { log::error("YAML dump error:\n{}", out.GetLastError()); }
   return out.c_str();
 }
 

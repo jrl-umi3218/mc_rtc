@@ -174,16 +174,10 @@ struct MC_RBDYN_DLLAPI Gripper
   double curOpening(const std::string & jointName) const;
 
   /*! \brief Returns all joints involved in the gripper */
-  inline const std::vector<std::string> & joints() const
-  {
-    return names;
-  }
+  inline const std::vector<std::string> & joints() const { return names; }
 
   /*! \brief Returns all active joints involved in the gripper */
-  inline const std::vector<std::string> & activeJoints() const
-  {
-    return active_joints;
-  }
+  inline const std::vector<std::string> & activeJoints() const { return active_joints; }
 
   /* \brief Checks whether a joint is an active gripper joint */
   inline bool hasActiveJoint(const std::string & jointName) const
@@ -194,10 +188,7 @@ struct MC_RBDYN_DLLAPI Gripper
   /*! \brief Return all gripper joints configuration
    * \return Current values of all the gripper's joints, including passive joints
    */
-  inline const std::vector<double> & q() const
-  {
-    return _q;
-  }
+  inline const std::vector<double> & q() const { return _q; }
 
   /*! \brief Get the current opening percentage
    *
@@ -219,44 +210,26 @@ struct MC_RBDYN_DLLAPI Gripper
    * from the desired command. If it is over the limit, it can only stay there
    * for overCommandLimitIterN iterations before being released
    **/
-  void actualCommandDiffTrigger(double d)
-  {
-    config_.actualCommandDiffTrigger = d;
-  }
+  void actualCommandDiffTrigger(double d) { config_.actualCommandDiffTrigger = d; }
   /*! Difference between the command and the reality that triggers the safety */
-  double actualCommandDiffTrigger() const
-  {
-    return config_.actualCommandDiffTrigger;
-  }
+  double actualCommandDiffTrigger() const { return config_.actualCommandDiffTrigger; }
 
   /*! Number of iterations where actualCommandDiffTrigger() threshold may be
    * exceeded before the security is triggered */
-  void overCommandLimitIterN(unsigned int N)
-  {
-    config_.overCommandLimitIterN = std::max(N, 1u);
-  }
+  void overCommandLimitIterN(unsigned int N) { config_.overCommandLimitIterN = std::max(N, 1u); }
   /*! Number of iterations where actualCommandDiffTrigger() threshold may be
    * exceeded before the security is triggered */
-  unsigned int overCommandLimitIterN() const
-  {
-    return config_.overCommandLimitIterN;
-  }
+  unsigned int overCommandLimitIterN() const { return config_.overCommandLimitIterN; }
 
   /** Offset by which the gripper is released if overCommandDiffTrigger is
    * trigger for more than overCommandLimitIterN
    *
    * @param offset offset angle in [rad] or distance in [meter]
    **/
-  void releaseSafetyOffset(double offset)
-  {
-    config_.releaseSafetyOffset = offset;
-  }
+  void releaseSafetyOffset(double offset) { config_.releaseSafetyOffset = offset; }
   /** Offset by which the gripper is release if overCommandDiffTrigger is
    * trigger for more than overCommandLimitIterN */
-  double releaseSafetyOffset() const
-  {
-    return config_.releaseSafetyOffset;
-  }
+  double releaseSafetyOffset() const { return config_.releaseSafetyOffset; }
 
   /*! \brief Check if the gripper motion stopped moving.
    *
@@ -274,16 +247,10 @@ struct MC_RBDYN_DLLAPI Gripper
    *
    * This only affects safety settings in the GUI
    */
-  inline bool is_metric() const noexcept
-  {
-    return is_metric_;
-  }
+  inline bool is_metric() const noexcept { return is_metric_; }
 
   /** \brief When true the gripper is considered "open" when the joints' values are minimal */
-  inline bool reversed() const noexcept
-  {
-    return reversed_;
-  }
+  inline bool reversed() const noexcept { return reversed_; }
 
 protected:
   /*! \brief Set the target opening of a single gripper joint by index

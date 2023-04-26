@@ -16,14 +16,12 @@ BOOST_AUTO_TEST_CASE(RUN)
   mc_control::Ticker::Configuration config;
   config.mc_rtc_configuration = get_config_file();
   mc_control::Ticker ticker(config);
-  auto do_sim_loops = [&]() {
+  auto do_sim_loops = [&]()
+  {
     for(size_t i = 0; i < nrIter(); ++i)
     {
       bool r = ticker.step();
-      if(!r)
-      {
-        mc_rtc::log::critical("Failed at iter {}", i);
-      }
+      if(!r) { mc_rtc::log::critical("Failed at iter {}", i); }
       BOOST_REQUIRE(r);
     }
   };

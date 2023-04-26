@@ -20,16 +20,10 @@ namespace bfs = boost::filesystem;
 template<typename T, typename A>
 bool compare_vectors(const std::vector<T, A> & lhs, const std::vector<T, A> & rhs)
 {
-  if(lhs.size() != rhs.size())
-  {
-    return false;
-  }
+  if(lhs.size() != rhs.size()) { return false; }
   for(size_t i = 0; i < lhs.size(); ++i)
   {
-    if(!(lhs[i] == rhs[i]))
-    {
-      return false;
-    }
+    if(!(lhs[i] == rhs[i])) { return false; }
   }
   return true;
 }
@@ -42,22 +36,13 @@ bool compare_vector_maps(const std::map<std::string, std::vector<T>> & lhs,
   {
     if(rhs.count(el.first))
     {
-      if(!compare_vectors(el.second, rhs.at(el.first)))
-      {
-        return false;
-      }
+      if(!compare_vectors(el.second, rhs.at(el.first))) { return false; }
     }
-    else
-    {
-      return false;
-    }
+    else { return false; }
   }
   for(const auto & el : rhs)
   {
-    if(!lhs.count(el.first))
-    {
-      return false;
-    }
+    if(!lhs.count(el.first)) { return false; }
   }
   return true;
 }
@@ -155,18 +140,9 @@ std::shared_ptr<mc_rbdyn::Surface> make_ref()
 {
   static int i = -1;
   i++;
-  if(i % 3 == 0)
-  {
-    return make_ref<std::shared_ptr<mc_rbdyn::PlanarSurface>>();
-  }
-  else if(i % 3 == 1)
-  {
-    return make_ref<std::shared_ptr<mc_rbdyn::CylindricalSurface>>();
-  }
-  else
-  {
-    return make_ref<std::shared_ptr<mc_rbdyn::GripperSurface>>();
-  }
+  if(i % 3 == 0) { return make_ref<std::shared_ptr<mc_rbdyn::PlanarSurface>>(); }
+  else if(i % 3 == 1) { return make_ref<std::shared_ptr<mc_rbdyn::CylindricalSurface>>(); }
+  else { return make_ref<std::shared_ptr<mc_rbdyn::GripperSurface>>(); }
 }
 
 bool operator==(const std::shared_ptr<mc_rbdyn::Surface> & lhs, const std::shared_ptr<mc_rbdyn::Surface> & rhs)
@@ -234,10 +210,7 @@ mc_rbdyn::PolygonInterpolator make_ref()
   auto random_tuple_pair = [&random_tuple]() { return std::make_pair(random_tuple(), random_tuple()); };
   size_t size = random_size();
   std::vector<mc_rbdyn::PolygonInterpolator::tuple_pair_t> vec(size);
-  for(size_t i = 0; i < size; ++i)
-  {
-    vec[i] = random_tuple_pair();
-  }
+  for(size_t i = 0; i < size; ++i) { vec[i] = random_tuple_pair(); }
   return {vec};
 }
 
@@ -350,17 +323,11 @@ bool compareHulls(const std::map<std::string, std::pair<std::string, std::string
     const auto & name = itm.first;
     const auto & body = itm.second.first;
     const auto & path = bfs::path(itm.second.second);
-    if(!rhs.count(name))
-    {
-      return false;
-    }
+    if(!rhs.count(name)) { return false; }
     const auto & ritm = rhs.at(name);
     const auto & rbody = ritm.first;
     const auto & rpath = bfs::path(ritm.second);
-    if(rbody != body || path != rpath)
-    {
-      return false;
-    }
+    if(rbody != body || path != rpath) { return false; }
   }
   return true;
 }
@@ -405,10 +372,7 @@ void test_config_array_helper(mc_rtc::Configuration & config, int)
 
   std::array<T, 3> test_a = config("object_a");
   BOOST_REQUIRE(test_a.size() == ref_a.size());
-  for(size_t i = 0; i < test_a.size(); ++i)
-  {
-    BOOST_CHECK(test_a[i] == ref_a[i]);
-  }
+  for(size_t i = 0; i < test_a.size(); ++i) { BOOST_CHECK(test_a[i] == ref_a[i]); }
 }
 
 template<typename T>
@@ -458,18 +422,12 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(TestJsonIO, T, test_types)
 
   using vector_t = std::vector<T, typename AllocatorHelper<T>::Allocator>;
   vector_t ref_v;
-  for(size_t i = 0; i < 5; ++i)
-  {
-    ref_v.push_back(make_ref<T>());
-  }
+  for(size_t i = 0; i < 5; ++i) { ref_v.push_back(make_ref<T>()); }
   config.add("object_v", ref_v);
 
   vector_t test_v = config("object_v");
   BOOST_REQUIRE(test_v.size() == ref_v.size());
-  for(size_t i = 0; i < test_v.size(); ++i)
-  {
-    BOOST_CHECK(test_v[i] == ref_v[i]);
-  }
+  for(size_t i = 0; i < test_v.size(); ++i) { BOOST_CHECK(test_v[i] == ref_v[i]); }
 
   test_config_array<T>(config);
 }
@@ -480,10 +438,7 @@ BOOST_AUTO_TEST_CASE(TestRobotModuleAltSave)
   mc_rtc::Configuration config;
   config.add("rm", rm, false);
   std::vector<mc_rbdyn::RobotModule, Eigen::aligned_allocator<mc_rbdyn::RobotModule>> rmV;
-  for(size_t i = 0; i < 3; ++i)
-  {
-    rmV.push_back(rm);
-  }
+  for(size_t i = 0; i < 3; ++i) { rmV.push_back(rm); }
   config.add("rmV", rmV, false, std::vector<std::string>{}, true);
   std::array<mc_rbdyn::RobotModule, 2> rmA = {{rm, rm}};
   config.add("rmA", rmA, false, std::vector<std::string>{"RARM_LINK6", "LARM_LINK6"});

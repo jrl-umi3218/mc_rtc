@@ -30,10 +30,7 @@ void applyTransformToSchById(const rbd::MultiBody & mb,
 template<typename X, typename Y>
 inline void update(std::map<X, Y> & oldData, const std::map<X, Y> & nData)
 {
-  for(const auto & p : nData)
-  {
-    oldData[p.first] = p.second;
-  }
+  for(const auto & p : nData) { oldData[p.first] = p.second; }
 }
 
 } // namespace
@@ -48,10 +45,7 @@ Robots::Robots(NewRobotsToken) : robots_(), mbs_(), mbcs_(), robotIndex_(0), env
 
 void Robots::copy(Robots & out) const
 {
-  if(&out == this)
-  {
-    return;
-  }
+  if(&out == this) { return; }
   out.robots_.clear();
   out.robot_modules_ = robot_modules_;
   out.mbs_ = mbs_;
@@ -97,10 +91,7 @@ unsigned int Robots::envIndex() const
 unsigned int Robots::robotIndex(const std::string & name) const
 {
   auto key = robotNameToIndex_.find(name);
-  if(key == robotNameToIndex_.end())
-  {
-    mc_rtc::log::error_and_throw("No robot named {}", name);
-  }
+  if(key == robotNameToIndex_.end()) { mc_rtc::log::error_and_throw("No robot named {}", name); }
   return key->second;
 }
 
@@ -148,10 +139,7 @@ Robot & Robots::robot(const std::string & name)
 const Robot & Robots::robot(const std::string & name) const
 {
   auto key = robotNameToIndex_.find(name);
-  if(key == robotNameToIndex_.end())
-  {
-    mc_rtc::log::error_and_throw("No robot named {}", name);
-  }
+  if(key == robotNameToIndex_.end()) { mc_rtc::log::error_and_throw("No robot named {}", name); }
   return *robots_[key->second];
 }
 
@@ -247,10 +235,7 @@ RobotsPtr loadRobotAndEnv(const RobotModule & module, const RobotModule & envMod
 
 void Robots::load(const std::vector<std::shared_ptr<RobotModule>> & modules)
 {
-  for(size_t i = 0; i < modules.size(); ++i)
-  {
-    load(*modules[i]);
-  }
+  for(size_t i = 0; i < modules.size(); ++i) { load(*modules[i]); }
 }
 
 RobotsPtr loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules)
@@ -282,10 +267,7 @@ RobotsPtr loadRobotFromUrdf(const std::string & name,
 
 void Robots::rename(const std::string & oldName, const std::string & newName)
 {
-  if(!hasRobot(oldName))
-  {
-    mc_rtc::log::error_and_throw("Cannot rename robot: no robot named {}", oldName);
-  }
+  if(!hasRobot(oldName)) { mc_rtc::log::error_and_throw("Cannot rename robot: no robot named {}", oldName); }
   if(robotNameToIndex_.count(newName))
   {
     mc_rtc::log::error_and_throw("Cannot rename robot: a robot named {} already exist", newName);

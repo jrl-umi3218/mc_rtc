@@ -51,10 +51,15 @@ endif()
 
 option(GENERATE_COVERAGE "Generate coverage data" FALSE)
 if("${CMAKE_CXX_FLAGS}" MATCHES "--coverage")
-  set(GENERATE_COVERAGE TRUE CACHE BOOL "Generate coverage data" FORCE)
+  set(GENERATE_COVERAGE
+      TRUE
+      CACHE BOOL "Generate coverage data" FORCE
+  )
   string(REPLACE "--coverage" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
   string(REPLACE "--coverage" "" CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
-  string(REPLACE "--coverage" "" CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS}")
+  string(REPLACE "--coverage" "" CMAKE_MODULE_LINKER_FLAGS
+                 "${CMAKE_MODULE_LINKER_FLAGS}"
+  )
 endif()
 
 option(TREAT_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
@@ -66,9 +71,14 @@ option(ENABLE_FAST_TESTS "Run controllers tests for a few iterations" OFF)
 
 option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 
-option(MC_RTC_BUILD_STATIC "Build a static version of mc_rtc, this has no support for pluggable components" OFF)
+option(MC_RTC_BUILD_STATIC
+       "Build a static version of mc_rtc, this has no support for pluggable components"
+       OFF
+)
 option(MC_RTC_DISABLE_NETWORK "Build without network support" OFF)
-option(MC_RTC_DEVELOPER_MODE "Disable exact version embedding to speed up recompilations" OFF)
+option(MC_RTC_DEVELOPER_MODE
+       "Disable exact version embedding to speed up recompilations" OFF
+)
 
 option(DISABLE_ROS "Build without ROS support (even if ROS was found)" OFF)
 
@@ -83,15 +93,24 @@ function(find_best_boost_stacktrace)
     find_package(Boost QUIET COMPONENTS stacktrace_${variant})
     string(TOUPPER "${variant}" VARIANT)
     if(Boost_stacktrace_${variant}_FOUND OR Boost_STACKTRACE_${VARIANT}_FOUND)
-      set(BOOST_STACKTRACE stacktrace_${variant} PARENT_SCOPE)
-      set(BOOST_USE_STACKTRACE_DEFINE "BOOST_STACKTRACE_USE_${VARIANT}" PARENT_SCOPE)
+      set(BOOST_STACKTRACE
+          stacktrace_${variant}
+          PARENT_SCOPE
+      )
+      set(BOOST_USE_STACKTRACE_DEFINE
+          "BOOST_STACKTRACE_USE_${VARIANT}"
+          PARENT_SCOPE
+      )
       return()
     endif()
   endforeach()
 endfunction()
 find_best_boost_stacktrace()
 if(BOOST_STACKTRACE STREQUAL "")
-  message(FATAL_ERROR "No suitable Boost.Stacktrace installed, maybe you are missing some dependencies")
+  message(
+    FATAL_ERROR
+      "No suitable Boost.Stacktrace installed, maybe you are missing some dependencies"
+  )
 endif()
 
 add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer ${BOOST_STACKTRACE})
@@ -127,19 +146,21 @@ endif()
 
 if(HOST_IS_WSL)
   set(WSL_NOTIFY_SEND_VERSION "v0.1.871612270")
-  set(WSL_NOTIFY_SEND_SHA256 8531436fd005844aca9948d68b9e4e40df56645a9eade91f47027cdd4d0a1b0e)
+  set(WSL_NOTIFY_SEND_SHA256
+      8531436fd005844aca9948d68b9e4e40df56645a9eade91f47027cdd4d0a1b0e
+  )
   file(
     DOWNLOAD
-      https://github.com/stuartleeks/wsl-notify-send/releases/download/${WSL_NOTIFY_SEND_VERSION}/wsl-notify-send_windows_amd64.zip
-      ${PROJECT_BINARY_DIR}/3rd-party/wsl-notify-send.zip
+    https://github.com/stuartleeks/wsl-notify-send/releases/download/${WSL_NOTIFY_SEND_VERSION}/wsl-notify-send_windows_amd64.zip
+    ${PROJECT_BINARY_DIR}/3rd-party/wsl-notify-send.zip
     EXPECTED_HASH SHA256=${WSL_NOTIFY_SEND_SHA256}
   )
   set(WSL_NOTIFY_SEND_DIR "${PROJECT_BINARY_DIR}/3rd-party/wsl-notify-send/")
   file(MAKE_DIRECTORY ${WSL_NOTIFY_SEND_DIR})
   execute_process(
-    COMMAND ${CMAKE_COMMAND} -E tar xf ${PROJECT_BINARY_DIR}/3rd-party/wsl-notify-send.zip
-    WORKING_DIRECTORY "${WSL_NOTIFY_SEND_DIR}"
-    COMMAND_ERROR_IS_FATAL ANY
+    COMMAND ${CMAKE_COMMAND} -E tar xf
+            ${PROJECT_BINARY_DIR}/3rd-party/wsl-notify-send.zip
+    WORKING_DIRECTORY "${WSL_NOTIFY_SEND_DIR}" COMMAND_ERROR_IS_FATAL ANY
   )
   set(WSL_NOTIFY_SEND_LOCATION "${WSL_NOTIFY_SEND_DIR}/wsl-notify-send.exe")
   message("-- Use wsl-notify-send for notifications at ${WSL_NOTIFY_SEND_LOCATION}")
@@ -161,12 +182,13 @@ add_subdirectory(3rd-party/mpack)
 # yaml-cpp
 add_project_dependency(yaml-cpp 0.5.0 REQUIRED)
 
-# RapidJSON
-# The code was copied from the 1.1.0 release tarball for RapidJSON
+# RapidJSON The code was copied from the 1.1.0 release tarball for RapidJSON
 # https://github.com/miloyip/rapidjson
 add_library(mc_rtc_3rd_party::RapidJSON INTERFACE IMPORTED)
-set_target_properties(mc_rtc_3rd_party::RapidJSON PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}/3rd-party/RapidJSON
+set_target_properties(
+  mc_rtc_3rd_party::RapidJSON
+  PROPERTIES INTERFACE_INCLUDE_DIRECTORIES
+             ${CMAKE_CURRENT_SOURCE_DIR}/3rd-party/RapidJSON
 )
 
 # spdlog
@@ -179,7 +201,10 @@ macro(find_description_package PACKAGE)
     find_package(${PACKAGE} REQUIRED)
     if("${${PACKAGE}_INSTALL_PREFIX}" STREQUAL "")
       if("${${PACKAGE}_SOURCE_PREFIX}" STREQUAL "")
-        message(FATAL_ERROR "Your ${PACKAGE} does not define where to find the data, please update.")
+        message(
+          FATAL_ERROR
+            "Your ${PACKAGE} does not define where to find the data, please update."
+        )
       else()
         set(${PACKAGE_PATH_VAR} "${${PACKAGE}_SOURCE_PREFIX}")
       endif()
@@ -199,10 +224,14 @@ macro(mc_rtc_set_prefix NAME FOLDER)
   set(MC_${NAME}_LIBRARY_INSTALL_PREFIX ${CMAKE_INSTALL_FULL_LIBDIR}/${FOLDER})
   if(WIN32)
     set(MC_${NAME}_RUNTIME_INSTALL_PREFIX ${CMAKE_INSTALL_FULL_BINDIR}/${FOLDER})
-    set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX ${MC_RTC_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${FOLDER})
+    set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX
+        ${MC_RTC_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${FOLDER}
+    )
   else()
     set(MC_${NAME}_RUNTIME_INSTALL_PREFIX ${CMAKE_INSTALL_FULL_LIBDIR}/${FOLDER})
-    set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX ${MC_RTC_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${FOLDER})
+    set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX
+        ${MC_RTC_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${FOLDER}
+    )
   endif()
   # For backward compatibility
   set(MC_${NAME}_INSTALL_PREFIX "${MC_${NAME}_LIBRARY_INSTALL_PREFIX}")
@@ -216,12 +245,17 @@ mc_rtc_set_prefix(CONTROLLER mc_controller)
 set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
 set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
 
-configure_file(${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h)
+configure_file(
+  ${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in
+  ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h
+)
 
-# For MSVC, set local environment variable to enable finding the built dll
-# of the main library when launching ctest with RUN_TESTS
+# For MSVC, set local environment variable to enable finding the built dll of the main
+# library when launching ctest with RUN_TESTS
 if(MSVC)
-  set(CMAKE_MSVCIDE_RUN_PATH "\$(SolutionDir)/3rd-party/ltdl/\$(Configuration);\$(SolutionDir)/src/\$(Configuration);\$(SolutionDir)/src/mc_control/fsm/\$(Configuration)")
+  set(CMAKE_MSVCIDE_RUN_PATH
+      "\$(SolutionDir)/3rd-party/ltdl/\$(Configuration);\$(SolutionDir)/src/\$(Configuration);\$(SolutionDir)/src/mc_control/fsm/\$(Configuration)"
+  )
 endif(MSVC)
 
 include(CMakeModules/ListAllFiles.cmake)
@@ -233,7 +267,7 @@ add_subdirectory(plugins)
 add_subdirectory(utils)
 
 if(${PYTHON_BINDING})
- add_subdirectory(binding/python)
+  add_subdirectory(binding/python)
 endif()
 
 if(${BUILD_TESTING})
@@ -247,32 +281,35 @@ add_subdirectory(robots)
 add_subdirectory(observers)
 add_subdirectory(controllers)
 
-install(DIRECTORY include ${CMAKE_BINARY_DIR}/include
-          DESTINATION ${CMAKE_INSTALL_PREFIX}
-          FILES_MATCHING REGEX "h(pp)?$")
+install(
+  DIRECTORY include ${CMAKE_BINARY_DIR}/include
+  DESTINATION ${CMAKE_INSTALL_PREFIX}
+  FILES_MATCHING
+  REGEX "h(pp)?$"
+)
 
 file(GLOB data_files "data/*.json")
-install(
-  FILES
-    ${data_files}
-  DESTINATION share/mc_rtc
-)
-install(
-  FILES
-    etc/mc_rtc.yaml
-  DESTINATION etc
-)
+install(FILES ${data_files} DESTINATION share/mc_rtc)
+install(FILES etc/mc_rtc.yaml DESTINATION etc)
 
 # Extra macros for mc_rtc
-file(RELATIVE_PATH mc_rtc_macros_RELATIVE_PATH "${CMAKE_INSTALL_PREFIX}/${CONFIG_INSTALL_DIR}" "${CMAKE_INSTALL_PREFIX}")
-configure_file(src/mc_rtcMacros.in.cmake "${CMAKE_CURRENT_BINARY_DIR}/src/mc_rtcMacros.cmake" @ONLY)
+file(RELATIVE_PATH mc_rtc_macros_RELATIVE_PATH
+     "${CMAKE_INSTALL_PREFIX}/${CONFIG_INSTALL_DIR}" "${CMAKE_INSTALL_PREFIX}"
+)
+configure_file(
+  src/mc_rtcMacros.in.cmake "${CMAKE_CURRENT_BINARY_DIR}/src/mc_rtcMacros.cmake" @ONLY
+)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/src/mc_rtcMacros.cmake"
-        DESTINATION "${CONFIG_INSTALL_DIR}")
+        DESTINATION "${CONFIG_INSTALL_DIR}"
+)
 set(PACKAGE_EXTRA_MACROS "${PACKAGE_EXTRA_MACROS}
-include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtcMacros.cmake\")")
+include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtcMacros.cmake\")"
+)
 
 if(NOT MC_RTC_BUILD_STATIC)
-  set(PACKAGE_EXTRA_MACROS "${PACKAGE_EXTRA_MACROS}
+  set(PACKAGE_EXTRA_MACROS
+      "${PACKAGE_EXTRA_MACROS}
 include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtc_fsm_states.cmake\")
-include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtc_observers.cmake\")")
+include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtc_observers.cmake\")"
+  )
 endif()

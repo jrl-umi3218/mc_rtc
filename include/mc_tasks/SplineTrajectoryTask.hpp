@@ -54,7 +54,8 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> SplineTrajectoryT
     bool useDuration = config("timeElapsed");
     if(useDuration)
     {
-      return [](const mc_tasks::MetaTask & t, std::string & out) {
+      return [](const mc_tasks::MetaTask & t, std::string & out)
+      {
         const auto & self = static_cast<const SplineTrajectoryBase &>(t);
         if(self.timeElapsed())
         {
@@ -77,20 +78,15 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> SplineTrajectoryT
         dof(i) = 0.;
         target(i) = 0.;
       }
-      else if(target(i) < 0)
-      {
-        dof(i) = -1.;
-      }
+      else if(target(i) < 0) { dof(i) = -1.; }
     }
-    return [dof, target](const mc_tasks::MetaTask & t, std::string & out) {
+    return [dof, target](const mc_tasks::MetaTask & t, std::string & out)
+    {
       const auto & self = static_cast<const SplineTrajectoryTask &>(t);
       Eigen::Vector6d w = self.frame_->wrench().vector();
       for(int i = 0; i < 6; ++i)
       {
-        if(dof(i) * fabs(w(i)) < target(i))
-        {
-          return false;
-        }
+        if(dof(i) * fabs(w(i)) < target(i)) { return false; }
       }
       out += "wrench";
       return true;
@@ -108,8 +104,9 @@ void SplineTrajectoryTask<Derived>::load(mc_solver::QPSolver & solver, const mc_
     /**
      * Load gains from config as vector<pair<double,Vector6d>> or vector<pair<double, double>>
      **/
-    auto genValues = [this](const mc_rtc::Configuration & c, const std::string & key,
-                            const Eigen::Vector6d & startGains) {
+    auto genValues =
+        [this](const mc_rtc::Configuration & c, const std::string & key, const Eigen::Vector6d & startGains)
+    {
       const auto & conf = c(key);
       std::vector<std::pair<double, mc_rtc::Configuration>> values = conf;
       std::vector<std::pair<double, Eigen::Vector6d>> out;
@@ -123,10 +120,7 @@ void SplineTrajectoryTask<Derived>::load(mc_solver::QPSolver & solver, const mc_
             Eigen::Vector6d vec = v.second;
             out.push_back(std::make_pair(v.first, vec));
           }
-          else
-          {
-            out.push_back({v.first, Eigen::Vector6d::Constant(static_cast<double>(v.second))});
-          }
+          else { out.push_back({v.first, Eigen::Vector6d::Constant(static_cast<double>(v.second))}); }
         }
         catch(mc_rtc::Configuration::Exception & e)
         {
@@ -137,32 +131,17 @@ void SplineTrajectoryTask<Derived>::load(mc_solver::QPSolver & solver, const mc_
         }
       }
       // Add initial gain if missing from configuration
-      if(out.empty())
-      {
-        out.push_back({0., startGains});
-      }
-      else if(!out.empty() && out.front().first > 0.)
-      {
-        out.insert(out.begin(), {0, startGains});
-      }
+      if(out.empty()) { out.push_back({0., startGains}); }
+      else if(!out.empty() && out.front().first > 0.) { out.insert(out.begin(), {0, startGains}); }
       return out;
     };
 
     auto gconfig = config("gainsInterpolation");
-    if(gconfig.has("stiffness"))
-    {
-      stiffnessInterpolation(genValues(gconfig, "stiffness", this->dimStiffness()));
-    }
+    if(gconfig.has("stiffness")) { stiffnessInterpolation(genValues(gconfig, "stiffness", this->dimStiffness())); }
 
-    if(gconfig.has("damping"))
-    {
-      dampingInterpolation(genValues(gconfig, "damping", this->dimDamping()));
-    }
+    if(gconfig.has("damping")) { dampingInterpolation(genValues(gconfig, "damping", this->dimDamping())); }
 
-    if(gconfig.has("dimWeight"))
-    {
-      dimWeightInterpolation(genValues(gconfig, "dimWeight", this->dimWeight()));
-    }
+    if(gconfig.has("dimWeight")) { dimWeightInterpolation(genValues(gconfig, "dimWeight", this->dimWeight())); }
   }
 }
 
@@ -210,10 +189,7 @@ void SplineTrajectoryTask<Derived>::update(mc_solver::QPSolver & solver)
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::interpolateGains()
 {
-  if(dimWeightInterpolator_.hasValues())
-  {
-    TrajectoryBase::dimWeight(dimWeightInterpolator_.compute(currTime_));
-  }
+  if(dimWeightInterpolator_.hasValues()) { TrajectoryBase::dimWeight(dimWeightInterpolator_.compute(currTime_)); }
 
   if(stiffnessInterpolator_.hasValues())
   { // Interpolate gains
@@ -242,10 +218,7 @@ void SplineTrajectoryTask<Derived>::oriWaypoints(const std::vector<std::pair<dou
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::dimWeight(const Eigen::VectorXd & dimW)
 {
-  if(dimW.size() != 6)
-  {
-    mc_rtc::log::error_and_throw("SplineTrajectoryTask dimWeight must be a Vector6d!");
-  }
+  if(dimW.size() != 6) { mc_rtc::log::error_and_throw("SplineTrajectoryTask dimWeight must be a Vector6d!"); }
 
   dimWeightInterpolator_.clear();
   TrajectoryBase::dimWeight(dimW);
@@ -298,10 +271,7 @@ void SplineTrajectoryTask<Derived>::damping(double damping)
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::damping(const Eigen::VectorXd & damping)
 {
-  if(damping.size() != 6)
-  {
-    mc_rtc::log::error_and_throw("[{}] dimensional damping must be a Vector6d!", name());
-  }
+  if(damping.size() != 6) { mc_rtc::log::error_and_throw("[{}] dimensional damping must be a Vector6d!", name()); }
 
   dampingInterpolator_.clear();
   TrajectoryBase::damping(damping);
@@ -316,14 +286,8 @@ void SplineTrajectoryTask<Derived>::setGains(double stiffness, double damping)
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::setGains(const Eigen::VectorXd & stiffness, const Eigen::VectorXd & damping)
 {
-  if(stiffness.size() != 6)
-  {
-    mc_rtc::log::error_and_throw("[{}] dimensional stiffness must be a Vector6d!", name());
-  }
-  else if(damping.size() != 6)
-  {
-    mc_rtc::log::error_and_throw("[{}] dimensional damping must be a Vector6d!", name());
-  }
+  if(stiffness.size() != 6) { mc_rtc::log::error_and_throw("[{}] dimensional stiffness must be a Vector6d!", name()); }
+  else if(damping.size() != 6) { mc_rtc::log::error_and_throw("[{}] dimensional damping must be a Vector6d!", name()); }
   stiffnessInterpolator_.clear();
   dampingInterpolator_.clear();
   TrajectoryBase::setGains(stiffness, damping);
@@ -425,7 +389,8 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
   gui.addElement({"Tasks", name_}, mc_rtc::gui::Rotation(
                                        "Target Rotation", [this]() { return this->target(); },
-                                       [this](const Eigen::Quaterniond & ori) {
+                                       [this](const Eigen::Quaterniond & ori)
+                                       {
                                          sva::PTransformd X_0_t(ori, this->target().translation());
                                          this->target(X_0_t);
                                        }));
@@ -434,16 +399,17 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
   auto & spline = static_cast<Derived &>(*this).spline();
   for(unsigned i = 0; i < oriSpline_.waypoints().size(); ++i)
   {
-    gui.addElement(
-        {"Tasks", name_, "Orientation Waypoint"},
-        mc_rtc::gui::Rotation(
-            "Waypoint " + std::to_string(i),
-            [this, i, &spline]() {
-              // Get position of orientation waypoint along the spline
-              const auto & wp = this->oriSpline_.waypoint(i);
-              return sva::PTransformd(wp.second, spline.splev(wp.first, 0)[0]);
-            },
-            [this, i](const Eigen::Quaterniond & ori) { this->oriSpline_.waypoint(i, ori.toRotationMatrix()); }));
+    gui.addElement({"Tasks", name_, "Orientation Waypoint"},
+                   mc_rtc::gui::Rotation(
+                       "Waypoint " + std::to_string(i),
+                       [this, i, &spline]()
+                       {
+                         // Get position of orientation waypoint along the spline
+                         const auto & wp = this->oriSpline_.waypoint(i);
+                         return sva::PTransformd(wp.second, spline.splev(wp.first, 0)[0]);
+                       },
+                       [this, i](const Eigen::Quaterniond & ori)
+                       { this->oriSpline_.waypoint(i, ori.toRotationMatrix()); }));
   }
 }
 

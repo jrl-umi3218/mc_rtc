@@ -48,10 +48,7 @@ void CoMInConvexFunction::reset()
 void CoMInConvexFunction::updateValue()
 {
   Eigen::DenseIndex i = 0;
-  for(const auto & p : planes_)
-  {
-    value_(i++) = com_.com().dot(p->normal()) + p->offset();
-  }
+  for(const auto & p : planes_) { value_(i++) = com_.com().dot(p->normal()) + p->offset(); }
 }
 
 void CoMInConvexFunction::updateVelocity()

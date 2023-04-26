@@ -40,10 +40,7 @@ struct FormImpl : public CallbackElement<Element, Callback>
   {
     count_ += 1;
     using ElementT = typename std::decay<T>::type;
-    if(ElementT::is_dynamic())
-    {
-      addDynamicElement(std::forward<T>(element));
-    }
+    if(ElementT::is_dynamic()) { addDynamicElement(std::forward<T>(element)); }
     else
     {
       std::vector<char> data = data_;
@@ -56,24 +53,15 @@ struct FormImpl : public CallbackElement<Element, Callback>
     }
   }
 
-  static constexpr size_t write_size()
-  {
-    return CallbackElement<Element, Callback>::write_size() + 1;
-  }
+  static constexpr size_t write_size() { return CallbackElement<Element, Callback>::write_size() + 1; }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
     CallbackElement<Element, Callback>::write(builder);
     builder.start_array(count_);
-    for(const auto & el : dynamic_elements_)
-    {
-      el(builder);
-    }
+    for(const auto & el : dynamic_elements_) { el(builder); }
     builder.write_object(data_.data(), data_size_);
-    for(size_t i = dynamic_elements_.size() + 1; i < count_; ++i)
-    {
-      builder.write_object(nullptr, 0);
-    }
+    for(size_t i = dynamic_elements_.size() + 1; i < count_; ++i) { builder.write_object(nullptr, 0); }
     builder.finish_array();
   }
 
@@ -90,10 +78,7 @@ private:
   void write_elements(mc_rtc::MessagePackBuilder & builder, Arg && element, Args &&... args)
   {
     using ElementT = typename std::decay<Arg>::type;
-    if(ElementT::is_dynamic())
-    {
-      addDynamicElement(std::forward<Arg>(element));
-    }
+    if(ElementT::is_dynamic()) { addDynamicElement(std::forward<Arg>(element)); }
     else
     {
       builder.start_array(element.write_size());
@@ -106,7 +91,8 @@ private:
   template<typename T>
   void addDynamicElement(T && element)
   {
-    auto callback = [element](mc_rtc::MessagePackBuilder & builder) mutable {
+    auto callback = [element](mc_rtc::MessagePackBuilder & builder) mutable
+    {
       builder.start_array(element.write_size());
       element.write(builder);
       builder.finish_array();
@@ -127,15 +113,9 @@ struct FormElement
 {
   static constexpr auto type = element;
 
-  static constexpr size_t write_size()
-  {
-    return 3 + Derived::write_size_();
-  }
+  static constexpr size_t write_size() { return 3 + Derived::write_size_(); }
 
-  static constexpr bool is_dynamic()
-  {
-    return false;
-  }
+  static constexpr bool is_dynamic() { return false; }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
@@ -166,10 +146,7 @@ struct CallbackOrValue
 
   Callback callback;
 
-  void write(mc_rtc::MessagePackBuilder & builder)
-  {
-    builder.write(callback());
-  }
+  void write(mc_rtc::MessagePackBuilder & builder) { builder.write(callback()); }
 };
 
 template<typename T>
@@ -177,10 +154,7 @@ struct CallbackOrValue<T, void>
 {
   T value;
 
-  void write(mc_rtc::MessagePackBuilder & builder)
-  {
-    builder.write(value);
-  }
+  void write(mc_rtc::MessagePackBuilder & builder) { builder.write(value); }
 };
 
 template<typename T, Elements element, typename DataCallback = void>
@@ -196,15 +170,9 @@ struct FormDataInput : public FormElement<FormDataInput<T, element, DataCallback
     has_def_ = false;
   }
 
-  static constexpr size_t write_size_()
-  {
-    return 2;
-  }
+  static constexpr size_t write_size_() { return 2; }
 
-  static constexpr bool is_dynamic()
-  {
-    return !std::is_same<DataCallback, void>::value;
-  }
+  static constexpr bool is_dynamic() { return !std::is_same<DataCallback, void>::value; }
 
   void write_(mc_rtc::MessagePackBuilder & builder)
   {
@@ -265,15 +233,9 @@ struct FormArrayInput : public FormElement<FormArrayInput<T, DataCallback>, Elem
     has_def_ = false;
   }
 
-  static constexpr size_t write_size_()
-  {
-    return 3;
-  }
+  static constexpr size_t write_size_() { return 3; }
 
-  static constexpr bool is_dynamic()
-  {
-    return !std::is_same<DataCallback, void>::value;
-  }
+  static constexpr bool is_dynamic() { return !std::is_same<DataCallback, void>::value; }
 
   void write_(mc_rtc::MessagePackBuilder & builder)
   {
@@ -330,10 +292,7 @@ struct FormComboInput : public FormElement<FormComboInput, Elements::ComboInput>
   {
   }
 
-  static constexpr size_t write_size_()
-  {
-    return 3;
-  }
+  static constexpr size_t write_size_() { return 3; }
 
   inline void write_(mc_rtc::MessagePackBuilder & builder)
   {
@@ -363,10 +322,7 @@ struct FormDataComboInput : public FormElement<FormDataComboInput, Elements::Dat
   {
   }
 
-  static constexpr size_t write_size_()
-  {
-    return 2;
-  }
+  static constexpr size_t write_size_() { return 2; }
 
   inline void write_(mc_rtc::MessagePackBuilder & builder)
   {

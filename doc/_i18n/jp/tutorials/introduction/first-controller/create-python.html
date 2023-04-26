@@ -65,4 +65,3 @@ $ PYTHONPATH=$HOME/my_python_controllers:$PYTHONPATH rosrun mc_rtc_ticker mc_rtc
 <h4>C++との主な違い</h4>
 
 <p>C++のコントローラーでは、必要に応じて<code>mc_control::MCController::run()</code>関数と<code>mc_control::MCController::reset()</code>関数の呼び出しをバイパスできます。一方、Pythonのコントローラーでは、C++と同様の処理が実行された<strong>後</strong>に、<code>run_callback(self)</code>と<code>reset_callback(self, data)</code>が常に呼び出されます。</p>
-

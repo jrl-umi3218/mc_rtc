@@ -50,10 +50,7 @@ public:
     auto X_gaze_object = object_ * X_0_gaze.inv();
     gazeTask->error(X_gaze_object.translation());
     bool ret = MCController::run();
-    if(!ret)
-    {
-      mc_rtc::log::critical("Failed at iter: {}", nrIter);
-    }
+    if(!ret) { mc_rtc::log::critical("Failed at iter: {}", nrIter); }
     BOOST_CHECK(ret);
     nrIter++;
     if(nrIter == 500)

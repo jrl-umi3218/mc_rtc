@@ -87,41 +87,23 @@ struct MC_CONTROL_FSM_DLLAPI State
   virtual void stop(Controller &) {}
 
   /** Handle read service call */
-  virtual bool read_msg(std::string &)
-  {
-    return false;
-  }
+  virtual bool read_msg(std::string &) { return false; }
 
   /** Handle read/write service call */
-  virtual bool read_write_msg(std::string &, std::string &)
-  {
-    return false;
-  }
+  virtual bool read_write_msg(std::string &, std::string &) { return false; }
 
   /** Returns the output of the state, should only be consulted once run has
    * returned true */
-  const std::string & output() const noexcept
-  {
-    return output_;
-  }
+  const std::string & output() const noexcept { return output_; }
 
   /** Returns the name of the state */
-  const std::string & name()
-  {
-    return name_;
-  }
+  const std::string & name() { return name_; }
 
-  void name(const std::string & n)
-  {
-    name_ = n;
-  }
+  void name(const std::string & n) { name_ = n; }
 
 protected:
   /** Output setter for derived classes */
-  void output(const std::string & o)
-  {
-    output_ = o;
-  }
+  void output(const std::string & o) { output_ = o; }
 
   /** Called to configure the state.
    *
@@ -229,7 +211,8 @@ using StatePtr = std::shared_ptr<State>;
 #  define EXPORT_SINGLE_STATE(NAME, TYPE)                                                              \
     namespace                                                                                          \
     {                                                                                                  \
-    static auto registered = []() {                                                                    \
+    static auto registered = []()                                                                      \
+    {                                                                                                  \
       using fn_t = std::function<TYPE *()>;                                                            \
       mc_control::fsm::Controller::factory().register_object(NAME, fn_t([]() { return new TYPE(); })); \
       return true;                                                                                     \

@@ -176,10 +176,7 @@ struct callback_is_serializable<T, void_t<typename std::result_of<T()>::type>>
 template<typename T>
 struct LogWriter
 {
-  static void write(const T & data, mc_rtc::MessagePackBuilder & builder)
-  {
-    builder.write(data);
-  }
+  static void write(const T & data, mc_rtc::MessagePackBuilder & builder) { builder.write(data); }
 };
 
 /** Provide a correspondance from a log type to a C++ type */

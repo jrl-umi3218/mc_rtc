@@ -33,7 +33,6 @@ Example3:
 # Example3 still have two tasks, objectives are unchanged but:
 # - t1 has no more completion criteria
 # - t2 has a completion criteria
----
 Example4:
   base: Example3
   tasks:

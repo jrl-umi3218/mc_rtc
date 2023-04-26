@@ -31,15 +31,9 @@ void_ptr make_void_ptr(std::unique_ptr<T> ptr)
 template<typename T>
 struct void_ptr_caster
 {
-  T * operator()(void_ptr & ptr)
-  {
-    return static_cast<T *>(ptr.get());
-  }
+  T * operator()(void_ptr & ptr) { return static_cast<T *>(ptr.get()); }
 
-  const T * operator()(const void_ptr & ptr)
-  {
-    return static_cast<const T *>(ptr.get());
-  }
+  const T * operator()(const void_ptr & ptr) { return static_cast<const T *>(ptr.get()); }
 };
 
 } // namespace mc_rtc

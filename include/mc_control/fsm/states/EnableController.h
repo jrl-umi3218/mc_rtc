@@ -24,10 +24,7 @@ struct MC_CONTROL_FSM_STATE_DLLAPI EnableControllerState : State
 {
   void start(Controller &) override;
 
-  bool run(Controller &) override
-  {
-    return true;
-  }
+  bool run(Controller &) override { return true; }
 
   void teardown(Controller &) override {}
 };

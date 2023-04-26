@@ -39,20 +39,14 @@ size_t TVMQPSolver::getContactIdx(const mc_rbdyn::Contact & contact)
 {
   for(size_t i = 0; i < contacts_.size(); ++i)
   {
-    if(contacts_[i] == contact)
-    {
-      return i;
-    }
+    if(contacts_[i] == contact) { return i; }
   }
   return contacts_.size();
 }
 
 void TVMQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts)
 {
-  for(const auto & c : contacts)
-  {
-    addContact(c);
-  }
+  for(const auto & c : contacts) { addContact(c); }
   size_t i = 0;
   for(auto it = contacts_.begin(); it != contacts_.end();)
   {
@@ -64,10 +58,7 @@ void TVMQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Conta
       const std::string & r2 = robots().robot(c.r2Index()).name();
       const std::string & r2S = c.r2Surface()->name();
       logger_->removeLogEntry("contact_" + r1 + "::" + r1S + "_" + r2 + "::" + r2S);
-      if(gui_)
-      {
-        gui_->removeElement({"Contacts", "Forces"}, fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S));
-      }
+      if(gui_) { gui_->removeElement({"Contacts", "Forces"}, fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S)); }
       it = removeContact(i);
     }
     else
@@ -82,16 +73,10 @@ const sva::ForceVecd TVMQPSolver::desiredContactForce(const mc_rbdyn::Contact & 
 {
   const auto & r1 = robot(id.r1Index());
   auto it1 = dynamics_.find(r1.name());
-  if(it1 != dynamics_.end())
-  {
-    return it1->second->dynamicFunction().contactForce(r1.frame(id.r1Surface()->name()));
-  }
+  if(it1 != dynamics_.end()) { return it1->second->dynamicFunction().contactForce(r1.frame(id.r1Surface()->name())); }
   const auto & r2 = robot(id.r2Index());
   auto it2 = dynamics_.find(r2.name());
-  if(it2 != dynamics_.end())
-  {
-    return it2->second->dynamicFunction().contactForce(r2.frame(id.r2Surface()->name()));
-  }
+  if(it2 != dynamics_.end()) { return it2->second->dynamicFunction().contactForce(r2.frame(id.r2Surface()->name())); }
   return sva::ForceVecd::Zero();
 }
 
@@ -145,10 +130,7 @@ bool TVMQPSolver::runOpenLoop()
     for(auto & robot : *robots_p)
     {
       auto & mb = robot.mb();
-      if(mb.nrDof() > 0)
-      {
-        updateRobot(robot);
-      }
+      if(mb.nrDof() > 0) { updateRobot(robot); }
     }
     return true;
   }
@@ -187,15 +169,9 @@ bool TVMQPSolver::runJointsFeedback(bool wVelocity)
       for(size_t j = 0; j < rjo.size(); ++j)
       {
         auto jI = robot.jointIndexInMBC(j);
-        if(jI == -1)
-        {
-          continue;
-        }
+        if(jI == -1) { continue; }
         robot.q()[static_cast<size_t>(jI)][0] = encoders[j];
-        if(wVelocity)
-        {
-          robot.alpha()[static_cast<size_t>(jI)][0] = encoders_alpha_[i][j];
-        }
+        if(wVelocity) { robot.alpha()[static_cast<size_t>(jI)][0] = encoders_alpha_[i][j]; }
       }
       robot.forwardKinematics();
       robot.forwardVelocity();
@@ -207,10 +183,7 @@ bool TVMQPSolver::runJointsFeedback(bool wVelocity)
     for(size_t i = 0; i < robots_p->size(); ++i)
     {
       auto & robot = robots_p->robot(i);
-      if(robot.mb().nrDof() == 0)
-      {
-        continue;
-      }
+      if(robot.mb().nrDof() == 0) { continue; }
       robot.q() = control_q_[i];
       robot.alpha() = control_alpha_[i];
       updateRobot(robot);
@@ -254,10 +227,7 @@ bool TVMQPSolver::runClosedLoop(bool integrateControlState)
     for(size_t i = 0; i < robots_p->size(); ++i)
     {
       auto & robot = robots_p->robot(i);
-      if(robot.mb().nrDof() == 0)
-      {
-        continue;
-      }
+      if(robot.mb().nrDof() == 0) { continue; }
       if(integrateControlState)
       {
         robot.q() = control_q_[i];
@@ -308,20 +278,14 @@ void TVMQPSolver::addDynamicsConstraint(mc_solver::DynamicsConstraint * dyn)
       // FIXME Debug mc_rbdyn::intersection
       // auto s1Points = mc_rbdyn::intersection(s1, s2);
       const auto & s1Points = s1.points();
-      if(isR1)
-      {
-        addContactToDynamics(r1.name(), f1, s1Points, data.f1_, data.f1Constraints_, C, 1.0);
-      }
+      if(isR1) { addContactToDynamics(r1.name(), f1, s1Points, data.f1_, data.f1Constraints_, C, 1.0); }
       if(isR2)
       {
         std::vector<sva::PTransformd> s2Points;
         s2Points.reserve(s1Points.size());
         auto X_b2_b1 =
             r1.mbc().bodyPosW[r1.bodyIndexByName(f1.body())] * r2.mbc().bodyPosW[r2.bodyIndexByName(f2.body())].inv();
-        for(const auto & X_b1_p : s1Points)
-        {
-          s2Points.push_back(X_b1_p * X_b2_b1);
-        }
+        for(const auto & X_b1_p : s1Points) { s2Points.push_back(X_b1_p * X_b2_b1); }
         addContactToDynamics(r2.name(), f2, s2Points, data.f2_, data.f2Constraints_, C, -1.0);
       }
     }
@@ -348,15 +312,10 @@ void TVMQPSolver::removeDynamicsConstraint(mc_solver::DynamicsConstraint * dyn)
     const auto & contact = contacts_[i];
     auto & data = contactsData_[i];
     auto clearContacts = [&](const std::string & robot, tvm::VariableVector & forces,
-                             std::vector<tvm::TaskWithRequirementsPtr> & constraints) {
-      if(robot != r.name())
-      {
-        return;
-      }
-      for(auto & c : constraints)
-      {
-        problem_.remove(*c);
-      }
+                             std::vector<tvm::TaskWithRequirementsPtr> & constraints)
+    {
+      if(robot != r.name()) { return; }
+      for(auto & c : constraints) { problem_.remove(*c); }
       constraints.clear();
       forces = tvm::VariableVector();
     };
@@ -376,17 +335,11 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
                                        double dir)
 {
   auto it = dynamics_.find(robot);
-  if(it == dynamics_.end())
-  {
-    return;
-  }
+  if(it == dynamics_.end()) { return; }
   if(constraints.size())
   {
     // FIXME Instead of this we should be able to change C
-    for(const auto & c : constraints)
-    {
-      problem_.remove(*c);
-    }
+    for(const auto & c : constraints) { problem_.remove(*c); }
     constraints.clear();
   }
   else
@@ -453,10 +406,7 @@ void TVMQPSolver::addContact(const mc_rbdyn::Contact & contact)
   size_t idx = contacts_.size();
   bool hasWork = false;
   std::tie(idx, hasWork) = addVirtualContactImpl(contact);
-  if(!hasWork)
-  {
-    return;
-  }
+  if(!hasWork) { return; }
   auto & data = contactsData_[idx];
   const auto & r1 = robot(contact.r1Index());
   const auto & r2 = robot(contact.r2Index());
@@ -468,8 +418,8 @@ void TVMQPSolver::addContact(const mc_rbdyn::Contact & contact)
   auto C = discretizedFrictionCone(contact.friction());
   auto addContactForce = [&](const std::string & robot, const mc_rbdyn::RobotFrame & frame,
                              const std::vector<sva::PTransformd> & points, tvm::VariableVector & forces,
-                             std::vector<tvm::TaskWithRequirementsPtr> & constraints,
-                             double dir) { addContactToDynamics(robot, frame, points, forces, constraints, C, dir); };
+                             std::vector<tvm::TaskWithRequirementsPtr> & constraints, double dir)
+  { addContactToDynamics(robot, frame, points, forces, constraints, C, dir); };
   // FIXME These points computation are a waste of time if they are not needed
   // FIXME Debug mc_rbdyn::intersection
   // auto s1Points = mc_rbdyn::intersection(s1, s2);
@@ -504,14 +454,8 @@ auto TVMQPSolver::removeContact(size_t idx) -> ContactIterator
     r2DynamicsIt->second->dynamicFunction().removeContact(r2.frame(contact.r2Surface()->name()));
     r2DynamicsIt->second->addToSolverImpl(*this);
   }
-  for(const auto & c : data.f1Constraints_)
-  {
-    problem_.remove(*c);
-  }
-  for(const auto & c : data.f2Constraints_)
-  {
-    problem_.remove(*c);
-  }
+  for(const auto & c : data.f1Constraints_) { problem_.remove(*c); }
+  for(const auto & c : data.f2Constraints_) { problem_.remove(*c); }
   if(data.contactConstraint_)
   {
     problem_.remove(*data.contactConstraint_);

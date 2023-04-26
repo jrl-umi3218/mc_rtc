@@ -87,7 +87,8 @@ void MCGlobalController::initGUI()
                     mc_rtc::gui::Label("Current controller", [this]() { return current_ctrl; }),
                     mc_rtc::gui::Form(
                         "Change controller",
-                        [this](const mc_rtc::Configuration & form) {
+                        [this](const mc_rtc::Configuration & form)
+                        {
                           std::string controller = form("Controller");
                           this->EnableController(controller);
                         },

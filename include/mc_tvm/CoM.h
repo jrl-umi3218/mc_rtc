@@ -52,51 +52,24 @@ public:
    */
   CoM(NewCoMToken, Robot & robot);
 
-  inline const Eigen::Vector3d & com() const noexcept
-  {
-    return com_;
-  }
+  inline const Eigen::Vector3d & com() const noexcept { return com_; }
 
-  inline const Eigen::Vector3d & velocity() const noexcept
-  {
-    return velocity_;
-  }
+  inline const Eigen::Vector3d & velocity() const noexcept { return velocity_; }
 
-  inline const Eigen::Vector3d & normalAcceleration() const noexcept
-  {
-    return normalAcceleration_;
-  }
+  inline const Eigen::Vector3d & normalAcceleration() const noexcept { return normalAcceleration_; }
 
-  inline const Eigen::Vector3d & acceleration() const noexcept
-  {
-    return acceleration_;
-  }
+  inline const Eigen::Vector3d & acceleration() const noexcept { return acceleration_; }
 
-  inline const Eigen::MatrixXd & jacobian() const noexcept
-  {
-    return jac_.jacobian();
-  }
+  inline const Eigen::MatrixXd & jacobian() const noexcept { return jac_.jacobian(); }
 
-  inline const Eigen::MatrixXd & JDot() const noexcept
-  {
-    return jac_.jacobianDot();
-  }
+  inline const Eigen::MatrixXd & JDot() const noexcept { return jac_.jacobianDot(); }
 
-  inline const Robot & robot() const noexcept
-  {
-    return robot_;
-  }
+  inline const Robot & robot() const noexcept { return robot_; }
 
-  inline Robot & robot() noexcept
-  {
-    return robot_;
-  }
+  inline Robot & robot() noexcept { return robot_; }
 
   /** Access the underlying CoMJacobian object to perform computations */
-  inline const rbd::CoMJacobian & comJacobian() const noexcept
-  {
-    return jac_;
-  }
+  inline const rbd::CoMJacobian & comJacobian() const noexcept { return jac_; }
 
 private:
   Robot & robot_;

@@ -25,10 +25,7 @@ private:
 
 public:
   /** Change data */
-  void refresh()
-  {
-    *this = LogData{};
-  }
+  void refresh() { *this = LogData{}; }
   void addToLogger(mc_rtc::Logger & logger)
   {
 #define ADD_LOG_ENTRY(NAME, MEMBER) logger.addLogEntry(NAME, this, [this]() { return MEMBER; })
@@ -46,10 +43,7 @@ public:
     ADD_LOG_ENTRY("std::vector<double>", v);
 #undef ADD_LOG_ENTRY
   }
-  void removeFromLogger(mc_rtc::Logger & logger)
-  {
-    logger.removeLogEntries(this);
-  }
+  void removeFromLogger(mc_rtc::Logger & logger) { logger.removeLogEntries(this); }
 };
 
 std::string make_log_ref()
@@ -57,7 +51,8 @@ std::string make_log_ref()
   using Policy = mc_rtc::Logger::Policy;
   mc_rtc::Logger logger(Policy::NON_THREADED, bfs::temp_directory_path().string(), "mc-rtc-test");
   logger.start("log-utils", 0.001);
-  auto log_s = [&](size_t sec) {
+  auto log_s = [&](size_t sec)
+  {
     size_t n_events = 1;
     for(size_t i = 0; i < sec * 1000; ++i)
     {
@@ -87,19 +82,13 @@ std::string make_log_ref()
   /** Log for 10 more seconds */
   log_s(10);
   auto latest = bfs::temp_directory_path() / "mc-rtc-test-log-utils-latest.bin";
-  if(bfs::exists(latest))
-  {
-    bfs::remove(latest);
-  }
+  if(bfs::exists(latest)) { bfs::remove(latest); }
   return logger.path();
 }
 
 void do_cleanup(const std::string & path)
 {
-  if(bfs::exists(path))
-  {
-    bfs::remove(path);
-  }
+  if(bfs::exists(path)) { bfs::remove(path); }
 }
 
 bool check_split(const std::string & path)
@@ -122,7 +111,8 @@ bool check_split(const std::string & path)
   auto flat = mc_rtc::log::FlatLog(path);
   auto flat_1 = mc_rtc::log::FlatLog(path_1);
   auto flat_2 = mc_rtc::log::FlatLog(path_2);
-  auto do_return = [&](bool res) {
+  auto do_return = [&](bool res)
+  {
     do_cleanup(path_1);
     do_cleanup(path_2);
     return res;
@@ -165,7 +155,8 @@ bool check_extract_time(const std::string & path)
     mc_rtc::log::critical("No output file after command: {}", extract_cmd);
     return false;
   }
-  auto do_return = [&](bool ret) {
+  auto do_return = [&](bool ret)
+  {
     do_cleanup(path_out);
     return ret;
   };
@@ -206,7 +197,8 @@ bool check_extract_key(const std::string & path)
     mc_rtc::log::critical("No output file after command: {}", extract_cmd);
     return false;
   }
-  auto do_return = [&](bool ret) {
+  auto do_return = [&](bool ret)
+  {
     do_cleanup(path_out);
     return ret;
   };
@@ -232,17 +224,15 @@ bool check_extract_keys(const std::string & path)
   auto out = fmt::format("{}/mc-rtc-test-log-utils-extract-keys", bfs::temp_directory_path().string());
   auto extract_cmd = fmt::format("{} extract {} {} --keys Eigen::*", MC_BIN_UTILS, path, out);
   int err = system(extract_cmd.c_str());
-  if(err != 0)
-  {
-    mc_rtc::log::critical("Execution failed: {}", extract_cmd);
-  }
+  if(err != 0) { mc_rtc::log::critical("Execution failed: {}", extract_cmd); }
   auto path_out = out + ".bin";
   if(!bfs::exists(path_out))
   {
     mc_rtc::log::critical("No output file after command: {}", extract_cmd);
     return false;
   }
-  auto do_return = [&](bool ret) {
+  auto do_return = [&](bool ret)
+  {
     do_cleanup(path_out);
     return ret;
   };
@@ -251,15 +241,13 @@ bool check_extract_keys(const std::string & path)
       "t", "Eigen::Quaterniond", "Eigen::Vector2d", "Eigen::Vector3d", "Eigen::Vector6d", "Eigen::VectorXd"};
   if(flat.entries() != expected_entries)
   {
-    auto print_entries = [](const std::set<std::string> & entries) {
+    auto print_entries = [](const std::set<std::string> & entries)
+    {
       std::string out = "{";
       size_t i = 0;
       for(const auto & e : entries)
       {
-        if(i++ != 0)
-        {
-          out = fmt::format("{}, ", out);
-        }
+        if(i++ != 0) { out = fmt::format("{}, ", out); }
         out = fmt::format("{}{}", out, e);
       }
       out += "}";
@@ -283,10 +271,7 @@ bool check_extract_events(const std::string & path)
     return false;
   }
   auto path_out = out + ".bin";
-  if(!bfs::exists(path_out))
-  {
-    mc_rtc::log::critical("No output file after command: {}", extract_cmd);
-  }
+  if(!bfs::exists(path_out)) { mc_rtc::log::critical("No output file after command: {}", extract_cmd); }
   bool ret = false;
   auto flat_in = mc_rtc::log::FlatLog(path);
   auto flat_out = mc_rtc::log::FlatLog(path_out);
@@ -328,7 +313,8 @@ int main()
 {
   mc_rtc::log::info("mc_bin_utils at {}", MC_BIN_UTILS);
   auto log = make_log_ref();
-  auto do_check = [&](auto && callback) {
+  auto do_check = [&](auto && callback)
+  {
     if(!callback(log))
     {
       do_cleanup(log);

@@ -99,23 +99,14 @@ public:
   void direction(double direction);
 
   /*! \brief Get the desired dislacement speed */
-  double speed()
-  {
-    return speed_;
-  }
+  double speed() { return speed_; }
   /*! \brief Set the desired dislacement speed */
   void speed(double s);
 
   /*! \brief Get the task stiffness */
-  double stiffness()
-  {
-    return stiffness_;
-  }
+  double stiffness() { return stiffness_; }
   /*! \brief Get the task weight */
-  double weight()
-  {
-    return weight_;
-  }
+  double weight() { return weight_; }
 
   /*! \brief Get the velocity error
    *

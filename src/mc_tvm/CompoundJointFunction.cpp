@@ -17,11 +17,9 @@ CompoundJointFunction::CompoundJointFunction(const mc_rbdyn::Robot & robot,
   registerUpdates(Update::B, &CompoundJointFunction::updateB);
   addOutputDependency<CompoundJointFunction>(Output::B, Update::B);
   addInputDependency<CompoundJointFunction>(Update::B, tvm_robot, Robot::Output::FK);
-  auto checkJoint = [&](const std::string & jName) {
-    if(!robot_.hasJoint(jName))
-    {
-      mc_rtc::log::error_and_throw("No joint named {} in {}", jName, robot.name());
-    }
+  auto checkJoint = [&](const std::string & jName)
+  {
+    if(!robot_.hasJoint(jName)) { mc_rtc::log::error_and_throw("No joint named {} in {}", jName, robot.name()); }
     auto qIdx = robot_.jointIndexByName(jName);
     if(robot_.mb().joint(static_cast<int>(qIdx)).dof() != 1)
     {
@@ -37,7 +35,8 @@ CompoundJointFunction::CompoundJointFunction(const mc_rbdyn::Robot & robot,
   }
   desc_ = {q1Idx, q2Idx, desc.p1.x(), desc.p1.y(), desc.p2.x() - desc.p1.x(), desc.p2.y() - desc.p1.y()};
   b_cst_ = desc_.p1_y * desc_.P_x - desc_.p1_x * desc_.P_y;
-  auto addVar = [&](size_t idx) {
+  auto addVar = [&](size_t idx)
+  {
     const auto & qVar = tvm::dot(tvm_robot.qJoint(idx), 2);
     addVariable(qVar, true);
     auto & jac = jacobian_.at(qVar.get());
@@ -51,7 +50,8 @@ void CompoundJointFunction::dt(double dt)
 {
   dt_ = dt;
   auto & tvm_robot = robot_.tvmRobot();
-  auto setupJac = [&](size_t idx, double value) {
+  auto setupJac = [&](size_t idx, double value)
+  {
     const auto & qVar = tvm::dot(tvm_robot.qJoint(idx), 2);
     auto & jac = jacobian_.at(qVar.get());
     jac(0, 0) = value;

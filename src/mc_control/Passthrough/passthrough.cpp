@@ -13,10 +13,7 @@ struct MC_CONTROL_DLLAPI Passthrough : public MCController
 
   void reset(const ControllerResetData &) override {}
 
-  bool run() override
-  {
-    return true;
-  }
+  bool run() override { return true; }
 };
 
 } // namespace mc_control

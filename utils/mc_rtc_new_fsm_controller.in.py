@@ -10,19 +10,39 @@ import imp
 import os
 
 try:
-  mod = imp.load_source('mc_rtc_new_controller', os.path.dirname(__file__) + '/mc_rtc_new_controller')
+    mod = imp.load_source(
+        "mc_rtc_new_controller", os.path.dirname(__file__) + "/mc_rtc_new_controller"
+    )
 except FileNotFoundError:
-  mod = imp.load_source('mc_rtc_new_controller', os.path.dirname(__file__) + '/mc_rtc_new_controller.py')
+    mod = imp.load_source(
+        "mc_rtc_new_controller", os.path.dirname(__file__) + "/mc_rtc_new_controller.py"
+    )
 new_controller = mod.new_controller
+
 
 def new_fsm_controller(project_dir, controller_class_name, controller_name):
     if not os.path.isabs(project_dir):
-        return new_fsm_controller(os.path.abspath(project_dir), controller_class_name, controller_name)
+        return new_fsm_controller(
+            os.path.abspath(project_dir), controller_class_name, controller_name
+        )
     if controller_name is None:
-        return new_fsm_controller(project_dir, controller_class_name, controller_class_name)
-    repo = new_controller(project_dir, controller_class_name, controller_name, base_class = 'mc_control::fsm::Controller', base_use_conf = True, extra_includes = ['mc_control/fsm/Controller.h'], extra_libs = 'mc_rtc::mc_control_fsm', min_code = False, controller_constructor = False)
-    with open(project_dir + '/etc/{}.in.yaml'.format(controller_name), 'w') as fd:
-        fd.write("""---
+        return new_fsm_controller(
+            project_dir, controller_class_name, controller_class_name
+        )
+    repo = new_controller(
+        project_dir,
+        controller_class_name,
+        controller_name,
+        base_class="mc_control::fsm::Controller",
+        base_use_conf=True,
+        extra_includes=["mc_control/fsm/Controller.h"],
+        extra_libs="mc_rtc::mc_control_fsm",
+        min_code=False,
+        controller_constructor=False,
+    )
+    with open(project_dir + "/etc/{}.in.yaml".format(controller_name), "w") as fd:
+        fd.write(
+            """---
 # If true, the FSM transitions are managed by an external tool
 Managed: false
 # If true and the FSM is self-managed, transitions should be triggered
@@ -78,9 +98,14 @@ transitions:
 - [{controller_name}_Initial, OK, {controller_name}_Initial, Strict]
 # Initial state
 init: {controller_name}_Initial
-""".format(controller_name = controller_name, controller_class_name = controller_class_name))
-    with open(project_dir + '/src/CMakeLists.txt', 'w') as fd:
-        fd.write("""set(controller_SRC
+""".format(
+                controller_name=controller_name,
+                controller_class_name=controller_class_name,
+            )
+        )
+    with open(project_dir + "/src/CMakeLists.txt", "w") as fd:
+        fd.write(
+            """set(controller_SRC
   {controller_class_name}.cpp
 )
 
@@ -98,24 +123,39 @@ install(TARGETS ${{PROJECT_NAME}}
 
 add_controller(${{PROJECT_NAME}}_controller lib.cpp "")
 target_link_libraries(${{PROJECT_NAME}}_controller PUBLIC ${{PROJECT_NAME}})
-""".format(controller_class_name = controller_class_name))
-    with open(project_dir + '/src/lib.cpp', 'w') as fd:
-        fd.write("""#include "{controller_class_name}.h"
+""".format(
+                controller_class_name=controller_class_name
+            )
+        )
+    with open(project_dir + "/src/lib.cpp", "w") as fd:
+        fd.write(
+            """#include "{controller_class_name}.h"
 
 CONTROLLER_CONSTRUCTOR("{controller_name}", {controller_class_name})
-""".format(controller_name = controller_name, controller_class_name = controller_class_name))
-    os.makedirs(project_dir + '/src/states/data')
-    with open(project_dir + '/src/CMakeLists.txt', 'a') as fd:
-        fd.write('\nadd_subdirectory(states)')
-    with open(project_dir + '/src/states/data/states.json', 'w') as fd:
-        fd.write('{\n}')
-    with open(project_dir + '/src/states/CMakeLists.txt', 'w') as fd:
-        fd.write("""add_fsm_state_simple({controller_name}_Initial)
+""".format(
+                controller_name=controller_name,
+                controller_class_name=controller_class_name,
+            )
+        )
+    os.makedirs(project_dir + "/src/states/data")
+    with open(project_dir + "/src/CMakeLists.txt", "a") as fd:
+        fd.write("\nadd_subdirectory(states)")
+    with open(project_dir + "/src/states/data/states.json", "w") as fd:
+        fd.write("{\n}")
+    with open(project_dir + "/src/states/CMakeLists.txt", "w") as fd:
+        fd.write(
+            """add_fsm_state_simple({controller_name}_Initial)
 
 add_fsm_data_directory(data)
-""".format(controller_name = controller_name))
-    with open(project_dir + '/src/states/{}_Initial.h'.format(controller_name), 'w') as fd:
-        fd.write("""#pragma once
+""".format(
+                controller_name=controller_name
+            )
+        )
+    with open(
+        project_dir + "/src/states/{}_Initial.h".format(controller_name), "w"
+    ) as fd:
+        fd.write(
+            """#pragma once
 
 #include <mc_control/fsm/State.h>
 
@@ -129,9 +169,15 @@ struct {controller_name}_Initial : mc_control::fsm::State
 
   void teardown(mc_control::fsm::Controller & ctl) override;
 }};
-""".format(controller_name = controller_name))
-    with open(project_dir + '/src/states/{}_Initial.cpp'.format(controller_name), 'w') as fd:
-        fd.write("""#include "{controller_name}_Initial.h"
+""".format(
+                controller_name=controller_name
+            )
+        )
+    with open(
+        project_dir + "/src/states/{}_Initial.cpp".format(controller_name), "w"
+    ) as fd:
+        fd.write(
+            """#include "{controller_name}_Initial.h"
 
 #include "../{controller_class_name}.h"
 
@@ -157,15 +203,52 @@ void {controller_name}_Initial::teardown(mc_control::fsm::Controller & ctl_)
 }}
 
 EXPORT_SINGLE_STATE("{controller_name}_Initial", {controller_name}_Initial)
-""".format(controller_name = controller_name, controller_class_name = controller_class_name))
-    repo.index.add([f.format(controller_name) for f in ['etc/{}.in.yaml', 'src/CMakeLists.txt', 'src/lib.cpp', 'src/states/data/states.json', 'src/states/CMakeLists.txt', 'src/states/{}_Initial.h', 'src/states/{}_Initial.cpp']])
+""".format(
+                controller_name=controller_name,
+                controller_class_name=controller_class_name,
+            )
+        )
+    repo.index.add(
+        [
+            f.format(controller_name)
+            for f in [
+                "etc/{}.in.yaml",
+                "src/CMakeLists.txt",
+                "src/lib.cpp",
+                "src/states/data/states.json",
+                "src/states/CMakeLists.txt",
+                "src/states/{}_Initial.h",
+                "src/states/{}_Initial.cpp",
+            ]
+        ]
+    )
     return repo
 
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Create a new mc_rtc FSM project')
-    parser.add_argument('project_dir', metavar='[project directory]', type=str, help='Path of the project')
-    parser.add_argument('controller_class_name', metavar='[controller class name]', type=str, help='Name of the controller class')
-    parser.add_argument('controller_name', metavar='[controller name]', nargs='?', type=str, help='Name of the controller, defaults to controller class name', default=None)
+    parser = argparse.ArgumentParser(description="Create a new mc_rtc FSM project")
+    parser.add_argument(
+        "project_dir",
+        metavar="[project directory]",
+        type=str,
+        help="Path of the project",
+    )
+    parser.add_argument(
+        "controller_class_name",
+        metavar="[controller class name]",
+        type=str,
+        help="Name of the controller class",
+    )
+    parser.add_argument(
+        "controller_name",
+        metavar="[controller name]",
+        nargs="?",
+        type=str,
+        help="Name of the controller, defaults to controller class name",
+        default=None,
+    )
     args = parser.parse_args()
-    repo = new_fsm_controller(args.project_dir, args.controller_class_name, args.controller_name)
+    repo = new_fsm_controller(
+        args.project_dir, args.controller_class_name, args.controller_name
+    )
     repo.index.commit("Initial commit")

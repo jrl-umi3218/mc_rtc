@@ -46,16 +46,10 @@ public:
   virtual bool run() override
   {
     bool ret = MCController::run();
-    if(!ret)
-    {
-      mc_rtc::log::critical("Failed at iter: {}", nrIter);
-    }
+    if(!ret) { mc_rtc::log::critical("Failed at iter: {}", nrIter); }
     BOOST_CHECK(ret);
     nrIter++;
-    if(nrIter == 500)
-    {
-      momentumTask->momentum(sva::ForceVecd::Zero());
-    }
+    if(nrIter == 500) { momentumTask->momentum(sva::ForceVecd::Zero()); }
     if(nrIter == 1000)
     {
       /* Check that the task is "finished" */
