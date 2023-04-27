@@ -40,10 +40,7 @@ PolygonInterpolator::PolygonInterpolator(const std::vector<tuple_pair_t> & tpv)
 std::shared_ptr<geos::geom::Geometry> PolygonInterpolator::fast_interpolate(double percent)
 {
   double perc = std::max(std::min(percent, 1.), -1.);
-  if(perc < 0)
-  {
-    perc = 1 + perc;
-  }
+  if(perc < 0) { perc = 1 + perc; }
   std::vector<tuple_t> points;
   auto seq = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 0);
   std::vector<geos::geom::Coordinate> seq_points;
@@ -103,9 +100,11 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
   geos::geom::Polygon * poly_d = geom_factory.createPolygon(shell_d, 0);
 #endif
 #if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 8
-  auto normals = [](std::unique_ptr<geos::geom::Polygon> & poly) {
+  auto normals = [](std::unique_ptr<geos::geom::Polygon> & poly)
+  {
 #else
-  auto normals = [](geos::geom::Polygon * poly) {
+  auto normals = [](geos::geom::Polygon * poly)
+  {
 #endif
     std::vector<tuple_t> _res;
     auto seq = poly->getExteriorRing()->getCoordinates();
@@ -115,14 +114,8 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
       const geos::geom::Coordinate & prev = seq->getAt(i == 0 ? seq->size() - 1 : i - 1);
       tuple_t normal{{p.y - prev.y, -(p.x - prev.x)}};
       double norm = normal[0] * normal[0] + normal[1] * normal[1];
-      if(norm > 0)
-      {
-        _res.push_back({{normal[0] / norm, normal[1] / norm}});
-      }
-      else
-      {
-        _res.push_back({{0., 0.}});
-      }
+      if(norm > 0) { _res.push_back({{normal[0] / norm, normal[1] / norm}}); }
+      else { _res.push_back({{0., 0.}}); }
     }
     return _res;
   };
@@ -135,10 +128,7 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
 #endif
   for(size_t i = 0; i < std::min(n_strt.size(), n_dest.size()); ++i)
   {
-    if(n_strt[i][0] == 0 && n_strt[i][1] == 0 && n_dest[i][0] == 0 && n_dest[i][1] == 0)
-    {
-      res.push_back({{0., 0.}});
-    }
+    if(n_strt[i][0] == 0 && n_strt[i][1] == 0 && n_dest[i][0] == 0 && n_dest[i][1] == 0) { res.push_back({{0., 0.}}); }
     else
     {
       res.push_back(

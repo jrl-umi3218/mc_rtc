@@ -42,17 +42,11 @@ void Executor::init(Controller & ctl,
   auto gui = ctl.gui();
   if(gui)
   {
-    if(category.size())
-    {
-      category_ = category;
-    }
+    if(category.size()) { category_ = category; }
     else
     {
       category_ = {"FSM"};
-      if(name.size())
-      {
-        category_.push_back(name);
-      }
+      if(name.size()) { category_.push_back(name); }
     }
     gui->addElement(category_, mc_rtc::gui::Button("Interrupt", [this]() { interrupt(); }),
                     mc_rtc::gui::Label("Current state", [this]() { return state(); }),
@@ -64,19 +58,13 @@ void Executor::init(Controller & ctl,
                         mc_rtc::gui::FormDataComboInput("State", true, {"states"})));
   }
   std::string log_entry = "Executor";
-  if(name_.size())
-  {
-    log_entry += "_" + name_;
-  }
-  else
-  {
-    log_entry += "_Main";
-  }
+  if(name_.size()) { log_entry += "_" + name_; }
+  else { log_entry += "_Main"; }
   ctl.logger().addLogEntry(log_entry, this, [this]() { return curr_state_; });
   log_entry = "perf_" + log_entry;
-  ctl.logger().addLogEntry(log_entry, this, [this]() {
-    return state_create_dt_.count() + state_run_dt_.count() + state_teardown_dt_.count();
-  });
+  ctl.logger().addLogEntry(log_entry, this,
+                           [this]()
+                           { return state_create_dt_.count() + state_run_dt_.count() + state_teardown_dt_.count(); });
   ctl.logger().addLogEntry(log_entry + "_create", this, [this]() { return state_create_dt_.count(); });
   ctl.logger().addLogEntry(log_entry + "_run", this, [this]() { return state_run_dt_.count(); });
   ctl.logger().addLogEntry(log_entry + "_teardown", this, [this]() { return state_teardown_dt_.count(); });
@@ -136,19 +124,13 @@ bool Executor::run(Controller & ctl, bool keep_state)
     }
     return complete(ctl, keep_state);
   }
-  else if(transition_triggered_)
-  {
-    next(ctl);
-  }
+  else if(transition_triggered_) { next(ctl); }
   return ready_;
 }
 
 void Executor::stop(Controller & ctl)
 {
-  if(state_)
-  {
-    state_->stop(ctl);
-  }
+  if(state_) { state_->stop(ctl); }
 }
 
 void Executor::teardown(Controller & ctl)
@@ -158,10 +140,7 @@ void Executor::teardown(Controller & ctl)
     state_->teardown_(ctl);
     state_ = nullptr;
   }
-  if(ctl.gui())
-  {
-    ctl.gui()->removeCategory(category_);
-  }
+  if(ctl.gui()) { ctl.gui()->removeCategory(category_); }
   ctl.logger().removeLogEntries(this);
 }
 
@@ -190,10 +169,7 @@ bool Executor::next()
 
 void Executor::next(Controller & ctl)
 {
-  if(!ready_ || next_state_.empty())
-  {
-    return;
-  }
+  if(!ready_ || next_state_.empty()) { return; }
   ready_ = false;
   transition_triggered_ = false;
   if(state_)

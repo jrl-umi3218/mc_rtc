@@ -36,28 +36,16 @@ struct MC_TVM_DLLAPI PositionBasedVisServoFunction : tvm::function::abstract::Fu
   PositionBasedVisServoFunction(const mc_rbdyn::RobotFrame & frame);
 
   /** Reset the error */
-  inline void reset() noexcept
-  {
-    X_t_s_ = sva::PTransformd::Identity();
-  }
+  inline void reset() noexcept { X_t_s_ = sva::PTransformd::Identity(); }
 
   /** Access the current error */
-  inline const sva::PTransformd & error() const noexcept
-  {
-    return X_t_s_;
-  }
+  inline const sva::PTransformd & error() const noexcept { return X_t_s_; }
 
   /** Set the function error, i.e. the current position relative to the target position */
-  inline void error(const sva::PTransformd & X_t_s) noexcept
-  {
-    X_t_s_ = X_t_s;
-  }
+  inline void error(const sva::PTransformd & X_t_s) noexcept { X_t_s_ = X_t_s; }
 
   /** Access the controlled frame */
-  inline const mc_rbdyn::RobotFrame & frame() const noexcept
-  {
-    return *frame_;
-  }
+  inline const mc_rbdyn::RobotFrame & frame() const noexcept { return *frame_; }
 
 protected:
   mc_rbdyn::ConstRobotFramePtr frame_;

@@ -40,22 +40,13 @@ public:
   RobotFrame(NewRobotFrameToken, const mc_rbdyn::RobotFrame & frame);
 
   /** Frame's jacobian */
-  inline const tvm::internal::MatrixWithProperties & jacobian() const noexcept
-  {
-    return jacobian_;
-  }
+  inline const tvm::internal::MatrixWithProperties & jacobian() const noexcept { return jacobian_; }
 
   /** Frame's normal acceleration in inertial frame */
-  inline const sva::MotionVecd & normalAcceleration() const noexcept
-  {
-    return normalAcceleration_;
-  }
+  inline const sva::MotionVecd & normalAcceleration() const noexcept { return normalAcceleration_; }
 
   /** Frame's jacobian time derivative */
-  inline const tvm::internal::MatrixWithProperties & JDot() const noexcept
-  {
-    return jacDot_;
-  }
+  inline const tvm::internal::MatrixWithProperties & JDot() const noexcept { return jacDot_; }
 
   /** Access the internal RBDyn Jacobian object
    *
@@ -65,10 +56,7 @@ public:
    * - the body jacobian
    * - the jacobian translated at varying position
    */
-  inline const rbd::Jacobian & rbdJacobian() const noexcept
-  {
-    return jac_;
-  }
+  inline const rbd::Jacobian & rbdJacobian() const noexcept { return jac_; }
 
   /** Returns the associated mc_rbdyn RobotFrame */
   inline const mc_rbdyn::RobotFrame & frame() const noexcept

@@ -49,10 +49,7 @@ struct MC_CONTROL_DLLAPI Contact
            || (r1 == rhs.r2 && r2 == rhs.r1 && r1Surface == rhs.r2Surface && r2Surface == rhs.r1Surface);
   }
 
-  bool operator!=(const Contact & rhs) const
-  {
-    return !(*this == rhs);
-  }
+  bool operator!=(const Contact & rhs) const { return !(*this == rhs); }
 
   /** Default constructor, invalid contact */
   Contact() = default;
@@ -75,7 +72,8 @@ struct hash<mc_control::Contact>
   std::size_t operator()(const mc_control::Contact & c) const noexcept
   {
     // Same as boost::hash_combine
-    auto hash_combine = [](const std::string & robot, const std::string & surface) {
+    auto hash_combine = [](const std::string & robot, const std::string & surface)
+    {
       auto h = std::hash<std::string>{}(robot);
       h ^= std::hash<std::string>{}(surface) + 0x9e3779b9 + (h << 6) + (h >> 2);
       return h;

@@ -26,9 +26,8 @@ get_fn make_getter(T fn, U arg)
 template<typename T, typename Cb, typename t>
 set_fn make_setter(T fn, Cb cb, t type)
 {
-  return [fn, cb, type](const mc_rtc::Configuration & data) mutable {
-    return fn(cb, type, const_cast<mc_rtc::Configuration &>(data));
-  };
+  return [fn, cb, type](const mc_rtc::Configuration & data) mutable
+  { return fn(cb, type, const_cast<mc_rtc::Configuration &>(data)); };
 }
 
 template<typename T, typename Cb>

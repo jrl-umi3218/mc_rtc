@@ -55,14 +55,8 @@ public:
         BOOST_REQUIRE(plugin_c(name_));
         BOOST_REQUIRE(plugin_c.has("exclusive_to_TestPluginController_1_2"));
         bool exclusive = plugin_c("exclusive_to_TestPluginController_1_2");
-        if(name_ == "TestPluginController_1_2")
-        {
-          BOOST_REQUIRE_EQUAL(exclusive, plugin == "Plugin1");
-        }
-        else
-        {
-          BOOST_REQUIRE_EQUAL(exclusive, false);
-        }
+        if(name_ == "TestPluginController_1_2") { BOOST_REQUIRE_EQUAL(exclusive, plugin == "Plugin1"); }
+        else { BOOST_REQUIRE_EQUAL(exclusive, false); }
       }
     }
     bool ret = MCController::run();
@@ -114,10 +108,7 @@ extern "C"
                                                           const mc_rtc::Configuration &)
   {
     auto out = new mc_control::TestPluginController(name, rm, dt);
-    if(name == "TestPluginController_1_2")
-    {
-      out->expected_plugins_ = {"Plugin0", "Plugin1", "Plugin2"};
-    }
+    if(name == "TestPluginController_1_2") { out->expected_plugins_ = {"Plugin0", "Plugin1", "Plugin2"}; }
     else if(name == "TestPluginController_2_3")
     {
       out->expected_plugins_ = {"Plugin0", "Plugin2", "Plugin3"};

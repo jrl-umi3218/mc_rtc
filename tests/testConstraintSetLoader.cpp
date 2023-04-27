@@ -38,15 +38,9 @@ template<typename T>
 struct ConstraintTester
 {
   static_assert(fail<T>::value, "This should be specialized");
-  mc_solver::ConstraintSetPtr make_ref()
-  {
-    return nullptr;
-  }
+  mc_solver::ConstraintSetPtr make_ref() { return nullptr; }
 
-  std::string json()
-  {
-    return "";
-  }
+  std::string json() { return ""; }
 
   void check(const mc_solver::ConstraintSetPtr & /*ref*/,
              const mc_solver::ConstraintSetPtr & /*loaded*/,
@@ -62,10 +56,7 @@ struct ConstraintTester<mc_solver::BoundedSpeedConstr>
   {
     for(int i = 0; i < 3; ++i)
     {
-      if(lS(i) > 0)
-      {
-        lS(i) = -lS(i);
-      }
+      if(lS(i) > 0) { lS(i) = -lS(i); }
       uS(i) = -lS(i);
     }
   }
@@ -138,10 +129,7 @@ struct ConstraintTester<mc_solver::CollisionsConstraint>
     config.add("r1Index", 0);
     config.add("r2Index", 0);
     auto cv = config.array("collisions");
-    for(const auto & c : rm->commonSelfCollisions())
-    {
-      cv.push(c);
-    }
+    for(const auto & c : rm->commonSelfCollisions()) { cv.push(c); }
     auto ret = getTmpFile();
     config.save(ret);
     return ret;

@@ -18,10 +18,7 @@ std::string cat2str(const std::vector<std::string> & cat)
   for(size_t i = 0; i < cat.size(); ++i)
   {
     ret += cat[i];
-    if(i != cat.size() - 1)
-    {
-      ret += "/";
-    }
+    if(i != cat.size() - 1) { ret += "/"; }
   }
   return ret;
 }
@@ -45,10 +42,7 @@ DummyControllerClient::DummyControllerClient()
 
 void DummyControllerClient::join()
 {
-  while(run_)
-  {
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-  }
+  while(run_) { std::this_thread::sleep_for(std::chrono::seconds(1)); }
   stop();
 }
 

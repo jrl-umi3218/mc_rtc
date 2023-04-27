@@ -307,28 +307,16 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric
    *
    * @param paused True to pause the task, False to resume.
    */
-  inline void pause(bool paused)
-  {
-    paused_ = paused;
-  }
+  inline void pause(bool paused) { paused_ = paused; }
 
   /** True when the task is paused */
-  inline bool pause() const noexcept
-  {
-    return paused_;
-  }
+  inline bool pause() const noexcept { return paused_; }
 
   /** Returns the current time along the trajectory */
-  inline double currentTime() const noexcept
-  {
-    return currTime_;
-  }
+  inline double currentTime() const noexcept { return currTime_; }
 
   /** @brief Returns the trajectory's duration */
-  inline double duration() const noexcept
-  {
-    return duration_;
-  }
+  inline double duration() const noexcept { return duration_; }
 
 protected:
   /**

@@ -109,21 +109,12 @@ public:
   /** Return X_f_ds, the pure rotation transform from the position given by
    * the URDF and the one estimated by calibration
    */
-  inline const sva::PTransformd & X_f_ds() const
-  {
-    return X_f_ds_;
-  }
+  inline const sva::PTransformd & X_f_ds() const { return X_f_ds_; }
 
   /** Return the mass of the link generating the wrench */
-  inline double mass() const
-  {
-    return mass_;
-  }
+  inline double mass() const { return mass_; }
 
-  inline const sva::ForceVecd & offset() const
-  {
-    return offset_;
-  }
+  inline const sva::ForceVecd & offset() const { return offset_; }
 
 private:
   /** Mass of the link generating the wrench */
@@ -157,10 +148,7 @@ ForceSensor::ForceSensor(const ForceSensor & fs) : ForceSensor(fs.name_, fs.pare
 
 ForceSensor & ForceSensor::operator=(const ForceSensor & fs)
 {
-  if(&fs == this)
-  {
-    return *this;
-  }
+  if(&fs == this) { return *this; }
   name_ = fs.name_;
   parent_ = fs.parent_;
   X_p_s_ = fs.X_p_s_;
@@ -178,10 +166,7 @@ void ForceSensor::loadCalibrator(const std::string & calib_file, const Eigen::Ve
     mc_rtc::log::warning("No calibration file {} found for force sensor {}", calib_file, name());
     return;
   }
-  else
-  {
-    calibration_->loadData(calib_file, gravity);
-  }
+  else { calibration_->loadData(calib_file, gravity); }
 }
 
 void ForceSensor::copyCalibrator(const mc_rbdyn::ForceSensor & other)

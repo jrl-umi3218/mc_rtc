@@ -32,10 +32,7 @@ struct NumberSliderImpl : public CommonInputImpl<GetT, SetT>
 
   NumberSliderImpl() {}
 
-  static constexpr size_t write_size()
-  {
-    return CommonInputImpl<GetT, SetT>::write_size() + 2;
-  }
+  static constexpr size_t write_size() { return CommonInputImpl<GetT, SetT>::write_size() + 2; }
 
   void write(mc_rtc::MessagePackBuilder & writer)
   {

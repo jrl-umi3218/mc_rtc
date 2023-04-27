@@ -57,16 +57,10 @@ public:
                   const Eigen::Vector6d & dof = Eigen::Vector6d::Ones());
 
   /** Access the contact dof vector */
-  inline const Eigen::Vector6d & dof() const noexcept
-  {
-    return dof_;
-  }
+  inline const Eigen::Vector6d & dof() const noexcept { return dof_; }
 
   /** Set the contact dof vector */
-  inline void dof(const Eigen::Vector6d & dof) noexcept
-  {
-    dof_ = dof;
-  }
+  inline void dof(const Eigen::Vector6d & dof) noexcept { dof_ = dof; }
 
 private:
   const Frame * f1_;

@@ -75,4 +75,4 @@ Stabilizer::RightSupport:
 ###
 Stabilizer::GoHalfSitting:
   base: Parallel
-  states: [Stabilizer::GoCenter, HalfSitting]
+  states: ['Stabilizer::GoCenter', HalfSitting]

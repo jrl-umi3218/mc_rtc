@@ -73,10 +73,7 @@ public:
       // RemovePostureTask should have removed the posture task
       BOOST_REQUIRE(!getPostureTask("jvrc1")->inSolver());
     }
-    else
-    {
-      BOOST_REQUIRE(getPostureTask("jvrc1")->inSolver());
-    }
+    else { BOOST_REQUIRE(getPostureTask("jvrc1")->inSolver()); }
     if(iter_ > 2) // TestConstraintsAndTasks
     {
       BOOST_REQUIRE(executor_.state() == "TestConstraintsAndTasks");
@@ -88,10 +85,7 @@ public:
       BOOST_REQUIRE((speed - ref).norm() < 5e-4);
       BOOST_REQUIRE(hasTask<mc_tasks::CoMTask>());
     }
-    else
-    {
-      BOOST_REQUIRE(!hasTask<mc_tasks::CoMTask>());
-    }
+    else { BOOST_REQUIRE(!hasTask<mc_tasks::CoMTask>()); }
     iter_++;
     return ret;
   }
@@ -116,20 +110,14 @@ public:
                   const Eigen::Vector6d & dof = Eigen::Vector6d::Ones())
   {
     fsm::Contact c("jvrc1", "ground", s, "AllGround", friction, dof);
-    if(!hasContact(c))
-    {
-      return false;
-    }
+    if(!hasContact(c)) { return false; }
     const auto & ref = contact(c);
     return ref.friction == c.friction && ref.dof == c.dof;
   }
 
   bool hasCollision(const std::string & r1, const std::string & r2, const mc_rbdyn::Collision & col)
   {
-    if(!collision_constraints_.count({r1, r2}))
-    {
-      return false;
-    }
+    if(!collision_constraints_.count({r1, r2})) { return false; }
     const auto & cols = collision_constraints_.at({r1, r2})->cols;
     return std::find(cols.begin(), cols.end(), col) != cols.end();
   }
@@ -139,10 +127,7 @@ public:
   {
     for(const auto & t : solver().tasks())
     {
-      if(dynamic_cast<const T *>(t) != nullptr)
-      {
-        return true;
-      }
+      if(dynamic_cast<const T *>(t) != nullptr) { return true; }
     }
     return false;
   }

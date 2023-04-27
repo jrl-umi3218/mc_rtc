@@ -143,11 +143,13 @@ namespace
 {
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "firstOrderImpedance",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
       using Allocator = Eigen::aligned_allocator<mc_tasks::force::FirstOrderImpedanceTask>;
       const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "firstOrderImpedance");
       const auto & robot = solver.robots().robot(robotIndex);
-      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
+      {
         if(config.has("surface"))
         {
           mc_rtc::log::deprecated("FirstOrderImpedanceTask", "surface", "frame");

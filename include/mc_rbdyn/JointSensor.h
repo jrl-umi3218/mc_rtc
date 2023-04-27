@@ -24,10 +24,7 @@ struct MC_RBDYN_DLLAPI JointSensor
    * @param jointName Name of the joint to which the sensor is attached
    *
    */
-  inline JointSensor(const std::string & jointName)
-  {
-    joint_ = jointName;
-  }
+  inline JointSensor(const std::string & jointName) { joint_ = jointName; }
 
   JointSensor(const JointSensor &) = default;
   JointSensor & operator=(const JointSensor &) = default;
@@ -38,46 +35,25 @@ struct MC_RBDYN_DLLAPI JointSensor
   ~JointSensor() noexcept = default;
 
   /** Returns the sensor's joint name */
-  inline const std::string & joint() const noexcept
-  {
-    return joint_;
-  }
+  inline const std::string & joint() const noexcept { return joint_; }
 
   /** Return the sensor's motor temperature reading (Celcius), NaN if not provided */
-  inline double motorTemperature() const noexcept
-  {
-    return motor_temperature_;
-  }
+  inline double motorTemperature() const noexcept { return motor_temperature_; }
 
   /** Set the sensor's motor temperature reading (Celcius) */
-  inline void motorTemperature(double motor_temperature) noexcept
-  {
-    motor_temperature_ = motor_temperature;
-  }
+  inline void motorTemperature(double motor_temperature) noexcept { motor_temperature_ = motor_temperature; }
 
   /** Return the sensor's driver temperature reading (Celcius), NaN if not provided */
-  inline double driverTemperature() const noexcept
-  {
-    return driver_temperature_;
-  }
+  inline double driverTemperature() const noexcept { return driver_temperature_; }
 
   /** Set the sensor's driver temperature reading (Celcius) */
-  inline void driverTemperature(double driver_temperature) noexcept
-  {
-    driver_temperature_ = driver_temperature;
-  }
+  inline void driverTemperature(double driver_temperature) noexcept { driver_temperature_ = driver_temperature; }
 
   /** Return the sensor's current reading (Ampere), NaN if not provided */
-  inline double motorCurrent() const noexcept
-  {
-    return motor_current_;
-  }
+  inline double motorCurrent() const noexcept { return motor_current_; }
 
   /** Set the sensor's current reading (Ampere) */
-  inline void motorCurrent(double motor_current) noexcept
-  {
-    motor_current_ = motor_current;
-  }
+  inline void motorCurrent(double motor_current) noexcept { motor_current_ = motor_current; }
 
 protected:
   /** Name of joint to which sensor is attached */

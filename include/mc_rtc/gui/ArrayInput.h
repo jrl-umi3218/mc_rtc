@@ -37,10 +37,7 @@ struct ArrayInputImpl : public CommonInputImpl<GetT, SetT>
   {
   }
 
-  static constexpr size_t write_size()
-  {
-    return CommonInputImpl<GetT, SetT>::write_size() + 1;
-  }
+  static constexpr size_t write_size() { return CommonInputImpl<GetT, SetT>::write_size() + 1; }
 
   void write(mc_rtc::MessagePackBuilder & writer)
   {
@@ -88,14 +85,8 @@ auto ArrayInput(const std::string & name, T & value)
   using Labels = details::Labels<std::decay_t<T>>;
   auto read = details::read(value);
   auto write = details::write(value);
-  if constexpr(Labels::has_labels)
-  {
-    return ArrayInput(name, Labels::labels, read, write);
-  }
-  else
-  {
-    return ArrayInput(name, read, write);
-  }
+  if constexpr(Labels::has_labels) { return ArrayInput(name, Labels::labels, read, write); }
+  else { return ArrayInput(name, read, write); }
 }
 
 /** Creates an input for a rotation using RPY angles
@@ -106,15 +97,10 @@ template<bool Degrees = true, typename T>
 auto RPYInput(const std::string & name, T & value)
 {
   return ArrayInput(name, details::RPYLabels<Degrees>::labels, details::read_rpy<Degrees>(value),
-                    [&value](const Eigen::Vector3d & rpy) {
-                      if constexpr(Degrees)
-                      {
-                        value = mc_rbdyn::rpyToMat(rpy * mc_rtc::constants::PI / 180.);
-                      }
-                      else
-                      {
-                        value = mc_rbdyn::rpyToMat(rpy);
-                      }
+                    [&value](const Eigen::Vector3d & rpy)
+                    {
+                      if constexpr(Degrees) { value = mc_rbdyn::rpyToMat(rpy * mc_rtc::constants::PI / 180.); }
+                      else { value = mc_rbdyn::rpyToMat(rpy); }
                     });
 }
 

@@ -45,55 +45,37 @@ struct LeakyIntegrator
   inline void add(const VectorT & value, double dt)
   {
     integral_ = (1. - rate_ * dt) * integral_ + dt * value;
-    if(saturation_ > 0.)
-    {
-      utils::clampInPlace(integral_, -saturation_, saturation_);
-    }
+    if(saturation_ > 0.) { utils::clampInPlace(integral_, -saturation_, saturation_); }
   }
 
   /** Evaluate the output of the integrator.
    *
    */
-  inline const VectorT & eval() const
-  {
-    return integral_;
-  }
+  inline const VectorT & eval() const { return integral_; }
 
   /** Get leak rate.
    *
    */
-  inline double rate() const
-  {
-    return rate_;
-  }
+  inline double rate() const { return rate_; }
 
   /** Set the leak rate of the integrator.
    *
    * \param rate New leak rate.
    *
    */
-  inline void rate(double rate)
-  {
-    rate_ = rate;
-  }
+  inline void rate(double rate) { rate_ = rate; }
 
   /** Set output saturation. Disable by providing a negative value.
    *
    * \param s Output will saturate between -s and +s.
    *
    */
-  inline void saturation(double s)
-  {
-    saturation_ = s;
-  }
+  inline void saturation(double s) { saturation_ = s; }
 
   /** Reset integral to zero.
    *
    */
-  inline void reset()
-  {
-    integral_.setZero();
-  }
+  inline void reset() { integral_.setZero(); }
 
 private:
   VectorT integral_;

@@ -25,10 +25,7 @@ struct ImpedanceVecd
 
   ImpedanceVecd() : ImpedanceVecd(limit, limit) {}
 
-  ImpedanceVecd(const sva::ImpedanceVecd & v)
-  {
-    vec(v);
-  }
+  ImpedanceVecd(const sva::ImpedanceVecd & v) { vec(v); }
 
   ImpedanceVecd(double angular_, double linear_)
   {
@@ -42,10 +39,7 @@ struct ImpedanceVecd
     return *this;
   }
 
-  inline Eigen::Vector6d vector() const noexcept
-  {
-    return vec_.vector();
-  }
+  inline Eigen::Vector6d vector() const noexcept { return vec_.vector(); }
 
   inline void vec(const sva::ImpedanceVecd & v) noexcept
   {
@@ -71,40 +65,19 @@ struct ImpedanceVecd
     linear(l);
   }
 
-  inline const sva::ImpedanceVecd & vec() const noexcept
-  {
-    return vec_;
-  }
+  inline const sva::ImpedanceVecd & vec() const noexcept { return vec_; }
 
-  inline void angular(const Eigen::Vector3d & v) noexcept
-  {
-    vec_.angular() = v.cwiseMax(limit);
-  }
+  inline void angular(const Eigen::Vector3d & v) noexcept { vec_.angular() = v.cwiseMax(limit); }
 
-  inline void angular(double angular) noexcept
-  {
-    vec_.angular().setConstant(std::max(angular, limit));
-  }
+  inline void angular(double angular) noexcept { vec_.angular().setConstant(std::max(angular, limit)); }
 
-  inline const Eigen::Vector3d & angular() const noexcept
-  {
-    return vec_.angular();
-  }
+  inline const Eigen::Vector3d & angular() const noexcept { return vec_.angular(); }
 
-  inline void linear(const Eigen::Vector3d & v) noexcept
-  {
-    vec_.linear() = v.cwiseMax(limit);
-  }
+  inline void linear(const Eigen::Vector3d & v) noexcept { vec_.linear() = v.cwiseMax(limit); }
 
-  inline void linear(double linear) noexcept
-  {
-    vec_.linear().setConstant(std::max(linear, limit));
-  }
+  inline void linear(double linear) noexcept { vec_.linear().setConstant(std::max(linear, limit)); }
 
-  inline const Eigen::Vector3d & linear() const noexcept
-  {
-    return vec_.linear();
-  }
+  inline const Eigen::Vector3d & linear() const noexcept { return vec_.linear(); }
 
 private:
   static constexpr double limit = StrictlyPositive ? 1e-6 : 0.0;
@@ -124,78 +97,36 @@ struct MC_TASKS_DLLAPI ImpedanceGains
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
   /** Impedance mass parameter */
-  inline const details::ImpedanceVecd<true> & M() const noexcept
-  {
-    return M_;
-  }
+  inline const details::ImpedanceVecd<true> & M() const noexcept { return M_; }
   /** Impedance mass parameter */
-  inline details::ImpedanceVecd<true> & M() noexcept
-  {
-    return M_;
-  }
+  inline details::ImpedanceVecd<true> & M() noexcept { return M_; }
   /** Impedance mass parameter */
-  inline const details::ImpedanceVecd<true> & mass() const noexcept
-  {
-    return M_;
-  }
+  inline const details::ImpedanceVecd<true> & mass() const noexcept { return M_; }
   /** Impedance mass parameter */
-  inline details::ImpedanceVecd<true> & mass() noexcept
-  {
-    return M_;
-  }
+  inline details::ImpedanceVecd<true> & mass() noexcept { return M_; }
 
   /** Impedance damper parameter */
-  inline const details::ImpedanceVecd<false> & D() const noexcept
-  {
-    return D_;
-  }
+  inline const details::ImpedanceVecd<false> & D() const noexcept { return D_; }
   /** Impedance damper parameter */
-  inline details::ImpedanceVecd<false> & D() noexcept
-  {
-    return D_;
-  }
+  inline details::ImpedanceVecd<false> & D() noexcept { return D_; }
   /** Impedance damper parameter */
-  inline const details::ImpedanceVecd<false> & damper() const noexcept
-  {
-    return D_;
-  }
+  inline const details::ImpedanceVecd<false> & damper() const noexcept { return D_; }
   /** Impedance damper parameter */
-  inline details::ImpedanceVecd<false> & damper() noexcept
-  {
-    return D_;
-  }
+  inline details::ImpedanceVecd<false> & damper() noexcept { return D_; }
 
   /** Impedance spring parameter */
-  inline const details::ImpedanceVecd<false> & K() const noexcept
-  {
-    return K_;
-  }
+  inline const details::ImpedanceVecd<false> & K() const noexcept { return K_; }
   /** Impedance spring parameter */
-  inline details::ImpedanceVecd<false> & K() noexcept
-  {
-    return K_;
-  }
+  inline details::ImpedanceVecd<false> & K() noexcept { return K_; }
   /** Impedance spring parameter */
-  inline const details::ImpedanceVecd<false> & spring() const noexcept
-  {
-    return K_;
-  }
+  inline const details::ImpedanceVecd<false> & spring() const noexcept { return K_; }
   /** Impedance spring parameter */
-  inline details::ImpedanceVecd<false> & spring() noexcept
-  {
-    return K_;
-  }
+  inline details::ImpedanceVecd<false> & spring() noexcept { return K_; }
 
   /** Impedance wrench gain */
-  inline const details::ImpedanceVecd<false> & wrench() const noexcept
-  {
-    return wrench_;
-  }
+  inline const details::ImpedanceVecd<false> & wrench() const noexcept { return wrench_; }
   /** Impedance wrench gain */
-  inline details::ImpedanceVecd<false> & wrench() noexcept
-  {
-    return wrench_;
-  }
+  inline details::ImpedanceVecd<false> & wrench() noexcept { return wrench_; }
 
   /** Returns default gains for the ImpedanceTask */
   inline static ImpedanceGains Default()

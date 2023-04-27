@@ -122,10 +122,7 @@ public:
       std::vector<std::string> selected_joints = {"Root"};
       for(const auto & j : robot().module().ref_joint_order())
       {
-        if(std::find(arm_joints.begin(), arm_joints.end(), j) != arm_joints.end())
-        {
-          selected_joints.push_back(j);
-        }
+        if(std::find(arm_joints.begin(), arm_joints.end(), j) != arm_joints.end()) { selected_joints.push_back(j); }
       }
       addCollisions("jvrc1", "box", {{"R_WRIST_Y_S", "box", iDist, sDist, 0, selected_joints}});
       BOOST_REQUIRE(hasCollision("jvrc1", "box", "R_WRIST_Y_S", "box"));

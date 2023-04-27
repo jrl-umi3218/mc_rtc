@@ -667,31 +667,13 @@ public:
    * @{
    */
 
-#define MAKE_ROBOTS_ACCESSOR(NAME, PTR)                               \
-  inline mc_rbdyn::Robots & NAME##s() noexcept                        \
-  {                                                                   \
-    return *controller().PTR##s_;                                     \
-  }                                                                   \
-  inline const mc_rbdyn::Robots & NAME##s() const noexcept            \
-  {                                                                   \
-    return *controller().PTR##s_;                                     \
-  }                                                                   \
-  inline mc_rbdyn::Robot & NAME() noexcept                            \
-  {                                                                   \
-    return NAME##s().robot();                                         \
-  }                                                                   \
-  inline const mc_rbdyn::Robot & NAME() const noexcept                \
-  {                                                                   \
-    return NAME##s().robot();                                         \
-  }                                                                   \
-  inline mc_rbdyn::Robot & NAME(const std::string & name)             \
-  {                                                                   \
-    return NAME##s().robot(name);                                     \
-  }                                                                   \
-  inline const mc_rbdyn::Robot & NAME(const std::string & name) const \
-  {                                                                   \
-    return NAME##s().robot(name);                                     \
-  }
+#define MAKE_ROBOTS_ACCESSOR(NAME, PTR)                                                      \
+  inline mc_rbdyn::Robots & NAME##s() noexcept { return *controller().PTR##s_; }             \
+  inline const mc_rbdyn::Robots & NAME##s() const noexcept { return *controller().PTR##s_; } \
+  inline mc_rbdyn::Robot & NAME() noexcept { return NAME##s().robot(); }                     \
+  inline const mc_rbdyn::Robot & NAME() const noexcept { return NAME##s().robot(); }         \
+  inline mc_rbdyn::Robot & NAME(const std::string & name) { return NAME##s().robot(name); }  \
+  inline const mc_rbdyn::Robot & NAME(const std::string & name) const { return NAME##s().robot(name); }
 
   MAKE_ROBOTS_ACCESSOR(robot, outputRobot)
   MAKE_ROBOTS_ACCESSOR(realRobot, outputRealRobot)

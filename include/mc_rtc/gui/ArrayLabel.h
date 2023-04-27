@@ -35,10 +35,7 @@ struct ArrayLabelImpl : public LabelImpl<GetT>
   /** Invalid element */
   ArrayLabelImpl() {}
 
-  static constexpr size_t write_size()
-  {
-    return LabelImpl<GetT>::write_size() + 1;
-  }
+  static constexpr size_t write_size() { return LabelImpl<GetT>::write_size() + 1; }
 
   void write(mc_rtc::MessagePackBuilder & writer)
   {
@@ -85,14 +82,8 @@ auto ArrayLabel(const std::string & name, T && value)
 {
   using Labels = details::Labels<std::decay_t<T>>;
   auto callback = details::read(std::forward<T>(value));
-  if constexpr(Labels::has_labels)
-  {
-    return ArrayLabel(name, Labels::labels, callback);
-  }
-  else
-  {
-    return details::ArrayLabelImpl(name, callback);
-  }
+  if constexpr(Labels::has_labels) { return ArrayLabel(name, Labels::labels, callback); }
+  else { return details::ArrayLabelImpl(name, callback); }
 }
 
 /** Creates a label for RPY angles

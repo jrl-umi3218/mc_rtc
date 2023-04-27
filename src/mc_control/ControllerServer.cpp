@@ -22,19 +22,14 @@ ControllerServer::ControllerServer(double dt,
   iter_ = 0;
   update_rate(dt, server_dt);
 #ifndef MC_RTC_DISABLE_NETWORK
-  auto init_socket = [](int & socket, int proto, const std::vector<std::string> & uris, const std::string & name) {
+  auto init_socket = [](int & socket, int proto, const std::vector<std::string> & uris, const std::string & name)
+  {
     socket = nn_socket(AF_SP, proto);
-    if(socket < 0)
-    {
-      mc_rtc::log::error_and_throw("Failed to initialize {}", name);
-    }
+    if(socket < 0) { mc_rtc::log::error_and_throw("Failed to initialize {}", name); }
     for(const auto & uri : uris)
     {
       int ret = nn_bind(socket, uri.c_str());
-      if(ret < 0)
-      {
-        mc_rtc::log::error_and_throw("Failed to bind {} to uri: {}", name, uri);
-      }
+      if(ret < 0) { mc_rtc::log::error_and_throw("Failed to bind {} to uri: {}", name, uri); }
     }
   };
   init_socket(pub_socket_, NN_PUB, pub_bind_uri, "PUB socket");
@@ -60,10 +55,7 @@ void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder, 
   {
     mc_rtc::log::error("Invokation of the following method failed\n{}\n", config.dump(true));
   }
-  if(logger_)
-  {
-    logger_->addGUIEvent({std::move(category), std::move(name), data});
-  }
+  if(logger_) { logger_->addGUIEvent({std::move(category), std::move(name), data}); }
 }
 
 void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder)
@@ -78,26 +70,19 @@ void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder)
       config.add("data", r.data);
       mc_rtc::log::error("Invokation of the following method failed\n{}\n", config.dump(true));
     }
-    if(logger_)
-    {
-      logger_->addGUIEvent(std::move(r));
-    }
+    if(logger_) { logger_->addGUIEvent(std::move(r)); }
   }
   requests_.resize(0);
 #ifndef MC_RTC_DISABLE_NETWORK
   /*FIXME Avoid freeing the message constantly */
   void * buf = nullptr;
   int recv = 0;
-  do
-  {
+  do {
     recv = nn_recv(pull_socket_, &buf, NN_MSG, NN_DONTWAIT);
     if(recv < 0)
     {
       auto err = nn_errno();
-      if(err != EAGAIN)
-      {
-        mc_rtc::log::error("ControllerServer failed to receive requested with errno: {}", err);
-      }
+      if(err != EAGAIN) { mc_rtc::log::error("ControllerServer failed to receive requested with errno: {}", err); }
     }
     else
     {
@@ -131,10 +116,7 @@ std::pair<const char *, size_t> ControllerServer::data() const
 
 void ControllerServer::update_rate(double dt, double server_dt)
 {
-  if(server_dt < dt)
-  {
-    server_dt = dt;
-  }
+  if(server_dt < dt) { server_dt = dt; }
   rate_ = static_cast<unsigned int>(ceil(server_dt / dt));
 }
 

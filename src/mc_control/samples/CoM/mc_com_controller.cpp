@@ -38,14 +38,11 @@ MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
     leftFootSurface_ = "LeftFoot";
     rightFootSurface_ = "RightFoot";
   }
-  else
-  {
-    mc_rtc::log::error_and_throw("MCCoMController does not support robot {}", robot().name());
-  }
+  else { mc_rtc::log::error_and_throw("MCCoMController does not support robot {}", robot().name()); }
 
-  datastore().make_call("KinematicAnchorFrame::" + robot().name(), [this](const mc_rbdyn::Robot & robot) {
-    return sva::interpolate(robot.surfacePose(leftFootSurface_), robot.surfacePose(rightFootSurface_), 0.5);
-  });
+  datastore().make_call(
+      "KinematicAnchorFrame::" + robot().name(), [this](const mc_rbdyn::Robot & robot)
+      { return sva::interpolate(robot.surfacePose(leftFootSurface_), robot.surfacePose(rightFootSurface_), 0.5); });
 }
 
 void MCCoMController::reset(const ControllerResetData & reset_data)

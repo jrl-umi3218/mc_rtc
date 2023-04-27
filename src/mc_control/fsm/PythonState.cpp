@@ -39,10 +39,7 @@ bool PythonState::run(Controller & ctl)
   {
     bool ret = run_(ctl);
     update_python_failed();
-    if(python_failed_)
-    {
-      return false;
-    }
+    if(python_failed_) { return false; }
     return ret;
   }
   return false;

@@ -34,10 +34,7 @@ int main(int argc, char * argv[])
       std::cout << desc << "\n";
       return 0;
     }
-    if(replay_outputs)
-    {
-      config.replay_configuration.with_outputs = true;
-    }
+    if(replay_outputs) { config.replay_configuration.with_outputs = true; }
     if(only_gui_inputs)
     {
       if(replay_outputs)
@@ -47,10 +44,7 @@ int main(int argc, char * argv[])
       config.replay_configuration.with_inputs = false;
       config.replay_configuration.with_outputs = false;
     }
-    if(config.sync_ratio <= 0)
-    {
-      mc_rtc::log::error_and_throw("sync-ratio must be strictly positive");
-    }
+    if(config.sync_ratio <= 0) { mc_rtc::log::error_and_throw("sync-ratio must be strictly positive"); }
     config.replay_configuration.stop_after_log = !continue_after_replay;
   }
   mc_control::Ticker ticker(config);

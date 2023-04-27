@@ -149,4 +149,3 @@ Make sure the surface normal is facing the right direction in the Blender projec
 # Add a surface to a robot
 
 To add a surface to a robot, you would follow the same steps as with an environment but the environment model is the robot's body where you want to add a surface. Then generate the "environment" into a temporary directory and use the generated rsdf file in your original robot's description folder.
-

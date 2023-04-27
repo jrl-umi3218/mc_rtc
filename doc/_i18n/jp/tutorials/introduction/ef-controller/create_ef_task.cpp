@@ -1,4 +1,4 @@
-// エンドエフェクタータスクのヘッダーをインクルードする（ヘッダファイル） 
+// エンドエフェクタータスクのヘッダーをインクルードする（ヘッダファイル）
 #include <mc_tasks/EndEffectorTask.h>
 // クラスのプライベートメンバーを追加 (ヘッダファイル)
 std::shared_ptr<mc_tasks::EndEffectorTask> efTask;

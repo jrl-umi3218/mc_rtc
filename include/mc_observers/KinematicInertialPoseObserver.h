@@ -70,10 +70,7 @@ struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
   void update(mc_control::MCController & ctl) override;
 
   /*! \brief Get floating-base pose in the world frame. */
-  const sva::PTransformd & posW() const
-  {
-    return pose_;
-  }
+  const sva::PTransformd & posW() const { return pose_; }
 
 protected:
   void addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger &, const std::string & category) override;

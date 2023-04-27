@@ -121,7 +121,8 @@ extern "C"
 
     PyGILState_Release(gstate);
     MCPythonControllerObject * res = (MCPythonControllerObject *)(c_obj);
-    res->impl->handle_python_error = []() -> bool {
+    res->impl->handle_python_error = []() -> bool
+    {
       auto gstate = PyGILState_Ensure();
       auto error = PyErr_Occurred();
       if(error)

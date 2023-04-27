@@ -33,10 +33,7 @@ template<typename T>
 const T & Robot::device(const std::string & name) const
 {
   auto it = data_->devicesIndex.find(name);
-  if(it == data_->devicesIndex.end())
-  {
-    mc_rtc::log::error_and_throw("No device named {} in {}", name, this->name());
-  }
+  if(it == data_->devicesIndex.end()) { mc_rtc::log::error_and_throw("No device named {} in {}", name, this->name()); }
   auto dev = data_->devices[it->second].get();
   auto ptr = dynamic_cast<T *>(dev);
   if(!ptr)

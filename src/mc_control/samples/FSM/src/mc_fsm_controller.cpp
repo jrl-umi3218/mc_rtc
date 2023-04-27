@@ -15,8 +15,9 @@ FSMController::FSMController(mc_rbdyn::RobotModulePtr rm,
 void FSMController::reset(const mc_control::ControllerResetData & data)
 {
   mc_control::fsm::Controller::reset(data);
-  auto check_contact = [this](const std::string & r1, const std::string & r2, const std::string & s1,
-                              const std::string & s2) {
+  auto check_contact =
+      [this](const std::string & r1, const std::string & r2, const std::string & s1, const std::string & s2)
+  {
     if(!hasContact({r1, r2, s1, s2}))
     {
       mc_rtc::log::error_and_throw("[FSM] Expected to find {}::{}/{}::{} contact", r1, s1, r2, s2);

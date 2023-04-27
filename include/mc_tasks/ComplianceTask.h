@@ -118,16 +118,10 @@ public:
   sva::ForceVecd getFilteredWrench() const;
 
   /*! \brief Modify the target wrench */
-  void setTargetWrench(const sva::ForceVecd & wrench)
-  {
-    obj_ = wrench;
-  }
+  void setTargetWrench(const sva::ForceVecd & wrench) { obj_ = wrench; }
 
   /*! \brief Get the current target wrench */
-  sva::ForceVecd getTargetWrench()
-  {
-    return obj_;
-  }
+  sva::ForceVecd getTargetWrench() { return obj_; }
 
   /*! \brief Set the task stiffness */
   void stiffness(double s)
@@ -136,10 +130,7 @@ public:
     efTask_->orientationTask->stiffness(s);
   }
   /*! \brief Get the task stiffness */
-  double stiffness()
-  {
-    return efTask_->positionTask->stiffness();
-  }
+  double stiffness() { return efTask_->positionTask->stiffness(); }
 
   /*! \brief Set the task weight */
   void weight(double w)
@@ -148,65 +139,32 @@ public:
     efTask_->orientationTask->weight(w);
   }
   /*! \brief Get the task weight */
-  double weight()
-  {
-    return efTask_->positionTask->weight();
-  }
+  double weight() { return efTask_->positionTask->weight(); }
 
   /*! \brief Set the force threshold */
-  void forceThresh(double t)
-  {
-    forceThresh_ = t;
-  }
+  void forceThresh(double t) { forceThresh_ = t; }
   /*! \brief Get the force threshold */
-  double forceThresh()
-  {
-    return forceThresh_;
-  }
+  double forceThresh() { return forceThresh_; }
 
   /*! \brief Set the torque threshold */
-  void torqueThresh(double t)
-  {
-    torqueThresh_ = t;
-  }
+  void torqueThresh(double t) { torqueThresh_ = t; }
   /*! \brief Get the torque threshold */
-  double torqueThresh()
-  {
-    return torqueThresh_;
-  }
+  double torqueThresh() { return torqueThresh_; }
 
   /*! \brief Set the force gain */
-  void forceGain(std::pair<double, double> t)
-  {
-    forceGain_ = t;
-  }
+  void forceGain(std::pair<double, double> t) { forceGain_ = t; }
   /*! \brief Get the force gain */
-  std::pair<double, double> forceGain()
-  {
-    return forceGain_;
-  }
+  std::pair<double, double> forceGain() { return forceGain_; }
 
   /*! \brief Set the torque gain */
-  void torqueGain(std::pair<double, double> t)
-  {
-    torqueGain_ = t;
-  }
+  void torqueGain(std::pair<double, double> t) { torqueGain_ = t; }
   /*! \brief Get the torque gain */
-  std::pair<double, double> torqueGain()
-  {
-    return torqueGain_;
-  }
+  std::pair<double, double> torqueGain() { return torqueGain_; }
 
   /*! \brief Set the current dof matrix */
-  void dof(const Eigen::Matrix6d & dof)
-  {
-    dof_ = dof;
-  }
+  void dof(const Eigen::Matrix6d & dof) { dof_ = dof; }
   /*! \brief Get the current dof matrix */
-  Eigen::Matrix6d dof()
-  {
-    return dof_;
-  }
+  Eigen::Matrix6d dof() { return dof_; }
 
   void dimWeight(const Eigen::VectorXd & dimW) override;
 
@@ -222,10 +180,7 @@ public:
 
   void resetJointsSelector(mc_solver::QPSolver & solver) override;
 
-  Eigen::VectorXd eval() const override
-  {
-    return wrench_.vector();
-  }
+  Eigen::VectorXd eval() const override { return wrench_.vector(); }
 
   Eigen::VectorXd speed() const override
   {

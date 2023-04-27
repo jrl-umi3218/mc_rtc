@@ -37,16 +37,10 @@ struct MC_SOLVER_DLLAPI TVMQPSolver final : public QPSolver
   double solveAndBuildTime() final;
 
   /** Access the internal problem */
-  inline tvm::LinearizedControlProblem & problem() noexcept
-  {
-    return problem_;
-  }
+  inline tvm::LinearizedControlProblem & problem() noexcept { return problem_; }
 
   /** Access the internal problem (const) */
-  inline const tvm::LinearizedControlProblem & problem() const noexcept
-  {
-    return problem_;
-  }
+  inline const tvm::LinearizedControlProblem & problem() const noexcept { return problem_; }
 
   /** Helper to get a \ref TVMQPSolver from a \ref QPSolver instance
    *

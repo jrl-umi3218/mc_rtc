@@ -11,10 +11,7 @@
 mc_rbdyn::Robots & get_robots()
 {
   static mc_rbdyn::RobotsPtr robots_ptr = nullptr;
-  if(robots_ptr)
-  {
-    return *robots_ptr;
-  }
+  if(robots_ptr) { return *robots_ptr; }
   configureRobotLoader();
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   auto env = mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
@@ -58,22 +55,10 @@ void TestRobotLoadingCommon(mc_rbdyn::RobotModulePtr rm, mc_rbdyn::RobotModulePt
   BOOST_REQUIRE_EQUAL(robotCopy.robotIndex(), 2);
   BOOST_REQUIRE_EQUAL(robotCopy.name(), "robotCopy");
   auto & robot = robots_ptr->robot("renamed");
-  for(const auto & c : robot.convexes())
-  {
-    BOOST_REQUIRE(robotCopy.hasConvex(c.first));
-  }
-  for(const auto & s : robot.surfaces())
-  {
-    BOOST_REQUIRE(robotCopy.hasSurface(s.first));
-  }
-  for(const auto & fs : robot.forceSensors())
-  {
-    BOOST_REQUIRE(robotCopy.hasForceSensor(fs.name()));
-  }
-  for(const auto & bs : robot.bodySensors())
-  {
-    BOOST_REQUIRE(robotCopy.hasBodySensor(bs.name()));
-  }
+  for(const auto & c : robot.convexes()) { BOOST_REQUIRE(robotCopy.hasConvex(c.first)); }
+  for(const auto & s : robot.surfaces()) { BOOST_REQUIRE(robotCopy.hasSurface(s.first)); }
+  for(const auto & fs : robot.forceSensors()) { BOOST_REQUIRE(robotCopy.hasForceSensor(fs.name())); }
+  for(const auto & bs : robot.bodySensors()) { BOOST_REQUIRE(robotCopy.hasBodySensor(bs.name())); }
 
   robots_ptr->removeRobot("robotCopy");
   BOOST_REQUIRE(!robots_ptr->hasRobot("robotCopy"));
@@ -114,7 +99,8 @@ BOOST_AUTO_TEST_CASE(TestRobotPosWVelWAccW)
     BOOST_CHECK(robots.robot().posW().matrix().isApprox(refPosW.matrix()));
   }
 
-  auto checkVelocity = [](const sva::MotionVecd & actual, const sva::MotionVecd & refVal) {
+  auto checkVelocity = [](const sva::MotionVecd & actual, const sva::MotionVecd & refVal)
+  {
     BOOST_CHECK_MESSAGE(actual.vector().isApprox(refVal.vector()), "Error in Robot::velW"
                                                                        << "\nExpected:"
                                                                        << "\nangular:" << refVal.angular().transpose()

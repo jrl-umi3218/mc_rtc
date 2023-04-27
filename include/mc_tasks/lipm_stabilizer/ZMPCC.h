@@ -42,17 +42,11 @@ struct ZMPCC
    *   - false: ZMPCC compensation gains are set to zero, and the integrator
    *   gradually leaks to zero
    */
-  void enabled(bool state)
-  {
-    enabled_ = state;
-  }
+  void enabled(bool state) { enabled_ = state; }
 
   /** Returns whether ZMPCC compensation is enabled
    */
-  bool enabled() const
-  {
-    return enabled_;
-  }
+  bool enabled() const { return enabled_; }
 
   /** Configures ZMPCC parameters
    *
@@ -70,10 +64,7 @@ struct ZMPCC
   }
 
   /** Returns ZMPCC configuration */
-  const ZMPCCConfiguration & config() const
-  {
-    return config_;
-  }
+  const ZMPCCConfiguration & config() const { return config_; }
 
   /** Compute CoM offset due to ZMPCC compensation
    *

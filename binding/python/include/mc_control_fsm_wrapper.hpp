@@ -16,9 +16,8 @@ using run_cb = std::function<bool(mc_control::fsm::Controller &)>;
 template<typename T, typename U>
 configure_cb make_configure_cb(T python_trampoline, U cb)
 {
-  return [python_trampoline, cb](const mc_rtc::Configuration & conf) {
-    return python_trampoline(cb, const_cast<mc_rtc::Configuration &>(conf));
-  };
+  return [python_trampoline, cb](const mc_rtc::Configuration & conf)
+  { return python_trampoline(cb, const_cast<mc_rtc::Configuration &>(conf)); };
 }
 
 template<typename T, typename U>

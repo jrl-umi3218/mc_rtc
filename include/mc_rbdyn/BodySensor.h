@@ -67,34 +67,19 @@ struct MC_RBDYN_DLLAPI BodySensor : public Device
   ~BodySensor() noexcept override;
 
   /** Get the sensor's parent body name */
-  inline const std::string & parentBody() const
-  {
-    return Device::parent();
-  }
+  inline const std::string & parentBody() const { return Device::parent(); }
 
   /** Return the transformation from the parent body to the sensor */
-  inline const sva::PTransformd & X_b_s() const
-  {
-    return Device::X_p_s();
-  }
+  inline const sva::PTransformd & X_b_s() const { return Device::X_p_s(); }
 
   /** Return the sensor's position reading, Zero if not provided */
-  inline const Eigen::Vector3d & position() const
-  {
-    return position_;
-  }
+  inline const Eigen::Vector3d & position() const { return position_; }
 
   /** Set the sensor's position reading */
-  inline void position(const Eigen::Vector3d & position)
-  {
-    position_ = position;
-  }
+  inline void position(const Eigen::Vector3d & position) { position_ = position; }
 
   /** Return the sensor's orientation reading, Identity if not provided */
-  inline const Eigen::Quaterniond & orientation() const
-  {
-    return orientation_;
-  }
+  inline const Eigen::Quaterniond & orientation() const { return orientation_; }
 
   /** Set the sensor's orientation reading
    *
@@ -102,58 +87,34 @@ struct MC_RBDYN_DLLAPI BodySensor : public Device
    * (i.e. a fixed frame in the real world) to a sensor frame of the robot.
    *
    */
-  inline void orientation(const Eigen::Quaterniond & orientation)
-  {
-    orientation_ = orientation;
-  }
+  inline void orientation(const Eigen::Quaterniond & orientation) { orientation_ = orientation; }
 
   /** Return the sensor's linear velocity reading, Zero if not provided */
-  inline const Eigen::Vector3d & linearVelocity() const
-  {
-    return linear_velocity_;
-  }
+  inline const Eigen::Vector3d & linearVelocity() const { return linear_velocity_; }
 
   /** Set the sensor's linear velocity reading */
-  inline void linearVelocity(const Eigen::Vector3d & linear_velocity)
-  {
-    linear_velocity_ = linear_velocity;
-  }
+  inline void linearVelocity(const Eigen::Vector3d & linear_velocity) { linear_velocity_ = linear_velocity; }
 
   /** Return the sensor's angular velocity reading, Zero if not provided */
-  inline const Eigen::Vector3d & angularVelocity() const
-  {
-    return angular_velocity_;
-  }
+  inline const Eigen::Vector3d & angularVelocity() const { return angular_velocity_; }
 
   /** Set the sensor's angular velocity reading */
-  inline void angularVelocity(const Eigen::Vector3d & angular_velocity)
-  {
-    angular_velocity_ = angular_velocity;
-  }
+  inline void angularVelocity(const Eigen::Vector3d & angular_velocity) { angular_velocity_ = angular_velocity; }
 
   /** Return the sensor's linear acceleration reading, Zero if not provided
    *
    * @deprecated in favor of const Eigen::Vector3d & linearAcceleration() const
    **/
-  MC_RTC_DEPRECATED inline const Eigen::Vector3d & acceleration() const
-  {
-    return linearAcceleration();
-  }
+  MC_RTC_DEPRECATED inline const Eigen::Vector3d & acceleration() const { return linearAcceleration(); }
 
   /** Set the sensor's linear acceleration reading
    *
    * @deprecated in favor of void linearAcceleration(const Eigen::Vector3d &)
    * */
-  MC_RTC_DEPRECATED inline void acceleration(const Eigen::Vector3d & acceleration)
-  {
-    linearAcceleration(acceleration);
-  }
+  MC_RTC_DEPRECATED inline void acceleration(const Eigen::Vector3d & acceleration) { linearAcceleration(acceleration); }
 
   /** Return the sensor's linear acceleration reading, Zero if not provided */
-  inline const Eigen::Vector3d & linearAcceleration() const
-  {
-    return linear_acceleration_;
-  }
+  inline const Eigen::Vector3d & linearAcceleration() const { return linear_acceleration_; }
 
   /** Set the sensor's linear acceleration reading */
   inline void linearAcceleration(const Eigen::Vector3d & linear_acceleration)
@@ -162,10 +123,7 @@ struct MC_RBDYN_DLLAPI BodySensor : public Device
   }
 
   /** Return the sensor's angular acceleration reading, Zero if not provided */
-  inline const Eigen::Vector3d & angularAcceleration() const
-  {
-    return angular_acceleration_;
-  }
+  inline const Eigen::Vector3d & angularAcceleration() const { return angular_acceleration_; }
 
   /** Set the sensor's angular acceleration reading */
   inline void angularAcceleration(const Eigen::Vector3d & angular_acceleration)

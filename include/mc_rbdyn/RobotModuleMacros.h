@@ -88,7 +88,8 @@
 #  define ROBOT_MODULE_DEFAULT_CONSTRUCTOR(NAME, TYPE)                                 \
     namespace                                                                          \
     {                                                                                  \
-    static auto registered = []() {                                                    \
+    static auto registered = []()                                                      \
+    {                                                                                  \
       using fn_t = std::function<TYPE *()>;                                            \
       mc_rbdyn::RobotLoader::register_object(NAME, fn_t([]() { return new TYPE(); })); \
       return true;                                                                     \
@@ -98,7 +99,8 @@
 #  define ROBOT_MODULE_CANONIC_CONSTRUCTOR(NAME, TYPE)                                                          \
     namespace                                                                                                   \
     {                                                                                                           \
-    static auto registered = []() {                                                                             \
+    static auto registered = []()                                                                               \
+    {                                                                                                           \
       using fn_t = std::function<TYPE *(const std::string &, const std::string &)>;                             \
       mc_rbdyn::RobotLoader::register_object(                                                                   \
           NAME, fn_t([](const std::string & path, const std::string & name) { return new TYPE(path, name); })); \

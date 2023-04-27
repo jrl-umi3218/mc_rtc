@@ -175,10 +175,7 @@ struct MC_RTC_GUI_DLLAPI PolygonDescription
            && closed_ == rhs.closed_;
   };
 
-  bool operator!=(const PolygonDescription & rhs) const
-  {
-    return !(*this == rhs);
-  }
+  bool operator!=(const PolygonDescription & rhs) const { return !(*this == rhs); }
 
   // clang-format off
   std::vector<std::array<double, 2>> & points() { return points_; }

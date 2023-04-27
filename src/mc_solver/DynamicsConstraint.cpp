@@ -30,31 +30,19 @@ static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots,
   {
     for(auto & ti : tl)
     {
-      for(auto & t : ti)
-      {
-        t = -INFINITY;
-      }
+      for(auto & t : ti) { t = -INFINITY; }
     }
     for(auto & ti : tu)
     {
-      for(auto & t : ti)
-      {
-        t = INFINITY;
-      }
+      for(auto & t : ti) { t = INFINITY; }
     }
     for(auto & tdi : tdl)
     {
-      for(auto & td : tdi)
-      {
-        td = -INFINITY;
-      }
+      for(auto & td : tdi) { td = -INFINITY; }
     }
     for(auto & tdi : tdu)
     {
-      for(auto & td : tdi)
-      {
-        td = INFINITY;
-      }
+      for(auto & td : tdi) { td = INFINITY; }
     }
   }
   tasks::TorqueBound tBound(tl, tu);
@@ -184,10 +172,7 @@ mc_solver::ConstraintSetPtr load_kin_constr(mc_solver::QPSolver & solver, const 
     return std::make_shared<mc_solver::KinematicsConstraint>(solver.robots(), robotIndex, solver.dt(), config("damper"),
                                                              config("velocityPercent", 0.5));
   }
-  else
-  {
-    return std::make_shared<mc_solver::KinematicsConstraint>(solver.robots(), robotIndex, solver.dt());
-  }
+  else { return std::make_shared<mc_solver::KinematicsConstraint>(solver.robots(), robotIndex, solver.dt()); }
 }
 
 mc_solver::ConstraintSetPtr load_dyn_constr(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)

@@ -114,28 +114,16 @@ struct MC_SOLVER_DLLAPI TasksQPSolver final : public QPSolver
   void updateConstrSize();
 
   /** Returns the internal QP solver data */
-  inline tasks::qp::SolverData & data() noexcept
-  {
-    return solver_.data();
-  }
+  inline tasks::qp::SolverData & data() noexcept { return solver_.data(); }
 
   /** Returns the internal QP solver data (const) */
-  inline const tasks::qp::SolverData & data() const noexcept
-  {
-    return solver_.data();
-  }
+  inline const tasks::qp::SolverData & data() const noexcept { return solver_.data(); }
 
   /** Access the internal QP solver */
-  tasks::qp::QPSolver & solver() noexcept
-  {
-    return solver_;
-  }
+  tasks::qp::QPSolver & solver() noexcept { return solver_; }
 
   /** Access the internal QP solver (const) */
-  const tasks::qp::QPSolver & solver() const noexcept
-  {
-    return solver_;
-  }
+  const tasks::qp::QPSolver & solver() const noexcept { return solver_; }
 
   /** Helper to get a \ref TasksQPSolver from a \ref QPSolver instance
    *

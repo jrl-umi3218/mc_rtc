@@ -63,8 +63,10 @@ namespace
 
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "damping",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto frame = [&]() -> std::string {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
+      auto frame = [&]() -> std::string
+      {
         if(config.has("surface"))
         {
           mc_rtc::log::deprecated("DampingTaskLoader", "surface", "frame");

@@ -8,8 +8,8 @@
       "minItems": 0,
       "maxItems": 2,
       "description": "Support contact surfaces (default: [Left, Right])",
-      "items": 
-      { 
+      "items":
+      {
         "type": "string",
         "enum": ["Left", "Right"]
       },

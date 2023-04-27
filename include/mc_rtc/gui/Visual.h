@@ -41,10 +41,7 @@ struct VisualImpl : public Element
   /** Invalid element */
   VisualImpl() {}
 
-  constexpr static size_t write_size()
-  {
-    return Element::write_size() + 2;
-  }
+  constexpr static size_t write_size() { return Element::write_size() + 2; }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {

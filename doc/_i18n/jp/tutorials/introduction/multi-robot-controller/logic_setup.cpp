@@ -1,9 +1,9 @@
 // ヘッダー内
 enum DoorPhase
 {
-      APPROACH = 0,
-      HANDLE,
-      OPEN
+  APPROACH = 0,
+  HANDLE,
+  OPEN
 };
 // コントローラーのプライベートプロパティ
 DoorPhase phase = APPROACH;

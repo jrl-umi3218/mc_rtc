@@ -35,10 +35,7 @@ struct PolyhedronTrianglesListImpl : public Element
   /** Invalid element */
   PolyhedronTrianglesListImpl() {}
 
-  static constexpr size_t write_size()
-  {
-    return Element::write_size() + 1 + PolyhedronConfig::write_size();
-  }
+  static constexpr size_t write_size() { return Element::write_size() + 1 + PolyhedronConfig::write_size(); }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
@@ -77,10 +74,7 @@ struct PolyhedronVerticesTrianglesImpl : public Element
   /** Invalid element */
   PolyhedronVerticesTrianglesImpl() {}
 
-  static constexpr size_t write_size()
-  {
-    return Element::write_size() + 2 + PolyhedronConfig::write_size();
-  }
+  static constexpr size_t write_size() { return Element::write_size() + 2 + PolyhedronConfig::write_size(); }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
@@ -124,10 +118,7 @@ struct ColoredPolyhedronImpl : public PolyhedronT
   /** Invalid element */
   ColoredPolyhedronImpl() {}
 
-  static constexpr size_t write_size()
-  {
-    return PolyhedronT::write_size() + 1;
-  }
+  static constexpr size_t write_size() { return PolyhedronT::write_size() + 1; }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
@@ -144,10 +135,7 @@ struct ColoredPolyhedronImpl : public PolyhedronT
         c[2].write(builder);
         builder.finish_array();
       }
-      else
-      {
-        c.write(builder);
-      }
+      else { c.write(builder); }
     }
     builder.finish_array();
   }

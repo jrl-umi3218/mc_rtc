@@ -8,9 +8,9 @@ AlignEscapedNewlinesLeft: true
 AlignOperands:   true
 AlignTrailingComments: false
 AllowAllParametersOfDeclarationOnNextLine: false
-AllowShortBlocksOnASingleLine: false
+AllowShortBlocksOnASingleLine: true
 AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: Inline
 AllowShortIfStatementsOnASingleLine: true
 AllowShortLoopsOnASingleLine: true
 AlwaysBreakAfterDefinitionReturnType: None
@@ -104,4 +104,3 @@ StatementMacros: [MC_RTC_diagnostic_push,MC_RTC_diagnostic_pop,MC_RTC_diagnostic
 TabWidth:        2
 UseTab:          Never
 ...
-

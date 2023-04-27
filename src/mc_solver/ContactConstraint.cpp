@@ -93,17 +93,12 @@ namespace
 
 static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
     "contact",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
       std::string cTypeStr = config("contactType", std::string{"velocity"});
       auto cType = mc_solver::ContactConstraint::Velocity;
-      if(cTypeStr == "acceleration")
-      {
-        cType = mc_solver::ContactConstraint::Acceleration;
-      }
-      else if(cTypeStr == "position")
-      {
-        cType = mc_solver::ContactConstraint::Position;
-      }
+      if(cTypeStr == "acceleration") { cType = mc_solver::ContactConstraint::Acceleration; }
+      else if(cTypeStr == "position") { cType = mc_solver::ContactConstraint::Position; }
       else if(cTypeStr != "velocity")
       {
         mc_rtc::log::error("Stored contact type for contact constraint not recognized, default to velocity");

@@ -58,10 +58,7 @@ std::string StateBuilder::cat2str(const std::vector<std::string> & cat)
   for(size_t i = 0; i < cat.size(); ++i)
   {
     ret += cat[i];
-    if(i != cat.size() - 1)
-    {
-      ret += "/";
-    }
+    if(i != cat.size() - 1) { ret += "/"; }
   }
   return ret;
 }
@@ -69,10 +66,7 @@ std::string StateBuilder::cat2str(const std::vector<std::string> & cat)
 void StateBuilder::removePlot(const std::string & name)
 {
   auto it = plots_.find(name);
-  if(it != plots_.end())
-  {
-    plots_.erase(it);
-  }
+  if(it != plots_.end()) { plots_.erase(it); }
 }
 
 void StateBuilder::removeCategory(const std::vector<std::string> & category)
@@ -88,30 +82,21 @@ void StateBuilder::removeCategory(const std::vector<std::string> & category)
   while(cat)
   {
     auto it = cat->find(category[depth]);
-    if(it == cat->sub.end())
-    {
-      return;
-    }
+    if(it == cat->sub.end()) { return; }
     cat->sub.erase(it);
     if(cat->elements.size() == 0 && cat->sub.size() == 0 && depth > 0)
     {
       depth -= 1;
       cat = getCategory(category, depth);
     }
-    else
-    {
-      cat = nullptr;
-    }
+    else { cat = nullptr; }
   }
 }
 
 bool StateBuilder::hasElement(const std::vector<std::string> & category, const std::string & name)
 {
   auto cat_ = getCategory(category);
-  if(!cat_)
-  {
-    return false;
-  }
+  if(!cat_) { return false; }
   const auto & cat = *cat_;
   auto it = std::find_if(cat.elements.begin(), cat.elements.end(),
                          [&name](const ElementStore & el) { return el().name() == name; });
@@ -121,57 +106,33 @@ bool StateBuilder::hasElement(const std::vector<std::string> & category, const s
 void StateBuilder::removeElement(const std::vector<std::string> & category, const std::string & name)
 {
   auto cat_ = getCategory(category);
-  if(!cat_)
-  {
-    return;
-  }
+  if(!cat_) { return; }
   auto & cat = *cat_;
   auto it = std::find_if(cat.elements.begin(), cat.elements.end(),
                          [&name](const ElementStore & el) { return el().name() == name; });
-  if(it != cat.elements.end())
-  {
-    cat.elements.erase(it);
-  }
-  if(cat.elements.size() == 0 && cat.sub.size() == 0)
-  {
-    removeCategory(category);
-  }
+  if(it != cat.elements.end()) { cat.elements.erase(it); }
+  if(cat.elements.size() == 0 && cat.sub.size() == 0) { removeCategory(category); }
 }
 
 void StateBuilder::removeElements(const std::vector<std::string> & category, void * source, bool recurse)
 {
-  if(source == nullptr)
-  {
-    return;
-  }
+  if(source == nullptr) { return; }
   auto cat_ = getCategory(category);
-  if(!cat_)
-  {
-    return;
-  }
+  if(!cat_) { return; }
   auto & elements = cat_->elements;
-  if(recurse)
-  {
-    removeElements(*cat_, source);
-  }
+  if(recurse) { removeElements(*cat_, source); }
   else
   {
     elements.erase(std::remove_if(elements.begin(), elements.end(),
                                   [source](const ElementStore & elem) { return elem.source == source; }),
                    elements.end());
   }
-  if(elements.size() == 0 && cat_->sub.size() == 0)
-  {
-    removeCategory(category);
-  }
+  if(elements.size() == 0 && cat_->sub.size() == 0) { removeCategory(category); }
 }
 
 void StateBuilder::removeElements(void * source)
 {
-  if(source == nullptr)
-  {
-    return;
-  }
+  if(source == nullptr) { return; }
   removeElements(elements_, source);
 }
 
@@ -179,7 +140,8 @@ void StateBuilder::removeElements(Category & category, void * source)
 {
   auto & sub = category.sub;
   sub.erase(std::remove_if(sub.begin(), sub.end(),
-                           [this, source](Category & cat) {
+                           [this, source](Category & cat)
+                           {
                              removeElements(cat, source);
                              return cat.elements.size() == 0 && cat.sub.size() == 0;
                            }),
@@ -227,25 +189,16 @@ void StateBuilder::update()
 {
   static std::vector<char> buffer;
   static mc_rtc::MessagePackBuilder builder(buffer);
-  for(auto & p : plots_)
-  {
-    p.second.callback(builder, p.first, true);
-  }
+  for(auto & p : plots_) { p.second.callback(builder, p.first, true); }
 }
 
 void StateBuilder::update(mc_rtc::MessagePackBuilder & builder, Category & category)
 {
   builder.start_array(1 + category.elements.size() + 1);
   builder.write(category.name);
-  for(auto & e : category.elements)
-  {
-    e.write(e.element(), builder);
-  }
+  for(auto & e : category.elements) { e.write(e.element(), builder); }
   builder.start_array(category.sub.size());
-  for(auto & s : category.sub)
-  {
-    update(builder, s);
-  }
+  for(auto & s : category.sub) { update(builder, s); }
   builder.finish_array();
   builder.finish_array();
 }
@@ -296,10 +249,7 @@ auto StateBuilder::getCategory(const std::vector<std::string> & category, size_t
   {
     const auto & c = category[i];
     auto it = cat_->find(c);
-    if(it == cat_->sub.end())
-    {
-      return nullptr;
-    }
+    if(it == cat_->sub.end()) { return nullptr; }
     cat_ = &(*it);
   }
   return cat_;
@@ -335,10 +285,7 @@ std::vector<StateBuilder::Category>::iterator StateBuilder::Category::find(const
 {
   for(auto it = sub.begin(); it != sub.end(); ++it)
   {
-    if(name == it->name)
-    {
-      return it;
-    }
+    if(name == it->name) { return it; }
   }
   return sub.end();
 }

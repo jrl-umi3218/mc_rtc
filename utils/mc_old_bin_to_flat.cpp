@@ -64,10 +64,7 @@ struct LogLine
   virtual void push() = 0;
   virtual void push(double) {}
   virtual void push(const std::string &) {}
-  virtual bool is_numeric()
-  {
-    return false;
-  }
+  virtual bool is_numeric() { return false; }
 };
 
 struct NumericLogLine : public LogLine
@@ -76,10 +73,7 @@ struct NumericLogLine : public LogLine
   std::string key_;
   data_t data_;
 
-  bool is_numeric() override
-  {
-    return true;
-  }
+  bool is_numeric() override { return true; }
 
   NumericLogLine(const std::string & k, uint64_t s) : key_(k), data_(s, std::numeric_limits<double>::quiet_NaN()) {}
 
@@ -108,21 +102,12 @@ struct NumericLogLine : public LogLine
     LogData<true>::read(is, data_);
   }
 
-  void push() override
-  {
-    data_.push_back(std::numeric_limits<double>::quiet_NaN());
-  }
+  void push() override { data_.push_back(std::numeric_limits<double>::quiet_NaN()); }
 
   void push(double d) override
   {
-    if(std::fabs(d) < std::numeric_limits<double>::min())
-    {
-      data_.push_back(0);
-    }
-    else
-    {
-      data_.push_back(d);
-    }
+    if(std::fabs(d) < std::numeric_limits<double>::min()) { data_.push_back(0); }
+    else { data_.push_back(d); }
   }
 };
 
@@ -159,51 +144,36 @@ struct StringLogLine : public LogLine
     LogData<false>::read(is, data_);
   }
 
-  void push() override
-  {
-    data_.push_back("");
-  }
+  void push() override { data_.push_back(""); }
 
-  void push(const std::string & s) override
-  {
-    data_.push_back(s);
-  }
+  void push(const std::string & s) override { data_.push_back(s); }
 };
 
 std::unordered_map<std::string, std::shared_ptr<LogLine>> readLog(const std::string & file)
 {
   std::unordered_map<std::string, std::shared_ptr<LogLine>> ret;
   std::ifstream ifs(file, std::ifstream::binary);
-  if(!ifs.is_open())
-  {
-    mc_rtc::log::error_and_throw("{} could not be opened!", file);
-  }
+  if(!ifs.is_open()) { mc_rtc::log::error_and_throw("{} could not be opened!", file); }
   std::vector<std::string> current_keys;
   std::vector<std::string> empty_keys;
   std::vector<size_t> data_size;
   size_t entries = 0;
-  auto addKey = [&](const std::string & key, bool is_numeric) {
+  auto addKey = [&](const std::string & key, bool is_numeric)
+  {
     current_keys.push_back(key);
     if(ret.count(key) == 0)
     {
-      if(is_numeric)
-      {
-        ret[key] = std::make_shared<NumericLogLine>(key, entries);
-      }
-      else
-      {
-        ret[key] = std::make_shared<StringLogLine>(key, entries);
-      }
+      if(is_numeric) { ret[key] = std::make_shared<NumericLogLine>(key, entries); }
+      else { ret[key] = std::make_shared<StringLogLine>(key, entries); }
     }
   };
-  auto addVectorKey = [&](const std::string & key, size_t size) {
-    for(size_t i = 0; i < size; ++i)
-    {
-      addKey(key + "_" + std::to_string(i), true);
-    }
+  auto addVectorKey = [&](const std::string & key, size_t size)
+  {
+    for(size_t i = 0; i < size; ++i) { addKey(key + "_" + std::to_string(i), true); }
     return size;
   };
-  auto pushVector = [&](size_t s, size_t j, const mc_rtc::log::DoubleVector * v) {
+  auto pushVector = [&](size_t s, size_t j, const mc_rtc::log::DoubleVector * v)
+  {
     for(size_t i = 0; i < s; ++i)
     {
       ret[current_keys[j + i]]->push(v->v()->operator[](static_cast<flatbuffers::uoffset_t>(i)));
@@ -213,10 +183,7 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>> readLog(const std::str
   {
     int size = 0;
     ifs.read((char *)&size, sizeof(int));
-    if(!ifs)
-    {
-      break;
-    }
+    if(!ifs) { break; }
     char * data = new char[size];
     ifs.read(data, size);
     auto * log = mc_rtc::log::GetLog(data);
@@ -370,10 +337,7 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>> readLog(const std::str
       };
       j += data_size[i];
     }
-    for(auto & e : empty_keys)
-    {
-      ret[e]->push();
-    }
+    for(auto & e : empty_keys) { ret[e]->push(); }
     entries++;
     delete[] data;
   }
@@ -385,10 +349,7 @@ void writeFlatLog(const std::unordered_map<std::string, std::shared_ptr<LogLine>
   std::ofstream ofs(file, std::ofstream::binary);
   uint64_t s = data.size();
   ofs.write((char *)&s, sizeof(uint64_t));
-  for(const auto & d : data)
-  {
-    d.second->write(ofs);
-  }
+  for(const auto & d : data) { d.second->write(ofs); }
 }
 
 void usage(const char * bin)
@@ -405,10 +366,7 @@ int main(int argc, char * argv[])
   }
   std::string in = argv[1];
   std::string out = "";
-  if(argc == 3)
-  {
-    out = argv[2];
-  }
+  if(argc == 3) { out = argv[2]; }
   else
   {
     out = bfs::path(argv[1]).filename().replace_extension(".flat").string();

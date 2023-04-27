@@ -7,7 +7,7 @@
     "robot": {"type": "string", "default": "Main Robot", "description": "Name of the robot to observe (control)" },
     "updateRobot": {"type": "string", "default": "Main Real Robot", "description": "Name of the robot to observe (real)" },
     "imuBodySensor": { "type": "string", "default": "Main BodySensor", "description": "Name of the body sensor containing IMU measurements (requires orientation)" },
-    "cutoff": { "type": "number", "default": "2*dt", "description": "Cutoff period for the low-pass filter on velocity. Must be at least twice the timestep" }, 
+    "cutoff": { "type": "number", "default": "2*dt", "description": "Cutoff period for the low-pass filter on velocity. Must be at least twice the timestep" },
     "anchorFrame":
     {
       "type": "object",

@@ -60,7 +60,7 @@ transitions:
 - [RightHandMoveBack,          OK, StandingHalfSitting, Auto]
 
 # Initial state
-init: RightHandToWall 
+init: RightHandToWall
 ```
 
 You should have easily recognized the main steps of the sample just by reading this transition map. Now let's look at what the main states are doing.
@@ -86,7 +86,7 @@ During the whole experiment, we want the robot's CoM to remain centered between 
         stiffness: 1
 ```
 
-### RightHandToWall: Hand trajectory 
+### RightHandToWall: Hand trajectory
 
 Next, we want to move the hand to a location in front of the robot near the wall. To do so, we use the {% doxygen mc_tasks::BSplineTrajectoryTask %}, that provides a bspline trajectory parametrized in terms of waypoints in both position and orientation. The task controls a desired robot surface to follow this trajectory.
 
@@ -124,10 +124,10 @@ Next, the `RightHandPushAdmittance` state uses the {% doxygen mc_tasks::Admittan
     tasks:
       RightHandAdmittance:
         type: admittance
-        surface: RightGripper 
+        surface: RightGripper
         # Tracks the forces along the normal axis of the gripper surface with an admittance coefficient of 0.001
         # Note the high-damping and low stiffness on that axis.
-        # All other axis are position controlled and will keep the current gripper position as much as possible 
+        # All other axis are position controlled and will keep the current gripper position as much as possible
         admittance: [0,0,0,0,0,0.001]
         stiffness: [10, 10, 10, 10, 10, 1]
         damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
@@ -138,7 +138,7 @@ Next, the `RightHandPushAdmittance` state uses the {% doxygen mc_tasks::Admittan
         wrench:
          force: [0, 0, -20]
          couple: [0, 0, 0]
-        # Rotate the gripper such that the fingers point towards the wall  
+        # Rotate the gripper such that the fingers point towards the wall
         targetRotation: [1.57, 0, 1.57]
         # The task will complete one a force of -20N has been reached. All other axes are ignored.
         completion:
@@ -173,7 +173,7 @@ void UpdateWall::start(mc_control::fsm::Controller & ctl)
   // [...] read YAML configuration parameters
 
   // Get the estimated pose of the fingers of the JVRC1 robot
-  // As estimated by the state observation pipeline 
+  // As estimated by the state observation pipeline
   const auto & bodyPose = ctl.realRobots().robot(rName).bodyPosW(bName);
   // Move the wall position along the x axis to match the fingertip's position
   auto posW = ctl.robot(moveRobotName).posW();
@@ -182,7 +182,7 @@ void UpdateWall::start(mc_control::fsm::Controller & ctl)
 }
 ```
 
-In the next state's, we will use this updated wall position to ensure collision avoidance with the hand while going back to the initial posture. 
+In the next state's, we will use this updated wall position to ensure collision avoidance with the hand while going back to the initial posture.
 
 ### Going back to the initial posture
 

@@ -35,10 +35,7 @@ struct XYThetaImpl : public CommonInputImpl<GetT, SetT>
   {
   }
 
-  constexpr static size_t write_size()
-  {
-    return CommonInputImpl<GetT, SetT>::write_size() + 1;
-  }
+  constexpr static size_t write_size() { return CommonInputImpl<GetT, SetT>::write_size() + 1; }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {

@@ -40,10 +40,7 @@ struct TrajectoryImpl : public DataElement<GetT>
   /** Invalid element */
   TrajectoryImpl() {}
 
-  constexpr static size_t write_size()
-  {
-    return DataElement<GetT>::write_size() + LineConfig::write_size();
-  }
+  constexpr static size_t write_size() { return DataElement<GetT>::write_size() + LineConfig::write_size(); }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {

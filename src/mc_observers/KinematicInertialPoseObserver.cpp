@@ -140,10 +140,7 @@ void KinematicInertialPoseObserver::addToLogger(const mc_control::MCController &
                                                 mc_rtc::Logger & logger,
                                                 const std::string & category)
 {
-  if(logPose_)
-  {
-    MC_RTC_LOG_HELPER(category + "_posW", pose_);
-  }
+  if(logPose_) { MC_RTC_LOG_HELPER(category + "_posW", pose_); }
   if(logAnchorFrame_)
   {
     MC_RTC_LOG_HELPER(category + "_anchorFrame", X_0_anchorFrame_);
@@ -155,8 +152,8 @@ void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController & ct
                                              mc_rtc::gui::StateBuilder & gui,
                                              const std::vector<std::string> & category)
 {
-  auto showHideAnchorFrame = [&gui, category](const std::string & name, bool show,
-                                              const sva::PTransformd & anchorFrame) {
+  auto showHideAnchorFrame = [&gui, category](const std::string & name, bool show, const sva::PTransformd & anchorFrame)
+  {
     auto cat = category;
     cat.push_back("Markers");
     gui.removeElement(cat, name);
@@ -166,7 +163,8 @@ void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController & ct
           cat, mc_rtc::gui::Transform(name, [&anchorFrame]() -> const sva::PTransformd & { return anchorFrame; }));
     }
   };
-  auto showHidePose = [this, category, &gui]() {
+  auto showHidePose = [this, category, &gui]()
+  {
     std::string name = "Pose";
     auto cat = category;
     cat.push_back("Markers");
@@ -180,19 +178,22 @@ void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController & ct
   gui.addElement(category,
                  mc_rtc::gui::Checkbox(
                      "Show anchor frame (control)", [this]() { return showAnchorFrame_; },
-                     [this, showHideAnchorFrame]() {
+                     [this, showHideAnchorFrame]()
+                     {
                        showAnchorFrame_ = !showAnchorFrame_;
                        showHideAnchorFrame("Anchor Frame (control)", showAnchorFrame_, X_0_anchorFrame_);
                      }),
                  mc_rtc::gui::Checkbox(
                      "Show anchor frame (real)", [this]() { return showAnchorFrameReal_; },
-                     [this, showHideAnchorFrame]() {
+                     [this, showHideAnchorFrame]()
+                     {
                        showAnchorFrameReal_ = !showAnchorFrameReal_;
                        showHideAnchorFrame("Anchor Frame (real)", showAnchorFrameReal_, X_0_anchorFrameReal_);
                      }),
                  mc_rtc::gui::Checkbox(
                      "Show pose", [this]() { return showPose_; },
-                     [this, showHidePose]() {
+                     [this, showHidePose]()
+                     {
                        showPose_ = !showPose_;
                        showHidePose();
                      }));

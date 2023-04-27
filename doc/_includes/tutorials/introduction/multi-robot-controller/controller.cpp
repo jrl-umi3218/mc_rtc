@@ -4,8 +4,14 @@
 
 MyFirstController::MyFirstController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config)
 : mc_control::MCController({rm,
-                           mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH) + "/../mc_int_obj_description", std::string("door")),
-                           mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"))}, dt)
+                            mc_rbdyn::RobotLoader::get_robot_module("env",
+                                                                    std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH)
+                                                                        + "/../mc_int_obj_description",
+                                                                    std::string("door")),
+                            mc_rbdyn::RobotLoader::get_robot_module("env",
+                                                                    std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
+                                                                    std::string("ground"))},
+                           dt)
 {
   config_.load(config);
   solver().addConstraintSet(contactConstraint);

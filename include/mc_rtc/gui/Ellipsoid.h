@@ -24,15 +24,10 @@ auto Ellipsoid(const std::string & name,
 {
   auto ellipsoid = mc_rtc::makeVisualSuperellispoid(details::GetValueOrCallbackValue(size_fn), 1.0, 1.0,
                                                     details::GetValueOrCallbackValue(color_fn));
-  auto get_visual_fn = [=]() mutable -> const rbd::parsers::Visual & {
-    if constexpr(std::is_invocable_v<GetSize>)
-    {
-      mc_rtc::getVisualSuperellipsoid(ellipsoid).size = size_fn();
-    }
-    if constexpr(std::is_invocable_v<GetColor>)
-    {
-      mc_rtc::details::setVisualColor(ellipsoid, color_fn());
-    }
+  auto get_visual_fn = [=]() mutable -> const rbd::parsers::Visual &
+  {
+    if constexpr(std::is_invocable_v<GetSize>) { mc_rtc::getVisualSuperellipsoid(ellipsoid).size = size_fn(); }
+    if constexpr(std::is_invocable_v<GetColor>) { mc_rtc::details::setVisualColor(ellipsoid, color_fn()); }
     return ellipsoid;
   };
   return Visual(name, get_visual_fn, get_pos_fn);

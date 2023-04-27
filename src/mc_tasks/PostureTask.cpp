@@ -36,15 +36,9 @@ struct TVMPostureTask : public TrajectoryTaskGeneric
     name_ = std::string("posture_") + robots.robot(robotIndex).name();
   }
 
-  void update(mc_solver::QPSolver & solver) override
-  {
-    TrajectoryTaskGeneric::update(solver);
-  }
+  void update(mc_solver::QPSolver & solver) override { TrajectoryTaskGeneric::update(solver); }
 
-  void posture(const std::vector<std::vector<double>> & p)
-  {
-    tvm_error(errorT)->posture(p);
-  }
+  void posture(const std::vector<std::vector<double>> & p) { tvm_error(errorT)->posture(p); }
 
   void jointsGains(const std::vector<tasks::qp::JointGains> & gains)
   {
@@ -134,30 +128,12 @@ void PostureTask::reset()
 void PostureTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   MetaTask::load(solver, config);
-  if(config.has("posture"))
-  {
-    this->posture(config("posture"));
-  }
-  if(config.has("jointGains"))
-  {
-    this->jointGains(solver, config("jointGains"));
-  }
-  if(config.has("target"))
-  {
-    this->target(config("target"));
-  }
-  if(config.has("stiffness"))
-  {
-    this->stiffness(config("stiffness"));
-  }
-  if(config.has("weight"))
-  {
-    this->weight(config("weight"));
-  }
-  if(config.has("jointWeights"))
-  {
-    this->jointWeights(config("jointWeights"));
-  }
+  if(config.has("posture")) { this->posture(config("posture")); }
+  if(config.has("jointGains")) { this->jointGains(solver, config("jointGains")); }
+  if(config.has("target")) { this->target(config("target")); }
+  if(config.has("stiffness")) { this->stiffness(config("stiffness")); }
+  if(config.has("weight")) { this->weight(config("weight")); }
+  if(config.has("jointWeights")) { this->jointWeights(config("jointWeights")); }
 }
 
 void PostureTask::dimWeight(const Eigen::VectorXd & dimW)
@@ -212,7 +188,8 @@ void PostureTask::selectUnactiveJoints(mc_solver::QPSolver &,
   Eigen::VectorXd dimW = dimWeight();
   dimW.setOnes();
   const auto & robot = robots_.robot(rIndex_);
-  auto dofOffset = [&robot, this]() {
+  auto dofOffset = [&robot, this]()
+  {
     switch(backend_)
     {
       case Backend::Tasks:
@@ -227,10 +204,7 @@ void PostureTask::selectUnactiveJoints(mc_solver::QPSolver &,
   {
     auto jIndex = static_cast<int>(robot.jointIndexByName(j));
     const auto & joint = robot.mb().joint(jIndex);
-    if(joint.dof() == 6)
-    {
-      continue;
-    }
+    if(joint.dof() == 6) { continue; }
     auto dofIndex = robot.mb().jointPosInDof(jIndex) - dofOffset;
     dimW.segment(dofIndex, joint.dof()).setZero();
   }
@@ -323,10 +297,7 @@ const Eigen::VectorXd & PostureTask::refAccel() const noexcept
 
 void PostureTask::addToSolver(mc_solver::QPSolver & solver)
 {
-  if(inSolver_)
-  {
-    return;
-  }
+  if(inSolver_) { return; }
   inSolver_ = true;
   switch(backend_)
   {
@@ -343,10 +314,7 @@ void PostureTask::addToSolver(mc_solver::QPSolver & solver)
 
 void PostureTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
-  if(!inSolver_)
-  {
-    return;
-  }
+  if(!inSolver_) { return; }
   inSolver_ = false;
   switch(backend_)
   {
@@ -549,10 +517,7 @@ void PostureTask::jointWeights(const std::map<std::string, double> & jws)
     if(robot.hasJoint(jw.first))
     {
       auto jIndex = mb.jointIndexByName(jw.first);
-      if(mb.joint(jIndex).dof() > 0)
-      {
-        dimW[mb.jointPosInDof(jIndex)] = jw.second;
-      }
+      if(mb.joint(jIndex).dof() > 0) { dimW[mb.jointPosInDof(jIndex)] = jw.second; }
       // No warning, it's probably over specified
     }
     else
@@ -591,10 +556,7 @@ void PostureTask::target(const std::map<std::string, std::vector<double>> & join
           }
         }
       }
-      else
-      {
-        mc_rtc::log::error("PostureTask::target dof missmatch for {}", j.first);
-      }
+      else { mc_rtc::log::error("PostureTask::target dof missmatch for {}", j.first); }
     }
   }
   posture(q);
@@ -626,23 +588,17 @@ void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   std::vector<std::string> active_gripper_joints;
   for(const auto & g : robots_.robot(rIndex_).grippers())
   {
-    for(const auto & n : g.get().activeJoints())
-    {
-      active_gripper_joints.push_back(n);
-    }
+    for(const auto & n : g.get().activeJoints()) { active_gripper_joints.push_back(n); }
   }
-  auto isActiveGripperJoint = [&](const std::string & j) {
-    return std::find(active_gripper_joints.begin(), active_gripper_joints.end(), j) != active_gripper_joints.end();
-  };
+  auto isActiveGripperJoint = [&](const std::string & j)
+  { return std::find(active_gripper_joints.begin(), active_gripper_joints.end(), j) != active_gripper_joints.end(); };
   for(const auto & j : robots_.robot(rIndex_).mb().joints())
   {
-    if(j.dof() != 1 || j.isMimic() || isActiveGripperJoint(j.name()))
-    {
-      continue;
-    }
+    if(j.dof() != 1 || j.isMimic() || isActiveGripperJoint(j.name())) { continue; }
     auto jIndex = robots_.robot(rIndex_).jointIndexByName(j.name());
     bool isContinuous = robots_.robot(rIndex_).ql()[jIndex][0] == -std::numeric_limits<double>::infinity();
-    auto updatePosture = [this](unsigned int jIndex, double v) {
+    auto updatePosture = [this](unsigned int jIndex, double v)
+    {
       this->posture_[jIndex][0] = v;
       const auto & jName = robots_.robot(rIndex_).mb().joint(static_cast<int>(jIndex)).name();
       if(mimics_.count(jName))
@@ -679,7 +635,8 @@ namespace
 
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "posture",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
       const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "posture");
       auto t =
           std::make_shared<mc_tasks::PostureTask>(solver, robotIndex, config("stiffness", 1.), config("weight", 10.));

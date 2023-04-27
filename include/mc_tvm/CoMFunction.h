@@ -34,46 +34,25 @@ struct MC_TVM_DLLAPI CoMFunction : tvm::function::abstract::Function
   void reset();
 
   /** Get the current objective */
-  inline const Eigen::Vector3d & com() const noexcept
-  {
-    return com_;
-  }
+  inline const Eigen::Vector3d & com() const noexcept { return com_; }
 
   /** Set the objective */
-  inline void com(const Eigen::Vector3d & com) noexcept
-  {
-    com_ = com;
-  }
+  inline void com(const Eigen::Vector3d & com) noexcept { com_ = com; }
 
   /** Get the robot's current CoM */
-  inline const Eigen::Vector3d & actual() const noexcept
-  {
-    return comAlgo_.com();
-  }
+  inline const Eigen::Vector3d & actual() const noexcept { return comAlgo_.com(); }
 
   /** Get the current objective */
-  inline const Eigen::Vector3d & refVel() const noexcept
-  {
-    return refVel_;
-  }
+  inline const Eigen::Vector3d & refVel() const noexcept { return refVel_; }
 
   /** Set the objective */
-  inline void refVel(const Eigen::Vector3d & refVel) noexcept
-  {
-    refVel_ = refVel;
-  }
+  inline void refVel(const Eigen::Vector3d & refVel) noexcept { refVel_ = refVel; }
 
   /** Get the current objective */
-  inline const Eigen::Vector3d & refAccel() const noexcept
-  {
-    return refAccel_;
-  }
+  inline const Eigen::Vector3d & refAccel() const noexcept { return refAccel_; }
 
   /** Set the objective */
-  inline void refAccel(const Eigen::Vector3d & refAccel) noexcept
-  {
-    refAccel_ = refAccel;
-  }
+  inline void refAccel(const Eigen::Vector3d & refAccel) noexcept { refAccel_ = refAccel; }
 
 private:
   const mc_tvm::CoM & comAlgo_;

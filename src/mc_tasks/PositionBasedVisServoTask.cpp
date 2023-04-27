@@ -113,27 +113,31 @@ void PositionBasedVisServoTask::addToLogger(mc_rtc::Logger & logger)
     case Backend::Tasks:
     {
       auto error = tasks_error(errorT);
-      logger.addLogEntry(name_ + "_eval", this, [error]() -> sva::PTransformd {
-        Eigen::Vector6d eval = error->eval();
-        Eigen::Vector3d angleAxis = eval.head(3);
-        Eigen::Vector3d axis = angleAxis / angleAxis.norm();
-        double angle = angleAxis.dot(axis);
-        Eigen::Quaterniond quat(Eigen::AngleAxisd(angle, axis));
-        return sva::PTransformd(quat, eval.tail(3));
-      });
+      logger.addLogEntry(name_ + "_eval", this,
+                         [error]() -> sva::PTransformd
+                         {
+                           Eigen::Vector6d eval = error->eval();
+                           Eigen::Vector3d angleAxis = eval.head(3);
+                           Eigen::Vector3d axis = angleAxis / angleAxis.norm();
+                           double angle = angleAxis.dot(axis);
+                           Eigen::Quaterniond quat(Eigen::AngleAxisd(angle, axis));
+                           return sva::PTransformd(quat, eval.tail(3));
+                         });
       break;
     }
     case Backend::TVM:
     {
       auto error = tvm_error(errorT);
-      logger.addLogEntry(name_ + "_eval", this, [error]() -> sva::PTransformd {
-        Eigen::Vector6d eval = error->value();
-        Eigen::Vector3d angleAxis = eval.head(3);
-        Eigen::Vector3d axis = angleAxis / angleAxis.norm();
-        double angle = angleAxis.dot(axis);
-        Eigen::Quaterniond quat(Eigen::AngleAxisd(angle, axis));
-        return sva::PTransformd(quat, eval.tail(3));
-      });
+      logger.addLogEntry(name_ + "_eval", this,
+                         [error]() -> sva::PTransformd
+                         {
+                           Eigen::Vector6d eval = error->value();
+                           Eigen::Vector3d angleAxis = eval.head(3);
+                           Eigen::Vector3d axis = angleAxis / angleAxis.norm();
+                           double angle = angleAxis.dot(axis);
+                           Eigen::Quaterniond quat(Eigen::AngleAxisd(angle, axis));
+                           return sva::PTransformd(quat, eval.tail(3));
+                         });
       break;
     }
     default:
@@ -148,7 +152,8 @@ namespace
 
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "pbvs",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
       std::shared_ptr<mc_tasks::PositionBasedVisServoTask> t;
       auto robotIndex = robotIndexFromConfig(config, solver.robots(), "pbvs");
       if(config.has("frame"))

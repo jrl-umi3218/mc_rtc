@@ -44,34 +44,19 @@ public:
   void tick();
 
   /** Distance between the two objects */
-  inline double distance() const noexcept
-  {
-    return this->value()(0);
-  }
+  inline double distance() const noexcept { return this->value()(0); }
 
   /** First convex involved in the collision */
-  inline const Convex & c1() const noexcept
-  {
-    return *c1_;
-  }
+  inline const Convex & c1() const noexcept { return *c1_; }
 
   /** Closest point on c1 in inertial frame coordinates */
-  inline const Eigen::Vector3d & p1() const noexcept
-  {
-    return p1_;
-  }
+  inline const Eigen::Vector3d & p1() const noexcept { return p1_; }
 
   /** Second convex involved in the collision */
-  inline const Convex & c2() const noexcept
-  {
-    return *c2_;
-  }
+  inline const Convex & c2() const noexcept { return *c2_; }
 
   /** Closest point on c2 in inertial frame coordinates */
-  inline const Eigen::Vector3d & p2() const noexcept
-  {
-    return p2_;
-  }
+  inline const Eigen::Vector3d & p2() const noexcept { return p2_; }
 
 protected:
   /* Update functions */

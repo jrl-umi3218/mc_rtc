@@ -33,18 +33,9 @@ struct MC_RBDYN_DLLAPI FDQPWeights
 
   void load(const mc_rtc::Configuration & config)
   {
-    if(config.has("ankle_torque"))
-    {
-      ankleTorqueSqrt = std::sqrt(static_cast<double>(config("ankle_torque")));
-    }
-    if(config.has("net_wrench"))
-    {
-      netWrenchSqrt = std::sqrt(static_cast<double>(config("net_wrench")));
-    }
-    if(config.has("pressure"))
-    {
-      pressureSqrt = std::sqrt(static_cast<double>(config("pressure")));
-    }
+    if(config.has("ankle_torque")) { ankleTorqueSqrt = std::sqrt(static_cast<double>(config("ankle_torque"))); }
+    if(config.has("net_wrench")) { netWrenchSqrt = std::sqrt(static_cast<double>(config("net_wrench"))); }
+    if(config.has("pressure")) { pressureSqrt = std::sqrt(static_cast<double>(config("pressure"))); }
   }
 
   mc_rtc::Configuration save() const
@@ -80,18 +71,9 @@ struct MC_RBDYN_DLLAPI FDMPCWeights
 
   void load(const mc_rtc::Configuration & config)
   {
-    if(config.has("cop"))
-    {
-      cop_ = static_cast<double>(config("cop"));
-    }
-    if(config.has("cop_regulation"))
-    {
-      copRegulation_ = static_cast<double>(config("cop_regulation"));
-    }
-    if(config.has("cop_diff"))
-    {
-      copDiff_ = static_cast<double>(config("cop_diff"));
-    }
+    if(config.has("cop")) { cop_ = static_cast<double>(config("cop")); }
+    if(config.has("cop_regulation")) { copRegulation_ = static_cast<double>(config("cop_regulation")); }
+    if(config.has("cop_diff")) { copDiff_ = static_cast<double>(config("cop_diff")); }
   }
 
   mc_rtc::Configuration save() const
@@ -358,10 +340,7 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::FDQPWeights>
     return weights;
   }
 
-  static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::FDQPWeights & weights)
-  {
-    return weights.save();
-  }
+  static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::FDQPWeights & weights) { return weights.save(); }
 };
 
 /**
@@ -377,10 +356,7 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::FDMPCWeights>
     return weights;
   }
 
-  static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::FDMPCWeights & weights)
-  {
-    return weights.save();
-  }
+  static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::FDMPCWeights & weights) { return weights.save(); }
 };
 
 /**
@@ -524,10 +500,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
   StabilizerConfiguration() {}
 
-  StabilizerConfiguration(const mc_rtc::Configuration & conf)
-  {
-    load(conf);
-  }
+  StabilizerConfiguration(const mc_rtc::Configuration & conf) { load(conf); }
 
   /**
    * @brief Checks that the chosen parameters are within the parameters defined
@@ -552,20 +525,11 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   {
     config("verbose", verbose);
 
-    if(config.has("safety_tresholds"))
-    {
-      safetyThresholds.load(config("safety_tresholds"));
-    }
+    if(config.has("safety_tresholds")) { safetyThresholds.load(config("safety_tresholds")); }
 
-    if(config.has("fdqp_weights"))
-    {
-      fdqpWeights.load(config("fdqp_weights"));
-    }
+    if(config.has("fdqp_weights")) { fdqpWeights.load(config("fdqp_weights")); }
 
-    if(config.has("fdmpc_weights"))
-    {
-      fdmpcWeights.load(config("fdmpc_weights"));
-    }
+    if(config.has("fdmpc_weights")) { fdmpcWeights.load(config("fdmpc_weights")); }
 
     config("friction", friction);
     config("leftFootSurface", leftFootSurface);
@@ -587,10 +551,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
         dfAdmittance.setZero();
         dfAdmittance.z() = admittance("dfz");
       }
-      else
-      {
-        admittance("df", dfAdmittance);
-      }
+      else { admittance("df", dfAdmittance); }
       if(admittance.has("dfz_damping"))
       {
         mc_rtc::log::warning("[MC_RTC_DEPRECATED][StabilizerConfiguration] dfz_damping is now dimensional, to "
@@ -598,10 +559,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
         dfDamping.setZero();
         dfDamping.z() = admittance("dfz_damping");
       }
-      else
-      {
-        admittance("df_damping", dfDamping);
-      }
+      else { admittance("df_damping", dfDamping); }
     }
     if(config.has("dcm_tracking"))
     {
@@ -622,14 +580,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       dcmTracking("derivator_cutoff_period", dcmDerivatorTimeConstant);
       dcmTracking("integrator_time_constant", dcmIntegratorTimeConstant);
     }
-    if(config.has("dcm_bias"))
-    {
-      dcmBias.load(config("dcm_bias"));
-    }
-    if(config.has("external_wrench"))
-    {
-      extWrench.load(config("external_wrench"));
-    }
+    if(config.has("dcm_bias")) { dcmBias.load(config("dcm_bias")); }
+    if(config.has("external_wrench")) { extWrench.load(config("external_wrench")); }
     if(config.has("tasks"))
     {
       auto tasks = config("tasks");
@@ -698,10 +650,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       vdc("stiffness", vdcStiffness);
     }
 
-    if(config.has("zmpcc"))
-    {
-      zmpcc.load(config("zmpcc"));
-    }
+    if(config.has("zmpcc")) { zmpcc.load(config("zmpcc")); }
     config("zmpcc", zmpcc);
   }
 

@@ -51,10 +51,7 @@ public:
   virtual bool run() override
   {
     bool ret = MCController::run();
-    if(!ret)
-    {
-      mc_rtc::log::critical("Failed at {}", nrIter);
-    }
+    if(!ret) { mc_rtc::log::critical("Failed at {}", nrIter); }
     BOOST_CHECK(ret);
     nrIter++;
     if(nrIter == 1500)

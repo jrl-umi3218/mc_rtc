@@ -61,7 +61,8 @@ void ZMPCC::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::str
                      [this](const Eigen::Vector2d & a) { config_.comAdmittance = a; }),
                  NumberInput(
                      "CoM integrator leak rate [Hz]", [this]() { return integrator_.rate(); },
-                     [this](double T) {
+                     [this](double T)
+                     {
                        integrator_.rate(T);
                        config_.integratorLeakRate = T;
                      }));

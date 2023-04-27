@@ -14,14 +14,8 @@ namespace fsm
 void EnableControllerState::start(Controller & ctl)
 {
   std::string next_controller = config_("NextController", std::string(""));
-  if(ctl.datastore().call<bool, const std::string &>("Global::EnableController", next_controller))
-  {
-    output("OK");
-  }
-  else
-  {
-    output("Failed");
-  }
+  if(ctl.datastore().call<bool, const std::string &>("Global::EnableController", next_controller)) { output("OK"); }
+  else { output("Failed"); }
 }
 
 } // namespace fsm

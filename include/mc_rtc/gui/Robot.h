@@ -34,10 +34,7 @@ struct RobotImpl : public Element
     static_assert(CheckReturnType<GetT, mc_rbdyn::Robot>::value, "Robot element must return an mc_rbdyn::Robot");
   }
 
-  static constexpr size_t write_size()
-  {
-    return Element::write_size() + 3;
-  }
+  static constexpr size_t write_size() { return Element::write_size() + 3; }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {

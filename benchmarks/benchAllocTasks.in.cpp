@@ -29,19 +29,13 @@ public:
 
 BENCHMARK_F(AllocTaskFixture, AllocSurfaceTransformTask)(benchmark::State & state)
 {
-  for(auto _ : state)
-  {
-    auto task = std::make_shared<mc_tasks::SurfaceTransformTask>("LeftFoot", solver.robots(), 0);
-  }
+  for(auto _ : state) { auto task = std::make_shared<mc_tasks::SurfaceTransformTask>("LeftFoot", solver.robots(), 0); }
 }
 
 BENCHMARK_F(AllocTaskFixture, SurfaceTransformTaskFromConfig)(benchmark::State & state)
 {
   mc_rtc::Configuration config("@CMAKE_CURRENT_SOURCE_DIR@/config.yaml");
-  for(auto _ : state)
-  {
-    auto task = mc_tasks::MetaTaskLoader::load<mc_tasks::SurfaceTransformTask>(solver, config);
-  }
+  for(auto _ : state) { auto task = mc_tasks::MetaTaskLoader::load<mc_tasks::SurfaceTransformTask>(solver, config); }
 }
 
 BENCHMARK_F(AllocTaskFixture, StabilizerTask)(benchmark::State & state)

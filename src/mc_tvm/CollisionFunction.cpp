@@ -16,10 +16,7 @@ namespace mc_tvm
 
 static Convex * max(Convex & c1, Convex & c2)
 {
-  if(c1.frame().robot().mb().nrDof() < c2.frame().robot().mb().nrDof())
-  {
-    return &c2;
-  }
+  if(c1.frame().robot().mb().nrDof() < c2.frame().robot().mb().nrDof()) { return &c2; }
   return &c1;
 }
 
@@ -49,7 +46,8 @@ CollisionFunction::CollisionFunction(Convex & c1,
 
   const Eigen::VectorXd * r1Selector_ = c1_ == &c1 ? &r1Selector : &r2Selector;
   const Eigen::VectorXd * r2Selector_ = c1_ == &c1 ? &r2Selector : &r1Selector;
-  auto addConvex = [this](Convex & convex, const Eigen::VectorXd & selector) {
+  auto addConvex = [this](Convex & convex, const Eigen::VectorXd & selector)
+  {
     auto & r = convex.frame().robot();
     if(r.mb().nrDof() > 0)
     {
@@ -74,16 +72,10 @@ CollisionFunction::CollisionFunction(Convex & c1,
 void CollisionFunction::updateValue()
 {
   double dist = sch::mc_rbdyn::distance(pair_, p1_, p2_);
-  if(dist == 0)
-  {
-    dist = sch::epsilon;
-  }
+  if(dist == 0) { dist = sch::epsilon; }
   dist = dist >= 0 ? std::sqrt(dist) : -std::sqrt(-dist);
   normVecDist_ = (p1_ - p2_) / dist;
-  if(iter_ == 1)
-  {
-    prevNormVecDist_ = normVecDist_;
-  }
+  if(iter_ == 1) { prevNormVecDist_ = normVecDist_; }
   if(prevIter_ != iter_)
   {
     speedVec_ = (normVecDist_ - prevNormVecDist_) / dt_;
@@ -110,10 +102,7 @@ void CollisionFunction::tick()
 
 void CollisionFunction::updateJacobian()
 {
-  for(int i = 0; i < variables_.numberOfVariables(); ++i)
-  {
-    jacobian_[variables_[i].get()].setZero();
-  }
+  for(int i = 0; i < variables_.numberOfVariables(); ++i) { jacobian_[variables_[i].get()].setZero(); }
   double sign = 1.0;
   auto object = std::ref(c1_);
   auto point = std::ref(p1_);
@@ -126,14 +115,8 @@ void CollisionFunction::updateJacobian()
     distJac_.block(0, 0, 1, d.jac_.dof()).noalias() =
         (sign * normVecDist_).transpose() * jac.block(3, 0, 3, d.jac_.dof());
     d.jac_.fullJacobian(r.mb(), distJac_.block(0, 0, 1, d.jac_.dof()), fullJac_);
-    if(d.selector_.size() == 0)
-    {
-      jacobian_[tvm_robot.q().get()] += fullJac_.block(0, 0, 1, r.mb().nrDof());
-    }
-    else
-    {
-      jacobian_[tvm_robot.q().get()] += fullJac_.block(0, 0, 1, r.mb().nrDof()) * d.selector_.asDiagonal();
-    }
+    if(d.selector_.size() == 0) { jacobian_[tvm_robot.q().get()] += fullJac_.block(0, 0, 1, r.mb().nrDof()); }
+    else { jacobian_[tvm_robot.q().get()] += fullJac_.block(0, 0, 1, r.mb().nrDof()) * d.selector_.asDiagonal(); }
     sign = -1.0;
     object = std::ref(c2_);
     point = std::ref(p2_);

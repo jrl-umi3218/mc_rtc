@@ -62,10 +62,7 @@ protected:
     bool run(Controller & ctl, double time);
     StatePtr & state();
 
-    const std::string & name()
-    {
-      return name_;
-    };
+    const std::string & name() { return name_; };
 
   private:
     StatePtr state_;

@@ -43,10 +43,7 @@ std::vector<T> fromVectorOrElement(const mc_rtc::Configuration & config,
                                    const std::string & key,
                                    const std::vector<T> & defaultVec)
 {
-  if(!config.has(key))
-  {
-    return defaultVec;
-  }
+  if(!config.has(key)) { return defaultVec; }
   const auto & c = config(key);
   try
   {

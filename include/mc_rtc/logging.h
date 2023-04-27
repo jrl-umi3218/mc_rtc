@@ -141,7 +141,7 @@ constexpr auto OUT_PURPLE = 13;
 constexpr auto OUT_RED = 12;
 } // namespace mc_rtc
 
-#  define __MC_RTC_STR2__(x) #  x
+#  define __MC_RTC_STR2__(x) #x
 #  define __MC_RTC_STR1__(x) __MC_RTC_STR2__(x)
 #  define __MC_RTC_PRAGMA_LOC__ __FILE__ "("__MC_RTC_STR1__(__LINE__) ") "
 

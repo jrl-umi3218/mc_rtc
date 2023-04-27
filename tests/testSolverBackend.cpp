@@ -27,35 +27,41 @@ BOOST_AUTO_TEST_CASE(TestSolverBackend)
   BOOST_REQUIRE(mc_solver::QPSolver::context_backend() == mc_solver::QPSolver::Backend::Tasks);
   {
     // Checks that on a new thread the backend is unset and can be set
-    std::thread th([&solver]() {
-      BOOST_REQUIRE(mc_solver::QPSolver::context_backend() == mc_solver::QPSolver::Backend::Unset);
-      mc_solver::QPSolver::context_backend(solver.backend());
-      BOOST_REQUIRE(mc_solver::QPSolver::context_backend() == mc_solver::QPSolver::Backend::Tasks);
-    });
+    std::thread th(
+        [&solver]()
+        {
+          BOOST_REQUIRE(mc_solver::QPSolver::context_backend() == mc_solver::QPSolver::Backend::Unset);
+          mc_solver::QPSolver::context_backend(solver.backend());
+          BOOST_REQUIRE(mc_solver::QPSolver::context_backend() == mc_solver::QPSolver::Backend::Tasks);
+        });
     th.join();
   }
   {
     // Check that MetaTaskLoader automatically sets the context backend
-    std::thread th([&solver]() {
-      BOOST_REQUIRE(mc_solver::QPSolver::context_backend() == mc_solver::QPSolver::Backend::Unset);
-      mc_rtc::Configuration config;
-      config.add("type", "com");
-      auto task = mc_tasks::MetaTaskLoader::load(solver, config);
-      BOOST_REQUIRE(task != nullptr);
-      BOOST_REQUIRE(mc_solver::QPSolver::context_backend() == mc_solver::QPSolver::Backend::Tasks);
-    });
+    std::thread th(
+        [&solver]()
+        {
+          BOOST_REQUIRE(mc_solver::QPSolver::context_backend() == mc_solver::QPSolver::Backend::Unset);
+          mc_rtc::Configuration config;
+          config.add("type", "com");
+          auto task = mc_tasks::MetaTaskLoader::load(solver, config);
+          BOOST_REQUIRE(task != nullptr);
+          BOOST_REQUIRE(mc_solver::QPSolver::context_backend() == mc_solver::QPSolver::Backend::Tasks);
+        });
     th.join();
   }
   {
     // Check that ConstraintSetLoader automatically sets the context backend
-    std::thread th([&solver]() {
-      BOOST_REQUIRE(mc_solver::QPSolver::context_backend() == mc_solver::QPSolver::Backend::Unset);
-      mc_rtc::Configuration config;
-      config.add("type", "contact");
-      auto cstr = mc_solver::ConstraintSetLoader::load(solver, config);
-      BOOST_REQUIRE(cstr != nullptr);
-      BOOST_REQUIRE(mc_solver::QPSolver::context_backend() == mc_solver::QPSolver::Backend::Tasks);
-    });
+    std::thread th(
+        [&solver]()
+        {
+          BOOST_REQUIRE(mc_solver::QPSolver::context_backend() == mc_solver::QPSolver::Backend::Unset);
+          mc_rtc::Configuration config;
+          config.add("type", "contact");
+          auto cstr = mc_solver::ConstraintSetLoader::load(solver, config);
+          BOOST_REQUIRE(cstr != nullptr);
+          BOOST_REQUIRE(mc_solver::QPSolver::context_backend() == mc_solver::QPSolver::Backend::Tasks);
+        });
     th.join();
   }
 }

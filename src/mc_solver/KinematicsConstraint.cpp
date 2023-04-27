@@ -100,10 +100,7 @@ void TVMKinematicsConstraint::removeFromSolver(mc_solver::TVMQPSolver & solver)
     solver.problem().removeSubstitutionFor(*solver.problem().constraint(*c));
     solver.problem().remove(*c);
   }
-  for(auto & c : constraints_)
-  {
-    solver.problem().remove(*c);
-  }
+  for(auto & c : constraints_) { solver.problem().remove(*c); }
   constraints_.clear();
   mimics_constraints_.clear();
 }
@@ -159,17 +156,11 @@ static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots,
   std::vector<std::vector<double>> ju = robot.ju();
   for(auto & vi : vl)
   {
-    for(auto & v : vi)
-    {
-      v = v * velocityPercent;
-    }
+    for(auto & v : vi) { v = v * velocityPercent; }
   }
   for(auto & vi : vu)
   {
-    for(auto & v : vi)
-    {
-      v = v * velocityPercent;
-    }
+    for(auto & v : vi) { v = v * velocityPercent; }
   }
   tasks::AlphaBound alphaBound(vl, vu);
   tasks::AlphaDBound alphaDBound(al, au);

@@ -55,34 +55,22 @@ enum class Elements
 struct MC_RTC_GUI_DLLAPI Element
 {
   /** Name of the element */
-  const std::string & name() const
-  {
-    return name_;
-  }
+  const std::string & name() const { return name_; }
 
   /** Access the stack id of an element (also referred to as SID)
    *
    * Elements that should be displayed on the same line share the same id
    */
-  int id() const
-  {
-    return id_;
-  }
+  int id() const { return id_; }
 
   /** Set the stack id of an element */
-  void id(int idIn)
-  {
-    id_ = idIn;
-  }
+  void id(int idIn) { id_ = idIn; }
 
   /** Returns the size of the array representing the widget in the MessagePack
    *
    * By default, it includes the widget name, type and SID.
    */
-  static constexpr size_t write_size()
-  {
-    return 3;
-  }
+  static constexpr size_t write_size() { return 3; }
 
   /** Write the widget to a MessagePackBuilder
    *
@@ -92,10 +80,7 @@ struct MC_RTC_GUI_DLLAPI Element
   void write(mc_rtc::MessagePackBuilder &) {}
 
   /** Take care of answering request from the client */
-  bool handleRequest(const mc_rtc::Configuration &)
-  {
-    return false;
-  }
+  bool handleRequest(const mc_rtc::Configuration &) { return false; }
 
   /** Invalid element, used for Python bindings */
   Element() {}
@@ -115,15 +100,9 @@ protected:
 template<typename GetT>
 struct DataElement : public Element
 {
-  static constexpr size_t write_size()
-  {
-    return Element::write_size() + 1;
-  }
+  static constexpr size_t write_size() { return Element::write_size() + 1; }
 
-  void write(mc_rtc::MessagePackBuilder & builder)
-  {
-    builder.write(get_fn_());
-  }
+  void write(mc_rtc::MessagePackBuilder & builder) { builder.write(get_fn_()); }
 
   /** Constructor */
   DataElement(const std::string & name, GetT get_fn) : Element(name), get_fn_(get_fn) {}

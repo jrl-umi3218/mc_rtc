@@ -350,10 +350,7 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
   mc_rtc::Configuration data();
 
   /** Return the number of elements in the GUI */
-  inline size_t size() const
-  {
-    return elements_.size();
-  }
+  inline size_t size() const { return elements_.size(); }
 
 private:
   template<typename T>
@@ -413,10 +410,7 @@ private:
     inline size_t size() const
     {
       size_t s = 0;
-      for(const auto & c : sub)
-      {
-        s += c.size();
-      }
+      for(const auto & c : sub) { s += c.size(); }
       return s + elements.size();
     }
   };

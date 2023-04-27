@@ -65,10 +65,12 @@ namespace
 {
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "lookAtTF",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
       const auto & robots = robotFromConfig(config, solver.robots(), "lookAtTF");
       Eigen::Vector3d frameVector = Eigen::Vector3d::Zero();
-      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
+      {
         if(config.has("body"))
         {
           mc_rtc::log::deprecated("LookAtTFTaskLoader", "body", "frame");

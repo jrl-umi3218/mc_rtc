@@ -16,7 +16,8 @@ std::unique_ptr<JointsSelectorFunction> JointsSelectorFunction::ActiveJoints(
 {
   auto & tvm_robot = robot.tvmRobot();
   tvm::VariablePtr usedVariable = nullptr;
-  auto useRobotVariable = [&](const tvm::VariablePtr & v) {
+  auto useRobotVariable = [&](const tvm::VariablePtr & v)
+  {
     if(std::find(f->variables().begin(), f->variables().end(), v) != f->variables().end())
     {
       usedVariable = v;
@@ -33,13 +34,15 @@ std::unique_ptr<JointsSelectorFunction> JointsSelectorFunction::ActiveJoints(
   const auto & mb = robot.mb();
 
   std::vector<std::string> joints = activeJoints;
-  std::sort(joints.begin(), joints.end(), [&mb](const std::string & lhs, const std::string & rhs) {
-    auto lhs_idx = mb.jointIndexByName(lhs);
-    auto rhs_idx = mb.jointIndexByName(rhs);
-    auto lhs_pos = mb.jointPosInDof(lhs_idx);
-    auto rhs_pos = mb.jointPosInDof(rhs_idx);
-    return lhs_pos < rhs_pos || (lhs_pos == rhs_pos && mb.joint(lhs_idx).dof() < mb.joint(rhs_idx).dof());
-  });
+  std::sort(joints.begin(), joints.end(),
+            [&mb](const std::string & lhs, const std::string & rhs)
+            {
+              auto lhs_idx = mb.jointIndexByName(lhs);
+              auto rhs_idx = mb.jointIndexByName(rhs);
+              auto lhs_pos = mb.jointPosInDof(lhs_idx);
+              auto rhs_pos = mb.jointPosInDof(rhs_idx);
+              return lhs_pos < rhs_pos || (lhs_pos == rhs_pos && mb.joint(lhs_idx).dof() < mb.joint(rhs_idx).dof());
+            });
 
   std::vector<std::pair<Eigen::DenseIndex, Eigen::DenseIndex>> activeIndex;
   Eigen::DenseIndex offset = usedVariable->spaceShift().tSize();
@@ -52,22 +55,13 @@ std::unique_ptr<JointsSelectorFunction> JointsSelectorFunction::ActiveJoints(
     Eigen::DenseIndex pos = mb.jointPosInDof(jIndex);
     if(pos != start + size)
     {
-      if(size != 0)
-      {
-        activeIndex.push_back({start - offset, size});
-      }
+      if(size != 0) { activeIndex.push_back({start - offset, size}); }
       start = pos;
       size = jDof;
     }
-    else
-    {
-      size += jDof;
-    }
+    else { size += jDof; }
   }
-  if(size != 0)
-  {
-    activeIndex.push_back({start - offset, size});
-  }
+  if(size != 0) { activeIndex.push_back({start - offset, size}); }
 
   return std::unique_ptr<JointsSelectorFunction>(new JointsSelectorFunction(f, usedVariable, activeIndex));
 }
@@ -80,11 +74,9 @@ std::unique_ptr<JointsSelectorFunction> JointsSelectorFunction::InactiveJoints(
   auto & tvm_robot = robot.tvmRobot();
   size_t j_idx = 0;
   std::vector<std::string> activeJoints{};
-  auto useRobotVariable = [&](const tvm::VariablePtr & v) {
-    if(std::find(f->variables().begin(), f->variables().end(), v) != f->variables().end())
-    {
-      return true;
-    }
+  auto useRobotVariable = [&](const tvm::VariablePtr & v)
+  {
+    if(std::find(f->variables().begin(), f->variables().end(), v) != f->variables().end()) { return true; }
     return false;
   };
   if(!useRobotVariable(tvm_robot.q()) && useRobotVariable(tvm_robot.qJoints()))

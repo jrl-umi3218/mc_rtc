@@ -19,23 +19,14 @@ constexpr unsigned int RobotModule::Gripper::Safety::DEFAULT_OVER_COMMAND_LIMIT_
 DevicePtrVector::DevicePtrVector(const DevicePtrVector & v) : std::vector<DevicePtr>()
 {
   reserve(v.size());
-  for(const auto & s : v)
-  {
-    push_back(s->clone());
-  }
+  for(const auto & s : v) { push_back(s->clone()); }
 }
 
 DevicePtrVector & DevicePtrVector::operator=(const DevicePtrVector & v)
 {
-  if(&v == this)
-  {
-    return *this;
-  }
+  if(&v == this) { return *this; }
   resize(v.size());
-  for(size_t i = 0; i < v.size(); ++i)
-  {
-    (*this)[i] = v[i]->clone();
-  }
+  for(size_t i = 0; i < v.size(); ++i) { (*this)[i] = v[i]->clone(); }
   return *this;
 }
 
@@ -55,18 +46,12 @@ void RobotModule::init(const rbd::parsers::ParserResult & res)
   {
     const auto & body = col.first;
     const auto & cols = col.second;
-    if(cols.size())
-    {
-      _collisionTransforms[body] = cols[0].origin;
-    }
+    if(cols.size()) { _collisionTransforms[body] = cols[0].origin; }
   }
   boundsFromURDF(res.limits);
   _visual = res.visual;
   _collision = res.collision;
-  if(_ref_joint_order.size() == 0)
-  {
-    make_default_ref_joint_order();
-  }
+  if(_ref_joint_order.size() == 0) { make_default_ref_joint_order(); }
   expand_stance();
 }
 
@@ -100,22 +85,13 @@ RobotModule::Gripper::Gripper(const std::string & name,
 : name(name), joints(joints), reverse_limits(reverse_limits), hasSafety_(safety != nullptr),
   hasMimics_(mimics != nullptr)
 {
-  if(mimics)
-  {
-    mimics_ = *mimics;
-  }
-  if(safety)
-  {
-    safety_ = *safety;
-  }
+  if(mimics) { mimics_ = *mimics; }
+  if(safety) { safety_ = *safety; }
 }
 
 void RobotModule::Gripper::Safety::load(const mc_rtc::Configuration & config)
 {
-  if(config.has("actualCommandDiffTrigger"))
-  {
-    actualCommandDiffTrigger = config("actualCommandDiffTrigger");
-  }
+  if(config.has("actualCommandDiffTrigger")) { actualCommandDiffTrigger = config("actualCommandDiffTrigger"); }
   if(config.has("threshold"))
   {
     mc_rtc::log::warning("[MC_RTC_DEPRECATED] Gripper safety property \"threshold\" (expressed in degrees) is "
@@ -135,10 +111,7 @@ void RobotModule::Gripper::Safety::load(const mc_rtc::Configuration & config)
     overCommandLimitIterN = std::max<unsigned int>(1, config("iter", DEFAULT_OVER_COMMAND_LIMIT_ITER_N));
   }
 
-  if(config.has("releaseSafetyOffset"))
-  {
-    releaseSafetyOffset = config("releaseSafetyOffset");
-  }
+  if(config.has("releaseSafetyOffset")) { releaseSafetyOffset = config("releaseSafetyOffset"); }
   else if(config.has("release"))
   {
     mc_rtc::log::warning("[MC_RTC_DEPRECATED] Gripper safety property \"release\" (expressed in degrees) is "
@@ -177,10 +150,7 @@ void RobotModule::expand_stance()
 {
   for(const auto & j : mb.joints())
   {
-    if(!_stance.count(j.name()) && j.name() != "Root")
-    {
-      _stance[j.name()] = j.zeroParam();
-    }
+    if(!_stance.count(j.name()) && j.name() != "Root") { _stance[j.name()] = j.zeroParam(); }
   }
 }
 
@@ -189,10 +159,7 @@ void RobotModule::make_default_ref_joint_order()
   _ref_joint_order.resize(0);
   for(const auto & j : mb.joints())
   {
-    if(j.dof() >= 1 && j.type() != rbd::Joint::Free)
-    {
-      _ref_joint_order.push_back(j.name());
-    }
+    if(j.dof() >= 1 && j.type() != rbd::Joint::Free) { _ref_joint_order.push_back(j.name()); }
   }
 }
 
@@ -202,14 +169,12 @@ RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
   ret.reserve(6);
   ret.push_back(limits.lower);
   ret.push_back(limits.upper);
-  auto convert = [](const std::map<std::string, std::vector<double>> & l) {
+  auto convert = [](const std::map<std::string, std::vector<double>> & l)
+  {
     auto ret = l;
     for(auto & el : ret)
     {
-      for(auto & e : el.second)
-      {
-        e = -e;
-      }
+      for(auto & e : el.second) { e = -e; }
     }
     return ret;
   };
@@ -223,21 +188,17 @@ RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
 bool check_module_compatibility(const RobotModule & lhs, const RobotModule & rhs)
 {
   bool is_ok = true;
-  auto format_params = [](const std::vector<std::string> & params) -> std::string {
-    if(params.size() == 0)
-    {
-      return "[]";
-    }
+  auto format_params = [](const std::vector<std::string> & params) -> std::string
+  {
+    if(params.size() == 0) { return "[]"; }
     std::stringstream ss;
     ss << "[";
-    for(size_t i = 0; i < params.size() - 1; ++i)
-    {
-      ss << params[i] << ", ";
-    }
+    for(size_t i = 0; i < params.size() - 1; ++i) { ss << params[i] << ", "; }
     ss << params.back() << "]";
     return ss.str();
   };
-  auto show_incompatiblity_issue = [&](std::string_view reason) {
+  auto show_incompatiblity_issue = [&](std::string_view reason)
+  {
     if(is_ok)
     {
       is_ok = false;
@@ -246,30 +207,12 @@ bool check_module_compatibility(const RobotModule & lhs, const RobotModule & rhs
     }
     mc_rtc::log::critical("- {}", reason);
   };
-  if(lhs.ref_joint_order() != rhs.ref_joint_order())
-  {
-    show_incompatiblity_issue("Different reference joint order");
-  }
-  if(lhs.bodySensors() != rhs.bodySensors())
-  {
-    show_incompatiblity_issue("Different body sensors");
-  }
-  if(lhs.forceSensors() != rhs.forceSensors())
-  {
-    show_incompatiblity_issue("Different force sensors");
-  }
-  if(lhs.jointSensors() != rhs.jointSensors())
-  {
-    show_incompatiblity_issue("Different joint sensors");
-  }
-  if(lhs.grippers() != rhs.grippers())
-  {
-    show_incompatiblity_issue("Different grippers");
-  }
-  if(lhs.devices().size() != rhs.devices().size())
-  {
-    show_incompatiblity_issue("Different devices");
-  }
+  if(lhs.ref_joint_order() != rhs.ref_joint_order()) { show_incompatiblity_issue("Different reference joint order"); }
+  if(lhs.bodySensors() != rhs.bodySensors()) { show_incompatiblity_issue("Different body sensors"); }
+  if(lhs.forceSensors() != rhs.forceSensors()) { show_incompatiblity_issue("Different force sensors"); }
+  if(lhs.jointSensors() != rhs.jointSensors()) { show_incompatiblity_issue("Different joint sensors"); }
+  if(lhs.grippers() != rhs.grippers()) { show_incompatiblity_issue("Different grippers"); }
+  if(lhs.devices().size() != rhs.devices().size()) { show_incompatiblity_issue("Different devices"); }
   else
   {
     const auto & lhs_devices = lhs.devices();

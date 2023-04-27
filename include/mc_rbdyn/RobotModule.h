@@ -175,16 +175,10 @@ struct MC_RBDYN_DLLAPI RobotModule
 
     // FIXME In C++17 std::optional is a better semantic
     /*! Returns the safety parameters if provided, otherwise a nullptr */
-    inline const Safety * safety() const
-    {
-      return hasSafety_ ? &safety_ : nullptr;
-    }
+    inline const Safety * safety() const { return hasSafety_ ? &safety_ : nullptr; }
 
     /*! Returns the mimics parameters if provided, otherwise a nullptr */
-    inline const std::vector<Mimic> * mimics() const
-    {
-      return hasMimics_ ? &mimics_ : nullptr;
-    }
+    inline const std::vector<Mimic> * mimics() const { return hasMimics_ ? &mimics_ : nullptr; }
 
   private:
     /*! True if safety parameters were provided by the user */
@@ -292,10 +286,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * - velocity limits (lower/upper)
    * - torque limits (lower/upper)
    */
-  const std::vector<std::map<std::string, std::vector<double>>> & bounds() const
-  {
-    return _bounds;
-  }
+  const std::vector<std::map<std::string, std::vector<double>>> & bounds() const { return _bounds; }
 
   /** Returns the robot's acceleration bounds
    *
@@ -320,10 +311,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * They should be provided in the following order:
    * - jerk limits (lower/upper)
    */
-  const std::vector<std::map<std::string, std::vector<double>>> & jerkBounds() const
-  {
-    return _jerkBounds;
-  }
+  const std::vector<std::map<std::string, std::vector<double>>> & jerkBounds() const { return _jerkBounds; }
 
   /** Returns the robot's torque-derivative bounds
    *
@@ -349,10 +337,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    *
    * For the floating base see \ref default_attitude
    */
-  const std::map<std::string, std::vector<double>> & stance() const
-  {
-    return _stance;
-  }
+  const std::map<std::string, std::vector<double>> & stance() const { return _stance; }
 
   /** Returns a map describing the convex hulls for the robot
    *
@@ -367,10 +352,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * The transformation between the convex and the body it's attached to are
    * provided in a separate map see \ref collisionTransforms()
    */
-  const std::map<std::string, std::pair<std::string, std::string>> & convexHull() const
-  {
-    return _convexHull;
-  }
+  const std::map<std::string, std::pair<std::string, std::string>> & convexHull() const { return _convexHull; }
 
   /** Returns a map describing collision objects for the robot
    *
@@ -401,10 +383,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * The transformation between the STPBV and the body it's attached to are
    * provided in a separate map see \ref collisionTransforms()
    */
-  const std::map<std::string, std::pair<std::string, std::string>> & stpbvHull() const
-  {
-    return _stpbvHull;
-  }
+  const std::map<std::string, std::pair<std::string, std::string>> & stpbvHull() const { return _stpbvHull; }
 
   /** Returns a map describing the transformation between convex/STPBV hulls
    * and their parent bodies
@@ -412,55 +391,37 @@ struct MC_RBDYN_DLLAPI RobotModule
    * A key defines the collision name. The value is the transformation between
    * this collision object and its parent body
    */
-  const std::map<std::string, sva::PTransformd> & collisionTransforms() const
-  {
-    return _collisionTransforms;
-  }
+  const std::map<std::string, sva::PTransformd> & collisionTransforms() const { return _collisionTransforms; }
 
   /** Return the flexibilities of the robot
    *
    * \see mc_rbdyn::Flexibility for details on the expected data
    */
-  const std::vector<Flexibility> & flexibility() const
-  {
-    return _flexibility;
-  }
+  const std::vector<Flexibility> & flexibility() const { return _flexibility; }
 
   /** Return the force sensors of the robot
    *
    * \see mc_rbdyn::ForceSensor for details on the expected data
    */
-  const std::vector<ForceSensor> & forceSensors() const
-  {
-    return _forceSensors;
-  }
+  const std::vector<ForceSensor> & forceSensors() const { return _forceSensors; }
 
   /** Return the body sensors of the robot
    *
    * \see mc_rbdyn::BodySensor for details on the expected data
    */
-  const BodySensorVector & bodySensors() const
-  {
-    return _bodySensors;
-  }
+  const BodySensorVector & bodySensors() const { return _bodySensors; }
 
   /** Return the joint sensors of the robot
    *
    * \see mc_rbdyn::JointSensor for details on the expected data
    */
-  const std::vector<JointSensor> & jointSensors() const
-  {
-    return _jointSensors;
-  }
+  const std::vector<JointSensor> & jointSensors() const { return _jointSensors; }
 
   /** Return the springs of a robot
    *
    * \see mc_rbdyn::Spring for details on the expected data
    */
-  const Springs & springs() const
-  {
-    return _springs;
-  }
+  const Springs & springs() const { return _springs; }
 
   /** Return a minimal self-collision set
    *
@@ -469,10 +430,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    *
    * \see mc_rbdyn::Collision for details on the expected data
    */
-  const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() const
-  {
-    return _minimalSelfCollisions;
-  }
+  const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() const { return _minimalSelfCollisions; }
 
   /** Return a common self-collision set
    *
@@ -482,19 +440,13 @@ struct MC_RBDYN_DLLAPI RobotModule
    *
    * \see mc_rbdyn::Collision for details on the expected data
    */
-  const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() const
-  {
-    return _commonSelfCollisions;
-  }
+  const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() const { return _commonSelfCollisions; }
 
   /** Return the grippers in the robot
    *
    * \see mc_rbdyn::Gripper for details on the expected data
    */
-  const std::vector<Gripper> & grippers() const
-  {
-    return _grippers;
-  }
+  const std::vector<Gripper> & grippers() const { return _grippers; }
 
   /** Returns default gripper safety parameters if one is not provided by a gripper.
    *
@@ -502,29 +454,20 @@ struct MC_RBDYN_DLLAPI RobotModule
    *
    * \see mc_rbdyn::Gripper::Safety for details on the safety parameters
    */
-  inline const Gripper::Safety & gripperSafety() const
-  {
-    return _gripperSafety;
-  }
+  inline const Gripper::Safety & gripperSafety() const { return _gripperSafety; }
 
   /** Return the reference (native controller) joint order of the robot
    *
    * If it is empty, \ref make_default_ref_joint_order() will be used to
    * generate one
    */
-  const std::vector<std::string> & ref_joint_order() const
-  {
-    return _ref_joint_order;
-  }
+  const std::vector<std::string> & ref_joint_order() const { return _ref_joint_order; }
 
   /** Return the default attitude of the floating base
    *
    * This attitute is associated to the \ref stance() configuration
    */
-  const std::array<double, 7> & default_attitude() const
-  {
-    return _default_attitude;
-  }
+  const std::array<double, 7> & default_attitude() const { return _default_attitude; }
 
   /** Return default configuration for the lipm stabilizer */
   const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & defaultLIPMStabilizerConfiguration() const
@@ -562,22 +505,13 @@ struct MC_RBDYN_DLLAPI RobotModule
    *
    * \see mc_rbdyn::CompoundJointConstraintDescription for details on the expected data
    */
-  inline const CompoundJointConstraintDescriptionVector & compoundJoints() const
-  {
-    return _compoundJoints;
-  }
+  inline const CompoundJointConstraintDescriptionVector & compoundJoints() const { return _compoundJoints; }
 
   /** Returns the list of parameters passed to mc_rbdyn::RobotLoader::get_robot_module to obtain this module */
-  inline const std::vector<std::string> & parameters() const
-  {
-    return _parameters;
-  }
+  inline const std::vector<std::string> & parameters() const { return _parameters; }
 
   /** Returns the list of parameters to get a RobotModule that is a canonical representation of this module */
-  inline const std::vector<std::string> & canonicalParameters() const
-  {
-    return _canonicalParameters;
-  }
+  inline const std::vector<std::string> & canonicalParameters() const { return _canonicalParameters; }
 
   /** Returns the configuration for the control to canonical conversion
    *
@@ -607,22 +541,13 @@ struct MC_RBDYN_DLLAPI RobotModule
    *
    * This defaults to urdf_path
    */
-  std::string real_urdf() const
-  {
-    return _real_urdf;
-  }
+  std::string real_urdf() const { return _real_urdf; }
 
   /** Returns a list of non standard sensors supported by this module */
-  inline const DevicePtrVector & devices() const
-  {
-    return _devices;
-  }
+  inline const DevicePtrVector & devices() const { return _devices; }
 
   /** Returns a list of robot frames supported by this module */
-  inline const std::vector<FrameDescription> & frames() const noexcept
-  {
-    return _frames;
-  }
+  inline const std::vector<FrameDescription> & frames() const noexcept { return _frames; }
 
 public:
   /** Path to the robot's description package */
@@ -735,30 +660,20 @@ inline bool operator==(const RobotModule::Gripper::Safety & lhs, const RobotModu
 
 inline bool operator==(const RobotModule::Gripper & lhs, const RobotModule::Gripper & rhs)
 {
-  auto compareMimics = [&]() {
+  auto compareMimics = [&]()
+  {
     auto lmimics = lhs.mimics();
     auto rmimics = rhs.mimics();
-    if(lmimics == nullptr && rmimics == nullptr)
-    {
-      return true;
-    }
-    if(lmimics == nullptr || rmimics == nullptr)
-    {
-      return false;
-    }
+    if(lmimics == nullptr && rmimics == nullptr) { return true; }
+    if(lmimics == nullptr || rmimics == nullptr) { return false; }
     return *lmimics == *rmimics;
   };
-  auto compareSafety = [&]() {
+  auto compareSafety = [&]()
+  {
     auto lsafety = lhs.safety();
     auto rsafety = rhs.safety();
-    if(lsafety == nullptr && rsafety == nullptr)
-    {
-      return true;
-    }
-    if(lsafety == nullptr || rsafety == nullptr)
-    {
-      return false;
-    }
+    if(lsafety == nullptr && rsafety == nullptr) { return true; }
+    if(lsafety == nullptr || rsafety == nullptr) { return false; }
     return *lsafety == *rsafety;
   };
   return lhs.name == rhs.name && lhs.joints == rhs.joints && lhs.reverse_limits == rhs.reverse_limits && compareSafety()

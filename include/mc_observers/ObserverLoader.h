@@ -78,10 +78,7 @@ public:
   {
     std::lock_guard<std::mutex> guard{mtx};
     verbose_ = verbose;
-    if(observer_loader)
-    {
-      observer_loader->set_verbosity(verbose);
-    }
+    if(observer_loader) { observer_loader->set_verbosity(verbose); }
   }
 
   /** Returns a list of available robots */
@@ -100,10 +97,7 @@ private:
       try
       {
         std::vector<std::string> default_path = {};
-        if(!skip_default_path)
-        {
-          default_path.push_back(mc_rtc::MC_OBSERVERS_INSTALL_PREFIX);
-        }
+        if(!skip_default_path) { default_path.push_back(mc_rtc::MC_OBSERVERS_INSTALL_PREFIX); }
         observer_loader.reset(
             new mc_rtc::ObjectLoader<mc_observers::Observer>("MC_RTC_OBSERVER_MODULE", default_path, verbose_));
       }

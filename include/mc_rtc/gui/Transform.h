@@ -38,10 +38,7 @@ struct TransformImpl : public CommonInputImpl<GetT, SetT>
                   "TransformImpl getter should return an sva::PTransformd");
   }
 
-  constexpr static size_t write_size()
-  {
-    return CommonInputImpl<GetT, SetT>::write_size() + 1;
-  }
+  constexpr static size_t write_size() { return CommonInputImpl<GetT, SetT>::write_size() + 1; }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {

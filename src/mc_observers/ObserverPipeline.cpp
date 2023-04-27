@@ -11,10 +11,7 @@ ObserverPipeline::ObserverPipeline(mc_control::MCController & ctl) : ctl_(ctl) {
 
 void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
 {
-  if(!config.has("name"))
-  {
-    mc_rtc::log::error_and_throw("[ObserverPipeline] \"name\" entry is required", name_);
-  }
+  if(!config.has("name")) { mc_rtc::log::error_and_throw("[ObserverPipeline] \"name\" entry is required", name_); }
   name_ = static_cast<std::string>(config("name"));
   config("run", runObservers_);
   config("update", updateObservers_);
@@ -66,10 +63,7 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
 void ObserverPipeline::reset()
 {
   desc_ = name_ + ": ";
-  if(pipelineObservers_.empty())
-  {
-    desc_ += "None";
-  }
+  if(pipelineObservers_.empty()) { desc_ += "None"; }
 
   for(size_t i = 0; i < pipelineObservers_.size(); ++i)
   {
@@ -77,19 +71,10 @@ void ObserverPipeline::reset()
     auto & observer = pipelineObserver.observer();
     observer.reset(ctl_);
 
-    if(pipelineObserver.update())
-    {
-      desc_ += observer.desc();
-    }
-    else
-    {
-      desc_ += "[" + observer.desc() + "]";
-    }
+    if(pipelineObserver.update()) { desc_ += observer.desc(); }
+    else { desc_ += "[" + observer.desc() + "]"; }
 
-    if(i < pipelineObservers_.size() - 1)
-    {
-      desc_ += " -> ";
-    }
+    if(i < pipelineObservers_.size() - 1) { desc_ += " -> "; }
   }
 }
 
@@ -103,17 +88,11 @@ bool ObserverPipeline::run()
     bool res = observer.run(ctl_);
     if(!res)
     {
-      if(pipelineObserver.successRequired())
-      {
-        success_ = false;
-      }
+      if(pipelineObserver.successRequired()) { success_ = false; }
       if(pipelineObserver.success())
       {
         mc_rtc::log::warning("[ObserverPipeline::{}] Observer {} failed to run", name(), observer.name());
-        if(observer.error().size())
-        {
-          mc_rtc::log::warning("{}", observer.error());
-        }
+        if(observer.error().size()) { mc_rtc::log::warning("{}", observer.error()); }
         pipelineObserver.success_ = false;
       }
     }
@@ -124,10 +103,7 @@ bool ObserverPipeline::run()
         mc_rtc::log::info("[ObserverPipeline::{}] Observer {} resumed", name(), observer.name());
         pipelineObserver.success_ = true;
       }
-      if(updateObservers_ && pipelineObserver.update_)
-      {
-        observer.update(ctl_);
-      }
+      if(updateObservers_ && pipelineObserver.update_) { observer.update(ctl_); }
     }
   }
   return success_;
@@ -137,10 +113,7 @@ void ObserverPipeline::addToLogger(mc_rtc::Logger & logger)
 {
   for(auto & observer : pipelineObservers_)
   {
-    if(observer.log())
-    {
-      observer.observer().addToLogger_(ctl_, logger, "Observers_" + name_);
-    }
+    if(observer.log()) { observer.observer().addToLogger_(ctl_, logger, "Observers_" + name_); }
   }
 }
 /*! \brief Remove observer from logger. */
@@ -148,10 +121,7 @@ void ObserverPipeline::removeFromLogger(mc_rtc::Logger & logger)
 {
   for(auto & observer : pipelineObservers_)
   {
-    if(observer.log())
-    {
-      observer.observer().removeFromLogger_(logger, "Observers_" + name_);
-    }
+    if(observer.log()) { observer.observer().removeFromLogger_(logger, "Observers_" + name_); }
   }
 }
 
@@ -159,10 +129,7 @@ void ObserverPipeline::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   for(auto & observer : pipelineObservers_)
   {
-    if(observer.gui())
-    {
-      observer.observer().addToGUI_(ctl_, gui, {"ObserverPipelines", name_});
-    }
+    if(observer.gui()) { observer.observer().addToGUI_(ctl_, gui, {"ObserverPipelines", name_}); }
   }
 }
 void ObserverPipeline::removeFromGUI(mc_rtc::gui::StateBuilder & gui)

@@ -1,19 +1,19 @@
 # List all files managed by the project
 set(MC_RTC_ALL_FILES)
 set(MC_RTC_SUBDIRS
-  3rd-party
-  benchmarks
-  binding
-  cmake
-  CMakeModules
-  debian
-  doc
-  etc
-  include
-  plugins
-  src
-  tests
-  utils
+    3rd-party
+    benchmarks
+    binding
+    cmake
+    CMakeModules
+    debian
+    doc
+    etc
+    include
+    plugins
+    src
+    tests
+    utils
 )
 file(STRINGS "${PROJECT_SOURCE_DIR}/.gitignore" IGNORE_FILTERS_IN)
 set(IGNORE_FILTERS)
@@ -41,8 +41,8 @@ macro(HANDLE_FILES VAR)
 endmacro()
 
 file(GLOB ROOT_ALL_FILES "${PROJECT_SOURCE_DIR}/*")
-HANDLE_FILES(ROOT_ALL_FILES)
+handle_files(ROOT_ALL_FILES)
 foreach(SUBDIR ${MC_RTC_SUBDIRS})
   file(GLOB_RECURSE SUBDIR_ALL_FILES "${PROJECT_SOURCE_DIR}/${SUBDIR}/*")
-  HANDLE_FILES(SUBDIR_ALL_FILES)
+  handle_files(SUBDIR_ALL_FILES)
 endforeach()

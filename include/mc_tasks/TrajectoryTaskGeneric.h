@@ -274,14 +274,8 @@ protected:
       auto & trajectory = *static_cast<tasks::qp::TrajectoryTask *>(trajectoryT_.get());
       stiffness_ = trajectory.stiffness();
       damping_ = trajectory.damping();
-      if(refVel_.size() != trajectory.refVel().size())
-      {
-        refVel_ = trajectory.refVel();
-      }
-      if(refAccel_.size() != trajectory.refAccel().size())
-      {
-        refAccel_ = trajectory.refAccel();
-      }
+      if(refVel_.size() != trajectory.refVel().size()) { refVel_ = trajectory.refVel(); }
+      if(refAccel_.size() != trajectory.refAccel().size()) { refAccel_ = trajectory.refAccel(); }
     }
     else if constexpr(backend == Backend::TVM)
     {
@@ -292,19 +286,10 @@ protected:
       int size = error->size();
       stiffness_ = Eigen::VectorXd::Constant(size, 1, stiffness_(0));
       damping_ = Eigen::VectorXd::Constant(size, 1, damping_(0));
-      if constexpr(details::has_refVel_v<ErrorT>)
-      {
-        refVel_ = error->refVel();
-      }
-      if constexpr(details::has_refAccel_v<ErrorT>)
-      {
-        refAccel_ = error->refAccel();
-      }
+      if constexpr(details::has_refVel_v<ErrorT>) { refVel_ = error->refVel(); }
+      if constexpr(details::has_refAccel_v<ErrorT>) { refAccel_ = error->refAccel(); }
     }
-    else
-    {
-      mc_rtc::log::error_and_throw("[{} task] Not implemented for backend: {}", backend_);
-    }
+    else { mc_rtc::log::error_and_throw("[{} task] Not implemented for backend: {}", backend_); }
   }
 
   void addToGUI(mc_rtc::gui::StateBuilder &) override;

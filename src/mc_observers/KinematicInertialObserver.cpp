@@ -53,10 +53,7 @@ bool KinematicInertialObserver::run(const mc_control::MCController & ctl)
     velFilter_.update(errVel);
     velW_ = velFilter_.eval();
   }
-  else
-  {
-    mc_rtc::log::warning("[{}] Skipping velocity update (anchor frame jumped)", name());
-  }
+  else { mc_rtc::log::warning("[{}] Skipping velocity update (anchor frame jumped)", name()); }
   posWPrev_ = posW;
   return res;
 }
@@ -89,7 +86,8 @@ void KinematicInertialObserver::addToGUI(const mc_control::MCController & ctl,
                                          const std::vector<std::string> & category)
 {
   KinematicInertialPoseObserver::addToGUI(ctl, gui, category);
-  auto showHideVel = [this, category, &gui]() {
+  auto showHideVel = [this, category, &gui]()
+  {
     std::string name = "Velocity";
     auto cat = category;
     cat.push_back("Markers");
@@ -99,7 +97,8 @@ void KinematicInertialObserver::addToGUI(const mc_control::MCController & ctl,
       gui.addElement(cat, mc_rtc::gui::Arrow(
                               name, velocityArrowConfig_,
                               [this]() -> const Eigen::Vector3d & { return posW().translation(); },
-                              [this]() -> Eigen::Vector3d {
+                              [this]() -> Eigen::Vector3d
+                              {
                                 const Eigen::Vector3d p = posW().translation();
                                 Eigen::Vector3d end = p + velW().linear();
                                 return end;
@@ -109,7 +108,8 @@ void KinematicInertialObserver::addToGUI(const mc_control::MCController & ctl,
 
   gui.addElement(category, mc_rtc::gui::Checkbox(
                                "Show velocity", [this]() { return showVelocity_; },
-                               [this, showHideVel]() {
+                               [this, showHideVel]()
+                               {
                                  showVelocity_ = !showVelocity_;
                                  showHideVel();
                                }));
@@ -118,7 +118,8 @@ void KinematicInertialObserver::addToGUI(const mc_control::MCController & ctl,
       category,
       mc_rtc::gui::NumberInput(
           "Cutoff Period", [this]() -> double { return velFilter_.cutoffPeriod(); },
-          [this, &ctl](double cutoff) {
+          [this, &ctl](double cutoff)
+          {
             if(cutoff < 2 * ctl.timeStep)
             {
               mc_rtc::log::warning(

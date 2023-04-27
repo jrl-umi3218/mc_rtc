@@ -67,9 +67,8 @@ private:
                                                                        double dt,
                                                                        const mc_rtc::Configuration & config);
   /** Programatically constructed based on the configuration values */
-  std::function<bool(const mc_tasks::MetaTask &, std::string &)> fn_ = [](const mc_tasks::MetaTask &, std::string &) {
-    return true;
-  };
+  std::function<bool(const mc_tasks::MetaTask &, std::string &)> fn_ = [](const mc_tasks::MetaTask &, std::string &)
+  { return true; };
   /** Output string */
   std::string output_;
 };

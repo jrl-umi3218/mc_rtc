@@ -73,77 +73,38 @@ public:
    *
    * \throws If the original robot has been destroyed
    */
-  inline const mc_rbdyn::Robot & robot() const
-  {
-    return robot_;
-  }
+  inline const mc_rbdyn::Robot & robot() const { return robot_; }
 
   /** Retrieve the joint limits (const) */
-  inline const Limits & limits() const noexcept
-  {
-    return limits_;
-  }
+  inline const Limits & limits() const noexcept { return limits_; }
 
   /** Retrieve the joint limits */
-  inline Limits & limits() noexcept
-  {
-    return limits_;
-  }
+  inline Limits & limits() noexcept { return limits_; }
 
   /** Access q variable (const) */
-  inline const tvm::VariablePtr & q() const noexcept
-  {
-    return q_;
-  }
+  inline const tvm::VariablePtr & q() const noexcept { return q_; }
   /** Access q variable */
-  inline tvm::VariablePtr & q() noexcept
-  {
-    return q_;
-  }
+  inline tvm::VariablePtr & q() noexcept { return q_; }
 
   /** Access q first derivative (joint velocity) (const) */
-  inline const tvm::VariablePtr & alpha() const noexcept
-  {
-    return dq_;
-  }
+  inline const tvm::VariablePtr & alpha() const noexcept { return dq_; }
   /** Access q first derivative (joint velocity) */
-  inline tvm::VariablePtr & alpha() noexcept
-  {
-    return dq_;
-  }
+  inline tvm::VariablePtr & alpha() noexcept { return dq_; }
 
   /** Access q second derivative (joint acceleration) (const) */
-  inline const tvm::VariablePtr & alphaD() const noexcept
-  {
-    return ddq_;
-  }
+  inline const tvm::VariablePtr & alphaD() const noexcept { return ddq_; }
   /** Access q second derivative (joint acceleration) */
-  inline tvm::VariablePtr & alphaD() noexcept
-  {
-    return ddq_;
-  }
+  inline tvm::VariablePtr & alphaD() noexcept { return ddq_; }
 
   /** Access floating-base variable (const) */
-  inline const tvm::VariablePtr & qFloatingBase() const noexcept
-  {
-    return q_fb_;
-  }
+  inline const tvm::VariablePtr & qFloatingBase() const noexcept { return q_fb_; }
   /** Access free-flyer variable */
-  inline tvm::VariablePtr & qFloatingBase() noexcept
-  {
-    return q_fb_;
-  }
+  inline tvm::VariablePtr & qFloatingBase() noexcept { return q_fb_; }
 
   /** Access joints variable (const) */
-  inline const tvm::VariablePtr & qJoints() const noexcept
-  {
-    return q_joints_;
-  }
+  inline const tvm::VariablePtr & qJoints() const noexcept { return q_joints_; }
   /** Access joints variable */
-  inline tvm::VariablePtr & qJoints() noexcept
-  {
-    return q_joints_;
-  }
+  inline tvm::VariablePtr & qJoints() noexcept { return q_joints_; }
 
   /** Given a joint index creates a TVM variable corresponding to this variable
    *
@@ -161,74 +122,38 @@ public:
    *
    * \throws If the robot does not have such a joint or the joint is not actuated
    */
-  inline tvm::VariablePtr qJoint(const std::string & jName)
-  {
-    return qJoint(robot().jointIndexByName(jName));
-  }
+  inline tvm::VariablePtr qJoint(const std::string & jName) { return qJoint(robot().jointIndexByName(jName)); }
 
   /** Access mimics' variable map (const) */
-  inline const std::map<tvm::VariablePtr, mimic_variables_t> & mimics() const noexcept
-  {
-    return mimics_;
-  }
+  inline const std::map<tvm::VariablePtr, mimic_variables_t> & mimics() const noexcept { return mimics_; }
   /** Access mimics' variable map */
-  inline std::map<tvm::VariablePtr, mimic_variables_t> & mimics() noexcept
-  {
-    return mimics_;
-  }
+  inline std::map<tvm::VariablePtr, mimic_variables_t> & mimics() noexcept { return mimics_; }
 
   /** Access tau variable (const) */
-  inline const tvm::VariablePtr & tau() const noexcept
-  {
-    return tau_;
-  }
+  inline const tvm::VariablePtr & tau() const noexcept { return tau_; }
   /** Access tau variable */
-  inline tvm::VariablePtr & tau()
-  {
-    return tau_;
-  }
+  inline tvm::VariablePtr & tau() { return tau_; }
 
   /** Returns the CoM algorithm associated to this robot (const) */
-  inline const CoM & comAlgo() const noexcept
-  {
-    return *com_;
-  }
+  inline const CoM & comAlgo() const noexcept { return *com_; }
 
   /** Returns the CoM algorithm associated to this robot */
-  inline CoM & comAlgo() noexcept
-  {
-    return *com_;
-  }
+  inline CoM & comAlgo() noexcept { return *com_; }
 
   /** Returns the momentum algorithm associated with this robot (const) */
-  inline const Momentum & momentumAlgo() const noexcept
-  {
-    return *momentum_;
-  }
+  inline const Momentum & momentumAlgo() const noexcept { return *momentum_; }
 
   /** Returns the momentum algorithm associated with this robot (const) */
-  inline Momentum & momentumAlgo() noexcept
-  {
-    return *momentum_;
-  }
+  inline Momentum & momentumAlgo() noexcept { return *momentum_; }
 
   /** Returns the mass matrix */
-  inline const Eigen::MatrixXd & H() const noexcept
-  {
-    return fd_.H();
-  }
+  inline const Eigen::MatrixXd & H() const noexcept { return fd_.H(); }
 
   /** Returns the non-linear dynamics component */
-  inline const Eigen::VectorXd & C() const noexcept
-  {
-    return fd_.C();
-  }
+  inline const Eigen::VectorXd & C() const noexcept { return fd_.C(); }
 
   /** Vector of normal acceleration in body coordinates */
-  inline const std::vector<sva::MotionVecd> & normalAccB() const noexcept
-  {
-    return normalAccB_;
-  }
+  inline const std::vector<sva::MotionVecd> & normalAccB() const noexcept { return normalAccB_; }
 
   /** Given a joint index in the reference joint order, returns the corresponding joint index in the q variable
    *

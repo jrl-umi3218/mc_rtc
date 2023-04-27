@@ -27,10 +27,7 @@ namespace
 char * getPATH()
 {
   static std::unique_ptr<char> PATH;
-  if(PATH)
-  {
-    return PATH.get();
-  }
+  if(PATH) { return PATH.get(); }
   int plen = GetEnvironmentVariable("PATH", nullptr, 0);
   PATH.reset(new char[plen]);
   GetEnvironmentVariable("PATH", PATH.get(), plen);
@@ -60,26 +57,17 @@ LTDLHandle::LTDLHandle(const std::string & class_name,
   valid_ = get_classes != nullptr;
   if(valid_)
   {
-    if(verbose_)
-    {
-      mc_rtc::log::info("Found matching class name symbol {}", class_name);
-    }
+    if(verbose_) { mc_rtc::log::info("Found matching class name symbol {}", class_name); }
     get_classes(classes_);
   }
-  if(valid_)
-  {
-    global_ = get_symbol<void (*)()>("LOAD_GLOBAL") != nullptr;
-  }
+  if(valid_) { global_ = get_symbol<void (*)()>("LOAD_GLOBAL") != nullptr; }
   close();
 }
 
 bool LTDLHandle::open()
 {
 #ifndef MC_RTC_BUILD_STATIC
-  if(open_)
-  {
-    return true;
-  }
+  if(open_) { return true; }
   if(verbose_)
   {
     mc_rtc::log::info("Attempt to open {}", path_);
@@ -93,10 +81,7 @@ bool LTDLHandle::open()
 #  ifndef WIN32
   if(global_)
   {
-    if(verbose_)
-    {
-      mc_rtc::log::info("Opening {} in global mode", path_);
-    }
+    if(verbose_) { mc_rtc::log::info("Opening {} in global mode", path_); }
     std::unique_lock<std::mutex> lock{LTDLMutex::MTX};
     lt_dladvise advise;
     lt_dladvise_init(&advise);
@@ -121,10 +106,7 @@ bool LTDLHandle::open()
     std::unique_lock<std::mutex> lock{LTDLMutex::MTX};
     const char * error = lt_dlerror();
     /* Discard the "file not found" error as it only indicates that we tried to load something other than a library */
-    if(strcmp(error, "file not found") != 0)
-    {
-      mc_rtc::log::warning("Failed to load {}\n{}", path_, error);
-    }
+    if(strcmp(error, "file not found") != 0) { mc_rtc::log::warning("Failed to load {}\n{}", path_, error); }
   }
 #  ifdef WIN32
   SetEnvironmentVariable("PATH", getPATH());
@@ -207,19 +189,13 @@ void Loader::load_libraries(const std::string & class_name,
   if(mc_rtc::debug())
   {
     debug_paths = pathsIn;
-    for(auto & p : debug_paths)
-    {
-      p += debug_suffix;
-    }
+    for(auto & p : debug_paths) { p += debug_suffix; }
     pathsRef = debug_paths;
   }
   const auto & paths = pathsRef.get();
 #  ifdef WIN32
   std::stringstream ss;
-  for(const auto & path : paths)
-  {
-    ss << path << ";";
-  }
+  for(const auto & path : paths) { ss << path << ";"; }
   ss << getPATH();
   std::string rpath = ss.str();
 #  else
@@ -229,19 +205,16 @@ void Loader::load_libraries(const std::string & class_name,
   {
     if(!bfs::exists(path))
     {
-      if(verbose)
-      {
-        mc_rtc::log::warning("Tried to load libraries from {} which does not exist", path);
-      }
+      if(verbose) { mc_rtc::log::warning("Tried to load libraries from {} which does not exist", path); }
       continue;
     }
     bfs::directory_iterator dit(path), endit;
     std::vector<bfs::path> drange;
     std::copy(dit, endit, std::back_inserter(drange));
     // Sort by newest file
-    std::sort(drange.begin(), drange.end(), [](const bfs::path & p1, const bfs::path & p2) {
-      return bfs::last_write_time(p1) > bfs::last_write_time(p2);
-    });
+    std::sort(drange.begin(), drange.end(),
+              [](const bfs::path & p1, const bfs::path & p2)
+              { return bfs::last_write_time(p1) > bfs::last_write_time(p2); });
     for(const auto & p : drange)
     {
       /* Attempt to load all dynamics libraries in the directory */

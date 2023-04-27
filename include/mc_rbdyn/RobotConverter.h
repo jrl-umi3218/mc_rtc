@@ -40,10 +40,7 @@ struct MC_RBDYN_DLLAPI RobotConverter
    */
   void convert(const mc_rbdyn::Robot & inputRobot, mc_rbdyn::Robot & outputRobot) const;
 
-  inline const RobotConverterConfig & config() const noexcept
-  {
-    return config_;
-  }
+  inline const RobotConverterConfig & config() const noexcept { return config_; }
 
 protected:
   /**

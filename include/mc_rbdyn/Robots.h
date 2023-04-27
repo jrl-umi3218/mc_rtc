@@ -48,16 +48,10 @@ public:
   bool hasRobot(const std::string & name) const;
 
   /** Give access to self for backward compatibility */
-  inline mc_rbdyn::Robots & robots() noexcept
-  {
-    return *this;
-  }
+  inline mc_rbdyn::Robots & robots() noexcept { return *this; }
 
   /** Give access to self for backward compatibility (const) */
-  inline const mc_rbdyn::Robots & robots() const noexcept
-  {
-    return *this;
-  }
+  inline const mc_rbdyn::Robots & robots() const noexcept { return *this; }
 
   /** Index of the main robot */
   unsigned int robotIndex() const;
@@ -224,10 +218,7 @@ public:
   }
 
   /** Create a new Robots instance */
-  inline static RobotsPtr make() noexcept
-  {
-    return std::make_shared<Robots>(NewRobotsToken{});
-  }
+  inline static RobotsPtr make() noexcept { return std::make_shared<Robots>(NewRobotsToken{}); }
 
   /** Create a new Robots instance with a custom deleter */
   template<class Deleter>

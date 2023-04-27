@@ -13,10 +13,7 @@ namespace fsm
 
 void MetaState::start(Controller & ctl)
 {
-  if(!config_.has("StepByStep"))
-  {
-    config_.add("StepByStep", false);
-  }
+  if(!config_.has("StepByStep")) { config_.add("StepByStep", false); }
   executor_.init(ctl, config_, name(), config_("category", std::vector<std::string>{}));
   run(ctl);
 }
@@ -25,10 +22,7 @@ bool MetaState::run(Controller & ctl)
 {
   executor_.run(ctl, true);
   bool ret = executor_.complete();
-  if(ret)
-  {
-    output(executor_.output());
-  }
+  if(ret) { output(executor_.output()); }
   return ret;
 }
 
@@ -63,10 +57,7 @@ bool MetaState::read_msg(std::string & msg)
       ss >> state;
       return executor_.resume(state);
     }
-    if(token == "next")
-    {
-      return executor_.next();
-    }
+    if(token == "next") { return executor_.next(); }
   }
   return false;
 }

@@ -31,7 +31,8 @@ auto Cylinder(const std::string & name,
 {
   CylinderParameters params = details::GetValueOrCallbackValue(params_fn);
   auto visual = mc_rtc::makeVisualCylinder(params.radius, params.length, details::GetValueOrCallbackValue(color_fn));
-  auto get_visual_fn = [=]() mutable -> const rbd::parsers::Visual & {
+  auto get_visual_fn = [=]() mutable -> const rbd::parsers::Visual &
+  {
     if constexpr(std::is_invocable_v<GetParams>)
     {
       auto & cylinder = mc_rtc::getVisualCylinder(visual);
@@ -39,10 +40,7 @@ auto Cylinder(const std::string & name,
       cylinder.radius = params.radius;
       cylinder.length = params.length;
     }
-    if constexpr(std::is_invocable_v<GetColor>)
-    {
-      mc_rtc::details::setVisualColor(visual, color_fn());
-    }
+    if constexpr(std::is_invocable_v<GetColor>) { mc_rtc::details::setVisualColor(visual, color_fn()); }
     return visual;
   };
   return Visual(name, get_visual_fn, get_pos_fn);

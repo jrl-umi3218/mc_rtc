@@ -79,10 +79,7 @@ void LookAtTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 void LookAtTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   VectorOrientationTask::load(solver, config);
-  if(config.has("targetPos"))
-  {
-    target(config("targetPos"));
-  }
+  if(config.has("targetPos")) { target(config("targetPos")); }
 }
 
 } // namespace mc_tasks
@@ -91,8 +88,10 @@ namespace
 {
 static auto registered_lookat = mc_tasks::MetaTaskLoader::register_load_function(
     "lookAt",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = [&]() {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
+      auto t = [&]()
+      {
         if(config.has("body"))
         {
           return std::make_shared<mc_tasks::LookAtTask>(config("body"), config("bodyVector"), solver.robots(),

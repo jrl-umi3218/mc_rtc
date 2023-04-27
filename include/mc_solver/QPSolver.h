@@ -123,10 +123,7 @@ public:
   virtual ~QPSolver() = default;
 
   /** Returns the backend for this solver instance */
-  inline Backend backend() const noexcept
-  {
-    return backend_;
-  }
+  inline Backend backend() const noexcept { return backend_; }
 
   /** Returns the current context backend
    *
@@ -208,10 +205,7 @@ public:
   /** Remove a task from the solver which was shared with the solver */
   inline void removeTask(std::shared_ptr<mc_tasks::MetaTask> task)
   {
-    if(task)
-    {
-      removeTask(task.get());
-    }
+    if(task) { removeTask(task.get()); }
   }
 
   /** Reset all contacts in the solver and use the new set of contacts provided
@@ -293,20 +287,11 @@ public:
   std::shared_ptr<mc_rtc::gui::StateBuilder> gui() const;
 
   /** Set the controller that is owning this QPSolver instance */
-  inline void controller(mc_control::MCController * ctl) noexcept
-  {
-    controller_ = ctl;
-  }
+  inline void controller(mc_control::MCController * ctl) noexcept { controller_ = ctl; }
   /** Returns the controller owning this instance (if any) (const) */
-  inline const mc_control::MCController * controller() const noexcept
-  {
-    return controller_;
-  }
+  inline const mc_control::MCController * controller() const noexcept { return controller_; }
   /** Returns the controller owning this instance (if any) */
-  inline mc_control::MCController * controller() noexcept
-  {
-    return controller_;
-  }
+  inline mc_control::MCController * controller() noexcept { return controller_; }
 
 protected:
   Backend backend_;

@@ -31,44 +31,23 @@ struct MC_TVM_DLLAPI FrameVelocity : public tvm::function::abstract::Function
   inline void reset() {}
 
   /** Access the related frame */
-  inline const mc_rbdyn::RobotFrame & frame() const noexcept
-  {
-    return *frame_;
-  }
+  inline const mc_rbdyn::RobotFrame & frame() const noexcept { return *frame_; }
 
   /** Get the dof vector */
-  inline const Eigen::Vector6d & dof() const noexcept
-  {
-    return dof_;
-  }
+  inline const Eigen::Vector6d & dof() const noexcept { return dof_; }
 
   /** Set the dof vector */
-  inline void dof(const Eigen::Vector6d & dof) noexcept
-  {
-    dof_ = dof;
-  }
+  inline void dof(const Eigen::Vector6d & dof) noexcept { dof_ = dof; }
 
   /** Set the reference velocity */
-  inline void refVel(const Eigen::Vector6d & refV) noexcept
-  {
-    refVel_ = refV;
-  }
+  inline void refVel(const Eigen::Vector6d & refV) noexcept { refVel_ = refV; }
   /** Get the reference velocity */
-  inline const Eigen::Vector6d & refVel() const noexcept
-  {
-    return refVel_;
-  }
+  inline const Eigen::Vector6d & refVel() const noexcept { return refVel_; }
 
   /** Set the reference acceleration */
-  inline void refAccel(const Eigen::Vector6d & refA) noexcept
-  {
-    refAccel_ = refA;
-  }
+  inline void refAccel(const Eigen::Vector6d & refA) noexcept { refAccel_ = refA; }
   /** Get the reference acceleration */
-  inline const Eigen::Vector6d & refAccel() const noexcept
-  {
-    return refAccel_;
-  }
+  inline const Eigen::Vector6d & refAccel() const noexcept { return refAccel_; }
 
 private:
   mc_rbdyn::ConstRobotFramePtr frame_;

@@ -94,10 +94,7 @@ BOOST_AUTO_TEST_CASE(TestCanonicalRobotConverter)
                                               robot, canonicalRobot, mc_rbdyn::RobotConverterConfig{}};
     for(unsigned i = 0; i < robot.mbc().q.size(); ++i)
     {
-      if(robot.mbc().q.size() == 1)
-      {
-        BOOST_REQUIRE(robot.mbc().q[i][0] != 0);
-      }
+      if(robot.mbc().q.size() == 1) { BOOST_REQUIRE(robot.mbc().q[i][0] != 0); }
     }
     for(const auto & j : canonicalRobot.mb().joints())
     {

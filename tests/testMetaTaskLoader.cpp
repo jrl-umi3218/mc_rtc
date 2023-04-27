@@ -41,15 +41,9 @@ template<typename T>
 struct TaskTester
 {
   static_assert(fail<T>::value, "This should be specialized");
-  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver &)
-  {
-    return nullptr;
-  }
+  mc_tasks::MetaTaskPtr make_ref(mc_solver::QPSolver &) { return nullptr; }
 
-  std::string json()
-  {
-    return "";
-  }
+  std::string json() { return ""; }
 
   void check(const mc_tasks::MetaTaskPtr & /*ref*/, const mc_tasks::MetaTaskPtr & /*loaded*/) {}
 };

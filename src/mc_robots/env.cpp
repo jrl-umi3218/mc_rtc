@@ -38,10 +38,7 @@ EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string &
       }
     }
   }
-  if(!fixed)
-  {
-    _bodySensors.emplace_back("FloatingBase", mb.body(0).name(), sva::PTransformd::Identity());
-  }
+  if(!fixed) { _bodySensors.emplace_back("FloatingBase", mb.body(0).name(), sva::PTransformd::Identity()); }
 }
 
 } // namespace mc_robots
@@ -78,10 +75,13 @@ extern "C"
 namespace
 {
 
-static auto registered = []() {
+static auto registered = []()
+{
   using fn_t = std::function<mc_robots::EnvRobotModule *(const std::string &, const std::string &)>;
-  auto make_callback = [](bool fixed) -> fn_t {
-    return [fixed](const std::string & path, const std::string & name) {
+  auto make_callback = [](bool fixed) -> fn_t
+  {
+    return [fixed](const std::string & path, const std::string & name)
+    {
       if(path == "@MC_ENV_DESCRIPTION_PATH@")
       {
         return new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, name, fixed);

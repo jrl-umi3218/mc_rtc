@@ -56,10 +56,7 @@ struct PrettyTable
   size_t size()
   {
     size_t s = N + 1;
-    for(size_t i = 0; i < N; ++i)
-    {
-      s += columns_[i].max_size_ + 2;
-    }
+    for(size_t i = 0; i < N; ++i) { s += columns_[i].max_size_ + 2; }
     return s;
   }
 
@@ -105,26 +102,14 @@ void usage(char * name)
 
 std::pair<size_t, size_t> getRange(const mc_rtc::log::FlatLog & log, const std::string & key)
 {
-  if(!log.has(key))
-  {
-    mc_rtc::log::error_and_throw("No entry named {} in log", key);
-  }
+  if(!log.has(key)) { mc_rtc::log::error_and_throw("No entry named {} in log", key); }
   size_t start = 0;
   size_t end = 0;
   auto t = log.getRaw<double>(key);
-  while(t[start] == nullptr)
-  {
-    start++;
-  }
+  while(t[start] == nullptr) { start++; }
   end = start;
-  while(t[end] != nullptr && end < t.size())
-  {
-    end++;
-  }
-  if(start == end)
-  {
-    mc_rtc::log::error_and_throw("{} does not look like a valid time entry", key);
-  }
+  while(t[end] != nullptr && end < t.size()) { end++; }
+  if(start == end) { mc_rtc::log::error_and_throw("{} does not look like a valid time entry", key); }
   return {start, end};
 }
 
@@ -169,10 +154,7 @@ int main(int argc, char * argv[])
   }
   std::string file = argv[1];
   std::string key = "t";
-  if(argc > 2)
-  {
-    key = argv[2];
-  }
+  if(argc > 2) { key = argv[2]; }
   PerfTable vt(std::array<PrettyColumn, 5>{PrettyColumn{""}, PrettyColumn{"Average"}, PrettyColumn{"StdEv"},
                                            PrettyColumn{"Min"}, PrettyColumn{"Max"}});
   mc_rtc::log::FlatLog log(file);
@@ -180,10 +162,7 @@ int main(int argc, char * argv[])
   auto keys = log.entries();
   for(const auto & k : keys)
   {
-    if(k.find(match) == 0)
-    {
-      show_perf(log, range, k, vt);
-    }
+    if(k.find(match) == 0) { show_perf(log, range, k, vt); }
   }
   vt.print(std::cout);
   return 0;

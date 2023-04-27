@@ -4,4 +4,3 @@ foreach(controller_dir ${controller_dirs})
     add_subdirectory(${controller_dir})
   endif()
 endforeach()
-

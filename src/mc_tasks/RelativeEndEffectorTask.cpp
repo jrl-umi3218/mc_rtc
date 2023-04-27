@@ -41,10 +41,7 @@ RelativeEndEffectorTask::RelativeEndEffectorTask(const mc_rbdyn::RobotFrame & fr
     name_ = fmt::format("body6d_{}_{}_rel_{}_{}", frame.robot().name(), frame.name(), relative_as_robot->robot().name(),
                         relative.name());
   }
-  else
-  {
-    name_ = fmt::format("body6d_{}_{}_rel_{}", frame.robot().name(), frame.name(), relative.name());
-  }
+  else { name_ = fmt::format("body6d_{}_{}_rel_{}", frame.robot().name(), frame.name(), relative.name()); }
 }
 
 void RelativeEndEffectorTask::reset()
@@ -85,9 +82,8 @@ void RelativeEndEffectorTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   gui.removeElement({"Tasks", name_}, "pos_target");
   gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform(
                                        "pos_target", [this]() { return curTransform * relative_->position(); },
-                                       [this](const sva::PTransformd & X_0_target) {
-                                         set_ef_pose(X_0_target * relative_->position().inv());
-                                       }));
+                                       [this](const sva::PTransformd & X_0_target)
+                                       { set_ef_pose(X_0_target * relative_->position().inv()); }));
 }
 
 } // namespace mc_tasks
@@ -100,14 +96,8 @@ void configure_pos_task(std::shared_ptr<mc_tasks::PositionTask> & t,
                         const mc_rtc::Configuration & config,
                         bool load_meta)
 {
-  if(load_meta)
-  {
-    t->load(solver, config);
-  }
-  if(config.has("position"))
-  {
-    t->position(config("position"));
-  }
+  if(load_meta) { t->load(solver, config); }
+  if(config.has("position")) { t->position(config("position")); }
   if(config.has("relative") && config("relative").has("position"))
   {
     const auto & robot = robotFromConfig(config, solver.robots(), t->name());
@@ -121,10 +111,7 @@ void configure_pos_task(std::shared_ptr<mc_tasks::PositionTask> & t,
     auto X_0_relative = X_s1_s2 * X_0_s1;
     t->position((sva::PTransformd(position) * X_0_relative).translation());
   }
-  if(config.has("positionWeight"))
-  {
-    t->weight(config("positionWeight"));
-  }
+  if(config.has("positionWeight")) { t->weight(config("positionWeight")); }
   if(config.has("positionStiffness"))
   {
     if(config("positionStiffness").size())
@@ -132,10 +119,7 @@ void configure_pos_task(std::shared_ptr<mc_tasks::PositionTask> & t,
       Eigen::Vector3d dimStiffness = config("positionStiffness");
       t->stiffness(dimStiffness);
     }
-    else
-    {
-      t->stiffness(static_cast<double>(config("positionStiffness")));
-    }
+    else { t->stiffness(static_cast<double>(config("positionStiffness"))); }
   }
 }
 
@@ -144,14 +128,8 @@ void configure_ori_task(std::shared_ptr<mc_tasks::OrientationTask> & t,
                         const mc_rtc::Configuration & config,
                         bool load_meta)
 {
-  if(load_meta)
-  {
-    t->load(solver, config);
-  }
-  if(config.has("orientation"))
-  {
-    t->orientation(config("orientation"));
-  }
+  if(load_meta) { t->load(solver, config); }
+  if(config.has("orientation")) { t->orientation(config("orientation")); }
   if(config.has("relative") && config("relative").has("orientation"))
   {
     const auto & robot = robotFromConfig(config, solver.robots(), "orientation");
@@ -165,10 +143,7 @@ void configure_ori_task(std::shared_ptr<mc_tasks::OrientationTask> & t,
     auto X_0_relative = X_s1_s2 * X_0_s1;
     t->orientation((sva::PTransformd(orientation) * X_0_relative).rotation());
   }
-  if(config.has("orientationWeight"))
-  {
-    t->weight(config("orientationWeight"));
-  }
+  if(config.has("orientationWeight")) { t->weight(config("orientationWeight")); }
   if(config.has("orientationStiffness"))
   {
     if(config("orientationStiffness").size())
@@ -176,16 +151,14 @@ void configure_ori_task(std::shared_ptr<mc_tasks::OrientationTask> & t,
       Eigen::Vector3d dimStiffness = config("orientationStiffness");
       t->stiffness(dimStiffness);
     }
-    else
-    {
-      t->stiffness(static_cast<double>(config("orientationStiffness")));
-    }
+    else { t->stiffness(static_cast<double>(config("orientationStiffness"))); }
   }
 }
 
 mc_tasks::MetaTaskPtr load_orientation_task(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
-  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
+  {
     const auto & robot = robotFromConfig(config, solver.robots(), "orientation");
     if(config.has("body"))
     {
@@ -207,7 +180,8 @@ mc_tasks::MetaTaskPtr load_position_task(mc_solver::QPSolver & solver, const mc_
     mc_rtc::log::error_and_throw("[PositionTaskLoader] bodyPoint is not supported anymore.\nYou can create a frame "
                                  "with the corresponding body point instead");
   }
-  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
+  {
     const auto & robot = robotFromConfig(config, solver.robots(), "position");
     if(config.has("body"))
     {
@@ -229,7 +203,8 @@ mc_tasks::MetaTaskPtr load_ef_task(mc_solver::QPSolver & solver, const mc_rtc::C
     mc_rtc::log::error_and_throw("[EndEffectorTaskLoader] bodyPoint is not supported anymore.\nYou can create a frame "
                                  "with the corresponding body point instead");
   }
-  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
+  {
     const auto & robot = robotFromConfig(config, solver.robots(), "endEffector");
     if(config.has("body"))
     {
@@ -252,7 +227,8 @@ mc_tasks::MetaTaskPtr load_relef_task(mc_solver::QPSolver & solver, const mc_rtc
     mc_rtc::log::error_and_throw("[RelativeEndEffectorTaskLoader] bodyPoint is not supported anymore.\nYou can create "
                                  "a frame with the corresponding body point instead");
   }
-  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+  const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
+  {
     const auto & robot = robotFromConfig(config, solver.robots(), "relativeEndEffector");
     if(config.has("body"))
     {
@@ -261,7 +237,8 @@ mc_tasks::MetaTaskPtr load_relef_task(mc_solver::QPSolver & solver, const mc_rtc
     }
     return robot.frame(config("frame"));
   }();
-  const auto & relFrame = [&]() -> const mc_rbdyn::RobotFrame & {
+  const auto & relFrame = [&]() -> const mc_rbdyn::RobotFrame &
+  {
     if(config.has("relBody"))
     {
       mc_rtc::log::deprecated("RelativeEndEffectorTaskLoader", "relBody", "relativeFrame");

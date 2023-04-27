@@ -1,5 +1,5 @@
 name: B0
-inertia: {
+inertia:
   mass: 0.0
   momentum: [0.0, 0.0, 0.0]
   inertia: [1.0, 0.0, 0.0,

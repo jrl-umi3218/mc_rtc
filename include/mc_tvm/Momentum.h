@@ -45,40 +45,19 @@ public:
    */
   Momentum(NewMomentumToken, CoM & com);
 
-  inline const auto & momentum() const noexcept
-  {
-    return momentum_;
-  }
+  inline const auto & momentum() const noexcept { return momentum_; }
 
-  inline const auto & velocity() const noexcept
-  {
-    return velocity_;
-  }
+  inline const auto & velocity() const noexcept { return velocity_; }
 
-  inline const auto & normalAcceleration() const noexcept
-  {
-    return normalAcceleration_;
-  }
+  inline const auto & normalAcceleration() const noexcept { return normalAcceleration_; }
 
-  inline const Eigen::MatrixXd & jacobian() const noexcept
-  {
-    return mat_.matrix();
-  }
+  inline const Eigen::MatrixXd & jacobian() const noexcept { return mat_.matrix(); }
 
-  inline const Eigen::MatrixXd & JDot() const noexcept
-  {
-    return mat_.matrixDot();
-  }
+  inline const Eigen::MatrixXd & JDot() const noexcept { return mat_.matrixDot(); }
 
-  inline const Robot & robot() const noexcept
-  {
-    return com_.robot();
-  }
+  inline const Robot & robot() const noexcept { return com_.robot(); }
 
-  inline Robot & robot() noexcept
-  {
-    return com_.robot();
-  }
+  inline Robot & robot() noexcept { return com_.robot(); }
 
 private:
   CoM & com_;

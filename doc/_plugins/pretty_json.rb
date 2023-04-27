@@ -28,5 +28,5 @@ Liquid::Template.register_filter(Jekyll::PrettyJsonFilter)
 # USAGE:
 # {{ site.data.user | pretty_json }}
 # {{ site.data.user | neat_json }}
-# 
+#
 # neatjson formatting options: https://github.com/Phrogz/NeatJSON#options

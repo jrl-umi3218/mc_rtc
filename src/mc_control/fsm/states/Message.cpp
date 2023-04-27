@@ -31,32 +31,14 @@ void MessageState::start(Controller & ctl)
   {
     std::string prefix;
     std::string message;
-    if(prefix_.size())
-    {
-      prefix = "[" + name() + "::" + prefix_ + "] ";
-    }
-    else
-    {
-      prefix = "[" + name() + "] ";
-    }
+    if(prefix_.size()) { prefix = "[" + name() + "::" + prefix_ + "] "; }
+    else { prefix = "[" + name() + "] "; }
     message = prefix + message_;
 
-    if(logType_ == "info")
-    {
-      mc_rtc::log::info(message);
-    }
-    else if(logType_ == "success")
-    {
-      mc_rtc::log::success(message);
-    }
-    else if(logType_ == "warning")
-    {
-      mc_rtc::log::warning(message);
-    }
-    else if(logType_ == "error")
-    {
-      mc_rtc::log::error(message);
-    }
+    if(logType_ == "info") { mc_rtc::log::info(message); }
+    else if(logType_ == "success") { mc_rtc::log::success(message); }
+    else if(logType_ == "warning") { mc_rtc::log::warning(message); }
+    else if(logType_ == "error") { mc_rtc::log::error(message); }
     else if(logType_ == "none")
     { /* Do not log anything to the terminal */
     }
@@ -85,10 +67,7 @@ bool MessageState::run(Controller &)
 
 void MessageState::teardown(Controller & ctl)
 {
-  if(gui_)
-  {
-    ctl.gui()->removeElement(guiCategory_, labelName_);
-  }
+  if(gui_) { ctl.gui()->removeElement(guiCategory_, labelName_); }
 }
 
 } // namespace fsm

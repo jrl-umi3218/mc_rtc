@@ -76,7 +76,8 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCom
   {
     double copError = config("copError");
     assert(copError >= 0);
-    return [copError](const mc_tasks::MetaTask & t, std::string & out) {
+    return [copError](const mc_tasks::MetaTask & t, std::string & out)
+    {
       const auto & self = static_cast<const CoPTask &>(t);
       Eigen::Vector2d error = self.measuredCoP() - self.targetCoP();
       if(error.norm() < copError)
@@ -98,20 +99,15 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCom
         dof(i) = 0.;
         force(i) = 0.;
       }
-      else if(force(i) < 0)
-      {
-        dof(i) = -1.;
-      }
+      else if(force(i) < 0) { dof(i) = -1.; }
     }
-    return [dof, force](const mc_tasks::MetaTask & t, std::string & out) {
+    return [dof, force](const mc_tasks::MetaTask & t, std::string & out)
+    {
       const auto & self = static_cast<const CoPTask &>(t);
       Eigen::Vector3d f = self.measuredWrench().force();
       for(int i = 0; i < 3; ++i)
       {
-        if(dof(i) * fabs(f(i)) < force(i))
-        {
-          return false;
-        }
+        if(dof(i) * fabs(f(i)) < force(i)) { return false; }
       }
       out += "force";
       return true;
@@ -123,14 +119,8 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCom
 void CoPTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   DampingTask::load(solver, config);
-  if(config.has("cop"))
-  {
-    targetCoP(config("cop"));
-  }
-  if(config.has("force"))
-  {
-    targetForce(config("force"));
-  }
+  if(config.has("cop")) { targetCoP(config("cop")); }
+  if(config.has("force")) { targetForce(config("force")); }
 }
 
 } // namespace force
@@ -142,8 +132,10 @@ namespace
 
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "cop",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame & {
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+    {
+      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
+      {
         auto rIndex = robotIndexFromConfig(config, solver.robots(), "cop");
         const auto & robot = solver.robots().robot(rIndex);
         if(config.has("surface"))

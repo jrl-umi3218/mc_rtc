@@ -5,18 +5,39 @@
 # Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-import json
-import sys
-
-from mc_log_ui import *
-UserPlot.__new__.__defaults__ = (LineStyle(), LineStyle(), {}, {}, GraphLabels(), {}, PlotType(0))
+from __future__ import print_function
 
 import matplotlib.pyplot as plt
-plt.rcParams['svg.fonttype'] = 'none'
+import sys
+
+from mc_log_ui import (
+    MCLogTab,
+    UserPlot,
+    LineStyle,
+    GraphLabels,
+    PlotType,
+    read_log,
+    load_UserPlots,
+)
+
+UserPlot.__new__.__defaults__ = (
+    LineStyle(),
+    LineStyle(),
+    {},
+    {},
+    GraphLabels(),
+    {},
+    PlotType(0),
+)
+
+
+plt.rcParams["svg.fonttype"] = "none"
+
 
 def usage():
-    print "{} [log] [plots] [format=png]".format(sys.argv[0])
+    print("{} [log] [plots] [format=png]".format(sys.argv[0]))
     sys.exit(1)
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:

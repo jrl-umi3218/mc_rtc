@@ -84,51 +84,30 @@ struct MC_PLANNING_DLLAPI Pendulum
   void resetCoMHeight(double height, const Eigen::Vector3d & p, const Eigen::Vector3d & n);
 
   /** CoM position in the world frame. */
-  const Eigen::Vector3d & com() const
-  {
-    return com_;
-  }
+  const Eigen::Vector3d & com() const { return com_; }
 
   /** CoM velocity in the world frame. */
-  const Eigen::Vector3d & comd() const
-  {
-    return comd_;
-  }
+  const Eigen::Vector3d & comd() const { return comd_; }
 
   /** CoM acceleration in the world frame. */
-  const Eigen::Vector3d & comdd() const
-  {
-    return comdd_;
-  }
+  const Eigen::Vector3d & comdd() const { return comdd_; }
 
   /** Divergent component of motion. */
-  Eigen::Vector3d dcm() const
-  {
-    return com_ + comd_ / omega_;
-  }
+  Eigen::Vector3d dcm() const { return com_ + comd_ / omega_; }
 
   /** Natural frequency. */
-  double omega() const
-  {
-    return omega_;
-  }
+  double omega() const { return omega_; }
 
   /** Zero-tilting moment point.
    *
    * \note In the linear inverted pendulum mode, the ZMP coincides with the
    * centroidal moment pivot (CMP) or its extended version (eCMP).
    */
-  const Eigen::Vector3d & zmp() const
-  {
-    return zmp_;
-  }
+  const Eigen::Vector3d & zmp() const { return zmp_; }
 
   /** Velocity of the zero-tilting moment point.
    */
-  const Eigen::Vector3d & zmpd() const
-  {
-    return zmpd_;
-  }
+  const Eigen::Vector3d & zmpd() const { return zmpd_; }
 
 protected:
   Eigen::Vector3d com_ = Eigen::Vector3d::Zero(); /**< Position of the center of mass */

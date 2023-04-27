@@ -188,10 +188,7 @@ protected:
   virtual void category(const std::vector<std::string> & parent, const std::string & category) = 0;
 
   /** Should be implemented to create a label for data that can be displayed as string */
-  inline virtual void label(const ElementId & id, const std::string &)
-  {
-    default_impl("Label", id);
-  }
+  inline virtual void label(const ElementId & id, const std::string &) { default_impl("Label", id); }
 
   /** Should be implemented to create a label for a numeric array
    *
@@ -206,34 +203,19 @@ protected:
   }
 
   /** Should be implemented to create a button */
-  virtual void button(const ElementId & id)
-  {
-    default_impl("Button", id);
-  }
+  virtual void button(const ElementId & id) { default_impl("Button", id); }
 
   /** Should be implemented to create a checkbox */
-  virtual void checkbox(const ElementId & id, bool /*state */)
-  {
-    default_impl("Checkbox", id);
-  }
+  virtual void checkbox(const ElementId & id, bool /*state */) { default_impl("Checkbox", id); }
 
   /** Should be implemented to create a widget able to input strings */
-  virtual void string_input(const ElementId & id, const std::string & /*data*/)
-  {
-    default_impl("StringInput", id);
-  }
+  virtual void string_input(const ElementId & id, const std::string & /*data*/) { default_impl("StringInput", id); }
 
   /** Should be implemented to create a widget able to input integers */
-  virtual void integer_input(const ElementId & id, int /*data*/)
-  {
-    default_impl("IntegerInput", id);
-  }
+  virtual void integer_input(const ElementId & id, int /*data*/) { default_impl("IntegerInput", id); }
 
   /** Should be implemented to create a widget able to input numbers */
-  virtual void number_input(const ElementId & id, double /*data*/)
-  {
-    default_impl("NumberInput", id);
-  }
+  virtual void number_input(const ElementId & id, double /*data*/) { default_impl("NumberInput", id); }
 
   virtual void number_slider(const ElementId & id, double /*data*/, double /*min*/, double /*max*/)
   {
@@ -491,16 +473,10 @@ protected:
    *
    * \p schema is the schema directory relative to mc_rtc JSON schema installation
    */
-  virtual void schema(const ElementId & id, const std::string & /*schema*/)
-  {
-    default_impl("Schema", id);
-  }
+  virtual void schema(const ElementId & id, const std::string & /*schema*/) { default_impl("Schema", id); }
 
   /** Create a form */
-  virtual void form(const ElementId & id)
-  {
-    default_impl("Form", id);
-  }
+  virtual void form(const ElementId & id) { default_impl("Form", id); }
 
   /** A checkbox within a form
    *

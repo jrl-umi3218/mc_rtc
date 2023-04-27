@@ -66,16 +66,10 @@ public:
   void update(mc_solver::QPSolver &) override;
 
   /*! \brief Access offset relative to the surface */
-  inline const sva::PTransformd & offset() const noexcept
-  {
-    return offset_;
-  }
+  inline const sva::PTransformd & offset() const noexcept { return offset_; }
 
   /*! \brief Set the offset relative to the surface */
-  inline void offset(const sva::PTransformd & off) noexcept
-  {
-    offset_ = off;
-  }
+  inline void offset(const sva::PTransformd & off) noexcept { offset_ = off; }
 
   void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 

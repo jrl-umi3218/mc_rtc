@@ -1,24 +1,24 @@
 {
   "properties":
   {
-    "posture": 
-    { 
-      "type": "array", 
+    "posture":
+    {
+      "type": "array",
       "description": "Posture target",
-      "items": 
-      { 
-        "type": "array", 
-        "items": { "type": "number" } 
-      } 
+      "items":
+      {
+        "type": "array",
+        "items": { "type": "number" }
+      }
     },
-    "jointGains": 
-    { 
-      "type": "array", 
+    "jointGains":
+    {
+      "type": "array",
       "description": "Gains for specific joints",
-      "items": 
-      { 
-        "$ref": "/../../Tasks/JointGains.json" 
-      } 
+      "items":
+      {
+        "$ref": "/../../Tasks/JointGains.json"
+      }
     },
     "jointWeights":
     {
@@ -50,6 +50,6 @@
     },
     "weight": { "type": "number", "default": 10, "description": "Task's weight" },
     "stiffness": { "type": "number", "default": 1, "description": "Tasks's stiffness" }
-  
+
   }
 }

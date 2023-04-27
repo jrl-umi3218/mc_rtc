@@ -148,10 +148,7 @@ RobotPublisherImpl::~RobotPublisherImpl()
 
 void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
 {
-  if(&robot == previous_robot)
-  {
-    return;
-  }
+  if(&robot == previous_robot) { return; }
   this->use_real = use_real;
   previous_robot = &robot;
 
@@ -230,15 +227,9 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
 
 void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
 {
-  if(&robot != previous_robot)
-  {
-    init(robot, use_real);
-  }
+  if(&robot != previous_robot) { init(robot, use_real); }
 
-  if(++seq % skip)
-  {
-    return;
-  }
+  if(++seq % skip) { return; }
 
   ros::Time tm = ros::Time::now();
 
@@ -362,45 +353,30 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
     tf.header.seq = data.js.header.seq;
   }
 
-  if(!msgs.push(data))
-  {
-    mc_rtc::log::error("Full ROS message publishing queue");
-  }
+  if(!msgs.push(data)) { mc_rtc::log::error("Full ROS message publishing queue"); }
 }
 
 RobotPublisher::RobotPublisher(const std::string & prefix, double rate, double dt) : impl(nullptr)
 {
   auto nh = ROSBridge::get_node_handle();
-  if(nh)
-  {
-    impl.reset(new RobotPublisherImpl(*nh, prefix, rate, dt));
-  }
+  if(nh) { impl.reset(new RobotPublisherImpl(*nh, prefix, rate, dt)); }
 }
 
 RobotPublisher::~RobotPublisher() {}
 
 void RobotPublisher::init(const mc_rbdyn::Robot & robot, bool use_real)
 {
-  if(impl)
-  {
-    impl->init(robot, use_real);
-  }
+  if(impl) { impl->init(robot, use_real); }
 }
 
 void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot)
 {
-  if(impl)
-  {
-    impl->update(dt, robot);
-  }
+  if(impl) { impl->update(dt, robot); }
 }
 
 void RobotPublisher::set_rate(double rate)
 {
-  if(impl)
-  {
-    impl->set_rate(rate);
-  }
+  if(impl) { impl->set_rate(rate); }
 }
 
 void RobotPublisherImpl::publishThread()
@@ -449,10 +425,7 @@ void RobotPublisherImpl::set_rate(double rateIn)
 
 inline bool ros_init(const std::string & name)
 {
-  if(ros::ok())
-  {
-    return true;
-  }
+  if(ros::ok()) { return true; }
   int argc = 0;
   char * argv[] = {0};
   ros::init(argc, argv, name.c_str(), ros::init_options::NoSigintHandler);
@@ -524,10 +497,7 @@ void ROSBridge::stop_robot_publisher(const std::string & publisher)
 {
   static auto & impl = impl_();
   auto it = impl.rpubs.find(publisher);
-  if(it == impl.rpubs.end())
-  {
-    return;
-  }
+  if(it == impl.rpubs.end()) { return; }
   impl.rpubs.erase(it);
 }
 

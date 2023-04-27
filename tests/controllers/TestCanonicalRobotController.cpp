@@ -45,30 +45,20 @@ public:
   {
     BOOST_REQUIRE(datastore().get<bool>("HasTestCanonicalRobotControllerPlugin"));
     auto njoints = robot().mbc().q.size();
-    auto postureT = [&](size_t j) {
-      return std::cos(static_cast<double>(j) / static_cast<double>(njoints) + nrIter / 2000.);
-    };
+    auto postureT = [&](size_t j)
+    { return std::cos(static_cast<double>(j) / static_cast<double>(njoints) + nrIter / 2000.); };
 
     size_t jIdx = 0;
     for(const auto & j : robot().mb().joints())
     {
-      if(j.dof() == 1)
-      {
-        target_[j.name()] = {postureT(jIdx)};
-      }
+      if(j.dof() == 1) { target_[j.name()] = {postureT(jIdx)}; }
       jIdx++;
     }
     postureTask->target(target_);
 
     double & targetQ = datastore().get<double>("GripperTarget");
-    if(targetQ >= gripper_max_ && dir_ > 0.0)
-    {
-      dir_ = -1.0;
-    }
-    if(targetQ <= gripper_min_ && dir_ < 0.0)
-    {
-      dir_ = 1.0;
-    }
+    if(targetQ >= gripper_max_ && dir_ > 0.0) { dir_ = -1.0; }
+    if(targetQ <= gripper_min_ && dir_ < 0.0) { dir_ = 1.0; }
     targetQ += dir_ * vmax_ * solver().dt();
 
     robot().gripper("l_gripper").setTargetQ("L_UTHUMB", targetQ);

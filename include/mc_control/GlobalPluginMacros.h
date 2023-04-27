@@ -53,7 +53,8 @@
 #  define EXPORT_MC_RTC_PLUGIN(NAME, TYPE)                                                               \
     namespace                                                                                            \
     {                                                                                                    \
-    static auto registered = []() {                                                                      \
+    static auto registered = []()                                                                        \
+    {                                                                                                    \
       using fn_t = std::function<TYPE *()>;                                                              \
       mc_control::GlobalPluginLoader::loader().register_object(NAME, fn_t([]() { return new TYPE(); })); \
       return true;                                                                                       \

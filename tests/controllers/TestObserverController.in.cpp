@@ -49,13 +49,10 @@ public:
   virtual bool run() override
   {
     // Check whether all pipelines succeeded
-    for(const auto & pipeline : observerPipelines())
-    {
-      BOOST_REQUIRE(pipeline.success());
-    }
+    for(const auto & pipeline : observerPipelines()) { BOOST_REQUIRE(pipeline.success()); }
 
-    auto checkPose = [](const std::string & prefix, const sva::PTransformd & expected,
-                        const sva::PTransformd & actual) {
+    auto checkPose = [](const std::string & prefix, const sva::PTransformd & expected, const sva::PTransformd & actual)
+    {
       BOOST_CHECK_MESSAGE(
           allclose(expected.rotation(), actual.rotation(), 1e-6),
           fmt::format("{} expected orientation [{}] but got [{}]", prefix,
@@ -83,10 +80,7 @@ public:
 
     for(const auto & joint : robot().refJointOrder())
     {
-      if(!robot().hasJoint(joint))
-      {
-        continue;
-      }
+      if(!robot().hasJoint(joint)) { continue; }
       auto j = robot().jointIndexByName(joint);
       BOOST_CHECK_CLOSE(robot().mbc().q[j][0], realRobot().mbc().q[j][0], 1e-6);
       BOOST_CHECK_CLOSE(robot().mbc().alpha[j][0], realRobot().mbc().alpha[j][0], 1e-6);
@@ -205,9 +199,10 @@ public:
     BOOST_REQUIRE(allclose(realRobot().posW().rotation(), robot().posW().rotation()));
 
     // Add anchor frame
-    datastore().make_call("KinematicAnchorFrame::" + robot().name(), [](const mc_rbdyn::Robot & robot) {
-      return sva::interpolate(robot.surfacePose("LeftFoot"), robot.surfacePose("RightFoot"), 0.5);
-    });
+    datastore().make_call("KinematicAnchorFrame::" + robot().name(),
+                          [](const mc_rbdyn::Robot & robot) {
+                            return sva::interpolate(robot.surfacePose("LeftFoot"), robot.surfacePose("RightFoot"), 0.5);
+                          });
   }
 
 private:

@@ -1,9 +1,9 @@
 // In the header
 enum DoorPhase
 {
-      APPROACH = 0,
-      HANDLE,
-      OPEN
+  APPROACH = 0,
+  HANDLE,
+  OPEN
 };
 // A private property of our controller
 DoorPhase phase = APPROACH;

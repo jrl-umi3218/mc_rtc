@@ -72,7 +72,7 @@ Enabled: EndEffector
 
 `Text`（テキスト）サンプルコントローラーでは、YAMLで記述された設定から[タスク]({{site.baseurl}}/json.html#MetaTask)と[制約条件]({{site.baseurl}}/json.html#ConstraintSet)を読み込むための{% doxygen mc_tasks::MetaTaskLoader %}と{% doxygen mc_solver::ConstraintSetLoader %}の使い方が示されています。
 
-**実行方法**: 
+**実行方法**:
 このコントローラーを実行するには、[mc_rtcの設定]({{site.baseurl}}/tutorials/introduction/configuration.html)でこのコントローラーを指定し、任意のインターフェイスを使用して[コントローラーを実行]({{site.baseurl}}/tutorials/introduction/running-a-controller.html)します。
 
 ```yaml

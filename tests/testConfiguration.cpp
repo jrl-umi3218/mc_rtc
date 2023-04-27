@@ -630,9 +630,7 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     ref.normalize();
 
     Eigen::Quaterniond a = config("quat");
-    if(a == ref)
-    {
-    }
+    if(a == ref) {}
     BOOST_CHECK(a == ref);
 
     Eigen::Quaterniond b;
@@ -640,9 +638,7 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     BOOST_CHECK(b == ref);
 
     Eigen::Quaterniond c = config("dict")("quat");
-    if(c == ref)
-    {
-    }
+    if(c == ref) {}
     BOOST_CHECK(c == ref);
 
     Eigen::Quaterniond d;
@@ -865,14 +861,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     }
     else
     {
-      if(json2)
-      {
-        config.loadData(sampleConfig2(false, json2));
-      }
-      else
-      {
-        config.loadYAMLData(sampleConfig2(false, json2));
-      }
+      if(json2) { config.loadData(sampleConfig2(false, json2)); }
+      else { config.loadYAMLData(sampleConfig2(false, json2)); }
     }
     int a = config("int");
     BOOST_CHECK_EQUAL(a, 12);
@@ -900,14 +890,8 @@ mc_rtc::Configuration makeConfig(bool fromDisk, bool json)
   else
   {
     const auto & data = sampleConfig(fromDisk, json);
-    if(json)
-    {
-      return mc_rtc::Configuration::fromData(data);
-    }
-    else
-    {
-      return mc_rtc::Configuration::fromYAMLData(data);
-    }
+    if(json) { return mc_rtc::Configuration::fromData(data); }
+    else { return mc_rtc::Configuration::fromYAMLData(data); }
   }
 }
 
@@ -970,24 +954,15 @@ BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
   std::vector<std::vector<double>> ref_double_v_v = {ref_double_v, ref_double_v, {0}, {}, {5.0, 4.0, 3.5}};
   config_ref.add("double_v_v", ref_double_v_v);
   std::vector<Eigen::Vector3d> ref_v3d_v;
-  for(size_t i = 0; i < 10; ++i)
-  {
-    ref_v3d_v.push_back(Eigen::Vector3d::Random());
-  }
+  for(size_t i = 0; i < 10; ++i) { ref_v3d_v.push_back(Eigen::Vector3d::Random()); }
   config_ref.add("v3d_v", ref_v3d_v);
   std::array<double, 3> ref_d_a3 = {{1.1, 2.2, 3.3}};
   config_ref.add("d_a3", ref_d_a3);
   std::vector<std::array<double, 3>> ref_a3_v;
-  for(size_t i = 0; i < 5; ++i)
-  {
-    ref_a3_v.push_back(ref_d_a3);
-  };
+  for(size_t i = 0; i < 5; ++i) { ref_a3_v.push_back(ref_d_a3); };
   config_ref.add("a3_v", ref_a3_v);
   std::array<std::array<double, 3>, 3> ref_a3_a;
-  for(size_t i = 0; i < 3; ++i)
-  {
-    ref_a3_a[i] = ref_d_a3;
-  }
+  for(size_t i = 0; i < 3; ++i) { ref_a3_a[i] = ref_d_a3; }
   config_ref.add("a3_a", ref_a3_a);
   config_ref.add("dict");
   config_ref("dict").add("int", ref_int);
@@ -1010,10 +985,7 @@ BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
   BOOST_CHECK(config_test("double_v_v") == ref_double_v_v);
   std::vector<Eigen::Vector3d> test_v3d_v = config_test("v3d_v");
   BOOST_REQUIRE(test_v3d_v.size() == ref_v3d_v.size());
-  for(size_t i = 0; i < test_v3d_v.size(); ++i)
-  {
-    BOOST_CHECK(test_v3d_v[i].isApprox(ref_v3d_v[i], 1e-9));
-  }
+  for(size_t i = 0; i < test_v3d_v.size(); ++i) { BOOST_CHECK(test_v3d_v[i].isApprox(ref_v3d_v[i], 1e-9)); }
   BOOST_CHECK(config_test("d_a3") == ref_d_a3);
   BOOST_CHECK(config_test("a3_v") == ref_a3_v);
   BOOST_CHECK(config_test("a3_a") == ref_a3_a);
@@ -1051,26 +1023,17 @@ BOOST_AUTO_TEST_CASE(TestConfigurationCeption)
   BOOST_CHECK(config_1("double_v") == ref_double_v);
   /* Create an array and put a few copies of config_2 inside */
   config_1.array("config_2_v", 5); // Reserve 5 but add 10 elements just 'cause
-  for(size_t i = 0; i < 10; ++i)
-  {
-    config_1("config_2_v").push(config_2);
-  }
+  for(size_t i = 0; i < 10; ++i) { config_1("config_2_v").push(config_2); }
   BOOST_REQUIRE(config_1.has("config_2_v"));
   BOOST_REQUIRE(config_1("config_2_v").size() == 10);
-  for(size_t i = 0; i < 10; ++i)
-  {
-    BOOST_CHECK(config_1("config_2_v")[i]("double_v") == ref_double_v);
-  }
+  for(size_t i = 0; i < 10; ++i) { BOOST_CHECK(config_1("config_2_v")[i]("double_v") == ref_double_v); }
   /* Add config_1 to config_1 */
   config_1.add("config_1", config_1);
   BOOST_REQUIRE(config_1.has("config_1"));
   BOOST_CHECK(config_1("config_1")("int") == ref_int);
   BOOST_REQUIRE(config_1("config_1").has("config_2_v"));
   BOOST_REQUIRE(config_1("config_1")("config_2_v").size() == 10);
-  for(size_t i = 0; i < 10; ++i)
-  {
-    BOOST_CHECK(config_1("config_1")("config_2_v")[i]("double_v") == ref_double_v);
-  }
+  for(size_t i = 0; i < 10; ++i) { BOOST_CHECK(config_1("config_1")("config_2_v")[i]("double_v") == ref_double_v); }
 }
 
 struct Foo;
@@ -1081,10 +1044,7 @@ struct Foo
   Foo(const std::string & name, double d) : name(name), d(d) {}
   std::string name = "";
   double d = 0.0;
-  bool operator==(const Foo & rhs) const
-  {
-    return rhs.name == this->name && rhs.d == this->d;
-  }
+  bool operator==(const Foo & rhs) const { return rhs.name == this->name && rhs.d == this->d; }
 };
 
 namespace mc_rtc
@@ -1092,10 +1052,7 @@ namespace mc_rtc
 template<>
 struct ConfigurationLoader<Foo>
 {
-  static Foo load(const mc_rtc::Configuration & config)
-  {
-    return {config("name"), config("d")};
-  }
+  static Foo load(const mc_rtc::Configuration & config) { return {config("name"), config("d")}; }
 
   static mc_rtc::Configuration save(const Foo & f)
   {
@@ -1130,17 +1087,15 @@ BOOST_AUTO_TEST_CASE(TestUserDefinedConversions)
   BOOST_CHECK(v1 == v_ref);
 
   config.array("foo_v2");
-  for(const auto & f : v_ref)
-  {
-    config("foo_v2").push(f);
-  }
+  for(const auto & f : v_ref) { config("foo_v2").push(f); }
   std::vector<Foo> v2 = config("foo_v2");
   BOOST_CHECK(v2 == v_ref);
 }
 
 BOOST_AUTO_TEST_CASE(TestLoadConfigurationInConfiguration)
 {
-  auto make_c1 = []() {
+  auto make_c1 = []()
+  {
     mc_rtc::Configuration c1;
     c1.add("a", std::vector<int>{0, 1, 2, 3});
     c1.add("i", 42);
@@ -1400,14 +1355,8 @@ struct MyNumber
   MyNumber() = default;
   MyNumber(uint64_t n) : n(n) {}
 
-  operator uint64_t() const
-  {
-    return n;
-  }
-  operator uint32_t() const
-  {
-    return static_cast<uint32_t>(n);
-  }
+  operator uint64_t() const { return n; }
+  operator uint32_t() const { return static_cast<uint32_t>(n); }
 };
 
 namespace std

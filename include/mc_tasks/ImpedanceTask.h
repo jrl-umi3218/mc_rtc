@@ -96,58 +96,31 @@ public:
   void reset() override;
 
   /*! \brief Access the impedance gains */
-  inline const ImpedanceGains & gains() const noexcept
-  {
-    return gains_;
-  }
+  inline const ImpedanceGains & gains() const noexcept { return gains_; }
 
   /*! \brief Access the impedance gains */
-  inline ImpedanceGains & gains() noexcept
-  {
-    return gains_;
-  }
+  inline ImpedanceGains & gains() noexcept { return gains_; }
 
   /*! \brief Get the target pose of the surface in the world frame. */
-  const sva::PTransformd & targetPose() const noexcept
-  {
-    return targetPoseW_;
-  }
+  const sva::PTransformd & targetPose() const noexcept { return targetPoseW_; }
 
   /*! \brief Set the target pose of the surface in the world frame. */
-  void targetPose(const sva::PTransformd & pose)
-  {
-    targetPoseW_ = pose;
-  }
+  void targetPose(const sva::PTransformd & pose) { targetPoseW_ = pose; }
 
   /*! \brief Get the target velocity of the surface in the world frame. */
-  const sva::MotionVecd & targetVel() const noexcept
-  {
-    return targetVelW_;
-  }
+  const sva::MotionVecd & targetVel() const noexcept { return targetVelW_; }
 
   /*! \brief Set the target velocity of the surface in the world frame. */
-  void targetVel(const sva::MotionVecd & vel)
-  {
-    targetVelW_ = vel;
-  }
+  void targetVel(const sva::MotionVecd & vel) { targetVelW_ = vel; }
 
   /*! \brief Get the target acceleration of the surface in the world frame. */
-  const sva::MotionVecd & targetAccel() const noexcept
-  {
-    return targetAccelW_;
-  }
+  const sva::MotionVecd & targetAccel() const noexcept { return targetAccelW_; }
 
   /*! \brief Set the target acceleration of the surface in the world frame. */
-  void targetAccel(const sva::MotionVecd & accel)
-  {
-    targetAccelW_ = accel;
-  }
+  void targetAccel(const sva::MotionVecd & accel) { targetAccelW_ = accel; }
 
   /*! \brief Get the relative pose from target frame to compliance frame represented in the world frame. */
-  const sva::PTransformd & deltaCompliancePose() const
-  {
-    return deltaCompPoseW_;
-  }
+  const sva::PTransformd & deltaCompliancePose() const { return deltaCompPoseW_; }
 
   /*! \brief Get the compliance pose of the surface in the world frame.
    *
@@ -162,43 +135,25 @@ public:
   }
 
   /*! \brief Get the target wrench in the surface frame. */
-  const sva::ForceVecd & targetWrench() const noexcept
-  {
-    return targetWrench_;
-  }
+  const sva::ForceVecd & targetWrench() const noexcept { return targetWrench_; }
 
   /*! \brief Set the target wrench in the world frame.
    * This function will convert the wrench from the world frame to the surface frame, and call targetWrench().
    *
    */
-  void targetWrenchW(const sva::ForceVecd & wrenchW)
-  {
-    targetWrench(frame_->position().dualMul(wrenchW));
-  }
+  void targetWrenchW(const sva::ForceVecd & wrenchW) { targetWrench(frame_->position().dualMul(wrenchW)); }
 
   /*! \brief Set the target wrench in the surface frame. */
-  void targetWrench(const sva::ForceVecd & wrench)
-  {
-    targetWrench_ = wrench;
-  }
+  void targetWrench(const sva::ForceVecd & wrench) { targetWrench_ = wrench; }
 
   /*! \brief Get the measured wrench in the surface frame. */
-  const sva::ForceVecd & measuredWrench() const
-  {
-    return measuredWrench_;
-  }
+  const sva::ForceVecd & measuredWrench() const { return measuredWrench_; }
 
   /*! \brief Get the filtered measured wrench in the surface frame. */
-  const sva::ForceVecd & filteredMeasuredWrench() const
-  {
-    return filteredMeasuredWrench_;
-  }
+  const sva::ForceVecd & filteredMeasuredWrench() const { return filteredMeasuredWrench_; }
 
   /*! \brief Get the cutoff period for the low-pass filter of measured wrench. */
-  double cutoffPeriod() const
-  {
-    return lowPass_.cutoffPeriod();
-  }
+  double cutoffPeriod() const { return lowPass_.cutoffPeriod(); }
 
   /*! \brief Set the cutoff period for the low-pass filter of measured wrench. */
   void cutoffPeriod(double cutoffPeriod)
@@ -208,10 +163,7 @@ public:
   }
 
   /*! \brief Get whether hold mode is enabled. */
-  inline bool hold() const noexcept
-  {
-    return hold_;
-  }
+  inline bool hold() const noexcept { return hold_; }
 
   /*! \brief Set hold mode.
    *
@@ -223,10 +175,7 @@ public:
    * dynamics would cause the compliancePose to temporarily deviate from the commanded targetPose, causes unintended
    * movement of the end-effector.
    */
-  inline void hold(bool hold) noexcept
-  {
-    hold_ = hold;
-  }
+  inline void hold(bool hold) noexcept { hold_ = hold; }
 
   /*! \brief Load parameters from a Configuration object. */
   void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;

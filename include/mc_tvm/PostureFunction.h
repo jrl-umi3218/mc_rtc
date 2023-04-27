@@ -42,16 +42,10 @@ public:
   void posture(const std::vector<std::vector<double>> & p);
 
   /** Access the full target posture */
-  const std::vector<std::vector<double>> & posture() const noexcept
-  {
-    return posture_;
-  }
+  const std::vector<std::vector<double>> & posture() const noexcept { return posture_; }
 
   /** Returns the reference velocity */
-  inline const Eigen::VectorXd & refVel() const noexcept
-  {
-    return refVel_;
-  }
+  inline const Eigen::VectorXd & refVel() const noexcept { return refVel_; }
 
   /** Set the reference velocity */
   inline void refVel(const Eigen::VectorXd & vel) noexcept
@@ -61,10 +55,7 @@ public:
   }
 
   /** Returns the reference acceleration */
-  inline const Eigen::VectorXd & refAccel() const noexcept
-  {
-    return refAccel_;
-  }
+  inline const Eigen::VectorXd & refAccel() const noexcept { return refAccel_; }
 
   /** Set the reference acceleration */
   inline void refAccel(const Eigen::VectorXd & acc) noexcept

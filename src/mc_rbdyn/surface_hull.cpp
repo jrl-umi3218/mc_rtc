@@ -27,14 +27,8 @@ inline int mkstemp(char * out)
   char tmp_dir[MAX_PATH + 1];
   GetTempPath(MAX_PATH + 1, tmp_dir);
   int ret = GetTempFileName(tmp_dir, "mkstemp", 0, out);
-  if(ret == 0)
-  {
-    return -1;
-  }
-  else
-  {
-    return 0;
-  }
+  if(ret == 0) { return -1; }
+  else { return 0; }
 }
 #endif
 
@@ -91,18 +85,16 @@ sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points_pt)
   poly_algo.triangles_.reserve(facets.size());
   for(const auto & f : facets)
   {
-    if(!f.isGood())
-    {
-      continue;
-    }
+    if(!f.isGood()) { continue; }
     sch::PolyhedronTriangle t;
     t.normal.Set(f.hyperplane().coordinates());
     t.normal.normalize();
     t.a = static_cast<unsigned int>(f.vertices()[0].point().id());
     t.b = static_cast<unsigned int>(f.vertices()[1].point().id());
     t.c = static_cast<unsigned int>(f.vertices()[2].point().id());
-    auto addNeighbors = [](std::vector<sch::S_PolyhedronVertex *> & vertexes_, unsigned int a, unsigned int b,
-                           unsigned int c) {
+    auto addNeighbors =
+        [](std::vector<sch::S_PolyhedronVertex *> & vertexes_, unsigned int a, unsigned int b, unsigned int c)
+    {
       vertexes_[a]->addNeighbor(vertexes_[b]);
       vertexes_[a]->addNeighbor(vertexes_[c]);
     };
@@ -112,10 +104,7 @@ sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points_pt)
     poly_algo.triangles_.push_back(t);
   }
 
-  for(const auto & v : poly_algo.vertexes_)
-  {
-    v->updateFastArrays();
-  }
+  for(const auto & v : poly_algo.vertexes_) { v->updateFastArrays(); }
   poly_algo.deleteVertexesWithoutNeighbors();
 
   return poly;
@@ -125,10 +114,7 @@ sch::S_Object * planar_hull(const mc_rbdyn::PlanarSurface & surface, const doubl
 {
   std::vector<sva::PTransformd> points = surface.points();
   sva::PTransformd offset(Eigen::Vector3d(0, 0, depth));
-  for(const sva::PTransformd & p : surface.points())
-  {
-    points.push_back(offset * p);
-  }
+  for(const sva::PTransformd & p : surface.points()) { points.push_back(offset * p); }
   return sch_polyhedron(points);
 }
 
@@ -157,10 +143,7 @@ sch::S_Object * gripper_hull(const mc_rbdyn::GripperSurface & surface, const dou
   }
   sva::PTransformd offset = sva::PTransformd(Eigen::Vector3d(depth, depth, depth));
   size_t nP = points.size();
-  for(size_t i = 0; i < nP; ++i)
-  {
-    points.push_back(offset * points[i]);
-  }
+  for(size_t i = 0; i < nP; ++i) { points.push_back(offset * points[i]); }
   return sch_polyhedron(points);
 }
 

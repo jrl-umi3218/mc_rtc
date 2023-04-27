@@ -20,10 +20,7 @@ namespace
 
 void handle_aliases_dir(const bfs::path & dir)
 {
-  if(!bfs::exists(dir) || !bfs::is_directory(dir))
-  {
-    return;
-  }
+  if(!bfs::exists(dir) || !bfs::is_directory(dir)) { return; }
   bfs::directory_iterator dit(dir), endit;
   std::vector<bfs::path> drange;
   std::copy(dit, endit, std::back_inserter(drange));
@@ -44,10 +41,7 @@ namespace mc_rbdyn
 
 void RobotLoader::load_aliases(const std::string & fname)
 {
-  if(verbose_)
-  {
-    mc_rtc::log::info("[RobotLoader] Loading aliases from {}", fname);
-  }
+  if(verbose_) { mc_rtc::log::info("[RobotLoader] Loading aliases from {}", fname); }
   mc_rtc::Configuration data(fname);
   try
   {
@@ -64,18 +58,9 @@ void RobotLoader::load_aliases(const std::string & fname)
       {
         mc_rtc::log::warning("Aliases {} was already declared, new declaration from {} will prevail", a.first, fname);
       }
-      if(a.second.size())
-      {
-        aliases[a.first] = a.second;
-      }
-      else
-      {
-        aliases[a.first] = {static_cast<std::string>(a.second)};
-      }
-      if(verbose_)
-      {
-        mc_rtc::log::info("New alias {}: {}", a.first, data(a.first).dump(true, true));
-      }
+      if(a.second.size()) { aliases[a.first] = a.second; }
+      else { aliases[a.first] = {static_cast<std::string>(a.second)}; }
+      if(verbose_) { mc_rtc::log::info("New alias {}: {}", a.first, data(a.first).dump(true, true)); }
     }
   }
   catch(mc_rtc::Configuration::Exception & exc)
@@ -91,10 +76,7 @@ std::vector<std::string> RobotLoader::available_robots()
   std::lock_guard<std::mutex> guard{mtx};
   init();
   auto ret = robot_loader->objects();
-  for(const auto & a : aliases)
-  {
-    ret.push_back(a.first);
-  }
+  for(const auto & a : aliases) { ret.push_back(a.first); }
   return ret;
 }
 
@@ -103,10 +85,7 @@ void RobotLoader::update_robot_module_path(const std::vector<std::string> & path
   std::lock_guard<std::mutex> guard{mtx};
   init();
   robot_loader->load_libraries(paths);
-  for(const auto & p : paths)
-  {
-    handle_aliases_dir(bfs::path(p) / "aliases");
-  }
+  for(const auto & p : paths) { handle_aliases_dir(bfs::path(p) / "aliases"); }
 }
 
 void RobotLoader::init(bool skip_default_path)
@@ -116,15 +95,9 @@ void RobotLoader::init(bool skip_default_path)
     try
     {
       std::vector<std::string> default_path = {};
-      if(!skip_default_path)
-      {
-        default_path.push_back(mc_rtc::MC_ROBOTS_INSTALL_PREFIX);
-      }
+      if(!skip_default_path) { default_path.push_back(mc_rtc::MC_ROBOTS_INSTALL_PREFIX); }
       robot_loader.reset(new mc_rtc::ObjectLoader<RobotModule>("MC_RTC_ROBOT_MODULE", default_path, verbose_));
-      for(const auto & p : default_path)
-      {
-        handle_aliases_dir(bfs::path(p) / "aliases");
-      }
+      for(const auto & p : default_path) { handle_aliases_dir(bfs::path(p) / "aliases"); }
 #ifndef WIN32
       handle_aliases_dir(bfs::path(std::getenv("HOME")) / ".config/mc_rtc/aliases/");
 #else
@@ -142,18 +115,9 @@ void RobotLoader::init(bool skip_default_path)
 
 RobotModulePtr RobotLoader::get_robot_module(const std::vector<std::string> & args)
 {
-  if(args.size() == 1)
-  {
-    return get_robot_module(args[0]);
-  }
-  if(args.size() == 2)
-  {
-    return get_robot_module(args[0], args[1]);
-  }
-  if(args.size() == 3)
-  {
-    return get_robot_module(args[0], args[1], args[2]);
-  }
+  if(args.size() == 1) { return get_robot_module(args[0]); }
+  if(args.size() == 2) { return get_robot_module(args[0], args[1]); }
+  if(args.size() == 3) { return get_robot_module(args[0], args[1], args[2]); }
   mc_rtc::log::error_and_throw<mc_rtc::LoaderException>(
       "RobotLoader dynamic arguments should have 1 to 3 arguments but {} were provided", args.size());
 }

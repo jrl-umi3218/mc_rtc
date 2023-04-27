@@ -10,14 +10,8 @@ namespace mc_plugin
 ROSServices::ROSServices(std::shared_ptr<ros::NodeHandle> nh, mc_control::MCGlobalController & controller)
 : nh_(nh), controller_(controller)
 {
-  if(nh)
-  {
-    start_services();
-  }
-  else
-  {
-    mc_rtc::log::warning("ROS not available, services will not be enabled");
-  }
+  if(nh) { start_services(); }
+  else { mc_rtc::log::warning("ROS not available, services will not be enabled"); }
 }
 
 void ROSServices::start_services()

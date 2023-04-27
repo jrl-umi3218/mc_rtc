@@ -60,7 +60,7 @@ transitions:
 - [RightHandMoveBack,          OK, StandingHalfSitting, Auto]
 
 # 初期状態
-init: RightHandToWall 
+init: RightHandToWall
 ```
 
 この状態遷移マップを見れば、このサンプルの手順を簡単に理解できます。次に、主な状態が何を実行するかを見てみましょう。
@@ -124,7 +124,7 @@ init: RightHandToWall
     tasks:
       RightHandAdmittance:
         type: admittance
-        surface: RightGripper 
+        surface: RightGripper
         # グリッパサーフェスの法線方向の力をアドミッタンス係数0.001で追従させる
         # 注意：この軸方向のダンピングは高く、剛性は低い
         # 他の軸は位置制御されており現在のグリッパの位置を可能な限り維持する

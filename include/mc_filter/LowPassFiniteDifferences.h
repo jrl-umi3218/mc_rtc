@@ -23,10 +23,7 @@ struct LowPassFiniteDifferences : public LowPass<T>
    * \param period Cutoff period.
    *
    */
-  LowPassFiniteDifferences(double dt, double period) : LowPassT(dt, period)
-  {
-    LowPassT::reset(T::Zero());
-  }
+  LowPassFiniteDifferences(double dt, double period) : LowPassT(dt, period) { LowPassT::reset(T::Zero()); }
 
   /** Reset filter to initial rest value.
    *
@@ -51,10 +48,7 @@ struct LowPassFiniteDifferences : public LowPass<T>
     prevValue_ = newPos;
   }
 
-  const T & prevValue() const
-  {
-    return prevValue_;
-  }
+  const T & prevValue() const { return prevValue_; }
 
 protected:
   T prevValue_;

@@ -14,10 +14,7 @@
 mc_rbdyn::Robots & get_robots()
 {
   static mc_rbdyn::RobotsPtr robots_ptr = nullptr;
-  if(robots_ptr)
-  {
-    return *robots_ptr;
-  }
+  if(robots_ptr) { return *robots_ptr; }
   configureRobotLoader();
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   auto env = mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),

@@ -22,24 +22,15 @@ struct MC_RTC_GUI_DLLAPI Color
   Color(double r, double g, double b, double a = 1.0) : r(r), g(g), b(b), a(a) {}
   Color(const Eigen::Vector3d & color) : r(color.x()), g(color.y()), b(color.z()) {}
   Color(const Eigen::Vector4d & color) : r(color.x()), g(color.y()), b(color.z()), a(color[3]) {}
-  Color(const mc_rtc::Configuration & config)
-  {
-    fromConfig(config);
-  }
+  Color(const mc_rtc::Configuration & config) { fromConfig(config); }
   double r = 1.0;
   double g = 0.0;
   double b = 0.0;
   double a = 1.0;
 
-  bool operator==(const Color & rhs) const
-  {
-    return r == rhs.r && g == rhs.g && b == rhs.b && a == rhs.a;
-  }
+  bool operator==(const Color & rhs) const { return r == rhs.r && g == rhs.g && b == rhs.b && a == rhs.a; }
 
-  bool operator!=(const Color & rhs) const
-  {
-    return !(*this == rhs);
-  }
+  bool operator!=(const Color & rhs) const { return !(*this == rhs); }
 
   void fromMessagePack(const mc_rtc::Configuration & config)
   {
@@ -66,10 +57,7 @@ struct MC_RTC_GUI_DLLAPI Color
       try
       {
         std::string color = config;
-        if(ColorMap.count(color))
-        {
-          *this = ColorMap.at(color);
-        }
+        if(ColorMap.count(color)) { *this = ColorMap.at(color); }
         else
         {
           auto msg = fmt::format("No color named {} ", color);
@@ -97,10 +85,7 @@ struct MC_RTC_GUI_DLLAPI Color
     return conf;
   }
 
-  static constexpr size_t write_size()
-  {
-    return 1;
-  }
+  static constexpr size_t write_size() { return 1; }
 
   void write(mc_rtc::MessagePackBuilder & builder) const
   {
@@ -136,10 +121,7 @@ struct ConfigurationLoader<mc_rtc::gui::Color>
     return color;
   }
 
-  static mc_rtc::Configuration save(const mc_rtc::gui::Color & color)
-  {
-    return color.saveConfig();
-  }
+  static mc_rtc::Configuration save(const mc_rtc::gui::Color & color) { return color.saveConfig(); }
 };
 
 namespace gui
@@ -161,10 +143,7 @@ struct MC_RTC_GUI_DLLAPI LineConfig
   : color(color), width(width), style(style)
   {
   }
-  LineConfig(const mc_rtc::Configuration & config)
-  {
-    fromConfig(config);
-  }
+  LineConfig(const mc_rtc::Configuration & config) { fromConfig(config); }
 
   void fromMessagePack(const mc_rtc::Configuration & config)
   {
@@ -180,14 +159,8 @@ struct MC_RTC_GUI_DLLAPI LineConfig
     if(config.has("style"))
     {
       auto s = config("style");
-      if(s == "solid")
-      {
-        style = LineStyle::Solid;
-      }
-      else if(s == "dotted")
-      {
-        style = LineStyle::Dotted;
-      }
+      if(s == "solid") { style = LineStyle::Solid; }
+      else if(s == "dotted") { style = LineStyle::Dotted; }
     }
   }
 
@@ -196,21 +169,12 @@ struct MC_RTC_GUI_DLLAPI LineConfig
     mc_rtc::Configuration config;
     config.add("color", color);
     config.add("width", width);
-    if(style == LineStyle::Solid)
-    {
-      config.add("style", "solid");
-    }
-    else if(style == LineStyle::Dotted)
-    {
-      config.add("style", "dotted");
-    }
+    if(style == LineStyle::Solid) { config.add("style", "solid"); }
+    else if(style == LineStyle::Dotted) { config.add("style", "dotted"); }
     return config;
   }
 
-  static constexpr size_t write_size()
-  {
-    return 1;
-  }
+  static constexpr size_t write_size() { return 1; }
 
   void write(mc_rtc::MessagePackBuilder & out) const
   {
@@ -233,10 +197,7 @@ struct ConfigurationLoader<mc_rtc::gui::LineConfig>
     return line;
   }
 
-  static mc_rtc::Configuration save(const mc_rtc::gui::LineConfig & line)
-  {
-    return line.saveConfig();
-  }
+  static mc_rtc::Configuration save(const mc_rtc::gui::LineConfig & line) { return line.saveConfig(); }
 };
 
 namespace gui
@@ -245,10 +206,7 @@ struct MC_RTC_GUI_DLLAPI ArrowConfig
 {
   ArrowConfig() : color(0., 1., 0.) {}
   ArrowConfig(const Color & color) : color(color) {}
-  ArrowConfig(const mc_rtc::Configuration & config)
-  {
-    fromConfig(config);
-  };
+  ArrowConfig(const mc_rtc::Configuration & config) { fromConfig(config); };
 
   void fromMessagePack(const mc_rtc::Configuration & config)
   {
@@ -285,10 +243,7 @@ struct MC_RTC_GUI_DLLAPI ArrowConfig
     return conf;
   }
 
-  static constexpr size_t write_size()
-  {
-    return 1;
-  }
+  static constexpr size_t write_size() { return 1; }
 
   void write(mc_rtc::MessagePackBuilder & out) const
   {
@@ -323,10 +278,7 @@ struct ConfigurationLoader<mc_rtc::gui::ArrowConfig>
     return arrow;
   }
 
-  static mc_rtc::Configuration save(const mc_rtc::gui::ArrowConfig & arrow)
-  {
-    return arrow.saveConfig();
-  }
+  static mc_rtc::Configuration save(const mc_rtc::gui::ArrowConfig & arrow) { return arrow.saveConfig(); }
 };
 
 namespace gui
@@ -335,10 +287,7 @@ struct ForceConfig : public ArrowConfig
 {
   ForceConfig() : ArrowConfig() {}
   ForceConfig(const Color & color) : ArrowConfig(color) {}
-  ForceConfig(const mc_rtc::Configuration & config)
-  {
-    fromConfig(config);
-  };
+  ForceConfig(const mc_rtc::Configuration & config) { fromConfig(config); };
 
   void fromMessagePack(const mc_rtc::Configuration & config)
   {
@@ -359,10 +308,7 @@ struct ForceConfig : public ArrowConfig
     return conf;
   }
 
-  static constexpr size_t write_size()
-  {
-    return 1;
-  }
+  static constexpr size_t write_size() { return 1; }
 
   void write(mc_rtc::MessagePackBuilder & out) const
   {
@@ -387,10 +333,7 @@ struct ConfigurationLoader<mc_rtc::gui::ForceConfig>
     return force;
   }
 
-  static mc_rtc::Configuration save(const mc_rtc::gui::ForceConfig & force)
-  {
-    return force.saveConfig();
-  }
+  static mc_rtc::Configuration save(const mc_rtc::gui::ForceConfig & force) { return force.saveConfig(); }
 };
 
 namespace gui
@@ -399,10 +342,7 @@ struct PointConfig
 {
   PointConfig() {}
   PointConfig(const Color & color, double scale = 0.02) : color(color), scale(scale) {}
-  PointConfig(const mc_rtc::Configuration & config)
-  {
-    fromConfig(config);
-  }
+  PointConfig(const mc_rtc::Configuration & config) { fromConfig(config); }
 
   void fromMessagePack(const mc_rtc::Configuration & config)
   {
@@ -424,10 +364,7 @@ struct PointConfig
     return conf;
   }
 
-  static constexpr size_t write_size()
-  {
-    return 1;
-  }
+  static constexpr size_t write_size() { return 1; }
 
   void write(mc_rtc::MessagePackBuilder & out) const
   {
@@ -452,10 +389,7 @@ struct ConfigurationLoader<mc_rtc::gui::PointConfig>
     return point;
   }
 
-  static mc_rtc::Configuration save(const mc_rtc::gui::PointConfig & point)
-  {
-    return point.saveConfig();
-  }
+  static mc_rtc::Configuration save(const mc_rtc::gui::PointConfig & point) { return point.saveConfig(); }
 };
 
 namespace gui
@@ -465,10 +399,7 @@ struct MC_RTC_GUI_DLLAPI PolyhedronConfig
 {
   PolyhedronConfig() {}
 
-  PolyhedronConfig(const mc_rtc::Configuration & config)
-  {
-    fromConfig(config);
-  }
+  PolyhedronConfig(const mc_rtc::Configuration & config) { fromConfig(config); }
 
   void fromConfig(const mc_rtc::Configuration & config)
   {
@@ -511,10 +442,7 @@ struct MC_RTC_GUI_DLLAPI PolyhedronConfig
     fixed_vertices_color = config[8];
   }
 
-  static constexpr size_t write_size()
-  {
-    return 1;
-  }
+  static constexpr size_t write_size() { return 1; }
 
   void write(mc_rtc::MessagePackBuilder & out) const
   {

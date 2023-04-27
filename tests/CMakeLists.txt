@@ -4,9 +4,9 @@
 
 find_package(Boost REQUIRED COMPONENTS unit_test_framework timer)
 
-############################
+# ######################################################################################
 # -- Compile-time tests -- #
-############################
+# ######################################################################################
 
 add_executable(LoggerTraits LoggerTraits.cpp)
 set_target_properties(LoggerTraits PROPERTIES FOLDER tests/compilation)
@@ -16,10 +16,9 @@ add_executable(testConstraintImplementation testConstraintImplementation.cpp)
 set_target_properties(testConstraintImplementation PROPERTIES FOLDER tests/compilation)
 target_link_libraries(testConstraintImplementation PUBLIC mc_solver)
 
-#################################
-#      -- Utility tests --      #
-# -- FIXME not actuals tests -- #
-#################################
+# ######################################################################################
+# -- Utility tests --      # -- FIXME not actuals tests -- #
+# ######################################################################################
 
 add_executable(testBSplineTrajectory testBSplineTrajectory.cpp)
 set_target_properties(testBSplineTrajectory PROPERTIES FOLDER tests/utility)
@@ -33,32 +32,43 @@ add_executable(testNotify testNotify.cpp)
 set_target_properties(testNotify PROPERTIES FOLDER tests/utility)
 target_link_libraries(testNotify PUBLIC mc_rtc_utils)
 
-#################################
+# ######################################################################################
 # -- Framework utility tests -- #
-#################################
+# ######################################################################################
 
 set(ROBOTS_BUILD_DIR src/mc_robots)
 if(CMAKE_CONFIGURATION_TYPES)
   set(ROBOTS_BUILD_DIR "${ROBOTS_BUILD_DIR}/$<CONFIGURATION>")
 endif()
 set(CONFIG_HEADER_INCLUDE_DIR "${CMAKE_CURRENT_BINARY_DIR}/include/$<CONFIGURATION>")
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.in
-               ${CMAKE_CURRENT_BINARY_DIR}/tests_config.cmake.h)
-file(GENERATE
-     OUTPUT "${CONFIG_HEADER_INCLUDE_DIR}/tests_config.h"
-     INPUT  "${CMAKE_CURRENT_BINARY_DIR}/tests_config.cmake.h")
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.in
+  ${CMAKE_CURRENT_BINARY_DIR}/tests_config.cmake.h
+)
+file(
+  GENERATE
+  OUTPUT "${CONFIG_HEADER_INCLUDE_DIR}/tests_config.h"
+  INPUT "${CMAKE_CURRENT_BINARY_DIR}/tests_config.cmake.h"
+)
 
-MACRO(mc_rtc_test NAME)
+macro(mc_rtc_test NAME)
   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.cpp)
     add_executable(${NAME} ${NAME}.cpp)
   elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.in.cpp)
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.in.cpp
-                   ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp)
+    configure_file(
+      ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.in.cpp
+      ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp
+    )
     add_executable(${NAME} ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp)
   else()
-    message(FATAL_ERROR "Cannot add mc_rtc_test: neither ${NAME}.cpp nor ${NAME}.in.cpp exists in ${CMAKE_CURRENT_SOURCE_DIR}")
+    message(
+      FATAL_ERROR
+        "Cannot add mc_rtc_test: neither ${NAME}.cpp nor ${NAME}.in.cpp exists in ${CMAKE_CURRENT_SOURCE_DIR}"
+    )
   endif()
-  target_link_libraries(${NAME} PUBLIC Boost::unit_test_framework Boost::disable_autolinking ${ARGN})
+  target_link_libraries(
+    ${NAME} PUBLIC Boost::unit_test_framework Boost::disable_autolinking ${ARGN}
+  )
   if(NOT Boost_USE_STATIC_LIBS)
     target_link_libraries(${NAME} PUBLIC Boost::dynamic_linking)
   endif()
@@ -69,7 +79,7 @@ MACRO(mc_rtc_test NAME)
   add_test(NAME ${NAME} COMMAND ${NAME})
   # Adding a project configuration file (for MSVC only)
   generate_msvc_dot_user_file(${NAME})
-ENDMACRO()
+endmacro()
 
 mc_rtc_test(testConfiguration mc_rtc_utils mc_rbdyn)
 mc_rtc_test(testGUIStateBuilder mc_rtc_gui)
@@ -83,41 +93,56 @@ mc_rtc_test(testDataStore mc_rtc_utils mc_rbdyn)
 mc_rtc_test(test_mc_rtc_utils mc_rtc_utils)
 mc_rtc_test(testConfigurationHelpers mc_rtc_utils)
 mc_rtc_test(test_io_utils mc_rtc_utils)
-get_filename_component(EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../doc/_examples" ABSOLUTE)
+get_filename_component(
+  EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../doc/_examples" ABSOLUTE
+)
 mc_rtc_test(testSchemaExamples mc_tasks)
 mc_rtc_test(testLogger mc_rbdyn)
 mc_rtc_test(testLogUtils mc_rbdyn)
 mc_rtc_test(testRobotModule mc_rbdyn)
 find_description_package(jvrc_description)
-set_target_properties(testRobotModule PROPERTIES COMPILE_FLAGS "-DJVRC_DESCRIPTION_PATH=\"${JVRC_DESCRIPTION_PATH}\"")
+set_target_properties(
+  testRobotModule PROPERTIES COMPILE_FLAGS
+                             "-DJVRC_DESCRIPTION_PATH=\"${JVRC_DESCRIPTION_PATH}\""
+)
 mc_rtc_test(testCanonicalRobot mc_rbdyn)
 mc_rtc_test(testSolverBackend mc_tasks)
 
-###########################
+# ######################################################################################
 # -- FSM related tests -- #
-###########################
+# ######################################################################################
 
 add_subdirectory(fsm_states)
 
 mc_rtc_test(testFSMStateFactory mc_control_fsm ConfigureState)
 # Run in ConfigureState dir to find the DLL on Windows
-set_tests_properties(testFSMStateFactory PROPERTIES WORKING_DIRECTORY "$<TARGET_FILE_DIR:ConfigureState>")
+set_tests_properties(
+  testFSMStateFactory PROPERTIES WORKING_DIRECTORY "$<TARGET_FILE_DIR:ConfigureState>"
+)
 # Generate an MSVC .user file with the right path
-generate_msvc_dot_user_file(testFSMStateFactory "$(SolutionDir)/tests/fsm_states/ConfigureState/$(Configuration)")
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/testFSMStateFactoryConfig.in.h"
-               "${CMAKE_CURRENT_BINARY_DIR}/testFSMStateFactoryConfig.cmake.h")
-file(GENERATE
-     OUTPUT "${CONFIG_HEADER_INCLUDE_DIR}/testFSMStateFactoryConfig.h"
-     INPUT  "${CMAKE_CURRENT_BINARY_DIR}/testFSMStateFactoryConfig.cmake.h")
+generate_msvc_dot_user_file(
+  testFSMStateFactory "$(SolutionDir)/tests/fsm_states/ConfigureState/$(Configuration)"
+)
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/testFSMStateFactoryConfig.in.h"
+  "${CMAKE_CURRENT_BINARY_DIR}/testFSMStateFactoryConfig.cmake.h"
+)
+file(
+  GENERATE
+  OUTPUT "${CONFIG_HEADER_INCLUDE_DIR}/testFSMStateFactoryConfig.h"
+  INPUT "${CMAKE_CURRENT_BINARY_DIR}/testFSMStateFactoryConfig.cmake.h"
+)
 
-######################################
+# ######################################################################################
 # -- Controllers and robots tests -- #
-######################################
+# ######################################################################################
 
 function(add_global_controller_tester NAME)
   add_library(${NAME} OBJECT ${NAME}.cpp)
   set_target_properties(${NAME} PROPERTIES FOLDER tests/ticker)
-  target_link_libraries(${NAME} PUBLIC mc_control Boost::unit_test_framework Boost::disable_autolinking)
+  target_link_libraries(
+    ${NAME} PUBLIC mc_control Boost::unit_test_framework Boost::disable_autolinking
+  )
   if(NOT Boost_USE_STATIC_LIBS)
     target_link_libraries(${NAME} PUBLIC Boost::dynamic_linking)
   endif()
@@ -128,11 +153,23 @@ endfunction()
 add_global_controller_tester(test_global_controller_construction_failure)
 add_global_controller_tester(test_global_controller_run)
 
-function(add_global_controller_test NAME TEST_MAIN TEST_NAME CONFIGURATION_FILE RUN_ITER NEXT_CONTROLLER)
+function(
+  add_global_controller_test
+  NAME
+  TEST_MAIN
+  TEST_NAME
+  CONFIGURATION_FILE
+  RUN_ITER
+  NEXT_CONTROLLER
+)
   set(CONFIG_CPP_INT_OUT ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/config.in.cpp)
   set(CONFIG_CPP_OUT ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/$<CONFIG>/config.cpp)
-  configure_file(${PROJECT_SOURCE_DIR}/tests/test_global_controller_config.in.cpp ${CONFIG_CPP_INT_OUT})
-  file(GENERATE
+  configure_file(
+    ${PROJECT_SOURCE_DIR}/tests/test_global_controller_config.in.cpp
+    ${CONFIG_CPP_INT_OUT}
+  )
+  file(
+    GENERATE
     OUTPUT ${CONFIG_CPP_OUT}
     INPUT ${CONFIG_CPP_INT_OUT}
   )
@@ -143,11 +180,27 @@ function(add_global_controller_test NAME TEST_MAIN TEST_NAME CONFIGURATION_FILE 
 endfunction()
 
 function(add_global_controller_test_construction_failure NAME CONFIGURATION_FILE)
-  add_global_controller_test(${NAME} test_global_controller_construction_failure ConstructionFailure_${NAME} ${CONFIGURATION_FILE} 0 "" ${ARGN})
+  add_global_controller_test(
+    ${NAME}
+    test_global_controller_construction_failure
+    ConstructionFailure_${NAME}
+    ${CONFIGURATION_FILE}
+    0
+    ""
+    ${ARGN}
+  )
 endfunction()
 
 function(add_global_controller_test_run NAME CONFIGURATION_FILE NRITER NEXTCTL)
-  add_global_controller_test(${NAME} test_global_controller_run ControllerRun_${NAME} ${CONFIGURATION_FILE} ${NRITER} "${NEXTCTL}" ${ARGN})
+  add_global_controller_test(
+    ${NAME}
+    test_global_controller_run
+    ControllerRun_${NAME}
+    ${CONFIGURATION_FILE}
+    ${NRITER}
+    "${NEXTCTL}"
+    ${ARGN}
+  )
 endfunction()
 
 add_executable(test_controller_restart test_controller_restart.cpp)
@@ -164,14 +217,14 @@ if(NOT DISABLE_ROBOT_TESTS)
   add_subdirectory(robots)
 endif()
 
-#######################
+# ######################################################################################
 # -- mc_rbdyn test -- #
-#######################
+# ######################################################################################
 mc_rtc_test(test_mc_rbdyn mc_rbdyn)
 
-######################
+# ######################################################################################
 # -- Network test -- #
-######################
+# ######################################################################################
 
 add_executable(dummyClient dummyClient.cpp)
 set_target_properties(dummyClient PROPERTIES FOLDER tests/GUI)
@@ -182,9 +235,9 @@ target_include_directories(dummyServer PRIVATE ${CONFIG_HEADER_INCLUDE_DIR})
 set_target_properties(dummyServer PROPERTIES FOLDER tests/GUI)
 target_link_libraries(dummyServer PUBLIC mc_control)
 
-######################
+# ######################################################################################
 # -- Filters test -- #
-######################
+# ######################################################################################
 mc_rtc_test(test_filters mc_filter SpaceVecAlg::SpaceVecAlg)
 
 mc_rtc_test(test_interpolation mc_control)

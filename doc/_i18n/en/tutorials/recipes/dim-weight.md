@@ -1,7 +1,7 @@
 It is possible to affect different weights to different axis in the task-space (e.g. ignore the vertical position of the CoM).
 
 Most tasks can take in an additional parameter `dimWeight` of type `Eigen::VectorXd` that allows you to weigh differently different directions:
-- The `dimWeight` does not replace the total weight. It is multiplicative with it. For example, a `comTask` with weight `1000` and a `dimWeight` of `[1., 1., 1e-3]` will behave like a task of total weight `[1000., 1000., 1.]` 
+- The `dimWeight` does not replace the total weight. It is multiplicative with it. For example, a `comTask` with weight `1000` and a `dimWeight` of `[1., 1., 1e-3]` will behave like a task of total weight `[1000., 1000., 1.]`
 - The `dimWeight` is a dynamic size vector. It is up to *you* to make sure it has the right size. Note that you can obtain the (lower-level) task size by calling `dim()` on it.
 - You can pass this parameter at construction and/or change it later.
 

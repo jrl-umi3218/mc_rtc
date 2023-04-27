@@ -42,7 +42,8 @@ static auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
 static auto em =
     mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"));
 static auto robots = mc_rbdyn::loadRobotAndEnv(*rm, *em);
-static std::unique_ptr<mc_solver::QPSolver> solver_ptr = [](mc_rbdyn::RobotsPtr robots) {
+static std::unique_ptr<mc_solver::QPSolver> solver_ptr = [](mc_rbdyn::RobotsPtr robots)
+{
   std::unique_ptr<mc_solver::TasksQPSolver> solver(new mc_solver::TasksQPSolver(robots, 0.005));
   solver->logger(std::make_shared<mc_rtc::Logger>(mc_rtc::Logger::Policy::NON_THREADED, ".", ""));
   solver->logger()->start("schema-examples", 0.005);

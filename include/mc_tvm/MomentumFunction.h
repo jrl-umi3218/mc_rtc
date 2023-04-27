@@ -36,46 +36,25 @@ struct MC_TVM_DLLAPI MomentumFunction : tvm::function::abstract::Function
   void reset();
 
   /** Get the current objective */
-  inline const sva::ForceVecd & momentum() const noexcept
-  {
-    return momentum_;
-  }
+  inline const sva::ForceVecd & momentum() const noexcept { return momentum_; }
 
   /** Set the objective */
-  inline void momentum(const sva::ForceVecd & momentum) noexcept
-  {
-    momentum_ = momentum;
-  }
+  inline void momentum(const sva::ForceVecd & momentum) noexcept { momentum_ = momentum; }
 
   /** Get the current objective */
-  inline const Eigen::Vector6d & refVel() const noexcept
-  {
-    return refVel_;
-  }
+  inline const Eigen::Vector6d & refVel() const noexcept { return refVel_; }
 
   /** Set the objective */
-  inline void refVel(const Eigen::Vector6d & refVel) noexcept
-  {
-    refVel_ = refVel;
-  }
+  inline void refVel(const Eigen::Vector6d & refVel) noexcept { refVel_ = refVel; }
 
   /** Get the current objective */
-  inline const Eigen::Vector6d & refAccel() const noexcept
-  {
-    return refAccel_;
-  }
+  inline const Eigen::Vector6d & refAccel() const noexcept { return refAccel_; }
 
   /** Set the objective */
-  inline void refAccel(const Eigen::Vector6d & refAccel) noexcept
-  {
-    refAccel_ = refAccel;
-  }
+  inline void refAccel(const Eigen::Vector6d & refAccel) noexcept { refAccel_ = refAccel; }
 
   /** Get the associated algorithm */
-  inline const mc_tvm::Momentum & algo() const noexcept
-  {
-    return momentumAlgo_;
-  }
+  inline const mc_tvm::Momentum & algo() const noexcept { return momentumAlgo_; }
 
 private:
   mc_tvm::Momentum & momentumAlgo_;

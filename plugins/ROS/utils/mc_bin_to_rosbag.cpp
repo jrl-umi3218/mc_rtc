@@ -34,10 +34,7 @@ struct DataToROS
 {
   using ret_t = void;
 
-  static ret_t convert(const T &)
-  {
-    static_assert(sizeof(T) == 0, "This should be specialized");
-  }
+  static ret_t convert(const T &) { static_assert(sizeof(T) == 0, "This should be specialized"); }
 };
 
 #define SIMPLE_CONVERT(CPPT, ROSMSGT)       \
@@ -97,10 +94,7 @@ struct DataToROS<Eigen::Vector6d>
     msg.layout.dim[0].label = "data";
     msg.layout.dim[0].size = 6;
     msg.layout.dim[0].stride = 6;
-    for(int i = 0; i < 6; ++i)
-    {
-      msg.data.push_back(data(i));
-    }
+    for(int i = 0; i < 6; ++i) { msg.data.push_back(data(i)); }
     return msg;
   }
 };
@@ -117,10 +111,7 @@ struct DataToROS<Eigen::VectorXd>
     msg.layout.dim[0].label = "data";
     msg.layout.dim[0].size = static_cast<unsigned int>(data.size());
     msg.layout.dim[0].stride = static_cast<unsigned int>(data.size());
-    for(int i = 0; i < data.size(); ++i)
-    {
-      msg.data.push_back(data(i));
-    }
+    for(int i = 0; i < data.size(); ++i) { msg.data.push_back(data(i)); }
     return msg;
   }
 };
@@ -221,10 +212,7 @@ void write(rosbag::Bag & bag,
            size_t idx)
 {
   const T * data = log.getRaw<T>(entry, idx);
-  if(data)
-  {
-    bag.write(entry, now, DataToROS<T>::convert(*data));
-  }
+  if(data) { bag.write(entry, now, DataToROS<T>::convert(*data)); }
 }
 
 void write(rosbag::Bag & bag,
@@ -313,10 +301,7 @@ void mc_bin_to_rosbag(const std::string & in, const std::string & out, double dt
   rosbag::Bag bag(out, rosbag::bagmode::Write);
   for(size_t i = 0; i < log.size(); ++i)
   {
-    for(const auto & e : entries)
-    {
-      write(bag, now, log, e.first, e.second, i);
-    }
+    for(const auto & e : entries) { write(bag, now, log, e.first, e.second, i); }
     now += ros::Duration(dt);
   }
   bag.close();

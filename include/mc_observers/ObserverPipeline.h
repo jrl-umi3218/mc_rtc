@@ -55,16 +55,10 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
      * @param name Name of the observer
      * @throws std::runtime_error if the observer is not part of the pipeline
      */
-    const Observer & observer() const
-    {
-      return *observer_;
-    }
+    const Observer & observer() const { return *observer_; }
 
     /* Non-const variant */
-    Observer & observer()
-    {
-      return const_cast<Observer &>(static_cast<const PipelineObserver *>(this)->observer());
-    }
+    Observer & observer() { return const_cast<Observer &>(static_cast<const PipelineObserver *>(this)->observer()); }
 
     /** Get a an observer of type T
      *
@@ -93,34 +87,19 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
       return const_cast<T &>(static_cast<const PipelineObserver *>(this)->observer<T>());
     }
 
-    bool update() const noexcept
-    {
-      return update_;
-    }
+    bool update() const noexcept { return update_; }
 
-    bool log() const noexcept
-    {
-      return log_;
-    }
+    bool log() const noexcept { return log_; }
 
-    bool gui() const noexcept
-    {
-      return gui_;
-    }
+    bool gui() const noexcept { return gui_; }
 
     /** Returns whether the last call to this observer succeeded */
-    bool success() const noexcept
-    {
-      return success_;
-    }
+    bool success() const noexcept { return success_; }
 
     /** Returns whether this observer must succeed or is allowed to fail
      * When true, the whole pipeline will fail if this observer fails. Otherwise
      * the pipeline will keep executing */
-    bool successRequired() const noexcept
-    {
-      return successRequired_;
-    }
+    bool successRequired() const noexcept { return successRequired_; }
 
   protected:
     ObserverPtr observer_ = nullptr; //< Observer
@@ -154,27 +133,18 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
   bool run();
 
   /** @return True if the observers are running */
-  inline bool runObservers() const noexcept
-  {
-    return runObservers_;
-  }
+  inline bool runObservers() const noexcept { return runObservers_; }
 
   /**
    * @brief Whether to run the observers in this pipeline
    *
    * @param status True if the observers should be run
    */
-  inline void runObservers(bool status)
-  {
-    runObservers_ = status;
-  }
+  inline void runObservers(bool status) { runObservers_ = status; }
 
   /** @return True if the observers are updating the real robots instance. The
    * update does not occur if runObservers() is false. */
-  inline bool updateObservers() const
-  {
-    return updateObservers_;
-  }
+  inline bool updateObservers() const { return updateObservers_; }
 
   /**
    * @brief Whether to update the observers in this pipeline
@@ -183,20 +153,14 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
    * observers's result. Update occurs only if runObservers() is true, and the
    * observer succeeded.
    */
-  inline void updateObservers(bool status)
-  {
-    updateObservers_ = status;
-  }
+  inline void updateObservers(bool status) { updateObservers_ = status; }
 
   /**
    * @brief Checks whether the last run of the pipeline succeeded
    *
    * @return True when the last call to run() succeeded
    */
-  inline bool success() const noexcept
-  {
-    return success_;
-  }
+  inline bool success() const noexcept { return success_; }
 
   /* Const accessor to an observer
    *
@@ -220,15 +184,9 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
     return const_cast<PipelineObserver &>(static_cast<const ObserverPipeline *>(this)->observer(name));
   }
 
-  const std::vector<PipelineObserver> & observers() const
-  {
-    return pipelineObservers_;
-  }
+  const std::vector<PipelineObserver> & observers() const { return pipelineObservers_; }
 
-  std::vector<PipelineObserver> & observers()
-  {
-    return pipelineObservers_;
-  }
+  std::vector<PipelineObserver> & observers() { return pipelineObservers_; }
 
   /**
    * @brief Checks whether this pipeline has an observer
@@ -261,16 +219,10 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
   }
 
   /*! \brief Short description of the pipeline */
-  inline const std::string & desc() const noexcept
-  {
-    return desc_;
-  }
+  inline const std::string & desc() const noexcept { return desc_; }
 
   /* Name used to identify this pipeline */
-  inline const std::string & name() const noexcept
-  {
-    return name_;
-  }
+  inline const std::string & name() const noexcept { return name_; }
 
   void addToLogger(mc_rtc::Logger &);
   void removeFromLogger(mc_rtc::Logger &);

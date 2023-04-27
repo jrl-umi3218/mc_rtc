@@ -89,10 +89,7 @@ struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric
   Eigen::Vector3d actual() const;
 
   /*! \brief Return the controlled body */
-  std::string body()
-  {
-    return frame_->body();
-  }
+  std::string body() { return frame_->body(); }
 
   void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 

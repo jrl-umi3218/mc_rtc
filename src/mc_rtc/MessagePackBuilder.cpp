@@ -86,10 +86,7 @@ static void mpack_std_vector_writer_flush(mpack_writer_t * writer, const char * 
 
 MessagePackBuilder::MessagePackBuilder(std::vector<char> & buffer) : impl_(new MessagePackBuilderImpl())
 {
-  if(buffer.size() == 0)
-  {
-    buffer.resize(MPACK_BUFFER_SIZE);
-  }
+  if(buffer.size() == 0) { buffer.resize(MPACK_BUFFER_SIZE); }
   mpack_writer_init(impl_.get(), buffer.data(), buffer.size());
   mpack_writer_set_context(impl_.get(), &buffer);
   mpack_writer_set_flush(impl_.get(), mpack_std_vector_writer_flush);
@@ -166,10 +163,7 @@ namespace
 template<typename T>
 inline void write_vector(mpack_writer_t * writer, const T & v)
 {
-  for(Eigen::Index i = 0; i < v.size(); ++i)
-  {
-    mpack_write_double(writer, v(i));
-  }
+  for(Eigen::Index i = 0; i < v.size(); ++i) { mpack_write_double(writer, v(i)); }
 }
 
 template<typename T>
@@ -177,10 +171,7 @@ inline void write_matrix(mpack_writer_t * writer, const T & m)
 {
   for(Eigen::Index i = 0; i < m.rows(); ++i)
   {
-    for(Eigen::Index j = 0; j < m.cols(); ++j)
-    {
-      mpack_write_double(writer, m(i, j));
-    }
+    for(Eigen::Index j = 0; j < m.cols(); ++j) { mpack_write_double(writer, m(i, j)); }
   }
 }
 

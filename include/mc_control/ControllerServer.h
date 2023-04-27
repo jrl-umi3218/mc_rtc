@@ -56,18 +56,12 @@ struct MC_CONTROL_DLLAPI ControllerServer
   std::pair<const char *, size_t> data() const;
 
   /** Attach a logger to the server */
-  inline void set_logger(std::shared_ptr<mc_rtc::Logger> logger) noexcept
-  {
-    logger_ = logger;
-  }
+  inline void set_logger(std::shared_ptr<mc_rtc::Logger> logger) noexcept { logger_ = logger; }
 
   /** Set requests to handle on the next iteration */
   inline void push_requests(const std::vector<mc_rtc::Logger::GUIEvent> & requests)
   {
-    for(const auto & r : requests)
-    {
-      requests_.push_back(r);
-    }
+    for(const auto & r : requests) { requests_.push_back(r); }
   }
 
   /** Update the rate of the server */

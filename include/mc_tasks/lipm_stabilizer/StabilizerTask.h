@@ -258,25 +258,16 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    *
    * @return The projected ankle frame expressed in world frame.
    */
-  inline const sva::PTransformd & contactAnklePose(ContactState s) const
-  {
-    return contacts_.at(s).anklePose();
-  }
+  inline const sva::PTransformd & contactAnklePose(ContactState s) const { return contacts_.at(s).anklePose(); }
 
-  inline const std::string & footSurface(ContactState s) const
-  {
-    return footTasks.at(s)->surface();
-  }
+  inline const std::string & footSurface(ContactState s) const { return footTasks.at(s)->surface(); }
 
   /**
    * @brief Interpolation paremeter between left and right foot
    *
    * @return Left foot ratio between [0,1]
    */
-  inline double leftFootRatio() const noexcept
-  {
-    return leftFootRatio_;
-  }
+  inline double leftFootRatio() const noexcept { return leftFootRatio_; }
 
   /**
    * @brief computes the anchorFrame compatible with the state observers
@@ -336,10 +327,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    *
    * \see targetCoM()
    **/
-  inline const Eigen::Vector3d & targetCoMRaw() const noexcept
-  {
-    return comTargetRaw_;
-  }
+  inline const Eigen::Vector3d & targetCoMRaw() const noexcept { return comTargetRaw_; }
 
   /** @brief Returns the CoM target used for stabilization.
    *
@@ -348,46 +336,25 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * function thus corresponds to the actual target used by the stabilizer, and
    * not the raw user provided target.
    */
-  inline const Eigen::Vector3d & targetCoM() const noexcept
-  {
-    return comTargetRaw_;
-  }
+  inline const Eigen::Vector3d & targetCoM() const noexcept { return comTargetRaw_; }
 
   /* Return the target CoM velocity provided by \ref stabilizer_target "target()" */
-  inline const Eigen::Vector3d & targetCoMVelocity() const noexcept
-  {
-    return comdTarget_;
-  }
+  inline const Eigen::Vector3d & targetCoMVelocity() const noexcept { return comdTarget_; }
 
   /* Return the target CoM acceleration provided by \ref stabilizer_target "target()" */
-  inline const Eigen::Vector3d & targetCoMAcceleration() const noexcept
-  {
-    return comddTarget_;
-  }
+  inline const Eigen::Vector3d & targetCoMAcceleration() const noexcept { return comddTarget_; }
 
   /* Return the target ZMP provided by \ref stabilizer_target "target()" */
-  inline const Eigen::Vector3d & targetZMP() const noexcept
-  {
-    return zmpTarget_;
-  }
+  inline const Eigen::Vector3d & targetZMP() const noexcept { return zmpTarget_; }
 
   /* Return the target ZMP velocity by \ref stabilizer_target "target()" */
-  inline const Eigen::Vector3d & targetZMPVelocity() const noexcept
-  {
-    return zmpdTarget_;
-  }
+  inline const Eigen::Vector3d & targetZMPVelocity() const noexcept { return zmpdTarget_; }
 
   /* Return the current support foot */
-  inline const ContactState supportFoot() const noexcept
-  {
-    return supportFoot_;
-  }
+  inline const ContactState supportFoot() const noexcept { return supportFoot_; }
 
   /* Set the current support foot */
-  inline void supportFoot(const ContactState & foot) noexcept
-  {
-    supportFoot_ = foot;
-  }
+  inline void supportFoot(const ContactState & foot) noexcept { supportFoot_ = foot; }
 
   /**
    * @brief Set the reference zmp sequence to distribute between the CoP task (Only in double support)
@@ -425,96 +392,48 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    *
    * \see \ref set_external_wrenches "setExternalWrenches()"
    **/
-  inline const std::vector<ExternalWrench> & externalWrenches() const noexcept
-  {
-    return extWrenches_;
-  }
+  inline const std::vector<ExternalWrench> & externalWrenches() const noexcept { return extWrenches_; }
 
   /*
    * Return the ZMP from the wrenches distribution
    **/
-  inline const Eigen::Vector3d & distribZMP() const noexcept
-  {
-    return distribZMP_;
-  }
+  inline const Eigen::Vector3d & distribZMP() const noexcept { return distribZMP_; }
 
-  inline const Eigen::Vector3d & measuredDCM() noexcept
-  {
-    return measuredDCM_;
-  }
+  inline const Eigen::Vector3d & measuredDCM() noexcept { return measuredDCM_; }
 
   inline const Eigen::Vector2d biasDCM() noexcept
   {
-    if(c_.dcmBias.withDCMBias)
-    {
-      return dcmEstimator_.getBias();
-    }
+    if(c_.dcmBias.withDCMBias) { return dcmEstimator_.getBias(); }
     return Eigen::Vector2d::Zero();
   }
 
   inline Eigen::Vector2d filteredDCM() const noexcept
   {
-    if(c_.dcmBias.withDCMBias)
-    {
-      return dcmEstimator_.getUnbiasedDCM();
-    }
+    if(c_.dcmBias.withDCMBias) { return dcmEstimator_.getUnbiasedDCM(); }
     return measuredDCM_.segment(0, 2);
   }
 
-  inline const Eigen::Vector3d & measuredZMP() noexcept
-  {
-    return measuredZMP_;
-  }
+  inline const Eigen::Vector3d & measuredZMP() noexcept { return measuredZMP_; }
 
-  inline const Eigen::Vector3d & measuredCoM() noexcept
-  {
-    return measuredCoM_;
-  }
+  inline const Eigen::Vector3d & measuredCoM() noexcept { return measuredCoM_; }
 
-  inline const Eigen::Vector3d & measuredCoMd() noexcept
-  {
-    return measuredCoMd_;
-  }
+  inline const Eigen::Vector3d & measuredCoMd() noexcept { return measuredCoMd_; }
 
-  inline const Eigen::Vector3d & measuredFilteredNetForces() const noexcept
-  {
-    return fSumFilter_.eval();
-  }
+  inline const Eigen::Vector3d & measuredFilteredNetForces() const noexcept { return fSumFilter_.eval(); }
 
-  inline const Eigen::Vector3d & comOffsetTarget() noexcept
-  {
-    return comOffsetTarget_;
-  }
+  inline const Eigen::Vector3d & comOffsetTarget() noexcept { return comOffsetTarget_; }
 
-  inline const Eigen::Vector3d & comOffsetMeasured() const noexcept
-  {
-    return comOffsetMeasured_;
-  }
+  inline const Eigen::Vector3d & comOffsetMeasured() const noexcept { return comOffsetMeasured_; }
 
-  inline const double zmpCoeffMeasured() const noexcept
-  {
-    return zmpCoefMeasured_;
-  }
+  inline const double zmpCoeffMeasured() const noexcept { return zmpCoefMeasured_; }
 
-  inline bool inContact(ContactState state) const noexcept
-  {
-    return contacts_.count(state);
-  }
+  inline bool inContact(ContactState state) const noexcept { return contacts_.count(state); }
 
-  inline bool inDoubleSupport() const noexcept
-  {
-    return contacts_.size() == 2;
-  }
+  inline bool inDoubleSupport() const noexcept { return contacts_.size() == 2; }
 
-  inline const mc_rbdyn::Robot & robot() const noexcept
-  {
-    return robots_.robot(robotIndex_);
-  }
+  inline const mc_rbdyn::Robot & robot() const noexcept { return robots_.robot(robotIndex_); }
 
-  inline const mc_rbdyn::Robot & realRobot() const noexcept
-  {
-    return realRobots_.robot(robotIndex_);
-  }
+  inline const mc_rbdyn::Robot & realRobot() const noexcept { return realRobots_.robot(robotIndex_); }
 
   /**
    * @name Setters to reconfigure the stabilizer online
@@ -530,15 +449,9 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * \see commitConfig() Make the current configuration the new default
    * @{
    */
-  inline void torsoPitch(double pitch) noexcept
-  {
-    c_.torsoPitch = pitch;
-  }
+  inline void torsoPitch(double pitch) noexcept { c_.torsoPitch = pitch; }
 
-  inline double omega() const
-  {
-    return omega_;
-  }
+  inline double omega() const { return omega_; }
 
   inline void torsoWeight(double weight) noexcept
   {
@@ -582,10 +495,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     dcmIntegrator_.timeConstant(dcmIntegratorTimeConstant);
   }
 
-  MC_RTC_DEPRECATED inline void dcmDerivatorTimeConstant(double T) noexcept
-  {
-    dcmDerivatorCutoffPeriod(T);
-  }
+  MC_RTC_DEPRECATED inline void dcmDerivatorTimeConstant(double T) noexcept { dcmDerivatorCutoffPeriod(T); }
 
   inline void dcmDerivatorCutoffPeriod(double T) noexcept
   {
@@ -632,37 +542,25 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   inline void contactWeight(double weight) noexcept
   {
     c_.contactWeight = weight;
-    for(auto footT : contactTasks)
-    {
-      footT->weight(c_.contactWeight);
-    }
+    for(auto footT : contactTasks) { footT->weight(c_.contactWeight); }
   }
 
   inline void contactStiffness(const sva::MotionVecd & stiffness) noexcept
   {
     c_.contactStiffness = stiffness;
-    for(auto contactT : contactTasks)
-    {
-      contactT->stiffness(stiffness);
-    }
+    for(auto contactT : contactTasks) { contactT->stiffness(stiffness); }
   }
 
   inline void contactDamping(const sva::MotionVecd & damping) noexcept
   {
     c_.contactDamping = damping;
-    for(auto contactT : contactTasks)
-    {
-      contactT->damping(damping);
-    }
+    for(auto contactT : contactTasks) { contactT->damping(damping); }
   }
 
   inline void copAdmittance(const Eigen::Vector2d & copAdmittance) noexcept
   {
     c_.copAdmittance = clamp(copAdmittance, 0., c_.safetyThresholds.MAX_COP_ADMITTANCE);
-    for(auto contactT : contactTasks)
-    {
-      contactT->admittance(contactAdmittance());
-    }
+    for(auto contactT : contactTasks) { contactT->admittance(contactAdmittance()); }
   }
 
   inline void copMaxVel(const sva::MotionVecd & copMaxVel) noexcept
@@ -679,27 +577,15 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   inline void copVelFilterGain(double gain) noexcept
   {
     c_.copVelFilterGain = mc_filter::utils::clamp(gain, 0, 1);
-    for(auto & ft : footTasks)
-    {
-      ft.second->velFilterGain(gain);
-    }
+    for(auto & ft : footTasks) { ft.second->velFilterGain(gain); }
   }
 
   /* Get the gain of the low-pass velocity filter of the cop tasks */
-  inline double copVelFilterGain() const noexcept
-  {
-    return c_.copVelFilterGain;
-  }
+  inline double copVelFilterGain() const noexcept { return c_.copVelFilterGain; }
 
-  inline void vdcFrequency(double freq) noexcept
-  {
-    c_.vdcFrequency = clamp(freq, 0., 10.);
-  }
+  inline void vdcFrequency(double freq) noexcept { c_.vdcFrequency = clamp(freq, 0., 10.); }
 
-  inline void vdcStiffness(double stiffness) noexcept
-  {
-    c_.vdcStiffness = clamp(stiffness, 0., 1e4);
-  }
+  inline void vdcStiffness(double stiffness) noexcept { c_.vdcStiffness = clamp(stiffness, 0., 1e4); }
 
   inline void dfAdmittance(Eigen::Vector3d dfAdmittance) noexcept
   {
@@ -711,10 +597,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     c_.dfDamping = clamp(dfDamping, 0., c_.safetyThresholds.MAX_DF_DAMPING);
   }
 
-  inline void fdqpWeights(const FDQPWeights & fdqp) noexcept
-  {
-    c_.fdqpWeights = fdqp;
-  }
+  inline void fdqpWeights(const FDQPWeights & fdqp) noexcept { c_.fdqpWeights = fdqp; }
 
   /**
    * @brief Changes the safety thresholds
@@ -749,10 +632,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   }
 
   /** @brief Get parameters of the DCM bias estimator. */
-  inline const DCMBiasEstimatorConfiguration & dcmBiasEstimatorConfiguration() const noexcept
-  {
-    return c_.dcmBias;
-  }
+  inline const DCMBiasEstimatorConfiguration & dcmBiasEstimatorConfiguration() const noexcept { return c_.dcmBias; }
 
   /**
    * @brief Changes the parameters for the external wrenches.
@@ -769,10 +649,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   }
 
   /** @brief Get the parameters for the external wrenches. */
-  inline const ExternalWrenchConfiguration & externalWrenchConfiguration() const noexcept
-  {
-    return c_.extWrench;
-  }
+  inline const ExternalWrenchConfiguration & externalWrenchConfiguration() const noexcept { return c_.extWrench; }
 
 private:
   void dimWeight(const Eigen::VectorXd & dimW) override;
