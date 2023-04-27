@@ -9,7 +9,9 @@
 #
 
 if(NOT TARGET mc_rtc_3rd_party::ROS)
-  include(FindPkgConfig)
+  if(NOT COMMAND pkg_check_modules)
+    find_package(PkgConfig)
+  endif()
   pkg_check_modules(MC_RTC_roscpp QUIET roscpp)
   if(${MC_RTC_roscpp_FOUND})
     set(ROSCPP_FOUND True)

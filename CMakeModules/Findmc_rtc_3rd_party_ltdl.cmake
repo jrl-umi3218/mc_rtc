@@ -27,9 +27,11 @@ if(NOT TARGET ${LTDL})
   )
 
   include(FindPackageHandleStandardArgs)
-  find_package_handle_standard_args(LTDL DEFAULT_MSG LTDL_LIBRARY LTDL_INCLUDE_DIR)
+  find_package_handle_standard_args(
+    mc_rtc_3rd_party_ltdl DEFAULT_MSG LTDL_LIBRARY LTDL_INCLUDE_DIR
+  )
   mark_as_advanced(LTDL_INCLUDE_DIR LTDL_LIBRARY)
-  if(LTDL_FOUND)
+  if(mc_rtc_3rd_party_ltdl_FOUND)
     add_library(${LTDL} INTERFACE IMPORTED GLOBAL)
     set_target_properties(
       ${LTDL} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${LTDL_INCLUDE_DIR}
