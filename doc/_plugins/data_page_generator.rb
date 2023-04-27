@@ -133,7 +133,7 @@ module Jekyll
           end
           if category != "definitions"
             # Merge with surrounding schema
-            parent[key_out] = resolveAllOf(site.data["schemas"][category][name])
+            parent[key_out] = site.data["schemas"][category][name].dup()
             if parent[key_out].has_key?("title")
               parent[key_out]["REF"] = "#{category}.#{name}"
             end
