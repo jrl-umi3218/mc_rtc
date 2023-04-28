@@ -5,6 +5,8 @@
   {
     "body1": { "type": "string", "description": "First convex body used, wildcards can be used" },
     "body2": { "type": "string", "description": "Second convex body used, wildcards can be used" },
+    "r1Joints": { "type": "array", "items": { "type": "string" }, "description": "Active joints used to avoid the collision (default: all)" },
+    "r2Joints": { "type": "array", "items": { "type": "string" }, "description": "Active joints used to avoid the collision (default: all)" },
     "iDist": { "type": "number", "default": 0.05, "description": "Interaction distance" },
     "sDist": { "type": "number", "default": 0.01, "description": "Safety distance" },
     "damping": { "type": "number", "default": 0.0, "description": "Damping, 0 enables automatic computation" }
