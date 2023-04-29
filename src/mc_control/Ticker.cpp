@@ -236,7 +236,7 @@ void Ticker::run()
       gc_.server().update_rate(gc_.timestep() / target_ratio, gc_.configuration().gui_timestep);
       reset_sync();
     }
-    if((config_.step_by_step && rem_steps_ > 0) || !config_.step_by_step)
+    if(((config_.step_by_step && rem_steps_ > 0) || !config_.step_by_step) && gc_.running)
     {
       rem_steps_--;
       step();
@@ -256,9 +256,10 @@ void Ticker::run()
     else
     {
       // Only update the GUI
+      bool was_running = gc_.running;
       gc_.running = false;
       gc_.run();
-      gc_.running = true;
+      gc_.running = was_running;
       std::this_thread::sleep_for(std::chrono::milliseconds(10));
       reset_sync();
     }
