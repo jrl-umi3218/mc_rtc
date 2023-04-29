@@ -705,7 +705,7 @@ class MCLogTab(QtWidgets.QWidget):
     @QtCore.Slot(QtWidgets.QTreeWidgetItem, int)
     def on_y2Selector_itemClicked(self, item, col):
         self.y2Selected, self.y2SelectedItems = self.itemSelectionChanged(
-            self.ui.y2Selector, self.y2Selected, self.y2SelectedItems, 0
+            self.ui.y2Selector, self.y2Selected, self.y2SelectedItems, 1
         )
 
     @QtCore.Slot(QtCore.QPoint)
