@@ -24,6 +24,8 @@ from matplotlib.backends.backend_qt5agg import (
     NavigationToolbar2QT as NavigationToolbar,
 )
 
+from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
+
 from collections import OrderedDict
 from math import asin, atan2
 
