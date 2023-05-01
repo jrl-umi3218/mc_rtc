@@ -307,6 +307,9 @@ TestServer::TestServer() : xythetaz_(4)
   auto surfaces = data.add("surfaces");
   surfaces.add("Goldorak", std::vector<std::string>{"Goldo_S1", "Goldo_S2", "Goldo_S3"});
   surfaces.add("Astro", std::vector<std::string>{"Astro_S1", "Astro_S2", "Astro_S3"});
+  auto frames = data.add("frames");
+  frames.add("Goldorak", std::vector<std::string>{"Goldo_F1", "Goldo_F2", "Goldo_F3"});
+  frames.add("Astro", std::vector<std::string>{"Astro_F1", "Astro_F2", "Astro_F3"});
   auto joints = data.add("joints");
   joints.add("Goldorak", std::vector<std::string>{"Goldo_J1", "Goldo_J2", "Goldo_J3"});
   joints.add("Astro", std::vector<std::string>{"Astro_J1", "Astro_J2", "Astro_J3"});
