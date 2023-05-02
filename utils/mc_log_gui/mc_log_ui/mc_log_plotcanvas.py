@@ -340,6 +340,15 @@ class PlotYAxis(object):
                 visible=self.grid.visible,
                 which="both",
             )
+        if not self.is_left and len(self.figure.axes[PlotSide.LEFT].plots) == 0:
+            self.figure.axes[PlotSide.LEFT]._axis.grid(
+                color=self.grid.color,
+                linestyle=self.grid.linestyle,
+                linewidth=self.grid.linewidth,
+                visible=self.grid.visible,
+                which="both",
+                axis="x",
+            )
 
     def legend(self):
         if not len(self.plots):
