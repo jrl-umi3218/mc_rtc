@@ -272,7 +272,7 @@ void Replay::before(mc_control::MCGlobalController & gc)
   if(with_gui_inputs_) { gc.server().push_requests(log.guiEvents()[iters_]); }
   for(auto & update_ds : datastore_updates_)
   {
-    update_ds.update(*log_, update_ds.log_entry, iters_, gc.controller().datastore(), update_ds.log_entry);
+    update_ds.update(*log_, update_ds.log_entry, iters_, gc.controller().datastore(), update_ds.ds_entry);
   }
 }
 

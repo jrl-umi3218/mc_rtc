@@ -48,6 +48,13 @@ public:
       uint64_t log_iter = datastore().template get<uint64_t>("iter");
       if(log_iter != iters_) { mc_rtc::log::critical("{} != {}", log_iter, iters_); }
       BOOST_REQUIRE(log_iter == iters_);
+
+      BOOST_REQUIRE(datastore().has("RENAMED_T"));
+      double renamed_t = datastore().template get<double>("RENAMED_T");
+      double expected_t = static_cast<double>(log_iter - 1) * timeStep;
+      bool test_t = std::fabs(expected_t - renamed_t) < 1e-6;
+      if(!test_t) { mc_rtc::log::critical("{} != {}", expected_t, renamed_t); }
+      BOOST_REQUIRE(test_t);
     }
     return ret;
   }
