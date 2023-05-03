@@ -466,20 +466,27 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & re
   else { actualQ = currentQ; }
   for(size_t i = 0; i < active_joints.size(); ++i)
   {
+    double alpha = (currentQ[i] - _q[i]) / timeStep;
     _q[i] = currentQ[i];
     if(joints_mbc_idx[i] != -1)
     {
       robot.mbc().q[static_cast<size_t>(joints_mbc_idx[i])] = {_q[i]};
       real.mbc().q[static_cast<size_t>(joints_mbc_idx[i])] = {_q[i]};
+      robot.mbc().alpha[static_cast<size_t>(joints_mbc_idx[i])] = {alpha};
+      real.mbc().alpha[static_cast<size_t>(joints_mbc_idx[i])] = {alpha};
     }
   }
   for(size_t i = active_joints.size(); i < names.size(); ++i)
   {
-    _q[i] = mult[i].second * _q[mult[i].first] + offset[i];
+    double next_q = mult[i].second * _q[mult[i].first] + offset[i];
+    double alpha = (next_q - _q[i]) / timeStep;
+    _q[i] = next_q;
     if(joints_mbc_idx[i] != -1)
     {
       robot.mbc().q[static_cast<size_t>(joints_mbc_idx[i])] = {_q[i]};
       real.mbc().q[static_cast<size_t>(joints_mbc_idx[i])] = {_q[i]};
+      robot.mbc().alpha[static_cast<size_t>(joints_mbc_idx[i])] = {alpha};
+      real.mbc().alpha[static_cast<size_t>(joints_mbc_idx[i])] = {alpha};
     }
   }
   for(size_t i = 0; i < actualQ.size(); ++i)
