@@ -336,7 +336,7 @@ mc_rbdyn::Robot & MCController::loadRobot(const mc_rbdyn::RobotModule & rm, cons
   else
   {
     canonicalModulePtr = mc_rbdyn::RobotLoader::get_robot_module(cp);
-    if(!canonicalModule)
+    if(!canonicalModulePtr)
     {
       mc_rtc::log::critical("Failed to load the canonical module for {}, acting as if canonical was self", name);
       canonicalModule = &rm;
