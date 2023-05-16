@@ -33,14 +33,8 @@ std::string make_temporary_path(const std::string & prefix)
 template<std::string RobotModule::*member, typename GetDefault>
 void set_or_default(mc_rbdyn::RobotModule & out, const std::string & value, GetDefault && get_default)
 {
-  if(value.size() == 0)
-  {
-    out.*member = get_default();
-  }
-  else
-  {
-    out.*member = value;
-  }
+  if(value.size() == 0) { out.*member = get_default(); }
+  else { out.*member = value; }
 }
 
 std::string prefixed_or_mapping(const std::string & ref,
@@ -48,10 +42,7 @@ std::string prefixed_or_mapping(const std::string & ref,
                                 const std::string & prefix)
 {
   auto it = mapping.find(ref);
-  if(it != mapping.end())
-  {
-    return it->second;
-  }
+  if(it != mapping.end()) { return it->second; }
   return fmt::format("{}{}", prefix, ref);
 }
 
@@ -75,10 +66,7 @@ void processSurfaces(const std::string & rsdf_dir_in, const std::string & rsdf_d
 {
   bfs::path pathIn(rsdf_dir_in);
   bfs::path pathOut(rsdf_dir_out);
-  if(!bfs::exists(pathIn) || !bfs::is_directory(pathIn))
-  {
-    return;
-  }
+  if(!bfs::exists(pathIn) || !bfs::is_directory(pathIn)) { return; }
   std::vector<bfs::path> files;
   std::copy(bfs::directory_iterator(pathIn), bfs::directory_iterator(), std::back_inserter(files));
   for(const auto & f : files)
@@ -109,52 +97,34 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
 #define SET_OR_DEFAULT(NAME, CALLBACK) set_or_default<&RobotModule::NAME>(out, params.NAME, CALLBACK)
 #define SET_OR_DEFAULT_DIRECTORY(NAME, CALLBACK) \
   SET_OR_DEFAULT(NAME, CALLBACK);                \
-  if(!bfs::exists(out.NAME))                     \
-  {                                              \
-    bfs::create_directories(out.NAME);           \
-  }
+  if(!bfs::exists(out.NAME)) { bfs::create_directories(out.NAME); }
   SET_OR_DEFAULT(name, ([&, this]() { return fmt::format("{}_{}_{}", this->name, prefix, other.name); }));
   SET_OR_DEFAULT_DIRECTORY(path, ([&]() { return make_temporary_path(out.name); }));
   SET_OR_DEFAULT(urdf_path, ([&]() { return (bfs::path(out.path) / "urdf" / (out.name + ".urdf")).string(); }));
   auto urdf_dir = bfs::path(out.urdf_path).parent_path();
-  if(!bfs::exists(urdf_dir))
-  {
-    bfs::create_directories(urdf_dir);
-  }
+  if(!bfs::exists(urdf_dir)) { bfs::create_directories(urdf_dir); }
   SET_OR_DEFAULT_DIRECTORY(rsdf_dir, ([&]() { return (bfs::path(out.path) / "rsdf" / out.name).string(); }));
   SET_OR_DEFAULT_DIRECTORY(calib_dir, ([&]() { return (bfs::path(out.path) / "calib").string(); }));
-  if(!params.useGripperSafetyFromThis)
-  {
-    out._gripperSafety = other._gripperSafety;
-  }
-  if(!params.useLIPMStabilizerConfigFromThis)
-  {
-    out._lipmStabilizerConfig = other._lipmStabilizerConfig;
-  }
+  if(!params.useGripperSafetyFromThis) { out._gripperSafety = other._gripperSafety; }
+  if(!params.useLIPMStabilizerConfigFromThis) { out._lipmStabilizerConfig = other._lipmStabilizerConfig; }
 #undef SET_OR_DEFAULT
 #undef SET_OR_DEFAULT_DIRECTORY
 
   // A few helpers to handle name remapping
   auto bodyName = [&](const std::string & body) { return prefixed_or_mapping(body, params.bodyMapping, prefix); };
   auto jointName = [&](const std::string & joint) { return prefixed_or_mapping(joint, params.jointMapping, prefix); };
-  auto convexName = [&](const std::string & convex) {
-    return prefixed_or_mapping(convex, params.convexMapping, prefix);
-  };
-  auto gripperName = [&](const std::string & gripper) {
-    return prefixed_or_mapping(gripper, params.gripperMapping, prefix);
-  };
-  auto surfaceName = [&](const std::string & surface) {
-    return prefixed_or_mapping(surface, params.surfaceMapping, prefix);
-  };
-  auto forceSensorName = [&](const std::string & forceSensor) {
-    return prefixed_or_mapping(forceSensor, params.forceSensorMapping, prefix);
-  };
-  auto bodySensorName = [&](const std::string & bodySensor) {
-    return prefixed_or_mapping(bodySensor, params.bodySensorMapping, prefix);
-  };
-  auto deviceName = [&](const std::string & device) {
-    return prefixed_or_mapping(device, params.deviceMapping, prefix);
-  };
+  auto convexName = [&](const std::string & convex)
+  { return prefixed_or_mapping(convex, params.convexMapping, prefix); };
+  auto gripperName = [&](const std::string & gripper)
+  { return prefixed_or_mapping(gripper, params.gripperMapping, prefix); };
+  auto surfaceName = [&](const std::string & surface)
+  { return prefixed_or_mapping(surface, params.surfaceMapping, prefix); };
+  auto forceSensorName = [&](const std::string & forceSensor)
+  { return prefixed_or_mapping(forceSensor, params.forceSensorMapping, prefix); };
+  auto bodySensorName = [&](const std::string & bodySensor)
+  { return prefixed_or_mapping(bodySensor, params.bodySensorMapping, prefix); };
+  auto deviceName = [&](const std::string & device)
+  { return prefixed_or_mapping(device, params.deviceMapping, prefix); };
 
   // Build a new MultiBodyGraph from this and other
   auto & mbg = out.mbg;
@@ -169,10 +139,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   {
     const auto & joint = other.mb.joint(static_cast<int>(i));
     rbd::Joint j{joint.type(), axisFromJoint(joint), joint.forward(), jointName(joint.name())};
-    if(joint.isMimic())
-    {
-      j.makeMimic(jointName(joint.mimicName()), joint.mimicMultiplier(), joint.mimicOffset());
-    }
+    if(joint.isMimic()) { j.makeMimic(jointName(joint.mimicName()), joint.mimicMultiplier(), joint.mimicOffset()); }
     mbg.addJoint(j);
   }
   // Add all connections except the root<->world connection
@@ -189,10 +156,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
                    jointName(other.mb.joint(static_cast<int>(i)).name()));
   }
   std::string connectJointName = params.jointName;
-  if(connectJointName.size() == 0)
-  {
-    connectJointName = fmt::format("{}_connect_{}_{}", name, prefix, other.name);
-  }
+  if(connectJointName.size() == 0) { connectJointName = fmt::format("{}_connect_{}_{}", name, prefix, other.name); }
   rbd::Joint connectJoint{params.jointType, params.jointAxis, params.jointForward, connectJointName};
   mbg.addJoint(connectJoint);
   mbg.linkBodies(this_body, params.X_this_connection, bodyName(other_body), params.X_other_connection,
@@ -239,14 +203,8 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
           "You provided invalid joint acceleration limits for the connection joint, expected {} but got {}",
           connectJoint.dof(), limit.size());
     }
-    if(params.jointAccelerationLimits[i].size() == 0)
-    {
-      continue;
-    }
-    if(out._accelerationBounds.size() < 2)
-    {
-      out._accelerationBounds.resize(2);
-    }
+    if(params.jointAccelerationLimits[i].size() == 0) { continue; }
+    if(out._accelerationBounds.size() < 2) { out._accelerationBounds.resize(2); }
     out._accelerationBounds[i][connectJointName] = params.jointAccelerationLimits[i];
   }
   for(size_t i = 0; i < 2; ++i)
@@ -258,14 +216,8 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
           "You provided invalid joint torqueDerivative limits for the connection joint, expected {} but got {}",
           connectJoint.dof(), limit.size());
     }
-    if(params.jointTorqueDerivativeLimits[i].size() == 0)
-    {
-      continue;
-    }
-    if(out._torqueDerivativeBounds.size() < 2)
-    {
-      out._torqueDerivativeBounds.resize(2);
-    }
+    if(params.jointTorqueDerivativeLimits[i].size() == 0) { continue; }
+    if(out._torqueDerivativeBounds.size() < 2) { out._torqueDerivativeBounds.resize(2); }
     out._torqueDerivativeBounds[i][connectJointName] = params.jointTorqueDerivativeLimits[i];
   }
   for(size_t i = 0; i < 2; ++i)
@@ -277,14 +229,8 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
           "You provided invalid joint jerk limits for the connection joint, expected {} but got {}", connectJoint.dof(),
           limit.size());
     }
-    if(params.jointJerkLimits[i].size() == 0)
-    {
-      continue;
-    }
-    if(out._jerkBounds.size() < 2)
-    {
-      out._jerkBounds.resize(2);
-    }
+    if(params.jointJerkLimits[i].size() == 0) { continue; }
+    if(out._jerkBounds.size() < 2) { out._jerkBounds.resize(2); }
     out._jerkBounds[i][connectJointName] = params.jointJerkLimits[i];
   }
 
@@ -301,50 +247,37 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   {
     const auto & jName = other.mb.joint(static_cast<int>(i)).name();
     const auto & newName = jointName(jName);
-    auto updateBounds = [&](size_t jMax, const bounds_t & boundsIn, bounds_t & boundsOut) {
+    auto updateBounds = [&](size_t jMax, const bounds_t & boundsIn, bounds_t & boundsOut)
+    {
       for(size_t j = 0; j < jMax; ++j)
       {
         const auto & bound = boundsIn[j];
         auto it = bound.find(jName);
-        if(it != bound.end())
-        {
-          boundsOut[j][newName] = it->second;
-        }
+        if(it != bound.end()) { boundsOut[j][newName] = it->second; }
       }
     };
     updateBounds(6, other._bounds, out._bounds);
     if(other._accelerationBounds.size())
     {
-      if(!out._accelerationBounds.size())
-      {
-        out._accelerationBounds.resize(2);
-      }
+      if(!out._accelerationBounds.size()) { out._accelerationBounds.resize(2); }
       updateBounds(2, other._accelerationBounds, out._accelerationBounds);
     }
     if(other._torqueDerivativeBounds.size())
     {
-      if(!out._torqueDerivativeBounds.size())
-      {
-        out._torqueDerivativeBounds.resize(2);
-      }
+      if(!out._torqueDerivativeBounds.size()) { out._torqueDerivativeBounds.resize(2); }
       updateBounds(2, other._torqueDerivativeBounds, out._torqueDerivativeBounds);
     }
     if(other._jerkBounds.size())
     {
-      if(!out._jerkBounds.size())
-      {
-        out._jerkBounds.resize(2);
-      }
+      if(!out._jerkBounds.size()) { out._jerkBounds.resize(2); }
       updateBounds(2, other._jerkBounds, out._jerkBounds);
     }
   }
 
   /** Update visual and collision visual maps */
-  auto updateVisualMap = [&](const VisualMap & visualsIn, VisualMap & visualsOut) {
-    for(const auto & v : visualsIn)
-    {
-      visualsOut[bodyName(v.first)] = v.second;
-    }
+  auto updateVisualMap = [&](const VisualMap & visualsIn, VisualMap & visualsOut)
+  {
+    for(const auto & v : visualsIn) { visualsOut[bodyName(v.first)] = v.second; }
   };
   updateVisualMap(other._visual, out._visual);
   updateVisualMap(other._collision, out._collision);
@@ -370,17 +303,15 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   for(const auto & s : other._stance)
   {
     const auto & jName = s.first;
-    if(jName == "Root")
-    {
-      continue;
-    }
+    if(jName == "Root") { continue; }
     const auto & jConfig = s.second;
     out._stance[jointName(jName)] = jConfig;
   }
 
   /** Update convex/stpbv hulls/sch objects */
   auto updateHulls = [&](const std::map<std::string, std::pair<std::string, std::string>> & hullsIn,
-                         std::map<std::string, std::pair<std::string, std::string>> & hullsOut) {
+                         std::map<std::string, std::pair<std::string, std::string>> & hullsOut)
+  {
     for(const auto & h : hullsIn)
     {
       const auto & cName = h.first;
@@ -414,16 +345,10 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   }
 
   /** Update collision transforms */
-  for(const auto & ct : other._collisionTransforms)
-  {
-    out._collisionTransforms[convexName(ct.first)] = ct.second;
-  }
+  for(const auto & ct : other._collisionTransforms) { out._collisionTransforms[convexName(ct.first)] = ct.second; }
 
   /** Update flexibility */
-  for(const auto & f : other._flexibility)
-  {
-    out._flexibility.push_back({jointName(f.jointName), f.K, f.C, f.O});
-  }
+  for(const auto & f : other._flexibility) { out._flexibility.push_back({jointName(f.jointName), f.K, f.C, f.O}); }
 
   /** Update force sensors */
   for(const auto & fs : other._forceSensors)
@@ -463,18 +388,16 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
     const auto & springBody = bodyName(other._springs.springsBodies[i]);
     const auto & afterSpringBody = bodyName(other._springs.afterSpringsBodies[i]);
     std::vector<std::string> springJoints;
-    for(const auto & j : other._springs.springsJoints[i])
-    {
-      springJoints.push_back(jointName(j));
-    }
+    for(const auto & j : other._springs.springsJoints[i]) { springJoints.push_back(jointName(j)); }
     out._springs.springsBodies.push_back(springBody);
     out._springs.afterSpringsBodies.push_back(afterSpringBody);
     out._springs.springsJoints.push_back(springJoints);
   }
 
   /** Update self-collisions set */
-  auto updateSelfCollisions = [&](const std::vector<mc_rbdyn::Collision> & colsIn,
-                                  std::vector<mc_rbdyn::Collision> & colsOut) {
+  auto updateSelfCollisions =
+      [&](const std::vector<mc_rbdyn::Collision> & colsIn, std::vector<mc_rbdyn::Collision> & colsOut)
+  {
     for(const auto & c : colsIn)
     {
       colsOut.push_back({convexName(c.body1), convexName(c.body2), c.iDist, c.sDist, c.damping});
@@ -484,14 +407,8 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   updateSelfCollisions(other._commonSelfCollisions, out._commonSelfCollisions);
 
   /** Merge the two ref_joint_order */
-  if(connectJoint.dof() > 0)
-  {
-    out._ref_joint_order.push_back(connectJointName);
-  }
-  for(const auto & j : other._ref_joint_order)
-  {
-    out._ref_joint_order.push_back(jointName(j));
-  }
+  if(connectJoint.dof() > 0) { out._ref_joint_order.push_back(connectJointName); }
+  for(const auto & j : other._ref_joint_order) { out._ref_joint_order.push_back(jointName(j)); }
 
   /** Update grippers */
   for(const auto & g : other._grippers)
@@ -507,25 +424,13 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
           name);
     }
     std::vector<std::string> joints;
-    for(const auto & j : g.joints)
-    {
-      joints.push_back(jointName(j));
-    }
+    for(const auto & j : g.joints) { joints.push_back(jointName(j)); }
     if(g.safety())
     {
-      if(g.mimics())
-      {
-        out._grippers.emplace_back(name, joints, g.reverse_limits, *g.safety(), *g.mimics());
-      }
-      else
-      {
-        out._grippers.emplace_back(name, joints, g.reverse_limits, *g.safety());
-      }
+      if(g.mimics()) { out._grippers.emplace_back(name, joints, g.reverse_limits, *g.safety(), *g.mimics()); }
+      else { out._grippers.emplace_back(name, joints, g.reverse_limits, *g.safety()); }
     }
-    else
-    {
-      out._grippers.emplace_back(name, joints, g.reverse_limits);
-    }
+    else { out._grippers.emplace_back(name, joints, g.reverse_limits); }
   }
 
   /** Update compound joint description */
@@ -556,31 +461,34 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
    * - Update the link property in every surface from other and copy the new file to out.rsdf_dir
    */
   processSurfaces(rsdf_dir, out.rsdf_dir, [](const std::string &) {});
-  processSurfaces(other.rsdf_dir, out.rsdf_dir, [&](const std::string & rsdf) {
-    std::ifstream ifs(rsdf);
-    std::stringstream ss;
-    ss << ifs.rdbuf();
-    tinyxml2::XMLDocument doc;
-    doc.Parse(ss.str().c_str());
-    auto root = doc.FirstChildElement("robot");
-    auto updateSurfaces = [&](const char * type) {
-      auto surface = root->FirstChildElement(type);
-      while(surface)
-      {
-        std::string name = surface->Attribute("name");
-        surface->SetAttribute("name", surfaceName(name).c_str());
-        std::string link = surface->Attribute("link");
-        surface->SetAttribute("link", bodyName(link).c_str());
-        surface = surface->NextSiblingElement(type);
-      }
-    };
-    updateSurfaces("planar_surface");
-    updateSurfaces("cylindrical_surface");
-    updateSurfaces("gripper_surface");
-    doc.SaveFile(rsdf.c_str());
-    auto p = bfs::path(rsdf);
-    bfs::rename(p, p.parent_path() / (prefix + p.leaf().string()));
-  });
+  processSurfaces(other.rsdf_dir, out.rsdf_dir,
+                  [&](const std::string & rsdf)
+                  {
+                    std::ifstream ifs(rsdf);
+                    std::stringstream ss;
+                    ss << ifs.rdbuf();
+                    tinyxml2::XMLDocument doc;
+                    doc.Parse(ss.str().c_str());
+                    auto root = doc.FirstChildElement("robot");
+                    auto updateSurfaces = [&](const char * type)
+                    {
+                      auto surface = root->FirstChildElement(type);
+                      while(surface)
+                      {
+                        std::string name = surface->Attribute("name");
+                        surface->SetAttribute("name", surfaceName(name).c_str());
+                        std::string link = surface->Attribute("link");
+                        surface->SetAttribute("link", bodyName(link).c_str());
+                        surface = surface->NextSiblingElement(type);
+                      }
+                    };
+                    updateSurfaces("planar_surface");
+                    updateSurfaces("cylindrical_surface");
+                    updateSurfaces("gripper_surface");
+                    doc.SaveFile(rsdf.c_str());
+                    auto p = bfs::path(rsdf);
+                    bfs::rename(p, p.parent_path() / (prefix + p.leaf().string()));
+                  });
 
   // Generate a module file so that the generated RobotModule can be re-used
   {
@@ -605,21 +513,16 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
   // A few helpers to handle name remapping
   auto bodyName = [&](const std::string & body) { return prefixed_or_mapping(body, params.bodyMapping, prefix); };
   auto jointName = [&](const std::string & joint) { return prefixed_or_mapping(joint, params.jointMapping, prefix); };
-  auto convexName = [&](const std::string & convex) {
-    return prefixed_or_mapping(convex, params.convexMapping, prefix);
-  };
-  auto gripperName = [&](const std::string & gripper) {
-    return prefixed_or_mapping(gripper, params.gripperMapping, prefix);
-  };
-  auto forceSensorName = [&](const std::string & forceSensor) {
-    return prefixed_or_mapping(forceSensor, params.forceSensorMapping, prefix);
-  };
-  auto bodySensorName = [&](const std::string & bodySensor) {
-    return prefixed_or_mapping(bodySensor, params.bodySensorMapping, prefix);
-  };
-  auto deviceName = [&](const std::string & device) {
-    return prefixed_or_mapping(device, params.deviceMapping, prefix);
-  };
+  auto convexName = [&](const std::string & convex)
+  { return prefixed_or_mapping(convex, params.convexMapping, prefix); };
+  auto gripperName = [&](const std::string & gripper)
+  { return prefixed_or_mapping(gripper, params.gripperMapping, prefix); };
+  auto forceSensorName = [&](const std::string & forceSensor)
+  { return prefixed_or_mapping(forceSensor, params.forceSensorMapping, prefix); };
+  auto bodySensorName = [&](const std::string & bodySensor)
+  { return prefixed_or_mapping(bodySensor, params.bodySensorMapping, prefix); };
+  auto deviceName = [&](const std::string & device)
+  { return prefixed_or_mapping(device, params.deviceMapping, prefix); };
   std::string connection_joint = "";
   {
     const auto & bIndexByName = mb.bodyIndexByName();
@@ -660,35 +563,23 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
   auto out = *this;
 
   // Name requires specific handling
-  if(params.name != "")
-  {
-    out.name = params.name;
-  }
+  if(params.name != "") { out.name = params.name; }
   else
   {
     std::string search = fmt::format("{}_{}", prefix, other.name);
     auto idx = out.name.find(search);
-    if(idx != std::string::npos)
-    {
-      out.name.erase(idx, search.size());
-    }
+    if(idx != std::string::npos) { out.name.erase(idx, search.size()); }
   }
 
   // Handle other general options
 #define SET_OR_DEFAULT(NAME, CALLBACK) set_or_default<&RobotModule::NAME>(out, params.NAME, CALLBACK)
 #define SET_OR_DEFAULT_DIRECTORY(NAME, CALLBACK) \
   SET_OR_DEFAULT(NAME, CALLBACK);                \
-  if(!bfs::exists(out.NAME))                     \
-  {                                              \
-    bfs::create_directories(out.NAME);           \
-  }
+  if(!bfs::exists(out.NAME)) { bfs::create_directories(out.NAME); }
   SET_OR_DEFAULT_DIRECTORY(path, ([&]() { return make_temporary_path(out.name); }));
   SET_OR_DEFAULT(urdf_path, ([&]() { return (bfs::path(out.path) / "urdf" / (out.name + ".urdf")).string(); }));
   auto urdf_dir = bfs::path(out.urdf_path).parent_path();
-  if(!bfs::exists(urdf_dir))
-  {
-    bfs::create_directories(urdf_dir);
-  }
+  if(!bfs::exists(urdf_dir)) { bfs::create_directories(urdf_dir); }
   SET_OR_DEFAULT_DIRECTORY(rsdf_dir, ([&]() { return (bfs::path(out.path) / "rsdf" / out.name).string(); }));
   SET_OR_DEFAULT_DIRECTORY(calib_dir, ([&]() { return (bfs::path(out.path) / "calib").string(); }));
 #undef SET_OR_DEFAULT
@@ -706,42 +597,26 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
   rbd::forwardKinematics(out.mb, out.mbc);
 
   /** Erase all extra bounds */
-  auto eraseBounds = [&](const std::string & jName) {
+  auto eraseBounds = [&](const std::string & jName)
+  {
     for(size_t i = 0; i < 2; ++i)
     {
       out._bounds[i].erase(jName);
-      if(out._accelerationBounds.size())
-      {
-        out._accelerationBounds[i].erase(jName);
-      }
-      if(out._torqueDerivativeBounds.size())
-      {
-        out._torqueDerivativeBounds[i].erase(jName);
-      }
-      if(out._jerkBounds.size())
-      {
-        out._jerkBounds[i].erase(jName);
-      }
+      if(out._accelerationBounds.size()) { out._accelerationBounds[i].erase(jName); }
+      if(out._torqueDerivativeBounds.size()) { out._torqueDerivativeBounds[i].erase(jName); }
+      if(out._jerkBounds.size()) { out._jerkBounds[i].erase(jName); }
     }
-    for(size_t i = 2; i < 6; ++i)
-    {
-      out._bounds[i].erase(jName);
-    }
+    for(size_t i = 2; i < 6; ++i) { out._bounds[i].erase(jName); }
     // Remove connection joint from stance
     out._stance.erase(jName);
   };
   eraseBounds(connection_joint);
-  for(const auto & j : other.mb.joints())
-  {
-    eraseBounds(jointName(j.name()));
-  }
+  for(const auto & j : other.mb.joints()) { eraseBounds(jointName(j.name())); }
 
   /** Update the visual and collision maps */
-  auto updateVisualMap = [&](const VisualMap & in, VisualMap & out) {
-    for(const auto & v : in)
-    {
-      out.erase(bodyName(v.first));
-    }
+  auto updateVisualMap = [&](const VisualMap & in, VisualMap & out)
+  {
+    for(const auto & v : in) { out.erase(bodyName(v.first)); }
   };
   updateVisualMap(other._visual, out._visual);
   updateVisualMap(other._collision, out._collision);
@@ -767,43 +642,29 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
   for(const auto & s : other._stance)
   {
     const auto & jName = s.first;
-    if(jName == "Root")
-    {
-      continue;
-    }
+    if(jName == "Root") { continue; }
     out._stance.erase(jointName(jName));
   }
 
   /** Update convex/stpbv hulls/sch objects */
   auto updateHulls = [&](const std::map<std::string, std::pair<std::string, std::string>> & hullsIn,
-                         std::map<std::string, std::pair<std::string, std::string>> & hullsOut) {
-    for(const auto & h : hullsIn)
-    {
-      hullsOut.erase(convexName(h.first));
-    }
+                         std::map<std::string, std::pair<std::string, std::string>> & hullsOut)
+  {
+    for(const auto & h : hullsIn) { hullsOut.erase(convexName(h.first)); }
   };
   updateHulls(other._convexHull, out._convexHull);
   updateHulls(other._stpbvHull, out._stpbvHull);
-  for(const auto & co : other._collisionObjects)
-  {
-    out._collisionObjects.erase(convexName(co.first));
-  }
+  for(const auto & co : other._collisionObjects) { out._collisionObjects.erase(convexName(co.first)); }
 
   /** Update collision transforms */
-  for(const auto & ct : other._collisionTransforms)
-  {
-    out._collisionTransforms.erase(convexName(ct.first));
-  }
+  for(const auto & ct : other._collisionTransforms) { out._collisionTransforms.erase(convexName(ct.first)); }
 
   /** Update flexibilities */
   for(const auto & flex : other._flexibility)
   {
     auto it = std::find_if(out._flexibility.begin(), out._flexibility.end(),
                            [&](const Flexibility & f) { return f.jointName == jointName(flex.jointName); });
-    if(it != out._flexibility.end())
-    {
-      out._flexibility.erase(it);
-    }
+    if(it != out._flexibility.end()) { out._flexibility.erase(it); }
   }
 
   /** Update force sensors */
@@ -838,10 +699,7 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
     const auto & springBody = bodyName(other._springs.springsBodies[i]);
     auto it = std::find_if(out._springs.springsBodies.begin(), out._springs.springsBodies.end(),
                            [&](const std::string & b) { return b == springBody; });
-    if(it == out._springs.springsBodies.end())
-    {
-      continue;
-    }
+    if(it == out._springs.springsBodies.end()) { continue; }
     auto idx = std::distance(out._springs.springsBodies.begin(), it);
     out._springs.springsBodies.erase(it);
     out._springs.springsJoints.erase(out._springs.springsJoints.begin() + idx);
@@ -849,35 +707,28 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
   }
 
   /** Update self-collisions set */
-  auto updateSelfCollisions = [&](const std::vector<mc_rbdyn::Collision> & colsIn,
-                                  std::vector<mc_rbdyn::Collision> & colsOut) {
+  auto updateSelfCollisions =
+      [&](const std::vector<mc_rbdyn::Collision> & colsIn, std::vector<mc_rbdyn::Collision> & colsOut)
+  {
     for(const auto & c : colsIn)
     {
-      auto it = std::find_if(colsOut.begin(), colsOut.end(), [&](const Collision & col) {
-        return col.body1 == convexName(c.body1) && col.body2 == convexName(c.body2);
-      });
-      if(it != colsOut.end())
-      {
-        colsOut.erase(it);
-      }
+      auto it = std::find_if(colsOut.begin(), colsOut.end(),
+                             [&](const Collision & col)
+                             { return col.body1 == convexName(c.body1) && col.body2 == convexName(c.body2); });
+      if(it != colsOut.end()) { colsOut.erase(it); }
     }
   };
   updateSelfCollisions(other._minimalSelfCollisions, out._minimalSelfCollisions);
   updateSelfCollisions(other._commonSelfCollisions, out._commonSelfCollisions);
 
   /** Update ref joint order */
-  auto removeFromRefJointOrder = [&](const std::string & jName) {
+  auto removeFromRefJointOrder = [&](const std::string & jName)
+  {
     auto it = std::find(out._ref_joint_order.begin(), out._ref_joint_order.end(), jName);
-    if(it != out._ref_joint_order.end())
-    {
-      out._ref_joint_order.erase(it);
-    }
+    if(it != out._ref_joint_order.end()) { out._ref_joint_order.erase(it); }
   };
   removeFromRefJointOrder(connection_joint);
-  for(const auto & j : other._ref_joint_order)
-  {
-    removeFromRefJointOrder(jointName(j));
-  }
+  for(const auto & j : other._ref_joint_order) { removeFromRefJointOrder(jointName(j)); }
 
   /** Update grippers */
   for(const auto & g : other._grippers)
@@ -885,23 +736,16 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
     const auto & name = gripperName(g.name);
     auto it =
         std::find_if(out._grippers.begin(), out._grippers.end(), [&name](const Gripper & g) { return g.name == name; });
-    if(it != out._grippers.end())
-    {
-      out._grippers.erase(it);
-    }
+    if(it != out._grippers.end()) { out._grippers.erase(it); }
   }
 
   /** Update compound joint description */
   for(const auto & cj : other._compoundJoints)
   {
     auto it = std::find_if(out._compoundJoints.begin(), out._compoundJoints.end(),
-                           [&](const CompoundJointConstraintDescription & cjIn) {
-                             return cjIn.j1 == jointName(cj.j1) && cjIn.j2 == jointName(cj.j2);
-                           });
-    if(it != out._compoundJoints.end())
-    {
-      out._compoundJoints.erase(it);
-    }
+                           [&](const CompoundJointConstraintDescription & cjIn)
+                           { return cjIn.j1 == jointName(cj.j1) && cjIn.j2 == jointName(cj.j2); });
+    if(it != out._compoundJoints.end()) { out._compoundJoints.erase(it); }
   }
 
   /** Update devices */
@@ -910,21 +754,16 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
     auto name = deviceName(d->name());
     auto it = std::find_if(out._devices.begin(), out._devices.end(),
                            [&name](const DevicePtr & d) { return d->name() == name; });
-    if(it != out._devices.end())
-    {
-      out._devices.erase(it);
-    }
+    if(it != out._devices.end()) { out._devices.erase(it); }
   }
 
   /** Update surfaces we simply copy all files except those that are also in other.rsdf_dir */
-  auto copySurfaces = [&]() {
+  auto copySurfaces = [&]()
+  {
     bfs::path this_rsdf_dir(rsdf_dir);
     bfs::path other_rsdf_dir(other.rsdf_dir);
     bfs::path out_rsdf_dir(out.rsdf_dir);
-    if(!bfs::exists(this_rsdf_dir) || !bfs::is_directory(this_rsdf_dir))
-    {
-      return;
-    }
+    if(!bfs::exists(this_rsdf_dir) || !bfs::is_directory(this_rsdf_dir)) { return; }
     std::vector<bfs::path> this_files;
     std::copy(bfs::directory_iterator(this_rsdf_dir), bfs::directory_iterator(), std::back_inserter(this_files));
     std::vector<bfs::path> other_files;
@@ -934,17 +773,11 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
     }
     for(const auto & f : this_files)
     {
-      if(f.extension() != ".rsdf")
-      {
-        continue;
-      }
+      if(f.extension() != ".rsdf") { continue; }
       auto it = std::find_if(other_files.begin(), other_files.end(),
                              [&](const bfs::path & other_f) { return f.leaf() == other_f.leaf(); });
       // Skip the copy if the file is from other
-      if(it != other_files.end())
-      {
-        continue;
-      }
+      if(it != other_files.end()) { continue; }
       bfs::path out = out_rsdf_dir / f.leaf();
       bfs::copy(f, out);
     }
