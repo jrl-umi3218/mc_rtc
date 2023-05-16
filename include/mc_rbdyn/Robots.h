@@ -180,10 +180,7 @@ public:
    * It is emitted after the robot has been added, i.e. robots(payload) has the newly
    * added robot
    */
-  inline onRobotAddedSigT::Proxy onRobotAdded() const noexcept
-  {
-    return onRobotAdded_;
-  }
+  inline onRobotAddedSigT::Proxy onRobotAdded() const noexcept { return onRobotAdded_; }
 
   using onRobotRemovedSigT = mc_rtc::Signal<std::string>;
   using onRobotRemovedSlotT = onRobotRemovedSigT::SlotT;
@@ -195,10 +192,7 @@ public:
    * It is emitted before the robot is effectively removed, i.e. robots(payload)
    * still has the robot about to be removed
    */
-  inline onRobotRemovedSigT::Proxy onRobotRemoved() const noexcept
-  {
-    return onRobotRemoved_;
-  }
+  inline onRobotRemovedSigT::Proxy onRobotRemoved() const noexcept { return onRobotRemoved_; }
   /** @} */
 
   /** Number of robots
