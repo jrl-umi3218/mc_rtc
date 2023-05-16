@@ -359,10 +359,7 @@ mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots) co
 {
   const mc_rbdyn::Robot & r1 = robots.robot(impl->r1Index);
   const mc_rbdyn::Robot & r2 = robots.robot(impl->r2Index);
-  if(r1.mb().nrDof() == 0 && r2.mb().nrDof() == 0)
-  {
-    return {};
-  }
+  if(r1.mb().nrDof() == 0 && r2.mb().nrDof() == 0) { return {}; }
   unsigned int r1BodyIndex = r1.bodyIndexByName(impl->r1Surface->bodyName());
   unsigned int r2BodyIndex = r2.bodyIndexByName(impl->r2Surface->bodyName());
   sva::PTransformd X_0_b1 = r1.mbc().bodyPosW[r1BodyIndex];
