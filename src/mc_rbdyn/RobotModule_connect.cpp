@@ -12,8 +12,9 @@
 #include <RBDyn/parsers/urdf.h>
 
 #include <boost/filesystem.hpp>
-
 namespace bfs = boost::filesystem;
+
+#include <tinyxml2.h>
 
 namespace mc_rbdyn
 {
