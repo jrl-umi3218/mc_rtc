@@ -51,19 +51,10 @@ struct Signal
   SlotT connect(Callable && callback)
   {
     SlotT out{this, next_slot_};
-    if(next_slot_ < callbacks_.size())
-    {
-      callbacks_[next_slot_] = callback;
-    }
-    else
-    {
-      callbacks_.push_back(callback);
-    }
+    if(next_slot_ < callbacks_.size()) { callbacks_[next_slot_] = callback; }
+    else { callbacks_.push_back(callback); }
     next_slot_++;
-    while(next_slot_ < callbacks_.size() && callbacks_[next_slot_])
-    {
-      next_slot_++;
-    }
+    while(next_slot_ < callbacks_.size() && callbacks_[next_slot_]) { next_slot_++; }
     return out;
   }
 
@@ -76,10 +67,7 @@ struct Signal
   {
     for(auto & c : callbacks_)
     {
-      if(c)
-      {
-        c(args...);
-      }
+      if(c) { c(args...); }
     }
   }
 
@@ -134,20 +122,14 @@ struct Slot
   Slot & operator=(const Slot &) = delete;
   Slot & operator=(Slot && rhs)
   {
-    if(&rhs == this)
-    {
-      return *this;
-    }
+    if(&rhs == this) { return *this; }
     signal_ = rhs.signal_;
     idx_ = rhs.idx_;
     rhs.signal_ = nullptr;
     return *this;
   }
 
-  ~Slot()
-  {
-    disconnect();
-  }
+  ~Slot() { disconnect(); }
 
   void disconnect()
   {

@@ -1060,10 +1060,7 @@ void MCController::supported_robots(std::vector<std::string> & out) const
 
 void MCController::stop()
 {
-  if(gui_)
-  {
-    gui_->removeCategory({"Global", "Grippers"});
-  }
+  if(gui_) { gui_->removeCategory({"Global", "Grippers"}); }
 }
 
 Gripper & MCController::gripper(const std::string & robot, const std::string & gripper)
