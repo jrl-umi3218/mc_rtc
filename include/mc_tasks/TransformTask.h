@@ -209,6 +209,9 @@ protected:
   /* Don't use parent's refVel() as the velocity frame (spatial or body) is
    * ambiguous. */
   using TrajectoryTaskGeneric::refVel;
+
+  bool showTarget_ = false;
+  bool showPose_ = false;
 };
 
 } // namespace mc_tasks

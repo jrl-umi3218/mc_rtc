@@ -16,6 +16,7 @@
 #include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_rtc/deprecated.h>
 #include <mc_rtc/gui/Transform.h>
+#include <mc_rtc/gui/Checkbox.h>
 
 namespace mc_tasks
 {
@@ -242,11 +243,45 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> TransformTask::bu
 void TransformTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryTaskGeneric::addToGUI(gui);
+  auto showTarget = [this, &gui]()
+  {
+    if(showTarget_)
+    {
+      gui.addElement({"Tasks", name_},
+                     mc_rtc::gui::Transform(
+                         "pos_target", [this]() { return this->target(); },
+                         [this](const sva::PTransformd & pos) { this->target(pos); }));
+    }
+    else { gui.removeElement({"Tasks", name_}, "pos_target"); }
+  };
+
+  auto showPose = [this, &gui]()
+  {
+    if(showPose_)
+    {
+      gui.addElement({"Tasks", name_},
+                     mc_rtc::gui::Transform("pos", [this]() { return frame_->position(); }));
+    }
+    else { gui.removeElement({"Tasks", name_}, "pos"); }
+  };
+
   gui.addElement({"Tasks", name_},
-                 mc_rtc::gui::Transform(
-                     "pos_target", [this]() { return this->target(); },
-                     [this](const sva::PTransformd & pos) { this->target(pos); }),
-                 mc_rtc::gui::Transform("pos", [this]() { return frame_->position(); }));
+                 mc_rtc::gui::Checkbox(
+                     "Show target", [this]() { return showTarget_; },
+                     [this, showTarget]()
+                     {
+                       showTarget_ = !showTarget_;
+                       showTarget();
+                     }),
+                 mc_rtc::gui::Checkbox(
+                     "Show pose", [this]() { return showPose_; },
+                     [this, showPose]()
+                     {
+                       showPose_ = !showPose_;
+                       showPose();
+                     }));
+  showTarget();
+  showPose();
 }
 
 } // namespace mc_tasks
