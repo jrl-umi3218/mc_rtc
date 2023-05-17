@@ -45,6 +45,7 @@ private:
   std::string ctl_name_;
   size_t iters_ = 0;
   std::shared_ptr<mc_rtc::log::FlatLog> log_;
+  bool pause_ = false;
   bool with_inputs_ = true;
   bool with_gui_inputs_ = true;
   bool with_outputs_ = false;
