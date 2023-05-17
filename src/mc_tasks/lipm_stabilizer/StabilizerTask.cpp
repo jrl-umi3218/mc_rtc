@@ -1053,6 +1053,8 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   sva::ForceVecd w_r_rc = X_0_rc.dualMul(w_r_0);
   Eigen::Vector2d leftCoP = (constants::vertical.cross(w_l_lc.couple()) / w_l_lc.force()(2)).head<2>();
   Eigen::Vector2d rightCoP = (constants::vertical.cross(w_r_rc.couple()) / w_r_rc.force()(2)).head<2>();
+  
+  for(auto & t : footTasks){t.second->setUsedPressure(true);}
   footTasks[ContactState::Left]->targetCoP(leftCoP);
   footTasks[ContactState::Left]->targetForce(w_l_lc.force());
   footTasks[ContactState::Right]->targetCoP(rightCoP);
