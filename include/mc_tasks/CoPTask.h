@@ -97,6 +97,16 @@ public:
       double dt,
       const mc_rtc::Configuration & config) const override;
 
+  /**
+   * @brief Wether to compute the desired torque with the target pressure (true) of the measured one (false)
+   * 
+   * @param s 
+   */
+  void setUsedPressure(bool s)
+  {
+    useTargetPressure = s;
+  }
+
   /*! \brief Measured CoP in target frame.
    *
    */
@@ -170,6 +180,8 @@ protected:
 private:
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();
   Eigen::Vector3d targetForce_ = Eigen::Vector3d::Zero();
+
+  bool useTargetPressure = false;
 
   void update(mc_solver::QPSolver &) override;
 
