@@ -369,7 +369,9 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   {
     horizonZmpRef_ = ref;
     horizonDelta_ = delta;
+    tComputation_ = 0;
     horizonCoPDistribution_ = true;
+
   }
 
   /**
