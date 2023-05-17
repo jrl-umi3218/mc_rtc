@@ -1341,7 +1341,7 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
     QPCoPRight_ = exp_mat * measuredRightCoP_delayed.segment(0, 2) + (Eigen::Matrix2d::Identity() - exp_mat) * rightCoP;
 
     // Check that the computed modeled ZMP coincide with the ZMP reference
-    QPzmp = (1 - ratio0) * (X_0_lc.translation().segment(0, 2) + X_0_lc.rotation().block(0,0,2,2).transpose() * QPCoPLeft_)
+    Eigen::Vector2d QPzmp = (1 - ratio0) * (X_0_lc.translation().segment(0, 2) + X_0_lc.rotation().block(0,0,2,2).transpose() * QPCoPLeft_)
                     + ratio0 * (X_0_rc.translation().segment(0, 2) + X_0_rc.rotation().block(0,0,2,2).transpose() * QPCoPRight_);
     
     distribCheck_ = QPzmp - zmp_ref[0];
