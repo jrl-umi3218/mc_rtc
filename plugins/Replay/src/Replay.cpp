@@ -151,6 +151,12 @@ void Replay::init(mc_control::MCGlobalController & gc, const mc_rtc::Configurati
   do_config("with-inputs", with_inputs_, "replay sensor inputs");
   do_config("with-gui-inputs", with_gui_inputs_, "replay GUI inputs");
   do_config("with-outputs", with_outputs_, "replay controller output");
+  do_config("pause", pause_, "start paused");
+  if(pause_ && with_inputs_ && !with_outputs_)
+  {
+    mc_rtc::log::warning("[Replay] Cannot start paused if only inputs are replayed");
+    pause_ = false;
+  }
   std::string with_datastore_config = config("with-datastore-config", std::string(""));
   if(!with_datastore_config.empty())
   {
@@ -200,6 +206,33 @@ void Replay::reset(mc_control::MCGlobalController & gc)
     ++it;
   }
   gc.controller().datastore().make_call("Replay::iter", [this](size_t iter) { iters_ = iter; });
+  // Setup Replay GUI
+  gc.controller().gui()->removeCategory({"Replay"});
+  gc.controller().gui()->addElement(
+      {"Replay"},
+      mc_rtc::gui::Button("Pause/Play",
+                          [this]()
+                          {
+                            if(with_inputs_ && !with_outputs_)
+                            {
+                              mc_rtc::log::warning("[Replay] Replay cannot be paused when only inputs are replayed");
+                              return;
+                            }
+                            pause_ = !pause_;
+                          }),
+      mc_rtc::gui::NumberSlider(
+          "Replay time", [this, &gc]() { return static_cast<double>(iters_) * gc.timestep(); },
+          [this, &gc](double t)
+          {
+            if(with_inputs_ && !with_outputs_)
+            {
+              mc_rtc::log::warning("[Replay] Replay time cannot be set when only inputs are replayed");
+              return;
+            }
+            size_t iter = static_cast<size_t>(std::floor(t / gc.timestep()));
+            iters_ = std::max<size_t>(std::min<size_t>(iter, log_->size() - 1), 0);
+          },
+          0.0, static_cast<double>(log_->size()) * gc.timestep()));
   // Run once to fill the initial sensors
   before(gc);
   iters_ = 0;
@@ -286,7 +319,7 @@ void Replay::after(mc_control::MCGlobalController & gc)
       gc.robot(r.name()).mbc() = r.mbc();
     }
   }
-  if(iters_ + 1 < log_->size()) { iters_++; }
+  if(!pause_ && iters_ + 1 < log_->size()) { iters_++; }
 }
 
 } // namespace mc_plugin
