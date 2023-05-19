@@ -210,8 +210,8 @@ protected:
    * ambiguous. */
   using TrajectoryTaskGeneric::refVel;
 
-  bool showTarget_ = false;
-  bool showPose_ = false;
+  bool showTarget_ = true;
+  bool showPose_ = true;
 };
 
 } // namespace mc_tasks
