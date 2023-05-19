@@ -24,7 +24,7 @@ namespace mc_tasks
 static inline mc_rtc::void_ptr_caster<tasks::qp::SurfaceTransformTask> tasks_error{};
 static inline mc_rtc::void_ptr_caster<mc_tvm::TransformFunction> tvm_error{};
 
-TransformTask::TransformTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+TransformTask::TransformTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight, bool showTarget, bool showPose)
 : TrajectoryTaskGeneric(frame.robot().robots(), frame.robot().robotIndex(), stiffness, weight), frame_(frame)
 {
   switch(backend_)
@@ -42,14 +42,18 @@ TransformTask::TransformTask(const mc_rbdyn::RobotFrame & frame, double stiffnes
 
   type_ = "transform";
   name_ = "transform_" + frame.robot().name() + "_" + frame.name();
+  showTarget_ = showTarget;
+  showPose_ = showPose;
 }
 
 TransformTask::TransformTask(const std::string & surfaceName,
                              const mc_rbdyn::Robots & robots,
                              unsigned int robotIndex,
                              double stiffness,
-                             double weight)
-: TransformTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight)
+                             double weight,
+                             bool showTarget, 
+                             bool showPose)
+: TransformTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight, showTarget, showPose)
 {
 }
 

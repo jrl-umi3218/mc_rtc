@@ -23,7 +23,7 @@ public:
    *
    * \param weight Task weight
    */
-  TransformTask(const mc_rbdyn::RobotFrame & frame, double stiffness = 2.0, double weight = 500.0);
+  TransformTask(const mc_rbdyn::RobotFrame & frame, double stiffness = 2.0, double weight = 500.0, bool showTarget = true, bool showPose = true);
 
   /*! \brief Constructor
    *
@@ -44,7 +44,9 @@ public:
                 const mc_rbdyn::Robots & robots,
                 unsigned int robotIndex,
                 double stiffness = 2.0,
-                double weight = 500);
+                double weight = 500, 
+                bool showTarget = true,
+                bool showPose = true);
 
   /*! \brief Reset the task
    *
