@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+## [2.5.0] - 2023-05-22
+
+### Added
+
+- [mc_control] GenericGripper now computes alphaOut (#365)
+- [StabilizerTask] Add a new method for force distribution based on horizon reference (#359)
+- [mc_rtc_ticker] Add an option to continue after the replay
+- [utils/mc_log_ui] Show a warning before displaying many plots at once
+
+### Fixes
+
+- [doc] Fix schema resolution issue to display the documentation correctly
+- [mc_tasks/BSplineTrajectoryTask] Use frame instead of surface
+- [Replay] Fix issues with datastore replay
+- [Replay] Add a GUI to control the iterations outside of the ticker (#367)
+- [StabilizerTask] Put kappa in gamma computation, avoids issue far from the origin
+- [Ticker] Use outputRobots for the input
+- [Ticker] Correctly enfore with-inputs option
+- [Ticker] Do not run as fast as possible after a failure
+- [utils/mc_log_ui] Show correct order for numerical entries of size > 9
+- [utils/mc_log_ui] Show the grid when only right-side graphs are selected
+
 ## [2.4.0] - 2023-04-17
 
 ### Changes
@@ -671,7 +693,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.4.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.5.0...HEAD
+[2.5.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.5.0
 [2.4.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.4.0
 [2.3.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.3.0
 [2.2.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.2.0
