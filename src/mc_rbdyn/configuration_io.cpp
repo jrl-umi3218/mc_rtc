@@ -47,8 +47,8 @@ struct formatter<rbd::Joint::Type> : public formatter<string_view>
       case rbd::Joint::Type::Fixed:
         return formatter<string_view>::format("fixed", ctx);
       default:
-        return formatter<string_view>::format(
-            fmt::to_string(static_cast<std::underlying_type_t<rbd::Joint::Type>>(t), ctx));
+        return formatter<string_view>::format(fmt::to_string(static_cast<std::underlying_type_t<rbd::Joint::Type>>(t)),
+                                              ctx);
     }
   }
 };
