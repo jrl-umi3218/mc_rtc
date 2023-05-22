@@ -21,6 +21,40 @@
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
+namespace fmt
+{
+
+template<>
+struct formatter<rbd::Joint::Type> : public formatter<string_view>
+{
+  template<typename FormatContext>
+  auto format(const rbd::Joint::Type & t, FormatContext & ctx) -> decltype(ctx.out())
+  {
+    switch(t)
+    {
+      case rbd::Joint::Type::Rev:
+        return formatter<string_view>::format("rev", ctx);
+      case rbd::Joint::Type::Prism:
+        return formatter<string_view>::format("prism", ctx);
+      case rbd::Joint::Type::Spherical:
+        return formatter<string_view>::format("spherical", ctx);
+      case rbd::Joint::Type::Planar:
+        return formatter<string_view>::format("planar", ctx);
+      case rbd::Joint::Type::Cylindrical:
+        return formatter<string_view>::format("cylindrical", ctx);
+      case rbd::Joint::Type::Free:
+        return formatter<string_view>::format("free", ctx);
+      case rbd::Joint::Type::Fixed:
+        return formatter<string_view>::format("fixed", ctx);
+      default:
+        return formatter<string_view>::format(
+            fmt::to_string(static_cast<std::underlying_type_t<rbd::Joint::Type>>(t), ctx));
+    }
+  }
+};
+
+} // namespace fmt
+
 namespace
 {
 // Return relative path to go to "to" from "from"
@@ -68,34 +102,7 @@ rbd::Joint::Type ConfigurationLoader<rbd::Joint::Type>::load(const mc_rtc::Confi
 mc_rtc::Configuration ConfigurationLoader<rbd::Joint::Type>::save(const rbd::Joint::Type & type)
 {
   mc_rtc::Configuration config;
-  std::string typeStr = "";
-  switch(type)
-  {
-    case rbd::Joint::Type::Rev:
-      typeStr = "rev";
-      break;
-    case rbd::Joint::Type::Prism:
-      typeStr = "prism";
-      break;
-    case rbd::Joint::Type::Spherical:
-      typeStr = "spherical";
-      break;
-    case rbd::Joint::Type::Planar:
-      typeStr = "planar";
-      break;
-    case rbd::Joint::Type::Cylindrical:
-      typeStr = "cylindrical";
-      break;
-    case rbd::Joint::Type::Free:
-      typeStr = "free";
-      break;
-    case rbd::Joint::Type::Fixed:
-      typeStr = "fixed";
-      break;
-    default:
-      mc_rtc::log::error_and_throw("Cannot serialize joint type {}", type);
-  }
-  config.add("type", typeStr);
+  config.add("type", fmt::to_string(type));
   return config;
 }
 
