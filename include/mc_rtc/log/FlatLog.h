@@ -14,15 +14,32 @@
 #include <string>
 #include <unordered_map>
 
-namespace mc_rtc
+namespace mc_rtc::log
 {
 
-namespace log
+namespace details
 {
+
+template<typename T>
+struct GetRawReturnType
+{
+  using type = T;
+};
+
+template<int N>
+struct GetRawReturnType<Eigen::Matrix<double, N, 1>>
+{
+  using type = std::conditional_t<N == 2 || N == 3 || N == 6, Eigen::Matrix<double, N, 1>, Eigen::VectorXd>;
+};
+
+} // namespace details
 
 /** From an on-disk binary log recorded by mc_rtc, return a flat structure */
 struct MC_RTC_UTILS_DLLAPI FlatLog
 {
+  template<typename T>
+  using get_raw_return_t = typename details::GetRawReturnType<T>::type;
+
   /** Default constructor, empty log */
   FlatLog() = default;
 
@@ -68,7 +85,7 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
    *
    */
   template<typename T>
-  std::vector<const T *> getRaw(const std::string & entry) const;
+  std::vector<const get_raw_return_t<T> *> getRaw(const std::string & entry) const;
 
   /** Get a typed record entry
    *
@@ -82,7 +99,7 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
    *
    */
   template<typename T>
-  std::vector<T> get(const std::string & entry, const T & def) const;
+  std::vector<get_raw_return_t<T>> get(const std::string & entry, const T & def) const;
 
   /** Get a typed record entry
    *
@@ -94,7 +111,7 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
    *
    */
   template<typename T>
-  std::vector<T> get(const std::string & entry) const;
+  std::vector<get_raw_return_t<T>> get(const std::string & entry) const;
 
   /** Get a typed record entry at a given index
    *
@@ -109,7 +126,7 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
    *
    */
   template<typename T>
-  T get(const std::string & entry, size_t i, const T & def) const;
+  get_raw_return_t<T> get(const std::string & entry, size_t i, const T & def) const;
 
   /** Get a typed raw entry at a given index
    *
@@ -121,7 +138,7 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
    *
    */
   template<typename T>
-  const T * getRaw(const std::string & entry, size_t i) const;
+  const get_raw_return_t<T> * getRaw(const std::string & entry, size_t i) const;
 
   /** Returns all the GUI events that happened during the log recording */
   inline const std::vector<std::vector<Logger::GUIEvent>> & guiEvents() const noexcept { return gui_events_; }
@@ -168,8 +185,6 @@ private:
   void appendBin(const std::string & fpath);
 };
 
-} // namespace log
-
-} // namespace mc_rtc
+} // namespace mc_rtc::log
 
 #include "FlatLog.hpp"

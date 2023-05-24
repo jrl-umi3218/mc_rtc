@@ -16,6 +16,14 @@ namespace bfs = boost::filesystem;
 
 #include "utils.h"
 
+namespace Eigen
+{
+
+using Vector7d = Eigen::Matrix<double, 7, 1>;
+using Vector8d = Eigen::Matrix<double, 8, 1>;
+
+} // namespace Eigen
+
 bool operator==(const Eigen::Quaterniond & lhs, const Eigen::Quaterniond & rhs)
 {
   return lhs.vec() == rhs.vec();
@@ -37,7 +45,8 @@ void check(mc_rtc::Logger & logger, Callback && cb)
 template<typename T>
 void check(const mc_rtc::log::FlatLog & log, const std::string & entry, size_t idx, const T & member)
 {
-  const T * raw = log.getRaw<T>(entry, idx);
+  auto raw = log.getRaw<T>(entry, idx);
+  BOOST_REQUIRE(log.getRaw<Eigen::Vector8d>(entry, idx) == nullptr);
   BOOST_REQUIRE(raw && *raw == member);
 }
 
@@ -51,7 +60,8 @@ private:
   mutable Eigen::Vector2d v2d = Eigen::Vector2d::Random();
   mutable Eigen::Vector3d v3d = Eigen::Vector3d::Random();
   mutable Eigen::Vector6d v6d = Eigen::Vector6d::Random();
-  mutable Eigen::VectorXd vxd = Eigen::VectorXd::Random(static_cast<Eigen::DenseIndex>(random_size()));
+  mutable Eigen::Vector7d v7d = Eigen::Vector7d::Random();
+  mutable Eigen::VectorXd vxd = Eigen::VectorXd::Random(static_cast<Eigen::DenseIndex>(random_size_except(8)));
   Eigen::Quaterniond q = random_quat();
   sva::PTransformd pt = random_pt();
   sva::ForceVecd fv = random_fv();
@@ -67,6 +77,7 @@ public:
   DEFINE_GETTER(v2d)
   DEFINE_GETTER(v3d)
   DEFINE_GETTER(v6d)
+  DEFINE_GETTER(v7d)
   DEFINE_GETTER(vxd)
   DEFINE_GETTER(q)
   DEFINE_GETTER(pt)
@@ -81,6 +92,7 @@ public:
   DEFINE_GET_AS_REF(v2d)
   DEFINE_GET_AS_REF(v3d)
   DEFINE_GET_AS_REF(v6d)
+  DEFINE_GET_AS_REF(v7d)
   DEFINE_GET_AS_REF(vxd)
 #undef DEFINE_GET_AS_REF
 
@@ -98,6 +110,7 @@ public:
     ADD_LOG_ENTRY("Eigen::Vector2d", v2d);
     ADD_LOG_ENTRY("Eigen::Vector3d", v3d);
     ADD_LOG_ENTRY("Eigen::Vector6d", v6d);
+    ADD_LOG_ENTRY("Eigen::Vector7d", v7d);
     ADD_LOG_ENTRY("Eigen::VectorXd", vxd);
     ADD_LOG_ENTRY("Eigen::Quaterniond", q);
     ADD_LOG_ENTRY("sva::PTransformd", pt);
@@ -117,6 +130,7 @@ public:
     ADD_LOG_ENTRY_AS_REF("v2d", v2d);
     ADD_LOG_ENTRY_AS_REF("v3d", v3d);
     ADD_LOG_ENTRY_AS_REF("v6d", v6d);
+    ADD_LOG_ENTRY_AS_REF("v7d", v7d);
     ADD_LOG_ENTRY_AS_REF("vxd", vxd);
 #undef ADD_LOG_ENTRY_AS_REF
   }
@@ -129,6 +143,7 @@ public:
     logger.addLogEntry<decltype(&LogData::v2d), &LogData::v2d>("Eigen::Vector2d", this);
     logger.addLogEntry<decltype(&LogData::v3d), &LogData::v3d>("Eigen::Vector3d", this);
     logger.addLogEntry<decltype(&LogData::v6d), &LogData::v6d>("Eigen::Vector6d", this);
+    logger.addLogEntry<decltype(&LogData::v7d), &LogData::v7d>("Eigen::Vector7d", this);
     logger.addLogEntry<decltype(&LogData::vxd), &LogData::vxd>("Eigen::VectorXd", this);
     logger.addLogEntry<decltype(&LogData::q), &LogData::q>("Eigen::Quaterniond", this);
     logger.addLogEntry<decltype(&LogData::pt), &LogData::pt>("sva::PTransformd", this);
@@ -146,6 +161,7 @@ public:
     ADD_LOG_ENTRY_AS_REF("v2d", v2d);
     ADD_LOG_ENTRY_AS_REF("v3d", v3d);
     ADD_LOG_ENTRY_AS_REF("v6d", v6d);
+    ADD_LOG_ENTRY_AS_REF("v7d", v7d);
     ADD_LOG_ENTRY_AS_REF("vxd", vxd);
 #undef ADD_LOG_ENTRY_AS_REF
   }
@@ -158,6 +174,7 @@ public:
     MC_RTC_LOG_HELPER("Eigen::Vector2d", v2d);
     MC_RTC_LOG_HELPER("Eigen::Vector3d", v3d);
     MC_RTC_LOG_HELPER("Eigen::Vector6d", v6d);
+    MC_RTC_LOG_HELPER("Eigen::Vector7d", v7d);
     MC_RTC_LOG_HELPER("Eigen::VectorXd", vxd);
     MC_RTC_LOG_HELPER("Eigen::Quaterniond", q);
     MC_RTC_LOG_HELPER("sva::PTransformd", pt);
@@ -175,6 +192,7 @@ public:
     ADD_LOG_ENTRY_AS_REF("v2d", v2d);
     ADD_LOG_ENTRY_AS_REF("v3d", v3d);
     ADD_LOG_ENTRY_AS_REF("v6d", v6d);
+    ADD_LOG_ENTRY_AS_REF("v7d", v7d);
     ADD_LOG_ENTRY_AS_REF("vxd", vxd);
 #undef ADD_LOG_ENTRY_AS_REF
   }
@@ -187,6 +205,7 @@ public:
     logger.addLogEntry<decltype(&LogData::get_v2d), &LogData::get_v2d>("Eigen::Vector2d", this);
     logger.addLogEntry<decltype(&LogData::get_v3d), &LogData::get_v3d>("Eigen::Vector3d", this);
     logger.addLogEntry<decltype(&LogData::get_v6d), &LogData::get_v6d>("Eigen::Vector6d", this);
+    logger.addLogEntry<decltype(&LogData::get_v7d), &LogData::get_v7d>("Eigen::Vector7d", this);
     logger.addLogEntry<decltype(&LogData::get_vxd), &LogData::get_vxd>("Eigen::VectorXd", this);
     logger.addLogEntry<decltype(&LogData::get_q), &LogData::get_q>("Eigen::Quaterniond", this);
     logger.addLogEntry<decltype(&LogData::get_pt), &LogData::get_pt>("sva::PTransformd", this);
@@ -199,6 +218,8 @@ public:
     logger.addLogEntry<decltype(&LogData::get_v3d_as_cref), &LogData::get_v3d_as_cref>("v3d_as_cref", this);
     logger.addLogEntry<decltype(&LogData::get_v6d_as_ref), &LogData::get_v6d_as_ref>("v6d_as_ref", this);
     logger.addLogEntry<decltype(&LogData::get_v6d_as_cref), &LogData::get_v6d_as_cref>("v6d_as_cref", this);
+    logger.addLogEntry<decltype(&LogData::get_v7d_as_ref), &LogData::get_v7d_as_ref>("v7d_as_ref", this);
+    logger.addLogEntry<decltype(&LogData::get_v7d_as_cref), &LogData::get_v7d_as_cref>("v7d_as_cref", this);
     logger.addLogEntry<decltype(&LogData::get_vxd_as_ref), &LogData::get_vxd_as_ref>("vxd_as_ref", this);
     logger.addLogEntry<decltype(&LogData::get_vxd_as_cref), &LogData::get_vxd_as_cref>("vxd_as_cref", this);
   }
@@ -211,6 +232,7 @@ public:
     MC_RTC_LOG_HELPER("Eigen::Vector2d", get_v2d);
     MC_RTC_LOG_HELPER("Eigen::Vector3d", get_v3d);
     MC_RTC_LOG_HELPER("Eigen::Vector6d", get_v6d);
+    MC_RTC_LOG_HELPER("Eigen::Vector7d", get_v7d);
     MC_RTC_LOG_HELPER("Eigen::VectorXd", get_vxd);
     MC_RTC_LOG_HELPER("Eigen::Quaterniond", get_q);
     MC_RTC_LOG_HELPER("sva::PTransformd", get_pt);
@@ -223,6 +245,8 @@ public:
     MC_RTC_LOG_HELPER("v3d_as_cref", get_v3d_as_cref);
     MC_RTC_LOG_HELPER("v6d_as_ref", get_v6d_as_ref);
     MC_RTC_LOG_HELPER("v6d_as_cref", get_v6d_as_cref);
+    MC_RTC_LOG_HELPER("v7d_as_ref", get_v7d_as_ref);
+    MC_RTC_LOG_HELPER("v7d_as_cref", get_v7d_as_cref);
     MC_RTC_LOG_HELPER("vxd_as_ref", get_vxd_as_ref);
     MC_RTC_LOG_HELPER("vxd_as_cref", get_vxd_as_cref);
   }
@@ -235,6 +259,7 @@ public:
     logger.removeLogEntry("Eigen::Vector2d");
     logger.removeLogEntry("Eigen::Vector3d");
     logger.removeLogEntry("Eigen::Vector6d");
+    logger.removeLogEntry("Eigen::Vector7d");
     logger.removeLogEntry("Eigen::VectorXd");
     logger.removeLogEntry("Eigen::Quaterniond");
     logger.removeLogEntry("sva::PTransformd");
@@ -248,6 +273,8 @@ public:
     logger.removeLogEntry("vxd_as_ref");
     logger.removeLogEntry("v6d_as_ref");
     logger.removeLogEntry("v6d_as_cref");
+    logger.removeLogEntry("v7d_as_ref");
+    logger.removeLogEntry("v7d_as_cref");
     logger.removeLogEntry("vxd_as_cref");
   }
 
@@ -262,6 +289,7 @@ public:
     ::check(log, "Eigen::Vector2d", idx, v2d);
     ::check(log, "Eigen::Vector3d", idx, v3d);
     ::check(log, "Eigen::Vector6d", idx, v6d);
+    ::check(log, "Eigen::Vector7d", idx, v7d);
     ::check(log, "Eigen::VectorXd", idx, vxd);
     ::check(log, "Eigen::Quaterniond", idx, q);
     ::check(log, "sva::PTransformd", idx, pt);
@@ -274,6 +302,8 @@ public:
     ::check(log, "v3d_as_cref", idx, v3d);
     ::check(log, "v6d_as_ref", idx, v6d);
     ::check(log, "v6d_as_cref", idx, v6d);
+    ::check(log, "v7d_as_ref", idx, v7d);
+    ::check(log, "v7d_as_cref", idx, v7d);
     ::check(log, "vxd_as_ref", idx, vxd);
     ::check(log, "vxd_as_cref", idx, vxd);
   }
@@ -287,6 +317,7 @@ public:
     BOOST_REQUIRE(log.getRaw<Eigen::Vector2d>("Eigen::Vector2d", idx) == nullptr);
     BOOST_REQUIRE(log.getRaw<Eigen::Vector3d>("Eigen::Vector3d", idx) == nullptr);
     BOOST_REQUIRE(log.getRaw<Eigen::Vector6d>("Eigen::Vector6d", idx) == nullptr);
+    BOOST_REQUIRE(log.getRaw<Eigen::Vector7d>("Eigen::Vector7d", idx) == nullptr);
     BOOST_REQUIRE(log.getRaw<Eigen::VectorXd>("Eigen::VectorXd", idx) == nullptr);
     BOOST_REQUIRE(log.getRaw<Eigen::Quaterniond>("Eigen::Quaterniond", idx) == nullptr);
     BOOST_REQUIRE(log.getRaw<sva::PTransformd>("sva::PTransformd", idx) == nullptr);
@@ -299,6 +330,8 @@ public:
     BOOST_REQUIRE(log.getRaw<Eigen::Vector3d>("v3d_as_cref", idx) == nullptr);
     BOOST_REQUIRE(log.getRaw<Eigen::Vector6d>("v6d_as_ref", idx) == nullptr);
     BOOST_REQUIRE(log.getRaw<Eigen::Vector6d>("v6d_as_cref", idx) == nullptr);
+    BOOST_REQUIRE(log.getRaw<Eigen::Vector7d>("v7d_as_ref", idx) == nullptr);
+    BOOST_REQUIRE(log.getRaw<Eigen::Vector7d>("v7d_as_cref", idx) == nullptr);
     BOOST_REQUIRE(log.getRaw<Eigen::VectorXd>("vxd_as_ref", idx) == nullptr);
     BOOST_REQUIRE(log.getRaw<Eigen::VectorXd>("vxd_as_cref", idx) == nullptr);
   }
@@ -343,6 +376,7 @@ BOOST_AUTO_TEST_CASE(TestLogger)
                                                    "Eigen::Vector2d",
                                                    "Eigen::Vector3d",
                                                    "Eigen::Vector6d",
+                                                   "Eigen::Vector7d",
                                                    "Eigen::VectorXd",
                                                    "Eigen::Quaterniond",
                                                    "sva::PTransformd",
@@ -355,6 +389,8 @@ BOOST_AUTO_TEST_CASE(TestLogger)
                                                    "v3d_as_cref",
                                                    "v6d_as_ref",
                                                    "v6d_as_cref",
+                                                   "v7d_as_ref",
+                                                   "v7d_as_cref",
                                                    "vxd_as_ref",
                                                    "vxd_as_cref"};
                   BOOST_REQUIRE(log.entries() == entries);

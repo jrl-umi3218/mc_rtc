@@ -102,6 +102,13 @@ size_t random_size()
   return dis(gen);
 }
 
+size_t random_size_except(size_t s)
+{
+  auto out = random_size();
+  while(out == s) { out = random_size(); }
+  return out;
+}
+
 bool random_bool()
 {
   static std::random_device rd;
