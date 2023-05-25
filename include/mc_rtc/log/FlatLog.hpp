@@ -26,14 +26,15 @@ struct CastLogRecord
   static const T * cast(const FlatLog::record & r) { return static_cast<const T *>(r.data.get()); }
 };
 
-template<int N>
-struct CastLogRecord<Eigen::Matrix<double, N, 1>>
+template<int N, int _Options, int _MaxRows, int _MaxCols>
+struct CastLogRecord<Eigen::Matrix<double, N, 1, _Options, _MaxRows, _MaxCols>>
 {
-  static const FlatLog::get_raw_return_t<Eigen::Matrix<double, N, 1>> * cast(const FlatLog::record & r)
+  static const FlatLog::get_raw_return_t<Eigen::Matrix<double, N, 1, _Options, _MaxRows, _MaxCols>> * cast(
+      const FlatLog::record & r)
   {
     if constexpr(N == -1 || N == 2 || N == 3 || N == 6)
     {
-      return static_cast<const Eigen::Matrix<double, N, 1> *>(r.data.get());
+      return static_cast<const Eigen::Matrix<double, N, 1, _Options, _MaxRows, _MaxCols> *>(r.data.get());
     }
     else
     {

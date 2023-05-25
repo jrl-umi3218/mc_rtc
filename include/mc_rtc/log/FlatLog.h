@@ -26,10 +26,12 @@ struct GetRawReturnType
   using type = T;
 };
 
-template<int N>
-struct GetRawReturnType<Eigen::Matrix<double, N, 1>>
+template<int N, int _Options, int _MaxRows, int _MaxCols>
+struct GetRawReturnType<Eigen::Matrix<double, N, 1, _Options, _MaxRows, _MaxCols>>
 {
-  using type = std::conditional_t<N == 2 || N == 3 || N == 6, Eigen::Matrix<double, N, 1>, Eigen::VectorXd>;
+  using type = std::conditional_t<N == 2 || N == 3 || N == 6,
+                                  Eigen::Matrix<double, N, 1, _Options, _MaxRows, _MaxCols>,
+                                  Eigen::VectorXd>;
 };
 
 } // namespace details
