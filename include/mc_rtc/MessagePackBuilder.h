@@ -160,6 +160,15 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
    */
   void write(const Eigen::VectorXd & v);
 
+  template<int N, int _Options, int _MaxRows, int _MaxCols>
+  void write(const Eigen::Matrix<double, N, 1, _Options, _MaxRows, _MaxCols> & v)
+  {
+    static_assert(N != -1 && N != 2 && N != 3 && N != 6, "Should have gone to specialized function");
+    start_array(static_cast<size_t>(N));
+    for(Eigen::Index i = 0; i < N; ++i) { write(v(i)); }
+    finish_array();
+  }
+
   /** Write an Eigen::Quaterniond
    *
    * Serializes as an array of size X

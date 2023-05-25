@@ -91,6 +91,12 @@ IMPL_MAPPING(mc_rbdyn::Gains6d, Vector6d);
 
 #undef IMPL_MAPPING
 
+template<int N, int _Options, int _MaxRows, int _MaxCols>
+struct GetLogType<Eigen::Matrix<double, N, 1, _Options, _MaxRows, _MaxCols>>
+{
+  static constexpr mc_rtc::log::LogType type = mc_rtc::log::LogType::VectorXd;
+};
+
 template<typename A>
 struct GetLogType<std::vector<double, A>>
 {
