@@ -32,6 +32,8 @@ struct MC_CONTROL_FSM_DLLAPI PythonState : public State
   std::function<void(Controller &)> stop_ = [](Controller &) {};
   std::function<bool()> handle_python_error;
 
+  using State::output;
+
 private:
   void update_python_failed();
 

@@ -81,3 +81,7 @@ cdef class PythonState(object):
       self.impl.stop_ = c_fsm.make_controller_cb(python_stop_cb, self)
     except AttributeError:
       pass
+  def output(self, out):
+      if isinstance(out, unicode):
+        out = out.encode(u'ascii')
+      self.impl.output(out)
