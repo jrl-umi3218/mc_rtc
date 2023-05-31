@@ -13,6 +13,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <type_traits>
 #include <vector>
 
 namespace mc_rtc
