@@ -757,6 +757,9 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
       case Elements::DataComboInput:
         form_data_combo_input(id, name, required, el[3], el[4]);
         break;
+      case Elements::Point3D:
+        form_point3d_input(id, name, required, el[3], el[4]);
+        break;
       default:
         mc_rtc::log::error("Form cannot handle element of type {}", static_cast<int>(type));
     }

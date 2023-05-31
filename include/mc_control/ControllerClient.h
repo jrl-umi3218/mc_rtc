@@ -643,6 +643,26 @@ protected:
   {
   }
 
+  /** A 3D point that can be edited from a Form
+   *
+   * \p formId Identifier of the form
+   *
+   * \p name Name of the entry
+   *
+   * \p required If true, it must hold a value when the form is sent
+   *
+   * \p default_ Default value in the form
+   *
+   * \p default_from_user Default is provided by the user
+   */
+  virtual void form_point3d_input(const ElementId & /*formId*/,
+                                  const std::string & /*name*/,
+                                  bool /*required*/,
+                                  const Eigen::Vector3d & /*default_*/,
+                                  bool /*default_from_user*/)
+  {
+  }
+
   /** Called when new plot data arrives
    *
    * This should open a new plotting window with the provided title.
