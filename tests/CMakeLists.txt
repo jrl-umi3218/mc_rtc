@@ -82,6 +82,7 @@ macro(mc_rtc_test NAME)
 endmacro()
 
 mc_rtc_test(testConfiguration mc_rtc_utils mc_rbdyn)
+mc_rtc_test(testSchema mc_rtc_utils mc_rbdyn)
 mc_rtc_test(testGUIStateBuilder mc_rtc_gui)
 mc_rtc_test(testJsonIO mc_rtc_utils mc_rbdyn)
 mc_rtc_test(testConstraintSetLoader mc_solver)
