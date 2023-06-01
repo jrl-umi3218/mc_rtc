@@ -10,11 +10,21 @@ foreach(PYTHON_NAME ${PYTHON_BINDING_VERSIONS})
   set_target_properties(
     ${PYTHON_NAME_LOWER}_controller PROPERTIES OUTPUT_NAME ${PYTHON_NAME_LOWER}
   )
-  target_link_libraries(
-    ${PYTHON_NAME_LOWER}_controller PRIVATE mc_control_${PYTHON_NAME}
-                                            mc_rbdyn_${PYTHON_NAME}
+  add_dependencies(
+    ${PYTHON_NAME_LOWER}_controller mc_control_${PYTHON_NAME} mc_rbdyn_${PYTHON_NAME}
+  )
+  target_include_directories(
+    ${PYTHON_NAME_LOWER}_controller
+    PRIVATE $<TARGET_PROPERTY:mc_control_${PYTHON_NAME},INTERFACE_INCLUDE_DIRECTORIES>
+            $<TARGET_PROPERTY:mc_rbdyn_${PYTHON_NAME},INTERFACE_INCLUDE_DIRECTORIES>
+  )
+  target_compile_definitions(
+    ${PYTHON_NAME_LOWER}_controller
+    PRIVATE $<TARGET_PROPERTY:mc_control_${PYTHON_NAME},INTERFACE_COMPILE_DEFINITIONS>
+            $<TARGET_PROPERTY:mc_rbdyn_${PYTHON_NAME},INTERFACE_COMPILE_DEFINITIONS>
   )
   target_include_directories(
     ${PYTHON_NAME_LOWER}_controller PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}"
   )
+  target_link_libraries(${PYTHON_NAME_LOWER}_controller PRIVATE ${PYTHON_NAME}::Python)
 endforeach()
