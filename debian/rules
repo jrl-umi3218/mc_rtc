@@ -6,6 +6,7 @@ export ROS_VERSION:=$(shell . /opt/ros/${ROS_DISTRO}/setup.sh && echo $$ROS_VERS
 export ROS_PYTHON_VERSION:=$(shell . /opt/ros/${ROS_DISTRO}/setup.sh && echo $$ROS_PYTHON_VERSION)
 ifeq (${ROS_PYTHON_VERSION}, 3)
 	export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python3/dist-packages:${PYTHONPATH}
+	export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python$(shell python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}');")/site-packages:${PYTHONPATH}
 	export MC_LOG_UI_PYTHON_EXECUTABLE:=python3
 else
 	export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python2.7/dist-packages:${PYTHONPATH}
@@ -13,7 +14,11 @@ else
 endif
 export PKG_CONFIG_PATH:=/opt/ros/${ROS_DISTRO}/lib/pkgconfig:$PKG_CONFIG_PATH
 export ROS_MASTER_URI:=http://localhost:11311
-export CMAKE_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}:$CMAKE_PREFIX_PATH
+ifeq (${ROS_VERSION}, 2)
+	export AMENT_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}
+else
+	export CMAKE_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}:$CMAKE_PREFIX_PATH
+endif
 
 TMP = $(CURDIR)/debian/tmp
 
