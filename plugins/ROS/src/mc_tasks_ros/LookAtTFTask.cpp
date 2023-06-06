@@ -8,6 +8,11 @@
 
 #include <mc_rtc/deprecated.h>
 
+#ifdef MC_RTC_ROS_IS_ROS2
+#  include <mc_rtc_ros/ros.h>
+#  include <rclcpp/rclcpp.hpp>
+#endif
+
 namespace mc_tasks
 {
 LookAtTFTask::LookAtTFTask(const std::string & bodyName,
@@ -28,8 +33,11 @@ LookAtTFTask::LookAtTFTask(const mc_rbdyn::RobotFrame & frame,
                            const std::string & targetFrame,
                            double stiffness,
                            double weight)
-: LookAtTask(frame, frameVector, stiffness, weight), tfListener(tfBuffer), sourceFrame(sourceFrame),
-  targetFrame(targetFrame)
+: LookAtTask(frame, frameVector, stiffness, weight),
+#ifdef MC_RTC_ROS_IS_ROS2
+  tfBuffer(mc_rtc::ROSBridge::get_node_handle()->get_clock()),
+#endif
+  tfListener(tfBuffer), sourceFrame(sourceFrame), targetFrame(targetFrame)
 {
   type_ = "lookAtTF";
   name_ = "look_at_TF_" + frame.robot().name() + "_" + frame.name() + "_" + targetFrame;
@@ -37,7 +45,11 @@ LookAtTFTask::LookAtTFTask(const mc_rbdyn::RobotFrame & frame,
 
 void LookAtTFTask::update(mc_solver::QPSolver &)
 {
+#ifdef MC_RTC_ROS_IS_ROS2
+  geometry_msgs::msg::TransformStamped transformStamped;
+#else
   geometry_msgs::TransformStamped transformStamped;
+#endif
   try
   {
     // lookupTransform(target_frame, source_frame) returns the transformation
@@ -45,7 +57,13 @@ void LookAtTFTask::update(mc_solver::QPSolver &)
     // target frame coordinates. We want the same transformation from source
     // frame to target frame expressed in the source frame coordinates, which is
     // the inverse calling order for lookupTransform.
-    transformStamped = tfBuffer.lookupTransform(sourceFrame, targetFrame, ros::Time(0));
+    transformStamped = tfBuffer.lookupTransform(sourceFrame, targetFrame,
+#ifdef MC_RTC_ROS_IS_ROS2
+                                                rclcpp::Time(0)
+#else
+                                                ros::Time(0)
+#endif
+    );
   }
   catch(tf2::TransformException & ex)
   {

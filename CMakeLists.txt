@@ -39,6 +39,8 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 project(${PROJECT_NAME} C CXX)
 set(MC_RTC_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
 
+set_default_cmake_build_type(RelWithDebInfo)
+
 if(NOT DEFINED MC_RTC_INSTALL_PREFIX)
   set(MC_RTC_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 endif()
