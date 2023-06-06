@@ -40,7 +40,8 @@ repos:
           src/mc_control/samples/Door/etc/DoorSample.in.yaml|
           src/mc_control/samples/ExternalForces/etc/ExternalForces.in.yaml|
           src/mc_control/samples/LIPMStabilizer/etc/LIPMStabilizer.in.yaml|
-          src/mc_control/fsm/states/data/StabilizerStanding.yaml
+          src/mc_control/fsm/states/data/StabilizerStanding.yaml|
+          tests/controllers/TestPythonState.in.yaml
       )$
   - id: debug-statements
   - id: destroyed-symlinks

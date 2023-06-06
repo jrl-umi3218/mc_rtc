@@ -1,0 +1,31 @@
+StatesLibraries: ["@FSM_STATES_INSTALL_PREFIX@"]
+StepByStep: false
+Managed: false
+IdleKeepState: true
+robots:
+  ground:
+    module: env/ground
+constraints:
+  - type: kinematics
+    damper: [0.1, 0.01, 0.5]
+  - type: contact
+contacts:
+  - r1: jvrc1
+    r2: ground
+    r1Surface: LeftFoot
+    r2Surface: AllGround
+  - r1: jvrc1
+    r2: ground
+    r1Surface: RightFoot
+    r2Surface: AllGround
+collisions:
+  - useMinimal: true
+states:
+  TestInitial:
+    base: @PYTHON@#test_python.TestPythonState
+    value: 42
+  TestFinal:
+    base: TestInitial
+    value: 100
+transitions:
+  - [TestInitial, Value=42, TestFinal, Strict]
