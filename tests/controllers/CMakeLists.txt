@@ -602,12 +602,29 @@ endif()
 add_global_controller_test_run(
   TestPluginController ${CONFIG_OUT} 5 TestPluginController_2_3
 )
+set(TEST_PLUGINS "")
+set(PLUGINS_MODULE_PATH "")
 
 # Test Python bindings
 if(PYTHON_BINDING AND NOT APPLE)
   file(READ "ObserverPipelinesPython.json" OBSERVER_PIPELINES)
   set(LOG_ENABLED "true")
   get_python_names(python_names)
+  add_library(TestPythonState SHARED TestPythonState.cpp)
+  target_link_libraries(
+    TestPythonState PUBLIC mc_control_fsm Boost::unit_test_framework
+  )
+  if(NOT Boost_USE_STATIC_LIBS)
+    target_link_libraries(TestPythonState PUBLIC Boost::dynamic_linking)
+  endif()
+  set_target_properties(
+    TestPythonState
+    PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
+               PREFIX ""
+               ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TestPythonState
+               LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TestPythonState
+               RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TestPythonState
+  )
   foreach(PYTHON ${python_names})
     set(TEST_CONTROLLER_NAME "${PYTHON}#test_python.TestPythonController")
     set(PYTHON_CONTROLLER_PATH "${CMAKE_BINARY_DIR}/src/mc_control/python")
@@ -674,6 +691,59 @@ if(PYTHON_BINDING AND NOT APPLE)
       )
       setup_test_log_fixture(Test${PYTHON}Controller Test${PYTHON}Log)
     endif()
+    macro(setup_test_python_state VARIANT)
+      set(TEST_CONTROLLER_NAME TestPythonState${VARIANT})
+      # This is not a path with library but we use this to output the controller
+      # configuration
+      set(PYTHON_CONTROLLER_PATH
+          "${CMAKE_CURRENT_BINARY_DIR}/${TEST_CONTROLLER_NAME}/${PYTHON}/$<CONFIG>"
+      )
+      set(TEST_CONTROLLER_PATH "$<TARGET_FILE_DIR:TestPythonState>")
+      set(CTL_CFG_OUT
+          "${CMAKE_CURRENT_BINARY_DIR}/${TEST_CONTROLLER_NAME}/${PYTHON}/${TEST_CONTROLLER_NAME}.cmake.yaml"
+      )
+      set(CONFIG_OUT
+          "${CMAKE_CURRENT_BINARY_DIR}/${TEST_CONTROLLER_NAME}/${PYTHON}/mc_rtc.cmake.conf"
+      )
+      set(NRITER 5)
+      configure_file(TestPythonState.in.yaml "${CTL_CFG_OUT}")
+      configure_file(mc_rtc.conf.in "${CONFIG_OUT}")
+      set(CTL_CFG_IN "${CTL_CFG_OUT}")
+      string(REPLACE "${TEST_CONTROLLER_NAME}.cmake.yaml"
+                     "$<CONFIG>/etc/${TEST_CONTROLLER_NAME}.yaml" CTL_CFG_OUT
+                     "${CTL_CFG_OUT}"
+      )
+      file(
+        GENERATE
+        OUTPUT "${CTL_CFG_OUT}"
+        INPUT "${CTL_CFG_IN}"
+      )
+      set(CONFIG_IN "${CONFIG_OUT}")
+      string(REPLACE "mc_rtc.cmake.conf" "$<CONFIG>/mc_rtc.conf" CONFIG_OUT
+                     "${CONFIG_OUT}"
+      )
+      file(
+        GENERATE
+        OUTPUT "${CONFIG_OUT}"
+        INPUT "${CONFIG_IN}"
+      )
+      add_global_controller_test_run(
+        Test${PYTHON}State${VARIANT}
+        ${CONFIG_OUT}
+        ${NRITER}
+        ""
+        ${CMAKE_COMMAND}
+        -E
+        env
+        "PYTHONPATH=${PYTHONPATH}${PATH_SEP}$ENV{PYTHONPATH}"
+        ${CMAKE_COMMAND}
+        -E
+        env
+        "${LDPATH_VAR}=${LDPATH}${PATH_SEP}${LDPATH_CONTROL}${PATH_SEP}$ENV{${LDPATH_VAR}}"
+      )
+    endmacro()
+    setup_test_python_state("")
+    setup_test_python_state("_TVM")
   endforeach()
   unset(OBSERVER_PIPELINES)
 endif()

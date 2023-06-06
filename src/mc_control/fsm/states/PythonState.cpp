@@ -4,13 +4,7 @@
 
 #include <mc_control/fsm/PythonState.h>
 
-#pragma GCC diagnostic push
-#ifdef __clang__
-#  pragma GCC diagnostic ignored "-Wdeprecated-register"
-#endif
-#pragma GCC diagnostic ignored "-Wregister"
-#include "Python.h"
-#pragma GCC diagnostic pop
+#include <mc_rtc/python.h>
 
 #include "mc_control/fsm/fsm.h"
 
@@ -27,11 +21,7 @@ extern "C"
   FSM_STATE_API void destroy(mc_control::fsm::State * ptr)
   {
     delete ptr;
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-variable"
-    auto gstate = PyGILState_Ensure();
-#pragma GCC diagnostic pop
-    Py_Finalize();
+    mc_rtc::python::Finalize();
   }
 
   FSM_STATE_API void LOAD_GLOBAL() {}
@@ -40,11 +30,7 @@ extern "C"
   {
     mc_rtc::log::info("[PythonState] Running with Python {}.{}.{}", PY_MAJOR_VERSION, PY_MINOR_VERSION,
                       PY_MICRO_VERSION);
-    if(!Py_IsInitialized())
-    {
-      Py_Initialize();
-      PyEval_SaveThread();
-    }
+    mc_rtc::python::Initialize();
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-variable"
     auto gstate = PyGILState_Ensure();

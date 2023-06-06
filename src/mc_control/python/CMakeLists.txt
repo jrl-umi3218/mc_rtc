@@ -25,6 +25,7 @@ foreach(PYTHON_NAME ${PYTHON_BINDING_VERSIONS})
   )
   target_include_directories(
     ${PYTHON_NAME_LOWER}_controller PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}"
+                                            "${PROJECT_SOURCE_DIR}/src/"
   )
   target_link_libraries(${PYTHON_NAME_LOWER}_controller PRIVATE ${PYTHON_NAME}::Python)
 endforeach()
