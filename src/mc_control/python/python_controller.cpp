@@ -4,13 +4,7 @@
 
 #include "python_controller.h"
 
-#pragma GCC diagnostic push
-#ifdef __clang__
-#  pragma GCC diagnostic ignored "-Wdeprecated-register"
-#endif
-#pragma GCC diagnostic ignored "-Wregister"
-#include <Python.h>
-#pragma GCC diagnostic pop
+#include <mc_rtc/python.h>
 
 #include <mc_control/mc_python_controller.h>
 
@@ -28,11 +22,7 @@ extern "C"
     // The Python object should be garbage collected, so we only take care of
     // the C++ memory we allocated
     delete ptr;
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-variable"
-    auto gstate = PyGILState_Ensure();
-#pragma GCC diagnostic pop
-    Py_Finalize();
+    mc_rtc::python::Finalize();
   }
   mc_control::MCController * create(const std::string &,
                                     const std::string & controller_name,
@@ -42,11 +32,7 @@ extern "C"
   {
     mc_rtc::log::info("[PythonController] Running with Python {}.{}.{}", PY_MAJOR_VERSION, PY_MINOR_VERSION,
                       PY_MICRO_VERSION);
-    if(!Py_IsInitialized())
-    {
-      Py_Initialize();
-      PyEval_SaveThread();
-    }
+    mc_rtc::python::Initialize();
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-variable"
     auto gstate = PyGILState_Ensure();
