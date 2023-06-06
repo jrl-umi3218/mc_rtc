@@ -73,8 +73,13 @@ if(${PYTHON_BINDING})
     add_library(${PYTHON_NAME}State SHARED "${SRC}")
     set_target_properties(${PYTHON_NAME}State PROPERTIES PREFIX "")
     set_target_properties(${PYTHON_NAME}State PROPERTIES FOLDER controllers/fsm/states)
-    target_link_libraries(${PYTHON_NAME}State PRIVATE ${PYTHON_NAME}::Python)
+    target_link_libraries(
+      ${PYTHON_NAME}State PRIVATE ${PYTHON_NAME}::Python mc_control_fsm
+    )
     target_include_directories(${PYTHON_NAME}State PRIVATE "${PROJECT_SOURCE_DIR}/src")
+    add_dependencies(
+      ${PYTHON_NAME}State mc_control_${PYTHON_NAME} mc_rbdyn_${PYTHON_NAME}
+    )
     target_include_directories(
       ${PYTHON_NAME}State
       PRIVATE
