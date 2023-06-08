@@ -253,6 +253,14 @@ public:
   template<typename... Args>
   std::shared_ptr<T> create_object(const std::string & name, Args... args);
 
+  /** Returns the runtime directory of an object
+   *
+   * Returns an empty string when the object is registered via a callback or if the object is unknown
+   *
+   * \param name Name of the object
+   */
+  std::string get_object_runtime_directory(const std::string & name) const noexcept;
+
   struct ObjectDeleter
   {
     ObjectDeleter() {}

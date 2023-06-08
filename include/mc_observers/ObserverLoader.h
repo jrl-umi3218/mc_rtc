@@ -38,6 +38,20 @@ public:
     return observer_loader->create_object(name, args...);
   }
 
+  /** Returns an Observer runtime directory
+   *
+   * Empty when the module does not exist or when it's registered statically
+   *
+   * \param name Module name
+   *
+   */
+  inline static std::string get_observer_runtime_directory(const std::string & name) noexcept
+  {
+    std::lock_guard<std::mutex> guard{mtx};
+    init();
+    return observer_loader->get_object_runtime_directory(name);
+  }
+
   template<typename RetT, typename... Args>
   static void register_object(const std::string & name, std::function<RetT *(const Args &...)> callback)
   {

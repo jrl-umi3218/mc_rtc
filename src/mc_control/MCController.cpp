@@ -621,7 +621,7 @@ void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
   {
     observerPipelines_.emplace_back(*this);
     auto & pipeline = observerPipelines_.back();
-    pipeline.create(pipelineConfig, timeStep);
+    pipeline.create(pipelineConfig, robot().module().name, timeStep);
     if(pipelineConfig("log", true)) { pipeline.addToLogger(logger()); }
     if(pipelineConfig("gui", false)) { pipeline.addToGUI(*gui()); }
   }
