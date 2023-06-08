@@ -351,7 +351,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   inline const Eigen::Vector3d & targetZMPVelocity() const noexcept { return zmpdTarget_; }
 
   /* Return the current support foot */
-  inline const ContactState supportFoot() const noexcept { return supportFoot_; }
+  inline ContactState supportFoot() const noexcept { return supportFoot_; }
 
   /* Set the current support foot */
   inline void supportFoot(const ContactState & foot) noexcept { supportFoot_ = foot; }
@@ -425,7 +425,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 
   inline const Eigen::Vector3d & comOffsetMeasured() const noexcept { return comOffsetMeasured_; }
 
-  inline const double zmpCoeffMeasured() const noexcept { return zmpCoefMeasured_; }
+  inline double zmpCoeffMeasured() const noexcept { return zmpCoefMeasured_; }
 
   inline bool inContact(ContactState state) const noexcept { return contacts_.count(state); }
 
