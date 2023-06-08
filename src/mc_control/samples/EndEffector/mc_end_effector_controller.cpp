@@ -24,16 +24,18 @@ MCEndEffectorController::MCEndEffectorController(std::shared_ptr<mc_rbdyn::Robot
   solver().addTask(postureTask.get());
   if(robot().hasSurface("LFullSole") && robot().hasSurface("RFullSole"))
   {
-    solver().setContacts(
-        {mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"), mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")});
+    addContact({robot().name(), env().name(), "LFullSole", "AllGround"});
+    addContact({robot().name(), env().name(), "RFullSole", "AllGround"});
   }
   else if(robot().hasSurface("LeftFoot") && robot().hasSurface("RightFoot"))
   {
-    solver().setContacts(
-        {mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"), mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
+    addContact({robot().name(), env().name(), "LeftFoot", "AllGround"});
+    addContact({robot().name(), env().name(), "RightFoot", "AllGround"});
   }
-  else if(robot().mb().joint(0).dof() == 0) { solver().setContacts({}); }
-  else { mc_rtc::log::error_and_throw("EndEffector sample does not support robot {}", robot().name()); }
+  else if(robot().mb().joint(0).dof() == 6)
+  {
+    mc_rtc::log::error_and_throw("EndEffector sample does not support robot {}", robot().name());
+  }
 
   std::string body = robot().mb().bodies().back().name();
   if(robot().hasBody("RARM_LINK7")) { body = "RARM_LINK7"; }
