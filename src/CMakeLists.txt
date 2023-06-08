@@ -602,17 +602,6 @@ set(mc_observers_HDR
     ../include/mc_observers/ObserverMacros.h
 )
 
-add_library(mc_observers SHARED ${mc_observers_SRC} ${mc_observers_HDR})
-target_include_directories(
-  mc_observers PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
-                      $<INSTALL_INTERFACE:include>
-)
-set_target_properties(mc_observers PROPERTIES COMPILE_FLAGS "-DMC_OBSERVERS_EXPORTS")
-target_link_libraries(mc_observers PUBLIC mc_filter mc_rbdyn mc_rtc_gui)
-install_mc_rtc_lib(mc_observers)
-
-add_subdirectory(mc_observers)
-
 set(mc_control_SRC
     mc_control/CompletionCriteria.cpp
     mc_control/ControllerServer.cpp
@@ -649,11 +638,13 @@ set(mc_control_HDR
     ../include/mc_control/mc_global_controller.h
 )
 
-add_library(mc_control SHARED ${mc_control_SRC} ${mc_control_HDR})
+add_library(
+  mc_control SHARED ${mc_control_SRC} ${mc_observers_SRC} ${mc_control_HDR}
+                    ${mc_observers_HDR}
+)
 set_target_properties(mc_control PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
 target_link_libraries(
-  mc_control PUBLIC mc_tasks mc_solver mc_rtc_loader mc_observers mc_rtc_utils
-                    mc_rtc_gui
+  mc_control PUBLIC mc_tasks mc_solver mc_rtc_loader mc_rtc_utils mc_rtc_gui
 )
 if(NOT MC_RTC_DISABLE_NETWORK)
   target_link_libraries(mc_control PUBLIC nanomsg)
@@ -661,6 +652,10 @@ else()
   target_compile_definitions(mc_control PUBLIC MC_RTC_DISABLE_NETWORK)
 endif()
 install_mc_rtc_lib(mc_control)
+
+add_library(mc_observers ALIAS mc_control)
+add_library(mc_rtc::mc_observers ALIAS mc_control)
+add_subdirectory(mc_observers)
 
 set(mc_control_client_SRC mc_control/ControllerClient.cpp)
 

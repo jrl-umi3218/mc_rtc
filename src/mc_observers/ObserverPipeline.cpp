@@ -3,6 +3,8 @@
 #include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_rtc/io_utils.h>
 
+#include <mc_control/MCController.h>
+
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
@@ -53,7 +55,7 @@ static inline mc_rtc::Configuration get_observer_config(const std::string & obse
 ObserverPipeline::ObserverPipeline(mc_control::MCController & ctl, const std::string & name) : ctl_(ctl), name_(name) {}
 ObserverPipeline::ObserverPipeline(mc_control::MCController & ctl) : ctl_(ctl) {}
 
-void ObserverPipeline::create(const mc_rtc::Configuration & config, const std::string & default_robot, double dt)
+void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
 {
   if(!config.has("name")) { mc_rtc::log::error_and_throw("[ObserverPipeline] \"name\" entry is required", name_); }
   name_ = static_cast<std::string>(config("name"));
@@ -80,8 +82,10 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, const std::s
       }
       auto observer = mc_observers::ObserverLoader::get_observer(observerType, dt);
       observer->name(observerName);
-      observer->configure(ctl_, get_observer_config(observerType, observerConf("robot", default_robot),
-                                                    observerConf("config", mc_rtc::Configuration{})));
+      auto config = observerConf("config", mc_rtc::Configuration{});
+      std::string robot = config("robot", ctl_.robot().name());
+      if(ctl_.hasRobot(robot)) { robot = ctl_.robot(robot).module().name; }
+      observer->configure(ctl_, get_observer_config(observerType, robot, config));
       pipelineObservers_.emplace_back(observer, observerConf);
     }
     else if(!observerConf("required", true))

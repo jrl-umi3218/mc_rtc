@@ -115,7 +115,7 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
   ~ObserverPipeline() = default;
 
   /* Load the observers */
-  void create(const mc_rtc::Configuration & config, const std::string & default_robot, double dt);
+  void create(const mc_rtc::Configuration & config, double dt);
 
   /* Initialize based on the current robot state */
   void reset();

@@ -135,6 +135,9 @@ macro(add_observer observer_name)
   )
 endmacro()
 
+# -- For backward compatibilty we keep mc_observers as an alias to mc_control
+add_library(mc_rtc::mc_observers ALIAS mc_rtc::mc_control)
+
 macro(add_observer_simple observer_base)
   add_observer(${observer_base} ${observer_base}.cpp ${observer_base}.h)
 endmacro()
