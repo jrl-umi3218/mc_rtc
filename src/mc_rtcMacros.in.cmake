@@ -71,6 +71,16 @@ macro(add_controller controller_name)
   )
 endmacro()
 
+macro(install_controller_configuration CONFIG)
+  install(FILES "${CONFIG}" DESTINATION "${MC_CONTROLLER_RUNTIME_INSTALL_PREFIX}/etc")
+endmacro()
+
+macro(install_controller_robot_configuration CONTROLLER_NAME CONFIG)
+  install(FILES "${CONFIG}"
+          DESTINATION "${MC_CONTROLLER_RUNTIME_INSTALL_PREFIX}/${CONTROLLER_NAME}/"
+  )
+endmacro()
+
 # -- Robots --
 
 mc_rtc_set_prefix(ROBOTS mc_robots)
@@ -135,12 +145,22 @@ macro(add_observer observer_name)
   )
 endmacro()
 
-# -- For backward compatibilty we keep mc_observers as an alias to mc_control
-add_library(mc_rtc::mc_observers ALIAS mc_rtc::mc_control)
-
 macro(add_observer_simple observer_base)
   add_observer(${observer_base} ${observer_base}.cpp ${observer_base}.h)
 endmacro()
+
+macro(install_observer_configuration CONFIG)
+  install(FILES "${CONFIG}" DESTINATION "${MC_OBSERVERS_RUNTIME_INSTALL_PREFIX}/etc")
+endmacro()
+
+macro(install_observer_robot_configuration OBSERVER_NAME CONFIG)
+  install(FILES "${CONFIG}"
+          DESTINATION "${MC_OBSERVERS_RUNTIME_INSTALL_PREFIX}/${OBSERVER_NAME}/"
+  )
+endmacro()
+
+# -- For backward compatibilty we keep mc_observers as an alias to mc_control
+add_library(mc_rtc::mc_observers ALIAS mc_rtc::mc_control)
 
 # -- States --
 if(MC_RTC_HONOR_INSTALL_PREFIX)
