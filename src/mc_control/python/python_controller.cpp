@@ -4,7 +4,7 @@
 
 #include "python_controller.h"
 
-#include <mc_rtc/python.h>
+#include <mc_rtc/mc_rtc_python.h>
 
 #include <mc_control/mc_python_controller.h>
 

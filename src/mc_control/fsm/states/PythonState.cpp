@@ -4,7 +4,7 @@
 
 #include <mc_control/fsm/PythonState.h>
 
-#include <mc_rtc/python.h>
+#include <mc_rtc/mc_rtc_python.h>
 
 #include "mc_control/fsm/fsm.h"
 
