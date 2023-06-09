@@ -60,8 +60,8 @@ void MCImpedanceController::reset(const ControllerResetData & reset_data)
   {
     comTask_->reset();
     solver().addTask(comTask_);
-    solver().setContacts(
-        {mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"), mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
+    addContact(Contact{robot().name(), env().name(), "LeftFoot", "AllGround"});
+    addContact(Contact{robot().name(), env().name(), "RightFoot", "AllGround"});
   }
 
   impedanceTask_->reset();

@@ -78,7 +78,8 @@ if(${PYTHON_BINDING})
     )
     target_include_directories(${PYTHON_NAME}State PRIVATE "${PROJECT_SOURCE_DIR}/src")
     add_dependencies(
-      ${PYTHON_NAME}State mc_control_${PYTHON_NAME} mc_rbdyn_${PYTHON_NAME}
+      ${PYTHON_NAME}State mc_control_fsm_${PYTHON_NAME} mc_control_${PYTHON_NAME}
+      mc_rbdyn_${PYTHON_NAME}
     )
     target_include_directories(
       ${PYTHON_NAME}State

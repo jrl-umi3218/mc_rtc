@@ -134,6 +134,14 @@ T * ObjectLoader<T>::create(const std::string & name, Args... args)
 }
 
 template<typename T>
+std::string ObjectLoader<T>::get_object_runtime_directory(const std::string & name) const noexcept
+{
+  auto it = handles_.find(name);
+  if(it == handles_.end()) { return ""; }
+  return it->second->dir();
+}
+
+template<typename T>
 template<typename... Args>
 T * ObjectLoader<T>::create_from_handles(const std::string & name, Args... args)
 {

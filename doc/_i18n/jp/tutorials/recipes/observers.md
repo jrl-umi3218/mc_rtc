@@ -91,7 +91,20 @@ ObserverPipelines:
   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/ssoNkV940yc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-## デフォルト観測器
+## 観測者の設定
+
+パイプラインの設定に加えて、観測者は以下の場所から設定を読み込むことができます:
+
+- グローバル設定: {% ihighlight bash %}${MC_OBSERVERS_RUNTIME_INSTALL_PREFIX}/etc/${ObserverType}.yaml{% endihighlight %}
+- ユーザー設定: {% ihighlight bash %}${HOME}/.config/mc_rtc/observers/${ObserverType}.yaml{% endihighlight %}
+- グローバルロボット固有の設定: {% ihighlight bash %}${MC_OBSERVERS_RUNTIME_INSTALL_PREFIX}/${ObserverType}/${Robot}.yaml{% endihighlight %}
+- ユーザーロボット固有の設定: {% ihighlight bash %}${HOME}/.config/mc_rtc/observers/${ObserverType}/${Robot}.yaml{% endihighlight %}
+
+これらの場所にある設定は、上記に表示されている順序で読み込まれ、パイプラインの設定は最後に読み込まれます。
+
+ロボット固有の設定では、`${Robot}`の値は`RobotModule`によって提供される名前です。mc_rtcは、観測者のコントローラーの設定の`robot`エントリを使用して、どのロボットを探すかを決定します。
+
+# デフォルト観測器
 
 このセクションでは、このフレームワークで用意されているデフォルト観測器について簡単に説明します。詳細については、各観測器のAPIドキュメントとJSONスキーマを参照してください。
 

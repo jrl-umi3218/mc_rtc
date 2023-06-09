@@ -1,0 +1,14 @@
+ObserverPipelines:
+  name: "ObserverPipeline"
+  observers:
+    - type: TestObserver
+      name: FullConfiguration
+      config:
+        fromControllerConfig: true
+        finalValue: 3
+    - type: TestObserver
+      name: NoControllerConfiguration
+    - type: TestObserver
+      name: NoControllerOrRobotConfiguration
+      config:
+        robot: jvrc2

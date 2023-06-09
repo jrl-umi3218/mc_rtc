@@ -51,13 +51,19 @@ macro(controller_test_common NAME)
     target_compile_definitions(${NAME} PRIVATE "-DMC_RTC_FAST_TESTS")
   endif()
   set(TEST_CONTROLLER_NAME ${NAME})
-  set(OBSERVER_MODULE_PATH "${CMAKE_BINARY_DIR}/src/mc_observers")
+  if(DEFINED OVERRIDE_OBSERVER_MODULE_PATH)
+    set(OBSERVER_MODULE_PATH "${OVERRIDE_OBSERVER_MODULE_PATH}")
+  else()
+    set(OBSERVER_MODULE_PATH "${CMAKE_BINARY_DIR}/src/mc_observers")
+  endif()
   set(PYTHON_CONTROLLER_PATH "${CMAKE_BINARY_DIR}/src/mc_control/python")
   set(ROBOT_MODULE_PATH "${CMAKE_BINARY_DIR}/src/mc_robots")
   set(TEST_CONTROLLER_PATH "${CMAKE_CURRENT_BINARY_DIR}/${TEST_CONTROLLER_NAME}")
   set(TEST_CONTROLLER_PATH_BASE "${TEST_CONTROLLER_PATH}")
   if(CMAKE_CONFIGURATION_TYPES)
-    set(OBSERVER_MODULE_PATH "${OBSERVER_MODULE_PATH}/$<CONFIGURATION>")
+    if(NOT DEFINED OVERRIDE_OBSERVER_MODULE_PATH)
+      set(OBSERVER_MODULE_PATH "${OBSERVER_MODULE_PATH}/$<CONFIGURATION>")
+    endif()
     set(PYTHON_CONTROLLER_PATH "${PYTHON_CONTROLLER_PATH}/$<CONFIGURATION>")
     set(ROBOT_MODULE_PATH "${ROBOT_MODULE_PATH}/$<CONFIGURATION>")
     set(TEST_CONTROLLER_PATH "${TEST_CONTROLLER_PATH}/$<CONFIGURATION>")
@@ -85,24 +91,18 @@ macro(controller_test_common NAME)
   endif()
   configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in
-    ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf
+    ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.cmake.conf
   )
 endmacro()
 
 macro(controller_test_construction_failure NAME)
   controller_test_common(${NAME})
-  if(CMAKE_CONFIGURATION_TYPES)
-    set(CONFIG_OUT
-        "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/$<CONFIGURATION>/mc_rtc-${NAME}.conf"
-    )
-    file(
-      GENERATE
-      OUTPUT ${CONFIG_OUT}
-      INPUT ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf
-    )
-  else()
-    set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf")
-  endif()
+  set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/$<CONFIG>/mc_rtc-${NAME}.conf")
+  file(
+    GENERATE
+    OUTPUT ${CONFIG_OUT}
+    INPUT ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.cmake.conf
+  )
   set_target_properties(${NAME} PROPERTIES FOLDER tests/controllers/failure)
   add_global_controller_test_construction_failure(${NAME} ${CONFIG_OUT})
 endmacro()
@@ -110,18 +110,14 @@ endmacro()
 macro(controller_test_run NAME NRITER)
   controller_test_common(${NAME})
   macro(setup_test_run VARIANT)
-    if(CMAKE_CONFIGURATION_TYPES)
-      set(CONFIG_OUT
-          "${CMAKE_CURRENT_BINARY_DIR}/${VARIANT}/$<CONFIG>/mc_rtc-${VARIANT}.conf"
-      )
-      file(
-        GENERATE
-        OUTPUT ${CONFIG_OUT}
-        INPUT ${CMAKE_CURRENT_BINARY_DIR}/${VARIANT}/mc_rtc-${VARIANT}.conf
-      )
-    else()
-      set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${VARIANT}/mc_rtc-${VARIANT}.conf")
-    endif()
+    set(CONFIG_OUT
+        "${CMAKE_CURRENT_BINARY_DIR}/${VARIANT}/$<CONFIG>/mc_rtc-${VARIANT}.conf"
+    )
+    file(
+      GENERATE
+      OUTPUT ${CONFIG_OUT}
+      INPUT ${CMAKE_CURRENT_BINARY_DIR}/${VARIANT}/mc_rtc-${VARIANT}.cmake.conf
+    )
     if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.in.yaml")
       configure_file(
         ${NAME}.in.yaml "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${VARIANT}.cmake.yaml"
@@ -171,7 +167,7 @@ macro(controller_test_run NAME NRITER)
   set(LOG_ENABLED "false")
   configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in
-    ${CMAKE_CURRENT_BINARY_DIR}/${VARIANT}/mc_rtc-${VARIANT}.conf
+    ${CMAKE_CURRENT_BINARY_DIR}/${VARIANT}/mc_rtc-${VARIANT}.cmake.conf
   )
   setup_test_run(${VARIANT})
   set(TEST_CONTROLLER_NAME "${OLD_TEST_CONTROLLER_NAME}")
@@ -317,6 +313,40 @@ controller_test_run(TestCollisionController 2001)
 controller_test_run(TestCanonicalRobotController 2001)
 # Configuration test
 controller_test_run(TestRobotConfigurationController 1)
+
+# Create a test observer
+add_library(TestObserver observers/TestObserver.cpp)
+set_target_properties(TestObserver PROPERTIES FOLDER tests/controllers/observers)
+target_link_libraries(
+  TestObserver PUBLIC mc_control Boost::unit_test_framework
+                      $<$<BOOL:${Boost_USE_STATIC_LIBS}>:Boost::dynamic_linking>
+)
+set_target_properties(
+  TestObserver
+  PROPERTIES PREFIX ""
+             ARCHIVE_OUTPUT_DIRECTORY
+             "${CMAKE_CURRENT_BINARY_DIR}/observers/TestObserver"
+             LIBRARY_OUTPUT_DIRECTORY
+             "${CMAKE_CURRENT_BINARY_DIR}/observers/TestObserver"
+             RUNTIME_OUTPUT_DIRECTORY
+             "${CMAKE_CURRENT_BINARY_DIR}/observers/TestObserver"
+)
+file(
+  GENERATE
+  OUTPUT "$<TARGET_FILE_DIR:TestObserver>/etc/TestObserver.yaml"
+  INPUT "${CMAKE_CURRENT_SOURCE_DIR}/observers/TestObserver.yaml"
+)
+file(
+  GENERATE
+  OUTPUT "$<TARGET_FILE_DIR:TestObserver>/TestObserver/jvrc1.yaml"
+  INPUT "${CMAKE_CURRENT_SOURCE_DIR}/observers/TestObserver.jvrc1.yaml"
+)
+
+# This test checks that observer can receive configuration in three way - Runtime path
+# configuration file - Robot-based configuration file - Controller configuration
+set(OVERRIDE_OBSERVER_MODULE_PATH "$<TARGET_FILE_DIR:TestObserver>")
+controller_test_run(TestObserverConfigurationController 1)
+unset(OVERRIDE_OBSERVER_MODULE_PATH)
 
 # Test FSM generic state configuration option
 set(FSM_STATES_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/src/mc_control/fsm/states/")

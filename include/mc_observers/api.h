@@ -41,11 +41,11 @@
 #else
 // Depending on whether one is building or using the
 // library define DLLAPI to import or export.
-#  ifdef MC_OBSERVERS_EXPORTS
+#  ifdef MC_CONTROL_EXPORTS
 #    define MC_OBSERVERS_DLLAPI MC_OBSERVERS_DLLEXPORT
 #  else
 #    define MC_OBSERVERS_DLLAPI MC_OBSERVERS_DLLIMPORT
-#  endif // MC_OBSERVERS_EXPORTS
+#  endif // MC_CONTROL_EXPORTS
 #  define MC_OBSERVERS_LOCAL MC_OBSERVERS_DLLLOCAL
 #endif // MC_OBSERVERS_STATIC
 
