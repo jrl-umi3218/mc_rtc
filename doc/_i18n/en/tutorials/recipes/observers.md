@@ -91,6 +91,19 @@ The end-result for this example pipeline looks like this *(left: choreonoid simu
   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/ssoNkV940yc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
+## Observers' configuration
+
+In addition to the configuration of the pipeline, observers can load configurations from the following locations:
+
+- Global configuration: {% ihighlight bash %}${MC_OBSERVERS_RUNTIME_INSTALL_PREFIX}/etc/${ObserverType}.yaml{% endihighlight %}
+- User configuration: {% ihighlight bash %}${HOME}/.config/mc_rtc/observers/${ObserverType}.yaml{% endihighlight %}
+- Global robot-specific configuration: {% ihighlight bash %}${MC_OBSERVERS_RUNTIME_INSTALL_PREFIX}/${ObserverType}/${Robot}.yaml{% endihighlight %}
+- User robot-specific configuration: {% ihighlight bash %}${HOME}/.config/mc_rtc/observers/${ObserverType}/${Robot}.yaml{% endihighlight %}
+
+The configuration at these locations are loaded in the order displayed above and the configuration in the pipeline is loaded last.
+
+For the robot specific configuration, the `${Robot}` value is the name provided by the `RobotModule`. mc_rtc uses the `robot` entry in the controller's configuration of the observer to decide which robot to look for.
+
 # Default observers
 
 This section provides a brief description of the default observers provided with the framework. Please refer to each observer's API documentation and JSON Schema for further details.
