@@ -317,7 +317,10 @@ controller_test_run(TestRobotConfigurationController 1)
 # Create a test observer
 add_library(TestObserver observers/TestObserver.cpp)
 set_target_properties(TestObserver PROPERTIES FOLDER tests/controllers/observers)
-target_link_libraries(TestObserver PUBLIC mc_control)
+target_link_libraries(
+  TestObserver PUBLIC mc_control Boost::unit_test_framework
+                      $<$<BOOL:${Boost_USE_STATIC_LIBS}>:Boost::dynamic_linking>
+)
 set_target_properties(
   TestObserver
   PROPERTIES PREFIX ""
