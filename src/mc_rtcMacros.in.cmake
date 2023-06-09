@@ -160,7 +160,10 @@ macro(install_observer_robot_configuration OBSERVER_NAME CONFIG)
 endmacro()
 
 # -- For backward compatibilty we keep mc_observers as an alias to mc_control
-add_library(mc_rtc::mc_observers ALIAS mc_rtc::mc_control)
+add_library(mc_rtc::mc_observers INTERFACE IMPORTED)
+set_target_properties(
+  mc_rtc::mc_observers PROPERTIES INTERFACE_LINK_LIBRARIES mc_rtc::mc_control
+)
 
 # -- States --
 if(MC_RTC_HONOR_INSTALL_PREFIX)
