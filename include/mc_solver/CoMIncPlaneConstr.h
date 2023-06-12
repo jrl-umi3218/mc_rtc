@@ -26,9 +26,18 @@ struct MC_SOLVER_DLLAPI CoMIncPlaneConstr : public ConstraintSet
 public:
   CoMIncPlaneConstr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double dt);
 
-  virtual void addToSolverImpl(QPSolver & solver) override;
+  void addToSolverImpl(QPSolver & solver) override;
 
-  virtual void removeFromSolverImpl(QPSolver & solver) override;
+  void removeFromSolverImpl(QPSolver & solver) override;
+
+  /** Set joints that participate in the constraint */
+  void setActiveJoints(const std::vector<std::string> & joints);
+
+  /** Set joints that do not participate in the constraint */
+  void setInactiveJoints(const std::vector<std::string> & joints);
+
+  /** Enable all joints for the constraint */
+  void resetActiveJoints();
 
   MC_RTC_DEPRECATED inline void set_planes(QPSolver & solver,
                                            const std::vector<mc_rbdyn::Plane> & planes,
