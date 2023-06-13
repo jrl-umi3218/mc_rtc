@@ -10,7 +10,7 @@ mc\_rtcは、シミュレーションシステムやロボット制御システ�
 
 UbuntuユーザーとmacOSユーザーにはバイナリ版を推奨します。Windowsユーザーにはvcpkgを推奨します。
 
-### Ubuntu LTS (18.04, 20.04)
+### Ubuntu LTS (18.04, 20.04, 22.04)
 
 {% assign install_apt=site.translations[site.lang].tutorials.introduction["installation-guide"].install_apt %}
 
@@ -42,9 +42,10 @@ brew install mc_rtc
       "kind": "git",
       "baseline": "{下記を参照}",
       "repository": "https://github.com/mc-rtc/vcpkg-registry",
-      "packages": [ "spacevecalg", "rbdyn", "eigen-qld", "sch-core", "tasks",
+      "packages": [ "libnotify", "hpp-spline", "ndcurves", "tvm",
+                    "spacevecalg", "rbdyn", "eigen-qld", "sch-core", "tasks",
                     "mc-rbdyn-urdf", "mc-rtc-data", "eigen-quadprog", "state-observation",
-                    "hpp-spline", "mc-rtc" ]
+                    "mc-rtc" ]
     }
   ]
 }

@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+## [2.6.0] - 2023-06-13
+
+### General
+
+This release is the first to support ROS2. Packages are provided for the ROS2 iron distribution under Ubuntu Jammy.
+
+### Added
+
+- [mc_control] FSM's state output can be set from a PythonState
+- [mc_observer] Add general configuration files and robot-specific configuration files for observers (#373)
+- [mc_rtc] It is now possible to log arbitrary fixed size vectors (#369)
+- [mc_solver] Allow to select active joints in CoMIncPlaneConstr (#374)
+
+### Changes
+
+- The `mc_observers` physical library has been removed. The symbols are now part of the `mc_control` library. For backward compatibility purposes, the `mc_rtc::mc_observers` target is still available.
+
+### Fixes
+
+- Avoid a crash when switching between two Python states (#372)
+
 ## [2.5.0] - 2023-05-22
 
 ### Added
@@ -693,7 +714,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.5.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.6.0...HEAD
+[2.6.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.6.0
 [2.5.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.5.0
 [2.4.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.4.0
 [2.3.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.3.0

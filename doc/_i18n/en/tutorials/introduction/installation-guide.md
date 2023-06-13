@@ -10,7 +10,7 @@ We provide binaries for the current Ubuntu LTS releases and macOS via [Homebrew]
 
 Binaries are recommended for Ubuntu users and macOS users. vcpkg is recommended for Windows users.
 
-### Ubuntu LTS (18.04, 20.04)
+### Ubuntu LTS (18.04, 20.04, 22.04)
 
 {% assign install_apt=site.translations[site.lang].tutorials.introduction["installation-guide"].install_apt %}
 
@@ -42,9 +42,10 @@ You can then setup our registry by creating a `vcpkg-configuration.json` file ei
       "kind": "git",
       "baseline": "{see below}",
       "repository": "https://github.com/mc-rtc/vcpkg-registry",
-      "packages": [ "spacevecalg", "rbdyn", "eigen-qld", "sch-core", "tasks",
+      "packages": [ "libnotify", "hpp-spline", "ndcurves", "tvm",
+                    "spacevecalg", "rbdyn", "eigen-qld", "sch-core", "tasks",
                     "mc-rbdyn-urdf", "mc-rtc-data", "eigen-quadprog", "state-observation",
-                    "hpp-spline", "ndcurves", "mc-rtc" ]
+                    "mc-rtc" ]
     }
   ]
 }
