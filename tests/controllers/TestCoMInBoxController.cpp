@@ -85,9 +85,13 @@ public:
     comTask->weight(1e5);
     /** Add an orientation task to keep the chest straight */
     auto chestTask = std::make_shared<mc_tasks::OrientationTask>(robot().frame("WAIST_R_S"));
-    solver().addTask(chestTask);
+    // solver().addTask(chestTask);
     /** Create the constraint */
     comConstraint = std::make_shared<mc_solver::CoMIncPlaneConstr>(robots(), 0, solver().dt());
+    comConstraint->setInactiveJoints({"NECK_Y", "NECK_R", "NECK_P"});
+    //  comConstraint->setActiveJoints({"Root", "R_HIP_P", "R_HIP_R", "R_HIP_Y", "R_KNEE", "R_ANKLE_R", "R_ANKLE_P",
+    //                                  "L_HIP_P", "L_HIP_R", "L_HIP_Y", "L_KNEE", "L_ANKLE_R", "L_ANKLE_P", "WAIST_Y",
+    //                                  "WAIST_P", "WAIST_R"});
     solver().addConstraintSet(*comConstraint);
 
     mc_rtc::log::success("Created TestCoMInBoxController");

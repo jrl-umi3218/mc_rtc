@@ -10,7 +10,8 @@ namespace mc_tvm
 {
 
 CoMInConvexFunction::CoMInConvexFunction(const mc_rbdyn::Robot & robot)
-: tvm::function::abstract::Function(0), com_(robot.tvmRobot().comAlgo())
+: tvm::function::abstract::Function(0), com_(robot.tvmRobot().comAlgo()),
+  selector_(Eigen::VectorXd::Ones(robot.mb().nrDof()))
 {
   registerUpdates(Update::Value, &CoMInConvexFunction::updateValue, Update::Velocity,
                   &CoMInConvexFunction::updateVelocity, Update::Jacobian, &CoMInConvexFunction::updateJacobian,
@@ -62,11 +63,12 @@ void CoMInConvexFunction::updateVelocity()
 
 void CoMInConvexFunction::updateJacobian()
 {
+  assert(selector_.size() == com_.robot().robot().mb().nrDof());
   Eigen::DenseIndex i = 0;
   const Eigen::MatrixXd & jac = com_.jacobian();
   for(const auto & p : planes_)
   {
-    jacobian_[com_.robot().q().get()].row(i).noalias() = p->normal().transpose() * jac;
+    jacobian_[com_.robot().q().get()].row(i).noalias() = p->normal().transpose() * jac * selector_.asDiagonal();
     ++i;
   }
 }

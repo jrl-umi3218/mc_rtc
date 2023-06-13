@@ -14,11 +14,24 @@
 
 #include <tvm/task_dynamics/VelocityDamper.h>
 
+#include "utils/jointsToSelector.h"
+
 namespace mc_solver
 {
 
 namespace details
 {
+
+struct TasksCoMIncPlaneConstr
+{
+  const mc_rbdyn::Robot & robot_;
+  tasks::qp::CoMIncPlaneConstr constraint_;
+
+  TasksCoMIncPlaneConstr(const mc_rbdyn::Robot & robot, double dt)
+  : robot_(robot), constraint_(robot.robots().mbs(), static_cast<int>(robot.robotIndex()), dt)
+  {
+  }
+};
 
 struct TVMCoMIncPlaneConstr
 {
@@ -92,7 +105,7 @@ struct TVMCoMIncPlaneConstr
 } // namespace details
 
 /** Helper to cast the constraint */
-static inline mc_rtc::void_ptr_caster<tasks::qp::CoMIncPlaneConstr> tasks_constraint{};
+static inline mc_rtc::void_ptr_caster<details::TasksCoMIncPlaneConstr> tasks_constraint{};
 static inline mc_rtc::void_ptr_caster<details::TVMCoMIncPlaneConstr> tvm_constraint{};
 
 static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend,
@@ -103,7 +116,7 @@ static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend,
   switch(backend)
   {
     case QPSolver::Backend::Tasks:
-      return mc_rtc::make_void_ptr<tasks::qp::CoMIncPlaneConstr>(robots.mbs(), static_cast<int>(robotIndex), dt);
+      return mc_rtc::make_void_ptr<details::TasksCoMIncPlaneConstr>(robots.robot(robotIndex), dt);
     case QPSolver::Backend::TVM:
       return mc_rtc::make_void_ptr<details::TVMCoMIncPlaneConstr>(robots.robot(robotIndex));
     default:
@@ -121,7 +134,7 @@ void CoMIncPlaneConstr::addToSolverImpl(QPSolver & solver)
   switch(backend_)
   {
     case QPSolver::Backend::Tasks:
-      tasks_constraint(constraint_)->addToSolver(solver.robots().mbs(), tasks_solver(solver).solver());
+      tasks_constraint(constraint_)->constraint_.addToSolver(solver.robots().mbs(), tasks_solver(solver).solver());
       break;
     case QPSolver::Backend::TVM:
       tvm_constraint(constraint_)->addToSolver(tvm_solver(solver));
@@ -136,10 +149,59 @@ void CoMIncPlaneConstr::removeFromSolverImpl(QPSolver & solver)
   switch(backend_)
   {
     case QPSolver::Backend::Tasks:
-      tasks_constraint(constraint_)->removeFromSolver(tasks_solver(solver).solver());
+      tasks_constraint(constraint_)->constraint_.removeFromSolver(tasks_solver(solver).solver());
       break;
     case QPSolver::Backend::TVM:
       tvm_constraint(constraint_)->removeFromSolver(tvm_solver(solver));
+      break;
+    default:
+      break;
+  }
+}
+
+void CoMIncPlaneConstr::setActiveJoints(const std::vector<std::string> & joints)
+{
+  switch(backend_)
+  {
+    case QPSolver::Backend::Tasks:
+      tasks_constraint(constraint_)->constraint_.selector() =
+          jointsToSelector(tasks_constraint(constraint_)->robot_, joints);
+      break;
+    case QPSolver::Backend::TVM:
+      tvm_constraint(constraint_)->function_->selector() =
+          jointsToSelector(tvm_constraint(constraint_)->function_->robot(), joints);
+      break;
+    default:
+      break;
+  }
+}
+
+void CoMIncPlaneConstr::setInactiveJoints(const std::vector<std::string> & joints)
+{
+  switch(backend_)
+  {
+    case QPSolver::Backend::Tasks:
+      tasks_constraint(constraint_)->constraint_.selector() =
+          jointsToSelector<false>(tasks_constraint(constraint_)->robot_, joints);
+      break;
+    case QPSolver::Backend::TVM:
+      tvm_constraint(constraint_)->function_->selector() =
+          jointsToSelector<false>(tvm_constraint(constraint_)->function_->robot(), joints);
+      break;
+    default:
+      break;
+  }
+}
+
+void CoMIncPlaneConstr::resetActiveJoints()
+{
+  switch(backend_)
+  {
+    case QPSolver::Backend::Tasks:
+      tasks_constraint(constraint_)->constraint_.selector().setOnes();
+      break;
+    case QPSolver::Backend::TVM:
+      tvm_constraint(constraint_)->function_->selector().setOnes();
       break;
     default:
       break;
@@ -159,7 +221,7 @@ void CoMIncPlaneConstr::setPlanes(QPSolver & solver,
   {
     case QPSolver::Backend::Tasks:
     {
-      auto & constr = *tasks_constraint(constraint_);
+      auto & constr = tasks_constraint(constraint_)->constraint_;
       auto & qpsolver = tasks_solver(solver);
       constr.reset();
       if(speeds.size() != 0 && normalsDots.size() == speeds.size() && planes.size() == speeds.size())

@@ -58,6 +58,12 @@ public:
     return *planes_[i];
   }
 
+  /** Access the selector */
+  Eigen::VectorXd & selector() noexcept { return selector_; }
+
+  /** Access the selector (const) */
+  const Eigen::VectorXd & selector() const noexcept { return selector_; }
+
 protected:
   void updateValue();
   void updateVelocity();
@@ -68,6 +74,9 @@ protected:
 
   /** Set of planes */
   std::vector<tvm::geometry::PlanePtr> planes_;
+
+  /** Selector */
+  Eigen::VectorXd selector_;
 };
 
 using CoMInConvexFunctionPtr = std::shared_ptr<CoMInConvexFunction>;
