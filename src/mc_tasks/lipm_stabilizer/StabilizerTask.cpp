@@ -352,6 +352,7 @@ void StabilizerTask::configure_(mc_solver::QPSolver & solver)
   {
     footTask.second->maxLinearVel(c_.copMaxVel.linear());
     footTask.second->maxAngularVel(c_.copMaxVel.angular());
+    footTask.second->useTargetPressure(c_.useTargetPressure);
   }
 
   dcmBiasEstimatorConfiguration(c_.dcmBias);
@@ -1053,7 +1054,6 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   Eigen::Vector2d leftCoP = (constants::vertical.cross(w_l_lc.couple()) / w_l_lc.force()(2)).head<2>();
   Eigen::Vector2d rightCoP = (constants::vertical.cross(w_r_rc.couple()) / w_r_rc.force()(2)).head<2>();
   
-  for(auto & t : footTasks){t.second->useTargetPressure(true);}
   footTasks[ContactState::Left]->targetCoP(leftCoP);
   footTasks[ContactState::Left]->targetForce(w_l_lc.force());
   footTasks[ContactState::Right]->targetCoP(rightCoP);
@@ -1320,8 +1320,6 @@ void StabilizerTask::computeCoPonHorizon(const std::vector<Eigen::Vector2d> & zm
         Eigen::Vector3d{leftCoP.y() * targetForceLeft.z(), -leftCoP.x() * targetForceLeft.z(), 0}, targetForceLeft};
     sva::ForceVecd w_r_rc = sva::ForceVecd{
         Eigen::Vector3d{rightCoP.y() * targetForceRight.z(), -rightCoP.x() * targetForceRight.z(), 0}, targetForceRight};
-
-    for(auto & t : footTasks){t.second->useTargetPressure(true);}
 
     footTasks[ContactState::Left]->targetCoP(leftCoP);
     footTasks[ContactState::Left]->targetForce(w_l_lc.force());

@@ -447,6 +447,10 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
   bool constrainCoP = true; /**<If true, the wrench computation constraint the CoP of each contact to be inside the foot
                                support rectangle. */
+  
+  bool useTargetPressure = true; /**<If true, the CoP tasks compute the target torque using the target vertical force, otherwise, the torque is computed
+                                      using the measured one. */
+  
 
   Eigen::Vector2d copAdmittance = Eigen::Vector2d::Zero(); /**< Admittance gains for foot damping control */
   sva::MotionVecd copMaxVel{{0.3, 0.3, 0.3}, {0.1, 0.1, 0.1}}; /**< Maximal velocity of the cop tasks */
@@ -540,6 +544,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     {
       auto admittance = config("admittance");
       admittance("cop", copAdmittance);
+      admittance("useTargetPressure",useTargetPressure);
       admittance("copFzLambda", copFzLambda);
       admittance("copFzDelay", delayCoP);
       admittance("maxVel", copMaxVel);
@@ -670,6 +675,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
     conf.add("admittance");
     conf("admittance").add("cop", copAdmittance);
+    conf("admittance").add("useTargetPressure",useTargetPressure);
     conf("admittance").add("df", dfAdmittance);
     conf("admittance").add("df_damping", dfDamping);
     conf("admittance").add("maxVel", copMaxVel);
