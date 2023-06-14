@@ -128,6 +128,7 @@ void CoPTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & c
   DampingTask::load(solver, config);
   if(config.has("cop")) { targetCoP(config("cop")); }
   if(config.has("force")) { targetForce(config("force")); }
+  if(config.has("useTargetPressure")) { useTargetPressure(config("useTargetPressure")); }
 }
 
 } // namespace force
