@@ -723,6 +723,8 @@ private:
    */
   void distributeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref, double delta);
 
+  void computeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref, const double delta,const double t_delay);
+
   /** Project desired wrench to single support foot.
    *
    * \param desiredWrench Desired resultant reaction wrench.
