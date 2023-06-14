@@ -717,7 +717,6 @@ void StabilizerTask::run()
     if(horizonCoPDistribution_)
     {
       distributeCoPonHorizon(horizonZmpRef_, horizonDelta_);
-      //horizonCoPDistribution_ = false;
     }
     else { distributeWrench(desiredWrench_); }
   }
@@ -1125,7 +1124,7 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   
   // We consider an input to be considered as the reference for the delay
   // At every sampling period
-  if(tComputation_ == 0.)
+  if(t_ - tComputation_ >= delta)
   {
     tComputation_ = t_;
     delayedTargetCoPLeft_ = footTasks[ContactState::Left]->targetCoP();
@@ -1137,13 +1136,13 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
     modeledFzLeft_ = measuredFzLeft;
     modeledFzRight_ = measuredFzRight;
   }
-  double t_delay = clamp((c_.delayCoP - (t_ - tComputation_)), 0, c_.delayCoP);
+  const double t_delay = clamp((c_.delayCoP - (t_ - tComputation_)), 0, c_.delayCoP);
 
 
 
-  if(t_ ==  tComputation_)
+  if(newCoPHorizonRef_)
   {
-
+    newCoPHorizonRef_ = false;
     Eigen::Vector3d targetForceLeft = Eigen::Vector3d::Zero();
     Eigen::Vector3d targetForceRight = Eigen::Vector3d::Zero();
 

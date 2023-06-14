@@ -369,8 +369,8 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   {
     horizonZmpRef_ = ref;
     horizonDelta_ = delta;
-    tComputation_ = 0;
     horizonCoPDistribution_ = true;
+    newCoPHorizonRef_ = true;
 
   }
 
@@ -971,6 +971,7 @@ protected:
   double horizonDelta_ = 0.05; /**< Sequence sampling period */
   /**<Is set to true when a new zmp sequence is provided and overided classical distribution */
   bool horizonCoPDistribution_ = false;
+  bool newCoPHorizonRef_ = false;
   Eigen::Vector2d modeledCoPLeft_ = Eigen::Vector2d::Zero(); /**< Used for logging*/
   Eigen::Vector2d modeledCoPRight_ = Eigen::Vector2d::Zero(); /**< Used for logging*/
 
