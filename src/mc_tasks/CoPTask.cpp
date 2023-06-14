@@ -46,7 +46,7 @@ void CoPTask::reset()
 void CoPTask::update(mc_solver::QPSolver & solver)
 {
   double pressure = std::max(0., measuredWrench().force().z());
-  if(useTargetPressure)
+  if(useTargetPressure_)
   {
     pressure = std::max(0.,targetForce_.z());
   }
@@ -60,14 +60,14 @@ void CoPTask::addToLogger(mc_rtc::Logger & logger)
   DampingTask::addToLogger(logger);
   MC_RTC_LOG_HELPER(name_ + "_measured_cop", measuredCoP);
   MC_RTC_LOG_HELPER(name_ + "_target_cop", targetCoP_);
-  MC_RTC_LOG_HELPER(name_ + "_useTargetPressure", useTargetPressure);
+  MC_RTC_LOG_HELPER(name_ + "_useTargetPressure", useTargetPressure_);
 }
 
 void CoPTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   gui.addElement({"Tasks", name_},
                  mc_rtc::gui::ArrayLabel("cop_measured", [this]() -> Eigen::Vector2d { return this->measuredCoP(); }),
-                 mc_rtc::gui::Checkbox("Use Target Pressure", [this] {return useTargetPressure;}, [this](){setUsedPressure(!useTargetPressure);} ),
+                 mc_rtc::gui::Checkbox("Use Target Pressure", [this] {return useTargetPressure_;}, [this](){useTargetPressure(!useTargetPressure_);} ),
                  mc_rtc::gui::ArrayInput(
                      "cop_target", [this]() -> const Eigen::Vector2d & { return this->targetCoP(); },
                      [this](const Eigen::Vector2d & cop) { this->targetCoP(cop); }));

@@ -102,9 +102,9 @@ public:
    * 
    * @param s 
    */
-  void setUsedPressure(bool s)
+  void useTargetPressure(bool s)
   {
-    useTargetPressure = s;
+    useTargetPressure_ = s;
   }
 
   /*! \brief Measured CoP in target frame.
@@ -181,7 +181,7 @@ private:
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();
   Eigen::Vector3d targetForce_ = Eigen::Vector3d::Zero();
 
-  bool useTargetPressure = false;
+  bool useTargetPressure_ = false;
 
   void update(mc_solver::QPSolver &) override;
 
