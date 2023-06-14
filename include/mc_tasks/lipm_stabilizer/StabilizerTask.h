@@ -371,7 +371,6 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     horizonDelta_ = delta;
     horizonCoPDistribution_ = true;
     newCoPHorizonRef_ = true;
-
   }
 
   /**
@@ -723,7 +722,7 @@ private:
    */
   void distributeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref, double delta);
 
-  void computeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref, const double delta,const double t_delay);
+  void computeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref, const double delta, const double t_delay);
 
   /** Project desired wrench to single support foot.
    *

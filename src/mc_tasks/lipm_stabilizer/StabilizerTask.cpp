@@ -715,10 +715,7 @@ void StabilizerTask::run()
 
   if(inDoubleSupport())
   {
-    if(horizonCoPDistribution_ && horizonZmpRef_.size() != 0)
-    {
-      distributeCoPonHorizon(horizonZmpRef_, horizonDelta_);
-    }
+    if(horizonCoPDistribution_ && horizonZmpRef_.size() != 0) { distributeCoPonHorizon(horizonZmpRef_, horizonDelta_); }
     else { distributeWrench(desiredWrench_); }
   }
   else
@@ -1053,279 +1050,282 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   sva::ForceVecd w_r_rc = X_0_rc.dualMul(w_r_0);
   Eigen::Vector2d leftCoP = (constants::vertical.cross(w_l_lc.couple()) / w_l_lc.force()(2)).head<2>();
   Eigen::Vector2d rightCoP = (constants::vertical.cross(w_r_rc.couple()) / w_r_rc.force()(2)).head<2>();
-  
+
   footTasks[ContactState::Left]->targetCoP(leftCoP);
   footTasks[ContactState::Left]->targetForce(w_l_lc.force());
   footTasks[ContactState::Right]->targetCoP(rightCoP);
   footTasks[ContactState::Right]->targetForce(w_r_rc.force());
 }
 
-void StabilizerTask::computeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref, const double delta,const double t_delay)
+void StabilizerTask::computeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref,
+                                         const double delta,
+                                         const double t_delay)
 {
-    // Variables
-    // ---------
-    // sequence [ul_1_x,ul_1_y, ..., ul_n_x,ul_n_y,ur_1_x,ur_1_y, ..., ur_n_x,ur_n_y]
-    // [ur_i_x,ur_i_y]: Right CoP reference in the foot frame at the ith iteration
-    // [ul_i_x,ul_i_y]: Left  CoP reference in the foot frame at the ith iteration
-    // Objective
-    // ---------
-    // Weighted minimization of the following tasks:
-    //
-    // -- minimize the CoP position to be under the ankle for each foot
-    // -- minimize the CoP position difference between both feet in their respective frame
-    //
-    // (fr_i_z * ur_i_x + fl_i_z * ul_i_x)/(fl_i_z + fr_i_z) == zmp_ref_i  -- modeled CoP must match zmp reference (same
-    // for y)
-    //
-    // Constraints
-    // -----------
-    //
-    //  CoP within the contact polygon
-    //
-    // The decision variable are organised such as :
-    // indx i of the left CoP reference : 2 * i
-    // indx i of the right CoP reference : 2 * (n + i)   
-    const auto & leftContact = contacts_.at(ContactState::Left);
-    const auto & rightContact = contacts_.at(ContactState::Right);
-    const double fz_tot = fSumFilter_.eval().z(); // Vertical force applied by gravity on the whole robot
+  // Variables
+  // ---------
+  // sequence [ul_1_x,ul_1_y, ..., ul_n_x,ul_n_y,ur_1_x,ur_1_y, ..., ur_n_x,ur_n_y]
+  // [ur_i_x,ur_i_y]: Right CoP reference in the foot frame at the ith iteration
+  // [ul_i_x,ul_i_y]: Left  CoP reference in the foot frame at the ith iteration
+  // Objective
+  // ---------
+  // Weighted minimization of the following tasks:
+  //
+  // -- minimize the CoP position to be under the ankle for each foot
+  // -- minimize the CoP position difference between both feet in their respective frame
+  //
+  // (fr_i_z * ur_i_x + fl_i_z * ul_i_x)/(fl_i_z + fr_i_z) == zmp_ref_i  -- modeled CoP must match zmp reference (same
+  // for y)
+  //
+  // Constraints
+  // -----------
+  //
+  //  CoP within the contact polygon
+  //
+  // The decision variable are organised such as :
+  // indx i of the left CoP reference : 2 * i
+  // indx i of the right CoP reference : 2 * (n + i)
+  const auto & leftContact = contacts_.at(ContactState::Left);
+  const auto & rightContact = contacts_.at(ContactState::Right);
+  const double fz_tot = fSumFilter_.eval().z(); // Vertical force applied by gravity on the whole robot
 
-    const sva::PTransformd & X_0_lc = leftContact.surfacePose();
-    const sva::PTransformd & X_0_rc = rightContact.surfacePose();
+  const sva::PTransformd & X_0_lc = leftContact.surfacePose();
+  const sva::PTransformd & X_0_rc = rightContact.surfacePose();
 
-    // translation vector from contact center to contact ankle in contact frame
-    //{
-    const Eigen::Vector3d t_rankle_rc = (X_0_rc * contacts_.at(ContactState::Right).anklePose().inv()).translation();
-    const Eigen::Vector3d t_lankle_lc = (X_0_lc * contacts_.at(ContactState::Left).anklePose().inv()).translation();
-    //}
+  // translation vector from contact center to contact ankle in contact frame
+  //{
+  const Eigen::Vector3d t_rankle_rc = (X_0_rc * contacts_.at(ContactState::Right).anklePose().inv()).translation();
+  const Eigen::Vector3d t_lankle_lc = (X_0_lc * contacts_.at(ContactState::Left).anklePose().inv()).translation();
+  //}
 
-    const Eigen::Vector3d & lankle = contacts_.at(ContactState::Left).anklePose().translation();
-    const Eigen::Vector3d & rankle = contacts_.at(ContactState::Right).anklePose().translation();
-    const Eigen::Vector2d t_lankle_rankle = (rankle - lankle).segment(0, 2);
+  const Eigen::Vector3d & lankle = contacts_.at(ContactState::Left).anklePose().translation();
+  const Eigen::Vector3d & rankle = contacts_.at(ContactState::Right).anklePose().translation();
+  const Eigen::Vector2d t_lankle_rankle = (rankle - lankle).segment(0, 2);
 
-    // The measured CoP is clamped in contact polygon
-    const Eigen::Vector2d measuredRightCoP = clamp(footTasks[ContactState::Right]->measuredCoP(),
-                                                  Eigen::Vector2d{-rightContact.halfLength(), -rightContact.halfWidth()},
-                                                  Eigen::Vector2d{rightContact.halfLength(), rightContact.halfWidth()});
-    const double measuredFzLeft =
-        clamp(X_0_rc.inv().dualMul(footTasks[ContactState::Left]->measuredWrench()).force().z(), 0, fz_tot);
-    const Eigen::Vector2d measuredLeftCoP = clamp(footTasks[ContactState::Left]->measuredCoP(),
-                                                  Eigen::Vector2d{-leftContact.halfLength(), -leftContact.halfWidth()},
-                                                  Eigen::Vector2d{leftContact.halfLength(), leftContact.halfWidth()});
-    const double measuredFzRight =
-        clamp(X_0_lc.inv().dualMul(footTasks[ContactState::Right]->measuredWrench()).force().z(), 0, fz_tot);
+  // The measured CoP is clamped in contact polygon
+  const Eigen::Vector2d measuredRightCoP = clamp(footTasks[ContactState::Right]->measuredCoP(),
+                                                 Eigen::Vector2d{-rightContact.halfLength(), -rightContact.halfWidth()},
+                                                 Eigen::Vector2d{rightContact.halfLength(), rightContact.halfWidth()});
+  const double measuredFzLeft =
+      clamp(X_0_rc.inv().dualMul(footTasks[ContactState::Left]->measuredWrench()).force().z(), 0, fz_tot);
+  const Eigen::Vector2d measuredLeftCoP = clamp(footTasks[ContactState::Left]->measuredCoP(),
+                                                Eigen::Vector2d{-leftContact.halfLength(), -leftContact.halfWidth()},
+                                                Eigen::Vector2d{leftContact.halfLength(), leftContact.halfWidth()});
+  const double measuredFzRight =
+      clamp(X_0_lc.inv().dualMul(footTasks[ContactState::Right]->measuredWrench()).force().z(), 0, fz_tot);
 
-    Eigen::Vector3d targetForceLeft = Eigen::Vector3d::Zero();
-    Eigen::Vector3d targetForceRight = Eigen::Vector3d::Zero();
+  Eigen::Vector3d targetForceLeft = Eigen::Vector3d::Zero();
+  Eigen::Vector3d targetForceRight = Eigen::Vector3d::Zero();
 
-    Eigen::Vector2d measuredLeftCoP_delayed;
-    double measuredFzLeft_delayed = 0;
+  Eigen::Vector2d measuredLeftCoP_delayed;
+  double measuredFzLeft_delayed = 0;
 
-    measuredLeftCoP_delayed.x() = measuredLeftCoP.x() * exp(-c_.copFzLambda.x() * t_delay)
-                                  + (1 - exp(-c_.copFzLambda.x() * t_delay)) * delayedTargetCoPLeft_.x();
-    measuredLeftCoP_delayed.y() = measuredLeftCoP.y() * exp(-c_.copFzLambda.y() * t_delay)
-                                  + (1 - exp(-c_.copFzLambda.y() * t_delay)) * delayedTargetCoPLeft_.y();
+  measuredLeftCoP_delayed.x() = measuredLeftCoP.x() * exp(-c_.copFzLambda.x() * t_delay)
+                                + (1 - exp(-c_.copFzLambda.x() * t_delay)) * delayedTargetCoPLeft_.x();
+  measuredLeftCoP_delayed.y() = measuredLeftCoP.y() * exp(-c_.copFzLambda.y() * t_delay)
+                                + (1 - exp(-c_.copFzLambda.y() * t_delay)) * delayedTargetCoPLeft_.y();
 
-    Eigen::Vector2d measuredRightCoP_delayed;
-    double measuredFzRight_delayed = 0;
-    measuredRightCoP_delayed.x() = measuredRightCoP.x() * exp(-c_.copFzLambda.x() * t_delay)
-                                  + (1 - exp(-c_.copFzLambda.x() * t_delay)) * delayedTargetCoPRight_.x();
-    measuredRightCoP_delayed.y() = measuredRightCoP.y() * exp(-c_.copFzLambda.y() * t_delay)
-                                  + (1 - exp(-c_.copFzLambda.y() * t_delay)) * delayedTargetCoPRight_.y();
+  Eigen::Vector2d measuredRightCoP_delayed;
+  double measuredFzRight_delayed = 0;
+  measuredRightCoP_delayed.x() = measuredRightCoP.x() * exp(-c_.copFzLambda.x() * t_delay)
+                                 + (1 - exp(-c_.copFzLambda.x() * t_delay)) * delayedTargetCoPRight_.x();
+  measuredRightCoP_delayed.y() = measuredRightCoP.y() * exp(-c_.copFzLambda.y() * t_delay)
+                                 + (1 - exp(-c_.copFzLambda.y() * t_delay)) * delayedTargetCoPRight_.y();
 
-    if(supportFoot_ == ContactState::Left)
+  if(supportFoot_ == ContactState::Left)
+  {
+    measuredFzRight_delayed = measuredFzRight * exp(-c_.copFzLambda.z() * t_delay)
+                              + (1 - exp(-c_.copFzLambda.z() * t_delay)) * delayedTargetFzRight_;
+    measuredFzLeft_delayed = fz_tot - measuredFzRight_delayed;
+  }
+  else
+  {
+    measuredFzLeft_delayed = measuredFzLeft * exp(-c_.copFzLambda.z() * t_delay)
+                             + (1 - exp(-c_.copFzLambda.z() * t_delay)) * delayedTargetFzLeft_;
+    measuredFzRight_delayed = fz_tot - measuredFzLeft_delayed;
+  }
+
+  clampInPlace(measuredFzLeft_delayed, 0, fz_tot);
+  clampInPlace(measuredFzRight_delayed, 0, fz_tot);
+
+  measuredLeftCoP_delayed.segment(0, 2) =
+      clamp(Eigen::Vector2d{measuredLeftCoP_delayed.x(), measuredLeftCoP_delayed.y()},
+            Eigen::Vector2d{-leftContact.halfLength(), -leftContact.halfWidth()},
+            Eigen::Vector2d{leftContact.halfLength(), leftContact.halfWidth()});
+  measuredRightCoP_delayed.segment(0, 2) =
+      clamp(Eigen::Vector2d{measuredRightCoP_delayed.x(), measuredRightCoP_delayed.y()},
+            Eigen::Vector2d{-rightContact.halfLength(), -rightContact.halfWidth()},
+            Eigen::Vector2d{rightContact.halfLength(), rightContact.halfWidth()});
+
+  const int nbReferences = static_cast<int>(zmp_ref.size());
+  const int nbVariables = 2 * 2 * nbReferences; // Each reference induce 2 CoP which has 2 coordinates x y
+  const int nbIneqCstr = 8 * nbReferences; // Each CoP has 4 cstr to remain bounded in contact polygone
+  const int nbEqCstr = 2 * nbReferences;
+
+  // Task to meet the CoPs to the reference ZMP
+  Eigen::MatrixXd Mcop = Eigen::MatrixXd::Zero(nbEqCstr, nbVariables);
+  Eigen::VectorXd bcop = Eigen::VectorXd::Zero(Mcop.rows());
+
+  // Task to regulate the CoPs under the foot ankle
+  Eigen::MatrixXd McopReg = Eigen::MatrixXd::Zero(nbVariables, nbVariables);
+  Eigen::VectorXd bcopReg = Eigen::VectorXd::Zero(McopReg.rows());
+
+  // Task to regulate the CoPs difference
+  Eigen::MatrixXd McopDiff = Eigen::MatrixXd::Zero(2 * nbReferences, nbVariables);
+  Eigen::VectorXd bcopDiff = Eigen::VectorXd::Zero(McopDiff.rows());
+
+  Eigen::MatrixXd Aineq = Eigen::MatrixXd::Zero(nbIneqCstr, nbVariables);
+  Eigen::VectorXd bineq = Eigen::VectorXd::Zero(Aineq.rows());
+
+  Eigen::Matrix<double, 4, 2> normals; // normals matrix for CoP constraints
+  Eigen::Vector4d offsetLeft = Eigen::Vector4d::Zero();
+  Eigen::Vector4d offsetRight = Eigen::Vector4d::Zero();
+  normals << 1, 0, -1, 0, 0, 1, 0, -1;
+
+  offsetLeft << leftContact.halfLength(), leftContact.halfLength(), leftContact.halfWidth(), leftContact.halfWidth();
+
+  offsetRight << rightContact.halfLength(), rightContact.halfLength(), rightContact.halfWidth(),
+      rightContact.halfWidth();
+
+  Eigen::Vector2d t_lankle_zmp = zmp_ref[0] - lankle.segment(0, 2);
+  const double lankle_rankle = t_lankle_rankle.norm();
+  double d_proj = t_lankle_zmp.dot(t_lankle_rankle.normalized());
+  // The vertical forces are splitted using the ratio obtained between the reference zmp pose and the contact pose;
+  double ratio = clamp(d_proj / lankle_rankle, c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot,
+                       1 - (c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot));
+
+  desiredFzLeft_ = (1 - ratio) * fz_tot;
+  desiredFzRight_ = ratio * fz_tot;
+
+  // We modeled the vertical forces to also follow a 1st order behavior between the reference and the state
+  targetForceLeft.z() = desiredFzLeft_ - measuredFzLeft_delayed * exp(-c_.copFzLambda.z() * (delta - t_delay));
+  targetForceLeft.z() /= (1 - exp(-c_.copFzLambda.z() * (delta - t_delay)));
+
+  targetForceRight.z() = desiredFzRight_ - measuredFzRight_delayed * exp(-c_.copFzLambda.z() * (delta - t_delay));
+  targetForceRight.z() /= (1 - exp(-c_.copFzLambda.z() * (delta - t_delay)));
+
+  const double ratio0 = ratio;
+
+  for(Eigen::Index i = 0; i < nbReferences; i++)
+  {
+
+    if(i != 0)
     {
-      measuredFzRight_delayed = measuredFzRight * exp(-c_.copFzLambda.z() * t_delay)
-                                + (1 - exp(-c_.copFzLambda.z() * t_delay)) * delayedTargetFzRight_;
-      measuredFzLeft_delayed = fz_tot - measuredFzRight_delayed;
+
+      t_lankle_zmp = zmp_ref[i] - lankle.segment(0, 2);
+      d_proj = t_lankle_zmp.dot(t_lankle_rankle.normalized());
+      // ratio = 1 : fz on rightfoot, 0 on leftFoot
+      ratio = clamp(d_proj / lankle_rankle, c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot,
+                    1 - (c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot));
     }
-    else
+
+    // Acop convert the CoP reference into the modeled CoP
+    // x be vector cotaining the CoP reference for one foot
+    // Acop * x + cop_0 * e^(-lambda t_i) = cop i in foot frame (left/right)
+    Eigen::MatrixXd Acop = Eigen::MatrixXd::Zero(2, 2 * nbReferences);
+    double t = static_cast<double>(i) * delta;
+    Eigen::Matrix2d exp_mat;
+    exp_mat << exp(-c_.copFzLambda.x() * (t + delta - (i == 0 ? t_delay : c_.delayCoP))), 0, 0,
+        exp(-c_.copFzLambda.y() * (t + delta - (i == 0 ? t_delay : c_.delayCoP)));
+    for(Eigen::Index k = 0; k <= i; k++)
     {
-      measuredFzLeft_delayed = measuredFzLeft * exp(-c_.copFzLambda.z() * t_delay)
-                              + (1 - exp(-c_.copFzLambda.z() * t_delay)) * delayedTargetFzLeft_;
-      measuredFzRight_delayed = fz_tot - measuredFzLeft_delayed;
+      if(k == i)
+      {
+        Acop(0, 2 * k) =
+            (1 - exp(-c_.copFzLambda.x() * (delta - (i == 0 ? t_delay : c_.delayCoP)))) * exp(-c_.copFzLambda.x() * t);
+        Acop(1, 2 * k + 1) =
+            (1 - exp(-c_.copFzLambda.y() * (delta - (i == 0 ? t_delay : c_.delayCoP)))) * exp(-c_.copFzLambda.y() * t);
+      }
+      else
+      {
+        Acop(0, 2 * k) = (1 - exp(-c_.copFzLambda.x() * delta)) * exp(-c_.copFzLambda.x() * t);
+        Acop(1, 2 * k + 1) = (1 - exp(-c_.copFzLambda.y() * delta)) * exp(-c_.copFzLambda.y() * t);
+      }
+      t -= delta;
     }
+    auto Acop_view = Acop.block(0, 0, 2, 2 * (i + 1));
+    // The task regulate zmp_i = (cop_l * f_z_l + cop_r * f_z_r)/f_z in world frame
+    Mcop.block(2 * i, 0, 2, Acop_view.cols()) = X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * Acop_view;
+    Mcop.block(2 * i, 2 * nbReferences, 2, Acop_view.cols()) =
+        X_0_rc.inv().rotation().block(0, 0, 2, 2) * ratio * Acop_view;
 
-    clampInPlace(measuredFzLeft_delayed, 0, fz_tot);
-    clampInPlace(measuredFzRight_delayed, 0, fz_tot);
-
-    measuredLeftCoP_delayed.segment(0, 2) =
-        clamp(Eigen::Vector2d{measuredLeftCoP_delayed.x(), measuredLeftCoP_delayed.y()},
-              Eigen::Vector2d{-leftContact.halfLength(), -leftContact.halfWidth()},
-              Eigen::Vector2d{leftContact.halfLength(), leftContact.halfWidth()});
-    measuredRightCoP_delayed.segment(0, 2) =
-        clamp(Eigen::Vector2d{measuredRightCoP_delayed.x(), measuredRightCoP_delayed.y()},
-              Eigen::Vector2d{-rightContact.halfLength(), -rightContact.halfWidth()},
-              Eigen::Vector2d{rightContact.halfLength(), rightContact.halfWidth()});
-
-    const int nbReferences = static_cast<int>(zmp_ref.size());
-    const int nbVariables = 2 * 2 * nbReferences; // Each reference induce 2 CoP which has 2 coordinates x y
-    const int nbIneqCstr = 8 * nbReferences; // Each CoP has 4 cstr to remain bounded in contact polygone
-    const int nbEqCstr = 2 * nbReferences;
-
-    // Task to meet the CoPs to the reference ZMP
-    Eigen::MatrixXd Mcop = Eigen::MatrixXd::Zero(nbEqCstr, nbVariables);
-    Eigen::VectorXd bcop = Eigen::VectorXd::Zero(Mcop.rows());
-
-    // Task to regulate the CoPs under the foot ankle
-    Eigen::MatrixXd McopReg = Eigen::MatrixXd::Zero(nbVariables, nbVariables);
-    Eigen::VectorXd bcopReg = Eigen::VectorXd::Zero(McopReg.rows());
-
-    // Task to regulate the CoPs difference
-    Eigen::MatrixXd McopDiff = Eigen::MatrixXd::Zero(2 * nbReferences, nbVariables);
-    Eigen::VectorXd bcopDiff = Eigen::VectorXd::Zero(McopDiff.rows());
-
-    Eigen::MatrixXd Aineq = Eigen::MatrixXd::Zero(nbIneqCstr, nbVariables);
-    Eigen::VectorXd bineq = Eigen::VectorXd::Zero(Aineq.rows());
-
-    Eigen::Matrix<double, 4, 2> normals; // normals matrix for CoP constraints
-    Eigen::Vector4d offsetLeft = Eigen::Vector4d::Zero();
-    Eigen::Vector4d offsetRight = Eigen::Vector4d::Zero();
-    normals << 1, 0, -1, 0, 0, 1, 0, -1;
-
-    offsetLeft << leftContact.halfLength(), leftContact.halfLength(), leftContact.halfWidth(), leftContact.halfWidth();
-
-    offsetRight << rightContact.halfLength(), rightContact.halfLength(), rightContact.halfWidth(),
-        rightContact.halfWidth();
-
-    Eigen::Vector2d t_lankle_zmp = zmp_ref[0] - lankle.segment(0, 2);
-    const double lankle_rankle = t_lankle_rankle.norm();
-    double d_proj = t_lankle_zmp.dot(t_lankle_rankle.normalized());
-    // The vertical forces are splitted using the ratio obtained between the reference zmp pose and the contact pose;
-    double ratio = clamp(d_proj / lankle_rankle, c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot,
-                        1 - (c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot));
-
-    desiredFzLeft_ = (1 - ratio) * fz_tot;
-    desiredFzRight_ = ratio * fz_tot;
-
-    // We modeled the vertical forces to also follow a 1st order behavior between the reference and the state
-    targetForceLeft.z() = desiredFzLeft_ - measuredFzLeft_delayed * exp(-c_.copFzLambda.z() * (delta - t_delay));
-    targetForceLeft.z() /= (1 - exp(-c_.copFzLambda.z() * (delta - t_delay)));
-
-    targetForceRight.z() = desiredFzRight_ - measuredFzRight_delayed * exp(-c_.copFzLambda.z() * (delta - t_delay));
-    targetForceRight.z() /= (1 - exp(-c_.copFzLambda.z() * (delta - t_delay)));
-
-    const double ratio0 = ratio;
-
-    for(Eigen::Index i = 0; i < nbReferences; i++)
-    {
-
-      if(i != 0)
-      {
-
-        t_lankle_zmp = zmp_ref[i] - lankle.segment(0, 2);
-        d_proj = t_lankle_zmp.dot(t_lankle_rankle.normalized());
-        // ratio = 1 : fz on rightfoot, 0 on leftFoot
-        ratio = clamp(d_proj / lankle_rankle, c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot,
-                      1 - (c_.safetyThresholds.MIN_DS_PRESSURE / fz_tot));
-      }
-
-      // Acop convert the CoP reference into the modeled CoP
-      // x be vector cotaining the CoP reference for one foot
-      // Acop * x + cop_0 * e^(-lambda t_i) = cop i in foot frame (left/right)
-      Eigen::MatrixXd Acop = Eigen::MatrixXd::Zero(2, 2 * nbReferences);
-      double t = static_cast<double>(i) * delta;
-      Eigen::Matrix2d exp_mat;
-      exp_mat << exp(-c_.copFzLambda.x() * (t + delta - (i == 0 ? t_delay : c_.delayCoP))), 0, 0,
-          exp(-c_.copFzLambda.y() * (t + delta - (i == 0 ? t_delay : c_.delayCoP)));
-      for(Eigen::Index k = 0; k <= i; k++)
-      {
-        if(k == i)
-        {
-          Acop(0, 2 * k) =
-              (1 - exp(-c_.copFzLambda.x() * (delta - (i == 0 ? t_delay : c_.delayCoP)))) * exp(-c_.copFzLambda.x() * t);
-          Acop(1, 2 * k + 1) =
-              (1 - exp(-c_.copFzLambda.y() * (delta - (i == 0 ? t_delay : c_.delayCoP)))) * exp(-c_.copFzLambda.y() * t);
-        }
-        else
-        {
-          Acop(0, 2 * k) = (1 - exp(-c_.copFzLambda.x() * delta)) * exp(-c_.copFzLambda.x() * t);
-          Acop(1, 2 * k + 1) = (1 - exp(-c_.copFzLambda.y() * delta)) * exp(-c_.copFzLambda.y() * t);
-        }
-        t -= delta;
-      }
-      auto Acop_view = Acop.block(0, 0, 2, 2 * (i + 1));
-      // The task regulate zmp_i = (cop_l * f_z_l + cop_r * f_z_r)/f_z in world frame
-      Mcop.block(2 * i, 0, 2, Acop_view.cols()) = X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * Acop_view;
-      Mcop.block(2 * i, 2 * nbReferences, 2, Acop_view.cols()) =
-          X_0_rc.inv().rotation().block(0, 0, 2, 2) * ratio * Acop_view;
-
-      // clang-format off
+    // clang-format off
       bcop.segment(2 * i, 2) =
           zmp_ref[i]
           - X_0_lc.translation().segment(0, 2) * (1 - ratio)
           - X_0_rc.translation().segment(0, 2) * (ratio)
           - X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * exp_mat * measuredLeftCoP_delayed.segment(0, 2)
           - X_0_rc.inv().rotation().block(0, 0, 2, 2) * (ratio) * exp_mat * measuredRightCoP_delayed.segment(0, 2);
-      // clang-format on
+    // clang-format on
 
-      McopReg.block(2 * i, 0, 2, Acop_view.cols()) = Acop_view;
-      McopReg.block(2 * nbReferences + 2 * i, 2 * nbReferences, 2, Acop_view.cols()) = Acop_view;
-      bcopReg.segment(2 * i, 2) = -t_lankle_lc.segment(0, 2) - exp_mat * measuredLeftCoP_delayed.segment(0, 2);
-      bcopReg.segment(2 * (i + nbReferences), 2) =
-          -t_rankle_rc.segment(0, 2) - exp_mat * measuredRightCoP_delayed.segment(0, 2);
+    McopReg.block(2 * i, 0, 2, Acop_view.cols()) = Acop_view;
+    McopReg.block(2 * nbReferences + 2 * i, 2 * nbReferences, 2, Acop_view.cols()) = Acop_view;
+    bcopReg.segment(2 * i, 2) = -t_lankle_lc.segment(0, 2) - exp_mat * measuredLeftCoP_delayed.segment(0, 2);
+    bcopReg.segment(2 * (i + nbReferences), 2) =
+        -t_rankle_rc.segment(0, 2) - exp_mat * measuredRightCoP_delayed.segment(0, 2);
 
-      // CoP must remain bounded in polygon cstr
-      Aineq.block(4 * i, 0, 4, Acop_view.cols()) = normals * Acop_view;
+    // CoP must remain bounded in polygon cstr
+    Aineq.block(4 * i, 0, 4, Acop_view.cols()) = normals * Acop_view;
 
-      bineq.segment(4 * i, 4) = offsetLeft - normals * exp_mat * measuredLeftCoP_delayed.segment(0, 2);
-      bineq.segment(4 * (nbReferences + i), 4) = offsetRight - normals * exp_mat * measuredRightCoP_delayed.segment(0, 2);
+    bineq.segment(4 * i, 4) = offsetLeft - normals * exp_mat * measuredLeftCoP_delayed.segment(0, 2);
+    bineq.segment(4 * (nbReferences + i), 4) = offsetRight - normals * exp_mat * measuredRightCoP_delayed.segment(0, 2);
 
-      McopDiff.block(2 * i, 0, 2, Acop_view.cols()) = Acop_view;
-      McopDiff.block(2 * i, 2 * nbReferences, 2, Acop_view.cols()) = -Acop_view;
-      bcopDiff.segment(2 * i, 2) = exp_mat * (measuredLeftCoP_delayed - measuredRightCoP_delayed).segment(0, 2);
-    }
+    McopDiff.block(2 * i, 0, 2, Acop_view.cols()) = Acop_view;
+    McopDiff.block(2 * i, 2 * nbReferences, 2, Acop_view.cols()) = -Acop_view;
+    bcopDiff.segment(2 * i, 2) = exp_mat * (measuredLeftCoP_delayed - measuredRightCoP_delayed).segment(0, 2);
+  }
 
-    // We copy the constraint for the other contact
-    Aineq.block(4 * nbReferences, 2 * nbReferences, 4 * nbReferences, 2 * nbReferences) =
-        Aineq.block(0, 0, 4 * nbReferences, 2 * nbReferences);
+  // We copy the constraint for the other contact
+  Aineq.block(4 * nbReferences, 2 * nbReferences, 4 * nbReferences, 2 * nbReferences) =
+      Aineq.block(0, 0, 4 * nbReferences, 2 * nbReferences);
 
-    Eigen::MatrixXd Q = c_.fdmpcWeights.cop_ * Mcop.transpose() * Mcop;
-    Q += c_.fdmpcWeights.copDiff_ * McopDiff.transpose() * McopDiff;
-    Q += c_.fdmpcWeights.copRegulation_ * McopReg.transpose() * McopReg;
+  Eigen::MatrixXd Q = c_.fdmpcWeights.cop_ * Mcop.transpose() * Mcop;
+  Q += c_.fdmpcWeights.copDiff_ * McopDiff.transpose() * McopDiff;
+  Q += c_.fdmpcWeights.copRegulation_ * McopReg.transpose() * McopReg;
 
-    Eigen::VectorXd c = c_.fdmpcWeights.cop_ * (-Mcop.transpose() * bcop);
-    c += c_.fdmpcWeights.copDiff_ * (McopDiff.transpose() * bcopDiff);
-    c += c_.fdmpcWeights.copRegulation_ * (-McopReg.transpose() * bcopReg);
+  Eigen::VectorXd c = c_.fdmpcWeights.cop_ * (-Mcop.transpose() * bcop);
+  c += c_.fdmpcWeights.copDiff_ * (McopDiff.transpose() * bcopDiff);
+  c += c_.fdmpcWeights.copRegulation_ * (-McopReg.transpose() * bcopReg);
 
-    qpSolver_.problem(nbVariables, 0, nbIneqCstr);
-    Eigen::MatrixXd Aeq(0, 0);
-    Eigen::VectorXd beq;
-    beq.resize(0);
+  qpSolver_.problem(nbVariables, 0, nbIneqCstr);
+  Eigen::MatrixXd Aeq(0, 0);
+  Eigen::VectorXd beq;
+  beq.resize(0);
 
-    bool solutionFound = qpSolver_.solve(Q, c, Aeq, beq, Aineq, bineq, /* isDecomp = */ false);
-    if(!solutionFound)
-    {
-      mc_rtc::log::error("[{}] DS force/CoP distribution QP: solver found no solution", name());
-      return;
-    }
+  bool solutionFound = qpSolver_.solve(Q, c, Aeq, beq, Aineq, bineq, /* isDecomp = */ false);
+  if(!solutionFound)
+  {
+    mc_rtc::log::error("[{}] DS force/CoP distribution QP: solver found no solution", name());
+    return;
+  }
 
-    Eigen::VectorXd x = qpSolver_.result();
-    Eigen::Vector2d leftCoP(x.segment(0, 2));
-    Eigen::Vector2d rightCoP(x.segment(2 * nbReferences, 2));
+  Eigen::VectorXd x = qpSolver_.result();
+  Eigen::Vector2d leftCoP(x.segment(0, 2));
+  Eigen::Vector2d rightCoP(x.segment(2 * nbReferences, 2));
 
-    Eigen::Matrix2d exp_mat;
-    exp_mat << exp(-c_.copFzLambda.x() * (delta - t_delay)), 0, 0, exp(-c_.copFzLambda.y() * (delta - t_delay));
+  Eigen::Matrix2d exp_mat;
+  exp_mat << exp(-c_.copFzLambda.x() * (delta - t_delay)), 0, 0, exp(-c_.copFzLambda.y() * (delta - t_delay));
 
-    // Get the next modeled CoP by the QP
-    QPCoPLeft_ = exp_mat * measuredLeftCoP_delayed.segment(0, 2) + (Eigen::Matrix2d::Identity() - exp_mat) * leftCoP;
-    QPCoPRight_ = exp_mat * measuredRightCoP_delayed.segment(0, 2) + (Eigen::Matrix2d::Identity() - exp_mat) * rightCoP;
+  // Get the next modeled CoP by the QP
+  QPCoPLeft_ = exp_mat * measuredLeftCoP_delayed.segment(0, 2) + (Eigen::Matrix2d::Identity() - exp_mat) * leftCoP;
+  QPCoPRight_ = exp_mat * measuredRightCoP_delayed.segment(0, 2) + (Eigen::Matrix2d::Identity() - exp_mat) * rightCoP;
 
-    // Check that the computed modeled ZMP coincide with the ZMP reference
-    Eigen::Vector2d QPzmp = (1 - ratio0) * (X_0_lc.translation().segment(0, 2) + X_0_lc.rotation().block(0,0,2,2).transpose() * QPCoPLeft_)
-                    + ratio0 * (X_0_rc.translation().segment(0, 2) + X_0_rc.rotation().block(0,0,2,2).transpose() * QPCoPRight_);
-    
-    distribCheck_ = QPzmp - zmp_ref[0];
- 
-    sva::ForceVecd w_l_lc = sva::ForceVecd{
-        Eigen::Vector3d{leftCoP.y() * targetForceLeft.z(), -leftCoP.x() * targetForceLeft.z(), 0}, targetForceLeft};
-    sva::ForceVecd w_r_rc = sva::ForceVecd{
-        Eigen::Vector3d{rightCoP.y() * targetForceRight.z(), -rightCoP.x() * targetForceRight.z(), 0}, targetForceRight};
+  // Check that the computed modeled ZMP coincide with the ZMP reference
+  Eigen::Vector2d QPzmp =
+      (1 - ratio0) * (X_0_lc.translation().segment(0, 2) + X_0_lc.rotation().block(0, 0, 2, 2).transpose() * QPCoPLeft_)
+      + ratio0 * (X_0_rc.translation().segment(0, 2) + X_0_rc.rotation().block(0, 0, 2, 2).transpose() * QPCoPRight_);
 
-    footTasks[ContactState::Left]->targetCoP(leftCoP);
-    footTasks[ContactState::Left]->targetForce(w_l_lc.force());
-    footTasks[ContactState::Right]->targetCoP(rightCoP);
-    footTasks[ContactState::Right]->targetForce(w_r_rc.force());
-    distribWrench_ = X_0_lc.inv().dualMul(w_l_lc) + X_0_rc.inv().dualMul(w_r_rc);
+  distribCheck_ = QPzmp - zmp_ref[0];
+
+  sva::ForceVecd w_l_lc = sva::ForceVecd{
+      Eigen::Vector3d{leftCoP.y() * targetForceLeft.z(), -leftCoP.x() * targetForceLeft.z(), 0}, targetForceLeft};
+  sva::ForceVecd w_r_rc = sva::ForceVecd{
+      Eigen::Vector3d{rightCoP.y() * targetForceRight.z(), -rightCoP.x() * targetForceRight.z(), 0}, targetForceRight};
+
+  footTasks[ContactState::Left]->targetCoP(leftCoP);
+  footTasks[ContactState::Left]->targetForce(w_l_lc.force());
+  footTasks[ContactState::Right]->targetCoP(rightCoP);
+  footTasks[ContactState::Right]->targetForce(w_r_rc.force());
+  distribWrench_ = X_0_lc.inv().dualMul(w_l_lc) + X_0_rc.inv().dualMul(w_r_rc);
 }
 
 void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref, const double delta)
@@ -1355,7 +1355,7 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
       clamp(X_0_lc.inv().dualMul(footTasks[ContactState::Right]->measuredWrench()).force().z(), 0, fz_tot);
 
   // double fz_tot = clamp( measuredFzRight + measuredFzLeft,0. ,robot().mass() * constants::GRAVITY );
-  
+
   // We consider an input to be considered as the reference for the delay
   // At every sampling period
   if(t_ - tComputation_ >= delta)
@@ -1375,7 +1375,7 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   if(newCoPHorizonRef_)
   {
     newCoPHorizonRef_ = false;
-    computeCoPonHorizon(zmp_ref,delta,t_delay);
+    computeCoPonHorizon(zmp_ref, delta, t_delay);
   }
   // We update the model CoP for logging
   if(c_.delayCoP != 0 && t_delay > 0)
