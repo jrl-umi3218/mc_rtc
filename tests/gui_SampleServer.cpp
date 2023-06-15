@@ -2,22 +2,12 @@
  * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_control/ControllerServer.h>
-
-#include <mc_rtc/gui.h>
 #include <mc_rtc/utils/heatmap.h>
 #include <mc_rtc/visual_utils.h>
 
 #include <SpaceVecAlg/Conversions.h>
 
-#include <chrono>
-#include <thread>
-
-#ifndef M_PI
-#  include <boost/math/constants/constants.hpp>
-#  define M_PI boost::math::constants::pi<double>()
-#endif
-
+#include "gui_TestServer.h"
 #include "utils.h"
 
 sva::PTransformd lookAt(const Eigen::Vector3d & position, const Eigen::Vector3d & target, const Eigen::Vector3d & up)
@@ -155,11 +145,11 @@ struct FakeZMPGraph
   }
 };
 
-struct TestServer
+struct SampleServer : public TestServer
 {
-  TestServer();
+  SampleServer();
 
-  void publish();
+  void publish() override;
 
   template<typename T>
   void add_demo_plot(const std::string & name, T callback);
@@ -176,9 +166,7 @@ struct TestServer
 
   void switch_visual(const std::string & visual);
 
-  mc_control::ControllerServer server{0.005, 0.05, {"ipc:///tmp/mc_rtc_pub.ipc"}, {"ipc:///tmp/mc_rtc_rep.ipc"}};
   DummyProvider provider;
-  mc_rtc::gui::StateBuilder builder;
   bool check_ = true;
   std::string string_ = "default";
   int int_ = 0;
@@ -207,7 +195,6 @@ struct TestServer
   Eigen::Vector3d arrow_start_{0.5, 0.5, 0.};
   Eigen::Vector3d arrow_end_{0.5, 1., -0.5};
   sva::ForceVecd force_{{0., 0., 0.}, {-50., 50., 100.}};
-  double t_ = 0.0;
   std::vector<std::string> table_header;
   std::vector<std::string> table_format;
   std::vector<std::vector<double>> table_data;
@@ -237,7 +224,7 @@ struct TestServer
   mc_rbdyn::RobotsPtr robots_;
 };
 
-TestServer::TestServer() : xythetaz_(4)
+SampleServer::SampleServer() : xythetaz_(4)
 {
   xythetaz_ << 1., 2., M_PI / 5, 1;
 
@@ -886,7 +873,7 @@ TestServer::TestServer() : xythetaz_(4)
       {"Robot"}, mc_rtc::gui::Robot("jvrc1", [this]() -> const mc_rbdyn::Robot & { return robots_->robot("jvrc1"); }));
 }
 
-void TestServer::switch_visual(const std::string & choice)
+void SampleServer::switch_visual(const std::string & choice)
 {
   visualChoice_ = choice;
   builder.removeCategory({"Visual"});
@@ -1091,7 +1078,7 @@ void TestServer::switch_visual(const std::string & choice)
 }
 
 template<typename T>
-void TestServer::add_demo_plot(const std::string & name, T callback)
+void SampleServer::add_demo_plot(const std::string & name, T callback)
 {
   bool has_plot = false;
   builder.addElement({}, mc_rtc::gui::Button("Add " + name + " plot",
@@ -1111,12 +1098,12 @@ void TestServer::add_demo_plot(const std::string & name, T callback)
 }
 
 template<typename T, typename U>
-void TestServer::add_demo_plot(const std::string & name,
-                               T callback,
-                               const std::string & dynamic_label,
-                               U dynamic_callback,
-                               size_t & n_plots,
-                               size_t mod)
+void SampleServer::add_demo_plot(const std::string & name,
+                                 T callback,
+                                 const std::string & dynamic_label,
+                                 U dynamic_callback,
+                                 size_t & n_plots,
+                                 size_t mod)
 {
   bool has_plot = false;
   builder.addElement({}, mc_rtc::gui::ElementsStacking::Horizontal,
@@ -1131,15 +1118,13 @@ void TestServer::add_demo_plot(const std::string & name,
                                          { dynamic_callback(name, n_plots, mod); }));
 }
 
-void TestServer::publish()
+void SampleServer::publish()
 {
   graph_.update(t_);
-  server.handle_requests(builder);
-  server.publish(builder);
-  t_ += 0.005;
+  TestServer::publish();
 }
 
-void TestServer::make_table(size_t s)
+void SampleServer::make_table(size_t s)
 {
   std::vector<std::string> header;
   std::vector<std::string> format;
@@ -1164,12 +1149,7 @@ void TestServer::make_table(size_t s)
 
 int main()
 {
-  TestServer server;
-  while(1)
-  {
-    auto now = std::chrono::high_resolution_clock::now();
-    server.publish();
-    std::this_thread::sleep_until(now + std::chrono::milliseconds(5));
-  }
+  SampleServer server;
+  server.loop();
   return 0;
 }
