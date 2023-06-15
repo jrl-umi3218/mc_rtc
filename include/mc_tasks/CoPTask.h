@@ -102,12 +102,12 @@ public:
    *
    * @param s
    */
-  void useTargetPressure(bool s) { useTargetPressure_ = s; }
+  inline void useTargetPressure(bool s) noexcept { useTargetPressure_ = s; }
 
   /**
    * @brief Wether the computeddesired torque is done with the target pressure (true) of the measured one (false)
    */
-  bool useTargetPressure() noexcept { return useTargetPressure_; }
+  inline bool useTargetPressure() const noexcept { return useTargetPressure_; }
 
   /*! \brief Measured CoP in target frame.
    *
