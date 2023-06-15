@@ -1249,12 +1249,12 @@ void StabilizerTask::computeCoPonHorizon(const std::vector<Eigen::Vector2d> & zm
         X_0_rc.inv().rotation().block(0, 0, 2, 2) * ratio * Acop_view;
 
     // clang-format off
-      bcop.segment(2 * i, 2) =
-          zmp_ref[i]
-          - X_0_lc.translation().segment(0, 2) * (1 - ratio)
-          - X_0_rc.translation().segment(0, 2) * (ratio)
-          - X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * exp_mat * measuredLeftCoP_delayed.segment(0, 2)
-          - X_0_rc.inv().rotation().block(0, 0, 2, 2) * (ratio) * exp_mat * measuredRightCoP_delayed.segment(0, 2);
+    bcop.segment(2 * i, 2) =
+        zmp_ref[i]
+        - X_0_lc.translation().segment(0, 2) * (1 - ratio)
+        - X_0_rc.translation().segment(0, 2) * (ratio)
+        - X_0_lc.inv().rotation().block(0, 0, 2, 2) * (1 - ratio) * exp_mat * measuredLeftCoP_delayed.segment(0, 2)
+        - X_0_rc.inv().rotation().block(0, 0, 2, 2) * (ratio) * exp_mat * measuredRightCoP_delayed.segment(0, 2);
     // clang-format on
 
     McopReg.block(2 * i, 0, 2, Acop_view.cols()) = Acop_view;
@@ -1372,9 +1372,9 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   }
   const double t_delay = clamp((c_.delayCoP - (t_ - tComputation_)), 0, c_.delayCoP);
 
-  if(newCoPHorizonRef_)
+  if(horizonRefUpdated_)
   {
-    newCoPHorizonRef_ = false;
+    horizonRefUpdated_ = false;
     computeCoPonHorizon(zmp_ref, delta, t_delay);
   }
   // We update the model CoP for logging
