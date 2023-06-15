@@ -643,7 +643,7 @@ protected:
   {
   }
 
-  /** A 3D point that can be edited from a Form
+  /** A 3D point that can be edited within a Form
    *
    * \p formId Identifier of the form
    *
@@ -660,6 +660,49 @@ protected:
                                   bool /*required*/,
                                   const Eigen::Vector3d & /*default_*/,
                                   bool /*default_from_user*/)
+  {
+  }
+
+  /** A rotation that can be edited within a Form
+   *
+   * Note: this requires a PTransformd to place the rotation in space but only the rotation should be provided in the
+   * callback
+   *
+   * \p formId Identifier of the form
+   *
+   * \p name Name of the entry
+   *
+   * \p required If true, it must hold a value when the form is sent
+   *
+   * \p default_ Default value in the form
+   *
+   * \p default_from_user Default is provided by the user
+   */
+  virtual void form_rotation_input(const ElementId & /*formId*/,
+                                   const std::string & /*name*/,
+                                   bool /*required*/,
+                                   const sva::PTransformd & /*default_*/,
+                                   bool /*default_from_user*/)
+  {
+  }
+
+  /** A transform that can be edited within a Form
+   *
+   * \p formId Identifier of the form
+   *
+   * \p name Name of the entry
+   *
+   * \p required If true, it must hold a value when the form is sent
+   *
+   * \p default_ Default value in the form
+   *
+   * \p default_from_user Default is provided by the user
+   */
+  virtual void form_transform_input(const ElementId & /*formId*/,
+                                    const std::string & /*name*/,
+                                    bool /*required*/,
+                                    const sva::PTransformd & /*default_*/,
+                                    bool /*default_from_user*/)
   {
   }
 

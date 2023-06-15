@@ -760,6 +760,12 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
       case Elements::Point3D:
         form_point3d_input(id, name, required, el[3], el[4]);
         break;
+      case Elements::Rotation:
+        form_rotation_input(id, name, required, el[3], el[4]);
+        break;
+      case Elements::Transform:
+        form_transform_input(id, name, required, el[3], el[4]);
+        break;
       default:
         mc_rtc::log::error("Form cannot handle element of type {}", static_cast<int>(type));
     }

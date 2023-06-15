@@ -213,6 +213,8 @@ MAKE_DATA_INPUT_HELPER(int, Elements::IntegerInput, FormIntegerInput)
 MAKE_DATA_INPUT_HELPER(double, Elements::NumberInput, FormNumberInput)
 MAKE_DATA_INPUT_HELPER(std::string, Elements::StringInput, FormStringInput)
 MAKE_DATA_INPUT_HELPER(Eigen::Vector3d, Elements::Point3D, FormPoint3DInput)
+MAKE_DATA_INPUT_HELPER(sva::PTransformd, Elements::Rotation, FormRotationInput)
+MAKE_DATA_INPUT_HELPER(sva::PTransformd, Elements::Transform, FormTransformInput)
 
 #undef MAKE_DATA_INPUT_HELPER
 
