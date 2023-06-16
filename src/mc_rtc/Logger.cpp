@@ -344,6 +344,19 @@ void Logger::removeLogEntries(const void * source)
   }
 }
 
+void Logger::clear(bool record)
+{
+  for(auto it = log_entries_.begin(); it != log_entries_.end();)
+  {
+    if(it->key != "t")
+    {
+      if(record) { log_events_.push_back(KeyRemovedEvent{it->key}); }
+      it = log_entries_.erase(it);
+    }
+    else { ++it; }
+  }
+}
+
 double Logger::t() const
 {
   return impl_->log_iter_;

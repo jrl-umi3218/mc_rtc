@@ -339,6 +339,14 @@ public:
   /** Returns the number of entries currently in the log */
   inline size_t size() const { return log_entries_.size(); }
 
+  /** Remove all entries (except t) from the log
+   *
+   * \param record If true record the removal events in the log
+   *
+   * Note: if the \p record parameter is false and the log is written again it might be invalid
+   */
+  void clear(bool record = true);
+
 private:
   /** Hold information about a log entry stored in this instance */
   struct LogEntry
