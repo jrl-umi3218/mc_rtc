@@ -352,6 +352,7 @@ void StabilizerTask::configure_(mc_solver::QPSolver & solver)
   {
     footTask.second->maxLinearVel(c_.copMaxVel.linear());
     footTask.second->maxAngularVel(c_.copMaxVel.angular());
+    footTask.second->useTargetPressure(c_.useTargetPressure);
   }
 
   dcmBiasEstimatorConfiguration(c_.dcmBias);
@@ -714,11 +715,7 @@ void StabilizerTask::run()
 
   if(inDoubleSupport())
   {
-    if(horizonCoPDistribution_)
-    {
-      distributeCoPonHorizon(horizonZmpRef_, horizonDelta_);
-      horizonCoPDistribution_ = false;
-    }
+    if(horizonCoPDistribution_ && horizonZmpRef_.size() != 0) { distributeCoPonHorizon(horizonZmpRef_, horizonDelta_); }
     else { distributeWrench(desiredWrench_); }
   }
   else
@@ -1053,13 +1050,16 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   sva::ForceVecd w_r_rc = X_0_rc.dualMul(w_r_0);
   Eigen::Vector2d leftCoP = (constants::vertical.cross(w_l_lc.couple()) / w_l_lc.force()(2)).head<2>();
   Eigen::Vector2d rightCoP = (constants::vertical.cross(w_r_rc.couple()) / w_r_rc.force()(2)).head<2>();
+
   footTasks[ContactState::Left]->targetCoP(leftCoP);
   footTasks[ContactState::Left]->targetForce(w_l_lc.force());
   footTasks[ContactState::Right]->targetCoP(rightCoP);
   footTasks[ContactState::Right]->targetForce(w_r_rc.force());
 }
 
-void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref, const double delta)
+void StabilizerTask::computeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref,
+                                         const double delta,
+                                         const double t_delay)
 {
   // Variables
   // ---------
@@ -1084,12 +1084,6 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   // The decision variable are organised such as :
   // indx i of the left CoP reference : 2 * i
   // indx i of the right CoP reference : 2 * (n + i)
-
-  if(zmp_ref.size() == 0)
-  {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] [distributeCoPonHorizon] no zmp reference given");
-  }
-
   const auto & leftContact = contacts_.at(ContactState::Left);
   const auto & rightContact = contacts_.at(ContactState::Right);
   const double fz_tot = fSumFilter_.eval().z(); // Vertical force applied by gravity on the whole robot
@@ -1118,24 +1112,6 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
                                                 Eigen::Vector2d{leftContact.halfLength(), leftContact.halfWidth()});
   const double measuredFzRight =
       clamp(X_0_lc.inv().dualMul(footTasks[ContactState::Right]->measuredWrench()).force().z(), 0, fz_tot);
-
-  // double fz_tot = clamp( measuredFzRight + measuredFzLeft,0. ,robot().mass() * constants::GRAVITY );
-
-  // We consider an input to be considered as the reference for the delay
-  // At every sampling period
-  if(t_ - tComputation_ > delta || tComputation_ == 0.)
-  {
-    tComputation_ = t_;
-    delayedTargetCoPLeft_ = footTasks[ContactState::Left]->targetCoP();
-    delayedTargetCoPRight_ = footTasks[ContactState::Right]->targetCoP();
-    delayedTargetFzLeft_ = footTasks[ContactState::Left]->targetWrench().force().z();
-    delayedTargetFzRight_ = footTasks[ContactState::Right]->targetWrench().force().z();
-    modeledCoPLeft_ = measuredLeftCoP;
-    modeledCoPRight_ = measuredRightCoP;
-    modeledFzLeft_ = measuredFzLeft;
-    modeledFzRight_ = measuredFzRight;
-  }
-  double t_delay = clamp((c_.delayCoP - (t_ - tComputation_)), 0, c_.delayCoP);
 
   Eigen::Vector3d targetForceLeft = Eigen::Vector3d::Zero();
   Eigen::Vector3d targetForceRight = Eigen::Vector3d::Zero();
@@ -1334,8 +1310,11 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   QPCoPRight_ = exp_mat * measuredRightCoP_delayed.segment(0, 2) + (Eigen::Matrix2d::Identity() - exp_mat) * rightCoP;
 
   // Check that the computed modeled ZMP coincide with the ZMP reference
-  distribCheck_ = (1 - ratio0) * (X_0_lc.translation().segment(0, 2) + QPCoPLeft_)
-                  + ratio0 * (X_0_rc.translation().segment(0, 2) + QPCoPRight_) - zmp_ref[0];
+  Eigen::Vector2d QPzmp =
+      (1 - ratio0) * (X_0_lc.translation().segment(0, 2) + X_0_lc.rotation().block(0, 0, 2, 2).transpose() * QPCoPLeft_)
+      + ratio0 * (X_0_rc.translation().segment(0, 2) + X_0_rc.rotation().block(0, 0, 2, 2).transpose() * QPCoPRight_);
+
+  distribCheck_ = QPzmp - zmp_ref[0];
 
   sva::ForceVecd w_l_lc = sva::ForceVecd{
       Eigen::Vector3d{leftCoP.y() * targetForceLeft.z(), -leftCoP.x() * targetForceLeft.z(), 0}, targetForceLeft};
@@ -1347,7 +1326,57 @@ void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> &
   footTasks[ContactState::Right]->targetCoP(rightCoP);
   footTasks[ContactState::Right]->targetForce(w_r_rc.force());
   distribWrench_ = X_0_lc.inv().dualMul(w_l_lc) + X_0_rc.inv().dualMul(w_r_rc);
+}
 
+void StabilizerTask::distributeCoPonHorizon(const std::vector<Eigen::Vector2d> & zmp_ref, const double delta)
+{
+  if(zmp_ref.size() == 0)
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] [distributeCoPonHorizon] no zmp reference given");
+  }
+
+  const auto & leftContact = contacts_.at(ContactState::Left);
+  const auto & rightContact = contacts_.at(ContactState::Right);
+  const double fz_tot = fSumFilter_.eval().z(); // Vertical force applied by gravity on the whole robot
+
+  const sva::PTransformd & X_0_lc = leftContact.surfacePose();
+  const sva::PTransformd & X_0_rc = rightContact.surfacePose();
+
+  // The measured CoP is clamped in contact polygon
+  const Eigen::Vector2d measuredRightCoP = clamp(footTasks[ContactState::Right]->measuredCoP(),
+                                                 Eigen::Vector2d{-rightContact.halfLength(), -rightContact.halfWidth()},
+                                                 Eigen::Vector2d{rightContact.halfLength(), rightContact.halfWidth()});
+  const double measuredFzLeft =
+      clamp(X_0_rc.inv().dualMul(footTasks[ContactState::Left]->measuredWrench()).force().z(), 0, fz_tot);
+  const Eigen::Vector2d measuredLeftCoP = clamp(footTasks[ContactState::Left]->measuredCoP(),
+                                                Eigen::Vector2d{-leftContact.halfLength(), -leftContact.halfWidth()},
+                                                Eigen::Vector2d{leftContact.halfLength(), leftContact.halfWidth()});
+  const double measuredFzRight =
+      clamp(X_0_lc.inv().dualMul(footTasks[ContactState::Right]->measuredWrench()).force().z(), 0, fz_tot);
+
+  // double fz_tot = clamp( measuredFzRight + measuredFzLeft,0. ,robot().mass() * constants::GRAVITY );
+
+  // We consider an input to be considered as the reference for the delay
+  // At every sampling period
+  if(t_ - tComputation_ >= delta)
+  {
+    tComputation_ = t_;
+    delayedTargetCoPLeft_ = footTasks[ContactState::Left]->targetCoP();
+    delayedTargetCoPRight_ = footTasks[ContactState::Right]->targetCoP();
+    delayedTargetFzLeft_ = footTasks[ContactState::Left]->targetWrench().force().z();
+    delayedTargetFzRight_ = footTasks[ContactState::Right]->targetWrench().force().z();
+    modeledCoPLeft_ = measuredLeftCoP;
+    modeledCoPRight_ = measuredRightCoP;
+    modeledFzLeft_ = measuredFzLeft;
+    modeledFzRight_ = measuredFzRight;
+  }
+  const double t_delay = clamp((c_.delayCoP - (t_ - tComputation_)), 0, c_.delayCoP);
+
+  if(horizonRefUpdated_)
+  {
+    horizonRefUpdated_ = false;
+    computeCoPonHorizon(zmp_ref, delta, t_delay);
+  }
   // We update the model CoP for logging
   if(c_.delayCoP != 0 && t_delay > 0)
   {
