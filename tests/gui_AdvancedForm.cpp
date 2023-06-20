@@ -8,11 +8,16 @@ struct AdvancedFormServer : public TestServer
 {
   AdvancedFormServer()
   {
-    builder.addElement({}, mc_rtc::gui::Form(
-                               "Send data", [this](const mc_rtc::Configuration & data) { callback(data); },
-                               mc_rtc::gui::FormPoint3DInput("Point3D", true, Eigen::Vector3d::Zero()),
-                               mc_rtc::gui::FormRotationInput("Rotation", true, {Eigen::Vector3d(1, 0, 0)}),
-                               mc_rtc::gui::FormTransformInput("Transform", true, {Eigen::Vector3d(0, 0, 1)})));
+    builder.addElement(
+        {}, mc_rtc::gui::Form(
+                "Send data", [this](const mc_rtc::Configuration & data) { callback(data); },
+                mc_rtc::gui::FormPoint3DInput("Point3D", true, Eigen::Vector3d::Zero()),
+                mc_rtc::gui::FormRotationInput("Rotation", true, {Eigen::Vector3d(1, 0, 0)}),
+                mc_rtc::gui::FormTransformInput("Transform", true, {Eigen::Vector3d(0, 0, 1)}),
+                mc_rtc::gui::FormObjectInput("nested", true, mc_rtc::gui::FormStringInput("name", true)),
+                mc_rtc::gui::FormObjectArrayInput("array of objects", true,
+                                                  mc_rtc::gui::FormComboInput("name", true, {"a", "b", "c", "d"}),
+                                                  mc_rtc::gui::FormNumberInput("number", false, 42.42))));
   }
 
   void callback(const mc_rtc::Configuration & data)

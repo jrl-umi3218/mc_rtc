@@ -706,6 +706,41 @@ protected:
   {
   }
 
+  /** Starts a form within a form
+   *
+   * After this call, all calls related to form elements must be interpreted as belonging to this sub-form
+   *
+   * \p name Name of the object
+   *
+   * \p required If true, it must hold a value when the form is sent
+   */
+  virtual void start_form_object_input(const std::string & /*name*/, bool /*required*/) {}
+
+  /** Pendant to \ref start_form_object_input
+   *
+   * After this call, all calls related to form elements must be interpreted as belonging to the form's parent
+   *
+   */
+  virtual void end_form_object_input() {}
+
+  /** Starts an array of objects input within a form
+   *
+   * After this call, all calls related to form elements must be interpreted as describing a form to generate one member
+   * of the array
+   *
+   * \p name Name of the array this generates
+   *
+   * \p required If true, it must hold a value (can be an empty array) when the form is sent
+   */
+  virtual void start_form_object_array_input(const std::string & /*name*/, bool /*required*/) {}
+
+  /** Pendant to \ref start_form_object_array_input
+   *
+   * After this call, all calls related to form elements must be interpreted as belonging to the form's parent
+   *
+   */
+  virtual void end_form_object_array_input() {}
+
   /** Called when new plot data arrives
    *
    * This should open a new plotting window with the provided title.

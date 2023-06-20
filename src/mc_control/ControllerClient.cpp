@@ -360,8 +360,11 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
         schema(id, data[3]);
         break;
       case Elements::Form:
+      {
+        form(id);
         handle_form(id, data[3]);
         break;
+      }
       case Elements::XYTheta:
         handle_xytheta(id, data);
         break;
@@ -726,7 +729,6 @@ void ControllerClient::handle_xytheta(const ElementId & id, const mc_rtc::Config
 
 void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configuration & gui)
 {
-  form(id);
   for(size_t i = 0; i < gui.size(); ++i)
   {
     auto el = gui[i];
@@ -766,6 +768,20 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
       case Elements::Transform:
         form_transform_input(id, name, required, el[3], el[4]);
         break;
+      case Elements::Form:
+      {
+        start_form_object_input(name, required);
+        handle_form(id, el[3]);
+        end_form_object_input();
+        break;
+      }
+      case Elements::ObjectArray:
+      {
+        start_form_object_array_input(name, required);
+        handle_form(id, el[3]);
+        end_form_object_array_input();
+        break;
+      }
       default:
         mc_rtc::log::error("Form cannot handle element of type {}", static_cast<int>(type));
     }

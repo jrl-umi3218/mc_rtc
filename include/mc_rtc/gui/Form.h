@@ -13,21 +13,11 @@ namespace mc_rtc::gui
 namespace details
 {
 
-/** Create a user-defined form
- *
- * A form is composed of 1 or more elements (FormInput) that can be required for the form completion (this must be
- * checked on client side)
- *
- * \tparam Callback Will be called when the form is completed on client side
- *
- */
-template<typename Callback>
-struct FormImpl : public CallbackElement<Element, Callback>
+/** Store elements of a form */
+struct FormElements
 {
-  static constexpr auto type = Elements::Form;
-
   template<typename... Args>
-  FormImpl(const std::string & name, Callback cb, Args &&... args) : CallbackElement<Element, Callback>(name, cb)
+  FormElements(Args &&... args)
   {
     mc_rtc::MessagePackBuilder builder(data_);
     count_ = sizeof...(Args);
@@ -53,11 +43,8 @@ struct FormImpl : public CallbackElement<Element, Callback>
     }
   }
 
-  static constexpr size_t write_size() { return CallbackElement<Element, Callback>::write_size() + 1; }
-
-  void write(mc_rtc::MessagePackBuilder & builder)
+  void write_impl(mc_rtc::MessagePackBuilder & builder)
   {
-    CallbackElement<Element, Callback>::write(builder);
     builder.start_array(count_);
     for(const auto & el : dynamic_elements_) { el(builder); }
     builder.write_object(data_.data(), data_size_);
@@ -65,10 +52,7 @@ struct FormImpl : public CallbackElement<Element, Callback>
     builder.finish_array();
   }
 
-  /** Invalid element */
-  FormImpl() {}
-
-private:
+protected:
   template<typename... Args>
   void write_elements(mc_rtc::MessagePackBuilder &, Args &&...)
   {
@@ -104,6 +88,37 @@ private:
   std::vector<std::function<void(mc_rtc::MessagePackBuilder &)>> dynamic_elements_;
   std::vector<char> data_;
   size_t data_size_;
+};
+
+/** Create a user-defined form
+ *
+ * A form is composed of 1 or more elements (FormInput) that can be required for the form completion (this must be
+ * checked on client side)
+ *
+ * \tparam Callback Will be called when the form is completed on client side
+ *
+ */
+template<typename Callback>
+struct FormImpl : public CallbackElement<Element, Callback>, FormElements
+{
+  static constexpr auto type = Elements::Form;
+
+  template<typename... Args>
+  FormImpl(const std::string & name, Callback cb, Args &&... args)
+  : CallbackElement<Element, Callback>(name, cb), FormElements(std::forward<Args>(args)...)
+  {
+  }
+
+  static constexpr size_t write_size() { return CallbackElement<Element, Callback>::write_size() + 1; }
+
+  void write(mc_rtc::MessagePackBuilder & builder)
+  {
+    CallbackElement<Element, Callback>::write(builder);
+    FormElements::write_impl(builder);
+  }
+
+  /** Invalid element */
+  FormImpl() {}
 };
 
 } // namespace details
@@ -315,8 +330,6 @@ private:
 
 struct FormDataComboInput : public FormElement<FormDataComboInput, Elements::DataComboInput>
 {
-  static constexpr auto type = Elements::DataComboInput;
-
   inline FormDataComboInput(const std::string & name,
                             bool required,
                             const std::vector<std::string> & ref,
@@ -339,6 +352,32 @@ struct FormDataComboInput : public FormElement<FormDataComboInput, Elements::Dat
 private:
   std::vector<std::string> ref_;
   bool send_index_;
+};
+
+struct FormObjectInput : public FormElement<FormObjectInput, Elements::Form>, details::FormElements
+{
+  template<typename... Args>
+  FormObjectInput(const std::string & name, bool required, Args &&... args)
+  : FormElement<FormObjectInput, Elements::Form>(name, required), FormElements(std::forward<Args>(args)...)
+  {
+  }
+
+  static constexpr size_t write_size_() { return 1; }
+
+  void write_(mc_rtc::MessagePackBuilder & builder) { FormElements::write_impl(builder); }
+};
+
+struct FormObjectArrayInput : public FormElement<FormObjectArrayInput, Elements::ObjectArray>, details::FormElements
+{
+  template<typename... Args>
+  FormObjectArrayInput(const std::string & name, bool required, Args &&... args)
+  : FormElement<FormObjectArrayInput, Elements::ObjectArray>(name, required), FormElements(std::forward<Args>(args)...)
+  {
+  }
+
+  static constexpr size_t write_size_() { return 1; }
+
+  void write_(mc_rtc::MessagePackBuilder & builder) { FormElements::write_impl(builder); }
 };
 
 /** Helper to create a Form element */
