@@ -24,6 +24,23 @@ struct AdvancedFormServer : public TestServer
                                                 "array of objects", true,
                                                 mc_rtc::gui::FormComboInput("name", true, {"a", "b", "c", "d"}),
                                                 mc_rtc::gui::FormNumberInput("number", false, 42.42))));
+    builder.addElement(
+        {"GenericArray"},
+        mc_rtc::gui::Form(
+            "Send data", [this](const mc_rtc::Configuration & data) { callback(data); },
+            mc_rtc::gui::FormGenericArrayInput("array of strings", true, mc_rtc::gui::FormStringInput("name", true))));
+    builder.addElement(
+        {"Trajectory maker", "Point3D"},
+        mc_rtc::gui::Form(
+            "Send data", [this](const mc_rtc::Configuration & data) { callback(data); },
+            mc_rtc::gui::FormGenericArrayInput("trajectory", true,
+                                               mc_rtc::gui::FormPoint3DInput("point", true, Eigen::Vector3d::Zero()))));
+    builder.addElement(
+        {"Trajectory maker", "Transform"},
+        mc_rtc::gui::Form(
+            "Send data", [this](const mc_rtc::Configuration & data) { callback(data); },
+            mc_rtc::gui::FormGenericArrayInput(
+                "trajectory", true, mc_rtc::gui::FormTransformInput("point", true, sva::PTransformd::Identity()))));
     builder.addElement({"OneOf"},
                        mc_rtc::gui::Form(
                            "Send data", [this](const mc_rtc::Configuration & data) { callback(data); },

@@ -367,6 +367,36 @@ struct FormObjectInput : public FormElement<FormObjectInput, Elements::Form>, de
   {
   }
 
+  static constexpr bool is_dynamic() { return true; }
+
+  static constexpr size_t write_size_() { return 1; }
+
+  void write_(mc_rtc::MessagePackBuilder & builder) { FormElements::write_impl(builder); }
+};
+
+/** Creates an inputs to build a generic array
+ *
+ * The element you pass to this element will be used to build the list, e.g.:
+ * - FormCheckbox will output a list of booleans
+ * - FormStringInput a list of strings
+ * - FormPoint3DInput a list of 3D points
+ *
+ * The name of the element you pass to this function has no effect
+ *
+ * For more complex objects you can use a FormObjectInput or use FormObjectArrayInput which is more explicit
+ */
+struct FormGenericArrayInput : public FormElement<FormGenericArrayInput, Elements::GenericArray>,
+                               private details::FormElements
+{
+  template<typename Element>
+  FormGenericArrayInput(const std::string & name, bool required, Element && element)
+  : FormElement<FormGenericArrayInput, Elements::GenericArray>(name, required),
+    FormElements(std::forward<Element>(element))
+  {
+  }
+
+  static constexpr bool is_dynamic() { return true; }
+
   static constexpr size_t write_size_() { return 1; }
 
   void write_(mc_rtc::MessagePackBuilder & builder) { FormElements::write_impl(builder); }
@@ -384,6 +414,8 @@ struct FormObjectArrayInput : public FormElement<FormObjectArrayInput, Elements:
   : FormElement<FormObjectArrayInput, Elements::ObjectArray>(name, required), FormElements(std::forward<Args>(args)...)
   {
   }
+
+  static constexpr bool is_dynamic() { return true; }
 
   static constexpr size_t write_size_() { return 1; }
 
@@ -403,6 +435,8 @@ struct FormOneOfInput : public FormElement<FormOneOfInput, Elements::OneOf>, det
   : FormElement<FormOneOfInput, Elements::OneOf>(name, required), FormElements(std::forward<Args>(args)...)
   {
   }
+
+  static constexpr bool is_dynamic() { return true; }
 
   static constexpr size_t write_size_() { return 1; }
 

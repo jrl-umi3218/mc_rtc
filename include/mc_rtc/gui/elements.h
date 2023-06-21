@@ -47,6 +47,7 @@ enum class Elements
   Visual,
   PolyhedronTrianglesList,
   PolyhedronVerticesTriangles,
+  GenericArray,
   ObjectArray,
   OneOf
 };
