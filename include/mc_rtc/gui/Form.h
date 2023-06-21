@@ -354,6 +354,11 @@ private:
   bool send_index_;
 };
 
+/** Creates a form within another form
+ *
+ * If the object is required then it will be received in the callback and its own required elements are also contained
+ * in the object
+ */
 struct FormObjectInput : public FormElement<FormObjectInput, Elements::Form>, details::FormElements
 {
   template<typename... Args>
@@ -367,11 +372,35 @@ struct FormObjectInput : public FormElement<FormObjectInput, Elements::Form>, de
   void write_(mc_rtc::MessagePackBuilder & builder) { FormElements::write_impl(builder); }
 };
 
+/** Creates an inputs to build an array of objects
+ *
+ * If the array is required the list is always sent even if it is empty otherwise it is only sent if it has at least one
+ * item
+ */
 struct FormObjectArrayInput : public FormElement<FormObjectArrayInput, Elements::ObjectArray>, details::FormElements
 {
   template<typename... Args>
   FormObjectArrayInput(const std::string & name, bool required, Args &&... args)
   : FormElement<FormObjectArrayInput, Elements::ObjectArray>(name, required), FormElements(std::forward<Args>(args)...)
+  {
+  }
+
+  static constexpr size_t write_size_() { return 1; }
+
+  void write_(mc_rtc::MessagePackBuilder & builder) { FormElements::write_impl(builder); }
+};
+
+/** Creates a one-of selector
+ *
+ * Only one of the item provided to this input will be active, the item name will tell which was selected
+ *
+ * If required, one of the element must be selected
+ */
+struct FormOneOfInput : public FormElement<FormOneOfInput, Elements::OneOf>, details::FormElements
+{
+  template<typename... Args>
+  FormOneOfInput(const std::string & name, bool required, Args &&... args)
+  : FormElement<FormOneOfInput, Elements::OneOf>(name, required), FormElements(std::forward<Args>(args)...)
   {
   }
 

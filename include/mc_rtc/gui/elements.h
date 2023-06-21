@@ -47,7 +47,8 @@ enum class Elements
   Visual,
   PolyhedronTrianglesList,
   PolyhedronVerticesTriangles,
-  ObjectArray
+  ObjectArray,
+  OneOf
 };
 
 /** Element is the common class for every element's type available in the

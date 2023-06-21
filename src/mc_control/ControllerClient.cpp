@@ -782,6 +782,13 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
         end_form_object_array_input();
         break;
       }
+      case Elements::OneOf:
+      {
+        start_form_one_of_input(name, required);
+        handle_form(id, el[3]);
+        end_form_one_of_input();
+        break;
+      }
       default:
         mc_rtc::log::error("Form cannot handle element of type {}", static_cast<int>(type));
     }

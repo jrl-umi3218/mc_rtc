@@ -741,6 +741,24 @@ protected:
    */
   virtual void end_form_object_array_input() {}
 
+  /** Start a one-of input within a form
+   *
+   * After this call, each call related to form elements is one option offered by the one-of selector. The name of the
+   * element should be used to distinguish the selected type
+   *
+   * \p name Name of the one-of selection
+   *
+   * \p required If true, it must hold a valid value when sent
+   */
+  virtual void start_form_one_of_input(const std::string & /*name*/, bool /*required*/) {}
+
+  /** Pendant to \ref start_form_one_of_input
+   *
+   * After this call, all calls related to form elements must be interpreted as belonging to the form's parent
+   *
+   */
+  virtual void end_form_one_of_input() {}
+
   /** Called when new plot data arrives
    *
    * This should open a new plotting window with the provided title.
