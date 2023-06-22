@@ -11,6 +11,7 @@ struct SimpleSchema : public mc_rtc::schema::Schema<SimpleSchema>
 #define MEMBER(...) SCHEMA_REQUIRED_DEFAULT_MEMBER(SimpleSchema, __VA_ARGS__)
   MEMBER(bool, useFeature, "Use magic feature");
   MEMBER(double, weight, "Task weight");
+  MEMBER(std::vector<std::string>, names, "Some names");
 #undef MEMBER
 };
 

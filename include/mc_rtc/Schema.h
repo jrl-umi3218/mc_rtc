@@ -44,6 +44,28 @@ struct is_schema
 template<typename T>
 inline constexpr bool is_schema_v = decltype(is_schema::test<T>(nullptr))::value;
 
+/** Type-trait to detect an std::vector */
+template<typename T>
+struct is_std_vector : std::false_type
+{
+};
+
+template<typename T, typename Allocator>
+struct is_std_vector<std::vector<T, Allocator>> : std::true_type
+{
+};
+
+template<typename T>
+inline constexpr bool is_std_vector_v = is_std_vector<T>::value;
+
+/** Type-trait to detect an std::vector<T> where T is a Schema-based type */
+template<typename T>
+inline constexpr bool is_std_vector_schema_v = []()
+{
+  if constexpr(is_std_vector_v<T>) { return is_schema_v<typename T::value_type>; }
+  else { return false; }
+}();
+
 /** Helper to get a default value for a given type */
 template<typename T, typename Enable = void>
 struct Default
@@ -53,6 +75,12 @@ struct Default
 
 template<typename T>
 struct Default<T, std::enable_if_t<is_schema_v<T>>>
+{
+  inline static const T value = {};
+};
+
+template<typename T>
+struct Default<T, std::enable_if_t<is_std_vector_v<T>>>
 {
   inline static const T value = {};
 };
@@ -124,10 +152,10 @@ struct MC_RTC_UTILS_DLLAPI Operations
   /** Load from a configuration object */
   std::function<void(void * self, const Configuration & in)> load = [](void *, const Configuration &) {};
 
-  using StandardForm = gui::details::FormElements;
+  using FormElements = gui::details::FormElements;
 
   /** Build a Form to load the object */
-  std::function<void(const void * self, StandardForm & form)> buildForm = [](const void *, StandardForm &) {};
+  std::function<void(const void * self, FormElements & form)> buildForm = [](const void *, FormElements &) {};
 
   /** Load from a Form */
   std::function<void(void * self, const Configuration & in)> loadForm = [](void *, const Configuration &) {};
@@ -136,6 +164,62 @@ struct MC_RTC_UTILS_DLLAPI Operations
 
   /** FIXME Add logging operation?*/
 };
+
+namespace details
+{
+
+template<typename T, bool IsRequired, bool HasChoices = false>
+void addValueToForm(const T & value,
+                    const std::string & description,
+                    const details::Choices<T, HasChoices> & choices,
+                    Operations::FormElements & form)
+{
+  if constexpr(details::is_schema_v<T>)
+  {
+    mc_rtc::gui::FormObjectInput input(description, IsRequired);
+    value.buildForm(&value, input);
+    form.addElement(input);
+  }
+  else if constexpr(details::is_std_vector_v<T>)
+  {
+    // FIXME We need a way to provide the existing elements here
+    mc_rtc::gui::FormGenericArrayInput input(description, IsRequired);
+    using value_type = typename T::value_type;
+    static value_type default_{};
+    addValueToForm<value_type, true>(default_, description, {}, input);
+    form.addElement(input);
+  }
+  else
+  {
+    auto get_value = [&value]() -> const T & { return value; };
+    if constexpr(std::is_same_v<T, bool>)
+    {
+      form.addElement(mc_rtc::gui::FormCheckbox(description, IsRequired, get_value));
+    }
+    else if constexpr(std::is_integral_v<T>)
+    {
+      form.addElement(mc_rtc::gui::FormIntegerInput(description, IsRequired, get_value));
+    }
+    else if constexpr(std::is_floating_point_v<T>)
+    {
+      form.addElement(mc_rtc::gui::FormNumberInput(description, IsRequired, get_value));
+    }
+    else if constexpr(std::is_same_v<T, std::string>)
+    {
+      if constexpr(HasChoices)
+      {
+        auto it = std::find(choices.choices.begin(), choices.choices.end(), value);
+        long int idx = it != choices.choices.end() ? std::distance(choices.choices.begin(), it) : -1;
+        form.addElement(
+            mc_rtc::gui::FormComboInput(description, IsRequired, choices.choices, false, static_cast<int>(idx)));
+      }
+      else { form.addElement(mc_rtc::gui::FormStringInput(description, IsRequired, get_value)); }
+    }
+    else { static_assert(!std::is_same_v<T, T>, "Must be implemented for this value type"); }
+  }
+}
+
+} // namespace details
 
 /** A simple value in a schema
  *
@@ -188,6 +272,15 @@ struct alignas(T) Value
         auto out_ = out.add(name);
         value.save(out_);
       }
+      else if constexpr(details::is_std_vector_schema_v<T>)
+      {
+        auto out_ = out.array(name, value.size());
+        for(const auto & v : value)
+        {
+          auto obj_ = out.object();
+          v.save(obj_);
+        }
+      }
       else { out.add(name, value); }
     };
     ops.load = [load = ops.load, name](void * self, const mc_rtc::Configuration & in)
@@ -195,6 +288,12 @@ struct alignas(T) Value
       load(self, in);
       T & value = static_cast<Schema *>(self)->*ptr;
       if constexpr(details::is_schema_v<T>) { value.load(in(name)); }
+      else if constexpr(details::is_std_vector_schema_v<T>)
+      {
+        std::vector<mc_rtc::Configuration> in_ = in(name);
+        value.resize(in_.size());
+        for(size_t i = 0; i < in.size(); ++i) { value[i].load(in_[i]); }
+      }
       else { value = in(name).operator T(); }
     };
     ops.loadForm = [loadForm = ops.loadForm, description](void * self, const mc_rtc::Configuration & in)
@@ -204,48 +303,21 @@ struct alignas(T) Value
       if(IsRequired || in.has(description))
       {
         if constexpr(details::is_schema_v<T>) { value.loadForm(&value, in(description)); }
+        else if constexpr(details::is_std_vector_schema_v<T>)
+        {
+          std::vector<mc_rtc::Configuration> in_ = in(description);
+          value.resize(in_.size());
+          for(size_t i = 0; i < in.size(); ++i) { value[i].load(in_[i]); }
+        }
         else { value = in(description).operator T(); }
       }
     };
     ops.buildForm =
-        [buildForm = ops.buildForm, description, choices](const void * self, Operations::StandardForm & form)
+        [buildForm = ops.buildForm, description, choices](const void * self, Operations::FormElements & form)
     {
       buildForm(self, form);
       const T & value = static_cast<const Schema *>(self)->*ptr;
-      if constexpr(details::is_schema_v<T>)
-      {
-        mc_rtc::gui::FormObjectInput input(description, IsRequired);
-        value.buildForm(&value, input);
-        form.addElement(input);
-      }
-      else
-      {
-        auto get_value = [&value]() -> const T & { return value; };
-        if constexpr(std::is_same_v<T, bool>)
-        {
-          form.addElement(mc_rtc::gui::FormCheckbox(description, IsRequired, get_value));
-        }
-        else if constexpr(std::is_integral_v<T>)
-        {
-          form.addElement(mc_rtc::gui::FormIntegerInput(description, IsRequired, get_value));
-        }
-        else if constexpr(std::is_floating_point_v<T>)
-        {
-          form.addElement(mc_rtc::gui::FormNumberInput(description, IsRequired, get_value));
-        }
-        else if constexpr(std::is_same_v<T, std::string>)
-        {
-          if constexpr(HasChoices)
-          {
-            auto it = std::find(choices.choices.begin(), choices.choices.end(), value);
-            long int idx = it != choices.choices.end() ? std::distance(choices.choices.begin(), it) : -1;
-            form.addElement(
-                mc_rtc::gui::FormComboInput(description, IsRequired, choices.choices, false, static_cast<int>(idx)));
-          }
-          else { form.addElement(mc_rtc::gui::FormStringInput(description, IsRequired, value)); }
-        }
-        else { static_assert(!std::is_same_v<T, T>, "Must be implemented for this value type"); }
-      }
+      details::addValueToForm<T, IsRequired>(value, description, choices, form);
     };
   }
 
