@@ -7,6 +7,8 @@
 #include <mc_rtc/gui/details/traits.h>
 #include <mc_rtc/gui/elements.h>
 
+#include <mc_rtc/logging.h>
+
 namespace mc_rtc::gui
 {
 
@@ -388,11 +390,23 @@ struct FormObjectInput : public FormElement<FormObjectInput, Elements::Form>, de
 struct FormGenericArrayInput : public FormElement<FormGenericArrayInput, Elements::GenericArray>,
                                private details::FormElements
 {
+  FormGenericArrayInput(const std::string & name, bool required)
+  : FormElement<FormGenericArrayInput, Elements::GenericArray>(name, required)
+  {
+  }
+
   template<typename Element>
   FormGenericArrayInput(const std::string & name, bool required, Element && element)
   : FormElement<FormGenericArrayInput, Elements::GenericArray>(name, required),
     FormElements(std::forward<Element>(element))
   {
+  }
+
+  template<typename T>
+  void addElement(T && element)
+  {
+    if(count_ == 1) { mc_rtc::log::error_and_throw("FormGenericArrayInput can only contain one element"); }
+    details::FormElements::addElement(std::forward<T>(element));
   }
 
   static constexpr bool is_dynamic() { return true; }
