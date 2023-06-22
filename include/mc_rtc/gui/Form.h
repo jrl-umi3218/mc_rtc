@@ -387,8 +387,7 @@ struct FormObjectInput : public FormElement<FormObjectInput, Elements::Form>, de
  *
  * For more complex objects you can use a FormObjectInput or use FormObjectArrayInput which is more explicit
  */
-struct FormGenericArrayInput : public FormElement<FormGenericArrayInput, Elements::GenericArray>,
-                               private details::FormElements
+struct FormGenericArrayInput : public FormElement<FormGenericArrayInput, Elements::GenericArray>, details::FormElements
 {
   FormGenericArrayInput(const std::string & name, bool required)
   : FormElement<FormGenericArrayInput, Elements::GenericArray>(name, required)
@@ -402,18 +401,15 @@ struct FormGenericArrayInput : public FormElement<FormGenericArrayInput, Element
   {
   }
 
-  template<typename T>
-  void addElement(T && element)
-  {
-    if(count_ == 1) { mc_rtc::log::error_and_throw("FormGenericArrayInput can only contain one element"); }
-    details::FormElements::addElement(std::forward<T>(element));
-  }
-
   static constexpr bool is_dynamic() { return true; }
 
   static constexpr size_t write_size_() { return 1; }
 
-  void write_(mc_rtc::MessagePackBuilder & builder) { FormElements::write_impl(builder); }
+  void write_(mc_rtc::MessagePackBuilder & builder)
+  {
+    if(count_ != 1) { mc_rtc::log::error_and_throw("FormGenericArrayInput must have exactly one element"); }
+    FormElements::write_impl(builder);
+  }
 };
 
 /** Creates an inputs to build an array of objects
