@@ -241,6 +241,11 @@ target_include_directories(gui_AdvancedForm PRIVATE ${CONFIG_HEADER_INCLUDE_DIR}
 set_target_properties(gui_AdvancedForm PROPERTIES FOLDER tests/GUI)
 target_link_libraries(gui_AdvancedForm PUBLIC mc_control)
 
+add_executable(gui_Schema gui_Schema.cpp)
+target_include_directories(gui_Schema PRIVATE ${CONFIG_HEADER_INCLUDE_DIR})
+set_target_properties(gui_Schema PROPERTIES FOLDER tests/GUI)
+target_link_libraries(gui_Schema PUBLIC mc_control)
+
 # ######################################################################################
 # -- Filters test -- #
 # ######################################################################################

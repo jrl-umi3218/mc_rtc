@@ -31,11 +31,30 @@ struct Choices<T, false>
   Choices() = default;
 };
 
+/** Type-trait to detect a Schema type */
+struct is_schema
+{
+  template<typename T>
+  static auto test(T *) -> typename T::is_schema_t;
+
+  template<typename T>
+  static std::false_type test(...);
+};
+
+template<typename T>
+inline constexpr bool is_schema_v = decltype(is_schema::test<T>(nullptr))::value;
+
 /** Helper to get a default value for a given type */
 template<typename T, typename Enable = void>
 struct Default
 {
   static_assert(!std::is_same_v<T, T>, "Must be specialized");
+};
+
+template<typename T>
+struct Default<T, std::enable_if_t<is_schema_v<T>>>
+{
+  inline static const T value = {};
 };
 
 template<typename T>
@@ -105,7 +124,7 @@ struct MC_RTC_UTILS_DLLAPI Operations
   /** Load from a configuration object */
   std::function<void(void * self, const Configuration & in)> load = [](void *, const Configuration &) {};
 
-  using StandardForm = gui::details::FormImpl<std::function<void(const Configuration &)>>;
+  using StandardForm = gui::details::FormElements;
 
   /** Build a Form to load the object */
   std::function<void(const void * self, StandardForm & form)> buildForm = [](const void *, StandardForm &) {};
@@ -163,36 +182,69 @@ struct alignas(T) Value
     ops.save = [save = ops.save, name](const void * self, mc_rtc::Configuration & out)
     {
       save(self, out);
-      out.add(name, (static_cast<const Schema *>(self)->*ptr).operator const T &());
+      const T & value = static_cast<const Schema *>(self)->*ptr;
+      if constexpr(details::is_schema_v<T>)
+      {
+        auto out_ = out.add(name);
+        value.save(out_);
+      }
+      else { out.add(name, value); }
     };
     ops.load = [load = ops.load, name](void * self, const mc_rtc::Configuration & in)
     {
       load(self, in);
-      (static_cast<Schema *>(self)->*ptr).operator T &() = in(name).operator T();
+      T & value = static_cast<Schema *>(self)->*ptr;
+      if constexpr(details::is_schema_v<T>) { value.load(in(name)); }
+      else { value = in(name).operator T(); }
     };
     ops.loadForm = [loadForm = ops.loadForm, description](void * self, const mc_rtc::Configuration & in)
     {
       loadForm(self, in);
       T & value = static_cast<Schema *>(self)->*ptr;
-      if(IsRequired || in.has(description)) { value = in(description).operator T(); }
+      if(IsRequired || in.has(description))
+      {
+        if constexpr(details::is_schema_v<T>) { value.loadForm(&value, in(description)); }
+        else { value = in(description).operator T(); }
+      }
     };
     ops.buildForm =
         [buildForm = ops.buildForm, description, choices](const void * self, Operations::StandardForm & form)
     {
       buildForm(self, form);
-      const T & value = static_cast<Schema *>(self)->*ptr;
-      auto get_value = [&value]() -> const T & { return value; };
-      if constexpr(std::is_same_v<T, bool>)
+      const T & value = static_cast<const Schema *>(self)->*ptr;
+      if constexpr(details::is_schema_v<T>)
       {
-        form.addElement(mc_rtc::gui::FormCheckbox(description, IsRequired, get_value));
+        mc_rtc::gui::FormObjectInput input(description, IsRequired);
+        value.buildForm(&value, input);
+        form.addElement(input);
       }
-      else if constexpr(std::is_integral_v<T>)
+      else
       {
-        form.addElement(mc_rtc::gui::FormIntegerInput(description, IsRequired, get_value));
-      }
-      else if constexpr(std::is_floating_point_v<T>)
-      {
-        form.addElement(mc_rtc::gui::FormNumberInput(description, IsRequired, get_value));
+        auto get_value = [&value]() -> const T & { return value; };
+        if constexpr(std::is_same_v<T, bool>)
+        {
+          form.addElement(mc_rtc::gui::FormCheckbox(description, IsRequired, get_value));
+        }
+        else if constexpr(std::is_integral_v<T>)
+        {
+          form.addElement(mc_rtc::gui::FormIntegerInput(description, IsRequired, get_value));
+        }
+        else if constexpr(std::is_floating_point_v<T>)
+        {
+          form.addElement(mc_rtc::gui::FormNumberInput(description, IsRequired, get_value));
+        }
+        else if constexpr(std::is_same_v<T, std::string>)
+        {
+          if constexpr(HasChoices)
+          {
+            auto it = std::find(choices.choices.begin(), choices.choices.end(), value);
+            long int idx = it != choices.choices.end() ? std::distance(choices.choices.begin(), it) : -1;
+            form.addElement(
+                mc_rtc::gui::FormComboInput(description, IsRequired, choices.choices, false, static_cast<int>(idx)));
+          }
+          else { form.addElement(mc_rtc::gui::FormStringInput(description, IsRequired, value)); }
+        }
+        else { static_assert(!std::is_same_v<T, T>, "Must be implemented for this value type"); }
       }
     };
   }
@@ -204,4 +256,77 @@ struct alignas(T) Value
   T value_;
 };
 
+/** Schema for a given type
+ *
+ * Members are added at the declaration site
+ */
+template<typename T>
+struct Schema : public Operations
+{
+  /** Tag to detect Schema objects */
+  using is_schema_t = std::true_type;
+
+  void save(mc_rtc::Configuration & out) const { Operations::save(this, out); }
+
+  std::string dump(bool pretty, bool yaml) const
+  {
+    mc_rtc::Configuration out;
+    save(out);
+    return out.dump(pretty, yaml);
+  }
+
+  void load(const Configuration & in) { Operations::load(this, in); }
+
+  template<typename Callback = std::function<void()>>
+  void addToGUI(
+      mc_rtc::gui::StateBuilder & gui,
+      const std::vector<std::string> & category,
+      const std::string & name,
+      Callback callback = []() {})
+  {
+    auto form = mc_rtc::gui::Form(name,
+                                  [this, callback](const mc_rtc::Configuration & cfg)
+                                  {
+                                    // FIXME If callback takes a Schema<T> do a copy instead of self modification
+                                    Operations::loadForm(this, cfg);
+                                    callback();
+                                  });
+    Operations::buildForm(this, form);
+    gui.addElement(category, form);
+  }
+};
+
+/** Declare a Schema<T> member of type TYPE, specify REQUIRED and DEFAULT value */
+#define SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, DEFAULT)                                  \
+  mc_rtc::schema::Value<TYPE> NAME##_                                                                 \
+  {                                                                                                   \
+    *this, mc_rtc::schema::details::MemberPointerWrapper<&T::NAME##_>{}, #NAME, DESCRIPTION, DEFAULT, \
+        std::bool_constant<REQUIRED>                                                                  \
+    {                                                                                                 \
+    }                                                                                                 \
+  }
+
+/** Declare a required Schema<T> member of type TYPE, only specify DEFAULT */
+#define SCHEMA_REQUIRED_MEMBER(T, TYPE, NAME, DESCRIPTION, DEFAULT) SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, true)
+
+/** Declare an optional Schema<T> member of type TYPE, only specify DEFAULT */
+#define SCHEMA_OPTIONAL_MEMBER(T, TYPE, NAME, DESCRIPTION, DEFAULT) SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, false)
+
+/** Declare a Schema<T> member of type TYPE with a default value, only specify REQUIRED */
+#define SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED) \
+  SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, mc_rtc::schema::details::Default<TYPE>::value)
+
+/** Declare a required Schema<T> member of type TYPE with a default value */
+#define SCHEMA_REQUIRED_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION) \
+  SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, true)
+
+/** Declare an optional Schema<T> member of type TYPE with a default value */
+#define SCHEMA_OPTIONAL_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION) \
+  SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, false)
+
 } // namespace mc_rtc::schema
+
+template<typename T>
+struct fmt::formatter<mc_rtc::schema::Value<T>> : formatter<T>
+{
+};
