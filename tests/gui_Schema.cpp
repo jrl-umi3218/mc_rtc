@@ -20,6 +20,7 @@ struct ComposeSchema : public mc_rtc::schema::Schema<ComposeSchema>
 #define MEMBER(...) SCHEMA_REQUIRED_DEFAULT_MEMBER(ComposeSchema, __VA_ARGS__)
   MEMBER(int, integer, "Integer value");
   MEMBER(SimpleSchema, simple, "Simple schema");
+  MEMBER(std::vector<SimpleSchema>, many, "Multiple simple schema");
 #undef MEMBER
 };
 

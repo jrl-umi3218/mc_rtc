@@ -277,7 +277,7 @@ struct alignas(T) Value
         auto out_ = out.array(name, value.size());
         for(const auto & v : value)
         {
-          auto obj_ = out.object();
+          auto obj_ = out_.object();
           v.save(obj_);
         }
       }
