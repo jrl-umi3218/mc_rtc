@@ -785,7 +785,9 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
               name);
           break;
         }
-        start_form_generic_array_input(name, required);
+        std::optional<std::vector<Configuration>> data = std::nullopt;
+        if(el[4].isArray()) { data = el[4]; }
+        start_form_generic_array_input(name, required, data);
         handle_form(id, el[3]);
         end_form_generic_array_input();
         break;

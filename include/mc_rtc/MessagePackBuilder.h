@@ -133,31 +133,31 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
 
   /** Write an Eigen::Vector2d
    *
-   * Serializes as an array of size 2
+   * Serialized as an array of size 2
    */
   void write(const Eigen::Vector2d & v);
 
   /** Write an Eigen::Vector3d
    *
-   * Serializes as an array of size 3
+   * Serialized as an array of size 3
    */
   void write(const Eigen::Vector3d & v);
 
   /** Write an Eigen::Vector4d
    *
-   * Serializes as an array of size 4
+   * Serialized as an array of size 4
    */
   void write(const Eigen::Vector4d & v);
 
   /** Write an Eigen::Vector6d
    *
-   * Serializes as an array of size 6
+   * Serialized as an array of size 6
    */
   void write(const Eigen::Vector6d & v);
 
   /** Write an Eigen::VectorXd
    *
-   * Serializes as an array of size X
+   * Serialized as an array of size X
    */
   void write(const Eigen::VectorXd & v);
 
@@ -172,19 +172,19 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
 
   /** Write an Eigen::Quaterniond
    *
-   * Serializes as an array of size X
+   * Serialized as an array of size 4
    */
   void write(const Eigen::Quaterniond & q);
 
   /** Write an Eigen::Matrix3d
    *
-   * Serializes as an array of size 9
+   * Serialized as an array of size 9
    */
   void write(const Eigen::Matrix3d & m);
 
   /** Write an sva::PTransformd
    *
-   * Serializes as an array of size 12 (Matrix3d + Vector3d)
+   * Serialized as an array of size 12 (Matrix3d + Vector3d)
    */
   void write(const sva::PTransformd & pt);
 
@@ -208,7 +208,7 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
 
   /** Write an mc_rtc::Configuration
    *
-   * Serialied as the JSON data it holds
+   * Serialized as the JSON data it holds
    */
   void write(const mc_rtc::Configuration & config);
 

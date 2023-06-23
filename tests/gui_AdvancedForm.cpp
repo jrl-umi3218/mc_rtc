@@ -30,6 +30,12 @@ struct AdvancedFormServer : public TestServer
             "Send data", [this](const mc_rtc::Configuration & data) { callback(data); },
             mc_rtc::gui::FormGenericArrayInput("array of strings", true, mc_rtc::gui::FormStringInput("name", true))));
     builder.addElement(
+        {"GenericArray with data"},
+        mc_rtc::gui::Form(
+            "Send data", [this](const mc_rtc::Configuration & data) { callback(data); },
+            mc_rtc::gui::FormGenericArrayInput("array of strings", true, mc_rtc::gui::FormStringInput("name", true),
+                                               [this]() -> const std::vector<std::string> & { return str_vector_; })));
+    builder.addElement(
         {"Trajectory maker", "Point3D"},
         mc_rtc::gui::Form(
             "Send data", [this](const mc_rtc::Configuration & data) { callback(data); },
@@ -53,6 +59,8 @@ struct AdvancedFormServer : public TestServer
   {
     mc_rtc::log::info("Data from callback:\n{}", data.dump(true, true));
   }
+
+  std::vector<std::string> str_vector_ = {"a", "b", "c", "d"};
 };
 
 int main()

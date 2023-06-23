@@ -730,8 +730,14 @@ protected:
    * \p name Name of the array this generates
    *
    * \p required If true, it must hold a value (can be an empty array) when the form is sent
+   *
+   * \p data Existing data in the array, must be sent along with the form if provided
    */
-  virtual void start_form_generic_array_input(const std::string & /*name*/, bool /*required*/) {}
+  virtual void start_form_generic_array_input(const std::string & /*name*/,
+                                              bool /*required*/,
+                                              std::optional<std::vector<Configuration>> /*data*/)
+  {
+  }
 
   /** Pendant to \ref start_form_object_array_input
    *

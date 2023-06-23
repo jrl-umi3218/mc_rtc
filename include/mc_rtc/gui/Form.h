@@ -123,11 +123,26 @@ struct FormImpl : public CallbackElement<Element, Callback>, FormElements
   FormImpl() {}
 };
 
+/** Type-trait to detect a FormElement */
+struct is_form_element
+{
+  template<typename T>
+  static auto test(T *) -> typename T::is_form_element_t;
+
+  template<typename T>
+  static std::false_type test(...);
+};
+
+template<typename T>
+inline constexpr bool is_form_element_v = decltype(is_form_element::test<T>(nullptr))::value;
+
 } // namespace details
 
 template<typename Derived, Elements element>
 struct FormElement
 {
+  using is_form_element_t = std::true_type;
+
   static constexpr auto type = element;
 
   static constexpr size_t write_size() { return 3 + Derived::write_size_(); }
@@ -387,29 +402,36 @@ struct FormObjectInput : public FormElement<FormObjectInput, Elements::Form>, de
  *
  * For more complex objects you can use a FormObjectInput or use FormObjectArrayInput which is more explicit
  */
-struct FormGenericArrayInput : public FormElement<FormGenericArrayInput, Elements::GenericArray>, details::FormElements
+template<typename T = details::VoidValue>
+struct FormGenericArrayInput : public FormElement<FormGenericArrayInput<T>, Elements::GenericArray>,
+                               details::FormElements
 {
-  FormGenericArrayInput(const std::string & name, bool required)
-  : FormElement<FormGenericArrayInput, Elements::GenericArray>(name, required)
+  template<typename = std::enable_if_t<!details::is_form_element_v<T>>>
+  FormGenericArrayInput(const std::string & name, bool required, T && data = {})
+  : FormElement<FormGenericArrayInput, Elements::GenericArray>(name, required), data_{data}
   {
   }
 
-  template<typename Element>
-  FormGenericArrayInput(const std::string & name, bool required, Element && element)
+  template<typename Element, typename = std::enable_if_t<details::is_form_element_v<Element>>>
+  FormGenericArrayInput(const std::string & name, bool required, Element && element, T && data = {})
   : FormElement<FormGenericArrayInput, Elements::GenericArray>(name, required),
-    FormElements(std::forward<Element>(element))
+    FormElements(std::forward<Element>(element)), data_{data}
   {
   }
 
   static constexpr bool is_dynamic() { return true; }
 
-  static constexpr size_t write_size_() { return 1; }
+  static constexpr size_t write_size_() { return 2; }
 
   void write_(mc_rtc::MessagePackBuilder & builder)
   {
     if(count_ != 1) { mc_rtc::log::error_and_throw("FormGenericArrayInput must have exactly one element"); }
     FormElements::write_impl(builder);
+    data_.write(builder);
   }
+
+private:
+  details::CallbackOrValue<T> data_;
 };
 
 /** Creates an inputs to build an array of objects
