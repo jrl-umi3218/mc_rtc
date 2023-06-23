@@ -156,29 +156,40 @@ namespace details
 {
 
 /** This helper class avoids forming reference to void arguments */
-template<typename T, typename Callback>
+template<typename T>
 struct CallbackOrValue
 {
-  static_assert(details::CheckReturnType<Callback, T>::value, "Callback should return the right type of value");
+  T callback_or_value;
 
-  Callback callback;
+  static inline constexpr bool is_callback = std::is_invocable_v<T>;
 
-  void write(mc_rtc::MessagePackBuilder & builder) { builder.write(callback()); }
+  void write(mc_rtc::MessagePackBuilder & builder)
+  {
+    if constexpr(is_callback) { builder.write(callback_or_value()); }
+    else { builder.write(callback_or_value); }
+  }
 };
 
-template<typename T>
-struct CallbackOrValue<T, void>
+struct VoidValue
 {
-  T value;
-
-  void write(mc_rtc::MessagePackBuilder & builder) { builder.write(value); }
 };
 
-template<typename T, Elements element, typename DataCallback = void>
-struct FormDataInput : public FormElement<FormDataInput<T, element, DataCallback>, element>
+template<>
+struct CallbackOrValue<VoidValue>
 {
-  FormDataInput(const std::string & name, bool required, CallbackOrValue<T, DataCallback> def)
-  : FormElement<FormDataInput<T, element, DataCallback>, element>(name, required), def_(def), has_def_(true)
+  CallbackOrValue() {}
+  CallbackOrValue(VoidValue) {}
+
+  static inline constexpr bool is_callback = false;
+
+  void write(mc_rtc::MessagePackBuilder & builder) { builder.write(); }
+};
+
+template<typename T, Elements element>
+struct FormDataInput : public FormElement<FormDataInput<T, element>, element>
+{
+  FormDataInput(const std::string & name, bool required, const T & def)
+  : FormElement<FormDataInput<T, element>, element>(name, required), def_{def}, has_def_(true)
   {
   }
 
@@ -189,7 +200,7 @@ struct FormDataInput : public FormElement<FormDataInput<T, element, DataCallback
 
   static constexpr size_t write_size_() { return 2; }
 
-  static constexpr bool is_dynamic() { return !std::is_same<DataCallback, void>::value; }
+  static constexpr bool is_dynamic() { return CallbackOrValue<T>::is_callback; }
 
   void write_(mc_rtc::MessagePackBuilder & builder)
   {
@@ -201,7 +212,7 @@ struct FormDataInput : public FormElement<FormDataInput<T, element, DataCallback
   FormDataInput() {}
 
 private:
-  CallbackOrValue<T, DataCallback> def_;
+  CallbackOrValue<T> def_;
   bool has_def_;
 };
 
@@ -215,14 +226,13 @@ private:
                                                                                                             \
   inline details::FormDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required, DATAT value) \
   {                                                                                                         \
-    return {name, required, details::CallbackOrValue<DATAT, void>{value}};                                  \
+    return {name, required, value};                                                                         \
   }                                                                                                         \
                                                                                                             \
-  template<typename Callback, typename std::enable_if<details::is_getter<Callback>(), int>::type = 0>       \
-  inline details::FormDataInput<DATAT, ELEMENT, Callback> FNAME(const std::string & name, bool required,    \
-                                                                Callback callback)                          \
+  template<typename T>                                                                                      \
+  inline details::FormDataInput<T, ELEMENT> FNAME(const std::string & name, bool required, T && value)      \
   {                                                                                                         \
-    return {name, required, details::CallbackOrValue<DATAT, Callback>{callback}};                           \
+    return {name, required, std::forward<T>(value)};                                                        \
   }
 
 MAKE_DATA_INPUT_HELPER(bool, Elements::Checkbox, FormCheckbox)
@@ -238,12 +248,12 @@ MAKE_DATA_INPUT_HELPER(sva::PTransformd, Elements::Transform, FormTransformInput
 namespace details
 {
 
-template<typename T, typename DataCallback = void>
-struct FormArrayInput : public FormElement<FormArrayInput<T, DataCallback>, Elements::ArrayInput>
+template<typename T>
+struct FormArrayInput : public FormElement<FormArrayInput<T>, Elements::ArrayInput>
 {
-  FormArrayInput(const std::string & name, bool required, CallbackOrValue<T, DataCallback> def, bool fixed_size = true)
-  : FormElement<FormArrayInput<T, DataCallback>, Elements::ArrayInput>(name, required), def_(def),
-    fixed_size_(fixed_size), has_def_(true)
+  FormArrayInput(const std::string & name, bool required, const T & def, bool fixed_size = true)
+  : FormElement<FormArrayInput<T>, Elements::ArrayInput>(name, required), def_{def}, fixed_size_(fixed_size),
+    has_def_(true)
   {
   }
 
@@ -255,7 +265,7 @@ struct FormArrayInput : public FormElement<FormArrayInput<T, DataCallback>, Elem
 
   static constexpr size_t write_size_() { return 3; }
 
-  static constexpr bool is_dynamic() { return !std::is_same<DataCallback, void>::value; }
+  static constexpr bool is_dynamic() { return CallbackOrValue<T>::is_callback; }
 
   void write_(mc_rtc::MessagePackBuilder & builder)
   {
@@ -268,7 +278,7 @@ struct FormArrayInput : public FormElement<FormArrayInput<T, DataCallback>, Elem
   FormArrayInput() {}
 
 private:
-  CallbackOrValue<T, DataCallback> def_;
+  CallbackOrValue<T> def_;
   bool fixed_size_;
   bool has_def_;
 };
@@ -281,23 +291,13 @@ details::FormArrayInput<T> FormArrayInput(const std::string & name, bool require
   return {name, required, fixed_size};
 }
 
-template<typename T, typename std::enable_if<!details::is_getter<T>(), int>::type = 0>
+template<typename T>
 inline details::FormArrayInput<T> FormArrayInput(const std::string & name,
                                                  bool required,
-                                                 const T & value,
+                                                 T && value,
                                                  bool fixed_size = true)
 {
-  return {name, required, details::CallbackOrValue<T, void>{value}, fixed_size};
-}
-
-template<typename Callback, typename std::enable_if<details::is_getter<Callback>(), int>::type = 0>
-inline details::FormArrayInput<details::ReturnTypeT<Callback>, Callback> FormArrayInput(const std::string & name,
-                                                                                        bool required,
-                                                                                        Callback callback,
-                                                                                        bool fixed_size = true)
-{
-  using ReturnT = details::ReturnTypeT<Callback>;
-  return {name, required, details::CallbackOrValue<ReturnT, Callback>{callback}, fixed_size};
+  return {name, required, std::forward<T>(value), fixed_size};
 }
 
 struct FormComboInput : public FormElement<FormComboInput, Elements::ComboInput>
