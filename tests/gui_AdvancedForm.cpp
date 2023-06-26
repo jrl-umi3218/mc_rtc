@@ -32,7 +32,12 @@ struct AdvancedFormServer : public TestServer
     builder.addElement(
         {"GenericArray with data"},
         mc_rtc::gui::Form(
-            "Send data", [this](const mc_rtc::Configuration & data) { callback(data); },
+            "Send data",
+            [this](const mc_rtc::Configuration & data)
+            {
+              callback(data);
+              str_vector_ = data("array of strings");
+            },
             mc_rtc::gui::FormGenericArrayInput("array of strings", true, mc_rtc::gui::FormStringInput("name", true),
                                                [this]() -> const std::vector<std::string> & { return str_vector_; })));
     builder.addElement(

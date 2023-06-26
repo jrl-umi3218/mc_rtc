@@ -174,6 +174,8 @@ namespace details
 template<typename T>
 struct CallbackOrValue
 {
+  static_assert(std::is_same_v<std::decay_t<T>, T>);
+
   T callback_or_value;
 
   static inline constexpr bool is_callback = std::is_invocable_v<T>;
@@ -233,21 +235,24 @@ private:
 
 } // namespace details
 
-#define MAKE_DATA_INPUT_HELPER(DATAT, ELEMENT, FNAME)                                                       \
-  inline details::FormDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required)              \
-  {                                                                                                         \
-    return {name, required};                                                                                \
-  }                                                                                                         \
-                                                                                                            \
-  inline details::FormDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required, DATAT value) \
-  {                                                                                                         \
-    return {name, required, value};                                                                         \
-  }                                                                                                         \
-                                                                                                            \
-  template<typename T>                                                                                      \
-  inline details::FormDataInput<T, ELEMENT> FNAME(const std::string & name, bool required, T && value)      \
-  {                                                                                                         \
-    return {name, required, std::forward<T>(value)};                                                        \
+#define MAKE_DATA_INPUT_HELPER(DATAT, ELEMENT, FNAME)                                                          \
+  inline details::FormDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required)                 \
+  {                                                                                                            \
+    return {name, required};                                                                                   \
+  }                                                                                                            \
+                                                                                                               \
+  template<typename T = DATAT>                                                                                 \
+  inline auto FNAME(const std::string & name, bool required, T value)                                          \
+  {                                                                                                            \
+    if constexpr(std::is_invocable_v<T>) { return details::FormDataInput<T, ELEMENT>{name, required, value}; } \
+    else                                                                                                       \
+    {                                                                                                          \
+      if constexpr(std::is_same_v<std::decay_t<T>, DATAT>)                                                     \
+      {                                                                                                        \
+        return details::FormDataInput<DATAT, ELEMENT>{name, required, value};                                  \
+      }                                                                                                        \
+      else { return details::FormDataInput<DATAT, ELEMENT>{name, required, DATAT{value}}; }                    \
+    }                                                                                                          \
   }
 
 MAKE_DATA_INPUT_HELPER(bool, Elements::Checkbox, FormCheckbox)
@@ -307,12 +312,17 @@ details::FormArrayInput<T> FormArrayInput(const std::string & name, bool require
 }
 
 template<typename T>
-inline details::FormArrayInput<T> FormArrayInput(const std::string & name,
-                                                 bool required,
-                                                 T && value,
-                                                 bool fixed_size = true)
+auto FormArrayInput(const std::string & name, bool required, T && value, bool fixed_size = true)
 {
-  return {name, required, std::forward<T>(value), fixed_size};
+  if constexpr(std::is_invocable_v<T>)
+  {
+    return details::FormArrayInput{name, required, std::forward<T>(value), fixed_size};
+  }
+  else
+  {
+    using DataT = std::decay_t<T>;
+    return details::FormArrayInput<DataT>{name, required, std::forward<T>(value), fixed_size};
+  }
 }
 
 struct FormComboInput : public FormElement<FormComboInput, Elements::ComboInput>
@@ -407,13 +417,13 @@ struct FormGenericArrayInput : public FormElement<FormGenericArrayInput<T>, Elem
                                details::FormElements
 {
   template<typename = std::enable_if_t<!details::is_form_element_v<T>>>
-  FormGenericArrayInput(const std::string & name, bool required, T && data = {})
+  FormGenericArrayInput(const std::string & name, bool required, T data = {})
   : FormElement<FormGenericArrayInput, Elements::GenericArray>(name, required), data_{data}
   {
   }
 
   template<typename Element, typename = std::enable_if_t<details::is_form_element_v<Element>>>
-  FormGenericArrayInput(const std::string & name, bool required, Element && element, T && data = {})
+  FormGenericArrayInput(const std::string & name, bool required, Element && element, T data = {})
   : FormElement<FormGenericArrayInput, Elements::GenericArray>(name, required),
     FormElements(std::forward<Element>(element)), data_{data}
   {
