@@ -20,7 +20,7 @@ namespace mc_rtc
 {
 
 struct Configuration;
-
+struct MessagePackBuilder;
 struct MessagePackBuilderImpl;
 
 namespace internal
@@ -60,6 +60,20 @@ template<typename T>
 constexpr bool is_like_uint32_t = is_like<uint32_t, T>();
 template<typename T>
 constexpr bool is_like_uint64_t = is_like<uint64_t, T>();
+
+template<typename T, typename = void>
+struct has_write_builder : std::false_type
+{
+};
+
+template<typename T>
+struct has_write_builder<T, std::void_t<decltype(std::declval<const T &>().write(std::declval<MessagePackBuilder &>()))>>
+: std::true_type
+{
+};
+
+template<typename T>
+static inline constexpr bool has_write_builder_v = has_write_builder<T>::value;
 
 } // namespace internal
 
@@ -225,6 +239,13 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
     else if constexpr(internal::is_like_uint32_t<T>) { write(static_cast<uint32_t>(number)); }
     else if constexpr(internal::is_like_uint64_t<T>) { write(static_cast<uint64_t>(number)); }
     else { static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size"); }
+  }
+
+  /** Write \tparam T to MessagePack if T implements T::write(MessagePackBuilder &) const */
+  template<typename T, typename = std::enable_if_t<internal::has_write_builder_v<T>>>
+  void write(const T & value)
+  {
+    value.write(*this);
   }
 
   /** @} */
