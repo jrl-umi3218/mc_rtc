@@ -146,8 +146,15 @@ struct Default<std::string>
 /** Operations implemented by an object that can be represented with a Schema */
 struct MC_RTC_UTILS_DLLAPI Operations
 {
+  /** Number of elements in the schema */
+  size_t schema_size = 0;
+
   /** Save to a configuration object */
   std::function<void(const void * self, Configuration & out)> save = [](const void *, Configuration &) {};
+
+  /** Write to a MessagePackBuilder */
+  std::function<void(const void * self, MessagePackBuilder & builder)> write = [](const void *, MessagePackBuilder &) {
+  };
 
   /** Load from a configuration object */
   std::function<void(void * self, const Configuration & in)> load = [](void *, const Configuration &) {};
@@ -263,6 +270,7 @@ struct alignas(T) Value
         const details::Choices<T, HasChoices> & choices = {})
   : value_(default_)
   {
+    ops.schema_size += 1;
     ops.save = [save = ops.save, name](const void * self, mc_rtc::Configuration & out)
     {
       save(self, out);
@@ -282,6 +290,13 @@ struct alignas(T) Value
         }
       }
       else { out.add(name, value); }
+    };
+    ops.write = [write = ops.write, description](const void * self, mc_rtc::MessagePackBuilder & builder)
+    {
+      write(self, builder);
+      const T & value = static_cast<const Schema *>(self)->*ptr;
+      builder.write(description);
+      builder.write(value);
     };
     ops.load = [load = ops.load, name](void * self, const mc_rtc::Configuration & in)
     {
@@ -307,7 +322,7 @@ struct alignas(T) Value
         {
           std::vector<mc_rtc::Configuration> in_ = in(description);
           value.resize(in_.size());
-          for(size_t i = 0; i < in.size(); ++i) { value[i].load(in_[i]); }
+          for(size_t i = 0; i < in_.size(); ++i) { value[i].loadForm(&value[i], in_[i]); }
         }
         else { value = in(description).operator T(); }
       }
@@ -339,6 +354,13 @@ struct Schema : public Operations
   using is_schema_t = std::true_type;
 
   void save(mc_rtc::Configuration & out) const { Operations::save(this, out); }
+
+  void write(mc_rtc::MessagePackBuilder & builder) const
+  {
+    builder.start_map(schema_size);
+    Operations::write(this, builder);
+    builder.finish_map();
+  }
 
   std::string dump(bool pretty, bool yaml) const
   {
