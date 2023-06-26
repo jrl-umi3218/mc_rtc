@@ -182,8 +182,8 @@ void addValueToForm(const T & value,
   }
   else if constexpr(details::is_std_vector_v<T>)
   {
-    // FIXME We need a way to provide the existing elements here
-    mc_rtc::gui::FormGenericArrayInput input(description, IsRequired);
+    auto get_value = [&value]() -> const T & { return value; };
+    mc_rtc::gui::FormGenericArrayInput input(description, IsRequired, get_value);
     using value_type = typename T::value_type;
     static value_type default_{};
     addValueToForm<value_type, true>(default_, description, {}, input);
