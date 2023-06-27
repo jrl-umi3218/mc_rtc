@@ -26,4 +26,8 @@ BOOST_AUTO_TEST_CASE(TestDefault)
   BOOST_REQUIRE(Default<sva::ForceVecd>::value == sva::ForceVecd::Zero());
   BOOST_REQUIRE(Default<sva::ImpedanceVecd>::value == sva::ImpedanceVecd::Zero());
   BOOST_REQUIRE(Default<sva::AdmittanceVecd>::value == sva::AdmittanceVecd::Zero());
+  // Variants' default is the default of the first type
+  static_assert(Default<std::variant<double, Eigen::Vector3d>>::value == 0.0);
+  using test_variant_t = std::variant<Eigen::Vector3d, double>;
+  BOOST_REQUIRE(Default<test_variant_t>::value == Eigen::Vector3d::Zero());
 }

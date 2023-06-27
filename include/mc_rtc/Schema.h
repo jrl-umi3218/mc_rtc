@@ -4,6 +4,8 @@
 #include <mc_rtc/gui/Form.h>
 #include <mc_rtc/gui/StateBuilder.h>
 
+#include <variant>
+
 namespace mc_rtc::schema
 {
 
@@ -139,6 +141,11 @@ template<>
 struct Default<std::string>
 {
   inline static const std::string value = "";
+};
+
+template<typename T, typename... Others>
+struct Default<std::variant<T, Others...>> : public Default<T>
+{
 };
 
 } // namespace details
