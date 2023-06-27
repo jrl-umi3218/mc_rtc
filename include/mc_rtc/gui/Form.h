@@ -202,22 +202,16 @@ struct CallbackOrValue<VoidValue>
   void write(mc_rtc::MessagePackBuilder & builder) { builder.write(); }
 };
 
-template<typename T, Elements element>
-struct FormDataInput : public FormElement<FormDataInput<T, element>, element>
+template<typename T>
+struct FormDataInputBase
 {
-  FormDataInput(const std::string & name, bool required, const T & def)
-  : FormElement<FormDataInput<T, element>, element>(name, required), def_{def}, has_def_(true)
-  {
-  }
+  FormDataInputBase(const T & def) : def_{def}, has_def_(true) {}
 
-  FormDataInput(const std::string & name, bool required) : FormDataInput<T, element>(name, required, {})
-  {
-    has_def_ = false;
-  }
+  FormDataInputBase() : FormDataInputBase(T{}) { has_def_ = false; }
 
   static constexpr size_t write_size_() { return 2; }
 
-  static constexpr bool is_dynamic() { return CallbackOrValue<T>::is_callback; }
+  static constexpr bool is_dynamic_() { return CallbackOrValue<T>::is_callback; }
 
   void write_(mc_rtc::MessagePackBuilder & builder)
   {
@@ -225,12 +219,55 @@ struct FormDataInput : public FormElement<FormDataInput<T, element>, element>
     builder.write(has_def_);
   }
 
-  /** Invalid element */
-  FormDataInput() {}
-
 private:
   CallbackOrValue<T> def_;
   bool has_def_;
+};
+
+template<typename T, Elements element>
+struct FormDataInput : public FormElement<FormDataInput<T, element>, element>, FormDataInputBase<T>
+{
+  FormDataInput(const std::string & name, bool required, const T & def)
+  : FormElement<FormDataInput<T, element>, element>(name, required), FormDataInputBase<T>(def)
+  {
+  }
+
+  FormDataInput(const std::string & name, bool required)
+  : FormElement<FormDataInput<T, element>, element>(name, required), FormDataInputBase<T>()
+  {
+  }
+
+  static constexpr bool is_dynamic() { return FormDataInputBase<T>::is_dynamic_(); }
+};
+
+template<typename T, Elements element>
+struct FormInteractiveDataInput : public FormElement<FormInteractiveDataInput<T, element>, element>,
+                                  FormDataInputBase<T>
+{
+  FormInteractiveDataInput(const std::string & name, bool required, const T & def, bool interactive = true)
+  : FormElement<FormInteractiveDataInput<T, element>, element>(name, required), FormDataInputBase<T>(def),
+    interactive_(interactive)
+  {
+  }
+
+  FormInteractiveDataInput(const std::string & name, bool required, bool interactive)
+  : FormElement<FormInteractiveDataInput<T, element>, element>(name, required), FormDataInputBase<T>(),
+    interactive_(interactive)
+  {
+  }
+
+  static constexpr bool is_dynamic() { return FormDataInputBase<T>::is_dynamic_(); }
+
+  static constexpr size_t write_size_() { return FormDataInputBase<T>::write_size_() + 1; }
+
+  void write_(mc_rtc::MessagePackBuilder & builder)
+  {
+    FormDataInputBase<T>::write_(builder);
+    builder.write(interactive_);
+  }
+
+private:
+  bool interactive_;
 };
 
 } // namespace details
@@ -255,15 +292,40 @@ private:
     }                                                                                                          \
   }
 
+#define MAKE_INTERACTIVE_DATA_INPUT_HELPER(DATAT, ELEMENT, FNAME)                                                   \
+  inline details::FormInteractiveDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required,           \
+                                                                 bool interactive = true)                           \
+  {                                                                                                                 \
+    return {name, required, interactive};                                                                           \
+  }                                                                                                                 \
+                                                                                                                    \
+  template<typename T = DATAT, typename = std::enable_if_t<!std::is_same_v<T, bool>>>                               \
+  inline auto FNAME(const std::string & name, bool required, T value, bool interactive = true)                      \
+  {                                                                                                                 \
+    if constexpr(std::is_invocable_v<T>)                                                                            \
+    {                                                                                                               \
+      return details::FormInteractiveDataInput<T, ELEMENT>{name, required, value, interactive};                     \
+    }                                                                                                               \
+    else                                                                                                            \
+    {                                                                                                               \
+      if constexpr(std::is_same_v<std::decay_t<T>, DATAT>)                                                          \
+      {                                                                                                             \
+        return details::FormInteractiveDataInput<DATAT, ELEMENT>{name, required, value, interactive};               \
+      }                                                                                                             \
+      else { return details::FormInteractiveDataInput<DATAT, ELEMENT>{name, required, DATAT{value}, interactive}; } \
+    }                                                                                                               \
+  }
+
 MAKE_DATA_INPUT_HELPER(bool, Elements::Checkbox, FormCheckbox)
 MAKE_DATA_INPUT_HELPER(int, Elements::IntegerInput, FormIntegerInput)
 MAKE_DATA_INPUT_HELPER(double, Elements::NumberInput, FormNumberInput)
 MAKE_DATA_INPUT_HELPER(std::string, Elements::StringInput, FormStringInput)
-MAKE_DATA_INPUT_HELPER(Eigen::Vector3d, Elements::Point3D, FormPoint3DInput)
-MAKE_DATA_INPUT_HELPER(sva::PTransformd, Elements::Rotation, FormRotationInput)
-MAKE_DATA_INPUT_HELPER(sva::PTransformd, Elements::Transform, FormTransformInput)
+MAKE_INTERACTIVE_DATA_INPUT_HELPER(Eigen::Vector3d, Elements::Point3D, FormPoint3DInput)
+MAKE_INTERACTIVE_DATA_INPUT_HELPER(sva::PTransformd, Elements::Rotation, FormRotationInput)
+MAKE_INTERACTIVE_DATA_INPUT_HELPER(sva::PTransformd, Elements::Transform, FormTransformInput)
 
 #undef MAKE_DATA_INPUT_HELPER
+#undef MAKE_INTERACTIVE_DATA_INPUT_HELPER
 
 namespace details
 {

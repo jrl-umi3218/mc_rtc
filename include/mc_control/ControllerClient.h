@@ -654,12 +654,15 @@ protected:
    * \p default_ Default value in the form
    *
    * \p default_from_user Default is provided by the user
+   *
+   * \p interactive Should display an interactive marker
    */
   virtual void form_point3d_input(const ElementId & /*formId*/,
                                   const std::string & /*name*/,
                                   bool /*required*/,
                                   const Eigen::Vector3d & /*default_*/,
-                                  bool /*default_from_user*/)
+                                  bool /*default_from_user*/,
+                                  bool /*interactive*/)
   {
   }
 
@@ -677,12 +680,15 @@ protected:
    * \p default_ Default value in the form
    *
    * \p default_from_user Default is provided by the user
+   *
+   * \p interactive Should display an interactive marker
    */
   virtual void form_rotation_input(const ElementId & /*formId*/,
                                    const std::string & /*name*/,
                                    bool /*required*/,
                                    const sva::PTransformd & /*default_*/,
-                                   bool /*default_from_user*/)
+                                   bool /*default_from_user*/,
+                                   bool /*interactive*/)
   {
   }
 
@@ -697,12 +703,15 @@ protected:
    * \p default_ Default value in the form
    *
    * \p default_from_user Default is provided by the user
+   *
+   * \p interactive Should display an interactive marker
    */
   virtual void form_transform_input(const ElementId & /*formId*/,
                                     const std::string & /*name*/,
                                     bool /*required*/,
                                     const sva::PTransformd & /*default_*/,
-                                    bool /*default_from_user*/)
+                                    bool /*default_from_user*/,
+                                    bool /*interactive*/)
   {
   }
 

@@ -14,6 +14,16 @@ struct AdvancedFormServer : public TestServer
                            mc_rtc::gui::FormPoint3DInput("Point3D", true, Eigen::Vector3d::Zero()),
                            mc_rtc::gui::FormRotationInput("Rotation", true, {Eigen::Vector3d(1, 0, 0)}),
                            mc_rtc::gui::FormTransformInput("Transform", true, {Eigen::Vector3d(0, 0, 1)})));
+    builder.addElement(
+        {"3D elements (persistent)"},
+        mc_rtc::gui::Form(
+            "Send data",
+            [this](const mc_rtc::Configuration & data)
+            {
+              callback(data);
+              point_ = data("Point3D");
+            },
+            mc_rtc::gui::FormPoint3DInput("Point3D", true, [this]() -> const Eigen::Vector3d & { return point_; })));
     builder.addElement({"Object"},
                        mc_rtc::gui::Form(
                            "Send data", [this](const mc_rtc::Configuration & data) { callback(data); },
@@ -66,6 +76,7 @@ struct AdvancedFormServer : public TestServer
   }
 
   std::vector<std::string> str_vector_ = {"a", "b", "c", "d"};
+  Eigen::Vector3d point_ = Eigen::Vector3d::Ones();
 };
 
 int main()
