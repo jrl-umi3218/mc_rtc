@@ -1391,3 +1391,54 @@ BOOST_AUTO_TEST_CASE(TestIntegralTypes)
     builder.finish();
   }
 }
+
+BOOST_AUTO_TEST_CASE(TestVariant)
+{
+  using variant_t = std::variant<double, std::string>;
+  variant_t v = 42.42;
+  mc_rtc::Configuration config;
+  config.add("v", v);
+  {
+    std::pair<size_t, double> serialized = config("v");
+    BOOST_REQUIRE_EQUAL(serialized.first, 0);
+    BOOST_REQUIRE_EQUAL(serialized.second, 42.42);
+  }
+  {
+    variant_t out = config("v");
+    BOOST_REQUIRE(out.index() == 0);
+    BOOST_REQUIRE(std::get<0>(out) == 42.42);
+  }
+  {
+    auto array = config.array("array");
+    array.push(v);
+  }
+  {
+    std::vector<variant_t> variant_array = config("array");
+    BOOST_REQUIRE(variant_array.size() == 1);
+    BOOST_REQUIRE(variant_array[0].index() == 0);
+    BOOST_REQUIRE(std::get<0>(variant_array[0]) == 42.42);
+  }
+  v = "hello";
+  config.add("v", v);
+  {
+    std::pair<size_t, std::string> serialized = config("v");
+    BOOST_REQUIRE_EQUAL(serialized.first, 1);
+    BOOST_REQUIRE_EQUAL(serialized.second, "hello");
+  }
+  {
+    variant_t out = config("v");
+    BOOST_REQUIRE(out.index() == 1);
+    BOOST_REQUIRE(std::get<1>(out) == "hello");
+  }
+  {
+    config("array").push(v);
+  }
+  {
+    std::vector<variant_t> variant_array = config("array");
+    BOOST_REQUIRE(variant_array.size() == 2);
+    BOOST_REQUIRE(variant_array[0].index() == 0);
+    BOOST_REQUIRE(std::get<0>(variant_array[0]) == 42.42);
+    BOOST_REQUIRE(variant_array[1].index() == 1);
+    BOOST_REQUIRE(std::get<1>(variant_array[1]) == "hello");
+  }
+}

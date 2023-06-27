@@ -24,6 +24,7 @@
 #include <string>
 #include <string_view>
 #include <unordered_set>
+#include <variant>
 #include <vector>
 
 namespace mc_rtc
@@ -527,6 +528,27 @@ public:
       return ret;
     }
     else { throw Configuration::Exception("Stored Json value is not an array", v); }
+  }
+
+  /** Retrieve a variant object
+   *
+   * \throws If the underlying value is not an array of size 2
+   *
+   * \throws If the first value of the array is an invalid index for this variant
+   *
+   * \throws If the data in the second value of the array does not allow to deserialize a value of the type given at the
+   * index
+   */
+  template<typename... Args>
+  operator std::variant<Args...>() const
+  {
+    if(!v.isArray()) { throw Configuration::Exception("Stored Json value is not an array", v); }
+    if(v.size() != 2) { throw Configuration::Exception("Stored Json value is not of size 2", v); }
+    size_t idx = Configuration(v[0]);
+    if(idx >= sizeof...(Args)) { throw Configuration::Exception("Variant index out of type index bound", v); }
+    static constexpr auto table =
+        std::array{+[](const Configuration & c) { return std::variant<Args...>{c.operator Args()}; }...};
+    return table[idx](v[1]);
   }
 
   /** Integral type conversions
@@ -1343,6 +1365,28 @@ public:
     for(const auto & v : value) { v.push(*v, std::forward<Args>(args)...); }
   }
 
+  /*! \brief Add a variant object into the JSON document
+   *
+   * The variant is written as [value.index(), std::get<value.index()>(value)] if it holds a value
+   *
+   * Otherwise it is written as [std::variant_npos, std::variant_npos]
+   *
+   * \param key Key of the element
+   *
+   * \param value Variant value to add
+   */
+  template<typename... Args>
+  void add(const std::string & key, const std::variant<Args...> & value)
+  {
+    Configuration v = array(key, 2);
+    v.push(value.index());
+    if(value.index() != std::variant_npos)
+    {
+      std::visit([&v](const auto & hold) { v.push(hold); }, value);
+    }
+    else { v.push(value.index()); }
+  }
+
   /** Integral type conversions
    *
    * \param Key key of the element
@@ -1460,6 +1504,28 @@ public:
   {
     Configuration v = array(value.size());
     for(const auto & v : value) { v.push(*v, std::forward<Args>(args)...); }
+  }
+
+  /*! \brief Push a variant object into the JSON document
+   *
+   * The variant is written as [value.index(), std::get<value.index()>(value)] if it holds a value
+   *
+   * Otherwise it is written as [std::variant_npos, std::variant_npos]
+   *
+   * \param key Key of the element
+   *
+   * \param value Variant value to add
+   */
+  template<typename... Args>
+  void push(const std::variant<Args...> & value)
+  {
+    Configuration v = array(2);
+    v.push(value.index());
+    if(value.index() != std::variant_npos)
+    {
+      std::visit([&v](const auto & hold) { v.push(hold); }, value);
+    }
+    else { v.push(value.index()); }
   }
 
   /** Remove a given element
