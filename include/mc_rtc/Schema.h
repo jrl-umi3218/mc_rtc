@@ -175,7 +175,7 @@ struct MC_RTC_UTILS_DLLAPI Operations
 namespace details
 {
 
-template<typename T, bool IsRequired, bool HasChoices = false>
+template<typename T, bool IsRequired, bool IsInteractive, bool HasChoices = false>
 void addValueToForm(const T & value,
                     const std::string & description,
                     const details::Choices<T, HasChoices> & choices,
@@ -193,7 +193,7 @@ void addValueToForm(const T & value,
     mc_rtc::gui::FormGenericArrayInput input(description, IsRequired, get_value);
     using value_type = typename T::value_type;
     static value_type default_{};
-    addValueToForm<value_type, true>(default_, description, {}, input);
+    addValueToForm<value_type, true, IsInteractive>(default_, description, {}, input);
     form.addElement(input);
   }
   else
@@ -222,11 +222,50 @@ void addValueToForm(const T & value,
       }
       else { form.addElement(mc_rtc::gui::FormStringInput(description, IsRequired, get_value)); }
     }
+    else if constexpr(std::is_same_v<T, Eigen::Vector3d>)
+    {
+      form.addElement(mc_rtc::gui::FormPoint3DInput(description, IsRequired, get_value, IsInteractive));
+    }
+    else if constexpr(std::is_same_v<T, sva::PTransformd>)
+    {
+      form.addElement(mc_rtc::gui::FormTransformInput(description, IsRequired, get_value, IsInteractive));
+    }
     else { static_assert(!std::is_same_v<T, T>, "Must be implemented for this value type"); }
   }
 }
 
 } // namespace details
+
+/** Feature flags for Schema values */
+enum class ValueFlag
+{
+  /** No flags */
+  None = 0,
+  /** The value is required */
+  Required = 2 << 0,
+  /** Use an interactive display */
+  Interactive = 2 << 1,
+  /** All flags enabled */
+  All = Required | Interactive
+};
+
+inline constexpr ValueFlag operator|(ValueFlag lhs, ValueFlag rhs) noexcept
+{
+  using int_t = std::underlying_type_t<ValueFlag>;
+  return static_cast<ValueFlag>(static_cast<int_t>(lhs) | static_cast<int_t>(rhs));
+}
+
+inline constexpr ValueFlag operator&(ValueFlag lhs, ValueFlag rhs) noexcept
+{
+  using int_t = std::underlying_type_t<ValueFlag>;
+  return static_cast<ValueFlag>(static_cast<int_t>(lhs) & static_cast<int_t>(rhs));
+}
+
+inline constexpr bool HasFeature(ValueFlag flag, ValueFlag feature) noexcept
+{
+  using int_t = std::underlying_type_t<ValueFlag>;
+  return (static_cast<int_t>(flag) & static_cast<int_t>(feature)) != 0;
+}
 
 /** A simple value in a schema
  *
@@ -244,7 +283,7 @@ struct alignas(T) Value
    *
    * \tparam ptr Member pointer in the Schema object
    *
-   * \tparam IsRequired If true the value is required in the form
+   * \tparam Flags Control some features of the value in the schema
    *
    * \tparam HasChoices If true, we expect choices to be provided for the value instead of an open form
    *
@@ -260,16 +299,18 @@ struct alignas(T) Value
    *
    * \param combo Possible choices when \tparam HasChoices is true
    */
-  template<typename Schema, Value<T> Schema::*ptr, bool IsRequired = true, bool HasChoices = false>
+  template<typename Schema, Value<T> Schema::*ptr, ValueFlag Flags = ValueFlag::All, bool HasChoices = false>
   Value(Operations & ops,
         details::MemberPointerWrapper<ptr>,
         const std::string & name,
         const std::string & description,
         const T & default_ = details::Default<T>::value,
-        const std::bool_constant<IsRequired> & = {},
+        const std::integral_constant<ValueFlag, Flags> & = {},
         const details::Choices<T, HasChoices> & choices = {})
   : value_(default_)
   {
+    constexpr bool IsRequired = HasFeature(Flags, ValueFlag::Required);
+    constexpr bool IsInteractive = HasFeature(Flags, ValueFlag::Interactive);
     ops.schema_size += 1;
     ops.save = [save = ops.save, name](const void * self, mc_rtc::Configuration & out)
     {
@@ -332,7 +373,7 @@ struct alignas(T) Value
     {
       buildForm(self, form);
       const T & value = static_cast<const Schema *>(self)->*ptr;
-      details::addValueToForm<T, IsRequired>(value, description, choices, form);
+      details::addValueToForm<T, IsRequired, IsInteractive>(value, description, choices, form);
     };
   }
 
@@ -391,13 +432,14 @@ struct Schema : public Operations
 };
 
 /** Declare a Schema<T> member of type TYPE, specify REQUIRED and DEFAULT value */
-#define SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, DEFAULT)                                  \
-  mc_rtc::schema::Value<TYPE> NAME##_                                                                 \
-  {                                                                                                   \
-    *this, mc_rtc::schema::details::MemberPointerWrapper<&T::NAME##_>{}, #NAME, DESCRIPTION, DEFAULT, \
-        std::bool_constant<REQUIRED>                                                                  \
-    {                                                                                                 \
-    }                                                                                                 \
+#define SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, DEFAULT)                                              \
+  mc_rtc::schema::Value<TYPE> NAME##_                                                                             \
+  {                                                                                                               \
+    *this, mc_rtc::schema::details::MemberPointerWrapper<&T::NAME##_>{}, #NAME, DESCRIPTION, DEFAULT,             \
+        std::integral_constant<mc_rtc::schema::ValueFlag,                                                         \
+                               mc_rtc::schema::ValueFlag::All & static_cast<mc_rtc::schema::ValueFlag>(REQUIRED)> \
+    {                                                                                                             \
+    }                                                                                                             \
   }
 
 /** Declare a required Schema<T> member of type TYPE, only specify DEFAULT */
