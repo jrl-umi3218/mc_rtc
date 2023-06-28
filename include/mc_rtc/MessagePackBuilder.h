@@ -14,6 +14,7 @@
 #include <set>
 #include <string>
 #include <type_traits>
+#include <variant>
 #include <vector>
 
 namespace mc_rtc
@@ -315,6 +316,16 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
   {
     start_array(sizeof...(Args));
     write_impl<0>(t);
+    finish_array();
+  }
+
+  /** Write an std::variant<Args...> */
+  template<typename... Args>
+  void write(const std::variant<Args...> & value)
+  {
+    start_array(2);
+    write(value.index());
+    std::visit([this](const auto & v) { write(v); }, value);
     finish_array();
   }
 
