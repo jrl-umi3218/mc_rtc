@@ -34,6 +34,14 @@ struct InteractiveSchema : public mc_rtc::schema::Schema<InteractiveSchema>
 #undef MEMBER
 };
 
+struct SimpleVariant : public mc_rtc::schema::Schema<SimpleVariant>
+{
+  using gain_t = std::variant<double, Eigen::Vector3d>;
+#define MEMBER(...) SCHEMA_REQUIRED_DEFAULT_MEMBER(SimpleVariant, __VA_ARGS__)
+  MEMBER(gain_t, stiffness, "Task stiffness");
+#undef MEMBER
+};
+
 struct SchemaServer : public TestServer
 {
   SchemaServer()
@@ -41,15 +49,18 @@ struct SchemaServer : public TestServer
     simple_.addToGUI(builder, {"Simple"}, "Update simple", [this]() { simple_updated(); });
     compose_.addToGUI(builder, {"Compose"}, "Update compose", [this]() { compose_updated(); });
     interactive_.addToGUI(builder, {"Interactive"}, "Update interactive", [this]() { interactive_updated(); });
+    simple_variant_.addToGUI(builder, {"Simple variant"}, "Update simple", [this]() { simple_variant_updated(); });
   }
 
   SimpleSchema simple_;
   ComposeSchema compose_;
   InteractiveSchema interactive_;
+  SimpleVariant simple_variant_;
 
   void simple_updated() { mc_rtc::log::info("simple_ updated:\n{}", simple_.dump(true, true)); }
   void compose_updated() { mc_rtc::log::info("compose_ updated:\n{}", compose_.dump(true, true)); }
   void interactive_updated() { mc_rtc::log::info("interactive_ updated:\n{}", interactive_.dump(true, true)); }
+  void simple_variant_updated() { mc_rtc::log::info("simple_variant_ updated:\n{}", simple_variant_.dump(true, true)); }
 };
 
 int main()

@@ -68,6 +68,20 @@ inline constexpr bool is_std_vector_schema_v = []()
   else { return false; }
 }();
 
+/** Type trait to detect a variant */
+template<typename T>
+struct is_variant : public std::false_type
+{
+};
+
+template<typename... Args>
+struct is_variant<std::variant<Args...>> : public std::true_type
+{
+};
+
+template<typename T>
+inline constexpr bool is_variant_v = is_variant<T>::value;
+
 /** Helper to get a default value for a given type */
 template<typename T, typename Enable = void>
 struct Default
@@ -182,12 +196,49 @@ struct MC_RTC_UTILS_DLLAPI Operations
 namespace details
 {
 
-template<typename T, bool IsRequired, bool IsInteractive, bool HasChoices = false>
+template<typename T, bool IsRequired, bool IsInteractive, bool HasChoices = false, bool IsStatic = false>
+void addValueToForm(const T & value,
+                    const std::string & description,
+                    const details::Choices<T, HasChoices> & choices,
+                    Operations::FormElements & form);
+
+template<bool IsRequired, bool IsInteractive, typename... Args>
+void variantToForm(const std::variant<Args...> &, Operations::FormElements & form)
+{
+  size_t i = 0;
+  (addValueToForm<Args, IsRequired, IsInteractive, false, true>(Default<Args>::value, std::to_string(i++), {}, form),
+   ...);
+}
+
+template<size_t i = 0, typename... Args>
+void variantFromForm(const mc_rtc::Configuration & data, std::variant<Args...> & value)
+{
+  if constexpr(i < sizeof...(Args))
+  {
+    if(data.has(std::to_string(i)))
+    {
+      using value_t = std::decay_t<decltype(std::get<i>(value))>;
+      value = data(std::to_string(i)).operator value_t();
+    }
+    else { variantFromForm<i + 1>(data, value); }
+  }
+  else { mc_rtc::log::error_and_throw("No index matching the variant size"); }
+}
+
+template<typename T, bool IsRequired, bool IsInteractive, bool HasChoices, bool IsStatic>
 void addValueToForm(const T & value,
                     const std::string & description,
                     const details::Choices<T, HasChoices> & choices,
                     Operations::FormElements & form)
 {
+  const auto & get_value = [&value]() -> decltype(auto)
+  {
+    if constexpr(IsStatic) { return value; }
+    else
+    {
+      return [&value]() -> const T & { return value; };
+    }
+  }();
   if constexpr(details::is_schema_v<T>)
   {
     mc_rtc::gui::FormObjectInput input(description, IsRequired);
@@ -196,7 +247,6 @@ void addValueToForm(const T & value,
   }
   else if constexpr(details::is_std_vector_v<T>)
   {
-    auto get_value = [&value]() -> const T & { return value; };
     mc_rtc::gui::FormGenericArrayInput input(description, IsRequired, get_value);
     using value_type = typename T::value_type;
     static value_type default_{};
@@ -205,7 +255,6 @@ void addValueToForm(const T & value,
   }
   else
   {
-    auto get_value = [&value]() -> const T & { return value; };
     if constexpr(std::is_same_v<T, bool>)
     {
       form.addElement(mc_rtc::gui::FormCheckbox(description, IsRequired, get_value));
@@ -237,7 +286,13 @@ void addValueToForm(const T & value,
     {
       form.addElement(mc_rtc::gui::FormTransformInput(description, IsRequired, get_value, IsInteractive));
     }
-    else { static_assert(!std::is_same_v<T, T>, "Must be implemented for this value type"); }
+    else if constexpr(details::is_variant_v<T>)
+    {
+      auto input = mc_rtc::gui::FormOneOfInput(description, IsRequired);
+      variantToForm<IsRequired, IsInteractive>(value, input);
+      form.addElement(input);
+    }
+    else { static_assert(!std::is_same_v<T, T>, "addValueToForm must be implemented for this value type"); }
   }
 }
 
@@ -372,6 +427,7 @@ struct alignas(T) Value
           value.resize(in_.size());
           for(size_t i = 0; i < in_.size(); ++i) { value[i].loadForm(&value[i], in_[i]); }
         }
+        else if constexpr(details::is_variant_v<T>) { details::variantFromForm(in(description), value); }
         else { value = in(description).operator T(); }
       }
     };
