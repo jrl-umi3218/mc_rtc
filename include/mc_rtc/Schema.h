@@ -17,16 +17,16 @@ struct MemberPointerWrapper
 };
 
 /** Helper when a Schema value has a finite number of choices */
-template<typename T, bool HasChoices>
+template<bool HasChoices>
 struct Choices
 {
   Choices() = default;
   Choices(const std::vector<std::string> & choices) : choices(choices) {}
-  std::vector<T> choices;
+  std::vector<std::string> choices;
 };
 
-template<typename T>
-struct Choices<T, false>
+template<>
+struct Choices<false>
 {
   Choices() = default;
 };
@@ -183,21 +183,29 @@ namespace details
 template<typename T, bool IsRequired, bool IsInteractive, bool HasChoices = false, bool IsStatic = false>
 void addValueToForm(const T & value,
                     const std::string & description,
-                    const details::Choices<T, HasChoices> & choices,
+                    const details::Choices<HasChoices> & choices,
                     Operations::FormElements & form);
 
-template<bool IsRequired, bool IsInteractive, typename... Args>
-void variantToForm(const std::variant<Args...> &, Operations::FormElements & form)
+template<bool IsRequired, bool IsInteractive, bool HasChoices, typename... Args>
+void variantToForm(const std::variant<Args...> &, Operations::FormElements & form, const Choices<HasChoices> & choices)
 {
+  auto get_choice = [&](size_t idx)
+  {
+    if constexpr(HasChoices)
+    {
+      if(idx < choices.choices.size()) { return choices.choices[idx]; }
+      return std::to_string(idx);
+    }
+    else { return std::to_string(idx); }
+  };
   size_t i = 0;
-  (addValueToForm<Args, IsRequired, IsInteractive, false, true>(Default<Args>::value, std::to_string(i++), {}, form),
-   ...);
+  (addValueToForm<Args, IsRequired, IsInteractive, false, true>(Default<Args>::value, get_choice(i++), {}, form), ...);
 }
 
 template<typename T, bool IsRequired, bool IsInteractive, bool HasChoices, bool IsStatic>
 void addValueToForm(const T & value,
                     const std::string & description,
-                    const details::Choices<T, HasChoices> & choices,
+                    const details::Choices<HasChoices> & choices,
                     Operations::FormElements & form)
 {
   const auto & get_value = [&value]() -> decltype(auto)
@@ -258,7 +266,7 @@ void addValueToForm(const T & value,
     else if constexpr(gui::details::is_variant_v<T>)
     {
       auto input = mc_rtc::gui::FormOneOfInput(description, IsRequired, get_value);
-      variantToForm<IsRequired, IsInteractive>(value, input);
+      variantToForm<IsRequired, IsInteractive>(value, input, choices);
       form.addElement(input);
     }
     else { static_assert(!std::is_same_v<T, T>, "addValueToForm must be implemented for this value type"); }
@@ -337,7 +345,7 @@ struct alignas(T) Value
         const std::string & description,
         const T & default_ = details::Default<T>::value,
         const std::integral_constant<ValueFlag, Flags> & = {},
-        const details::Choices<T, HasChoices> & choices = {})
+        const details::Choices<HasChoices> & choices = {})
   : value_(default_)
   {
     constexpr bool IsRequired = HasFeature(Flags, ValueFlag::Required);
@@ -463,33 +471,43 @@ struct Schema : public Operations
 };
 
 /** Declare a Schema<T> member of type TYPE, specify REQUIRED and DEFAULT value */
-#define SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, DEFAULT)                                              \
-  mc_rtc::schema::Value<TYPE> NAME##_                                                                             \
-  {                                                                                                               \
-    *this, mc_rtc::schema::details::MemberPointerWrapper<&T::NAME##_>{}, #NAME, DESCRIPTION, DEFAULT,             \
-        std::integral_constant<mc_rtc::schema::ValueFlag,                                                         \
-                               mc_rtc::schema::ValueFlag::All & static_cast<mc_rtc::schema::ValueFlag>(REQUIRED)> \
-    {                                                                                                             \
-    }                                                                                                             \
+#define SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, DEFAULT, ...)                                            \
+  mc_rtc::schema::Value<TYPE> NAME##_                                                                                \
+  {                                                                                                                  \
+    *this, mc_rtc::schema::details::MemberPointerWrapper<&T::NAME##_>{}, #NAME, DESCRIPTION, DEFAULT,                \
+        std::integral_constant<mc_rtc::schema::ValueFlag,                                                            \
+                               mc_rtc::schema::ValueFlag::All & static_cast<mc_rtc::schema::ValueFlag>(REQUIRED)>{}, \
+        ##__VA_ARGS__                                                                                                \
   }
 
 /** Declare a required Schema<T> member of type TYPE, only specify DEFAULT */
-#define SCHEMA_REQUIRED_MEMBER(T, TYPE, NAME, DESCRIPTION, DEFAULT) SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, true)
+#define SCHEMA_REQUIRED_MEMBER(T, TYPE, NAME, DESCRIPTION, DEFAULT, ...) \
+  SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, true, ##__VA_ARGS__)
 
 /** Declare an optional Schema<T> member of type TYPE, only specify DEFAULT */
-#define SCHEMA_OPTIONAL_MEMBER(T, TYPE, NAME, DESCRIPTION, DEFAULT) SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, false)
+#define SCHEMA_OPTIONAL_MEMBER(T, TYPE, NAME, DESCRIPTION, DEFAULT, ...) \
+  SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, false, ##__VA_ARGS__)
 
 /** Declare a Schema<T> member of type TYPE with a default value, only specify REQUIRED */
-#define SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED) \
-  SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, mc_rtc::schema::details::Default<TYPE>::value)
+#define SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, ...) \
+  SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, mc_rtc::schema::details::Default<TYPE>::value, ##__VA_ARGS__)
 
 /** Declare a required Schema<T> member of type TYPE with a default value */
-#define SCHEMA_REQUIRED_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION) \
-  SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, true)
+#define SCHEMA_REQUIRED_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, ...) \
+  SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, true, ##__VA_ARGS__)
 
 /** Declare an optional Schema<T> member of type TYPE with a default value */
-#define SCHEMA_OPTIONAL_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION) \
-  SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, false)
+#define SCHEMA_OPTIONAL_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, ...) \
+  SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, false, ##__VA_ARGS__)
+
+/** The following alias make working with schema a little simpler */
+static inline constexpr ValueFlag Required = ValueFlag::Required;
+
+static inline constexpr ValueFlag Interactive = ValueFlag::Interactive;
+
+static inline constexpr ValueFlag None = ValueFlag::None;
+
+using Choices = details::Choices<true>;
 
 } // namespace mc_rtc::schema
 

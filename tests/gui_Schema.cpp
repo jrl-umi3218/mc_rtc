@@ -26,11 +26,14 @@ struct ComposeSchema : public mc_rtc::schema::Schema<ComposeSchema>
 
 struct InteractiveSchema : public mc_rtc::schema::Schema<InteractiveSchema>
 {
-  using ValueFlag = mc_rtc::schema::ValueFlag;
 #define MEMBER(...) SCHEMA_MEMBER(InteractiveSchema, __VA_ARGS__)
-  MEMBER(Eigen::Vector3d, point, "3D point", ValueFlag::Required | ValueFlag::Interactive, Eigen::Vector3d::Zero());
-  MEMBER(Eigen::Vector3d, gain, "3D gain", ValueFlag::Required, Eigen::Vector3d::Zero());
-  MEMBER(Eigen::Vector3d, gainOpt, "3D optional gain", ValueFlag::None, Eigen::Vector3d::Zero());
+  MEMBER(Eigen::Vector3d,
+         point,
+         "3D point",
+         mc_rtc::schema::Required | mc_rtc::schema::Interactive,
+         Eigen::Vector3d::Zero());
+  MEMBER(Eigen::Vector3d, gain, "3D gain", mc_rtc::schema::Required, Eigen::Vector3d::Zero());
+  MEMBER(Eigen::Vector3d, gainOpt, "3D optional gain", mc_rtc::schema::None, Eigen::Vector3d::Zero());
 #undef MEMBER
 };
 
@@ -38,7 +41,7 @@ struct SimpleVariant : public mc_rtc::schema::Schema<SimpleVariant>
 {
   using gain_t = std::variant<double, Eigen::Vector3d>;
 #define MEMBER(...) SCHEMA_REQUIRED_DEFAULT_MEMBER(SimpleVariant, __VA_ARGS__)
-  MEMBER(gain_t, stiffness, "Task stiffness");
+  MEMBER(gain_t, stiffness, "Task stiffness", mc_rtc::schema::Choices({"scalar", "dimensional"}));
 #undef MEMBER
 };
 
