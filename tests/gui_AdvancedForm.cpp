@@ -68,6 +68,18 @@ struct AdvancedFormServer : public TestServer
                            mc_rtc::gui::FormOneOfInput("oneof", true, mc_rtc::gui::FormCheckbox("bool", true, false),
                                                        mc_rtc::gui::FormNumberInput("number", true, 42.42),
                                                        mc_rtc::gui::FormStringInput("string", true, "empty"))));
+    builder.addElement({"OneOf with data"}, mc_rtc::gui::Form(
+                                                "Send data",
+                                                [this](const mc_rtc::Configuration & data)
+                                                {
+                                                  variant_ = data("oneof");
+                                                  callback(data);
+                                                },
+                                                mc_rtc::gui::FormOneOfInput(
+                                                    "oneof", true, [this]() -> const variant_t & { return variant_; },
+                                                    mc_rtc::gui::FormCheckbox("bool", true, false),
+                                                    mc_rtc::gui::FormNumberInput("number", true, 42.42),
+                                                    mc_rtc::gui::FormStringInput("string", true, "empty"))));
   }
 
   void callback(const mc_rtc::Configuration & data)
@@ -77,6 +89,8 @@ struct AdvancedFormServer : public TestServer
 
   std::vector<std::string> str_vector_ = {"a", "b", "c", "d"};
   Eigen::Vector3d point_ = Eigen::Vector3d::Ones();
+  using variant_t = std::variant<bool, double, std::string>;
+  variant_t variant_ = std::string("hello");
 };
 
 int main()

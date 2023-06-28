@@ -801,8 +801,10 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
       }
       case Elements::OneOf:
       {
-        start_form_one_of_input(name, required);
-        handle_form(id, el[3]);
+        std::optional<std::pair<size_t, Configuration>> data = std::nullopt;
+        if(el[3].isArray()) { data = el[3]; }
+        start_form_one_of_input(name, required, data);
+        handle_form(id, el[4]);
         end_form_one_of_input();
         break;
       }

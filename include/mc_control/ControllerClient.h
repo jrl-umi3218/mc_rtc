@@ -781,8 +781,14 @@ protected:
    * \p name Name of the one-of selection
    *
    * \p required If true, it must hold a valid value when sent
+   *
+   * \p data Active data
    */
-  virtual void start_form_one_of_input(const std::string & /*name*/, bool /*required*/) {}
+  virtual void start_form_one_of_input(const std::string & /*name*/,
+                                       bool /*required*/,
+                                       const std::optional<std::pair<size_t, Configuration>> & /*data*/)
+  {
+  }
 
   /** Pendant to \ref start_form_one_of_input
    *

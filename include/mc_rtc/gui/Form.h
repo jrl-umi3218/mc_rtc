@@ -176,6 +176,8 @@ struct CallbackOrValue
 {
   static_assert(std::is_same_v<std::decay_t<T>, T>);
 
+  CallbackOrValue(T value) : callback_or_value(value) {}
+
   T callback_or_value;
 
   static inline constexpr bool is_callback = std::is_invocable_v<T>;
@@ -528,23 +530,49 @@ struct FormObjectArrayInput : public FormElement<FormObjectArrayInput, Elements:
 
 /** Creates a one-of selector
  *
- * Only one of the item provided to this input will be active, the item name will tell which was selected
+ * Only one of the item provided to this input will be active
+ *
+ * The value is sent as a variant, i.e. [selected_index, value]
+ *
+ * A default value (of a variant type) can be provided
  *
  * If required, one of the element must be selected
  */
-struct FormOneOfInput : public FormElement<FormOneOfInput, Elements::OneOf>, details::FormElements
+template<typename T = details::VoidValue>
+struct FormOneOfInput : public FormElement<FormOneOfInput<T>, Elements::OneOf>, details::FormElements
 {
+  FormOneOfInput(const std::string & name, bool required)
+  : FormElement<FormOneOfInput, Elements::OneOf>(name, required), FormElements()
+  {
+  }
+
+  template<typename U,
+           typename... Args,
+           typename = std::enable_if_t<!details::is_variant_v<std::decay_t<U>> && !details::is_getter<U>()>>
+  FormOneOfInput(const std::string & name, bool required, U && arg, Args &&... args)
+  : FormElement<FormOneOfInput, Elements::OneOf>(name, required),
+    FormElements(std::forward<U>(arg), std::forward<Args>(args)...)
+  {
+  }
+
   template<typename... Args>
-  FormOneOfInput(const std::string & name, bool required, Args &&... args)
-  : FormElement<FormOneOfInput, Elements::OneOf>(name, required), FormElements(std::forward<Args>(args)...)
+  FormOneOfInput(const std::string & name, bool required, const T & def, Args &&... args)
+  : FormElement<FormOneOfInput, Elements::OneOf>(name, required), FormElements(std::forward<Args>(args)...), def_(def)
   {
   }
 
   static constexpr bool is_dynamic() { return true; }
 
-  static constexpr size_t write_size_() { return 1; }
+  static constexpr size_t write_size_() { return 2; }
 
-  void write_(mc_rtc::MessagePackBuilder & builder) { FormElements::write_impl(builder); }
+  void write_(mc_rtc::MessagePackBuilder & builder)
+  {
+    def_.write(builder);
+    FormElements::write_impl(builder);
+  }
+
+private:
+  details::CallbackOrValue<T> def_;
 };
 
 /** Helper to create a Form element */
