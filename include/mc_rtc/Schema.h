@@ -4,8 +4,6 @@
 #include <mc_rtc/gui/Form.h>
 #include <mc_rtc/gui/StateBuilder.h>
 
-#include <variant>
-
 namespace mc_rtc::schema
 {
 
@@ -67,20 +65,6 @@ inline constexpr bool is_std_vector_schema_v = []()
   if constexpr(is_std_vector_v<T>) { return is_schema_v<typename T::value_type>; }
   else { return false; }
 }();
-
-/** Type trait to detect a variant */
-template<typename T>
-struct is_variant : public std::false_type
-{
-};
-
-template<typename... Args>
-struct is_variant<std::variant<Args...>> : public std::true_type
-{
-};
-
-template<typename T>
-inline constexpr bool is_variant_v = is_variant<T>::value;
 
 /** Helper to get a default value for a given type */
 template<typename T, typename Enable = void>
@@ -210,21 +194,6 @@ void variantToForm(const std::variant<Args...> &, Operations::FormElements & for
    ...);
 }
 
-template<size_t i = 0, typename... Args>
-void variantFromForm(const mc_rtc::Configuration & data, std::variant<Args...> & value)
-{
-  if constexpr(i < sizeof...(Args))
-  {
-    if(data.has(std::to_string(i)))
-    {
-      using value_t = std::decay_t<decltype(std::get<i>(value))>;
-      value = data(std::to_string(i)).operator value_t();
-    }
-    else { variantFromForm<i + 1>(data, value); }
-  }
-  else { mc_rtc::log::error_and_throw("No index matching the variant size"); }
-}
-
 template<typename T, bool IsRequired, bool IsInteractive, bool HasChoices, bool IsStatic>
 void addValueToForm(const T & value,
                     const std::string & description,
@@ -286,9 +255,9 @@ void addValueToForm(const T & value,
     {
       form.addElement(mc_rtc::gui::FormTransformInput(description, IsRequired, get_value, IsInteractive));
     }
-    else if constexpr(details::is_variant_v<T>)
+    else if constexpr(gui::details::is_variant_v<T>)
     {
-      auto input = mc_rtc::gui::FormOneOfInput(description, IsRequired);
+      auto input = mc_rtc::gui::FormOneOfInput(description, IsRequired, get_value);
       variantToForm<IsRequired, IsInteractive>(value, input);
       form.addElement(input);
     }
@@ -427,7 +396,6 @@ struct alignas(T) Value
           value.resize(in_.size());
           for(size_t i = 0; i < in_.size(); ++i) { value[i].loadForm(&value[i], in_[i]); }
         }
-        else if constexpr(details::is_variant_v<T>) { details::variantFromForm(in(description), value); }
         else { value = in(description).operator T(); }
       }
     };
