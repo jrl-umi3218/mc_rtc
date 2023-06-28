@@ -20,7 +20,7 @@ template<typename retT, typename T, typename U>
 std::function<retT()> make_log_callback(T fn, U arg)
 {
   return [fn, arg] { return fn(arg); };
-};
+}
 
 #define MAKE_LOG_HELPER(NAME, TYPE)          \
   template<typename T, typename U>           \
@@ -64,12 +64,12 @@ mc_rtc::Configuration get_as_config(const T & v)
   return conf("v");
 }
 
-mc_rtc::Configuration ConfigurationFromData(const std::string & data)
+inline mc_rtc::Configuration ConfigurationFromData(const std::string & data)
 {
   return mc_rtc::Configuration::fromData(data);
 }
 
-void set_loader_debug_suffix(const std::string & suffix)
+inline void set_loader_debug_suffix(const std::string & suffix)
 {
   mc_rtc::Loader::debug_suffix = suffix;
 }
