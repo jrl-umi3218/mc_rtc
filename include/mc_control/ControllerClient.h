@@ -574,7 +574,10 @@ protected:
   {
   }
 
-  /** An array input within a form */
+  /** An array input within a form
+   *
+   * This is kept for backward compatibility, mc_rtc never calls this version and you should implement the full version
+   */
   virtual void form_array_input(const ElementId & formId,
                                 const std::string & name,
                                 bool required,
@@ -583,6 +586,18 @@ protected:
                                 bool /*default_from_user*/)
   {
     form_array_input(formId, name, required, default_, fixed_size);
+  }
+
+  /** An array input within a form */
+  virtual void form_array_input(const ElementId & formId,
+                                const std::string & name,
+                                bool required,
+                                const std::vector<std::string> & /*labels*/,
+                                const Eigen::VectorXd & default_,
+                                bool fixed_size,
+                                bool default_from_user)
+  {
+    form_array_input(formId, name, required, default_, fixed_size, default_from_user);
   }
 
   /** A combo input within a form

@@ -335,19 +335,26 @@ namespace details
 template<typename T>
 struct FormArrayInput : public FormElement<FormArrayInput<T>, Elements::ArrayInput>
 {
-  FormArrayInput(const std::string & name, bool required, const T & def, bool fixed_size = true)
+  FormArrayInput(const std::string & name,
+                 bool required,
+                 const std::vector<std::string> & labels,
+                 const T & def,
+                 bool fixed_size = true)
   : FormElement<FormArrayInput<T>, Elements::ArrayInput>(name, required), def_{def}, fixed_size_(fixed_size),
-    has_def_(true)
+    has_def_(true), labels_(labels)
   {
   }
 
-  FormArrayInput(const std::string & name, bool required, bool fixed_size = false)
-  : FormArrayInput<T>(name, required, {}, fixed_size)
+  FormArrayInput(const std::string & name,
+                 bool required,
+                 const std::vector<std::string> & labels = {},
+                 bool fixed_size = false)
+  : FormArrayInput<T>(name, required, labels, {}, fixed_size)
   {
     has_def_ = false;
   }
 
-  static constexpr size_t write_size_() { return 3; }
+  static constexpr size_t write_size_() { return 4; }
 
   static constexpr bool is_dynamic() { return CallbackOrValue<T>::is_callback; }
 
@@ -356,15 +363,14 @@ struct FormArrayInput : public FormElement<FormArrayInput<T>, Elements::ArrayInp
     def_.write(builder);
     builder.write(fixed_size_);
     builder.write(has_def_);
+    builder.write(labels_);
   }
-
-  /** Invalid element */
-  FormArrayInput() {}
 
 private:
   CallbackOrValue<T> def_;
   bool fixed_size_;
   bool has_def_;
+  std::vector<std::string> labels_;
 };
 
 } // namespace details
@@ -372,7 +378,8 @@ private:
 template<typename T>
 details::FormArrayInput<T> FormArrayInput(const std::string & name, bool required, bool fixed_size = false)
 {
-  return {name, required, fixed_size};
+  using Labels = details::Labels<T>;
+  return {name, required, Labels::labels, fixed_size};
 }
 
 template<typename T>
@@ -380,12 +387,15 @@ auto FormArrayInput(const std::string & name, bool required, T && value, bool fi
 {
   if constexpr(std::is_invocable_v<T>)
   {
-    return details::FormArrayInput{name, required, std::forward<T>(value), fixed_size};
+    using DataT = std::decay_t<decltype(std::declval<T>()())>;
+    using Labels = details::Labels<DataT>;
+    return details::FormArrayInput{name, required, Labels::labels, std::forward<T>(value), fixed_size};
   }
   else
   {
     using DataT = std::decay_t<T>;
-    return details::FormArrayInput<DataT>{name, required, std::forward<T>(value), fixed_size};
+    using Labels = details::Labels<DataT>;
+    return details::FormArrayInput<DataT>{name, required, Labels::labels, std::forward<T>(value), fixed_size};
   }
 }
 

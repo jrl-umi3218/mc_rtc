@@ -116,6 +116,7 @@ template<typename T>
 struct Labels
 {
   static constexpr bool has_labels = false;
+  inline static const std::vector<std::string> labels = {};
 };
 
 template<>

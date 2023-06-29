@@ -751,7 +751,8 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
         form_string_input(id, name, required, el[3], el.size() > 4 ? el[4] : true);
         break;
       case Elements::ArrayInput:
-        form_array_input(id, name, required, el[3], el[4], el.size() > 5 ? el[5] : true);
+        form_array_input(id, name, required, el.size() > 6 ? el[6] : std::vector<std::string>{}, el[3], el[4],
+                         el.size() > 5 ? el[5] : true);
         break;
       case Elements::ComboInput:
         form_combo_input(id, name, required, el[3], el[4], el.size() > 5 ? el[5] : -1);
