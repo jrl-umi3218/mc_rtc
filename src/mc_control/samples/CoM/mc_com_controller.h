@@ -19,7 +19,7 @@ struct MC_CONTROL_DLLAPI MCCoMController : public MCController
 
 protected:
   std::shared_ptr<mc_tasks::CoMTask> comTask;
-  std::string leftFootSurface_, rightFootSurface_;
+  std::vector<std::string> surfaces_;
 };
 
 } // namespace mc_control
