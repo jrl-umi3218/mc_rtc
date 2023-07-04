@@ -11,6 +11,7 @@
 
 #include "jvrc1.h"
 
+#include <mc_rbdyn/Device.h>
 #include <mc_rbdyn/RobotModuleMacros.h>
 
 #include <mc_rtc/logging.h>
@@ -24,6 +25,13 @@ namespace bfs = boost::filesystem;
 
 namespace mc_robots
 {
+
+mc_rbdyn::DevicePtr JVRC1DummySpeaker::clone() const
+{
+  auto dummy = new JVRC1DummySpeaker(name_);
+  dummy->text_ = text_;
+  return mc_rbdyn::DevicePtr(dummy);
+}
 
 JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics)
 : RobotModule(std::string(JVRC_VAL_VAL(JVRC_DESCRIPTION_PATH)), "jvrc1")
@@ -61,6 +69,7 @@ JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics)
                       "R_LLITTLE",    "L_SHOULDER_P", "L_SHOULDER_R", "L_SHOULDER_Y", "L_ELBOW_P", "L_ELBOW_Y",
                       "L_WRIST_R",    "L_WRIST_Y",    "L_UTHUMB",     "L_LTHUMB",     "L_UINDEX",  "L_LINDEX",
                       "L_ULITTLE",    "L_LLITTLE"};
+  _devices.emplace_back(new JVRC1DummySpeaker{"DummySpeaker"});
 
   std::string convexPath = path + "/convex/" + name + "/";
   bfs::path p(convexPath);

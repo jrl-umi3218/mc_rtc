@@ -217,7 +217,7 @@ bool check_module_compatibility(const RobotModule & lhs, const RobotModule & rhs
   {
     const auto & lhs_devices = lhs.devices();
     const auto & rhs_devices = rhs.devices();
-    for(size_t i = 0; lhs_devices.size(); ++i)
+    for(size_t i = 0; i < lhs_devices.size(); ++i)
     {
       const auto & lhs_d = *lhs_devices[i];
       const auto & rhs_d = *rhs_devices[i];
