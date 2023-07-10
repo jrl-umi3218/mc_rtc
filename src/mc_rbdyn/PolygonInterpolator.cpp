@@ -7,10 +7,13 @@
 #include <geos/version.h>
 
 #include <geos/geom/CoordinateSequence.h>
-#include <geos/geom/CoordinateSequenceFactory.h>
 #include <geos/geom/GeometryFactory.h>
 #include <geos/geom/LinearRing.h>
 #include <geos/geom/Polygon.h>
+
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR < 12
+#  include <geos/geom/CoordinateSequenceFactory.h>
+#endif
 
 namespace mc_rbdyn
 {
@@ -42,7 +45,11 @@ std::shared_ptr<geos::geom::Geometry> PolygonInterpolator::fast_interpolate(doub
   double perc = std::max(std::min(percent, 1.), -1.);
   if(perc < 0) { perc = 1 + perc; }
   std::vector<tuple_t> points;
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 12
+  auto seq = std::make_unique<geos::geom::CoordinateSequence>(static_cast<size_t>(0), 0);
+#else
   auto seq = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 0);
+#endif
   std::vector<geos::geom::Coordinate> seq_points;
   for(const auto & p : tuple_pairs_)
   {
@@ -77,8 +84,13 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::midpoint_derivati
 std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative(double epsilon_derivative)
 {
   std::vector<tuple_t> res;
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 12
+  auto seq_s = std::make_unique<geos::geom::CoordinateSequence>(static_cast<size_t>(0), 2);
+  auto seq_d = std::make_unique<geos::geom::CoordinateSequence>(static_cast<size_t>(0), 2);
+#else
   auto seq_s = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 2);
   auto seq_d = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 2);
+#endif
   std::vector<geos::geom::Coordinate> points_s;
   std::vector<geos::geom::Coordinate> points_d;
   for(const auto & p : tuple_pairs_)

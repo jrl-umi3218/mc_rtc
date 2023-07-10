@@ -11,10 +11,13 @@
 
 #include <geos/version.h>
 
-#include <geos/geom/CoordinateSequenceFactory.h>
 #include <geos/geom/GeometryFactory.h>
 #include <geos/geom/LinearRing.h>
 #include <geos/geom/Polygon.h>
+
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR < 12
+#  include <geos/geom/CoordinateSequenceFactory.h>
+#endif
 
 namespace mc_rbdyn
 {
@@ -66,7 +69,11 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
     const geos::geom::GeometryFactory & factory = *factory_ptr;
 
     // Create robot surf polygon
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 12
+    auto robotPoints2dseq = std::make_unique<geos::geom::CoordinateSequence>(static_cast<size_t>(0), 0);
+#else
     auto robotPoints2dseq = factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 0);
+#endif
     std::vector<geos::geom::Coordinate> points;
     for(const std::pair<double, double> & p : robotPoints2d)
     {
@@ -82,7 +89,11 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
 #endif
 
     // Create env surf polygon
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 12
+    auto envPoints2dseq = std::make_unique<geos::geom::CoordinateSequence>(static_cast<size_t>(0), 0);
+#else
     auto envPoints2dseq = factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 0);
+#endif
     points.clear();
     for(const std::pair<double, double> & p : envPoints2d)
     {
