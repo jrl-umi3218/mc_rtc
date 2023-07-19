@@ -1,4 +1,4 @@
-#include <mc_rtc/Schema.h>
+#include "samples_Schema.h"
 
 #include <boost/test/unit_test.hpp>
 
@@ -30,4 +30,11 @@ BOOST_AUTO_TEST_CASE(TestDefault)
   static_assert(Default<std::variant<double, Eigen::Vector3d>>::value == 0.0);
   using test_variant_t = std::variant<Eigen::Vector3d, double>;
   BOOST_REQUIRE(Default<test_variant_t>::value == Eigen::Vector3d::Zero());
+}
+
+BOOST_AUTO_TEST_CASE(TestSimpleSchema)
+{
+  SimpleSchema default_;
+  SimpleSchema other_;
+  BOOST_REQUIRE(default_ == other_);
 }

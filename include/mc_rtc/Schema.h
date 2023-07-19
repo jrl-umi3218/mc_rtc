@@ -172,6 +172,9 @@ struct MC_RTC_UTILS_DLLAPI Operations
   /** Load from a Form */
   std::function<void(void * self, const Configuration & in)> loadForm = [](void *, const Configuration &) {};
 
+  /** Compare two objects */
+  std::function<bool(const void * lhs, const void * rhs)> areEqual = [](const void *, const void *) { return true; };
+
   /** FIXME Add a saveSchema function */
 
   /** FIXME Add logging operation?*/
@@ -414,6 +417,12 @@ struct alignas(T) Value
       const T & value = static_cast<const Schema *>(self)->*ptr;
       details::addValueToForm<T, IsRequired, IsInteractive>(value, description, choices, form);
     };
+    ops.areEqual = [areEqual = ops.areEqual](const void * lhs, const void * rhs)
+    {
+      const T & lhs_value = static_cast<const Schema *>(lhs)->*ptr;
+      const T & rhs_value = static_cast<const Schema *>(rhs)->*ptr;
+      return areEqual(lhs, rhs) && (lhs_value == rhs_value);
+    };
   }
 
   inline operator T &() noexcept { return value_; }
@@ -468,6 +477,9 @@ struct Schema : public Operations
     Operations::buildForm(this, form);
     gui.addElement(category, form);
   }
+
+  bool operator==(const Schema<T> & rhs) const { return Operations::areEqual(this, &rhs); }
+  bool operator!=(const Schema<T> & rhs) const { return !Operations::areEqual(this, &rhs); }
 };
 
 /** Declare a Schema<T> member of type TYPE, specify REQUIRED and DEFAULT value */
