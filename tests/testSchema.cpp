@@ -1,4 +1,5 @@
 #include "samples_Schema.h"
+#include "utils.h"
 
 #include <boost/test/unit_test.hpp>
 
@@ -37,4 +38,15 @@ BOOST_AUTO_TEST_CASE(TestSimpleSchema)
   SimpleSchema default_;
   SimpleSchema other_;
   BOOST_REQUIRE(default_ == other_);
+  {
+    default_.useFeature = true;
+    default_.weight = 42.42;
+    default_.names = {"a", "b", "c"};
+    default_.wrench = random_fv();
+    default_.pt = random_pt();
+    mc_rtc::Configuration cfg;
+    default_.save(cfg);
+    other_.load(cfg);
+    BOOST_REQUIRE(default_ == other_);
+  }
 }

@@ -341,7 +341,7 @@ struct alignas(T) Value
    *
    * \param combo Possible choices when \tparam HasChoices is true
    */
-  template<typename Schema, Value<T> Schema::*ptr, ValueFlag Flags = ValueFlag::All, bool HasChoices = false>
+  template<typename Schema, T Schema::*ptr, ValueFlag Flags = ValueFlag::All, bool HasChoices = false>
   Value(Operations & ops,
         details::MemberPointerWrapper<ptr>,
         const std::string & name,
@@ -425,8 +425,6 @@ struct alignas(T) Value
     };
   }
 
-  inline operator T &() noexcept { return value_; }
-
   inline operator const T &() const noexcept { return value_; }
 
   T value_;
@@ -483,13 +481,11 @@ struct Schema : public Operations
 };
 
 /** Declare a Schema<T> member of type TYPE, specify REQUIRED and DEFAULT value */
-#define SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, DEFAULT, ...)                                            \
-  mc_rtc::schema::Value<TYPE> NAME##_                                                                                \
-  {                                                                                                                  \
-    *this, mc_rtc::schema::details::MemberPointerWrapper<&T::NAME##_>{}, #NAME, DESCRIPTION, DEFAULT,                \
-        std::integral_constant<mc_rtc::schema::ValueFlag,                                                            \
-                               mc_rtc::schema::ValueFlag::All & static_cast<mc_rtc::schema::ValueFlag>(REQUIRED)>{}, \
-        ##__VA_ARGS__                                                                                                \
+#define SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, DEFAULT, ...)                          \
+  TYPE NAME = mc_rtc::schema::Value<TYPE>                                                          \
+  {                                                                                                \
+    *this, mc_rtc::schema::details::MemberPointerWrapper<&T::NAME>{}, #NAME, DESCRIPTION, DEFAULT, \
+        std::integral_constant<mc_rtc::schema::ValueFlag, REQUIRED>{}, ##__VA_ARGS__               \
   }
 
 /** Declare a required Schema<T> member of type TYPE, only specify DEFAULT */
