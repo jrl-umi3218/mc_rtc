@@ -383,6 +383,7 @@ void CollisionsConstraint::toggleCollisionMonitor(int collId)
                                                    { return fmt::format("{:0.2f} cm", distance_callback()); }));
       category_.push_back("Arrows");
       gui.addElement(category_, mc_rtc::gui::Arrow(label, p1_callback, p2_callback));
+      category_.pop_back();
     };
     // Add the monitor
     switch(backend_)
@@ -394,7 +395,6 @@ void CollisionsConstraint::toggleCollisionMonitor(int collId)
             [collConstr, collId]() { return collConstr->getCollisionData(collId).distance * 100; },
             [collConstr, collId]() -> const Eigen::Vector3d & { return collConstr->getCollisionData(collId).p1; },
             [collConstr, collId]() -> const Eigen::Vector3d & { return collConstr->getCollisionData(collId).p2; });
-        category_.pop_back();
         break;
       }
       case QPSolver::Backend::TVM:
