@@ -89,7 +89,20 @@ public:
   /** Remove all collisions from the constraint */
   void reset();
 
+  /** Get the automated monitoring setting */
+  inline bool automaticMonitor() const noexcept { return autoMonitor_; }
+
+  /** Set the automated monitoring setting
+   *
+   * If true collisions, monitors are automatically added/removed depending on the collision activation
+   *
+   * If false, monitors are managed by the user
+   */
+  inline void automaticMonitor(bool a) noexcept { autoMonitor_ = a; }
+
   void addToSolverImpl(QPSolver & solver) override;
+
+  void update(QPSolver & solver) override;
 
   void removeFromSolverImpl(QPSolver & solver) override;
 
@@ -121,11 +134,12 @@ private:
   void __addCollision(mc_solver::QPSolver & solver, const mc_rbdyn::Collision & col);
 
   /* Internal management for collision display */
+  bool autoMonitor_ = true;
   std::unordered_set<int> monitored_;
   std::shared_ptr<mc_rtc::gui::StateBuilder> gui_;
   std::vector<std::string> category_;
   void addMonitorButton(int collId, const mc_rbdyn::Collision & col);
-  void toggleCollisionMonitor(int collId);
+  void toggleCollisionMonitor(int collId, const mc_rbdyn::Collision * col = nullptr);
 };
 
 } // namespace mc_solver

@@ -183,7 +183,7 @@ bool CollisionsConstraint::removeCollision(QPSolver & solver, const std::string 
   auto p = __popCollId(b1Name, b2Name);
   if(!p.second.isNone())
   {
-    if(monitored_.count(p.first)) { toggleCollisionMonitor(p.first); }
+    if(monitored_.count(p.first)) { toggleCollisionMonitor(p.first, &p.second); }
     category_.push_back("Monitors");
     std::string name = "Monitor " + p.second.body1 + "/" + p.second.body2;
     gui_->removeElement(category_, name);
@@ -245,7 +245,7 @@ bool CollisionsConstraint::removeCollisionByBody(QPSolver & solver,
         default:
           break;
       }
-      if(monitored_.count(out.first)) { toggleCollisionMonitor(out.first); }
+      if(monitored_.count(out.first)) { toggleCollisionMonitor(out.first, &out.second); }
       category_.push_back("Monitors");
       std::string name = "Monitor " + out.second.body1 + "/" + out.second.body2;
       gui_->removeElement(category_, name);
@@ -336,15 +336,7 @@ void CollisionsConstraint::__addCollision(mc_solver::QPSolver & solver, const mc
     default:
       break;
   }
-  if(solver.gui())
-  {
-    if(!gui_)
-    {
-      gui_ = solver.gui();
-      category_ = {"Collisions", r1.name() + "/" + r2.name()};
-    }
-    addMonitorButton(collId, col);
-  }
+  addMonitorButton(collId, col);
 }
 
 void CollisionsConstraint::addMonitorButton(int collId, const mc_rbdyn::Collision & col)
@@ -361,17 +353,19 @@ void CollisionsConstraint::addMonitorButton(int collId, const mc_rbdyn::Collisio
   }
 }
 
-void CollisionsConstraint::toggleCollisionMonitor(int collId)
+void CollisionsConstraint::toggleCollisionMonitor(int collId, const mc_rbdyn::Collision * col_p)
 {
-  auto findCollisionById = [this, collId]() -> const mc_rbdyn::Collision &
+  auto findCollisionById = [this, collId, &col_p]()
   {
+    if(col_p) { return; }
     for(const auto & c : collIdDict)
     {
-      if(c.second.first == collId) { return c.second.second; }
+      if(c.second.first == collId) { col_p = &c.second.second; }
     }
     mc_rtc::log::error_and_throw("[CollisionConstraint] Attempted to toggleCollisionMonitor on non-existent collision");
   };
-  const auto & col = findCollisionById();
+  findCollisionById();
+  const auto & col = *col_p;
   auto & gui = *gui_;
   std::string label = col.body1 + "::" + col.body2;
   if(monitored_.count(collId))
@@ -388,9 +382,10 @@ void CollisionsConstraint::toggleCollisionMonitor(int collId)
     auto addMonitor = [&](auto && distance_callback, auto && p1_callback, auto && p2_callback)
     {
       gui.addElement(category_, mc_rtc::gui::Label(label, [distance_callback]()
-                                                   { return fmt::format("{:0.2f} cm", distance_callback()); }));
+                                                   { return fmt::format("{:0.2f} cm", 100.0 * distance_callback()); }));
       category_.push_back("Arrows");
       gui.addElement(category_, mc_rtc::gui::Arrow(label, p1_callback, p2_callback));
+      category_.pop_back();
     };
     // Add the monitor
     switch(backend_)
@@ -399,10 +394,9 @@ void CollisionsConstraint::toggleCollisionMonitor(int collId)
       {
         auto collConstr = tasks_constraint(constraint_);
         addMonitor(
-            [collConstr, collId]() { return collConstr->getCollisionData(collId).distance * 100; },
+            [collConstr, collId]() { return collConstr->getCollisionData(collId).distance; },
             [collConstr, collId]() -> const Eigen::Vector3d & { return collConstr->getCollisionData(collId).p1; },
             [collConstr, collId]() -> const Eigen::Vector3d & { return collConstr->getCollisionData(collId).p2; });
-        category_.pop_back();
         break;
       }
       case QPSolver::Backend::TVM:
@@ -447,6 +441,11 @@ void CollisionsConstraint::addCollisions(QPSolver & solver, const std::vector<mc
 
 void CollisionsConstraint::addToSolverImpl(QPSolver & solver)
 {
+  gui_ = solver.gui();
+  const mc_rbdyn::Robot & r1 = solver.robots().robot(r1Index);
+  const mc_rbdyn::Robot & r2 = solver.robots().robot(r2Index);
+  category_ = {"Collisions", r1.name() + "/" + r2.name()};
+  gui_->addElement(category_, mc_rtc::gui::Checkbox("Automatic monitor", autoMonitor_));
   switch(backend_)
   {
     case QPSolver::Backend::Tasks:
@@ -467,6 +466,37 @@ void CollisionsConstraint::addToSolverImpl(QPSolver & solver)
       break;
   }
   for(const auto & cols : collIdDict) { addMonitorButton(cols.second.first, cols.second.second); }
+}
+
+void CollisionsConstraint::update(QPSolver &)
+{
+  if(!autoMonitor_) { return; }
+  auto getDistance = [this](int collId)
+  {
+    switch(backend_)
+    {
+      case QPSolver::Backend::Tasks:
+      {
+        auto collConstr = tasks_constraint(constraint_);
+        return collConstr->getCollisionData(collId).distance;
+      }
+      case QPSolver::Backend::TVM:
+      {
+        auto collConstr = tvm_constraint(constraint_);
+        auto & fn = collConstr->getData(collId)->function;
+        return fn->distance();
+      }
+      default:
+        mc_rtc::log::error_and_throw("Not implemented for this backend");
+    }
+  };
+  for(const auto & [name, info] : collIdDict)
+  {
+    const auto & [collId, coll] = info;
+    auto distance = getDistance(collId);
+    if(distance < coll.iDist && !monitored_.count(collId)) { toggleCollisionMonitor(collId, &coll); }
+    if(distance > coll.iDist && monitored_.count(collId)) { toggleCollisionMonitor(collId, &coll); }
+  }
 }
 
 void CollisionsConstraint::removeFromSolverImpl(QPSolver & solver)
@@ -557,6 +587,7 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
       auto ret = std::make_shared<mc_solver::CollisionsConstraint>(
           solver.robots(), robotIndexFromConfig(config, solver.robots(), "collision", false, "r1Index", "r1", ""),
           robotIndexFromConfig(config, solver.robots(), "collision", false, "r2Index", "r2", ""), solver.dt());
+      ret->automaticMonitor(config("automaticMonitor", true));
       if(ret->r1Index == ret->r2Index)
       {
         if(config("useCommon", false))

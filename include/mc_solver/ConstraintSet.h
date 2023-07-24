@@ -25,6 +25,14 @@ struct MC_SOLVER_DLLAPI ConstraintSet
   /** This is called by \ref mc_solver::QPSolver when the constraint is added to the problem */
   void addToSolver(mc_solver::QPSolver & solver);
 
+  /** \brief Update the constraint
+   *
+   * This is called at every iteration of the controller once the constraint has been added to a solver
+   *
+   * \param solver Solver in which the constraint has been inserted
+   */
+  virtual void update(QPSolver &) {}
+
   /** This is called by \ref mc_solver::QPSolver when the constraint is removed from the problem */
   void removeFromSolver(mc_solver::QPSolver & solver);
 

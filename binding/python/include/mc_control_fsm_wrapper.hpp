@@ -24,10 +24,10 @@ template<typename T, typename U>
 controller_cb make_controller_cb(T python_trampoline, U cb)
 {
   return [python_trampoline, cb](mc_control::fsm::Controller & ctl) { return python_trampoline(cb, ctl); };
-};
+}
 
 template<typename T, typename U>
 run_cb make_run_cb(T python_trampoline, U cb)
 {
   return [python_trampoline, cb](mc_control::fsm::Controller & ctl) { return python_trampoline(cb, ctl); };
-};
+}

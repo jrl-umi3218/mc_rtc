@@ -218,10 +218,13 @@ public:
   virtual void setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts) = 0;
 
   /** Returns the current set of contacts */
-  const std::vector<mc_rbdyn::Contact> & contacts() const;
+  inline const std::vector<mc_rbdyn::Contact> & contacts() const noexcept { return contacts_; }
+
+  /** Returns the current set of constraints */
+  inline const std::vector<mc_solver::ConstraintSet *> & constraints() const noexcept { return constraints_; }
 
   /** Returns the MetaTasks currently in the solver */
-  const std::vector<mc_tasks::MetaTask *> & tasks() const;
+  inline const std::vector<mc_tasks::MetaTask *> & tasks() const noexcept { return metaTasks_; }
 
   /** Desired resultant of contact force in robot surface frame
    * \param contact Contact for which the force is desired.
@@ -307,6 +310,9 @@ protected:
 
   /** Storage for shared_pointer on tasks */
   std::vector<std::shared_ptr<void>> shPtrTasksStorage;
+
+  /** Holds ConstraintSet currently in the solver */
+  std::vector<mc_solver::ConstraintSet *> constraints_;
 
   /** Pointer to the Logger */
   std::shared_ptr<mc_rtc::Logger> logger_ = nullptr;

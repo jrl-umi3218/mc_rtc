@@ -6,6 +6,12 @@
     "type": { "enum": ["collision"] },
     "r1": { "type": "string", "default": "MainRobot", "description": "Name of the first robot involved in the collision" },
     "r2": { "type": "string", "default": "MainRobot", "description": "Name of the second robot involved in the collision" },
+    "automaticMonitor":
+    {
+      "type": "boolean",
+      "default": true,
+      "description": "If true automatically display collision monitors as constraints get activated. Otherwise those monitors are managed manually"
+    },
     "useCommon":
     {
       "type": "boolean",

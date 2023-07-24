@@ -501,12 +501,10 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_extWrench_comOffsetErr_ZMPLimit", this,
                      [this]() { return c_.extWrench.comOffsetErrZMPLimit; });
   logger.addLogEntry(name_ + "_extWrench_comOffsetDerivator", this, [this]() { return comOffsetDerivator_.eval(); });
-  logger.addLogEntry(name_ + "_extWrench_ZMPCoefMeasured", this,
-                     [this]() -> const double & { return zmpCoefMeasured_; });
+  logger.addLogEntry(name_ + "_extWrench_ZMPCoefMeasured", this, [this]() { return zmpCoefMeasured_; });
   logger.addLogEntry(name_ + "_df_damping", this, [this]() { return c_.dfDamping; });
   logger.addLogEntry(name_ + "_forcesSum", this, [this]() -> const Eigen::Vector3d & { return fSumFilter_.eval(); });
-  logger.addLogEntry(name_ + "_forcesSum_cutOffPeriod", this,
-                     [this]() -> const double { return c_.fSumFilterTimeConstant; });
+  logger.addLogEntry(name_ + "_forcesSum_cutOffPeriod", this, [this]() { return c_.fSumFilterTimeConstant; });
   logger.addLogEntry(name_ + "_fdqp_weights_ankleTorque", this,
                      [this]() { return std::pow(c_.fdqpWeights.ankleTorqueSqrt, 2); });
   logger.addLogEntry(name_ + "_fdqp_weights_netWrench", this,
@@ -519,7 +517,7 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
                      [this]() -> Eigen::Vector2d { return c_.copFzLambda.segment(0, 2); });
   logger.addLogEntry(name_ + "_fdmpc_model_cop_left", this, [this]() { return modeledCoPLeft_; });
   logger.addLogEntry(name_ + "_fdmpc_model_cop_right", this, [this]() { return modeledCoPRight_; });
-  logger.addLogEntry(name_ + "_fdmpc_model_fz_lambda", this, [this]() -> double { return c_.copFzLambda.z(); });
+  logger.addLogEntry(name_ + "_fdmpc_model_fz_lambda", this, [this]() { return c_.copFzLambda.z(); });
   logger.addLogEntry(name_ + "_fdmpc_model_fz_left", this, [this]() { return modeledFzLeft_; });
   logger.addLogEntry(name_ + "_fdmpc_model_fz_right", this, [this]() { return modeledFzRight_; });
   logger.addLogEntry(name_ + "_fdmpc_desired_fz_left", this, [this]() { return desiredFzLeft_; });
