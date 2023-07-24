@@ -183,7 +183,7 @@ int show(int argc, char * argv[])
     for(size_t i = 0; i < events.size(); ++i)
     {
       if(events[i].size() == 0) { continue; }
-      std::cout << "Events at t = " << (i * dt) << ":\n";
+      std::cout << "Events at t = " << (static_cast<double>(i) * dt) << ":\n";
       for(const auto & e : events[i])
       {
         std::cout << "- category: ";

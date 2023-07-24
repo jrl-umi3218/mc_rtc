@@ -37,7 +37,7 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
   extWrenchSumLowPass_(dt, /* cutoffPeriod = */ 0.05), comOffsetLowPass_(dt, /* cutoffPeriod = */ 0.05),
   comOffsetLowPassCoM_(dt, /* cutoffPeriod = */ 1.0), comOffsetDerivator_(dt, /* timeConstant = */ 1.),
   dcmIntegrator_(dt, /* timeConstant = */ 15.), dcmDerivator_(dt, /* timeConstant = */ 1.), dt_(dt),
-  fSumFilter_(dt, /* cutoffPeriod = */ 2.), mass_(robots.robot(robotIndex).mass())
+  mass_(robots.robot(robotIndex).mass()), fSumFilter_(dt, /* cutoffPeriod = */ 2.)
 {
   type_ = "lipm_stabilizer";
   name_ = type_ + "_" + robots.robot(robotIndex).name();
