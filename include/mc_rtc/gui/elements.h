@@ -48,7 +48,6 @@ enum class Elements
   PolyhedronTrianglesList,
   PolyhedronVerticesTriangles,
   GenericArray,
-  ObjectArray,
   OneOf
 };
 

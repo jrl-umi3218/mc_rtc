@@ -28,12 +28,14 @@ struct AdvancedFormServer : public TestServer
                        mc_rtc::gui::Form(
                            "Send data", [this](const mc_rtc::Configuration & data) { callback(data); },
                            mc_rtc::gui::FormObjectInput("nested", true, mc_rtc::gui::FormStringInput("name", true))));
-    builder.addElement({"ObjectArray"}, mc_rtc::gui::Form(
-                                            "Send data", [this](const mc_rtc::Configuration & data) { callback(data); },
-                                            mc_rtc::gui::FormObjectArrayInput(
-                                                "array of objects", true,
-                                                mc_rtc::gui::FormComboInput("name", true, {"a", "b", "c", "d"}),
-                                                mc_rtc::gui::FormNumberInput("number", false, 42.42))));
+    builder.addElement({"ObjectArray"},
+                       mc_rtc::gui::Form(
+                           "Send data", [this](const mc_rtc::Configuration & data) { callback(data); },
+                           mc_rtc::gui::FormGenericArrayInput(
+                               "array of objects", true,
+                               mc_rtc::gui::FormObjectInput(
+                                   "object", true, mc_rtc::gui::FormComboInput("name", true, {"a", "b", "c", "d"}),
+                                   mc_rtc::gui::FormNumberInput("number", false, 42.42)))));
     builder.addElement(
         {"GenericArray"},
         mc_rtc::gui::Form(

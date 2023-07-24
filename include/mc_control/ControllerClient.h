@@ -763,30 +763,12 @@ protected:
   {
   }
 
-  /** Pendant to \ref start_form_object_array_input
+  /** Pendant to \ref start_form_generic_array_input
    *
    * After this call, all calls related to form elements must be interpreted as belonging to the form's parent
    *
    */
   virtual void end_form_generic_array_input() {}
-
-  /** Starts an array of objects input within a form
-   *
-   * After this call, all calls related to form elements must be interpreted as describing a form to generate one member
-   * of the array
-   *
-   * \p name Name of the array this generates
-   *
-   * \p required If true, it must hold a value (can be an empty array) when the form is sent
-   */
-  virtual void start_form_object_array_input(const std::string & /*name*/, bool /*required*/) {}
-
-  /** Pendant to \ref start_form_object_array_input
-   *
-   * After this call, all calls related to form elements must be interpreted as belonging to the form's parent
-   *
-   */
-  virtual void end_form_object_array_input() {}
 
   /** Start a one-of input within a form
    *

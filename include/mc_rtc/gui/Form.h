@@ -481,10 +481,10 @@ struct FormObjectInput : public FormElement<FormObjectInput, Elements::Form>, de
  * - FormCheckbox will output a list of booleans
  * - FormStringInput a list of strings
  * - FormPoint3DInput a list of 3D points
+ * - FormObjectInput will output a list of objects
  *
  * The name of the element you pass to this function has no effect
  *
- * For more complex objects you can use a FormObjectInput or use FormObjectArrayInput which is more explicit
  */
 template<typename T = details::VoidValue>
 struct FormGenericArrayInput : public FormElement<FormGenericArrayInput<T>, Elements::GenericArray>,
@@ -516,26 +516,6 @@ struct FormGenericArrayInput : public FormElement<FormGenericArrayInput<T>, Elem
 
 private:
   details::CallbackOrValue<T> data_;
-};
-
-/** Creates an inputs to build an array of objects
- *
- * If the array is required the list is always sent even if it is empty otherwise it is only sent if it has at least one
- * item
- */
-struct FormObjectArrayInput : public FormElement<FormObjectArrayInput, Elements::ObjectArray>, details::FormElements
-{
-  template<typename... Args>
-  FormObjectArrayInput(const std::string & name, bool required, Args &&... args)
-  : FormElement<FormObjectArrayInput, Elements::ObjectArray>(name, required), FormElements(std::forward<Args>(args)...)
-  {
-  }
-
-  static constexpr bool is_dynamic() { return true; }
-
-  static constexpr size_t write_size_() { return 1; }
-
-  void write_(mc_rtc::MessagePackBuilder & builder) { FormElements::write_impl(builder); }
 };
 
 /** Creates a one-of selector
