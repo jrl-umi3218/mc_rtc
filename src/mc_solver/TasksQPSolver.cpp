@@ -190,6 +190,7 @@ bool TasksQPSolver::run_impl(FeedbackType fType)
 
 bool TasksQPSolver::runOpenLoop()
 {
+  for(auto & c : constraints_) { c->update(*this); }
   for(auto & t : metaTasks_)
   {
     t->update(*this);
@@ -259,6 +260,7 @@ bool TasksQPSolver::runJointsFeedback(bool wVelocity)
       robot.forwardAcceleration();
     }
   }
+  for(auto & c : constraints_) { c->update(*this); }
   for(auto & t : metaTasks_)
   {
     t->update(*this);
@@ -313,7 +315,8 @@ bool TasksQPSolver::runClosedLoop(bool integrateControlState)
     robot.forwardAcceleration();
   }
 
-  // Update tasks from estimated robots
+  // Update tasks and constraints from estimated robots
+  for(auto & c : constraints_) { c->update(*this); }
   for(auto & t : metaTasks_)
   {
     t->update(*this);

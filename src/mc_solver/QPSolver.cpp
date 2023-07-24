@@ -53,6 +53,9 @@ void QPSolver::addConstraintSet(ConstraintSet & cs)
         "[QPSolver::addConstraintSet] Constraint backend ({}) is different from this solver backend ({})", cs.backend(),
         backend_);
   }
+  auto it = std::find(constraints_.begin(), constraints_.end(), &cs);
+  if(it != constraints_.end()) { return; }
+  constraints_.push_back(&cs);
   cs.addToSolver(*this);
   if(dynamic_cast<DynamicsConstraint *>(&cs) != nullptr)
   {
@@ -68,6 +71,9 @@ void QPSolver::removeConstraintSet(ConstraintSet & cs)
         "[QPSolver::removeConstraintSet] Constraint backend ({}) is different from this solver backend ({})",
         cs.backend(), backend_);
   }
+  auto it = std::find(constraints_.begin(), constraints_.end(), &cs);
+  if(it == constraints_.end()) { return; }
+  constraints_.erase(it);
   cs.removeFromSolver(*this);
   removeDynamicsConstraint(&cs);
 }
@@ -111,16 +117,6 @@ void QPSolver::removeTask(mc_tasks::MetaTask * task)
                                            [task](const std::shared_ptr<void> & p) { return task == p.get(); }),
                             shPtrTasksStorage.end());
   }
-}
-
-const std::vector<mc_rbdyn::Contact> & QPSolver::contacts() const
-{
-  return contacts_;
-}
-
-const std::vector<mc_tasks::MetaTask *> & QPSolver::tasks() const
-{
-  return metaTasks_;
 }
 
 bool QPSolver::run(FeedbackType fType)

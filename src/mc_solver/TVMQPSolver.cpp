@@ -112,6 +112,7 @@ bool TVMQPSolver::run_impl(FeedbackType fType)
 
 bool TVMQPSolver::runCommon()
 {
+  for(auto & c : constraints_) { c->update(*this); }
   for(auto & t : metaTasks_)
   {
     t->update(*this);
