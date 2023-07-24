@@ -380,7 +380,7 @@ void CollisionsConstraint::toggleCollisionMonitor(int collId)
     auto addMonitor = [&](auto && distance_callback, auto && p1_callback, auto && p2_callback)
     {
       gui.addElement(category_, mc_rtc::gui::Label(label, [distance_callback]()
-                                                   { return fmt::format("{:0.2f} cm", distance_callback()); }));
+                                                   { return fmt::format("{:0.2f} cm", 100.0 * distance_callback()); }));
       category_.push_back("Arrows");
       gui.addElement(category_, mc_rtc::gui::Arrow(label, p1_callback, p2_callback));
       category_.pop_back();
@@ -392,7 +392,7 @@ void CollisionsConstraint::toggleCollisionMonitor(int collId)
       {
         auto collConstr = tasks_constraint(constraint_);
         addMonitor(
-            [collConstr, collId]() { return collConstr->getCollisionData(collId).distance * 100; },
+            [collConstr, collId]() { return collConstr->getCollisionData(collId).distance; },
             [collConstr, collId]() -> const Eigen::Vector3d & { return collConstr->getCollisionData(collId).p1; },
             [collConstr, collId]() -> const Eigen::Vector3d & { return collConstr->getCollisionData(collId).p2; });
         break;
