@@ -336,15 +336,7 @@ void CollisionsConstraint::__addCollision(mc_solver::QPSolver & solver, const mc
     default:
       break;
   }
-  if(solver.gui())
-  {
-    if(!gui_)
-    {
-      gui_ = solver.gui();
-      category_ = {"Collisions", r1.name() + "/" + r2.name()};
-    }
-    addMonitorButton(collId, col);
-  }
+  addMonitorButton(collId, col);
 }
 
 void CollisionsConstraint::addMonitorButton(int collId, const mc_rbdyn::Collision & col)
@@ -447,6 +439,11 @@ void CollisionsConstraint::addCollisions(QPSolver & solver, const std::vector<mc
 
 void CollisionsConstraint::addToSolverImpl(QPSolver & solver)
 {
+  gui_ = solver.gui();
+  const mc_rbdyn::Robot & r1 = solver.robots().robot(r1Index);
+  const mc_rbdyn::Robot & r2 = solver.robots().robot(r2Index);
+  category_ = {"Collisions", r1.name() + "/" + r2.name()};
+  gui_->addElement(category_, mc_rtc::gui::Checkbox("Automatic monitor", autoMonitor_));
   switch(backend_)
   {
     case QPSolver::Backend::Tasks:
@@ -467,6 +464,37 @@ void CollisionsConstraint::addToSolverImpl(QPSolver & solver)
       break;
   }
   for(const auto & cols : collIdDict) { addMonitorButton(cols.second.first, cols.second.second); }
+}
+
+void CollisionsConstraint::update(QPSolver &)
+{
+  if(!autoMonitor_) { return; }
+  auto getDistance = [this](int collId)
+  {
+    switch(backend_)
+    {
+      case QPSolver::Backend::Tasks:
+      {
+        auto collConstr = tasks_constraint(constraint_);
+        return collConstr->getCollisionData(collId).distance;
+      }
+      case QPSolver::Backend::TVM:
+      {
+        auto collConstr = tvm_constraint(constraint_);
+        auto & fn = collConstr->getData(collId)->function;
+        return fn->distance();
+      }
+      default:
+        mc_rtc::log::error_and_throw("Not implemented for this backend");
+    }
+  };
+  for(const auto & [name, info] : collIdDict)
+  {
+    const auto & [collId, coll] = info;
+    auto distance = getDistance(collId);
+    if(distance < coll.iDist && !monitored_.count(collId)) { toggleCollisionMonitor(collId); }
+    if(distance > coll.iDist && monitored_.count(collId)) { toggleCollisionMonitor(collId); }
+  }
 }
 
 void CollisionsConstraint::removeFromSolverImpl(QPSolver & solver)
@@ -557,6 +585,7 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
       auto ret = std::make_shared<mc_solver::CollisionsConstraint>(
           solver.robots(), robotIndexFromConfig(config, solver.robots(), "collision", false, "r1Index", "r1", ""),
           robotIndexFromConfig(config, solver.robots(), "collision", false, "r2Index", "r2", ""), solver.dt());
+      ret->automaticMonitor(config("automaticMonitor", true));
       if(ret->r1Index == ret->r2Index)
       {
         if(config("useCommon", false))
