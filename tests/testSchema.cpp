@@ -49,4 +49,12 @@ BOOST_AUTO_TEST_CASE(TestSimpleSchema)
     other_.load(cfg);
     BOOST_REQUIRE(default_ == other_);
   }
+  {
+    SimpleSchema new_{true, 42.42, default_.names, default_.wrench, default_.pt};
+    BOOST_REQUIRE(new_ == default_);
+  }
+  {
+    SimpleSchema copy_{default_};
+    BOOST_REQUIRE(copy_ == default_);
+  }
 }
