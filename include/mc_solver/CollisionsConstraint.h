@@ -139,7 +139,7 @@ private:
   std::shared_ptr<mc_rtc::gui::StateBuilder> gui_;
   std::vector<std::string> category_;
   void addMonitorButton(int collId, const mc_rbdyn::Collision & col);
-  void toggleCollisionMonitor(int collId);
+  void toggleCollisionMonitor(int collId, const mc_rbdyn::Collision * col = nullptr);
 };
 
 } // namespace mc_solver

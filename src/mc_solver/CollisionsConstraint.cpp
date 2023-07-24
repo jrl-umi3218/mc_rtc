@@ -183,7 +183,7 @@ bool CollisionsConstraint::removeCollision(QPSolver & solver, const std::string 
   auto p = __popCollId(b1Name, b2Name);
   if(!p.second.isNone())
   {
-    if(monitored_.count(p.first)) { toggleCollisionMonitor(p.first); }
+    if(monitored_.count(p.first)) { toggleCollisionMonitor(p.first, &p.second); }
     category_.push_back("Monitors");
     std::string name = "Monitor " + p.second.body1 + "/" + p.second.body2;
     gui_->removeElement(category_, name);
@@ -245,7 +245,7 @@ bool CollisionsConstraint::removeCollisionByBody(QPSolver & solver,
         default:
           break;
       }
-      if(monitored_.count(out.first)) { toggleCollisionMonitor(out.first); }
+      if(monitored_.count(out.first)) { toggleCollisionMonitor(out.first, &out.second); }
       category_.push_back("Monitors");
       std::string name = "Monitor " + out.second.body1 + "/" + out.second.body2;
       gui_->removeElement(category_, name);
@@ -353,17 +353,19 @@ void CollisionsConstraint::addMonitorButton(int collId, const mc_rbdyn::Collisio
   }
 }
 
-void CollisionsConstraint::toggleCollisionMonitor(int collId)
+void CollisionsConstraint::toggleCollisionMonitor(int collId, const mc_rbdyn::Collision * col_p)
 {
-  auto findCollisionById = [this, collId]() -> const mc_rbdyn::Collision &
+  auto findCollisionById = [this, collId, &col_p]()
   {
+    if(col_p) { return; }
     for(const auto & c : collIdDict)
     {
-      if(c.second.first == collId) { return c.second.second; }
+      if(c.second.first == collId) { col_p = &c.second.second; }
     }
     mc_rtc::log::error_and_throw("[CollisionConstraint] Attempted to toggleCollisionMonitor on non-existent collision");
   };
-  const auto & col = findCollisionById();
+  findCollisionById();
+  const auto & col = *col_p;
   auto & gui = *gui_;
   std::string label = col.body1 + "::" + col.body2;
   if(monitored_.count(collId))
@@ -492,8 +494,8 @@ void CollisionsConstraint::update(QPSolver &)
   {
     const auto & [collId, coll] = info;
     auto distance = getDistance(collId);
-    if(distance < coll.iDist && !monitored_.count(collId)) { toggleCollisionMonitor(collId); }
-    if(distance > coll.iDist && monitored_.count(collId)) { toggleCollisionMonitor(collId); }
+    if(distance < coll.iDist && !monitored_.count(collId)) { toggleCollisionMonitor(collId, &coll); }
+    if(distance > coll.iDist && monitored_.count(collId)) { toggleCollisionMonitor(collId, &coll); }
   }
 }
 
