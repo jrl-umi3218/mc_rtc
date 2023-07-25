@@ -158,7 +158,7 @@ Ticker::Ticker(const Configuration & config) : config_(config), gc_(get_gc_confi
     if(log_->size() > 1)
     {
       double dt = log_->get("t", 1, 0.0) - log_->get("t", 0, 0.0);
-      if(dt != gc_.timestep())
+      if(std::fabs(dt - gc_.timestep()) > 1e-6)
       {
         mc_rtc::log::error_and_throw("Controller timestep ({}) is different from replay timestep ({})", gc_.timestep(),
                                      dt);
