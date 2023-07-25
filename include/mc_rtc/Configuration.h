@@ -27,6 +27,18 @@
 #include <variant>
 #include <vector>
 
+// The code we use to convert a Configuration value to an std::variant value requires GCC >= 8.3
+// We use a less optimal recursive implementation for the case where GCC < 8.3
+#if defined(__GNUC__) && !defined(__llvm__) && !defined(__INTEL_COMPILER)
+#  if __GNUC__ > 8 || (__GNUC__ == 8 && __GNUC_MINOR__ > 2)
+#    define MC_RTC_USE_VARIANT_WORKAROUND 0
+#  else
+#    define MC_RTC_USE_VARIANT_WORKAROUND 1
+#  endif
+#else
+#  define MC_RTC_USE_VARIANT_WORKAROUND 0
+#endif
+
 namespace mc_rtc
 {
 
@@ -99,6 +111,12 @@ template<typename T, typename... Args>
 struct has_configuration_save_object : decltype(_has_configuration_save_object::test<T, Args...>(nullptr))
 {
 };
+
+#if MC_RTC_USE_VARIANT_WORKAROUND
+/** Converts a Configuration object to a variant based on the active idx obtained at runtime */
+template<size_t IDX, typename... Args>
+std::variant<Args...> to_variant(const Configuration & c, size_t idx);
+#endif
 
 } // namespace internal
 
@@ -546,9 +564,13 @@ public:
     if(v.size() != 2) { throw Configuration::Exception("Stored Json value is not of size 2", v); }
     size_t idx = Configuration(v[0]);
     if(idx >= sizeof...(Args)) { throw Configuration::Exception("Variant index out of type index bound", v); }
+#if MC_RTC_USE_VARIANT_WORKAROUND
+    return internal::to_variant<0, Args...>(v[1], idx);
+#else
     static constexpr auto table =
         std::array{+[](const Configuration & c) { return std::variant<Args...>{c.operator Args()}; }...};
     return table[idx](v[1]);
+#endif
   }
 
   /** Integral type conversions
@@ -1614,6 +1636,25 @@ struct MC_RTC_UTILS_DLLAPI ConfigurationFile : public Configuration
 private:
   std::string path_;
 };
+
+#if MC_RTC_USE_VARIANT_WORKAROUND
+namespace internal
+{
+
+template<size_t IDX, typename... Args>
+std::variant<Args...> to_variant(const Configuration & c, size_t idx)
+{
+  // Note: this never happens because we always pass idx < sizeof...(Args)
+  if constexpr(IDX >= sizeof...(Args)) { mc_rtc::log::error_and_throw("Invalid runtime index for variant"); }
+  else
+  {
+    if(idx == IDX) { return c.operator std::variant_alternative_t<IDX, std::variant<Args...>>(); }
+    else { return to_variant<IDX + 1, Args...>(c, idx); }
+  }
+}
+
+} // namespace internal
+#endif
 
 } // namespace mc_rtc
 
