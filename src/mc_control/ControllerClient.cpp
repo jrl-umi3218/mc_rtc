@@ -784,7 +784,7 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
           break;
         }
         std::optional<std::vector<Configuration>> data = std::nullopt;
-        if(el[4].isArray()) { data = el[4]; }
+        if(el[4].isArray()) { data = el[4].operator std::vector<Configuration>(); }
         start_form_generic_array_input(name, required, data);
         handle_form(id, el[3]);
         end_form_generic_array_input();
@@ -793,7 +793,7 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
       case Elements::OneOf:
       {
         std::optional<std::pair<size_t, Configuration>> data = std::nullopt;
-        if(el[3].isArray()) { data = el[3]; }
+        if(el[3].isArray()) { data = el[3].operator std::pair<size_t, Configuration>(); }
         start_form_one_of_input(name, required, data);
         handle_form(id, el[4]);
         end_form_one_of_input();
