@@ -80,7 +80,7 @@ def genericInit(AnyTask self, size, name, *args, skip_alloc=False, **kwargs):
   if skip_alloc:
     if len(args) + len(kwargs) > 0:
       raise TypeError("Cannot pass skip_alloc=True and other arguments to {0} ctor".format(name))
-    self.__own_impl = False
+    self.own_impl__ = False
     if AnyTask in AnyTTG:
       genericTTGNull(self)
     else:
@@ -93,11 +93,11 @@ def genericInit(AnyTask self, size, name, *args, skip_alloc=False, **kwargs):
 
 cdef class CoMTask(_CoMTrajectoryTask):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __ctor__(self, mc_rbdyn.Robots robots, robotIndex,
                stiffness = 2.0, weight = 500.0):
-    self.__own_impl = True
+    self.own_impl__ = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.CoMTask(deref(robots.impl), robotIndex, stiffness, weight)
 
   def __cinit__(self, *args, **kwargs):
@@ -115,13 +115,13 @@ cdef class CoMTask(_CoMTrajectoryTask):
 
 cdef class PositionTask(_PositionTrajectoryTask):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __ctor__(self, bodyName, mc_rbdyn.Robots robots,
                 robotIndex, stiffness = 2.0, weight = 500.0):
     if isinstance(bodyName, unicode):
       bodyName = bodyName.encode(u'ascii')
-    self.__own_impl = True
+    self.own_impl__ = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.PositionTask(bodyName, deref(robots.impl), robotIndex, stiffness, weight)
 
   def __cinit__(self, *args, **kwargs):
@@ -141,13 +141,13 @@ cdef PositionTask PositionTaskFromSharedPtr(shared_ptr[c_mc_tasks.PositionTask] 
 
 cdef class OrientationTask(_OrientationTrajectoryTask):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __ctor__(self, bodyName, mc_rbdyn.Robots robots,
                 robotIndex, stiffness = 2.0, weight = 500.0):
     if isinstance(bodyName, unicode):
       bodyName = bodyName.encode(u'ascii')
-    self.__own_impl = True
+    self.own_impl__ = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.OrientationTask(bodyName, deref(robots.impl), robotIndex, stiffness, weight)
   def __cinit__(self, *args, **kwargs):
     genericInit[OrientationTask](self, 3, 'OrientationTask', *args, **kwargs)
@@ -165,27 +165,27 @@ cdef OrientationTask OrientationTaskFromSharedPtr(shared_ptr[c_mc_tasks.Orientat
 
 cdef class VectorOrientationTask(_VectorOrientationTrajectoryTask):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __ctor__(self, bodyName, eigen.Vector3d bodyVector,
                eigen.Vector3d targetVector, mc_rbdyn.Robots robots,
                 robotIndex, stiffness = 2.0, weight = 500.0):
     if isinstance(bodyName, unicode):
       bodyName = bodyName.encode(u'ascii')
-    self.__own_impl = True
+    self.own_impl__ = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.VectorOrientationTask(bodyName, bodyVector.impl, targetVector.impl, deref(robots.impl), robotIndex, stiffness, weight)
   def __cinit__(self, *args, **kwargs):
     genericInit[VectorOrientationTask](self, 5, 'VectorOrientationTask', *args, **kwargs)
 
 cdef class SurfaceTransformTask(_SurfaceTransformTask):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __ctor__(self, surfaceName, mc_rbdyn.Robots robots,
           robotIndex, stiffness = 2.0, weight = 500.0):
     if isinstance(surfaceName, unicode):
       surfaceName = surfaceName.encode(u'ascii')
-    self.__own_impl = True
+    self.own_impl__ = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.SurfaceTransformTask(surfaceName, deref(robots.impl), robotIndex, stiffness, weight)
   def __cinit__(self, *args, **kwargs):
     genericInit[SurfaceTransformTask](self, 3, 'SurfaceTransformTask', *args, **kwargs)
@@ -229,13 +229,13 @@ cdef class VectorPairDoubleVector3d(object):
 
 cdef class BSplineTrajectoryTask(_SplineTrajectoryTask):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __ctor__(self, mc_rbdyn.Robots robots, robotIndex,
           surfaceName, duration, stiffness, weight, sva.PTransformd target, posWp, oriWp):
     if isinstance(surfaceName, unicode):
       surfaceName = surfaceName.encode(u'ascii')
-    self.__own_impl = True
+    self.own_impl__ = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.BSplineTrajectoryTask(deref(robots.impl), robotIndex, surfaceName, duration, stiffness, weight, deref(target.impl))
     self.posWaypoints(posWp)
     self.oriWaypoints(oriWp)
@@ -267,13 +267,13 @@ cdef class BSplineTrajectoryTask(_SplineTrajectoryTask):
 
 cdef class ExactCubicTrajectoryTask(_SplineTrajectoryTask):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __ctor__(self, mc_rbdyn.Robots robots, robotIndex,
           surfaceName, duration, stiffness, weight, sva.PTransformd target):
     if isinstance(surfaceName, unicode):
       surfaceName = surfaceName.encode(u'ascii')
-    self.__own_impl = True
+    self.own_impl__ = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.ExactCubicTrajectoryTask(deref(robots.impl), robotIndex, surfaceName, duration, stiffness, weight, deref(target.impl))
   def __cinit__(self, *args, **kwargs):
     genericInit[ExactCubicTrajectoryTask](self, 7, 'ExactCubicTrajectoryTask', *args, **kwargs)
@@ -306,13 +306,13 @@ cdef class ExactCubicTrajectoryTask(_SplineTrajectoryTask):
 
 cdef class EndEffectorTask(MetaTask):
   def __dealloc__(self):
-    if self.__own_impl and type(self) is EndEffectorTask:
+    if self.own_impl__ and type(self) is EndEffectorTask:
       del self.impl
   def __ctor__(self, bodyName, mc_rbdyn.Robots robots,
                 robotIndex, stiffness = 2.0, weight = 1000.0):
     if isinstance(bodyName, unicode):
       bodyName = bodyName.encode(u'ascii')
-    self.__own_impl = True
+    self.own_impl__ = True
     self.impl = self.mt_base = new c_mc_tasks.EndEffectorTask(bodyName, deref(robots.impl), robotIndex, stiffness, weight)
   def __cinit__(self, *args, **kwargs):
     genericInit[EndEffectorTask](self, 3, 'EndEffectorTask', *args, **kwargs)
@@ -336,7 +336,7 @@ cdef class EndEffectorTask(MetaTask):
 
 cdef class RelativeEndEffectorTask(EndEffectorTask):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __ctor__(self, bodyName, mc_rbdyn.Robots robots,
                 robotIndex, relBodyName = "", stiffness = 2.0, weight = 1000.0):
@@ -344,17 +344,17 @@ cdef class RelativeEndEffectorTask(EndEffectorTask):
       bodyName = bodyName.encode(u'ascii')
     if isinstance(relBodyName, unicode):
       relBodyName = relBodyName.encode(u'ascii')
-    self.__own_impl = True
+    self.own_impl__ = True
     self.impl = self.mt_base = new c_mc_tasks.RelativeEndEffectorTask(bodyName, deref(robots.impl), robotIndex, relBodyName, stiffness, weight)
   def __cinit__(self, *args, **kwargs):
     genericInit[RelativeEndEffectorTask](self, 3, 'RelativeEndEffectorTask', *args, **kwargs)
 
 cdef class PostureTask(MetaTask):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __ctor__(self, mc_solver.QPSolver solver, rIndex, stiffness, weight):
-    self.__own_impl = True
+    self.own_impl__ = True
     self.impl = self.mt_base = new c_mc_tasks.PostureTask(deref(solver.impl), rIndex, stiffness, weight)
   def __cinit__(self, *args, **kwargs):
     genericInit[PostureTask](self, 4, 'PostureTask', *args, **kwargs)
@@ -388,6 +388,6 @@ cdef class PostureTask(MetaTask):
 
 cdef PostureTask PostureTaskFromPtr(c_mc_tasks.PostureTask * p):
   cdef PostureTask ret = PostureTask(skip_alloc = True)
-  ret.__own_impl = False
+  ret.own_impl__ = False
   ret.impl = ret.mt_base = p
   return ret

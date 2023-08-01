@@ -33,10 +33,10 @@ cdef class ContactConstraint(ConstraintSet):
   Velocity = c_mc_solver.ContactTypeVelocity
   Position = c_mc_solver.ContactTypePosition
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __cinit__(self, timeStep, int cType = ContactConstraint.Velocity, dynamics = True, skip_alloc = False):
-    self.__own_impl = True
+    self.own_impl__ = True
     if not skip_alloc:
       assert(cType >= ContactConstraint.Acceleration and cType <= ContactConstraint.Position)
       self.impl = self.cs_base = new c_mc_solver.ContactConstraint(timeStep, <c_mc_solver.ContactConstraintContactType>cType)
@@ -54,17 +54,17 @@ cdef class ContactConstraint(ConstraintSet):
 
 cdef ContactConstraint ContactConstraintFromPtr(c_mc_solver.ContactConstraint * p):
     cdef ContactConstraint ret = ContactConstraint(0.0, skip_alloc = True)
-    ret.__own_impl = False
+    ret.own_impl__ = False
     ret.impl = ret.cs_base = p
     return ret
 
 cdef class KinematicsConstraint(ConstraintSet):
   def __dealloc__(self):
-    if type(self) is KinematicsConstraint and self.__own_impl:
+    if type(self) is KinematicsConstraint and self.own_impl__:
       del self.impl
   def __cinit__(self, mc_rbdyn.Robots robots, robotIndex, timeStep, damper = None, velocityPercent = 1.0, infTorque = False, skip_alloc = False):
     cdef c_mc_solver.array3d damp = c_mc_solver.array3d()
-    self.__own_impl = True
+    self.own_impl__ = True
     if type(self) is KinematicsConstraint and not skip_alloc:
       if damper is None:
         self.impl = self.cs_base = new c_mc_solver.KinematicsConstraint(deref(robots.impl), robotIndex, timeStep)
@@ -76,17 +76,17 @@ cdef class KinematicsConstraint(ConstraintSet):
 
 cdef KinematicsConstraint KinematicsConstraintFromPtr(c_mc_solver.KinematicsConstraint*p):
     cdef KinematicsConstraint ret = KinematicsConstraint(None, 0, 0.0, skip_alloc = True)
-    ret.__own_impl = False
+    ret.own_impl__ = False
     ret.impl = ret.cs_base = p
     return ret
 
 cdef class DynamicsConstraint(KinematicsConstraint):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __cinit__(self, mc_rbdyn.Robots robots, robotIndex, timeStep, isStatic = False, damper = None, velocityPercent = 1.0, infTorque = False, skip_alloc = False):
     cdef c_mc_solver.array3d damp = c_mc_solver.array3d()
-    self.__own_impl = True
+    self.own_impl__ = True
     if not skip_alloc:
       if damper is None:
         self.d_impl = self.impl = self.cs_base = new c_mc_solver.DynamicsConstraint(deref(robots.impl), robotIndex, timeStep, infTorque)
@@ -98,17 +98,17 @@ cdef class DynamicsConstraint(KinematicsConstraint):
 
 cdef DynamicsConstraint DynamicsConstraintFromPtr(c_mc_solver.DynamicsConstraint * p):
     cdef DynamicsConstraint ret = DynamicsConstraint(None, 0, 0.0, skip_alloc = True)
-    ret.__own_impl = False
+    ret.own_impl__ = False
     ret.d_impl = ret.impl = ret.cs_base = p
     return ret
 
 cdef class CollisionsConstraint(ConstraintSet):
   defaultDampingOffset = c_mc_solver.CollisionsConstraintDefaultDampingOffset
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __cinit__(self, mc_rbdyn.Robots robots, r1Index, r2Index, timeStep, skip_alloc = False):
-    self.__own_impl = True
+    self.own_impl__ = True
     if not skip_alloc:
       self.impl = self.cs_base = new c_mc_solver.CollisionsConstraint(deref(robots.impl), r1Index, r2Index, timeStep)
   def removeCollision(self, QPSolver solver, b1Name, b2Name):
@@ -148,7 +148,7 @@ cdef class CollisionsConstraint(ConstraintSet):
 
 cdef CollisionsConstraint CollisionsConstraintFromPtr(c_mc_solver.CollisionsConstraint * p):
     cdef CollisionsConstraint ret = CollisionsConstraint(None, None, None, None, skip_alloc = True)
-    ret.__own_impl = False
+    ret.own_impl__ = False
     ret.impl = ret.cs_base = p
     return ret
 
@@ -159,10 +159,10 @@ cdef qp.BilateralContact BilateralContactFromC(const c_qp.BilateralContact & bc)
 
 cdef class QPSolver(object):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __cinit__(self, mc_rbdyn.Robots robots, timeStep, skip_alloc = False):
-    self.__own_impl = True
+    self.own_impl__ = True
     if not skip_alloc:
       self.impl = new c_mc_solver.TasksQPSolver(robots.impl, timeStep)
   def addConstraintSet(self, ConstraintSet cs):
@@ -191,7 +191,7 @@ cdef class QPSolver(object):
 
 cdef QPSolver QPSolverFromPtr(c_mc_solver.QPSolver * p):
     cdef QPSolver ret = QPSolver(None, 0, skip_alloc = True)
-    ret.__own_impl = False
+    ret.own_impl__ = False
     ret.impl = p
     return ret
 

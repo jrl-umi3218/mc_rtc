@@ -20,7 +20,7 @@ cdef class MetaTask(object):
 
 cdef class PostureTask(MetaTask):
   cdef c_mc_tasks.PostureTask * impl
-  cdef cppbool __own_impl
+  cdef cppbool own_impl__
 
 cdef PostureTask PostureTaskFromPtr(c_mc_tasks.PostureTask *)
 
@@ -44,45 +44,45 @@ cdef class _SplineTrajectoryTask(MetaTask):
 
 cdef class BSplineTrajectoryTask(_SplineTrajectoryTask):
   cdef c_mc_tasks.BSplineTrajectoryTask * impl
-  cdef cppbool __own_impl
+  cdef cppbool own_impl__
 
 cdef class ExactCubicTrajectoryTask(_SplineTrajectoryTask):
   cdef c_mc_tasks.ExactCubicTrajectoryTask * impl
-  cdef cppbool __own_impl
+  cdef cppbool own_impl__
 
 cdef class _TransformTask(MetaTask):
   cdef c_mc_tasks.TrajectoryTaskGeneric * ttg_base
 
 cdef class CoMTask(_CoMTrajectoryTask):
   cdef c_mc_tasks.CoMTask * impl
-  cdef cppbool __own_impl
+  cdef cppbool own_impl__
 
 cdef class PositionTask(_PositionTrajectoryTask):
   cdef c_mc_tasks.PositionTask * impl
-  cdef cppbool __own_impl
+  cdef cppbool own_impl__
 
 cdef PositionTask PositionTaskFromSharedPtr(shared_ptr[c_mc_tasks.PositionTask])
 
 cdef class OrientationTask(_OrientationTrajectoryTask):
   cdef c_mc_tasks.OrientationTask * impl
-  cdef cppbool __own_impl
+  cdef cppbool own_impl__
 
 cdef OrientationTask OrientationTaskFromSharedPtr(shared_ptr[c_mc_tasks.OrientationTask])
 
 cdef class VectorOrientationTask(_VectorOrientationTrajectoryTask):
   cdef c_mc_tasks.VectorOrientationTask * impl
-  cdef cppbool __own_impl
+  cdef cppbool own_impl__
 
 cdef class EndEffectorTask(MetaTask):
   cdef c_mc_tasks.EndEffectorTask * impl
-  cdef cppbool __own_impl
+  cdef cppbool own_impl__
 
 cdef class RelativeEndEffectorTask(EndEffectorTask):
   pass
 
 cdef class SurfaceTransformTask(_SurfaceTransformTask):
   cdef c_mc_tasks.SurfaceTransformTask * impl
-  cdef cppbool __own_impl
+  cdef cppbool own_impl__
 
 ctypedef fused AnyTTG:
   CoMTask

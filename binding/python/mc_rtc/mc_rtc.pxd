@@ -13,7 +13,7 @@ cdef Logger LoggerFromRef(c_mc_rtc.Logger &)
 
 cdef class Configuration(object):
   cdef c_mc_rtc.Configuration * impl
-  cdef cppbool __own_impl
+  cdef cppbool own_impl__
 
 cdef Configuration ConfigurationFromValue(c_mc_rtc.Configuration)
 cdef Configuration ConfigurationFromRef(c_mc_rtc.Configuration &)

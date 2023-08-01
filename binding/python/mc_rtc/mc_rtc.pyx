@@ -101,11 +101,11 @@ cdef Logger LoggerFromRef(c_mc_rtc.Logger & logger):
 
 cdef class Configuration(object):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __cinit__(self, *args, skip_alloc = False):
     if not skip_alloc:
-      self.__own_impl = True
+      self.own_impl__ = True
       if(len(args) == 0):
         self.impl = new c_mc_rtc.Configuration()
       else:
@@ -115,7 +115,7 @@ cdef class Configuration(object):
           path = path.encode(u'ascii')
         self.impl = new c_mc_rtc.Configuration(<string>(path))
     else:
-      self.__own_impl = False
+      self.own_impl__ = False
       self.impl = NULL
   @staticmethod
   def fromData(data):
@@ -306,7 +306,7 @@ cdef class Configuration(object):
 
 cdef Configuration ConfigurationFromValue(c_mc_rtc.Configuration conf):
   cdef Configuration ret = Configuration(skip_alloc = True)
-  ret.__own_impl = True
+  ret.own_impl__ = True
   ret.impl = new c_mc_rtc.Configuration(conf)
   return ret
 

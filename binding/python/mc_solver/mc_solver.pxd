@@ -11,13 +11,13 @@ cdef class ConstraintSet(object):
 
 cdef class ContactConstraint(ConstraintSet):
   cdef c_mc_solver.ContactConstraint * impl
-  cdef cppbool __own_impl
+  cdef cppbool own_impl__
 
 cdef ContactConstraint ContactConstraintFromPtr(c_mc_solver.ContactConstraint *)
 
 cdef class KinematicsConstraint(ConstraintSet):
   cdef c_mc_solver.KinematicsConstraint * impl
-  cdef cppbool __own_impl
+  cdef cppbool own_impl__
 
 cdef KinematicsConstraint KinematicsConstraintFromPtr(c_mc_solver.KinematicsConstraint *)
 
@@ -28,13 +28,13 @@ cdef DynamicsConstraint DynamicsConstraintFromPtr(c_mc_solver.DynamicsConstraint
 
 cdef class CollisionsConstraint(ConstraintSet):
   cdef c_mc_solver.CollisionsConstraint * impl
-  cdef cppbool __own_impl
+  cdef cppbool own_impl__
 
 cdef CollisionsConstraint CollisionsConstraintFromPtr(c_mc_solver.CollisionsConstraint*)
 
 cdef class QPSolver(object):
   cdef c_mc_solver.QPSolver * impl
-  cdef cppbool __own_impl
+  cdef cppbool own_impl__
 
 cdef QPSolver QPSolverFromPtr(c_mc_solver.QPSolver*)
 

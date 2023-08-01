@@ -128,8 +128,6 @@ cdef class MCController(object):
     return self.base.run()
   def reset(self, ControllerResetData data):
     self.base.reset(deref(data.impl))
-  def robot(self):
-    return mc_rbdyn.RobotFromC(self.base.robot())
   def env(self):
     return mc_rbdyn.RobotFromC(self.base.env())
   def robots(self):
@@ -214,7 +212,7 @@ cdef class MCController(object):
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
     if name is None:
-      return MCController.robot(self)
+      return mc_rbdyn.RobotFromC(self.base.robot())
     else:
       return mc_rbdyn.RobotFromC(self.base.robot(name))
   def addContact(self, c, *args):

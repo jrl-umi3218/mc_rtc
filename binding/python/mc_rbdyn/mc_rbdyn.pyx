@@ -149,10 +149,10 @@ cdef Flexibility FlexibilityFromC(const c_mc_rbdyn.Flexibility & flex):
 
 cdef class BodySensor(object):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __cinit__(self, skip_alloc = False):
-    self.__own_impl = not skip_alloc
+    self.own_impl__ = not skip_alloc
     if skip_alloc:
       self.impl = NULL
       return
@@ -184,7 +184,7 @@ cdef BodySensor BodySensorFromCRef(const c_mc_rbdyn.BodySensor & bs):
 
 cdef class ForceSensor(object):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __ctor__(self, sn, bn, sva.PTransformd X_p_f):
     if isinstance(sn, unicode):
@@ -193,7 +193,7 @@ cdef class ForceSensor(object):
       bn = bn.encode(u'ascii')
     self.impl = new c_mc_rbdyn.ForceSensor(sn, bn, deref(X_p_f.impl))
   def __cinit__(self, *args, skip_alloc = False):
-    self.__own_impl = not skip_alloc
+    self.own_impl__ = not skip_alloc
     if skip_alloc:
       assert(len(args) ==0)
       self.impl = NULL
@@ -1045,7 +1045,7 @@ cdef class Contact(object):
   defaultFriction = c_mc_rbdyn.ContactdefaultFriction
   nrBilatPoints = c_mc_rbdyn.ContactnrBilatPoints
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __copyctor__(self, Contact other):
     self.impl = new c_mc_rbdyn.Contact(deref(other.impl))
@@ -1077,7 +1077,7 @@ cdef class Contact(object):
       skip_alloc = bool(kwds["skip_alloc"])
     else:
       skip_alloc = False
-    self.__own_impl = True
+    self.own_impl__ = True
     if len(args) == 0 and skip_alloc:
       self.impl = NULL
     elif len(args) == 1 and isinstance(args[0], Contact):
@@ -1189,18 +1189,18 @@ cdef Contact ContactFromC(const c_mc_rbdyn.Contact& c, cppbool copy=True):
   if copy:
     ret.impl = new c_mc_rbdyn.Contact(c)
   else:
-    ret.__own_impl = False
+    ret.own_impl__ = False
     ret.impl = &(c_mc_rbdyn.const_cast_contact(c))
   return ret
 
 cdef class ContactVector(object):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.v
   def __push_contact(self, Contact c):
     self.v.push_back(deref(c.impl))
   def __cinit__(self, *args, skip_alloc = False):
-    self.__own_impl = True
+    self.own_impl__ = True
     if not skip_alloc:
       self.v = new vector[c_mc_rbdyn.Contact]()
     if len(args) == 1:
@@ -1261,7 +1261,7 @@ cdef ContactVector ContactVectorFromC(const vector[c_mc_rbdyn.Contact]& v,
   if copy:
     ret.v = new vector[c_mc_rbdyn.Contact](v)
   else:
-    ret.__own_impl = False
+    ret.own_impl__ = False
     ret.v = &(c_mc_rbdyn.const_cast_contact_vector(v))
   return ret
 
@@ -1276,15 +1276,15 @@ cdef GeosGeomGeometry GeosGeomGeometryFromSharedPtr(shared_ptr[c_mc_rbdyn.Geomet
 
 cdef class PolygonInterpolator(object):
   def __dealloc__(self):
-    if self.__own_impl:
+    if self.own_impl__:
       del self.impl
   def __cinit__(self, *args, skip_alloc = False):
     if skip_alloc:
       assert(len(args) == 0)
       self.impl = NULL
-      self.__own_impl = False
+      self.own_impl__ = False
     else:
-      self.__own_impl = True
+      self.own_impl__ = True
       assert(len(args) == 1)
       data_path = args[0]
       if isinstance(data_path, unicode):
