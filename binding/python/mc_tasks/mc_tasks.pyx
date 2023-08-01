@@ -218,7 +218,7 @@ cdef class PairDoubleVector3d(object):
     if len(args) == 1 and isinstance(args[0], tuple) and len(args[0]) == 2:
       tup = args[0]
       self.impl = pair[double, c_eigen.Vector3d](tup[0], eigen.Vector3d(tup[1]).impl)
-      print "pair {}".format(tup[0])
+      print("pair {}".format(tup[0]))
 
 cdef class VectorPairDoubleVector3d(object):
   cdef vector[pair[double, c_eigen.Vector3d]] impl

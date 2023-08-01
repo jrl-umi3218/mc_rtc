@@ -4,7 +4,7 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-cimport c_fsm
+cimport mc_control.fsm.c_fsm as c_fsm
 
 cimport eigen.eigen as eigen
 cimport mc_rtc.c_mc_rtc as c_mc_rtc

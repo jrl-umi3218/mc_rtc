@@ -2,7 +2,7 @@
 # Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-cimport c_mc_rtc
+cimport mc_rtc.c_mc_rtc as c_mc_rtc
 
 from libcpp cimport bool as cppbool
 

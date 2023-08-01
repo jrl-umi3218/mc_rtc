@@ -951,7 +951,7 @@ cdef SurfaceFromC(const c_mc_rbdyn.Surface & surface):
   elif s_type == "cylindrical":
     ret = CylindricalSurfaceFromPtr(c_mc_rbdyn.dynamic_cast_cylindrical_surface(ptr))
   else:
-    print "Unknown Surface type:",ptr.type()
+    print("Unknown Surface type: %s"%ptr.type())
     ret.impl = ptr
   return ret
 
@@ -965,7 +965,7 @@ cdef SurfaceFromPtr(shared_ptr[c_mc_rbdyn.Surface] ptr, cppbool keep_ptr = True)
   elif s_type == "cylindrical":
     ret = CylindricalSurfaceFromPtr(c_mc_rbdyn.dynamic_cast_cylindrical_surface(ptr.get()))
   else:
-    print "Unknown Surface type:",s_type
+    print("Unknown Surface type: %s"%s_type)
     ret.impl = ptr.get()
   if keep_ptr:
     ret.ptr = ptr

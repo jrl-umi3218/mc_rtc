@@ -2,7 +2,7 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-cimport c_mc_rbdyn
+cimport mc_rbdyn.c_mc_rbdyn as c_mc_rbdyn
 from libcpp.vector cimport vector
 from libcpp cimport bool as cppbool
 

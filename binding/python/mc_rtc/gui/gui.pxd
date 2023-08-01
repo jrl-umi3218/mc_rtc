@@ -2,7 +2,7 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-cimport c_gui
+cimport mc_rtc.gui.c_gui as c_gui
 
 cimport mc_rtc.c_mc_rtc as c_mc_rtc
 

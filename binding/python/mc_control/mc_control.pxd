@@ -2,7 +2,7 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-cimport c_mc_control
+cimport mc_control.c_mc_control as c_mc_control
 
 from libcpp cimport bool as cppbool
 

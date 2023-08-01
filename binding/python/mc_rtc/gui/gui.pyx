@@ -4,7 +4,7 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-cimport c_gui
+cimport mc_rtc.gui.c_gui as c_gui
 
 cimport mc_rtc.mc_rtc as mc_rtc
 cimport mc_rtc.c_mc_rtc as c_mc_rtc
@@ -367,7 +367,7 @@ cdef class Form(Element):
         self.impl.addElement((<FormDataComboInput>arg).impl)
       else:
         self._elements.remove(arg)
-        print "Unsupported type {}, cannot be added to the form".format(t)
+        print("Unsupported type {}, cannot be added to the form".format(t))
 
 
 cdef class StateBuilder(object):
@@ -420,7 +420,7 @@ cdef class StateBuilder(object):
       self.impl.get().addElement[c_gui.FormImpl[c_gui.set_fn]](py2cpp(category), (<Form>element).impl)
     else:
       StateBuilder.ELEMENTS["/".join(category)].remove(element)
-      print "Unsupported type {}, this element will not be added".format(t)
+      print("Unsupported type {}, this element will not be added".format(t))
     if len(args):
       self.addElement(category, args[0], *args[1:])
   def reset(self):
