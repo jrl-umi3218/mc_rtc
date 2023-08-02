@@ -195,19 +195,25 @@ public:
    *
    * \param get_fn A function that provides data that should be logged
    *
+   * \param overwrite If true, overwrite the previous entry of the same name (if any), otherwise log and return
+   *
    */
   template<typename CallbackT,
            typename SourceT = void,
            typename std::enable_if<mc_rtc::log::callback_is_serializable<CallbackT>::value, int>::type = 0>
-  void addLogEntry(const std::string & name, const SourceT * source, CallbackT && get_fn)
+  void addLogEntry(const std::string & name, const SourceT * source, CallbackT && get_fn, bool overwrite = false)
   {
     using ret_t = decltype(get_fn());
     using base_t = typename std::decay<ret_t>::type;
     auto it = find_entry(name);
     if(it != log_entries_.end())
     {
-      log::error("Already logging an entry named {}", name);
-      return;
+      if(!overwrite)
+      {
+        log::error("Already logging an entry named {}", name);
+        return;
+      }
+      else { log_entries_.erase(it); }
     }
     auto log_type = log::callback_is_serializable<CallbackT>::log_type;
     log_events_.push_back(KeyAddedEvent{log_type, name});
@@ -228,15 +234,18 @@ public:
    *
    * \param source Source of the log entry
    *
+   * \param overwrite If true, overwrite the previous entry of the same name (if any), otherwise log and return
+   *
    */
   template<typename MemberPtrT,
            MemberPtrT member,
            typename SourceT,
            typename std::enable_if<mc_rtc::log::is_serializable_member<MemberPtrT>::value, int>::type = 0>
-  void addLogEntry(const std::string & name, const SourceT * source)
+  void addLogEntry(const std::string & name, const SourceT * source, bool overwrite = false)
   {
     using MemberT = decltype(source->*member);
-    addLogEntry(name, source, [source]() -> const MemberT & { return source->*member; });
+    addLogEntry(
+        name, source, [source]() -> const MemberT & { return source->*member; }, overwrite);
   }
 
   /** Add a log entry from a source and a compile-time pointer to method
@@ -251,15 +260,18 @@ public:
    *
    * \param source Source of the log entry
    *
+   * \param overwrite If true, overwrite the previous entry of the same name (if any), otherwise log and return
+   *
    */
   template<typename MethodPtrT,
            MethodPtrT method,
            typename SourceT,
            typename std::enable_if<mc_rtc::log::is_serializable_getter<MethodPtrT>::value, int>::type = 0>
-  void addLogEntry(const std::string & name, const SourceT * source)
+  void addLogEntry(const std::string & name, const SourceT * source, bool overwrite = false)
   {
     using MethodRetT = decltype((source->*method)());
-    addLogEntry(name, source, [source]() -> MethodRetT { return (source->*method)(); });
+    addLogEntry(
+        name, source, [source]() -> MethodRetT { return (source->*method)(); }, overwrite);
   }
 
   /** Add a log entry into the log with no source
@@ -274,11 +286,13 @@ public:
    *
    * \param get_fn A function that provides data that should be logged
    *
+   * \param overwrite If true, overwrite the previous entry of the same name (if any), otherwise log and return
+   *
    */
   template<typename T, typename std::enable_if<mc_rtc::log::callback_is_serializable<T>::value, int>::type = 0>
-  void addLogEntry(const std::string & name, T && get_fn)
+  void addLogEntry(const std::string & name, T && get_fn, bool overwrite = false)
   {
-    addLogEntry(name, static_cast<const void *>(nullptr), std::forward<T>(get_fn));
+    addLogEntry(name, static_cast<const void *>(nullptr), std::forward<T>(get_fn), overwrite);
   }
 
   /** Add multiple entries at once with the same entry

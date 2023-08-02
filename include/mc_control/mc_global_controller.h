@@ -944,6 +944,7 @@ private:
 
   void start_log();
   void setup_log();
+  void setup_plugin_log();
   std::map<std::string, bool> setup_logger_ = {};
 
   /** Timers and performance measure */
