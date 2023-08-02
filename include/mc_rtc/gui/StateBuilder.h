@@ -405,7 +405,7 @@ private:
      * iterator to it, otherwise returns end() */
     std::vector<Category>::iterator find(const std::string & name);
     /** For each category, keeps track of the line id for next elements added */
-    int id;
+    int id = 0;
     /** Returns the number of elements in this category and its sub-categories */
     inline size_t size() const
     {
