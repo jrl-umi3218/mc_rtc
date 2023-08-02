@@ -765,7 +765,7 @@ bool MCGlobalController::run()
       next_controller_->reset({controller_->robot().mbc().q});
       next_controller_->resetObserverPipelines();
       controller_ = next_controller_;
-      /** Reset plugins */
+      /** Reset global plugins */
       for(auto & plugin : plugins_) { plugin.plugin->reset(*this); }
       resetControllerPlugins();
     }
@@ -1034,27 +1034,6 @@ void MCGlobalController::setup_log()
   controller->logger().addLogEntry("perf_Log", [this]() { return log_dt.count(); });
   controller->logger().addLogEntry("perf_Gui", [this]() { return gui_dt.count(); });
   controller->logger().addLogEntry("perf_FrameworkCost", [this]() { return framework_cost; });
-  auto getPluginName = [this](GlobalPlugin * plugin) -> const std::string &
-  {
-    for(auto & p : plugins_)
-    {
-      if(p.plugin.get() == plugin) { return p.name; }
-    }
-    mc_rtc::log::error_and_throw(
-        "Impossible error, searched for a plugin name from a pointer to a plugin that was not loaded");
-  };
-  for(const auto & plugin : plugins_before_)
-  {
-    const auto & name = getPluginName(plugin.plugin);
-    controller->logger().addLogEntry(fmt::format("perf_Plugins_{}_before", name),
-                                     [&plugin]() { return plugin.plugin_before_dt.count(); });
-  }
-  for(const auto & plugin : plugins_after_)
-  {
-    const auto & name = getPluginName(plugin.plugin);
-    controller->logger().addLogEntry(fmt::format("perf_Plugins_{}_after", name),
-                                     [&plugin]() { return plugin.plugin_after_dt.count(); });
-  }
   // Log system wall time as nanoseconds since epoch (can be used to manage synchronization with ros)
   controller->logger().addLogEntry("timeWall",
                                    []() -> int64_t
@@ -1144,6 +1123,32 @@ void MCGlobalController::resetControllerPlugins()
   {
     auto plugin = loadPlugin(name, next_ctrl.c_str());
     if(plugin) { plugin->init(*this, config.global_plugin_configs[name]); }
+  }
+  setup_plugin_log();
+}
+
+void MCGlobalController::setup_plugin_log()
+{
+  auto getPluginName = [this](GlobalPlugin * plugin) -> const std::string &
+  {
+    for(auto & p : plugins_)
+    {
+      if(p.plugin.get() == plugin) { return p.name; }
+    }
+    mc_rtc::log::error_and_throw(
+        "Impossible error, searched for a plugin name from a pointer to a plugin that was not loaded");
+  };
+  for(const auto & plugin : plugins_before_)
+  {
+    const auto & name = getPluginName(plugin.plugin);
+    controller_->logger().addLogEntry(
+        fmt::format("perf_Plugins_{}_before", name), [&plugin]() { return plugin.plugin_before_dt.count(); }, true);
+  }
+  for(const auto & plugin : plugins_after_)
+  {
+    const auto & name = getPluginName(plugin.plugin);
+    controller_->logger().addLogEntry(
+        fmt::format("perf_Plugins_{}_after", name), [&plugin]() { return plugin.plugin_after_dt.count(); }, true);
   }
 }
 
