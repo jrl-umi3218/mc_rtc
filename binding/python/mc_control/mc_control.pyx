@@ -372,7 +372,9 @@ cdef class MCGlobalController(object):
 
 cdef class ElementId(object):
   def __cinit__(self, category, name):
-    self.impl = c_mc_control.ElementId(category, name)
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
+    self.impl = c_mc_control.ElementId([s.encode(u'ascii') if isinstance(s, unicode) else s for s in category] , name)
   property category:
     def __get__(self):
       return self.impl.category
@@ -382,6 +384,10 @@ cdef class ElementId(object):
 
 cdef class ControllerClient(object):
   def __cinit__(self, sub_conn_uri, push_conn_uri, timeout = 0.0):
+    if isinstance(sub_conn_uri, unicode):
+      sub_conn_uri = sub_conn_uri.encode(u'ascii')
+    if isinstance(push_conn_uri, unicode):
+      push_conn_uri = push_conn_uri.encode(u'ascii')
     self.impl = new c_mc_control.ControllerClient(sub_conn_uri, push_conn_uri, timeout)
   def send_request(self, element_id, data = None):
     if data is None:
