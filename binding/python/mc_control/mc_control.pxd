@@ -29,3 +29,9 @@ cdef public api class MCPythonController(MCController)[object MCPythonController
 
 cdef class MCGlobalController(object):
   cdef c_mc_control.MCGlobalController * impl
+
+cdef class ElementId(object):
+  cdef c_mc_control.ElementId impl
+
+cdef class ControllerClient(object):
+  cdef c_mc_control.ControllerClient * impl

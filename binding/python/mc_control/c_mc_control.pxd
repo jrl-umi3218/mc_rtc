@@ -156,3 +156,15 @@ cdef extern from "mc_control_wrapper.hpp" namespace "mc_control":
 
   void add_anchor_frame_callback[T, U](MCPythonController &, const string &, T, U)
   void remove_anchor_frame_callback(MCPythonController &, const string &)
+
+cdef extern from "<mc_control/ControllerClient.h>" namespace "mc_control":
+  cdef cppclass ElementId:
+    ElementId()
+    ElementId(const vector[string]&, const string&)
+    vector[string] category
+    string name
+  cdef cppclass ControllerClient:
+    ControllerClient()
+    ControllerClient(const string&, const string&, double)
+    void send_request(const ElementId&)
+    void send_request(const ElementId&, c_mc_rtc.Configuration)

@@ -367,3 +367,28 @@ cdef class MCGlobalController(object):
       return self.impl.running
     def __set__(self, b):
       self.impl.running = b
+
+cdef class ElementId(object):
+  def __cinit__(self, category, name):
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
+    self.impl = c_mc_control.ElementId([s.encode(u'ascii') if isinstance(s, unicode) else s for s in category] , name)
+  property category:
+    def __get__(self):
+      return self.impl.category
+  property name:
+    def __get__(self):
+      return self.impl.name
+
+cdef class ControllerClient(object):
+  def __cinit__(self, sub_conn_uri, push_conn_uri, timeout = 0.0):
+    if isinstance(sub_conn_uri, unicode):
+      sub_conn_uri = sub_conn_uri.encode(u'ascii')
+    if isinstance(push_conn_uri, unicode):
+      push_conn_uri = push_conn_uri.encode(u'ascii')
+    self.impl = new c_mc_control.ControllerClient(sub_conn_uri, push_conn_uri, timeout)
+  def send_request(self, element_id, data = None):
+    if data is None:
+      deref(self.impl).send_request((<ElementId>element_id).impl)
+    else:
+      deref(self.impl).send_request((<ElementId>element_id).impl, deref((<mc_rtc.Configuration>data).impl))

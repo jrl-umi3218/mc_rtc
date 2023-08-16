@@ -185,7 +185,7 @@ protected:
   virtual void stopped() {}
 
   /** Should be implemented to create a new category container */
-  virtual void category(const std::vector<std::string> & parent, const std::string & category) = 0;
+  virtual void category(const std::vector<std::string> & parent, const std::string & category){};
 
   /** Should be implemented to create a label for data that can be displayed as string */
   inline virtual void label(const ElementId & id, const std::string &) { default_impl("Label", id); }
