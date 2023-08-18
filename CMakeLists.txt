@@ -183,6 +183,11 @@ add_subdirectory(3rd-party/mpack)
 
 # yaml-cpp
 add_project_dependency(yaml-cpp 0.5.0 REQUIRED)
+if(TARGET yaml-cpp::yaml-cpp)
+  set(YAML_CPP_TARGET yaml-cpp::yaml-cpp)
+else()
+  set(YAML_CPP_TARGET yaml-cpp)
+endif()
 
 # RapidJSON The code was copied from the 1.1.0 release tarball for RapidJSON
 # https://github.com/miloyip/rapidjson

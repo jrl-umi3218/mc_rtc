@@ -153,7 +153,7 @@ target_link_libraries(
          Boost::${BOOST_STACKTRACE}
          Boost::filesystem
          Boost::disable_autolinking
-         yaml-cpp
+         ${YAML_CPP_TARGET}
          spdlog::spdlog
          ${CMAKE_DL_LIBS}
   PRIVATE $<BUILD_INTERFACE:mc_rtc_3rd_party::RapidJSON>
