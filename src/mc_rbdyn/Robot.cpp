@@ -1180,7 +1180,6 @@ void Robot::forwardKinematics(rbd::MultiBodyConfig & mbc) const
     unsigned int index = static_cast<unsigned int>(mb().bodyIndexByName(cvx.second.first));
     sch::mc_rbdyn::transform(*(cvx.second.second.get()), mbc.bodyPosW[index]);
   }
-
 }
 
 void Robot::forwardVelocity()
