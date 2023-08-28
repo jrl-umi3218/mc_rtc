@@ -91,18 +91,18 @@ struct Default<T, std::enable_if_t<std::is_arithmetic_v<T>>>
   inline static constexpr T value = 0;
 };
 
-template<typename Scalar, int N, int _Options, int _MaxRows, int _MaxCols>
-struct Default<Eigen::Matrix<Scalar, N, 1, _Options, _MaxRows, _MaxCols>, std::enable_if_t<(N > 0)>>
+template<typename Scalar, int N, int Options, int MaxRows, int MaxCols>
+struct Default<Eigen::Matrix<Scalar, N, 1, Options, MaxRows, MaxCols>, std::enable_if_t<(N > 0)>>
 {
-  inline static const Eigen::Matrix<Scalar, N, 1, _Options, _MaxRows, _MaxCols> value =
-      Eigen::Matrix<Scalar, N, 1, _Options, _MaxRows, _MaxCols>::Zero();
+  inline static const Eigen::Matrix<Scalar, N, 1, Options, MaxRows, MaxCols> value =
+      Eigen::Matrix<Scalar, N, 1, Options, MaxRows, MaxCols>::Zero();
 };
 
-template<typename Scalar, int N, int _Options, int _MaxRows, int _MaxCols>
-struct Default<Eigen::Matrix<Scalar, N, N, _Options, _MaxRows, _MaxCols>, std::enable_if_t<(N > 1)>>
+template<typename Scalar, int N, int Options, int MaxRows, int MaxCols>
+struct Default<Eigen::Matrix<Scalar, N, N, Options, MaxRows, MaxCols>, std::enable_if_t<(N > 1)>>
 {
-  inline static const Eigen::Matrix<Scalar, N, N, _Options, _MaxRows, _MaxCols> value =
-      Eigen::Matrix<Scalar, N, N, _Options, _MaxRows, _MaxCols>::Identity();
+  inline static const Eigen::Matrix<Scalar, N, N, Options, MaxRows, MaxCols> value =
+      Eigen::Matrix<Scalar, N, N, Options, MaxRows, MaxCols>::Identity();
 };
 
 template<>
@@ -138,7 +138,7 @@ struct Default<sva::AdmittanceVecd>
 template<>
 struct Default<std::string>
 {
-  inline static const std::string value = "";
+  inline static const std::string value;
 };
 
 template<typename T, typename... Others>
@@ -198,47 +198,48 @@ void addValueToForm(const T & value,
     addValueToForm<value_type, true, IsInteractive>(default_, description, {}, input);
     form.addElement(input);
   }
-  else
+  else if constexpr(gui::details::is_variant_v<T>)
   {
-    if constexpr(std::is_same_v<T, bool>)
-    {
-      form.addElement(mc_rtc::gui::FormCheckbox(description, IsRequired, get_value));
-    }
-    else if constexpr(std::is_integral_v<T>)
-    {
-      form.addElement(mc_rtc::gui::FormIntegerInput(description, IsRequired, get_value));
-    }
-    else if constexpr(std::is_floating_point_v<T>)
-    {
-      form.addElement(mc_rtc::gui::FormNumberInput(description, IsRequired, get_value));
-    }
-    else if constexpr(std::is_same_v<T, std::string>)
-    {
-      if constexpr(HasChoices)
-      {
-        auto it = std::find(choices.choices.begin(), choices.choices.end(), value);
-        long int idx = it != choices.choices.end() ? std::distance(choices.choices.begin(), it) : -1;
-        form.addElement(
-            mc_rtc::gui::FormComboInput(description, IsRequired, choices.choices, false, static_cast<int>(idx)));
-      }
-      else { form.addElement(mc_rtc::gui::FormStringInput(description, IsRequired, get_value)); }
-    }
-    else if constexpr(std::is_same_v<T, Eigen::Vector3d>)
-    {
-      form.addElement(mc_rtc::gui::FormPoint3DInput(description, IsRequired, get_value, IsInteractive));
-    }
-    else if constexpr(std::is_same_v<T, sva::PTransformd>)
-    {
-      form.addElement(mc_rtc::gui::FormTransformInput(description, IsRequired, get_value, IsInteractive));
-    }
-    else if constexpr(gui::details::is_variant_v<T>)
-    {
-      auto input = mc_rtc::gui::FormOneOfInput(description, IsRequired, get_value);
-      variantToForm<IsRequired, IsInteractive>(value, input, choices);
-      form.addElement(input);
-    }
-    else { static_assert(!std::is_same_v<T, T>, "addValueToForm must be implemented for this value type"); }
+    auto input = mc_rtc::gui::FormOneOfInput(description, IsRequired, get_value);
+    variantToForm<IsRequired, IsInteractive>(value, input, choices);
+    form.addElement(input);
   }
+  else if constexpr(std::is_same_v<T, bool>)
+  {
+    form.addElement(mc_rtc::gui::FormCheckbox(description, IsRequired, get_value));
+  }
+  else if constexpr(std::is_integral_v<T>)
+  {
+    form.addElement(mc_rtc::gui::FormIntegerInput(description, IsRequired, get_value));
+  }
+  else if constexpr(std::is_floating_point_v<T>)
+  {
+    form.addElement(mc_rtc::gui::FormNumberInput(description, IsRequired, get_value));
+  }
+  else if constexpr(std::is_same_v<T, std::string>)
+  {
+    if constexpr(HasChoices)
+    {
+      auto it = std::find(choices.choices.begin(), choices.choices.end(), value);
+      long int idx = it != choices.choices.end() ? std::distance(choices.choices.begin(), it) : -1;
+      form.addElement(
+          mc_rtc::gui::FormComboInput(description, IsRequired, choices.choices, false, static_cast<int>(idx)));
+    }
+    else { form.addElement(mc_rtc::gui::FormStringInput(description, IsRequired, get_value)); }
+  }
+  else if constexpr(std::is_same_v<T, Eigen::Vector3d>)
+  {
+    form.addElement(mc_rtc::gui::FormPoint3DInput(description, IsRequired, get_value, IsInteractive));
+  }
+  else if constexpr(std::is_same_v<T, sva::PTransformd>)
+  {
+    form.addElement(mc_rtc::gui::FormTransformInput(description, IsRequired, get_value, IsInteractive));
+  }
+  else if constexpr(std::is_same_v<T, sva::ForceVecd>)
+  {
+    form.addElement(mc_rtc::gui::FormArrayInput(description, IsRequired, get_value));
+  }
+  else { static_assert(!std::is_same_v<T, T>, "addValueToForm must be implemented for this value type"); }
 }
 
 } // namespace details
@@ -308,8 +309,9 @@ struct MC_RTC_UTILS_DLLAPI Operations
   /** Build a Form to load the object */
   std::function<void(const void * self, FormElements & form)> buildForm = [](const void *, FormElements &) {};
 
-  /** Load from a Form */
-  std::function<void(void * self, const Configuration & in)> loadForm = [](void *, const Configuration &) {};
+  /** Convert a form configuration to the configuration expected by load */
+  std::function<void(const Configuration & in, Configuration & out)> formToStd = [](const Configuration &,
+                                                                                    Configuration &) {};
 
   /** Compare two objects */
   std::function<bool(const void * lhs, const void * rhs)> areEqual = [](const void *, const void *) { return true; };
@@ -380,24 +382,32 @@ struct MC_RTC_UTILS_DLLAPI Operations
       {
         std::vector<mc_rtc::Configuration> in_ = in(name);
         value.resize(in_.size());
-        for(size_t i = 0; i < in.size(); ++i) { value[i].load(in_[i]); }
+        for(size_t i = 0; i < in_.size(); ++i) { value[i].load(in_[i]); }
       }
       else { value = in(name).operator T(); }
     };
-    loadForm = [loadForm = loadForm, description](void * self, const mc_rtc::Configuration & in)
+    formToStd = [formToStd = formToStd, name, description](const Configuration & in, Configuration & out)
     {
-      loadForm(self, in);
-      T & value = static_cast<Schema *>(self)->*ptr;
+      formToStd(in, out);
       if(IsRequired || in.has(description))
       {
-        if constexpr(details::is_schema_v<T>) { value.loadForm(in(description)); }
+        if constexpr(details::is_schema_v<T>)
+        {
+          auto out_ = out.add(name);
+          T::formToStd(in(description), out_);
+        }
         else if constexpr(details::is_std_vector_schema_v<T>)
         {
-          std::vector<mc_rtc::Configuration> in_ = in(description);
-          value.resize(in_.size());
-          for(size_t i = 0; i < in_.size(); ++i) { value[i].loadForm(in_[i]); }
+          using SchemaT = typename T::value_type;
+          std::vector<Configuration> in_ = in(description);
+          auto out_ = out.array(name, in_.size());
+          for(size_t i = 0; i < in_.size(); ++i)
+          {
+            auto out_i = out_.object();
+            SchemaT::formToStd(in_[i], out_i);
+          }
         }
-        else { value = in(description).operator T(); }
+        else { out.add(name, in(description)); }
       }
     };
     buildForm = [buildForm = buildForm, description, choices](const void * self, Operations::FormElements & form)
@@ -439,23 +449,8 @@ const T & get_default(const T & default_,
 /** Empty schema used to simplify writing of the MC_RTC_SCHEMA macro, you do not need to inherit from that */
 struct EmptySchema
 {
-  inline static size_t schema_size() noexcept { return 0; }
-
-  inline static void save(mc_rtc::Configuration &) {}
-
-  inline static void write_impl(mc_rtc::MessagePackBuilder &) {}
-
-  inline static void load(const mc_rtc::Configuration &) {}
-
-  inline static void buildForm(Operations::FormElements &) {}
-
-  inline static void loadForm(const mc_rtc::Configuration &) {}
-
-  template<typename T>
-  inline static bool areEqual(const T &)
-  {
-    return true;
-  }
+  /** Empty ops used to simplify code generation */
+  inline static mc_rtc::schema::Operations ops_;
 };
 
 } // namespace details
@@ -466,24 +461,21 @@ struct EmptySchema
                                                                                                              \
 protected:                                                                                                   \
   inline static mc_rtc::schema::Operations ops_;                                                             \
+                                                                                                             \
   inline static size_t schema_size() noexcept                                                                \
   {                                                                                                          \
-    return ops_.values_count + BaseT::schema_size();                                                         \
+    return ops_.values_count + BaseT::ops_.values_count;                                                     \
   }                                                                                                          \
   inline void write_impl(mc_rtc::MessagePackBuilder & builder) const                                         \
   {                                                                                                          \
-    BaseT::write_impl(builder);                                                                              \
+    BaseT::ops_.write(this, builder);                                                                        \
     ops_.write(this, builder);                                                                               \
-  }                                                                                                          \
-  inline bool areEqual(const SchemaT & rhs) const                                                            \
-  {                                                                                                          \
-    return ops_.areEqual(this, &rhs);                                                                        \
   }                                                                                                          \
                                                                                                              \
 public:                                                                                                      \
   inline void save(mc_rtc::Configuration & out) const                                                        \
   {                                                                                                          \
-    BaseT::save(out);                                                                                        \
+    BaseT::ops_.save(this, out);                                                                             \
     ops_.save(this, out);                                                                                    \
   }                                                                                                          \
   inline void write(mc_rtc::MessagePackBuilder & builder) const                                              \
@@ -500,18 +492,18 @@ public:                                                                         
   }                                                                                                          \
   inline void load(const mc_rtc::Configuration & in)                                                         \
   {                                                                                                          \
-    BaseT::load(in);                                                                                         \
+    BaseT::ops_.load(this, in);                                                                              \
     ops_.load(this, in);                                                                                     \
   }                                                                                                          \
   inline void buildForm(mc_rtc::schema::Operations::FormElements & form) const                               \
   {                                                                                                          \
-    BaseT::buildForm(form);                                                                                  \
+    BaseT::ops_.buildForm(this, form);                                                                       \
     ops_.buildForm(this, form);                                                                              \
   }                                                                                                          \
-  inline void loadForm(const mc_rtc::Configuration & cfg)                                                    \
+  static inline void formToStd(const mc_rtc::Configuration & in, mc_rtc::Configuration & out)                \
   {                                                                                                          \
-    BaseT::loadForm(cfg);                                                                                    \
-    ops_.loadForm(this, cfg);                                                                                \
+    BaseT::ops_.formToStd(in, out);                                                                          \
+    ops_.formToStd(in, out);                                                                                 \
   }                                                                                                          \
   template<typename Callback = std::function<void()>>                                                        \
   inline void addToGUI(                                                                                      \
@@ -519,10 +511,12 @@ public:                                                                         
       Callback callback = []() {})                                                                           \
   {                                                                                                          \
     auto form = mc_rtc::gui::Form(name,                                                                      \
-                                  [this, callback](const mc_rtc::Configuration & cfg)                        \
+                                  [this, callback](const mc_rtc::Configuration & in)                         \
                                   {                                                                          \
+                                    mc_rtc::Configuration cfg;                                               \
+                                    formToStd(in, cfg);                                                      \
                                     /** FIXME If callback takes SchemaT do a copy **/                        \
-                                    loadForm(cfg);                                                           \
+                                    load(cfg);                                                               \
                                     callback();                                                              \
                                   });                                                                        \
     buildForm(form);                                                                                         \
@@ -530,7 +524,7 @@ public:                                                                         
   }                                                                                                          \
   inline bool operator==(const SchemaT & rhs) const                                                          \
   {                                                                                                          \
-    return BaseT::areEqual(rhs) && areEqual(rhs);                                                            \
+    return BaseT::ops_.areEqual(this, &rhs) && ops_.areEqual(this, &rhs);                                    \
   }                                                                                                          \
   inline bool operator!=(const SchemaT & rhs) const                                                          \
   {                                                                                                          \
