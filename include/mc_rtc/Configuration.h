@@ -85,9 +85,26 @@ struct _has_configuration_load_object
 };
 
 template<typename T>
-struct has_configuration_load_object : decltype(_has_configuration_load_object::test<T>(nullptr))
+inline constexpr bool has_configuration_load_object_v =
+    decltype(_has_configuration_load_object::test<T>(nullptr))::value;
+
+/** Helper trait to determine whether:
+ * static T T::load(const mc_rtc::Configuration &);
+ * is a valid function or not
+ */
+struct _has_static_load_configuration
 {
+  template<typename T,
+           typename = std::enable_if_t<std::is_same_v<decltype(T::load(std::declval<const Configuration &>())), T>>>
+  static std::true_type test(T * p);
+
+  template<typename T>
+  static std::false_type test(...);
 };
+
+template<typename T>
+inline constexpr bool has_static_load_configuration_v =
+    decltype(_has_static_load_configuration::test<T>(nullptr))::value;
 
 /** Helper trait to determine whether:
  * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&, Args ...);
@@ -108,9 +125,28 @@ struct _has_configuration_save_object
 };
 
 template<typename T, typename... Args>
-struct has_configuration_save_object : decltype(_has_configuration_save_object::test<T, Args...>(nullptr))
+inline constexpr bool has_configuration_save_object_v =
+    decltype(_has_configuration_save_object::test<T, Args...>(nullptr))::value;
+
+/** Helper trait to determine whether:
+ * mc_rtc::Configuration T::save(Args...) const
+ * is a valid method or not
+ */
+struct _has_configuration_save_method
 {
+  template<typename T,
+           typename... Args,
+           typename = std::enable_if_t<
+               std::is_same_v<decltype(std::declval<const T &>().save(std::declval<Args>()...)), Configuration>>>
+  static std::true_type test(T * p);
+
+  template<typename T, typename... Args>
+  static std::false_type test(...);
 };
+
+template<typename T, typename... Args>
+inline constexpr bool has_configuration_save_method_v =
+    decltype(_has_configuration_save_method::test<T, Args...>(nullptr))::value;
 
 #if MC_RTC_USE_VARIANT_WORKAROUND
 /** Converts a Configuration object to a variant based on the active idx obtained at runtime */
@@ -448,7 +484,7 @@ public:
       for(size_t i = 0; i < v.size(); ++i) { ret.push_back(Configuration(v[i])); }
       return ret;
     }
-    else { throw Configuration::Exception("Stored Json value is not a vector", v); }
+    throw Configuration::Exception("Stored Json value is not a vector", v);
   }
 
   /*! \brief Retrieve an array instance
@@ -466,7 +502,7 @@ public:
       for(size_t i = 0; i < N; ++i) { ret[i] = Configuration(v[i]); }
       return ret;
     }
-    else { throw Configuration::Exception("Stored Json value is not an array or its size is incorrect", v); }
+    throw Configuration::Exception("Stored Json value is not an array or its size is incorrect", v);
   }
 
   /*! \brief Retrieve a pair instance
@@ -478,7 +514,7 @@ public:
   operator std::pair<T1, T2>() const
   {
     if(v.isArray() && v.size() == 2) { return std::make_pair<T1, T2>(Configuration(v[0]), Configuration(v[1])); }
-    else { throw Configuration::Exception("Stored Json value is not an array of size 2", v); }
+    throw Configuration::Exception("Stored Json value is not an array of size 2", v);
   }
 
   /*! \brief Retrieve a string-indexed map instance
@@ -501,7 +537,7 @@ public:
       }
       return ret;
     }
-    else { throw Configuration::Exception("Stored Json value is not an object", v); }
+    throw Configuration::Exception("Stored Json value is not an object", v);
   }
 
   /*! \brief Retrieve a set of objects
@@ -523,7 +559,7 @@ public:
       }
       return ret;
     }
-    else { throw Configuration::Exception("Stored Json value is not an array", v); }
+    throw Configuration::Exception("Stored Json value is not an array", v);
   }
 
   /*! \brief Retrieve an unordered set of objects
@@ -545,7 +581,7 @@ public:
       }
       return ret;
     }
-    else { throw Configuration::Exception("Stored Json value is not an array", v); }
+    throw Configuration::Exception("Stored Json value is not an array", v);
   }
 
   /** Retrieve a variant object
@@ -596,10 +632,14 @@ public:
    * Requires:
    * - T mc_rtc::ConfigurationLoader<T>::load(const mc_rtc::Configuration &) should exist
    */
-  template<typename T, typename std::enable_if<internal::has_configuration_load_object<T>::value, int>::type = 0>
+  template<typename T,
+           typename std::enable_if<internal::has_configuration_load_object_v<T>
+                                       || internal::has_static_load_configuration_v<T>,
+                                   int>::type = 0>
   operator T() const
   {
-    return ConfigurationLoader<T>::load(*this);
+    if constexpr(internal::has_configuration_load_object_v<T>) { return ConfigurationLoader<T>::load(*this); }
+    else { return T::load(*this); }
   }
 
   /*! \brief Retrieves an optional<T>
@@ -1265,10 +1305,16 @@ public:
    */
   template<typename T,
            typename... Args,
-           typename std::enable_if<internal::has_configuration_save_object<T, Args...>::value, int>::type = 0>
+           typename std::enable_if<internal::has_configuration_save_object_v<T, Args...>
+                                       || internal::has_configuration_save_method_v<T, Args...>,
+                                   int>::type = 0>
   void push(const T & value, Args &&... args)
   {
-    push(mc_rtc::ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
+    if constexpr(internal::has_configuration_save_object_v<T, Args...>)
+    {
+      push(mc_rtc::ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
+    }
+    else { push(value.save(std::forward<Args>(args)...)); }
   }
 
   /** Integral type conversions
@@ -1440,10 +1486,16 @@ public:
    */
   template<typename T,
            typename... Args,
-           typename std::enable_if<internal::has_configuration_save_object<T, Args...>::value, int>::type = 0>
+           typename std::enable_if<internal::has_configuration_save_object_v<T, Args...>
+                                       || internal::has_configuration_save_method_v<T, Args...>,
+                                   int>::type = 0>
   void add(const std::string & key, const T & value, Args &&... args)
   {
-    add(key, ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
+    if constexpr(internal::has_configuration_save_object_v<T, Args...>)
+    {
+      add(key, ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
+    }
+    else { add(key, value.save(std::forward<Args>(args)...)); }
   }
 
   /*! \brief Push a vector into the JSON document
