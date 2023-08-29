@@ -1169,11 +1169,17 @@ unsigned int mc_rbdyn::Robot::robotIndex() const
 
 void Robot::forwardKinematics()
 {
-  rbd::forwardKinematics(mb(), mbc());
+  forwardKinematics(mbc());
 }
 void Robot::forwardKinematics(rbd::MultiBodyConfig & mbc) const
 {
   rbd::forwardKinematics(mb(), mbc);
+
+  for(auto & cvx : convexes_)
+  {
+    unsigned int index = static_cast<unsigned int>(mb().bodyIndexByName(cvx.second.first));
+    sch::mc_rbdyn::transform(*(cvx.second.second.get()), mbc.bodyPosW[index]);
+  }
 }
 
 void Robot::forwardVelocity()
