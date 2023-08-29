@@ -16,6 +16,14 @@ namespace bfs = boost::filesystem;
 #include <fstream>
 #include <iostream>
 
+bool silence_exception(const mc_rtc::Configuration::Exception & e)
+{
+  e.silence();
+  return true;
+}
+#define MC_RTC_CHECK_THROW(statement) \
+  BOOST_CHECK_EXCEPTION(statement, mc_rtc::Configuration::Exception, silence_exception)
+
 namespace Eigen
 {
 
@@ -176,9 +184,11 @@ std::string sampleConfig2(bool fromDisk, bool json)
 void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bool json2)
 {
   /*! Check that accessing a non-existing entry throws */
-  BOOST_CHECK_THROW(config("NONE"), mc_rtc::Configuration::Exception);
+  MC_RTC_CHECK_THROW(config("NONE"));
 
   BOOST_CHECK(config("NONE", std::optional<mc_rtc::Configuration>{}) == std::nullopt);
+
+  BOOST_CHECK(config.find("NONE") == std::nullopt);
 
   /* int tests */
   {
@@ -227,6 +237,11 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     auto k = config("double", std::optional<int>{std::nullopt});
     BOOST_CHECK(k == std::nullopt);
+
+    auto l = config.find<int>("int");
+    BOOST_CHECK(l.has_value() && *l == 42);
+
+    MC_RTC_CHECK_THROW([[maybe_unused]] auto m = config.find<int>("double"));
   }
 
   /* unsigned int tests */
@@ -253,9 +268,9 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     BOOST_CHECK_EQUAL(d, 10);
 
     /*! Check int to unsigned int does not happen */
-    unsigned int h = 10;
-    config("sint", h);
-    BOOST_CHECK_EQUAL(h, 10);
+    unsigned int e = 10;
+    config("sint", e);
+    BOOST_CHECK_EQUAL(e, 10);
 
     /*! Access a unsigned int from a dict */
     unsigned int f = 0;
@@ -266,6 +281,11 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     unsigned int g = 0;
     config("dict")("int", g);
     BOOST_CHECK_EQUAL(g, 42);
+
+    auto h = config.find<unsigned int>("int");
+    BOOST_CHECK(h.has_value() && *h == 42);
+
+    MC_RTC_CHECK_THROW([[maybe_unused]] auto i = config.find<unsigned int>("double"));
   }
 
   /* double tests */
@@ -349,7 +369,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
-    BOOST_CHECK_THROW(Eigen::Vector2d d = config("v6d"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(Eigen::Vector2d d = config("v6d"));
+    MC_RTC_CHECK_THROW(auto d = config.find<Eigen::Vector2d>("v6d"));
     MC_RTC_diagnostic_pop
 
     Eigen::Vector2d e = Eigen::Vector2d::Zero();
@@ -380,7 +401,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
-    BOOST_CHECK_THROW(mc_rbdyn::Gains2d d = config("v6d"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(mc_rbdyn::Gains2d d = config("v6d"));
+    MC_RTC_CHECK_THROW(auto d = config.find<mc_rbdyn::Gains2d>("v6d"));
     MC_RTC_diagnostic_pop
 
     mc_rbdyn::Gains2d e = mc_rbdyn::Gains2d::Zero();
@@ -424,7 +446,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
-    BOOST_CHECK_THROW(Eigen::Vector3d d = config("v6d"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(Eigen::Vector3d d = config("v6d"));
+    MC_RTC_CHECK_THROW(auto d = config.find<Eigen::Vector3d>("v6d"));
     MC_RTC_diagnostic_pop
 
     Eigen::Vector3d e = Eigen::Vector3d::Zero();
@@ -455,7 +478,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
-    BOOST_CHECK_THROW(mc_rbdyn::Gains3d d = config("v6d"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(mc_rbdyn::Gains3d d = config("v6d"));
+    MC_RTC_CHECK_THROW(auto d = config.find<mc_rbdyn::Gains3d>("v6d"));
     MC_RTC_diagnostic_pop
 
     mc_rbdyn::Gains3d e = mc_rbdyn::Gains3d::Zero();
@@ -499,7 +523,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
-    BOOST_CHECK_THROW(Eigen::Vector4d d = config("v6d"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(Eigen::Vector4d d = config("v6d"));
+    MC_RTC_CHECK_THROW(auto d = config.find<Eigen::Vector4d>("v6d"));
     MC_RTC_diagnostic_pop
 
     Eigen::Vector4d e = Eigen::Vector4d::Zero();
@@ -530,7 +555,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
-    BOOST_CHECK_THROW(Eigen::Vector6d d = config("v3d"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(Eigen::Vector6d d = config("v3d"));
+    MC_RTC_CHECK_THROW(auto d = config.find<Eigen::Vector6d>("v3d"));
     MC_RTC_diagnostic_pop
 
     Eigen::Vector6d e = Eigen::Vector6d::Zero();
@@ -561,7 +587,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
-    BOOST_CHECK_THROW(mc_rbdyn::Gains6d d = config("v3d"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(mc_rbdyn::Gains6d d = config("v3d"));
+    MC_RTC_CHECK_THROW(auto d = config.find<mc_rbdyn::Gains6d>("v3d"));
     MC_RTC_diagnostic_pop
 
     mc_rbdyn::Gains6d e = mc_rbdyn::Gains6d::Zero();
@@ -611,7 +638,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     Eigen::VectorXd d = config("vXd");
     BOOST_CHECK_EQUAL(d, ref);
 
-    BOOST_CHECK_THROW(Eigen::VectorXd e = config("int"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(Eigen::VectorXd e = config("int"));
+    MC_RTC_CHECK_THROW(auto d = config.find<Eigen::VectorXd>("int"));
 
     Eigen::VectorXd f = Eigen::VectorXd::Zero(0);
     f = config("dict")("v6d");
@@ -755,8 +783,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     config("dict")("doubleDoublePair", c);
     BOOST_CHECK(c == ref);
 
-    BOOST_CHECK_THROW(c = (std::pair<double, double>)config("quat"), mc_rtc::Configuration::Exception);
-    BOOST_CHECK_THROW(c = (std::pair<double, double>)config("doubleStringPair"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(c = (std::pair<double, double>)config("quat"));
+    MC_RTC_CHECK_THROW(c = (std::pair<double, double>)config("doubleStringPair"));
   }
 
   /* pair<double, string> test */
@@ -992,8 +1020,10 @@ BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
   BOOST_CHECK(config_test("a3_v") == ref_a3_v);
   BOOST_CHECK(config_test("a3_a") == ref_a3_a);
   BOOST_REQUIRE(config_test.has("dict"));
+  BOOST_REQUIRE(config_test.find("dict").has_value());
   BOOST_CHECK(config_test("dict")("int") == ref_int);
   BOOST_REQUIRE(config_test.has("dict2"));
+  BOOST_REQUIRE(config_test.find("dict2").has_value());
   BOOST_CHECK(config_test("dict2")("double_v") == ref_double_v);
 
   /* Save a part of the configuration */
@@ -1210,10 +1240,10 @@ BOOST_AUTO_TEST_CASE(TestNestedLoading)
   mc_rtc::Configuration c3;
   c3.load(c2("nested")("b"));
   BOOST_REQUIRE(c3 == true);
-  BOOST_CHECK_THROW(c3.add("nested"), mc_rtc::Configuration::Exception);
+  MC_RTC_CHECK_THROW(c3.add("nested"));
   c1.load(c2("nested")("b"));
   BOOST_REQUIRE(c1 == true);
-  BOOST_CHECK_THROW(c1.add("nested"), mc_rtc::Configuration::Exception);
+  MC_RTC_CHECK_THROW(c1.add("nested"));
 }
 
 BOOST_AUTO_TEST_CASE(TestConfigurartionRemove)

@@ -813,6 +813,32 @@ public:
    */
   Configuration operator()(const std::string & key) const;
 
+  /*! \brief Returns the Configuration entry if it exists, std::nullopt otherwise
+   *
+   * \param Key key used to store the value
+   *
+   * \returns Configuration entry if it exists, std::nullopt otherwise
+   */
+  std::optional<Configuration> find(const std::string & key) const;
+
+  /*! \brief Returns the value stored within the configuration if it exists, std::nullopt otherwise
+   *
+   * \param key Key used to store the value
+   *
+   * \returns Value if key is in the configuration, std::nullopt otherwise
+   *
+   * \tparam T Type of the entry retrieved
+   *
+   * \throws If the conversion to \tparam T fails
+   */
+  template<typename T>
+  std::optional<T> find(const std::string & key) const
+  {
+    auto maybe_cfg = find(key);
+    if(maybe_cfg) { return maybe_cfg->operator T(); }
+    return std::nullopt;
+  }
+
   /*! \brief Returns true if the underlying array or underlying object is empty */
   bool empty() const;
 

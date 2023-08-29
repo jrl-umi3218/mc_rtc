@@ -200,6 +200,22 @@ Configuration Configuration::operator()(const std::string & key) const
   throw Exception("No entry named " + key + " in the configuration", v);
 }
 
+std::optional<Configuration> Configuration::find(const std::string & key) const
+{
+  assert(v.value_);
+  auto * value = static_cast<internal::RapidJSONValue *>(v.value_);
+  if(v.isObject())
+  {
+    auto ret = value->FindMember(key);
+    if(ret != value->MemberEnd())
+    {
+      internal::RapidJSONValue * kvalue = &(ret->value);
+      return Configuration(Configuration::Json{static_cast<void *>(kvalue), v.doc_});
+    }
+  }
+  return std::nullopt;
+}
+
 size_t Configuration::size() const
 {
   if(v.isArray()) { return v.size(); }
