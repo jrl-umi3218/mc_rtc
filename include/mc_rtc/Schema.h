@@ -350,21 +350,7 @@ struct MC_RTC_UTILS_DLLAPI Operations
     {
       save(self, out);
       const T & value = static_cast<const Schema *>(self)->*ptr;
-      if constexpr(details::is_schema_v<T>)
-      {
-        auto out_ = out.add(name);
-        value.save(out_);
-      }
-      else if constexpr(details::is_std_vector_schema_v<T>)
-      {
-        auto out_ = out.array(name, value.size());
-        for(const auto & v : value)
-        {
-          auto obj_ = out_.object();
-          v.save(obj_);
-        }
-      }
-      else { out.add(name, value); }
+      out.add(name, value);
     };
     write = [write = write, description](const void * self, mc_rtc::MessagePackBuilder & builder)
     {
@@ -377,14 +363,8 @@ struct MC_RTC_UTILS_DLLAPI Operations
     {
       load(self, in);
       T & value = static_cast<Schema *>(self)->*ptr;
-      if constexpr(details::is_schema_v<T>) { value.load(in(name)); }
-      else if constexpr(details::is_std_vector_schema_v<T>)
-      {
-        std::vector<mc_rtc::Configuration> in_ = in(name);
-        value.resize(in_.size());
-        for(size_t i = 0; i < in_.size(); ++i) { value[i].load(in_[i]); }
-      }
-      else { value = in(name).operator T(); }
+      if(in.has(name)) { value = in(name).operator T(); }
+      else if constexpr(IsRequired) { mc_rtc::log::error_and_throw("{} is required"); }
     };
     formToStd = [formToStd = formToStd, name, description](const Configuration & in, Configuration & out)
     {
@@ -478,6 +458,12 @@ public:                                                                         
     BaseT::ops_.save(this, out);                                                                             \
     ops_.save(this, out);                                                                                    \
   }                                                                                                          \
+  inline mc_rtc::Configuration toConfiguration() const                                                       \
+  {                                                                                                          \
+    mc_rtc::Configuration out;                                                                               \
+    save(out);                                                                                               \
+    return out;                                                                                              \
+  }                                                                                                          \
   inline void write(mc_rtc::MessagePackBuilder & builder) const                                              \
   {                                                                                                          \
     builder.start_map(schema_size());                                                                        \
@@ -494,6 +480,12 @@ public:                                                                         
   {                                                                                                          \
     BaseT::ops_.load(this, in);                                                                              \
     ops_.load(this, in);                                                                                     \
+  }                                                                                                          \
+  inline static SchemaT fromConfiguration(const mc_rtc::Configuration & in)                                  \
+  {                                                                                                          \
+    SchemaT out;                                                                                             \
+    out.load(in);                                                                                            \
+    return out;                                                                                              \
   }                                                                                                          \
   inline void buildForm(mc_rtc::schema::Operations::FormElements & form) const                               \
   {                                                                                                          \
