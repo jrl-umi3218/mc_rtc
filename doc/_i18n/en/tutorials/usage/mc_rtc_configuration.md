@@ -305,12 +305,12 @@ struct Foo
   // ...
 
   // This will be called to load your object from a Configuration object
-  static Foo load(const mc_rtc::Configuration & in);
+  static Foo fromConfiguration(const mc_rtc::Configuration & in);
 
   // This will be called save your object to a Configuration object
-  mc_rtc::Configuration save() const;
+  mc_rtc::Configuration toConfiguration() const;
 
   // This also supports arguments
-  mc_rtc::Configuration save(bool verbose) const;
+  mc_rtc::Configuration toConfiguration(bool verbose) const;
 };
 ```

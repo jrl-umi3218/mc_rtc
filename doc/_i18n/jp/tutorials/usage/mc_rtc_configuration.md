@@ -279,11 +279,12 @@ struct Foo
   // ...
 
   // このメソッドは、オブジェクトをConfigurationオブジェクトから読み込むために呼び出されます
-  static Foo load(const mc_rtc::Configuration & in);
+  static Foo fromConfiguration(const mc_rtc::Configuration & in);
 
   // このメソッドは、オブジェクトをConfigurationオブジェクトに保存するために呼び出されます
-  mc_rtc::Configuration save() const;
+  mc_rtc::Configuration toConfiguration() const;
 
   // これは引数もサポートしています
-  mc_rtc::Configuration save(bool verbose) const;
+  mc_rtc::Configuration toConfiguration(bool verbose) const;
 };
+```

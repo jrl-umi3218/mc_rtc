@@ -89,13 +89,14 @@ inline constexpr bool has_configuration_load_object_v =
     decltype(_has_configuration_load_object::test<T>(nullptr))::value;
 
 /** Helper trait to determine whether:
- * static T T::load(const mc_rtc::Configuration &);
+ * static T T::fromConfiguration(const mc_rtc::Configuration &);
  * is a valid function or not
  */
-struct _has_static_load_configuration
+struct _has_static_fromConfiguration
 {
   template<typename T,
-           typename = std::enable_if_t<std::is_same_v<decltype(T::load(std::declval<const Configuration &>())), T>>>
+           typename = std::enable_if_t<
+               std::is_same_v<decltype(T::fromConfiguration(std::declval<const Configuration &>())), T>>>
   static std::true_type test(T * p);
 
   template<typename T>
@@ -103,8 +104,7 @@ struct _has_static_load_configuration
 };
 
 template<typename T>
-inline constexpr bool has_static_load_configuration_v =
-    decltype(_has_static_load_configuration::test<T>(nullptr))::value;
+inline constexpr bool has_static_fromConfiguration_v = decltype(_has_static_fromConfiguration::test<T>(nullptr))::value;
 
 /** Helper trait to determine whether:
  * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&, Args ...);
@@ -129,15 +129,16 @@ inline constexpr bool has_configuration_save_object_v =
     decltype(_has_configuration_save_object::test<T, Args...>(nullptr))::value;
 
 /** Helper trait to determine whether:
- * mc_rtc::Configuration T::save(Args...) const
+ * mc_rtc::Configuration T::toConfiguration(Args...) const
  * is a valid method or not
  */
-struct _has_configuration_save_method
+struct _has_toConfiguration_method
 {
-  template<typename T,
-           typename... Args,
-           typename = std::enable_if_t<
-               std::is_same_v<decltype(std::declval<const T &>().save(std::declval<Args>()...)), Configuration>>>
+  template<
+      typename T,
+      typename... Args,
+      typename = std::enable_if_t<
+          std::is_same_v<decltype(std::declval<const T &>().toConfiguration(std::declval<Args>()...)), Configuration>>>
   static std::true_type test(T * p);
 
   template<typename T, typename... Args>
@@ -145,8 +146,8 @@ struct _has_configuration_save_method
 };
 
 template<typename T, typename... Args>
-inline constexpr bool has_configuration_save_method_v =
-    decltype(_has_configuration_save_method::test<T, Args...>(nullptr))::value;
+inline constexpr bool has_toConfiguration_method_v =
+    decltype(_has_toConfiguration_method::test<T, Args...>(nullptr))::value;
 
 #if MC_RTC_USE_VARIANT_WORKAROUND
 /** Converts a Configuration object to a variant based on the active idx obtained at runtime */
@@ -634,12 +635,12 @@ public:
    */
   template<typename T,
            typename std::enable_if<internal::has_configuration_load_object_v<T>
-                                       || internal::has_static_load_configuration_v<T>,
+                                       || internal::has_static_fromConfiguration_v<T>,
                                    int>::type = 0>
   operator T() const
   {
     if constexpr(internal::has_configuration_load_object_v<T>) { return ConfigurationLoader<T>::load(*this); }
-    else { return T::load(*this); }
+    else { return T::fromConfiguration(*this); }
   }
 
   /*! \brief Retrieves an optional<T>
@@ -1306,7 +1307,7 @@ public:
   template<typename T,
            typename... Args,
            typename std::enable_if<internal::has_configuration_save_object_v<T, Args...>
-                                       || internal::has_configuration_save_method_v<T, Args...>,
+                                       || internal::has_toConfiguration_method_v<T, Args...>,
                                    int>::type = 0>
   void push(const T & value, Args &&... args)
   {
@@ -1314,7 +1315,7 @@ public:
     {
       push(mc_rtc::ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
     }
-    else { push(value.save(std::forward<Args>(args)...)); }
+    else { push(value.toConfiguration(std::forward<Args>(args)...)); }
   }
 
   /** Integral type conversions
@@ -1487,7 +1488,7 @@ public:
   template<typename T,
            typename... Args,
            typename std::enable_if<internal::has_configuration_save_object_v<T, Args...>
-                                       || internal::has_configuration_save_method_v<T, Args...>,
+                                       || internal::has_toConfiguration_method_v<T, Args...>,
                                    int>::type = 0>
   void add(const std::string & key, const T & value, Args &&... args)
   {
@@ -1495,7 +1496,7 @@ public:
     {
       add(key, ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
     }
-    else { add(key, value.save(std::forward<Args>(args)...)); }
+    else { add(key, value.toConfiguration(std::forward<Args>(args)...)); }
   }
 
   /*! \brief Push a vector into the JSON document

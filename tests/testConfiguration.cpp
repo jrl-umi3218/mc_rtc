@@ -1044,7 +1044,7 @@ struct Foo
 {
   Foo() {}
   Foo(const std::string & name, double d) : name(name), d(d) {}
-  std::string name = "";
+  std::string name;
   double d = 0.0;
   bool operator==(const Foo & rhs) const { return rhs.name == this->name && rhs.d == this->d; }
 };
@@ -1073,13 +1073,13 @@ struct Bar
 {
   Bar() {}
   Bar(const std::string & name, double d) : name(name), d(d) {}
-  std::string name = "";
+  std::string name;
   double d = 0.0;
   inline bool operator==(const Bar & rhs) const { return rhs.name == this->name && rhs.d == this->d; }
 
-  static Bar load(const mc_rtc::Configuration & config) { return {config("name"), config("d")}; }
+  static Bar fromConfiguration(const mc_rtc::Configuration & config) { return {config("name"), config("d")}; }
 
-  mc_rtc::Configuration save() const
+  mc_rtc::Configuration toConfiguration() const
   {
     mc_rtc::Configuration config;
     config.add("name", name);
@@ -1090,13 +1090,13 @@ struct Bar
 
 } // namespace test
 
-static_assert(!mc_rtc::internal::has_static_load_configuration_v<double>);
-static_assert(!mc_rtc::internal::has_static_load_configuration_v<Foo>);
-static_assert(mc_rtc::internal::has_static_load_configuration_v<test::Bar>);
+static_assert(!mc_rtc::internal::has_static_fromConfiguration_v<double>);
+static_assert(!mc_rtc::internal::has_static_fromConfiguration_v<Foo>);
+static_assert(mc_rtc::internal::has_static_fromConfiguration_v<test::Bar>);
 
-static_assert(!mc_rtc::internal::has_configuration_save_method_v<double>);
-static_assert(!mc_rtc::internal::has_configuration_save_method_v<Foo>);
-static_assert(mc_rtc::internal::has_configuration_save_method_v<test::Bar>);
+static_assert(!mc_rtc::internal::has_toConfiguration_method_v<double>);
+static_assert(!mc_rtc::internal::has_toConfiguration_method_v<Foo>);
+static_assert(mc_rtc::internal::has_toConfiguration_method_v<test::Bar>);
 
 using user_types = boost::mpl::list<Foo, test::Bar>;
 
@@ -1115,7 +1115,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(TestUserDefinedConversions, T, user_types)
     }
     else
     {
-      T f1 = T::load(config("foo"));
+      T f1 = T::fromConfiguration(config("foo"));
       return f1;
     }
   }();
