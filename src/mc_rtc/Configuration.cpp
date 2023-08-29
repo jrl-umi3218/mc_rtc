@@ -2,9 +2,12 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_rbdyn/rpy_utils.h>
 #include <mc_rtc/Configuration.h>
+
+#include <mc_rtc/Default.h>
 #include <mc_rtc/logging.h>
+
+#include <mc_rbdyn/rpy_utils.h>
 
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/filesystem.hpp>
@@ -20,6 +23,14 @@ inline std::string to_lower(const std::string & in)
 {
   return boost::algorithm::to_lower_copy(in);
 }
+
+template<typename T>
+T cast_or_default(const std::optional<mc_rtc::Configuration> & opt)
+{
+  if(opt) { return opt->operator T(); }
+  return mc_rtc::Default<T>::value;
+}
+
 } // namespace
 
 namespace mc_rtc
@@ -111,6 +122,22 @@ Configuration::Json Configuration::Json::operator[](size_t idx) const
   return {static_cast<void *>(&(*value)[idx]), doc_};
 }
 
+std::optional<Configuration::Json> Configuration::Json::find(const std::string & key) const
+{
+  assert(value_);
+  auto * value = static_cast<internal::RapidJSONValue *>(value_);
+  if(value->IsObject())
+  {
+    auto it = value->FindMember(key);
+    if(it != value->MemberEnd())
+    {
+      internal::RapidJSONValue * kvalue = &(it->value);
+      return Configuration::Json{static_cast<void *>(kvalue), doc_};
+    }
+  }
+  return std::nullopt;
+}
+
 Configuration::Json Configuration::Json::operator[](const std::string & key) const
 {
   assert(value_);
@@ -196,23 +223,15 @@ bool Configuration::has(const std::string & key) const
 
 Configuration Configuration::operator()(const std::string & key) const
 {
-  if(has(key)) { return Configuration(v[key]); }
+  auto out = find(key);
+  if(out) { return *out; }
   throw Exception("No entry named " + key + " in the configuration", v);
 }
 
 std::optional<Configuration> Configuration::find(const std::string & key) const
 {
-  assert(v.value_);
-  auto * value = static_cast<internal::RapidJSONValue *>(v.value_);
-  if(v.isObject())
-  {
-    auto ret = value->FindMember(key);
-    if(ret != value->MemberEnd())
-    {
-      internal::RapidJSONValue * kvalue = &(ret->value);
-      return Configuration(Configuration::Json{static_cast<void *>(kvalue), v.doc_});
-    }
-  }
+  auto out = v.find(key);
+  if(out) { return Configuration(*out); }
   return std::nullopt;
 }
 
@@ -507,21 +526,9 @@ Configuration::operator Eigen::MatrixXd() const
 
 Configuration::operator sva::PTransformd() const
 {
-  if(has("rotation"))
-  {
-    Eigen::Matrix3d r = (*this)("rotation");
-    if(has("translation"))
-    {
-      Eigen::Vector3d t = (*this)("translation");
-      return {r, t};
-    }
-    return {r};
-  }
-  if(has("translation"))
-  {
-    Eigen::Vector3d t = (*this)("translation");
-    return {t};
-  }
+  auto rot = find("rotation");
+  auto trans = find("translation");
+  if(rot || trans) { return {cast_or_default<Eigen::Matrix3d>(rot), cast_or_default<Eigen::Vector3d>(trans)}; }
   if(size() == 7)
   {
     const auto & config = *this;
@@ -540,7 +547,9 @@ Configuration::operator sva::PTransformd() const
 
 Configuration::operator sva::ForceVecd() const
 {
-  if(has("couple") && has("force")) { return {(*this)("couple"), (*this)("force")}; }
+  auto couple = find("couple");
+  auto force = find("force");
+  if(couple || force) { return {cast_or_default<Eigen::Vector3d>(couple), cast_or_default<Eigen::Vector3d>(force)}; }
   if(size() == 6)
   {
     const auto & config = *this;
@@ -551,7 +560,12 @@ Configuration::operator sva::ForceVecd() const
 
 Configuration::operator sva::MotionVecd() const
 {
-  if(has("angular") && has("linear")) { return {(*this)("angular"), (*this)("linear")}; }
+  auto angular = find("angular");
+  auto linear = find("linear");
+  if(angular || linear)
+  {
+    return {cast_or_default<Eigen::Vector3d>(angular), cast_or_default<Eigen::Vector3d>(linear)};
+  }
   if(size() == 6)
   {
     const auto & config = *this;
@@ -562,10 +576,11 @@ Configuration::operator sva::MotionVecd() const
 
 Configuration::operator sva::ImpedanceVecd() const
 {
-  if(has("angular") && has("linear"))
+  auto angular = find("angular");
+  auto linear = find("linear");
+  if(angular || linear)
   {
-    Eigen::Vector3d angular = (*this)("angular");
-    return {angular, (*this)("linear")};
+    return {cast_or_default<Eigen::Vector3d>(angular), cast_or_default<Eigen::Vector3d>(linear)};
   }
   if(size() == 6)
   {
@@ -855,7 +870,8 @@ void Configuration::add(const std::string & key, const Configuration & value)
   auto & json = *static_cast<internal::RapidJSONValue *>(v.value_);
   internal::RapidJSONValue key_(key.c_str(), allocator);
   internal::RapidJSONValue value_(*static_cast<internal::RapidJSONValue *>(value.v.value_), allocator);
-  if(has(key)) { json.RemoveMember(key.c_str()); }
+  auto prev = json.FindMember(key_);
+  if(prev != json.MemberEnd()) { json.RemoveMember(prev); }
   json.AddMember(key_, value_, allocator);
 }
 
@@ -867,7 +883,8 @@ Configuration Configuration::add(const std::string & key)
   auto & json = *static_cast<internal::RapidJSONValue *>(v.value_);
   internal::RapidJSONValue key_(key.c_str(), allocator);
   internal::RapidJSONValue value(rapidjson::kObjectType);
-  if(has(key)) { json.RemoveMember(key.c_str()); }
+  auto prev = json.FindMember(key_);
+  if(prev != json.MemberEnd()) { json.RemoveMember(prev); }
   json.AddMember(key_, value, allocator);
   return (*this)(key);
 }
@@ -880,7 +897,8 @@ Configuration Configuration::array(const std::string & key, size_t size)
   internal::RapidJSONValue key_(key.c_str(), allocator);
   internal::RapidJSONValue value(rapidjson::kArrayType);
   if(size) { value.Reserve(size, allocator); }
-  if(has(key)) { json.RemoveMember(key.c_str()); }
+  auto prev = json.FindMember(key_);
+  if(prev != json.MemberEnd()) { json.RemoveMember(prev); }
   json.AddMember(key_, value, allocator);
   return (*this)(key);
 }

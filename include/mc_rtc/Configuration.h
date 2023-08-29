@@ -190,6 +190,8 @@ private:
      * \throws If key does not belong in keys()
      */
     Json operator[](const std::string & key) const;
+    /** Try to find an element at the provided key */
+    std::optional<Json> find(const std::string & key) const;
     /** True if the value is a string */
     bool isString() const noexcept;
     /** True if the value is numeric */
