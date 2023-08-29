@@ -5,7 +5,7 @@
 
 BOOST_AUTO_TEST_CASE(TestDefault)
 {
-  using namespace mc_rtc::schema::details;
+  using namespace mc_rtc;
   // Arithmetic types default to zero
   static_assert(Default<int>::value == 0);
   static_assert(Default<uint64_t>::value == 0);

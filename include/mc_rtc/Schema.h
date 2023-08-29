@@ -1,6 +1,7 @@
 #pragma once
 
 #include <mc_rtc/Configuration.h>
+#include <mc_rtc/Default.h>
 #include <mc_rtc/gui/Form.h>
 #include <mc_rtc/gui/StateBuilder.h>
 
@@ -65,86 +66,6 @@ inline constexpr bool is_std_vector_schema_v = []()
   if constexpr(is_std_vector_v<T>) { return is_schema_v<typename T::value_type>; }
   else { return false; }
 }();
-
-/** Helper to get a default value for a given type */
-template<typename T, typename Enable = void>
-struct Default
-{
-  static_assert(!std::is_same_v<T, T>, "Must be specialized");
-};
-
-template<typename T>
-struct Default<T, std::enable_if_t<is_schema_v<T>>>
-{
-  inline static const T value = {};
-};
-
-template<typename T>
-struct Default<T, std::enable_if_t<is_std_vector_v<T>>>
-{
-  inline static const T value = {};
-};
-
-template<typename T>
-struct Default<T, std::enable_if_t<std::is_arithmetic_v<T>>>
-{
-  inline static constexpr T value = 0;
-};
-
-template<typename Scalar, int N, int Options, int MaxRows, int MaxCols>
-struct Default<Eigen::Matrix<Scalar, N, 1, Options, MaxRows, MaxCols>, std::enable_if_t<(N > 0)>>
-{
-  inline static const Eigen::Matrix<Scalar, N, 1, Options, MaxRows, MaxCols> value =
-      Eigen::Matrix<Scalar, N, 1, Options, MaxRows, MaxCols>::Zero();
-};
-
-template<typename Scalar, int N, int Options, int MaxRows, int MaxCols>
-struct Default<Eigen::Matrix<Scalar, N, N, Options, MaxRows, MaxCols>, std::enable_if_t<(N > 1)>>
-{
-  inline static const Eigen::Matrix<Scalar, N, N, Options, MaxRows, MaxCols> value =
-      Eigen::Matrix<Scalar, N, N, Options, MaxRows, MaxCols>::Identity();
-};
-
-template<>
-struct Default<sva::PTransformd>
-{
-  inline static const sva::PTransformd value = sva::PTransformd::Identity();
-};
-
-template<>
-struct Default<sva::MotionVecd>
-{
-  inline static const sva::MotionVecd value = sva::MotionVecd::Zero();
-};
-
-template<>
-struct Default<sva::ForceVecd>
-{
-  inline static const sva::ForceVecd value = sva::ForceVecd::Zero();
-};
-
-template<>
-struct Default<sva::ImpedanceVecd>
-{
-  inline static const sva::ImpedanceVecd value = sva::ImpedanceVecd::Zero();
-};
-
-template<>
-struct Default<sva::AdmittanceVecd>
-{
-  inline static const sva::AdmittanceVecd value = sva::AdmittanceVecd::Zero();
-};
-
-template<>
-struct Default<std::string>
-{
-  inline static const std::string value;
-};
-
-template<typename T, typename... Others>
-struct Default<std::variant<T, Others...>> : public Default<T>
-{
-};
 
 template<typename T, bool IsRequired, bool IsInteractive, bool HasChoices = false, bool IsStatic = false>
 void addValueToForm(const T & value,
@@ -435,130 +356,6 @@ struct EmptySchema
 
 } // namespace details
 
-#define MC_RTC_SCHEMA(SchemaT, BaseT)                                                                        \
-  /** Tag to detect Schema objects */                                                                        \
-  using is_schema_t = std::true_type;                                                                        \
-                                                                                                             \
-protected:                                                                                                   \
-  inline static mc_rtc::schema::Operations ops_;                                                             \
-                                                                                                             \
-  inline static size_t schema_size() noexcept                                                                \
-  {                                                                                                          \
-    return ops_.values_count + BaseT::ops_.values_count;                                                     \
-  }                                                                                                          \
-  inline void write_impl(mc_rtc::MessagePackBuilder & builder) const                                         \
-  {                                                                                                          \
-    BaseT::ops_.write(this, builder);                                                                        \
-    ops_.write(this, builder);                                                                               \
-  }                                                                                                          \
-                                                                                                             \
-public:                                                                                                      \
-  inline void save(mc_rtc::Configuration & out) const                                                        \
-  {                                                                                                          \
-    BaseT::ops_.save(this, out);                                                                             \
-    ops_.save(this, out);                                                                                    \
-  }                                                                                                          \
-  inline mc_rtc::Configuration toConfiguration() const                                                       \
-  {                                                                                                          \
-    mc_rtc::Configuration out;                                                                               \
-    save(out);                                                                                               \
-    return out;                                                                                              \
-  }                                                                                                          \
-  inline void write(mc_rtc::MessagePackBuilder & builder) const                                              \
-  {                                                                                                          \
-    builder.start_map(schema_size());                                                                        \
-    write_impl(builder);                                                                                     \
-    builder.finish_map();                                                                                    \
-  }                                                                                                          \
-  inline std::string dump(bool pretty, bool yaml) const                                                      \
-  {                                                                                                          \
-    mc_rtc::Configuration out;                                                                               \
-    save(out);                                                                                               \
-    return out.dump(pretty, yaml);                                                                           \
-  }                                                                                                          \
-  inline void load(const mc_rtc::Configuration & in)                                                         \
-  {                                                                                                          \
-    BaseT::ops_.load(this, in);                                                                              \
-    ops_.load(this, in);                                                                                     \
-  }                                                                                                          \
-  inline static SchemaT fromConfiguration(const mc_rtc::Configuration & in)                                  \
-  {                                                                                                          \
-    SchemaT out;                                                                                             \
-    out.load(in);                                                                                            \
-    return out;                                                                                              \
-  }                                                                                                          \
-  inline void buildForm(mc_rtc::schema::Operations::FormElements & form) const                               \
-  {                                                                                                          \
-    BaseT::ops_.buildForm(this, form);                                                                       \
-    ops_.buildForm(this, form);                                                                              \
-  }                                                                                                          \
-  static inline void formToStd(const mc_rtc::Configuration & in, mc_rtc::Configuration & out)                \
-  {                                                                                                          \
-    BaseT::ops_.formToStd(in, out);                                                                          \
-    ops_.formToStd(in, out);                                                                                 \
-  }                                                                                                          \
-  template<typename Callback = std::function<void()>>                                                        \
-  inline void addToGUI(                                                                                      \
-      mc_rtc ::gui::StateBuilder & gui, const std::vector<std::string> & category, const std::string & name, \
-      Callback callback = []() {})                                                                           \
-  {                                                                                                          \
-    auto form = mc_rtc::gui::Form(name,                                                                      \
-                                  [this, callback](const mc_rtc::Configuration & in)                         \
-                                  {                                                                          \
-                                    mc_rtc::Configuration cfg;                                               \
-                                    formToStd(in, cfg);                                                      \
-                                    /** FIXME If callback takes SchemaT do a copy **/                        \
-                                    load(cfg);                                                               \
-                                    callback();                                                              \
-                                  });                                                                        \
-    buildForm(form);                                                                                         \
-    gui.addElement(category, form);                                                                          \
-  }                                                                                                          \
-  inline bool operator==(const SchemaT & rhs) const                                                          \
-  {                                                                                                          \
-    return BaseT::ops_.areEqual(this, &rhs) && ops_.areEqual(this, &rhs);                                    \
-  }                                                                                                          \
-  inline bool operator!=(const SchemaT & rhs) const                                                          \
-  {                                                                                                          \
-    return !(*this == rhs);                                                                                  \
-  }
-
-#define MC_RTC_NEW_SCHEMA(SchemaT) MC_RTC_SCHEMA(SchemaT, mc_rtc::schema::details::EmptySchema)
-
-/** Declare a T member of type TYPE, specify REQUIRED and DEFAULT value */
-#define MC_RTC_SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, DEFAULT, ...)                           \
-public:                                                                                                    \
-  TYPE NAME = mc_rtc::schema::details::get_default(                                                        \
-      DEFAULT, std::integral_constant<mc_rtc::schema::ValueFlag, REQUIRED>{}, ##__VA_ARGS__);              \
-                                                                                                           \
-private:                                                                                                   \
-  inline static const bool NAME##_registered_ =                                                            \
-      T::ops_.registerValue(mc_rtc::schema::details::MemberPointerWrapper<&T::NAME>{}, #NAME, DESCRIPTION, \
-                            std::integral_constant<mc_rtc::schema::ValueFlag, REQUIRED>{}, ##__VA_ARGS__); \
-                                                                                                           \
-public:
-
-/** Declare a required Schema<T> member of type TYPE, only specify DEFAULT */
-#define MC_RTC_SCHEMA_REQUIRED_MEMBER(T, TYPE, NAME, DESCRIPTION, DEFAULT, ...) \
-  MC_RTC_SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, mc_rtc::schema::ValueFlag::All, DEFAULT, ##__VA_ARGS__)
-
-/** Declare an optional Schema<T> member of type TYPE, only specify DEFAULT */
-#define MC_RTC_SCHEMA_OPTIONAL_MEMBER(T, TYPE, NAME, DESCRIPTION, DEFAULT, ...) \
-  MC_RTC_SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, mc_rtc::schema::ValueFlag::Interactive, DEFAULT, ##__VA_ARGS__)
-
-/** Declare a Schema<T> member of type TYPE with a default value, only specify REQUIRED */
-#define MC_RTC_SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, ...)                             \
-  MC_RTC_SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, mc_rtc::schema::details::Default<TYPE>::value, \
-                       ##__VA_ARGS__)
-
-/** Declare a required Schema<T> member of type TYPE with a default value */
-#define MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, ...) \
-  MC_RTC_SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, mc_rtc::schema::ValueFlag::All, ##__VA_ARGS__)
-
-/** Declare an optional Schema<T> member of type TYPE with a default value */
-#define MC_RTC_SCHEMA_OPTIONAL_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, ...) \
-  MC_RTC_SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, mc_rtc::schema::ValueFlag::Interactive, ##__VA_ARGS__)
-
 /** The following alias make working with schema a little simpler */
 static inline constexpr ValueFlag Required = ValueFlag::Required;
 
@@ -569,3 +366,21 @@ static inline constexpr ValueFlag None = ValueFlag::None;
 using Choices = details::Choices<true>;
 
 } // namespace mc_rtc::schema
+
+namespace mc_rtc
+{
+template<typename T>
+struct Default<T, std::enable_if_t<schema::details::is_schema_v<T>>>
+{
+  inline static const T value = {};
+};
+
+template<typename T>
+struct Default<T, std::enable_if_t<schema::details::is_std_vector_v<T>>>
+{
+  inline static const T value = {};
+};
+
+} // namespace mc_rtc
+
+#include <mc_rtc/SchemaMacros.h>
