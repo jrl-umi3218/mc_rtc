@@ -39,6 +39,13 @@ struct DummyProvider
   std::array<double, 3> array = {3., 4., 5.};
 };
 
+struct ChunkyXYData
+{
+  double t = 0;
+  bool has_plot = false;
+  bool add_data = false;
+};
+
 struct FakeZMPGraph
 {
   using Color = mc_rtc::gui::Color;
@@ -210,6 +217,7 @@ struct TestServer
       std::make_tuple<std::string, double, int>("World", 0.2001, 4),
       std::make_tuple<std::string, double, int>("!", 0.0001, 42)};
   FakeZMPGraph graph_;
+  ChunkyXYData chunky_xy_data_;
   size_t n_dynamic_regular_plot = 0;
   size_t n_dynamic_xy_plot = 0;
   std::vector<Eigen::Vector3d> trajectory_ = {Eigen::Vector3d::UnitX(), Eigen::Vector3d::UnitY(),
@@ -838,6 +846,35 @@ TestServer::TestServer() : xythetaz_(4)
   };
   add_demo_plot("Dynamic Regular Plot", dynamic_plot, "Add data", add_dynamic_plot, n_dynamic_regular_plot, 4);
   add_demo_plot("Dynamic XY Plot", dynamic_xy_plot, "Add XY data", add_dynamic_plot, n_dynamic_xy_plot, 3);
+
+  auto toggle_chunky_xy_plot = [this]()
+  {
+    if(chunky_xy_data_.has_plot)
+    {
+      chunky_xy_data_.has_plot = false;
+      builder.removePlot("Chunky xy plot");
+      return;
+    }
+    chunky_xy_data_.has_plot = true;
+    builder.addXYPlot("Chunky xy plot", mc_rtc::gui::plot::XYChunk(
+                                            "Data",
+                                            [this](std::vector<std::array<double, 2>> & points)
+                                            {
+                                              if(!chunky_xy_data_.add_data) { return; }
+                                              double t0 = chunky_xy_data_.t;
+                                              double tF = 0.1;
+                                              for(double t = t0; t < t0 + 1.0; t += 0.01)
+                                              {
+                                                points.push_back({t, cos(t)});
+                                              }
+                                              chunky_xy_data_.add_data = false;
+                                              chunky_xy_data_.t += 1.0;
+                                            },
+                                            mc_rtc::gui::Color::Green));
+  };
+  builder.addElement({}, mc_rtc::gui::ElementsStacking::Horizontal,
+                     mc_rtc::gui::Button("Add chunky XY plot", [toggle_chunky_xy_plot]() { toggle_chunky_xy_plot(); }),
+                     mc_rtc::gui::Button("Send chunk", [this]() { chunky_xy_data_.add_data = true; }));
 
   switch_visual("sphere");
 

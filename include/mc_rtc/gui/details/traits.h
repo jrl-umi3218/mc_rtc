@@ -99,6 +99,9 @@ struct CheckReturnType<GetT, T, Args...>
   static constexpr bool value = CheckReturnType<GetT, T>::value || CheckReturnType<GetT, Args...>::value;
 };
 
+template<typename CallbackT, typename FunT>
+inline constexpr bool has_compatible_signature_v = std::is_convertible_v<CallbackT, std::function<FunT>>;
+
 /** Given a type provides appropriate labels.
  *
  * The following types are supported:

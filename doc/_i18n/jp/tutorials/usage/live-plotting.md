@@ -260,3 +260,24 @@ for(const auto & it : callbacks)
 > 注: この処理では実行時に以下のチェックが行われます。
 1. 指定されたプロットが存在しない場合、この呼び出しは何の効果もありません。
 2. データとして1次元データが指定され、グラフとしてXYプロットが指定された場合、この呼び出しは何の効果もありません。
+
+## Chunky XY プロット
+
+これまで提供してきた例は常に一度に1つのデータポイントを提供します。しかし、XY プロットは、任意の数のポイントを一度に提供することができる追加のシグネチャをサポートしています。これは非同期でデータが送られてくる場合や、一度に単一のプロットを描画する場合に役立ちます。
+
+{% capture source %}
+{% raw %}
+gui()->addXYPlot(
+  "Chunky plot",
+  mc_rtc::gui::plot::XYChunk("Chunky",
+                             [this](std::vector<std::array<double, 2>> & points) {
+                               // 外部の条件に基づいてポイントを追加
+                               // 何も追加しないこともあります
+                             },
+                             Color::Red)
+);
+{% endraw %}
+{% endcapture %}
+{% include show_source.html lang="cpp" source=source %}
+
+> 注: これは XY プロットでのみサポートされており、そうでない場合は Y プロットを正しく同期させることができません。
