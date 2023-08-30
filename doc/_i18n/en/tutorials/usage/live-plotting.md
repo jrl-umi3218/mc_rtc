@@ -259,3 +259,24 @@ for(const auto & it : callbacks)
 > Note: this makes some runtime checks
 1. If the provided plot does not exist, the call has no effect
 2. If the provided data is one dimensional but the graph is an XY plot, the call has no effect
+
+## Chunky XY plots
+
+The examples we provided so far always provide a single point of data at a time. However, the XY plot supports an additional signature that allow you to provide an arbitrary number of points at a time. This can be useful to plot data that comes in asynchronously or to draw a single plot at once.
+
+{% capture source %}
+{% raw %}
+gui()->addXYPlot(
+  "Chunky plot",
+  mc_rtc::gui::plot::XYChunk("Chunky",
+                             [this](std::vector<std::array<double, 2>> & points) {
+                               // Push to points based on some external condition
+                               // It is ok to push nothing
+                             },
+                             Color::Red)
+);
+{% endraw %}
+{% endcapture %}
+{% include show_source.html lang="cpp" source=source %}
+
+> Note: This is only supported with XY plots as we would not be able to synchronize a Y plot correctly otherwise.

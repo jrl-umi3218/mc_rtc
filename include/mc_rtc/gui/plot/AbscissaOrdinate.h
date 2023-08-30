@@ -21,18 +21,18 @@ namespace impl
 
 /** For a given plot, this holds options on the ordinate plot and a callback
  * that returns the current value */
-template<typename GetXT, typename GetYT>
+template<typename UpdateCacheT>
 struct AbscissaOrdinate
 {
   static constexpr Type type = Type::AbscissaOrdinate;
 
-  AbscissaOrdinate(std::string_view name, GetXT get_x_fn, GetYT get_y_fn, Color color, Style style, Side side)
-  : name_(name), get_x_fn_(get_x_fn), get_y_fn_(get_y_fn), color_(color), style_(style), side_(side)
+  using CacheT = std::vector<std::array<double, 2>>;
+
+  AbscissaOrdinate(std::string_view name, UpdateCacheT update_fn, Color color, Style style, Side side)
+  : name_(name), update_fn_(update_fn), color_(color), style_(style), side_(side)
   {
-    static_assert(details::CheckReturnType<GetXT, double>::value,
-                  "AbscissaOrdinate x-callback should return a single floating-point value");
-    static_assert(details::CheckReturnType<GetYT, double>::value,
-                  "AbscissaOrdinate y-callback should return a single floating-point value");
+    static_assert(details::has_compatible_signature_v<UpdateCacheT, void(CacheT &)>,
+                  "AbscissaOrdinate callback should update its cache");
     cache_.reserve(16);
   }
 
@@ -49,7 +49,7 @@ struct AbscissaOrdinate
     cache_.resize(0);
   }
 
-  void update() const { cache_.push_back({get_x_fn_(), get_y_fn_()}); }
+  void update() const { update_fn_(cache_); }
 
   AbscissaOrdinate & style(Style style)
   {
@@ -65,8 +65,7 @@ struct AbscissaOrdinate
 
 protected:
   std::string name_;
-  GetXT get_x_fn_;
-  GetYT get_y_fn_;
+  UpdateCacheT update_fn_;
   mutable Color color_;
   mutable std::vector<std::array<double, 2>> cache_;
   Style style_;
@@ -74,11 +73,11 @@ protected:
 };
 
 /** Allows to provide an ordinate with changing color */
-template<typename GetXT, typename GetYT, typename GetColor>
-struct AbscissaOrdinateWithColor : public AbscissaOrdinate<GetXT, GetYT>
+template<typename UpdateCacheT, typename GetColor>
+struct AbscissaOrdinateWithColor : public AbscissaOrdinate<UpdateCacheT>
 {
-  AbscissaOrdinateWithColor(std::string_view name, GetXT get_x, GetYT get_y, GetColor color, Style style, Side side)
-  : AbscissaOrdinate<GetXT, GetYT>(name, get_x, get_y, color(), style, side), get_color_(color)
+  AbscissaOrdinateWithColor(std::string_view name, UpdateCacheT update_cache, GetColor color, Style style, Side side)
+  : AbscissaOrdinate<UpdateCacheT>(name, update_cache, color(), style, side), get_color_(color)
   {
     static_assert(details::CheckReturnType<GetColor, Color>::value,
                   "AbscissaOrdinate color callback should return a color");
@@ -87,7 +86,7 @@ struct AbscissaOrdinateWithColor : public AbscissaOrdinate<GetXT, GetYT>
   void write(mc_rtc::MessagePackBuilder & builder) const
   {
     this->color_ = get_color_();
-    AbscissaOrdinate<GetXT, GetYT>::write(builder);
+    AbscissaOrdinate<UpdateCacheT>::write(builder);
   }
 
 private:
@@ -95,28 +94,57 @@ private:
 };
 } // namespace impl
 
-/** Helper to create an impl::Ordinate */
-template<typename GetXT, typename GetYT>
-impl::AbscissaOrdinate<GetXT, GetYT> XY(std::string_view name,
-                                        GetXT get_x_fn,
-                                        GetYT get_y_fn,
-                                        Color color,
-                                        Style style = Style::Solid,
-                                        Side side = Side::Left)
+/** Helper to create an impl::AbscissaOrdinate|impl::AbscissaOrdinateWithColor with chunky updates
+ *
+ * This is meant to be used to create/update graphs with a bunch of data at once
+ */
+template<typename UpdateCacheT, typename MaybeGetColor>
+auto XYChunk(std::string_view name,
+             UpdateCacheT update_fn,
+             MaybeGetColor color,
+             Style style = Style::Solid,
+             Side side = Side::Left)
 {
-  return impl::AbscissaOrdinate<GetXT, GetYT>(name, get_x_fn, get_y_fn, color, style, side);
+  if constexpr(std::is_same_v<std::decay_t<MaybeGetColor>, Color>)
+  {
+    return impl::AbscissaOrdinate(name, update_fn, color, style, side);
+  }
+  else { return impl::AbscissaOrdinateWithColor(name, update_fn, color, style, side); }
 }
 
-/** Helper to create an impl::OrdinateWithColor */
-template<typename GetXT, typename GetYT, typename GetColor>
-impl::AbscissaOrdinateWithColor<GetXT, GetYT, GetColor> XY(std::string_view name,
-                                                           GetXT get_x_fn,
-                                                           GetYT get_y_fn,
-                                                           GetColor get_color_fn,
-                                                           Style style = Style::Solid,
-                                                           Side side = Side::Left)
+/** Helper to create an impl::AbscissaOrdinate|impl::AbscissaOrdinateWithColor */
+template<typename GetXT, typename GetYT, typename MaybeGetColor>
+auto XY(std::string_view name,
+        GetXT get_x_fn,
+        GetYT get_y_fn,
+        MaybeGetColor color,
+        Style style = Style::Solid,
+        Side side = Side::Left)
 {
-  return impl::AbscissaOrdinateWithColor<GetXT, GetYT, GetColor>(name, get_x_fn, get_y_fn, get_color_fn, style, side);
+  static_assert(details::CheckReturnType<GetXT, double>::value,
+                "XY x-callback should return a single floating-point value");
+  static_assert(details::CheckReturnType<GetYT, double>::value,
+                "XY y-callback should return a single floating-point value");
+  using XYCacheT = std::vector<std::array<double, 2>>;
+  if constexpr(std::is_same_v<std::decay_t<MaybeGetColor>, Color>)
+  {
+    return impl::AbscissaOrdinate(
+        name,
+        [get_x_fn, get_y_fn](XYCacheT & cache) {
+          cache.push_back({get_x_fn(), get_y_fn()});
+        },
+        color, style, side);
+  }
+  else
+  {
+    static_assert(details::CheckReturnType<MaybeGetColor, Color>::value, "XY color callback should return a color");
+    return impl::AbscissaOrdinateWithColor(
+        name,
+        [get_x_fn, get_y_fn](XYCacheT & cache) {
+          cache.push_back({get_x_fn(), get_y_fn()});
+        },
+        color, style, side);
+  }
 }
 
 } // namespace plot
