@@ -1175,10 +1175,16 @@ void Robot::forwardKinematics(rbd::MultiBodyConfig & mbc) const
 {
   rbd::forwardKinematics(mb(), mbc);
 
-  for(auto & cvx : convexes_)
+  for(const auto & cvx : convexes_)
   {
-    unsigned int index = static_cast<unsigned int>(mb().bodyIndexByName(cvx.second.first));
-    sch::mc_rbdyn::transform(*(cvx.second.second.get()), mbc.bodyPosW[index]);
+    auto get_cvx_tf = [&]()
+    {
+      unsigned int index = static_cast<unsigned int>(mb().bodyIndexByName(cvx.second.first));
+      auto tfs_it = collisionTransforms_.find(cvx.first);
+      if(tfs_it != collisionTransforms_.end()) { return tfs_it->second * mbc.bodyPosW[index]; }
+      return mbc.bodyPosW[index];
+    };
+    sch::mc_rbdyn::transform(*cvx.second.second, get_cvx_tf());
   }
 }
 
