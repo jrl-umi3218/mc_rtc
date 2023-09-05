@@ -102,41 +102,6 @@ protected:
   void estimatePosition(const mc_control::MCController & ctl);
 
 protected:
-  /**
-   * @brief Merge roll and pitch orientation from a rotation matrix R1 with yaw (rotation around gravity) from another
-   * rotation matrix R2
-   *
-   * This function was adpated from https://github.com/mehdi-benallegue/state-observation and modified to follow
-   * SpaceVecAlg conventions for rotation. It computes:
-   *
-   *
-   * \f[
-   *  R=\left(
-   *  \begin{array}{ccc}
-   *   \frac{m\times e_{z}}{\left\Vert m\times e_{z}\right\Vert } & \frac{e_{z}\times m\times e_{z}}{\left\Vert m\times
-   * e_{z}\right\Vert } & e_{z}\end{array}\right)\left(\begin{array}{ccc} \frac{m_{l}\times v_{1}}{\left\Vert
-   * m_{l}\times v_{1}\right\Vert } & \frac{v_{1}\times m_{l}\times v_{1}}{\left\Vert m_{l}\times v_{1}\right\Vert } &
-   * v_{1}\end{array}
-   *   \right)^{T}\\
-   *   v_{1}=R_{1}e_{z}\qquad m_{l}=R_{2}m\\
-   *   m = \left\{
-   *   \begin{array}{c}
-   *   e_x \mbox{ if } ||R_2e_x \times v_1||^2 < \epsilon^2\\
-   *   e_y \mbox{ otherwise }
-   *   \end{array}
-   *   \right.
-   *  \f]
-   *
-   * @param R1 First rotation matrix (for roll and pitch)
-   * @param R2 Second rotation matrix (for yaw)
-   *
-   * @return a rotation matrix composed of roll and pitch from R1, yaw from R2
-   */
-  inline Eigen::Matrix3d mergeRoll1Pitch1WithYaw2(const Eigen::Matrix3d & R1,
-                                                  const Eigen::Matrix3d & R2,
-                                                  double epsilonAngle = 1e-16);
-
-protected:
   std::string robot_; /**< Robot to observe (default main robot) */
   std::string realRobot_; /**< Corresponding real robot (default main real robot) */
   std::string imuSensor_; /**< BodySensor containting IMU readings */
