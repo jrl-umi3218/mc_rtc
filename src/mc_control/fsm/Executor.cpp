@@ -33,6 +33,7 @@ void Executor::init(Controller & ctl,
   name_ = name;
   config("Managed", managed_);
   config("StepByStep", step_by_step_);
+  config("ResetPostures", reset_postures_);
   if(!managed_)
   {
     transition_map_.init(ctl.factory(), config);
@@ -176,7 +177,7 @@ void Executor::next(Controller & ctl)
   {
     auto state_teardown_start = clock::now();
     state_->teardown_(ctl);
-    ctl.resetPostures();
+    if(reset_postures_) { ctl.resetPostures(); }
     state_teardown_dt_ = clock::now() - state_teardown_start;
   }
   mc_rtc::log::success("Starting state {}", next_state_);
