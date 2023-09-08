@@ -58,7 +58,7 @@ void OrientationFunction::updateJacobian()
 
 void OrientationFunction::updateNormalAcceleration()
 {
-  normalAcceleration_ = frame_.normalAcceleration().angular();
+  normalAcceleration_ = frame_.normalAcceleration().angular() - refAccel_;
 }
 
 } // namespace mc_tvm

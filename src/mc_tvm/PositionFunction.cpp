@@ -57,7 +57,7 @@ void PositionFunction::updateJacobian()
 
 void PositionFunction::updateNormalAcceleration()
 {
-  normalAcceleration_ = frame_.normalAcceleration().linear();
+  normalAcceleration_ = frame_.normalAcceleration().linear() - refAccel_;
 }
 
 } // namespace mc_tvm
