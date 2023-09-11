@@ -360,7 +360,11 @@ void CollisionsConstraint::toggleCollisionMonitor(int collId, const mc_rbdyn::Co
     if(col_p) { return; }
     for(const auto & c : collIdDict)
     {
-      if(c.second.first == collId) { col_p = &c.second.second; }
+      if(c.second.first == collId)
+      {
+        col_p = &c.second.second;
+        return;
+      }
     }
     mc_rtc::log::error_and_throw("[CollisionConstraint] Attempted to toggleCollisionMonitor on non-existent collision");
   };
