@@ -7,6 +7,7 @@
 
 #include <mc_observers/KinematicInertialPoseObserver.h>
 #include <mc_observers/ObserverMacros.h>
+#include <state-observation/tools/rigid-body-kinematics.hpp>
 
 #include <mc_control/MCController.h>
 #include <mc_rbdyn/rpy_utils.h>
@@ -110,7 +111,8 @@ void KinematicInertialPoseObserver::estimateOrientation(const mc_rbdyn::Robot & 
   Eigen::Matrix3d E_0_mIMU = imuSensor.X_b_s().rotation().transpose() * imuSensor.orientation().toRotationMatrix();
   const Eigen::Matrix3d & E_0_cIMU = X_0_cIMU.rotation();
   // Estimate IMU orientation: merges roll+pitch from measurement with yaw from control
-  Eigen::Matrix3d E_0_eIMU = mergeRoll1Pitch1WithYaw2(E_0_mIMU, E_0_cIMU);
+  Eigen::Matrix3d E_0_eIMU =
+      stateObservation::kine::mergeRoll1Pitch1WithYaw2(E_0_mIMU.transpose(), E_0_cIMU.transpose());
   pose_.rotation() = X_rIMU_rBase.rotation() * E_0_eIMU.transpose();
 }
 
@@ -216,36 +218,6 @@ void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController & ct
   showHideAnchorFrame("Anchor Frame (control)", showAnchorFrame_, X_0_anchorFrame_);
   showHideAnchorFrame("Anchor Frame (real)", showAnchorFrameReal_, X_0_anchorFrameReal_);
   showHidePose();
-}
-
-inline Eigen::Matrix3d KinematicInertialPoseObserver::mergeRoll1Pitch1WithYaw2(const Eigen::Matrix3d & R1,
-                                                                               const Eigen::Matrix3d & R2,
-                                                                               double epsilonAngle)
-{
-  using Matrix3 = Eigen::Matrix3d;
-  using Vector3 = Eigen::Vector3d;
-
-  const Vector3 & ez = Vector3::UnitZ();
-  Matrix3 R_temp1, R_temp2;
-  Vector3 v1 = R1 * ez;
-  Vector3 mlxv1 = (R2 * Vector3::UnitX()).cross(v1);
-  double n2 = mlxv1.squaredNorm();
-
-  if(n2 > epsilonAngle * epsilonAngle)
-  {
-    // we take m=ex
-    R_temp1 << -Vector3::UnitY(), Vector3::UnitX(), ez;
-    mlxv1 /= sqrt(n2);
-    R_temp2 << mlxv1.transpose(), v1.cross(mlxv1).transpose(), v1.transpose();
-    return R_temp1 * R_temp2;
-  }
-  else
-  {
-    // we take m=ey
-    mlxv1 = (R2 * Vector3::UnitY()).cross(v1).normalized();
-    R_temp2 << mlxv1.transpose(), v1.cross(mlxv1).transpose(), v1.transpose();
-    return R_temp2.transpose();
-  }
 }
 
 } // namespace mc_observers
