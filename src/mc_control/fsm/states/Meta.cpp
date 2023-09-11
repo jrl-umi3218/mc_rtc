@@ -14,6 +14,7 @@ namespace fsm
 void MetaState::start(Controller & ctl)
 {
   if(!config_.has("StepByStep")) { config_.add("StepByStep", false); }
+  if(!config_.has("ResetPostures")) { config_.add("ResetPostures", false); }
   executor_.init(ctl, config_, name(), config_("category", std::vector<std::string>{}));
   run(ctl);
 }
