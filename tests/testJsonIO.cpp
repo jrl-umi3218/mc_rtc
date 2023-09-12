@@ -406,12 +406,8 @@ struct AllocatorHelper<mc_rbdyn::RobotModule>
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestJsonIO, T, test_types)
 {
-  static_assert(mc_rtc::internal::has_configuration_load_object<T>::value,
-                "No Configuration load function for this type");
-  static_assert(mc_rtc::internal::has_configuration_save_object<T>::value,
-                "No Configuration save function for this type");
-  BOOST_CHECK(mc_rtc::internal::has_configuration_load_object<T>::value);
-  BOOST_CHECK(mc_rtc::internal::has_configuration_save_object<T>::value);
+  static_assert(mc_rtc::internal::has_configuration_load_object_v<T>, "No Configuration load function for this type");
+  static_assert(mc_rtc::internal::has_configuration_save_object_v<T>, "No Configuration save function for this type");
 
   T ref = make_ref<T>();
   mc_rtc::Configuration config;

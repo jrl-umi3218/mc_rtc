@@ -24,7 +24,20 @@
 #include <string>
 #include <string_view>
 #include <unordered_set>
+#include <variant>
 #include <vector>
+
+// The code we use to convert a Configuration value to an std::variant value requires GCC >= 8.3
+// We use a less optimal recursive implementation for the case where GCC < 8.3
+#if defined(__GNUC__) && !defined(__llvm__) && !defined(__INTEL_COMPILER)
+#  if __GNUC__ > 8 || (__GNUC__ == 8 && __GNUC_MINOR__ > 2)
+#    define MC_RTC_USE_VARIANT_WORKAROUND 0
+#  else
+#    define MC_RTC_USE_VARIANT_WORKAROUND 1
+#  endif
+#else
+#  define MC_RTC_USE_VARIANT_WORKAROUND 0
+#endif
 
 namespace mc_rtc
 {
@@ -72,9 +85,26 @@ struct _has_configuration_load_object
 };
 
 template<typename T>
-struct has_configuration_load_object : decltype(_has_configuration_load_object::test<T>(nullptr))
+inline constexpr bool has_configuration_load_object_v =
+    decltype(_has_configuration_load_object::test<T>(nullptr))::value;
+
+/** Helper trait to determine whether:
+ * static T T::fromConfiguration(const mc_rtc::Configuration &);
+ * is a valid function or not
+ */
+struct _has_static_fromConfiguration
 {
+  template<typename T,
+           typename = std::enable_if_t<
+               std::is_same_v<decltype(T::fromConfiguration(std::declval<const Configuration &>())), T>>>
+  static std::true_type test(T * p);
+
+  template<typename T>
+  static std::false_type test(...);
 };
+
+template<typename T>
+inline constexpr bool has_static_fromConfiguration_v = decltype(_has_static_fromConfiguration::test<T>(nullptr))::value;
 
 /** Helper trait to determine whether:
  * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&, Args ...);
@@ -95,9 +125,35 @@ struct _has_configuration_save_object
 };
 
 template<typename T, typename... Args>
-struct has_configuration_save_object : decltype(_has_configuration_save_object::test<T, Args...>(nullptr))
+inline constexpr bool has_configuration_save_object_v =
+    decltype(_has_configuration_save_object::test<T, Args...>(nullptr))::value;
+
+/** Helper trait to determine whether:
+ * mc_rtc::Configuration T::toConfiguration(Args...) const
+ * is a valid method or not
+ */
+struct _has_toConfiguration_method
 {
+  template<
+      typename T,
+      typename... Args,
+      typename = std::enable_if_t<
+          std::is_same_v<decltype(std::declval<const T &>().toConfiguration(std::declval<Args>()...)), Configuration>>>
+  static std::true_type test(T * p);
+
+  template<typename T, typename... Args>
+  static std::false_type test(...);
 };
+
+template<typename T, typename... Args>
+inline constexpr bool has_toConfiguration_method_v =
+    decltype(_has_toConfiguration_method::test<T, Args...>(nullptr))::value;
+
+#if MC_RTC_USE_VARIANT_WORKAROUND
+/** Converts a Configuration object to a variant based on the active idx obtained at runtime */
+template<size_t IDX, typename... Args>
+std::variant<Args...> to_variant(const Configuration & c, size_t idx);
+#endif
 
 } // namespace internal
 
@@ -134,6 +190,8 @@ private:
      * \throws If key does not belong in keys()
      */
     Json operator[](const std::string & key) const;
+    /** Try to find an element at the provided key */
+    std::optional<Json> find(const std::string & key) const;
     /** True if the value is a string */
     bool isString() const noexcept;
     /** True if the value is numeric */
@@ -429,7 +487,7 @@ public:
       for(size_t i = 0; i < v.size(); ++i) { ret.push_back(Configuration(v[i])); }
       return ret;
     }
-    else { throw Configuration::Exception("Stored Json value is not a vector", v); }
+    throw Configuration::Exception("Stored Json value is not a vector", v);
   }
 
   /*! \brief Retrieve an array instance
@@ -447,7 +505,7 @@ public:
       for(size_t i = 0; i < N; ++i) { ret[i] = Configuration(v[i]); }
       return ret;
     }
-    else { throw Configuration::Exception("Stored Json value is not an array or its size is incorrect", v); }
+    throw Configuration::Exception("Stored Json value is not an array or its size is incorrect", v);
   }
 
   /*! \brief Retrieve a pair instance
@@ -459,7 +517,7 @@ public:
   operator std::pair<T1, T2>() const
   {
     if(v.isArray() && v.size() == 2) { return std::make_pair<T1, T2>(Configuration(v[0]), Configuration(v[1])); }
-    else { throw Configuration::Exception("Stored Json value is not an array of size 2", v); }
+    throw Configuration::Exception("Stored Json value is not an array of size 2", v);
   }
 
   /*! \brief Retrieve a string-indexed map instance
@@ -482,7 +540,7 @@ public:
       }
       return ret;
     }
-    else { throw Configuration::Exception("Stored Json value is not an object", v); }
+    throw Configuration::Exception("Stored Json value is not an object", v);
   }
 
   /*! \brief Retrieve a set of objects
@@ -504,7 +562,7 @@ public:
       }
       return ret;
     }
-    else { throw Configuration::Exception("Stored Json value is not an array", v); }
+    throw Configuration::Exception("Stored Json value is not an array", v);
   }
 
   /*! \brief Retrieve an unordered set of objects
@@ -526,7 +584,32 @@ public:
       }
       return ret;
     }
-    else { throw Configuration::Exception("Stored Json value is not an array", v); }
+    throw Configuration::Exception("Stored Json value is not an array", v);
+  }
+
+  /** Retrieve a variant object
+   *
+   * \throws If the underlying value is not an array of size 2
+   *
+   * \throws If the first value of the array is an invalid index for this variant
+   *
+   * \throws If the data in the second value of the array does not allow to deserialize a value of the type given at the
+   * index
+   */
+  template<typename... Args>
+  operator std::variant<Args...>() const
+  {
+    if(!v.isArray()) { throw Configuration::Exception("Stored Json value is not an array", v); }
+    if(v.size() != 2) { throw Configuration::Exception("Stored Json value is not of size 2", v); }
+    size_t idx = Configuration(v[0]);
+    if(idx >= sizeof...(Args)) { throw Configuration::Exception("Variant index out of type index bound", v); }
+#if MC_RTC_USE_VARIANT_WORKAROUND
+    return internal::to_variant<0, Args...>(v[1], idx);
+#else
+    static constexpr auto table =
+        std::array{+[](const Configuration & c) { return std::variant<Args...>{c.operator Args()}; }...};
+    return table[idx](v[1]);
+#endif
   }
 
   /** Integral type conversions
@@ -552,10 +635,14 @@ public:
    * Requires:
    * - T mc_rtc::ConfigurationLoader<T>::load(const mc_rtc::Configuration &) should exist
    */
-  template<typename T, typename std::enable_if<internal::has_configuration_load_object<T>::value, int>::type = 0>
+  template<typename T,
+           typename std::enable_if<internal::has_configuration_load_object_v<T>
+                                       || internal::has_static_fromConfiguration_v<T>,
+                                   int>::type = 0>
   operator T() const
   {
-    return ConfigurationLoader<T>::load(*this);
+    if constexpr(internal::has_configuration_load_object_v<T>) { return ConfigurationLoader<T>::load(*this); }
+    else { return T::fromConfiguration(*this); }
   }
 
   /*! \brief Retrieves an optional<T>
@@ -727,6 +814,49 @@ public:
    * \throws If key is not stored in the Configuration
    */
   Configuration operator()(const std::string & key) const;
+
+  /*! \brief Returns the Configuration entry if it exists, std::nullopt otherwise
+   *
+   * \param key key used to store the value
+   *
+   * \returns Configuration entry if it exists, std::nullopt otherwise
+   */
+  std::optional<Configuration> find(const std::string & key) const;
+
+  /*! \brief Return the Configuration entry at (key, others...) if it exists, std::nullopt otherwise
+   *
+   * This is equivalent if(auto a = cfg.find("a")) { if(auto b = cfg.find("b")) { ... } }
+   *
+   * \param key key used to store the value
+   *
+   * \param others Keys searched one after the other
+   *
+   * \returns Configuration entry if it exists, std::nullopt otherwise
+   */
+  template<typename... Args>
+  std::optional<Configuration> find(const std::string & key, Args &&... others) const
+  {
+    auto out = find(key);
+    return out ? out->find(std::forward<Args>(others)...) : std::nullopt;
+  }
+
+  /*! \brief Return the Configuration entry at (key, others...) if it exists, std::nullopt otherwise
+   *
+   * \param key key used to store the value
+   *
+   * \param others Keys searched one after the other
+   *
+   * \tparam T Type of the entry retrieved
+   *
+   * \throws If the key exists but the conversion to \tparam T fails
+   */
+  template<typename T, typename... Args>
+  std::optional<T> find(const std::string & key, Args &&... others) const
+  {
+    auto maybe_cfg = find(key, std::forward<Args>(others)...);
+    if(maybe_cfg) { return maybe_cfg->operator T(); }
+    return std::nullopt;
+  }
 
   /*! \brief Returns true if the underlying array or underlying object is empty */
   bool empty() const;
@@ -1221,10 +1351,16 @@ public:
    */
   template<typename T,
            typename... Args,
-           typename std::enable_if<internal::has_configuration_save_object<T, Args...>::value, int>::type = 0>
+           typename std::enable_if<internal::has_configuration_save_object_v<T, Args...>
+                                       || internal::has_toConfiguration_method_v<T, Args...>,
+                                   int>::type = 0>
   void push(const T & value, Args &&... args)
   {
-    push(mc_rtc::ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
+    if constexpr(internal::has_configuration_save_object_v<T, Args...>)
+    {
+      push(mc_rtc::ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
+    }
+    else { push(value.toConfiguration(std::forward<Args>(args)...)); }
   }
 
   /** Integral type conversions
@@ -1343,6 +1479,28 @@ public:
     for(const auto & v : value) { v.push(*v, std::forward<Args>(args)...); }
   }
 
+  /*! \brief Add a variant object into the JSON document
+   *
+   * The variant is written as [value.index(), std::get<value.index()>(value)] if it holds a value
+   *
+   * Otherwise it is written as [std::variant_npos, std::variant_npos]
+   *
+   * \param key Key of the element
+   *
+   * \param value Variant value to add
+   */
+  template<typename... Args>
+  void add(const std::string & key, const std::variant<Args...> & value)
+  {
+    Configuration v = array(key, 2);
+    v.push(value.index());
+    if(value.index() != std::variant_npos)
+    {
+      std::visit([&v](const auto & hold) { v.push(hold); }, value);
+    }
+    else { v.push(value.index()); }
+  }
+
   /** Integral type conversions
    *
    * \param Key key of the element
@@ -1374,10 +1532,16 @@ public:
    */
   template<typename T,
            typename... Args,
-           typename std::enable_if<internal::has_configuration_save_object<T, Args...>::value, int>::type = 0>
+           typename std::enable_if<internal::has_configuration_save_object_v<T, Args...>
+                                       || internal::has_toConfiguration_method_v<T, Args...>,
+                                   int>::type = 0>
   void add(const std::string & key, const T & value, Args &&... args)
   {
-    add(key, ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
+    if constexpr(internal::has_configuration_save_object_v<T, Args...>)
+    {
+      add(key, ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
+    }
+    else { add(key, value.toConfiguration(std::forward<Args>(args)...)); }
   }
 
   /*! \brief Push a vector into the JSON document
@@ -1460,6 +1624,28 @@ public:
   {
     Configuration v = array(value.size());
     for(const auto & v : value) { v.push(*v, std::forward<Args>(args)...); }
+  }
+
+  /*! \brief Push a variant object into the JSON document
+   *
+   * The variant is written as [value.index(), std::get<value.index()>(value)] if it holds a value
+   *
+   * Otherwise it is written as [std::variant_npos, std::variant_npos]
+   *
+   * \param key Key of the element
+   *
+   * \param value Variant value to add
+   */
+  template<typename... Args>
+  void push(const std::variant<Args...> & value)
+  {
+    Configuration v = array(2);
+    v.push(value.index());
+    if(value.index() != std::variant_npos)
+    {
+      std::visit([&v](const auto & hold) { v.push(hold); }, value);
+    }
+    else { v.push(value.index()); }
   }
 
   /** Remove a given element
@@ -1548,6 +1734,25 @@ struct MC_RTC_UTILS_DLLAPI ConfigurationFile : public Configuration
 private:
   std::string path_;
 };
+
+#if MC_RTC_USE_VARIANT_WORKAROUND
+namespace internal
+{
+
+template<size_t IDX, typename... Args>
+std::variant<Args...> to_variant(const Configuration & c, size_t idx)
+{
+  // Note: this never happens because we always pass idx < sizeof...(Args)
+  if constexpr(IDX >= sizeof...(Args)) { mc_rtc::log::error_and_throw("Invalid runtime index for variant"); }
+  else
+  {
+    if(idx == IDX) { return c.operator std::variant_alternative_t<IDX, std::variant<Args...>>(); }
+    else { return to_variant<IDX + 1, Args...>(c, idx); }
+  }
+}
+
+} // namespace internal
+#endif
 
 } // namespace mc_rtc
 

@@ -5,14 +5,24 @@
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/pragma.h>
 
+#include <boost/test/unit_test.hpp>
+
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
-#include <boost/test/unit_test.hpp>
+#include <boost/mpl/list.hpp>
 
 #include "utils.h"
 #include <fstream>
 #include <iostream>
+
+bool silence_exception(const mc_rtc::Configuration::Exception & e)
+{
+  e.silence();
+  return true;
+}
+#define MC_RTC_CHECK_THROW(statement) \
+  BOOST_CHECK_EXCEPTION(statement, mc_rtc::Configuration::Exception, silence_exception)
 
 namespace Eigen
 {
@@ -174,9 +184,11 @@ std::string sampleConfig2(bool fromDisk, bool json)
 void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bool json2)
 {
   /*! Check that accessing a non-existing entry throws */
-  BOOST_CHECK_THROW(config("NONE"), mc_rtc::Configuration::Exception);
+  MC_RTC_CHECK_THROW(config("NONE"));
 
   BOOST_CHECK(config("NONE", std::optional<mc_rtc::Configuration>{}) == std::nullopt);
+
+  BOOST_CHECK(config.find("NONE") == std::nullopt);
 
   /* int tests */
   {
@@ -225,6 +237,11 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     auto k = config("double", std::optional<int>{std::nullopt});
     BOOST_CHECK(k == std::nullopt);
+
+    auto l = config.find<int>("int");
+    BOOST_CHECK(l.has_value() && *l == 42);
+
+    MC_RTC_CHECK_THROW([[maybe_unused]] auto m = config.find<int>("double"));
   }
 
   /* unsigned int tests */
@@ -251,9 +268,9 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     BOOST_CHECK_EQUAL(d, 10);
 
     /*! Check int to unsigned int does not happen */
-    unsigned int h = 10;
-    config("sint", h);
-    BOOST_CHECK_EQUAL(h, 10);
+    unsigned int e = 10;
+    config("sint", e);
+    BOOST_CHECK_EQUAL(e, 10);
 
     /*! Access a unsigned int from a dict */
     unsigned int f = 0;
@@ -264,6 +281,11 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     unsigned int g = 0;
     config("dict")("int", g);
     BOOST_CHECK_EQUAL(g, 42);
+
+    auto h = config.find<unsigned int>("int");
+    BOOST_CHECK(h.has_value() && *h == 42);
+
+    MC_RTC_CHECK_THROW([[maybe_unused]] auto i = config.find<unsigned int>("double"));
   }
 
   /* double tests */
@@ -347,7 +369,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
-    BOOST_CHECK_THROW(Eigen::Vector2d d = config("v6d"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(Eigen::Vector2d d = config("v6d"));
+    MC_RTC_CHECK_THROW(auto d = config.find<Eigen::Vector2d>("v6d"));
     MC_RTC_diagnostic_pop
 
     Eigen::Vector2d e = Eigen::Vector2d::Zero();
@@ -378,7 +401,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
-    BOOST_CHECK_THROW(mc_rbdyn::Gains2d d = config("v6d"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(mc_rbdyn::Gains2d d = config("v6d"));
+    MC_RTC_CHECK_THROW(auto d = config.find<mc_rbdyn::Gains2d>("v6d"));
     MC_RTC_diagnostic_pop
 
     mc_rbdyn::Gains2d e = mc_rbdyn::Gains2d::Zero();
@@ -422,7 +446,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
-    BOOST_CHECK_THROW(Eigen::Vector3d d = config("v6d"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(Eigen::Vector3d d = config("v6d"));
+    MC_RTC_CHECK_THROW(auto d = config.find<Eigen::Vector3d>("v6d"));
     MC_RTC_diagnostic_pop
 
     Eigen::Vector3d e = Eigen::Vector3d::Zero();
@@ -453,7 +478,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
-    BOOST_CHECK_THROW(mc_rbdyn::Gains3d d = config("v6d"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(mc_rbdyn::Gains3d d = config("v6d"));
+    MC_RTC_CHECK_THROW(auto d = config.find<mc_rbdyn::Gains3d>("v6d"));
     MC_RTC_diagnostic_pop
 
     mc_rbdyn::Gains3d e = mc_rbdyn::Gains3d::Zero();
@@ -497,7 +523,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
-    BOOST_CHECK_THROW(Eigen::Vector4d d = config("v6d"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(Eigen::Vector4d d = config("v6d"));
+    MC_RTC_CHECK_THROW(auto d = config.find<Eigen::Vector4d>("v6d"));
     MC_RTC_diagnostic_pop
 
     Eigen::Vector4d e = Eigen::Vector4d::Zero();
@@ -528,7 +555,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
-    BOOST_CHECK_THROW(Eigen::Vector6d d = config("v3d"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(Eigen::Vector6d d = config("v3d"));
+    MC_RTC_CHECK_THROW(auto d = config.find<Eigen::Vector6d>("v3d"));
     MC_RTC_diagnostic_pop
 
     Eigen::Vector6d e = Eigen::Vector6d::Zero();
@@ -559,7 +587,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
 
     MC_RTC_diagnostic_push
     MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
-    BOOST_CHECK_THROW(mc_rbdyn::Gains6d d = config("v3d"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(mc_rbdyn::Gains6d d = config("v3d"));
+    MC_RTC_CHECK_THROW(auto d = config.find<mc_rbdyn::Gains6d>("v3d"));
     MC_RTC_diagnostic_pop
 
     mc_rbdyn::Gains6d e = mc_rbdyn::Gains6d::Zero();
@@ -609,7 +638,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     Eigen::VectorXd d = config("vXd");
     BOOST_CHECK_EQUAL(d, ref);
 
-    BOOST_CHECK_THROW(Eigen::VectorXd e = config("int"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(Eigen::VectorXd e = config("int"));
+    MC_RTC_CHECK_THROW(auto d = config.find<Eigen::VectorXd>("int"));
 
     Eigen::VectorXd f = Eigen::VectorXd::Zero(0);
     f = config("dict")("v6d");
@@ -753,8 +783,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     config("dict")("doubleDoublePair", c);
     BOOST_CHECK(c == ref);
 
-    BOOST_CHECK_THROW(c = (std::pair<double, double>)config("quat"), mc_rtc::Configuration::Exception);
-    BOOST_CHECK_THROW(c = (std::pair<double, double>)config("doubleStringPair"), mc_rtc::Configuration::Exception);
+    MC_RTC_CHECK_THROW(c = (std::pair<double, double>)config("quat"));
+    MC_RTC_CHECK_THROW(c = (std::pair<double, double>)config("doubleStringPair"));
   }
 
   /* pair<double, string> test */
@@ -990,8 +1020,10 @@ BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
   BOOST_CHECK(config_test("a3_v") == ref_a3_v);
   BOOST_CHECK(config_test("a3_a") == ref_a3_a);
   BOOST_REQUIRE(config_test.has("dict"));
+  BOOST_REQUIRE(config_test.find("dict").has_value());
   BOOST_CHECK(config_test("dict")("int") == ref_int);
   BOOST_REQUIRE(config_test.has("dict2"));
+  BOOST_REQUIRE(config_test.find("dict2").has_value());
   BOOST_CHECK(config_test("dict2")("double_v") == ref_double_v);
 
   /* Save a part of the configuration */
@@ -1042,7 +1074,7 @@ struct Foo
 {
   Foo() {}
   Foo(const std::string & name, double d) : name(name), d(d) {}
-  std::string name = "";
+  std::string name;
   double d = 0.0;
   bool operator==(const Foo & rhs) const { return rhs.name == this->name && rhs.d == this->d; }
 };
@@ -1064,31 +1096,77 @@ struct ConfigurationLoader<Foo>
 };
 } // namespace mc_rtc
 
-BOOST_AUTO_TEST_CASE(TestUserDefinedConversions)
+namespace test
 {
-  Foo f_ref{"foo", 1.0};
+
+struct Bar
+{
+  Bar() {}
+  Bar(const std::string & name, double d) : name(name), d(d) {}
+  std::string name;
+  double d = 0.0;
+  inline bool operator==(const Bar & rhs) const { return rhs.name == this->name && rhs.d == this->d; }
+
+  static Bar fromConfiguration(const mc_rtc::Configuration & config) { return {config("name"), config("d")}; }
+
+  mc_rtc::Configuration toConfiguration() const
+  {
+    mc_rtc::Configuration config;
+    config.add("name", name);
+    config.add("d", d);
+    return config;
+  }
+};
+
+} // namespace test
+
+static_assert(!mc_rtc::internal::has_static_fromConfiguration_v<double>);
+static_assert(!mc_rtc::internal::has_static_fromConfiguration_v<Foo>);
+static_assert(mc_rtc::internal::has_static_fromConfiguration_v<test::Bar>);
+
+static_assert(!mc_rtc::internal::has_toConfiguration_method_v<double>);
+static_assert(!mc_rtc::internal::has_toConfiguration_method_v<Foo>);
+static_assert(mc_rtc::internal::has_toConfiguration_method_v<test::Bar>);
+
+using user_types = boost::mpl::list<Foo, test::Bar>;
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(TestUserDefinedConversions, T, user_types)
+{
+  T f_ref{"foo", 1.0};
   mc_rtc::Configuration config;
   config.add("foo", f_ref);
 
-  Foo f1 = mc_rtc::ConfigurationLoader<Foo>::load(config("foo"));
+  T f1 = [&config]()
+  {
+    if constexpr(mc_rtc::internal::has_configuration_load_object_v<T>)
+    {
+      T f1 = mc_rtc::ConfigurationLoader<T>::load(config("foo"));
+      return f1;
+    }
+    else
+    {
+      T f1 = T::fromConfiguration(config("foo"));
+      return f1;
+    }
+  }();
   BOOST_CHECK(f1 == f_ref);
 
-  Foo f2;
+  T f2;
   f2 = config("foo");
   BOOST_CHECK(f2 == f_ref);
 
-  Foo f3 = config("foo");
+  T f3 = config("foo");
   BOOST_CHECK(f3 == f_ref);
 
-  std::vector<Foo> v_ref{f1, f2};
+  std::vector<T> v_ref{f1, f2};
   config.add("foo_v", v_ref);
 
-  std::vector<Foo> v1 = config("foo_v");
+  std::vector<T> v1 = config("foo_v");
   BOOST_CHECK(v1 == v_ref);
 
   config.array("foo_v2");
   for(const auto & f : v_ref) { config("foo_v2").push(f); }
-  std::vector<Foo> v2 = config("foo_v2");
+  std::vector<T> v2 = config("foo_v2");
   BOOST_CHECK(v2 == v_ref);
 }
 
@@ -1162,10 +1240,10 @@ BOOST_AUTO_TEST_CASE(TestNestedLoading)
   mc_rtc::Configuration c3;
   c3.load(c2("nested")("b"));
   BOOST_REQUIRE(c3 == true);
-  BOOST_CHECK_THROW(c3.add("nested"), mc_rtc::Configuration::Exception);
+  MC_RTC_CHECK_THROW(c3.add("nested"));
   c1.load(c2("nested")("b"));
   BOOST_REQUIRE(c1 == true);
-  BOOST_CHECK_THROW(c1.add("nested"), mc_rtc::Configuration::Exception);
+  MC_RTC_CHECK_THROW(c1.add("nested"));
 }
 
 BOOST_AUTO_TEST_CASE(TestConfigurartionRemove)
@@ -1389,5 +1467,56 @@ BOOST_AUTO_TEST_CASE(TestIntegralTypes)
     mc_rtc::MessagePackBuilder builder(buffer);
     builder.write(number);
     builder.finish();
+  }
+}
+
+BOOST_AUTO_TEST_CASE(TestVariant)
+{
+  using variant_t = std::variant<double, std::string>;
+  variant_t v = 42.42;
+  mc_rtc::Configuration config;
+  config.add("v", v);
+  {
+    std::pair<size_t, double> serialized = config("v");
+    BOOST_REQUIRE_EQUAL(serialized.first, 0);
+    BOOST_REQUIRE_EQUAL(serialized.second, 42.42);
+  }
+  {
+    variant_t out = config("v");
+    BOOST_REQUIRE(out.index() == 0);
+    BOOST_REQUIRE(std::get<0>(out) == 42.42);
+  }
+  {
+    auto array = config.array("array");
+    array.push(v);
+  }
+  {
+    std::vector<variant_t> variant_array = config("array");
+    BOOST_REQUIRE(variant_array.size() == 1);
+    BOOST_REQUIRE(variant_array[0].index() == 0);
+    BOOST_REQUIRE(std::get<0>(variant_array[0]) == 42.42);
+  }
+  v = "hello";
+  config.add("v", v);
+  {
+    std::pair<size_t, std::string> serialized = config("v");
+    BOOST_REQUIRE_EQUAL(serialized.first, 1);
+    BOOST_REQUIRE_EQUAL(serialized.second, "hello");
+  }
+  {
+    variant_t out = config("v");
+    BOOST_REQUIRE(out.index() == 1);
+    BOOST_REQUIRE(std::get<1>(out) == "hello");
+  }
+  {
+    config("array").push(v);
+  }
+  {
+    std::vector<variant_t> variant_array = config("array");
+    BOOST_REQUIRE(variant_array.size() == 2);
+    BOOST_REQUIRE(variant_array[0].index() == 0);
+    BOOST_REQUIRE(std::get<0>(variant_array[0]) == 42.42);
+    BOOST_REQUIRE(variant_array[1].index() == 1);
+    BOOST_REQUIRE(std::get<1>(variant_array[1]) == "hello");
   }
 }

@@ -1,6 +1,7 @@
 {
   "title": "sva::ForceVecd",
   "type": "object",
+  "description": "Either couple or force can be ommited if the other is present",
   "properties":
   {
     "couple": { "$ref": "/../../Eigen/Vector3d.json" },

@@ -263,8 +263,9 @@ This feature allows you to specialize `mc_rtc::Configuration`
 to support loading/save to/from your own type. This feature is
 a C++ only feature for now.
 
-It works by adding a specialization template in the `mc_rtc`
-namespace of the following form:
+#### Non-intrusive approach
+
+You can add a specialization to the `ConfigurationLoader` template in the `mc_rtc` namespace of the following form:
 
 ```cpp
 template<>
@@ -291,5 +292,25 @@ struct ConfigurationLoader<MyType>
   static MyType load(const mc_rtc::Configuration & config);
 
   static mc_rtc::Configuration save(const MyType & object, bool verbose = false);
+};
+```
+
+#### Intrusive approach
+
+You can also implement methods in your object, `mc_rtc` will then pick these methods automatically:
+
+```cpp
+struct Foo
+{
+  // ...
+
+  // This will be called to load your object from a Configuration object
+  static Foo fromConfiguration(const mc_rtc::Configuration & in);
+
+  // This will be called save your object to a Configuration object
+  mc_rtc::Configuration toConfiguration() const;
+
+  // This also supports arguments
+  mc_rtc::Configuration toConfiguration(bool verbose) const;
 };
 ```

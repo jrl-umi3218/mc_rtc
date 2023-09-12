@@ -238,9 +238,12 @@ std::vector<std::pair<std::vector<Eigen::Vector3d>, std::vector<double>> inequal
 
 ### 独自の型のサポート
 
+
 この機能では、独自の型を持つデータの読み込みや保存を行えるように`mc_rtc::Configuration`を特殊化することができます。現在、この機能はC++でのみサポートされています。
 
-この機能を使用するには、`mc_rtc`名前空間に以下の形式で特殊化テンプレートを追加します。
+#### 非侵入的な方法
+
+次の形式で、mc_rtc名前空間内のConfigurationLoaderテンプレートに特殊化を追加することができます：
 
 ```cpp
 template<>
@@ -263,5 +266,25 @@ struct ConfigurationLoader<MyType>
   static MyType load(const mc_rtc::Configuration & config);
 
   static mc_rtc::Configuration save(const MyType & object, bool verbose = false);
+};
+```
+
+#### 侵入的な方法
+
+また、オブジェクト内にメソッドを実装することもできます。`mc_rtc`はこれらのメソッドを自動的に選択します：
+
+```cpp
+struct Foo
+{
+  // ...
+
+  // このメソッドは、オブジェクトをConfigurationオブジェクトから読み込むために呼び出されます
+  static Foo fromConfiguration(const mc_rtc::Configuration & in);
+
+  // このメソッドは、オブジェクトをConfigurationオブジェクトに保存するために呼び出されます
+  mc_rtc::Configuration toConfiguration() const;
+
+  // これは引数もサポートしています
+  mc_rtc::Configuration toConfiguration(bool verbose) const;
 };
 ```

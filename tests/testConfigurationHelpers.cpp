@@ -5,6 +5,13 @@
 #include <mc_rtc/ConfigurationHelpers.h>
 #include <boost/test/unit_test.hpp>
 
+bool silence_exception(const mc_rtc::Configuration::Exception & e)
+{
+  e.silence();
+  return true;
+}
+#define MC_RTC_REQUIRE_THROW(statement, exception) BOOST_REQUIRE_EXCEPTION(statement, exception, silence_exception)
+
 template<typename ElemT,
          typename WrongElemT,
          typename VecT = std::vector<ElemT>,
@@ -21,21 +28,20 @@ void test_fromVectorOrElement(const ElemT & elem,
   vectorConf.add("vectorNonConvertible", wrongVec);
   vectorConf.add("elem", elem);
   vectorConf.add("elemNonConvertible", wrongElem);
-  mc_rtc::log::info(vectorConf.dump(true));
 
   VecT elemVec{elem};
 
   // Try to load from element
   BOOST_CHECK(fromVectorOrElement<ElemT>(vectorConf, "elem") == elemVec);
   BOOST_CHECK(fromVectorOrElement<ElemT>(vectorConf, "elemNonExisting", elemVec) == elemVec);
-  BOOST_REQUIRE_THROW(fromVectorOrElement<ElemT>(vectorConf, "elemNonExisting"), Configuration::Exception);
-  BOOST_REQUIRE_THROW(fromVectorOrElement<ElemT>(vectorConf, "elemNonConvertible"), Configuration::Exception);
+  MC_RTC_REQUIRE_THROW(fromVectorOrElement<ElemT>(vectorConf, "elemNonExisting"), Configuration::Exception);
+  MC_RTC_REQUIRE_THROW(fromVectorOrElement<ElemT>(vectorConf, "elemNonConvertible"), Configuration::Exception);
 
   // Try to load from vector of elements
   BOOST_CHECK(fromVectorOrElement<ElemT>(vectorConf, "vector") == vec);
   BOOST_CHECK(fromVectorOrElement<ElemT>(vectorConf, "vectorNonExisting", vec) == vec);
-  BOOST_REQUIRE_THROW(fromVectorOrElement<ElemT>(vectorConf, "vectorNonExisting"), Configuration::Exception);
-  BOOST_REQUIRE_THROW(fromVectorOrElement<ElemT>(vectorConf, "vectorNonConvertible"), Configuration::Exception);
+  MC_RTC_REQUIRE_THROW(fromVectorOrElement<ElemT>(vectorConf, "vectorNonExisting"), Configuration::Exception);
+  MC_RTC_REQUIRE_THROW(fromVectorOrElement<ElemT>(vectorConf, "vectorNonConvertible"), Configuration::Exception);
 }
 
 BOOST_AUTO_TEST_CASE(TestIOUtils)
