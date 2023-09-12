@@ -817,26 +817,43 @@ public:
 
   /*! \brief Returns the Configuration entry if it exists, std::nullopt otherwise
    *
-   * \param Key key used to store the value
+   * \param key key used to store the value
    *
    * \returns Configuration entry if it exists, std::nullopt otherwise
    */
   std::optional<Configuration> find(const std::string & key) const;
 
-  /*! \brief Returns the value stored within the configuration if it exists, std::nullopt otherwise
+  /*! \brief Return the Configuration entry at (key, others...) if it exists, std::nullopt otherwise
    *
-   * \param key Key used to store the value
+   * This is equivalent if(auto a = cfg.find("a")) { if(auto b = cfg.find("b")) { ... } }
    *
-   * \returns Value if key is in the configuration, std::nullopt otherwise
+   * \param key key used to store the value
+   *
+   * \param others Keys searched one after the other
+   *
+   * \returns Configuration entry if it exists, std::nullopt otherwise
+   */
+  template<typename... Args>
+  std::optional<Configuration> find(const std::string & key, Args &&... others) const
+  {
+    auto out = find(key);
+    return out ? out->find(std::forward<Args>(others)...) : std::nullopt;
+  }
+
+  /*! \brief Return the Configuration entry at (key, others...) if it exists, std::nullopt otherwise
+   *
+   * \param key key used to store the value
+   *
+   * \param others Keys searched one after the other
    *
    * \tparam T Type of the entry retrieved
    *
-   * \throws If the conversion to \tparam T fails
+   * \throws If the key exists but the conversion to \tparam T fails
    */
-  template<typename T>
-  std::optional<T> find(const std::string & key) const
+  template<typename T, typename... Args>
+  std::optional<T> find(const std::string & key, Args &&... others) const
   {
-    auto maybe_cfg = find(key);
+    auto maybe_cfg = find(key, std::forward<Args>(others)...);
     if(maybe_cfg) { return maybe_cfg->operator T(); }
     return std::nullopt;
   }
