@@ -360,8 +360,11 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
         schema(id, data[3]);
         break;
       case Elements::Form:
+      {
+        form(id);
         handle_form(id, data[3]);
         break;
+      }
       case Elements::XYTheta:
         handle_xytheta(id, data);
         break;
@@ -726,7 +729,6 @@ void ControllerClient::handle_xytheta(const ElementId & id, const mc_rtc::Config
 
 void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configuration & gui)
 {
-  form(id);
   for(size_t i = 0; i < gui.size(); ++i)
   {
     auto el = gui[i];
@@ -749,7 +751,8 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
         form_string_input(id, name, required, el[3], el.size() > 4 ? el[4] : true);
         break;
       case Elements::ArrayInput:
-        form_array_input(id, name, required, el[3], el[4], el.size() > 5 ? el[5] : true);
+        form_array_input(id, name, required, el.size() > 6 ? el[6] : std::vector<std::string>{}, el[3], el[4],
+                         el.size() > 5 ? el[5] : true);
         break;
       case Elements::ComboInput:
         form_combo_input(id, name, required, el[3], el[4], el.size() > 5 ? el[5] : -1);
@@ -757,6 +760,45 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
       case Elements::DataComboInput:
         form_data_combo_input(id, name, required, el[3], el[4]);
         break;
+      case Elements::Point3D:
+        form_point3d_input(id, name, required, el[3], el[4], el[5]);
+        break;
+      case Elements::Rotation:
+        form_rotation_input(id, name, required, el[3], el[4], el[5]);
+        break;
+      case Elements::Transform:
+        form_transform_input(id, name, required, el[3], el[4], el[5]);
+        break;
+      case Elements::Form:
+      {
+        start_form_object_input(name, required);
+        handle_form(id, el[3]);
+        end_form_object_input();
+        break;
+      }
+      case Elements::GenericArray:
+      {
+        if(el[3].size() != 1)
+        {
+          mc_rtc::log::error("GenericArray ({}) has more than one element describing its content!", name);
+          break;
+        }
+        std::optional<std::vector<Configuration>> data = std::nullopt;
+        if(el[4].isArray()) { data = el[4].operator std::vector<Configuration>(); }
+        start_form_generic_array_input(name, required, data);
+        handle_form(id, el[3]);
+        end_form_generic_array_input();
+        break;
+      }
+      case Elements::OneOf:
+      {
+        std::optional<std::pair<size_t, Configuration>> data = std::nullopt;
+        if(el[3].isArray()) { data = el[3].operator std::pair<size_t, Configuration>(); }
+        start_form_one_of_input(name, required, data);
+        handle_form(id, el[4]);
+        end_form_one_of_input();
+        break;
+      }
       default:
         mc_rtc::log::error("Form cannot handle element of type {}", static_cast<int>(type));
     }

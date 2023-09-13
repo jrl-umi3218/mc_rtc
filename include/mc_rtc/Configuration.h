@@ -1481,9 +1481,9 @@ public:
 
   /*! \brief Add a variant object into the JSON document
    *
-   * The variant is written as [value.index(), std::get<value.index()>(value)] if it holds a value
+   * The variant is written as [value.index(), std::get<value.index()>(value)]
    *
-   * Otherwise it is written as [std::variant_npos, std::variant_npos]
+   * \throws If the variant is in valueless state
    *
    * \param key Key of the element
    *
@@ -1494,11 +1494,7 @@ public:
   {
     Configuration v = array(key, 2);
     v.push(value.index());
-    if(value.index() != std::variant_npos)
-    {
-      std::visit([&v](const auto & hold) { v.push(hold); }, value);
-    }
-    else { v.push(value.index()); }
+    std::visit([&v](const auto & hold) { v.push(hold); }, value);
   }
 
   /** Integral type conversions
@@ -1628,9 +1624,9 @@ public:
 
   /*! \brief Push a variant object into the JSON document
    *
-   * The variant is written as [value.index(), std::get<value.index()>(value)] if it holds a value
+   * The variant is written as [value.index(), std::get<value.index()>(value)]
    *
-   * Otherwise it is written as [std::variant_npos, std::variant_npos]
+   * \throws If the variant is in valueless state
    *
    * \param key Key of the element
    *
@@ -1641,11 +1637,7 @@ public:
   {
     Configuration v = array(2);
     v.push(value.index());
-    if(value.index() != std::variant_npos)
-    {
-      std::visit([&v](const auto & hold) { v.push(hold); }, value);
-    }
-    else { v.push(value.index()); }
+    std::visit([&v](const auto & hold) { v.push(hold); }, value);
   }
 
   /** Remove a given element

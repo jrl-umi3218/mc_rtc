@@ -14,13 +14,14 @@
 #include <set>
 #include <string>
 #include <type_traits>
+#include <variant>
 #include <vector>
 
 namespace mc_rtc
 {
 
 struct Configuration;
-
+struct MessagePackBuilder;
 struct MessagePackBuilderImpl;
 
 namespace internal
@@ -60,6 +61,20 @@ template<typename T>
 constexpr bool is_like_uint32_t = is_like<uint32_t, T>();
 template<typename T>
 constexpr bool is_like_uint64_t = is_like<uint64_t, T>();
+
+template<typename T, typename = void>
+struct has_write_builder : std::false_type
+{
+};
+
+template<typename T>
+struct has_write_builder<T, std::void_t<decltype(std::declval<const T &>().write(std::declval<MessagePackBuilder &>()))>>
+: std::true_type
+{
+};
+
+template<typename T>
+static inline constexpr bool has_write_builder_v = has_write_builder<T>::value;
 
 } // namespace internal
 
@@ -133,31 +148,31 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
 
   /** Write an Eigen::Vector2d
    *
-   * Serializes as an array of size 2
+   * Serialized as an array of size 2
    */
   void write(const Eigen::Vector2d & v);
 
   /** Write an Eigen::Vector3d
    *
-   * Serializes as an array of size 3
+   * Serialized as an array of size 3
    */
   void write(const Eigen::Vector3d & v);
 
   /** Write an Eigen::Vector4d
    *
-   * Serializes as an array of size 4
+   * Serialized as an array of size 4
    */
   void write(const Eigen::Vector4d & v);
 
   /** Write an Eigen::Vector6d
    *
-   * Serializes as an array of size 6
+   * Serialized as an array of size 6
    */
   void write(const Eigen::Vector6d & v);
 
   /** Write an Eigen::VectorXd
    *
-   * Serializes as an array of size X
+   * Serialized as an array of size X
    */
   void write(const Eigen::VectorXd & v);
 
@@ -172,19 +187,19 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
 
   /** Write an Eigen::Quaterniond
    *
-   * Serializes as an array of size X
+   * Serialized as an array of size 4
    */
   void write(const Eigen::Quaterniond & q);
 
   /** Write an Eigen::Matrix3d
    *
-   * Serializes as an array of size 9
+   * Serialized as an array of size 9
    */
   void write(const Eigen::Matrix3d & m);
 
   /** Write an sva::PTransformd
    *
-   * Serializes as an array of size 12 (Matrix3d + Vector3d)
+   * Serialized as an array of size 12 (Matrix3d + Vector3d)
    */
   void write(const sva::PTransformd & pt);
 
@@ -208,7 +223,7 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
 
   /** Write an mc_rtc::Configuration
    *
-   * Serialied as the JSON data it holds
+   * Serialized as the JSON data it holds
    */
   void write(const mc_rtc::Configuration & config);
 
@@ -225,6 +240,13 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
     else if constexpr(internal::is_like_uint32_t<T>) { write(static_cast<uint32_t>(number)); }
     else if constexpr(internal::is_like_uint64_t<T>) { write(static_cast<uint64_t>(number)); }
     else { static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size"); }
+  }
+
+  /** Write \tparam T to MessagePack if T implements T::write(MessagePackBuilder &) const */
+  template<typename T, typename = std::enable_if_t<internal::has_write_builder_v<T>>>
+  void write(const T & value)
+  {
+    value.write(*this);
   }
 
   /** @} */
@@ -294,6 +316,16 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
   {
     start_array(sizeof...(Args));
     write_impl<0>(t);
+    finish_array();
+  }
+
+  /** Write an std::variant<Args...> */
+  template<typename... Args>
+  void write(const std::variant<Args...> & value)
+  {
+    start_array(2);
+    write(value.index());
+    std::visit([this](const auto & v) { write(v); }, value);
     finish_array();
   }
 

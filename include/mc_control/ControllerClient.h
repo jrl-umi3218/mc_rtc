@@ -574,7 +574,10 @@ protected:
   {
   }
 
-  /** An array input within a form */
+  /** An array input within a form
+   *
+   * This is kept for backward compatibility, mc_rtc never calls this version and you should implement the full version
+   */
   virtual void form_array_input(const ElementId & formId,
                                 const std::string & name,
                                 bool required,
@@ -583,6 +586,18 @@ protected:
                                 bool /*default_from_user*/)
   {
     form_array_input(formId, name, required, default_, fixed_size);
+  }
+
+  /** An array input within a form */
+  virtual void form_array_input(const ElementId & formId,
+                                const std::string & name,
+                                bool required,
+                                const std::vector<std::string> & /*labels*/,
+                                const Eigen::VectorXd & default_,
+                                bool fixed_size,
+                                bool default_from_user)
+  {
+    form_array_input(formId, name, required, default_, fixed_size, default_from_user);
   }
 
   /** A combo input within a form
@@ -642,6 +657,142 @@ protected:
                                      bool /*send_index*/)
   {
   }
+
+  /** A 3D point that can be edited within a Form
+   *
+   * \p formId Identifier of the form
+   *
+   * \p name Name of the entry
+   *
+   * \p required If true, it must hold a value when the form is sent
+   *
+   * \p default_ Default value in the form
+   *
+   * \p default_from_user Default is provided by the user
+   *
+   * \p interactive Should display an interactive marker
+   */
+  virtual void form_point3d_input(const ElementId & /*formId*/,
+                                  const std::string & /*name*/,
+                                  bool /*required*/,
+                                  const Eigen::Vector3d & /*default_*/,
+                                  bool /*default_from_user*/,
+                                  bool /*interactive*/)
+  {
+  }
+
+  /** A rotation that can be edited within a Form
+   *
+   * Note: this requires a PTransformd to place the rotation in space but only the rotation should be provided in the
+   * callback
+   *
+   * \p formId Identifier of the form
+   *
+   * \p name Name of the entry
+   *
+   * \p required If true, it must hold a value when the form is sent
+   *
+   * \p default_ Default value in the form
+   *
+   * \p default_from_user Default is provided by the user
+   *
+   * \p interactive Should display an interactive marker
+   */
+  virtual void form_rotation_input(const ElementId & /*formId*/,
+                                   const std::string & /*name*/,
+                                   bool /*required*/,
+                                   const sva::PTransformd & /*default_*/,
+                                   bool /*default_from_user*/,
+                                   bool /*interactive*/)
+  {
+  }
+
+  /** A transform that can be edited within a Form
+   *
+   * \p formId Identifier of the form
+   *
+   * \p name Name of the entry
+   *
+   * \p required If true, it must hold a value when the form is sent
+   *
+   * \p default_ Default value in the form
+   *
+   * \p default_from_user Default is provided by the user
+   *
+   * \p interactive Should display an interactive marker
+   */
+  virtual void form_transform_input(const ElementId & /*formId*/,
+                                    const std::string & /*name*/,
+                                    bool /*required*/,
+                                    const sva::PTransformd & /*default_*/,
+                                    bool /*default_from_user*/,
+                                    bool /*interactive*/)
+  {
+  }
+
+  /** Starts a form within a form
+   *
+   * After this call, all calls related to form elements must be interpreted as belonging to this sub-form
+   *
+   * \p name Name of the object
+   *
+   * \p required If true, it must hold a value when the form is sent
+   */
+  virtual void start_form_object_input(const std::string & /*name*/, bool /*required*/) {}
+
+  /** Pendant to \ref start_form_object_input
+   *
+   * After this call, all calls related to form elements must be interpreted as belonging to the form's parent
+   *
+   */
+  virtual void end_form_object_input() {}
+
+  /** Starts a generic array input
+   *
+   * The next call related to form elements must be interpreted as describing the type of members the array expects
+   *
+   * \p name Name of the array this generates
+   *
+   * \p required If true, it must hold a value (can be an empty array) when the form is sent
+   *
+   * \p data Existing data in the array, must be sent along with the form if provided
+   */
+  virtual void start_form_generic_array_input(const std::string & /*name*/,
+                                              bool /*required*/,
+                                              std::optional<std::vector<Configuration>> /*data*/)
+  {
+  }
+
+  /** Pendant to \ref start_form_generic_array_input
+   *
+   * After this call, all calls related to form elements must be interpreted as belonging to the form's parent
+   *
+   */
+  virtual void end_form_generic_array_input() {}
+
+  /** Start a one-of input within a form
+   *
+   * After this call, each call related to form elements is one option offered by the one-of selector. The name of the
+   * element should be used to distinguish the selected type
+   *
+   * \p name Name of the one-of selection
+   *
+   * \p required If true, it must hold a valid value when sent
+   *
+   * \p data Active data
+   */
+  virtual void start_form_one_of_input(const std::string & /*name*/,
+                                       bool /*required*/,
+                                       const std::optional<std::pair<size_t, Configuration>> & /*data*/)
+  {
+  }
+
+  /** Pendant to \ref start_form_one_of_input
+   *
+   * After this call, all calls related to form elements must be interpreted as belonging to the form's parent
+   *
+   */
+  virtual void end_form_one_of_input() {}
 
   /** Called when new plot data arrives
    *
