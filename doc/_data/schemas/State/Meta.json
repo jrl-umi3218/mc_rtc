@@ -8,7 +8,8 @@
       "properties":
       {
         "Managed": { "type": "boolean", "default": false, "description": "If true, this state does not handle transitions by itself"},
-        "StepByStep": { "type": "boolean", "description": "Affects the StepByStep transition behaviour<br/>If not set, inherits the setting from its parent FSM" },
+        "StepByStep": { "type": "boolean", "description": "Affects the StepByStep transition behaviour<br/>Defaults to true for the main executor, false otherwise" },
+        "ResetPostures": { "type": "boolean", "description": "When true reset the posture tasks to the current posture before transitioning to the next state. Defaults to true for the main executor, false otherwise (Meta states)" },
         "transitions": { "type": "array", "description": "A transition map, required if Managed is false",
           "items":
           {

@@ -137,6 +137,8 @@ private:
   bool managed_ = false;
   /** If true and not managed, waits for trigger before transitions */
   bool step_by_step_ = true;
+  /** When true reset the posture tasks to the current posture before transitionning to the next state */
+  bool reset_postures_ = true;
 
   /** Transition map, empty if managed */
   TransitionMap transition_map_;
