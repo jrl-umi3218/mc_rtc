@@ -708,6 +708,31 @@ void MCGlobalController::setJointMotorCurrents(const std::string & robotName,
   for(const auto & c : currents) { sensors[robot.data()->jointJointSensors.at(c.first)].motorCurrent(c.second); }
 }
 
+void MCGlobalController::setJointMotorStatus(const std::string & joint, bool status)
+{
+  setJointMotorStatus(controller_->robot().name(), joint, status);
+}
+
+void MCGlobalController::setJointMotorStatus(const std::string & robotName, const std::string & joint, bool status)
+{
+  auto & robot = controller().robot(robotName);
+  auto & sensors = robot.data()->jointSensors;
+  sensors[robot.data()->jointJointSensors.at(joint)].motorStatus(status);
+}
+
+void MCGlobalController::setJointMotorStatuses(const std::map<std::string, bool> & statuses)
+{
+  setJointMotorStatuses(controller_->robot().name(), statuses);
+}
+
+void MCGlobalController::setJointMotorStatuses(const std::string & robotName,
+                                               const std::map<std::string, bool> & statuses)
+{
+  auto & robot = controller().robot(robotName);
+  auto & sensors = robot.data()->jointSensors;
+  for(const auto & s : statuses) { sensors[robot.data()->jointJointSensors.at(s.first)].motorStatus(s.second); }
+}
+
 bool MCGlobalController::run()
 {
   /** Always pick a steady clock */
@@ -743,6 +768,7 @@ bool MCGlobalController::run()
         js.motorTemperature(controller_->robot().jointJointSensor(js.joint()).motorTemperature());
         js.driverTemperature(controller_->robot().jointJointSensor(js.joint()).driverTemperature());
         js.motorCurrent(controller_->robot().jointJointSensor(js.joint()).motorCurrent());
+        js.motorStatus(controller_->robot().jointJointSensor(js.joint()).motorStatus());
       }
       next_controller_->realRobot().mbc() = controller_->realRobot().mbc();
     }

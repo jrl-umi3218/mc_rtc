@@ -55,6 +55,12 @@ struct MC_RBDYN_DLLAPI JointSensor
   /** Set the sensor's current reading (Ampere) */
   inline void motorCurrent(double motor_current) noexcept { motor_current_ = motor_current; }
 
+  /** Return the sensor's motor ON/OFF reading, ON (true) if not provided */
+  inline bool motorStatus() const noexcept { return motor_status_; }
+
+  /** Set the sensor's motor ON/OFF reading */
+  inline void motorStatus(bool motor_status) noexcept { motor_status_ = motor_status; }
+
 protected:
   /** Name of joint to which sensor is attached */
   std::string joint_;
@@ -66,6 +72,8 @@ private:
   double driver_temperature_ = std::numeric_limits<double>::quiet_NaN();
   /* Motor current (Ampere) */
   double motor_current_ = std::numeric_limits<double>::quiet_NaN();
+  /* Motor status (ON/OFF) */
+  bool motor_status_ = true;
 };
 
 inline bool operator==(const JointSensor & lhs, const JointSensor & rhs)
