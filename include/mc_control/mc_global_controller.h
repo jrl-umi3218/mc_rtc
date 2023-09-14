@@ -600,6 +600,42 @@ public:
    * \throws If the specified robot does not exist
    */
   void setJointMotorCurrents(const std::string & robotName, const std::map<std::string, double> & currents);
+
+  /*! \brief Motor status provided by the JointSensor for the main robot (sets control+real)
+   *
+   * \param joint name of the joint to which sensor is attached
+   * \param status motor ON/OFF status
+   * \throws If the robot does not have any JointSensor at joint
+   */
+  void setJointMotorStatus(const std::string & joint, bool status);
+
+  /*! \brief Motor status provided by the JointSensor for the specified robot (sets control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param joint name of the joint to which sensor is attached
+   * \param status motor ON/OFF status
+   * \throws If the robot does not have any JointSensor at joint
+   * \throws If the specified robot does not exist
+   */
+  void setJointMotorStatus(const std::string & robotName, const std::string & joint, bool status);
+
+  /*! \brief Motor status provided by multiple JointSensors for the main robot (sets control+real)
+   *
+   * \param statuses map of joint name to motor status
+   * \throws If any of the joint sensors do not exist
+   */
+  void setJointMotorStatuses(const std::map<std::string, bool> & statuses);
+
+  /*! \brief Motor status provided by multiple JointSensors for the specified robot (sets control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param statuses map of joint name to motor status
+   * \throws If any of the joint sensors do not exist
+   * \throws If the specified robot does not exist
+   */
+  void setJointMotorStatuses(const std::string & robotName, const std::map<std::string, bool> & statuses);
   /** @} */
 
 protected:

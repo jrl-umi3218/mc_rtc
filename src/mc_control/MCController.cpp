@@ -535,6 +535,8 @@ void MCController::addRobotToLog(const mc_rbdyn::Robot & r)
                          [this, name, jnt]() { return robot(name).jointJointSensor(jnt).driverTemperature(); });
     logger().addLogEntry(entry_str("JointSensor_" + jnt + "_motorCurrent"),
                          [this, name, jnt]() { return robot(name).jointJointSensor(jnt).motorCurrent(); });
+    logger().addLogEntry(entry_str("JointSensor_" + jnt + "_motorStatus"),
+                         [this, name, jnt]() { return robot(name).jointJointSensor(jnt).motorStatus(); });
   }
 }
 
@@ -576,6 +578,7 @@ void MCController::removeRobot(const std::string & name)
       logger().removeLogEntry(entry_str("JointSensor_" + js.joint() + "_motorTemperature"));
       logger().removeLogEntry(entry_str("JointSensor_" + js.joint() + "_driverTemperature"));
       logger().removeLogEntry(entry_str("JointSensor_" + js.joint() + "_motorCurrent"));
+      logger().removeLogEntry(entry_str("JointSensor_" + js.joint() + "_motorStatus"));
     }
     converters_.erase(converters_.begin() + robot.robotIndex());
   }
