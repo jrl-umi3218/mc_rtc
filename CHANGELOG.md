@@ -2,6 +2,26 @@
 
 ## [Unreleased]
 
+## [2.8.0] - 2023-09-19
+
+### Added
+
+- [mc_control] Added motor status to joint sensor (#395)
+- [mc_control/FSM] Posture tasks' reset can be disabled (#389)
+- [mc_rtc/Configuration] Added support for `std::variant` (#393)
+- [mc_rtc/Configuration] Added `Configuration::find` (#393)
+- [mc_rtc/GUI] Added form elements to provide more complex forms (#394)
+
+### Changes
+
+- [mc_control/FSM] FSM embedded in a Meta state no longer reset the posture at transition by default (#389)
+
+### Fixes
+
+- [mc_observers] KinematicInertial uses the correct function from state-observation (#391)
+- [mc_solver] Fix a crash in monitor activation
+- [mc_tvm] Correctly include refAccel in Orientation|PositionFunction
+
 ## [2.7.0] - 2023-09-06
 
 ### Added
@@ -741,7 +761,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.7.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.8.0...HEAD
+[2.8.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.8.0
 [2.7.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.7.0
 [2.6.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.6.0
 [2.5.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.5.0
