@@ -7,7 +7,7 @@
 struct SimpleSchema
 {
   MC_RTC_NEW_SCHEMA(SimpleSchema)
-#define MEMBER(...) MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER(SimpleSchema, __VA_ARGS__)
+#define MEMBER(...) MC_RTC_PP_ID(MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER(SimpleSchema, __VA_ARGS__))
   MEMBER(bool, useFeature, "Use magic feature")
   MEMBER(double, weight, "Task weight")
   MEMBER(std::vector<std::string>, names, "Some names")

@@ -1,3 +1,5 @@
+#define MC_RTC_PP_ID(X) X
+
 #define MC_RTC_SCHEMA(SchemaT, BaseT)                                                                        \
   /** Tag to detect Schema objects */                                                                        \
   using is_schema_t = std::true_type;                                                                        \
@@ -103,20 +105,22 @@ public:
 
 /** Declare a required Schema<T> member of type TYPE, only specify DEFAULT */
 #define MC_RTC_SCHEMA_REQUIRED_MEMBER(T, TYPE, NAME, DESCRIPTION, DEFAULT, ...) \
-  MC_RTC_SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, mc_rtc::schema::ValueFlag::All, DEFAULT, ##__VA_ARGS__)
+  MC_RTC_PP_ID(MC_RTC_SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, mc_rtc::schema::ValueFlag::All, DEFAULT, ##__VA_ARGS__))
 
 /** Declare an optional Schema<T> member of type TYPE, only specify DEFAULT */
-#define MC_RTC_SCHEMA_OPTIONAL_MEMBER(T, TYPE, NAME, DESCRIPTION, DEFAULT, ...) \
-  MC_RTC_SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, mc_rtc::schema::ValueFlag::Interactive, DEFAULT, ##__VA_ARGS__)
+#define MC_RTC_SCHEMA_OPTIONAL_MEMBER(T, TYPE, NAME, DESCRIPTION, DEFAULT, ...)                                  \
+  MC_RTC_PP_ID(MC_RTC_SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, mc_rtc::schema::ValueFlag::Interactive, DEFAULT, \
+                                    ##__VA_ARGS__))
 
 /** Declare a Schema<T> member of type TYPE with a default value, only specify REQUIRED */
 #define MC_RTC_SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, ...) \
-  MC_RTC_SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, mc_rtc::Default<TYPE>::value, ##__VA_ARGS__)
+  MC_RTC_PP_ID(MC_RTC_SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, REQUIRED, mc_rtc::Default<TYPE>::value, ##__VA_ARGS__))
 
 /** Declare a required Schema<T> member of type TYPE with a default value */
 #define MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, ...) \
-  MC_RTC_SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, mc_rtc::schema::ValueFlag::All, ##__VA_ARGS__)
+  MC_RTC_PP_ID(MC_RTC_SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, mc_rtc::schema::ValueFlag::All, ##__VA_ARGS__))
 
 /** Declare an optional Schema<T> member of type TYPE with a default value */
 #define MC_RTC_SCHEMA_OPTIONAL_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, ...) \
-  MC_RTC_SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, mc_rtc::schema::ValueFlag::Interactive, ##__VA_ARGS__)
+  MC_RTC_PP_ID(                                                                \
+      MC_RTC_SCHEMA_DEFAULT_MEMBER(T, TYPE, NAME, DESCRIPTION, mc_rtc::schema::ValueFlag::Interactive, ##__VA_ARGS__))
