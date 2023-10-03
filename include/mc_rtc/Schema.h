@@ -264,8 +264,6 @@ struct MC_RTC_UTILS_DLLAPI Operations
                      const std::integral_constant<ValueFlag, Flags> & = {},
                      const details::Choices<HasChoices> & choices = {})
   {
-    constexpr bool IsRequired = HasFeature(Flags, ValueFlag::Required);
-    constexpr bool IsInteractive = HasFeature(Flags, ValueFlag::Interactive);
     values_count += 1;
     save = [save = save, name](const void * self, mc_rtc::Configuration & out)
     {
@@ -282,6 +280,7 @@ struct MC_RTC_UTILS_DLLAPI Operations
     };
     load = [load = load, name](void * self, const mc_rtc::Configuration & in)
     {
+      constexpr bool IsRequired = HasFeature(Flags, ValueFlag::Required);
       load(self, in);
       T & value = static_cast<Schema *>(self)->*ptr;
       if(in.has(name)) { value = in(name).operator T(); }
@@ -289,6 +288,7 @@ struct MC_RTC_UTILS_DLLAPI Operations
     };
     formToStd = [formToStd = formToStd, name, description](const Configuration & in, Configuration & out)
     {
+      constexpr bool IsRequired = HasFeature(Flags, ValueFlag::Required);
       formToStd(in, out);
       if(IsRequired || in.has(description))
       {
@@ -313,6 +313,8 @@ struct MC_RTC_UTILS_DLLAPI Operations
     };
     buildForm = [buildForm = buildForm, description, choices](const void * self, Operations::FormElements & form)
     {
+      constexpr bool IsRequired = HasFeature(Flags, ValueFlag::Required);
+      constexpr bool IsInteractive = HasFeature(Flags, ValueFlag::Interactive);
       buildForm(self, form);
       const T & value = static_cast<const Schema *>(self)->*ptr;
       details::addValueToForm<T, IsRequired, IsInteractive>(value, description, choices, form);
