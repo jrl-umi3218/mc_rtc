@@ -210,7 +210,7 @@ inline constexpr bool HasFeature(ValueFlag flag, ValueFlag feature) noexcept
  * - MC_RTC_SCHEMA_MEMBER_*(SchemaT, ...) to declare members inside a schema-enable struct of type SchemaT
  *
  */
-struct MC_RTC_UTILS_DLLAPI Operations
+struct Operations
 {
   /** Name of members in the schema */
   size_t values_count = 0;
