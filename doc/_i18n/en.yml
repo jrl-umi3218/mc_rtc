@@ -108,6 +108,8 @@ tutorials:
       title: ROS integration
     global-plugins:
       title: Using global plugins
+    schema:
+      title: Schema structures integrated to the framework
   tools:
     title: Framework tools
     desc: These tutorials introduce useful tools developed around mc_rtc
