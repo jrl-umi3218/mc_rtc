@@ -109,6 +109,8 @@ tutorials:
       title: ROS統合
     global-plugins:
       title: グローバルプラグインの利用
+    schema:
+      title: フレームワークに統合されたスキーマ構造
   tools:
     title: ツール
     desc: これらのチュートリアルはmc_rtc関連の便利なツールを紹介します。

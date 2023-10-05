@@ -32,6 +32,8 @@
       id: ros
     -
       id: global-plugins
+    -
+      id: schema
 -
   id: tools
   tutorials:
