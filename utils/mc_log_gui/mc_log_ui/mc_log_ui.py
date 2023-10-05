@@ -1508,7 +1508,7 @@ class MCLogUI(QtWidgets.QMainWindow):
             )
         if len(self.loaded_files) > 1:
             if len(self.loaded_files) == 2:
-                keys = self.data.keys()
+                keys = list(self.data.keys())
                 for k in keys:
                     self.data["{}_{}".format(self.loaded_files[0], k)] = self.data[k]
                     del self.data[k]
