@@ -109,6 +109,8 @@ public:
     std::vector<std::string> main_robot_module;
     /** Initial position of robots in the world */
     std::map<std::string, sva::PTransformd> init;
+    /** Initial configuration of robots in the world */
+    std::map<std::string, std::vector<std::vector<double>>> init_q;
   };
 
 public:
