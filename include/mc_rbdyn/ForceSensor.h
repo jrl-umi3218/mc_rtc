@@ -5,16 +5,12 @@
 #pragma once
 
 #include <mc_rbdyn/Device.h>
+#include <mc_rbdyn/ForceSensorCalibData.h>
 
 namespace mc_rbdyn
 {
 
 struct Robot;
-
-namespace detail
-{
-struct ForceSensorCalibData;
-}
 
 /** This struct is intended to hold static information about a force sensor
  * and the current reading of said sensor. If the appropriate data is
@@ -114,6 +110,8 @@ public:
    * @{
    */
 
+  void loadCalibrator(const detail::ForceSensorCalibData & data) noexcept;
+
   /** Load data from a file, using a gravity vector. The file should
    * contain 13 parameters in that order: mass (1), rpy for X_f_ds (3),
    * position for X_p_vb (3), wrench offset (6).
@@ -153,6 +151,9 @@ public:
   /** Return the sensor offset */
   const sva::ForceVecd & offset() const;
 
+  /** Access the calibration object */
+  inline const detail::ForceSensorCalibData & calib() const noexcept { return calibration_; }
+
   /** @} */
   /* End of Calibration group */
 
@@ -161,7 +162,7 @@ public:
 private:
   sva::ForceVecd wrench_;
 
-  std::shared_ptr<detail::ForceSensorCalibData> calibration_;
+  detail::ForceSensorCalibData calibration_;
 };
 
 inline bool operator==(const mc_rbdyn::ForceSensor & lhs, const mc_rbdyn::ForceSensor & rhs)
