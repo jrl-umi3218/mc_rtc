@@ -1,4 +1,4 @@
-#define MC_RTC_PP_ID(X) X
+#include <mc_rtc/macros/pp_id.h>
 
 #define MC_RTC_SCHEMA(SchemaT, BaseT)                                                                        \
   /** Tag to detect Schema objects */                                                                        \
