@@ -297,13 +297,14 @@ void Logger::log()
       }
       else if constexpr(std::is_same_v<T, StartEvent>)
       {
-        builder.start_array(6);
+        builder.start_array(7);
         builder.write(static_cast<uint8_t>(3));
         builder.write(meta_.timestep);
         builder.write(meta_.main_robot);
         builder.write(meta_.main_robot_module);
         builder.write(meta_.init);
         builder.write(meta_.init_q);
+        builder.write(meta_.calibs);
         builder.finish_array();
       }
       else { static_assert(!std::is_same_v<T, T>, "non-exhaustive visitor"); }

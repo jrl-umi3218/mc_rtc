@@ -1048,10 +1048,12 @@ void MCGlobalController::setup_log()
   meta.main_robot_module = controller_->robot().module().parameters();
   meta.init.clear();
   meta.init_q.clear();
+  meta.calibs.clear();
   for(const auto & r : controller_->robots())
   {
     meta.init[r.name()] = r.posW();
     meta.init_q[r.name()] = r.mbc().q;
+    for(const auto & fs : r.forceSensors()) { meta.calibs[r.name()][fs.name()] = fs.calib().toConfiguration(); }
   }
   if(setup_logger_.count(current_ctrl)) { return; }
   // Copy controller pointer to avoid lambda issue

@@ -111,6 +111,8 @@ public:
     std::map<std::string, sva::PTransformd> init;
     /** Initial configuration of robots in the world */
     std::map<std::string, std::vector<std::vector<double>>> init_q;
+    /** Calibration used for the force sensors */
+    std::map<std::string, std::map<std::string, mc_rtc::Configuration>> calibs;
   };
 
 public:

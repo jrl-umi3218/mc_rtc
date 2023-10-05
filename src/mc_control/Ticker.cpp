@@ -181,6 +181,19 @@ Ticker::Ticker(const Configuration & config) : config_(config), gc_(get_gc_confi
     }
     // Do the initialization
     auto [encoders, attitudes] = get_initial_state(*log_, gc_.robots(), gc_.controller().robot().name());
+    if(log_->meta())
+    {
+      const auto & calibs = log_->meta()->calibs;
+      for(const auto & [r, fs_calibs] : calibs)
+      {
+        auto & robot = gc_.robots().robot(r);
+        for(const auto & [fs_name, calib] : fs_calibs)
+        {
+          auto & fs = const_cast<mc_rbdyn::ForceSensor &>(robot.forceSensor(fs_name));
+          fs.loadCalibrator(mc_rbdyn::detail::ForceSensorCalibData::fromConfiguration(calib));
+        }
+      }
+    }
     gc_.init(encoders, attitudes);
   }
   else { gc_.init(); }

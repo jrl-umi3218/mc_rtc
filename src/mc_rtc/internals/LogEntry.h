@@ -524,6 +524,7 @@ struct LogEntry : mpack_tree_t
             meta.main_robot_module = data[3];
             meta.init = data[4];
             if(data.size() > 5) { meta.init_q = data[5]; }
+            if(data.size() > 6) { meta.calibs = data[6]; }
             metaOut = meta;
           }
           else
