@@ -28,6 +28,9 @@ set_target_properties(
              LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TestReplayController
              RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TestReplayController
 )
+target_include_directories(TestReplayController PRIVATE ${CMAKE_SOURCE_DIR}/tests)
+set(CONFIG_HEADER_INCLUDE_DIR "${CMAKE_BINARY_DIR}/tests/include/$<CONFIG>")
+target_include_directories(TestReplayController PRIVATE ${CONFIG_HEADER_INCLUDE_DIR})
 
 add_global_controller_test_run(
   TestReplayController_Record ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/mc_rtc.yaml 50
