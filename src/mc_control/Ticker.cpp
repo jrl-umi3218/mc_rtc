@@ -77,39 +77,54 @@ std::optional<sva::PTransformd> get_posW(const mc_rtc::log::FlatLog & log,
                                          bool is_main,
                                          size_t idx)
 {
-  auto entry = log_entry("ff", robot, is_main);
   if(log.meta())
   {
     auto it = log.meta()->init.find(robot);
     if(it != log.meta()->init.end()) { return it->second; }
   }
+  auto entry = log_entry("ff", robot, is_main);
   if(!log.has(entry)) { return std::nullopt; }
   return log.get(entry, idx, sva::PTransformd::Identity());
 }
 
+std::optional<std::vector<double>> get_initial_encoders(const mc_rtc::log::FlatLog & log,
+                                                        const mc_rbdyn::Robot & robot,
+                                                        bool is_main)
+{
+  if(log.meta())
+  {
+    auto it = log.meta()->init_q.find(robot.name());
+    if(it != log.meta()->init_q.end())
+    {
+      const auto & q = it->second;
+      std::vector<double> out;
+      for(size_t i = 0; i < robot.refJointOrder().size(); ++i)
+      {
+        auto mbcIdx = robot.jointIndexInMBC(i);
+        if(mbcIdx >= 0 && !q[static_cast<size_t>(mbcIdx)].empty()) { out.push_back(q[static_cast<size_t>(mbcIdx)][0]); }
+        else { out.push_back(0.0); }
+      }
+      return out;
+    }
+  }
+  if(log.has(log_entry("qIn", robot.name(), is_main))) { return get_encoders(log, robot.name(), is_main, 0); }
+  return std::nullopt;
+}
+
 /** Get the initial state of all robots from the given log */
-auto get_initial_state(const mc_rtc::log::FlatLog & log,
-                       const std::vector<std::string> & robots,
-                       const std::string & main)
+auto get_initial_state(const mc_rtc::log::FlatLog & log, const mc_rbdyn::Robots & robots, const std::string & main)
 {
   std::pair<std::map<std::string, std::vector<double>>, std::map<std::string, sva::PTransformd>> out;
   auto & encoders = out.first;
   auto & bases = out.second;
   for(const auto & r : robots)
   {
-    bool is_main = r == main;
-    if(log.has(log_entry("qIn", r, is_main))) { encoders[r] = get_encoders(log, r, is_main, 0); }
-    auto posW = get_posW(log, r, is_main, 0);
-    if(posW) { bases[r] = *posW; }
+    bool is_main = r.name() == main;
+    auto r_encoders = get_initial_encoders(log, r, is_main);
+    if(r_encoders) { encoders[r.name()] = *r_encoders; }
+    auto posW = get_posW(log, r.name(), is_main, 0);
+    if(posW) { bases[r.name()] = *posW; }
   }
-  return out;
-}
-
-/** Get the names of the robot currently in the controller */
-std::vector<std::string> get_robots(const mc_control::MCGlobalController & gc)
-{
-  std::vector<std::string> out;
-  for(const auto & r : gc.controller().robots()) { out.push_back(r.name()); }
   return out;
 }
 
@@ -165,7 +180,7 @@ Ticker::Ticker(const Configuration & config) : config_(config), gc_(get_gc_confi
       }
     }
     // Do the initialization
-    auto [encoders, attitudes] = get_initial_state(*log_, get_robots(gc_), gc_.controller().robot().name());
+    auto [encoders, attitudes] = get_initial_state(*log_, gc_.robots(), gc_.controller().robot().name());
     gc_.init(encoders, attitudes);
   }
   else { gc_.init(); }
@@ -189,7 +204,7 @@ bool Ticker::step()
     simulate_sensors();
     if(log_)
     {
-      auto [encoders, attitudes] = get_initial_state(*log_, get_robots(gc_), gc_.controller().robot().name());
+      auto [encoders, attitudes] = get_initial_state(*log_, gc_.robots(), gc_.controller().robot().name());
       gc_.reset(encoders, attitudes);
     }
     else { gc_.reset(); }

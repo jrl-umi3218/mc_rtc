@@ -5,9 +5,7 @@
 #pragma once
 
 #include <mc_rtc/macros/deprecated.h>
-
-/** Preprocessor identity, used to force expansion (mainly to work around MSVC "feature" */
-#define MC_RTC_PP_ID(x) x
+#include <mc_rtc/macros/pp_id.h>
 
 /** Transform a expression to string*/
 #define MC_RTC_STRINGIFY_(x) #x

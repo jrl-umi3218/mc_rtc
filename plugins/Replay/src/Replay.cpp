@@ -234,6 +234,21 @@ void Replay::reset(mc_control::MCGlobalController & gc)
             iters_ = std::max<size_t>(std::min<size_t>(iter, log_->size() - 1), 0);
           },
           0.0, static_cast<double>(log_->size()) * gc.timestep()));
+  // Use calibration from the replay
+  if(with_inputs_ && log_->meta())
+  {
+    const auto & calibs = log_->meta()->calibs;
+    for(const auto & [r, fs_calibs] : calibs)
+    {
+      if(!gc.robots().hasRobot(r)) { continue; }
+      auto & robot = gc.robots().robot(r);
+      for(const auto & [fs_name, calib] : fs_calibs)
+      {
+        auto & fs = const_cast<mc_rbdyn::ForceSensor &>(robot.forceSensor(fs_name));
+        fs.loadCalibrator(mc_rbdyn::detail::ForceSensorCalibData::fromConfiguration(calib));
+      }
+    }
+  }
   // Run once to fill the initial sensors
   before(gc);
   iters_ = 0;

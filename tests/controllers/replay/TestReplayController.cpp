@@ -12,10 +12,23 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include <utils.h>
+
 namespace mc_control
 {
 
 static std::string REPLAY_PATH = "";
+
+static auto calib = []()
+{
+  mc_rbdyn::detail::ForceSensorCalibData calib;
+  calib.mass = 42.42;
+  calib.worldForce = random_fv();
+  calib.X_f_ds = random_pt();
+  calib.X_p_vb = random_pt();
+  calib.offset = random_fv();
+  return calib;
+}();
 
 template<bool Play>
 struct MC_CONTROL_DLLAPI TestReplayController : public MCController
@@ -30,12 +43,17 @@ public:
     solver().addConstraintSet(compoundJointConstraint);
     postureTask->stiffness(200.0);
     qpsolver->setContacts({});
+    if constexpr(!Play)
+    {
+      const_cast<mc_rbdyn::ForceSensor &>(robot().forceSensor("LeftFootForceSensor")).loadCalibrator(calib);
+    }
   }
 
   bool run() override
   {
     if constexpr(Play)
     {
+      BOOST_REQUIRE(robot().forceSensor("LeftFootForceSensor").calib() == calib);
       BOOST_REQUIRE(datastore().has("Replay::Log"));
       BOOST_REQUIRE(!datastore().has("NOT_IN_DATASTORE"));
     }

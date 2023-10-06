@@ -511,9 +511,9 @@ struct LogEntry : mpack_tree_t
           else if(event_t == 3)
           {
             // StartEvent event
-            if(event_size != 5)
+            if(event_size < 5)
             {
-              log::error("Start event should have five entries");
+              log::error("Start event should have at least five entries");
               valid_ = false;
               return;
             }
@@ -523,6 +523,8 @@ struct LogEntry : mpack_tree_t
             meta.main_robot = data[2].operator std::string();
             meta.main_robot_module = data[3];
             meta.init = data[4];
+            if(data.size() > 5) { meta.init_q = data[5]; }
+            if(data.size() > 6) { meta.calibs = data[6]; }
             metaOut = meta;
           }
           else

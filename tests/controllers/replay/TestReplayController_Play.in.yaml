@@ -1,6 +1,6 @@
 Plugins: [Replay]
 Replay:
-  with-inputs: false
+  with-inputs: true
   with-gui-inputs: false
   with-outputs: false
   with-datastore-config: "@CMAKE_CURRENT_SOURCE_DIR@/datastore-replay.yaml"
