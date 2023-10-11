@@ -3,10 +3,10 @@ Package: ros-@ROS_DISTRO@-mc-rtc-plugin
 Section: libs
 Architecture: any
 Depends: libmc-rtc-dev,
-         ros-@ROS_DISTRO@-roscpp,
-         ros-@ROS_DISTRO@-common-msgs,
+         ros-@ROS_DISTRO@-roscpp | ros-@ROS_DISTRO@-rclcpp,
+         ros-@ROS_DISTRO@-common-msgs | ros-@ROS_DISTRO@-common-interfaces,
          ros-@ROS_DISTRO@-tf2-ros,
-         ros-@ROS_DISTRO@-rosbag,
+         ros-@ROS_DISTRO@-rosbag | ros-@ROS_DISTRO@-rosbag2,
          ros-@ROS_DISTRO@-mc-rtc-data,
          ros-@ROS_DISTRO@-mc-rtc-msgs,
          ${misc:Depends}
