@@ -1,6 +1,18 @@
 # Changelog
 
-## [Unreleased]
+## [2.9.0] - 2023-10-11
+
+### Added
+
+- [mc_rtc] Added beta version of mc_rtc::Schema (#396)
+- [mc_rtc] Logs now contain the initial configuration of the robot (#398)
+- [mc_rtc] Logs now contain the force sensors' calibration parameters (#398)
+
+### Fixes
+
+- [debian] Fix the ros-@ROS_DISTRO@-mc-rtc-plugin package in ROS2
+- [Replay] Use new information in the logs to improve replay accuracy (#398)
+- [utils/mc_log_ui] Fix comparison loading in Python 3
 
 ## [2.8.0] - 2023-09-19
 
@@ -761,7 +773,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.8.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.9.0...HEAD
+[2.8.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.0
 [2.8.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.8.0
 [2.7.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.7.0
 [2.6.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.6.0
