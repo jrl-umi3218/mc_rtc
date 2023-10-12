@@ -20,6 +20,10 @@ if(NOT TARGET mc_rtc_3rd_party::ROS)
   if(DEFINED ENV{ROS_VERSION} AND "$ENV{ROS_VERSION}" EQUAL "2")
     cmake_minimum_required(VERSION 3.22)
     list(APPEND CMAKE_PREFIX_PATH $ENV{AMENT_PREFIX_PATH})
+    set(AMENT_CMAKE_UNINSTALL_TARGET
+        OFF
+        CACHE BOOL "" FORCE
+    )
     find_package(rclcpp QUIET)
     if(NOT TARGET rclcpp::rclcpp)
       set(ROSCPP_FOUND False)
