@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.9.1] - 2023-10-13
+
+### Fixes
+
+- [debian] Package dependency fix in Jammy and later releases
+- [cmake/ROS] Do no let ament intefere with the uninstall target
+
 ## [2.9.0] - 2023-10-11
 
 ### Added
@@ -773,8 +780,9 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.9.0...HEAD
-[2.8.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.0
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.9.1...HEAD
+[2.9.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.1
+[2.9.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.0
 [2.8.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.8.0
 [2.7.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.7.0
 [2.6.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.6.0
