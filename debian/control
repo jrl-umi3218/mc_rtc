@@ -105,7 +105,7 @@ Section: science
 Architecture: any
 Depends: libmc-rtc (= ${binary:Version}),
          python-git | python3-git,
-         python-mc-rtc,
+#PYTHON2         python-mc-rtc,
          python3-mc-rtc,
          python-matplotlib | python3-matplotlib,
          python-pyqt5 | python3-pyqt5,
