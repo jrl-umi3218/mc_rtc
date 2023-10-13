@@ -16,6 +16,7 @@
 #  include <nav_msgs/msg/odometry.hpp>
 #  include <sensor_msgs/msg/imu.hpp>
 #  include <sensor_msgs/msg/joint_state.hpp>
+#  include <std_msgs/msg/string.hpp>
 
 #  include <rclcpp/rclcpp.hpp>
 #else
@@ -156,6 +157,8 @@ private:
   NodeHandle & nh;
 #if MC_RTC_ROS_IS_ROS2
   std::unique_ptr<rclcpp::Rate> rosRate;
+  Publisher<std_msgs::msg::String> paramsTopic;
+  Publisher<std_msgs::msg::String> descriptionTopic;
 #else
   ros::Rate rosRate;
 #endif
@@ -198,6 +201,10 @@ RobotPublisherImpl::RobotPublisherImpl(NodeHandle & nh, const std::string & pref
 : nh(nh),
 #if MC_RTC_ROS_IS_ROS2
   rosRate(std::make_unique<rclcpp::Rate>(rate)),
+  paramsTopic(
+      this->nh.create_publisher<std_msgs::msg::String>(prefix + "robot_module", rclcpp::QoS(1).transient_local())),
+  descriptionTopic(
+      this->nh.create_publisher<std_msgs::msg::String>(prefix + "robot_description", rclcpp::QoS(1).transient_local())),
   j_state_pub(this->nh.create_publisher<JointState>(prefix + "joint_states", 1)),
   imu_pub(this->nh.create_publisher<Imu>(prefix + "imu", 1)),
   j_sensor_pub(this->nh.create_publisher<JointSensors>(prefix + "joint_sensors", 1)),
@@ -290,7 +297,16 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
   }
 
 #ifdef MC_RTC_ROS_IS_ROS2
-  nh.set_parameter({prefix + "/robot_module", robot.module().parameters()});
+  {
+    std_msgs::msg::String msg;
+    const auto & params = robot.module().parameters();
+    for(size_t i = 0; i < params.size(); ++i)
+    {
+      msg.data += params[i];
+      if(i + 1 < params.size()) { msg.data += "#"; }
+    }
+    paramsTopic->publish(msg);
+  }
 #else
   nh.setParam(prefix + "/robot_module", robot.module().parameters());
 #endif
@@ -304,7 +320,11 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
   std::stringstream urdf;
   urdf << ifs.rdbuf();
 #ifdef MC_RTC_ROS_IS_ROS2
-  nh.set_parameter({prefix + "/robot_description", urdf.str()});
+  {
+    std_msgs::msg::String msg;
+    msg.data = urdf.str();
+    descriptionTopic->publish(msg);
+  }
 #else
   nh.setParam(prefix + "/robot_description", urdf.str());
 #endif
