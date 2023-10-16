@@ -6,7 +6,6 @@ var structmc__observers_1_1KinematicInertialPoseObserver =
     [ "configure", "structmc__observers_1_1KinematicInertialPoseObserver.html#abea98fd588b27d2e403a9c6016ea483a", null ],
     [ "estimateOrientation", "structmc__observers_1_1KinematicInertialPoseObserver.html#a6b6a2d32b41691feec87fbff77276731", null ],
     [ "estimatePosition", "structmc__observers_1_1KinematicInertialPoseObserver.html#af4516c687fb2683eea570e5afc926165", null ],
-    [ "mergeRoll1Pitch1WithYaw2", "structmc__observers_1_1KinematicInertialPoseObserver.html#ad2349c169584c20be6c8e80e361f1724", null ],
     [ "posW", "structmc__observers_1_1KinematicInertialPoseObserver.html#a5bf8eadeba583a5e22559cba9f68bc7a", null ],
     [ "reset", "structmc__observers_1_1KinematicInertialPoseObserver.html#a5564591fc150e119fbfe35991031c7da", null ],
     [ "run", "structmc__observers_1_1KinematicInertialPoseObserver.html#a91574e17a50e7d77a05835335accc0ec", null ],

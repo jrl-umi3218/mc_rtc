@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['quaternionmap',['QuaternionMap',['../structmc__control_1_1MCGlobalController.html#a9710af004519962c8b37f64c6f362c6c',1,'mc_control::MCGlobalController']]],
-  ['quaternionmapallocator',['QuaternionMapAllocator',['../structmc__control_1_1MCGlobalController.html#a865cf8ffa3c30f8936b7e384706cff2d',1,'mc_control::MCGlobalController']]]
+  ['point_5ft_5952',['point_t',['../structmc__trajectory_1_1ExactCubic.html#a696e4cd6c5ac9fda37888ac9b2c7a955',1,'mc_trajectory::ExactCubic']]],
+  ['pointer_5953',['pointer',['../structmc__rtc_1_1SharedPtrVectorIterator.html#a54279f934795fa778f72b63788e3993c',1,'mc_rtc::SharedPtrVectorIterator::pointer()'],['../structmc__rtc_1_1SharedPtrVectorConstIterator.html#a63a324cabd24ceb8e3e011ee82036d90',1,'mc_rtc::SharedPtrVectorConstIterator::pointer()']]],
+  ['posturetaskptr_5954',['PostureTaskPtr',['../namespacemc__tasks.html#a20b4cf1d7ce78ab29822e5d5d6616489',1,'mc_tasks']]]
 ];

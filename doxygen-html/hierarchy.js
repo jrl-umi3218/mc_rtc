@@ -2,9 +2,11 @@ var hierarchy =
 [
     [ "mc_rtc::internal::_has_configuration_load_object", "structmc__rtc_1_1internal_1_1__has__configuration__load__object.html", null ],
     [ "mc_rtc::internal::_has_configuration_save_object", "structmc__rtc_1_1internal_1_1__has__configuration__save__object.html", null ],
+    [ "mc_rtc::internal::_has_static_fromConfiguration", "structmc__rtc_1_1internal_1_1__has__static__fromConfiguration.html", null ],
+    [ "mc_rtc::internal::_has_toConfiguration_method", "structmc__rtc_1_1internal_1_1__has__toConfiguration__method.html", null ],
     [ "mc_rtc::gui::plot::impl::Abscissa< GetT >", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Abscissa.html", null ],
-    [ "mc_rtc::gui::plot::impl::AbscissaOrdinate< GetXT, GetYT >", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html", [
-      [ "mc_rtc::gui::plot::impl::AbscissaOrdinateWithColor< GetXT, GetYT, GetColor >", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html", null ]
+    [ "mc_rtc::gui::plot::impl::AbscissaOrdinate< UpdateCacheT >", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html", [
+      [ "mc_rtc::gui::plot::impl::AbscissaOrdinateWithColor< UpdateCacheT, GetColor >", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html", null ]
     ] ],
     [ "aligned_allocator", null, [
       [ "mc_rtc::internal::Allocator< T, typename T::eigen_aligned_operator_new_marker_type >", "structmc__rtc_1_1internal_1_1Allocator_3_01T_00_01typename_01T_1_1eigen__aligned__operator__new__marker__type_01_4.html", null ]
@@ -20,12 +22,14 @@ var hierarchy =
     [ "mc_rbdyn::Base", "structmc__rbdyn_1_1Base.html", null ],
     [ "mc_rtc::log::callback_is_serializable< T, typename >", "structmc__rtc_1_1log_1_1callback__is__serializable.html", null ],
     [ "mc_rtc::log::callback_is_serializable< T, void_t< typename std::result_of< T()>::type > >", "structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205.html", null ],
-    [ "mc_rtc::gui::details::CallbackOrValue< T, Callback >", "structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html", null ],
-    [ "mc_rtc::gui::details::CallbackOrValue< T, DataCallback >", "structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html", null ],
-    [ "mc_rtc::gui::details::CallbackOrValue< T, void >", "structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue_3_01T_00_01void_01_4.html", null ],
+    [ "mc_rtc::gui::details::CallbackOrValue< T >", "structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html", null ],
+    [ "mc_rtc::gui::details::CallbackOrValue< details::VoidValue >", "structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html", null ],
+    [ "mc_rtc::gui::details::CallbackOrValue< VoidValue >", "structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue_3_01VoidValue_01_4.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, Args >", "structmc__rtc_1_1gui_1_1details_1_1CheckReturnType.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, T >", "structmc__rtc_1_1gui_1_1details_1_1CheckReturnType_3_01GetT_00_01T_01_4.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, T, Args... >", "structmc__rtc_1_1gui_1_1details_1_1CheckReturnType_3_01GetT_00_01T_00_01Args_8_8_8_01_4.html", null ],
+    [ "mc_rtc::schema::details::Choices< HasChoices >", "structmc__rtc_1_1schema_1_1details_1_1Choices.html", null ],
+    [ "mc_rtc::schema::details::Choices< false >", "structmc__rtc_1_1schema_1_1details_1_1Choices_3_01false_01_4.html", null ],
     [ "mc_rbdyn::Collision", "structmc__rbdyn_1_1Collision.html", null ],
     [ "Collision", "classCollision.html", null ],
     [ "mc_rtc::gui::Color", "structmc__rtc_1_1gui_1_1Color.html", null ],
@@ -42,6 +46,7 @@ var hierarchy =
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::Contact >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1Contact_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration_01_4.html", null ],
+    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::FDMPCWeights >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1FDMPCWeights_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::FDQPWeights >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1FDQPWeights_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::SafetyThresholds >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::StabilizerConfiguration >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration_01_4.html", null ],
@@ -142,6 +147,19 @@ var hierarchy =
     [ "mc_rtc::gui::CylinderParameters", "structmc__rtc_1_1gui_1_1CylinderParameters.html", null ],
     [ "mc_rtc::DataStore", "structmc__rtc_1_1DataStore.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html", null ],
+    [ "mc_rtc::Default< T, Enable >", "structmc__rtc_1_1Default.html", null ],
+    [ "mc_rtc::Default< std::string >", "structmc__rtc_1_1Default_3_01std_1_1string_01_4.html", null ],
+    [ "mc_rtc::Default< sva::AdmittanceVecd >", "structmc__rtc_1_1Default_3_01sva_1_1AdmittanceVecd_01_4.html", null ],
+    [ "mc_rtc::Default< sva::ForceVecd >", "structmc__rtc_1_1Default_3_01sva_1_1ForceVecd_01_4.html", null ],
+    [ "mc_rtc::Default< sva::ImpedanceVecd >", "structmc__rtc_1_1Default_3_01sva_1_1ImpedanceVecd_01_4.html", null ],
+    [ "mc_rtc::Default< sva::MotionVecd >", "structmc__rtc_1_1Default_3_01sva_1_1MotionVecd_01_4.html", null ],
+    [ "mc_rtc::Default< sva::PTransformd >", "structmc__rtc_1_1Default_3_01sva_1_1PTransformd_01_4.html", null ],
+    [ "mc_rtc::Default< T >", "structmc__rtc_1_1Default.html", [
+      [ "mc_rtc::Default< std::variant< T, Others... > >", "structmc__rtc_1_1Default_3_01std_1_1variant_3_01T_00_01Others_8_8_8_01_4_01_4.html", null ]
+    ] ],
+    [ "mc_rtc::Default< T, std::enable_if_t< schema::details::is_schema_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01std_1_1enable__if__t_3_01schema_1_1details_1_1is__schema__v_3_01T_01_4_01_4_01_4.html", null ],
+    [ "mc_rtc::Default< T, std::enable_if_t< schema::details::is_std_vector_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01std_1_1enable__if__t_3_01schema_1_1details_1_1is__std__vector__v_3_01T_01_4_01_4_01_4.html", null ],
+    [ "mc_rtc::Default< T, std::enable_if_t< std::is_arithmetic_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01std_1_1enable__if__t_3_01std_1_1is__arithmetic__v_3_01T_01_4_01_4_01_4.html", null ],
     [ "mc_control::fsm::ParallelState::DelayedState", "structmc__control_1_1fsm_1_1ParallelState_1_1DelayedState.html", null ],
     [ "mc_rbdyn::Device", "structmc__rbdyn_1_1Device.html", [
       [ "mc_rbdyn::BodySensor", "structmc__rbdyn_1_1BodySensor.html", null ],
@@ -169,9 +187,13 @@ var hierarchy =
             [ "mc_rtc::gui::details::IntegerInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1IntegerInputImpl.html", null ],
             [ "mc_rtc::gui::details::NumberInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1NumberInputImpl.html", null ],
             [ "mc_rtc::gui::details::NumberSliderImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1NumberSliderImpl.html", null ],
+            [ "mc_rtc::gui::details::StringInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1StringInputImpl.html", null ]
+          ] ]
+        ] ],
+        [ "mc_rtc::gui::CallbackElement< DataElement< GetT >, std::nullptr_t >", "structmc__rtc_1_1gui_1_1CallbackElement.html", [
+          [ "mc_rtc::gui::CommonInputImpl< GetT, std::nullptr_t >", "structmc__rtc_1_1gui_1_1CommonInputImpl.html", [
             [ "mc_rtc::gui::details::Point3DImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1Point3DImpl.html", null ],
             [ "mc_rtc::gui::details::RotationImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1RotationImpl.html", null ],
-            [ "mc_rtc::gui::details::StringInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1StringInputImpl.html", null ],
             [ "mc_rtc::gui::details::TransformImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1TransformImpl.html", null ],
             [ "mc_rtc::gui::details::XYThetaImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html", null ]
           ] ]
@@ -198,6 +220,15 @@ var hierarchy =
       [ "mc_rtc::gui::details::VisualImpl< GetVisual, GetPos >", "structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html", null ]
     ] ],
     [ "mc_control::ElementId", "structmc__control_1_1ElementId.html", null ],
+    [ "ElementT", null, [
+      [ "mc_rtc::gui::CallbackElement< ElementT, Callback >", "structmc__rtc_1_1gui_1_1CallbackElement.html", [
+        [ "mc_rtc::gui::VoidCallbackElement< ElementT, Callback >", "structmc__rtc_1_1gui_1_1VoidCallbackElement.html", null ]
+      ] ],
+      [ "mc_rtc::gui::CallbackElement< ElementT, std::nullptr_t >", "structmc__rtc_1_1gui_1_1CallbackElement_3_01ElementT_00_01std_1_1nullptr__t_01_4.html", null ]
+    ] ],
+    [ "mc_rtc::schema::details::EmptySchema", "structmc__rtc_1_1schema_1_1details_1_1EmptySchema.html", null ],
+    [ "mc_rtc::enable_if_t<(N > 0)> >", "structmc__rtc_1_1Default_3_01Eigen_1_1Matrix_3_01Scalar_00_01N_00_011_00_01Options_00_01MaxRows_a64953bfae576ebbe6be9eab9b3c9612.html", null ],
+    [ "mc_rtc::enable_if_t<(N > 1)> >", "structmc__rtc_1_1Default_3_01Eigen_1_1Matrix_3_01Scalar_00_01N_00_01N_00_01Options_00_01MaxRows_78508de69251a7c285946e43e621eeeb.html", null ],
     [ "mc_rtc::log::FlatLog::entry", "structmc__rtc_1_1log_1_1FlatLog_1_1entry.html", null ],
     [ "mc_tasks::lipm_stabilizer::StabilizerTask::EnumClassHash", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1EnumClassHash.html", null ],
     [ "exception", null, [
@@ -210,19 +241,28 @@ var hierarchy =
     [ "mc_tasks::lipm_stabilizer::StabilizerTask::ExternalWrench", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html", null ],
     [ "false_type", null, [
-      [ "mc_control::MCController::DeprecatedAnchorFrame< T >", "structmc__control_1_1MCController_1_1DeprecatedAnchorFrame.html", null ]
+      [ "mc_control::MCController::DeprecatedAnchorFrame< T >", "structmc__control_1_1MCController_1_1DeprecatedAnchorFrame.html", null ],
+      [ "mc_rtc::gui::details::is_variant< T >", "structmc__rtc_1_1gui_1_1details_1_1is__variant.html", null ],
+      [ "mc_rtc::internal::has_write_builder< T, typename >", "structmc__rtc_1_1internal_1_1has__write__builder.html", null ],
+      [ "mc_rtc::schema::details::is_std_vector< T >", "structmc__rtc_1_1schema_1_1details_1_1is__std__vector.html", null ]
     ] ],
+    [ "mc_rbdyn::lipm_stabilizer::FDMPCWeights", "structmc__rbdyn_1_1lipm__stabilizer_1_1FDMPCWeights.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::FDQPWeights", "structmc__rbdyn_1_1lipm__stabilizer_1_1FDQPWeights.html", null ],
     [ "mc_rtc::log::FlatLog", "structmc__rtc_1_1log_1_1FlatLog.html", null ],
     [ "mc_rbdyn::Flexibility", "structmc__rbdyn_1_1Flexibility.html", null ],
     [ "mc_tvm::DynamicFunction::ForceContact", "structmc__tvm_1_1DynamicFunction_1_1ForceContact.html", null ],
+    [ "mc_rbdyn::detail::ForceSensorCalibData", "structmc__rbdyn_1_1detail_1_1ForceSensorCalibData.html", null ],
     [ "formatter", null, [
       [ "fmt::formatter< mc_rtc::Configuration >", "structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html", null ],
       [ "fmt::formatter< mc_solver::QPSolver::Backend >", "structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html", null ]
     ] ],
+    [ "mc_rtc::gui::details::FormDataInputBase< T >", "structmc__rtc_1_1gui_1_1details_1_1FormDataInputBase.html", [
+      [ "mc_rtc::gui::details::FormDataInput< T, element >", "structmc__rtc_1_1gui_1_1details_1_1FormDataInput.html", null ],
+      [ "mc_rtc::gui::details::FormInteractiveDataInput< T, element >", "structmc__rtc_1_1gui_1_1details_1_1FormInteractiveDataInput.html", null ]
+    ] ],
     [ "mc_rtc::gui::FormElement< Derived, element >", "structmc__rtc_1_1gui_1_1FormElement.html", null ],
-    [ "mc_rtc::gui::FormElement< FormArrayInput< T, DataCallback >, Elements::ArrayInput >", "structmc__rtc_1_1gui_1_1FormElement.html", [
-      [ "mc_rtc::gui::details::FormArrayInput< T, DataCallback >", "structmc__rtc_1_1gui_1_1details_1_1FormArrayInput.html", null ]
+    [ "mc_rtc::gui::FormElement< FormArrayInput< T >, Elements::ArrayInput >", "structmc__rtc_1_1gui_1_1FormElement.html", [
+      [ "mc_rtc::gui::details::FormArrayInput< T >", "structmc__rtc_1_1gui_1_1details_1_1FormArrayInput.html", null ]
     ] ],
     [ "mc_rtc::gui::FormElement< FormComboInput, Elements::ComboInput >", "structmc__rtc_1_1gui_1_1FormElement.html", [
       [ "mc_rtc::gui::FormComboInput", "structmc__rtc_1_1gui_1_1FormComboInput.html", null ]
@@ -230,8 +270,26 @@ var hierarchy =
     [ "mc_rtc::gui::FormElement< FormDataComboInput, Elements::DataComboInput >", "structmc__rtc_1_1gui_1_1FormElement.html", [
       [ "mc_rtc::gui::FormDataComboInput", "structmc__rtc_1_1gui_1_1FormDataComboInput.html", null ]
     ] ],
-    [ "mc_rtc::gui::FormElement< FormDataInput< T, element, DataCallback >, element >", "structmc__rtc_1_1gui_1_1FormElement.html", [
-      [ "mc_rtc::gui::details::FormDataInput< T, element, DataCallback >", "structmc__rtc_1_1gui_1_1details_1_1FormDataInput.html", null ]
+    [ "mc_rtc::gui::FormElement< FormDataInput< T, element >, element >", "structmc__rtc_1_1gui_1_1FormElement.html", [
+      [ "mc_rtc::gui::details::FormDataInput< T, element >", "structmc__rtc_1_1gui_1_1details_1_1FormDataInput.html", null ]
+    ] ],
+    [ "mc_rtc::gui::FormElement< FormGenericArrayInput< details::VoidValue >, Elements::GenericArray >", "structmc__rtc_1_1gui_1_1FormElement.html", [
+      [ "mc_rtc::gui::FormGenericArrayInput< T >", "structmc__rtc_1_1gui_1_1FormGenericArrayInput.html", null ]
+    ] ],
+    [ "mc_rtc::gui::FormElement< FormInteractiveDataInput< T, element >, element >", "structmc__rtc_1_1gui_1_1FormElement.html", [
+      [ "mc_rtc::gui::details::FormInteractiveDataInput< T, element >", "structmc__rtc_1_1gui_1_1details_1_1FormInteractiveDataInput.html", null ]
+    ] ],
+    [ "mc_rtc::gui::FormElement< FormObjectInput, Elements::Form >", "structmc__rtc_1_1gui_1_1FormElement.html", [
+      [ "mc_rtc::gui::FormObjectInput", "structmc__rtc_1_1gui_1_1FormObjectInput.html", null ]
+    ] ],
+    [ "mc_rtc::gui::FormElement< FormOneOfInput< details::VoidValue >, Elements::OneOf >", "structmc__rtc_1_1gui_1_1FormElement.html", [
+      [ "mc_rtc::gui::FormOneOfInput< T >", "structmc__rtc_1_1gui_1_1FormOneOfInput.html", null ]
+    ] ],
+    [ "mc_rtc::gui::details::FormElements", "structmc__rtc_1_1gui_1_1details_1_1FormElements.html", [
+      [ "mc_rtc::gui::details::FormImpl< Callback >", "structmc__rtc_1_1gui_1_1details_1_1FormImpl.html", null ],
+      [ "mc_rtc::gui::FormGenericArrayInput< T >", "structmc__rtc_1_1gui_1_1FormGenericArrayInput.html", null ],
+      [ "mc_rtc::gui::FormObjectInput", "structmc__rtc_1_1gui_1_1FormObjectInput.html", null ],
+      [ "mc_rtc::gui::FormOneOfInput< T >", "structmc__rtc_1_1gui_1_1FormOneOfInput.html", null ]
     ] ],
     [ "mc_rbdyn::RobotModule::FrameDescription", "structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html", null ],
     [ "Function", null, [
@@ -257,9 +315,12 @@ var hierarchy =
       [ "mc_tasks::MetaTaskLoader", "structmc__tasks_1_1MetaTaskLoader.html", null ]
     ] ],
     [ "mc_rtc::log::GetLogType< T >", "structmc__rtc_1_1log_1_1GetLogType.html", null ],
+    [ "mc_rtc::log::GetLogType< Eigen::Matrix< double, N, 1, _Options, _MaxRows, _MaxCols > >", "structmc__rtc_1_1log_1_1GetLogType_3_01Eigen_1_1Matrix_3_01double_00_01N_00_011_00_01__Options_0d37545e2c91f0820ac69007e59addfb6.html", null ],
     [ "mc_rtc::log::GetLogType< Eigen::Ref< Type, Options, StrideType > >", "structmc__rtc_1_1log_1_1GetLogType_3_01Eigen_1_1Ref_3_01Type_00_01Options_00_01StrideType_01_4_01_4.html", null ],
     [ "mc_rtc::log::GetLogType< std::array< double, N > >", "structmc__rtc_1_1log_1_1GetLogType_3_01std_1_1array_3_01double_00_01N_01_4_01_4.html", null ],
     [ "mc_rtc::log::GetLogType< std::vector< double, A > >", "structmc__rtc_1_1log_1_1GetLogType_3_01std_1_1vector_3_01double_00_01A_01_4_01_4.html", null ],
+    [ "mc_rtc::log::details::GetRawReturnType< T >", "structmc__rtc_1_1log_1_1details_1_1GetRawReturnType.html", null ],
+    [ "mc_rtc::log::details::GetRawReturnType< Eigen::Matrix< double, N, 1, _Options, _MaxRows, _MaxCols > >", "structmc__rtc_1_1log_1_1details_1_1GetRawReturnType_3_01Eigen_1_1Matrix_3_01double_00_01N_00_01131e1e736bda6798d6f468d50df35a0fe.html", null ],
     [ "Global", "classGlobal.html", null ],
     [ "mc_control::MCGlobalController::GlobalConfiguration", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html", null ],
     [ "mc_control::GlobalPlugin", "structmc__control_1_1GlobalPlugin.html", null ],
@@ -283,9 +344,11 @@ var hierarchy =
     [ "is_base_of", null, [
       [ "mc_solver::utils::IsUpdate< T >", "structmc__solver_1_1utils_1_1IsUpdate.html", null ]
     ] ],
+    [ "mc_rtc::gui::details::is_form_element", "structmc__rtc_1_1gui_1_1details_1_1is__form__element.html", null ],
     [ "is_same", null, [
       [ "mc_rbdyn::details::are_strings< T >", "structmc__rbdyn_1_1details_1_1are__strings_3_01T_01_4.html", null ]
     ] ],
+    [ "mc_rtc::schema::details::is_schema", "structmc__rtc_1_1schema_1_1details_1_1is__schema.html", null ],
     [ "mc_rtc::log::is_serializable< T >", "structmc__rtc_1_1log_1_1is__serializable.html", null ],
     [ "mc_rtc::log::is_serializable_getter< T >", "structmc__rtc_1_1log_1_1is__serializable__getter.html", null ],
     [ "mc_rtc::log::is_serializable_getter< MethodRetT(T::*)() const >", "structmc__rtc_1_1log_1_1is__serializable__getter_3_01MethodRetT_07T_1_1_5_08_07_08_01const_01_4.html", null ],
@@ -316,6 +379,7 @@ var hierarchy =
     ] ],
     [ "mc_trajectory::LinearInterpolation< T >", "structmc__trajectory_1_1LinearInterpolation.html", null ],
     [ "mc_trajectory::LinearInterpolation< Eigen::Vector6d >", "structmc__trajectory_1_1LinearInterpolation.html", null ],
+    [ "mc_trajectory::LinearInterpolation< Value >", "structmc__trajectory_1_1LinearInterpolation.html", null ],
     [ "mc_rtc::gui::LineConfig", "structmc__rtc_1_1gui_1_1LineConfig.html", null ],
     [ "mc_rtc::Loader", "structmc__rtc_1_1Loader.html", null ],
     [ "mc_rbdyn::LoadRobotParameters", "structmc__rbdyn_1_1LoadRobotParameters.html", null ],
@@ -342,24 +406,24 @@ var hierarchy =
     ] ],
     [ "mc_control::MCController", "structmc__control_1_1MCController.html", [
       [ "mc_control::details::BackendSpecificController< MCController::Backend::Tasks, mc_solver::TasksQPSolver >", "structmc__control_1_1details_1_1BackendSpecificController.html", null ],
-      [ "mc_control::details::BackendSpecificController< MCController::Backend::TVM, mc_solver::TVMQPSolver >", "structmc__control_1_1details_1_1BackendSpecificController.html", [
-        [ "mc_control::TVMController", "structmc__control_1_1TVMController.html", null ]
-      ] ],
+      [ "mc_control::details::BackendSpecificController< MCController::Backend::TVM, mc_solver::TVMQPSolver >", "structmc__control_1_1details_1_1BackendSpecificController.html", null ],
       [ "mc_control::details::BackendSpecificController< backend, SolverT >", "structmc__control_1_1details_1_1BackendSpecificController.html", [
-        [ "mc_control::TasksController", "structmc__control_1_1TasksController.html", null ]
+        [ "mc_control::TasksController", "structmc__control_1_1TasksController.html", null ],
+        [ "mc_control::TVMController", "structmc__control_1_1TVMController.html", null ]
       ] ],
       [ "mc_control::fsm::Controller", "structmc__control_1_1fsm_1_1Controller.html", [
         [ "mc_control::fsm::details::BackendSpecificController< MCController::Backend::Tasks, mc_solver::TasksQPSolver >", "structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html", [
           [ "mc_control::fsm::TasksController", "structmc__control_1_1fsm_1_1TasksController.html", null ]
         ] ],
-        [ "mc_control::fsm::details::BackendSpecificController< MCController::Backend::TVM, mc_solver::TVMQPSolver >", "structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html", null ],
-        [ "mc_control::fsm::details::BackendSpecificController< backend, SolverT >", "structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html", [
+        [ "mc_control::fsm::details::BackendSpecificController< MCController::Backend::TVM, mc_solver::TVMQPSolver >", "structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html", [
           [ "mc_control::fsm::TVMController", "structmc__control_1_1fsm_1_1TVMController.html", null ]
-        ] ]
+        ] ],
+        [ "mc_control::fsm::details::BackendSpecificController< backend, SolverT >", "structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html", null ]
       ] ],
       [ "mc_control::MCPythonController", "structmc__control_1_1MCPythonController.html", null ]
     ] ],
     [ "mc_control::MCGlobalController", "structmc__control_1_1MCGlobalController.html", null ],
+    [ "mc_rtc::schema::details::MemberPointerWrapper< ptr >", "structmc__rtc_1_1schema_1_1details_1_1MemberPointerWrapper.html", null ],
     [ "mc_rtc::MessagePackBuilder", "structmc__rtc_1_1MessagePackBuilder.html", null ],
     [ "mc_rtc::Logger::Meta", "structmc__rtc_1_1Logger_1_1Meta.html", null ],
     [ "mc_tasks::MetaTask", "structmc__tasks_1_1MetaTask.html", [
@@ -406,15 +470,15 @@ var hierarchy =
       ] ]
     ] ],
     [ "mc_rbdyn::Mimic", "structmc__rbdyn_1_1Mimic.html", null ],
-    [ "mc_tvm::Frame::NewFrameToken", "structmc__tvm_1_1Frame_1_1NewFrameToken.html", [
-      [ "mc_tvm::RobotFrame::NewRobotFrameToken", "structmc__tvm_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
-    ] ],
     [ "mc_rbdyn::Frame::NewFrameToken", "structmc__rbdyn_1_1Frame_1_1NewFrameToken.html", [
       [ "mc_rbdyn::RobotFrame::NewRobotFrameToken", "structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
     ] ],
+    [ "mc_tvm::Frame::NewFrameToken", "structmc__tvm_1_1Frame_1_1NewFrameToken.html", [
+      [ "mc_tvm::RobotFrame::NewRobotFrameToken", "structmc__tvm_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
+    ] ],
     [ "mc_rbdyn::Robots::NewRobotsToken", "structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html", null ],
-    [ "mc_tvm::Robot::NewRobotToken", "structmc__tvm_1_1Robot_1_1NewRobotToken.html", null ],
     [ "mc_rbdyn::Robot::NewRobotToken", "structmc__rbdyn_1_1Robot_1_1NewRobotToken.html", null ],
+    [ "mc_tvm::Robot::NewRobotToken", "structmc__tvm_1_1Robot_1_1NewRobotToken.html", null ],
     [ "Node", null, [
       [ "mc_tvm::CoM", "structmc__tvm_1_1CoM.html", null ],
       [ "mc_tvm::Convex", "structmc__tvm_1_1Convex.html", null ],
@@ -424,15 +488,13 @@ var hierarchy =
       [ "mc_tvm::Momentum", "structmc__tvm_1_1Momentum.html", null ],
       [ "mc_tvm::Robot", "structmc__tvm_1_1Robot.html", null ]
     ] ],
-    [ "noncopyable", null, [
-      [ "mc_rtc::ObjectLoader< T >", "structmc__rtc_1_1ObjectLoader.html", null ],
-      [ "mc_rtc::ObjectLoader< State >", "structmc__rtc_1_1ObjectLoader.html", [
-        [ "mc_control::fsm::StateFactory", "structmc__control_1_1fsm_1_1StateFactory.html", null ]
-      ] ]
-    ] ],
     [ "mc_rtc::gui::details::NotAGetter", "structmc__rtc_1_1gui_1_1details_1_1NotAGetter.html", null ],
     [ "mc_tvm::CollisionFunction::ObjectData", "structmc__tvm_1_1CollisionFunction_1_1ObjectData.html", null ],
-    [ "mc_rtc::ObjectLoader< T >::ObjectDeleter", "structmc__rtc_1_1ObjectLoader_1_1ObjectDeleter.html", null ],
+    [ "mc_rtc::ObjectLoader::ObjectDeleter", "structmc__rtc_1_1ObjectLoader_1_1ObjectDeleter.html", null ],
+    [ "mc_rtc::ObjectLoader", "structmc__rtc_1_1ObjectLoader.html", null ],
+    [ "mc_rtc::ObjectLoader< State >", "structmc__rtc_1_1ObjectLoader.html", [
+      [ "mc_control::fsm::StateFactory", "structmc__control_1_1fsm_1_1StateFactory.html", null ]
+    ] ],
     [ "mc_observers::Observer", "structmc__observers_1_1Observer.html", [
       [ "mc_observers::BodySensorObserver", "structmc__observers_1_1BodySensorObserver.html", null ],
       [ "mc_observers::EncoderObserver", "structmc__observers_1_1EncoderObserver.html", null ],
@@ -442,6 +504,7 @@ var hierarchy =
     ] ],
     [ "mc_observers::ObserverLoader", "structmc__observers_1_1ObserverLoader.html", null ],
     [ "mc_observers::ObserverPipeline", "structmc__observers_1_1ObserverPipeline.html", null ],
+    [ "mc_rtc::schema::Operations", "structmc__rtc_1_1schema_1_1Operations.html", null ],
     [ "mc_rtc::gui::plot::impl::Ordinate< GetT >", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html", [
       [ "mc_rtc::gui::plot::impl::OrdinateWithColor< GetT, GetColor >", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1OrdinateWithColor.html", null ]
     ] ],
@@ -524,17 +587,14 @@ var hierarchy =
       [ "mc_rbdyn::PlanarSurface", "structmc__rbdyn_1_1PlanarSurface.html", null ]
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html", null ],
-    [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
-    ] ],
-    [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
-    ] ],
     [ "mc_control::Ticker", "structmc__control_1_1Ticker.html", null ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],
     [ "true_type", null, [
-      [ "mc_rbdyn::details::are_strings< Args >", "structmc__rbdyn_1_1details_1_1are__strings.html", null ]
+      [ "mc_rbdyn::details::are_strings< Args >", "structmc__rbdyn_1_1details_1_1are__strings.html", null ],
+      [ "mc_rtc::gui::details::is_variant< std::variant< Args... > >", "structmc__rtc_1_1gui_1_1details_1_1is__variant_3_01std_1_1variant_3_01Args_8_8_8_01_4_01_4.html", null ],
+      [ "mc_rtc::internal::has_write_builder< T, std::void_t< decltype(std::declval< const T & >().write(std::declval< MessagePackBuilder & >()))> >", "structmc__rtc_1_1internal_1_1has__write__builder_3_01T_00_01std_1_1void__t_3_01decltype_07std_1_1f30e14306a8a05c633790cd1bae0d02.html", null ],
+      [ "mc_rtc::schema::details::is_std_vector< std::vector< T, Allocator > >", "structmc__rtc_1_1schema_1_1details_1_1is__std__vector_3_01std_1_1vector_3_01T_00_01Allocator_01_4_01_4.html", null ]
     ] ],
     [ "mc_tasks::details::TVMTrajectoryTaskGeneric", "structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html", null ],
     [ "type", null, [
@@ -557,6 +617,13 @@ var hierarchy =
       [ "mc_rtc::unique_ptr< mc_solver::DynamicsConstraint >", "classmc__rtc_1_1unique__ptr.html", null ],
       [ "mc_rtc::unique_ptr< mc_solver::KinematicsConstraint >", "classmc__rtc_1_1unique__ptr.html", null ]
     ] ],
+    [ "UpdateNrVars", null, [
+      [ "mc_solver::utils::Update< UpdateNrVars >", "structmc__solver_1_1utils_1_1Update.html", [
+        [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateRobot >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
+        [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateRobot >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
+        [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateRobot >", "structmc__solver_1_1utils_1_1Constraint.html", null ]
+      ] ]
+    ] ],
     [ "mc_solver::utils::UpdateNrVarsData", "structmc__solver_1_1utils_1_1UpdateNrVarsData.html", [
       [ "mc_solver::utils::UpdateNrVarsLambda", "structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html", [
         [ "mc_solver::utils::Update< UpdateNrVarsLambda >", "structmc__solver_1_1utils_1_1Update.html", [
@@ -572,33 +639,21 @@ var hierarchy =
       ] ],
       [ "mc_solver::utils::UpdateNrVarsRobot", "structmc__solver_1_1utils_1_1UpdateNrVarsRobot.html", null ]
     ] ],
+    [ "UpdateT", null, [
+      [ "mc_solver::utils::Constraint< tasks::qp::Equality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
+      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
+      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
+      [ "mc_solver::utils::Constraint< ConstraintT, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", null ]
+    ] ],
     [ "mc_solver::utils::UpdateTag", "structmc__solver_1_1utils_1_1UpdateTag.html", [
-      [ "mc_solver::utils::Update< UpdateNrVars >", "structmc__solver_1_1utils_1_1Update.html", [
-        [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateRobot >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
-        [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateRobot >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
-        [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateRobot >", "structmc__solver_1_1utils_1_1Constraint.html", null ]
-      ] ],
+      [ "mc_solver::utils::Update< UpdateNrVars >", "structmc__solver_1_1utils_1_1Update.html", null ],
       [ "mc_solver::utils::Update< UpdateNrVarsLambda >", "structmc__solver_1_1utils_1_1Update.html", null ]
     ] ],
     [ "vector", null, [
       [ "mc_rbdyn::DevicePtrVector", "structmc__rbdyn_1_1DevicePtrVector.html", null ]
     ] ],
     [ "mc_rtc::void_ptr_caster< T >", "structmc__rtc_1_1void__ptr__caster.html", null ],
+    [ "mc_rtc::gui::details::VoidValue", "structmc__rtc_1_1gui_1_1details_1_1VoidValue.html", null ],
     [ "mc_tasks::lipm_stabilizer::ZMPCC", "structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html", null ],
-    [ "mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration.html", null ],
-    [ "ElementT", null, [
-      [ "mc_rtc::gui::CallbackElement< ElementT, Callback >", "structmc__rtc_1_1gui_1_1CallbackElement.html", [
-        [ "mc_rtc::gui::VoidCallbackElement< ElementT, Callback >", "structmc__rtc_1_1gui_1_1VoidCallbackElement.html", null ]
-      ] ],
-      [ "mc_rtc::gui::CallbackElement< ElementT, std::nullptr_t >", "structmc__rtc_1_1gui_1_1CallbackElement_3_01ElementT_00_01std_1_1nullptr__t_01_4.html", null ]
-    ] ],
-    [ "UpdateNrVars", null, [
-      [ "mc_solver::utils::Update< UpdateNrVars >", "structmc__solver_1_1utils_1_1Update.html", null ]
-    ] ],
-    [ "UpdateT", null, [
-      [ "mc_solver::utils::Constraint< tasks::qp::Equality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
-      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
-      [ "mc_solver::utils::Constraint< ConstraintT, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", null ]
-    ] ]
+    [ "mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration.html", null ]
 ];

@@ -16,5 +16,7 @@ var structmc__tasks_1_1force_1_1CoPTask =
     [ "targetForce", "structmc__tasks_1_1force_1_1CoPTask.html#aa452d416c7f6df4f3b5ddc511db246a2", null ],
     [ "targetForce", "structmc__tasks_1_1force_1_1CoPTask.html#af250603b7c162ce5dd654825dea2af7e", null ],
     [ "targetForceW", "structmc__tasks_1_1force_1_1CoPTask.html#a9f7344de19e35fda42d0dc3c493b8f11", null ],
-    [ "targetWrench", "structmc__tasks_1_1force_1_1CoPTask.html#a58ef8d30ea6ea9f78d7d36340975d985", null ]
+    [ "targetWrench", "structmc__tasks_1_1force_1_1CoPTask.html#a58ef8d30ea6ea9f78d7d36340975d985", null ],
+    [ "useTargetPressure", "structmc__tasks_1_1force_1_1CoPTask.html#ae4023dfc1dd672d612c39db79b28f697", null ],
+    [ "useTargetPressure", "structmc__tasks_1_1force_1_1CoPTask.html#a270fa36571c3a25596e3f405e27b1f60", null ]
 ];

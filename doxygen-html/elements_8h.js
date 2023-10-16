@@ -32,6 +32,8 @@ var elements_8h =
       [ "Robot", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a5d1eca158c00250d9c4c32d947b7c433", null ],
       [ "Visual", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a4557e77491fe3dbd9a6055aeb0ed00d7", null ],
       [ "PolyhedronTrianglesList", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a94c8141fc670449195562629a2055edf", null ],
-      [ "PolyhedronVerticesTriangles", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a35ddbf0f6429fc2aabd5fadc20766153", null ]
+      [ "PolyhedronVerticesTriangles", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a35ddbf0f6429fc2aabd5fadc20766153", null ],
+      [ "GenericArray", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a8c8886e12ab9253c95168612dc435b0f", null ],
+      [ "OneOf", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a104632c63520385967d8e185f7aa68dc", null ]
     ] ]
 ];

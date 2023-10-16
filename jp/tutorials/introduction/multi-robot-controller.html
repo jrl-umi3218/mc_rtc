@@ -97,7 +97,7 @@
         &nbsp;&nbsp;&nbsp;
       
     
-    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path></svg></a>
   </div>
 </header>
 
@@ -180,6 +180,10 @@
                       
                         
                         <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/schema.html">フレームワークに統合されたスキーマ構造</a></li>
                         
                       
                     </ul>
@@ -561,7 +565,9 @@
   <div class="card-body">
 
   <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># resetコールバック関数内
-</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">RotZ</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="n">pi</span><span class="p">),</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span></code></pre></figure>
+</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span>
+    <span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">RotZ</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="n">pi</span><span class="p">),</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">)</span></code></pre></figure>
 
   
   </div>
@@ -630,8 +636,12 @@
   <div class="card-body">
 
   <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># resetコールバック関数内
-</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">RotZ</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="n">pi</span><span class="p">),</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
-<span class="bp">self</span><span class="p">.</span><span class="n">doorKinematics</span> <span class="o">=</span> <span class="n">mc_solver</span><span class="p">.</span><span class="n">KinematicsConstraint</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">timeStep</span><span class="p">)</span>
+</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span>
+    <span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">RotZ</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="n">pi</span><span class="p">),</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">doorKinematics</span> <span class="o">=</span> <span class="n">mc_solver</span><span class="p">.</span><span class="n">KinematicsConstraint</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">timeStep</span>
+<span class="p">)</span>
 <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">doorKinematics</span><span class="p">)</span>
 <span class="bp">self</span><span class="p">.</span><span class="n">doorPosture</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="p">.</span><span class="n">PostureTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">)</span>
 <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">doorPosture</span><span class="p">)</span></code></pre></figure>
@@ -690,9 +700,9 @@
   <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// ヘッダー内</span>
 <span class="k">enum</span> <span class="n">DoorPhase</span>
 <span class="p">{</span>
-      <span class="n">APPROACH</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-      <span class="n">HANDLE</span><span class="p">,</span>
-      <span class="n">OPEN</span>
+  <span class="n">APPROACH</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="n">HANDLE</span><span class="p">,</span>
+  <span class="n">OPEN</span>
 <span class="p">};</span>
 <span class="c1">// コントローラーのプライベートプロパティ</span>
 <span class="n">DoorPhase</span> <span class="n">phase</span> <span class="o">=</span> <span class="n">APPROACH</span><span class="p">;</span>
@@ -739,14 +749,18 @@
 <span class="n">OPEN</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="c1"># コンストラクター内
 </span><span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">APPROACH</span>
+
+
 <span class="c1"># コントローラーの新しいメソッド
 </span><span class="k">def</span> <span class="nf">switch_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-  <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">==</span> <span class="n">APPROACH</span> <span class="ow">and</span> <span class="bp">False</span><span class="p">:</span> <span class="c1"># この条件は後で記述する
-</span>    <span class="c1"># HANDLEフェーズをセットアップする
-</span>    <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">HANDLE</span>
-  <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">==</span> <span class="n">HANDLE</span> <span class="ow">and</span> <span class="bp">False</span><span class="p">:</span> <span class="c1"># この条件は後で記述する
-</span>    <span class="c1"># OPENフェーズをセットアップする
-</span>    <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">OPEN</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">==</span> <span class="n">APPROACH</span> <span class="ow">and</span> <span class="bp">False</span><span class="p">:</span>  <span class="c1"># この条件は後で記述する
+</span>        <span class="c1"># HANDLEフェーズをセットアップする
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">HANDLE</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">==</span> <span class="n">HANDLE</span> <span class="ow">and</span> <span class="bp">False</span><span class="p">:</span>  <span class="c1"># この条件は後で記述する
+</span>        <span class="c1"># OPENフェーズをセットアップする
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">OPEN</span>
+
+
 <span class="c1"># runコールバック関数内でこれを呼び出す
 </span><span class="k">def</span> <span class="nf">run_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="p">.</span><span class="n">switch_phase</span><span class="p">()</span>
@@ -822,10 +836,15 @@
 
   <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># resetコールバック関数内
 # タスクを作成してソルバーに追加する
-</span><span class="bp">self</span><span class="p">.</span><span class="n">handTask</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="p">.</span><span class="n">SurfaceTransformTask</span><span class="p">(</span><span class="s">"RightGripper"</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">)</span>
+</span><span class="bp">self</span><span class="p">.</span><span class="n">handTask</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="p">.</span><span class="n">SurfaceTransformTask</span><span class="p">(</span>
+    <span class="s">"RightGripper"</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1000.0</span>
+<span class="p">)</span>
 <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">)</span>
 <span class="c1"># ハンドルの位置を基準とした目標を設定する
-</span><span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">.</span><span class="n">target</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.025</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"Handle"</span><span class="p">))</span></code></pre></figure>
+</span><span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">.</span><span class="n">target</span><span class="p">(</span>
+    <span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.025</span><span class="p">))</span>
+    <span class="o">*</span> <span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"Handle"</span><span class="p">)</span>
+<span class="p">)</span></code></pre></figure>
 
   
   </div>
@@ -908,18 +927,22 @@
   <div class="card-body">
 
   <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># switch_phase(self)を編集する
-</span><span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">==</span> <span class="n">APPROACH</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">.</span><span class="nb">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">.</span><span class="n">speed</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-4</span><span class="p">:</span>
-  <span class="c1"># 新しい接触面を追加する
-</span>  <span class="bp">self</span><span class="p">.</span><span class="n">addContact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"door"</span><span class="p">,</span> <span class="s">"RightGripper"</span><span class="p">,</span> <span class="s">"Handle"</span><span class="p">)</span>
-  <span class="c1"># 面変換タスクを削除する
-</span>  <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">removeTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">)</span>
-  <span class="c1"># ロボットの現在の姿勢を維持する
-</span>  <span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
-  <span class="bp">self</span><span class="p">.</span><span class="n">comTask</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
-  <span class="c1"># 新しいハンドル位置を目標とする
-</span>  <span class="bp">self</span><span class="p">.</span><span class="n">doorPosture</span><span class="p">.</span><span class="n">target</span><span class="p">({</span><span class="s">"handle"</span><span class="p">:</span> <span class="p">{</span><span class="o">-</span><span class="mf">1.0</span><span class="p">}})</span>
-  <span class="c1"># フェーズを切り替える
-</span>  <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">HANDLE</span></code></pre></figure>
+</span><span class="k">if</span> <span class="p">(</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">==</span> <span class="n">APPROACH</span>
+    <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">.</span><span class="nb">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.05</span>
+    <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">.</span><span class="n">speed</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-4</span>
+<span class="p">):</span>
+    <span class="c1"># 新しい接触面を追加する
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">addContact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"door"</span><span class="p">,</span> <span class="s">"RightGripper"</span><span class="p">,</span> <span class="s">"Handle"</span><span class="p">)</span>
+    <span class="c1"># 面変換タスクを削除する
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">removeTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">)</span>
+    <span class="c1"># ロボットの現在の姿勢を維持する
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">comTask</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="c1"># 新しいハンドル位置を目標とする
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">doorPosture</span><span class="p">.</span><span class="n">target</span><span class="p">({</span><span class="s">"handle"</span><span class="p">:</span> <span class="p">{</span><span class="o">-</span><span class="mf">1.0</span><span class="p">}})</span>
+    <span class="c1"># フェーズを切り替える
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">HANDLE</span></code></pre></figure>
 
   
   </div>
@@ -987,10 +1010,10 @@
   <div class="card-body">
 
   <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">==</span> <span class="n">HANDLE</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">doorPosture</span><span class="p">.</span><span class="nb">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">:</span>
-  <span class="c1"># ドア開の目標を更新する
-</span>  <span class="bp">self</span><span class="p">.</span><span class="n">doorPosture</span><span class="p">.</span><span class="n">target</span><span class="p">({</span><span class="s">"door"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">]})</span>
-  <span class="c1"># フェーズを切り替える
-</span>  <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">OPEN</span></code></pre></figure>
+    <span class="c1"># ドア開の目標を更新する
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">doorPosture</span><span class="p">.</span><span class="n">target</span><span class="p">({</span><span class="s">"door"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">]})</span>
+    <span class="c1"># フェーズを切り替える
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">OPEN</span></code></pre></figure>
 
   
   </div>

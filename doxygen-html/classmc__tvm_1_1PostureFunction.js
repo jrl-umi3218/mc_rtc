@@ -1,9 +1,9 @@
 var classmc__tvm_1_1PostureFunction =
 [
     [ "PostureFunction", "classmc__tvm_1_1PostureFunction.html#aee9c255113c5ea9b781ab7c82717dc80", null ],
+    [ "posture", "classmc__tvm_1_1PostureFunction.html#aed9ff5e5c1d0fe185a685bd157607ab3", null ],
     [ "posture", "classmc__tvm_1_1PostureFunction.html#ac44b94db01c5d622d1a2e7d5e4e611d6", null ],
     [ "posture", "classmc__tvm_1_1PostureFunction.html#a89ffdee091a648bf3a0f22efd1c621dd", null ],
-    [ "posture", "classmc__tvm_1_1PostureFunction.html#aed9ff5e5c1d0fe185a685bd157607ab3", null ],
     [ "refAccel", "classmc__tvm_1_1PostureFunction.html#a09412d7de8949c69199b5986d7c66fe8", null ],
     [ "refAccel", "classmc__tvm_1_1PostureFunction.html#a640ebe5eb95bb143010cf8ff6f84803e", null ],
     [ "refVel", "classmc__tvm_1_1PostureFunction.html#aa455918368adb44227238a35b686eb65", null ],

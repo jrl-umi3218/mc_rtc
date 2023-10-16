@@ -1,5 +1,7 @@
 var MessagePackBuilder_8h =
 [
+    [ "has_write_builder", "structmc__rtc_1_1internal_1_1has__write__builder.html", null ],
+    [ "has_write_builder< T, std::void_t< decltype(std::declval< const T & >().write(std::declval< MessagePackBuilder & >()))> >", "structmc__rtc_1_1internal_1_1has__write__builder_3_01T_00_01std_1_1void__t_3_01decltype_07std_1_1f30e14306a8a05c633790cd1bae0d02.html", null ],
     [ "MessagePackBuilder", "structmc__rtc_1_1MessagePackBuilder.html", "structmc__rtc_1_1MessagePackBuilder" ],
     [ "is_like", "MessagePackBuilder_8h.html#acba6fe117d8807e358abe0a19f91362c", null ],
     [ "is_integral_v", "MessagePackBuilder_8h.html#a71205a048e877fdade723bb88b6bbbdb", null ],

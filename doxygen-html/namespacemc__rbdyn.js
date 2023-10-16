@@ -1,5 +1,6 @@
 var namespacemc__rbdyn =
 [
+    [ "detail", "namespacemc__rbdyn_1_1detail.html", "namespacemc__rbdyn_1_1detail" ],
     [ "details", "namespacemc__rbdyn_1_1details.html", "namespacemc__rbdyn_1_1details" ],
     [ "lipm_stabilizer", "namespacemc__rbdyn_1_1lipm__stabilizer.html", "namespacemc__rbdyn_1_1lipm__stabilizer" ],
     [ "Base", "structmc__rbdyn_1_1Base.html", "structmc__rbdyn_1_1Base" ],

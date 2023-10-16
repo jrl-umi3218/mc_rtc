@@ -15,15 +15,19 @@ var traits_8h =
     [ "Labels< sva::ImpedanceVecd >", "structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1ImpedanceVecd_01_4.html", null ],
     [ "RPYLabels", "structmc__rtc_1_1gui_1_1details_1_1RPYLabels.html", null ],
     [ "RPYLabels< false >", "structmc__rtc_1_1gui_1_1details_1_1RPYLabels_3_01false_01_4.html", null ],
+    [ "is_variant", "structmc__rtc_1_1gui_1_1details_1_1is__variant.html", null ],
+    [ "is_variant< std::variant< Args... > >", "structmc__rtc_1_1gui_1_1details_1_1is__variant_3_01std_1_1variant_3_01Args_8_8_8_01_4_01_4.html", null ],
     [ "ReturnTypeT", "traits_8h.html#a62d70a1c5467de8404eceee15a80da68", null ],
     [ "void_t", "traits_8h.html#a437b4050328d7178f5872223cf9f7f35", null ],
     [ "GetValueOrCallbackValue", "traits_8h.html#a063ab3ae51c7861effacdad6ad481fb7", null ],
     [ "is_getter", "traits_8h.html#a3f24a46e2245c7951863c943009a6b3c", null ],
-    [ "is_getter_impl", "traits_8h.html#a8e445bc0e47af1ff42f00cec4cbacbf7", null ],
     [ "is_getter_impl", "traits_8h.html#a664fd97ecf7ee798c1fcace58d4f8a21", null ],
+    [ "is_getter_impl", "traits_8h.html#a8e445bc0e47af1ff42f00cec4cbacbf7", null ],
     [ "read", "traits_8h.html#aa90a6a7d888d3e6cd89d0d3145147c49", null ],
     [ "read", "traits_8h.html#a8cc3f398aa314eda86c9e95c9c398eab", null ],
     [ "read_rpy", "traits_8h.html#a525f80286b88635cab1cffe4dfa8d378", null ],
     [ "read_rpy", "traits_8h.html#adc6021c4cfdf829779413fd40767cc14", null ],
-    [ "write", "traits_8h.html#afd2e4edc42e47fce8e0a1721dbc8475a", null ]
+    [ "write", "traits_8h.html#afd2e4edc42e47fce8e0a1721dbc8475a", null ],
+    [ "has_compatible_signature_v", "traits_8h.html#a89ae18ba7d80121f376e31949581a034", null ],
+    [ "is_variant_v", "traits_8h.html#a12c06c1a155a20f7d150d8f8699ca073", null ]
 ];

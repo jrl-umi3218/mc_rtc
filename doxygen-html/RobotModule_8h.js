@@ -11,7 +11,7 @@ var RobotModule_8h =
     [ "RobotModuleVector", "RobotModule_8h.html#a95605f5cb57b7c5b39027072bedbbc04", null ],
     [ "S_ObjectPtr", "RobotModule_8h.html#ac3517607389b845ee6ffdee65cbc8a63", null ],
     [ "check_module_compatibility", "RobotModule_8h.html#a8ac23895f52ccc0e6ea9f77dfc83c84a", null ],
-    [ "operator==", "RobotModule_8h.html#abaf5b2b5f77f9658f757b3a1dbdcf030", null ],
     [ "operator==", "RobotModule_8h.html#a5e07749ee4441c7ee3c8d1b9508f6126", null ],
+    [ "operator==", "RobotModule_8h.html#abaf5b2b5f77f9658f757b3a1dbdcf030", null ],
     [ "urdf_limits_to_bounds", "RobotModule_8h.html#ae02615325b483661411e4eb7d76e0522", null ]
 ];

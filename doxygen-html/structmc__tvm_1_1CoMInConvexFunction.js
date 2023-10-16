@@ -7,10 +7,13 @@ var structmc__tvm_1_1CoMInConvexFunction =
     [ "planes", "structmc__tvm_1_1CoMInConvexFunction.html#adde2150d37bc874ac9da377d5964ccfd", null ],
     [ "reset", "structmc__tvm_1_1CoMInConvexFunction.html#a10cbec4d1b1c42b768a08f2b7c2970e0", null ],
     [ "robot", "structmc__tvm_1_1CoMInConvexFunction.html#ada87b71da3915c3b8dfb1e4c2148128c", null ],
+    [ "selector", "structmc__tvm_1_1CoMInConvexFunction.html#a0cbe2f5914f67550793ed6dfbcc6708c", null ],
+    [ "selector", "structmc__tvm_1_1CoMInConvexFunction.html#ac0eab9b22e56b0cd8f7be42edbcfaa46", null ],
     [ "updateJacobian", "structmc__tvm_1_1CoMInConvexFunction.html#a7e05e0f2de547e844a5c5b5e15ef6ce8", null ],
     [ "updateNormalAcceleration", "structmc__tvm_1_1CoMInConvexFunction.html#afb2503489acaac7adee62163505b7326", null ],
     [ "updateValue", "structmc__tvm_1_1CoMInConvexFunction.html#a63d84411d467e2be2c76d0e9442ff517", null ],
     [ "updateVelocity", "structmc__tvm_1_1CoMInConvexFunction.html#a79f5e0a686f3a47a310b4855772ddd5d", null ],
     [ "com_", "structmc__tvm_1_1CoMInConvexFunction.html#ac422c9da2108a0ccc05604682b797f2f", null ],
-    [ "planes_", "structmc__tvm_1_1CoMInConvexFunction.html#a33f3cf76ebde8e6af9f698f206c85138", null ]
+    [ "planes_", "structmc__tvm_1_1CoMInConvexFunction.html#a33f3cf76ebde8e6af9f698f206c85138", null ],
+    [ "selector_", "structmc__tvm_1_1CoMInConvexFunction.html#a4b5b4e97dea280b8ab57b7c25d565ca9", null ]
 ];

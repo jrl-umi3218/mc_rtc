@@ -19,7 +19,6 @@ var pragma_8h =
     [ "MC_RTC_MAP2_9", "pragma_8h.html#ab032378e87b8c10476e9aee3cc528e4a", null ],
     [ "MC_RTC_MAP_TWO_ARGS", "pragma_8h.html#a68ae92d9a7368007a7f93d6e5bee5454", null ],
     [ "MC_RTC_MSVC_diagnostic_ignored", "pragma_8h.html#a02fba0b09122a66e1ebc4148d27ae52a", null ],
-    [ "MC_RTC_PP_ID", "pragma_8h.html#af3a2e2d6c980d07a49970e25c5d41480", null ],
     [ "MC_RTC_PRAGMA", "pragma_8h.html#a8b26cd59b48fd7f9a75f848ec1963e65", null ],
     [ "MC_RTC_STRINGIFY", "pragma_8h.html#ae40018a9e89fd64d3d3f790ca47cfa7f", null ],
     [ "MC_RTC_STRINGIFY_", "pragma_8h.html#ae64eef40bbdd1c92469f30e64b774e04", null ],

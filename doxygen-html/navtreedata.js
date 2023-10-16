@@ -1,10 +1,35 @@
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this file.
+
+Copyright (C) 1997-2019 by Dimitri van Heesch
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of version 2 of the GNU General Public License as published by
+the Free Software Foundation
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+@licend  The above is the entire license notice
+for the JavaScript code in this file
+*/
 var NAVTREE =
 [
   [ "mc_rtc", "index.html", [
+    [ "Introduction", "index.html#autotoc_md0", null ],
+    [ "Available interfaces", "index.html#autotoc_md1", null ],
+    [ "Installing", "index.html#autotoc_md2", null ],
     [ "Deprecated List", "deprecated.html", null ],
     [ "Modules", "modules.html", "modules" ],
-    [ "Namespaces", null, [
-      [ "Namespace List", "namespaces.html", "namespaces" ],
+    [ "Namespaces", "namespaces.html", [
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", "namespacemembers_dup" ],
         [ "Functions", "namespacemembers_func.html", "namespacemembers_func" ],
@@ -27,8 +52,8 @@ var NAVTREE =
         [ "Related Functions", "functions_rela.html", null ]
       ] ]
     ] ],
-    [ "Files", null, [
-      [ "File List", "files.html", "files" ],
+    [ "Files", "files.html", [
+      [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [
         [ "All", "globals.html", null ],
         [ "Functions", "globals_func.html", null ],
@@ -42,28 +67,29 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AbscissaOrdinate_8h.html",
-"KinematicInertialObserver_8h.html",
-"StationaryOffset_8h_source.html",
-"classmc__tvm_1_1VectorOrientationFunction.html#ad946978d158a134ff404f2a18c3f3857",
-"include_2mc__observers_2api_8h.html#ad87f4c4e93529fdbfdd4a95ef34bbd7a",
-"mc__tvm_2RobotFrame_8h.html",
-"structmc__control_1_1Contact.html#aff7d5f60b948de7e6b1327b4544b4a5b",
-"structmc__control_1_1MCController.html#a5bd5718a3b2acc5933161f12a03cd00d",
-"structmc__control_1_1fsm_1_1Controller.html#a59903f739677ea9f89b0cc8f0cdc051d",
-"structmc__filter_1_1LowPass.html#a543781fd1c5ec7b653de6e2189de8fdb",
-"structmc__rbdyn_1_1Collision.html",
-"structmc__rbdyn_1_1Robot.html#a4b62d2a94e3c81f2c436828bc9ed5186",
-"structmc__rbdyn_1_1RobotModule.html#ab4acadd6d4c3d607b929be70f3ba94e5",
-"structmc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration.html#a3c05d238cf8b0b2803e502985898c9ca",
-"structmc__rtc_1_1Logger.html#ae7cc40f50bb8edbcc79c06476f7a4540",
-"structmc__rtc_1_1gui_1_1StateBuilder.html#a9d2f14dac31913f3f57809ec56512801",
-"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Polygon.html#af7e96bad2cd93f2b0eaecbf94e8ce4c2",
-"structmc__solver_1_1QPSolver.html#af48a56a36d044fa4077f1c9e0ad69936",
-"structmc__tasks_1_1MetaTask.html#a7821083f6def1d54f22ea7c0e223e21a",
-"structmc__tasks_1_1VectorOrientationTask.html#ab389c34fd3c93b00643143d92ef257f2",
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a50bd7771e0e45cd45b507af97b285544",
-"structmc__tvm_1_1CoMInConvexFunction.html#a9243c035c3f77d3b2eee5d94c0a44dae",
-"utils_8h_source.html"
+"InterpolatedRotation_8h_source.html",
+"StabilizerConfiguration_8h.html",
+"classmc__tvm_1_1TransformFunction.html#ab48e3af3a67ed5b35f6d223e2feb29dd",
+"heatmap_8h.html#a82fe941770f36f355a999699984b5943",
+"mc__python__controller_8h.html",
+"pragma_8h.html#a8b26cd59b48fd7f9a75f848ec1963e65",
+"structmc__control_1_1Gripper.html#acd2dade357fca9fa8f2261a8f29fc6b7",
+"structmc__control_1_1MCPythonController.html#a912a0dc9659948113b9eca0605c2cd12",
+"structmc__control_1_1fsm_1_1State.html#acb573a0d4be2001f1e6820d9d75d3a94",
+"structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html",
+"structmc__rbdyn_1_1Mimic.html",
+"structmc__rbdyn_1_1RobotFrame.html#a540f8df03fdee424e2db6118a1b273c5",
+"structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#abc2551e9efb790f462bf04173f5333cb",
+"structmc__rtc_1_1ConfigurationArrayIterator.html#a2d7d4ae76ac0313499089302504022cb",
+"structmc__rtc_1_1gui_1_1Color.html",
+"structmc__rtc_1_1gui_1_1details_1_1NumberSliderImpl.html#a31ec26adacc75b84306592469c5f403d",
+"structmc__rtc_1_1schema_1_1details_1_1Choices.html#a87cd404eedabc3765e8ebfeaf7eb4aaa",
+"structmc__solver_1_1utils_1_1Constraint.html#ab383394a69ab62c4fab23378e64868de",
+"structmc__tasks_1_1PositionTask.html#ada68a975c5586850572384f476a77883",
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#a9e4af3978acf95b18cb58842898ff266",
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a6863d425eff4e098af4abc8a38ee2326",
+"structmc__tvm_1_1CoMInConvexFunction.html#a10cbec4d1b1c42b768a08f2b7c2970e0",
+"type__name_8h.html#a8fb61bc6391bc9cd0ef2aa0efff2d641"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -14,8 +14,8 @@ var structmc__trajectory_1_1ExactCubic =
     [ "sampleTrajectory", "structmc__trajectory_1_1ExactCubic.html#ab73c2c2f06d04ee301e8ec0d1a15b831", null ],
     [ "splev", "structmc__trajectory_1_1ExactCubic.html#a3df92dec43977efee8f5f4a8cc83ae87", null ],
     [ "update", "structmc__trajectory_1_1ExactCubic.html#a22a9af98b0a796589d8c25037b7cdb60", null ],
-    [ "waypoint", "structmc__trajectory_1_1ExactCubic.html#aec46e0e93dfe6c8483cd4ab96ec133ae", null ],
-    [ "waypoint", "structmc__trajectory_1_1ExactCubic.html#a012346ad965151024073f23d6261d977", null ],
     [ "waypoint", "structmc__trajectory_1_1ExactCubic.html#a83a0733b114960743205b1b3a390ca6e", null ],
+    [ "waypoint", "structmc__trajectory_1_1ExactCubic.html#a012346ad965151024073f23d6261d977", null ],
+    [ "waypoint", "structmc__trajectory_1_1ExactCubic.html#aec46e0e93dfe6c8483cd4ab96ec133ae", null ],
     [ "waypointTime", "structmc__trajectory_1_1ExactCubic.html#a48ee7c7819f41e00f485f3565d990106", null ]
 ];

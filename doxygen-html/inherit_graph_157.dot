@@ -1,10 +1,17 @@
 digraph "Graphical Class Hierarchy"
 {
  // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node60 [label="testnullptr",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node60 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 [label="mc_rtc::internal::has\l_configuration_load_object\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1internal_1_1has__configuration__load__object.html"];
+  Node343 [label="mc_rtc::gui::details\l::FormDataInputBase\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1FormDataInputBase.html",tooltip=" "];
+  Node343 -> Node335 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node335 [label="mc_rtc::gui::details\l::FormDataInput\< T, element \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1FormDataInput.html",tooltip=" "];
+  Node343 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="mc_rtc::gui::details\l::FormInteractiveDataInput\l\< T, element \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1FormInteractiveDataInput.html",tooltip=" "];
+  Node334 [label="mc_rtc::gui::FormElement\l\< FormDataInput\< T, element\l \>, element \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1FormElement.html",tooltip=" "];
+  Node334 -> Node335 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="mc_rtc::gui::FormElement\l\< FormInteractiveDataInput\l\< T, element \>, element \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1FormElement.html",tooltip=" "];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

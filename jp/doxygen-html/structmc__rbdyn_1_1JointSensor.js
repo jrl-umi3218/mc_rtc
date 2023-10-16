@@ -10,6 +10,8 @@ var structmc__rbdyn_1_1JointSensor =
     [ "joint", "structmc__rbdyn_1_1JointSensor.html#a5bc82e5bc792b1205bab90bbc0db9ff0", null ],
     [ "motorCurrent", "structmc__rbdyn_1_1JointSensor.html#a94a894a6d608152e9ffd574db02f3aae", null ],
     [ "motorCurrent", "structmc__rbdyn_1_1JointSensor.html#a0cb1c64c1bad340b0c85d615af6bb5ee", null ],
+    [ "motorStatus", "structmc__rbdyn_1_1JointSensor.html#aba6e6295492c6da6f48372b777dd5ccf", null ],
+    [ "motorStatus", "structmc__rbdyn_1_1JointSensor.html#a782148fe6d9fb87c841b295d0bffeae7", null ],
     [ "motorTemperature", "structmc__rbdyn_1_1JointSensor.html#abfa5c1b8b13fe8bd3a7ddc4e241fda1a", null ],
     [ "motorTemperature", "structmc__rbdyn_1_1JointSensor.html#aea5410f5e72c9a14732809820c5b7fc7", null ],
     [ "operator=", "structmc__rbdyn_1_1JointSensor.html#a1f6ea7b4b8c8d540834d479a43c68481", null ],

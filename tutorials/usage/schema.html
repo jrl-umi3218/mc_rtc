@@ -1,0 +1,652 @@
+
+
+
+
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>Tutorials - Schema structures integrated to the framework - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">Online demonstration</a>
+    </div>
+    
+      
+      
+      
+      EN
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+        <a href="/mc_rtc/jp/tutorials/usage/schema.html">
+      
+      JP
+      
+        </a>
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>Introduction</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc and its components</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Framework usage</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/global-plugins.html">Using global plugins</a></li>
+                        
+                      
+                        
+                        <li><strong>Schema structures integrated to the framework</strong></li>
+                          
+                        
+                      
+                    </ul>
+                    
+                    <li>Framework tools</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_rtc_ticker-and-replay.html">mc_rtc_ticker and the Replay plugin</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Control recipes</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm-main-states.html">Main FSM states</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/datastore.html">DataStore: Sharing Objects</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/observers.html">State Observation Pipelines</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/lipm-stabilizer.html">Using the LIPM Stabilizer</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Samples</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/samples/list-of-samples.html">Available sample controllers</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/samples/sample-admittance.html">Admittance sample controller</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Advanced topics</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-plugin.html">Implement a new plugin for mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/support-mc-rtc-build-static.html">Supporting MC_RTC_BUILD_STATIC in your code</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#introducing-mc_rtcschema">Introducing mc_rtc::Schema</a></li>
+<li class="toc-entry toc-h2"><a href="#our-first-schema-based-structure">Our first schema-based structure</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#the-mc_rtc_schema_member-macro">The MC_RTC_SCHEMA_MEMBER macro</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#about-type">About TYPE</a></li>
+<li class="toc-entry toc-h3"><a href="#about-flags">About FLAGS</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#mc_rtcschemarequired">mc_rtc::schema::Required</a></li>
+<li class="toc-entry toc-h4"><a href="#mc_rtcschemainteractive">mc_rtc::schema::Interactive</a></li>
+<li class="toc-entry toc-h4"><a href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#about-default">About DEFAULT</a></li>
+<li class="toc-entry toc-h3"><a href="#about-names">About NAMES</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#example-1">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#the-mc_rtc_new_schema-and-mc_rtc_schema-macros">The MC_RTC_NEW_SCHEMA and MC_RTC_SCHEMA macros</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>Schema structures integrated to the framework</h1>
+        
+
+        <h2 id="introducing-mc_rtcschema">Introducing <code class="language-plaintext highlighter-rouge">mc_rtc::Schema</code></h2>
+
+<p>JSON Schema is a <a href="https://json-schema.org/">specification</a> that allows to document the expected data format to go from a JSON object to a given data structure.</p>
+
+<p>It is used in <a href="https://jrl-umi3218.github.io/mc_rtc/json.html">mc_rtc</a> to document the expected data for loading objects – e.g. tasks or constraints – into the framework.</p>
+
+<p>As you write code within mc_rtc you will likely encounter a scenarion where you load a number of parameters from an <a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a> object.</p>
+
+<p>In addition to loading this configuration object into your data structure, you will also likely be interested in:</p>
+
+<ul>
+  <li>Saving the current state of the object to an <code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code> file – and then to disk;</li>
+  <li>Allow to edit the parameters online;</li>
+  <li>Document the configuration format;</li>
+</ul>
+
+<p>Writing all this code by hand is possible but tedious and error-prone, especially when adding or removing fields from the structure.</p>
+
+<p>This is where <code class="language-plaintext highlighter-rouge">mc_rtc::Schema</code> comes in. Its objective is to allow you to write a simple structure that behaves like a simple structure but comes packed with extra features.</p>
+
+<h2 id="our-first-schema-based-structure">Our first schema-based structure</h2>
+
+<p>The following example is a simple schema structure that illustrates the basic usage of the feature:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;mc_rtc/Schema.h&gt;
+</span>
+<span class="k">struct</span> <span class="nc">SimpleSchema</span>
+<span class="p">{</span>
+  <span class="n">MC_RTC_NEW_SCHEMA</span><span class="p">(</span><span class="n">SimpleSchema</span><span class="p">)</span>
+<span class="cp">#define MEMBER(...) MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER(SimpleSchema, __VA_ARGS__)
+</span>  <span class="n">MEMBER</span><span class="p">(</span><span class="kt">bool</span><span class="p">,</span> <span class="n">useFeature</span><span class="p">,</span> <span class="s">"Use magic feature"</span><span class="p">)</span>
+  <span class="n">MEMBER</span><span class="p">(</span><span class="kt">double</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="s">"Task weight"</span><span class="p">)</span>
+  <span class="n">MEMBER</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="s">"Some names"</span><span class="p">)</span>
+  <span class="n">MEMBER</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">ForceVecd</span><span class="p">,</span> <span class="n">wrench</span><span class="p">,</span> <span class="s">"Target wrench"</span><span class="p">)</span>
+  <span class="n">MEMBER</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">,</span> <span class="n">pt</span><span class="p">,</span> <span class="s">"Some transform"</span><span class="p">)</span>
+<span class="cp">#undef MEMBER
+</span><span class="p">};</span>
+</code></pre></div></div>
+
+<h5 class="no_toc">Note for MSVC users</h5>
+
+<p>If you intend the above code to be used with the Microsoft Visual C++ Compiler (MSVC), the <code class="language-plaintext highlighter-rouge">MEMBER</code> definition should be changed to:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define MEMBER(...) MC_RTC_PP_ID(MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER(SimpleSchema, __VA_ARGS__))
+</span></code></pre></div></div>
+
+<p>Or avoid the <code class="language-plaintext highlighter-rouge">MEMBER</code> helper all-together.</p>
+
+<p>This works around a pre-processor issue in MSVC.</p>
+
+<h3 id="usage">Usage</h3>
+
+<p>The structure that we defined this way is used a regular C++ structure:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">do_foo</span><span class="p">(</span><span class="k">const</span> <span class="n">sva</span><span class="o">::</span><span class="n">ForceVecd</span> <span class="o">&amp;</span><span class="p">);</span>
+
+<span class="c1">// The structure can be default constructed (more on the defaults later)</span>
+<span class="n">SimpleSchema</span> <span class="n">simple</span><span class="p">;</span>
+<span class="c1">// Access a member as a simple structure</span>
+<span class="n">do_foo</span><span class="p">(</span><span class="n">simple</span><span class="p">.</span><span class="n">wrench</span><span class="p">);</span>
+<span class="c1">// The members are of the type you specified so this is also possible</span>
+<span class="n">do_foo</span><span class="p">(</span><span class="n">simple</span><span class="p">.</span><span class="n">pt</span> <span class="o">*</span> <span class="n">simple</span><span class="p">.</span><span class="n">wrench</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>However, this structure also has a number of extra functionalities built-in:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Load from an mc_rtc::Configuration value</span>
+<span class="n">simple</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
+<span class="c1">// Save to an mc_rtc::Configuration object</span>
+<span class="n">simple</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
+<span class="c1">// We can also take advantage of mc_rtc::Configuration user defined conversions</span>
+<span class="n">config</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">"simple"</span><span class="p">,</span> <span class="n">simple</span><span class="p">);</span>
+<span class="n">SimpleSchema</span> <span class="n">simple2</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"simple"</span><span class="p">);</span>
+<span class="c1">// Print to the console</span>
+<span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">"simple:</span><span class="se">\n</span><span class="s">{}"</span><span class="p">,</span> <span class="n">simple</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span><span class="nb">true</span><span class="p">,</span> <span class="nb">true</span><span class="p">));</span>
+<span class="c1">// Add a form to the GUI that will edit simple in place</span>
+<span class="n">simple</span><span class="p">.</span><span class="n">addToGUI</span><span class="p">(</span><span class="o">*</span><span class="n">controller</span><span class="p">.</span><span class="n">gui</span><span class="p">(),</span> <span class="p">{</span><span class="s">"Form category"</span><span class="p">},</span> <span class="s">"Form name"</span><span class="p">,</span>
+                <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span>
+                  <span class="c1">// The simple object has been updated with new values at this point</span>
+                  <span class="n">on_simple_update</span><span class="p">();</span>
+                <span class="p">});</span>
+</code></pre></div></div>
+
+<p>You can also use aggregate initialization or <a href="https://en.cppreference.com/w/cpp/language/aggregate_initialization#Designated_initializers">designated initialization</a> (from C++20) to initialize the structure:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SimpleSchema</span> <span class="n">simple</span><span class="p">{</span><span class="nb">true</span><span class="p">,</span> <span class="mf">42.42</span><span class="p">,</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span> <span class="n">wrench</span><span class="p">,</span> <span class="n">pt</span><span class="p">};</span>
+</code></pre></div></div>
+
+<p>Finally the structure we created here has the same size as the simpler structure we could have created by hand.</p>
+
+<h2 id="the-mc_rtc_schema_member-macro">The <code class="language-plaintext highlighter-rouge">MC_RTC_SCHEMA_MEMBER</code> macro</h2>
+
+<p>In the previous example, we have used the <code class="language-plaintext highlighter-rouge">MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER</code> macro. It is actually a wrapper around the more general <code class="language-plaintext highlighter-rouge">MC_RTC_SCHEMA_MEMBER</code> macro which has the following siganture:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MC_RTC_SCHEMA_MEMBER</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">TYPE</span><span class="p">,</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">DESCRIPTION</span><span class="p">,</span> <span class="n">FLAGS</span><span class="p">,</span> <span class="n">DEFAULT</span><span class="p">,</span> <span class="p">...)</span>
+</code></pre></div></div>
+
+<p>The parameters have the following usage:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">T</code> is the type of the Schema object where this member appears;</li>
+  <li><code class="language-plaintext highlighter-rouge">TYPE</code> is the type of the member variable;</li>
+  <li><code class="language-plaintext highlighter-rouge">NAME</code> is the name of the member variable;</li>
+  <li><code class="language-plaintext highlighter-rouge">DESCRIPTION</code> is a documentation string for the member variable, it is also used in the generated Form;</li>
+  <li><code class="language-plaintext highlighter-rouge">FLAGS</code> is used to add additional information about the member, most notably whether the member is required or not;</li>
+  <li><code class="language-plaintext highlighter-rouge">DEFAULT</code> is the default value used for this member;</li>
+  <li><code class="language-plaintext highlighter-rouge">...</code>/<code class="language-plaintext highlighter-rouge">NAMES</code> these extra parameters are used for two purposes:
+    <ul>
+      <li>if <code class="language-plaintext highlighter-rouge">TYPE</code> is <code class="language-plaintext highlighter-rouge">std::string</code> this can be used to provide valid values;</li>
+      <li>if <code class="language-plaintext highlighter-rouge">TYPE</code> is <code class="language-plaintext highlighter-rouge">std::variant&lt;T...&gt;</code> this is used to assign meaningful names to the variant altneratives;</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="about-type">About <code class="language-plaintext highlighter-rouge">TYPE</code></h3>
+
+<p>The intent is for any <code class="language-plaintext highlighter-rouge">TYPE</code> to be usable – at least for the load/save scenario, not all types may be supported for the form-based edition.</p>
+
+<p>If a given <code class="language-plaintext highlighter-rouge">TYPE</code> is not supported you will get a compilation error, please report the issue to mc_rtc developpers.</p>
+
+<p>As of now, most types that can be loaded/saved through an <code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code> object are supported as well as schema-based types and <code class="language-plaintext highlighter-rouge">std::vector</code> of such types.</p>
+
+<p>The following is an example using such types:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">ComposeSchema</span>
+<span class="p">{</span>
+  <span class="n">MC_RTC_NEW_SCHEMA</span><span class="p">(</span><span class="n">ComposeSchema</span><span class="p">)</span>
+<span class="cp">#define MEMBER(...) MC_RTC_PP_ID(MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER(ComposeSchema, __VA_ARGS__))
+</span>  <span class="n">MEMBER</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="n">integer</span><span class="p">,</span> <span class="s">"Integer value"</span><span class="p">)</span>
+  <span class="n">MEMBER</span><span class="p">(</span><span class="n">SimpleSchema</span><span class="p">,</span> <span class="n">simple</span><span class="p">,</span> <span class="s">"Simple schema"</span><span class="p">)</span>
+  <span class="n">MEMBER</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">SimpleSchema</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">many</span><span class="p">,</span> <span class="s">"Multiple simple schema"</span><span class="p">)</span>
+<span class="cp">#undef MEMBER
+</span><span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="about-flags">About <code class="language-plaintext highlighter-rouge">FLAGS</code></h3>
+
+<p>There is current two flags:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc::schema::Required</code></li>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc::schema::Interactive</code></li>
+</ul>
+
+<h4 id="mc_rtcschemarequired"><code class="language-plaintext highlighter-rouge">mc_rtc::schema::Required</code></h4>
+
+<p>When a member is required:</p>
+
+<ul>
+  <li>the member must be present in the configuration;</li>
+  <li>the member must correctly de-serialize to its type;</li>
+</ul>
+
+<p>Otherwise the member is only read if it is present in the configuration.</p>
+
+<p>Note: members are always saved into a Configuration object, whether they are required or not</p>
+
+<h4 id="mc_rtcschemainteractive"><code class="language-plaintext highlighter-rouge">mc_rtc::schema::Interactive</code></h4>
+
+<p>The schema can treat the following types as interactive:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Eigen::Vector3d</code></li>
+  <li><code class="language-plaintext highlighter-rouge">sva::PTransformd</code></li>
+</ul>
+
+<p>If members of these types are added to a form then interactive form elements will be used.</p>
+
+<p>However, it does not always make sense. For example, a 3D gain could be represented with an <code class="language-plaintext highlighter-rouge">Eigen::Vector3d</code> and there is no point to use a 3D marker to edit this value.</p>
+
+<p>You can control this behavior by setting the interactive flag accordingly. In all macros, except the basic <code class="language-plaintext highlighter-rouge">MC_RTC_SCHEMA_MEMBER</code>, the flag is set by default.</p>
+
+<h4 id="example">Example</h4>
+
+<p>The following example illustrates the use of these flags in the <code class="language-plaintext highlighter-rouge">MC_RTC_SCHEMA_MEMBER</code> macro call:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">InteractiveSchema</span>
+<span class="p">{</span>
+  <span class="n">MC_RTC_NEW_SCHEMA</span><span class="p">(</span><span class="n">InteractiveSchema</span><span class="p">)</span>
+<span class="cp">#define MEMBER(...) MC_RTC_PP_ID(MC_RTC_SCHEMA_MEMBER(InteractiveSchema, __VA_ARGS__))
+</span>  <span class="n">MEMBER</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">,</span>
+         <span class="n">point</span><span class="p">,</span>
+         <span class="s">"3D point"</span><span class="p">,</span>
+         <span class="n">mc_rtc</span><span class="o">::</span><span class="n">schema</span><span class="o">::</span><span class="n">Required</span> <span class="o">|</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">schema</span><span class="o">::</span><span class="n">Interactive</span><span class="p">,</span>
+         <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">Zero</span><span class="p">())</span>
+  <span class="n">MEMBER</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">,</span> <span class="n">gain</span><span class="p">,</span> <span class="s">"3D gain"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">schema</span><span class="o">::</span><span class="n">Required</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">Ones</span><span class="p">())</span>
+  <span class="n">MEMBER</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">,</span> <span class="n">gainOpt</span><span class="p">,</span> <span class="s">"3D optional gain"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">schema</span><span class="o">::</span><span class="n">None</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">Zero</span><span class="p">())</span>
+<span class="cp">#undef MEMBER
+</span><span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="about-default">About <code class="language-plaintext highlighter-rouge">DEFAULT</code></h3>
+
+<p>This lets you specify the default value of the member. Anything that would be valid on the right-hand side of the assignment operator is ok here.</p>
+
+<p>If you are using a <code class="language-plaintext highlighter-rouge">_DEFAULT_</code> macro, this is <code class="language-plaintext highlighter-rouge">mc_rtc::Default&lt;T&gt;</code> which is:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">0</code> for arithmetic types (thus <code class="language-plaintext highlighter-rouge">false</code> for <code class="language-plaintext highlighter-rouge">bool</code>)</li>
+  <li>Zero for Eigen vectors</li>
+  <li>Identity for Eigen square matrix</li>
+  <li>Identity for <code class="language-plaintext highlighter-rouge">sva::PTransformd</code></li>
+  <li>Zero for <code class="language-plaintext highlighter-rouge">sva::ForceVecd</code>, <code class="language-plaintext highlighter-rouge">sva::MotionVecd</code>, <code class="language-plaintext highlighter-rouge">sva::ImpedanceVecd</code>, <code class="language-plaintext highlighter-rouge">sva::AdmittanceVecd</code></li>
+  <li>Empty string for <code class="language-plaintext highlighter-rouge">std::string</code></li>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc::Default&lt;T&gt;</code> for <code class="language-plaintext highlighter-rouge">std::variant&lt;T, Others...&gt;</code></li>
+  <li>Default values for a schema-based structure</li>
+</ul>
+
+<h3 id="about-names">About <code class="language-plaintext highlighter-rouge">NAMES</code></h3>
+
+<p>These extra parameter has two possible use-case:</p>
+
+<ul>
+  <li>a list of possible values when <code class="language-plaintext highlighter-rouge">TYPE</code> is <code class="language-plaintext highlighter-rouge">std::string</code></li>
+  <li>a description of the types when <code class="language-plaintext highlighter-rouge">TYPE</code> is <code class="language-plaintext highlighter-rouge">std::variant&lt;T...&gt;</code></li>
+</ul>
+
+<h4 id="example-1">Example</h4>
+
+<p>In this example we have a gain represented as variant. It can be a <code class="language-plaintext highlighter-rouge">double</code> scalar or an <code class="language-plaintext highlighter-rouge">Eigen::Vector3d</code>. The <code class="language-plaintext highlighter-rouge">mc_rtc::schema::Choices</code> is passed to the <code class="language-plaintext highlighter-rouge">MEMBER</code> macro and those names will be used when displaying the choice in the GUI.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">SimpleVariant</span>
+<span class="p">{</span>
+  <span class="n">MC_RTC_NEW_SCHEMA</span><span class="p">(</span><span class="n">SimpleVariant</span><span class="p">)</span>
+  <span class="k">using</span> <span class="n">gain_t</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">variant</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="cp">#define MEMBER(...) MC_RTC_PP_ID(MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER(SimpleVariant, __VA_ARGS__))
+</span>  <span class="n">MEMBER</span><span class="p">(</span><span class="n">gain_t</span><span class="p">,</span> <span class="n">stiffness</span><span class="p">,</span> <span class="s">"Task stiffness"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">schema</span><span class="o">::</span><span class="n">Choices</span><span class="p">({</span><span class="s">"scalar"</span><span class="p">,</span> <span class="s">"dimensional"</span><span class="p">}))</span>
+<span class="cp">#undef MEMBER
+</span><span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="the-mc_rtc_new_schema-and-mc_rtc_schema-macros">The <code class="language-plaintext highlighter-rouge">MC_RTC_NEW_SCHEMA</code> and <code class="language-plaintext highlighter-rouge">MC_RTC_SCHEMA</code> macros</h2>
+
+<p>In all examples so far we have seen usage of <code class="language-plaintext highlighter-rouge">MC_RTC_NEW_SCHEMA</code>. As the name suggests, this macro is used to introduce a new schema declaration.</p>
+
+<p>It takes a single argument which is the name of the structure we are creating.</p>
+
+<p>However, it is sometimes useful to extend a schema with additional members. In such cases one should use the <code class="language-plaintext highlighter-rouge">MC_RTC_SCHEMA</code> macro instead:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">ExtendedSchema</span> <span class="o">:</span> <span class="k">public</span> <span class="n">SimpleSchema</span>
+<span class="p">{</span>
+  <span class="n">MC_RTC_SCHEMA</span><span class="p">(</span><span class="n">ExtendedSchema</span><span class="p">,</span> <span class="n">SimpleSchema</span><span class="p">)</span>
+<span class="cp">#define MEMBER(...) MC_RTC_PP_ID(MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER(ExtendedSchema, __VA_ARGS__))
+</span>  <span class="n">MEMBER</span><span class="p">(</span><span class="kt">double</span><span class="p">,</span> <span class="n">extendedGain</span><span class="p">,</span> <span class="s">"Gain for the extended algorithm"</span><span class="p">)</span>
+<span class="cp">#undef MEMBER
+</span><span class="p">};</span>
+</code></pre></div></div>
+
+<p>This macro simply takes the schema name as well as the base class the schema is using.</p>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/tutorials/tools/mc_rtc_ticker-and-replay.html">Next tutorial: mc_rtc_ticker and the Replay plugin</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/credits.html">Credits</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['value_5ftype',['value_type',['../structmc__rbdyn_1_1Robots.html#a857c321c4be0d8fa2443e4a8c2afaa27',1,'mc_rbdyn::Robots']]],
-  ['void_5fptr',['void_ptr',['../namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d',1,'mc_rtc']]],
-  ['void_5ft',['void_t',['../namespacemc__rtc_1_1gui_1_1details.html#a437b4050328d7178f5872223cf9f7f35',1,'mc_rtc::gui::details::void_t()'],['../namespacemc__rtc_1_1log.html#a50801f83a6ed3945d8cc199c9b3c4ce3',1,'mc_rtc::log::void_t()']]]
+  ['unique_5fptr_5993',['unique_ptr',['../structmc__rtc_1_1ObjectLoader.html#aa13f0440f89cdc6976cb80938524c7ae',1,'mc_rtc::ObjectLoader']]],
+  ['unique_5fvoid_5fptr_5994',['unique_void_ptr',['../structmc__rtc_1_1log_1_1FlatLog_1_1record.html#a4e556fb8cf1154c39f535f18bbbbf2a0',1,'mc_rtc::log::FlatLog::record']]],
+  ['updatelambda_5995',['UpdateLambda',['../namespacemc__solver_1_1utils.html#a51609ca39a4099935af3983ff08a0c50',1,'mc_solver::utils']]],
+  ['updaterobot_5996',['UpdateRobot',['../namespacemc__solver_1_1utils.html#a3fef857fcf6a819b7f8061f33248d0b5',1,'mc_solver::utils']]]
 ];

@@ -1,5 +1,5 @@
 var structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor =
 [
-    [ "AbscissaOrdinateWithColor", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html#a7e96cb8a2ee39eb14b2280b51f23168e", null ],
-    [ "write", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html#a3d6f033510ac8d8a5a05b56adf3c19e2", null ]
+    [ "AbscissaOrdinateWithColor", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html#a0ace60ce4127aabf8b751528da1897fe", null ],
+    [ "write", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html#a38270bfbbc2b01bfe1b7cda5ed9cf224", null ]
 ];

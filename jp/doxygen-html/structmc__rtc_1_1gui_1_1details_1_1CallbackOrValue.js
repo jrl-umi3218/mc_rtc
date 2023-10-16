@@ -1,5 +1,6 @@
 var structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue =
 [
-    [ "write", "structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html#ac59bb78744f3cf287d2d9099061b988d", null ],
-    [ "callback", "structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html#af3a829e1c7cc555885856838dbc83a64", null ]
+    [ "CallbackOrValue", "structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html#a44defc8e50271d0ec424453a57a948b2", null ],
+    [ "write", "structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html#a00f7dca6cf36426a2c911442825492ca", null ],
+    [ "callback_or_value", "structmc__rtc_1_1gui_1_1details_1_1CallbackOrValue.html#a894de42eef029f644a28d0f02e875ab0", null ]
 ];

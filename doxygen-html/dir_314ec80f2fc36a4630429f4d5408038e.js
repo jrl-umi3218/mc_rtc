@@ -19,6 +19,7 @@ var dir_314ec80f2fc36a4630429f4d5408038e =
       [ "Flexibility", "structmc__rbdyn_1_1Flexibility.html", "structmc__rbdyn_1_1Flexibility" ]
     ] ],
     [ "ForceSensor.h", "ForceSensor_8h.html", "ForceSensor_8h" ],
+    [ "ForceSensorCalibData.h", "ForceSensorCalibData_8h.html", "ForceSensorCalibData_8h" ],
     [ "Frame.h", "mc__rbdyn_2Frame_8h.html", [
       [ "Frame", "structmc__rbdyn_1_1Frame.html", "structmc__rbdyn_1_1Frame" ],
       [ "NewFrameToken", "structmc__rbdyn_1_1Frame_1_1NewFrameToken.html", null ]

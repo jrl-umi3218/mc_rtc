@@ -1,12 +1,13 @@
 digraph "Graphical Class Hierarchy"
 {
  // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node316 [label="formatter",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node316 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 [label="fmt::formatter\< mc\l_rtc::Configuration \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html"];
-  Node316 -> Node318 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node318 [label="fmt::formatter\< mc\l_solver::QPSolver::Backend \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html"];
+  Node344 [label="formatter",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node344 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="fmt::formatter\< mc\l_rtc::Configuration \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html",tooltip=" "];
+  Node344 -> Node346 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node346 [label="fmt::formatter\< mc\l_solver::QPSolver::Backend \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html",tooltip=" "];
 }

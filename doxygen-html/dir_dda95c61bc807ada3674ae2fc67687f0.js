@@ -27,7 +27,7 @@ var dir_dda95c61bc807ada3674ae2fc67687f0 =
     [ "Polyhedron.h", "Polyhedron_8h.html", "Polyhedron_8h" ],
     [ "Robot.h", "mc__rtc_2gui_2Robot_8h.html", "mc__rtc_2gui_2Robot_8h" ],
     [ "Rotation.h", "Rotation_8h.html", "Rotation_8h" ],
-    [ "Schema.h", "Schema_8h.html", "Schema_8h" ],
+    [ "Schema.h", "gui_2Schema_8h.html", "gui_2Schema_8h" ],
     [ "Sphere.h", "Sphere_8h.html", "Sphere_8h" ],
     [ "StateBuilder.h", "StateBuilder_8h.html", "StateBuilder_8h" ],
     [ "StringInput.h", "StringInput_8h.html", "StringInput_8h" ],

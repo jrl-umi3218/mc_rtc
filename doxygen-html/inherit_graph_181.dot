@@ -1,8 +1,9 @@
 digraph "Graphical Class Hierarchy"
 {
  // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_rtc::Logger::GUIEvent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1Logger_1_1GUIEvent.html",tooltip="GUI callback event. "];
+  Node0 [label="mc_rtc::log::callback\l_is_serializable\< T,\l typename \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1log_1_1callback__is__serializable.html",tooltip=" "];
 }
