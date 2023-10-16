@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.9.2] - 2023-10-16
+
+### Fixes
+
+- [ROS] Correctly initialize ros2
+- [ROS2] Publish description and parameters as topics rather than parameters
+
 ## [2.9.1] - 2023-10-13
 
 ### Fixes
@@ -780,7 +787,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.9.1...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.9.2...HEAD
+[2.9.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.2
 [2.9.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.1
 [2.9.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.0
 [2.8.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.8.0
