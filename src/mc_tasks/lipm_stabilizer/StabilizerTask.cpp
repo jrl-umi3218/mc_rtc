@@ -732,7 +732,7 @@ void StabilizerTask::run()
       footTasks[ContactState::Left]->setZeroTargetWrench();
     }
   }
-  distribZMP_ = mc_rbdyn::zmp(distribWrench_, zmpFrame_);
+  if(!mc_rbdyn::zmp(distribZMP_, distribWrench_, zmpFrame_)) { return; }
 
   updateCoMTaskZMPCC();
   updateFootForceDifferenceControl();
