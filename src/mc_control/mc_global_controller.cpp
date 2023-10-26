@@ -1029,7 +1029,8 @@ bool MCGlobalController::GoToHalfSitPose()
 
 void MCGlobalController::start_log()
 {
-  controller_->logger().start(current_ctrl, controller_->timeStep);
+  controller_->logger().start(current_ctrl, controller_->timeStep,
+                              setup_logger_.find(current_ctrl) != setup_logger_.end());
   setup_log();
   if(server_) { server_->set_logger(controller_->logger_); }
 }

@@ -213,7 +213,8 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume, d
   {
     if(resume)
     {
-      // Repeat the added key events
+      // Re-create key events based on the current set of entries
+      log_events_.clear();
       for(const auto & e : log_entries_) { log_events_.push_back(KeyAddedEvent{e.type, e.key}); }
     }
     else { impl_->log_iter_ = start_t; }

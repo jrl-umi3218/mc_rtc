@@ -737,9 +737,11 @@ void MCController::reset(const ControllerResetData & reset_data)
   updateContacts();
   if(gui_)
   {
+    gui_->removeElement({"Contacts"}, "Contacts");
     gui_->addElement({"Contacts"}, mc_rtc::gui::Table("Contacts", {"R1", "S1", "R2", "S2", "DoF", "Friction"},
                                                       [this]() -> const std::vector<ContactTableDataT> &
                                                       { return contacts_table_; }));
+    gui_->removeElement({"Contacts", "Add"}, "Add contact");
     gui_->addElement({"Contacts", "Add"},
                      mc_rtc::gui::Form(
                          "Add contact",
@@ -760,7 +762,8 @@ void MCController::reset(const ControllerResetData & reset_data)
                          mc_rtc::gui::FormNumberInput("Friction", false, mc_rbdyn::Contact::defaultFriction),
                          mc_rtc::gui::FormArrayInput<Eigen::Vector6d>("dof", false, Eigen::Vector6d::Ones())));
   }
-  logger().addLogEntry("perf_UpdateContacts", [this]() { return updateContacts_dt_.count(); });
+  logger().addLogEntry(
+      "perf_UpdateContacts", [this]() { return updateContacts_dt_.count(); }, true);
 }
 
 void MCController::updateContacts()
