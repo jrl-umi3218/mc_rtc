@@ -130,6 +130,7 @@ void Controller::reset(const ControllerResetData & data)
     gui_->data().add("states", all_states);
   }
   startIdleState();
+  running_ = false;
 }
 
 void Controller::resetPostures()
