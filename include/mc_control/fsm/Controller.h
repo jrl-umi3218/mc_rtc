@@ -144,6 +144,8 @@ protected:
   bool idle_keep_state_ = false;
   /** True if not idle */
   bool running_ = false;
+  /** First reset call */
+  bool first_reset_ = true;
   /** Main executor */
   Executor executor_;
 };

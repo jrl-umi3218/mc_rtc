@@ -129,7 +129,11 @@ void Controller::reset(const ControllerResetData & data)
     std::sort(all_states.begin(), all_states.end());
     gui_->data().add("states", all_states);
   }
-  startIdleState();
+  if(first_reset_)
+  {
+    first_reset_ = false;
+    startIdleState();
+  }
 }
 
 void Controller::resetPostures()
