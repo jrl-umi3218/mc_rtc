@@ -1,5 +1,6 @@
 var NAVTREEINDEX21 =
 {
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a65b51a83fbd47db891199fdafdc50220":[6,0,9,2,2,71],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a6863d425eff4e098af4abc8a38ee2326":[6,0,9,2,2,160],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a68d1efc50be7bb07bdf12ed98bba24cc":[6,0,9,2,2,116],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a694edac11eca809a1faaafed3971cbca":[6,0,9,2,2,77],
@@ -248,6 +249,5 @@ var NAVTREEINDEX21 =
 "structmc__tvm_1_1CoMFunction.html#abd429c514217e80c9db466f274f96e70":[6,0,11,2,1],
 "structmc__tvm_1_1CoMFunction.html#abfd6b5c64a70e0911435b853dfc2a782":[6,0,11,2,7],
 "structmc__tvm_1_1CoMFunction.html#adc5e6f0a5d13dfa60e36d1375b980281":[6,0,11,2,2],
-"structmc__tvm_1_1CoMInConvexFunction.html":[6,0,11,3],
-"structmc__tvm_1_1CoMInConvexFunction.html#a0cbe2f5914f67550793ed6dfbcc6708c":[6,0,11,3,7]
+"structmc__tvm_1_1CoMInConvexFunction.html":[6,0,11,3]
 };

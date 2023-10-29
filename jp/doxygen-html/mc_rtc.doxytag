@@ -14011,6 +14011,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>first_reset_</name>
+      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
+      <anchor>a4444c4573b9202e95726018d691c581f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
       <type>Executor</type>
       <name>executor_</name>
       <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>

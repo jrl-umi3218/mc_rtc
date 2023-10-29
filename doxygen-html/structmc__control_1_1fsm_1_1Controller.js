@@ -15,6 +15,7 @@ var structmc__control_1_1fsm_1_1Controller =
     [ "executor_", "structmc__control_1_1fsm_1_1Controller.html#af043ec138ea3eaa88da2bb920de0777e", null ],
     [ "factory_", "structmc__control_1_1fsm_1_1Controller.html#a157396c0762ed3195ceded0e8fcbd942", null ],
     [ "ff_tasks_", "structmc__control_1_1fsm_1_1Controller.html#a72d332cebe24c4a81aa20ec2b911b0b4", null ],
+    [ "first_reset_", "structmc__control_1_1fsm_1_1Controller.html#a4444c4573b9202e95726018d691c581f", null ],
     [ "idle_keep_state_", "structmc__control_1_1fsm_1_1Controller.html#a87e1854906c3b292131a1831529a6942", null ],
     [ "posture_tasks_", "structmc__control_1_1fsm_1_1Controller.html#a07013b382ce6e4247057217fa49a7c97", null ],
     [ "running_", "structmc__control_1_1fsm_1_1Controller.html#a2f6a4cf37f59a88bfcd9e1a347921579", null ],

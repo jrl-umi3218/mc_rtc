@@ -1,5 +1,6 @@
 var NAVTREEINDEX15 =
 {
+"structmc__rtc_1_1gui_1_1CallbackElement_3_01ElementT_00_01std_1_1nullptr__t_01_4.html#a9feabd8218b298fb9b7161f0fbbe6f2c":[6,0,7,0,4,1],
 "structmc__rtc_1_1gui_1_1Color.html":[6,0,7,0,5],
 "structmc__rtc_1_1gui_1_1Color.html#a19f305fdd38fecd3a8fb92282afd9291":[6,0,7,0,5,12],
 "structmc__rtc_1_1gui_1_1Color.html#a201dd52d431e2ea56fb165822154f85b":[6,0,7,0,5,6],
@@ -248,6 +249,5 @@ var NAVTREEINDEX15 =
 "structmc__rtc_1_1gui_1_1details_1_1NotAGetter.html":[6,0,7,0,0,34],
 "structmc__rtc_1_1gui_1_1details_1_1NumberInputImpl.html":[6,0,7,0,0,35],
 "structmc__rtc_1_1gui_1_1details_1_1NumberInputImpl.html#a87f89fdb83a9084dae58396a4b0a5ae6":[6,0,7,0,0,35,0],
-"structmc__rtc_1_1gui_1_1details_1_1NumberInputImpl.html#ada43b4eb8e03e7d5713bba1f92ca0e45":[6,0,7,0,0,35,1],
-"structmc__rtc_1_1gui_1_1details_1_1NumberSliderImpl.html":[6,0,7,0,0,36]
+"structmc__rtc_1_1gui_1_1details_1_1NumberInputImpl.html#ada43b4eb8e03e7d5713bba1f92ca0e45":[6,0,7,0,0,35,1]
 };
