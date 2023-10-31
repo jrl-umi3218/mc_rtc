@@ -184,9 +184,9 @@ void Replay::reset(mc_control::MCGlobalController & gc)
     robots_ = mc_rbdyn::Robots::make();
     // Note: we copy the output robots here not the control robots
     gc.robots().copy(*robots_);
-    gc.controller().gui()->removeCategory({"Robots"});
     for(const auto & r : *robots_)
     {
+      gc.controller().gui()->removeElement({"Robots"}, r.name());
       gc.controller().gui()->addElement({"Robots"},
                                         mc_rtc::gui::Robot(r.name(), [&r]() -> const mc_rbdyn::Robot & { return r; }));
     }
