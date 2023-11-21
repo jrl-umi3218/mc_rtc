@@ -17,7 +17,7 @@ Available commands:
 Use mc_bin_utils <command> --help for usage of each command
 ```
 
-We will covert the `extract` and `convert` commands. `show` and `split` are self-explanatory.
+We will cover the `extract` and `convert` commands. `show` and `split` are self-explanatory.
 
 ### `mc_bin_utils extract`
 

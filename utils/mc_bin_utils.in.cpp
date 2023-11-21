@@ -111,10 +111,14 @@ int show(int argc, char * argv[])
 {
   po::variables_map vm;
   po::options_description tool("mc_bin_utils show options");
+  bool print_calib = false;
   bool print_events = false;
+  bool print_init = false;
   // clang-format off
   tool.add_options()
     ("help", "Produce this message")
+    ("print-init", po::bool_switch(&print_init), "Show initial positions/configurations of the robots")
+    ("print-calib", po::bool_switch(&print_calib), "Show the stored force sensor calibration")
     ("print-events", po::bool_switch(&print_events), "Show GUI events in the log")
     ("in", po::value<std::string>(), "Input file");
   // clang-format on
@@ -165,6 +169,40 @@ int show(int argc, char * argv[])
     std::cout << "Timestep: " << meta->timestep << "\n";
     std::cout << "MainRobot: " << meta->main_robot << "\n";
     std::cout << "MainRobotParams: " << mc_rtc::io::to_string(meta->main_robot_module) << "\n";
+    if(print_init)
+    {
+      for(const auto & [r, init_pos] : meta->init)
+      {
+        std::cout << r << " initial pose:\n";
+        std::cout << "  translation: " << init_pos.translation().transpose() << "\n";
+        const auto & q = Eigen::Quaterniond(init_pos.rotation());
+        std::cout << "  rotation: [" << mc_rtc::io::to_string(std::array{q.w(), q.x(), q.y(), q.z()}) << "]\n";
+      }
+      for(const auto & [r, init_q] : meta->init_q)
+      {
+        std::cout << r << " initial configuration:\n";
+        std::cout << "["
+                  << mc_rtc::io::to_string(init_q,
+                                           [](const auto & qi) { return "[" + mc_rtc::io::to_string(qi) + "]"; })
+                  << "]\n";
+      }
+    }
+    if(print_calib)
+    {
+      for(const auto & [r, calibs] : meta->calibs)
+      {
+        if(calibs.empty())
+        {
+          std::cout << r << ": No calibration data\n";
+          continue;
+        }
+        for(const auto & [sensor, calib] : calibs)
+        {
+          std::cout << r << "::" << sensor << ":\n";
+          std::cout << calib.dump(true, true) << "\n";
+        }
+      }
+    }
   }
   std::cout << "Entries: " << keys.size() << "\n";
   std::cout << "GUI events: " << n_events << "\n";
