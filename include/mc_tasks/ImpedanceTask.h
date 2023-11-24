@@ -183,6 +183,10 @@ public:
 protected:
   ImpedanceGains gains_ = ImpedanceGains::Default();
 
+  bool showTarget_ = true;
+  bool showPose_ = true;
+  bool showCompliance_ = true;
+
   /** Relative pose, velocity, and acceleration from target frame to compliance frame represented in the world frame.
    *  To store these values across control cycles, represent them in a constant world frame instead of the time-varying
    *  surface frame.
