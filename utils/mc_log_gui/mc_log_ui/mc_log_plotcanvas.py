@@ -1520,6 +1520,8 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
         self.draw()
 
     def saveAnimation(self):
+        if self.animationButton.isChecked():
+            self.animationButton.toggle()
         if not self.animationButton.isChecked():
             self.startAnimation()
             if not self.animation:
