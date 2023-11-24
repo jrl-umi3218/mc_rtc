@@ -274,11 +274,18 @@ void StabilizerTask::enable()
   configure(lastConfig_);
   zmpcc_.enabled(true);
   enabled_ = true;
+  wasEnabled_ = true;
 }
 
 void StabilizerTask::disable()
 {
   mc_rtc::log::info("[StabilizerTask] disabled");
+  disable_();
+  wasEnabled_ = false;
+}
+
+void StabilizerTask::disable_()
+{
   // Save current configuration to be reused when re-enabling
   lastConfig_ = c_;
   disableConfig_ = c_;
@@ -522,6 +529,25 @@ void StabilizerTask::checkInTheAir()
   for(const auto & footT : footTasks)
   {
     inTheAir_ = inTheAir_ && footT.second->measuredWrench().force().z() < c_.safetyThresholds.MIN_DS_PRESSURE;
+  }
+
+  if(!wasInTheAir_ && inTheAir_)
+  {
+    wasInTheAir_ = true;
+    if(enabled_)
+    {
+      mc_rtc::log::warning("[{}] Robot is in the air, disabling stabilizer", name());
+      disable_();
+    }
+  }
+  else if(!inTheAir_ && wasInTheAir_)
+  {
+    wasInTheAir_ = false;
+    if(wasEnabled_)
+    {
+      mc_rtc::log::warning("[{}] Robot is no longer in the air, re-enabling stabilizer", name());
+      enable();
+    }
   }
 }
 
