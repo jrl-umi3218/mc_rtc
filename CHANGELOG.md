@@ -1,5 +1,22 @@
 # Changelog
 
+## [Unreleased]
+
+## [2.9.2] - 2023-10-16
+
+### Added
+
+- [mc_bin_utils] Add an option to show the initial configuration of the robot
+- [mc_bin_utils] Add an option to show the calibration data used by the robot
+
+### Fixes
+
+- [mc_control] Correctly resume logging on reset
+- [mc_control/FSM] Only start the idle state on the first reset
+- [Replay] Only remove robots published by the controller
+- [StabilizerTask] Use a non-throwing variant of Robot::zmp
+- [utils/mc_log_ui] Stop the animation before saving it
+
 ## [2.9.2] - 2023-10-16
 
 ### Fixes
@@ -787,7 +804,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.9.2...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.9.3...HEAD
+[2.9.3]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.3
 [2.9.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.2
 [2.9.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.1
 [2.9.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.0
