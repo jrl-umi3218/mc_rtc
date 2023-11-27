@@ -256,6 +256,10 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a68d1efc50be7bb07bdf12ed98bba24cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22569ac33f8c0e99bb674520373c41c6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a22569ac33f8c0e99bb674520373c41c6">inTheAir_</a> = false</td></tr>
 <tr class="separator:a22569ac33f8c0e99bb674520373c41c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f62d08f513eb0e0a3ab0b18dfc3ef99"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a7f62d08f513eb0e0a3ab0b18dfc3ef99">wasInTheAir_</a> = false</td></tr>
+<tr class="separator:a7f62d08f513eb0e0a3ab0b18dfc3ef99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1481659a940c5d63b0800d8eb6f2a58"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#af1481659a940c5d63b0800d8eb6f2a58">wasEnabled_</a> = true</td></tr>
+<tr class="separator:af1481659a940c5d63b0800d8eb6f2a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af009d6a160e266c013a56d7348ac4c80"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#af009d6a160e266c013a56d7348ac4c80">dfForceError_</a> = Eigen::Vector3d::Zero()</td></tr>
 <tr class="separator:af009d6a160e266c013a56d7348ac4c80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a071bad816dfef57c9f0a2a8b3d9fa49e"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a071bad816dfef57c9f0a2a8b3d9fa49e">dfError_</a> = Eigen::Vector3d::Zero()</td></tr>
@@ -551,6 +555,8 @@ Setters to reconfigure the stabilizer online</h2></td></tr>
 <tr class="memitem:a19464c74ed88aa569d1b0a3a5f4c505b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a19464c74ed88aa569d1b0a3a5f4c505b">configure_</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
 <tr class="memdesc:a19464c74ed88aa569d1b0a3a5f4c505b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual configuration of the stabilizer. Called when reconfigure_ is true.  <a href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a19464c74ed88aa569d1b0a3a5f4c505b">More...</a><br /></td></tr>
 <tr class="separator:a19464c74ed88aa569d1b0a3a5f4c505b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ad3e50d5dd1081423c0f6178a1a4465"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a2ad3e50d5dd1081423c0f6178a1a4465">disable_</a> ()</td></tr>
+<tr class="separator:a2ad3e50d5dd1081423c0f6178a1a4465"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfb302989c1f34fe7131c72bd74e33a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#abfb302989c1f34fe7131c72bd74e33a5">checkConfiguration</a> (const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a8e6d2236262d21dcc7ab589b6d6844ba">StabilizerConfiguration</a> &amp;<a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8475056ad2eabba42d0f46c310361e84">config</a>)</td></tr>
 <tr class="separator:abfb302989c1f34fe7131c72bd74e33a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -1710,6 +1716,32 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Disable all feedback components. </p>
+
+</div>
+</div>
+<a id="a2ad3e50d5dd1081423c0f6178a1a4465"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ad3e50d5dd1081423c0f6178a1a4465">&#9670;&nbsp;</a></span>disable_()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::disable_ </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Contacts to add to the QPSolver when the task is inserted </p>
 
 </div>
 </div>
@@ -5305,6 +5337,52 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Average height error used in vertical drift compensation </p>
+
+</div>
+</div>
+<a id="af1481659a940c5d63b0800d8eb6f2a58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1481659a940c5d63b0800d8eb6f2a58">&#9670;&nbsp;</a></span>wasEnabled_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_tasks::lipm_stabilizer::StabilizerTask::wasEnabled_ = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Whether the stabilizer was enabled before the robot was in the air </p>
+
+</div>
+</div>
+<a id="a7f62d08f513eb0e0a3ab0b18dfc3ef99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f62d08f513eb0e0a3ab0b18dfc3ef99">&#9670;&nbsp;</a></span>wasInTheAir_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_tasks::lipm_stabilizer::StabilizerTask::wasInTheAir_ = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Whether the robot was in the air at the previous iteration </p>
 
 </div>
 </div>

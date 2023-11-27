@@ -40735,6 +40735,20 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>wasInTheAir_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a7f62d08f513eb0e0a3ab0b18dfc3ef99</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>wasEnabled_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>af1481659a940c5d63b0800d8eb6f2a58</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
       <type>Eigen::Vector3d</type>
       <name>dfForceError_</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
@@ -41657,6 +41671,13 @@
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>a19464c74ed88aa569d1b0a3a5f4c505b</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>disable_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a2ad3e50d5dd1081423c0f6178a1a4465</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
