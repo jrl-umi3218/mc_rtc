@@ -834,6 +834,7 @@ protected:
    * @param solver Solver to which this task has been added
    */
   void configure_(mc_solver::QPSolver & solver);
+  void disable_();
 
   /** Ensures that the configuration is valid */
   void checkConfiguration(const StabilizerConfiguration & config);
@@ -953,6 +954,8 @@ protected:
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_filter::LowPassCompose<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */
+  bool wasInTheAir_ = false; /**< Whether the robot was in the air at the previous iteration */
+  bool wasEnabled_ = true; /**< Whether the stabilizer was enabled before the robot was in the air */
   Eigen::Vector3d dfForceError_ = Eigen::Vector3d::Zero(); /**< Force error in foot force difference control */
   Eigen::Vector3d dfError_ = Eigen::Vector3d::Zero(); /**< Height error in foot force difference control */
   double dt_ = 0.005; /**< Controller cycle in [s] */
