@@ -30,21 +30,51 @@ struct SimpleSchema
   MEMBER(bool, useFeature, "Use magic feature")
   MEMBER(double, weight, "Task weight")
   MEMBER(std::vector<std::string>, names, "Some names")
+  using MapType = std::map<std::string, double>
+  MEMBER(MapType, jointValues, "Map of joint names and values")
   MEMBER(sva::ForceVecd, wrench, "Target wrench")
   MEMBER(sva::PTransformd, pt, "Some transform")
 #undef MEMBER
 };
 ```
 
-<h5 class="no_toc">Note for MSVC users</h5>
+<h5 class="no_toc">Note on the MEMBER macro</h5>
+
+If you intend to use the `MEMBER` macro, beware of the following pre-processor limitations.
+
+<h6 class="no_toc">Templated types</h6>
+
+Due to limitations of the pre-processor, you cannot directly pass types depending on multiple template parameters to the macro. For example, the following will give a compilation error.
+
+```cpp
+MEMBER(std::map<std::string, double>, jointValues, "Map of joint names and values")
+```
+
+This occurs because the pre-processor splits the arguments as follows:
+
+- `std::map<std::string`
+- `double>`
+- `jointValues`
+- `"Map of joint names and values"`
+
+To avoid this you can explicitly alias the type
+
+```cpp
+using MapType = std::map<std::string, double>
+MEMBER(MapType, jointValues, "Map of joint names and values")
+```
+
+If this is not an option, you may use `BOOST_IDENTIY_TYPE` instead.
+
+
+
+<h6 class="no_toc">Note for MSVC users</h6>
 
 If you intend the above code to be used with the Microsoft Visual C++ Compiler (MSVC), the `MEMBER` definition should be changed to:
 
 ```cpp
 #define MEMBER(...) MC_RTC_PP_ID(MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER(SimpleSchema, __VA_ARGS__))
 ```
-
-Or avoid the `MEMBER` helper all-together.
 
 This works around a pre-processor issue in MSVC.
 
@@ -117,7 +147,7 @@ The intent is for any `TYPE` to be usable -- at least for the load/save scenario
 
 If a given `TYPE` is not supported you will get a compilation error, please report the issue to mc_rtc developpers.
 
-As of now, most types that can be loaded/saved through an `mc_rtc::Configuration` object are supported as well as schema-based types and `std::vector` of such types.
+As of now, most types that can be loaded/saved through an `mc_rtc::Configuration` object are supported as well as schema-based types and `std::vector` and `std::map` of such types.
 
 The following is an example using such types:
 
@@ -196,6 +226,8 @@ If you are using a `_DEFAULT_` macro, this is `mc_rtc::Default<T>` which is:
 - Identity for `sva::PTransformd`
 - Zero for `sva::ForceVecd`, `sva::MotionVecd`, `sva::ImpedanceVecd`, `sva::AdmittanceVecd`
 - Empty string for `std::string`
+- Empty vector for `std::vector<T>`
+- Empty map for `std::map<K, V>`
 - `mc_rtc::Default<T>` for `std::variant<T, Others...>`
 - Default values for a schema-based structure
 
