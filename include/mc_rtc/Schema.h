@@ -323,7 +323,7 @@ struct Operations
           auto out_ = out.add(name);
           T::formToStd(in(description), out_);
         }
-        else if constexpr(details::is_std_vector_schema_v<T> or details::is_std_map_schema_v<T>)
+        else if constexpr(details::is_std_vector_schema_v<T> || details::is_std_map_schema_v<T>)
         {
           using SchemaT = typename T::value_type;
           std::vector<Configuration> in_ = in(description);
