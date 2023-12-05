@@ -73,8 +73,8 @@ struct is_std_map : std::false_type
 {
 };
 
-template<typename... Args>
-struct is_std_map<std::map<Args...>> : std::true_type
+template<typename T>
+struct is_std_map<std::map<std::string, T>> : std::true_type
 {
 };
 
@@ -323,7 +323,7 @@ struct Operations
           auto out_ = out.add(name);
           T::formToStd(in(description), out_);
         }
-        else if constexpr(details::is_std_vector_schema_v<T> || details::is_std_map_schema_v<T>)
+        else if constexpr(details::is_std_vector_schema_v<T>)
         {
           using SchemaT = typename T::value_type;
           std::vector<Configuration> in_ = in(description);
@@ -334,6 +334,7 @@ struct Operations
             SchemaT::formToStd(in_[i], out_i);
           }
         }
+        else if constexpr(details::is_std_map_schema_v<T>) {}
         else { out.add(name, in(description)); }
       }
     };
