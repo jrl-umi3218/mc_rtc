@@ -31,6 +31,10 @@ BOOST_AUTO_TEST_CASE(TestDefault)
   static_assert(Default<std::variant<double, Eigen::Vector3d>>::value == 0.0);
   using test_variant_t = std::variant<Eigen::Vector3d, double>;
   BOOST_REQUIRE(Default<test_variant_t>::value == Eigen::Vector3d::Zero());
+  BOOST_REQUIRE(Default<std::vector<double>>::value == std::vector<double>{});
+  auto map_value = Default<std::map<std::string, double>>::value;
+  auto expected_map_value = std::map<std::string, double>{};
+  BOOST_REQUIRE(map_value == expected_map_value);
 }
 
 BOOST_AUTO_TEST_CASE(TestSimpleSchema)
@@ -42,6 +46,7 @@ BOOST_AUTO_TEST_CASE(TestSimpleSchema)
     default_.useFeature = true;
     default_.weight = 42.42;
     default_.names = {"a", "b", "c"};
+    default_.jointValues = {{"a", 0.0}, {"b", 1.0}, {"c", 2.0}};
     default_.wrench = random_fv();
     default_.pt = random_pt();
     mc_rtc::Configuration cfg;
@@ -50,7 +55,7 @@ BOOST_AUTO_TEST_CASE(TestSimpleSchema)
     BOOST_REQUIRE(default_ == other_);
   }
   {
-    SimpleSchema new_{true, 42.42, default_.names, default_.wrench, default_.pt};
+    SimpleSchema new_{true, 42.42, default_.names, default_.jointValues, default_.wrench, default_.pt};
     BOOST_REQUIRE(new_ == default_);
   }
   {

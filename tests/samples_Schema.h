@@ -11,6 +11,8 @@ struct SimpleSchema
   MEMBER(bool, useFeature, "Use magic feature")
   MEMBER(double, weight, "Task weight")
   MEMBER(std::vector<std::string>, names, "Some names")
+  using MapType = std::map<std::string, double>;
+  MEMBER(MapType, jointValues, "Some joint values")
   MEMBER(sva::ForceVecd, wrench, "Target wrench")
   MEMBER(sva::PTransformd, pt, "Some transform")
 #undef MEMBER

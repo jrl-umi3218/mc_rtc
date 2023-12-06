@@ -67,6 +67,28 @@ inline constexpr bool is_std_vector_schema_v = []()
   else { return false; }
 }();
 
+/** Type-trait to detect an std::map */
+template<typename T>
+struct is_std_map : std::false_type
+{
+};
+
+template<typename T>
+struct is_std_map<std::map<std::string, T>> : std::true_type
+{
+};
+
+template<typename T>
+inline constexpr bool is_std_map_v = is_std_map<T>::value;
+
+/** Type-trait to detect an std::map<Key, ValueT> where ValueT is a Schema-based type */
+template<typename T>
+inline constexpr bool is_std_map_schema_v = []()
+{
+  if constexpr(is_std_map_v<T>) { return is_schema_v<typename T::value_type>; }
+  else { return false; }
+}();
+
 template<typename T, bool IsRequired, bool IsInteractive, bool HasChoices = false, bool IsStatic = false>
 void addValueToForm(const T & value,
                     const std::string & description,
@@ -118,6 +140,10 @@ void addValueToForm(const T & value,
     static value_type default_{};
     addValueToForm<value_type, true, IsInteractive>(default_, description, {}, input);
     form.addElement(input);
+  }
+  else if constexpr(details::is_std_map_v<T>)
+  {
+    // We currently do not support map in forms
   }
   else if constexpr(gui::details::is_variant_v<T>)
   {
@@ -308,6 +334,7 @@ struct Operations
             SchemaT::formToStd(in_[i], out_i);
           }
         }
+        else if constexpr(details::is_std_map_schema_v<T>) {}
         else { out.add(name, in(description)); }
       }
     };
@@ -383,6 +410,11 @@ struct Default<T, std::enable_if_t<schema::details::is_std_vector_v<T>>>
   inline static const T value = {};
 };
 
+template<typename T>
+struct Default<T, typename std::enable_if_t<schema::details::is_std_map_v<T>>>
+{
+  inline static const T value = {};
+};
 } // namespace mc_rtc
 
 #include <mc_rtc/SchemaMacros.h>

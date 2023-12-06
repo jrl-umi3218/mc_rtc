@@ -30,15 +30,41 @@ struct SimpleSchema
 };
 ```
 
-<h5 class="no_toc">MSVCユーザー向けの注意</h5>
+<h5 class="no_toc">MEMBERマクロについて</h5>
+
+`MEMBER`マクロを使用する場合は、以下のプリプロセッサの制限に注意してください。
+
+<h6 class="no_toc">テンプレート化されたタイプ</h6>
+
+プリプロセッサの制限により、複数のテンプレート・パラメータに依存する型をマクロに直接渡すことはできません。例えば、以下のようにするとコンパイルエラーになります。
+
+```cpp
+MEMBER(std::map<std::string, double>, jointValues, "関節名と値のマップ")
+```
+
+これは、プリプロセッサが引数を次のように分割するために発生します：
+
+- `std::map<std::string`
+- `std::map<std::string`
+- `jointValues`
+- `"関節名と値のマップ"`
+
+これを避けるには、明示的に型のエイリアスを指定します。
+
+```cpp
+using MapType = std::map<std::string, double>;
+MEMBER(MapType, jointValues, "関節の名前と値のマップ")
+```
+
+このオプションを使用できない場合は、代わりに `BOOST_IDENTIY_TYPE` を使用することができます。
+
+<h6 class="no_toc">MSVCユーザー向けの注意</h6>
 
 上記のコードをMicrosoft Visual C++ Compiler（MSVC）で使用する場合、`MEMBER`の定義を次のように変更する必要があります：
 
 ```cpp
 #define MEMBER(...) MC_RTC_PP_ID(MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER(SimpleSchema, __VA_ARGS__))
 ```
-
-あるいは、`MEMBER`ヘルパーを完全に回避することもできます。
 
 これは、MSVCのプリプロセッサの問題を回避するためのものです。
 
@@ -107,7 +133,13 @@ MC_RTC_SCHEMA_MEMBER(T, TYPE, NAME, DESCRIPTION, FLAGS, DEFAULT, ...)
 
 ### `TYPE`について
 
-`TYPE`は、少なくともロード/保存シナリオではすべての`TYPE`を使用できることが意図されています。フォームベースの編集についてはすべての型がサポートされるわけではありません。特定の`TYPE`がサポートされていない場合、コンパイルエラーが発生しますので、問題をmc_rtcの開発者に報告してください。現在、`mc_rtc::Configuration`オブジェクトを介してロード/保存できるほとんどの型、スキーマベースの型、およびそのような型の`std::vector`がサポートされています。次の例は、このような型を使用する例です：
+少なくともロード/セーブのシナリオでは、どの `TYPE` でも使用できることを意図していますが、フォームベースのエディションではすべての `TYPE` がサポートされるとは限りません。
+
+もし、ある `TYPE` がサポートされていない場合、コンパイルエラーが発生します。
+
+現在のところ、`mc_rtc::Configuration`オブジェクトを通してロード/セーブできるほとんどの型と、スキーマベースの型、そのような型の `std::vector` と `std::map` がサポートされている。
+
+以下はそのような型を使用した例である：
 
 ```cpp
 struct ComposeSchema
@@ -178,6 +210,8 @@ struct InteractiveSchema
 - `sva::PTransformd`の場合は単位変換行列
 - `sva::ForceVecd`、`sva::MotionVecd`、`sva::ImpedanceVecd`、`sva::AdmittanceVecd`の場合はゼロ
 - `std::string`の場合は空の文字列
+- std::vector<T>`の場合は空のベクトル
+- 空のマップ `std::map<K, V>` の場合
 - `std::variant<T>`の場合は`mc_rtc::Default<T>`です
 - スキーマベースの構造の場合はデフォルト値
 
