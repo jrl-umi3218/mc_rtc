@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"hat_8h_source.html":[7,0,0,4,18],
+"heatmap_8h.html":[7,0,0,6,3,0],
 "heatmap_8h.html#a82fe941770f36f355a999699984b5943":[7,0,0,6,3,0,0],
 "heatmap_8h_source.html":[7,0,0,6,3,0],
 "hierarchy.html":[6,2],
@@ -247,7 +249,5 @@ var NAVTREEINDEX4 =
 "mc__controller_8h.html#abe63c9c89a7762fc5ef9a7589218978c":[7,0,0,0,14,1],
 "mc__controller_8h.html#ae12249535408100bcdf1007ef0eb8fb8":[7,0,0,0,14,3],
 "mc__controller_8h_source.html":[7,0,0,0,14],
-"mc__global__controller_8h.html":[7,0,0,0,15],
-"mc__global__controller_8h.html#aaf0a11741b6fb186ec99a9d2616dbf1a":[7,0,0,0,15,2],
-"mc__global__controller_8h_source.html":[7,0,0,0,15]
+"mc__global__controller_8h.html":[7,0,0,0,15]
 };

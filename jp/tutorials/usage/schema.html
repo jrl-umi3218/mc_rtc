@@ -394,14 +394,40 @@
 </span><span class="p">};</span>
 </code></pre></div></div>
 
-<h5 class="no_toc">MSVCユーザー向けの注意</h5>
+<h5 class="no_toc">MEMBERマクロについて</h5>
+
+<p><code class="language-plaintext highlighter-rouge">MEMBER</code>マクロを使用する場合は、以下のプリプロセッサの制限に注意してください。</p>
+
+<h6 class="no_toc">テンプレート化されたタイプ</h6>
+
+<p>プリプロセッサの制限により、複数のテンプレート・パラメータに依存する型をマクロに直接渡すことはできません。例えば、以下のようにするとコンパイルエラーになります。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MEMBER</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">jointValues</span><span class="p">,</span> <span class="s">"関節名と値のマップ"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>これは、プリプロセッサが引数を次のように分割するために発生します：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">std::map&lt;std::string</code></li>
+  <li><code class="language-plaintext highlighter-rouge">std::map&lt;std::string</code></li>
+  <li><code class="language-plaintext highlighter-rouge">jointValues</code></li>
+  <li><code class="language-plaintext highlighter-rouge">"関節名と値のマップ"</code></li>
+</ul>
+
+<p>これを避けるには、明示的に型のエイリアスを指定します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="n">MapType</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="n">MEMBER</span><span class="p">(</span><span class="n">MapType</span><span class="p">,</span> <span class="n">jointValues</span><span class="p">,</span> <span class="s">"関節の名前と値のマップ"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>このオプションを使用できない場合は、代わりに <code class="language-plaintext highlighter-rouge">BOOST_IDENTIY_TYPE</code> を使用することができます。</p>
+
+<h6 class="no_toc">MSVCユーザー向けの注意</h6>
 
 <p>上記のコードをMicrosoft Visual C++ Compiler（MSVC）で使用する場合、<code class="language-plaintext highlighter-rouge">MEMBER</code>の定義を次のように変更する必要があります：</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define MEMBER(...) MC_RTC_PP_ID(MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER(SimpleSchema, __VA_ARGS__))
 </span></code></pre></div></div>
-
-<p>あるいは、<code class="language-plaintext highlighter-rouge">MEMBER</code>ヘルパーを完全に回避することもできます。</p>
 
 <p>これは、MSVCのプリプロセッサの問題を回避するためのものです。</p>
 
@@ -471,7 +497,13 @@
 
 <h3 id="typeについて"><code class="language-plaintext highlighter-rouge">TYPE</code>について</h3>
 
-<p><code class="language-plaintext highlighter-rouge">TYPE</code>は、少なくともロード/保存シナリオではすべての<code class="language-plaintext highlighter-rouge">TYPE</code>を使用できることが意図されています。フォームベースの編集についてはすべての型がサポートされるわけではありません。特定の<code class="language-plaintext highlighter-rouge">TYPE</code>がサポートされていない場合、コンパイルエラーが発生しますので、問題をmc_rtcの開発者に報告してください。現在、<code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>オブジェクトを介してロード/保存できるほとんどの型、スキーマベースの型、およびそのような型の<code class="language-plaintext highlighter-rouge">std::vector</code>がサポートされています。次の例は、このような型を使用する例です：</p>
+<p>少なくともロード/セーブのシナリオでは、どの <code class="language-plaintext highlighter-rouge">TYPE</code> でも使用できることを意図していますが、フォームベースのエディションではすべての <code class="language-plaintext highlighter-rouge">TYPE</code> がサポートされるとは限りません。</p>
+
+<p>もし、ある <code class="language-plaintext highlighter-rouge">TYPE</code> がサポートされていない場合、コンパイルエラーが発生します。</p>
+
+<p>現在のところ、<code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>オブジェクトを通してロード/セーブできるほとんどの型と、スキーマベースの型、そのような型の <code class="language-plaintext highlighter-rouge">std::vector</code> と <code class="language-plaintext highlighter-rouge">std::map</code> がサポートされている。</p>
+
+<p>以下はそのような型を使用した例である：</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">ComposeSchema</span>
 <span class="p">{</span>
@@ -547,6 +579,8 @@
   <li><code class="language-plaintext highlighter-rouge">sva::PTransformd</code>の場合は単位変換行列</li>
   <li><code class="language-plaintext highlighter-rouge">sva::ForceVecd</code>、<code class="language-plaintext highlighter-rouge">sva::MotionVecd</code>、<code class="language-plaintext highlighter-rouge">sva::ImpedanceVecd</code>、<code class="language-plaintext highlighter-rouge">sva::AdmittanceVecd</code>の場合はゼロ</li>
   <li><code class="language-plaintext highlighter-rouge">std::string</code>の場合は空の文字列</li>
+  <li>std::vector<T>`の場合は空のベクトル</T></li>
+  <li>空のマップ <code class="language-plaintext highlighter-rouge">std::map&lt;K, V&gt;</code> の場合</li>
   <li><code class="language-plaintext highlighter-rouge">std::variant&lt;T&gt;</code>の場合は<code class="language-plaintext highlighter-rouge">mc_rtc::Default&lt;T&gt;</code>です</li>
   <li>スキーマベースの構造の場合はデフォルト値</li>
 </ul>

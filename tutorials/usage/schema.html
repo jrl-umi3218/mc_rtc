@@ -396,20 +396,48 @@
 </span>  <span class="n">MEMBER</span><span class="p">(</span><span class="kt">bool</span><span class="p">,</span> <span class="n">useFeature</span><span class="p">,</span> <span class="s">"Use magic feature"</span><span class="p">)</span>
   <span class="n">MEMBER</span><span class="p">(</span><span class="kt">double</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="s">"Task weight"</span><span class="p">)</span>
   <span class="n">MEMBER</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="s">"Some names"</span><span class="p">)</span>
+  <span class="k">using</span> <span class="n">MapType</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span>
+  <span class="n">MEMBER</span><span class="p">(</span><span class="n">MapType</span><span class="p">,</span> <span class="n">jointValues</span><span class="p">,</span> <span class="s">"Map of joint names and values"</span><span class="p">)</span>
   <span class="n">MEMBER</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">ForceVecd</span><span class="p">,</span> <span class="n">wrench</span><span class="p">,</span> <span class="s">"Target wrench"</span><span class="p">)</span>
   <span class="n">MEMBER</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">,</span> <span class="n">pt</span><span class="p">,</span> <span class="s">"Some transform"</span><span class="p">)</span>
 <span class="cp">#undef MEMBER
 </span><span class="p">};</span>
 </code></pre></div></div>
 
-<h5 class="no_toc">Note for MSVC users</h5>
+<h5 class="no_toc">Note on the MEMBER macro</h5>
+
+<p>If you intend to use the <code class="language-plaintext highlighter-rouge">MEMBER</code> macro, beware of the following pre-processor limitations.</p>
+
+<h6 class="no_toc">Templated types</h6>
+
+<p>Due to limitations of the pre-processor, you cannot directly pass types depending on multiple template parameters to the macro. For example, the following will give a compilation error.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MEMBER</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">jointValues</span><span class="p">,</span> <span class="s">"Map of joint names and values"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This occurs because the pre-processor splits the arguments as follows:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">std::map&lt;std::string</code></li>
+  <li><code class="language-plaintext highlighter-rouge">double&gt;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">jointValues</code></li>
+  <li><code class="language-plaintext highlighter-rouge">"Map of joint names and values"</code></li>
+</ul>
+
+<p>To avoid this you can explicitly alias the type</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="n">MapType</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="n">MEMBER</span><span class="p">(</span><span class="n">MapType</span><span class="p">,</span> <span class="n">jointValues</span><span class="p">,</span> <span class="s">"Map of joint names and values"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>If this is not an option, you may use <code class="language-plaintext highlighter-rouge">BOOST_IDENTIY_TYPE</code> instead.</p>
+
+<h6 class="no_toc">Note for MSVC users</h6>
 
 <p>If you intend the above code to be used with the Microsoft Visual C++ Compiler (MSVC), the <code class="language-plaintext highlighter-rouge">MEMBER</code> definition should be changed to:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define MEMBER(...) MC_RTC_PP_ID(MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER(SimpleSchema, __VA_ARGS__))
 </span></code></pre></div></div>
-
-<p>Or avoid the <code class="language-plaintext highlighter-rouge">MEMBER</code> helper all-together.</p>
 
 <p>This works around a pre-processor issue in MSVC.</p>
 
@@ -483,7 +511,7 @@
 
 <p>If a given <code class="language-plaintext highlighter-rouge">TYPE</code> is not supported you will get a compilation error, please report the issue to mc_rtc developpers.</p>
 
-<p>As of now, most types that can be loaded/saved through an <code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code> object are supported as well as schema-based types and <code class="language-plaintext highlighter-rouge">std::vector</code> of such types.</p>
+<p>As of now, most types that can be loaded/saved through an <code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code> object are supported as well as schema-based types and <code class="language-plaintext highlighter-rouge">std::vector</code> and <code class="language-plaintext highlighter-rouge">std::map</code> of such types.</p>
 
 <p>The following is an example using such types:</p>
 
@@ -567,6 +595,8 @@
   <li>Identity for <code class="language-plaintext highlighter-rouge">sva::PTransformd</code></li>
   <li>Zero for <code class="language-plaintext highlighter-rouge">sva::ForceVecd</code>, <code class="language-plaintext highlighter-rouge">sva::MotionVecd</code>, <code class="language-plaintext highlighter-rouge">sva::ImpedanceVecd</code>, <code class="language-plaintext highlighter-rouge">sva::AdmittanceVecd</code></li>
   <li>Empty string for <code class="language-plaintext highlighter-rouge">std::string</code></li>
+  <li>Empty vector for <code class="language-plaintext highlighter-rouge">std::vector&lt;T&gt;</code></li>
+  <li>Empty map for <code class="language-plaintext highlighter-rouge">std::map&lt;K, V&gt;</code></li>
   <li><code class="language-plaintext highlighter-rouge">mc_rtc::Default&lt;T&gt;</code> for <code class="language-plaintext highlighter-rouge">std::variant&lt;T, Others...&gt;</code></li>
   <li>Default values for a schema-based structure</li>
 </ul>

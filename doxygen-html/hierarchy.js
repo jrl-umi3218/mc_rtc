@@ -160,6 +160,7 @@ var hierarchy =
     [ "mc_rtc::Default< T, std::enable_if_t< schema::details::is_schema_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01std_1_1enable__if__t_3_01schema_1_1details_1_1is__schema__v_3_01T_01_4_01_4_01_4.html", null ],
     [ "mc_rtc::Default< T, std::enable_if_t< schema::details::is_std_vector_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01std_1_1enable__if__t_3_01schema_1_1details_1_1is__std__vector__v_3_01T_01_4_01_4_01_4.html", null ],
     [ "mc_rtc::Default< T, std::enable_if_t< std::is_arithmetic_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01std_1_1enable__if__t_3_01std_1_1is__arithmetic__v_3_01T_01_4_01_4_01_4.html", null ],
+    [ "mc_rtc::Default< T, typename std::enable_if_t< schema::details::is_std_map_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01typename_01std_1_1enable__if__t_3_01schema_1_1details_1_1is_beadeb99586bf01a357ff75f4c89b66e.html", null ],
     [ "mc_control::fsm::ParallelState::DelayedState", "structmc__control_1_1fsm_1_1ParallelState_1_1DelayedState.html", null ],
     [ "mc_rbdyn::Device", "structmc__rbdyn_1_1Device.html", [
       [ "mc_rbdyn::BodySensor", "structmc__rbdyn_1_1BodySensor.html", null ],
@@ -244,6 +245,7 @@ var hierarchy =
       [ "mc_control::MCController::DeprecatedAnchorFrame< T >", "structmc__control_1_1MCController_1_1DeprecatedAnchorFrame.html", null ],
       [ "mc_rtc::gui::details::is_variant< T >", "structmc__rtc_1_1gui_1_1details_1_1is__variant.html", null ],
       [ "mc_rtc::internal::has_write_builder< T, typename >", "structmc__rtc_1_1internal_1_1has__write__builder.html", null ],
+      [ "mc_rtc::schema::details::is_std_map< T >", "structmc__rtc_1_1schema_1_1details_1_1is__std__map.html", null ],
       [ "mc_rtc::schema::details::is_std_vector< T >", "structmc__rtc_1_1schema_1_1details_1_1is__std__vector.html", null ]
     ] ],
     [ "mc_rbdyn::lipm_stabilizer::FDMPCWeights", "structmc__rbdyn_1_1lipm__stabilizer_1_1FDMPCWeights.html", null ],
@@ -470,11 +472,11 @@ var hierarchy =
       ] ]
     ] ],
     [ "mc_rbdyn::Mimic", "structmc__rbdyn_1_1Mimic.html", null ],
-    [ "mc_rbdyn::Frame::NewFrameToken", "structmc__rbdyn_1_1Frame_1_1NewFrameToken.html", [
-      [ "mc_rbdyn::RobotFrame::NewRobotFrameToken", "structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
-    ] ],
     [ "mc_tvm::Frame::NewFrameToken", "structmc__tvm_1_1Frame_1_1NewFrameToken.html", [
       [ "mc_tvm::RobotFrame::NewRobotFrameToken", "structmc__tvm_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
+    ] ],
+    [ "mc_rbdyn::Frame::NewFrameToken", "structmc__rbdyn_1_1Frame_1_1NewFrameToken.html", [
+      [ "mc_rbdyn::RobotFrame::NewRobotFrameToken", "structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
     ] ],
     [ "mc_rbdyn::Robots::NewRobotsToken", "structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html", null ],
     [ "mc_rbdyn::Robot::NewRobotToken", "structmc__rbdyn_1_1Robot_1_1NewRobotToken.html", null ],
@@ -594,6 +596,7 @@ var hierarchy =
       [ "mc_rbdyn::details::are_strings< Args >", "structmc__rbdyn_1_1details_1_1are__strings.html", null ],
       [ "mc_rtc::gui::details::is_variant< std::variant< Args... > >", "structmc__rtc_1_1gui_1_1details_1_1is__variant_3_01std_1_1variant_3_01Args_8_8_8_01_4_01_4.html", null ],
       [ "mc_rtc::internal::has_write_builder< T, std::void_t< decltype(std::declval< const T & >().write(std::declval< MessagePackBuilder & >()))> >", "structmc__rtc_1_1internal_1_1has__write__builder_3_01T_00_01std_1_1void__t_3_01decltype_07std_1_1f30e14306a8a05c633790cd1bae0d02.html", null ],
+      [ "mc_rtc::schema::details::is_std_map< std::map< std::string, T > >", "structmc__rtc_1_1schema_1_1details_1_1is__std__map_3_01std_1_1map_3_01std_1_1string_00_01T_01_4_01_4.html", null ],
       [ "mc_rtc::schema::details::is_std_vector< std::vector< T, Allocator > >", "structmc__rtc_1_1schema_1_1details_1_1is__std__vector_3_01std_1_1vector_3_01T_00_01Allocator_01_4_01_4.html", null ]
     ] ],
     [ "mc_tasks::details::TVMTrajectoryTaskGeneric", "structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html", null ],

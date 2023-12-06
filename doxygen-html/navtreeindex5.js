@@ -1,5 +1,7 @@
 var NAVTREEINDEX5 =
 {
+"mc__global__controller_8h.html#aaf0a11741b6fb186ec99a9d2616dbf1a":[7,0,0,0,15,2],
+"mc__global__controller_8h_source.html":[7,0,0,0,15],
 "mc__python__controller_8h.html":[7,0,0,0,16],
 "mc__python__controller_8h_source.html":[7,0,0,0,16],
 "mc__rbdyn_2Contact_8h.html":[7,0,0,4,7],
@@ -93,8 +95,8 @@ var NAVTREEINDEX5 =
 "namespacemc__rtc_1_1gui.html":[5,0,7,2],
 "namespacemc__rtc_1_1gui_1_1details.html":[5,0,7,2,0],
 "namespacemc__rtc_1_1gui_1_1details.html":[6,0,7,0,0],
-"namespacemc__rtc_1_1gui_1_1plot.html":[5,0,7,2,1],
 "namespacemc__rtc_1_1gui_1_1plot.html":[6,0,7,0,1],
+"namespacemc__rtc_1_1gui_1_1plot.html":[5,0,7,2,1],
 "namespacemc__rtc_1_1gui_1_1plot_1_1impl.html":[6,0,7,0,1,0],
 "namespacemc__rtc_1_1gui_1_1plot_1_1impl.html":[5,0,7,2,1,0],
 "namespacemc__rtc_1_1internal.html":[5,0,7,3],
@@ -111,8 +113,8 @@ var NAVTREEINDEX5 =
 "namespacemc__rtc_1_1utils.html":[5,0,7,7],
 "namespacemc__solver.html":[5,0,8],
 "namespacemc__solver.html":[6,0,8],
-"namespacemc__solver_1_1details.html":[5,0,8,0],
 "namespacemc__solver_1_1details.html":[6,0,8,0],
+"namespacemc__solver_1_1details.html":[5,0,8,0],
 "namespacemc__solver_1_1utils.html":[5,0,8,1],
 "namespacemc__solver_1_1utils.html":[6,0,8,1],
 "namespacemc__tasks.html":[5,0,9],
@@ -247,7 +249,5 @@ var NAVTREEINDEX5 =
 "pragma_8h.html#a3f03fcd513350b95f4c858ab704d09e7":[7,0,0,6,19,1],
 "pragma_8h.html#a4af0974096a7f82dbf9a9d12ed30a90a":[7,0,0,6,19,6],
 "pragma_8h.html#a50f154e9e60e5f9860cc22930076d527":[7,0,0,6,19,2],
-"pragma_8h.html#a6803324242017bdb17050394560aeb5a":[7,0,0,6,19,11],
-"pragma_8h.html#a68ae92d9a7368007a7f93d6e5bee5454":[7,0,0,6,19,17],
-"pragma_8h.html#a7bc988f4aa0896d1c3894abe5f5dbd13":[7,0,0,6,19,5]
+"pragma_8h.html#a6803324242017bdb17050394560aeb5a":[7,0,0,6,19,11]
 };

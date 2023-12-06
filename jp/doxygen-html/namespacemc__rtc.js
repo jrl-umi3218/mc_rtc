@@ -41,6 +41,7 @@ var namespacemc__rtc =
     [ "Default< T, std::enable_if_t< schema::details::is_schema_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01std_1_1enable__if__t_3_01schema_1_1details_1_1is__schema__v_3_01T_01_4_01_4_01_4.html", null ],
     [ "Default< T, std::enable_if_t< schema::details::is_std_vector_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01std_1_1enable__if__t_3_01schema_1_1details_1_1is__std__vector__v_3_01T_01_4_01_4_01_4.html", null ],
     [ "Default< T, std::enable_if_t< std::is_arithmetic_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01std_1_1enable__if__t_3_01std_1_1is__arithmetic__v_3_01T_01_4_01_4_01_4.html", null ],
+    [ "Default< T, typename std::enable_if_t< schema::details::is_std_map_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01typename_01std_1_1enable__if__t_3_01schema_1_1details_1_1is_beadeb99586bf01a357ff75f4c89b66e.html", null ],
     [ "enable_if_t<(N > 0)> >", "structmc__rtc_1_1Default_3_01Eigen_1_1Matrix_3_01Scalar_00_01N_00_011_00_01Options_00_01MaxRows_a64953bfae576ebbe6be9eab9b3c9612.html", null ],
     [ "enable_if_t<(N > 1)> >", "structmc__rtc_1_1Default_3_01Eigen_1_1Matrix_3_01Scalar_00_01N_00_01N_00_01Options_00_01MaxRows_78508de69251a7c285946e43e621eeeb.html", null ],
     [ "Loader", "structmc__rtc_1_1Loader.html", "structmc__rtc_1_1Loader" ],

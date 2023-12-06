@@ -90,6 +90,10 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1schema_1_1details_1_1is__schema.html">is_schema</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1schema_1_1details_1_1is__std__map.html">is_std_map</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1schema_1_1details_1_1is__std__map_3_01std_1_1map_3_01std_1_1string_00_01T_01_4_01_4.html">is_std_map&lt; std::map&lt; std::string, T &gt; &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1schema_1_1details_1_1is__std__vector.html">is_std_vector</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1schema_1_1details_1_1is__std__vector_3_01std_1_1vector_3_01T_00_01Allocator_01_4_01_4.html">is_std_vector&lt; std::vector&lt; T, Allocator &gt; &gt;</a></td></tr>
@@ -120,6 +124,12 @@ Variables</h2></td></tr>
 <tr class="memitem:a072b503b527e3da37040ebe485d363cb"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a072b503b527e3da37040ebe485d363cb"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1schema_1_1details.html#a072b503b527e3da37040ebe485d363cb">is_std_vector_schema_v</a></td></tr>
 <tr class="separator:a072b503b527e3da37040ebe485d363cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae874a4d2e31845957e98747f57355619"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ae874a4d2e31845957e98747f57355619"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1schema_1_1details.html#ae874a4d2e31845957e98747f57355619">is_std_map_v</a> = <a class="el" href="structmc__rtc_1_1schema_1_1details_1_1is__std__map.html">is_std_map</a>&lt;T&gt;::value</td></tr>
+<tr class="separator:ae874a4d2e31845957e98747f57355619"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06d54bbf547eec85c79ad622dedeec05"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a06d54bbf547eec85c79ad622dedeec05"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1schema_1_1details.html#a06d54bbf547eec85c79ad622dedeec05">is_std_map_schema_v</a></td></tr>
+<tr class="separator:a06d54bbf547eec85c79ad622dedeec05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ae66d7396d23a1b99290de0f04edfb19c"></a>
@@ -254,6 +264,60 @@ template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">constexpr bool mc_rtc::schema::details::is_schema_v = decltype(<a class="el" href="structmc__rtc_1_1schema_1_1details_1_1is__schema.html#a5ced097c915be8c98c742bf9a41456d3">is_schema::test</a>&lt;T&gt;(nullptr))::value</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a06d54bbf547eec85c79ad622dedeec05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06d54bbf547eec85c79ad622dedeec05">&#9670;&nbsp;</a></span>is_std_map_schema_v</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr bool mc_rtc::schema::details::is_std_map_schema_v</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= []()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">if</span> constexpr(is_std_map_v&lt;T&gt;) { <span class="keywordflow">return</span> is_schema_v&lt;typename T::value_type&gt;; }</div>
+<div class="line">  <span class="keywordflow">else</span> { <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line">}()</div>
+</div><!-- fragment --><p>Type-trait to detect an std::map&lt;Key, ValueT&gt; where ValueT is a Schema-based type </p>
+
+</div>
+</div>
+<a id="ae874a4d2e31845957e98747f57355619"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae874a4d2e31845957e98747f57355619">&#9670;&nbsp;</a></span>is_std_map_v</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr bool mc_rtc::schema::details::is_std_map_v = <a class="el" href="structmc__rtc_1_1schema_1_1details_1_1is__std__map.html">is_std_map</a>&lt;T&gt;::value</td>
         </tr>
       </table>
   </td>

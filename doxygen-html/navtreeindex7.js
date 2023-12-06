@@ -1,5 +1,7 @@
 var NAVTREEINDEX7 =
 {
+"structmc__control_1_1Gripper.html#ab388cbc7157fea187e7398746b37e436":[6,0,2,12,50],
+"structmc__control_1_1Gripper.html#abab8a5d952afd7d69a39fac45d7a4f74":[6,0,2,12,36],
 "structmc__control_1_1Gripper.html#acd2dade357fca9fa8f2261a8f29fc6b7":[6,0,2,12,59],
 "structmc__control_1_1Gripper.html#aceef1a71c3113b84067decf4ba37ed66":[6,0,2,12,48],
 "structmc__control_1_1Gripper.html#ad0e50e298dbf9b0a2be480a40a207c83":[6,0,2,12,12],
@@ -247,7 +249,5 @@ var NAVTREEINDEX7 =
 "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#acbde34fb861228455a925e57f38b2e6d":[6,0,2,14,0,23],
 "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#aefc4cb0145c34e7595b346186ed8a2d6":[6,0,2,14,0,17],
 "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#afe307dbd38d3487b7ef154f35333cb5b":[6,0,2,14,0,6],
-"structmc__control_1_1MCPythonController.html":[6,0,2,15],
-"structmc__control_1_1MCPythonController.html#a032e887f83331f4138a8b4125010930a":[6,0,2,15,0],
-"structmc__control_1_1MCPythonController.html#a3700ef59c7492c0be19158e991ccf6e6":[6,0,2,15,2]
+"structmc__control_1_1MCPythonController.html":[6,0,2,15]
 };

@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_rtc::enable_if_t\l\<(N \> 0)\> \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1Default_3_01Eigen_1_1Matrix_3_01Scalar_00_01N_00_011_00_01Options_00_01MaxRows_a64953bfae576ebbe6be9eab9b3c9612.html",tooltip=" "];
+  Node0 [label="mc_rtc::Default\< T,\l typename std::enable\l_if_t\< schema::details\l::is_std_map_v\< T \> \> \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1Default_3_01T_00_01typename_01std_1_1enable__if__t_3_01schema_1_1details_1_1is_beadeb99586bf01a357ff75f4c89b66e.html",tooltip=" "];
 }

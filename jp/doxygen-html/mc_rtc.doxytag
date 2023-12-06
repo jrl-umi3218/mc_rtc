@@ -4096,10 +4096,13 @@
     <class kind="struct">mc_rtc::schema::details::is_schema</class>
     <class kind="struct">mc_rtc::schema::details::is_std_vector</class>
     <class kind="struct">mc_rtc::schema::details::is_std_vector&lt; std::vector&lt; T, Allocator &gt; &gt;</class>
+    <class kind="struct">mc_rtc::schema::details::is_std_map</class>
+    <class kind="struct">mc_rtc::schema::details::is_std_map&lt; std::map&lt; std::string, T &gt; &gt;</class>
     <class kind="struct">mc_rtc::schema::Operations</class>
     <class kind="struct">mc_rtc::schema::details::EmptySchema</class>
     <class kind="struct">mc_rtc::Default&lt; T, std::enable_if_t&lt; schema::details::is_schema_v&lt; T &gt; &gt; &gt;</class>
     <class kind="struct">mc_rtc::Default&lt; T, std::enable_if_t&lt; schema::details::is_std_vector_v&lt; T &gt; &gt; &gt;</class>
+    <class kind="struct">mc_rtc::Default&lt; T, typename std::enable_if_t&lt; schema::details::is_std_map_v&lt; T &gt; &gt; &gt;</class>
     <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::schema</namespace>
     <namespace>mc_rtc::schema::details</namespace>
@@ -4182,6 +4185,20 @@
       <name>is_std_vector_schema_v</name>
       <anchorfile>namespacemc__rtc_1_1schema_1_1details.html</anchorfile>
       <anchor>a072b503b527e3da37040ebe485d363cb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_std_map_v</name>
+      <anchorfile>namespacemc__rtc_1_1schema_1_1details.html</anchorfile>
+      <anchor>ae874a4d2e31845957e98747f57355619</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_std_map_schema_v</name>
+      <anchorfile>namespacemc__rtc_1_1schema_1_1details.html</anchorfile>
+      <anchor>a06d54bbf547eec85c79ad622dedeec05</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -15600,6 +15617,18 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::Default&lt; T, typename std::enable_if_t&lt; schema::details::is_std_map_v&lt; T &gt; &gt; &gt;</name>
+    <filename>structmc__rtc_1_1Default_3_01T_00_01typename_01std_1_1enable__if__t_3_01schema_1_1details_1_1is_beadeb99586bf01a357ff75f4c89b66e.html</filename>
+    <templarg></templarg>
+    <member kind="variable" static="yes">
+      <type>static const T</type>
+      <name>value</name>
+      <anchorfile>structmc__rtc_1_1Default_3_01T_00_01typename_01std_1_1enable__if__t_3_01schema_1_1details_1_1is_beadeb99586bf01a357ff75f4c89b66e.html</anchorfile>
+      <anchor>a2ae06867bb358628cce2e1deae528a7f</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_control::fsm::ParallelState::DelayedState</name>
     <filename>structmc__control_1_1fsm_1_1ParallelState_1_1DelayedState.html</filename>
     <member kind="function">
@@ -22950,6 +22979,16 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::schema::details::is_std_map</name>
+    <filename>structmc__rtc_1_1schema_1_1details_1_1is__std__map.html</filename>
+    <templarg></templarg>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::schema::details::is_std_map&lt; std::map&lt; std::string, T &gt; &gt;</name>
+    <filename>structmc__rtc_1_1schema_1_1details_1_1is__std__map_3_01std_1_1map_3_01std_1_1string_00_01T_01_4_01_4.html</filename>
+    <templarg></templarg>
+  </compound>
+  <compound kind="struct">
     <name>mc_rtc::schema::details::is_std_vector</name>
     <filename>structmc__rtc_1_1schema_1_1details_1_1is__std__vector.html</filename>
     <templarg></templarg>
@@ -28468,12 +28507,12 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rbdyn::Frame::NewFrameToken</name>
-    <filename>structmc__rbdyn_1_1Frame_1_1NewFrameToken.html</filename>
-  </compound>
-  <compound kind="struct">
     <name>mc_tvm::Frame::NewFrameToken</name>
     <filename>structmc__tvm_1_1Frame_1_1NewFrameToken.html</filename>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rbdyn::Frame::NewFrameToken</name>
+    <filename>structmc__rbdyn_1_1Frame_1_1NewFrameToken.html</filename>
   </compound>
   <compound kind="struct">
     <name>mc_tvm::RobotFrame::NewRobotFrameToken</name>
@@ -35109,6 +35148,131 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_tvm::RobotFrame</name>
+    <filename>structmc__tvm_1_1RobotFrame.html</filename>
+    <base>mc_tvm::Frame</base>
+    <class kind="struct">mc_tvm::RobotFrame::NewRobotFrameToken</class>
+    <member kind="function">
+      <type></type>
+      <name>RobotFrame</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a180f24508483d020ade6aeabae644d09</anchor>
+      <arglist>(NewRobotFrameToken, const mc_rbdyn::RobotFrame &amp;frame)</arglist>
+    </member>
+    <member kind="function">
+      <type>const tvm::internal::MatrixWithProperties &amp;</type>
+      <name>jacobian</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a00716e444025c382da74be44d3df4940</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::MotionVecd &amp;</type>
+      <name>normalAcceleration</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a8cb1e954e920e2bd05c365defa9b67e3</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const tvm::internal::MatrixWithProperties &amp;</type>
+      <name>JDot</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a9d7c9662ee1b362c6a07fa041f919fc8</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const rbd::Jacobian &amp;</type>
+      <name>rbdJacobian</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a16b0b4f8711176311d767f08161f08c8</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::RobotFrame &amp;</type>
+      <name>frame</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a3f92ee53ad6d5db07eadfa532722c374</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>updateJacobian</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a717bad80165b51da9fb4a33765fb2831</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>updateNormalAcceleration</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a75c299966804b0861a9f32ab903ab78d</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>updateJDot</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>aa21e608aa91ef692d313c044b7cb805c</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Matrix3d</type>
+      <name>h_</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>ad2948decfee161d88cb03d5400386633</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>rbd::Jacobian</type>
+      <name>jac_</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a027298a7d5e79f596ea548941332aadc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>rbd::Blocks</type>
+      <name>blocks_</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a39cd40cec4116ab81c4d350b1fca6a60</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::MatrixXd</type>
+      <name>jacTmp_</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a7c2aa9bd736e94ab71b84043bed57264</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>tvm::internal::MatrixWithProperties</type>
+      <name>jacobian_</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>ae0ee03929ed4c7ef9dd29f49061e3d3e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::MotionVecd</type>
+      <name>normalAcceleration_</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>ab8e4f2a97bb8286702968f2a73e3f7c7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>tvm::internal::MatrixWithProperties</type>
+      <name>jacDot_</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>aad4a278bb84f7a8279800b88706c228d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="friend">
+      <type>friend struct</type>
+      <name>mc_rbdyn::RobotFrame</name>
+      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
+      <anchor>a48c246b2297ef56ace9fbaf5ef9d4113</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rbdyn::RobotFrame</name>
     <filename>structmc__rbdyn_1_1RobotFrame.html</filename>
     <base>shared&lt; RobotFrame, Frame &gt;</base>
@@ -35272,131 +35436,6 @@
       <name>Robot</name>
       <anchorfile>structmc__rbdyn_1_1RobotFrame.html</anchorfile>
       <anchor>ad03b49f51df2ba1d492ced03d923fdd0</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>mc_tvm::RobotFrame</name>
-    <filename>structmc__tvm_1_1RobotFrame.html</filename>
-    <base>mc_tvm::Frame</base>
-    <class kind="struct">mc_tvm::RobotFrame::NewRobotFrameToken</class>
-    <member kind="function">
-      <type></type>
-      <name>RobotFrame</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a180f24508483d020ade6aeabae644d09</anchor>
-      <arglist>(NewRobotFrameToken, const mc_rbdyn::RobotFrame &amp;frame)</arglist>
-    </member>
-    <member kind="function">
-      <type>const tvm::internal::MatrixWithProperties &amp;</type>
-      <name>jacobian</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a00716e444025c382da74be44d3df4940</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const sva::MotionVecd &amp;</type>
-      <name>normalAcceleration</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a8cb1e954e920e2bd05c365defa9b67e3</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const tvm::internal::MatrixWithProperties &amp;</type>
-      <name>JDot</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a9d7c9662ee1b362c6a07fa041f919fc8</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const rbd::Jacobian &amp;</type>
-      <name>rbdJacobian</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a16b0b4f8711176311d767f08161f08c8</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>const mc_rbdyn::RobotFrame &amp;</type>
-      <name>frame</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a3f92ee53ad6d5db07eadfa532722c374</anchor>
-      <arglist>() const noexcept</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>updateJacobian</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a717bad80165b51da9fb4a33765fb2831</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>updateNormalAcceleration</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a75c299966804b0861a9f32ab903ab78d</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>updateJDot</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>aa21e608aa91ef692d313c044b7cb805c</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>Eigen::Matrix3d</type>
-      <name>h_</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>ad2948decfee161d88cb03d5400386633</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>rbd::Jacobian</type>
-      <name>jac_</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a027298a7d5e79f596ea548941332aadc</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>rbd::Blocks</type>
-      <name>blocks_</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a39cd40cec4116ab81c4d350b1fca6a60</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>Eigen::MatrixXd</type>
-      <name>jacTmp_</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a7c2aa9bd736e94ab71b84043bed57264</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>tvm::internal::MatrixWithProperties</type>
-      <name>jacobian_</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>ae0ee03929ed4c7ef9dd29f49061e3d3e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>sva::MotionVecd</type>
-      <name>normalAcceleration_</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>ab8e4f2a97bb8286702968f2a73e3f7c7</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>tvm::internal::MatrixWithProperties</type>
-      <name>jacDot_</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>aad4a278bb84f7a8279800b88706c228d</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="friend">
-      <type>friend struct</type>
-      <name>mc_rbdyn::RobotFrame</name>
-      <anchorfile>structmc__tvm_1_1RobotFrame.html</anchorfile>
-      <anchor>a48c246b2297ef56ace9fbaf5ef9d4113</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -42713,14 +42752,14 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_control::fsm::TasksController</name>
-    <filename>structmc__control_1_1fsm_1_1TasksController.html</filename>
-    <base>BackendSpecificController&lt; MCController::Backend::Tasks, mc_solver::TasksQPSolver &gt;</base>
-  </compound>
-  <compound kind="struct">
     <name>mc_control::TasksController</name>
     <filename>structmc__control_1_1TasksController.html</filename>
     <base>mc_control::details::BackendSpecificController</base>
+  </compound>
+  <compound kind="struct">
+    <name>mc_control::fsm::TasksController</name>
+    <filename>structmc__control_1_1fsm_1_1TasksController.html</filename>
+    <base>BackendSpecificController&lt; MCController::Backend::Tasks, mc_solver::TasksQPSolver &gt;</base>
   </compound>
   <compound kind="struct">
     <name>mc_solver::TasksQPSolver</name>
@@ -43989,14 +44028,14 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_control::fsm::TVMController</name>
-    <filename>structmc__control_1_1fsm_1_1TVMController.html</filename>
-    <base>BackendSpecificController&lt; MCController::Backend::TVM, mc_solver::TVMQPSolver &gt;</base>
-  </compound>
-  <compound kind="struct">
     <name>mc_control::TVMController</name>
     <filename>structmc__control_1_1TVMController.html</filename>
     <base>mc_control::details::BackendSpecificController</base>
+  </compound>
+  <compound kind="struct">
+    <name>mc_control::fsm::TVMController</name>
+    <filename>structmc__control_1_1fsm_1_1TVMController.html</filename>
+    <base>BackendSpecificController&lt; MCController::Backend::TVM, mc_solver::TVMQPSolver &gt;</base>
   </compound>
   <compound kind="struct">
     <name>mc_solver::TVMQPSolver</name>
@@ -45933,6 +45972,7 @@
     <class kind="struct">mc_rtc::Default&lt; T, std::enable_if_t&lt; schema::details::is_schema_v&lt; T &gt; &gt; &gt;</class>
     <class kind="struct">mc_rtc::Default&lt; T, std::enable_if_t&lt; schema::details::is_std_vector_v&lt; T &gt; &gt; &gt;</class>
     <class kind="struct">mc_rtc::Default&lt; T, std::enable_if_t&lt; std::is_arithmetic_v&lt; T &gt; &gt; &gt;</class>
+    <class kind="struct">mc_rtc::Default&lt; T, typename std::enable_if_t&lt; schema::details::is_std_map_v&lt; T &gt; &gt; &gt;</class>
     <class kind="struct">mc_rtc::Default&lt; Eigen::Matrix&lt; Scalar, N, 1, Options, MaxRows, MaxCols &gt;, std::enable_if_t&lt;(N &gt; 0)&gt; &gt;</class>
     <class kind="struct">mc_rtc::Default&lt; Eigen::Matrix&lt; Scalar, N, N, Options, MaxRows, MaxCols &gt;, std::enable_if_t&lt;(N &gt; 1)&gt; &gt;</class>
     <class kind="class">mc_rtc::Loader</class>
@@ -47905,6 +47945,8 @@
     <class kind="struct">mc_rtc::schema::details::Choices&lt; false &gt;</class>
     <class kind="struct">mc_rtc::schema::details::EmptySchema</class>
     <class kind="struct">mc_rtc::schema::details::is_schema</class>
+    <class kind="struct">mc_rtc::schema::details::is_std_map</class>
+    <class kind="struct">mc_rtc::schema::details::is_std_map&lt; std::map&lt; std::string, T &gt; &gt;</class>
     <class kind="struct">mc_rtc::schema::details::is_std_vector</class>
     <class kind="struct">mc_rtc::schema::details::is_std_vector&lt; std::vector&lt; T, Allocator &gt; &gt;</class>
     <class kind="struct">mc_rtc::schema::details::MemberPointerWrapper</class>
@@ -47948,6 +47990,20 @@
       <name>is_std_vector_schema_v</name>
       <anchorfile>namespacemc__rtc_1_1schema_1_1details.html</anchorfile>
       <anchor>a072b503b527e3da37040ebe485d363cb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_std_map_v</name>
+      <anchorfile>namespacemc__rtc_1_1schema_1_1details.html</anchorfile>
+      <anchor>ae874a4d2e31845957e98747f57355619</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_std_map_schema_v</name>
+      <anchorfile>namespacemc__rtc_1_1schema_1_1details.html</anchorfile>
+      <anchor>a06d54bbf547eec85c79ad622dedeec05</anchor>
       <arglist></arglist>
     </member>
   </compound>
