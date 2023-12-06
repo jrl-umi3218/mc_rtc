@@ -60,12 +60,11 @@ This occurs because the pre-processor splits the arguments as follows:
 To avoid this you can explicitly alias the type
 
 ```cpp
-using MapType = std::map<std::string, double>
+using MapType = std::map<std::string, double>;
 MEMBER(MapType, jointValues, "Map of joint names and values")
 ```
 
 If this is not an option, you may use `BOOST_IDENTIY_TYPE` instead.
-
 
 
 <h6 class="no_toc">Note for MSVC users</h6>
