@@ -282,7 +282,7 @@ Robot::Robot(NewRobotToken,
         if(initQ[i].size() != jQ.size())
         {
           mc_rtc::log::error_and_throw(
-              "Missmatch between RobotModule stance for joint {}\nStance provides {} values but should be {}", j.name(),
+              "Mismatch between RobotModule stance for joint {}\nStance provides {} values but should be {}", j.name(),
               jQ.size(), initQ[i].size());
         }
         initQ[i] = jQ;
