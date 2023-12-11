@@ -7,6 +7,7 @@
 #include <mc_solver/ConstraintSetLoader.h>
 #include <mc_solver/TVMQPSolver.h>
 #include <mc_solver/TasksQPSolver.h>
+#include "utils/jointsToSelector.h"
 
 #include <mc_tvm/CollisionFunction.h>
 
@@ -20,8 +21,6 @@
 #include <Tasks/QPConstr.h>
 
 #include <tvm/task_dynamics/VelocityDamper.h>
-
-#include "utils/jointsToSelector.h"
 
 namespace mc_solver
 {
@@ -300,9 +299,24 @@ void CollisionsConstraint::__addCollision(mc_solver::QPSolver & solver, const mc
   int collId = __createCollId(col);
   if(collId < 0) { return; }
   cols.push_back(col);
-  auto r1Selector = jointsToSelector(robots.robot(r1Index), col.r1Joints);
-  auto r2Selector =
-      r1Index == r2Index ? Eigen::VectorXd::Zero(0).eval() : jointsToSelector(robots.robot(r2Index), col.r2Joints);
+
+  auto computeJointsSelector = [&robots](const std::vector<std::string> & activeJoints,
+                                         const std::vector<std::string> & unactiveJoints, auto rIndex)
+  {
+    if((activeJoints.empty() && unactiveJoints.empty()) || activeJoints.size())
+    { // Use active joints selector by default
+      return jointsToSelector<true>(robots.robot(rIndex), activeJoints);
+    }
+    else
+    { // If we don't have an active joints selector check if we have unactive joints instead
+      return jointsToSelector<false>(robots.robot(rIndex), unactiveJoints);
+    }
+  };
+
+  auto r1Selector = computeJointsSelector(col.r1ActiveJoints, col.r1UnactiveJoints, r1Index);
+  auto r2Selector = r1Index == r2Index ? Eigen::VectorXd::Zero(0).eval()
+                                       : computeJointsSelector(col.r2ActiveJoints, col.r2UnactiveJoints, r2Index);
+
   switch(backend_)
   {
     case QPSolver::Backend::Tasks:
