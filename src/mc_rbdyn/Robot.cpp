@@ -524,7 +524,7 @@ const RobotModule & Robot::module() const
   return robots_->robotModule(robots_idx_);
 }
 
-void Robot::addBodySensor(const BodySensor & sensor) const
+void Robot::addBodySensor(const BodySensor & sensor)
 {
   if(!hasBodySensor(sensor.name()))
   {
