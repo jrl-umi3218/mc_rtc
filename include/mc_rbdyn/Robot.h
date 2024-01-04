@@ -97,7 +97,7 @@ public:
    *
    * @param sensor Body to add
    */
-  void addBodySensor(const BodySensor & sensor) const;
+  void addBodySensor(const BodySensor & sensor);
 
   /** Return true if the robot has a body sensor named name
    *
