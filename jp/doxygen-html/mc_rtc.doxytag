@@ -33091,6 +33091,13 @@
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>addBodySensor</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>aea55ad48f3307dc57c674d851e47ecd8</anchor>
+      <arglist>(const BodySensor &amp;sensor)</arglist>
+    </member>
+    <member kind="function">
       <type>bool</type>
       <name>hasBodySensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
@@ -33888,6 +33895,13 @@
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>a41b7c80447b0d61661bfc2a0242eaa8f</anchor>
       <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>addBodySensor</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>aea55ad48f3307dc57c674d851e47ecd8</anchor>
+      <arglist>(const BodySensor &amp;sensor)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>

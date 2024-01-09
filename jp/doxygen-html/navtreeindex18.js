@@ -1,5 +1,6 @@
 var NAVTREEINDEX18 =
 {
+"structmc__solver_1_1details_1_1CompoundJointConstraint.html#acb4fa85bb33ff2a1de3b7de351f131c5":[6,0,8,0,0,1],
 "structmc__solver_1_1details_1_1CompoundJointConstraint.html#ad06e91a57f1229af89b70c358f4a7b13":[6,0,8,0,0,0],
 "structmc__solver_1_1details_1_1CompoundJointConstraint.html#ad18a2350451245577b50d4556cc566fa":[6,0,8,0,0,10],
 "structmc__solver_1_1utils_1_1Constraint.html":[6,0,8,1,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX18 =
 "structmc__tasks_1_1PositionBasedVisServoTask.html#ae2cab369aedb3678ebd9b4687faa8ba9":[6,0,9,17,1],
 "structmc__tasks_1_1PositionTask.html":[6,0,9,18],
 "structmc__tasks_1_1PositionTask.html#a048c94abdb15f43ba0eb3504c724ea9d":[6,0,9,18,7],
-"structmc__tasks_1_1PositionTask.html#a1ace65857e5ada474531dcffc700924f":[6,0,9,18,4],
-"structmc__tasks_1_1PositionTask.html#a346759f0552355a22d302ee7d91673b7":[6,0,9,18,5]
+"structmc__tasks_1_1PositionTask.html#a1ace65857e5ada474531dcffc700924f":[6,0,9,18,4]
 };

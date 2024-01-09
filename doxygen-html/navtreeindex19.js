@@ -1,5 +1,6 @@
 var NAVTREEINDEX19 =
 {
+"structmc__tasks_1_1PositionTask.html#a346759f0552355a22d302ee7d91673b7":[6,0,9,18,5],
 "structmc__tasks_1_1PositionTask.html#a4424ab1a1faf897723d2f3bdbacc3f97":[6,0,9,18,3],
 "structmc__tasks_1_1PositionTask.html#a4e0abb585b67f4f3026269e5809e41d4":[6,0,9,18,10],
 "structmc__tasks_1_1PositionTask.html#a86e8cb6cb49e5269c931ed57eda6e113":[6,0,9,18,8],
@@ -248,6 +249,5 @@ var NAVTREEINDEX19 =
 "structmc__tasks_1_1force_1_1AdmittanceTask.html#a2eeb8d4440242d2c4526226e15efaf87":[6,0,9,1,1,34],
 "structmc__tasks_1_1force_1_1AdmittanceTask.html#a3433b288829da956de5f93c99dc12870":[6,0,9,1,1,35],
 "structmc__tasks_1_1force_1_1AdmittanceTask.html#a3958c43db37f34168e7b0b370d8edf23":[6,0,9,1,1,18],
-"structmc__tasks_1_1force_1_1AdmittanceTask.html#a40e25a8a37d85dfbde690b2c20e84717":[6,0,9,1,1,29],
-"structmc__tasks_1_1force_1_1AdmittanceTask.html#a50134b1f1bbb68f93e3b1235da3f15bd":[6,0,9,1,1,20]
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#a40e25a8a37d85dfbde690b2c20e84717":[6,0,9,1,1,29]
 };

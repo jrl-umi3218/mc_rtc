@@ -1,5 +1,6 @@
 var NAVTREEINDEX20 =
 {
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#a50134b1f1bbb68f93e3b1235da3f15bd":[6,0,9,1,1,20],
 "structmc__tasks_1_1force_1_1AdmittanceTask.html#a530f67ea3aaa3fc0437aa72940de1143":[6,0,9,1,1,15],
 "structmc__tasks_1_1force_1_1AdmittanceTask.html#a626218531c0140a6ce6b3efa2c2b840b":[6,0,9,1,1,31],
 "structmc__tasks_1_1force_1_1AdmittanceTask.html#a7340c5f14c1ba117ec60046742b3e9ad":[6,0,9,1,1,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX20 =
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a54b412afadacab001a1969d33b7c28e3":[6,0,9,2,2,168],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a58c5a5511acce6250f822dddf65e0a2d":[6,0,9,2,2,34],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a58ca52d0d748317df0b78148f31a6a4a":[6,0,9,2,2,125],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a5b6105d75689301db9d974c1119069da":[6,0,9,2,2,26],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a5ba652e24e17842a3a0e7d00157a0416":[6,0,9,2,2,154]
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a5b6105d75689301db9d974c1119069da":[6,0,9,2,2,26]
 };
