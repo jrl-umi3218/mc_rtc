@@ -524,6 +524,19 @@ const RobotModule & Robot::module() const
   return robots_->robotModule(robots_idx_);
 }
 
+void Robot::addBodySensor(const BodySensor & sensor)
+{
+  if(!hasBodySensor(sensor.name()))
+  {
+    data_->bodySensors.push_back(sensor);
+    data_->bodySensorsIndex.insert({sensor.name(), data_->bodySensors.size() - 1});
+
+    if(!bodyHasBodySensor(sensor.name())) data_->bodyBodySensors.insert({sensor.name(), data_->bodySensors.size() - 1});
+  }
+
+  else { mc_rtc::log::error_and_throw("Body sensor named {} already attached to {}", sensor.name(), this->name()); }
+}
+
 const BodySensor & Robot::bodySensor(const std::string & name) const
 {
   auto it = data_->bodySensorsIndex.find(name);

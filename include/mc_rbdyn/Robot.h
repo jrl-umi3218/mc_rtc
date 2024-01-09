@@ -93,6 +93,12 @@ public:
   /** Return the first BodySensor in the robot (const) */
   inline const BodySensor & bodySensor() const noexcept { return data_->bodySensors[0]; }
 
+  /** Add BodySensor to the robot
+   *
+   * @param sensor Body to add
+   */
+  void addBodySensor(const BodySensor & sensor);
+
   /** Return true if the robot has a body sensor named name
    *
    * @param name Name of the body sensor
