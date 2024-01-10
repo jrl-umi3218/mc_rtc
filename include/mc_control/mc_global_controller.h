@@ -898,7 +898,7 @@ public:
     std::string init_attitude_sensor = "";
 
     std::vector<std::string> robot_module_paths = {};
-    std::shared_ptr<mc_rbdyn::RobotModule> main_robot_module;
+    std::shared_ptr<mc_rbdyn::RobotModule> main_robot_module = nullptr;
 
     std::vector<std::string> observer_module_paths = {};
 

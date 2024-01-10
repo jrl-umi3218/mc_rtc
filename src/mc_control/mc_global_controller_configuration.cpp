@@ -52,6 +52,21 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   config("VerboseLoader", verbose_loader);
   config("Timestep", timestep);
 
+  ///////////////////
+  //  Controllers  //
+  ///////////////////
+  config("ControllerModulePaths", controller_module_paths);
+  if(!config("ClearControllerModulePath", false))
+  {
+    controller_module_paths.insert(controller_module_paths.begin(), mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
+  }
+  enabled_controllers = mc_rtc::fromVectorOrElement<std::string>(config, "Enabled", {});
+  if(enabled_controllers.size()) { initial_controller = enabled_controllers[0]; }
+  else { mc_rtc::log::error_and_throw("Enabled entry in mc_rtc must contain at least one controller name"); }
+  config("Default", initial_controller);
+  config("IncludeHalfSitController", include_halfsit_controller);
+  load_controllers_configs();
+
   //////////////
   //  Robots  //
   //////////////
@@ -88,6 +103,22 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       }
       else
       {
+        for(auto & c : controllers_configs)
+        {
+          if(c.second.has("robots"))
+          {
+            auto controller_robots_config = c.second("robots");
+            if(controller_robots_config.has(robot_name))
+            {
+              const std::string rm = controller_robots_config(robot_name)("module");
+              main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(rm);
+            }
+            break;
+          }
+        }
+      }
+      if(main_robot_module == nullptr)
+      {
         mc_rtc::log::error_and_throw("Trying to use {} as main robot but this robot cannot be loaded", robot_name);
       }
     }
@@ -115,6 +146,22 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
         }
       }
       else
+      {
+        for(auto & c : controllers_configs)
+        {
+          if(c.second.has("robots"))
+          {
+            auto controller_robots_config = c.second("robots");
+            if(controller_robots_config.has(params[0]))
+            {
+              const std::string rm = controller_robots_config(params[0])("module");
+              main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(rm);
+            }
+            break;
+          }
+        }
+      }
+      if(main_robot_module == nullptr)
       {
         mc_rtc::log::error_and_throw("Trying to use {} as main robot but this robot cannot be loaded", params[0]);
       }
@@ -179,20 +226,6 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       global_plugins.push_back(p);
     }
   }
-
-  ///////////////////
-  //  Controllers  //
-  ///////////////////
-  config("ControllerModulePaths", controller_module_paths);
-  if(!config("ClearControllerModulePath", false))
-  {
-    controller_module_paths.insert(controller_module_paths.begin(), mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
-  }
-  enabled_controllers = mc_rtc::fromVectorOrElement<std::string>(config, "Enabled", {});
-  if(enabled_controllers.size()) { initial_controller = enabled_controllers[0]; }
-  else { mc_rtc::log::error_and_throw("Enabled entry in mc_rtc must contain at least one controller name"); }
-  config("Default", initial_controller);
-  config("IncludeHalfSitController", include_halfsit_controller);
 
   ////////////////////
   // Initialization //
