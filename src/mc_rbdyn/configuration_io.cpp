@@ -18,6 +18,7 @@
 #include <sch-core/S_Sphere.h>
 #include <sch-core/S_Superellipsoid.h>
 
+#include <mc_rtc/deprecated.h>
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
@@ -151,29 +152,30 @@ mc_rbdyn::Collision ConfigurationLoader<mc_rbdyn::Collision>::load(const mc_rtc:
 {
   auto body1 = config("body1");
   auto body2 = config("body2");
-  auto loadDeprecatedActiveJoints = [&](std::string prefix)
+  auto loadActiveJoints = [&](std::string prefix) -> std::tuple<std::optional<std::vector<std::string>>, bool>
   {
-    auto r1Joints = prefix + "Joints";
-    auto r1ActiveJoints = prefix + "ActiveJoints";
-    auto activeJoints = std::vector<std::string>{};
-    if(config.has(r1Joints))
+    if(auto cfg = config.find(prefix + "Joints")) { return {cfg->operator std::vector<std::string>(), false}; }
+    if(auto cfg = config.find(prefix + "ActiveJoints"))
     {
-      mc_rtc::log::deprecated(fmt::format("ConfigurationLoader<mc_rbdyn::Collision> (bodies: {} - {})", body1, body2),
-                              r1Joints, r1ActiveJoints);
-      if(auto r1ActiveJointsC = config.find(r1ActiveJoints))
+      mc_rtc::log::deprecated(fmt::format("Collision ({} - {})", body1, body2), prefix + "ActiveJoints",
+                              prefix + "Joints");
+      auto joints = cfg->operator std::vector<std::string>();
+      if(joints.empty())
       {
-        mc_rtc::log::warning("ConfigurationLoader<mc_rbdyn::Collision> has both {0} and {1}, {0} will be ignored",
-                             r1Joints, r1ActiveJoints);
-        activeJoints = *r1ActiveJointsC;
+        mc_rtc::log::warning(
+            "[Collision][breaking change] The meaning of an empty joint vector has changed from all joints active to "
+            "no joints active. Remove {}ActiveJoints from your configuration to restore the former behaviour.",
+            prefix);
       }
-      else { activeJoints = config(r1Joints); }
+      return {cfg->operator std::vector<std::string>(), false};
     }
-    return activeJoints;
+    if(auto cfg = config.find(prefix + "InactiveJoints")) { return {cfg->operator std::vector<std::string>(), true}; }
+    return {std::nullopt, false};
   };
+  const auto & [r1Joints, r1Inactive] = loadActiveJoints("r1");
+  const auto & [r2Joints, r2Inactive] = loadActiveJoints("r2");
   return mc_rbdyn::Collision(body1, body2, config("iDist", 0.05), config("sDist", 0.01), config("damping", 0.0),
-                             loadDeprecatedActiveJoints("r1"), loadDeprecatedActiveJoints("r2"),
-                             config("r1UnactiveJoints", std::vector<std::string>{}),
-                             config("r2UnactiveJoints", std::vector<std::string>{}));
+                             r1Joints, r2Joints, r1Inactive, r2Inactive);
 }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Collision>::save(const mc_rbdyn::Collision & c)
@@ -184,10 +186,10 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Collision>::save(const mc_rb
   config.add("iDist", c.iDist);
   config.add("sDist", c.sDist);
   config.add("damping", c.damping);
-  config.add("r1ActiveJoints", c.r1ActiveJoints);
-  config.add("r2ActiveJoints", c.r2ActiveJoints);
-  config.add("r1UnactiveJoints", c.r1UnactiveJoints);
-  config.add("r2UnactiveJoints", c.r2UnactiveJoints);
+  if(c.r1Joints) { config.add("r1Joints", *c.r1Joints); }
+  if(c.r2Joints) { config.add("r2Joints", *c.r2Joints); }
+  config.add("r1JointsInactive", c.r1JointsInactive);
+  config.add("r2JointsInactive", c.r2JointsInactive);
   return config;
 }
 
