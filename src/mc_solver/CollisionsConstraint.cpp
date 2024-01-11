@@ -306,6 +306,15 @@ void CollisionsConstraint::__addCollision(mc_solver::QPSolver & solver, const mc
   {
     if(joints)
     {
+      // check that all joints exist
+      for(const auto & j : *joints)
+      {
+        if(!robots.robot(rIndex).hasJoint(j))
+        {
+          mc_rtc::log::error_and_throw("[CollisionsConstraint] No joint named \"{}\" in robot \"{}\"", j,
+                                       robots.robot(rIndex).name());
+        }
+      }
       if(inactive) { return jointsToSelector<false>(robots.robot(rIndex), *joints); }
       else { return jointsToSelector<true>(robots.robot(rIndex), *joints); }
     }
