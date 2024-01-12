@@ -300,9 +300,31 @@ void CollisionsConstraint::__addCollision(mc_solver::QPSolver & solver, const mc
   int collId = __createCollId(col);
   if(collId < 0) { return; }
   cols.push_back(col);
-  auto r1Selector = jointsToSelector(robots.robot(r1Index), col.r1Joints);
-  auto r2Selector =
-      r1Index == r2Index ? Eigen::VectorXd::Zero(0).eval() : jointsToSelector(robots.robot(r2Index), col.r2Joints);
+
+  auto computeJointsSelector =
+      [&robots](const std::optional<std::vector<std::string>> & joints, bool inactive, auto rIndex)
+  {
+    if(joints)
+    {
+      // check that all joints exist
+      for(const auto & j : *joints)
+      {
+        if(!robots.robot(rIndex).hasJoint(j))
+        {
+          mc_rtc::log::error_and_throw("[CollisionsConstraint] No joint named \"{}\" in robot \"{}\"", j,
+                                       robots.robot(rIndex).name());
+        }
+      }
+      if(inactive) { return jointsToSelector<false>(robots.robot(rIndex), *joints); }
+      else { return jointsToSelector<true>(robots.robot(rIndex), *joints); }
+    }
+    else { return Eigen::VectorXd::Zero(0).eval(); }
+  };
+
+  auto r1Selector = computeJointsSelector(col.r1Joints, col.r1JointsInactive, r1Index);
+  auto r2Selector = r1Index == r2Index ? Eigen::VectorXd::Zero(0).eval()
+                                       : computeJointsSelector(col.r2Joints, col.r2JointsInactive, r2Index);
+
   switch(backend_)
   {
     case QPSolver::Backend::Tasks:

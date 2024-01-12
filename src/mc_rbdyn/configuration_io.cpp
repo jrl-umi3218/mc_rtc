@@ -18,6 +18,7 @@
 #include <sch-core/S_Sphere.h>
 #include <sch-core/S_Superellipsoid.h>
 
+#include <mc_rtc/deprecated.h>
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
@@ -149,9 +150,42 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::JointSensor>::save(const mc_
 
 mc_rbdyn::Collision ConfigurationLoader<mc_rbdyn::Collision>::load(const mc_rtc::Configuration & config)
 {
-  return mc_rbdyn::Collision(config("body1"), config("body2"), config("iDist", 0.05), config("sDist", 0.01),
-                             config("damping", 0.0), config("r1Joints", std::vector<std::string>{}),
-                             config("r2Joints", std::vector<std::string>{}));
+  auto body1 = config("body1");
+  auto body2 = config("body2");
+  auto loadActiveJoints = [&](std::string prefix) -> std::tuple<std::optional<std::vector<std::string>>, bool>
+  {
+    auto active_joints = config.find(prefix + "ActiveJoints");
+    auto joints = config.find(prefix + "Joints");
+    auto inactive_joints = config.find(prefix + "InactiveJoints");
+    if((active_joints || joints) && inactive_joints)
+    {
+      mc_rtc::log::warning(
+          "Collision ({} - {}) has both {}ActiveJoints and {}InactiveJoints, {}ActiveJoints will be used", body1, body2,
+          prefix);
+    }
+
+    if(joints)
+    {
+      mc_rtc::log::deprecated(fmt::format("Collision ({} - {})", body1, body2), prefix + "Joints",
+                              prefix + "ActiveJoints");
+      auto jointsV = joints->operator std::vector<std::string>();
+      if(jointsV.empty())
+      {
+        mc_rtc::log::warning(
+            "[Collision][breaking change] The meaning of an empty joint vector has changed from all joints active to "
+            "no joints active. Remove {}Joints from your configuration to restore the former behaviour.",
+            prefix);
+      }
+      return {jointsV, false};
+    }
+    if(active_joints) { return {active_joints->operator std::vector<std::string>(), false}; }
+    if(inactive_joints) { return {inactive_joints->operator std::vector<std::string>(), true}; }
+    return {std::nullopt, false};
+  };
+  const auto & [r1Joints, r1Inactive] = loadActiveJoints("r1");
+  const auto & [r2Joints, r2Inactive] = loadActiveJoints("r2");
+  return mc_rbdyn::Collision(body1, body2, config("iDist", 0.05), config("sDist", 0.01), config("damping", 0.0),
+                             r1Joints, r2Joints, r1Inactive, r2Inactive);
 }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Collision>::save(const mc_rbdyn::Collision & c)
@@ -162,8 +196,16 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Collision>::save(const mc_rb
   config.add("iDist", c.iDist);
   config.add("sDist", c.sDist);
   config.add("damping", c.damping);
-  config.add("r1Joints", c.r1Joints);
-  config.add("r2Joints", c.r2Joints);
+  auto saveActiveJoints = [&](std::string prefix, const std::optional<std::vector<std::string>> & joints, bool inactive)
+  {
+    if(joints)
+    {
+      if(inactive) { config.add(prefix + "InactiveJoints", *c.r1Joints); }
+      else { config.add(prefix + "ActiveJoints", *c.r1Joints); }
+    }
+  };
+  saveActiveJoints("r1", c.r1Joints, c.r1JointsInactive);
+  saveActiveJoints("r2", c.r2Joints, c.r2JointsInactive);
   return config;
 }
 

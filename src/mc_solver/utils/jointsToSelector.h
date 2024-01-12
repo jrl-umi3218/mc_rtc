@@ -5,10 +5,31 @@
 namespace mc_solver
 {
 
+/**
+ * @brief Returns a joint selector for the given list of active/unactive joints
+ *
+ * @tparam Select If true, the selector will be set to 1 (active) for the given joints, 0 (unactive) otherwise. An empty
+ * vector is treated as no active joints.
+ * @tparam Select If false, the selector will be set to 0 (unactive) for the given joints, 1 (active) otherwise. An
+ * empty vector is treated as no inactive joints.
+ *
+ * @return Eigen::VectorXd A joint selector consisting of a vector of size robot.mb().nrDof() with 1 for active joints,
+ * 0 otherwise or an empty vector when all joints are active.
+ */
 template<bool Select = true>
 static inline Eigen::VectorXd jointsToSelector(const mc_rbdyn::Robot & robot, const std::vector<std::string> & joints)
 {
-  if(joints.size() == 0) { return Eigen::VectorXd::Zero(0); }
+  if(joints.empty())
+  {
+    if constexpr(Select)
+    { // no joints active
+      return Eigen::VectorXd::Zero(robot.mb().nrDof());
+    }
+    else
+    { // all joints active
+      return Eigen::VectorXd::Zero(0);
+    }
+  }
   Eigen::VectorXd ret = [&robot]()
   {
     if constexpr(Select) { return Eigen::VectorXd::Zero(robot.mb().nrDof()); }
