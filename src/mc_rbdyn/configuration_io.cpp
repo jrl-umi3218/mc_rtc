@@ -154,29 +154,32 @@ mc_rbdyn::Collision ConfigurationLoader<mc_rbdyn::Collision>::load(const mc_rtc:
   auto body2 = config("body2");
   auto loadActiveJoints = [&](std::string prefix) -> std::tuple<std::optional<std::vector<std::string>>, bool>
   {
-    if((config.has(prefix + "ActiveJoints") || config.has(prefix + "Joints")) && config.has(prefix + "InactiveJoints"))
+    auto active_joints = config.find(prefix + "ActiveJoints");
+    auto joints = config.find(prefix + "Joints");
+    auto inactive_joints = config.find(prefix + "InactiveJoints");
+    if((active_joints || joints) && inactive_joints)
     {
       mc_rtc::log::warning(
           "Collision ({} - {}) has both {}ActiveJoints and {}InactiveJoints, {}ActiveJoints will be used", body1, body2,
           prefix);
     }
 
-    if(auto cfg = config.find(prefix + "Joints"))
+    if(joints)
     {
       mc_rtc::log::deprecated(fmt::format("Collision ({} - {})", body1, body2), prefix + "Joints",
                               prefix + "ActiveJoints");
-      auto joints = cfg->operator std::vector<std::string>();
-      if(joints.empty())
+      auto jointsV = joints->operator std::vector<std::string>();
+      if(jointsV.empty())
       {
         mc_rtc::log::warning(
             "[Collision][breaking change] The meaning of an empty joint vector has changed from all joints active to "
             "no joints active. Remove {}Joints from your configuration to restore the former behaviour.",
             prefix);
       }
-      return {cfg->operator std::vector<std::string>(), false};
+      return {jointsV, false};
     }
-    if(auto cfg = config.find(prefix + "ActiveJoints")) { return {cfg->operator std::vector<std::string>(), false}; }
-    if(auto cfg = config.find(prefix + "InactiveJoints")) { return {cfg->operator std::vector<std::string>(), true}; }
+    if(active_joints) { return {active_joints->operator std::vector<std::string>(), false}; }
+    if(inactive_joints) { return {inactive_joints->operator std::vector<std::string>(), true}; }
     return {std::nullopt, false};
   };
   const auto & [r1Joints, r1Inactive] = loadActiveJoints("r1");
