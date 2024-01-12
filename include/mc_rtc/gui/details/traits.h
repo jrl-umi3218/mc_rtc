@@ -106,7 +106,10 @@ inline constexpr bool has_compatible_signature_v = std::is_convertible_v<Callbac
 /** Given a type provides appropriate labels.
  *
  * The following types are supported:
+ * - Eigen::Vector2d -> {"x", "y"}
  * - Eigen::Vector3d -> {"x", "y", "z"}
+ * - Eigen::Vector4d -> {"x", "y", "z", "w"}
+ * - Eigen::Quaterniond -> {"w", "x", "y", "z"}
  * - Eigen::Quaterniond -> {"w", "x", "y", "z"}
  * - sva::MotionVecd -> {"wx", "wy", "wz", "vx", "vy", "vz"}
  * - sva::ForceVecd -> {"cx", "cy", "cz", "fx", "fy", "fz"}
@@ -120,10 +123,24 @@ struct Labels
 };
 
 template<>
+struct Labels<Eigen::Vector2d>
+{
+  static constexpr bool has_labels = true;
+  inline static const std::vector<std::string> labels = {"x", "y"};
+};
+
+template<>
 struct Labels<Eigen::Vector3d>
 {
   static constexpr bool has_labels = true;
   inline static const std::vector<std::string> labels = {"x", "y", "z"};
+};
+
+template<>
+struct Labels<Eigen::Vector4d>
+{
+  static constexpr bool has_labels = true;
+  inline static const std::vector<std::string> labels = {"x", "y", "z", "w"};
 };
 
 template<>

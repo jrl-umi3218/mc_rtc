@@ -89,6 +89,20 @@ inline constexpr bool is_std_map_schema_v = []()
   else { return false; }
 }();
 
+/** Type-trait to detect if something is an Eigen::VectorNd */
+template<typename T>
+struct is_eigen_vector : public std::false_type
+{
+};
+
+template<typename Scalar, int Rows, int Options, int MaxRows>
+struct is_eigen_vector<Eigen::Matrix<Scalar, Rows, 1, Options, MaxRows, 1>> : public std::true_type
+{
+};
+
+template<typename T>
+inline constexpr bool is_eigen_vector_v = is_eigen_vector<T>::value;
+
 template<typename T, bool IsRequired, bool IsInteractive, bool HasChoices = false, bool IsStatic = false>
 void addValueToForm(const T & value,
                     const std::string & description,
@@ -182,7 +196,7 @@ void addValueToForm(const T & value,
   {
     form.addElement(mc_rtc::gui::FormTransformInput(description, IsRequired, get_value, IsInteractive));
   }
-  else if constexpr(std::is_same_v<T, sva::ForceVecd>)
+  else if constexpr(std::is_same_v<T, sva::ForceVecd> || details::is_eigen_vector_v<T>)
   {
     form.addElement(mc_rtc::gui::FormArrayInput(description, IsRequired, get_value));
   }

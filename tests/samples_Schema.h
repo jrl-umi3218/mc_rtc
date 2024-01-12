@@ -15,5 +15,7 @@ struct SimpleSchema
   MEMBER(MapType, jointValues, "Some joint values")
   MEMBER(sva::ForceVecd, wrench, "Target wrench")
   MEMBER(sva::PTransformd, pt, "Some transform")
+  MEMBER(Eigen::Vector2d, v2d, "Some 2d setting")
+  MEMBER(Eigen::Vector4d, v4d, "Some 4d setting")
 #undef MEMBER
 };
