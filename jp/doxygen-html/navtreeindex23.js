@@ -1,5 +1,7 @@
 var NAVTREEINDEX23 =
 {
+"tasks__traits_8h_source.html":[7,0,0,8,29],
+"traits_8h.html":[7,0,0,6,0,0,0],
 "traits_8h.html#a063ab3ae51c7861effacdad6ad481fb7":[7,0,0,6,0,0,0,21],
 "traits_8h.html#a12c06c1a155a20f7d150d8f8699ca073":[7,0,0,6,0,0,0,31],
 "traits_8h.html#a3f24a46e2245c7951863c943009a6b3c":[7,0,0,6,0,0,0,22],

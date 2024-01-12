@@ -1,5 +1,7 @@
 var NAVTREEINDEX19 =
 {
+"structmc__tasks_1_1PositionBasedVisServoTask.html#a9cc81a8586f6a7232fc6cf1f92aaf0dc":[6,0,9,17,0],
+"structmc__tasks_1_1PositionBasedVisServoTask.html#aa2e8c33c6432ee68e91a59ed396fdd2a":[6,0,9,17,4],
 "structmc__tasks_1_1PositionBasedVisServoTask.html#ab210ce2c552242965b7bd04b02d91517":[6,0,9,17,2],
 "structmc__tasks_1_1PositionBasedVisServoTask.html#ae2cab369aedb3678ebd9b4687faa8ba9":[6,0,9,17,1],
 "structmc__tasks_1_1PositionTask.html":[6,0,9,18],
@@ -247,7 +249,5 @@ var NAVTREEINDEX19 =
 "structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#aea29b650bf510a48543c2c44cfcf7746":[6,0,9,0,0,4],
 "structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#afc77fd9f5ac84a9a9024994b101da0c8":[6,0,9,0,0,2],
 "structmc__tasks_1_1force_1_1AdmittanceTask.html":[6,0,9,1,1],
-"structmc__tasks_1_1force_1_1AdmittanceTask.html#a052349477335695173c7765bbac00210":[6,0,9,1,1,17],
-"structmc__tasks_1_1force_1_1AdmittanceTask.html#a11f68c4af2082ba57141752b3036e0f1":[6,0,9,1,1,7],
-"structmc__tasks_1_1force_1_1AdmittanceTask.html#a1a82a23ac354e6e380ecd7803e790d27":[6,0,9,1,1,9]
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#a052349477335695173c7765bbac00210":[6,0,9,1,1,17]
 };

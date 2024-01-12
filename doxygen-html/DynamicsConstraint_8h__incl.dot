@@ -28,9 +28,11 @@ digraph "include/mc_solver/DynamicsConstraint.h"
   Node25 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node11 [label="mc_rbdyn/api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$include_2mc__rbdyn_2api_8h.html",tooltip=" "];
   Node25 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node26 [label="vector",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
-  Node8 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node27 [label="mc_rbdyn/CompoundJointConstraint\lDescription.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$CompoundJointConstraintDescription_8h.html",tooltip=" "];
+  Node26 [label="optional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node25 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node27 [label="vector",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node8 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node28 [label="mc_rbdyn/CompoundJointConstraint\lDescription.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$CompoundJointConstraintDescription_8h.html",tooltip=" "];
   Node8 -> Node44 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node44 [label="mc_rbdyn/Flexibility.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Flexibility_8h.html",tooltip=" "];
   Node44 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -48,7 +50,7 @@ digraph "include/mc_solver/DynamicsConstraint.h"
   Node8 -> Node70 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node70 [label="mc_rbdyn/Springs.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Springs_8h.html",tooltip=" "];
   Node70 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node70 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node70 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node8 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node8 -> Node71 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node71 [label="mc_rbdyn/lipm_stabilizer\l/StabilizerConfiguration.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$StabilizerConfiguration_8h.html",tooltip=" "];
@@ -58,8 +60,8 @@ digraph "include/mc_solver/DynamicsConstraint.h"
   Node8 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node8 -> Node74 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node74 [label="RBDyn/parsers/common.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
-  Node8 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 -> Node44 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 -> Node45 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -67,7 +69,7 @@ digraph "include/mc_solver/DynamicsConstraint.h"
   Node5 -> Node70 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node13 [label="memory",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
-  Node5 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 -> Node76 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node76 [label="mc_rbdyn/RobotFrame.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__rbdyn_2RobotFrame_8h.html",tooltip=" "];
   Node76 -> Node77 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -82,8 +84,8 @@ digraph "include/mc_solver/DynamicsConstraint.h"
   Node77 -> Node81 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node81 [label="mc_rtc/shared.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$shared_8h.html",tooltip=" "];
   Node81 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node81 -> Node36 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node36 [label="type_traits",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node81 -> Node37 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node37 [label="type_traits",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
   Node77 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node12 [label="SpaceVecAlg/SpaceVecAlg",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
   Node4 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -94,7 +96,7 @@ digraph "include/mc_solver/DynamicsConstraint.h"
   Node83 [label="RBDyn/MultiBodyConfig.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
   Node82 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node82 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node82 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node82 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 -> Node80 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 -> Node84 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -103,8 +105,7 @@ digraph "include/mc_solver/DynamicsConstraint.h"
   Node4 -> Node85 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node85 [label="RBDyn/MultiBodyGraph.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
   Node4 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 -> Node41 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node41 [label="optional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node4 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 -> Node64 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node64 [label="unordered_map",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
   Node4 -> Node86 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -112,7 +113,7 @@ digraph "include/mc_solver/DynamicsConstraint.h"
   Node3 -> Node87 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node87 [label="mc_rtc/iterators.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$iterators_8h.html",tooltip=" "];
   Node87 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node87 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node87 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 -> Node81 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node88 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node88 [label="mc_solver/ConstraintSet.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ConstraintSet_8h.html",tooltip=" "];
@@ -127,8 +128,8 @@ digraph "include/mc_solver/DynamicsConstraint.h"
   Node91 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node91 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node89 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node89 -> Node39 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node39 [label="mc_rtc/pragma.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$pragma_8h.html",tooltip=" "];
+  Node89 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node40 [label="mc_rtc/pragma.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$pragma_8h.html",tooltip=" "];
   Node89 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node88 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node93 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
