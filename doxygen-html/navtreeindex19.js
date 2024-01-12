@@ -1,5 +1,10 @@
 var NAVTREEINDEX19 =
 {
+"structmc__tasks_1_1PositionBasedVisServoTask.html#ab210ce2c552242965b7bd04b02d91517":[6,0,9,17,2],
+"structmc__tasks_1_1PositionBasedVisServoTask.html#ae2cab369aedb3678ebd9b4687faa8ba9":[6,0,9,17,1],
+"structmc__tasks_1_1PositionTask.html":[6,0,9,18],
+"structmc__tasks_1_1PositionTask.html#a048c94abdb15f43ba0eb3504c724ea9d":[6,0,9,18,7],
+"structmc__tasks_1_1PositionTask.html#a1ace65857e5ada474531dcffc700924f":[6,0,9,18,4],
 "structmc__tasks_1_1PositionTask.html#a346759f0552355a22d302ee7d91673b7":[6,0,9,18,5],
 "structmc__tasks_1_1PositionTask.html#a4424ab1a1faf897723d2f3bdbacc3f97":[6,0,9,18,3],
 "structmc__tasks_1_1PositionTask.html#a4e0abb585b67f4f3026269e5809e41d4":[6,0,9,18,10],
@@ -244,10 +249,5 @@ var NAVTREEINDEX19 =
 "structmc__tasks_1_1force_1_1AdmittanceTask.html":[6,0,9,1,1],
 "structmc__tasks_1_1force_1_1AdmittanceTask.html#a052349477335695173c7765bbac00210":[6,0,9,1,1,17],
 "structmc__tasks_1_1force_1_1AdmittanceTask.html#a11f68c4af2082ba57141752b3036e0f1":[6,0,9,1,1,7],
-"structmc__tasks_1_1force_1_1AdmittanceTask.html#a1a82a23ac354e6e380ecd7803e790d27":[6,0,9,1,1,9],
-"structmc__tasks_1_1force_1_1AdmittanceTask.html#a23ad3f774d74e81633461ffe28c9335f":[6,0,9,1,1,14],
-"structmc__tasks_1_1force_1_1AdmittanceTask.html#a2eeb8d4440242d2c4526226e15efaf87":[6,0,9,1,1,34],
-"structmc__tasks_1_1force_1_1AdmittanceTask.html#a3433b288829da956de5f93c99dc12870":[6,0,9,1,1,35],
-"structmc__tasks_1_1force_1_1AdmittanceTask.html#a3958c43db37f34168e7b0b370d8edf23":[6,0,9,1,1,18],
-"structmc__tasks_1_1force_1_1AdmittanceTask.html#a40e25a8a37d85dfbde690b2c20e84717":[6,0,9,1,1,29]
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#a1a82a23ac354e6e380ecd7803e790d27":[6,0,9,1,1,9]
 };

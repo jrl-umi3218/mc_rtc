@@ -1,5 +1,6 @@
 var NAVTREEINDEX6 =
 {
+"pragma_8h.html#a6803324242017bdb17050394560aeb5a":[7,0,0,6,19,11],
 "pragma_8h.html#a68ae92d9a7368007a7f93d6e5bee5454":[7,0,0,6,19,17],
 "pragma_8h.html#a7bc988f4aa0896d1c3894abe5f5dbd13":[7,0,0,6,19,5],
 "pragma_8h.html#a8b26cd59b48fd7f9a75f848ec1963e65":[7,0,0,6,19,19],
@@ -248,6 +249,5 @@ var NAVTREEINDEX6 =
 "structmc__control_1_1Gripper.html#aa662e2af56018d19e5655934616d8943":[6,0,2,12,45],
 "structmc__control_1_1Gripper.html#aa6a495f7018cd71dcc4d366df8807cf2":[6,0,2,12,57],
 "structmc__control_1_1Gripper.html#aa789942e53cc165d37e40819a233ddbf":[6,0,2,12,20],
-"structmc__control_1_1Gripper.html#aad4ca73d511751dca580ea0f372780e1":[6,0,2,12,25],
-"structmc__control_1_1Gripper.html#ab343f75540cb23dadf80172b9b5e1e79":[6,0,2,12,0]
+"structmc__control_1_1Gripper.html#aad4ca73d511751dca580ea0f372780e1":[6,0,2,12,25]
 };

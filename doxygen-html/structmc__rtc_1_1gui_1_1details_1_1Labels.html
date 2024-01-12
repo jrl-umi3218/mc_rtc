@@ -94,7 +94,10 @@ struct mc_rtc::gui::details::Labels&lt; T &gt;</h3>
 
 <p>Given a type provides appropriate labels.</p>
 <p>The following types are supported:</p><ul>
+<li>Eigen::Vector2d -&gt; {"x", "y"}</li>
 <li>Eigen::Vector3d -&gt; {"x", "y", "z"}</li>
+<li>Eigen::Vector4d -&gt; {"x", "y", "z", "w"}</li>
+<li>Eigen::Quaterniond -&gt; {"w", "x", "y", "z"}</li>
 <li>Eigen::Quaterniond -&gt; {"w", "x", "y", "z"}</li>
 <li>sva::MotionVecd -&gt; {"wx", "wy", "wz", "vx", "vy", "vz"}</li>
 <li>sva::ForceVecd -&gt; {"cx", "cy", "cz", "fx", "fy", "fz"}</li>

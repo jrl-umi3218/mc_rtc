@@ -1,5 +1,6 @@
 var NAVTREEINDEX10 =
 {
+"structmc__observers_1_1ObserverPipeline.html#adf93df3bebd6b8e6dc341c2c20ba18ee":[6,0,4,6,25],
 "structmc__observers_1_1ObserverPipeline.html#ae95d55cd84f06d83369b082fa2be0646":[6,0,4,6,27],
 "structmc__observers_1_1ObserverPipeline.html#aeeae20962b5ccf64ec8a3d374604974e":[6,0,4,6,8],
 "structmc__observers_1_1ObserverPipeline.html#aefa347af69a4dc6e69429155bd0e10c7":[6,0,4,6,16],
@@ -248,6 +249,5 @@ var NAVTREEINDEX10 =
 "structmc__rbdyn_1_1JointSensor.html#aba6e6295492c6da6f48372b777dd5ccf":[6,0,6,16,10],
 "structmc__rbdyn_1_1JointSensor.html#abbd216e688e549ffdbadbacb9abb97a8":[6,0,6,16,5],
 "structmc__rbdyn_1_1JointSensor.html#abeb589efccbf28f0614568516829c052":[6,0,6,16,3],
-"structmc__rbdyn_1_1JointSensor.html#abfa5c1b8b13fe8bd3a7ddc4e241fda1a":[6,0,6,16,12],
-"structmc__rbdyn_1_1JointSensor.html#ac0ae6ebd134c29a687ac45f234648e9a":[6,0,6,16,0]
+"structmc__rbdyn_1_1JointSensor.html#abfa5c1b8b13fe8bd3a7ddc4e241fda1a":[6,0,6,16,12]
 };

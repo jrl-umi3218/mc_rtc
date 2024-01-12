@@ -245,6 +245,7 @@ var hierarchy =
       [ "mc_control::MCController::DeprecatedAnchorFrame< T >", "structmc__control_1_1MCController_1_1DeprecatedAnchorFrame.html", null ],
       [ "mc_rtc::gui::details::is_variant< T >", "structmc__rtc_1_1gui_1_1details_1_1is__variant.html", null ],
       [ "mc_rtc::internal::has_write_builder< T, typename >", "structmc__rtc_1_1internal_1_1has__write__builder.html", null ],
+      [ "mc_rtc::schema::details::is_eigen_vector< T >", "structmc__rtc_1_1schema_1_1details_1_1is__eigen__vector.html", null ],
       [ "mc_rtc::schema::details::is_std_map< T >", "structmc__rtc_1_1schema_1_1details_1_1is__std__map.html", null ],
       [ "mc_rtc::schema::details::is_std_vector< T >", "structmc__rtc_1_1schema_1_1details_1_1is__std__vector.html", null ]
     ] ],
@@ -365,7 +366,9 @@ var hierarchy =
     [ "mc_rtc::Logger::KeyRemovedEvent", "structmc__rtc_1_1Logger_1_1KeyRemovedEvent.html", null ],
     [ "mc_rtc::gui::details::Labels< T >", "structmc__rtc_1_1gui_1_1details_1_1Labels.html", null ],
     [ "mc_rtc::gui::details::Labels< Eigen::Quaterniond >", "structmc__rtc_1_1gui_1_1details_1_1Labels_3_01Eigen_1_1Quaterniond_01_4.html", null ],
+    [ "mc_rtc::gui::details::Labels< Eigen::Vector2d >", "structmc__rtc_1_1gui_1_1details_1_1Labels_3_01Eigen_1_1Vector2d_01_4.html", null ],
     [ "mc_rtc::gui::details::Labels< Eigen::Vector3d >", "structmc__rtc_1_1gui_1_1details_1_1Labels_3_01Eigen_1_1Vector3d_01_4.html", null ],
+    [ "mc_rtc::gui::details::Labels< Eigen::Vector4d >", "structmc__rtc_1_1gui_1_1details_1_1Labels_3_01Eigen_1_1Vector4d_01_4.html", null ],
     [ "mc_rtc::gui::details::Labels< sva::ForceVecd >", "structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1ForceVecd_01_4.html", null ],
     [ "mc_rtc::gui::details::Labels< sva::ImpedanceVecd >", "structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1ImpedanceVecd_01_4.html", null ],
     [ "mc_rtc::gui::details::Labels< sva::MotionVecd >", "structmc__rtc_1_1gui_1_1details_1_1Labels_3_01sva_1_1MotionVecd_01_4.html", null ],
@@ -479,8 +482,8 @@ var hierarchy =
       [ "mc_rbdyn::RobotFrame::NewRobotFrameToken", "structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
     ] ],
     [ "mc_rbdyn::Robots::NewRobotsToken", "structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html", null ],
-    [ "mc_rbdyn::Robot::NewRobotToken", "structmc__rbdyn_1_1Robot_1_1NewRobotToken.html", null ],
     [ "mc_tvm::Robot::NewRobotToken", "structmc__tvm_1_1Robot_1_1NewRobotToken.html", null ],
+    [ "mc_rbdyn::Robot::NewRobotToken", "structmc__rbdyn_1_1Robot_1_1NewRobotToken.html", null ],
     [ "Node", null, [
       [ "mc_tvm::CoM", "structmc__tvm_1_1CoM.html", null ],
       [ "mc_tvm::Convex", "structmc__tvm_1_1Convex.html", null ],
@@ -596,6 +599,7 @@ var hierarchy =
       [ "mc_rbdyn::details::are_strings< Args >", "structmc__rbdyn_1_1details_1_1are__strings.html", null ],
       [ "mc_rtc::gui::details::is_variant< std::variant< Args... > >", "structmc__rtc_1_1gui_1_1details_1_1is__variant_3_01std_1_1variant_3_01Args_8_8_8_01_4_01_4.html", null ],
       [ "mc_rtc::internal::has_write_builder< T, std::void_t< decltype(std::declval< const T & >().write(std::declval< MessagePackBuilder & >()))> >", "structmc__rtc_1_1internal_1_1has__write__builder_3_01T_00_01std_1_1void__t_3_01decltype_07std_1_1f30e14306a8a05c633790cd1bae0d02.html", null ],
+      [ "mc_rtc::schema::details::is_eigen_vector< Eigen::Matrix< Scalar, Rows, 1, Options, MaxRows, 1 > >", "structmc__rtc_1_1schema_1_1details_1_1is__eigen__vector_3_01Eigen_1_1Matrix_3_01Scalar_00_01Rowsbb9412232b88ba886c0355b931a7aba0.html", null ],
       [ "mc_rtc::schema::details::is_std_map< std::map< std::string, T > >", "structmc__rtc_1_1schema_1_1details_1_1is__std__map_3_01std_1_1map_3_01std_1_1string_00_01T_01_4_01_4.html", null ],
       [ "mc_rtc::schema::details::is_std_vector< std::vector< T, Allocator > >", "structmc__rtc_1_1schema_1_1details_1_1is__std__vector_3_01std_1_1vector_3_01T_00_01Allocator_01_4_01_4.html", null ]
     ] ],
