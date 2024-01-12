@@ -154,21 +154,28 @@ mc_rbdyn::Collision ConfigurationLoader<mc_rbdyn::Collision>::load(const mc_rtc:
   auto body2 = config("body2");
   auto loadActiveJoints = [&](std::string prefix) -> std::tuple<std::optional<std::vector<std::string>>, bool>
   {
-    if(auto cfg = config.find(prefix + "Joints")) { return {cfg->operator std::vector<std::string>(), false}; }
-    if(auto cfg = config.find(prefix + "ActiveJoints"))
+    if((config.has(prefix + "ActiveJoints") || config.has(prefix + "Joints")) && config.has(prefix + "InactiveJoints"))
     {
-      mc_rtc::log::deprecated(fmt::format("Collision ({} - {})", body1, body2), prefix + "ActiveJoints",
-                              prefix + "Joints");
+      mc_rtc::log::warning(
+          "Collision ({} - {}) has both {}ActiveJoints and {}InactiveJoints, {}ActiveJoints will be used", body1, body2,
+          prefix);
+    }
+
+    if(auto cfg = config.find(prefix + "Joints"))
+    {
+      mc_rtc::log::deprecated(fmt::format("Collision ({} - {})", body1, body2), prefix + "Joints",
+                              prefix + "ActiveJoints");
       auto joints = cfg->operator std::vector<std::string>();
       if(joints.empty())
       {
         mc_rtc::log::warning(
             "[Collision][breaking change] The meaning of an empty joint vector has changed from all joints active to "
-            "no joints active. Remove {}ActiveJoints from your configuration to restore the former behaviour.",
+            "no joints active. Remove {}Joints from your configuration to restore the former behaviour.",
             prefix);
       }
       return {cfg->operator std::vector<std::string>(), false};
     }
+    if(auto cfg = config.find(prefix + "ActiveJoints")) { return {cfg->operator std::vector<std::string>(), false}; }
     if(auto cfg = config.find(prefix + "InactiveJoints")) { return {cfg->operator std::vector<std::string>(), true}; }
     return {std::nullopt, false};
   };
@@ -186,10 +193,16 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Collision>::save(const mc_rb
   config.add("iDist", c.iDist);
   config.add("sDist", c.sDist);
   config.add("damping", c.damping);
-  if(c.r1Joints) { config.add("r1Joints", *c.r1Joints); }
-  if(c.r2Joints) { config.add("r2Joints", *c.r2Joints); }
-  config.add("r1JointsInactive", c.r1JointsInactive);
-  config.add("r2JointsInactive", c.r2JointsInactive);
+  auto saveActiveJoints = [&](std::string prefix, const std::optional<std::vector<std::string>> & joints, bool inactive)
+  {
+    if(joints)
+    {
+      if(inactive) { config.add(prefix + "InactiveJoints", *c.r1Joints); }
+      else { config.add(prefix + "ActiveJoints", *c.r1Joints); }
+    }
+  };
+  saveActiveJoints("r1", c.r1Joints, c.r1JointsInactive);
+  saveActiveJoints("r2", c.r2Joints, c.r2JointsInactive);
   return config;
 }
 
