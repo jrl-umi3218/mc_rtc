@@ -133,14 +133,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   std::string main_robot_name = robots_modules[0]->name;
   if(config.has("MainRobot"))
   {
-    std::string main_robot_name_config;
-    if(config("MainRobot").size() == 0) { config("MainRobot", main_robot_name_config); }
-    else
-    {
-      std::vector<std::string> params = config("MainRobot");
-      main_robot_name_config = params[0];
-    }
-    if(!mc_rbdyn::RobotLoader::has_robot(main_robot_name_config)) { main_robot_name = main_robot_name_config; }
+    if(config("MainRobot").has("name")) { config("MainRobot")("name", main_robot_name); }
   }
   loadRobot(robots_modules[0], main_robot_name);
   for(auto rm : std::vector<mc_rbdyn::RobotModulePtr>(robots_modules.begin() + 1, robots_modules.end()))
