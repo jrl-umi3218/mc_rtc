@@ -130,11 +130,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   qpsolver->gui(gui_);
   qpsolver->controller(this);
 
-  std::string main_robot_name = robot_modules[0]->name;
-  if(config.has("MainRobot"))
-  {
-    if(config("MainRobot").has("name")) { config("MainRobot")("name", main_robot_name); }
-  }
+  std::string main_robot_name = config.find<std::string>("MainRobot", "name").value_or(robot_modules[0]->name);
   loadRobot(robot_modules[0], main_robot_name);
   for(auto it = std::next(robot_modules.cbegin()); it != robot_modules.end(); ++it)
   {
