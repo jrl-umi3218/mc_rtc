@@ -115,7 +115,7 @@ static inline std::shared_ptr<mc_solver::QPSolver> make_solver(double dt, MCCont
   }
 }
 
-MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules,
+MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules,
                            double dt,
                            const mc_rtc::Configuration & config,
                            ControllerParameters params)
@@ -130,14 +130,15 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   qpsolver->gui(gui_);
   qpsolver->controller(this);
 
-  std::string main_robot_name = robots_modules[0]->name;
+  std::string main_robot_name = robot_modules[0]->name;
   if(config.has("MainRobot"))
   {
     if(config("MainRobot").has("name")) { config("MainRobot")("name", main_robot_name); }
   }
-  loadRobot(robots_modules[0], main_robot_name);
-  for(auto rm : std::vector<mc_rbdyn::RobotModulePtr>(robots_modules.begin() + 1, robots_modules.end()))
+  loadRobot(robot_modules[0], main_robot_name);
+  for(auto it = std::next(robot_modules.cbegin()); it != robot_modules.end(); ++it)
   {
+    const auto & rm = *it;
     loadRobot(rm, rm->name);
   }
   /* Load robot-specific configuration depending on parameters */
