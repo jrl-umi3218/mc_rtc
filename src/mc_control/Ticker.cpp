@@ -4,6 +4,8 @@
 
 #include <mc_control/Ticker.h>
 
+#include <thread>
+
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
