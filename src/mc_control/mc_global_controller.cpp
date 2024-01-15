@@ -26,8 +26,6 @@
 
 #include <algorithm>
 #include <cstdlib>
-#include <fstream>
-#include <iomanip>
 
 namespace mc_control
 {
@@ -35,12 +33,12 @@ namespace mc_control
 MCGlobalController::PluginHandle::~PluginHandle() {}
 
 MCGlobalController::MCGlobalController(const std::string & conf, std::shared_ptr<mc_rbdyn::RobotModule> rm)
-: MCGlobalController(GlobalConfiguration(conf, rm))
+: MCGlobalController(GlobalConfiguration(conf, std::move(rm)))
 {
 }
 
 MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
-: config(conf), current_ctrl(""), next_ctrl(""), controller_(nullptr), next_controller_(nullptr)
+: config(conf), controller_(nullptr), next_controller_(nullptr)
 {
   // Display configuration information
   if(conf.enable_gui_server)
