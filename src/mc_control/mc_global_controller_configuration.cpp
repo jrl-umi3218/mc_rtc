@@ -3,9 +3,13 @@
  */
 
 #include <mc_control/mc_global_controller.h>
+
 #include <mc_observers/ObserverLoader.h>
+
 #include <mc_rbdyn/RobotLoader.h>
+
 #include <mc_rtc/ConfigurationHelpers.h>
+#include <mc_rtc/io_utils.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -72,61 +76,41 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   if(rm) { main_robot_module = rm; }
   else
   {
-    if(!config.has("MainRobot") || config("MainRobot").size() == 0)
+    auto main_robot_params = [&]() -> std::vector<std::string>
     {
-      std::string robot_name = "JVRC1";
-      if(config.has("MainRobot"))
-      {
-        if(config("MainRobot").has("module")) { config("MainRobot")("module", robot_name); }
-        else { config("MainRobot", robot_name); }
-      }
-      if(mc_rbdyn::RobotLoader::has_robot(robot_name))
-      {
-        try
-        {
-          main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(robot_name);
-        }
-        catch(const mc_rtc::LoaderException & exc)
-        {
-          mc_rtc::log::error_and_throw("Failed to create {} to use as a main robot", robot_name);
-        }
-      }
-      else
-      {
-        mc_rtc::log::error_and_throw("Trying to use {} as main robot but this robot cannot be loaded", robot_name);
-      }
+      auto main_robot_cfg = config.find("MainRobot");
+      if(!main_robot_cfg) { return {"JVRC1"}; }
+      if(main_robot_cfg->isArray()) { return main_robot_cfg->operator std::vector<std::string>(); }
+      if(main_robot_cfg->isObject()) { return (*main_robot_cfg)("module").operator std::vector<std::string>(); }
+      return {main_robot_cfg->operator std::string()};
+    }();
+    if(!mc_rbdyn::RobotLoader::has_robot(main_robot_params[0]))
+    {
+      mc_rtc::log::error_and_throw("No loadable robot with module {}", main_robot_params[0]);
     }
-    else
+    try
     {
-      std::vector<std::string> params = config("MainRobot");
-      if(mc_rbdyn::RobotLoader::has_robot(params[0]))
-      {
-        try
-        {
-          if(params.size() == 1) { main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(params[0]); }
-          else if(params.size() == 2)
-          {
-            main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(params[0], params[1]);
-          }
-          else if(params.size() == 3)
-          {
-            main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(params[0], params[1], params[2]);
-          }
-          else { throw mc_rtc::LoaderException("Too many parameters given to MainRobot"); }
-        }
-        catch(const mc_rtc::LoaderException &)
-        {
-          mc_rtc::log::error_and_throw("Failed to create main robot using parameters {}", config("MainRobot").dump());
-        }
-      }
-      else
-      {
-        mc_rtc::log::error_and_throw("Trying to use {} as main robot but this robot cannot be loaded", params[0]);
-      }
+      main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(main_robot_params);
+    }
+    catch(const mc_rtc::LoaderException & exc)
+    {
+      mc_rtc::log::error_and_throw(
+          "[mc_rtc::LoaderException] Failed to create [{}] to use as a main robot, exception: {}",
+          mc_rtc::io::to_string(main_robot_params), exc.what());
+    }
+    catch(const std::exception & exc)
+    {
+      mc_rtc::log::error_and_throw("[std::exception] Failed to create [{}] to use as a main robot, exception: {}",
+                                   mc_rtc::io::to_string(main_robot_params), exc.what());
+    }
+    catch(...)
+    {
+      mc_rtc::log::error_and_throw("[General exception] Failed to create [{}] to use as a main robot",
+                                   mc_rtc::io::to_string(main_robot_params));
     }
   }
   main_robot_module->expand_stance();
-  if(main_robot_module->ref_joint_order().size() == 0) { main_robot_module->make_default_ref_joint_order(); }
+  if(main_robot_module->ref_joint_order().empty()) { main_robot_module->make_default_ref_joint_order(); }
 
   /////////////////
   //  Observers  //
