@@ -86,7 +86,12 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       auto main_robot_cfg = config.find("MainRobot");
       if(!main_robot_cfg) { return {"JVRC1"}; }
       if(main_robot_cfg->isArray()) { return main_robot_cfg->operator std::vector<std::string>(); }
-      if(main_robot_cfg->isObject()) { return (*main_robot_cfg)("module").operator std::vector<std::string>(); }
+      if(main_robot_cfg->isObject())
+      {
+        auto module_cfg = (*main_robot_cfg)("module");
+        if(module_cfg.isArray()) { return module_cfg.operator std::vector<std::string>(); }
+        return {module_cfg.operator std::string()};
+      }
       return {main_robot_cfg->operator std::string()};
     }();
     if(!mc_rbdyn::RobotLoader::has_robot(main_robot_params[0]))
