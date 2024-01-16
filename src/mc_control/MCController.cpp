@@ -254,19 +254,15 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
       }
       else
       {
-        std::string module = rconfig("module");
-        auto params = rconfig("params", std::vector<std::string>{});
-        mc_rbdyn::RobotModulePtr rm = nullptr;
-        if(params.size() == 0) { rm = mc_rbdyn::RobotLoader::get_robot_module(module); }
-        else if(params.size() == 1) { rm = mc_rbdyn::RobotLoader::get_robot_module(module, params.at(0)); }
-        else if(params.size() == 2)
+        auto params = [&]() -> std::vector<std::string>
         {
-          rm = mc_rbdyn::RobotLoader::get_robot_module(module, params.at(0), params.at(1));
-        }
-        else
-        {
-          mc_rtc::log::error_and_throw("Controller only handles robot modules that require two parameters at most");
-        }
+          auto module = rconfig("module");
+          if(module.isArray()) { return module.operator std::vector<std::string>(); }
+          std::vector<std::string> params = rconfig("params", std::vector<std::string>{});
+          params.insert(params.begin(), module.operator std::string());
+          return params;
+        }();
+        auto rm = mc_rbdyn::RobotLoader::get_robot_module(params);
         if(!rm) { mc_rtc::log::error_and_throw("Failed to load {} as specified in configuration", rname); }
         auto & robot = loadRobot(rm, rname);
         load_robot_config(robot);
