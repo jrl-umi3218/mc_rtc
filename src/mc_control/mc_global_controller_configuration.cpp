@@ -20,28 +20,32 @@ namespace mc_control
 {
 
 MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string & conf,
-                                                             std::shared_ptr<mc_rbdyn::RobotModule> rm)
+                                                             std::shared_ptr<mc_rbdyn::RobotModule> rm,
+                                                             bool conf_only)
 {
-  // Load default configuration file
-  std::string globalPath(mc_rtc::CONF_PATH);
-  if(bfs::exists(globalPath))
+  if(!conf_only)
   {
-    mc_rtc::log::info("Loading default global configuration {}", globalPath);
-    config.load(globalPath);
-  }
+    // Load default configuration file
+    std::string globalPath(mc_rtc::CONF_PATH);
+    if(bfs::exists(globalPath))
+    {
+      mc_rtc::log::info("Loading default global configuration {}", globalPath);
+      config.load(globalPath);
+    }
 
 #ifndef WIN32
-  auto config_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/mc_rtc.conf";
+    auto config_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/mc_rtc.conf";
 #else
-  // Should work for Windows Vista and up
-  auto config_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/mc_rtc.conf";
+    // Should work for Windows Vista and up
+    auto config_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/mc_rtc.conf";
 #endif
-  // Load user's local configuration if it exists
-  if(!bfs::exists(config_path)) { config_path.replace_extension(".yaml"); }
-  if(bfs::exists(config_path))
-  {
-    mc_rtc::log::info("Loading additional global configuration {}", config_path.string());
-    config.load(config_path.string());
+    // Load user's local configuration if it exists
+    if(!bfs::exists(config_path)) { config_path.replace_extension(".yaml"); }
+    if(bfs::exists(config_path))
+    {
+      mc_rtc::log::info("Loading additional global configuration {}", config_path.string());
+      config.load(config_path.string());
+    }
   }
   // Load extra configuration
   if(bfs::exists(conf))
@@ -49,6 +53,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     mc_rtc::log::info("Loading additional global configuration {}", conf);
     config.load(conf);
   }
+  else if(conf_only) { mc_rtc::log::error_and_throw("Required to load {} only but this is not available", conf); }
 
   ///////////////////////
   //  General options  //

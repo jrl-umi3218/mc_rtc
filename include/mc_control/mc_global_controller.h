@@ -883,8 +883,12 @@ public:
      * \param conf Configuration file that should be loaded
      *
      * \param Main robot module, if null use the MainRobot entry in conf to initialize it
+     *
+     * \param conf_only If true, only load the specified configuration file
      */
-    GlobalConfiguration(const std::string & conf, std::shared_ptr<mc_rbdyn::RobotModule> rm = nullptr);
+    GlobalConfiguration(const std::string & conf,
+                        std::shared_ptr<mc_rbdyn::RobotModule> rm = nullptr,
+                        bool conf_only = false);
 
     inline bool enabled(const std::string & ctrl);
 
