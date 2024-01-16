@@ -30,7 +30,13 @@
       </th>
       <td colspan="2">These entries cover most needs you might have</td>
     </tr>
-    {% include mc_rtc_configuration_row.html entry="MainRobot" desc="This entry dictates the main robot used by all controllers. Most interface cannot infer the correct module to use based on the simulation environment so this is the user's responsibility to make sure the two match." example="MainRobot: JVRC1" %}
+{% capture MainRobot_example2 %}
+# Support renaming the robot
+MainRobot:
+  name: MyRobot
+  module: JVRC1
+{% endcapture %}
+    {% include mc_rtc_configuration_row.html entry="MainRobot" desc="This entry dictates the main robot used by all controllers. Most interface cannot infer the correct module to use based on the simulation environment so this is the user's responsibility to make sure the two match." example="MainRobot: JVRC1" example2=MainRobot_example2%}
     <tr>
       <th scope="row">Enabled</th>
       <td>Provides a list of enabled controllers. See the <a href="{{site.baseurl}}/tutorials/samples/list-of-samples.html">list of all available sample controllers</a>.</td>

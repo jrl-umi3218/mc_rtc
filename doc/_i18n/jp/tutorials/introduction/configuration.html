@@ -30,7 +30,13 @@
       </th>
       <td colspan="2">このエントリは、通常考えられるほとんどのニーズをカバーします。</td>
     </tr>
-    {% include mc_rtc_configuration_row.html entry="MainRobot" desc="このエントリは、すべてのコントローラーで使用されるメインロボットを指定します。ほとんどのインターフェイスは、どのモジュールを使用すべきかをシミュレーション環境に基づいて推測することはできません。そのため、シミュレーション環境に応じてユーザーがモジュールを指定する必要があります。" example="MainRobot: JVRC1" %}
+{% capture MainRobot_example2 %}
+# ロボット名の変更をサポート
+MainRobot:
+  name: MyRobot
+  module: JVRC1
+{% endcapture %}
+    {% include mc_rtc_configuration_row.html entry="MainRobot" desc="このエントリは、すべてのコントローラーで使用されるメインロボットを指定します。ほとんどのインターフェイスは、どのモジュールを使用すべきかをシミュレーション環境に基づいて推測することはできません。そのため、シミュレーション環境に応じてユーザーがモジュールを指定する必要があります。" example="MainRobot: JVRC1" example2=MainRobot_example2 %}
     <tr>
       <th scope="row">Enabled</th>
       <td>有効なコントローラーのリストを提供します。<a href="{{site.baseurl}}/tutorials/samples/list-of-samples.html">利用可能なサンプルコントローラーのリスト</a>を参照してください。</a>.</td>
