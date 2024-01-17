@@ -1,5 +1,11 @@
 <tr>
   <th scope="row">{{include.entry}}</th>
   <td>{{include.desc}}</td>
-  <td>{% highlight yaml %}{{include.example}}{% endhighlight %}</td>
+  <td>
+    {% highlight yaml %}{{include.example}}{% endhighlight %}
+    {% if include.example2 %}
+      <p>{% t or %}</p>
+      {% highlight yaml %}{{include.example2}}{% endhighlight %}
+    {% endif %}
+  </td>
 </tr>

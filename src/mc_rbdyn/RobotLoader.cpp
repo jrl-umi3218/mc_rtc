@@ -98,12 +98,15 @@ void RobotLoader::init(bool skip_default_path)
       if(!skip_default_path) { default_path.push_back(mc_rtc::MC_ROBOTS_INSTALL_PREFIX); }
       robot_loader.reset(new mc_rtc::ObjectLoader<RobotModule>("MC_RTC_ROBOT_MODULE", default_path, verbose_));
       for(const auto & p : default_path) { handle_aliases_dir(bfs::path(p) / "aliases"); }
+      if(!skip_default_path)
+      {
 #ifndef WIN32
-      handle_aliases_dir(bfs::path(std::getenv("HOME")) / ".config/mc_rtc/aliases/");
+        handle_aliases_dir(bfs::path(std::getenv("HOME")) / ".config/mc_rtc/aliases/");
 #else
-      // Should work for Windows Vista and up
-      handle_aliases_dir(bfs::path(std::getenv("APPDATA")) / "mc_rtc/aliases/");
+        // Should work for Windows Vista and up
+        handle_aliases_dir(bfs::path(std::getenv("APPDATA")) / "mc_rtc/aliases/");
 #endif
+      }
     }
     catch(const mc_rtc::LoaderException & exc)
     {

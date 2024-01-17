@@ -3,9 +3,13 @@
  */
 
 #include <mc_control/mc_global_controller.h>
+
 #include <mc_observers/ObserverLoader.h>
+
 #include <mc_rbdyn/RobotLoader.h>
+
 #include <mc_rtc/ConfigurationHelpers.h>
+#include <mc_rtc/io_utils.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -16,28 +20,32 @@ namespace mc_control
 {
 
 MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string & conf,
-                                                             std::shared_ptr<mc_rbdyn::RobotModule> rm)
+                                                             std::shared_ptr<mc_rbdyn::RobotModule> rm,
+                                                             bool conf_only)
 {
-  // Load default configuration file
-  std::string globalPath(mc_rtc::CONF_PATH);
-  if(bfs::exists(globalPath))
+  if(!conf_only)
   {
-    mc_rtc::log::info("Loading default global configuration {}", globalPath);
-    config.load(globalPath);
-  }
+    // Load default configuration file
+    std::string globalPath(mc_rtc::CONF_PATH);
+    if(bfs::exists(globalPath))
+    {
+      mc_rtc::log::info("Loading default global configuration {}", globalPath);
+      config.load(globalPath);
+    }
 
 #ifndef WIN32
-  auto config_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/mc_rtc.conf";
+    auto config_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/mc_rtc.conf";
 #else
-  // Should work for Windows Vista and up
-  auto config_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/mc_rtc.conf";
+    // Should work for Windows Vista and up
+    auto config_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/mc_rtc.conf";
 #endif
-  // Load user's local configuration if it exists
-  if(!bfs::exists(config_path)) { config_path.replace_extension(".yaml"); }
-  if(bfs::exists(config_path))
-  {
-    mc_rtc::log::info("Loading additional global configuration {}", config_path.string());
-    config.load(config_path.string());
+    // Load user's local configuration if it exists
+    if(!bfs::exists(config_path)) { config_path.replace_extension(".yaml"); }
+    if(bfs::exists(config_path))
+    {
+      mc_rtc::log::info("Loading additional global configuration {}", config_path.string());
+      config.load(config_path.string());
+    }
   }
   // Load extra configuration
   if(bfs::exists(conf))
@@ -45,6 +53,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     mc_rtc::log::info("Loading additional global configuration {}", conf);
     config.load(conf);
   }
+  else if(conf_only) { mc_rtc::log::error_and_throw("Required to load {} only but this is not available", conf); }
 
   ///////////////////////
   //  General options  //
@@ -72,56 +81,46 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   if(rm) { main_robot_module = rm; }
   else
   {
-    if(!config.has("MainRobot") || config("MainRobot").size() == 0)
+    auto main_robot_params = [&]() -> std::vector<std::string>
     {
-      std::string robot_name = config("MainRobot", std::string{"JVRC1"});
-      if(mc_rbdyn::RobotLoader::has_robot(robot_name))
+      auto main_robot_cfg = config.find("MainRobot");
+      if(!main_robot_cfg) { return {"JVRC1"}; }
+      if(main_robot_cfg->isArray()) { return main_robot_cfg->operator std::vector<std::string>(); }
+      if(main_robot_cfg->isObject())
       {
-        try
-        {
-          main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(robot_name);
-        }
-        catch(const mc_rtc::LoaderException & exc)
-        {
-          mc_rtc::log::error_and_throw("Failed to create {} to use as a main robot", robot_name);
-        }
+        auto module_cfg = (*main_robot_cfg)("module");
+        if(module_cfg.isArray()) { return module_cfg.operator std::vector<std::string>(); }
+        return {module_cfg.operator std::string()};
       }
-      else
-      {
-        mc_rtc::log::error_and_throw("Trying to use {} as main robot but this robot cannot be loaded", robot_name);
-      }
+      return {main_robot_cfg->operator std::string()};
+    }();
+    if(!mc_rbdyn::RobotLoader::has_robot(main_robot_params[0]))
+    {
+      mc_rtc::log::error_and_throw("No loadable robot with module {}", main_robot_params[0]);
     }
-    else
+    try
     {
-      std::vector<std::string> params = config("MainRobot");
-      if(mc_rbdyn::RobotLoader::has_robot(params[0]))
-      {
-        try
-        {
-          if(params.size() == 1) { main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(params[0]); }
-          else if(params.size() == 2)
-          {
-            main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(params[0], params[1]);
-          }
-          else if(params.size() == 3)
-          {
-            main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(params[0], params[1], params[2]);
-          }
-          else { throw mc_rtc::LoaderException("Too many parameters given to MainRobot"); }
-        }
-        catch(const mc_rtc::LoaderException &)
-        {
-          mc_rtc::log::error_and_throw("Failed to create main robot using parameters {}", config("MainRobot").dump());
-        }
-      }
-      else
-      {
-        mc_rtc::log::error_and_throw("Trying to use {} as main robot but this robot cannot be loaded", params[0]);
-      }
+      main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(main_robot_params);
+    }
+    catch(const mc_rtc::LoaderException & exc)
+    {
+      mc_rtc::log::error_and_throw(
+          "[mc_rtc::LoaderException] Failed to create [{}] to use as a main robot, exception: {}",
+          mc_rtc::io::to_string(main_robot_params), exc.what());
+    }
+    catch(const std::exception & exc)
+    {
+      mc_rtc::log::error_and_throw("[std::exception] Failed to create [{}] to use as a main robot, exception: {}",
+                                   mc_rtc::io::to_string(main_robot_params), exc.what());
+    }
+    catch(...)
+    {
+      mc_rtc::log::error_and_throw("[General exception] Failed to create [{}] to use as a main robot",
+                                   mc_rtc::io::to_string(main_robot_params));
     }
   }
   main_robot_module->expand_stance();
-  if(main_robot_module->ref_joint_order().size() == 0) { main_robot_module->make_default_ref_joint_order(); }
+  if(main_robot_module->ref_joint_order().empty()) { main_robot_module->make_default_ref_joint_order(); }
 
   /////////////////
   //  Observers  //

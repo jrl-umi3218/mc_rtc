@@ -252,3 +252,5 @@ target_link_libraries(gui_Schema PUBLIC mc_control)
 mc_rtc_test(test_filters mc_filter SpaceVecAlg::SpaceVecAlg)
 
 mc_rtc_test(test_interpolation mc_control)
+
+add_subdirectory(global_controller_configuration)

@@ -132,6 +132,7 @@ public:
     std::lock_guard<std::mutex> guard{mtx};
     init(true);
     robot_loader->clear();
+    aliases.clear();
   }
 
   /** Check if a robot is available

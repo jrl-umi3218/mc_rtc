@@ -1,0 +1,12 @@
+MainRobot: @MAIN_ROBOT@
+ClearRobotModulePath: true
+RobotModulePaths: ["@ROBOT_MODULE_PATH@"]
+
+ClearControllerModulePath: true
+Enabled: [Posture]
+
+ClearObserverModulePath: true
+ObserverPipelines: {}
+
+ClearGlobalPluginPath: true
+Plugins: []
