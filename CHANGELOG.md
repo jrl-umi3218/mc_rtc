@@ -2,7 +2,21 @@
 
 ## [Unreleased]
 
-## [2.9.2] - 2023-10-16
+## [2.10.0] - 2024-01-17
+
+### Added
+
+- [mc_control] Support for renaming the main robot via the configuration (#423)
+- [mc_rbdyn] Add `addBodySensor` to `mc_rbdyn::Robot` (#419)
+- [mc_rtc] Add support for any fixed size vector to Schema (#422)
+- [mc_rtc] Add `std::map<std::string, T>` support in Schema (#412)
+- [mc_solver] Add support for inactive joints in a collision (#416)
+
+### Fixes
+
+- [StabilizerTask] Fix disabling when the robot is in the air (#411)
+
+## [2.9.3] - 2023-10-16
 
 ### Added
 
@@ -804,7 +818,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.9.3...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.10.0...HEAD
+[2.10.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.10.0
 [2.9.3]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.3
 [2.9.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.2
 [2.9.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.1
