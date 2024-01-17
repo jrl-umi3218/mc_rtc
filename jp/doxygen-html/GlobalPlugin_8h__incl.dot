@@ -25,6 +25,8 @@ digraph "include/mc_control/GlobalPlugin.h"
   Node59 [label="mc_rtc/log/Logger.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Logger_8h.html",tooltip=" "];
   Node59 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node22 [label="mc_rtc/logging.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$logging_8h.html",tooltip=" "];
+  Node59 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="memory",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
   Node4 -> Node63 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node63 [label="mc_rbdyn/RobotConverter.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$RobotConverter_8h.html",tooltip=" "];
   Node63 -> Node82 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -36,6 +38,9 @@ digraph "include/mc_control/GlobalPlugin.h"
   Node4 -> Node102 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node102 [label="mc_rtc/DataStore.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$DataStore_8h.html",tooltip=" "];
   Node102 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node102 -> Node103 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node103 [label="functional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node102 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node102 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node20 [label="vector",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
   Node4 -> Node105 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -43,7 +48,8 @@ digraph "include/mc_control/GlobalPlugin.h"
   Node105 -> Node43 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 -> Node59 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 -> Node148 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node148 [label="mc_rtc/unique_ptr.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$unique__ptr_8h.html",tooltip=" "];
+  Node148 [label="mc_rtc/unique_ptr.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$unique__ptr_8h.html",tooltip=" "];
+  Node148 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 -> Node149 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node149 [label="mc_solver/CollisionsConstraint.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$CollisionsConstraint_8h.html",tooltip=" "];
   Node149 -> Node71 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -71,6 +77,7 @@ digraph "include/mc_control/GlobalPlugin.h"
   Node151 [label="mc_solver/QPSolver.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$QPSolver_8h.html",tooltip=" "];
   Node151 -> Node36 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node151 -> Node100 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node151 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 -> Node165 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node165 [label="mc_tasks/PostureTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$PostureTask_8h.html",tooltip=" "];
   Node4 -> Node36 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -88,8 +95,12 @@ digraph "include/mc_control/GlobalPlugin.h"
   Node170 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node170 -> Node172 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node172 [label="boost/noncopyable.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node170 -> Node173 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node173 [label="ltdl.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node170 -> Node103 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node170 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node14 [label="map",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node170 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node170 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node170 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -142,10 +153,4 @@ digraph "include/mc_control/GlobalPlugin.h"
   Node2 -> Node170 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node59 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 -> Node123 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node123 [label="fstream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
-  Node2 -> Node176 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node176 [label="sstream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
-  Node2 -> Node177 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node177 [label="thread",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
 }

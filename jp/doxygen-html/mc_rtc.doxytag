@@ -20678,8 +20678,8 @@
       <type></type>
       <name>GlobalConfiguration</name>
       <anchorfile>structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html</anchorfile>
-      <anchor>a987a966351ac8bc6f17d94cc8103a408</anchor>
-      <arglist>(const std::string &amp;conf, std::shared_ptr&lt; mc_rbdyn::RobotModule &gt; rm=nullptr)</arglist>
+      <anchor>af18c32734324bbb065f49691b11aca11</anchor>
+      <arglist>(const std::string &amp;conf, std::shared_ptr&lt; mc_rbdyn::RobotModule &gt; rm=nullptr, bool conf_only=false)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>

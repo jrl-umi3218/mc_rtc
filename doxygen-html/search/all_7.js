@@ -72,7 +72,7 @@ var searchData=
   ['global_5fplugin_5fpaths_1049',['global_plugin_paths',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a66adac4c10fc9599308e15741a15f0a6',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['global_5fplugins_1050',['global_plugins',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a9b7cb460139df0aa576f76bfb45e4bc2',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['global_5fplugins_5fautoload_1051',['global_plugins_autoload',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a27279fba33e00bc1e4f16edc0db7f160',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
-  ['globalconfiguration_1052',['GlobalConfiguration',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html',1,'mc_control::MCGlobalController::GlobalConfiguration'],['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a987a966351ac8bc6f17d94cc8103a408',1,'mc_control::MCGlobalController::GlobalConfiguration::GlobalConfiguration()']]],
+  ['globalconfiguration_1052',['GlobalConfiguration',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html',1,'mc_control::MCGlobalController::GlobalConfiguration'],['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#af18c32734324bbb065f49691b11aca11',1,'mc_control::MCGlobalController::GlobalConfiguration::GlobalConfiguration()']]],
   ['globalplugin_1053',['GlobalPlugin',['../structmc__control_1_1GlobalPlugin.html',1,'mc_control']]],
   ['globalplugin_2eh_1054',['GlobalPlugin.h',['../GlobalPlugin_8h.html',1,'']]],
   ['globalplugin_5ffwd_2eh_1055',['GlobalPlugin_fwd.h',['../GlobalPlugin__fwd_8h.html',1,'']]],

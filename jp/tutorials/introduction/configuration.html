@@ -390,10 +390,20 @@
       </th>
       <td colspan="2">このエントリは、通常考えられるほとんどのニーズをカバーします。</td>
     </tr>
+
     <tr>
   <th scope="row">MainRobot</th>
   <td>このエントリは、すべてのコントローラーで使用されるメインロボットを指定します。ほとんどのインターフェイスは、どのモジュールを使用すべきかをシミュレーション環境に基づいて推測することはできません。そのため、シミュレーション環境に応じてユーザーがモジュールを指定する必要があります。</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span></code></pre></figure>
+    
+      <p>または</p>
+      <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># ロボット名の変更をサポート</span>
+<span class="na">MainRobot</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">MyRobot</span>
+  <span class="na">module</span><span class="pi">:</span> <span class="s">JVRC1</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
@@ -404,31 +414,46 @@
     <tr>
   <th scope="row">Default</th>
   <td>有効なコントローラーのうちどれを最初に起動するかを選択します。なお、デフォルトとして指定されたコントローラーが有効になっていない場合や、デフォルトのコントローラーが指定されていない場合は、リスト内で最初に登場する有効なコントローラーがデフォルトコントローラーとして選択されます。</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Default</span><span class="pi">:</span> <span class="s">Posture</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Default</span><span class="pi">:</span> <span class="s">Posture</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">Timestep</th>
   <td>コントローラーのタイムステップ</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Timestep</span><span class="pi">:</span> <span class="s">0.005</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Timestep</span><span class="pi">:</span> <span class="s">0.005</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">Log</th>
   <td>コントローラーの出力をログに記録するかどうかを指定します。</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Log</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Log</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">InitAttitudeFromSensor</th>
   <td>センサーとロボットモジュールのどちらでロボットの姿勢を初期化するかを指定します。</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">InitAttitudeFromSensor</span><span class="pi">:</span> <span class="no">false</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">InitAttitudeFromSensor</span><span class="pi">:</span> <span class="no">false</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">InitAttitudeSensor</th>
   <td>ロボットの姿勢の初期化に使用されるボディセンサーの名前。名前が空の場合、デフォルトのボディセンサーが使用されます。このエントリは、<pre>InitAttitudeFromSensor=true</pre>の場合にだけ使用されます。</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">InitAttitudeSensor</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">InitAttitudeSensor</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr class="table-active">
@@ -441,19 +466,28 @@
     <tr>
   <th scope="row">LogDirectory</th>
   <td>このオプションは、ログファイルをどこに保存するかを指定します。デフォルトではシステムの一時ディレクトリに保存されます。</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogDirectory</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/tmp"</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogDirectory</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/tmp"</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">LogTemplate</th>
   <td>このオプションは、ログのプレフィックスを指定します。ログファイルには以下のように名前が付けられます。 <pre>[LogTemplate]-[ControllerName]-[date].log</pre></td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogTemplate</span><span class="pi">:</span> <span class="s2">"</span><span class="s">mc-control"</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogTemplate</span><span class="pi">:</span> <span class="s2">"</span><span class="s">mc-control"</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">LogPolicy</th>
   <td>このオプションは、ロギング関連のディスク操作を別スレッドで実行するか("threaded")）、run()ループと同じスレッドで実行するか("non-threaded")を指定します。デフォルトではnon-threadedポリシーが使用されます。リアルタイムシステムではthreadedポリシーの使用を強く推奨します。</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogPolicy</span><span class="pi">:</span> <span class="s2">"</span><span class="s">non-threaded"</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogPolicy</span><span class="pi">:</span> <span class="s2">"</span><span class="s">non-threaded"</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr class="table-active">
@@ -468,25 +502,37 @@
     <tr>
   <th scope="row">ControllerModulePaths</th>
   <td>このオプションは、mc_rtcにコントローラーモジュールを検索させる<strong>追加の</strong>ディレクトリを指定します。</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">ControllerModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/controller/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">ControllerModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/controller/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">RobotModulePaths</th>
   <td>このオプションは、mc_rtcにロボットモジュールを検索させる<strong>追加の</strong>ディレクトリを指定します。</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">RobotModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/robot/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">RobotModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/robot/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">ObserverModulePaths</th>
   <td>このオプションは、mc_rtcに状態観測モジュールを検索させる<strong>追加の</strong>ディレクトリを指定します。</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">ObserverModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/observer/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">ObserverModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/observer/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">GlobalPluginPaths</th>
   <td>このオプションは、mc_rtcにグローバルプラグインを検索させる<strong>追加の</strong>ディレクトリを指定します。</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">GlobalPluginPaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/global/plugin/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">GlobalPluginPaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/global/plugin/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure>
+    
+  </td>
 </tr>
 
   </tbody>
@@ -529,25 +575,37 @@
     <tr>
   <th scope="row">control</th>
   <td>ロボットの制御状態（mc_rtcのコントローラー出力）をパブリッシュするかどうか</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">control</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">control</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">env</th>
   <td>他のロボットの制御状態（メインロボット以外のロボットに関するmc_rtcのコントローラー出力）をパブリッシュするかどうか</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">env</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">env</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">real</th>
   <td>ロボットの観測状態（観測器パイプラインから得られたロボットの状態）をパブリッシュするかどうか</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">real</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">real</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">timestep</th>
   <td>ロボットの制御状態と実際の状態をパブリッシュする頻度</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">timestep</span><span class="pi">:</span> <span class="s">0.01</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">timestep</span><span class="pi">:</span> <span class="s">0.01</span></code></pre></figure>
+    
+  </td>
 </tr>
 
   </tbody>

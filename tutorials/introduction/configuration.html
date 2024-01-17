@@ -395,10 +395,20 @@
       </th>
       <td colspan="2">These entries cover most needs you might have</td>
     </tr>
+
     <tr>
   <th scope="row">MainRobot</th>
   <td>This entry dictates the main robot used by all controllers. Most interface cannot infer the correct module to use based on the simulation environment so this is the user's responsibility to make sure the two match.</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span></code></pre></figure>
+    
+      <p>or</p>
+      <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># Support renaming the robot</span>
+<span class="na">MainRobot</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">MyRobot</span>
+  <span class="na">module</span><span class="pi">:</span> <span class="s">JVRC1</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
@@ -409,31 +419,46 @@
     <tr>
   <th scope="row">Default</th>
   <td>Select which of the enabled controllers will be started first. Note that if the default controller is not enabled or if no default entry is provided then the first enabled controller in the list is chosen as a default controller.</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Default</span><span class="pi">:</span> <span class="s">Posture</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Default</span><span class="pi">:</span> <span class="s">Posture</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">Timestep</th>
   <td>The controller's timestep.</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Timestep</span><span class="pi">:</span> <span class="s">0.005</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Timestep</span><span class="pi">:</span> <span class="s">0.005</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">Log</th>
   <td>Dictate whether or not controllers will log their output.</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Log</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Log</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">InitAttitudeFromSensor</th>
   <td>Intialize the robot's attitude from sensor or the robot module</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">InitAttitudeFromSensor</span><span class="pi">:</span> <span class="no">false</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">InitAttitudeFromSensor</span><span class="pi">:</span> <span class="no">false</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">InitAttitudeSensor</th>
   <td>Name of the BodySensor used for initialization of the robot's attitude. An empty name uses the default body sensor. Only used when <pre>InitAttitudeFromSensor=true</pre></td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">InitAttitudeSensor</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">InitAttitudeSensor</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr class="table-active">
@@ -446,19 +471,28 @@
     <tr>
   <th scope="row">LogDirectory</th>
   <td>This option dictates where the log files will be stored, defaults to a system temporary directory</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogDirectory</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/tmp"</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogDirectory</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/tmp"</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">LogTemplate</th>
   <td>This option dictates the prefix of the log. The log file will then have the name: <pre>[LogTemplate]-[ControllerName]-[date].log</pre></td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogTemplate</span><span class="pi">:</span> <span class="s2">"</span><span class="s">mc-control"</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogTemplate</span><span class="pi">:</span> <span class="s2">"</span><span class="s">mc-control"</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">LogPolicy</th>
   <td>This option dictates whether logging-related disk operations happen in a separate thread ("threaded") or in the same thread as the run() loop ("non-threaded"). This defaults to the non-threaded policy. On real-time systems, the threaded policy is strongly advised.</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogPolicy</span><span class="pi">:</span> <span class="s2">"</span><span class="s">non-threaded"</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LogPolicy</span><span class="pi">:</span> <span class="s2">"</span><span class="s">non-threaded"</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr class="table-active">
@@ -473,25 +507,37 @@ The following options control the way mc_rtc loads additional modules from libra
     <tr>
   <th scope="row">ControllerModulePaths</th>
   <td>This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for controller modules.</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">ControllerModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/controller/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">ControllerModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/controller/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">RobotModulePaths</th>
   <td>This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for robot modules.</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">RobotModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/robot/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">RobotModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/robot/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">ObserverModulePaths</th>
   <td>This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for state observation modules.</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">ObserverModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/observer/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">ObserverModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/observer/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">GlobalPluginPaths</th>
   <td>This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for global plugins.</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">GlobalPluginPaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/global/plugin/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">GlobalPluginPaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/global/plugin/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure>
+    
+  </td>
 </tr>
 
   </tbody>
@@ -534,25 +580,37 @@ The following options control the way mc_rtc loads additional modules from libra
     <tr>
   <th scope="row">control</th>
   <td>Publish the robot's control state (mc_rtc controller output).</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">control</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">control</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">env</th>
   <td>Publish other robots control state (mc_rtc controller output for the non-main robot).</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">env</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">env</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">real</th>
   <td>Publish the robot's observed state (i.e. the robot's state obtained from the observer pipeline).</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">real</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">real</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure>
+    
+  </td>
 </tr>
 
     <tr>
   <th scope="row">timestep</th>
   <td>Control the publication rate of the robot's controlled and real state.</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">timestep</span><span class="pi">:</span> <span class="s">0.01</span></code></pre></figure></td>
+  <td>
+    <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">timestep</span><span class="pi">:</span> <span class="s">0.01</span></code></pre></figure>
+    
+  </td>
 </tr>
 
   </tbody>

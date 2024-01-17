@@ -1,6 +1,6 @@
 var structmc__control_1_1MCGlobalController_1_1GlobalConfiguration =
 [
-    [ "GlobalConfiguration", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a987a966351ac8bc6f17d94cc8103a408", null ],
+    [ "GlobalConfiguration", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#af18c32734324bbb065f49691b11aca11", null ],
     [ "enabled", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#ac2d357671c1f2ba1c316a128a6bf6549", null ],
     [ "load_controller_plugin_configs", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#aab0038f60606738d6567df31a6a0fa8e", null ],
     [ "load_controllers_configs", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a25be914af3f8f7543109624e44f820f2", null ],
