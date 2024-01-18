@@ -293,6 +293,13 @@ Robot::Robot(NewRobotToken,
       const auto & attitude = module_.default_attitude();
       initQ[0] = {std::begin(attitude), std::end(attitude)};
     }
+    else
+    {
+      const auto & attitude = module_.default_attitude();
+      posW(sva::PTransformd{
+          Eigen::Quaterniond(attitude[0], attitude[1], attitude[2], attitude[3]).toRotationMatrix().inverse(),
+          Eigen::Vector3d(attitude[4], attitude[5], attitude[6])});
+    }
     mbc().q = initQ;
     forwardKinematics();
     forwardVelocity();
