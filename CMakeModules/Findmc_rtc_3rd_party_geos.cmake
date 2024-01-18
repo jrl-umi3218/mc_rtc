@@ -29,7 +29,9 @@ if(NOT TARGET GEOS::geos)
     if(GEOS_CONFIG)
       # Get GEOS_INSTALL_PREFIX from geos-config
       execute_process(
-        COMMAND ${GEOS_CONFIG} --prefix OUTPUT_VARIABLE GEOS_INSTALL_PREFIX
+        COMMAND ${GEOS_CONFIG} --prefix
+        OUTPUT_VARIABLE GEOS_INSTALL_PREFIX
+        OUTPUT_STRIP_TRAILING_WHITESPACE
       )
       find_library(GEOS_LIBRARY NAME geos HINTS ${GEOS_INSTALL_PREFIX})
       if(NOT GEOS_LIBRARY)
