@@ -288,13 +288,10 @@ Robot::Robot(NewRobotToken,
         initQ[i] = jQ;
       }
     }
-    if(initQ[0].size())
-    {
-      const auto & attitude = module_.default_attitude();
-      initQ[0] = {std::begin(attitude), std::end(attitude)};
-    }
     mbc().q = initQ;
-    forwardKinematics();
+    const auto & attitude = module_.default_attitude();
+    posW({Eigen::Quaterniond(attitude[0], attitude[1], attitude[2], attitude[3]).inverse(),
+          Eigen::Vector3d(attitude[4], attitude[5], attitude[6])});
     forwardVelocity();
     forwardAcceleration();
   }
