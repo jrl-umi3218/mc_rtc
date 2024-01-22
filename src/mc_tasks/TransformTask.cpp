@@ -167,6 +167,11 @@ void TransformTask::targetSurface(unsigned int robotIndex,
   target(robots.robot(robotIndex).frame(surfaceName), offset);
 }
 
+void TransformTask::targetFrame(const mc_rbdyn::Frame & targetFrame, const sva::PTransformd & offset)
+{
+  target(targetFrame, offset);
+}
+
 void TransformTask::target(const mc_rbdyn::Frame & frame, const sva::PTransformd & offset)
 {
   target(offset * frame.position());

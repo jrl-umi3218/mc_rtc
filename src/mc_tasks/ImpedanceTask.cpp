@@ -143,7 +143,7 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
   // 5. Set compliance values to the targets of SurfaceTransformTask
   refAccel(T_0_s * (targetAccelW_ + deltaCompAccelW_)); // represented in the surface frame
   refVelB(T_0_s * (targetVelW_ + deltaCompVelW_)); // represented in the surface frame
-  target(compliancePose()); // represented in the world frame
+  TransformTask::target(compliancePose()); // represented in the world frame
 }
 
 void ImpedanceTask::reset()
@@ -153,7 +153,7 @@ void ImpedanceTask::reset()
   TransformTask::reset();
 
   // Set the target and compliance poses to the SurfaceTransformTask target (i.e., the current pose)
-  targetPoseW_ = target();
+  targetPoseW_ = TransformTask::target();
   deltaCompPoseW_ = sva::PTransformd::Identity();
 
   // Reset the target and compliance velocity and acceleration to zero

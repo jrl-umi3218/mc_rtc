@@ -7,6 +7,7 @@
 #include <mc_tasks/TrajectoryTaskGeneric.h>
 
 #include <mc_rbdyn/RobotFrame.h>
+#include <SpaceVecAlg/SpaceVecAlg>
 
 namespace mc_tasks
 {
@@ -56,14 +57,14 @@ public:
   void reset() override;
 
   /*! \brief Get the task's target */
-  sva::PTransformd target() const;
+  virtual sva::PTransformd target() const;
 
   /*! \brief Set the task's target
    *
    * \param pos Target in world frame
    *
    */
-  void target(const sva::PTransformd & pos);
+  virtual void target(const sva::PTransformd & pos);
 
   /**
    * @brief Targets a robot surface with an optional offset.
@@ -76,7 +77,9 @@ public:
    * @param offset
    *  offset defined in the target contact frame
    */
-  void targetSurface(unsigned int robotIndex, const std::string & surfaceName, const sva::PTransformd & offset);
+  void targetSurface(unsigned int robotIndex,
+                     const std::string & surfaceName,
+                     const sva::PTransformd & offset = sva::PTransformd::Identity());
 
   /**
    * @brief Targets a given frame with an optional offset
@@ -87,7 +90,18 @@ public:
    *
    * \param offset Offset relative to \p targetFrame
    */
-  void target(const mc_rbdyn::Frame & frame, const sva::PTransformd & offset);
+  void targetFrame(const mc_rbdyn::Frame & targetFrame, const sva::PTransformd & offset = sva::PTransformd::Identity());
+
+  /**
+   * @brief Targets a given frame with an optional offset
+   *
+   * The offset is given in the target frame
+   *
+   * \param targetFrame Target frame
+   *
+   * \param offset Offset relative to \p targetFrame
+   */
+  virtual void target(const mc_rbdyn::Frame & frame, const sva::PTransformd & offset);
 
   /*! \brief Retrieve the controlled frame name */
   inline const std::string & surface() const noexcept { return frame_->name(); }
