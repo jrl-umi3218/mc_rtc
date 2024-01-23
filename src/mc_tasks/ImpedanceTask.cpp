@@ -142,7 +142,7 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
 
   // 5. Set compliance values to the targets of SurfaceTransformTask
   refAccel(T_0_s * (targetAccelW_ + deltaCompAccelW_)); // represented in the surface frame
-  refVelB(T_0_s * (targetVelW_ + deltaCompVelW_)); // represented in the surface frame
+  TransformTask::refVelB(T_0_s * (targetVelW_ + deltaCompVelW_)); // represented in the surface frame
   TransformTask::target(compliancePose()); // represented in the world frame
 }
 

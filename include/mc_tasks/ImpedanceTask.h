@@ -111,7 +111,7 @@ public:
   const sva::MotionVecd & targetVel() const noexcept { return targetVelW_; }
 
   /*! \brief Set the target velocity of the surface in the world frame. */
-  void targetVel(const sva::MotionVecd & vel) { targetVelW_ = vel; }
+  void targetVel(const sva::MotionVecd & worldVel) override { targetVelW_ = worldVel; }
 
   /*! \brief Get the target acceleration of the surface in the world frame. */
   const sva::MotionVecd & targetAccel() const noexcept { return targetAccelW_; }
@@ -235,11 +235,7 @@ private:
   using TransformTask::refVelB;
 
   /* \brief Same as targetPose(const sva::PTransformd &) */
-  void target(const sva::PTransformd & pos) override
-  {
-    mc_rtc::log::info("ImpedanceTask::target");
-    targetPose(pos);
-  }
+  void target(const sva::PTransformd & pos) override { targetPose(pos); }
 
   /* \brief Same as targetPose() */
   sva::PTransformd target() const override { return targetPose(); }
