@@ -107,18 +107,27 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a982e5360a5e5b068b6f4bf6180bce3ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a982e5360a5e5b068b6f4bf6180bce3ee">reset</a> () override</td></tr>
 <tr class="memdesc:a982e5360a5e5b068b6f4bf6180bce3ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the task.  <a href="structmc__tasks_1_1TransformTask.html#a982e5360a5e5b068b6f4bf6180bce3ee">More...</a><br /></td></tr>
 <tr class="separator:a982e5360a5e5b068b6f4bf6180bce3ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8f62ed47730c972c5bab0d287bef086"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#ae8f62ed47730c972c5bab0d287bef086">target</a> () const</td></tr>
-<tr class="memdesc:ae8f62ed47730c972c5bab0d287bef086"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the task's target.  <a href="structmc__tasks_1_1TransformTask.html#ae8f62ed47730c972c5bab0d287bef086">More...</a><br /></td></tr>
-<tr class="separator:ae8f62ed47730c972c5bab0d287bef086"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad23f8cbe9682a6fdc48fb1f98aa6fa94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#ad23f8cbe9682a6fdc48fb1f98aa6fa94">target</a> (const sva::PTransformd &amp;pos)</td></tr>
-<tr class="memdesc:ad23f8cbe9682a6fdc48fb1f98aa6fa94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the task's target.  <a href="structmc__tasks_1_1TransformTask.html#ad23f8cbe9682a6fdc48fb1f98aa6fa94">More...</a><br /></td></tr>
-<tr class="separator:ad23f8cbe9682a6fdc48fb1f98aa6fa94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49d3421e1859d9b36e4bc64ca6c29490"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a49d3421e1859d9b36e4bc64ca6c29490">targetSurface</a> (unsigned int robotIndex, const std::string &amp;surfaceName, const sva::PTransformd &amp;offset)</td></tr>
-<tr class="memdesc:a49d3421e1859d9b36e4bc64ca6c29490"><td class="mdescLeft">&#160;</td><td class="mdescRight">Targets a robot surface with an optional offset. The offset is expressed in the target contact frame.  <a href="structmc__tasks_1_1TransformTask.html#a49d3421e1859d9b36e4bc64ca6c29490">More...</a><br /></td></tr>
-<tr class="separator:a49d3421e1859d9b36e4bc64ca6c29490"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50134b1f1bbb68f93e3b1235da3f15bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a50134b1f1bbb68f93e3b1235da3f15bd">target</a> (const <a class="el" href="structmc__rbdyn_1_1Frame.html">mc_rbdyn::Frame</a> &amp;<a class="el" href="structmc__tasks_1_1TransformTask.html#aed8a30b4cb0b2efefdfcfb7c5c88e1c7">frame</a>, const sva::PTransformd &amp;offset)</td></tr>
-<tr class="memdesc:a50134b1f1bbb68f93e3b1235da3f15bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Targets a given frame with an optional offset.  <a href="structmc__tasks_1_1TransformTask.html#a50134b1f1bbb68f93e3b1235da3f15bd">More...</a><br /></td></tr>
-<tr class="separator:a50134b1f1bbb68f93e3b1235da3f15bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa203d8d2f9505b02dda474444f28c5bb"><td class="memItemLeft" align="right" valign="top">virtual sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#aa203d8d2f9505b02dda474444f28c5bb">target</a> () const</td></tr>
+<tr class="memdesc:aa203d8d2f9505b02dda474444f28c5bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the task's target.  <a href="structmc__tasks_1_1TransformTask.html#aa203d8d2f9505b02dda474444f28c5bb">More...</a><br /></td></tr>
+<tr class="separator:aa203d8d2f9505b02dda474444f28c5bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ed9f566928c9c9cfa5b6f971699d84b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a4ed9f566928c9c9cfa5b6f971699d84b">target</a> (const sva::PTransformd &amp;worldPos)</td></tr>
+<tr class="memdesc:a4ed9f566928c9c9cfa5b6f971699d84b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the task's target.  <a href="structmc__tasks_1_1TransformTask.html#a4ed9f566928c9c9cfa5b6f971699d84b">More...</a><br /></td></tr>
+<tr class="separator:a4ed9f566928c9c9cfa5b6f971699d84b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca97ce8515f92288be63e19cec0b6c72"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#aca97ce8515f92288be63e19cec0b6c72">targetVel</a> (const sva::MotionVecd &amp;worldVel)</td></tr>
+<tr class="memdesc:aca97ce8515f92288be63e19cec0b6c72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the task's target velocity.  <a href="structmc__tasks_1_1TransformTask.html#aca97ce8515f92288be63e19cec0b6c72">More...</a><br /></td></tr>
+<tr class="separator:aca97ce8515f92288be63e19cec0b6c72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9bc862aa7bb14da29be6a9103e91ea5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#ab9bc862aa7bb14da29be6a9103e91ea5">targetSurface</a> (unsigned int robotIndex, const std::string &amp;surfaceName, const sva::PTransformd &amp;offset=sva::PTransformd::Identity())</td></tr>
+<tr class="memdesc:ab9bc862aa7bb14da29be6a9103e91ea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Targets a robot surface with an optional offset. The offset is expressed in the target contact frame.  <a href="structmc__tasks_1_1TransformTask.html#ab9bc862aa7bb14da29be6a9103e91ea5">More...</a><br /></td></tr>
+<tr class="separator:ab9bc862aa7bb14da29be6a9103e91ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95a6bac4dec4e01c4452de31122ce6d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a95a6bac4dec4e01c4452de31122ce6d9">targetFrame</a> (const <a class="el" href="structmc__rbdyn_1_1Frame.html">mc_rbdyn::Frame</a> &amp;targetFrame, const sva::PTransformd &amp;offset=sva::PTransformd::Identity())</td></tr>
+<tr class="memdesc:a95a6bac4dec4e01c4452de31122ce6d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Targets a given frame with an optional offset.  <a href="structmc__tasks_1_1TransformTask.html#a95a6bac4dec4e01c4452de31122ce6d9">More...</a><br /></td></tr>
+<tr class="separator:a95a6bac4dec4e01c4452de31122ce6d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99c956fd7bcebd7bbebb2885fe192f1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#a99c956fd7bcebd7bbebb2885fe192f1c">targetFrameVelocity</a> (const <a class="el" href="structmc__rbdyn_1_1Frame.html">mc_rbdyn::Frame</a> &amp;<a class="el" href="structmc__tasks_1_1TransformTask.html#a95a6bac4dec4e01c4452de31122ce6d9">targetFrame</a>, const sva::PTransformd &amp;offset=sva::PTransformd::Identity())</td></tr>
+<tr class="memdesc:a99c956fd7bcebd7bbebb2885fe192f1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Targets a given frame velocity with an optional offset.  <a href="structmc__tasks_1_1TransformTask.html#a99c956fd7bcebd7bbebb2885fe192f1c">More...</a><br /></td></tr>
+<tr class="separator:a99c956fd7bcebd7bbebb2885fe192f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af265a914cd8863a4698f650ca0d55b81"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#af265a914cd8863a4698f650ca0d55b81">target</a> (const <a class="el" href="structmc__rbdyn_1_1Frame.html">mc_rbdyn::Frame</a> &amp;<a class="el" href="structmc__tasks_1_1TransformTask.html#aed8a30b4cb0b2efefdfcfb7c5c88e1c7">frame</a>, const sva::PTransformd &amp;offset)</td></tr>
+<tr class="memdesc:af265a914cd8863a4698f650ca0d55b81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Targets a given frame with an optional offset.  <a href="structmc__tasks_1_1TransformTask.html#af265a914cd8863a4698f650ca0d55b81">More...</a><br /></td></tr>
+<tr class="separator:af265a914cd8863a4698f650ca0d55b81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab059f811cfba21cdc35c8109c1ffa05a"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TransformTask.html#ab059f811cfba21cdc35c8109c1ffa05a">surface</a> () const noexcept</td></tr>
 <tr class="memdesc:ab059f811cfba21cdc35c8109c1ffa05a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the controlled frame name.  <a href="structmc__tasks_1_1TransformTask.html#ab059f811cfba21cdc35c8109c1ffa05a">More...</a><br /></td></tr>
 <tr class="separator:ab059f811cfba21cdc35c8109c1ffa05a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1241,33 +1250,44 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ae8f62ed47730c972c5bab0d287bef086"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae8f62ed47730c972c5bab0d287bef086">&#9670;&nbsp;</a></span>target() <span class="overload">[1/3]</span></h2>
+<a id="aa203d8d2f9505b02dda474444f28c5bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa203d8d2f9505b02dda474444f28c5bb">&#9670;&nbsp;</a></span>target() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">sva::PTransformd mc_tasks::TransformTask::target </td>
+          <td class="memname">virtual sva::PTransformd mc_tasks::TransformTask::target </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Get the task's target. </p>
 
 </div>
 </div>
-<a id="a50134b1f1bbb68f93e3b1235da3f15bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a50134b1f1bbb68f93e3b1235da3f15bd">&#9670;&nbsp;</a></span>target() <span class="overload">[2/3]</span></h2>
+<a id="af265a914cd8863a4698f650ca0d55b81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af265a914cd8863a4698f650ca0d55b81">&#9670;&nbsp;</a></span>target() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_tasks::TransformTask::target </td>
+          <td class="memname">virtual void mc_tasks::TransformTask::target </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Frame.html">mc_rbdyn::Frame</a> &amp;&#160;</td>
           <td class="paramname"><em>frame</em>, </td>
@@ -1277,6 +1297,83 @@ Additional Inherited Members</h2></td></tr>
           <td></td>
           <td class="paramtype">const sva::PTransformd &amp;&#160;</td>
           <td class="paramname"><em>offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Targets a given frame with an optional offset. </p>
+<p>The offset is given in the target frame</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">targetFrame</td><td>Target frame</td></tr>
+    <tr><td class="paramname">offset</td><td>Offset relative to <code>targetFrame</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4ed9f566928c9c9cfa5b6f971699d84b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ed9f566928c9c9cfa5b6f971699d84b">&#9670;&nbsp;</a></span>target() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void mc_tasks::TransformTask::target </td>
+          <td>(</td>
+          <td class="paramtype">const sva::PTransformd &amp;&#160;</td>
+          <td class="paramname"><em>worldPos</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the task's target. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>Target in world frame </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a95a6bac4dec4e01c4452de31122ce6d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95a6bac4dec4e01c4452de31122ce6d9">&#9670;&nbsp;</a></span>targetFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::TransformTask::targetFrame </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Frame.html">mc_rbdyn::Frame</a> &amp;&#160;</td>
+          <td class="paramname"><em>targetFrame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const sva::PTransformd &amp;&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>sva::PTransformd::Identity()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1298,34 +1395,46 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ad23f8cbe9682a6fdc48fb1f98aa6fa94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad23f8cbe9682a6fdc48fb1f98aa6fa94">&#9670;&nbsp;</a></span>target() <span class="overload">[3/3]</span></h2>
+<a id="a99c956fd7bcebd7bbebb2885fe192f1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99c956fd7bcebd7bbebb2885fe192f1c">&#9670;&nbsp;</a></span>targetFrameVelocity()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_tasks::TransformTask::target </td>
+          <td class="memname">void mc_tasks::TransformTask::targetFrameVelocity </td>
           <td>(</td>
-          <td class="paramtype">const sva::PTransformd &amp;&#160;</td>
-          <td class="paramname"><em>pos</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Frame.html">mc_rbdyn::Frame</a> &amp;&#160;</td>
+          <td class="paramname"><em>targetFrame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const sva::PTransformd &amp;&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>sva::PTransformd::Identity()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set the task's target. </p>
+<p>Targets a given frame velocity with an optional offset. </p>
+<p>The offset is given in the target frame</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pos</td><td>Target in world frame </td></tr>
+    <tr><td class="paramname">targetFrame</td><td>Target frame</td></tr>
+    <tr><td class="paramname">offset</td><td>Offset relative to <code>targetFrame</code> </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a49d3421e1859d9b36e4bc64ca6c29490"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49d3421e1859d9b36e4bc64ca6c29490">&#9670;&nbsp;</a></span>targetSurface()</h2>
+<a id="ab9bc862aa7bb14da29be6a9103e91ea5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9bc862aa7bb14da29be6a9103e91ea5">&#9670;&nbsp;</a></span>targetSurface()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1346,7 +1455,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const sva::PTransformd &amp;&#160;</td>
-          <td class="paramname"><em>offset</em>&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>sva::PTransformd::Identity()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1365,6 +1474,42 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="aca97ce8515f92288be63e19cec0b6c72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca97ce8515f92288be63e19cec0b6c72">&#9670;&nbsp;</a></span>targetVel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void mc_tasks::TransformTask::targetVel </td>
+          <td>(</td>
+          <td class="paramtype">const sva::MotionVecd &amp;&#160;</td>
+          <td class="paramname"><em>worldVel</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the task's target velocity. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vel</td><td>Target velocity in world frame </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="structmc__tasks_1_1force_1_1ImpedanceTask.html#a8bc1fc9217b93d306a2434ebb35ec8be">mc_tasks::force::ImpedanceTask</a>.</p>
 
 </div>
 </div>

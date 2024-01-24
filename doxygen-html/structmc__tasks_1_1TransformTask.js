@@ -28,9 +28,12 @@ var structmc__tasks_1_1TransformTask =
     [ "stiffness", "structmc__tasks_1_1TransformTask.html#aaec71d54b94af7e896d496d95e066387", null ],
     [ "surface", "structmc__tasks_1_1TransformTask.html#ab059f811cfba21cdc35c8109c1ffa05a", null ],
     [ "surfacePose", "structmc__tasks_1_1TransformTask.html#a91855af37722789f0d3a33b884db17ca", null ],
-    [ "target", "structmc__tasks_1_1TransformTask.html#ae8f62ed47730c972c5bab0d287bef086", null ],
-    [ "target", "structmc__tasks_1_1TransformTask.html#a50134b1f1bbb68f93e3b1235da3f15bd", null ],
-    [ "target", "structmc__tasks_1_1TransformTask.html#ad23f8cbe9682a6fdc48fb1f98aa6fa94", null ],
-    [ "targetSurface", "structmc__tasks_1_1TransformTask.html#a49d3421e1859d9b36e4bc64ca6c29490", null ],
+    [ "target", "structmc__tasks_1_1TransformTask.html#aa203d8d2f9505b02dda474444f28c5bb", null ],
+    [ "target", "structmc__tasks_1_1TransformTask.html#af265a914cd8863a4698f650ca0d55b81", null ],
+    [ "target", "structmc__tasks_1_1TransformTask.html#a4ed9f566928c9c9cfa5b6f971699d84b", null ],
+    [ "targetFrame", "structmc__tasks_1_1TransformTask.html#a95a6bac4dec4e01c4452de31122ce6d9", null ],
+    [ "targetFrameVelocity", "structmc__tasks_1_1TransformTask.html#a99c956fd7bcebd7bbebb2885fe192f1c", null ],
+    [ "targetSurface", "structmc__tasks_1_1TransformTask.html#ab9bc862aa7bb14da29be6a9103e91ea5", null ],
+    [ "targetVel", "structmc__tasks_1_1TransformTask.html#aca97ce8515f92288be63e19cec0b6c72", null ],
     [ "frame_", "structmc__tasks_1_1TransformTask.html#a078d35f229cfe10dfa0e4672cb3304d9", null ]
 ];

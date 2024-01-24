@@ -22,7 +22,7 @@ var structmc__tasks_1_1force_1_1ImpedanceTask =
     [ "targetPose", "structmc__tasks_1_1force_1_1ImpedanceTask.html#ab48cd89c0e4d3fe4413d0df8f83ccd3f", null ],
     [ "targetPose", "structmc__tasks_1_1force_1_1ImpedanceTask.html#ab82147120e3992c1f02313025ea8e2c1", null ],
     [ "targetVel", "structmc__tasks_1_1force_1_1ImpedanceTask.html#ab334d38e827d6917708178233c7feb9f", null ],
-    [ "targetVel", "structmc__tasks_1_1force_1_1ImpedanceTask.html#ad8b7c40175ae9d55ae86d4d89ffabe52", null ],
+    [ "targetVel", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a8bc1fc9217b93d306a2434ebb35ec8be", null ],
     [ "targetWrench", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a9887a44eed16940dbf620dc109b968cb", null ],
     [ "targetWrench", "structmc__tasks_1_1force_1_1ImpedanceTask.html#ad9dcb8ef222560d520f4822adf3fe3e2", null ],
     [ "targetWrenchW", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a61a7f7ed47d98c51238404e7791d7357", null ],

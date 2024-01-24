@@ -7645,24 +7645,24 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>sva::PTransformd</type>
+      <type>virtual sva::PTransformd</type>
       <name>target</name>
       <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
-      <anchor>ae8f62ed47730c972c5bab0d287bef086</anchor>
+      <anchor>aa203d8d2f9505b02dda474444f28c5bb</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>void</type>
+      <type>virtual void</type>
       <name>target</name>
       <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
-      <anchor>ad23f8cbe9682a6fdc48fb1f98aa6fa94</anchor>
-      <arglist>(const sva::PTransformd &amp;pos)</arglist>
+      <anchor>a4ed9f566928c9c9cfa5b6f971699d84b</anchor>
+      <arglist>(const sva::PTransformd &amp;worldPos)</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>void</type>
+      <type>virtual void</type>
       <name>target</name>
       <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
-      <anchor>a50134b1f1bbb68f93e3b1235da3f15bd</anchor>
+      <anchor>af265a914cd8863a4698f650ca0d55b81</anchor>
       <arglist>(const mc_rbdyn::Frame &amp;frame, const sva::PTransformd &amp;offset)</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -21958,8 +21958,8 @@
       <type>void</type>
       <name>targetVel</name>
       <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
-      <anchor>ad8b7c40175ae9d55ae86d4d89ffabe52</anchor>
-      <arglist>(const sva::MotionVecd &amp;vel)</arglist>
+      <anchor>a8bc1fc9217b93d306a2434ebb35ec8be</anchor>
+      <arglist>(const sva::MotionVecd &amp;worldVel) override</arglist>
     </member>
     <member kind="function">
       <type>const sva::MotionVecd &amp;</type>
@@ -43830,32 +43830,53 @@
       <anchor>a982e5360a5e5b068b6f4bf6180bce3ee</anchor>
       <arglist>() override</arglist>
     </member>
-    <member kind="function">
-      <type>sva::PTransformd</type>
+    <member kind="function" virtualness="virtual">
+      <type>virtual sva::PTransformd</type>
       <name>target</name>
       <anchorfile>structmc__tasks_1_1TransformTask.html</anchorfile>
-      <anchor>ae8f62ed47730c972c5bab0d287bef086</anchor>
+      <anchor>aa203d8d2f9505b02dda474444f28c5bb</anchor>
       <arglist>() const</arglist>
     </member>
-    <member kind="function">
-      <type>void</type>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
       <name>target</name>
       <anchorfile>structmc__tasks_1_1TransformTask.html</anchorfile>
-      <anchor>ad23f8cbe9682a6fdc48fb1f98aa6fa94</anchor>
-      <arglist>(const sva::PTransformd &amp;pos)</arglist>
+      <anchor>a4ed9f566928c9c9cfa5b6f971699d84b</anchor>
+      <arglist>(const sva::PTransformd &amp;worldPos)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>targetVel</name>
+      <anchorfile>structmc__tasks_1_1TransformTask.html</anchorfile>
+      <anchor>aca97ce8515f92288be63e19cec0b6c72</anchor>
+      <arglist>(const sva::MotionVecd &amp;worldVel)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>targetSurface</name>
       <anchorfile>structmc__tasks_1_1TransformTask.html</anchorfile>
-      <anchor>a49d3421e1859d9b36e4bc64ca6c29490</anchor>
-      <arglist>(unsigned int robotIndex, const std::string &amp;surfaceName, const sva::PTransformd &amp;offset)</arglist>
+      <anchor>ab9bc862aa7bb14da29be6a9103e91ea5</anchor>
+      <arglist>(unsigned int robotIndex, const std::string &amp;surfaceName, const sva::PTransformd &amp;offset=sva::PTransformd::Identity())</arglist>
     </member>
     <member kind="function">
       <type>void</type>
+      <name>targetFrame</name>
+      <anchorfile>structmc__tasks_1_1TransformTask.html</anchorfile>
+      <anchor>a95a6bac4dec4e01c4452de31122ce6d9</anchor>
+      <arglist>(const mc_rbdyn::Frame &amp;targetFrame, const sva::PTransformd &amp;offset=sva::PTransformd::Identity())</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>targetFrameVelocity</name>
+      <anchorfile>structmc__tasks_1_1TransformTask.html</anchorfile>
+      <anchor>a99c956fd7bcebd7bbebb2885fe192f1c</anchor>
+      <arglist>(const mc_rbdyn::Frame &amp;targetFrame, const sva::PTransformd &amp;offset=sva::PTransformd::Identity())</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
       <name>target</name>
       <anchorfile>structmc__tasks_1_1TransformTask.html</anchorfile>
-      <anchor>a50134b1f1bbb68f93e3b1235da3f15bd</anchor>
+      <anchor>af265a914cd8863a4698f650ca0d55b81</anchor>
       <arglist>(const mc_rbdyn::Frame &amp;frame, const sva::PTransformd &amp;offset)</arglist>
     </member>
     <member kind="function">
