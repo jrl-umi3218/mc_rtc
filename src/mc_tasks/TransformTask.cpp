@@ -12,6 +12,7 @@
 
 #include <mc_rbdyn/rpy_utils.h>
 
+#include <mc_rbdyn/hat.h>
 #include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_rtc/deprecated.h>
 #include <mc_rtc/gui/Transform.h>
@@ -145,19 +146,26 @@ sva::PTransformd TransformTask::target() const
   }
 }
 
-void TransformTask::target(const sva::PTransformd & pose)
+void TransformTask::target(const sva::PTransformd & worldPose)
 {
   switch(backend_)
   {
     case Backend::Tasks:
-      tasks_error(errorT)->target(pose);
+      tasks_error(errorT)->target(worldPose);
       break;
     case Backend::TVM:
-      tvm_error(errorT)->pose(pose);
+      tvm_error(errorT)->pose(worldPose);
       break;
     default:
       break;
   }
+}
+
+void TransformTask::targetVel(const sva::MotionVecd & worldVec)
+{
+  auto X_0_f = frame_->position();
+  auto velB = X_0_f * worldVec;
+  refVelB(velB);
 }
 
 void TransformTask::targetSurface(unsigned int robotIndex,
@@ -165,6 +173,19 @@ void TransformTask::targetSurface(unsigned int robotIndex,
                                   const sva::PTransformd & offset)
 {
   target(robots.robot(robotIndex).frame(surfaceName), offset);
+}
+
+void TransformTask::targetFrame(const mc_rbdyn::Frame & targetFrame, const sva::PTransformd & offset)
+{
+  target(targetFrame, offset);
+}
+
+void TransformTask::targetFrameVelocity(const mc_rbdyn::Frame & targetFrame, const sva::PTransformd & offset)
+{
+  auto vel = targetFrame.velocity();
+  auto X_0_f = targetFrame.position();
+  vel.linear() += -mc_rbdyn::hat(X_0_f.rotation().transpose() * offset.translation()) * vel.angular();
+  targetVel(vel);
 }
 
 void TransformTask::target(const mc_rbdyn::Frame & frame, const sva::PTransformd & offset)

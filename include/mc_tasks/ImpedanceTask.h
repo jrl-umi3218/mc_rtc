@@ -111,7 +111,7 @@ public:
   const sva::MotionVecd & targetVel() const noexcept { return targetVelW_; }
 
   /*! \brief Set the target velocity of the surface in the world frame. */
-  void targetVel(const sva::MotionVecd & vel) { targetVelW_ = vel; }
+  void targetVel(const sva::MotionVecd & worldVel) override { targetVelW_ = worldVel; }
 
   /*! \brief Get the target acceleration of the surface in the world frame. */
   const sva::MotionVecd & targetAccel() const noexcept { return targetAccelW_; }
@@ -227,10 +227,18 @@ private:
   /** Targets of SurfaceTransformTask should not be set by the user.
    *  Instead, the user can set the targetPose, targetVel, and targetAccel.
    *  Targets of SurfaceTransformTask are determined from the target values through the impedance equation.
+   *
+   *  We override the target functions of TransformTask to set the targetPose instead.
+   *  This allows functions such as targetFrame, targetSurface to work as expected.
    */
   using TransformTask::refAccel;
   using TransformTask::refVelB;
-  using TransformTask::target;
+
+  /* \brief Same as targetPose(const sva::PTransformd &) */
+  void target(const sva::PTransformd & pos) override { targetPose(pos); }
+
+  /* \brief Same as targetPose() */
+  sva::PTransformd target() const override { return targetPose(); }
 };
 
 } // namespace force
