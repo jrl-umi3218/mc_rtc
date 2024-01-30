@@ -48,7 +48,8 @@ enum class Elements
   PolyhedronTrianglesList,
   PolyhedronVerticesTriangles,
   GenericArray,
-  OneOf
+  OneOf,
+  RobotMsg
 };
 
 /** Element is the common class for every element's type available in the

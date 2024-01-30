@@ -476,6 +476,31 @@ struct MC_RTC_GUI_DLLAPI PolyhedronConfig
   ///< passed along with the triangles
   bool fixed_vertices_color = true;
 };
+
+/** Provides full information about a robot kinematic and dynamic state */
+struct MC_RTC_GUI_DLLAPI RobotMsgData
+{
+  RobotMsgData() = default;
+  RobotMsgData(const std::vector<std::string> & params,
+               const Eigen::VectorXd & q,
+               const Eigen::VectorXd & alpha,
+               const Eigen::VectorXd & alphaD,
+               const Eigen::VectorXd & tau,
+               const std::vector<sva::ForceVecd> & forces,
+               const sva::PTransformd & posW)
+  : parameters(params), q(q), alpha(alpha), alphaD(alphaD), tau(tau), forces(forces), posW(posW)
+  {
+  }
+
+  std::vector<std::string> parameters;
+  Eigen::VectorXd q;
+  Eigen::VectorXd alpha;
+  Eigen::VectorXd alphaD;
+  Eigen::VectorXd tau;
+  std::vector<sva::ForceVecd> forces;
+  sva::PTransformd posW;
+};
+
 } // namespace gui
 
 template<>

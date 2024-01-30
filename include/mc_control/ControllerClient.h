@@ -461,6 +461,11 @@ protected:
     default_impl("Robot", id);
   }
 
+  virtual void robot_msg(const ElementId & id, const mc_rtc::gui::RobotMsgData & /*msg*/)
+  {
+    default_impl("RobotMsg", id);
+  }
+
   /** Should display the visual element \p visual at the position \p pose */
   virtual void visual(const ElementId & id,
                       [[maybe_unused]] const rbd::parsers::Visual & visual,
