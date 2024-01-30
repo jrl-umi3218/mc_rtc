@@ -5,9 +5,17 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node249 [label="LinearFunction",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
-  Node249 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 [label="mc_tvm::CompoundJointFunction",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1CompoundJointFunction.html",tooltip=" "];
-  Node249 -> Node251 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node251 [label="mc_tvm::DynamicFunction",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1DynamicFunction.html",tooltip=" "];
+  Node165 [label="Node",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node165 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="mc_tvm::CoM",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1CoM.html",tooltip=" "];
+  Node165 -> Node167 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node167 [label="mc_tvm::Convex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1Convex.html",tooltip=" "];
+  Node165 -> Node168 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node168 [label="mc_tvm::Frame",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1Frame.html",tooltip=" "];
+  Node168 -> Node169 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node169 [label="mc_tvm::RobotFrame",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1RobotFrame.html",tooltip=" "];
+  Node165 -> Node170 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node170 [label="mc_tvm::Momentum",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1Momentum.html",tooltip=" "];
+  Node165 -> Node171 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node171 [label="mc_tvm::Robot",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1Robot.html",tooltip=" "];
 }

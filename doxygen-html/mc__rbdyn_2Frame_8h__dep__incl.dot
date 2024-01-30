@@ -35,8 +35,6 @@ digraph "include/mc_rbdyn/Frame.h"
   Node53 [label="include/mc_tasks/FirstOrder\lImpedanceTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$FirstOrderImpedanceTask_8h.html",tooltip=" "];
   Node48 -> Node54 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node54 [label="include/mc_tasks/Surface\lTransformTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$SurfaceTransformTask_8h.html",tooltip=" "];
-  Node41 -> Node55 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node55 [label="include/mc_tasks/SplineTrajectory\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$SplineTrajectoryTask_8h.html",tooltip=" "];
   Node6 -> Node68 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node68 [label="include/mc_tasks/AddRemove\lContactTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$AddRemoveContactTask_8h.html",tooltip=" "];
   Node6 -> Node46 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -112,13 +110,15 @@ digraph "include/mc_rbdyn/Frame.h"
   Node98 [label="include/mc_observers\l/KinematicInertialObserver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$KinematicInertialObserver_8h.html",tooltip=" "];
   Node3 -> Node90 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 -> Node99 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node99 [label="include/mc_tvm/Robot.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2Robot_8h.html",tooltip=" "];
-  Node99 -> Node100 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node100 [label="include/mc_tvm/CoMInConvex\lFunction.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$CoMInConvexFunction_8h.html",tooltip=" "];
+  Node99 [label="include/mc_rtc/gui\l/RobotMsg.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotMsg_8h.html",tooltip=" "];
+  Node3 -> Node100 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node100 [label="include/mc_tvm/Robot.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2Robot_8h.html",tooltip=" "];
+  Node100 -> Node101 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 [label="include/mc_tvm/CoMInConvex\lFunction.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$CoMInConvexFunction_8h.html",tooltip=" "];
   Node2 -> Node48 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 -> Node101 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node101 [label="include/mc_tvm/RobotFrame.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2RobotFrame_8h.html",tooltip=" "];
-  Node1 -> Node102 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node102 [label="include/mc_tvm/Frame.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2Frame_8h.html",tooltip=" "];
-  Node102 -> Node101 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node102 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node102 [label="include/mc_tvm/RobotFrame.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2RobotFrame_8h.html",tooltip=" "];
+  Node1 -> Node103 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node103 [label="include/mc_tvm/Frame.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2Frame_8h.html",tooltip=" "];
+  Node103 -> Node102 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

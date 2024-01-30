@@ -20,6 +20,7 @@ var namespacemc__rtc_1_1gui =
     [ "LineConfig", "structmc__rtc_1_1gui_1_1LineConfig.html", "structmc__rtc_1_1gui_1_1LineConfig" ],
     [ "PointConfig", "structmc__rtc_1_1gui_1_1PointConfig.html", "structmc__rtc_1_1gui_1_1PointConfig" ],
     [ "PolyhedronConfig", "structmc__rtc_1_1gui_1_1PolyhedronConfig.html", "structmc__rtc_1_1gui_1_1PolyhedronConfig" ],
+    [ "RobotMsgData", "structmc__rtc_1_1gui_1_1RobotMsgData.html", "structmc__rtc_1_1gui_1_1RobotMsgData" ],
     [ "StateBuilder", "structmc__rtc_1_1gui_1_1StateBuilder.html", "structmc__rtc_1_1gui_1_1StateBuilder" ],
     [ "VoidCallbackElement", "structmc__rtc_1_1gui_1_1VoidCallbackElement.html", "structmc__rtc_1_1gui_1_1VoidCallbackElement" ]
 ];

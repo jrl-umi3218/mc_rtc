@@ -214,6 +214,7 @@ var hierarchy =
       [ "mc_rtc::gui::details::PolyhedronTrianglesListImpl< GetTrianglesT >", "structmc__rtc_1_1gui_1_1details_1_1PolyhedronTrianglesListImpl.html", null ],
       [ "mc_rtc::gui::details::PolyhedronVerticesTrianglesImpl< GetVerticesT, GetTrianglesT >", "structmc__rtc_1_1gui_1_1details_1_1PolyhedronVerticesTrianglesImpl.html", null ],
       [ "mc_rtc::gui::details::RobotImpl< GetT >", "structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html", null ],
+      [ "mc_rtc::gui::details::RobotMsgImpl< GetT >", "structmc__rtc_1_1gui_1_1details_1_1RobotMsgImpl.html", null ],
       [ "mc_rtc::gui::details::StaticTableImpl< GetData >", "structmc__rtc_1_1gui_1_1details_1_1StaticTableImpl.html", null ],
       [ "mc_rtc::gui::details::TableImpl< GetHeader, GetData >", "structmc__rtc_1_1gui_1_1details_1_1TableImpl.html", [
         [ "mc_rtc::gui::details::FormattedTableImpl< GetHeader, GetFormat, GetData >", "structmc__rtc_1_1gui_1_1details_1_1FormattedTableImpl.html", null ]
@@ -545,6 +546,7 @@ var hierarchy =
     [ "mc_rbdyn::RobotData", "structmc__rbdyn_1_1RobotData.html", null ],
     [ "mc_rbdyn::RobotLoader", "structmc__rbdyn_1_1RobotLoader.html", null ],
     [ "mc_rbdyn::RobotModule", "structmc__rbdyn_1_1RobotModule.html", null ],
+    [ "mc_rtc::gui::RobotMsgData", "structmc__rtc_1_1gui_1_1RobotMsgData.html", null ],
     [ "mc_rtc::RobotPublisher", "structmc__rtc_1_1RobotPublisher.html", null ],
     [ "mc_rtc::ROSBridge", "structmc__rtc_1_1ROSBridge.html", null ],
     [ "mc_rtc::gui::details::RPYLabels< Degrees >", "structmc__rtc_1_1gui_1_1details_1_1RPYLabels.html", null ],

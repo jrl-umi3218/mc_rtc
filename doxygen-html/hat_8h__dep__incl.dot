@@ -23,8 +23,6 @@ digraph "include/mc_rbdyn/hat.h"
   Node43 [label="include/mc_tasks/Orientation\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$OrientationTask_8h.html",tooltip=" "];
   Node43 -> Node47 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node47 [label="include/mc_tasks/lipm\l_stabilizer/StabilizerTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$StabilizerTask_8h.html",tooltip=" "];
-  Node42 -> Node48 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node48 [label="include/mc_tasks/Position\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$PositionTask_8h.html",tooltip=" "];
   Node42 -> Node49 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node49 [label="include/mc_tasks/Transform\lTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$TransformTask_8h.html",tooltip=" "];
   Node49 -> Node50 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -112,13 +110,15 @@ digraph "include/mc_rbdyn/hat.h"
   Node99 [label="include/mc_observers\l/KinematicInertialObserver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$KinematicInertialObserver_8h.html",tooltip=" "];
   Node4 -> Node91 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 -> Node100 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node100 [label="include/mc_tvm/Robot.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2Robot_8h.html",tooltip=" "];
-  Node100 -> Node101 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node101 [label="include/mc_tvm/CoMInConvex\lFunction.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$CoMInConvexFunction_8h.html",tooltip=" "];
+  Node100 [label="include/mc_rtc/gui\l/RobotMsg.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotMsg_8h.html",tooltip=" "];
+  Node4 -> Node101 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 [label="include/mc_tvm/Robot.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2Robot_8h.html",tooltip=" "];
+  Node101 -> Node102 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node102 [label="include/mc_tvm/CoMInConvex\lFunction.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$CoMInConvexFunction_8h.html",tooltip=" "];
   Node3 -> Node49 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 -> Node102 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node102 [label="include/mc_tvm/RobotFrame.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2RobotFrame_8h.html",tooltip=" "];
-  Node2 -> Node103 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node103 [label="include/mc_tvm/Frame.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2Frame_8h.html",tooltip=" "];
-  Node103 -> Node102 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 -> Node103 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node103 [label="include/mc_tvm/RobotFrame.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2RobotFrame_8h.html",tooltip=" "];
+  Node2 -> Node104 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node104 [label="include/mc_tvm/Frame.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2Frame_8h.html",tooltip=" "];
+  Node104 -> Node103 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

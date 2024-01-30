@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_rtc::schema::details\l::Choices\< HasChoices \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1schema_1_1details_1_1Choices.html",tooltip=" "];
+  Node0 [label="mc_rtc::schema::details\l::Choices\< false \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1schema_1_1details_1_1Choices_3_01false_01_4.html",tooltip=" "];
 }

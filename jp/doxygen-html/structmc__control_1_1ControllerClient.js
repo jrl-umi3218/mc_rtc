@@ -62,6 +62,7 @@ var structmc__control_1_1ControllerClient =
     [ "raw_request", "structmc__control_1_1ControllerClient.html#ad71e478b911f2bb391ab06af04c4411f", null ],
     [ "reconnect", "structmc__control_1_1ControllerClient.html#abdbe8eadba9fe6727e1e546f5ade5b72", null ],
     [ "robot", "structmc__control_1_1ControllerClient.html#ae3efbe9ac079a07e540872820bf951f9", null ],
+    [ "robot_msg", "structmc__control_1_1ControllerClient.html#a34992903634a072f4160856f3e834f15", null ],
     [ "rotation", "structmc__control_1_1ControllerClient.html#a323427c958144adfc5a1593775566f36", null ],
     [ "run", "structmc__control_1_1ControllerClient.html#acf4cab847f34bf43e9666bc2c0bd1a85", null ],
     [ "run", "structmc__control_1_1ControllerClient.html#a8079e120ef304ca447b0f36c42598364", null ],

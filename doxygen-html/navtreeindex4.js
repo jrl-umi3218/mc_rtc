@@ -1,5 +1,9 @@
 var NAVTREEINDEX4 =
 {
+"gui_2Schema_8h_source.html":[7,0,0,6,0,28],
+"gui_8h.html":[7,0,0,6,12],
+"gui_8h_source.html":[7,0,0,6,12],
+"hat_8h.html":[7,0,0,4,18],
 "hat_8h.html#adfd1b3b7507cf3de890aeb3eca8376d0":[7,0,0,4,18,0],
 "hat_8h_source.html":[7,0,0,4,18],
 "heatmap_8h.html":[7,0,0,6,3,0],
@@ -245,9 +249,5 @@ var NAVTREEINDEX4 =
 "mc__control_2Contact_8h.html#ac55a4e95c7c3aaab29499a0abe565e3a":[7,0,0,0,5,3],
 "mc__control_2Contact_8h_source.html":[7,0,0,0,5],
 "mc__controller_8h.html":[7,0,0,0,14],
-"mc__controller_8h.html#a2606b401f367e0b10c4d3d48a8a1234b":[7,0,0,0,14,2],
-"mc__controller_8h.html#a53b7790e199f0eb693195a9e0f3183fa":[7,0,0,0,14,0],
-"mc__controller_8h.html#abe63c9c89a7762fc5ef9a7589218978c":[7,0,0,0,14,1],
-"mc__controller_8h.html#ae12249535408100bcdf1007ef0eb8fb8":[7,0,0,0,14,3],
-"mc__controller_8h_source.html":[7,0,0,0,14]
+"mc__controller_8h.html#a2606b401f367e0b10c4d3d48a8a1234b":[7,0,0,0,14,2]
 };

@@ -34,6 +34,7 @@ var elements_8h =
       [ "PolyhedronTrianglesList", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a94c8141fc670449195562629a2055edf", null ],
       [ "PolyhedronVerticesTriangles", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a35ddbf0f6429fc2aabd5fadc20766153", null ],
       [ "GenericArray", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a8c8886e12ab9253c95168612dc435b0f", null ],
-      [ "OneOf", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a104632c63520385967d8e185f7aa68dc", null ]
+      [ "OneOf", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a104632c63520385967d8e185f7aa68dc", null ],
+      [ "RobotMsg", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a28c4880bfca5b0935bf49c3039e34b09", null ]
     ] ]
 ];

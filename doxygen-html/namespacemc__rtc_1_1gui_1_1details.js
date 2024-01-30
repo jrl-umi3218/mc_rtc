@@ -47,6 +47,7 @@ var namespacemc__rtc_1_1gui_1_1details =
     [ "ReturnTypeImpl", "structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl.html", "structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl" ],
     [ "ReturnTypeImpl< GetT, false >", "structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl_3_01GetT_00_01false_01_4.html", "structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl_3_01GetT_00_01false_01_4" ],
     [ "RobotImpl", "structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html", "structmc__rtc_1_1gui_1_1details_1_1RobotImpl" ],
+    [ "RobotMsgImpl", "structmc__rtc_1_1gui_1_1details_1_1RobotMsgImpl.html", "structmc__rtc_1_1gui_1_1details_1_1RobotMsgImpl" ],
     [ "RotationImpl", "structmc__rtc_1_1gui_1_1details_1_1RotationImpl.html", "structmc__rtc_1_1gui_1_1details_1_1RotationImpl" ],
     [ "RPYLabels", "structmc__rtc_1_1gui_1_1details_1_1RPYLabels.html", null ],
     [ "RPYLabels< false >", "structmc__rtc_1_1gui_1_1details_1_1RPYLabels_3_01false_01_4.html", null ],

@@ -38,8 +38,6 @@ digraph "include/mc_rbdyn/RobotFrame.h"
   Node40 -> Node57 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node57 [label="include/mc_tasks/CoMTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$CoMTask_8h.html",tooltip=" "];
   Node57 -> Node45 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node40 -> Node58 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node58 [label="include/mc_tasks/GazeTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$GazeTask_8h.html",tooltip=" "];
   Node5 -> Node67 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node67 [label="include/mc_tasks/AddRemove\lContactTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$AddRemoveContactTask_8h.html",tooltip=" "];
   Node5 -> Node45 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -115,10 +113,12 @@ digraph "include/mc_rbdyn/RobotFrame.h"
   Node97 [label="include/mc_observers\l/KinematicInertialObserver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$KinematicInertialObserver_8h.html",tooltip=" "];
   Node2 -> Node89 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node98 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node98 [label="include/mc_tvm/Robot.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2Robot_8h.html",tooltip=" "];
-  Node98 -> Node99 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node99 [label="include/mc_tvm/CoMInConvex\lFunction.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$CoMInConvexFunction_8h.html",tooltip=" "];
+  Node98 [label="include/mc_rtc/gui\l/RobotMsg.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotMsg_8h.html",tooltip=" "];
+  Node2 -> Node99 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node99 [label="include/mc_tvm/Robot.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2Robot_8h.html",tooltip=" "];
+  Node99 -> Node100 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node100 [label="include/mc_tvm/CoMInConvex\lFunction.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$CoMInConvexFunction_8h.html",tooltip=" "];
   Node1 -> Node47 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 -> Node100 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node100 [label="include/mc_tvm/RobotFrame.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2RobotFrame_8h.html",tooltip=" "];
+  Node1 -> Node101 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 [label="include/mc_tvm/RobotFrame.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__tvm_2RobotFrame_8h.html",tooltip=" "];
 }

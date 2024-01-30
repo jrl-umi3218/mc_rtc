@@ -3378,6 +3378,7 @@
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a35ddbf0f6429fc2aabd5fadc20766153">PolyhedronVerticesTriangles</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a8c8886e12ab9253c95168612dc435b0f">GenericArray</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a104632c63520385967d8e185f7aa68dc">OneOf</enumvalue>
+      <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a28c4880bfca5b0935bf49c3039e34b09">RobotMsg</enumvalue>
     </member>
   </compound>
   <compound kind="file">
@@ -3896,6 +3897,7 @@
     <class kind="struct">mc_rtc::gui::PointConfig</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::PointConfig &gt;</class>
     <class kind="struct">mc_rtc::gui::PolyhedronConfig</class>
+    <class kind="struct">mc_rtc::gui::RobotMsgData</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::PolyhedronConfig &gt;</class>
     <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::gui</namespace>
@@ -4038,6 +4040,26 @@
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
       <anchor>a0074155dfebc9c355c338024df640aa5</anchor>
       <arglist>(const std::string &amp;name, const PolyhedronConfig &amp;config, GetVerticesT get_vertices_fn, GetTrianglesT get_triangles_fn, GetColorT get_color_fn)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>RobotMsg.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
+    <filename>RobotMsg_8h.html</filename>
+    <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
+    <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
+    <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
+    <includes id="mc__rbdyn_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rbdyn/Robot.h</includes>
+    <class kind="struct">mc_rtc::gui::details::RobotMsgImpl</class>
+    <namespace>mc_rtc</namespace>
+    <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
+    <member kind="function">
+      <type>auto</type>
+      <name>RobotMsg</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a05f683d215a6f3cec228bc83410affd8</anchor>
+      <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -14468,6 +14490,13 @@
       <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
       <anchor>ae3efbe9ac079a07e540872820bf951f9</anchor>
       <arglist>(const ElementId &amp;id, const std::vector&lt; std::string &gt; &amp;, const std::vector&lt; std::vector&lt; double &gt;&gt; &amp;, const sva::PTransformd &amp;)</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
+      <name>robot_msg</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a34992903634a072f4160856f3e834f15</anchor>
+      <arglist>(const ElementId &amp;id, const mc_rtc::gui::RobotMsgData &amp;)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
       <type>virtual void</type>
@@ -36174,6 +36203,107 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::gui::RobotMsgData</name>
+    <filename>structmc__rtc_1_1gui_1_1RobotMsgData.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>RobotMsgData</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1RobotMsgData.html</anchorfile>
+      <anchor>aee6d5855f42be0f7d3585037b2a1f9f9</anchor>
+      <arglist>()=default</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>RobotMsgData</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1RobotMsgData.html</anchorfile>
+      <anchor>a469e3f10cb241eb18ee47d4694972f2d</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;params, const Eigen::VectorXd &amp;q, const Eigen::VectorXd &amp;alpha, const Eigen::VectorXd &amp;alphaD, const Eigen::VectorXd &amp;tau, const std::vector&lt; sva::ForceVecd &gt; &amp;forces, const sva::PTransformd &amp;posW)</arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; std::string &gt;</type>
+      <name>parameters</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1RobotMsgData.html</anchorfile>
+      <anchor>a1de124e42348740401567c5a12134670</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>Eigen::VectorXd</type>
+      <name>q</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1RobotMsgData.html</anchorfile>
+      <anchor>a9bce193461bf8042358cb73032663560</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>Eigen::VectorXd</type>
+      <name>alpha</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1RobotMsgData.html</anchorfile>
+      <anchor>ade1fe6e8bcf79de9e8da074914390fda</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>Eigen::VectorXd</type>
+      <name>alphaD</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1RobotMsgData.html</anchorfile>
+      <anchor>a3eb2c66fa6e4bfedb905c54ad36c9f73</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>Eigen::VectorXd</type>
+      <name>tau</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1RobotMsgData.html</anchorfile>
+      <anchor>a8c3d6273ca7e9bb8f6d2b6e922558cc0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; sva::ForceVecd &gt;</type>
+      <name>forces</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1RobotMsgData.html</anchorfile>
+      <anchor>a5d96edf32ea98a19c17646cd0e3a3338</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>sva::PTransformd</type>
+      <name>posW</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1RobotMsgData.html</anchorfile>
+      <anchor>ad0601ff843f9b8d0ba2e08cc001b43b9</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::RobotMsgImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1RobotMsgImpl.html</filename>
+    <templarg></templarg>
+    <base>mc_rtc::gui::Element</base>
+    <member kind="function">
+      <type></type>
+      <name>RobotMsgImpl</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RobotMsgImpl.html</anchorfile>
+      <anchor>a2247768919e83147f357d3a5b50fc8ce</anchor>
+      <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RobotMsgImpl.html</anchorfile>
+      <anchor>a83b5a52338f47a3e09416e9502ba489d</anchor>
+      <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static constexpr size_t</type>
+      <name>write_size</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RobotMsgImpl.html</anchorfile>
+      <anchor>a1a5a2b7f209933015d2b8866e2a2f058</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static constexpr auto</type>
+      <name>type</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RobotMsgImpl.html</anchorfile>
+      <anchor>ae66df5c6c7003a4cbb73ac47ccb3e2d9</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rtc::RobotPublisher</name>
     <filename>structmc__rtc_1_1RobotPublisher.html</filename>
     <member kind="function">
@@ -46396,6 +46526,7 @@
     <class kind="struct">mc_rtc::gui::LineConfig</class>
     <class kind="struct">mc_rtc::gui::PointConfig</class>
     <class kind="struct">mc_rtc::gui::PolyhedronConfig</class>
+    <class kind="struct">mc_rtc::gui::RobotMsgData</class>
     <class kind="struct">mc_rtc::gui::StateBuilder</class>
     <class kind="struct">mc_rtc::gui::VoidCallbackElement</class>
     <member kind="enumeration">
@@ -46432,6 +46563,7 @@
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a35ddbf0f6429fc2aabd5fadc20766153">PolyhedronVerticesTriangles</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a8c8886e12ab9253c95168612dc435b0f">GenericArray</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a104632c63520385967d8e185f7aa68dc">OneOf</enumvalue>
+      <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a28c4880bfca5b0935bf49c3039e34b09">RobotMsg</enumvalue>
     </member>
     <member kind="enumeration">
       <type></type>
@@ -46866,6 +46998,13 @@
     </member>
     <member kind="function">
       <type>auto</type>
+      <name>RobotMsg</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a05f683d215a6f3cec228bc83410affd8</anchor>
+      <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
       <name>Rotation</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
       <anchor>a609e22c82ab9d29f5ca8240c5df19098</anchor>
@@ -47048,6 +47187,7 @@
     <class kind="struct">mc_rtc::gui::details::ReturnTypeImpl</class>
     <class kind="struct">mc_rtc::gui::details::ReturnTypeImpl&lt; GetT, false &gt;</class>
     <class kind="struct">mc_rtc::gui::details::RobotImpl</class>
+    <class kind="struct">mc_rtc::gui::details::RobotMsgImpl</class>
     <class kind="struct">mc_rtc::gui::details::RotationImpl</class>
     <class kind="struct">mc_rtc::gui::details::RPYLabels</class>
     <class kind="struct">mc_rtc::gui::details::RPYLabels&lt; false &gt;</class>

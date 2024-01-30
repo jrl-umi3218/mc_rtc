@@ -126,6 +126,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1PolyhedronConfig.html">PolyhedronConfig</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1RobotMsgData.html">RobotMsgData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">StateBuilder</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1VoidCallbackElement.html">VoidCallbackElement</a></td></tr>
@@ -167,7 +169,9 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a94c8141fc670449195562629a2055edf">Elements::PolyhedronTrianglesList</a>, 
 <a class="el" href="namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a35ddbf0f6429fc2aabd5fadc20766153">Elements::PolyhedronVerticesTriangles</a>, 
 <a class="el" href="namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a8c8886e12ab9253c95168612dc435b0f">Elements::GenericArray</a>, 
-<a class="el" href="namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a104632c63520385967d8e185f7aa68dc">Elements::OneOf</a>
+<a class="el" href="namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a104632c63520385967d8e185f7aa68dc">Elements::OneOf</a>, 
+<br />
+&#160;&#160;<a class="el" href="namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a28c4880bfca5b0935bf49c3039e34b09">Elements::RobotMsg</a>
 <br />
  }</td></tr>
 <tr class="separator:a32d283e5c35e7fd7dcddbc0199bfdc06"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -356,6 +360,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a4960c76995e58d4b10b4339800ef777a"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
 <tr class="memitem:a4960c76995e58d4b10b4339800ef777a"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a4960c76995e58d4b10b4339800ef777a">Robot</a> (const std::string &amp;name, GetT get_fn)</td></tr>
 <tr class="separator:a4960c76995e58d4b10b4339800ef777a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05f683d215a6f3cec228bc83410affd8"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
+<tr class="memitem:a05f683d215a6f3cec228bc83410affd8"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a05f683d215a6f3cec228bc83410affd8">RobotMsg</a> (const std::string &amp;name, GetT get_fn)</td></tr>
+<tr class="separator:a05f683d215a6f3cec228bc83410affd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a609e22c82ab9d29f5ca8240c5df19098"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
 <tr class="memitem:a609e22c82ab9d29f5ca8240c5df19098"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a609e22c82ab9d29f5ca8240c5df19098">Rotation</a> (const std::string &amp;name, GetT get_fn)</td></tr>
 <tr class="separator:a609e22c82ab9d29f5ca8240c5df19098"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -463,6 +470,7 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="a32d283e5c35e7fd7dcddbc0199bfdc06a35ddbf0f6429fc2aabd5fadc20766153"></a>PolyhedronVerticesTriangles&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a32d283e5c35e7fd7dcddbc0199bfdc06a8c8886e12ab9253c95168612dc435b0f"></a>GenericArray&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a32d283e5c35e7fd7dcddbc0199bfdc06a104632c63520385967d8e185f7aa68dc"></a>OneOf&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a32d283e5c35e7fd7dcddbc0199bfdc06a28c4880bfca5b0935bf49c3039e34b09"></a>RobotMsg&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -2731,6 +2739,37 @@ template&lt;typename GetT &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">auto mc_rtc::gui::Robot </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GetT&#160;</td>
+          <td class="paramname"><em>get_fn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Helper function to create a RobotImpl </p>
+
+</div>
+</div>
+<a id="a05f683d215a6f3cec228bc83410affd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05f683d215a6f3cec228bc83410affd8">&#9670;&nbsp;</a></span>RobotMsg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename GetT &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto mc_rtc::gui::RobotMsg </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em>, </td>
