@@ -357,7 +357,7 @@ target_include_directories(
 )
 install_mc_rtc_lib(mc_rbdyn)
 
-set(mc_rtc_gui_SRC mc_rtc/gui/StateBuilder.cpp)
+set(mc_rtc_gui_SRC mc_rtc/gui/StateBuilder.cpp mc_rbdyn/gui/RobotConvex.cpp)
 
 set(mc_rtc_gui_HDR
     ../include/mc_rtc/gui/api.h
@@ -400,6 +400,7 @@ set(mc_rtc_gui_HDR
     ../include/mc_rtc/gui/plot/Ordinate.h
     ../include/mc_rtc/gui/plot/Polygon.h
     ../include/mc_rtc/gui/plot/Polygons.h
+    ../include/mc_rbdyn/gui/RobotConvex.h
 )
 
 add_library(mc_rtc_gui SHARED ${mc_rtc_gui_SRC} ${mc_rtc_gui_HDR})
