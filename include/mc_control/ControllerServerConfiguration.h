@@ -12,6 +12,30 @@
 namespace mc_control
 {
 
+namespace details
+{
+
+// FIXME This could be inside ControllerServerConfiguration but it crashes clang-10
+
+/** "Classic" socket configuration
+ *
+ * \tparam default_pub_port Default publisher port
+ *
+ * \tparam default_pull_port Default pull port
+ */
+template<uint16_t default_pub_port, uint16_t default_pull_port>
+struct SocketConfiguration
+{
+  /** Which host the socket binds to */
+  std::string host = "*";
+  /** Publisher port */
+  uint16_t pub_port = default_pub_port;
+  /** Pull request port */
+  uint16_t pull_port = default_pull_port;
+};
+
+} // namespace details
+
 /** Configuration for \ref mc_control::ControllerServer */
 struct MC_CONTROL_DLLAPI ControllerServerConfiguration
 {
@@ -31,24 +55,7 @@ struct MC_CONTROL_DLLAPI ControllerServerConfiguration
    */
   std::optional<std::string> ipc_socket = mc_rtc::temp_directory_path("mc_rtc");
 
-  /** "Classic" socket configuration
-   *
-   * \tparam default_pub_port Default publisher port
-   *
-   * \tparam default_pull_port Default pull port
-   */
-  template<uint16_t default_pub_port, uint16_t default_pull_port>
-  struct SocketConfiguration
-  {
-    /** Which host the socket binds to */
-    std::string host = "*";
-    /** Publisher port */
-    uint16_t pub_port = default_pub_port;
-    /** Pull request port */
-    uint16_t pull_port = default_pull_port;
-  };
-
-  using TCPConfiguration = SocketConfiguration<4242, 4343>;
+  using TCPConfiguration = details::SocketConfiguration<4242, 4343>;
 
   /** Configuration for the TCP socket
    *
@@ -56,7 +63,7 @@ struct MC_CONTROL_DLLAPI ControllerServerConfiguration
    */
   std::optional<TCPConfiguration> tcp_config = TCPConfiguration{};
 
-  using WebSocketConfiguration = SocketConfiguration<8080, 8081>;
+  using WebSocketConfiguration = details::SocketConfiguration<8080, 8081>;
 
   /** Configuration for the WebSocket socket
    *
