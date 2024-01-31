@@ -14,6 +14,11 @@
 namespace mc_control
 {
 
+ControllerServer::ControllerServer(double dt, const ControllerServerConfiguration & config)
+: ControllerServer(dt, config.timestep, config.pub_uris(), config.pull_uris())
+{
+}
+
 ControllerServer::ControllerServer(double dt,
                                    double server_dt,
                                    const std::vector<std::string> & pub_bind_uri,

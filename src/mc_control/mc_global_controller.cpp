@@ -44,10 +44,7 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   if(conf.enable_gui_server)
   {
     mc_rtc::log::info("GUI server enabled");
-    mc_rtc::log::info("Will serve data on:");
-    for(const auto & pub_uri : conf.gui_server_pub_uris) { mc_rtc::log::info("- {}", pub_uri); }
-    mc_rtc::log::info("Will handle requests on:");
-    for(const auto & rep_uri : conf.gui_server_rep_uris) { mc_rtc::log::info("- {}", rep_uri); }
+    conf.gui_server_configuration.print_serving_information();
   }
   else { mc_rtc::log::info("GUI server disabled"); }
   {
@@ -128,8 +125,7 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
 
   if(config.enable_gui_server)
   {
-    server_.reset(new mc_control::ControllerServer(config.timestep, config.gui_timestep, config.gui_server_pub_uris,
-                                                   config.gui_server_rep_uris));
+    server_.reset(new mc_control::ControllerServer(config.timestep, config.gui_server_configuration));
   }
 }
 

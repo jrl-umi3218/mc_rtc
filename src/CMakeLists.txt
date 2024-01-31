@@ -608,6 +608,7 @@ set(mc_observers_HDR
 set(mc_control_SRC
     mc_control/CompletionCriteria.cpp
     mc_control/ControllerServer.cpp
+    mc_control/ControllerServerConfiguration.cpp
     mc_control/SimulationContactPair.cpp
     mc_control/MCController.cpp
     mc_control/mc_python_controller.cpp
@@ -630,6 +631,7 @@ set(mc_control_HDR
     ../include/mc_control/Configuration.h
     ../include/mc_control/Contact.h
     ../include/mc_control/ControllerServer.h
+    ../include/mc_control/ControllerServerConfiguration.h
     ../include/mc_control/GlobalPlugin.h
     ../include/mc_control/GlobalPluginMacros.h
     ../include/mc_control/GlobalPlugin_fwd.h
