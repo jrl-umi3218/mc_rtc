@@ -104,7 +104,8 @@ void ControllerServer::publish(mc_rtc::gui::StateBuilder & gui_builder)
   {
     buffer_size_ = gui_builder.update(buffer_);
 #ifndef MC_RTC_DISABLE_NETWORK
-    nn_send(pub_socket_, buffer_.data(), buffer_size_, 0);
+    int err = nn_send(pub_socket_, buffer_.data(), buffer_size_, 0);
+    if(err < 0) { mc_rtc::log::error("[ControllerServer] Failed to send {}", nn_strerror(nn_errno())); }
 #endif
   }
   else

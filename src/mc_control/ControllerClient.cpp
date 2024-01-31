@@ -54,6 +54,9 @@ void init_socket(int & socket, int proto, const std::string & uri, const std::st
   {
     int err = nn_setsockopt(socket, NN_SUB, NN_SUB_SUBSCRIBE, "", 0);
     if(err < 0) { mc_rtc::log::error_and_throw("Failed to set subscribe option on SUB socket"); }
+    int opt = -1;
+    err = nn_setsockopt(socket, NN_SOL_SOCKET, NN_RCVMAXSIZE, &opt, sizeof(opt));
+    if(err < 0) { mc_rtc::log::error_and_throw("Failed to set receive max size option on SUB socket"); }
   }
 }
 
