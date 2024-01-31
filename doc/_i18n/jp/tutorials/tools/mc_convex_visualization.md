@@ -1,20 +1,20 @@
-`mc_convex_visualization`は、ロボットの凸領域をRVizで表示するツールです。{% link mc_rtc_ros %}パッケージに含まれています。
+`mc_convex_visualization` は mc_rtc GUI アプリケーションでロボットの凸部を可視化するツールです。
 
-### 可視化ツールを起動する
+### ビジュアライゼーションの起動
 
-以下のようにツールを起動します。
+ツールの起動方法は以下の通りです：
 
 ```bash
-$ roslaunch mc_convex_visualization display.launch robot:=JVRC1
+$ mc_convex_visualization JVRC1
 ```
 
-引数`robot`には、`mc_rbdyn::RobotLoader::get_robot_module`関数に渡すのと同じものを指定する必要があります。なお、この引数ではロボットの別名を使用できます。例:
+プログラムの引数は `MainRobot` のエントリと同じものを指定します。エイリアスも扱えます。例えば
 
 ```bash
-# 引数のベクトルとして与える方法
-$ roslaunch mc_convex_visualization display.launch robot:="[env, `rospack find mc_env_description`, ground]"
-# エイリアスを使用する方法
-$ roslaunch mc_convex_visualization display.launch robot:=env/ground
+# 引数のベクトルを指定する
+$ mc_convex_visualization env `rospack find mc_env_description` ground
+# またはエイリアス
+$ mc_convex_visualization env/ground
 ```
 
 このツールを起動すると、以下のように表示されます。
