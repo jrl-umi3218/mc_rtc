@@ -112,6 +112,7 @@ set(mc_rtc_utils_SRC
     mc_rtc/MessagePackBuilder.cpp
     mc_rtc/deprecated.cpp
     mc_rtc/logging.cpp
+    mc_rtc/path.cpp
     mc_rtc/version.cpp
     ${DEBUG_SOURCE}
 )
@@ -137,6 +138,7 @@ set(mc_rtc_utils_HDR
     ../include/mc_rtc/type_name.h
     ../include/mc_rtc/debug.h
     ../include/mc_rtc/deprecated.h
+    ../include/mc_rtc/path.h
     ../include/mc_rtc/pragma.h
     ../include/mc_rtc/shared.h
     ../include/mc_rtc/visual_utils.h

@@ -5,6 +5,7 @@
 #include <mc_rbdyn/RobotLoader.h>
 
 #include <mc_rtc/Configuration.h>
+#include <mc_rtc/path.h>
 
 #include <boost/filesystem.hpp>
 #include <boost/range/adaptors.hpp>
@@ -98,15 +99,7 @@ void RobotLoader::init(bool skip_default_path)
       if(!skip_default_path) { default_path.push_back(mc_rtc::MC_ROBOTS_INSTALL_PREFIX); }
       robot_loader.reset(new mc_rtc::ObjectLoader<RobotModule>("MC_RTC_ROBOT_MODULE", default_path, verbose_));
       for(const auto & p : default_path) { handle_aliases_dir(bfs::path(p) / "aliases"); }
-      if(!skip_default_path)
-      {
-#ifndef WIN32
-        handle_aliases_dir(bfs::path(std::getenv("HOME")) / ".config/mc_rtc/aliases/");
-#else
-        // Should work for Windows Vista and up
-        handle_aliases_dir(bfs::path(std::getenv("APPDATA")) / "mc_rtc/aliases/");
-#endif
-      }
+      if(!skip_default_path) { handle_aliases_dir(mc_rtc::user_config_directory_path("aliases")); }
     }
     catch(const mc_rtc::LoaderException & exc)
     {

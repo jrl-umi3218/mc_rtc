@@ -10,6 +10,7 @@
 
 #include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_rtc/io_utils.h>
+#include <mc_rtc/path.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -33,12 +34,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       config.load(globalPath);
     }
 
-#ifndef WIN32
-    auto config_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/mc_rtc.conf";
-#else
-    // Should work for Windows Vista and up
-    auto config_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/mc_rtc.conf";
-#endif
+    bfs::path config_path = mc_rtc::user_config_directory_path("mc_rtc.conf");
     // Load user's local configuration if it exists
     if(!bfs::exists(config_path)) { config_path.replace_extension(".yaml"); }
     if(bfs::exists(config_path))
@@ -344,12 +340,7 @@ void MCGlobalController::GlobalConfiguration::load_controllers_configs()
   controllers_configs.clear();
   // Load controller-specific configuration
   load_configs("controller", enabled_controllers, controller_module_paths,
-#ifndef WIN32
-               bfs::path(std::getenv("HOME")) / ".config/mc_rtc/controllers",
-#else
-               bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers",
-#endif
-               controllers_configs, config, {"Plugins"});
+               mc_rtc::user_config_directory_path("controllers"), controllers_configs, config, {"Plugins"});
 }
 
 void MCGlobalController::GlobalConfiguration::load_plugin_configs()
@@ -360,11 +351,7 @@ void MCGlobalController::GlobalConfiguration::load_plugin_configs()
 void MCGlobalController::GlobalConfiguration::load_controller_plugin_configs(const std::string & controller,
                                                                              const std::vector<std::string> & plugins)
 {
-#ifndef WIN32
-  bfs::path user_config = bfs::path(std::getenv("HOME")) / ".config" / "mc_rtc";
-#else
-  bfs::path user_config = bfs::path(std::getenv("APPDATA")) / "mc_rtc";
-#endif
+  bfs::path user_config = mc_rtc::user_config_directory_path();
   for(const auto & plugin : plugins)
   {
     auto plugin_c = global_plugin_configs.find(plugin);
