@@ -274,7 +274,7 @@ bool operator==(const Geometry::Sphere & lhs, const Geometry::Sphere & rhs)
 
 bool operator==(const Geometry::Mesh & lhs, const Geometry::Mesh & rhs)
 {
-  return lhs.filename == rhs.filename && lhs.scale == rhs.scale;
+  return lhs.filename == rhs.filename && lhs.scaleV == rhs.scaleV;
 }
 
 bool operator==(const Geometry::Superellipsoid & lhs, const Geometry::Superellipsoid & rhs)
