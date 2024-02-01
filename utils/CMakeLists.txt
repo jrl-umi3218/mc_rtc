@@ -37,6 +37,8 @@ add_mc_rtc_utils(mc_json_to_yaml)
 
 add_mc_rtc_utils(mc_convex_visualization)
 
+add_mc_rtc_utils(mc_surfaces_visualization)
+
 add_mc_rtc_utils(mc_rtc_ticker)
 target_link_libraries(
   mc_rtc_ticker PUBLIC Boost::program_options Boost::disable_autolinking
