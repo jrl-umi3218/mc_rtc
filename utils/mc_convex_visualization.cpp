@@ -22,7 +22,7 @@ struct ApplicationServer
     loadRobot(params);
   }
 
-  virtual void publish()
+  void publish()
   {
     server.handle_requests(builder);
     server.publish(builder);
@@ -72,13 +72,51 @@ struct ApplicationServer
   {
     const auto & robot = robots->robot();
     builder.addElement({"Robot"}, mc_rtc::gui::Robot(robot.name(), [&robot]() -> const auto & { return robot; }));
+    builder.addElement({"Robot", "Convexes"}, mc_rtc::gui::Checkbox(
+                                                  "Show all", [this]() { return all_selected(); },
+                                                  [this, &robot]()
+                                                  {
+                                                    auto callback = all_selected() ? &ApplicationServer::removeConvex
+                                                                                   : &ApplicationServer::addConvex;
+                                                    for(const auto & [name, _] : robot.convexes())
+                                                    {
+                                                      (this->*callback)(name);
+                                                    }
+                                                  }));
     for(const auto & convex_it : robot.convexes())
     {
-      mc_rbdyn::gui::addConvexToGUI(builder, {"Robot", "Collision objects"}, robot, convex_it.first);
+      const auto & name = convex_it.first;
+      selected_convexes[name] = false;
+      builder.addElement({"Robot", "Convexes"}, mc_rtc::gui::Checkbox(
+                                                    "Show " + name, [this, name]() { return selected_convexes[name]; },
+                                                    [this, name]()
+                                                    {
+                                                      if(selected_convexes[name]) { removeConvex(name); }
+                                                      else { addConvex(name); }
+                                                    }));
+      addConvex(name);
     }
   }
 
-  void removeRobot() { builder.removeCategory({"Robot"}); }
+  void addConvex(const std::string & name)
+  {
+    if(selected_convexes[name]) { return; }
+    selected_convexes[name] = true;
+    mc_rbdyn::gui::addConvexToGUI(builder, {"Robot", "Collision objects"}, robots->robot(), name);
+  }
+
+  void removeConvex(const std::string & name)
+  {
+    if(!selected_convexes[name]) { return; }
+    selected_convexes[name] = false;
+    builder.removeElement({"Robot", "Collision objects"}, name);
+  }
+
+  void removeRobot()
+  {
+    selected_convexes.clear();
+    builder.removeCategory({"Robot"});
+  }
 
   void setupRobotSelector()
   {
@@ -92,7 +130,13 @@ struct ApplicationServer
 
   std::vector<std::string> available_robots;
   int selected_robot = -1;
+  std::unordered_map<std::string, bool> selected_convexes;
   std::shared_ptr<mc_rbdyn::Robots> robots;
+
+  bool all_selected()
+  {
+    return std::all_of(selected_convexes.begin(), selected_convexes.end(), [](const auto & it) { return it.second; });
+  }
 };
 
 int main(int argc, char * argv[])
