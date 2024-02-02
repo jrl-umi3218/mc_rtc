@@ -17,8 +17,8 @@ $ mc_convex_visualization env `rospack find mc_env_description` ground
 $ mc_convex_visualization env/ground
 ```
 
-このツールを起動すると、以下のように表示されます。
+mc_rtc GUIを起動した後、これが表示されるはずです：
 
 <img src="{{site.baseurl_root}}/assets/tutorials/tools/img/mc_convex_visualization.png" alt="mc_convex_visualization in action" class="img-fluid" />
 
-赤い枠で囲まれた領域にあるチェックボックスをオン・オフすることで、選択した凸領域の表示・非表示を切り替えられます。
+インターフェースを通じて表示する凸形状を簡単に選択できます。

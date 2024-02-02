@@ -17,8 +17,8 @@ $ mc_convex_visualization env `rospack find mc_env_description` ground
 $ mc_convex_visualization env/ground
 ```
 
-After launching it should look like this:
+After launching an mc_rtc GUI, it should look like this:
 
 <img src="{{site.baseurl_root}}/assets/tutorials/tools/img/mc_convex_visualization.png" alt="mc_convex_visualization in action" class="img-fluid" />
 
-By enabling/disabling the checkboxes in the highlighted area you can show/hide selected convexes.
+You can easily select which convexes to display through the interface.
