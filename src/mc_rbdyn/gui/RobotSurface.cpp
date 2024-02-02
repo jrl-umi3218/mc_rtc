@@ -6,9 +6,18 @@
 
 namespace mc_rbdyn::gui
 {
+std::vector<std::string> addSurfaceToGUI(mc_rtc::gui::StateBuilder & gui,
+                                         const std::vector<std::string> & category,
+                                         const mc_rbdyn::Robot & robot,
+                                         const std::string & name,
+                                         const std::optional<std::string> & publishName)
+{
+  return addSurfaceToGUI(gui, category, defaultSurfaceConfig, robot, name, publishName);
+}
 
 std::vector<std::string> addSurfaceToGUI(mc_rtc::gui::StateBuilder & gui,
                                          const std::vector<std::string> & category,
+                                         const mc_rtc::gui::LineConfig & cfg,
                                          const mc_rbdyn::Robot & robot,
                                          const std::string & name,
                                          const std::optional<std::string> & publishName)
@@ -29,7 +38,7 @@ std::vector<std::string> addSurfaceToGUI(mc_rtc::gui::StateBuilder & gui,
         [&cylinder]() {
           return mc_rtc::gui::CylinderParameters{cylinder.radius(), cylinder.width()};
         },
-        get_pose, mc_rtc::gui::Color::Green));
+        get_pose, cfg.color));
   }
   else if(surface.type() == "planar")
   {
@@ -38,7 +47,7 @@ std::vector<std::string> addSurfaceToGUI(mc_rtc::gui::StateBuilder & gui,
     std::vector<Eigen::Vector3d> points;
     points.resize(plan.points().size());
     publish_surface(mc_rtc::gui::Polygon(
-        publishName.value_or(name), mc_rtc::gui::LineConfig{mc_rtc::gui::Color::Green, 0.01},
+        publishName.value_or(name), cfg,
         [&plan, points, get_pose]() mutable -> const std::vector<Eigen::Vector3d> &
         {
           auto pose = get_pose();

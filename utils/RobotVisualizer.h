@@ -1,8 +1,8 @@
 #include <mc_rtc/gui.h>
 
 #include <mc_control/ControllerServer.h>
-#include "mc_rbdyn/gui/RobotConvex.h"
-#include "mc_rtc/gui/types.h"
+#include <mc_rbdyn/gui/RobotConvex.h>
+#include <mc_rbdyn/gui/RobotSurface.h>
 
 struct RobotVisualizer
 {
@@ -26,6 +26,7 @@ private:
   mc_control::ControllerServer server{0.005, server_config};
   mc_rtc::gui::StateBuilder builder;
   mc_rtc::gui::PolyhedronConfig convexConfig = mc_rbdyn::gui::defaultConvexConfig;
+  mc_rtc::gui::LineConfig surfaceConfig = mc_rbdyn::gui::defaultSurfaceConfig;
 
   std::vector<std::string> available_robots;
   int selected_robot = -1;
@@ -48,6 +49,8 @@ private:
   void removeConvex(const std::string & name);
 
   void addSurface(const std::string & name);
+
+  void addSurfaceConfigurationGUI();
 
   void removeSurface(const std::string & name);
 

@@ -153,10 +153,12 @@ void RobotVisualizer::addRobot()
                                                   }));
     if(show_surfaces) { addSurface(name); }
   }
+  addSurfaceConfigurationGUI();
 }
 
 void RobotVisualizer::addConvexConfigurationGUI()
 {
+  builder.removeElement({"Robot", "Convexes", "Convex Display Configuration"}, "Apply Convex Configuration");
   builder.addElement({"Robot", "Convexes", "Convex Display Configuration"},
                      mc_rtc::gui::Form(
                          "Apply Convex Configuration",
@@ -193,6 +195,35 @@ void RobotVisualizer::addConvexConfigurationGUI()
                          mc_rtc::gui::FormCheckbox("Apply to all", false, true)));
 }
 
+void RobotVisualizer::addSurfaceConfigurationGUI()
+{
+  builder.removeElement({"Robot", "Surfaces", "Surface Display Configuration"}, "Apply Surface Configuration");
+  builder.addElement({"Robot", "Surfaces", "Surface Display Configuration"},
+                     mc_rtc::gui::Form(
+                         "Apply Surface Configuration",
+                         [this](const mc_rtc::Configuration & data)
+                         {
+                           surfaceConfig.color = data("Color");
+                           surfaceConfig.width = data("Width");
+                           if(data("Apply to all"))
+                           {
+                             for(const auto & [name, selected] : selected_surfaces)
+                             {
+                               if(selected)
+                               {
+                                 removeSurface(name);
+                                 addSurface(name);
+                               }
+                             }
+                           }
+                           builder.removeCategory({"Robot", "Surfaces", "Configuration"});
+                           addSurfaceConfigurationGUI();
+                         },
+                         mc_rtc::gui::FormArrayInput("Color", false, surfaceConfig.color),
+                         mc_rtc::gui::FormNumberInput("Width", false, surfaceConfig.width),
+                         mc_rtc::gui::FormCheckbox("Apply to all", false, true)));
+}
+
 void RobotVisualizer::removeRobot()
 {
   selected_convexes.clear();
@@ -207,7 +238,7 @@ void RobotVisualizer::addSurface(const std::string & name)
   if(selected_surfaces[name]) { return; }
   selected_surfaces[name] = true;
   surfaces_elements[name] =
-      mc_rbdyn::gui::addSurfaceToGUI(builder, {"Robot", "Surface objects"}, robots->robot(), name);
+      mc_rbdyn::gui::addSurfaceToGUI(builder, {"Robot", "Surface objects"}, surfaceConfig, robots->robot(), name);
 }
 
 void RobotVisualizer::removeSurface(const std::string & name)
