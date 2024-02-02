@@ -92,6 +92,14 @@ void RobotVisualizer::addRobot()
                                                     (this->*callback)(name);
                                                   }
                                                 }));
+  builder.addElement({"Robot", "Frames"}, mc_rtc::gui::Checkbox(
+                                              "Show all", [this]() { return all_frames_selected(); },
+                                              [this, &robot]()
+                                              {
+                                                auto callback = all_frames_selected() ? &RobotVisualizer::removeFrame
+                                                                                      : &RobotVisualizer::addFrame;
+                                                for(const auto & name : robot.frames()) { (this->*callback)(name); }
+                                              }));
   builder.addElement({"Robot", "Surfaces"}, mc_rtc::gui::Checkbox(
                                                 "Show all", [this]() { return all_surfaces_selected(); },
                                                 [this, &robot]()
@@ -117,6 +125,19 @@ void RobotVisualizer::addRobot()
                                                   }));
     if(show_convexes) { addConvex(name); }
   }
+  auto frames = robot.frames();
+  std::sort(frames.begin(), frames.end());
+  for(const auto & name : frames)
+  {
+    selected_frames[name] = false;
+    builder.addElement({"Robot", "Frames"}, mc_rtc::gui::Checkbox(
+                                                name, [this, name]() { return selected_frames[name]; },
+                                                [this, name]()
+                                                {
+                                                  if(selected_frames[name]) { addFrame(name); }
+                                                  else { removeFrame(name); }
+                                                }));
+  }
   for(const auto & name : robot.availableSurfaces())
   {
     selected_surfaces[name] = false;
@@ -134,6 +155,7 @@ void RobotVisualizer::addRobot()
 void RobotVisualizer::removeRobot()
 {
   selected_convexes.clear();
+  selected_frames.clear();
   selected_surfaces.clear();
   surfaces_elements.clear();
   builder.removeCategory({"Robot"});
@@ -166,4 +188,19 @@ void RobotVisualizer::removeConvex(const std::string & name)
   if(!selected_convexes[name]) { return; }
   selected_convexes[name] = false;
   builder.removeElement({"Robot", "Collision objects"}, name);
+}
+
+void RobotVisualizer::addFrame(const std::string & name)
+{
+  if(selected_frames[name]) { return; }
+  selected_frames[name] = true;
+  builder.addElement({"Robot", "Frame objects"},
+                     mc_rtc::gui::Transform(name, [this, name]() { return robots->robot().frame(name).position(); }));
+}
+
+void RobotVisualizer::removeFrame(const std::string & name)
+{
+  if(!selected_frames[name]) { return; }
+  selected_frames[name] = false;
+  builder.removeElement({"Robot", "Frame objects"}, name);
 }

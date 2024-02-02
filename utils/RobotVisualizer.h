@@ -27,6 +27,7 @@ private:
   std::vector<std::string> available_robots;
   int selected_robot = -1;
   std::unordered_map<std::string, bool> selected_convexes;
+  std::unordered_map<std::string, bool> selected_frames;
   std::unordered_map<std::string, bool> selected_surfaces;
   std::unordered_map<std::string, std::vector<std::string>> surfaces_elements;
   std::shared_ptr<mc_rbdyn::Robots> robots;
@@ -45,6 +46,10 @@ private:
 
   void removeSurface(const std::string & name);
 
+  void addFrame(const std::string & name);
+
+  void removeFrame(const std::string & name);
+
   void setupRobotSelector();
 
   inline bool all_surfaces_selected() const noexcept
@@ -55,6 +60,11 @@ private:
   inline bool all_convexes_selected() const noexcept
   {
     return std::all_of(selected_convexes.begin(), selected_convexes.end(), [](const auto & it) { return it.second; });
+  }
+
+  inline bool all_frames_selected() const noexcept
+  {
+    return std::all_of(selected_frames.begin(), selected_frames.end(), [](auto && it) { return it.second; });
   }
 };
 
