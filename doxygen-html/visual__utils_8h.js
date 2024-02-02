@@ -5,6 +5,7 @@ var visual__utils_8h =
     [ "makeVisualBox", "visual__utils_8h.html#a3ce6a1fbc6cbfa50125c3f80b1cd0851", null ],
     [ "makeVisualCylinder", "visual__utils_8h.html#aa2d10e7b9779943a641cb502ad841733", null ],
     [ "makeVisualMesh", "visual__utils_8h.html#a1d213977773e9bf5489f5fa974220724", null ],
+    [ "makeVisualMesh", "visual__utils_8h.html#a6583f5c8963b6e13d003a0f6954df1d5", null ],
     [ "makeVisualSphere", "visual__utils_8h.html#a3f2e3cb6db6610b54eaae481a25daf19", null ],
     [ "makeVisualSuperellispoid", "visual__utils_8h.html#a96ffc71a55eba088e4e6e07923a9ae8e", null ],
     [ "setVisualColor", "visual__utils_8h.html#a7a5690abf7ba73d622fd2d86a9acc961", null ],

@@ -5726,6 +5726,13 @@
       <type>rbd::parsers::Visual</type>
       <name>makeVisualMesh</name>
       <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a6583f5c8963b6e13d003a0f6954df1d5</anchor>
+      <arglist>(const std::string &amp;path, Eigen::Vector3d scaleV)</arglist>
+    </member>
+    <member kind="function">
+      <type>rbd::parsers::Visual</type>
+      <name>makeVisualMesh</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
       <anchor>a1d213977773e9bf5489f5fa974220724</anchor>
       <arglist>(const std::string &amp;path, double scale)</arglist>
     </member>
@@ -46318,6 +46325,13 @@
       <anchorfile>namespacemc__rtc.html</anchorfile>
       <anchor>a3ce6a1fbc6cbfa50125c3f80b1cd0851</anchor>
       <arglist>(const Eigen::Vector3d &amp;dim, const mc_rtc::gui::Color &amp;color)</arglist>
+    </member>
+    <member kind="function">
+      <type>rbd::parsers::Visual</type>
+      <name>makeVisualMesh</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a6583f5c8963b6e13d003a0f6954df1d5</anchor>
+      <arglist>(const std::string &amp;path, Eigen::Vector3d scaleV)</arglist>
     </member>
     <member kind="function">
       <type>rbd::parsers::Visual</type>
