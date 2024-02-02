@@ -6,6 +6,8 @@
 
 #include <mc_rtc/io_utils.h>
 
+#include "mc_rtc/gui/Form.h"
+#include "mc_rtc/gui/types.h"
 #include <thread>
 
 #ifdef MC_RTC_HAS_ROS
@@ -125,6 +127,7 @@ void RobotVisualizer::addRobot()
                                                   }));
     if(show_convexes) { addConvex(name); }
   }
+  addConvexConfigurationGUI();
   auto frames = robot.frames();
   std::sort(frames.begin(), frames.end());
   for(const auto & name : frames)
@@ -150,6 +153,44 @@ void RobotVisualizer::addRobot()
                                                   }));
     if(show_surfaces) { addSurface(name); }
   }
+}
+
+void RobotVisualizer::addConvexConfigurationGUI()
+{
+  builder.addElement({"Robot", "Convexes", "Convex Display Configuration"},
+                     mc_rtc::gui::Form(
+                         "Apply Convex Configuration",
+                         [this](const mc_rtc::Configuration & data)
+                         {
+                           convexConfig.triangle_color = data("Triangle Color");
+                           convexConfig.edge_config.color = data("Edge Color");
+                           convexConfig.edge_config.width = data("Edge Width");
+                           convexConfig.show_edges = data("Show edges");
+                           convexConfig.vertices_config.color = data("Vertex Color");
+                           convexConfig.vertices_config.scale = data("Vertex Scale");
+                           convexConfig.show_vertices = data("Show vertices");
+                           if(data("Apply to all"))
+                           {
+                             for(const auto & [name, selected] : selected_convexes)
+                             {
+                               if(selected)
+                               {
+                                 removeConvex(name);
+                                 addConvex(name);
+                               }
+                             }
+                           }
+                           builder.removeCategory({"Robot", "Convexes", "Configuration"});
+                           addConvexConfigurationGUI();
+                         },
+                         mc_rtc::gui::FormArrayInput("Triangle Color", false, convexConfig.triangle_color),
+                         mc_rtc::gui::FormArrayInput("Edge Color", false, convexConfig.edge_config.color),
+                         mc_rtc::gui::FormNumberInput("Edge Width", false, convexConfig.edge_config.width),
+                         mc_rtc::gui::FormCheckbox("Show edges", false, convexConfig.show_edges),
+                         mc_rtc::gui::FormArrayInput("Vertex Color", false, convexConfig.vertices_config.color),
+                         mc_rtc::gui::FormNumberInput("Vertex Scale", false, convexConfig.vertices_config.scale),
+                         mc_rtc::gui::FormCheckbox("Show vertices", false, convexConfig.show_vertices),
+                         mc_rtc::gui::FormCheckbox("Apply to all", false, true)));
 }
 
 void RobotVisualizer::removeRobot()
@@ -180,7 +221,7 @@ void RobotVisualizer::addConvex(const std::string & name)
 {
   if(selected_convexes[name]) { return; }
   selected_convexes[name] = true;
-  mc_rbdyn::gui::addConvexToGUI(builder, {"Robot", "Collision objects"}, robots->robot(), name);
+  mc_rbdyn::gui::addConvexToGUI(builder, {"Robot", "Collision objects"}, convexConfig, robots->robot(), name);
 }
 
 void RobotVisualizer::removeConvex(const std::string & name)
