@@ -37,6 +37,10 @@ add_mc_rtc_utils(mc_json_to_yaml)
 
 add_library(RobotVisualizer OBJECT RobotVisualizer.h RobotVisualizer.cpp)
 target_link_libraries(RobotVisualizer PUBLIC mc_rtc::mc_control)
+if(TARGET mc_rtc::mc_rtc_ros)
+  target_link_libraries(RobotVisualizer PUBLIC mc_rtc::mc_rtc_ros)
+  target_compile_definitions(RobotVisualizer PUBLIC MC_RTC_HAS_ROS)
+endif()
 
 add_mc_rtc_utils(mc_convex_visualization)
 target_link_libraries(mc_convex_visualization PRIVATE RobotVisualizer)

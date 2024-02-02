@@ -2,10 +2,6 @@
 
 #include <mc_control/ControllerServer.h>
 
-#ifdef MC_RTC_HAS_ROS
-#  include <mc_rtc_ros/ros.h>
-#endif
-
 struct RobotVisualizer
 {
   /** Constructor

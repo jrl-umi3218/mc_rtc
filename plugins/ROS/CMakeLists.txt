@@ -34,6 +34,7 @@ endif()
 set(mc_rtc_ros_SRC src/mc_rtc_ros/ros.cpp)
 set(mc_rtc_ros_HDR include/mc_rtc_ros/ros.h include/mc_rtc_ros/api.h)
 add_library(mc_rtc_ros SHARED ${mc_rtc_ros_SRC} ${mc_rtc_ros_HDR})
+add_library(mc_rtc::mc_rtc_ros ALIAS mc_rtc_ros)
 set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_RTC_ROS_EXPORTS")
 target_link_libraries(mc_rtc_ros PUBLIC mc_rtc::mc_rbdyn mc_rtc_3rd_party::ROS)
 target_include_directories(

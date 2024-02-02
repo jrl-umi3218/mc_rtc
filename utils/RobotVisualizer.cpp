@@ -8,6 +8,10 @@
 
 #include <thread>
 
+#ifdef MC_RTC_HAS_ROS
+#  include <mc_rtc_ros/ros.h>
+#endif
+
 std::vector<std::string> params_from_main(int argc, char * argv[])
 {
   if(argc == 1) { return {"JVRC1"}; }
@@ -29,6 +33,7 @@ void RobotVisualizer::run()
   while(1)
   {
     auto now = std::chrono::high_resolution_clock::now();
+    if(robots) { mc_rtc::ROSBridge::update_robot_publisher("control", 0.005, robots->robot()); }
     server.handle_requests(builder);
     server.publish(builder);
     std::this_thread::sleep_until(now + std::chrono::milliseconds(5));
