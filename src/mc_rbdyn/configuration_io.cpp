@@ -685,7 +685,7 @@ rbd::parsers::Geometry::Mesh ConfigurationLoader<rbd::parsers::Geometry::Mesh>::
 {
   rbd::parsers::Geometry::Mesh m;
   m.filename = static_cast<std::string>(config("filename"));
-  m.scale = config("scale");
+  m.scaleV = config("scaleV");
   return m;
 }
 
@@ -693,7 +693,7 @@ mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Geometry::Mesh>::save(co
 {
   mc_rtc::Configuration config;
   config.add("filename", m.filename);
-  config.add("scale", m.scale);
+  config.add("scaleV", m.scaleV);
   return config;
 }
 
