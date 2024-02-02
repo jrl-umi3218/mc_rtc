@@ -35,9 +35,15 @@ add_mc_rtc_utils(mc_old_bin_to_flat)
 
 add_mc_rtc_utils(mc_json_to_yaml)
 
-add_mc_rtc_utils(mc_convex_visualization)
+add_library(RobotVisualizer OBJECT RobotVisualizer.h RobotVisualizer.cpp)
+target_link_libraries(RobotVisualizer PUBLIC mc_rtc::mc_control)
 
+add_mc_rtc_utils(mc_convex_visualization)
+target_link_libraries(mc_convex_visualization PRIVATE RobotVisualizer)
+add_mc_rtc_utils(mc_robot_visualization)
+target_link_libraries(mc_robot_visualization PRIVATE RobotVisualizer)
 add_mc_rtc_utils(mc_surfaces_visualization)
+target_link_libraries(mc_surfaces_visualization PRIVATE RobotVisualizer)
 
 add_mc_rtc_utils(mc_rtc_ticker)
 target_link_libraries(
