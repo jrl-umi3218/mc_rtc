@@ -103,12 +103,18 @@ inline rbd::parsers::Visual makeVisualBox(const Eigen::Vector3d & dim, const mc_
 inline constexpr auto getVisualBox = details::getVisualGeometry<rbd::parsers::Geometry::Type::BOX>;
 
 /** Returns a new Visual that holds a Mesh object */
-inline rbd::parsers::Visual makeVisualMesh(const std::string & path, double scale)
+inline rbd::parsers::Visual makeVisualMesh(const std::string & path, Eigen::Vector3d scaleV)
 {
   rbd::parsers::Geometry::Mesh m;
   m.filename = path;
-  m.scale = scale;
+  m.scaleV = scaleV;
   return details::makeVisual(m, {});
+}
+
+/** Returns a new Visual that holds a Mesh object */
+inline rbd::parsers::Visual makeVisualMesh(const std::string & path, double scale)
+{
+  return makeVisualMesh(path, Eigen::Vector3d(scale, scale, scale));
 }
 
 /** Get the mesh data if the visual is a mesh, throws otherwise */
