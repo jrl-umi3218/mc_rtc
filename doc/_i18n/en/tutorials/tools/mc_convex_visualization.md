@@ -1,24 +1,24 @@
-`mc_convex_visualization` is a tool that allows you to visualize the convexes of a robot in the RViZ application. It is part of the {% link mc_rtc_ros %} package.
+`mc_convex_visualization` is a tool that allows you to visualize the convexes of a robot in any mc_rtc GUI application.
 
 ### Launching the visualization
 
 The tool is launched as follows:
 
 ```bash
-$ roslaunch mc_convex_visualization display.launch robot:=JVRC1
+$ mc_convex_visualization JVRC1
 ```
 
-The `robot` argument should be the same as what you would pass to the `mc_rbdyn::RobotLoader::get_robot_module` function, this can also be a robot alias. For example:
+The arguments to the program should be the same as you would use as a `MainRobot` entry. It can also handle aliases. For example:
 
 ```bash
 # Specify a vector of arguments
-$ roslaunch mc_convex_visualization display.launch robot:="[env, `rospack find mc_env_description`, ground]"
+$ mc_convex_visualization env `rospack find mc_env_description` ground
 # Or an alias
-$ roslaunch mc_convex_visualization display.launch robot:=env/ground
+$ mc_convex_visualization env/ground
 ```
 
-After launching it should look like this:
+After launching an mc_rtc GUI, it should look like this:
 
 <img src="{{site.baseurl_root}}/assets/tutorials/tools/img/mc_convex_visualization.png" alt="mc_convex_visualization in action" class="img-fluid" />
 
-By enabling/disabling the checkboxes in the highlighted area you can show/hide selected convexes.
+You can easily select which convexes to display through the interface.

@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <mc_control/ControllerServerConfiguration.h>
 #include <mc_control/MCController.h>
 
 #include <mc_rtc/gui/StateBuilder.h>
@@ -40,6 +41,14 @@ struct MC_CONTROL_DLLAPI ControllerServer
                    double server_dt,
                    const std::vector<std::string> & pub_bind_uri,
                    const std::vector<std::string> & pull_bind_uri);
+
+  /** Construct from the provided configuration
+   *
+   * \param dt Controller timestep
+   *
+   * \param config Server configuration \ref ControllerServerConfiguration for details
+   */
+  ControllerServer(double dt, const ControllerServerConfiguration & config);
 
   ~ControllerServer();
 

@@ -920,9 +920,7 @@ public:
     std::string log_template = "mc-control";
 
     bool enable_gui_server = true;
-    double gui_timestep = 0.05;
-    std::vector<std::string> gui_server_pub_uris;
-    std::vector<std::string> gui_server_rep_uris;
+    ControllerServerConfiguration gui_server_configuration;
 
     Configuration config;
 

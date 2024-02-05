@@ -2,22 +2,22 @@
 
 ### 可視化ツールを起動する
 
-以下のようにツールを起動します。
+ツールの起動方法は以下の通りです：
 
 ```bash
-$ roslaunch mc_surfaces_visualization display.launch robot:=JVRC1
+$ mc_surfaces_visualization JVRC1
 ```
 
-引数`robot`には、`mc_rbdyn::RobotLoader::get_robot_module`関数に渡すのと同じものを指定する必要があります。なお、この引数ではロボットの別名を使用できます。例:
+プログラムの引数は `MainRobot` のエントリと同じものを指定します。エイリアスも扱えます。例えば
 
 ```bash
-# 引数のベクトルとして与える方法
-$ roslaunch mc_surfaces_visualization display.launch robot:="[env, `rospack find mc_env_description`, ground]"
-# エイリアスとして与える方法
-$ roslaunch mc_surfaces_visualization display.launch robot:=env/ground
+# 引数のベクトルを指定する
+$ mc_surfaces_visualization env `rospack find mc_env_description` ground
+# またはエイリアス
+$ mc_surfaces_visualization env/ground
 ```
 
-このツールを起動すると、以下のように表示されます。
+mc_rtc GUIを起動した後、これが表示されるはずです：
 
 <img src="{{site.baseurl_root}}/assets/tutorials/tools/img/mc_surfaces_visualization.png" alt="mc_surfaces_visualization in action" class="img-fluid" />
 
@@ -27,4 +27,4 @@ $ roslaunch mc_surfaces_visualization display.launch robot:=env/ground
 - 円筒形の表面は、緑の円筒で表示されます（このスクリーンショットには表示されていません）。
 - グリッパーの表面は、グリッパーの先端方向を示すフレームの法線の向きを示す青い矢印で表されます。
 
-赤い枠で囲まれた領域にあるチェックボックスをオン・オフすることで、選択した表面の表示・非表示を切り替えることができます。
+インターフェースを通じて表示する表面を簡単に選択できます

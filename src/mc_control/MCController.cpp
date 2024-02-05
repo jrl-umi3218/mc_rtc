@@ -15,6 +15,7 @@
 #include <mc_rtc/gui/Schema.h>
 #include <mc_rtc/io_utils.h>
 #include <mc_rtc/logging.h>
+#include <mc_rtc/path.h>
 
 #include <mc_tasks/MetaTaskLoader.h>
 
@@ -984,11 +985,7 @@ mc_rtc::Configuration MCController::robot_config(const std::string & robot) cons
 {
   mc_rtc::Configuration result;
   bfs::path system_path = bfs::path(loading_location_) / this->name_ / (robot + ".conf");
-#ifndef WIN32
-  bfs::path user_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/controllers";
-#else
-  bfs::path user_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers";
-#endif
+  bfs::path user_path = mc_rtc::user_config_directory_path("controllers");
   user_path = user_path / name_ / (robot + ".conf");
   auto load_conf = [&result](const std::string & path)
   {

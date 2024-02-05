@@ -14,6 +14,11 @@
 namespace mc_control
 {
 
+ControllerServer::ControllerServer(double dt, const ControllerServerConfiguration & config)
+: ControllerServer(dt, config.timestep, config.pub_uris(), config.pull_uris())
+{
+}
+
 ControllerServer::ControllerServer(double dt,
                                    double server_dt,
                                    const std::vector<std::string> & pub_bind_uri,
@@ -99,7 +104,8 @@ void ControllerServer::publish(mc_rtc::gui::StateBuilder & gui_builder)
   {
     buffer_size_ = gui_builder.update(buffer_);
 #ifndef MC_RTC_DISABLE_NETWORK
-    nn_send(pub_socket_, buffer_.data(), buffer_size_, 0);
+    int err = nn_send(pub_socket_, buffer_.data(), buffer_size_, 0);
+    if(err < 0) { mc_rtc::log::error("[ControllerServer] Failed to send {}", nn_strerror(nn_errno())); }
 #endif
   }
   else

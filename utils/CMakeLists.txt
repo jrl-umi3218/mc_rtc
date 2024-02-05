@@ -14,24 +14,42 @@ endif()
 
 find_package(Boost REQUIRED COMPONENTS program_options timer)
 
-macro(add_mc_rtc_utils NAME)
-  add_executable(${NAME} ${ARGN})
+function(add_mc_rtc_utils NAME)
+  set(SOURCES ${ARGN})
+  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.cpp)
+    list(APPEND SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.cpp)
+  endif()
+  add_executable(${NAME} ${SOURCES})
   set_target_properties(${NAME} PROPERTIES FOLDER utils)
   target_link_libraries(${NAME} PUBLIC mc_control)
   install(TARGETS ${NAME} DESTINATION bin)
-endmacro()
+endfunction()
 
-add_mc_rtc_utils(mc_bin_to_log mc_bin_to_log.cpp mc_bin_to_log_main.cpp)
+add_mc_rtc_utils(mc_bin_to_log mc_bin_to_log_main.cpp)
 
-add_mc_rtc_utils(mc_bin_to_flat mc_bin_to_flat.cpp mc_bin_to_flat_main.cpp)
+add_mc_rtc_utils(mc_bin_to_flat mc_bin_to_flat_main.cpp)
 
-add_mc_rtc_utils(mc_bin_perf mc_bin_perf.cpp)
+add_mc_rtc_utils(mc_bin_perf)
 
-add_mc_rtc_utils(mc_old_bin_to_flat mc_old_bin_to_flat.cpp)
+add_mc_rtc_utils(mc_old_bin_to_flat)
 
-add_mc_rtc_utils(mc_json_to_yaml mc_json_to_yaml.cpp)
+add_mc_rtc_utils(mc_json_to_yaml)
 
-add_mc_rtc_utils(mc_rtc_ticker mc_rtc_ticker.cpp)
+add_library(RobotVisualizer OBJECT RobotVisualizer.h RobotVisualizer.cpp)
+target_link_libraries(RobotVisualizer PUBLIC mc_rtc::mc_control)
+if(TARGET mc_rtc::mc_rtc_ros)
+  target_link_libraries(RobotVisualizer PUBLIC mc_rtc::mc_rtc_ros)
+  target_compile_definitions(RobotVisualizer PUBLIC MC_RTC_HAS_ROS)
+endif()
+
+add_mc_rtc_utils(mc_convex_visualization)
+target_link_libraries(mc_convex_visualization PRIVATE RobotVisualizer)
+add_mc_rtc_utils(mc_robot_visualization)
+target_link_libraries(mc_robot_visualization PRIVATE RobotVisualizer)
+add_mc_rtc_utils(mc_surfaces_visualization)
+target_link_libraries(mc_surfaces_visualization PRIVATE RobotVisualizer)
+
+add_mc_rtc_utils(mc_rtc_ticker)
 target_link_libraries(
   mc_rtc_ticker PUBLIC Boost::program_options Boost::disable_autolinking
 )

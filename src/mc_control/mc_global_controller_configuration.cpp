@@ -10,6 +10,7 @@
 
 #include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_rtc/io_utils.h>
+#include <mc_rtc/path.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -33,12 +34,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       config.load(globalPath);
     }
 
-#ifndef WIN32
-    auto config_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/mc_rtc.conf";
-#else
-    // Should work for Windows Vista and up
-    auto config_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/mc_rtc.conf";
-#endif
+    bfs::path config_path = mc_rtc::user_config_directory_path("mc_rtc.conf");
     // Load user's local configuration if it exists
     if(!bfs::exists(config_path)) { config_path.replace_extension(".yaml"); }
     if(bfs::exists(config_path))
@@ -225,59 +221,10 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   /////////////////////////
   //  GUI server options //
   /////////////////////////
-  if(config.has("GUIServer"))
+  if(auto gui_config = config.find("GUIServer"))
   {
-    auto gui_config = config("GUIServer");
-    enable_gui_server = gui_config("Enable", false);
-    gui_timestep = gui_config("Timestep", 0.05);
-    if(gui_timestep == 0) { gui_timestep = timestep; }
-    if(gui_config.has("IPC"))
-    {
-      auto ipc_config = gui_config("IPC");
-      auto socket = ipc_config("Socket", (bfs::temp_directory_path() / "mc_rtc").string());
-      gui_server_pub_uris.push_back("ipc://" + socket + "_pub.ipc");
-      gui_server_rep_uris.push_back("ipc://" + socket + "_rep.ipc");
-    }
-    auto handle_section = [this, &gui_config](const std::string & section, const std::string & protocol,
-                                              const std::string & default_host,
-                                              const std::pair<unsigned int, unsigned int> & default_ports,
-                                              const std::vector<unsigned int> & used_ports) -> std::vector<unsigned int>
-    {
-      if(gui_config.has(section))
-      {
-        auto prot_config = gui_config(section);
-        auto host = prot_config("Host", default_host);
-        auto ports = prot_config("Ports", default_ports);
-        auto check_port = [&protocol, &used_ports](unsigned int port)
-        {
-          if(std::find(used_ports.begin(), used_ports.end(), port) != used_ports.end())
-          {
-            mc_rtc::log::error(
-                "Port {} configured for protocol {} is alread used by another protocol. Expect things to go badly.",
-                port, protocol);
-          }
-        };
-        check_port(ports.first);
-        check_port(ports.second);
-        {
-          std::stringstream ss;
-          ss << protocol << "://" << host << ":" << ports.first;
-          gui_server_pub_uris.push_back(ss.str());
-        }
-        {
-          std::stringstream ss;
-          ss << protocol << "://" << host << ":" << ports.second;
-          gui_server_rep_uris.push_back(ss.str());
-        }
-        auto ret = used_ports;
-        ret.push_back(ports.first);
-        ret.push_back(ports.second);
-        return ret;
-      }
-      return used_ports;
-    };
-    auto tcp_ports = handle_section("TCP", "tcp", "*", {4242, 4343}, {});
-    handle_section("WS", "ws", "*", {8080, 8081}, tcp_ports);
+    enable_gui_server = (*gui_config)("Enable", false);
+    gui_server_configuration.load(*gui_config);
   }
   else { enable_gui_server = false; }
 }
@@ -344,12 +291,7 @@ void MCGlobalController::GlobalConfiguration::load_controllers_configs()
   controllers_configs.clear();
   // Load controller-specific configuration
   load_configs("controller", enabled_controllers, controller_module_paths,
-#ifndef WIN32
-               bfs::path(std::getenv("HOME")) / ".config/mc_rtc/controllers",
-#else
-               bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers",
-#endif
-               controllers_configs, config, {"Plugins"});
+               mc_rtc::user_config_directory_path("controllers"), controllers_configs, config, {"Plugins"});
 }
 
 void MCGlobalController::GlobalConfiguration::load_plugin_configs()
@@ -360,11 +302,7 @@ void MCGlobalController::GlobalConfiguration::load_plugin_configs()
 void MCGlobalController::GlobalConfiguration::load_controller_plugin_configs(const std::string & controller,
                                                                              const std::vector<std::string> & plugins)
 {
-#ifndef WIN32
-  bfs::path user_config = bfs::path(std::getenv("HOME")) / ".config" / "mc_rtc";
-#else
-  bfs::path user_config = bfs::path(std::getenv("APPDATA")) / "mc_rtc";
-#endif
+  bfs::path user_config = mc_rtc::user_config_directory_path();
   for(const auto & plugin : plugins)
   {
     auto plugin_c = global_plugin_configs.find(plugin);

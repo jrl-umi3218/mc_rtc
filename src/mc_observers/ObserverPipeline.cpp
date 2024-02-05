@@ -1,7 +1,10 @@
-#include <mc_observers/ObserverLoader.h>
 #include <mc_observers/ObserverPipeline.h>
+
+#include <mc_observers/ObserverLoader.h>
+
 #include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_rtc/io_utils.h>
+#include <mc_rtc/path.h>
 
 #include <mc_control/MCController.h>
 
@@ -38,11 +41,7 @@ static inline mc_rtc::Configuration get_observer_config(const std::string & obse
   // Load observer configuration
   auto runtime_dir = mc_observers::ObserverLoader::get_observer_runtime_directory(observerType);
   if(!runtime_dir.empty()) { load_config(out, runtime_dir + "/etc", observerType); }
-#ifndef WIN32
-  bfs::path user_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/observers";
-#else
-  bfs::path user_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/observers";
-#endif
+  bfs::path user_path = mc_rtc::user_config_directory_path("observers");
   load_config(out, user_path.string(), observerType);
   // Load robot specific configuration
   if(!runtime_dir.empty()) { load_config(out, runtime_dir + "/" + observerType, robot); }

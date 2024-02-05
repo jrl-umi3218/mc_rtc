@@ -112,6 +112,7 @@ set(mc_rtc_utils_SRC
     mc_rtc/MessagePackBuilder.cpp
     mc_rtc/deprecated.cpp
     mc_rtc/logging.cpp
+    mc_rtc/path.cpp
     mc_rtc/version.cpp
     ${DEBUG_SOURCE}
 )
@@ -137,6 +138,7 @@ set(mc_rtc_utils_HDR
     ../include/mc_rtc/type_name.h
     ../include/mc_rtc/debug.h
     ../include/mc_rtc/deprecated.h
+    ../include/mc_rtc/path.h
     ../include/mc_rtc/pragma.h
     ../include/mc_rtc/shared.h
     ../include/mc_rtc/visual_utils.h
@@ -357,7 +359,9 @@ target_include_directories(
 )
 install_mc_rtc_lib(mc_rbdyn)
 
-set(mc_rtc_gui_SRC mc_rtc/gui/StateBuilder.cpp)
+set(mc_rtc_gui_SRC mc_rtc/gui/StateBuilder.cpp mc_rbdyn/gui/RobotConvex.cpp
+                   mc_rbdyn/gui/RobotSurface.cpp
+)
 
 set(mc_rtc_gui_HDR
     ../include/mc_rtc/gui/api.h
@@ -400,6 +404,8 @@ set(mc_rtc_gui_HDR
     ../include/mc_rtc/gui/plot/Ordinate.h
     ../include/mc_rtc/gui/plot/Polygon.h
     ../include/mc_rtc/gui/plot/Polygons.h
+    ../include/mc_rbdyn/gui/RobotConvex.h
+    ../include/mc_rbdyn/gui/RobotSurface.h
 )
 
 add_library(mc_rtc_gui SHARED ${mc_rtc_gui_SRC} ${mc_rtc_gui_HDR})
@@ -605,6 +611,7 @@ set(mc_observers_HDR
 set(mc_control_SRC
     mc_control/CompletionCriteria.cpp
     mc_control/ControllerServer.cpp
+    mc_control/ControllerServerConfiguration.cpp
     mc_control/SimulationContactPair.cpp
     mc_control/MCController.cpp
     mc_control/mc_python_controller.cpp
@@ -627,6 +634,7 @@ set(mc_control_HDR
     ../include/mc_control/Configuration.h
     ../include/mc_control/Contact.h
     ../include/mc_control/ControllerServer.h
+    ../include/mc_control/ControllerServerConfiguration.h
     ../include/mc_control/GlobalPlugin.h
     ../include/mc_control/GlobalPluginMacros.h
     ../include/mc_control/GlobalPlugin_fwd.h
