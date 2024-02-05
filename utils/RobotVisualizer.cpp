@@ -35,7 +35,9 @@ void RobotVisualizer::run()
   while(1)
   {
     auto now = std::chrono::high_resolution_clock::now();
+#ifdef MC_RTC_HAS_ROS
     if(robots) { mc_rtc::ROSBridge::update_robot_publisher("control", 0.005, robots->robot()); }
+#endif
     server.handle_requests(builder);
     server.publish(builder);
     std::this_thread::sleep_until(now + std::chrono::milliseconds(5));
