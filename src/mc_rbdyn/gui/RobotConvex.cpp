@@ -5,7 +5,6 @@
 #include <mc_rtc/gui/Polyhedron.h>
 #include <mc_rtc/gui/Sphere.h>
 
-#include "mc_rtc/gui/types.h"
 #include <sch/S_Object/S_Box.h>
 #include <sch/S_Object/S_Cylinder.h>
 #include <sch/S_Object/S_Sphere.h>
@@ -18,16 +17,7 @@ void addConvexToGUI(mc_rtc::gui::StateBuilder & gui,
                     const std::vector<std::string> & category,
                     const mc_rbdyn::Robot & robot,
                     const std::string & name,
-                    const std::optional<std::string> & publishName)
-{
-  addConvexToGUI(gui, category, defaultConvexConfig, robot, name, publishName);
-}
-
-void addConvexToGUI(mc_rtc::gui::StateBuilder & gui,
-                    const std::vector<std::string> & category,
                     const mc_rtc::gui::PolyhedronConfig & cfg,
-                    const mc_rbdyn::Robot & robot,
-                    const std::string & name,
                     const std::optional<std::string> & publishName)
 {
   const auto & convex = robot.convex(name);

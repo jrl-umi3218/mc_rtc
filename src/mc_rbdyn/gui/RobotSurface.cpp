@@ -6,20 +6,12 @@
 
 namespace mc_rbdyn::gui
 {
-std::vector<std::string> addSurfaceToGUI(mc_rtc::gui::StateBuilder & gui,
-                                         const std::vector<std::string> & category,
-                                         const mc_rbdyn::Robot & robot,
-                                         const std::string & name,
-                                         const std::optional<std::string> & publishName)
-{
-  return addSurfaceToGUI(gui, category, defaultSurfaceConfig, robot, name, publishName);
-}
 
 std::vector<std::string> addSurfaceToGUI(mc_rtc::gui::StateBuilder & gui,
                                          const std::vector<std::string> & category,
-                                         const mc_rtc::gui::LineConfig & cfg,
                                          const mc_rbdyn::Robot & robot,
                                          const std::string & name,
+                                         const mc_rtc::gui::LineConfig & cfg,
                                          const std::optional<std::string> & publishName)
 {
   std::vector<std::string> out;

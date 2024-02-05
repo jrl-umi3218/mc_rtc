@@ -6,8 +6,6 @@
 
 #include <mc_rtc/io_utils.h>
 
-#include "mc_rtc/gui/Form.h"
-#include "mc_rtc/gui/types.h"
 #include <thread>
 
 #ifdef MC_RTC_HAS_ROS
@@ -240,7 +238,7 @@ void RobotVisualizer::addSurface(const std::string & name)
   if(selected_surfaces[name]) { return; }
   selected_surfaces[name] = true;
   surfaces_elements[name] =
-      mc_rbdyn::gui::addSurfaceToGUI(builder, {"Robot", "Surface objects"}, surfaceConfig, robots->robot(), name);
+      mc_rbdyn::gui::addSurfaceToGUI(builder, {"Robot", "Surface objects"}, robots->robot(), name, surfaceConfig);
 }
 
 void RobotVisualizer::removeSurface(const std::string & name)
@@ -254,7 +252,7 @@ void RobotVisualizer::addConvex(const std::string & name)
 {
   if(selected_convexes[name]) { return; }
   selected_convexes[name] = true;
-  mc_rbdyn::gui::addConvexToGUI(builder, {"Robot", "Collision objects"}, convexConfig, robots->robot(), name);
+  mc_rbdyn::gui::addConvexToGUI(builder, {"Robot", "Collision objects"}, robots->robot(), name, convexConfig);
 }
 
 void RobotVisualizer::removeConvex(const std::string & name)

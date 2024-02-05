@@ -36,24 +36,9 @@ static const mc_rtc::gui::LineConfig defaultSurfaceConfig = []() {
  */
 MC_RBDYN_DLLAPI std::vector<std::string> addSurfaceToGUI(mc_rtc::gui::StateBuilder & gui,
                                                          const std::vector<std::string> & category,
-                                                         const mc_rtc::gui::LineConfig & cfg,
                                                          const mc_rbdyn::Robot & robot,
                                                          const std::string & name,
-                                                         const std::optional<std::string> & publishName = std::nullopt);
-
-/** Helper function to create a GUI element from a surface object inside a robot
- *
- * \see std::vector<std::string> addSurfaceToGUI(mc_rtc::gui::StateBuilder &,
-                                                         const std::vector<std::string> &,
-                                                         const mc_rtc::gui::LineConfig &,
-                                                         const mc_rbdyn::Robot &,
-                                                         const std::string &,
-                                                         const std::optional<std::string> & publishName);
- */
-MC_RBDYN_DLLAPI std::vector<std::string> addSurfaceToGUI(mc_rtc::gui::StateBuilder & gui,
-                                                         const std::vector<std::string> & category,
-                                                         const mc_rbdyn::Robot & robot,
-                                                         const std::string & name,
+                                                         const mc_rtc::gui::LineConfig & cfg = defaultSurfaceConfig,
                                                          const std::optional<std::string> & publishName = std::nullopt);
 
 } // namespace mc_rbdyn::gui

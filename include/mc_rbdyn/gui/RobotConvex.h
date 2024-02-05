@@ -5,8 +5,9 @@
 #pragma once
 
 #include <mc_rbdyn/Robot.h>
+
 #include <mc_rtc/gui/StateBuilder.h>
-#include "mc_rtc/gui/types.h"
+#include <mc_rtc/gui/types.h>
 
 namespace mc_rbdyn::gui
 {
@@ -21,22 +22,6 @@ static const mc_rtc::gui::PolyhedronConfig defaultConvexConfig = []()
   cfg.show_vertices = false;
   return cfg;
 }();
-
-/**
- * Helper function to create a GUI element from a convex object inside a robot
- *
- * \see void addConvexToGUI(mc_rtc::gui::StateBuilder &,
-                                    const mc_rtc::gui::PolyhedronConfig &,
-                                    const std::vector<std::string> &,
-                                    const mc_rbdyn::Robot &,
-                                    const std::string &,
-                                    const std::optional<std::string> & publishName);
- */
-MC_RBDYN_DLLAPI void addConvexToGUI(mc_rtc::gui::StateBuilder & gui,
-                                    const std::vector<std::string> & category,
-                                    const mc_rbdyn::Robot & robot,
-                                    const std::string & name,
-                                    const std::optional<std::string> & publishName = std::nullopt);
 
 /** Helper function to create a GUI element from a convex object inside a robot
  *
@@ -55,9 +40,9 @@ MC_RBDYN_DLLAPI void addConvexToGUI(mc_rtc::gui::StateBuilder & gui,
  */
 MC_RBDYN_DLLAPI void addConvexToGUI(mc_rtc::gui::StateBuilder & gui,
                                     const std::vector<std::string> & category,
-                                    const mc_rtc::gui::PolyhedronConfig & cfg,
                                     const mc_rbdyn::Robot & robot,
                                     const std::string & name,
+                                    const mc_rtc::gui::PolyhedronConfig & cfg = defaultConvexConfig,
                                     const std::optional<std::string> & publishName = std::nullopt);
 
 } // namespace mc_rbdyn::gui
