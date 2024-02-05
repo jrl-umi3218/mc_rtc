@@ -2,6 +2,24 @@
 
 ## [Unreleased]
 
+## [2.11.0] - 2024-02-05
+
+### Added
+
+- [mc_rbdyn/GUI] Add helpers to visualize surfaces and convexes (#431)
+- [mc_rtc/GUI] Added RobotMsg: a complete view of the robot state (#425)
+- [mc_rtc] Add path helpers (#431)
+- [utils/RobotVisualizer] Add a new tool to visualize a robot built on mc_rtc GUI (#431)
+
+### Changes
+
+- [mc_rtc/GUI] Send scale vector for visual mesh instead of scalar (#430)
+
+### Fixes
+
+- [mc_rbdyn] Always use default_attitude to initialize the attitude (#424)
+- [mc_tasks] Clarify usage of targetSurface/targetFrame in ImpedanceTask
+
 ## [2.10.0] - 2024-01-17
 
 ### Added
@@ -818,7 +836,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.10.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.11.0...HEAD
+[2.11.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.11.0
 [2.10.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.10.0
 [2.9.3]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.3
 [2.9.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.2
