@@ -1,6 +1,7 @@
 var structmc__control_1_1ControllerServer =
 [
     [ "ControllerServer", "structmc__control_1_1ControllerServer.html#ac13be9e36cf38cb6bdde4cc8b4b19250", null ],
+    [ "ControllerServer", "structmc__control_1_1ControllerServer.html#a4b0db8e2a67ad3364e82a978cc972d20", null ],
     [ "~ControllerServer", "structmc__control_1_1ControllerServer.html#aa4ef79cfb9afe739ee67b64b66969f97", null ],
     [ "data", "structmc__control_1_1ControllerServer.html#a9f21b40efd63fa7a522ef961daad027f", null ],
     [ "handle_requests", "structmc__control_1_1ControllerServer.html#aaa597dffa422f0cf699d9240b5b174f7", null ],

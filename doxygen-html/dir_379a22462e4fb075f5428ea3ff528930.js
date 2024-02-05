@@ -34,6 +34,7 @@ var dir_379a22462e4fb075f5428ea3ff528930 =
     [ "loader_api.h", "loader__api_8h.html", "loader__api_8h" ],
     [ "logging.h", "logging_8h.html", "logging_8h" ],
     [ "MessagePackBuilder.h", "MessagePackBuilder_8h.html", "MessagePackBuilder_8h" ],
+    [ "path.h", "path_8h.html", "path_8h" ],
     [ "pragma.h", "pragma_8h.html", "pragma_8h" ],
     [ "Schema.h", "Schema_8h.html", "Schema_8h" ],
     [ "SchemaMacros.h", "SchemaMacros_8h.html", "SchemaMacros_8h" ],

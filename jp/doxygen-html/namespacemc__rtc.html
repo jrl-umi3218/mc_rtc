@@ -254,6 +254,10 @@ Functions</h2></td></tr>
 <tr class="separator:a9c308b4400fb83031251be1f6ab0adb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bd63387904206fef1971ac84987b3bc"><td class="memItemLeft" align="right" valign="top">bool <a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a0bd63387904206fef1971ac84987b3bc">debug</a> () noexcept</td></tr>
 <tr class="separator:a0bd63387904206fef1971ac84987b3bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5616d104c3e121be9cb465d12d18db7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a5616d104c3e121be9cb465d12d18db7b">temp_directory_path</a> (const std::string &amp;suffix=&quot;&quot;)</td></tr>
+<tr class="separator:a5616d104c3e121be9cb465d12d18db7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e4bce12cf517283be1a0b784e881dfe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a0e4bce12cf517283be1a0b784e881dfe">user_config_directory_path</a> (const std::string &amp;suffix=&quot;&quot;)</td></tr>
+<tr class="separator:a0e4bce12cf517283be1a0b784e881dfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a8fb61bc6391bc9cd0ef2aa0efff2d641">type_name</a> ()</td></tr>
 <tr class="separator:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -309,6 +313,8 @@ Variables</h2></td></tr>
 <p>Helper functions to emit deprecation messages when loading JSON/YAML from old versions</p>
 <p>This header contains the base block of all elements in the GUI system. For the implementation details of specific elements look into their dedicated header</p>
 <p>This file contains classes that are used to configure the visual styles of various elements in the GUI</p>
+<p>This header defines a number of utility functions related to forming path in the environment</p>
+<p>They are thin wrapper around boost::filesystem to be later replaced by std::filesystem after Ubuntu 18.04 support is fully dropped</p>
 <p>This header provides a number of function to help with the creation of rbd::parsers::Visual elements</p>
 <p>Helpers for unique_ptr&lt;void, void (*)(void *)&gt; </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
@@ -801,6 +807,31 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="a5616d104c3e121be9cb465d12d18db7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5616d104c3e121be9cb465d12d18db7b">&#9670;&nbsp;</a></span>temp_directory_path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string mc_rtc::temp_directory_path </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>suffix</em> = <code>&quot;&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the path to the OS temporary directory</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">suffix</td><td>Added (with a path separator) to the returned path </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a8fb61bc6391bc9cd0ef2aa0efff2d641"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8fb61bc6391bc9cd0ef2aa0efff2d641">&#9670;&nbsp;</a></span>type_name()</h2>
 
@@ -819,6 +850,33 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Return a human-readable type name</p>
 <p>Only use for displaying messages as the name is not guaranteed to be the same across compilers and invokation </p>
+
+</div>
+</div>
+<a id="a0e4bce12cf517283be1a0b784e881dfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e4bce12cf517283be1a0b784e881dfe">&#9670;&nbsp;</a></span>user_config_directory_path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string mc_rtc::user_config_directory_path </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>suffix</em> = <code>&quot;&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the path to the user's config directory</p>
+<p>On Linux/macOS this returns ${HOME}/.config/mc_rtc folder</p>
+<p>On Windows this returns the APPDATA%/mc_rtc folder</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">suffix</td><td>Added (with a path separator) to the returned path </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

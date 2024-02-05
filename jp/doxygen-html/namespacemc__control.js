@@ -9,6 +9,7 @@ var namespacemc__control =
     [ "ControllerParameters", "structmc__control_1_1ControllerParameters.html", "structmc__control_1_1ControllerParameters" ],
     [ "ControllerResetData", "structmc__control_1_1ControllerResetData.html", "structmc__control_1_1ControllerResetData" ],
     [ "ControllerServer", "structmc__control_1_1ControllerServer.html", "structmc__control_1_1ControllerServer" ],
+    [ "ControllerServerConfiguration", "structmc__control_1_1ControllerServerConfiguration.html", "structmc__control_1_1ControllerServerConfiguration" ],
     [ "ElementId", "structmc__control_1_1ElementId.html", "structmc__control_1_1ElementId" ],
     [ "GlobalPlugin", "structmc__control_1_1GlobalPlugin.html", "structmc__control_1_1GlobalPlugin" ],
     [ "GlobalPluginLoader", "structmc__control_1_1GlobalPluginLoader.html", null ],

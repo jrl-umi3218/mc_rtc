@@ -329,7 +329,7 @@
               </div>
               
                 <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h3"><a href="#可視化ツールを起動する">可視化ツールを起動する</a></li>
+<li class="toc-entry toc-h3"><a href="#ビジュアライゼーションの起動">ビジュアライゼーションの起動</a></li>
 </ul>
               
             </div>
@@ -341,28 +341,28 @@
         <h1>凸形状の可視化</h1>
         
 
-        <p><code class="language-plaintext highlighter-rouge">mc_convex_visualization</code>は、ロボットの凸領域をRVizで表示するツールです。<a href="https://github.com/jrl-umi3218/mc_rtc_ros" target="blank_">mc_rtc_ros</a>パッケージに含まれています。</p>
+        <p><code class="language-plaintext highlighter-rouge">mc_convex_visualization</code> は mc_rtc GUI アプリケーションでロボットの凸部を可視化するツールです。</p>
 
-<h3 id="可視化ツールを起動する">可視化ツールを起動する</h3>
+<h3 id="ビジュアライゼーションの起動">ビジュアライゼーションの起動</h3>
 
-<p>以下のようにツールを起動します。</p>
+<p>ツールの起動方法は以下の通りです：</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>roslaunch mc_convex_visualization display.launch robot:<span class="o">=</span>JVRC1
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_convex_visualization JVRC1
 </code></pre></div></div>
 
-<p>引数<code class="language-plaintext highlighter-rouge">robot</code>には、<code class="language-plaintext highlighter-rouge">mc_rbdyn::RobotLoader::get_robot_module</code>関数に渡すのと同じものを指定する必要があります。なお、この引数ではロボットの別名を使用できます。例:</p>
+<p>プログラムの引数は <code class="language-plaintext highlighter-rouge">MainRobot</code> のエントリと同じものを指定します。エイリアスも扱えます。例えば</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 引数のベクトルとして与える方法</span>
-<span class="nv">$ </span>roslaunch mc_convex_visualization display.launch robot:<span class="o">=</span><span class="s2">"[env, </span><span class="sb">`</span>rospack find mc_env_description<span class="sb">`</span><span class="s2">, ground]"</span>
-<span class="c"># エイリアスを使用する方法</span>
-<span class="nv">$ </span>roslaunch mc_convex_visualization display.launch robot:<span class="o">=</span><span class="nb">env</span>/ground
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 引数のベクトルを指定する</span>
+<span class="nv">$ </span>mc_convex_visualization <span class="nb">env</span> <span class="sb">`</span>rospack find mc_env_description<span class="sb">`</span> ground
+<span class="c"># またはエイリアス</span>
+<span class="nv">$ </span>mc_convex_visualization <span class="nb">env</span>/ground
 </code></pre></div></div>
 
-<p>このツールを起動すると、以下のように表示されます。</p>
+<p>mc_rtc GUIを起動した後、これが表示されるはずです：</p>
 
 <p><img src="/mc_rtc/assets/tutorials/tools/img/mc_convex_visualization.png" alt="mc_convex_visualization in action" class="img-fluid" /></p>
 
-<p>赤い枠で囲まれた領域にあるチェックボックスをオン・オフすることで、選択した凸領域の表示・非表示を切り替えられます。</p>
+<p>インターフェースを通じて表示する凸形状を簡単に選択できます。</p>
 
 
 

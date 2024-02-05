@@ -5,9 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node250 [label="LinearFunction",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
-  Node250 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 [label="mc_tvm::CompoundJointFunction",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1CompoundJointFunction.html",tooltip=" "];
-  Node250 -> Node252 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node252 [label="mc_tvm::DynamicFunction",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1DynamicFunction.html",tooltip=" "];
+  Node0 [label="mc_tvm::CollisionFunction\l::ObjectData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tvm_1_1CollisionFunction_1_1ObjectData.html",tooltip=" "];
 }

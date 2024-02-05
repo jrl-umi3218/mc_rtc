@@ -18,6 +18,10 @@ var dir_8a948ff1aa35df8f7730fc54bf71041a =
     [ "ControllerServer.h", "ControllerServer_8h.html", [
       [ "ControllerServer", "structmc__control_1_1ControllerServer.html", "structmc__control_1_1ControllerServer" ]
     ] ],
+    [ "ControllerServerConfiguration.h", "ControllerServerConfiguration_8h.html", [
+      [ "SocketConfiguration", "structmc__control_1_1details_1_1SocketConfiguration.html", "structmc__control_1_1details_1_1SocketConfiguration" ],
+      [ "ControllerServerConfiguration", "structmc__control_1_1ControllerServerConfiguration.html", "structmc__control_1_1ControllerServerConfiguration" ]
+    ] ],
     [ "generic_gripper.h", "generic__gripper_8h.html", "generic__gripper_8h" ],
     [ "GlobalPlugin.h", "GlobalPlugin_8h.html", "GlobalPlugin_8h" ],
     [ "GlobalPlugin_fwd.h", "GlobalPlugin__fwd_8h.html", "GlobalPlugin__fwd_8h" ],

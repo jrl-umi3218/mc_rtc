@@ -143,6 +143,7 @@ var hierarchy =
     [ "mc_control::ControllerParameters", "structmc__control_1_1ControllerParameters.html", null ],
     [ "mc_control::ControllerResetData", "structmc__control_1_1ControllerResetData.html", null ],
     [ "mc_control::ControllerServer", "structmc__control_1_1ControllerServer.html", null ],
+    [ "mc_control::ControllerServerConfiguration", "structmc__control_1_1ControllerServerConfiguration.html", null ],
     [ "mc_solver::QPSolver::ControllerToken", "structmc__solver_1_1QPSolver_1_1ControllerToken.html", null ],
     [ "mc_rtc::gui::CylinderParameters", "structmc__rtc_1_1gui_1_1CylinderParameters.html", null ],
     [ "mc_rtc::DataStore", "structmc__rtc_1_1DataStore.html", null ],
@@ -330,8 +331,8 @@ var hierarchy =
     [ "mc_control::GlobalPlugin", "structmc__control_1_1GlobalPlugin.html", null ],
     [ "mc_control::GlobalPlugin::GlobalPluginConfiguration", "structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html", null ],
     [ "mc_control::GlobalPluginLoader", "structmc__control_1_1GlobalPluginLoader.html", null ],
-    [ "mc_control::Gripper", "structmc__control_1_1Gripper.html", null ],
     [ "mc_rbdyn::RobotModule::Gripper", "structmc__rbdyn_1_1RobotModule_1_1Gripper.html", null ],
+    [ "mc_control::Gripper", "structmc__control_1_1Gripper.html", null ],
     [ "mc_rtc::Logger::GUIEvent", "structmc__rtc_1_1Logger_1_1GUIEvent.html", null ],
     [ "mc_solver::GenericLoader< Derived, T >::Handle", "structmc__solver_1_1GenericLoader_1_1Handle.html", null ],
     [ "std::hash< mc_control::Contact >", "structstd_1_1hash_3_01mc__control_1_1Contact_01_4.html", null ],
@@ -483,8 +484,8 @@ var hierarchy =
       [ "mc_rbdyn::RobotFrame::NewRobotFrameToken", "structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
     ] ],
     [ "mc_rbdyn::Robots::NewRobotsToken", "structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html", null ],
-    [ "mc_tvm::Robot::NewRobotToken", "structmc__tvm_1_1Robot_1_1NewRobotToken.html", null ],
     [ "mc_rbdyn::Robot::NewRobotToken", "structmc__rbdyn_1_1Robot_1_1NewRobotToken.html", null ],
+    [ "mc_tvm::Robot::NewRobotToken", "structmc__tvm_1_1Robot_1_1NewRobotToken.html", null ],
     [ "Node", null, [
       [ "mc_tvm::CoM", "structmc__tvm_1_1CoM.html", null ],
       [ "mc_tvm::Convex", "structmc__tvm_1_1Convex.html", null ],
@@ -557,6 +558,7 @@ var hierarchy =
     [ "mc_trajectory::SequenceInterpolator< Eigen::Vector6d, mc_trajectory::LinearInterpolation< Eigen::Vector6d > >", "structmc__trajectory_1_1SequenceInterpolator.html", null ],
     [ "mc_control::SimulationContactPair", "structmc__control_1_1SimulationContactPair.html", null ],
     [ "mc_tasks::SmoothTask< objT >", "structmc__tasks_1_1SmoothTask.html", null ],
+    [ "mc_control::details::SocketConfiguration< default_pub_port, default_pull_port >", "structmc__control_1_1details_1_1SocketConfiguration.html", null ],
     [ "mc_trajectory::Spline< T, WaypointsT >", "structmc__trajectory_1_1Spline.html", null ],
     [ "mc_trajectory::Spline< Eigen::Matrix3d, std::vector< std::pair< double, Eigen::Matrix3d > > >", "structmc__trajectory_1_1Spline.html", [
       [ "mc_trajectory::InterpolatedRotation", "structmc__trajectory_1_1InterpolatedRotation.html", null ]

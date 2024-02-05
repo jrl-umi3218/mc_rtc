@@ -85,6 +85,8 @@ $(document).ready(function(){initNavTree('structmc__control_1_1ControllerServer.
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac13be9e36cf38cb6bdde4cc8b4b19250"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerServer.html#ac13be9e36cf38cb6bdde4cc8b4b19250">ControllerServer</a> (double dt, double server_dt, const std::vector&lt; std::string &gt; &amp;pub_bind_uri, const std::vector&lt; std::string &gt; &amp;pull_bind_uri)</td></tr>
 <tr class="separator:ac13be9e36cf38cb6bdde4cc8b4b19250"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b0db8e2a67ad3364e82a978cc972d20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerServer.html#a4b0db8e2a67ad3364e82a978cc972d20">ControllerServer</a> (double dt, const <a class="el" href="structmc__control_1_1ControllerServerConfiguration.html">ControllerServerConfiguration</a> &amp;config)</td></tr>
+<tr class="separator:a4b0db8e2a67ad3364e82a978cc972d20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4ef79cfb9afe739ee67b64b66969f97"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerServer.html#aa4ef79cfb9afe739ee67b64b66969f97">~ControllerServer</a> ()</td></tr>
 <tr class="separator:aa4ef79cfb9afe739ee67b64b66969f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a734ffb48f73a37374b9b51c4c7655507"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerServer.html#a734ffb48f73a37374b9b51c4c7655507">handle_requests</a> (<a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">mc_rtc::gui::StateBuilder</a> &amp;gui_builder)</td></tr>
@@ -110,7 +112,7 @@ Public Member Functions</h2></td></tr>
 </ul>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac13be9e36cf38cb6bdde4cc8b4b19250"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac13be9e36cf38cb6bdde4cc8b4b19250">&#9670;&nbsp;</a></span>ControllerServer()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac13be9e36cf38cb6bdde4cc8b4b19250">&#9670;&nbsp;</a></span>ControllerServer() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -157,6 +159,42 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <p>Check nanomsg documentation for supported protocols </p>
+
+</div>
+</div>
+<a id="a4b0db8e2a67ad3364e82a978cc972d20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b0db8e2a67ad3364e82a978cc972d20">&#9670;&nbsp;</a></span>ControllerServer() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_control::ControllerServer::ControllerServer </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmc__control_1_1ControllerServerConfiguration.html">ControllerServerConfiguration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Construct from the provided configuration</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dt</td><td>Controller timestep</td></tr>
+    <tr><td class="paramname">config</td><td>Server configuration <a class="el" href="structmc__control_1_1ControllerServerConfiguration.html">ControllerServerConfiguration</a> for details </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

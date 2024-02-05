@@ -1,5 +1,6 @@
 var dir_314ec80f2fc36a4630429f4d5408038e =
 [
+    [ "gui", "dir_a0265be3730c50e6cf85b016811d8c85.html", "dir_a0265be3730c50e6cf85b016811d8c85" ],
     [ "lipm_stabilizer", "dir_b12c04a52b5fa63c1edbfd9e290b90b3.html", "dir_b12c04a52b5fa63c1edbfd9e290b90b3" ],
     [ "api.h", "include_2mc__rbdyn_2api_8h.html", "include_2mc__rbdyn_2api_8h" ],
     [ "Base.h", "Base_8h.html", [

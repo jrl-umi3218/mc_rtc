@@ -1,0 +1,11 @@
+digraph "include/mc_rbdyn/gui" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_314ec80f2fc36a4630429f4d5408038e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="mc_rbdyn" fontname="Helvetica", fontsize="10", URL="dir_314ec80f2fc36a4630429f4d5408038e.html"]
+  dir_a0265be3730c50e6cf85b016811d8c85 [shape=box, label="gui", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_a0265be3730c50e6cf85b016811d8c85.html"];
+  }
+  dir_379a22462e4fb075f5428ea3ff528930 [shape=box label="mc_rtc" fillcolor="white" style="filled" color="red" URL="dir_379a22462e4fb075f5428ea3ff528930.html"];
+  dir_a0265be3730c50e6cf85b016811d8c85->dir_379a22462e4fb075f5428ea3ff528930 [headlabel="3", labeldistance=1.5 headhref="dir_000022_000008.html"];
+}

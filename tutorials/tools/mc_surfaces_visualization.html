@@ -347,18 +347,18 @@
 
 <p>The tool is launched as follows:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>roslaunch mc_surfaces_visualization display.launch robot:<span class="o">=</span>JVRC1
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_surfaces_visualization JVRC1
 </code></pre></div></div>
 
-<p>The <code class="language-plaintext highlighter-rouge">robot</code> argument should be the same as what you would pass to the <code class="language-plaintext highlighter-rouge">mc_rbdyn::RobotLoader::get_robot_module</code> function, this can also be a robot alias. For example:</p>
+<p>The arguments to the program should be the same as you would use as a <code class="language-plaintext highlighter-rouge">MainRobot</code> entry. It can also handle aliases. For example:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Specify a vector of arguments</span>
-<span class="nv">$ </span>roslaunch mc_surfaces_visualization display.launch robot:<span class="o">=</span><span class="s2">"[env, </span><span class="sb">`</span>rospack find mc_env_description<span class="sb">`</span><span class="s2">, ground]"</span>
+<span class="nv">$ </span>mc_surfaces_visualization <span class="nb">env</span> <span class="sb">`</span>rospack find mc_env_description<span class="sb">`</span> ground
 <span class="c"># Or an alias</span>
-<span class="nv">$ </span>roslaunch mc_surfaces_visualization display.launch robot:<span class="o">=</span><span class="nb">env</span>/ground
+<span class="nv">$ </span>mc_surfaces_visualization <span class="nb">env</span>/ground
 </code></pre></div></div>
 
-<p>After launching it should look like this:</p>
+<p>After launching an mc_rtc GUI, it should look like this:</p>
 
 <p><img src="/mc_rtc/assets/tutorials/tools/img/mc_surfaces_visualization.png" alt="mc_surfaces_visualization in action" class="img-fluid" /></p>
 
@@ -370,7 +370,7 @@
   <li>Gripper surfaces are represented with blue arrows representing the normal direction of the gripper’s points’ frame;</li>
 </ul>
 
-<p>By enabling/disabling the checkboxes in the highlighted area you can show/hide selected surfaces.</p>
+<p>You can easily select which surfaces to display through the interface.</p>
 
 
 
