@@ -100,6 +100,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a0fe8c6c109a01c727c6c7b64c4b8ead2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3254977695e2955bdda9d07d7ec8a9de"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotData.html#a3254977695e2955bdda9d07d7ec8a9de">forceSensorsIndex</a></td></tr>
 <tr class="separator:a3254977695e2955bdda9d07d7ec8a9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a659c3c3fcfd2d6a823f051c49a1c3241"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotData.html#a659c3c3fcfd2d6a823f051c49a1c3241">bodyForceSensors_</a></td></tr>
+<tr class="separator:a659c3c3fcfd2d6a823f051c49a1c3241"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2168b5d056d55ed259dca4795d9f4064"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacemc__rbdyn.html#a728d731db2806e7673f67b958970e558">BodySensorVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotData.html#a2168b5d056d55ed259dca4795d9f4064">bodySensors</a></td></tr>
 <tr class="separator:a2168b5d056d55ed259dca4795d9f4064"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67dc85b79dc89817f8522617b3fd0a3a"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotData.html#a67dc85b79dc89817f8522617b3fd0a3a">bodySensorsIndex</a></td></tr>
@@ -118,6 +120,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:aaedac65f208c8d20ce463dc27e2dd96e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadf5f6efd574f54480a60a1b4f95e722"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotData.html#aadf5f6efd574f54480a60a1b4f95e722">devicesIndex</a></td></tr>
 <tr class="separator:aadf5f6efd574f54480a60a1b4f95e722"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71bc7926f8395aa3fe22bcda9547af12"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structmc__rbdyn_1_1Robot.html">Robot</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotData.html#a71bc7926f8395aa3fe22bcda9547af12">robots</a></td></tr>
+<tr class="separator:a71bc7926f8395aa3fe22bcda9547af12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Hold data and objects that are shared among different views of a robot (control/real/output)</p>
@@ -142,6 +146,21 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Correspondance between bodies' names and attached body sensors </p>
+
+</div>
+</div>
+<a id="a659c3c3fcfd2d6a823f051c49a1c3241"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a659c3c3fcfd2d6a823f051c49a1c3241">&#9670;&nbsp;</a></span>bodyForceSensors_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::string, size_t&gt; mc_rbdyn::RobotData::bodyForceSensors_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Correspondance between bodies' names and attached force sensors </p>
 
 </div>
 </div>
@@ -351,6 +370,22 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Reference joint order see <a class="el" href="structmc__rbdyn_1_1RobotModule.html">mc_rbdyn::RobotModule</a> </p>
+
+</div>
+</div>
+<a id="a71bc7926f8395aa3fe22bcda9547af12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71bc7926f8395aa3fe22bcda9547af12">&#9670;&nbsp;</a></span>robots</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structmc__rbdyn_1_1Robot.html">Robot</a> *&gt; mc_rbdyn::RobotData::robots</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A list of robots that share this data</p>
+<p>This is used to communicate changes to the data to all instances that share this data </p>
 
 </div>
 </div>

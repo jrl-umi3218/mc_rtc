@@ -34202,6 +34202,13 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>addForceSensor</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a26f9ef104069d99a32a1c0dee3c74e3d</anchor>
+      <arglist>(const mc_rbdyn::ForceSensor &amp;fs)</arglist>
+    </member>
+    <member kind="function">
       <type>bool</type>
       <name>hasForceSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
@@ -35008,6 +35015,13 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>addForceSensor</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a26f9ef104069d99a32a1c0dee3c74e3d</anchor>
+      <arglist>(const mc_rbdyn::ForceSensor &amp;fs)</arglist>
+    </member>
+    <member kind="function">
       <type>bool</type>
       <name>hasForceSensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
@@ -35349,6 +35363,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
+      <type>std::unordered_map&lt; std::string, size_t &gt;</type>
+      <name>bodyForceSensors_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>a659c3c3fcfd2d6a823f051c49a1c3241</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
       <type>BodySensorVector</type>
       <name>bodySensors</name>
       <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
@@ -35409,6 +35430,13 @@
       <name>devicesIndex</name>
       <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
       <anchor>aadf5f6efd574f54480a60a1b4f95e722</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; Robot * &gt;</type>
+      <name>robots</name>
+      <anchorfile>structmc__rbdyn_1_1RobotData.html</anchorfile>
+      <anchor>a71bc7926f8395aa3fe22bcda9547af12</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -35549,6 +35577,13 @@
       <anchorfile>structmc__rbdyn_1_1RobotFrame.html</anchorfile>
       <anchor>aa8fbc94f2673cae7787cf91bb03cda8f</anchor>
       <arglist>() const final</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>resetForceSensor</name>
+      <anchorfile>structmc__rbdyn_1_1RobotFrame.html</anchorfile>
+      <anchor>a7c6f6ac428927aeb89a024cbf0e97393</anchor>
+      <arglist>() noexcept</arglist>
     </member>
     <member kind="variable" protection="protected">
       <type>Robot &amp;</type>

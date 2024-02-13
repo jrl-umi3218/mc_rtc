@@ -1,5 +1,9 @@
 var NAVTREEINDEX22 =
 {
+"structmc__trajectory_1_1ExactCubic.html#aec46e0e93dfe6c8483cd4ab96ec133ae":[6,0,10,1,16],
+"structmc__trajectory_1_1ExactCubic.html#af0dd28bb9136823399f3d85d5512bc33":[6,0,10,1,6],
+"structmc__trajectory_1_1ExactCubic.html#af47e1c92e5824f345b1616aacbd1891c":[6,0,10,1,9],
+"structmc__trajectory_1_1InterpolatedRotation.html":[6,0,10,2],
 "structmc__trajectory_1_1InterpolatedRotation.html#a00b27ba3e5f5c5028a5c3f1b18552617":[6,0,10,2,3],
 "structmc__trajectory_1_1InterpolatedRotation.html#a35aa6707fcb6b62d7be8daa9df9991eb":[6,0,10,2,1],
 "structmc__trajectory_1_1InterpolatedRotation.html#a3848a3c1a1d3796760025d7504c0e7a7":[6,0,10,2,2],
@@ -245,9 +249,5 @@ var NAVTREEINDEX22 =
 "structmc__tvm_1_1Robot.html#abdf8f5c4410399bdfdf515039a7bb46b":[6,0,11,19,27],
 "structmc__tvm_1_1Robot.html#ac75223a1a8b292dacbe8b79b087f604f":[6,0,11,19,26],
 "structmc__tvm_1_1Robot.html#ad2443dfa13fc3f84b53bd4dde44c0dd5":[6,0,11,19,31],
-"structmc__tvm_1_1Robot.html#ad433dc0ea980cc12a348d81d4932741a":[6,0,11,19,19],
-"structmc__tvm_1_1Robot.html#ad5f7d733469c9f86df634791e93b7e9b":[6,0,11,19,4],
-"structmc__tvm_1_1Robot.html#adb99116b257ce988a45c1014bfc271c2":[6,0,11,19,17],
-"structmc__tvm_1_1Robot.html#add7d5d4795ebc89f0cbf613e83a9f75d":[6,0,11,19,7],
-"structmc__tvm_1_1Robot.html#ae1cf367a11dbb344f58f5ff77a687629":[6,0,11,19,9]
+"structmc__tvm_1_1Robot.html#ad433dc0ea980cc12a348d81d4932741a":[6,0,11,19,19]
 };

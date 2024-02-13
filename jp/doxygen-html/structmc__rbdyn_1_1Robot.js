@@ -10,6 +10,7 @@ var structmc__rbdyn_1_1Robot =
     [ "addBodySensor", "structmc__rbdyn_1_1Robot.html#aea55ad48f3307dc57c674d851e47ecd8", null ],
     [ "addConvex", "structmc__rbdyn_1_1Robot.html#ae30c16125ec220e6525f86339d894a3c", null ],
     [ "addDevice", "structmc__rbdyn_1_1Robot.html#a1736b85ddedafef83111d6c67ff6f129", null ],
+    [ "addForceSensor", "structmc__rbdyn_1_1Robot.html#a26f9ef104069d99a32a1c0dee3c74e3d", null ],
     [ "addSensor", "structmc__rbdyn_1_1Robot.html#abc302e460bc53880eb062681e9e50a54", null ],
     [ "addSurface", "structmc__rbdyn_1_1Robot.html#a02691447f1d554276f01339ba6c3aad7", null ],
     [ "al", "structmc__rbdyn_1_1Robot.html#ab64263a01616ad04b3f5212fd5742fd2", null ],

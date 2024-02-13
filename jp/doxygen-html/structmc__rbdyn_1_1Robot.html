@@ -433,6 +433,8 @@ Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Force sensors</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>These functions are related to force sensors </p>
 </div></td></tr>
+<tr class="memitem:a26f9ef104069d99a32a1c0dee3c74e3d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a26f9ef104069d99a32a1c0dee3c74e3d">addForceSensor</a> (const <a class="el" href="structmc__rbdyn_1_1ForceSensor.html">mc_rbdyn::ForceSensor</a> &amp;fs)</td></tr>
+<tr class="separator:a26f9ef104069d99a32a1c0dee3c74e3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42615f6ac857b53acb4ae0376c3986c7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a42615f6ac857b53acb4ae0376c3986c7">hasForceSensor</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>) const noexcept</td></tr>
 <tr class="separator:a42615f6ac857b53acb4ae0376c3986c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf845c2c3a0f18430986e4a752f08fe7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#acf845c2c3a0f18430986e4a752f08fe7">bodyHasForceSensor</a> (const std::string &amp;body) const noexcept</td></tr>
@@ -749,6 +751,39 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Add a generic device to the robot </p>
+
+</div>
+</div>
+<a id="a26f9ef104069d99a32a1c0dee3c74e3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26f9ef104069d99a32a1c0dee3c74e3d">&#9670;&nbsp;</a></span>addForceSensor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::Robot::addForceSensor </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1ForceSensor.html">mc_rbdyn::ForceSensor</a> &amp;&#160;</td>
+          <td class="paramname"><em>fs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Add a new force sensor to the robot</p>
+<p>This also updates frames' sensors.</p>
+<p>This does not load the calibration file for this sensor. It is up to the caller to do so if they have a file availble.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sensor</td><td>Sensor to be added to the robot</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>a sensor with the same name already exists within this robot </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

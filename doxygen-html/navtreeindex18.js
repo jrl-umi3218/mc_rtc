@@ -1,5 +1,9 @@
 var NAVTREEINDEX18 =
 {
+"structmc__solver_1_1QPSolver.html#ae35ec2765a45413bcfebae5e57bcea5f":[6,0,8,23,19],
+"structmc__solver_1_1QPSolver.html#ae628e7f079f7ec8dd5ba2818ffe27adc":[6,0,8,23,40],
+"structmc__solver_1_1QPSolver.html#ae805619eed38900664c15a1f3be7921f":[6,0,8,23,23],
+"structmc__solver_1_1QPSolver.html#aebef0e7a739f0e970d589014bf3970f3":[6,0,8,23,5],
 "structmc__solver_1_1QPSolver.html#af3238a88966bd91546b492a7dcf3dd17":[6,0,8,23,13],
 "structmc__solver_1_1QPSolver.html#af48a56a36d044fa4077f1c9e0ad69936":[6,0,8,23,20],
 "structmc__solver_1_1QPSolver.html#af9d03e836739ebbe8a4fe468c89a1318":[6,0,8,23,39],
@@ -245,9 +249,5 @@ var NAVTREEINDEX18 =
 "structmc__tasks_1_1MetaTask.html#a1db4ea4e03d00823e7ee10b444a697b1":[6,0,9,13,17],
 "structmc__tasks_1_1MetaTask.html#a1f3a8dff16b572ac14d1ab4cf32a9e36":[6,0,9,13,28],
 "structmc__tasks_1_1MetaTask.html#a21e9870f7434084d52299f18f8f86da7":[6,0,9,13,26],
-"structmc__tasks_1_1MetaTask.html#a27dbee0df32ae7f803184cb6222fc427":[6,0,9,13,13],
-"structmc__tasks_1_1MetaTask.html#a2827c0bf7b69c7d349c34e9b3db19958":[6,0,9,13,6],
-"structmc__tasks_1_1MetaTask.html#a2f04c2bc3c4806a13bd383826127f7e1":[6,0,9,13,24],
-"structmc__tasks_1_1MetaTask.html#a2fd93334634a24c2955f83cbf71926c1":[6,0,9,13,22],
-"structmc__tasks_1_1MetaTask.html#a33509a37fe853747dcacae6cdda089f1":[6,0,9,13,0]
+"structmc__tasks_1_1MetaTask.html#a27dbee0df32ae7f803184cb6222fc427":[6,0,9,13,13]
 };

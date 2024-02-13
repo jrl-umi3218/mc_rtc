@@ -78,18 +78,18 @@ var NAVTREEINDEX =
 "structmc__control_1_1fsm_1_1StabilizerStandingState.html#a6e8df7ef63d968bdfe366e5c12d224e7",
 "structmc__observers_1_1Observer.html#ad50a096eb3ea0ba9a09f3a9b286a73a9",
 "structmc__rbdyn_1_1Frame.html#a9188d603302310854ecb37fccf72249e",
-"structmc__rbdyn_1_1RobotConverter.html#a4f226cefe778f8796b9fc828f3320df9",
-"structmc__rbdyn_1_1Surface.html#aca2614ce25d784597de6ef3e53f68c96",
-"structmc__rtc_1_1Configuration.html#abf5e743e0ca14bb22bed349263a3f4b5",
-"structmc__rtc_1_1RobotPublisher.html#a1ff98ac0dc276543e910f89fcbb0f1b4",
-"structmc__rtc_1_1gui_1_1details_1_1ForceROImpl.html#a51f3125393430bf6861fdfaa3e859993",
-"structmc__rtc_1_1log_1_1FlatLog.html#ad1b26e3c1e38fac12edf862041ae6194",
-"structmc__solver_1_1QPSolver.html#af3238a88966bd91546b492a7dcf3dd17",
-"structmc__tasks_1_1MetaTask.html#a44d85f3f65abc8a5f8965efec40ebe7d",
-"structmc__tasks_1_1TransformTask.html#a910e8284e4e8d29f5099f2a4105e1ac4",
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a18352e8c8269aabbd125f8d49a9c5b2f",
-"structmc__trajectory_1_1InterpolatedRotation.html#a00b27ba3e5f5c5028a5c3f1b18552617",
-"structmc__tvm_1_1Robot.html#ae42524423b8c9b451f4c6a79fe054e15"
+"structmc__rbdyn_1_1RobotConverter.html#a3ae2e8970a964a2d79149204e0ca3887",
+"structmc__rbdyn_1_1Surface.html#a8c4fe07a3ad4392974c63722916b28db",
+"structmc__rtc_1_1Configuration.html#ab8cc8b0acc61a5bcf4befd1752691e97",
+"structmc__rtc_1_1ObjectLoader_1_1ObjectDeleter.html#ab2c3ffdb618f703a455be33b3612d911",
+"structmc__rtc_1_1gui_1_1details_1_1ForceImpl.html#ac9c8e724499257f3ea21001c6930c6c7",
+"structmc__rtc_1_1log_1_1FlatLog.html#aaab239b6569c991b55472d3811e2360b",
+"structmc__solver_1_1QPSolver.html#ae35ec2765a45413bcfebae5e57bcea5f",
+"structmc__tasks_1_1MetaTask.html#a2827c0bf7b69c7d349c34e9b3db19958",
+"structmc__tasks_1_1TransformTask.html#a4ed9f566928c9c9cfa5b6f971699d84b",
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a157a2ca5ae25905e6db6c0a522e38b27",
+"structmc__trajectory_1_1ExactCubic.html#aec46e0e93dfe6c8483cd4ab96ec133ae",
+"structmc__tvm_1_1Robot.html#ad5f7d733469c9f86df634791e93b7e9b"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

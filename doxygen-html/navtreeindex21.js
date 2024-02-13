@@ -1,5 +1,9 @@
 var NAVTREEINDEX21 =
 {
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a157a2ca5ae25905e6db6c0a522e38b27":[6,0,9,2,2,109],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a15becbde64e05238765cbb514f9163b0":[6,0,9,2,2,92],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a168d791b9b03a88eb4cd33d527c52210":[6,0,9,2,2,164],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a16db8e5921026c24b38ac1bd298443af":[6,0,9,2,2,143],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a18352e8c8269aabbd125f8d49a9c5b2f":[6,0,9,2,2,70],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a18cf3bbe16d6f31b76fb67a4db7bf216":[6,0,9,2,2,22],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a19464c74ed88aa569d1b0a3a5f4c505b":[6,0,9,2,2,21],
@@ -245,9 +249,5 @@ var NAVTREEINDEX21 =
 "structmc__trajectory_1_1ExactCubic.html#a808079084680fabc35d41f2fcd2918fa":[6,0,10,1,2],
 "structmc__trajectory_1_1ExactCubic.html#a83a0733b114960743205b1b3a390ca6e":[6,0,10,1,14],
 "structmc__trajectory_1_1ExactCubic.html#ab73c2c2f06d04ee301e8ec0d1a15b831":[6,0,10,1,11],
-"structmc__trajectory_1_1ExactCubic.html#ae734960f82442e523fe5fa1077588e75":[6,0,10,1,5],
-"structmc__trajectory_1_1ExactCubic.html#aec46e0e93dfe6c8483cd4ab96ec133ae":[6,0,10,1,16],
-"structmc__trajectory_1_1ExactCubic.html#af0dd28bb9136823399f3d85d5512bc33":[6,0,10,1,6],
-"structmc__trajectory_1_1ExactCubic.html#af47e1c92e5824f345b1616aacbd1891c":[6,0,10,1,9],
-"structmc__trajectory_1_1InterpolatedRotation.html":[6,0,10,2]
+"structmc__trajectory_1_1ExactCubic.html#ae734960f82442e523fe5fa1077588e75":[6,0,10,1,5]
 };
