@@ -528,7 +528,8 @@ void Robot::addBodySensor(const BodySensor & sensor)
     data_->bodySensors.push_back(sensor);
     data_->bodySensorsIndex.insert({sensor.name(), data_->bodySensors.size() - 1});
 
-    if(!bodyHasBodySensor(sensor.name())) data_->bodyBodySensors.insert({sensor.name(), data_->bodySensors.size() - 1});
+    if(!bodyHasBodySensor(sensor.parentBody()))
+      data_->bodyBodySensors.insert({sensor.parentBody(), data_->bodySensors.size() - 1});
   }
 
   else { mc_rtc::log::error_and_throw("Body sensor named {} already attached to {}", sensor.name(), this->name()); }
