@@ -371,11 +371,11 @@
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MyController.h</span>
 <span class="cp">#pragma once
-#include &lt;mc_control/mc_controller.h&gt;
-#include "api.h"
+#include</span> <span class="cpf">&lt;mc_control/mc_controller.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">"api.h"</span><span class="cp">
 </span><span class="c1">// If we want to use elements in mc_tasks or mc_solver we first must include their header file</span>
-<span class="cp">#include &lt;mc_tasks/CoMTask.h&gt;
-#include &lt;mc_tasks/SurfaceTransformTask.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;mc_tasks/CoMTask.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mc_tasks/SurfaceTransformTask.h&gt;</span><span class="cp">
 </span>
 <span class="k">struct</span> <span class="nc">MyController_DLLAPI</span> <span class="n">MyController</span> <span class="o">:</span> <span class="k">public</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span>
 <span class="p">{</span>
@@ -396,7 +396,7 @@
   <li>In <code class="language-plaintext highlighter-rouge">MyController.cpp</code>:</li>
 </ul>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include "MyController.h"
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"MyController.h"</span><span class="cp">
 </span>
 <span class="n">MyController</span><span class="o">::</span><span class="n">MyController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="cm">/* config */</span><span class="p">)</span>
 <span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="p">(</span><span class="n">rm</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
@@ -475,8 +475,8 @@
 <p>To use <code class="language-plaintext highlighter-rouge">AddRemoveContactTask</code> we need a <a href="/mc_rtc/tutorials/recipes/speed-constraint.html">BoundedSpeedConstraint</a> in the solver. We will also need the task itself. Finally, we need two supplementary steps to remove and add back the foot. So, we will modify our controller header and the <code class="language-plaintext highlighter-rouge">reset()</code> function accordingly:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// In the header</span>
-<span class="cp">#include &lt;mc_solver/BoundedSpeedConstr.h&gt;
-#include &lt;mc_tasks/AddRemoveContactTask.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;mc_solver/BoundedSpeedConstr.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mc_tasks/AddRemoveContactTask.h&gt;</span><span class="cp">
 </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">BoundedSpeedConstr</span><span class="o">&gt;</span> <span class="n">bSpeedConstr</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">AddRemoveContactTask</span><span class="o">&gt;</span> <span class="n">aRContactTask</span><span class="p">;</span>
 <span class="kt">bool</span> <span class="n">removed_left_foot</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>

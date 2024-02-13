@@ -372,7 +372,7 @@
   <div class="card-body">
 
   <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// エンドエフェクタータスクのヘッダーをインクルードする（ヘッダファイル）</span>
-<span class="cp">#include &lt;mc_tasks/EndEffectorTask.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;mc_tasks/EndEffectorTask.h&gt;</span><span class="cp">
 </span><span class="c1">// クラスのプライベートメンバーを追加 (ヘッダファイル)</span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span> <span class="n">efTask</span><span class="p">;</span>
 <span class="c1">// コンストラクター内でタスクを作成して問題に追加する</span>
@@ -580,7 +580,7 @@
   <div class="card-body">
 
   <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// タスクローダーを取得する</span>
-<span class="cp">#include &lt;mc_tasks/MetaTaskLoader.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;mc_tasks/MetaTaskLoader.h&gt;</span><span class="cp">
 </span>
 <span class="c1">// JSONファイルからタスクを取得する</span>
 <span class="k">auto</span> <span class="n">task</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="o">::</span><span class="n">MetaTaskLoader</span><span class="o">::</span><span class="n">load</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="s">"/my/path/task.json"</span><span class="p">);</span>

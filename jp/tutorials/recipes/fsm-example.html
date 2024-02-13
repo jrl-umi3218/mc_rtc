@@ -623,9 +623,9 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
 
 <p>この状態は<code class="language-plaintext highlighter-rouge">src/states/Door_Initial.cpp</code>で定義されており、この処理で必要とされる仮想関数<code class="language-plaintext highlighter-rouge">configure</code>、<code class="language-plaintext highlighter-rouge">start</code>、<code class="language-plaintext highlighter-rouge">run</code>と関数<code class="language-plaintext highlighter-rouge">teardown</code>を置き換えます（<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1State" target="blank_"><code>mc_control::fsm::State</code></a>のAPIのドキュメントを参照）。ここでは、状態開始時にGUIにボタンを追加します。そして、このボタンがクリックされたときに、bool型の状態<code class="language-plaintext highlighter-rouge">openDoor_</code>を変化させます（後で「OpenDoor」状態に遷移するのに使用します）。これを実現するには、<code class="language-plaintext highlighter-rouge">output("OpenDoor")</code>を呼び出し、<code class="language-plaintext highlighter-rouge">bool Door_Initial::run</code>関数で<code class="language-plaintext highlighter-rouge">true</code>を返します。これは、この状態の処理が完了して次の状態に遷移できることを表します。なお、この状態遷移がどのように起こるかは、状態遷移マップの設定によって定義されています（<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1TransitionMap" target="blank_"><code>mc_control::fsm::TransitionMap</code></a>を参照）。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;mc_control/fsm/Controller.h&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_control/fsm/Controller.h&gt;</span><span class="cp">
 </span>
-<span class="cp">#include "Door_Initial.h"
+<span class="cp">#include</span> <span class="cpf">"Door_Initial.h"</span><span class="cp">
 </span>
 <span class="kt">void</span> <span class="n">Door_Initial</span><span class="o">::</span><span class="n">configure</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span><span class="p">)</span> <span class="p">{}</span>
 
@@ -660,8 +660,8 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
 <p>まず、この動作の状態遷移マップを見てみましょう。</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::OpenDoorFSM:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Meta</span>
-  <span class="s">transitions</span><span class="pi">:</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Meta</span>
+  <span class="s">transitions</span><span class="err">:</span>
     <span class="pi">-</span> <span class="pi">[</span><span class="nv">Door_Initial</span><span class="pi">,</span> <span class="nv">OpenDoor</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">ReachHandle</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
     <span class="pi">-</span> <span class="pi">[</span><span class="nv">Door</span><span class="pi">::</span><span class="nv">ReachHandle</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">MoveHandle</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
     <span class="pi">-</span> <span class="pi">[</span><span class="nv">Door</span><span class="pi">::</span><span class="nv">MoveHandle</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">OpenDoor</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
@@ -670,8 +670,8 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
 <p>ユーザーがGUIのボタンをクリックすると、上記の<code class="language-plaintext highlighter-rouge">Door_Initial</code>というC++状態によって<code class="language-plaintext highlighter-rouge">OpenDoor</code>という状態遷移がトリガーされます。すると、有限オートマトンは次の状態である<code class="language-plaintext highlighter-rouge">Door::ReachHandle</code>に遷移します。</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::ReachHandle:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
-  <span class="s">tasks</span><span class="pi">:</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">MetaTasks</span>
+  <span class="s">tasks</span><span class="err">:</span>
     <span class="na">RightHandTrajectory</span><span class="pi">:</span>
       <span class="na">type</span><span class="pi">:</span> <span class="s">surfaceTransform</span>
       <span class="na">surface</span><span class="pi">:</span> <span class="s">RightGripper</span>
@@ -694,9 +694,9 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
 <p>すると、<code class="language-plaintext highlighter-rouge">OpenDoorFSM</code>は次の状態である<code class="language-plaintext highlighter-rouge">[Door::ReachHandle, OK, Door::MoveHandle, Auto]</code>に遷移します。</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::MoveHandle:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Posture</span>
-  <span class="s">robot</span><span class="pi">:</span> <span class="s">door</span>
-  <span class="s">completion</span><span class="pi">:</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Posture</span>
+  <span class="s">robot</span><span class="err">:</span> <span class="s">door</span>
+  <span class="s">completion</span><span class="err">:</span>
     <span class="na">eval</span><span class="pi">:</span> <span class="m">0.01</span>
 <span class="err">  </span><span class="na">postureTask</span><span class="pi">:</span>
     <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
@@ -717,8 +717,8 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
 <p>この状態の処理が完了したら、次の状態である<code class="language-plaintext highlighter-rouge">[Door::MoveHandle, OK, Door::OpenDoor, Auto]</code>に遷移します。この状態は、先の状態と非常によく似ています。この状態では、ロボットがドアを開けられるように、ドアの蝶番の目標関節角度を変更します。この状態が先の状態（<code class="language-plaintext highlighter-rouge">base: Door::MoveHandle</code>）をどのように継承しているかに注目してください。この状態は、新しい目標を再定義している点だけが先の状態と異なります。</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::OpenDoor:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Door::MoveHandle</span>
-  <span class="s">postureTask</span><span class="pi">:</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Door::MoveHandle</span>
+  <span class="s">postureTask</span><span class="err">:</span>
     <span class="na">jointGains</span><span class="pi">:</span>
       <span class="pi">-</span> <span class="na">jointName</span><span class="pi">:</span> <span class="s">handle</span>
         <span class="na">stiffness</span><span class="pi">:</span> <span class="m">50</span>
@@ -732,15 +732,15 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
 <p>現時点では、この有限オートマトンはドアを開く動作のみが考慮されています。ロボットのバランスについては考慮されていません。それでは、左足と右足の中点の真上に質量中心を置いてみましょう。これを実現するには、<code class="language-plaintext highlighter-rouge">Door::Standing</code>状態を前述の<code class="language-plaintext highlighter-rouge">Door::OpenDoorFSM</code>と同じ場所に置きます。厳密にいうと、これらの状態はタイムステップごとに交互に実行されます。.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::OpenDoorDemo:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Parallel</span>
-  <span class="s">states</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Door</span><span class="pi">::</span><span class="nv">Standing</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">OpenDoorFSM</span><span class="pi">]</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Parallel</span>
+  <span class="s">states</span><span class="err">:</span> <span class="pi">[</span><span class="nv">Door</span><span class="pi">::</span><span class="nv">Standing</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">OpenDoorFSM</span><span class="pi">]</span>
 </code></pre></div></div>
 
 <p>立位状態は以下のように定義されます。</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::Standing:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
-  <span class="s">tasks</span><span class="pi">:</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">MetaTasks</span>
+  <span class="s">tasks</span><span class="err">:</span>
     <span class="na">CoM</span><span class="pi">:</span>
       <span class="na">type</span><span class="pi">:</span> <span class="s">com</span>
       <span class="na">above</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">LeftFoot</span><span class="pi">,</span> <span class="nv">RightFoot</span><span class="pi">]</span>

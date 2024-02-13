@@ -365,7 +365,7 @@
 <h2 id="nodehandleノードハンドルを取得する">NodeHandle（ノードハンドル）を取得する</h2>
 
 <p>以下のコードを使用すると、mc_rtcによって作成された<code class="language-plaintext highlighter-rouge">ros::NodeHandle</code>にアクセスできます。</p>
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;mc_rtc/ros.h&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_rtc/ros.h&gt;</span><span class="cp">
 </span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span><span class="o">&gt;</span> <span class="n">nh</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">ROSBridge</span><span class="o">::</span><span class="n">get_node_handle</span><span class="p">();</span>
 </code></pre></div></div>

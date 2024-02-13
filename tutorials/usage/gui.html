@@ -634,7 +634,7 @@
 
 <p>This element allows to display a <code class="language-plaintext highlighter-rouge">Visual</code> element. Two callbacks are expected, the first must return an <code class="language-plaintext highlighter-rouge">rbd::parsers::Visual</code> element and the second must return the position (origin) of the <code class="language-plaintext highlighter-rouge">Visual</code> element.</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;mc_rtc/visual_utils.h&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_rtc/visual_utils.h&gt;</span><span class="cp">
 </span>
 <span class="n">Visual</span><span class="p">(</span><span class="s">"Visual"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">makeVisualSphere</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">Color</span><span class="o">::</span><span class="n">Blue</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">visual_pos_</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>

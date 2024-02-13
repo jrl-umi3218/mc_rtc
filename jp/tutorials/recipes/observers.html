@@ -624,7 +624,7 @@
 <p>さらに、<code class="language-plaintext highlighter-rouge">mc_rtc</code>が観測器を見つけられるように、<code class="language-plaintext highlighter-rouge">mc_rtc</code>の観測器ローダーにライブラリを検索させるための読み込みシンボルを定義する必要があります。これを行うには、<code class="language-plaintext highlighter-rouge">mc_observers/ObserverMacros.h</code>で定義された以下のマクロを使用します。</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// YourObserver.cpp</span>
-<span class="cp">#include &lt;mc_observers/ObserverMacros.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;mc_observers/ObserverMacros.h&gt;</span><span class="cp">
 </span><span class="c1">// オブザーバの実装 (configure, reset, run, update 関数)</span>
 <span class="n">EXPORT_OBSERVER_MODULE</span><span class="p">(</span><span class="s">"YourObserver"</span><span class="p">,</span> <span class="n">your_namespace</span><span class="o">::</span><span class="n">YourObserverClassName</span><span class="p">)</span>
 </code></pre></div></div>

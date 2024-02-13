@@ -575,10 +575,10 @@
 <span class="c1"># この状態は現在位置で両脚接地で立っている状態を維持する</span>
 <span class="c1">##</span>
 <span class="s">Stabilizer::Standing:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">StabilizerStandingState</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">StabilizerStandingState</span>
   <span class="s"># この stiffness は目標重心位置のバネダンパ計算に用いられる</span>
   <span class="s"># ダンピングは自動的に2*sqrt(stiffness)として計算される</span>
-  <span class="s">stiffness</span><span class="pi">:</span> <span class="m">5</span>
+  <span class="s">stiffness</span><span class="err">:</span> <span class="m">5</span>
   <span class="c1"># スタビライザ設定 (前節を参照)</span>
   <span class="na">StabilizerConfig</span><span class="pi">:</span>
     <span class="na">type</span><span class="pi">:</span> <span class="s">lipm_stabilizer</span>
@@ -597,24 +597,24 @@
 <span class="c1"># - OK dcmが事前に定義されたしきい値に到達した場合</span>
 <span class="c1">##</span>
 <span class="s">Stabilizer::GoCenter:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Stabilizer::Standing</span>
-  <span class="s">above</span><span class="pi">:</span> <span class="s">Center</span>
-  <span class="s">completion</span><span class="pi">:</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Stabilizer::Standing</span>
+  <span class="s">above</span><span class="err">:</span> <span class="s">Center</span>
+  <span class="s">completion</span><span class="err">:</span>
     <span class="na">dcmEval</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.005</span><span class="pi">,</span> <span class="nv">0.005</span><span class="pi">,</span> <span class="nv">0.05</span><span class="pi">]</span>
 
 <span class="c1">##</span>
 <span class="c1"># 重心を左足首の上に移動させる</span>
 <span class="c1">##</span>
 <span class="s">Stabilizer::GoLeft:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Stabilizer::GoCenter</span>
-  <span class="s">above</span><span class="pi">:</span> <span class="s">LeftAnkle</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Stabilizer::GoCenter</span>
+  <span class="s">above</span><span class="err">:</span> <span class="s">LeftAnkle</span>
 
 <span class="c1">##</span>
 <span class="c1"># 重心を右足首の上に移動させる</span>
 <span class="c1">##</span>
 <span class="s">Stabilizer::GoRight:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Stabilizer::GoLeft</span>
-  <span class="s">above</span><span class="pi">:</span> <span class="s">RightAnkle</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Stabilizer::GoLeft</span>
+  <span class="s">above</span><span class="err">:</span> <span class="s">RightAnkle</span>
 </code></pre></div></div>
 
 <p>よく使われる動作に関する状態（上記の状態も含む）が定義されたシンプルなライブラリが、<code class="language-plaintext highlighter-rouge">mc_control/fsm/states/data/StabilizerStanding.yaml</code>に用意されています。これらの状態を他の状態と同時に実行することで、次のセクションで説明するようなより複雑な動作を行わせることができます。</p>

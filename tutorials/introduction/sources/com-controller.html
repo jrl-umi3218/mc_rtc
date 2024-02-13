@@ -386,10 +386,10 @@
 27
 </pre></td><td class="code"><pre><span class="cp">#pragma once
 </span>
-<span class="cp">#include &lt;mc_control/mc_controller.h&gt;
-#include &lt;mc_tasks/CoMTask.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;mc_control/mc_controller.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mc_tasks/CoMTask.h&gt;</span><span class="cp">
 </span>
-<span class="cp">#include "api.h"
+<span class="cp">#include</span> <span class="cpf">"api.h"</span><span class="cp">
 </span>
 <span class="k">struct</span> <span class="nc">MyFirstController_DLLAPI</span> <span class="n">MyFirstController</span> <span class="o">:</span> <span class="k">public</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span>
 <span class="p">{</span>
@@ -460,7 +460,7 @@
 45
 46
 47
-</pre></td><td class="code"><pre><span class="cp">#include "MyFirstController.h"
+</pre></td><td class="code"><pre><span class="cp">#include</span> <span class="cpf">"MyFirstController.h"</span><span class="cp">
 </span>
 <span class="n">MyFirstController</span><span class="o">::</span><span class="n">MyFirstController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">)</span>
 <span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="p">(</span><span class="n">rm</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>

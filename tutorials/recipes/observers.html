@@ -625,7 +625,7 @@ For further available functionnalities, please refer to <a href="/mc_rtc/doxygen
 <p>Furthermore, in order for <code class="language-plaintext highlighter-rouge">mc_rtc</code> to find your observer, you must define the loading symbols that <code class="language-plaintext highlighter-rouge">mc_rtc</code>’s observer loader will look for in your library. This can be done through the following macro defined in <code class="language-plaintext highlighter-rouge">mc_observers/ObserverMacros.h</code></p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// YourObserver.cpp</span>
-<span class="cp">#include &lt;mc_observers/ObserverMacros.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;mc_observers/ObserverMacros.h&gt;</span><span class="cp">
 </span><span class="c1">// Observer implementation (configure, reset, run and update functions)</span>
 <span class="n">EXPORT_OBSERVER_MODULE</span><span class="p">(</span><span class="s">"YourObserver"</span><span class="p">,</span> <span class="n">your_namespace</span><span class="o">::</span><span class="n">YourObserverClassName</span><span class="p">)</span>
 </code></pre></div></div>

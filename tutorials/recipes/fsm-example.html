@@ -624,9 +624,9 @@ optional arguments:
 
 <p>This state is defined in <code class="language-plaintext highlighter-rouge">src/states/Door_Initial.cpp</code> and overrides the required virtual functions <code class="language-plaintext highlighter-rouge">configure</code>, <code class="language-plaintext highlighter-rouge">start</code> and <code class="language-plaintext highlighter-rouge">run</code> and <code class="language-plaintext highlighter-rouge">teardown</code> function (see the API documentation of <a href="/mc_rtc/doxygen.html#structmc__control_1_1fsm_1_1State" target="blank_"><code>mc_control::fsm::State</code></a>). Here, we add a button to the GUI when the state starts. When clicked, this button is used to change the state of a boolean <code class="language-plaintext highlighter-rouge">openDoor_</code>, which is later used to trigger an “OpenDoor” transition. This is achieved by calling <code class="language-plaintext highlighter-rouge">output("OpenDoor")</code> and returning <code class="language-plaintext highlighter-rouge">true</code> in the <code class="language-plaintext highlighter-rouge">bool Door_Initial::run</code> function, which signifies that we consider the state to be completed and that the next transition can occur. Note that the the configuration of the transition map determines how this transition occurs (see <a href="/mc_rtc/doxygen.html#structmc__control_1_1fsm_1_1TransitionMap" target="blank_"><code>mc_control::fsm::TransitionMap</code></a>).</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;mc_control/fsm/Controller.h&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_control/fsm/Controller.h&gt;</span><span class="cp">
 </span>
-<span class="cp">#include "Door_Initial.h"
+<span class="cp">#include</span> <span class="cpf">"Door_Initial.h"</span><span class="cp">
 </span>
 <span class="kt">void</span> <span class="n">Door_Initial</span><span class="o">::</span><span class="n">configure</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span><span class="p">)</span> <span class="p">{}</span>
 
@@ -661,8 +661,8 @@ optional arguments:
 <p>First, let’s see what the transition map for this state looks like:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::OpenDoorFSM:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Meta</span>
-  <span class="s">transitions</span><span class="pi">:</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Meta</span>
+  <span class="s">transitions</span><span class="err">:</span>
     <span class="pi">-</span> <span class="pi">[</span><span class="nv">Door_Initial</span><span class="pi">,</span> <span class="nv">OpenDoor</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">ReachHandle</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
     <span class="pi">-</span> <span class="pi">[</span><span class="nv">Door</span><span class="pi">::</span><span class="nv">ReachHandle</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">MoveHandle</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
     <span class="pi">-</span> <span class="pi">[</span><span class="nv">Door</span><span class="pi">::</span><span class="nv">MoveHandle</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">OpenDoor</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
@@ -671,8 +671,8 @@ optional arguments:
 <p>The <code class="language-plaintext highlighter-rouge">Door_Initial</code> C++ state described above will trigger the <code class="language-plaintext highlighter-rouge">OpenDoor</code> transition when the user clicks on the GUI button. The FSM will then move to the next state <code class="language-plaintext highlighter-rouge">Door::ReachHandle</code>:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::ReachHandle:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
-  <span class="s">tasks</span><span class="pi">:</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">MetaTasks</span>
+  <span class="s">tasks</span><span class="err">:</span>
     <span class="na">RightHandTrajectory</span><span class="pi">:</span>
       <span class="na">type</span><span class="pi">:</span> <span class="s">surfaceTransform</span>
       <span class="na">surface</span><span class="pi">:</span> <span class="s">RightGripper</span>
@@ -695,9 +695,9 @@ optional arguments:
 <p>The <code class="language-plaintext highlighter-rouge">OpenDoorFSM</code> can thus move to its next transition: <code class="language-plaintext highlighter-rouge">[Door::ReachHandle, OK, Door::MoveHandle, Auto]</code></p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::MoveHandle:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Posture</span>
-  <span class="s">robot</span><span class="pi">:</span> <span class="s">door</span>
-  <span class="s">completion</span><span class="pi">:</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Posture</span>
+  <span class="s">robot</span><span class="err">:</span> <span class="s">door</span>
+  <span class="s">completion</span><span class="err">:</span>
     <span class="na">eval</span><span class="pi">:</span> <span class="m">0.01</span>
 <span class="err">  </span><span class="na">postureTask</span><span class="pi">:</span>
     <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
@@ -718,8 +718,8 @@ optional arguments:
 <p>Once this state completes, we can move to the next transition: <code class="language-plaintext highlighter-rouge">[Door::MoveHandle, OK, Door::OpenDoor, Auto]</code>. This next state is very similar to the previous one: it changes the target joint angle of the door’s hinges to make the robot open it. Note how this state inherits from the previous one (<code class="language-plaintext highlighter-rouge">base: Door::MoveHandle</code>), and only redefines the new targets.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::OpenDoor:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Door::MoveHandle</span>
-  <span class="s">postureTask</span><span class="pi">:</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Door::MoveHandle</span>
+  <span class="s">postureTask</span><span class="err">:</span>
     <span class="na">jointGains</span><span class="pi">:</span>
       <span class="pi">-</span> <span class="na">jointName</span><span class="pi">:</span> <span class="s">handle</span>
         <span class="na">stiffness</span><span class="pi">:</span> <span class="m">50</span>
@@ -733,15 +733,15 @@ optional arguments:
 <p>As-is, this FSM only concerns itself with the door opening motion. However, it does not handle the robot’s balance. Here, we will simply center the CoM above the left and right foot. This is achieved by putting the <code class="language-plaintext highlighter-rouge">Door::Standing</code> state in parallel with the <code class="language-plaintext highlighter-rouge">Door::OpenDoorFSM</code> described above. Strictly speaking these states are executed one after the other at every timestep.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::OpenDoorDemo:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Parallel</span>
-  <span class="s">states</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Door</span><span class="pi">::</span><span class="nv">Standing</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">OpenDoorFSM</span><span class="pi">]</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Parallel</span>
+  <span class="s">states</span><span class="err">:</span> <span class="pi">[</span><span class="nv">Door</span><span class="pi">::</span><span class="nv">Standing</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">OpenDoorFSM</span><span class="pi">]</span>
 </code></pre></div></div>
 
 <p>with the standing state defined as:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::Standing:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
-  <span class="s">tasks</span><span class="pi">:</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">MetaTasks</span>
+  <span class="s">tasks</span><span class="err">:</span>
     <span class="na">CoM</span><span class="pi">:</span>
       <span class="na">type</span><span class="pi">:</span> <span class="s">com</span>
       <span class="na">above</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">LeftFoot</span><span class="pi">,</span> <span class="nv">RightFoot</span><span class="pi">]</span>

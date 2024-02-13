@@ -369,7 +369,7 @@ document assumes the reader has some level of familiarity with ROS principles.</
 <h2 id="getting-a-nodehandle">Getting a NodeHandle</h2>
 
 <p>The following code will give you access to the <code class="language-plaintext highlighter-rouge">ros::NodeHandle</code> created by mc_rtc:</p>
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;mc_rtc/ros.h&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_rtc/ros.h&gt;</span><span class="cp">
 </span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span><span class="o">&gt;</span> <span class="n">nh</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">ROSBridge</span><span class="o">::</span><span class="n">get_node_handle</span><span class="p">();</span>
 </code></pre></div></div>

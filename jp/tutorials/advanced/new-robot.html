@@ -416,7 +416,7 @@
 <div class="card bg-light card-source">
   <div class="card-body">
 
-  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include &lt;mc_rbdyn/RobotLoader.h&gt;
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">&lt;mc_rbdyn/RobotLoader.h&gt;</span><span class="cp">
 </span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">path</span> <span class="o">=</span> <span class="s">"/path/to/description"</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span> <span class="o">=</span> <span class="s">"name"</span><span class="p">;</span>
@@ -564,7 +564,7 @@
 <div class="card bg-light card-source">
   <div class="card-body">
 
-  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include &lt;mc_rbdyn/RobotLoader.h&gt;
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">&lt;mc_rbdyn/RobotLoader.h&gt;</span><span class="cp">
 </span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">json_path</span> <span class="o">=</span> <span class="s">"/path/to/file.json"</span><span class="p">;</span>
 <span class="k">auto</span> <span class="n">rm_json</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"json"</span><span class="p">,</span> <span class="n">json_path</span><span class="p">);</span>
@@ -717,8 +717,8 @@
 
   <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#pragma once
 </span>
-<span class="cp">#include &lt;mc_rbdyn/RobotModule.h&gt;
-#include &lt;mc_robots/api.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;mc_rbdyn/RobotModule.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mc_robots/api.h&gt;</span><span class="cp">
 </span>
 <span class="k">struct</span> <span class="nc">MC_ROBOTS_DLLAPI</span> <span class="n">MyRobotModule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span>
 <span class="p">{</span>
@@ -761,9 +761,9 @@
 <div class="card bg-light card-source">
   <div class="card-body">
 
-  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include "MyRobot.h"
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">"MyRobot.h"</span><span class="cp">
 </span>
-<span class="cp">#include &lt;RBDyn/parsers/urdf.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;RBDyn/parsers/urdf.h&gt;</span><span class="cp">
 </span>
 <span class="c1">// MY_PATHはCMakeなどで与えることができる</span>
 <span class="n">MyRobotModule</span><span class="o">::</span><span class="n">MyRobotModule</span><span class="p">(</span><span class="kt">bool</span> <span class="n">fixed</span><span class="p">)</span> <span class="o">:</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span><span class="p">(</span><span class="n">MY_PATH</span><span class="p">,</span> <span class="s">"my_robot"</span><span class="p">)</span>

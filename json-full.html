@@ -49273,8 +49273,8 @@ configs:
 <span class="c1"># It targets a contact at the current foot position, but with identity world orientation and nominal height 0.</span>
 <span class="c1">##</span>
 <span class="s">Stabilizer::Standing:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">StabilizerStandingState</span>
-  <span class="s">stiffness</span><span class="pi">:</span> <span class="m">5</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">StabilizerStandingState</span>
+  <span class="s">stiffness</span><span class="err">:</span> <span class="m">5</span>
   <span class="na">StabilizerConfig</span><span class="pi">:</span>
     <span class="na">type</span><span class="pi">:</span> <span class="s">lipm_stabilizer</span>
     <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
@@ -49295,31 +49295,31 @@ configs:
       <span class="na">height</span><span class="pi">:</span> <span class="m">0</span>
 
 <span class="s">Stabilizer::GoCenter:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Stabilizer::Standing</span>
-  <span class="s">above</span><span class="pi">:</span> <span class="s">CenterSurfaces</span>
-  <span class="s">completion</span><span class="pi">:</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Stabilizer::Standing</span>
+  <span class="s">above</span><span class="err">:</span> <span class="s">CenterSurfaces</span>
+  <span class="s">completion</span><span class="err">:</span>
     <span class="na">dcmEval</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.005</span><span class="pi">,</span> <span class="nv">0.005</span><span class="pi">,</span> <span class="nv">0.05</span><span class="pi">]</span>
 
 <span class="c1">##</span>
 <span class="c1"># Make the CoM move to a point above the left foot ankle</span>
 <span class="c1">##</span>
 <span class="s">Stabilizer::GoLeft:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Stabilizer::GoCenter</span>
-  <span class="s">above</span><span class="pi">:</span> <span class="s">LeftSurface</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Stabilizer::GoCenter</span>
+  <span class="s">above</span><span class="err">:</span> <span class="s">LeftSurface</span>
 
 <span class="c1">##</span>
 <span class="c1"># Make the CoM move to a point above the right foot ankle</span>
 <span class="c1">##</span>
 <span class="s">Stabilizer::GoRight:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Stabilizer::GoLeft</span>
-  <span class="s">above</span><span class="pi">:</span> <span class="s">RightSurface</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Stabilizer::GoLeft</span>
+  <span class="s">above</span><span class="err">:</span> <span class="s">RightSurface</span>
 
 <span class="c1">##</span>
 <span class="c1"># Single support state that keeps the CoM above the left foot contact</span>
 <span class="c1">##</span>
 <span class="s">Stabilizer::LeftSupport:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Stabilizer::GoLeft</span>
-  <span class="s">completion</span><span class="pi">:</span> <span class="pi">{}</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Stabilizer::GoLeft</span>
+  <span class="s">completion</span><span class="err">:</span> <span class="pi">{}</span>
   <span class="na">StabilizerConfig</span><span class="pi">:</span>
     <span class="na">contacts</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Left</span><span class="pi">]</span>
 
@@ -49327,8 +49327,8 @@ configs:
 <span class="c1"># Single support state that keeps the CoM above the right foot contact</span>
 <span class="c1">##</span>
 <span class="s">Stabilizer::RightSupport:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Stabilizer::GoRight</span>
-  <span class="s">completion</span><span class="pi">:</span> <span class="pi">{}</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Stabilizer::GoRight</span>
+  <span class="s">completion</span><span class="err">:</span> <span class="pi">{}</span>
   <span class="na">StabilizerConfig</span><span class="pi">:</span>
     <span class="na">contacts</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Right</span><span class="pi">]</span>
 
@@ -49338,8 +49338,8 @@ configs:
 <span class="c1"># but the joints posture target will be that of halfsitting</span>
 <span class="c1">###</span>
 <span class="s">Stabilizer::GoHalfSitting:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Parallel</span>
-  <span class="s">states</span><span class="pi">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">Stabilizer::GoCenter'</span><span class="pi">,</span> <span class="nv">HalfSitting</span><span class="pi">]</span></code></pre></figure>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Parallel</span>
+  <span class="s">states</span><span class="err">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">Stabilizer::GoCenter'</span><span class="pi">,</span> <span class="nv">HalfSitting</span><span class="pi">]</span></code></pre></figure>
 
   
     
@@ -158788,7 +158788,7 @@ stiffness: 5.0</pre>
 <div class="card bg-light card-source">
   <div class="card-body">
 <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// Access the constraint set loader</span>
-<span class="cp">#include &lt;mc_solver/ConstraintSetLoader.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;mc_solver/ConstraintSetLoader.h&gt;</span><span class="cp">
 </span>
 <span class="c1">// Get the constraint from a JSON file</span>
 <span class="k">auto</span> <span class="n">constraint</span> <span class="o">=</span> <span class="n">mc_solver</span><span class="o">::</span><span class="n">ConstraintSetLoader</span><span class="o">::</span><span class="n">load</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="s">"/my/path/constraint.json"</span><span class="p">);</span>
@@ -158827,7 +158827,7 @@ stiffness: 5.0</pre>
 <div class="card bg-light card-source">
   <div class="card-body">
 <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// Access the meta task loader</span>
-<span class="cp">#include &lt;mc_tasks/MetaTaskLoader.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;mc_tasks/MetaTaskLoader.h&gt;</span><span class="cp">
 </span>
 <span class="c1">// Get the task from a JSON file</span>
 <span class="k">auto</span> <span class="n">task</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="o">::</span><span class="n">MetaTaskLoader</span><span class="o">::</span><span class="n">load</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="s">"/my/path/task.json"</span><span class="p">);</span>

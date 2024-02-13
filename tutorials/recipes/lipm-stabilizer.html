@@ -576,10 +576,10 @@ See <a href="https://jrl-umi3218.github.io/lipm_walking_controller/doxygen/HEAD/
 <span class="c1"># This state keeps the robot standing at it's current position in double support</span>
 <span class="c1">##</span>
 <span class="s">Stabilizer::Standing:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">StabilizerStandingState</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">StabilizerStandingState</span>
   <span class="s"># This stiffness controls the spring-damper computation of the reference CoM position</span>
   <span class="s"># damping is automatically computed as 2*sqrt(stiffness)</span>
-  <span class="s">stiffness</span><span class="pi">:</span> <span class="m">5</span>
+  <span class="s">stiffness</span><span class="err">:</span> <span class="m">5</span>
   <span class="c1"># StabilizerTask configuration (see previous section)</span>
   <span class="na">StabilizerConfig</span><span class="pi">:</span>
     <span class="na">type</span><span class="pi">:</span> <span class="s">lipm_stabilizer</span>
@@ -598,24 +598,24 @@ See <a href="https://jrl-umi3218.github.io/lipm_walking_controller/doxygen/HEAD/
 <span class="c1"># - OK when the dcm reaches the provided threshold</span>
 <span class="c1">##</span>
 <span class="s">Stabilizer::GoCenter:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Stabilizer::Standing</span>
-  <span class="s">above</span><span class="pi">:</span> <span class="s">Center</span>
-  <span class="s">completion</span><span class="pi">:</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Stabilizer::Standing</span>
+  <span class="s">above</span><span class="err">:</span> <span class="s">Center</span>
+  <span class="s">completion</span><span class="err">:</span>
     <span class="na">dcmEval</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.005</span><span class="pi">,</span> <span class="nv">0.005</span><span class="pi">,</span> <span class="nv">0.05</span><span class="pi">]</span>
 
 <span class="c1">##</span>
 <span class="c1"># Make the CoM move to a point above the left foot ankle</span>
 <span class="c1">##</span>
 <span class="s">Stabilizer::GoLeft:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Stabilizer::GoCenter</span>
-  <span class="s">above</span><span class="pi">:</span> <span class="s">LeftAnkle</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Stabilizer::GoCenter</span>
+  <span class="s">above</span><span class="err">:</span> <span class="s">LeftAnkle</span>
 
 <span class="c1">##</span>
 <span class="c1"># Make the CoM move to a point above the right foot ankle</span>
 <span class="c1">##</span>
 <span class="s">Stabilizer::GoRight:</span>
-  <span class="s">base</span><span class="pi">:</span> <span class="s">Stabilizer::GoLeft</span>
-  <span class="s">above</span><span class="pi">:</span> <span class="s">RightAnkle</span>
+  <span class="s">base</span><span class="err">:</span> <span class="s">Stabilizer::GoLeft</span>
+  <span class="s">above</span><span class="err">:</span> <span class="s">RightAnkle</span>
 </code></pre></div></div>
 
 <p>A simple library of predefined states for the most common actions (including the ones above) is provided in <code class="language-plaintext highlighter-rouge">mc_control/fsm/states/data/StabilizerStanding.yaml</code>. These states are intended to be put in parallel to other states to achieve more complex actions, such as the ones showcased in the next section.</p>
