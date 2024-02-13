@@ -34,6 +34,44 @@ public:
       BOOST_REQUIRE(r.data().get() == outputRobot(r.name()).data().get());
       BOOST_REQUIRE(r.data().get() == outputRealRobot(r.name()).data().get());
     }
+    auto for_all_robots = [this](auto && callback)
+    {
+      callback(robot());
+      callback(realRobot());
+      callback(outputRobot());
+      callback(outputRealRobot());
+    };
+    auto require_for_all_robots = [this](auto && callback, const char * desc)
+    {
+      auto do_throw = [&]()
+      {
+        mc_rtc::log::error_and_throw(desc);
+        return true;
+      };
+      BOOST_REQUIRE(callback(robot()) || do_throw());
+      BOOST_REQUIRE(callback(realRobot()) || do_throw());
+      BOOST_REQUIRE(callback(outputRobot()) || do_throw());
+      BOOST_REQUIRE(callback(outputRealRobot()) || do_throw());
+    };
+    // Check that we can create frames at runtime
+    require_for_all_robots([](const mc_rbdyn::Robot & r) { return !r.hasFrame("CameraFrame"); }, "has no CameraFrame");
+    for_all_robots([](mc_rbdyn::Robot & r)
+                   { r.makeFrame("CameraFrame", r.frame("NECK_P_S"), sva::PTransformd::Identity()); });
+    require_for_all_robots([](const mc_rbdyn::Robot & r) { return r.hasFrame("CameraFrame"); }, "has CameraFrame");
+    // Checks that we can add a new force sensor at run-time
+    require_for_all_robots([](const mc_rbdyn::Robot & r) { return !r.hasForceSensor("HeadForceSensor"); },
+                           "has no HeadForceSensor");
+    require_for_all_robots([](const mc_rbdyn::Robot & r) { return !r.bodyHasForceSensor("NECK_P_S"); },
+                           "NECK_P_S has no force sensor");
+    require_for_all_robots([](const mc_rbdyn::Robot & r) { return !r.frame("CameraFrame").hasForceSensor(); },
+                           "CameraFrame has no force sensor");
+    robot().addForceSensor(mc_rbdyn::ForceSensor{"HeadForceSensor", "NECK_P_S", sva::PTransformd::Identity()});
+    require_for_all_robots([](const mc_rbdyn::Robot & r) { return r.hasForceSensor("HeadForceSensor"); },
+                           "has HeadForceSensor");
+    require_for_all_robots([](const mc_rbdyn::Robot & r) { return r.bodyHasForceSensor("NECK_P_S"); },
+                           "NECK_P_S has force sensor");
+    require_for_all_robots([](const mc_rbdyn::Robot & r) { return r.frame("CameraFrame").hasForceSensor(); },
+                           "CameraFrame has force sensor");
     solver().addConstraintSet(kinematicsConstraint);
     postureTask->stiffness(1);
     postureTask->weight(1);

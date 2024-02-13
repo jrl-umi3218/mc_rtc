@@ -258,6 +258,7 @@ Robot::Robot(NewRobotToken,
 {
   if(params.data_) { data_ = params.data_; }
   else { data_ = std::make_shared<RobotData>(); }
+  data_->robots.push_back(this);
   const auto & module_ = module();
 
   sva::PTransformd base_tf = params.base_tf_.value_or(sva::PTransformd::Identity());
@@ -394,6 +395,7 @@ Robot::Robot(NewRobotToken,
     {
       const auto & fs = data_->forceSensors[i];
       data_->forceSensorsIndex[fs.name()] = i;
+      data_->bodyForceSensors_[fs.parentBody()] = i;
     }
   }
   auto & forceSensors_ = data_->forceSensors;
@@ -411,11 +413,6 @@ Robot::Robot(NewRobotToken,
       }
       else { fs.loadCalibrator(calib_file.string(), mbc().gravity); }
     }
-  }
-  for(size_t i = 0; i < forceSensors_.size(); ++i)
-  {
-    const auto & fs = forceSensors_[i];
-    bodyForceSensors_[fs.parentBody()] = i;
   }
 
   for(const auto & b : mb().bodies())
@@ -500,7 +497,14 @@ Robot::Robot(NewRobotToken,
   zmp_ = Eigen::Vector3d::Zero();
 }
 
-Robot::~Robot() = default;
+Robot::~Robot()
+{
+  if(data_)
+  {
+    auto it = std::find(data_->robots.begin(), data_->robots.end(), this);
+    if(it != data_->robots.end()) { data_->robots.erase(it); }
+  }
+}
 
 Robot::Robot(Robot &&) = default;
 
@@ -528,7 +532,8 @@ void Robot::addBodySensor(const BodySensor & sensor)
     data_->bodySensors.push_back(sensor);
     data_->bodySensorsIndex.insert({sensor.name(), data_->bodySensors.size() - 1});
 
-    if(!bodyHasBodySensor(sensor.name())) data_->bodyBodySensors.insert({sensor.name(), data_->bodySensors.size() - 1});
+    if(!bodyHasBodySensor(sensor.parentBody()))
+      data_->bodyBodySensors.insert({sensor.parentBody(), data_->bodySensors.size() - 1});
   }
 
   else { mc_rtc::log::error_and_throw("Body sensor named {} already attached to {}", sensor.name(), this->name()); }
@@ -926,6 +931,28 @@ std::vector<Flexibility> & Robot::flexibility()
   return flexibility_;
 }
 
+void Robot::addForceSensor(const mc_rbdyn::ForceSensor & fs)
+{
+  auto it = data_->forceSensorsIndex.find(fs.name());
+  if(it != data_->forceSensorsIndex.end())
+  {
+    mc_rtc::log::error_and_throw("Cannot add a force sensor named {} since {} already has one", fs.name(),
+                                 this->name());
+  }
+  data_->forceSensors.push_back(fs);
+  data_->forceSensorsIndex[fs.name()] = data_->forceSensors.size() - 1;
+  auto bfs_it = data_->bodyForceSensors_.find(fs.parentBody());
+  if(bfs_it == data_->bodyForceSensors_.end())
+  {
+    data_->bodyForceSensors_[fs.parentBody()] = data_->forceSensors.size() - 1;
+  }
+  auto updateFrames = [](const mc_rbdyn::Robot & robot)
+  {
+    for(const auto & f : robot.frames_) { f.second->resetForceSensor(); }
+  };
+  for(auto & r : data_->robots) { updateFrames(*r); }
+}
+
 const ForceSensor & Robot::forceSensor(const std::string & name) const
 {
   auto it = data_->forceSensorsIndex.find(name);
@@ -938,8 +965,8 @@ const ForceSensor & Robot::forceSensor(const std::string & name) const
 
 const ForceSensor & Robot::bodyForceSensor(const std::string & body) const
 {
-  auto it = bodyForceSensors_.find(body);
-  if(it == bodyForceSensors_.end())
+  auto it = data_->bodyForceSensors_.find(body);
+  if(it == data_->bodyForceSensors_.end())
   {
     mc_rtc::log::error_and_throw("No force sensor directly attached to {} in {}", body, name());
   }
@@ -1480,10 +1507,10 @@ RobotFramePtr Robot::makeTemporaryFrame(const std::string & name,
 
 const ForceSensor * Robot::findBodyForceSensor(const std::string & body) const
 {
-  auto it = bodyForceSensors_.find(body);
-  if(it != bodyForceSensors_.end()) { return &data_->forceSensors[it->second]; }
+  auto it = data_->bodyForceSensors_.find(body);
+  if(it != data_->bodyForceSensors_.end()) { return &data_->forceSensors[it->second]; }
   auto bodyName = findIndirectForceSensorBodyName(body);
-  if(bodyName.size()) { return &data_->forceSensors[bodyForceSensors_.find(bodyName)->second]; }
+  if(!bodyName.empty()) { return &data_->forceSensors[data_->bodyForceSensors_.find(bodyName)->second]; }
   return nullptr;
 }
 

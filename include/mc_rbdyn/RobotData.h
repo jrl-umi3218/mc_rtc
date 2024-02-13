@@ -17,6 +17,8 @@
 namespace mc_rbdyn
 {
 
+struct Robot;
+
 /** Hold data and objects that are shared among different views of a robot (control/real/output)
  *
  * The framework enforce consistency between these views
@@ -42,6 +44,8 @@ struct RobotData
   std::vector<ForceSensor> forceSensors;
   /** Correspondance between force sensor's name and force sensor index */
   std::unordered_map<std::string, size_t> forceSensorsIndex;
+  /** Correspondance between bodies' names and attached force sensors */
+  std::unordered_map<std::string, size_t> bodyForceSensors_;
   /** Hold all body sensors */
   BodySensorVector bodySensors;
   /** Correspondance between body sensor's name and body sensor index*/
@@ -60,6 +64,10 @@ struct RobotData
   DevicePtrVector devices;
   /** Correspondance between a device's name and a device index */
   std::unordered_map<std::string, size_t> devicesIndex;
+  /** A list of robots that share this data
+   *
+   * This is used to communicate changes to the data to all instances that share this data */
+  std::vector<Robot *> robots;
 };
 
 using RobotDataPtr = std::shared_ptr<RobotData>;
