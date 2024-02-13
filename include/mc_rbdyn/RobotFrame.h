@@ -155,6 +155,9 @@ protected:
   const ForceSensor * sensor_ = nullptr;
 
   void init_tvm_frame() const final;
+
+  /** Search for a force sensor inside Robot again */
+  void resetForceSensor() noexcept;
 };
 
 } // namespace mc_rbdyn

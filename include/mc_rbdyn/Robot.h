@@ -663,6 +663,19 @@ public:
    * @{
    */
 
+  /** Add a new force sensor to the robot
+   *
+   * This also updates frames' sensors.
+   *
+   * This does not load the calibration file for this sensor. It is up to the caller to do so if they have a file
+   * availble.
+   *
+   * \param sensor Sensor to be added to the robot
+   *
+   * \throws If a sensor with the same name already exists within this robot
+   */
+  void addForceSensor(const mc_rbdyn::ForceSensor & fs);
+
   /** Check if a force sensor exists
    *
    * @param name Name of the sensor
@@ -684,7 +697,10 @@ public:
    * @returns True if the body has a force sensor attached to it, false
    * otherwise
    */
-  inline bool bodyHasForceSensor(const std::string & body) const noexcept { return bodyForceSensors_.count(body) != 0; }
+  inline bool bodyHasForceSensor(const std::string & body) const noexcept
+  {
+    return data_->bodyForceSensors_.count(body) != 0;
+  }
 
   /**
    * @brief Checks if the surface has a force sensor directly attached to it
@@ -715,7 +731,7 @@ public:
    */
   inline bool bodyHasIndirectForceSensor(const std::string & body) const
   {
-    return bodyHasForceSensor(body) || findIndirectForceSensorBodyName(body).size() != 0;
+    return bodyHasForceSensor(body) || findIndirectForceSensorBodyName(body).empty();
   }
 
   /** Check if the surface has a force sensor attached to it (directly or
@@ -1129,8 +1145,6 @@ private:
   Springs springs_;
   /** Flexibility in this instance */
   std::vector<Flexibility> flexibility_;
-  /** Correspondance between bodies' names and attached force sensors */
-  std::map<std::string, size_t> bodyForceSensors_;
   /** Frames in this robot */
   std::unordered_map<std::string, RobotFramePtr> frames_;
   /** Mass of this robot */

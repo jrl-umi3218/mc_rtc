@@ -29,6 +29,12 @@ RobotFrame::RobotFrame(NewRobotFrameToken tkn,
 {
 }
 
+void RobotFrame::resetForceSensor() noexcept
+{
+  if(parent_) { sensor_ = (static_cast<RobotFrame *>(parent_.get()))->sensor_; }
+  else { sensor_ = robot_.findBodyForceSensor(body()); }
+}
+
 const std::string & RobotFrame::body() const noexcept
 {
   return robot_.mb().body(static_cast<int>(bodyMbcIdx_)).name();
