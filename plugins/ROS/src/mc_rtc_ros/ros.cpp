@@ -195,6 +195,23 @@ private:
   std::thread th;
 
   void publishThread();
+
+  void add_force_sensor(const mc_rbdyn::Robot & robot, const mc_rbdyn::ForceSensor & fs)
+  {
+#ifdef MC_RTC_ROS_IS_ROS2
+    auto tm = nh.now();
+#else
+    auto tm = Time::now();
+#endif
+    const std::string & name = fs.name();
+    data.wrenches.emplace_back();
+    auto & msg = data.wrenches.back();
+    msg.header.frame_id = prefix + name;
+    if(!robot.hasBody(fs.name()))
+    {
+      data.tfs.push_back(PT2TF(fs.X_p_f(), tm, prefix + fs.parentBody(), prefix + name, 0));
+    }
+  }
 };
 
 RobotPublisherImpl::RobotPublisherImpl(NodeHandle & nh, const std::string & prefix, double rate, double dt)
@@ -277,17 +294,7 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
     data.tfs.push_back(PT2TF(id, tm, prefix + predName, prefix + succName, 0));
   }
 
-  for(const auto & fs : robot.forceSensors())
-  {
-    const std::string & name = fs.name();
-    data.wrenches.emplace_back();
-    auto & msg = data.wrenches.back();
-    msg.header.frame_id = prefix + name;
-    if(!robot.hasBody(fs.name()))
-    {
-      data.tfs.push_back(PT2TF(fs.X_p_f(), tm, prefix + fs.parentBody(), prefix + name, 0));
-    }
-  }
+  for(const auto & fs : robot.forceSensors()) { add_force_sensor(robot, fs); }
 
   for(const auto & s : robot.surfaces())
   {
@@ -426,7 +433,8 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
     size_t wrench_i = 0;
     for(const auto & fs : robot.forceSensors())
     {
-      auto & msg = data.wrenches[wrench_i++];
+      if(wrench_i >= data.wrenches.size()) { add_force_sensor(robot, fs); }
+      auto & msg = data.wrenches[wrench_i];
       const sva::ForceVecd & wrench_sva = fs.wrench();
       msg.header.stamp = data.js.header.stamp;
 #ifndef MC_RTC_ROS_IS_ROS2
@@ -438,6 +446,7 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
       msg.wrench.torque.x = wrench_sva.couple().x();
       msg.wrench.torque.y = wrench_sva.couple().y();
       msg.wrench.torque.z = wrench_sva.couple().z();
+      wrench_i++;
     }
   }
 
