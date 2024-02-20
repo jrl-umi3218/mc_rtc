@@ -941,7 +941,9 @@ then
   check_and_clone_git_dependency jrl-umi3218/mc_rtc_msgs $CATKIN_DATA_WORKSPACE_SRC
   check_and_clone_git_dependency jrl-umi3218/mc_rtc_ros $CATKIN_WORKSPACE_SRC
 else
-  check_and_clone_git_dependency jrl-umi3218/mc_rtc_data $SOURCE_DIR
+  check_and_clone_git_dependency jrl-umi3218/jvrc_description $SOURCE_DIR
+  check_and_clone_git_dependency jrl-umi3218/mc_env_description $SOURCE_DIR
+  check_and_clone_git_dependency jrl-umi3218/mc_int_obj_description $SOURCE_DIR
 fi
 
 echo_log "-- [OK] All manadatory repositories successfuly cloned or updated"
@@ -1270,7 +1272,11 @@ if $WITH_ROS_SUPPORT
 then
   build_catkin_workspace $CATKIN_DATA_WORKSPACE
 else
-  build_git_dependency jrl-umi3218/mc_rtc_data
+  export CMAKE_ADDITIONAL_OPTIONS="${OLD_CMAKE_OPTIONS} -DDISABLE_ROS:BOOL=ON"
+  build_git_dependency jrl-umi3218/jvrc_description
+  build_git_dependency jrl-umi3218/mc_env_description
+  build_git_dependency jrl-umi3218/mc_int_obj_description
+  export CMAKE_ADDITIONAL_OPTIONS="${OLD_CMAKE_OPTIONS}"
 fi
 
 echo_log "-- [SUCCESS] All mandatory dependencies have been successfully built, tested and installed"

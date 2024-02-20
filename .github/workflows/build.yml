@@ -126,7 +126,12 @@ jobs:
           - path: jrl-umi3218/RBDyn
           - path: jrl-umi3218/Tasks
           - path: jrl-umi3218/mc_rbdyn_urdf
-          - path: jrl-umi3218/mc_rtc_data
+          - path: jrl-umi3218/jvrc_description
+            options: -DDISABLE_ROS:BOOL=ON
+          - path: jrl-umi3218/mc_env_description
+            options: -DDISABLE_ROS:BOOL=ON
+          - path: jrl-umi3218/mc_int_obj_description
+            options: -DDISABLE_ROS:BOOL=ON
           - path: jrl-umi3218/eigen-quadprog
           - path: jrl-umi3218/state-observation
           - path: jrl-umi3218/tvm
