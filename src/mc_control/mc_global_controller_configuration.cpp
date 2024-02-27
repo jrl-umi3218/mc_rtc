@@ -157,10 +157,16 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
         std::ifstream ifs(p.string());
         std::stringstream ss;
         ss << ifs.rdbuf();
-        auto plugin = ss.str();
+        auto plugin = [&ss]()
+        {
+          auto out = ss.str();
+          out.erase(std::find_if(out.rbegin(), out.rend(), [](unsigned char ch) { return !std::isspace(ch); }).base(),
+                    out.end());
+          return out;
+        }();
         if(std::find(global_plugins.begin(), global_plugins.end(), plugin) == global_plugins.end())
         {
-          global_plugins.push_back(ss.str());
+          global_plugins.push_back(plugin);
           global_plugins_autoload.push_back(global_plugins.back());
         }
       }

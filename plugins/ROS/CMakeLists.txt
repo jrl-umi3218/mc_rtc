@@ -92,7 +92,7 @@ set(plugin_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/plugin/ROS.cpp"
 set(plugin_HDR "${CMAKE_CURRENT_SOURCE_DIR}/src/plugin/ROS.h"
                "${CMAKE_CURRENT_SOURCE_DIR}/src/plugin/Services.h"
 )
-add_plugin(ROS "${plugin_SRC}" "${plugin_HDR}")
+add_plugin(ROS AUTOLOAD ${plugin_SRC} ${plugin_HDR})
 set_target_properties(ROS PROPERTIES COMPILE_FLAGS "-DMC_RTC_ROS_PLUGIN_EXPORTS")
 target_link_libraries(ROS PUBLIC mc_rtc_ros mc_tasks_ros)
 install(FILES etc/ROS.yaml DESTINATION "${MC_PLUGINS_RUNTIME_INSTALL_PREFIX}/etc")
