@@ -255,8 +255,11 @@ endmacro()
 mc_rtc_set_prefix(PLUGINS mc_plugins)
 
 macro(add_plugin plugin)
-  option(AUTOLOAD_${plugin}_PLUGIN "Automatically load ${plugin} plugin" ON)
-  add_library(${plugin} SHARED ${ARGN})
+  cmake_parse_arguments(ADD_PLUGIN "AUTOLOAD" "" "" ${ARGN})
+  option(AUTOLOAD_${plugin}_PLUGIN "Automatically load ${plugin} plugin"
+         ${ADD_PLUGIN_AUTOLOAD}
+  )
+  add_library(${plugin} SHARED ${ADD_PLUGIN_UNPARSED_ARGUMENTS})
   set_target_properties(${plugin} PROPERTIES PREFIX "")
   target_link_libraries(${plugin} PUBLIC mc_rtc::mc_control)
   install(
@@ -273,9 +276,19 @@ macro(add_plugin plugin)
   )
   set(plugin_CFG "${CMAKE_CURRENT_SOURCE_DIR}/etc/${plugin}.yaml")
   file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/stage/autoload/${plugin}.yaml" "${plugin}")
+  set(AUTOLOAD_DESTINATION "${MC_PLUGINS_RUNTIME_INSTALL_PREFIX}/autoload/")
   if(AUTOLOAD_${plugin}_PLUGIN)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/stage/autoload/${plugin}.yaml"
             DESTINATION "${MC_PLUGINS_RUNTIME_INSTALL_PREFIX}/autoload/"
+    )
+  else()
+    set(AUTOLOAD_DESTINATION "${AUTOLOAD_DESTINATION}/${plugin}.yaml")
+    install(
+      CODE "
+    if(EXISTS \"${AUTOLOAD_DESTINATION}\")
+      message(STATUS \"Removing: ${AUTOLOAD_DESTINATION}\")
+      file(REMOVE \"${AUTOLOAD_DESTINATION}\")
+    endif()"
     )
   endif()
 endmacro()
