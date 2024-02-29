@@ -2,6 +2,23 @@
 
 ## [Unreleased]
 
+## [2.12.0] - 2024-02-29
+
+### Added
+
+- [cmake] Add `AUTOLOAD` setting to the `add_plugin` macro to enable autoload (#436)
+- [mc_rbdyn] Add `addForceSensor` to `Robot` (#433/#434)
+
+### Changes
+
+- [cmake] The `add_plugin` macro no longer defaults to `AUTOLOAD=ON` (#436)
+
+### Fixes
+
+- [cmake] Uninstall autoload files when plugin autoload option is disabled (#436)
+- [mc_control] Trim autoload files so they can be edited manually (#436)
+- [mc_rbdyn] Fix a bug in `addBodySensor` (#433)
+
 ## [2.11.0] - 2024-02-05
 
 ### Added
@@ -836,7 +853,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.11.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.12.0...HEAD
+[2.12.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.12.0
 [2.11.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.11.0
 [2.10.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.10.0
 [2.9.3]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.3
