@@ -429,7 +429,7 @@ double PostureTask::damping() const
   }
 }
 
-inline void PostureTask::setGains(double s, double d)
+void PostureTask::setGains(double s, double d)
 {
   switch(backend_)
   {
