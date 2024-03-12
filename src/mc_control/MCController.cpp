@@ -415,9 +415,8 @@ void MCController::addRobotToGUI(const mc_rbdyn::Robot & r)
   data("joints").add(r.name(), r.module().ref_joint_order());
   data("frames").add(r.name(), r.frames());
   auto name = r.name();
-  gui()->addElement(
-      {"Robots"},
-      mc_rtc::gui::Robot(r.name(), [name, this]() -> const mc_rbdyn::Robot & { return this->outputRobot(name); }));
+  gui()->addElement({"Robots"}, mc_rtc::gui::Robot(r.name(), [name, this]() -> const mc_rbdyn::Robot &
+                                                   { return this->outputRobot(name); }));
 }
 
 void MCController::addRobotToLog(const mc_rbdyn::Robot & r)
@@ -493,16 +492,14 @@ void MCController::addRobotToLog(const mc_rbdyn::Robot & r)
   {
     logger().addLogEntry(entry("ff"),
                          [this, name]() -> const sva::PTransformd & { return outputRobot(name).mbc().bodyPosW[0]; });
-    logger().addLogEntry(entry("ff_real"),
-                         [this, name]() -> const sva::PTransformd &
+    logger().addLogEntry(entry("ff_real"), [this, name]() -> const sva::PTransformd &
                          { return outputRealRobot(name).mbc().bodyPosW[0]; });
   }
   // Log all force sensors
   for(const auto & fs : robot(name).forceSensors())
   {
     const auto & fs_name = fs.name();
-    logger().addLogEntry(entry_str(fs.name()),
-                         [this, name, fs_name]() -> const sva::ForceVecd &
+    logger().addLogEntry(entry_str(fs.name()), [this, name, fs_name]() -> const sva::ForceVecd &
                          { return robot(name).forceSensor(fs_name).wrench(); });
   }
   // Log all body sensors
@@ -510,23 +507,17 @@ void MCController::addRobotToLog(const mc_rbdyn::Robot & r)
   for(size_t i = 0; i < bodySensors.size(); ++i)
   {
     const auto & bs_name = bodySensors[i].name();
-    logger().addLogEntry(entry_str(bs_name + "_position"),
-                         [this, name, bs_name]() -> const Eigen::Vector3d &
+    logger().addLogEntry(entry_str(bs_name + "_position"), [this, name, bs_name]() -> const Eigen::Vector3d &
                          { return robot(name).bodySensor(bs_name).position(); });
-    logger().addLogEntry(entry_str(bs_name + "_orientation"),
-                         [this, name, bs_name]() -> const Eigen::Quaterniond &
+    logger().addLogEntry(entry_str(bs_name + "_orientation"), [this, name, bs_name]() -> const Eigen::Quaterniond &
                          { return robot(name).bodySensor(bs_name).orientation(); });
-    logger().addLogEntry(entry_str(bs_name + "_linearVelocity"),
-                         [this, name, bs_name]() -> const Eigen::Vector3d &
+    logger().addLogEntry(entry_str(bs_name + "_linearVelocity"), [this, name, bs_name]() -> const Eigen::Vector3d &
                          { return robot(name).bodySensor(bs_name).linearVelocity(); });
-    logger().addLogEntry(entry_str(bs_name + "_angularVelocity"),
-                         [this, name, bs_name]() -> const Eigen::Vector3d &
+    logger().addLogEntry(entry_str(bs_name + "_angularVelocity"), [this, name, bs_name]() -> const Eigen::Vector3d &
                          { return robot(name).bodySensor(bs_name).angularVelocity(); });
-    logger().addLogEntry(entry_str(bs_name + "_linearAcceleration"),
-                         [this, name, bs_name]() -> const Eigen::Vector3d &
+    logger().addLogEntry(entry_str(bs_name + "_linearAcceleration"), [this, name, bs_name]() -> const Eigen::Vector3d &
                          { return robot(name).bodySensor(bs_name).linearAcceleration(); });
-    logger().addLogEntry(entry_str(bs_name + "_angularAcceleration"),
-                         [this, name, bs_name]() -> const Eigen::Vector3d &
+    logger().addLogEntry(entry_str(bs_name + "_angularAcceleration"), [this, name, bs_name]() -> const Eigen::Vector3d &
                          { return robot(name).bodySensor(bs_name).angularAcceleration(); });
   }
   // Log all joint sensors
@@ -766,8 +757,7 @@ void MCController::reset(const ControllerResetData & reset_data)
                          mc_rtc::gui::FormNumberInput("Friction", false, mc_rbdyn::Contact::defaultFriction),
                          mc_rtc::gui::FormArrayInput<Eigen::Vector6d>("dof", false, Eigen::Vector6d::Ones())));
   }
-  logger().addLogEntry(
-      "perf_UpdateContacts", [this]() { return updateContacts_dt_.count(); }, true);
+  logger().addLogEntry("perf_UpdateContacts", [this]() { return updateContacts_dt_.count(); }, true);
 }
 
 void MCController::updateContacts()

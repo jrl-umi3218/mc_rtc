@@ -321,8 +321,8 @@ SampleServer::SampleServer() : xythetaz_(4)
   builder.addElement({"Buttons"}, mc_rtc::gui::ElementsStacking::Horizontal,
                      mc_rtc::gui::Button("Foo", []() { mc_rtc::log::info("Foo pushed"); }),
                      mc_rtc::gui::Button("Bar", []() { mc_rtc::log::info("Bar pushed"); }));
-  builder.addElement({"Checkbox"}, mc_rtc::gui::Checkbox(
-                                       "Checkbox", [this]() { return check_; }, [this]() { check_ = !check_; }));
+  builder.addElement({"Checkbox"},
+                     mc_rtc::gui::Checkbox("Checkbox", [this]() { return check_; }, [this]() { check_ = !check_; }));
   builder.addElement({"Checkbox", "Simple syntax"}, mc_rtc::gui::Checkbox("Checkbox", check_));
   builder.addElement({"Inputs"},
                      mc_rtc::gui::StringInput(
@@ -394,17 +394,15 @@ SampleServer::SampleServer() : xythetaz_(4)
   builder.addElement({"Inputs", "Generic"}, mc_rtc::gui::Input("StringInput", string_),
                      mc_rtc::gui::Input("IntegerInput", int_), mc_rtc::gui::Input("NumberInput", d_),
                      mc_rtc::gui::Input("ArrayInput", v_), mc_rtc::gui::Input("ArrayInput w/ auto labels", v3_));
-  builder.addElement({"Schema"}, mc_rtc::gui::Schema("Add metatask", "MetaTask",
-                                                     [](const mc_rtc::Configuration & c) {
-                                                       std::cout << "Got schema request:\n"
-                                                                 << c.dump(true) << std::endl;
-                                                     }));
+  builder.addElement({"Schema"},
+                     mc_rtc::gui::Schema("Add metatask", "MetaTask", [](const mc_rtc::Configuration & c)
+                                         { std::cout << "Got schema request:\n"
+                                                     << c.dump(true) << std::endl; }));
   builder.addElement({"Forms", "Static"},
                      mc_rtc::gui::Form(
-                         "Add contact",
-                         [](const mc_rtc::Configuration & data) {
-                           std::cout << "Got data" << std::endl << data.dump(true) << std::endl;
-                         },
+                         "Add contact", [](const mc_rtc::Configuration & data)
+                         { std::cout << "Got data" << std::endl
+                                     << data.dump(true) << std::endl; },
                          mc_rtc::gui::FormCheckbox("Enabled", false, true),
                          mc_rtc::gui::FormIntegerInput("INT", false, 42),
                          mc_rtc::gui::FormNumberInput("NUMBER", false, 0.42),
@@ -450,10 +448,8 @@ SampleServer::SampleServer() : xythetaz_(4)
       mc_rtc::gui::Transform(
           "Interactive Transform", [this]() { return interactive_; },
           [this](const sva::PTransformd & p) { interactive_ = p; }),
-      mc_rtc::gui::XYTheta("XYTheta ReadOnly",
-                           [this]() -> std::array<double, 4> {
-                             return {xytheta_.x(), xytheta_.y(), xytheta_.z(), 0.1};
-                           }),
+      mc_rtc::gui::XYTheta("XYTheta ReadOnly", [this]() -> std::array<double, 4>
+                           { return {xytheta_.x(), xytheta_.y(), xytheta_.z(), 0.1}; }),
       mc_rtc::gui::XYTheta(
           "XYTheta", [this]() { return xytheta_; }, [this](const Eigen::VectorXd & vec) { xytheta_ = vec.head<3>(); }),
       mc_rtc::gui::XYTheta(
@@ -647,44 +643,29 @@ SampleServer::SampleServer() : xythetaz_(4)
       {"GUI Markers", "Trajectories"}, mc_rtc::gui::Trajectory("Vector3d", [this]() { return trajectory_; }),
       mc_rtc::gui::Trajectory("PTransformd", {mc_rtc::gui::Color::Green}, [this]() { return poseTrajectory_; }),
       mc_rtc::gui::Trajectory("Live 3D", {mc_rtc::gui::Color::Magenta},
-                              [this]() {
-                                return Eigen::Vector3d{cos(t_), sin(t_), 1.0};
-                              }),
-      mc_rtc::gui::Trajectory("Live transform", {mc_rtc::gui::Color::Black},
-                              [this]() {
-                                return lookAt({cos(t_), -1, sin(t_)}, {0, 0, 0}, Eigen::Vector3d::UnitZ());
-                              }));
+                              [this]() { return Eigen::Vector3d{cos(t_), sin(t_), 1.0}; }),
+      mc_rtc::gui::Trajectory("Live transform", {mc_rtc::gui::Color::Black}, [this]()
+                              { return lookAt({cos(t_), -1, sin(t_)}, {0, 0, 0}, Eigen::Vector3d::UnitZ()); }));
 
   mc_rtc::gui::ArrowConfig arrow_config({1., 0., 0.});
   arrow_config.start_point_scale = 0.02;
   arrow_config.end_point_scale = 0.02;
   builder.addElement({"GUI Markers", "Arrows"},
                      mc_rtc::gui::Arrow(
-                         "ArrowRO", arrow_config,
-                         []() {
-                           return Eigen::Vector3d{2, 2, 0};
-                         },
-                         []() {
-                           return Eigen::Vector3d{2.5, 2.5, 0.5};
-                         }),
+                         "ArrowRO", arrow_config, []() { return Eigen::Vector3d{2, 2, 0}; },
+                         []() { return Eigen::Vector3d{2.5, 2.5, 0.5}; }),
                      mc_rtc::gui::Arrow(
                          "Arrow", arrow_config, [this]() { return arrow_start_; },
                          [this](const Eigen::Vector3d & start) { arrow_start_ = start; },
                          [this]() { return arrow_end_; }, [this](const Eigen::Vector3d & end) { arrow_end_ = end; }),
                      mc_rtc::gui::Force(
                          "ForceRO", mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(1., 0., 0.)),
-                         []() {
-                           return sva::ForceVecd(Eigen::Vector3d{0., 0., 0.}, Eigen::Vector3d{10., 0., 100.});
-                         },
-                         []() {
-                           return sva::PTransformd{Eigen::Vector3d{2, 2, 0}};
-                         }),
+                         []() { return sva::ForceVecd(Eigen::Vector3d{0., 0., 0.}, Eigen::Vector3d{10., 0., 100.}); },
+                         []() { return sva::PTransformd{Eigen::Vector3d{2, 2, 0}}; }),
                      mc_rtc::gui::Force(
                          "Force", mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(0., 1., 0.)), [this]() { return force_; },
                          [this](const sva::ForceVecd & force) { force_ = force; },
-                         []() {
-                           return sva::PTransformd{Eigen::Vector3d{2, 2, 0}};
-                         }));
+                         []() { return sva::PTransformd{Eigen::Vector3d{2, 2, 0}}; }));
   using Color = mc_rtc::gui::Color;
   using Range = mc_rtc::gui::plot::Range;
   using Style = mc_rtc::gui::plot::Style;
@@ -694,8 +675,7 @@ SampleServer::SampleServer() : xythetaz_(4)
     builder.addPlot(name, mc_rtc::gui::plot::X("t", [this]() { return t_; }),
                     mc_rtc::gui::plot::Y(
                         "sin(t)", [this]() { return std::sin(t_); }, Color::Red),
-                    mc_rtc::gui::plot::Y(
-                        "cos(t)", [this]() { return std::cos(t_); }, Color::Blue));
+                    mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color::Blue));
   };
   add_demo_plot("sin(t)/cos(t)", sin_cos_plot);
   auto discontinuous_plot = [this](const std::string & name)
@@ -729,12 +709,12 @@ SampleServer::SampleServer() : xythetaz_(4)
   add_demo_plot("Demo style", demo_style_plot);
   auto fix_axis_plot = [this](const std::string & name)
   {
-    builder.addPlot(name, mc_rtc::gui::plot::X("t", [this]() { return t_; }), {"Y1", {0, 1}}, // Fix both min and max
-                    {"Y2", {-Range::inf, 0}}, // Only fix max
-                    mc_rtc::gui::plot::Y(
-                        "sin(t)", [this]() { return std::sin(t_); }, Color::Red),
-                    mc_rtc::gui::plot::Y(
-                        "cos(t)", [this]() { return std::cos(t_); }, Color::Blue, Style::Solid, Side::Right));
+    builder.addPlot(
+        name, mc_rtc::gui::plot::X("t", [this]() { return t_; }), {"Y1", {0, 1}}, // Fix both min and max
+        {"Y2", {-Range::inf, 0}}, // Only fix max
+        mc_rtc::gui::plot::Y(
+            "sin(t)", [this]() { return std::sin(t_); }, Color::Red),
+        mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color::Blue, Style::Solid, Side::Right));
   };
   add_demo_plot("Fix axis", fix_axis_plot);
   using PolygonDescription = mc_rtc::gui::plot::PolygonDescription;
@@ -786,8 +766,7 @@ SampleServer::SampleServer() : xythetaz_(4)
     builder.addXYPlot(name);
     n_dynamic_xy_plot = 0;
     // Add an Y-plot, this should return false
-    bool added = builder.addPlotData(name, mc_rtc::gui::plot::Y(
-                                               "label", []() { return 0.0; }, Color::Blue));
+    bool added = builder.addPlotData(name, mc_rtc::gui::plot::Y("label", []() { return 0.0; }, Color::Blue));
     assert(!added);
     (void)added;
   };
@@ -826,8 +805,7 @@ SampleServer::SampleServer() : xythetaz_(4)
     }
     else
     {
-      builder.addPlotData(name, mc_rtc::gui::plot::Y(
-                                    label, [data]() { return data; }, Color::Blue));
+      builder.addPlotData(name, mc_rtc::gui::plot::Y(label, [data]() { return data; }, Color::Blue));
     }
     n_plots += 1;
   };
@@ -878,9 +856,8 @@ void SampleServer::switch_visual(const std::string & choice)
   visualChoice_ = choice;
   builder.removeCategory({"Visual"});
   builder.addElement({"Visual"}, mc_rtc::gui::ComboInput(
-                                     "Choice", {"sphere", "box", "cylinder", "mesh"},
-                                     [this]() -> const std::string & { return visualChoice_; },
-                                     [this](const std::string & c) { switch_visual(c); }));
+                                     "Choice", {"sphere", "box", "cylinder", "mesh"}, [this]() -> const std::string &
+                                     { return visualChoice_; }, [this](const std::string & c) { switch_visual(c); }));
   if(choice == "sphere")
   {
     visual_ = mc_rtc::makeVisualSphere(sphereRadius_, {1, 0, 0, 0.2});
@@ -959,34 +936,33 @@ void SampleServer::switch_visual(const std::string & choice)
   builder.addElement({"Visual"}, mc_rtc::gui::Visual(
                                      choice, [this]() -> const rbd::parsers::Visual & { return visual_; },
                                      [this]() -> const sva::PTransformd & { return visualPos_; }));
-  builder.addElement(
-      {"Visual", "Ellipsoid"},
-      mc_rtc::gui::Ellipsoid(
-          "Fixed size/Fixed color", Eigen::Vector3d(0.25, 0.5, 1.0),
-          []() { return sva::PTransformd(Eigen::Vector3d(-4, 0, 1)); }, mc_rtc::gui::Color::Blue),
-      mc_rtc::gui::Ellipsoid(
-          "Fixed size/Varying color", Eigen::Vector3d(0.25, 0.5, 1.0),
-          []() { return sva::PTransformd(Eigen::Vector3d(-4, 1, 1)); },
-          [this]()
-          {
-            auto color = mc_rtc::gui::Color::Yellow;
-            color.a = (1 + cos(t_)) / 2;
-            return color;
-          }),
-      mc_rtc::gui::Ellipsoid(
-          "Varying size/Fixed color",
-          [this]() -> Eigen::Vector3d { return Eigen::Vector3d(0.25, 0.5, 1.0) * (1 + (1 + cos(t_)) / 2); },
-          []() { return sva::PTransformd(Eigen::Vector3d(-4, 2, 1)); }),
-      mc_rtc::gui::Ellipsoid(
-          "Varying size/Varying color",
-          [this]() -> Eigen::Vector3d { return Eigen::Vector3d(0.25, 0.5, 1.0) * (1 + (1 + sin(t_)) / 2); },
-          []() { return sva::PTransformd(Eigen::Vector3d(-4, 3, 1)); },
-          [this]()
-          {
-            auto color = mc_rtc::gui::Color::Green;
-            color.a = (1 + sin(t_)) / 2;
-            return color;
-          }));
+  builder.addElement({"Visual", "Ellipsoid"},
+                     mc_rtc::gui::Ellipsoid(
+                         "Fixed size/Fixed color", Eigen::Vector3d(0.25, 0.5, 1.0),
+                         []() { return sva::PTransformd(Eigen::Vector3d(-4, 0, 1)); }, mc_rtc::gui::Color::Blue),
+                     mc_rtc::gui::Ellipsoid(
+                         "Fixed size/Varying color", Eigen::Vector3d(0.25, 0.5, 1.0),
+                         []() { return sva::PTransformd(Eigen::Vector3d(-4, 1, 1)); },
+                         [this]()
+                         {
+                           auto color = mc_rtc::gui::Color::Yellow;
+                           color.a = (1 + cos(t_)) / 2;
+                           return color;
+                         }),
+                     mc_rtc::gui::Ellipsoid(
+                         "Varying size/Fixed color", [this]() -> Eigen::Vector3d
+                         { return Eigen::Vector3d(0.25, 0.5, 1.0) * (1 + (1 + cos(t_)) / 2); },
+                         []() { return sva::PTransformd(Eigen::Vector3d(-4, 2, 1)); }),
+                     mc_rtc::gui::Ellipsoid(
+                         "Varying size/Varying color", [this]() -> Eigen::Vector3d
+                         { return Eigen::Vector3d(0.25, 0.5, 1.0) * (1 + (1 + sin(t_)) / 2); },
+                         []() { return sva::PTransformd(Eigen::Vector3d(-4, 3, 1)); },
+                         [this]()
+                         {
+                           auto color = mc_rtc::gui::Color::Green;
+                           color.a = (1 + sin(t_)) / 2;
+                           return color;
+                         }));
   builder.addElement({"Visual", "Cylinder"},
                      mc_rtc::gui::Cylinder(
                          "Fixed size/Fixed color", {0.125, 1.0},
@@ -1022,34 +998,33 @@ void SampleServer::switch_visual(const std::string & choice)
                            color.a = (1 + sin(t_)) / 2;
                            return color;
                          }));
-  builder.addElement(
-      {"Visual", "Box"},
-      mc_rtc::gui::Box(
-          "Fixed size/Fixed color", Eigen::Vector3d(0.25, 0.5, 1.0),
-          []() { return sva::PTransformd(Eigen::Vector3d(-2, 0, 1)); }, mc_rtc::gui::Color::Blue),
-      mc_rtc::gui::Box(
-          "Fixed size/Varying color", Eigen::Vector3d(0.25, 0.5, 1.0),
-          []() { return sva::PTransformd(Eigen::Vector3d(-2, 1, 1)); },
-          [this]()
-          {
-            auto color = mc_rtc::gui::Color::Yellow;
-            color.a = (1 + cos(t_)) / 2;
-            return color;
-          }),
-      mc_rtc::gui::Box(
-          "Varying size/Fixed color",
-          [this]() -> Eigen::Vector3d { return Eigen::Vector3d(0.25, 0.5, 1.0) * (1 + (1 + cos(t_)) / 2); },
-          []() { return sva::PTransformd(Eigen::Vector3d(-2, 2, 1)); }),
-      mc_rtc::gui::Box(
-          "Varying size/Varying color",
-          [this]() -> Eigen::Vector3d { return Eigen::Vector3d(0.25, 0.5, 1.0) * (1 + (1 + sin(t_)) / 2); },
-          []() { return sva::PTransformd(Eigen::Vector3d(-2, 3, 1)); },
-          [this]()
-          {
-            auto color = mc_rtc::gui::Color::Green;
-            color.a = (1 + sin(t_)) / 2;
-            return color;
-          }));
+  builder.addElement({"Visual", "Box"},
+                     mc_rtc::gui::Box(
+                         "Fixed size/Fixed color", Eigen::Vector3d(0.25, 0.5, 1.0),
+                         []() { return sva::PTransformd(Eigen::Vector3d(-2, 0, 1)); }, mc_rtc::gui::Color::Blue),
+                     mc_rtc::gui::Box(
+                         "Fixed size/Varying color", Eigen::Vector3d(0.25, 0.5, 1.0),
+                         []() { return sva::PTransformd(Eigen::Vector3d(-2, 1, 1)); },
+                         [this]()
+                         {
+                           auto color = mc_rtc::gui::Color::Yellow;
+                           color.a = (1 + cos(t_)) / 2;
+                           return color;
+                         }),
+                     mc_rtc::gui::Box(
+                         "Varying size/Fixed color", [this]() -> Eigen::Vector3d
+                         { return Eigen::Vector3d(0.25, 0.5, 1.0) * (1 + (1 + cos(t_)) / 2); },
+                         []() { return sva::PTransformd(Eigen::Vector3d(-2, 2, 1)); }),
+                     mc_rtc::gui::Box(
+                         "Varying size/Varying color", [this]() -> Eigen::Vector3d
+                         { return Eigen::Vector3d(0.25, 0.5, 1.0) * (1 + (1 + sin(t_)) / 2); },
+                         []() { return sva::PTransformd(Eigen::Vector3d(-2, 3, 1)); },
+                         [this]()
+                         {
+                           auto color = mc_rtc::gui::Color::Green;
+                           color.a = (1 + sin(t_)) / 2;
+                           return color;
+                         }));
   builder.addElement({"Visual", "Sphere"},
                      mc_rtc::gui::Sphere(
                          "Fixed radius/Fixed color", 0.25, []() { return sva::PTransformd(Eigen::Vector3d(-1, 0, 1)); },

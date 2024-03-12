@@ -245,25 +245,21 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  mc_rtc::gui::NumberInput(
                      "cutoffPeriod", [this]() { return this->cutoffPeriod(); },
                      [this](double a) { return this->cutoffPeriod(a); }),
-                 mc_rtc::gui::Checkbox(
-                     "hold", [this]() { return hold_; }, [this]() { hold_ = !hold_; }));
-  gui.addElement({"Tasks", name_, "Impedance gains"},
-                 mc_rtc::gui::ArrayInput(
-                     "mass", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                     [this]() -> const sva::ImpedanceVecd & { return gains().mass().vec(); },
-                     [this](const Eigen::Vector6d & a) { gains().mass().vec(a); }),
-                 mc_rtc::gui::ArrayInput(
-                     "damper", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                     [this]() -> const sva::ImpedanceVecd & { return gains().damper().vec(); },
-                     [this](const Eigen::Vector6d & a) { gains().damper().vec(a); }),
-                 mc_rtc::gui::ArrayInput(
-                     "spring", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                     [this]() -> const sva::ImpedanceVecd & { return gains().spring().vec(); },
-                     [this](const Eigen::Vector6d & a) { gains().spring().vec(a); }),
-                 mc_rtc::gui::ArrayInput(
-                     "wrench", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                     [this]() -> const sva::ImpedanceVecd & { return gains().wrench().vec(); },
-                     [this](const Eigen::Vector6d & a) { gains().wrench().vec(a); }));
+                 mc_rtc::gui::Checkbox("hold", [this]() { return hold_; }, [this]() { hold_ = !hold_; }));
+  gui.addElement(
+      {"Tasks", name_, "Impedance gains"},
+      mc_rtc::gui::ArrayInput(
+          "mass", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() -> const sva::ImpedanceVecd &
+          { return gains().mass().vec(); }, [this](const Eigen::Vector6d & a) { gains().mass().vec(a); }),
+      mc_rtc::gui::ArrayInput(
+          "damper", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() -> const sva::ImpedanceVecd &
+          { return gains().damper().vec(); }, [this](const Eigen::Vector6d & a) { gains().damper().vec(a); }),
+      mc_rtc::gui::ArrayInput(
+          "spring", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() -> const sva::ImpedanceVecd &
+          { return gains().spring().vec(); }, [this](const Eigen::Vector6d & a) { gains().spring().vec(a); }),
+      mc_rtc::gui::ArrayInput(
+          "wrench", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() -> const sva::ImpedanceVecd &
+          { return gains().wrench().vec(); }, [this](const Eigen::Vector6d & a) { gains().wrench().vec(a); }));
 }
 
 } // namespace force
@@ -294,4 +290,4 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       t->load(solver, config);
       return t;
     });
-}
+} // namespace

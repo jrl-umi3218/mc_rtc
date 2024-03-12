@@ -70,7 +70,7 @@ private:
 
 public:
 #define DEFINE_GETTER(MEMBER) \
-  auto get_##MEMBER() const -> const decltype(this->MEMBER) & { return this->MEMBER; }
+  auto get_##MEMBER() const->const decltype(this->MEMBER) & { return this->MEMBER; }
   DEFINE_GETTER(b)
   DEFINE_GETTER(d)
   DEFINE_GETTER(s)
@@ -86,9 +86,9 @@ public:
   DEFINE_GETTER(v)
 #undef DEFINE_GETTER
 
-#define DEFINE_GET_AS_REF(MEMBER)                                                                   \
-  auto get_##MEMBER##_as_ref() const -> Eigen::Ref<decltype(this->MEMBER)> { return this->MEMBER; } \
-  auto get_##MEMBER##_as_cref() const -> Eigen::Ref<const decltype(this->MEMBER)> { return this->MEMBER; }
+#define DEFINE_GET_AS_REF(MEMBER)                                                                 \
+  auto get_##MEMBER##_as_ref() const->Eigen::Ref<decltype(this->MEMBER)> { return this->MEMBER; } \
+  auto get_##MEMBER##_as_cref() const->Eigen::Ref<const decltype(this->MEMBER)> { return this->MEMBER; }
   DEFINE_GET_AS_REF(v2d)
   DEFINE_GET_AS_REF(v3d)
   DEFINE_GET_AS_REF(v6d)

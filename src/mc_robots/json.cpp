@@ -45,6 +45,6 @@ static auto registered = []()
   mc_rbdyn::RobotLoader::register_object("json", callback);
   return true;
 }();
-}
+} // namespace
 
 #endif

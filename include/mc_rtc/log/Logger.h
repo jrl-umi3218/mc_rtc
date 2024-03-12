@@ -221,9 +221,8 @@ public:
     }
     auto log_type = log::callback_is_serializable<CallbackT>::log_type;
     log_events_.push_back(KeyAddedEvent{log_type, name});
-    log_entries_.push_back({log_type, name, source, [get_fn](mc_rtc::MessagePackBuilder & builder) mutable {
-                              mc_rtc::log::LogWriter<base_t>::write(get_fn(), builder);
-                            }});
+    log_entries_.push_back({log_type, name, source, [get_fn](mc_rtc::MessagePackBuilder & builder) mutable
+                            { mc_rtc::log::LogWriter<base_t>::write(get_fn(), builder); }});
   }
 
   /** Add a log entry from a source and a compile-time pointer to member
@@ -248,8 +247,7 @@ public:
   void addLogEntry(const std::string & name, const SourceT * source, bool overwrite = false)
   {
     using MemberT = decltype(source->*member);
-    addLogEntry(
-        name, source, [source]() -> const MemberT & { return source->*member; }, overwrite);
+    addLogEntry(name, source, [source]() -> const MemberT & { return source->*member; }, overwrite);
   }
 
   /** Add a log entry from a source and a compile-time pointer to method
@@ -274,8 +272,7 @@ public:
   void addLogEntry(const std::string & name, const SourceT * source, bool overwrite = false)
   {
     using MethodRetT = decltype((source->*method)());
-    addLogEntry(
-        name, source, [source]() -> MethodRetT { return (source->*method)(); }, overwrite);
+    addLogEntry(name, source, [source]() -> MethodRetT { return (source->*method)(); }, overwrite);
   }
 
   /** Add a log entry into the log with no source

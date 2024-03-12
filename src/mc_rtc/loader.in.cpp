@@ -212,8 +212,7 @@ void Loader::load_libraries(const std::string & class_name,
     std::vector<bfs::path> drange;
     std::copy(dit, endit, std::back_inserter(drange));
     // Sort by newest file
-    std::sort(drange.begin(), drange.end(),
-              [](const bfs::path & p1, const bfs::path & p2)
+    std::sort(drange.begin(), drange.end(), [](const bfs::path & p1, const bfs::path & p2)
               { return bfs::last_write_time(p1) > bfs::last_write_time(p2); });
     for(const auto & p : drange)
     {

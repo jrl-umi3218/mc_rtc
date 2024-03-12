@@ -81,9 +81,8 @@ inline bool iterate_binary_log(const std::string & fpath,
                                const std::string & time = "t")
 {
   return iterate_binary_log(
-      fpath,
-      [&callback](IterateBinaryLogData data) { return callback(data.keys, data.records, data.time.value_or(-1)); },
-      extract, time);
+      fpath, [&callback](IterateBinaryLogData data)
+      { return callback(data.keys, data.records, data.time.value_or(-1)); }, extract, time);
 }
 
 } // namespace mc_rtc::log

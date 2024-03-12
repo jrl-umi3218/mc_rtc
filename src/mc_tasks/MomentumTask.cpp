@@ -115,11 +115,9 @@ void MomentumTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   {
     case Backend::Tasks:
     {
-      gui.addElement({"Tasks", name_}, mc_rtc::gui::ArrayLabel("momentum", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                                               [this]() -> Eigen::Vector6d {
-                                                                 return this->momentum().vector()
-                                                                        - tasks_error(this->errorT)->eval();
-                                                               }));
+      gui.addElement({"Tasks", name_}, mc_rtc::gui::ArrayLabel(
+                                           "momentum", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() -> Eigen::Vector6d
+                                           { return this->momentum().vector() - tasks_error(this->errorT)->eval(); }));
       break;
     }
     case Backend::TVM:
@@ -148,4 +146,4 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       t->load(solver, config);
       return t;
     });
-}
+} // namespace

@@ -26,11 +26,8 @@ std::vector<std::string> addSurfaceToGUI(mc_rtc::gui::StateBuilder & gui,
   {
     const auto & cylinder = dynamic_cast<const mc_rbdyn::CylindricalSurface &>(surface);
     publish_surface(mc_rtc::gui::Cylinder(
-        publishName.value_or(name),
-        [&cylinder]() {
-          return mc_rtc::gui::CylinderParameters{cylinder.radius(), cylinder.width()};
-        },
-        get_pose, cfg.color));
+        publishName.value_or(name), [&cylinder]()
+        { return mc_rtc::gui::CylinderParameters{cylinder.radius(), cylinder.width()}; }, get_pose, cfg.color));
   }
   else if(surface.type() == "planar")
   {

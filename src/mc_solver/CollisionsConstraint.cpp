@@ -629,4 +629,4 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
       ret->addCollisions(solver, collisions);
       return ret;
     });
-}
+} // namespace

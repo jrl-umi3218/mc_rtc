@@ -383,8 +383,8 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryTask::addToGUI(gui);
 
-  gui.addElement({"Tasks", name_}, mc_rtc::gui::Checkbox(
-                                       "Paused", [this]() { return paused_; }, [this]() { paused_ = !paused_; }));
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::Checkbox("Paused", [this]() { return paused_; }, [this]() { paused_ = !paused_; }));
   gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("Surface pose", [this]() { return frame_->position(); }));
 
   gui.addElement({"Tasks", name_}, mc_rtc::gui::Rotation(

@@ -44,17 +44,14 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
       {"Tasks", name_, "Main"},
       ArrayInput(
           "Foot admittance", {"CoPx", "CoPy"},
-          [this]() -> Eigen::Vector2d {
-            return {c_.copAdmittance.x(), c_.copAdmittance.y()};
-          },
+          [this]() -> Eigen::Vector2d { return {c_.copAdmittance.x(), c_.copAdmittance.y()}; },
           [this](const Eigen::Vector2d & a) { copAdmittance(a); }),
       ArrayInput(
           "Foot force difference Damping", {"Fx", "Fy", "Fz"}, [this]() -> Eigen::Vector3d { return c_.dfDamping; },
           [this](const Eigen::Vector3d & a) { dfDamping(a); }),
       ArrayInput(
-          "Foot force difference Admittance", {"Fx", "Fy", "Fz"},
-          [this]() -> Eigen::Vector3d { return c_.dfAdmittance; },
-          [this](const Eigen::Vector3d & a) { dfAdmittance(a); }),
+          "Foot force difference Admittance", {"Fx", "Fy", "Fz"}, [this]() -> Eigen::Vector3d
+          { return c_.dfAdmittance; }, [this](const Eigen::Vector3d & a) { dfAdmittance(a); }),
       ArrayInput(
           "DCM P gains", {"x", "y"}, [this]() -> const Eigen::Vector2d & { return c_.dcmPropGain; },
           [this](const Eigen::Vector2d & gains) { dcmGains(gains, c_.dcmIntegralGain, c_.dcmDerivGain); }),
@@ -70,9 +67,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
           "ZMPd gain", [this]() { return c_.zmpdGain; }, [this](double a) { c_.zmpdGain = a; }),
       ArrayInput(
           "DCM filters", {"Integrator T [s]", "Derivator T [s]"},
-          [this]() -> Eigen::Vector2d {
-            return {dcmIntegrator_.timeConstant(), dcmDerivator_.cutoffPeriod()};
-          },
+          [this]() -> Eigen::Vector2d { return {dcmIntegrator_.timeConstant(), dcmDerivator_.cutoffPeriod()}; },
           [this](const Eigen::Vector2d & T)
           {
             dcmIntegratorTimeConstant(T(0));
@@ -103,9 +98,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
       ArrayInput(
           "Foot CoP lambda", {"CoPx", "CoPy", "f"},
-          [this]() -> Eigen::Vector3d {
-            return {c_.copFzLambda.x(), c_.copFzLambda.y(), c_.copFzLambda.z()};
-          },
+          [this]() -> Eigen::Vector3d { return {c_.copFzLambda.x(), c_.copFzLambda.y(), c_.copFzLambda.z()}; },
           [this](const Eigen::Vector3d & a) { c_.copFzLambda = a; }),
       NumberInput(
           "Admittance Delay", [this]() { return c_.delayCoP; }, [this](double d) { c_.delayCoP = d; }),
@@ -119,9 +112,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
           }),
       ArrayInput(
           "Vertical drift compensation", {"frequency", "stiffness"},
-          [this]() -> Eigen::Vector2d {
-            return {c_.vdcFrequency, c_.vdcStiffness};
-          },
+          [this]() -> Eigen::Vector2d { return {c_.vdcFrequency, c_.vdcStiffness}; },
           [this](const Eigen::Vector2d & v)
           {
             vdcFrequency(v(0));
@@ -246,8 +237,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                   "zmp_ref", [this]() { return zmpTarget_.x(); }, Color::Cyan),
                               plot::Y(
                                   "zmp_mes", [this]() { return measuredZMP_.x(); }, Color::Blue, Style::Dashed),
-                              plot::Y(
-                                  "zmp_stabi", [this]() { return distribZMP_.x(); }, Color::Blue));
+                              plot::Y("zmp_stabi", [this]() { return distribZMP_.x(); }, Color::Blue));
                         }),
                  Button("Stop DCM-ZMP (x)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (x)"); }));
 
@@ -271,8 +261,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                   "zmp_ref", [this]() { return zmpTarget_.y(); }, Color::Cyan),
                               plot::Y(
                                   "zmp_mes", [this]() { return measuredZMP_.y(); }, Color::Blue, Style::Dashed),
-                              plot::Y(
-                                  "zmp_stabi", [this]() { return distribZMP_.y(); }, Color::Blue));
+                              plot::Y("zmp_stabi", [this]() { return distribZMP_.y(); }, Color::Blue));
                         }),
                  Button("Stop DCM-ZMP (y)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (y)"); }));
 
@@ -283,8 +272,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                           gui.addPlot("CoM Tracking (x)", plot::X("t", [this]() { return t_; }),
                                       plot::Y(
                                           "com_ref", [this]() { return comTarget_.x(); }, Color::Red),
-                                      plot::Y(
-                                          "com_mes", [this]() { return measuredCoM_.x(); }, Color::Magenta));
+                                      plot::Y("com_mes", [this]() { return measuredCoM_.x(); }, Color::Magenta));
                         }),
                  Button("Stop CoM (x)", [&gui]() { gui.removePlot("CoM Tracking (x)"); }));
   gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal,
@@ -294,8 +282,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                           gui.addPlot("CoM Tracking (y)", plot::X("t", [this]() { return t_; }),
                                       plot::Y(
                                           "com_ref", [this]() { return comTarget_.y(); }, Color::Red),
-                                      plot::Y(
-                                          "com_mes", [this]() { return measuredCoM_.y(); }, Color::Magenta));
+                                      plot::Y("com_mes", [this]() { return measuredCoM_.y(); }, Color::Magenta));
                         }),
                  Button("Stop CoM (y)", [&gui]() { gui.removePlot("CoM Tracking (y)"); }));
 
@@ -308,8 +295,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                           "x", [this]() { return dcmIntegrator_.eval().x(); }, Color::Red),
                                       plot::Y(
                                           "y", [this]() { return dcmIntegrator_.eval().y(); }, Color::Green),
-                                      plot::Y(
-                                          "z", [this]() { return dcmIntegrator_.eval().z(); }, Color::Blue));
+                                      plot::Y("z", [this]() { return dcmIntegrator_.eval().z(); }, Color::Blue));
                         }),
                  Button("Stop DCM Integrator", [&gui]() { gui.removePlot("DCM Integrator"); }));
   gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal,
@@ -321,8 +307,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                           "x", [this]() { return dcmDerivator_.eval().x(); }, Color::Red),
                                       plot::Y(
                                           "y", [this]() { return dcmDerivator_.eval().y(); }, Color::Green),
-                                      plot::Y(
-                                          "z", [this]() { return dcmDerivator_.eval().z(); }, Color::Blue));
+                                      plot::Y("z", [this]() { return dcmDerivator_.eval().z(); }, Color::Blue));
                         }),
                  Button("Stop DCM Derivator", [&gui]() { gui.removePlot("DCM Derivator"); }));
 
@@ -388,15 +373,14 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   for(const auto footTask : footTasks)
   {
     auto footT = footTask.second;
-    gui.addElement({"Tasks", name_, "Markers", "Foot wrenches"},
-                   Point3D("Stabilizer_" + footT->surface() + "CoP", PointConfig(Color::Magenta, 0.01),
-                           [footT]() { return footT->targetCoPW(); }),
-                   Force(
-                       "Measured_" + footT->surface() + "CoPForce", copForceConfig,
-                       [footT, this]() {
-                         return robot().indirectSurfaceForceSensor(footT->surface()).worldWrenchWithoutGravity(robot());
-                       },
-                       [footT]() { return sva::PTransformd(footT->measuredCoPW()); }));
+    gui.addElement(
+        {"Tasks", name_, "Markers", "Foot wrenches"},
+        Point3D("Stabilizer_" + footT->surface() + "CoP", PointConfig(Color::Magenta, 0.01),
+                [footT]() { return footT->targetCoPW(); }),
+        Force(
+            "Measured_" + footT->surface() + "CoPForce", copForceConfig, [footT, this]()
+            { return robot().indirectSurfaceForceSensor(footT->surface()).worldWrenchWithoutGravity(robot()); },
+            [footT]() { return sva::PTransformd(footT->measuredCoPW()); }));
   }
 
   gui.addElement({"Tasks", name_, "Markers", "Contacts"},

@@ -63,8 +63,7 @@ void Executor::init(Controller & ctl,
   else { log_entry += "_Main"; }
   ctl.logger().addLogEntry(log_entry, this, [this]() { return curr_state_; });
   log_entry = "perf_" + log_entry;
-  ctl.logger().addLogEntry(log_entry, this,
-                           [this]()
+  ctl.logger().addLogEntry(log_entry, this, [this]()
                            { return state_create_dt_.count() + state_run_dt_.count() + state_teardown_dt_.count(); });
   ctl.logger().addLogEntry(log_entry + "_create", this, [this]() { return state_create_dt_.count(); });
   ctl.logger().addLogEntry(log_entry + "_run", this, [this]() { return state_run_dt_.count(); });
