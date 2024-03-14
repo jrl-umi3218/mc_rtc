@@ -198,29 +198,23 @@ $(document).ready(function(){initNavTree('AbscissaOrdinate_8h_source.html',''); 
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <span class="keywordflow">if</span> constexpr(std::is_same_v&lt;std::decay_t&lt;MaybeGetColor&gt;, <a class="code" href="structmc__rtc_1_1gui_1_1Color.html">Color</a>&gt;)</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  {</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html">impl::AbscissaOrdinate</a>(</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        name,</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        [get_x_fn, get_y_fn](XYCacheT &amp; cache) {</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;          cache.push_back({get_x_fn(), get_y_fn()});</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        },</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        color, style, side);</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  }</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  {</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    static_assert(<a class="code" href="structmc__rtc_1_1gui_1_1details_1_1CheckReturnType.html">details::CheckReturnType&lt;MaybeGetColor, Color&gt;::value</a>, <span class="stringliteral">&quot;XY color callback should return a color&quot;</span>);</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html">impl::AbscissaOrdinateWithColor</a>(</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        name,</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        [get_x_fn, get_y_fn](XYCacheT &amp; cache) {</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;          cache.push_back({get_x_fn(), get_y_fn()});</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        },</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        color, style, side);</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  }</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;}</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;} <span class="comment">// namespace plot</span></div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;} <span class="comment">// namespace gui</span></div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;} <span class="comment">// namespace mc_rtc</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        name, [get_x_fn, get_y_fn](XYCacheT &amp; cache) { cache.push_back({get_x_fn(), get_y_fn()}); }, color, style,</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        side);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  }</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  {</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    static_assert(<a class="code" href="structmc__rtc_1_1gui_1_1details_1_1CheckReturnType.html">details::CheckReturnType&lt;MaybeGetColor, Color&gt;::value</a>, <span class="stringliteral">&quot;XY color callback should return a color&quot;</span>);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html">impl::AbscissaOrdinateWithColor</a>(</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        name, [get_x_fn, get_y_fn](XYCacheT &amp; cache) { cache.push_back({get_x_fn(), get_y_fn()}); }, color, style,</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        side);</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  }</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;}</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;} <span class="comment">// namespace plot</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;} <span class="comment">// namespace gui</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;} <span class="comment">// namespace mc_rtc</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="astructmc__rtc_1_1MessagePackBuilder_html"><div class="ttname"><a href="structmc__rtc_1_1MessagePackBuilder.html">mc_rtc::MessagePackBuilder</a></div><div class="ttdef"><b>Definition:</b> MessagePackBuilder.h:86</div></div>

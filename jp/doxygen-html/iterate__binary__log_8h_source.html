@@ -138,12 +138,11 @@ $(document).ready(function(){initNavTree('iterate__binary__log_8h_source.html','
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                               <span class="keyword">const</span> std::string &amp; time = <span class="stringliteral">&quot;t&quot;</span>)</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;{</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="namespacemc__rtc_1_1log.html#a70dfcae1b3566ebd23adecd27752e15f">iterate_binary_log</a>(</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      fpath,</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      [&amp;callback](<a class="code" href="structmc__rtc_1_1log_1_1IterateBinaryLogData.html">IterateBinaryLogData</a> data) { <span class="keywordflow">return</span> callback(data.<a class="code" href="structmc__rtc_1_1log_1_1IterateBinaryLogData.html#acb85602dd9f879ebad0b47b33b2d9529">keys</a>, data.<a class="code" href="structmc__rtc_1_1log_1_1IterateBinaryLogData.html#a3e314425b49f11964e4bba451179d80e">records</a>, data.<a class="code" href="structmc__rtc_1_1log_1_1IterateBinaryLogData.html#a3db9fd05afaf6af9d0f1575a32a4b0f0">time</a>.value_or(-1)); },</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      extract, time);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;} <span class="comment">// namespace mc_rtc::log</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      fpath, [&amp;callback](<a class="code" href="structmc__rtc_1_1log_1_1IterateBinaryLogData.html">IterateBinaryLogData</a> data)</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      { <span class="keywordflow">return</span> callback(data.<a class="code" href="structmc__rtc_1_1log_1_1IterateBinaryLogData.html#acb85602dd9f879ebad0b47b33b2d9529">keys</a>, data.<a class="code" href="structmc__rtc_1_1log_1_1IterateBinaryLogData.html#a3e314425b49f11964e4bba451179d80e">records</a>, data.<a class="code" href="structmc__rtc_1_1log_1_1IterateBinaryLogData.html#a3db9fd05afaf6af9d0f1575a32a4b0f0">time</a>.value_or(-1)); }, extract, time);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;} <span class="comment">// namespace mc_rtc::log</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="astructmc__rtc_1_1MessagePackBuilder_html"><div class="ttname"><a href="structmc__rtc_1_1MessagePackBuilder.html">mc_rtc::MessagePackBuilder</a></div><div class="ttdef"><b>Definition:</b> MessagePackBuilder.h:86</div></div>
