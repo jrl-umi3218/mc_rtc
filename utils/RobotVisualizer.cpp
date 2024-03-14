@@ -76,8 +76,7 @@ void RobotVisualizer::setupRobotSelector()
 {
   if(builder.hasElement({}, "Switch robot")) { builder.removeElement({}, "Switch robot"); }
   builder.addElement({}, mc_rtc::gui::Form(
-                             "Switch robot",
-                             [this](const mc_rtc::Configuration & data)
+                             "Switch robot", [this](const mc_rtc::Configuration & data)
                              { this->loadRobot({data("Robot").operator std::string()}); },
                              mc_rtc::gui::FormComboInput("Robot", true, available_robots, false, selected_robot)));
 }

@@ -173,8 +173,7 @@ void EncoderObserver::addToLogger(const mc_control::MCController & ctl,
     }
     else if(velUpdate_ == VelUpdate::EncoderVelocities)
     {
-      logger.addLogEntry(category + "_encoderVelocities", this,
-                         [this, &ctl]() -> const std::vector<double> &
+      logger.addLogEntry(category + "_encoderVelocities", this, [this, &ctl]() -> const std::vector<double> &
                          { return ctl.robot(robot_).encoderVelocities(); });
     }
     else if(velUpdate_ == VelUpdate::Control)

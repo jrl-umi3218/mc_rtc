@@ -43,11 +43,10 @@ void MCGlobalController::initGUI()
         targetCat.push_back("Targets");
         for(const auto & joint : g_ptr->activeJoints())
         {
-          gui->addElement(targetCat,
-                          mc_rtc::gui::NumberSlider(
-                              joint, [joint, g_ptr]() { return g_ptr->curOpening(joint); },
-                              [joint, g_ptr](double targetOpening) { g_ptr->setTargetOpening(joint, targetOpening); },
-                              0, 1));
+          gui->addElement(targetCat, mc_rtc::gui::NumberSlider(
+                                         joint, [joint, g_ptr]() { return g_ptr->curOpening(joint); },
+                                         [joint, g_ptr](double targetOpening)
+                                         { g_ptr->setTargetOpening(joint, targetOpening); }, 0, 1));
         }
 
         category.push_back("Safety");

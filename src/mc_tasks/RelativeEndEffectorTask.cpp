@@ -20,10 +20,10 @@ RelativeEndEffectorTask::RelativeEndEffectorTask(const std::string & bodyName,
                                                  double stiffness,
                                                  double weight)
 : RelativeEndEffectorTask(
-    robots.robot(robotIndex).frame(bodyName),
-    robots.robot(robotIndex).frame(relBodyName.size() ? relBodyName : robots.robot(robotIndex).mb().body(0).name()),
-    stiffness,
-    weight)
+      robots.robot(robotIndex).frame(bodyName),
+      robots.robot(robotIndex).frame(relBodyName.size() ? relBodyName : robots.robot(robotIndex).mb().body(0).name()),
+      stiffness,
+      weight)
 {
 }
 

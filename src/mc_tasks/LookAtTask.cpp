@@ -106,4 +106,4 @@ static auto registered_lookat = mc_tasks::MetaTaskLoader::register_load_function
       t->load(solver, config);
       return t;
     });
-}
+} // namespace

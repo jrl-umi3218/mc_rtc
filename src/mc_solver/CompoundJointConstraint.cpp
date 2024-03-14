@@ -208,4 +208,4 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
       }
       else { return std::make_shared<mc_solver::CompoundJointConstraint>(solver.robots(), rIndex, solver.dt()); }
     });
-}
+} // namespace

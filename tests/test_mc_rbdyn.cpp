@@ -101,13 +101,11 @@ BOOST_AUTO_TEST_CASE(TestRobotPosWVelWAccW)
 
   auto checkVelocity = [](const sva::MotionVecd & actual, const sva::MotionVecd & refVal)
   {
-    BOOST_CHECK_MESSAGE(actual.vector().isApprox(refVal.vector()), "Error in Robot::velW"
-                                                                       << "\nExpected:"
-                                                                       << "\nangular:" << refVal.angular().transpose()
-                                                                       << "\nlinear :" << refVal.linear().transpose()
-                                                                       << "\nGot:"
-                                                                       << "\nangular:" << actual.angular().transpose()
-                                                                       << "\nlinear :" << actual.linear().transpose());
+    BOOST_CHECK_MESSAGE(actual.vector().isApprox(refVal.vector()),
+                        "Error in Robot::velW" << "\nExpected:" << "\nangular:" << refVal.angular().transpose()
+                                               << "\nlinear :" << refVal.linear().transpose()
+                                               << "\nGot:" << "\nangular:" << actual.angular().transpose()
+                                               << "\nlinear :" << actual.linear().transpose());
   };
 
   for(int i = 0; i < 100; ++i)
@@ -153,9 +151,9 @@ BOOST_AUTO_TEST_CASE(TestRobotZMPSimple)
 
     auto zmpIdeal = X_0_ls.translation();
     auto zmpComputed = robot.zmp(sensorNames, Eigen::Vector3d::Zero(), {0., 0., 1.});
-    BOOST_CHECK_MESSAGE(zmpComputed.isApprox(zmpIdeal, 1e-10), "Error in Robot::zmp computation with leftFootRatio="
-                                                                   << "\nExpected: " << zmpIdeal.transpose()
-                                                                   << "\nGot: " << zmpComputed.transpose());
+    BOOST_CHECK_MESSAGE(zmpComputed.isApprox(zmpIdeal, 1e-10),
+                        "Error in Robot::zmp computation with leftFootRatio=" << "\nExpected: " << zmpIdeal.transpose()
+                                                                              << "\nGot: " << zmpComputed.transpose());
   }
 
   {
@@ -169,9 +167,9 @@ BOOST_AUTO_TEST_CASE(TestRobotZMPSimple)
 
     auto zmpIdeal = X_0_rs.translation();
     auto zmpComputed = robot.zmp(sensorNames, Eigen::Vector3d::Zero(), {0., 0., 1.});
-    BOOST_CHECK_MESSAGE(zmpComputed.isApprox(zmpIdeal, 1e-10), "Error in Robot::zmp computation with leftFootRatio="
-                                                                   << "\nExpected: " << zmpIdeal.transpose()
-                                                                   << "\nGot: " << zmpComputed.transpose());
+    BOOST_CHECK_MESSAGE(zmpComputed.isApprox(zmpIdeal, 1e-10),
+                        "Error in Robot::zmp computation with leftFootRatio=" << "\nExpected: " << zmpIdeal.transpose()
+                                                                              << "\nGot: " << zmpComputed.transpose());
   }
 
   { // checks that zmp throws if used with null force

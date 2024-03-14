@@ -91,8 +91,7 @@ void OrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   TrajectoryTaskGeneric::addToGUI(gui);
   gui.addElement({"Tasks", name_},
                  mc_rtc::gui::Rotation(
-                     "ori_target",
-                     [this]() -> sva::PTransformd
+                     "ori_target", [this]() -> sva::PTransformd
                      { return sva::PTransformd(this->orientation(), frame_->position().translation()); },
                      [this](const Eigen::Quaterniond & ori) { this->orientation(ori.toRotationMatrix()); }),
                  mc_rtc::gui::Rotation("ori", [this]() -> sva::PTransformd { return frame_->position(); }));

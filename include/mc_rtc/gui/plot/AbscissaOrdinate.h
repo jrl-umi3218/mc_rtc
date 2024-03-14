@@ -129,21 +129,15 @@ auto XY(std::string_view name,
   if constexpr(std::is_same_v<std::decay_t<MaybeGetColor>, Color>)
   {
     return impl::AbscissaOrdinate(
-        name,
-        [get_x_fn, get_y_fn](XYCacheT & cache) {
-          cache.push_back({get_x_fn(), get_y_fn()});
-        },
-        color, style, side);
+        name, [get_x_fn, get_y_fn](XYCacheT & cache) { cache.push_back({get_x_fn(), get_y_fn()}); }, color, style,
+        side);
   }
   else
   {
     static_assert(details::CheckReturnType<MaybeGetColor, Color>::value, "XY color callback should return a color");
     return impl::AbscissaOrdinateWithColor(
-        name,
-        [get_x_fn, get_y_fn](XYCacheT & cache) {
-          cache.push_back({get_x_fn(), get_y_fn()});
-        },
-        color, style, side);
+        name, [get_x_fn, get_y_fn](XYCacheT & cache) { cache.push_back({get_x_fn(), get_y_fn()}); }, color, style,
+        side);
   }
 }
 

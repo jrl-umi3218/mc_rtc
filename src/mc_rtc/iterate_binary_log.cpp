@@ -90,10 +90,10 @@ bool iterate_binary_log(const std::string & f,
       }
       return keys_str;
     }();
-    if(!callback(IterateBinaryLogData{keys_str, log.records(), events, t,
-                                      [&log](mc_rtc::MessagePackBuilder & builder,
-                                             const std::vector<std::string> & keys) { log.copy(builder, keys); },
-                                      buffer.data(), entrySize, meta}))
+    if(!callback(
+           IterateBinaryLogData{keys_str, log.records(), events, t,
+                                [&log](mc_rtc::MessagePackBuilder & builder, const std::vector<std::string> & keys)
+                                { log.copy(builder, keys); }, buffer.data(), entrySize, meta}))
     {
       return false;
     }

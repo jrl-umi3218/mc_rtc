@@ -201,4 +201,4 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       t->load(solver, config);
       return t;
     });
-}
+} // namespace

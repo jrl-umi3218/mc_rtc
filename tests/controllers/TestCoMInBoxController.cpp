@@ -24,9 +24,8 @@ namespace mc_control
 /** Build a cube as a set of planes from a given origin and size */
 static std::vector<mc_rbdyn::Plane> makeCube(const Eigen::Vector3d & origin, double size)
 {
-  auto getPlane = [&](const Eigen::Vector3d & normal, const Eigen::Vector3d & point) {
-    return mc_rbdyn::Plane{normal, -normal.dot(origin + point)};
-  };
+  auto getPlane = [&](const Eigen::Vector3d & normal, const Eigen::Vector3d & point)
+  { return mc_rbdyn::Plane{normal, -normal.dot(origin + point)}; };
   return {getPlane(Eigen::Vector3d{1, 0, 0}, Eigen::Vector3d{-size, 0, 0}),
           getPlane(Eigen::Vector3d{-1, 0, 0}, Eigen::Vector3d{size, 0, 0}),
           getPlane(Eigen::Vector3d{0, 1, 0}, Eigen::Vector3d{0, -size, 0}),

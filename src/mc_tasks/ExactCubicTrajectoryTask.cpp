@@ -98,9 +98,8 @@ void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                      [this]() -> Eigen::Vector3d { return initialPose_.translation(); },
                      [this]() -> Eigen::Vector3d { return initialPose_.translation() + bspline.init_vel(); }),
                  mc_rtc::gui::Arrow(
-                     "Final", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
-                     [this]() -> Eigen::Vector3d { return SplineTrajectoryBase::target().translation(); },
-                     [this]() -> Eigen::Vector3d
+                     "Final", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)), [this]() -> Eigen::Vector3d
+                     { return SplineTrajectoryBase::target().translation(); }, [this]() -> Eigen::Vector3d
                      { return SplineTrajectoryBase::target().translation() + bspline.end_vel(); }));
 }
 
@@ -203,4 +202,4 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       t->pause(config("paused", false));
       return t;
     });
-}
+} // namespace

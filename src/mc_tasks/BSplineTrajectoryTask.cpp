@@ -159,4 +159,4 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       t->pause(config("paused", false));
       return t;
     });
-}
+} // namespace

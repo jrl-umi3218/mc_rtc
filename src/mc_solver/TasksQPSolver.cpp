@@ -98,8 +98,7 @@ void TasksQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Con
       gui_->addElement({"Contacts", "Forces"},
                        mc_rtc::gui::Force(
                            fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S),
-                           [this, &contact]() { return desiredContactForce(contact); },
-                           [this, &contact]()
+                           [this, &contact]() { return desiredContactForce(contact); }, [this, &contact]()
                            { return robots().robot(contact.r1Index()).surfacePose(contact.r1Surface()->name()); }));
     }
   }

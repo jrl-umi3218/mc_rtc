@@ -177,6 +177,6 @@ static auto registered = []()
   mc_rbdyn::RobotLoader::register_object("JVRC1Fixed", fn_t([]() { return new mc_robots::JVRC1RobotModule(true); }));
   return true;
 }();
-}
+} // namespace
 
 #endif

@@ -10,9 +10,8 @@
 namespace mc_rbdyn::gui
 {
 
-static const mc_rtc::gui::LineConfig defaultSurfaceConfig = []() {
-  return mc_rtc::gui::LineConfig{mc_rtc::gui::Color::Green, 0.01};
-}();
+static const mc_rtc::gui::LineConfig defaultSurfaceConfig = []()
+{ return mc_rtc::gui::LineConfig{mc_rtc::gui::Color::Green, 0.01}; }();
 
 /** Helper function to create a GUI element from a surface object inside a robot
  *

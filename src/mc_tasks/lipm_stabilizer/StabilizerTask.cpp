@@ -1605,4 +1605,4 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       t->reset();
       return t;
     });
-}
+} // namespace
