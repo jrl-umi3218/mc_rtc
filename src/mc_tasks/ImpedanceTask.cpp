@@ -203,6 +203,7 @@ void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
                      [this]() -> const sva::ImpedanceVecd & { return gains().wrench().vec(); });
 
   // compliance values
+  logger.addLogEntry(name_ + "_compliancePose", this, [this]() { return compliancePose(); });
   MC_RTC_LOG_HELPER(name_ + "_deltaCompliancePose", deltaCompPoseW_);
   MC_RTC_LOG_HELPER(name_ + "_deltaComplianceVel", deltaCompVelW_);
   MC_RTC_LOG_HELPER(name_ + "_deltaComplianceAccel", deltaCompAccelW_);
