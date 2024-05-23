@@ -177,6 +177,30 @@ void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
   if(config.has("gains")) { gains_ = config("gains"); }
   if(config.has("wrench")) { targetWrench(config("wrench")); }
   if(config.has("cutoffPeriod")) { cutoffPeriod(config("cutoffPeriod")); }
+  if(config.has("deltaCompPoseLinLimit"))
+  {
+    deltaCompPoseLinLimit_ = std::max(static_cast<double>(config("deltaCompPoseLinLimit")), 0.0);
+  }
+  if(config.has("deltaCompPoseAngLimit"))
+  {
+    deltaCompPoseAngLimit_ = std::max(static_cast<double>(config("deltaCompPoseAngLimit")), 0.0);
+  }
+  if(config.has("deltaCompVelLinLimit"))
+  {
+    deltaCompVelLinLimit_ = std::max(static_cast<double>(config("deltaCompVelLinLimit")), 0.0);
+  }
+  if(config.has("deltaCompVelAngLimit"))
+  {
+    deltaCompVelAngLimit_ = std::max(static_cast<double>(config("deltaCompVelAngLimit")), 0.0);
+  }
+  if(config.has("deltaCompAccelLinLimit"))
+  {
+    deltaCompAccelLinLimit_ = std::max(static_cast<double>(config("deltaCompAccelLinLimit")), 0.0);
+  }
+  if(config.has("deltaCompAccelAngLimit"))
+  {
+    deltaCompAccelAngLimit_ = std::max(static_cast<double>(config("deltaCompAccelAngLimit")), 0.0);
+  }
   TransformTask::load(solver, config);
   // The TransformTask::load function above only sets
   // the TrajectoryTaskGeneric's target, but not the compliance target, so we
