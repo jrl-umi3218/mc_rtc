@@ -10,8 +10,9 @@
 namespace mc_tvm
 {
 
-DynamicFunction::DynamicFunction(const mc_rbdyn::Robot & robot)
-: tvm::function::abstract::LinearFunction(robot.mb().nrDof()), robot_(robot)
+DynamicFunction::DynamicFunction(const mc_rbdyn::Robot & robot, bool compensateExternalForces)
+: tvm::function::abstract::LinearFunction(robot.mb().nrDof()), robot_(robot),
+  compensateExternalForces_(compensateExternalForces)
 {
   registerUpdates(Update::B, &DynamicFunction::updateb);
   registerUpdates(Update::Jacobian, &DynamicFunction::updateJacobian);
@@ -103,6 +104,14 @@ sva::ForceVecd DynamicFunction::contactForce(const mc_rbdyn::RobotFrame & frame)
 void DynamicFunction::updateb()
 {
   b_ = robot_.tvmRobot().C();
+  if(compensateExternalForces_)
+  {
+    b_ -= robot_.tvmRobot().tauExternal();
+    if(robot_.hasDevice<mc_rbdyn::VirtualTorqueSensor>("virtualTorqueSensor"))
+    {
+      b_ += robot_.device<mc_rbdyn::VirtualTorqueSensor>("virtualTorqueSensor").torques();
+    }
+  }
 }
 
 void DynamicFunction::updateJacobian()

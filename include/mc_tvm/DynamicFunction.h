@@ -14,6 +14,8 @@
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
+#include <mc_rbdyn/VirtualTorqueSensor.h>
+
 namespace mc_tvm
 {
 
@@ -36,7 +38,7 @@ public:
   SET_UPDATES(DynamicFunction, Jacobian, B)
 
   /** Construct the equation of motion for a given robot */
-  DynamicFunction(const mc_rbdyn::Robot & robot);
+  DynamicFunction(const mc_rbdyn::Robot & robot, bool compensateExternalForces = false);
 
   /** Add a contact to the function
    *
@@ -73,6 +75,7 @@ protected:
   void updateb();
 
   const mc_rbdyn::Robot & robot_;
+  const bool compensateExternalForces_;
 
   /** Holds data for the force part of the motion equation */
   struct ForceContact
