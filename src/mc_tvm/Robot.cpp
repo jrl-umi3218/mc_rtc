@@ -133,8 +133,8 @@ Robot::Robot(NewRobotToken, const mc_rbdyn::Robot & robot)
   dq_->setZero();
   ddq_->setZero();
   tau_->setZero();
-  tau_ext_ = Eigen::VectorXd::Zero(robot.mb().nrJoints());
-  ddq_ext_ = Eigen::VectorXd::Zero(robot.mb().nrJoints());
+  tau_ext_ = Eigen::VectorXd::Zero(robot.mb().nrDof());
+  ddq_ext_ = Eigen::VectorXd::Zero(robot.mb().nrDof());
 
   const auto & rjo = robot.refJointOrder();
   refJointIndexToQIndex_.resize(rjo.size());
