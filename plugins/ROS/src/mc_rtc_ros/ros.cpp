@@ -7,6 +7,8 @@
 #include <mc_rtc/logging.h>
 #include <mc_rtc/utils.h>
 #include <mc_rtc_ros/ros.h>
+#include <rclcpp/init_options.hpp>
+#include <rclcpp/utilities.hpp>
 
 #include <RBDyn/FK.h>
 
@@ -586,7 +588,7 @@ inline bool ros_init([[maybe_unused]] const std::string & name)
   if(ros::ok()) { return true; }
   int argc = 0;
 #ifdef MC_RTC_ROS_IS_ROS2
-  rclcpp::init(argc, nullptr);
+  rclcpp::init(argc, nullptr, rclcpp::InitOptions(), rclcpp::SignalHandlerOptions::SigTerm);
 #else
   ros::init(argc, nullptr, name.c_str(), ros::init_options::NoSigintHandler);
   if(!ros::master::check())
