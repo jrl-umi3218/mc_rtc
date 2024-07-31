@@ -8,7 +8,6 @@
 #include <mc_rtc/utils.h>
 #include <mc_rtc_ros/ros.h>
 
-
 #include <RBDyn/FK.h>
 
 #ifdef MC_RTC_ROS_IS_ROS2
@@ -19,8 +18,8 @@
 #  include <sensor_msgs/msg/joint_state.hpp>
 #  include <std_msgs/msg/string.hpp>
 
-#  include <rclcpp/rclcpp.hpp>
 #  include <rclcpp/init_options.hpp>
+#  include <rclcpp/rclcpp.hpp>
 #  include <rclcpp/utilities.hpp>
 #else
 #  include <geometry_msgs/WrenchStamped.h>
