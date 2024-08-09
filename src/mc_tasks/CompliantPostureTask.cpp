@@ -32,6 +32,7 @@ void CompliantPostureTask::update(mc_solver::QPSolver & solver)
   if(isCompliant_)
   {
     Eigen::VectorXd disturbance = tvm_robot_.alphaDExternal();
+    // mc_rtc::log::info("Ref accel from disturbance : {}", disturbance.transpose());
     Eigen::VectorXd disturbedAccel = refAccel_ + disturbance;
     PostureTask::refAccel(disturbedAccel);
   }

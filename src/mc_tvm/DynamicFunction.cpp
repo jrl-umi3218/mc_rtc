@@ -21,7 +21,10 @@ DynamicFunction::DynamicFunction(const mc_rbdyn::Robot & robot, bool compensateE
   auto & tvm_robot = robot.tvmRobot();
   addInputDependency<DynamicFunction>(Update::Jacobian, tvm_robot, Robot::Output::H);
   addInputDependency<DynamicFunction>(Update::B, tvm_robot, Robot::Output::C);
-  addInputDependency<DynamicFunction>(Update::B, tvm_robot, Robot::Output::ExternalForces);
+  if(compensateExternalForces_)
+  {
+    addInputDependency<DynamicFunction>(Update::B, tvm_robot, Robot::Output::ExternalForces);
+  }
   addVariable(tvm::dot(tvm_robot.q(), 2), true);
   addVariable(tvm_robot.tau(), true);
   jacobian_[tvm_robot.tau().get()] = -Eigen::MatrixXd::Identity(robot_.mb().nrDof(), robot_.mb().nrDof());
@@ -108,7 +111,7 @@ void DynamicFunction::updateb()
   if(compensateExternalForces_)
   {
     b_ -= robot_.tvmRobot().tauExternal();
-    mc_rtc::log::info("Compensating for : {}", robot_.tvmRobot().tauExternal());
+    // mc_rtc::log::info("Compensating for : {}", robot_.tvmRobot().tauExternal().transpose());
     if(robot_.hasDevice<mc_rbdyn::VirtualTorqueSensor>("virtualTorqueSensor"))
     {
       b_ += robot_.device<mc_rbdyn::VirtualTorqueSensor>("virtualTorqueSensor").torques();

@@ -6,6 +6,7 @@
 
 #include <mc_tasks/EndEffectorTask.h>
 #include <RBDyn/MultiBody.h>
+#include <Eigen/src/Core/Matrix.h>
 
 namespace mc_tasks
 {
@@ -46,9 +47,11 @@ public:
 
   // Set the compliant behavior of the task
   void makeCompliant(bool compliance);
+  void setComplianceVector(Eigen::Vector6d gamma);
 
   // Get compliance state of the task
   bool isCompliant(void);
+  Eigen::Vector6d getComplianceVector(void);
 
 protected:
   void addToSolver(mc_solver::QPSolver & solver);
@@ -57,7 +60,7 @@ protected:
 
   void addToGUI(mc_rtc::gui::StateBuilder & gui);
 
-  bool isCompliant_;
+  Eigen::MatrixXd compliant_matrix_;
 
   mc_tvm::Robot * tvm_robot_;
 
