@@ -253,10 +253,10 @@ void TransformTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
     {
       gui.addElement({"Tasks", name_},
                      mc_rtc::gui::Transform(
-                         "pos_target", [this]() { return this->target(); },
+                         "targetPose", [this]() { return this->target(); },
                          [this](const sva::PTransformd & pos) { this->target(pos); }));
     }
-    else { gui.removeElement({"Tasks", name_}, "pos_target"); }
+    else { gui.removeElement({"Tasks", name_}, "targetPose"); }
   };
 
   auto showPose = [this, &gui]()
@@ -264,9 +264,9 @@ void TransformTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
     if(showPose_)
     {
       gui.addElement({"Tasks", name_},
-                     mc_rtc::gui::Transform("pos", [this]() { return frame_->position(); }));
+                     mc_rtc::gui::Transform("pose", [this]() { return frame_->position(); }));
     }
-    else { gui.removeElement({"Tasks", name_}, "pos"); }
+    else { gui.removeElement({"Tasks", name_}, "pose"); }
   };
 
   gui.addElement({"Tasks", name_},

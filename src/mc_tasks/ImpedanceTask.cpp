@@ -287,12 +287,6 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   showTarget();
   showCompliance();
   gui.addElement({"Tasks", name_},
-                 // pose
-                //  mc_rtc::gui::Transform(
-                //      "targetPose", [this]() -> const sva::PTransformd & { return this->targetPose(); },
-                //      [this](const sva::PTransformd & pos) { this->targetPose(pos); }),
-                //  mc_rtc::gui::Transform("compliancePose", [this]() { return this->compliancePose(); }),
-                //  mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }),
                  // wrench
                  mc_rtc::gui::ArrayInput(
                      "targetWrench", {"cx", "cy", "cz", "fx", "fy", "fz"},

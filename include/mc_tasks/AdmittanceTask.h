@@ -205,6 +205,9 @@ protected:
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
   void addToLogger(mc_rtc::Logger & logger) override;
 
+  bool showTarget_ = true;
+  bool showPose_ = true;
+
   /** Transform's refVelB() becomes internal to the task. */
   using TransformTask::refVelB;
 

@@ -13,6 +13,7 @@
 #include <mc_rtc/gui/ArrayLabel.h>
 #include <mc_rtc/gui/NumberInput.h>
 #include <mc_rtc/gui/Transform.h>
+#include <mc_rtc/gui/Checkbox.h>
 
 #include <mc_rtc/deprecated.h>
 
@@ -115,12 +116,48 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
 
 void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
+  auto showTarget = [this, &gui]()
+  {
+    if(showTarget_)
+    {
+      gui.addElement({"Tasks", name_},
+                      mc_rtc::gui::Transform(
+                      "targetPose", [this]() { return this->targetPose(); },
+                      [this](const sva::PTransformd & pos) { this->targetPose(pos); }));
+    }
+    else { gui.removeElement({"Tasks", name_}, "targetPose"); }
+  };
+
+  auto showPose = [this, &gui]()
+  {
+    if(showPose_)
+    {
+      gui.addElement({"Tasks", name_},
+                     mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }));
+    }
+    else { gui.removeElement({"Tasks", name_}, "pose"); }
+  };
+
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::Checkbox(
+                     "Show target frame", [this]() { return showTarget_; },
+                     [this, showTarget]()
+                     {
+                       showTarget_ = !showTarget_;
+                       showTarget();
+                     }),
+                 mc_rtc::gui::Checkbox(
+                     "Show pose frame", [this]() { return showPose_; },
+                     [this, showPose]()
+                     {
+                       showPose_ = !showPose_;
+                       showPose();
+                     }));
+
+  showPose();
+  showTarget();
   gui.addElement(
       {"Tasks", name_},
-      mc_rtc::gui::Transform(
-          "pos_target", [this]() { return this->targetPose(); },
-          [this](const sva::PTransformd & pos) { this->targetPose(pos); }),
-      mc_rtc::gui::Transform("pos", [this]() { return frame_->position(); }),
       mc_rtc::gui::ArrayInput(
           "admittance", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() { return this->admittance().vector(); },
           [this](const Eigen::Vector6d & a) { this->admittance(a); }),
