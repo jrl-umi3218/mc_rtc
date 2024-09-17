@@ -15,8 +15,8 @@
 #include <mc_rbdyn/hat.h>
 #include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_rtc/deprecated.h>
-#include <mc_rtc/gui/Transform.h>
 #include <mc_rtc/gui/Checkbox.h>
+#include <mc_rtc/gui/Transform.h>
 
 namespace mc_tasks
 {
@@ -24,7 +24,11 @@ namespace mc_tasks
 static inline mc_rtc::void_ptr_caster<tasks::qp::SurfaceTransformTask> tasks_error{};
 static inline mc_rtc::void_ptr_caster<mc_tvm::TransformFunction> tvm_error{};
 
-TransformTask::TransformTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight, bool showTarget, bool showPose)
+TransformTask::TransformTask(const mc_rbdyn::RobotFrame & frame,
+                             double stiffness,
+                             double weight,
+                             bool showTarget,
+                             bool showPose)
 : TrajectoryTaskGeneric(frame.robot().robots(), frame.robot().robotIndex(), stiffness, weight), frame_(frame)
 {
   switch(backend_)
@@ -51,7 +55,7 @@ TransformTask::TransformTask(const std::string & surfaceName,
                              unsigned int robotIndex,
                              double stiffness,
                              double weight,
-                             bool showTarget, 
+                             bool showTarget,
                              bool showPose)
 : TransformTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight, showTarget, showPose)
 {
@@ -251,10 +255,9 @@ void TransformTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   {
     if(showTarget_)
     {
-      gui.addElement({"Tasks", name_},
-                     mc_rtc::gui::Transform(
-                         "targetPose", [this]() { return this->target(); },
-                         [this](const sva::PTransformd & pos) { this->target(pos); }));
+      gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform(
+                                           "targetPose", [this]() { return this->target(); },
+                                           [this](const sva::PTransformd & pos) { this->target(pos); }));
     }
     else { gui.removeElement({"Tasks", name_}, "targetPose"); }
   };
@@ -263,8 +266,7 @@ void TransformTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   {
     if(showPose_)
     {
-      gui.addElement({"Tasks", name_},
-                     mc_rtc::gui::Transform("pose", [this]() { return frame_->position(); }));
+      gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("pose", [this]() { return frame_->position(); }));
     }
     else { gui.removeElement({"Tasks", name_}, "pose"); }
   };

@@ -11,9 +11,9 @@
 
 #include <mc_rtc/gui/ArrayInput.h>
 #include <mc_rtc/gui/ArrayLabel.h>
+#include <mc_rtc/gui/Checkbox.h>
 #include <mc_rtc/gui/NumberInput.h>
 #include <mc_rtc/gui/Transform.h>
-#include <mc_rtc/gui/Checkbox.h>
 
 #include <mc_rtc/deprecated.h>
 
@@ -36,7 +36,11 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
 {
 }
 
-AdmittanceTask::AdmittanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight, bool showTarget, bool showPose)
+AdmittanceTask::AdmittanceTask(const mc_rbdyn::RobotFrame & frame,
+                               double stiffness,
+                               double weight,
+                               bool showTarget,
+                               bool showPose)
 : TransformTask(frame, stiffness, weight)
 {
   if(!frame.hasForceSensor())
@@ -124,10 +128,9 @@ void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   {
     if(showTarget_)
     {
-      gui.addElement({"Tasks", name_},
-                      mc_rtc::gui::Transform(
-                      "targetPose", [this]() { return this->targetPose(); },
-                      [this](const sva::PTransformd & pos) { this->targetPose(pos); }));
+      gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform(
+                                           "targetPose", [this]() { return this->targetPose(); },
+                                           [this](const sva::PTransformd & pos) { this->targetPose(pos); }));
     }
     else { gui.removeElement({"Tasks", name_}, "targetPose"); }
   };
@@ -136,8 +139,7 @@ void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   {
     if(showPose_)
     {
-      gui.addElement({"Tasks", name_},
-                     mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }));
+      gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }));
     }
     else { gui.removeElement({"Tasks", name_}, "pose"); }
   };

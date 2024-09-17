@@ -32,10 +32,12 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
 {
 }
 
-ImpedanceTask::ImpedanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight,
-                                                                                  bool showTarget,
-                                                                                  bool showPose,
-                                                                                  bool showCompliance)
+ImpedanceTask::ImpedanceTask(const mc_rbdyn::RobotFrame & frame,
+                             double stiffness,
+                             double weight,
+                             bool showTarget,
+                             bool showPose,
+                             bool showCompliance)
 : TransformTask(frame, stiffness, weight), lowPass_(0.005, cutoffPeriod_)
 {
   const auto & robot = frame.robot();
@@ -241,9 +243,9 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
     if(showTarget_)
     {
       gui.addElement({"Tasks", name_},
-                      mc_rtc::gui::Transform(
-                      "targetPose", [this]() -> const sva::PTransformd & { return this->targetPose(); },
-                      [this](const sva::PTransformd & pos) { this->targetPose(pos); }));
+                     mc_rtc::gui::Transform(
+                         "targetPose", [this]() -> const sva::PTransformd & { return this->targetPose(); },
+                         [this](const sva::PTransformd & pos) { this->targetPose(pos); }));
     }
     else { gui.removeElement({"Tasks", name_}, "targetPose"); }
   };
@@ -253,8 +255,7 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
     if(showCompliance_)
     {
       gui.addElement({"Tasks", name_},
-                      mc_rtc::gui::Transform(
-                      "compliancePose", [this]() { return this->compliancePose(); }));
+                     mc_rtc::gui::Transform("compliancePose", [this]() { return this->compliancePose(); }));
     }
     else { gui.removeElement({"Tasks", name_}, "compliancePose"); }
   };
@@ -263,8 +264,7 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   {
     if(showPose_)
     {
-      gui.addElement({"Tasks", name_},
-                     mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }));
+      gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }));
     }
     else { gui.removeElement({"Tasks", name_}, "pose"); }
   };
@@ -284,7 +284,7 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                        showPose_ = !showPose_;
                        showPose();
                      }),
-                  mc_rtc::gui::Checkbox(
+                 mc_rtc::gui::Checkbox(
                      "Show compliance frame", [this]() { return showCompliance_; },
                      [this, showCompliance]()
                      {

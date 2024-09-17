@@ -75,7 +75,7 @@ public:
                 double stiffness = 5.0,
                 double weight = 1000.0,
                 bool showTarget = true,
-                bool showPose= true,
+                bool showPose = true,
                 bool showCompliance = true);
 
   /** \brief Constructor
@@ -88,10 +88,12 @@ public:
    *
    * \throws If the frame does not have a force sensor attached to it
    */
-  ImpedanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness = 5.0, double weight = 1000.0,
-                                                                            bool showTarget = true,
-                                                                            bool showPose= true,
-                                                                            bool showCompliance = true);
+  ImpedanceTask(const mc_rbdyn::RobotFrame & frame,
+                double stiffness = 5.0,
+                double weight = 1000.0,
+                bool showTarget = true,
+                bool showPose = true,
+                bool showCompliance = true);
 
   /*! \brief Reset the task
    *

@@ -51,7 +51,11 @@ public:
    * \throws If the frame does not have a force sensor attached
    *
    */
-  AdmittanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness = 5.0, double weight = 1000.0, bool showTarget = true, bool showPose = true);
+  AdmittanceTask(const mc_rbdyn::RobotFrame & frame,
+                 double stiffness = 5.0,
+                 double weight = 1000.0,
+                 bool showTarget = true,
+                 bool showPose = true);
 
   /*! \brief Initialize a new admittance task.
    *
@@ -75,7 +79,7 @@ public:
                  unsigned robotIndex,
                  double stiffness = 5.0,
                  double weight = 1000.0,
-                 bool showTarget = true, 
+                 bool showTarget = true,
                  bool showPose = true);
 
   /*! \brief Reset the task
