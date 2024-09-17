@@ -24,13 +24,19 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
                              const mc_rbdyn::Robots & robots,
                              unsigned int robotIndex,
                              double stiffness,
-                             double weight)
-: ImpedanceTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight)
+                             double weight,
+                             bool showTarget,
+                             bool showPose,
+                             bool showCompliance)
+: ImpedanceTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight, showTarget, showPose, showCompliance)
 {
 }
 
-ImpedanceTask::ImpedanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
-: TransformTask(frame, stiffness, weight, false, false), lowPass_(0.005, cutoffPeriod_)
+ImpedanceTask::ImpedanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight,
+                                                                                  bool showTarget,
+                                                                                  bool showPose,
+                                                                                  bool showCompliance)
+: TransformTask(frame, stiffness, weight), lowPass_(0.005, cutoffPeriod_)
 {
   const auto & robot = frame.robot();
   type_ = "impedance";
@@ -40,6 +46,9 @@ ImpedanceTask::ImpedanceTask(const mc_rbdyn::RobotFrame & frame, double stiffnes
   {
     mc_rtc::log::error_and_throw("[{}] Frame {} does not have a force sensor attached", name_, frame.name());
   }
+  showTarget_ = showTarget;
+  showPose_ = showPose;
+  showCompliance_ = showCompliance;
 }
 
 void ImpedanceTask::update(mc_solver::QPSolver & solver)

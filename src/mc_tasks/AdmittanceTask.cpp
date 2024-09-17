@@ -29,12 +29,14 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
                                const mc_rbdyn::Robots & robots,
                                unsigned int robotIndex,
                                double stiffness,
-                               double weight)
-: AdmittanceTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight)
+                               double weight,
+                               bool showTarget,
+                               bool showPose)
+: AdmittanceTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight, showTarget, showPose)
 {
 }
 
-AdmittanceTask::AdmittanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+AdmittanceTask::AdmittanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight, bool showTarget, bool showPose)
 : TransformTask(frame, stiffness, weight)
 {
   if(!frame.hasForceSensor())
@@ -44,6 +46,8 @@ AdmittanceTask::AdmittanceTask(const mc_rbdyn::RobotFrame & frame, double stiffn
   }
   name_ = "admittance_" + frame.robot().name() + "_" + frame.name();
   reset();
+  showTarget_ = showTarget;
+  showPose_ = showPose;
 }
 
 void AdmittanceTask::update(mc_solver::QPSolver &)
