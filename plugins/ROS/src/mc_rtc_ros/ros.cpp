@@ -7,8 +7,7 @@
 #include <mc_rtc/logging.h>
 #include <mc_rtc/utils.h>
 #include <mc_rtc_ros/ros.h>
-#include <rclcpp/init_options.hpp>
-#include <rclcpp/utilities.hpp>
+
 
 #include <RBDyn/FK.h>
 
@@ -21,6 +20,8 @@
 #  include <std_msgs/msg/string.hpp>
 
 #  include <rclcpp/rclcpp.hpp>
+# include <rclcpp/init_options.hpp>
+# include <rclcpp/utilities.hpp>
 #else
 #  include <geometry_msgs/WrenchStamped.h>
 #  include <mc_rtc_msgs/JointSensors.h>
