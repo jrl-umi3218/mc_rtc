@@ -18,11 +18,9 @@
 #  include <sensor_msgs/msg/joint_state.hpp>
 #  include <std_msgs/msg/string.hpp>
 
+#  include <rclcpp/init_options.hpp>
 #  include <rclcpp/rclcpp.hpp>
 #else
-#  include <geometry_msgs/WrenchStamped.h>
-#  include <mc_rtc_msgs/JointSensors.h>
-#  include <nav_msgs/Odometry.h>
 #  include <sensor_msgs/Imu.h>
 #  include <sensor_msgs/JointState.h>
 
@@ -586,7 +584,7 @@ inline bool ros_init([[maybe_unused]] const std::string & name)
   if(ros::ok()) { return true; }
   int argc = 0;
 #ifdef MC_RTC_ROS_IS_ROS2
-  rclcpp::init(argc, nullptr);
+  rclcpp::init(argc, nullptr, rclcpp::InitOptions(), rclcpp::SignalHandlerOptions::SigTerm);
 #else
   ros::init(argc, nullptr, name.c_str(), ros::init_options::NoSigintHandler);
   if(!ros::master::check())
