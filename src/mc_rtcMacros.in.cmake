@@ -235,10 +235,14 @@ macro(find_description_package PACKAGE)
   find_package(${PACKAGE} REQUIRED)
   if("${${PACKAGE}_INSTALL_PREFIX}" STREQUAL "")
     if("${${PACKAGE}_SOURCE_PREFIX}" STREQUAL "")
-      message(
-        FATAL_ERROR
-          "Your ${PACKAGE} does not define where to find the data, please update."
-      )
+       if("${${PACKAGE}_DIR}" STREQUAL "")
+         message(
+          FATAL_ERROR
+            "Your ${PACKAGE} does not define where to find the data, please update."
+         )
+       else()
+         set(${PACKAGE_PATH_VAR} "${${PACKAGE}_DIR}/..")
+       endif()
     else()
       set(${PACKAGE_PATH_VAR} "${${PACKAGE}_SOURCE_PREFIX}")
     endif()
