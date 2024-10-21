@@ -259,8 +259,8 @@ struct Operations
   std::function<void(const void * self, Configuration & out)> save = [](const void *, Configuration &) {};
 
   /** Write to a MessagePackBuilder */
-  std::function<void(const void * self, MessagePackBuilder & builder)> write = [](const void *, MessagePackBuilder &) {
-  };
+  std::function<void(const void * self, MessagePackBuilder & builder)> write = [](const void *,
+                                                                                  MessagePackBuilder &) {};
 
   /** Load from a configuration object */
   std::function<void(void * self, const Configuration & in)> load = [](void *, const Configuration &) {};
@@ -297,7 +297,7 @@ struct Operations
    *
    * \param choices Possible choices when \tparam HasChoices is true
    */
-  template<typename T, typename Schema, T Schema::*ptr, ValueFlag Flags = ValueFlag::All, bool HasChoices = false>
+  template<typename T, typename Schema, T Schema::* ptr, ValueFlag Flags = ValueFlag::All, bool HasChoices = false>
   bool registerValue(details::MemberPointerWrapper<ptr>,
                      const std::string & name,
                      const std::string & description,

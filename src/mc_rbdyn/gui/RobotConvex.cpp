@@ -79,7 +79,8 @@ void addConvexToGUI(mc_rtc::gui::StateBuilder & gui,
   {
     publish_object(mc_rtc::gui::Cylinder(
         publishName.value_or(name),
-        [cylinder]() {
+        [cylinder]()
+        {
           return mc_rtc::gui::CylinderParameters{cylinder->getRadius(), (cylinder->getP2() - cylinder->getP1()).norm()};
         },
         get_pose, mc_rtc::gui::Color::Green));

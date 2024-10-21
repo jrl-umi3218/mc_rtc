@@ -10,10 +10,9 @@ ExternalForcesController::ExternalForcesController(mc_rbdyn::RobotModulePtr rm,
                                                    Backend backend)
 : mc_control::fsm::Controller(rm, dt, config, backend)
 {
-  datastore().make_call("KinematicAnchorFrame::" + robot().name(),
-                        [](const mc_rbdyn::Robot & robot) {
-                          return sva::interpolate(robot.surfacePose("LeftFoot"), robot.surfacePose("RightFoot"), 0.5);
-                        });
+  datastore().make_call(
+      "KinematicAnchorFrame::" + robot().name(), [](const mc_rbdyn::Robot & robot)
+      { return sva::interpolate(robot.surfacePose("LeftFoot"), robot.surfacePose("RightFoot"), 0.5); });
 }
 
 void ExternalForcesController::reset(const mc_control::ControllerResetData & reset_data)

@@ -636,7 +636,7 @@ void StabilizerTask::setExternalWrenches(const std::vector<std::string> & surfac
   computeWrenchOffsetAndCoefficient<&ExternalWrench::target>(robot(), comOffsetTarget_, zmpCoefTarget_);
 }
 
-template<sva::ForceVecd StabilizerTask::ExternalWrench::*TargetOrMeasured>
+template<sva::ForceVecd StabilizerTask::ExternalWrench::* TargetOrMeasured>
 void StabilizerTask::computeWrenchOffsetAndCoefficient(const mc_rbdyn::Robot & robot,
                                                        Eigen::Vector3d & offset_gamma,
                                                        double & coef_kappa) const
@@ -669,7 +669,7 @@ void StabilizerTask::computeWrenchOffsetAndCoefficient(const mc_rbdyn::Robot & r
   offset_gamma /= zeta;
 }
 
-template<sva::ForceVecd StabilizerTask::ExternalWrench::*TargetOrMeasured>
+template<sva::ForceVecd StabilizerTask::ExternalWrench::* TargetOrMeasured>
 sva::ForceVecd StabilizerTask::computeExternalWrenchSum(const mc_rbdyn::Robot & robot,
                                                         const Eigen::Vector3d & com) const
 {
