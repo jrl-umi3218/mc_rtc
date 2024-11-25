@@ -67,7 +67,8 @@ inline bool iterate_binary_log(const std::string & fpath,
 {
   return iterate_binary_log(
       fpath,
-      [&callback](IterateBinaryLogData data) {
+      [&callback](IterateBinaryLogData data)
+      {
         return callback(data.keys, data.records, data.time.value_or(-1), data.copy_cb, data.raw_data,
                         data.raw_data_size);
       },
