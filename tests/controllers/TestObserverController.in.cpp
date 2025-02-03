@@ -199,10 +199,9 @@ public:
     BOOST_REQUIRE(allclose(realRobot().posW().rotation(), robot().posW().rotation()));
 
     // Add anchor frame
-    datastore().make_call("KinematicAnchorFrame::" + robot().name(),
-                          [](const mc_rbdyn::Robot & robot) {
-                            return sva::interpolate(robot.surfacePose("LeftFoot"), robot.surfacePose("RightFoot"), 0.5);
-                          });
+    datastore().make_call(
+        "KinematicAnchorFrame::" + robot().name(), [](const mc_rbdyn::Robot & robot)
+        { return sva::interpolate(robot.surfacePose("LeftFoot"), robot.surfacePose("RightFoot"), 0.5); });
   }
 
 private:

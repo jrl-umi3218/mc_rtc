@@ -782,7 +782,7 @@ private:
    *  @param offset_gamma [out] - Com offset
    *  @param coef_alpha [out] - ZmP coefficient
    */
-  template<sva::ForceVecd ExternalWrench::*TargetOrMeasured>
+  template<sva::ForceVecd ExternalWrench::* TargetOrMeasured>
   void computeWrenchOffsetAndCoefficient(const mc_rbdyn::Robot & robot,
                                          Eigen::Vector3d & offset_gamma,
                                          double & coef_kappa) const;
@@ -793,7 +793,7 @@ private:
    *  @param robot Robot used to transform surface wrenches (control robot or real robot)
    *  @param com Robot CoM
    */
-  template<sva::ForceVecd ExternalWrench::*TargetOrMeasured>
+  template<sva::ForceVecd ExternalWrench::* TargetOrMeasured>
   sva::ForceVecd computeExternalWrenchSum(const mc_rbdyn::Robot & robot, const Eigen::Vector3d & com) const;
 
   /** @brief Compute the position, force, and moment of the external contacts in the world frame.
