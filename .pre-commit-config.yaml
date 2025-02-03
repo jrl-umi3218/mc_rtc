@@ -11,7 +11,7 @@ repos:
   - id: check-useless-excludes
   - id: check-hooks-apply
 - repo: https://github.com/pre-commit/mirrors-clang-format
-  rev: v18.1.3
+  rev: v19.1.7
   hooks:
   - id: clang-format
     'types_or': [c++, c]
@@ -22,7 +22,7 @@ repos:
           utils/mc_bin_flatbuffers/.*
       )$
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.6.0
+  rev: v5.0.0
   hooks:
   - id: check-added-large-files
   - id: check-ast
@@ -52,7 +52,7 @@ repos:
   - id: mixed-line-ending
   - id: trailing-whitespace
 - repo: https://github.com/psf/black
-  rev: 24.3.0
+  rev: 25.1.0
   hooks:
   - id: black
     exclude: |
@@ -61,7 +61,7 @@ repos:
           utils/mc_log_gui/mc_log_ui/ui/.*
       )$
 - repo: https://github.com/PyCQA/flake8
-  rev: 7.0.0
+  rev: 7.1.1
   hooks:
   - id: flake8
     args:
