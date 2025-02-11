@@ -38,7 +38,7 @@ struct ArrowROImpl : public Element
   }
 
   /** Invalid element */
-  ArrowROImpl(){};
+  ArrowROImpl() {};
 
   constexpr static size_t write_size() { return Element::write_size() + 3 + ArrowConfig::write_size(); }
 
@@ -72,7 +72,7 @@ struct ArrowImpl : public ArrowROImpl<GetStart, GetEnd>
   }
 
   /** Invalid element */
-  ArrowImpl(){};
+  ArrowImpl() {};
 
   void write(mc_rtc::MessagePackBuilder & builder) { ArrowROImpl<GetStart, GetEnd>::write(builder, false); }
 
