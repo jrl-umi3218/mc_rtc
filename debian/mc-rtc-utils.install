@@ -10,5 +10,8 @@ usr/bin/mc_rtc_new_fsm_controller
 usr/bin/mc_log_ui
 usr/bin/mc_plot_logs
 usr/bin/mc_rtc_ticker
+usr/bin/mc_surfaces_visualization
+usr/bin/mc_convex_visualization
+usr/bin/mc_robot_visualization
 usr/share/applications/mc_log_ui.desktop
 usr/share/icons/*
