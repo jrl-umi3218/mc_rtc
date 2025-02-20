@@ -7,3 +7,4 @@ gem 'jekyll_inline_highlight'
 gem 'jekyll-toc'
 gem 'neatjson'
 gem 'jekyll-multiple-languages-plugin'
+gem "ffi", "< 1.17.0"
