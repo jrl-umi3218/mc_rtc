@@ -355,7 +355,7 @@
         <h1>アドミッタンスコントローラ</h1>
         
 
-        <p>このチュートリアルでは、本フレームワークで用意されている<code class="language-plaintext highlighter-rouge">AdmittanceSample</code>サンプルコントローラーの使い方と概念について説明します。このサンプルでは、<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1force_1_1AdmittanceTask" target="blank_"><code>mc_tasks::force::AdmittanceTask</code></a>を使用して、壁を押しながら<code class="language-plaintext highlighter-rouge">JVRC1</code>の手に加わる力を調節する方法を示します。</p>
+        <p>このチュートリアルでは、本フレームワークで用意されている<code class="language-plaintext highlighter-rouge">AdmittanceSample</code>サンプルコントローラーの使い方と概念について説明します。このサンプルでは、mc_tasks::force::AdmittanceTaskを使用して、壁を押しながら<code class="language-plaintext highlighter-rouge">JVRC1</code>の手に加わる力を調節する方法を示します。</p>
 
 <p>このコントローラーでは、以下の手順で処理を実行します。</p>
 
@@ -424,7 +424,7 @@
 
 <h3 id="standingbase-質量中心と胸部を管理する">StandingBase: 質量中心と胸部を管理する</h3>
 
-<p>この実験全体を通じて、ロボットの質量中心を両足の中点の真上に維持します。これを実現するには、<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1CoMTask" target="blank_"><code>mc_tasks::CoMTask</code></a>を使用します。また、胸部の過度な動きを抑えてより人間らしい動きとなるように、ロボットの胸部に<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1OrientationTask" target="blank_"><code>mc_tasks::OrientationTask</code></a>を追加します。この状態は、この有限オートマトン内にある他のすべての状態の基準状態として使用され、すべての状態がこの状態の動作を継承します。</p>
+<p>この実験全体を通じて、ロボットの質量中心を両足の中点の真上に維持します。これを実現するには、mc_tasks::CoMTaskを使用します。また、胸部の過度な動きを抑えてより人間らしい動きとなるように、ロボットの胸部にmc_tasks::OrientationTaskを追加します。この状態は、この有限オートマトン内にある他のすべての状態の基準状態として使用され、すべての状態がこの状態の動作を継承します。</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 重心位置を足の中間に、胴体をまっすぐに保つ</span>
   <span class="na">StandingBase</span><span class="pi">:</span>
@@ -444,7 +444,7 @@
 
 <h3 id="righthandtowall-手の移動経路">RightHandToWall: 手の移動経路</h3>
 
-<p>次に、ロボットの手を壁の近くまで前に動かします。これを行うには、<a href="/mc_rtc/jp/doxygen.html#structmc__tasks_1_1BSplineTrajectoryTask" target="blank_"><code>mc_tasks::BSplineTrajectoryTask</code></a>を使用します。このタスクでは、中間点の情報に基づいて、位置と向きがパラメーター化されたBスプライン曲線の移動経路が出力されます。このタスクでは、指定されたロボットの表面がこの移動経路に沿って制御されます。</p>
+<p>次に、ロボットの手を壁の近くまで前に動かします。これを行うには、mc_tasks::BSplineTrajectoryTaskを使用します。このタスクでは、中間点の情報に基づいて、位置と向きがパラメーター化されたBスプライン曲線の移動経路が出力されます。このタスクでは、指定されたロボットの表面がこの移動経路に沿って制御されます。</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 手先を壁近くに移動させる軌道</span>
   <span class="na">RightHandToWall</span><span class="pi">:</span>
@@ -501,7 +501,7 @@
             <span class="na">couple</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">.nan</span><span class="pi">,</span> <span class="nv">.nan</span><span class="pi">,</span> <span class="nv">.nan</span><span class="pi">]</span>
 </code></pre></div></div>
 
-<p>次の<code class="language-plaintext highlighter-rouge">RightHandKeepAdmittance</code>状態では、ParallelState（<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1ParallelState" target="blank_"><code>mc_control::fsm::ParallelState</code></a>）を使用して、先の状態を所定の時間だけ実行します。さらに、この状態を実行しつつ、壁に加わる力が一定となるように制御します。そのため、ロボットを前に押すと、手が後ろに動いて壁に加わる力が減少し、ロボットを後ろに引くと、それと反対の動作が行われます。</p>
+<p>次の<code class="language-plaintext highlighter-rouge">RightHandKeepAdmittance</code>状態では、ParallelState（mc_control::fsm::ParallelState）を使用して、先の状態を所定の時間だけ実行します。さらに、この状態を実行しつつ、壁に加わる力が一定となるように制御します。そのため、ロボットを前に押すと、手が後ろに動いて壁に加わる力が減少し、ロボットを後ろに引くと、それと反対の動作が行われます。</p>
 
 <h3 id="キネマティクスに基づいて壁の位置を更新する">キネマティクスに基づいて壁の位置を更新する</h3>
 
@@ -518,7 +518,7 @@
 
 <p>ただし、ロボットの動作開始位置が想定された開始位置とわずかに異なる場合があるため、想定された壁の位置が実際の壁の位置と異なる場合があります。しかし、先のアドミッタンス制御状態を使用することで、ロボットのグリッパーが壁に到達したかどうかがわかります。この情報に加えて、ロボットのキネマティクス情報を使用して（さらには、接触面が滑らないものと仮定して）、今回のモデルにおける壁の位置を更新します。これは、C++で実装された<code class="language-plaintext highlighter-rouge">UpdateWall</code>状態で実行します。この状態は、ロボットの指先の現在の推定位置を読み取り、指先が壁に触れるように壁の位置を更新します。</p>
 
-<p>なお、この状態では、<a href="/mc_rtc/jp/doxygen.html#structmc__observers_1_1KinematicInertialObserver" target="blank_"><code>mc_observers::KinematicInertialObserver</code></a>によって観測されたロボットの状態を使用して、実際のロボットにおける実際の手の位置が判定されます（<a href="/mc_rtc/jp/tutorials/recipes/observers.html">観測器のチュートリアル</a>を参照）。</p>
+<p>なお、この状態では、mc_observers::KinematicInertialObserverによって観測されたロボットの状態を使用して、実際のロボットにおける実際の手の位置が判定されます（<a href="/mc_rtc/jp/tutorials/recipes/observers.html">観測器のチュートリアル</a>を参照）。</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">UpdateWall</span><span class="o">::</span><span class="n">start</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl</span><span class="p">)</span>
 <span class="p">{</span>
@@ -538,7 +538,7 @@
 
 <h3 id="最初の姿勢に戻す">最初の姿勢に戻す</h3>
 
-<p>この有限オートマトンの残りの部分では、ロボットを最初の姿勢に戻します。まず、スムーズに遷移できるように、<code class="language-plaintext highlighter-rouge">RightHandReleaseAdmittance</code>を使用して手の圧力を解放し、手の圧力をほぼ0にします。次に、現在の位置から<code class="language-plaintext highlighter-rouge">10cm</code>後方に手を動かします。最後に、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1HalfSittingState" target="blank_"><code>mc_control::fsm::HalfSittingState</code></a>状態を使用して、最初の中腰の姿勢に戻します。今回は手の動きを明示的に指定していないため、中腰の姿勢に戻るまでに手と壁が衝突するおそれがあります。それを防ぐため、手と壁との間に衝突制約条件を追加します。</p>
+<p>この有限オートマトンの残りの部分では、ロボットを最初の姿勢に戻します。まず、スムーズに遷移できるように、<code class="language-plaintext highlighter-rouge">RightHandReleaseAdmittance</code>を使用して手の圧力を解放し、手の圧力をほぼ0にします。次に、現在の位置から<code class="language-plaintext highlighter-rouge">10cm</code>後方に手を動かします。最後に、mc_control::fsm::HalfSittingState状態を使用して、最初の中腰の姿勢に戻します。今回は手の動きを明示的に指定していないため、中腰の姿勢に戻るまでに手と壁が衝突するおそれがあります。それを防ぐため、手と壁との間に衝突制約条件を追加します。</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nl">RightHandMoveBack:</span>
     <span class="n">base</span><span class="o">:</span> <span class="n">StandingBase</span>

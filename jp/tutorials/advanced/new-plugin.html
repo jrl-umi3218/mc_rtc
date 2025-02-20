@@ -353,7 +353,7 @@
         <h1>mc_rtc用の新しいプラグインの実装方法</h1>
         
 
-        <p>mc_rtcでは、どのインターフェイスでも、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController" target="blank_"><code>mc_control::MCGlobalController</code></a>クラスを使用して本フレームワークのコントローラーが初期化されて実行されます。特に、反復実行時には<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController#a153432b8c6ebfc4f9484deb1439ca3ee" target="blank_"><code>mc_control::MCGlobalController::run()</code></a>関数が実行されます。</p>
+        <p>mc_rtcでは、どのインターフェイスでも、mc_control::MCGlobalControllerクラスを使用して本フレームワークのコントローラーが初期化されて実行されます。特に、反復実行時にはmc_control::MCGlobalController::run()関数が実行されます。</p>
 
 <p>本フレームワークではプラグインシステムが採用されており、このrun関数の開始時と終了時に実行されるコンポーネントを記述できます。</p>
 
@@ -368,13 +368,13 @@
 <h2 id="独自のプラグインを記述する">独自のプラグインを記述する</h2>
 
 
-<p>プラグインを記述するには、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1GlobalPlugin" target="blank_"><code>mc_control::GlobalPlugin</code></a>クラスから継承したクラスを記述します。さらに、以下の関数を実装します。</p>
+<p>プラグインを記述するには、mc_control::GlobalPluginクラスから継承したクラスを記述します。さらに、以下の関数を実装します。</p>
 
 <ul>
-  <li><a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1GlobalPlugin#acd8832c0335bbf2493bd04697b721bd7" target="blank_"><code>mc_control::GlobalPlugin::init()</code></a>は、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController#ac49cb563047d30361c781b96ec2a8e5d" target="blank_"><code>mc_control::MCGlobalController::init()</code></a>が呼び出されたときにmc_rtcによって呼び出されます。</li>
-  <li><a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1GlobalPlugin#a034ddfcb8958c36c5812cdb7e0a2e9ca" target="blank_"><code>mc_control::GlobalPlugin::reset()</code></a>は、コントローラーが変更されたときにmc_rtcによって呼び出されます。</li>
-  <li><a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1GlobalPlugin#a83ce36f99de7b4a3e7af152ed88e0f5b" target="blank_"><code>mc_control::GlobalPlugin::before()</code></a>は、実行関数の開始時に呼び出されます。</li>
-  <li><a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1GlobalPlugin#ab661e381f418ad5f9afa4adf25b4f282" target="blank_"><code>mc_control::GlobalPlugin::after()</code></a>は、実行関数の終了時に呼び出されます。</li>
+  <li>mc_control::GlobalPlugin::init()は、mc_control::MCGlobalController::init()が呼び出されたときにmc_rtcによって呼び出されます。</li>
+  <li>mc_control::GlobalPlugin::reset()は、コントローラーが変更されたときにmc_rtcによって呼び出されます。</li>
+  <li>mc_control::GlobalPlugin::before()は、実行関数の開始時に呼び出されます。</li>
+  <li>mc_control::GlobalPlugin::after()は、実行関数の終了時に呼び出されます。</li>
 </ul>
 
 <div class="alert alert-warning">最初のコントローラーの起動時、mc_rtcによってresetメソッドは呼び出されません。この場合、initメソッドのみが呼び出されます。必要であれば、initメソッドからresetメソッドを呼び出すことができます。</div>
