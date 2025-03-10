@@ -31,7 +31,7 @@ std::string make_temporary_path(const std::string & prefix)
   return out.string();
 }
 
-template<std::string RobotModule::*member, typename GetDefault>
+template<std::string RobotModule::* member, typename GetDefault>
 void set_or_default(mc_rbdyn::RobotModule & out, const std::string & value, GetDefault && get_default)
 {
   if(value.size() == 0) { out.*member = get_default(); }
@@ -713,8 +713,7 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
   {
     for(const auto & c : colsIn)
     {
-      auto it = std::find_if(colsOut.begin(), colsOut.end(),
-                             [&](const Collision & col)
+      auto it = std::find_if(colsOut.begin(), colsOut.end(), [&](const Collision & col)
                              { return col.body1 == convexName(c.body1) && col.body2 == convexName(c.body2); });
       if(it != colsOut.end()) { colsOut.erase(it); }
     }
