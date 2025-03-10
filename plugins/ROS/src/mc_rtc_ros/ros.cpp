@@ -183,6 +183,8 @@ private:
 
   /* Hold the address of the last init/update call */
   const mc_rbdyn::Robot * previous_robot = nullptr;
+  /* Slot to the Robots::onRemovedRobot signal */
+  mc_rbdyn::Robots::onRobotRemovedSlotT onRobotRemoved_;
   RobotStateData data;
   bool use_real;
 
@@ -246,6 +248,12 @@ RobotPublisherImpl::~RobotPublisherImpl()
 void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
 {
   if(&robot == previous_robot) { return; }
+  auto name = robot.name();
+  onRobotRemoved_ = robot.robots().onRobotRemoved().connect(
+      [this, name](const std::string & n)
+      {
+        if(n == name) { previous_robot = nullptr; }
+      });
   this->use_real = use_real;
   previous_robot = &robot;
 
