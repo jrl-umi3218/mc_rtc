@@ -494,9 +494,8 @@ void MCController::addRobotToGUI(const mc_rbdyn::Robot & r)
   data("joints").add(r.name(), r.module().ref_joint_order());
   data("frames").add(r.name(), r.frames());
   auto name = r.name();
-  gui()->addElement(
-      {"Robots"},
-      mc_rtc::gui::Robot(r.name(), [name, this]() -> const mc_rbdyn::Robot & { return this->outputRobot(name); }));
+  gui()->addElement({"Robots"}, mc_rtc::gui::Robot(r.name(), [name, this]() -> const mc_rbdyn::Robot &
+                                                   { return this->outputRobot(name); }));
   for(const auto & g : r.grippersByName())
   {
     addGripperToGUI(g.second.get(), *gui(), {"Global", "Grippers", r.name(), g.first});
