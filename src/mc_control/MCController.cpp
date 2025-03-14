@@ -904,6 +904,8 @@ void MCController::removeCollisions(const std::string & r1, const std::string & 
 void MCController::addContact(const Contact & c, bool show)
 {
   { // Ensure that optional robots have a name for correct unique set insertion
+    // TODO: it would be better not to store the robots name as optional
+    // in mc_control::Contact to avoid this kind of issue by-design
     auto & cc = const_cast<Contact &>(c);
     cc.r1 = c.r1.has_value() ? c.r1.value() : robot().name();
     cc.r2 = c.r2.has_value() ? c.r2.value() : robot().name();
@@ -947,6 +949,12 @@ void MCController::addContact(const Contact & c, bool show)
 
 void MCController::removeContact(const Contact & c)
 {
+  { // Ensure that optional robots have a name for correct unique set insertion
+    auto & cc = const_cast<Contact &>(c);
+    cc.r1 = c.r1.has_value() ? c.r1.value() : robot().name();
+    cc.r2 = c.r2.has_value() ? c.r2.value() : robot().name();
+  }
+
   contacts_changed_ |= static_cast<bool>(contacts_.erase(c));
   if(contacts_changed_)
   {
