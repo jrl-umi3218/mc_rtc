@@ -47,7 +47,6 @@ size_t TVMQPSolver::getContactIdx(const mc_rbdyn::Contact & contact)
 
 void TVMQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts)
 {
-  mc_rtc::log::warning("TVMQPSOLVER setContacts");
   for(const auto & c : contacts) { addContact(c); }
   size_t i = 0;
   for(auto it = contacts_.begin(); it != contacts_.end();)
@@ -339,7 +338,6 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
                                        const mc_rbdyn::Contact & contact, // pass polytope A matrix
                                        double dir)
 {
-  mc_rtc::log::warning("TVMQPSOLVER addContactToDynamics");
   auto it = dynamics_.find(robot);
   if(it == dynamics_.end()) { return; }
   if(constraints.size())
@@ -428,14 +426,12 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
 
 void TVMQPSolver::addContact(const mc_rbdyn::Contact & contact)
 {
-  mc_rtc::log::warning("TVMQPSOLVER addContact");
   size_t idx = contacts_.size();
   bool hasWork = false;
   // Add geometric contact constraint if it is not already present
   // Checks if friction/dof/polytope have changed. When true we need to update the friction cone/polytope constraint
   std::tie(idx, hasWork) = addVirtualContactImpl(contact);
   if(!hasWork) { return; }
-  mc_rtc::log::warning("TVMQPSOLVER work");
   auto & data = contactsData_[idx];
   const auto & r1 = robot(contact.r1Index());
   const auto & r2 = robot(contact.r2Index());
