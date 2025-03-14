@@ -360,7 +360,7 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
   const auto & feasiblePolytope = contact.feasiblePolytope();
   if(feasiblePolytope)
   {
-    mc_rtc::log::info("Adding polytope constraints: {}", feasiblePolytope->planeConstants.size());
+    mc_rtc::log::info("Adding polytope constraints: planeConstants size {}", feasiblePolytope->planeConstants.size());
     for(int i = 0; i < forces.numberOfVariables(); ++i)
     {
       auto & f = forces[i];
