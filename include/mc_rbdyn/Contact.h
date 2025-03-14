@@ -11,6 +11,7 @@
 #include <Tasks/QPContacts.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
+#include <optional>
 
 #include <memory>
 
@@ -43,12 +44,18 @@ MC_RBDYN_DLLAPI std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surf
                                                             const mc_rbdyn::Surface & envSurface,
                                                             const sva::PTransformd & X_es_rs);
 
+struct FeasiblePolytope
+{
+  Eigen::MatrixX3d planeNormals;
+  Eigen::VectorXd planeConstants;
+};
+
 struct ContactImpl;
 
 struct MC_RBDYN_DLLAPI Contact
 {
 public:
-  constexpr static int nrConeGen = 4;
+  constexpr static int nrConeGen = 4; // FIXME: use it in tvmqpsolver...
   constexpr static double defaultFriction = 0.7;
   constexpr static unsigned int nrBilatPoints = 4;
 
@@ -124,6 +131,9 @@ public:
   /** Set the contact friction */
   void friction(double friction);
 
+  void feasiblePolytope(const FeasiblePolytope & polytope);
+  const std::optional<FeasiblePolytope> & feasiblePolytope() const noexcept;
+
   std::pair<std::string, std::string> surfaces() const;
 
   sva::PTransformd X_0_r1s(const mc_rbdyn::Robot & robot) const;
@@ -163,6 +173,9 @@ private:
   mc_solver::QPContactPtr taskContact(const mc_rbdyn::Robots & robots,
                                       const sva::PTransformd & X_b1_b2,
                                       const std::vector<sva::PTransformd> & points) const;
+
+  //! If present superseeds friction cone constraints
+  std::optional<FeasiblePolytope> feasiblePolytope_;
 
 public:
   static mc_rbdyn::Contact load(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & config);
