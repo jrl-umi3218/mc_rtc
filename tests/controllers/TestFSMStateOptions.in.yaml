@@ -10,12 +10,10 @@ constraints:
     damper: [0.1, 0.01, 0.5]
   - type: contact
 contacts:
-  - r1: jvrc1
-    r2: ground
+  - r2: ground
     r1Surface: LeftFoot
     r2Surface: AllGround
-  - r1: jvrc1
-    r2: ground
+  - r2: ground
     r1Surface: RightFoot
     r2Surface: AllGround
 collisions:
@@ -24,8 +22,7 @@ states:
   TestContactsManipulation:
     base: HalfSitting
     RemoveContacts: &default-contacts
-      - r1: jvrc1
-        r2: ground
+      - r2: ground
         r1Surface: LeftFoot
         r2Surface: AllGround
       - r1: jvrc1
@@ -33,8 +30,7 @@ states:
         r1Surface: RightFoot
         r2Surface: AllGround
     AddContacts: &special-contacts
-      - r1: jvrc1
-        r2: ground
+      - r2: ground
         r1Surface: LeftFootCenter
         r2Surface: AllGround
         friction: 0.8

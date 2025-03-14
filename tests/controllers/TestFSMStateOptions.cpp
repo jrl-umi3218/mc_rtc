@@ -50,9 +50,13 @@ public:
       Eigen::Vector6d dof = Eigen::Vector6d::Ones();
       dof(2) = 0.0;
       BOOST_REQUIRE(hasContact("RightFootCenter", 0.8, dof));
+      BOOST_REQUIRE(contacts().size() == 2);
     }
     if(iter_ == 1) // TestCollisionsManipulation
     {
+      BOOST_REQUIRE(solver().contacts().size()
+                    == 2); // note: contacts are added to the QP at the start of the next call to mc_controller::run.
+                           // Thus this checks for the contacts added on the previous iteration
       BOOST_REQUIRE(executor_.state() == "TestCollisionsManipulation");
       BOOST_REQUIRE(hasCollision("jvrc1", "ground", {"L_WRIST_Y_S", "ground", 0.05, 0.01, 0}));
       BOOST_REQUIRE(!hasCollision("jvrc1", "jvrc1", {"R_WRIST_Y_S", "R_HIP_Y_S", 0.05, 0.025, 0}));
@@ -111,6 +115,21 @@ public:
   {
     fsm::Contact c("jvrc1", "ground", s, "AllGround", friction, dof);
     if(!hasContact(c)) { return false; }
+    fsm::Contact empty_r1_robot_c("", "ground", s, "AllGround", friction, dof);
+    if(hasContact(empty_r1_robot_c))
+    {
+      mc_rtc::log::error("Found a contact with an empty r1 robot name, this shouldn't be possible {}", s);
+      // There used to be a bug where inserting a contact with an empty r1/r2 robot
+      // would add a contact with an empty robot name, thus leading to duplicated
+      // contacts when one would add the same contact by explicitely specifing r1/r2
+      return false;
+    }
+    fsm::Contact empty_r2_robot_c("jvrc1", "", s, "AllGround", friction, dof);
+    if(hasContact(empty_r2_robot_c))
+    {
+      mc_rtc::log::error("Found a contact with an empty r2 robot name, this shouldn't be possible {}", s);
+      return false;
+    }
     const auto & ref = contact(c);
     return ref.friction == c.friction && ref.dof == c.dof;
   }

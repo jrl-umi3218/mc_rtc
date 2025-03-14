@@ -307,8 +307,10 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
     }
   }
   /** Create contacts */
-  if(config.has("contacts")) { contacts_ = config("contacts"); }
-  contacts_changed_ = true;
+  if(auto contacts = config.find("contacts"))
+  {
+    for(const auto & c : *contacts) { addContact(c); }
+  }
   mc_rtc::log::info("MCController(base) ready");
 }
 
@@ -898,12 +900,18 @@ void MCController::removeCollisions(const std::string & r1, const std::string & 
 
 void MCController::addContact(const Contact & c)
 {
-  bool inserted;
-  ContactSet::iterator it;
-  std::tie(it, inserted) = contacts_.insert(c);
+  { // Ensure that optional robots have a name for correct unique set insertion
+    // TODO: it would be better not to store the robots name as optional
+    // in mc_control::Contact to avoid this kind of issue by-design
+    auto & cc = const_cast<Contact &>(c);
+    cc.r1 = c.r1.has_value() ? c.r1.value() : robot().name();
+    cc.r2 = c.r2.has_value() ? c.r2.value() : robot().name();
+  }
+
+  auto [it, inserted] = contacts_.insert(c);
   contacts_changed_ |= inserted;
-  const auto & r1 = c.r1.has_value() ? c.r1.value() : robot().name();
-  const auto & r2 = c.r2.has_value() ? c.r2.value() : robot().name();
+  const auto & r1 = c.r1.value();
+  const auto & r2 = c.r2.value();
   if(!inserted)
   {
     if(it->dof != c.dof)
@@ -929,6 +937,12 @@ void MCController::addContact(const Contact & c)
 
 void MCController::removeContact(const Contact & c)
 {
+  { // Ensure that optional robots have a name for correct unique set insertion
+    auto & cc = const_cast<Contact &>(c);
+    cc.r1 = c.r1.has_value() ? c.r1.value() : robot().name();
+    cc.r2 = c.r2.has_value() ? c.r2.value() : robot().name();
+  }
+
   contacts_changed_ |= static_cast<bool>(contacts_.erase(c));
   if(contacts_changed_)
   {
