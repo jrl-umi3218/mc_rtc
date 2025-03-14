@@ -149,7 +149,7 @@ private:
                             const std::vector<sva::PTransformd> & points,
                             tvm::VariableVector & forces,
                             std::vector<tvm::TaskWithRequirementsPtr> & constraints,
-                            const Eigen::MatrixXd & frictionCone,
+                            const mc_rbdyn::Contact & contact,
                             double dir);
 };
 
