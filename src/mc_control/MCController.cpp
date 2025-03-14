@@ -764,6 +764,7 @@ void MCController::reset(const ControllerResetData & reset_data)
 
 void MCController::updateContacts()
 {
+  mc_rtc::log::warning("updateContacts() called");
   if(contacts_changed_ && contact_constraint_)
   {
     std::vector<mc_rbdyn::Contact> contacts;
@@ -795,6 +796,8 @@ void MCController::updateContacts()
       auto r2Index = robot(r2).robotIndex();
       contacts.emplace_back(robots(), r1Index, r2Index, c.r1Surface, c.r2Surface, c.friction);
       contacts.back().dof(c.dof);
+      contacts.back().feasiblePolytope({});
+      mc_rtc::log::warning("updateContacts() feasible polytope");
       if(solver().backend() == Backend::Tasks)
       {
         auto cId = contacts.back().contactId(robots());

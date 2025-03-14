@@ -447,6 +447,16 @@ void Contact::friction(double friction)
   impl->friction = friction;
 }
 
+void Contact::feasiblePolytope(const mc_rbdyn::FeasiblePolytope & polytope)
+{
+  feasiblePolytope_ = polytope;
+}
+
+const std::optional<mc_rbdyn::FeasiblePolytope> & Contact::feasiblePolytope() const noexcept
+{
+  return feasiblePolytope_;
+}
+
 Contact Contact::swap(const mc_rbdyn::Robots & robots) const
 {
   const auto & c = *this;

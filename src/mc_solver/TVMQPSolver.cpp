@@ -21,6 +21,7 @@ namespace mc_solver
 
 inline static Eigen::MatrixXd discretizedFrictionCone(double muI)
 {
+  // 4 faces, 3 forces
   Eigen::MatrixXd C(4, 3);
   double mu = muI / std::sqrt(2);
   C << Eigen::Matrix2d::Identity(), Eigen::Vector2d::Constant(mu), -Eigen::Matrix2d::Identity(),
@@ -46,6 +47,7 @@ size_t TVMQPSolver::getContactIdx(const mc_rbdyn::Contact & contact)
 
 void TVMQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts)
 {
+  mc_rtc::log::warning("TVMQPSOLVER setContacts");
   for(const auto & c : contacts) { addContact(c); }
   size_t i = 0;
   for(auto it = contacts_.begin(); it != contacts_.end();)
@@ -261,6 +263,9 @@ void TVMQPSolver::addDynamicsConstraint(mc_solver::DynamicsConstraint * dyn)
                                  r.name());
   }
   dynamics_[r.name()] = dyn;
+  // NOTE: Add polytope to contact mc_rbdyn::Contact
+  // TODO: Pass polytope + offsets to addContactToDynamics
+  // TODO: Reformulate friction cone constraint
   for(size_t i = 0; i < contacts_.size(); ++i)
   {
     const auto & contact = contacts_[i];
@@ -275,11 +280,10 @@ void TVMQPSolver::addDynamicsConstraint(mc_solver::DynamicsConstraint * dyn)
       const auto & s2 = *contact.r2Surface();
       const auto & f1 = r1.frame(s1.name());
       const auto & f2 = r2.frame(s2.name());
-      const auto C = discretizedFrictionCone(contact.friction());
       // FIXME Debug mc_rbdyn::intersection
       // auto s1Points = mc_rbdyn::intersection(s1, s2);
       const auto & s1Points = s1.points();
-      if(isR1) { addContactToDynamics(r1.name(), f1, s1Points, data.f1_, data.f1Constraints_, C, 1.0); }
+      if(isR1) { addContactToDynamics(r1.name(), f1, s1Points, data.f1_, data.f1Constraints_, contact, 1.0); }
       if(isR2)
       {
         std::vector<sva::PTransformd> s2Points;
@@ -287,7 +291,7 @@ void TVMQPSolver::addDynamicsConstraint(mc_solver::DynamicsConstraint * dyn)
         auto X_b2_b1 =
             r1.mbc().bodyPosW[r1.bodyIndexByName(f1.body())] * r2.mbc().bodyPosW[r2.bodyIndexByName(f2.body())].inv();
         for(const auto & X_b1_p : s1Points) { s2Points.push_back(X_b1_p * X_b2_b1); }
-        addContactToDynamics(r2.name(), f2, s2Points, data.f2_, data.f2Constraints_, C, -1.0);
+        addContactToDynamics(r2.name(), f2, s2Points, data.f2_, data.f2Constraints_, contact, -1.0);
       }
     }
   }
@@ -332,9 +336,10 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
                                        const std::vector<sva::PTransformd> & points,
                                        tvm::VariableVector & forces,
                                        std::vector<tvm::TaskWithRequirementsPtr> & constraints,
-                                       const Eigen::MatrixXd & frictionCone,
+                                       const mc_rbdyn::Contact & contact, // pass polytope A matrix
                                        double dir)
 {
+  mc_rtc::log::warning("TVMQPSOLVER addContactToDynamics");
   auto it = dynamics_.find(robot);
   if(it == dynamics_.end()) { return; }
   if(constraints.size())
@@ -347,13 +352,33 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
   {
     it->second->removeFromSolverImpl(*this);
     auto & dyn = it->second->dynamicFunction();
+    // create decision variables
+    // array of decision variables for each contact
+    // vec3d for each point
     forces = dyn.addContact(frame, points, dir);
     it->second->addToSolverImpl(*this);
   }
-  for(int i = 0; i < forces.numberOfVariables(); ++i)
+
+  const auto & feasiblePolytope = contact.feasiblePolytope();
+  if(feasiblePolytope)
   {
-    auto & f = forces[i];
-    constraints.push_back(problem_.add(dir * frictionCone * f >= 0.0, {tvm::requirements::PriorityLevel(0)}));
+    mc_rtc::log::info("Adding polytope constraints: {}", feasiblePolytope->planeConstants.size());
+    for(int i = 0; i < forces.numberOfVariables(); ++i)
+    {
+      auto & f = forces[i];
+      constraints.push_back(
+          problem_.add(dir * feasiblePolytope->planeNormals * f <= dir * feasiblePolytope->planeConstants,
+                       {tvm::requirements::PriorityLevel(0)}));
+    }
+  }
+  else
+  {
+    const auto frictionCone = discretizedFrictionCone(contact.friction());
+    for(int i = 0; i < forces.numberOfVariables(); ++i)
+    {
+      auto & f = forces[i];
+      constraints.push_back(problem_.add(dir * frictionCone * f >= 0.0, {tvm::requirements::PriorityLevel(0)}));
+    }
   }
 }
 
@@ -366,9 +391,9 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
     const auto & oldContact = contacts_[idx];
     if(oldContact.dof() == contact.dof() && oldContact.friction() == contact.friction())
     {
-      return std::make_tuple(idx, hasWork);
+      return std::make_tuple(idx, hasWork || contact.feasiblePolytope());
     }
-    hasWork = contact.friction() != oldContact.friction();
+    hasWork = contact.feasiblePolytope() || contact.friction() != oldContact.friction();
     contacts_[idx] = contact;
   }
   else
@@ -403,10 +428,14 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
 
 void TVMQPSolver::addContact(const mc_rbdyn::Contact & contact)
 {
+  mc_rtc::log::warning("TVMQPSOLVER addContact");
   size_t idx = contacts_.size();
   bool hasWork = false;
+  // Add geometric contact constraint if it is not already present
+  // Checks if friction/dof/polytope have changed. When true we need to update the friction cone/polytope constraint
   std::tie(idx, hasWork) = addVirtualContactImpl(contact);
   if(!hasWork) { return; }
+  mc_rtc::log::warning("TVMQPSOLVER work");
   auto & data = contactsData_[idx];
   const auto & r1 = robot(contact.r1Index());
   const auto & r2 = robot(contact.r2Index());
@@ -414,12 +443,12 @@ void TVMQPSolver::addContact(const mc_rbdyn::Contact & contact)
   const auto & s2 = *contact.r2Surface();
   const auto & f1 = r1.frame(s1.name());
   const auto & f2 = r2.frame(s2.name());
-  // FIXME Let the user decide how much the friction cone should be discretized
-  auto C = discretizedFrictionCone(contact.friction());
+
   auto addContactForce = [&](const std::string & robot, const mc_rbdyn::RobotFrame & frame,
                              const std::vector<sva::PTransformd> & points, tvm::VariableVector & forces,
                              std::vector<tvm::TaskWithRequirementsPtr> & constraints, double dir)
-  { addContactToDynamics(robot, frame, points, forces, constraints, C, dir); };
+  { addContactToDynamics(robot, frame, points, forces, constraints, contact, dir); };
+
   // FIXME These points computation are a waste of time if they are not needed
   // FIXME Debug mc_rbdyn::intersection
   // auto s1Points = mc_rbdyn::intersection(s1, s2);
