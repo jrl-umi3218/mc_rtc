@@ -762,6 +762,7 @@ void MCController::reset(const ControllerResetData & reset_data)
 
 void MCController::updateContacts()
 {
+  mc_rtc::log::warning("updateContacts() called");
   if(contacts_changed_ && contact_constraint_)
   {
     std::vector<mc_rbdyn::Contact> contacts;
@@ -793,6 +794,8 @@ void MCController::updateContacts()
       auto r2Index = robot(r2).robotIndex();
       contacts.emplace_back(robots(), r1Index, r2Index, c.r1Surface, c.r2Surface, c.friction);
       contacts.back().dof(c.dof);
+      contacts.back().feasiblePolytope({});
+      mc_rtc::log::warning("updateContacts() feasible polytope");
       if(solver().backend() == Backend::Tasks)
       {
         auto cId = contacts.back().contactId(robots());
@@ -898,9 +901,7 @@ void MCController::removeCollisions(const std::string & r1, const std::string & 
 
 void MCController::addContact(const Contact & c)
 {
-  bool inserted;
-  ContactSet::iterator it;
-  std::tie(it, inserted) = contacts_.insert(c);
+  auto [it, inserted] = contacts_.insert(c);
   contacts_changed_ |= inserted;
   const auto & r1 = c.r1.has_value() ? c.r1.value() : robot().name();
   const auto & r2 = c.r2.has_value() ? c.r2.value() : robot().name();
