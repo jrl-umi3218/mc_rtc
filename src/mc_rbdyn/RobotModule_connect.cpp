@@ -100,7 +100,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   auto out = *this;
 
   // Handle general options
-#define SET_OR_DEFAULT(NAME, CALLBACK) set_or_default<&RobotModule::NAME>(out, params.NAME, CALLBACK)
+#define SET_OR_DEFAULT(NAME, CALLBACK) set_or_default<&RobotModule::NAME>(out, params.NAME##_, CALLBACK)
 #define SET_OR_DEFAULT_DIRECTORY(NAME, CALLBACK) \
   SET_OR_DEFAULT(NAME, CALLBACK);                \
   if(!fs::exists(out.NAME)) { fs::create_directories(out.NAME); }
@@ -111,26 +111,26 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   if(!fs::exists(urdf_dir)) { fs::create_directories(urdf_dir); }
   SET_OR_DEFAULT_DIRECTORY(rsdf_dir, ([&]() { return (fs::path(out.path) / "rsdf" / out.name).string(); }));
   SET_OR_DEFAULT_DIRECTORY(calib_dir, ([&]() { return (fs::path(out.path) / "calib").string(); }));
-  if(!params.useGripperSafetyFromThis) { out._gripperSafety = other._gripperSafety; }
-  if(!params.useLIPMStabilizerConfigFromThis) { out._lipmStabilizerConfig = other._lipmStabilizerConfig; }
+  if(!params.useGripperSafetyFromThis_) { out._gripperSafety = other._gripperSafety; }
+  if(!params.useLIPMStabilizerConfigFromThis_) { out._lipmStabilizerConfig = other._lipmStabilizerConfig; }
 #undef SET_OR_DEFAULT
 #undef SET_OR_DEFAULT_DIRECTORY
 
   // A few helpers to handle name remapping
-  auto bodyName = [&](const std::string & body) { return prefixed_or_mapping(body, params.bodyMapping, prefix); };
-  auto jointName = [&](const std::string & joint) { return prefixed_or_mapping(joint, params.jointMapping, prefix); };
+  auto bodyName = [&](const std::string & body) { return prefixed_or_mapping(body, params.bodyMapping_, prefix); };
+  auto jointName = [&](const std::string & joint) { return prefixed_or_mapping(joint, params.jointMapping_, prefix); };
   auto convexName = [&](const std::string & convex)
-  { return prefixed_or_mapping(convex, params.convexMapping, prefix); };
+  { return prefixed_or_mapping(convex, params.convexMapping_, prefix); };
   auto gripperName = [&](const std::string & gripper)
-  { return prefixed_or_mapping(gripper, params.gripperMapping, prefix); };
+  { return prefixed_or_mapping(gripper, params.gripperMapping_, prefix); };
   auto surfaceName = [&](const std::string & surface)
-  { return prefixed_or_mapping(surface, params.surfaceMapping, prefix); };
+  { return prefixed_or_mapping(surface, params.surfaceMapping_, prefix); };
   auto forceSensorName = [&](const std::string & forceSensor)
-  { return prefixed_or_mapping(forceSensor, params.forceSensorMapping, prefix); };
+  { return prefixed_or_mapping(forceSensor, params.forceSensorMapping_, prefix); };
   auto bodySensorName = [&](const std::string & bodySensor)
-  { return prefixed_or_mapping(bodySensor, params.bodySensorMapping, prefix); };
+  { return prefixed_or_mapping(bodySensor, params.bodySensorMapping_, prefix); };
   auto deviceName = [&](const std::string & device)
-  { return prefixed_or_mapping(device, params.deviceMapping, prefix); };
+  { return prefixed_or_mapping(device, params.deviceMapping_, prefix); };
 
   // Build a new MultiBodyGraph from this and other
   auto & mbg = out.mbg;
@@ -161,11 +161,11 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
     mbg.linkBodies(bodyName(predBody.name()), X_pred_joint, bodyName(succBody.name()), X_succ_joint,
                    jointName(other.mb.joint(static_cast<int>(i)).name()));
   }
-  std::string connectJointName = params.jointName;
+  std::string connectJointName = params.jointName_;
   if(connectJointName.size() == 0) { connectJointName = fmt::format("{}_connect_{}_{}", name, prefix, other.name); }
-  rbd::Joint connectJoint{params.jointType, params.jointAxis, params.jointForward, connectJointName};
+  rbd::Joint connectJoint{params.jointType_, params.jointAxis_, params.jointForward_, connectJointName};
   mbg.addJoint(connectJoint);
-  mbg.linkBodies(this_body, params.X_this_connection, bodyName(other_body), params.X_other_connection,
+  mbg.linkBodies(this_body, params.X_this_connection_, bodyName(other_body), params.X_other_connection_,
                  connectJointName);
 
   /** Create a new MultiBodyGraph which has the same base as this */
@@ -182,70 +182,70 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   /** Check and add the provided bounds for the connection joint */
   for(size_t i = 0; i < 2; ++i)
   {
-    if(params.jointLimits[i].size() != static_cast<size_t>(connectJoint.params()))
+    if(params.jointLimits_[i].size() != static_cast<size_t>(connectJoint.params()))
     {
       mc_rtc::log::error_and_throw<std::runtime_error>(
           "You provided invalid position limits for the connection joint, expected {} but got {}",
-          connectJoint.params(), params.jointLimits[i].size());
+          connectJoint.params(), params.jointLimits_[i].size());
     }
-    out._bounds[i][connectJointName] = params.jointLimits[i];
+    out._bounds[i][connectJointName] = params.jointLimits_[i];
   }
   for(size_t i = 2; i < 6; ++i)
   {
-    if(params.jointLimits[i].size() != static_cast<size_t>(connectJoint.dof()))
+    if(params.jointLimits_[i].size() != static_cast<size_t>(connectJoint.dof()))
     {
       mc_rtc::log::error_and_throw<std::runtime_error>(
           "You provided invalid velocity/torque limits for the connection joint, expected {} but got {}",
-          connectJoint.params(), params.jointLimits[i].size());
+          connectJoint.params(), params.jointLimits_[i].size());
     }
-    out._bounds[i][connectJointName] = params.jointLimits[i];
+    out._bounds[i][connectJointName] = params.jointLimits_[i];
   }
   for(size_t i = 0; i < 2; ++i)
   {
-    const auto & limit = params.jointAccelerationLimits[i];
+    const auto & limit = params.jointAccelerationLimits_[i];
     if(limit.size() != 0 && limit.size() != static_cast<size_t>(connectJoint.dof()))
     {
       mc_rtc::log::error_and_throw<std::runtime_error>(
           "You provided invalid joint acceleration limits for the connection joint, expected {} but got {}",
           connectJoint.dof(), limit.size());
     }
-    if(params.jointAccelerationLimits[i].size() == 0) { continue; }
+    if(params.jointAccelerationLimits_[i].size() == 0) { continue; }
     if(out._accelerationBounds.size() < 2) { out._accelerationBounds.resize(2); }
-    out._accelerationBounds[i][connectJointName] = params.jointAccelerationLimits[i];
+    out._accelerationBounds[i][connectJointName] = params.jointAccelerationLimits_[i];
   }
   for(size_t i = 0; i < 2; ++i)
   {
-    const auto & limit = params.jointTorqueDerivativeLimits[i];
+    const auto & limit = params.jointTorqueDerivativeLimits_[i];
     if(limit.size() != 0 && limit.size() != static_cast<size_t>(connectJoint.dof()))
     {
       mc_rtc::log::error_and_throw<std::runtime_error>(
           "You provided invalid joint torqueDerivative limits for the connection joint, expected {} but got {}",
           connectJoint.dof(), limit.size());
     }
-    if(params.jointTorqueDerivativeLimits[i].size() == 0) { continue; }
+    if(params.jointTorqueDerivativeLimits_[i].size() == 0) { continue; }
     if(out._torqueDerivativeBounds.size() < 2) { out._torqueDerivativeBounds.resize(2); }
-    out._torqueDerivativeBounds[i][connectJointName] = params.jointTorqueDerivativeLimits[i];
+    out._torqueDerivativeBounds[i][connectJointName] = params.jointTorqueDerivativeLimits_[i];
   }
   for(size_t i = 0; i < 2; ++i)
   {
-    const auto & limit = params.jointJerkLimits[i];
+    const auto & limit = params.jointJerkLimits_[i];
     if(limit.size() != 0 && limit.size() != static_cast<size_t>(connectJoint.dof()))
     {
       mc_rtc::log::error_and_throw<std::runtime_error>(
           "You provided invalid joint jerk limits for the connection joint, expected {} but got {}", connectJoint.dof(),
           limit.size());
     }
-    if(params.jointJerkLimits[i].size() == 0) { continue; }
+    if(params.jointJerkLimits_[i].size() == 0) { continue; }
     if(out._jerkBounds.size() < 2) { out._jerkBounds.resize(2); }
-    out._jerkBounds[i][connectJointName] = params.jointJerkLimits[i];
+    out._jerkBounds[i][connectJointName] = params.jointJerkLimits_[i];
   }
 
   /** Check the stance configuration for the connection joint */
-  if(params.jointStance.size() != static_cast<size_t>(connectJoint.params()))
+  if(params.jointStance_.size() != static_cast<size_t>(connectJoint.params()))
   {
     mc_rtc::log::error_and_throw<std::runtime_error>(
         "You provided an invalid configuration for the connection joint stance, expected {} params but got {}",
-        connectJoint.params(), params.jointStance.size());
+        connectJoint.params(), params.jointStance_.size());
   }
 
   /** Update all bounds */
@@ -517,18 +517,18 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
   mc_rtc::log::info("Disconnecting {} from {} RobotModule", other.name, name);
 
   // A few helpers to handle name remapping
-  auto bodyName = [&](const std::string & body) { return prefixed_or_mapping(body, params.bodyMapping, prefix); };
-  auto jointName = [&](const std::string & joint) { return prefixed_or_mapping(joint, params.jointMapping, prefix); };
+  auto bodyName = [&](const std::string & body) { return prefixed_or_mapping(body, params.bodyMapping_, prefix); };
+  auto jointName = [&](const std::string & joint) { return prefixed_or_mapping(joint, params.jointMapping_, prefix); };
   auto convexName = [&](const std::string & convex)
-  { return prefixed_or_mapping(convex, params.convexMapping, prefix); };
+  { return prefixed_or_mapping(convex, params.convexMapping_, prefix); };
   auto gripperName = [&](const std::string & gripper)
-  { return prefixed_or_mapping(gripper, params.gripperMapping, prefix); };
+  { return prefixed_or_mapping(gripper, params.gripperMapping_, prefix); };
   auto forceSensorName = [&](const std::string & forceSensor)
-  { return prefixed_or_mapping(forceSensor, params.forceSensorMapping, prefix); };
+  { return prefixed_or_mapping(forceSensor, params.forceSensorMapping_, prefix); };
   auto bodySensorName = [&](const std::string & bodySensor)
-  { return prefixed_or_mapping(bodySensor, params.bodySensorMapping, prefix); };
+  { return prefixed_or_mapping(bodySensor, params.bodySensorMapping_, prefix); };
   auto deviceName = [&](const std::string & device)
-  { return prefixed_or_mapping(device, params.deviceMapping, prefix); };
+  { return prefixed_or_mapping(device, params.deviceMapping_, prefix); };
   std::string connection_joint = "";
   {
     const auto & bIndexByName = mb.bodyIndexByName();
@@ -569,7 +569,7 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
   auto out = *this;
 
   // Name requires specific handling
-  if(params.name != "") { out.name = params.name; }
+  if(params.name_ != "") { out.name = params.name_; }
   else
   {
     std::string search = fmt::format("{}_{}", prefix, other.name);
@@ -578,7 +578,7 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
   }
 
   // Handle other general options
-#define SET_OR_DEFAULT(NAME, CALLBACK) set_or_default<&RobotModule::NAME>(out, params.NAME, CALLBACK)
+#define SET_OR_DEFAULT(NAME, CALLBACK) set_or_default<&RobotModule::NAME>(out, params.NAME##_, CALLBACK)
 #define SET_OR_DEFAULT_DIRECTORY(NAME, CALLBACK) \
   SET_OR_DEFAULT(NAME, CALLBACK);                \
   if(!fs::exists(out.NAME)) { fs::create_directories(out.NAME); }
