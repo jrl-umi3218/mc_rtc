@@ -11,8 +11,11 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/parsers/urdf.h>
 
+// For unique_path only
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include <tinyxml2.h>
 
@@ -24,10 +27,12 @@ namespace
 
 std::string make_temporary_path(const std::string & prefix)
 {
-  auto tmp = bfs::temp_directory_path();
+  auto tmp = fs::temp_directory_path();
   auto pattern = fmt::format("{}-%%%%-%%%%-%%%%-%%%%", prefix);
-  auto out = tmp / bfs::unique_path(pattern);
-  bfs::create_directories(out);
+  // std::filesystem does not have a unique_path function in c++17
+  // keep boost around for now
+  auto out = tmp / bfs::unique_path(pattern).string();
+  fs::create_directories(out);
   return out.string();
 }
 
@@ -65,17 +70,17 @@ Eigen::Vector3d axisFromJoint(const rbd::Joint & j)
 template<typename SurfaceFileCallback>
 void processSurfaces(const std::string & rsdf_dir_in, const std::string & rsdf_dir_out, SurfaceFileCallback && callback)
 {
-  bfs::path pathIn(rsdf_dir_in);
-  bfs::path pathOut(rsdf_dir_out);
-  if(!bfs::exists(pathIn) || !bfs::is_directory(pathIn)) { return; }
-  std::vector<bfs::path> files;
-  std::copy(bfs::directory_iterator(pathIn), bfs::directory_iterator(), std::back_inserter(files));
+  fs::path pathIn(rsdf_dir_in);
+  fs::path pathOut(rsdf_dir_out);
+  if(!fs::exists(pathIn) || !fs::is_directory(pathIn)) { return; }
+  std::vector<fs::path> files;
+  std::copy(fs::directory_iterator(pathIn), fs::directory_iterator(), std::back_inserter(files));
   for(const auto & f : files)
   {
     if(f.extension() == ".rsdf")
     {
-      bfs::path out = pathOut / f.leaf();
-      bfs::copy(f, out);
+      fs::path out = pathOut / f.filename();
+      fs::copy(f, out);
       callback(out.string());
     }
   }
@@ -98,14 +103,14 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
 #define SET_OR_DEFAULT(NAME, CALLBACK) set_or_default<&RobotModule::NAME>(out, params.NAME, CALLBACK)
 #define SET_OR_DEFAULT_DIRECTORY(NAME, CALLBACK) \
   SET_OR_DEFAULT(NAME, CALLBACK);                \
-  if(!bfs::exists(out.NAME)) { bfs::create_directories(out.NAME); }
+  if(!fs::exists(out.NAME)) { fs::create_directories(out.NAME); }
   SET_OR_DEFAULT(name, ([&, this]() { return fmt::format("{}_{}_{}", this->name, prefix, other.name); }));
   SET_OR_DEFAULT_DIRECTORY(path, ([&]() { return make_temporary_path(out.name); }));
-  SET_OR_DEFAULT(urdf_path, ([&]() { return (bfs::path(out.path) / "urdf" / (out.name + ".urdf")).string(); }));
-  auto urdf_dir = bfs::path(out.urdf_path).parent_path();
-  if(!bfs::exists(urdf_dir)) { bfs::create_directories(urdf_dir); }
-  SET_OR_DEFAULT_DIRECTORY(rsdf_dir, ([&]() { return (bfs::path(out.path) / "rsdf" / out.name).string(); }));
-  SET_OR_DEFAULT_DIRECTORY(calib_dir, ([&]() { return (bfs::path(out.path) / "calib").string(); }));
+  SET_OR_DEFAULT(urdf_path, ([&]() { return (fs::path(out.path) / "urdf" / (out.name + ".urdf")).string(); }));
+  auto urdf_dir = fs::path(out.urdf_path).parent_path();
+  if(!fs::exists(urdf_dir)) { fs::create_directories(urdf_dir); }
+  SET_OR_DEFAULT_DIRECTORY(rsdf_dir, ([&]() { return (fs::path(out.path) / "rsdf" / out.name).string(); }));
+  SET_OR_DEFAULT_DIRECTORY(calib_dir, ([&]() { return (fs::path(out.path) / "calib").string(); }));
   if(!params.useGripperSafetyFromThis) { out._gripperSafety = other._gripperSafety; }
   if(!params.useLIPMStabilizerConfigFromThis) { out._lipmStabilizerConfig = other._lipmStabilizerConfig; }
 #undef SET_OR_DEFAULT
@@ -487,8 +492,8 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
                     updateSurfaces("cylindrical_surface");
                     updateSurfaces("gripper_surface");
                     doc.SaveFile(rsdf.c_str());
-                    auto p = bfs::path(rsdf);
-                    bfs::rename(p, p.parent_path() / (prefix + p.leaf().string()));
+                    auto p = fs::path(rsdf);
+                    fs::rename(p, p.parent_path() / (prefix + p.filename().string()));
                   });
 
   // Generate a module file so that the generated RobotModule can be re-used
@@ -576,13 +581,13 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
 #define SET_OR_DEFAULT(NAME, CALLBACK) set_or_default<&RobotModule::NAME>(out, params.NAME, CALLBACK)
 #define SET_OR_DEFAULT_DIRECTORY(NAME, CALLBACK) \
   SET_OR_DEFAULT(NAME, CALLBACK);                \
-  if(!bfs::exists(out.NAME)) { bfs::create_directories(out.NAME); }
+  if(!fs::exists(out.NAME)) { fs::create_directories(out.NAME); }
   SET_OR_DEFAULT_DIRECTORY(path, ([&]() { return make_temporary_path(out.name); }));
-  SET_OR_DEFAULT(urdf_path, ([&]() { return (bfs::path(out.path) / "urdf" / (out.name + ".urdf")).string(); }));
-  auto urdf_dir = bfs::path(out.urdf_path).parent_path();
-  if(!bfs::exists(urdf_dir)) { bfs::create_directories(urdf_dir); }
-  SET_OR_DEFAULT_DIRECTORY(rsdf_dir, ([&]() { return (bfs::path(out.path) / "rsdf" / out.name).string(); }));
-  SET_OR_DEFAULT_DIRECTORY(calib_dir, ([&]() { return (bfs::path(out.path) / "calib").string(); }));
+  SET_OR_DEFAULT(urdf_path, ([&]() { return (fs::path(out.path) / "urdf" / (out.name + ".urdf")).string(); }));
+  auto urdf_dir = fs::path(out.urdf_path).parent_path();
+  if(!fs::exists(urdf_dir)) { fs::create_directories(urdf_dir); }
+  SET_OR_DEFAULT_DIRECTORY(rsdf_dir, ([&]() { return (fs::path(out.path) / "rsdf" / out.name).string(); }));
+  SET_OR_DEFAULT_DIRECTORY(calib_dir, ([&]() { return (fs::path(out.path) / "calib").string(); }));
 #undef SET_OR_DEFAULT
 #undef SET_OR_DEFAULT_DIRECTORY
 
@@ -760,26 +765,26 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
   /** Update surfaces we simply copy all files except those that are also in other.rsdf_dir */
   auto copySurfaces = [&]()
   {
-    bfs::path this_rsdf_dir(rsdf_dir);
-    bfs::path other_rsdf_dir(other.rsdf_dir);
-    bfs::path out_rsdf_dir(out.rsdf_dir);
-    if(!bfs::exists(this_rsdf_dir) || !bfs::is_directory(this_rsdf_dir)) { return; }
-    std::vector<bfs::path> this_files;
-    std::copy(bfs::directory_iterator(this_rsdf_dir), bfs::directory_iterator(), std::back_inserter(this_files));
-    std::vector<bfs::path> other_files;
-    if(bfs::exists(other_rsdf_dir) && bfs::is_directory(other_rsdf_dir))
+    fs::path this_rsdf_dir(rsdf_dir);
+    fs::path other_rsdf_dir(other.rsdf_dir);
+    fs::path out_rsdf_dir(out.rsdf_dir);
+    if(!fs::exists(this_rsdf_dir) || !fs::is_directory(this_rsdf_dir)) { return; }
+    std::vector<fs::path> this_files;
+    std::copy(fs::directory_iterator(this_rsdf_dir), fs::directory_iterator(), std::back_inserter(this_files));
+    std::vector<fs::path> other_files;
+    if(fs::exists(other_rsdf_dir) && fs::is_directory(other_rsdf_dir))
     {
-      std::copy(bfs::directory_iterator(other_rsdf_dir), bfs::directory_iterator(), std::back_inserter(other_files));
+      std::copy(fs::directory_iterator(other_rsdf_dir), fs::directory_iterator(), std::back_inserter(other_files));
     }
     for(const auto & f : this_files)
     {
       if(f.extension() != ".rsdf") { continue; }
       auto it = std::find_if(other_files.begin(), other_files.end(),
-                             [&](const bfs::path & other_f) { return f.leaf() == other_f.leaf(); });
+                             [&](const fs::path & other_f) { return f.filename() == other_f.filename(); });
       // Skip the copy if the file is from other
       if(it != other_files.end()) { continue; }
-      bfs::path out = out_rsdf_dir / f.leaf();
-      bfs::copy(f, out);
+      fs::path out = out_rsdf_dir / f.filename();
+      fs::copy(f, out);
     }
   };
   copySurfaces();
