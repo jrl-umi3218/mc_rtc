@@ -267,6 +267,18 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Gives fine control over the connection operation \see RobotModule::connect */
   struct ConnectionParameters
   {
+#define CONNECTION_PROPERTY_MEMBERS(NAME, TYPE, DEFAULT)      \
+  inline ConnectionParameters & NAME(const TYPE & b) noexcept \
+  {                                                           \
+    NAME##_ = b;                                              \
+    return *this;                                             \
+  }                                                           \
+  inline auto & NAME() noexcept { return NAME##_; }
+
+#define CONNECTION_PROPERTY(NAME, TYPE, DEFAULT) \
+  TYPE NAME##_ = DEFAULT;                        \
+  CONNECTION_PROPERTY_MEMBERS(NAME, TYPE, DEFAULT)
+
     /** @name General parameters
      *
      * These parameters affect the general output
@@ -275,19 +287,19 @@ struct MC_RBDYN_DLLAPI RobotModule
      */
 
     /** Where all the temporary assembly files are put, defaults to a randomly generated temporary folder */
-    std::string path = "";
+    CONNECTION_PROPERTY(path, std::string, "")
     /** Name of the resulting robot, defaults to `this.name`_`prefix`_`other.name` */
-    std::string name = "";
+    CONNECTION_PROPERTY(name, std::string, "")
     /** Path to the resulting robot's URDF file, defaults to `outputPath`/urdf/`name`.urdf */
-    std::string urdf_path;
+    CONNECTION_PROPERTY(urdf_path, std::string, "")
     /** Path to the resulting robot's RSDF files, defaults to `outputPath`/rsdf/`name`/ */
-    std::string rsdf_dir;
+    CONNECTION_PROPERTY(rsdf_dir, std::string, "")
     /** Path to the calibration directory, defaults to `outputPath`/calib/ */
-    std::string calib_dir;
+    CONNECTION_PROPERTY(calib_dir, std::string, "")
     /** Whether the default gripper safety parameters are taken from this (default) or other */
-    bool useGripperSafetyFromThis = true;
+    CONNECTION_PROPERTY(useGripperSafetyFromThis, bool, true)
     /** Whether the default LIPM stabilizer configuration is taken from this (default) or other */
-    bool useLIPMStabilizerConfigFromThis = true;
+    CONNECTION_PROPERTY(useLIPMStabilizerConfigFromThis, bool, true)
 
     /** @} */
     /* End General parameters section */
@@ -300,31 +312,36 @@ struct MC_RBDYN_DLLAPI RobotModule
      */
 
     /** Type of joint used for connection, defaults to rbd::Joint::Type::Fixed */
-    rbd::Joint::Type jointType = rbd::Joint::Type::Fixed;
+    CONNECTION_PROPERTY(jointType, rbd::Joint::Type, rbd::Joint::Type::Fixed)
+
     /** Joint axis, defaults to Eigen::Vector3d::UnitZ() */
-    Eigen::Vector3d jointAxis = Eigen::Vector3d::UnitZ();
+    CONNECTION_PROPERTY(jointAxis, Eigen::Vector3d, Eigen::Vector3d::UnitZ())
     /** Is joint forward, defaults to true */
-    bool jointForward = true;
+    CONNECTION_PROPERTY(jointForward, bool, true)
     /** Joint name, must be unique in the assembly, defaults to `this.name`_connect_`prefix`_`other.name` */
-    std::string jointName = "";
+    CONNECTION_PROPERTY(jointName, std::string, "")
     /** Default (half-sitting) configuration for the connection joint */
-    std::vector<double> jointStance = {};
+    CONNECTION_PROPERTY(jointStance, std::vector<double>, {})
     /** Joint limits (position, velocity, torque) for the connection joint, \ref RobotModule::connect will throw if the
      * limits are not compatible with the connection joint */
-    std::array<std::vector<double>, 6> jointLimits = {};
+    using JointLimits = std::array<std::vector<double>, 6>;
+    CONNECTION_PROPERTY(jointLimits, JointLimits, {})
     /** Joint acceleration limits for the connection joint, can remain empty regardless of the joint type but throws if
      * the provided limits are not compatible with the connection joint otherwise */
-    std::array<std::vector<double>, 2> jointAccelerationLimits = {};
+    using JointAccelerationLimits = std::array<std::vector<double>, 2>;
+    CONNECTION_PROPERTY(jointAccelerationLimits, JointAccelerationLimits, {})
     /** Joint jerk limits for the connection joint, can remain empty regardless of the joint type but throws if
      * the provided limits are not compatible with the connection joint otherwise */
-    std::array<std::vector<double>, 2> jointJerkLimits = {};
+    using JointJerkLimits = std::array<std::vector<double>, 2>;
+    CONNECTION_PROPERTY(jointJerkLimits, JointJerkLimits, {})
     /** Joint torque derivative limits for the connection joint, can remain empty regardless of the joint type but
      * throws if the provided limits are not compatible with the connection joint otherwise */
-    std::array<std::vector<double>, 2> jointTorqueDerivativeLimits = {};
+    using JointTorqueDerivativeLimits = std::array<std::vector<double>, 2>;
+    CONNECTION_PROPERTY(jointTorqueDerivativeLimits, JointTorqueDerivativeLimits, {})
     /** Transformation from this_body to the connection joint, defaults to identity */
-    sva::PTransformd X_this_connection = sva::PTransformd::Identity();
+    CONNECTION_PROPERTY(X_this_connection, sva::PTransformd, sva::PTransformd::Identity())
     /** Transformation from other_body to the connection joint, defaults to identity */
-    sva::PTransformd X_other_connection = sva::PTransformd::Identity();
+    CONNECTION_PROPERTY(X_other_connection, sva::PTransformd, sva::PTransformd::Identity())
 
     /** @} */
     /* End Connection joint section */
@@ -341,28 +358,28 @@ struct MC_RBDYN_DLLAPI RobotModule
     using mapping_t = std::unordered_map<std::string, std::string>;
 
     /** Remap body names */
-    mapping_t bodyMapping;
+    CONNECTION_PROPERTY(bodyMapping, mapping_t, {})
 
     /** Remap joint names */
-    mapping_t jointMapping;
+    CONNECTION_PROPERTY(jointMapping, mapping_t, {})
 
     /** Remap convex names (applies to stpbv and collision transformations mapping) */
-    mapping_t convexMapping;
+    CONNECTION_PROPERTY(convexMapping, mapping_t, {})
 
     /** Remap gripper names */
-    mapping_t gripperMapping;
+    CONNECTION_PROPERTY(gripperMapping, mapping_t, {})
 
     /** Remap surface names */
-    mapping_t surfaceMapping;
+    CONNECTION_PROPERTY(surfaceMapping, mapping_t, {})
 
     /** Remap force sensor names */
-    mapping_t forceSensorMapping;
+    CONNECTION_PROPERTY(forceSensorMapping, mapping_t, {})
 
     /** Remap body sensor names */
-    mapping_t bodySensorMapping;
+    CONNECTION_PROPERTY(bodySensorMapping, mapping_t, {})
 
     /** Remap device names */
-    mapping_t deviceMapping;
+    CONNECTION_PROPERTY(deviceMapping, mapping_t, {})
 
     /** @} */
     /* End Name mapping section */
