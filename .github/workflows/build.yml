@@ -22,7 +22,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, macos-latest, windows-latest]
+        # FIXME: temporarely disable macos-latest due to issues related to the switch to M1 arm architecture
+        # in the runner
+        os: [ubuntu-20.04, windows-latest]
         build-type: [Debug, RelWithDebInfo, script]
         compiler: [gcc, clang]
         exclude:
