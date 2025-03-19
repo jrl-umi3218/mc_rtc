@@ -502,6 +502,9 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
     auto yaml = mc_rtc::ConfigurationLoader<mc_rbdyn::RobotModule>::save(out, false, {}, out.mb.joint(0).dof() == 0);
     yaml.save(module_yaml);
     out._parameters = {"json", module_yaml};
+    // XXX: Ideally  we would need a way to connect canonical robot modules together as well as their non-canonical
+    // representation For now we consider that connected robots are identical to their full canonical representation
+    out._canonicalParameters = out._parameters;
     mc_rtc::log::info("Connection done, result module in: {}", module_yaml);
   }
 
