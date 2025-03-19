@@ -75,7 +75,7 @@ public:
   static mc_rbdyn::RobotModulePtr get_robot_module(const std::string & name, const Args &... args)
   {
     if(!details::are_strings<Args...>::value) { return get_robot_module(name, details::to_string(args)...); }
-    std::unique_lock<std::mutex> guard{mtx};
+    std::unique_lock<std::recursive_mutex> guard{mtx};
     init();
     mc_rbdyn::RobotModulePtr rm = nullptr;
     auto setup_canonical = [](mc_rbdyn::RobotModulePtr rm)
@@ -116,7 +116,7 @@ public:
   template<typename RetT, typename... Args>
   static void register_object(const std::string & name, std::function<RetT *(const Args &...)> callback)
   {
-    std::unique_lock<std::mutex> guard{mtx};
+    std::unique_lock<std::recursive_mutex> guard{mtx};
     init();
     robot_loader->register_object(name, callback);
   }
@@ -129,7 +129,7 @@ public:
   /** Remove all loaded libraries */
   static inline void clear()
   {
-    std::lock_guard<std::mutex> guard{mtx};
+    std::lock_guard<std::recursive_mutex> guard{mtx};
     init(true);
     robot_loader->clear();
     aliases.clear();
@@ -140,14 +140,14 @@ public:
    */
   static inline bool has_robot(const std::string & name)
   {
-    std::lock_guard<std::mutex> guard{mtx};
+    std::lock_guard<std::recursive_mutex> guard{mtx};
     init();
     return robot_loader->has_object(name) || aliases.count(name) != 0;
   }
 
   static inline void set_verbosity(bool verbose)
   {
-    std::lock_guard<std::mutex> guard{mtx};
+    std::lock_guard<std::recursive_mutex> guard{mtx};
     verbose_ = verbose;
     if(robot_loader) { robot_loader->set_verbosity(verbose); }
   }
@@ -197,7 +197,13 @@ private:
 
   static std::unique_ptr<mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>> robot_loader;
   static bool verbose_;
-  static std::mutex mtx;
+  /**
+   * We use a recursive mutex here to allow nested calls to get_robot_module()
+   * In particular, this allows calling get_robot_module from within the create() function of a robot module library.
+   * This is particularely useful to take advantage of RobotModule::connect to expose new first-class named connected
+   *modules directly from the robot module library.
+   **/
+  static std::recursive_mutex mtx;
   static std::map<std::string, std::vector<std::string>> aliases;
 }; // namespace mc_rbdyn
 
