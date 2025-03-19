@@ -4,9 +4,11 @@
 CMakeLists.txt.user*
 *.autosave
 build/
+build
 *.bin
 *.pos
 utils/mc_log_gui/*.png
 compile_commands.json
 .vscode/
 utils/build_and_install_user_config.sh
+.cache/
