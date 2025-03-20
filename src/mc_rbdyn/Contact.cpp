@@ -232,6 +232,7 @@ Contact::Contact(const Contact & contact)
                               contact.r2Surface()->copy(), contact.X_r2s_r1s(), contact.friction(), contact.isFixed(),
                               contact.X_b_s(), contact.ambiguityId()}));
   dof_ = contact.dof();
+  feasiblePolytope_ = contact.feasiblePolytope();
 }
 
 Contact & Contact::operator=(const Contact & rhs)
@@ -247,6 +248,7 @@ Contact & Contact::operator=(const Contact & rhs)
   this->impl->friction = rhs.friction();
   this->impl->ambiguityId = rhs.ambiguityId();
   this->dof_ = rhs.dof();
+  this->feasiblePolytope_ = rhs.feasiblePolytope();
   return *this;
 }
 
