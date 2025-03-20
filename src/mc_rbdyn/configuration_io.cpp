@@ -19,8 +19,8 @@
 #include <sch-core/S_Superellipsoid.h>
 
 #include <mc_rtc/deprecated.h>
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 namespace fmt
 {
@@ -59,17 +59,17 @@ struct formatter<rbd::Joint::Type> : public formatter<string_view>
 namespace
 {
 // Return relative path to go to "to" from "from"
-bfs::path relative(bfs::path to, bfs::path from)
+fs::path relative(fs::path to, fs::path from)
 {
-  bfs::path::const_iterator fromIter = from.begin();
-  bfs::path::const_iterator toIter = to.begin();
+  fs::path::const_iterator fromIter = from.begin();
+  fs::path::const_iterator toIter = to.begin();
   while(fromIter != from.end() && toIter != to.end() && (*toIter) == (*fromIter))
   {
     ++toIter;
     ++fromIter;
   }
-  bfs::path relPath;
-  while(fromIter != from.end() && *fromIter != bfs::path("."))
+  fs::path relPath;
+  while(fromIter != from.end() && *fromIter != fs::path("."))
   {
     relPath /= "..";
     ++fromIter;
@@ -994,13 +994,13 @@ failed_cast:
 
 mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_rtc::Configuration & config)
 {
-  bfs::path path((std::string)config("path"));
+  fs::path path((std::string)config("path"));
   std::string name = config("name");
-  bfs::path urdf_path = [&]()
+  fs::path urdf_path = [&]()
   {
     if(config.has("urdf_path"))
     {
-      bfs::path out(static_cast<std::string>(config("urdf_path")));
+      fs::path out(static_cast<std::string>(config("urdf_path")));
       if(!out.is_absolute()) { return path / out; }
       return out;
     }
@@ -1020,7 +1020,7 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   {
     auto filteredLinks = config("filteredLinks", std::vector<std::string>{});
     auto fixed = config("fixed", false);
-    if(!bfs::exists(rm.urdf_path))
+    if(!fs::exists(rm.urdf_path))
     {
       mc_rtc::log::error_and_throw("Could not open model for {} at {}", rm.name, rm.urdf_path);
     }
@@ -1068,21 +1068,21 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   /* Default values work fine for those */
   if(config.has("rsdf_dir"))
   {
-    bfs::path rsdf_dir((std::string)config("rsdf_dir"));
+    fs::path rsdf_dir((std::string)config("rsdf_dir"));
     if(!rsdf_dir.is_absolute()) { rsdf_dir = path / rsdf_dir; }
     rm.rsdf_dir = rsdf_dir.string();
   }
   config("convexHulls", rm._convexHull);
   for(auto & cH : rm._convexHull)
   {
-    bfs::path chPath(cH.second.second);
+    fs::path chPath(cH.second.second);
     if(!chPath.is_absolute()) { cH.second.second = (path / chPath).string(); }
   }
   config("collisionObjects", rm._collisionObjects);
   config("stpbvHulls", rm._stpbvHull);
   for(auto & sH : rm._stpbvHull)
   {
-    bfs::path stPath(sH.second.second);
+    fs::path stPath(sH.second.second);
     if(!stPath.is_absolute()) { sH.second.second = (path / stPath).string(); }
   }
   config("flexibilities", rm._flexibility);
