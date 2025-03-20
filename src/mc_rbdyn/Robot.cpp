@@ -25,8 +25,8 @@
 #include <sch/S_Object/S_Cylinder.h>
 #include <sch/S_Object/S_Superellipsoid.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include <fstream>
 #include <tuple>
@@ -403,8 +403,8 @@ Robot::Robot(NewRobotToken,
   {
     for(auto & fs : forceSensors_)
     {
-      bfs::path calib_file = bfs::path(module_.calib_dir) / std::string("calib_data." + fs.name());
-      if(!bfs::exists(calib_file))
+      fs::path calib_file = fs::path(module_.calib_dir) / std::string("calib_data." + fs.name());
+      if(!fs::exists(calib_file))
       {
         if(params.warn_on_missing_files_)
         {
@@ -422,7 +422,7 @@ Robot::Robot(NewRobotToken,
 
   if(loadFiles)
   {
-    if(bfs::exists(module_.rsdf_dir)) { loadRSDFFromDir(module_.rsdf_dir); }
+    if(fs::exists(module_.rsdf_dir)) { loadRSDFFromDir(module_.rsdf_dir); }
     else if(module_.rsdf_dir.size() && params.warn_on_missing_files_)
     {
       mc_rtc::log::error("RSDF directory ({}) specified by RobotModule for {} does not exist.", module_.rsdf_dir,
@@ -941,8 +941,8 @@ void Robot::addForceSensor(const mc_rbdyn::ForceSensor & fs)
   }
   data_->forceSensors.push_back(fs);
   data_->forceSensorsIndex[fs.name()] = data_->forceSensors.size() - 1;
-  auto bfs_it = data_->bodyForceSensors_.find(fs.parentBody());
-  if(bfs_it == data_->bodyForceSensors_.end())
+  auto fs_it = data_->bodyForceSensors_.find(fs.parentBody());
+  if(fs_it == data_->bodyForceSensors_.end())
   {
     data_->bodyForceSensors_[fs.parentBody()] = data_->forceSensors.size() - 1;
   }
