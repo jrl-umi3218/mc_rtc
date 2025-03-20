@@ -497,12 +497,15 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
                   });
 
   // Generate a module file so that the generated RobotModule can be re-used
+  // XXX: currently devices are not saved so strictly speaking the generated yaml robot
+  // won't be exactly identical to the one generated here
   {
     std::string module_yaml = fmt::format("{}/{}.yaml", out.path, out.name);
     out._parameters = {"json", module_yaml};
-    // XXX: Ideally  we would need a way to connect canonical robot modules together as well as their non-canonical
-    // representation For now we consider that connected robots are identical to their full canonical representation
-    out._canonicalParameters = out._parameters; // FIXME: saved yaml module does not have the same devices
+    // Connected robots do not have a canonical representation
+    // The generated "out" module will be used as the canonical module
+    out._canonicalParameters.clear();
+
     auto yaml = mc_rtc::ConfigurationLoader<mc_rbdyn::RobotModule>::save(out, false, {}, out.mb.joint(0).dof() == 0);
     yaml.save(module_yaml);
     mc_rtc::log::info("Connection done, result module in: {}", module_yaml);
