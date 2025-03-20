@@ -332,7 +332,7 @@ mc_rbdyn::Robot & MCController::loadRobot(const mc_rbdyn::RobotModule & rm, cons
   mc_rbdyn::RobotModulePtr canonicalModulePtr = nullptr;
   const mc_rbdyn::RobotModule * canonicalModule = nullptr;
   const auto & cp = rm.canonicalParameters();
-  if(cp == rm.parameters()) { canonicalModule = &rm; }
+  if(cp == rm.parameters() || cp.empty()) { canonicalModule = &rm; }
   else
   {
     canonicalModulePtr = mc_rbdyn::RobotLoader::get_robot_module(cp);
