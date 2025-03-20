@@ -40,6 +40,8 @@ public:
   {
     bool ret = fsm::Controller::run();
     BOOST_REQUIRE(ret);
+    Eigen::Vector6d dof = Eigen::Vector6d::Ones();
+    dof(2) = 0.0;
     if(iter_ == 0) // TestContactsManipulation
     {
       BOOST_REQUIRE(executor_.state() == "TestContactsManipulation");
@@ -47,16 +49,28 @@ public:
       BOOST_REQUIRE(!hasContact("LeftFoot"));
       BOOST_REQUIRE(!hasContact("RightFoot"));
       BOOST_REQUIRE(hasContact("LeftFootCenter", 0.8));
-      Eigen::Vector6d dof = Eigen::Vector6d::Ones();
-      dof(2) = 0.0;
       BOOST_REQUIRE(hasContact("RightFootCenter", 0.8, dof));
+      // note: contacts are added to the QP at the start of the next call to mc_controller::run.
+      // Thus this checks for the contacts added on the previous iteration
       BOOST_REQUIRE(contacts().size() == 2);
     }
-    if(iter_ == 1) // TestCollisionsManipulation
+    if(iter_ == 1) // TestContactsManipulation2
+    {
+      BOOST_REQUIRE(executor_.state() == "TestContactsManipulation2");
+      BOOST_REQUIRE(solver().contacts().size()
+                    == 2);
+      for(const auto & c : solver().contacts())
+      {
+        if(c.r1Surface()->name() == "RightFootCenter")
+        {
+          BOOST_REQUIRE(c.dof() == dof);
+        }
+      }
+    }
+    else if(iter_ == 2)
     {
       BOOST_REQUIRE(solver().contacts().size()
-                    == 2); // note: contacts are added to the QP at the start of the next call to mc_controller::run.
-                           // Thus this checks for the contacts added on the previous iteration
+                    == 2);
       BOOST_REQUIRE(executor_.state() == "TestCollisionsManipulation");
       BOOST_REQUIRE(hasCollision("jvrc1", "ground", {"L_WRIST_Y_S", "ground", 0.05, 0.01, 0}));
       BOOST_REQUIRE(!hasCollision("jvrc1", "jvrc1", {"R_WRIST_Y_S", "R_HIP_Y_S", 0.05, 0.025, 0}));
@@ -66,7 +80,7 @@ public:
       BOOST_REQUIRE(!hasCollision("jvrc1", "ground", {"L_WRIST_Y_S", "ground", 0.05, 0.01, 0}));
       BOOST_REQUIRE(hasCollision("jvrc1", "jvrc1", {"R_WRIST_Y_S", "R_HIP_Y_S", 0.05, 0.025, 0}));
     }
-    if(iter_ == 2) // TestRemovePostureTask
+    if(iter_ == 3) // TestRemovePostureTask
     {
       BOOST_REQUIRE(executor_.state() == "TestRemovePostureTask");
       // AddContactsAfter/RemoveContactsAfter should have put the contacts back
@@ -78,7 +92,7 @@ public:
       BOOST_REQUIRE(!getPostureTask("jvrc1")->inSolver());
     }
     else { BOOST_REQUIRE(getPostureTask("jvrc1")->inSolver()); }
-    if(iter_ > 2) // TestConstraintsAndTasks
+    if(iter_ > 3) // TestConstraintsAndTasks
     {
       BOOST_REQUIRE(executor_.state() == "TestConstraintsAndTasks");
       // There is now a constraint to set l_wrist speed to a constant

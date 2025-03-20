@@ -231,6 +231,7 @@ Contact::Contact(const Contact & contact)
   impl.reset(new ContactImpl({contact.r1Index(), contact.r2Index(), contact.r1Surface()->copy(),
                               contact.r2Surface()->copy(), contact.X_r2s_r1s(), contact.friction(), contact.isFixed(),
                               contact.X_b_s(), contact.ambiguityId()}));
+  dof_ = contact.dof();
 }
 
 Contact & Contact::operator=(const Contact & rhs)
@@ -245,6 +246,7 @@ Contact & Contact::operator=(const Contact & rhs)
   this->impl->X_b_s = rhs.X_b_s();
   this->impl->friction = rhs.friction();
   this->impl->ambiguityId = rhs.ambiguityId();
+  this->dof_ = rhs.dof();
   return *this;
 }
 
