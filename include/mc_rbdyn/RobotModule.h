@@ -693,7 +693,10 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Returns the list of parameters passed to mc_rbdyn::RobotLoader::get_robot_module to obtain this module */
   inline const std::vector<std::string> & parameters() const { return _parameters; }
 
-  /** Returns the list of parameters to get a RobotModule that is a canonical representation of this module */
+  /** Returns the list of parameters to get a RobotModule that is a canonical representation of this module
+   *
+   * An empty vector means that the canonical and control module are the same
+   **/
   inline const std::vector<std::string> & canonicalParameters() const { return _canonicalParameters; }
 
   /** Returns the configuration for the control to canonical conversion
