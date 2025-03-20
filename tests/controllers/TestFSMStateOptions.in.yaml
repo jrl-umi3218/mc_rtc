@@ -18,28 +18,35 @@ contacts:
     r2Surface: AllGround
 collisions:
   - useMinimal: true
+
+
+RemoveContacts: &default-contacts
+ - r2: ground
+   r1Surface: LeftFoot
+   r2Surface: AllGround
+ - r1: jvrc1
+   r2: ground
+   r1Surface: RightFoot
+   r2Surface: AllGround
+AddContacts: &special-contacts
+ - r2: ground
+   r1Surface: LeftFootCenter
+   r2Surface: AllGround
+   friction: 0.8
+ - r1: jvrc1
+   r2: ground
+   r1Surface: RightFootCenter
+   r2Surface: AllGround
+   friction: 0.8
+   dof: [1, 1, 0, 1, 1, 1]
+
 states:
   TestContactsManipulation:
     base: HalfSitting
-    RemoveContacts: &default-contacts
-      - r2: ground
-        r1Surface: LeftFoot
-        r2Surface: AllGround
-      - r1: jvrc1
-        r2: ground
-        r1Surface: RightFoot
-        r2Surface: AllGround
-    AddContacts: &special-contacts
-      - r2: ground
-        r1Surface: LeftFootCenter
-        r2Surface: AllGround
-        friction: 0.8
-      - r1: jvrc1
-        r2: ground
-        r1Surface: RightFootCenter
-        r2Surface: AllGround
-        friction: 0.8
-        dof: [1, 1, 0, 1, 1, 1]
+    RemoveContacts: *default-contacts
+    AddContacts: *special-contacts
+  TestContactsManipulation2:
+    base: TestContactsManipulation
     AddContactsAfter: *default-contacts
     RemoveContactsAfter: *special-contacts
   TestCollisionsManipulation:
@@ -81,6 +88,7 @@ states:
       CoM:
         type: com
 transitions:
-  - [TestContactsManipulation, OK, TestCollisionsManipulation, Auto]
+  - [TestContactsManipulation, OK, TestContactsManipulation2, Auto]
+  - [TestContactsManipulation2, OK, TestCollisionsManipulation, Auto]
   - [TestCollisionsManipulation, OK, TestRemovePostureTask, Auto]
   - [TestRemovePostureTask, OK, TestConstraintsAndTasks, Auto]
