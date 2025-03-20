@@ -267,17 +267,20 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Gives fine control over the connection operation \see RobotModule::connect */
   struct ConnectionParameters
   {
-#define CONNECTION_PROPERTY_MEMBERS(NAME, TYPE, DEFAULT)      \
+
+/**
+ * Helper to define a member variables and
+ * methods that allow chaining calls to setters e.g
+ * ConnecionParameters{}.name(...).urdf_path(...)
+ */
+#define CONNECTION_PROPERTY(NAME, TYPE, DEFAULT)              \
+  TYPE NAME##_ = DEFAULT;                                     \
   inline ConnectionParameters & NAME(const TYPE & b) noexcept \
   {                                                           \
     NAME##_ = b;                                              \
     return *this;                                             \
   }                                                           \
   inline auto & NAME() noexcept { return NAME##_; }
-
-#define CONNECTION_PROPERTY(NAME, TYPE, DEFAULT) \
-  TYPE NAME##_ = DEFAULT;                        \
-  CONNECTION_PROPERTY_MEMBERS(NAME, TYPE, DEFAULT)
 
     /** @name General parameters
      *
@@ -381,6 +384,7 @@ struct MC_RBDYN_DLLAPI RobotModule
     /** Remap device names */
     CONNECTION_PROPERTY(deviceMapping, mapping_t, {})
 
+#undef CONNECTION_PROPERTY
     /** @} */
     /* End Name mapping section */
   };
