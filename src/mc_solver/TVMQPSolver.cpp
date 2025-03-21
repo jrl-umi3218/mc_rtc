@@ -336,7 +336,7 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
                                        const std::vector<sva::PTransformd> & points,
                                        tvm::VariableVector & forces,
                                        std::vector<tvm::TaskWithRequirementsPtr> & constraints,
-                                       const mc_rbdyn::Contact & contact, // pass polytope A matrix
+                                       const mc_rbdyn::Contact & contact,
                                        double dir)
 {
   auto it = dynamics_.find(robot);
@@ -387,6 +387,7 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
   auto idx = getContactIdx(contact);
   if(idx < contacts_.size())
   {
+    // This contact already exists in the solver
     const auto & oldContact = contacts_[idx];
     if(oldContact.dof() == contact.dof() && oldContact.friction() == contact.friction())
     {
@@ -400,6 +401,7 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
     hasWork = true;
     contacts_.push_back(contact);
   }
+  // Get the contactData element for this contact or create it if new contact
   auto & data = idx < contactsData_.size() ? contactsData_[idx] : contactsData_.emplace_back();
   const auto & r1 = robot(contact.r1Index());
   const auto & r2 = robot(contact.r2Index());
@@ -407,6 +409,7 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
   const auto & f2 = r2.frame(contact.r2Surface()->name());
   if(!data.contactConstraint_) // New contact
   {
+    // Create a new contact function, add it to the problem and keep it in the contactData element
     auto contact_fn = std::make_shared<mc_tvm::ContactFunction>(f1, f2, contact.dof());
     // Check if a contact constraint exists in the QP
     for(const auto & constraint : constraints())
@@ -461,6 +464,7 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
   }
   else
   {
+    // The contact function already exists, just update the contact dof
     auto contact_fn = std::static_pointer_cast<mc_tvm::ContactFunction>(data.contactConstraint_->task.function());
     contact_fn->dof(contact.dof());
   }
@@ -472,7 +476,8 @@ void TVMQPSolver::addContact(const mc_rbdyn::Contact & contact)
   size_t idx = contacts_.size();
   bool hasWork = false;
   // Add geometric contact constraint if it is not already present
-  // Checks if friction/dof/polytope have changed. When true we need to update the friction cone/polytope constraint
+  // hasWork becomes true if friction or polytope changed, in this case dynamics function must be updated
+  // dofs changing do not influence the dynamics so does not matter here
   std::tie(idx, hasWork) = addVirtualContactImpl(contact);
   if(!hasWork) { return; }
   auto & data = contactsData_[idx];
