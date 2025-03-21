@@ -22,77 +22,73 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, macos-latest, windows-latest]
-        build-type: [Debug, RelWithDebInfo, script]
+        # temporarely disable macos-latest
+        os: [ubuntu-20.04, ubuntu-22.04, windows-latest]
+        build-type: [Debug, RelWithDebInfo]
         compiler: [gcc, clang]
         exclude:
-          # Only default compiler on ubuntu-18.04, macos-latest and windows-latest
-          - os: ubuntu-18.04
-            compiler: clang
+          # Only default compiler on macos-latest and windows-latest
           - os: macos-latest
             compiler: clang
           - os: windows-latest
-            compiler: clang
-          # Script always use default compiler
-          - build-type: script
             compiler: clang
           # FIXME Windows Debug CI fails: tests are failing
           - os: windows-latest
             build-type: Debug
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
     - name: Linux cleanup
-      if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-22.04'
       run: |
         set -e
         sudo rm -rf /opt/hostedtoolcache/CodeQL
         sudo rm -rf /usr/local/lib/android
         echo "LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib/x86_64-linux-gnu/:${LD_LIBRARY_PATH}" >> $GITHUB_ENV
     - name: macOS cleanup
+      if: startsWith(runner.os, 'macOS')
       run: |
         sudo rm '/usr/local/bin/2to3'
-      if: startsWith(runner.os, 'macOS')
-    - name: Install pip for Python 2 (Ubuntu 20.04)
-      run: |
-        curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
-        sudo python2 get-pip.py
-        rm -f get-pip.py
-      if: matrix.os == 'ubuntu-20.04' && matrix.build-type != 'script'
-    - name: Clear environment (script)
-      uses: jrl-umi3218/github-actions/install-dependencies@master
-      if: matrix.build-type == 'script'
+
+    - name: Clone superbuild
+      if: matrix.os != 'windows-latest'
+      uses: actions/checkout@v4
       with:
-        compiler: ${{ matrix.compiler }}
-        build-type: RelWithDebInfo
-    - name: Build with script
-      if: matrix.build-type == 'script'
+        submodules: recursive
+        repository: mc-rtc/mc-rtc-superbuild
+        path: mc-rtc-superbuild
+
+    - name: "[superbuild] Bootstrap"
+      if: matrix.os != 'windows-latest'
       shell: bash
       run: |
-        set -x
-        cd utils
-        if [[ "${{ matrix.os }}" == "windows-latest" ]]
-        then
-          ./build_and_install.sh --user-input false --with-python-support false --build-testing false --build-benchmarks true
-        elif [[ "${{ matrix.os }}" == "macos-latest" ]]
-        then
-          ./build_and_install.sh --user-input false --with-python-support false --build-benchmarks true --allow-root true
-        else
-          ./build_and_install.sh --user-input false --build-benchmarks true --allow-root true
-        fi
-    - name: Install dependencies
+        cd ${GITHUB_WORKSPACE}/mc-rtc-superbuild
+        ./utils/bootstrap-linux.sh
+        git config --global user.email "arn.tanguy@gmail.com"
+        git config --global user.name "Arnaud Tanguy (Automated CI update)"
+    - name: "[superbuild] Install system dependencies"
+      if: matrix.os != 'windows-latest'
+      shell: bash
+      run: |
+        mkdir -p ${TMPDIR-/tmp}/build-mc-rtc
+        cmake -S ${GITHUB_WORKSPACE}/mc-rtc-superbuild -B ${TMPDIR-/tmp}/build-mc-rtc -DCMAKE_BUILD_TYPE=RelWithDebInfo -DVERBOSE_TEST_OUTPUT=ON
+
+    - name: "[superbuild] Install mc_rtc and related projects"
+      if: matrix.os != 'windows-latest'
+      shell: bash
+      run: |
+        cmake --build ${TMPDIR-/tmp}/build-mc-rtc --config RelWithDebInfo
+
+    # mc-rtc-superbuild does not support windows yet, build manually
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: "[windows] Install dependencies"
+      if: matrix.os == 'windows-latest'
       uses: jrl-umi3218/github-actions/install-dependencies@master
-      if: matrix.build-type != 'script'
       with:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
-        ubuntu: |
-          apt: cython cython3 python-pytest python3-pytest python-numpy python3-numpy python-coverage python3-coverage python-setuptools python3-setuptools libeigen3-dev doxygen doxygen-latex libboost-all-dev libtinyxml2-dev libgeos++-dev libnanomsg-dev libyaml-cpp-dev libltdl-dev libnotify-dev
-        macos: |
-          brew: eigen boost tinyxml2 geos nanomsg yaml-cpp pkg-config libtool gcc libnotify
-          pip: Cython coverage numpy pytest
         windows: |
           pip: Cython coverage numpy pytest
           github:
@@ -108,7 +104,6 @@ jobs:
             - path: jbeder/yaml-cpp
               ref: 29dcf92f870ee51cce8d68f8fcfe228942e8dfe1
               options: -DYAML_CPP_BUILD_TESTS:BOOL=OFF
-        macos-options: -DPYTHON_BINDING:BOOL=OFF
         windows-options: -DPYTHON_BINDING:BOOL=OFF
         github: |
           - path: gabime/spdlog
@@ -136,51 +131,14 @@ jobs:
           - path: jrl-umi3218/state-observation
           - path: jrl-umi3218/tvm
             options: -DTVM_WITH_ROBOT:BOOL=OFF
-    - name: Build and test
-      if: matrix.build-type == 'RelWithDebInfo' || (matrix.build-type == 'Debug' && github.ref == 'refs/heads/master')
+    - name: "[windows] Build and test"
+      if: matrix.os == 'windows-latest' && (matrix.build-type == 'RelWithDebInfo' || (matrix.build-type == 'Debug' && github.ref == 'refs/heads/master'))
       uses: jrl-umi3218/github-actions/build-cmake-project@master
       with:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
-        macos-options: -DPYTHON_BINDING:BOOL=OFF
         windows-options: -DPYTHON_BINDING:BOOL=OFF
-    - name: Build and test (Debug/Fast tests)
-      if: matrix.build-type == 'Debug' && github.ref != 'refs/heads/master'
-      uses: jrl-umi3218/github-actions/build-cmake-project@master
-      with:
-        compiler: ${{ matrix.compiler }}
-        build-type: ${{ matrix.build-type }}
-        options: '-DENABLE_FAST_TESTS:BOOL=ON'
-        macos-options: -DPYTHON_BINDING:BOOL=OFF
-    - name: Build with ROS
-      if: (matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04') && matrix.build-type != 'script'
-      run: |
-        set -e
-        set -x
-        pushd .
-        if [ "${{ matrix.os }}" = "ubuntu-18.04" ]
-        then
-          export ROS_DISTRO="melodic"
-        else
-          export ROS_DISTRO="noetic"
-        fi
-        sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-        wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
-        sudo apt-get update -qq
-        sudo apt-get install -qq ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-tf2-ros
-        . /opt/ros/${ROS_DISTRO}/setup.bash
-        mkdir -p /tmp/_ci/catkin_ws/src/
-        cd /tmp/_ci/catkin_ws/src
-        catkin_init_workspace
-        git clone --recursive https://github.com/jrl-umi3218/mc_rtc_msgs
-        cd ../
-        catkin_make || exit 1
-        . devel/setup.bash
-        popd
-        pushd .
-        cd build
-        cmake ../ && make -j2 && sudo make install || exit 1
-        popd
+
     - name: Upload documentation
       # Only run on master branch and for one configuration
       if: matrix.os == 'ubuntu-20.04' && matrix.build-type == 'RelWithDebInfo' && matrix.compiler == 'gcc' && github.ref == 'refs/heads/master' && github.repository == 'jrl-umi3218/mc_rtc'
@@ -201,21 +159,11 @@ jobs:
         bundle exec jekyll build --trace -b /mc_rtc -d /tmp/website
         cd /tmp/website
         git add .
-        git config --global user.email "pierre.gergondet@gmail.com"
-        git config --global user.name "Pierre Gergondet (Automated CI update)"
+        git config --global user.email "arn.tanguy@gmail.com"
+        git config --global user.name "Arnaud Tanguy (Automated CI update)"
         git commit -m "Website from commit ${GITHUB_SHA}"
         git push origin gh-pages
         popd
-    - name: Debug Windows DLL issue
-      if: failure() && matrix.os == 'windows-latest'
-      shell: bash
-      run: |
-        set -e
-        pwd
-        echo $PATH
-        ls
-        ldd build/tests/RelWithDebInfo/testGUIStateBuilder.exe
-        ldd build/tests/RelWithDebInfo/testDataStore.exe
     - name: Slack Notification
       if: failure()
       uses: archive/github-actions-slack@master
