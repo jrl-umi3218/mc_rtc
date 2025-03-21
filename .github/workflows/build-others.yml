@@ -21,8 +21,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["debian_buster", "ubuntu_22.04"]
-    runs-on: ubuntu-20.04
+        os: ["debian_bullseye", "ubuntu_22.04"]
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v4
       with:
@@ -53,7 +53,6 @@ jobs:
         docker build -t mc-rtc-ci-${{matrix.os}} .
         echo "::endgroup::"
         echo "::group::Run install"
-        # docker run mc-rtc-ci-${{matrix.os}} /bin/bash -c 'cd /source/utils && ./build_and_install.sh --user-input false --build-benchmarks true --allow-root true'
         docker run mc-rtc-ci-${{matrix.os}} /bin/bash -c '/source/.github/workflows/docker/build-docker.sh'
         echo "::endgroup::"
     - name: Slack Notification
