@@ -21,8 +21,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["debian_buster", "ubuntu_22.04"]
-    runs-on: ubuntu-20.04
+        os: ["debian_bullseye", "ubuntu_22.04"]
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v4
       with:
