@@ -57,20 +57,15 @@ public:
     if(iter_ == 1) // TestContactsManipulation2
     {
       BOOST_REQUIRE(executor_.state() == "TestContactsManipulation2");
-      BOOST_REQUIRE(solver().contacts().size()
-                    == 2);
+      BOOST_REQUIRE(solver().contacts().size() == 2);
       for(const auto & c : solver().contacts())
       {
-        if(c.r1Surface()->name() == "RightFootCenter")
-        {
-          BOOST_REQUIRE(c.dof() == dof);
-        }
+        if(c.r1Surface()->name() == "RightFootCenter") { BOOST_REQUIRE(c.dof() == dof); }
       }
     }
     else if(iter_ == 2)
     {
-      BOOST_REQUIRE(solver().contacts().size()
-                    == 2);
+      BOOST_REQUIRE(solver().contacts().size() == 2);
       BOOST_REQUIRE(executor_.state() == "TestCollisionsManipulation");
       BOOST_REQUIRE(hasCollision("jvrc1", "ground", {"L_WRIST_Y_S", "ground", 0.05, 0.01, 0}));
       BOOST_REQUIRE(!hasCollision("jvrc1", "jvrc1", {"R_WRIST_Y_S", "R_HIP_Y_S", 0.05, 0.025, 0}));
