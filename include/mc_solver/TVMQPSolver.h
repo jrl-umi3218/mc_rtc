@@ -142,7 +142,36 @@ private:
   void addContact(const mc_rbdyn::Contact & contact);
   using ContactIterator = std::vector<mc_rbdyn::Contact>::iterator;
   ContactIterator removeContact(size_t idx);
+
+  /**
+   * @brief Update or create and add an mc_tvm::ContactFunction (geometric constraint) to the problem,
+   * and update solver contacts_ and contactsData_ vectors
+   *
+   * hasWork becomes true if friction or polytope changed, in this case dynamics function must be updated
+   *
+   * dofs changing do not influence the dynamics so does not trigger hasWork
+   *
+   * @param contact the mc_rbdyn::Contact to add or update
+   * @return std::tuple of contact id / hasWork
+   */
   std::tuple<size_t, bool> addVirtualContactImpl(const mc_rbdyn::Contact & contact);
+
+  /**
+   * @brief If the robot has a dynamic constraint, add the contact's influence to it.
+   *
+   * This creates force variables for each contact point and constraints on them (either friction cone
+   * or feasiblePolytope) and adds them to the problem.
+   *
+   * The tvm dependency between the force variables and the DynamicFunction is done here with addContact
+   *
+   * @param robot Robot name
+   * @param frame Contact frame
+   * @param points Contact points in the frame's parent body's frame
+   * @param forces Ref to where the forces tvm variables created by this contact will be stored
+   * @param constraints Ref to where the constraints on these forces will be stored
+   * @param contact mc_rbydn::Contact object for contact friction or feasiblePolytope
+   * @param dir Contact direction
+   */
   void addContactToDynamics(const std::string & robot,
                             const mc_rbdyn::RobotFrame & frame,
                             const std::vector<sva::PTransformd> & points,
