@@ -58,12 +58,9 @@ private:
   {
     msg_.q.resize(robot.mb().nrParams());
     rbd::paramToVector(robot.mbc().q, msg_.q);
-    msg_.alpha.resize(robot.mb().nrDof());
-    rbd::paramToVector(robot.mbc().alpha, msg_.alpha);
-    msg_.alphaD.resize(msg_.alpha.size());
-    rbd::paramToVector(robot.mbc().alphaD, msg_.alphaD);
-    msg_.tau.resize(msg_.alpha.size());
-    rbd::paramToVector(robot.mbc().jointTorque, msg_.tau);
+    msg_.alpha = rbd::dofToVector(robot.mb(), robot.mbc().alpha);
+    msg_.alphaD = rbd::dofToVector(robot.mb(), robot.mbc().alphaD);
+    msg_.tau = rbd::dofToVector(robot.mb(), robot.mbc().jointTorque);
   }
 };
 
