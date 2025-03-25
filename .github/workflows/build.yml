@@ -18,8 +18,10 @@ on:
       - '**'
 
 env:
+  # Branch that triggered this workflow
   GITHUB_BRANCH: ${{ github.head_ref || github.ref_name }}
-  GITHUB_REPOSITORY: ${{ github.repository }}
+  # Repository that triggered this workflow
+  GITHUB_REPO_TRIGGER: ${{ github.actor }}/${{ github.event.repository.name }}
 
 jobs:
   build:
@@ -78,7 +80,7 @@ jobs:
               -B ${TMPDIR-/tmp}/build-mc-rtc \
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
               -DINSTALL_DOCUMENTATION=ON \
-              -DMC_RTC_SUPERBUILD_OVERRIDE_mc_rtc_GITHUB=${GITHUB_REPOSITORY} \
+              -DMC_RTC_SUPERBUILD_OVERRIDE_mc_rtc_GITHUB=${GITHUB_REPO_TRIGGER} \
               -DMC_RTC_SUPERBUILD_OVERRIDE_mc_rtc_GIT_TAG="origin/${GITHUB_BRANCH}"
 
     - name: "[superbuild] Install mc_rtc and related projects"
