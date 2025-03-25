@@ -70,7 +70,7 @@ jobs:
       shell: bash
       run: |
         mkdir -p ${TMPDIR-/tmp}/build-mc-rtc
-        cmake -S ${GITHUB_WORKSPACE}/mc-rtc-superbuild -B ${TMPDIR-/tmp}/build-mc-rtc -DCMAKE_BUILD_TYPE=RelWithDebInfo -DVERBOSE_TEST_OUTPUT=ON
+        cmake -S ${GITHUB_WORKSPACE}/mc-rtc-superbuild -B ${TMPDIR-/tmp}/build-mc-rtc -DCMAKE_BUILD_TYPE=RelWithDebInfo -DINSTALL_DOCUMENTATION=ON
 
     - name: "[superbuild] Install mc_rtc and related projects"
       if: matrix.os != 'windows-latest'
@@ -141,7 +141,7 @@ jobs:
 
     - name: Upload documentation
       # Only run on master branch and for one configuration
-      if: matrix.os == 'ubuntu-20.04' && matrix.build-type == 'RelWithDebInfo' && matrix.compiler == 'gcc' && github.ref == 'refs/heads/master' && github.repository == 'jrl-umi3218/mc_rtc'
+      if: matrix.os == 'ubuntu-22.04' && matrix.build-type == 'RelWithDebInfo' && matrix.compiler == 'gcc' && github.ref == 'refs/heads/master' && github.repository == 'jrl-umi3218/mc_rtc'
       run: |
         set -x
         pushd .
