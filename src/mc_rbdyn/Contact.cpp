@@ -228,6 +228,7 @@ std::vector<mc_rbdyn::Contact> Contact::loadVector(const mc_rbdyn::Robots & robo
 
 Contact::Contact(const Contact & contact)
 {
+  std::lock_guard<std::mutex> lock(contactMutex_);
   impl.reset(new ContactImpl({contact.r1Index(), contact.r2Index(), contact.r1Surface()->copy(),
                               contact.r2Surface()->copy(), contact.X_r2s_r1s(), contact.friction(), contact.isFixed(),
                               contact.X_b_s(), contact.ambiguityId()}));
@@ -237,6 +238,7 @@ Contact::Contact(const Contact & contact)
 
 Contact & Contact::operator=(const Contact & rhs)
 {
+  std::lock_guard<std::mutex> lock(contactMutex_);
   if(this == &rhs) { return *this; }
   this->impl->r1Index = rhs.r1Index();
   this->impl->r2Index = rhs.r2Index();
@@ -451,11 +453,13 @@ void Contact::friction(double friction)
 
 void Contact::feasiblePolytope(const mc_rbdyn::FeasiblePolytope & polytope)
 {
+  std::lock_guard<std::mutex> lock(contactMutex_);
   feasiblePolytope_ = polytope;
 }
 
 const std::optional<mc_rbdyn::FeasiblePolytope> & Contact::feasiblePolytope() const noexcept
 {
+  std::lock_guard<std::mutex> lock(contactMutex_);
   return feasiblePolytope_;
 }
 
