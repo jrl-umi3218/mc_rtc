@@ -1,0 +1,10 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$structmc__solver_1_1ConstraintSet.html" title="This class is a basis to wrap Constraint functions from Tasks. The aim of such wrappers should be two..." alt="" coords="5,136,191,163"/>
+<area shape="rect" id="node2" href="$structmc__solver_1_1BoundedSpeedConstr.html" title=" " alt="" coords="239,5,475,32"/>
+<area shape="rect" id="node3" href="$structmc__solver_1_1CoMIncPlaneConstr.html" title=" " alt="" coords="246,56,469,83"/>
+<area shape="rect" id="node4" href="$structmc__solver_1_1CollisionsConstraint.html" title=" " alt="" coords="244,107,471,133"/>
+<area shape="rect" id="node5" href="$structmc__solver_1_1CompoundJointConstraint.html" title=" " alt="" coords="259,158,455,199"/>
+<area shape="rect" id="node6" href="$structmc__solver_1_1ContactConstraint.html" title=" " alt="" coords="250,224,465,251"/>
+<area shape="rect" id="node7" href="$structmc__solver_1_1KinematicsConstraint.html" title=" " alt="" coords="239,275,476,301"/>
+<area shape="rect" id="node8" href="$structmc__solver_1_1DynamicsConstraint.html" title=" " alt="" coords="524,275,753,301"/>
+</map>

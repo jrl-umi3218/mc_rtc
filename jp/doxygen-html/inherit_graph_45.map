@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$structmc__observers_1_1Observer.html" title="State observation API." alt="" coords="5,71,185,98"/>
+<area shape="rect" id="node2" href="$structmc__observers_1_1BodySensorObserver.html" title=" " alt="" coords="251,5,449,47"/>
+<area shape="rect" id="node3" href="$structmc__observers_1_1EncoderObserver.html" title=" " alt="" coords="234,71,466,98"/>
+<area shape="rect" id="node4" href="$structmc__observers_1_1KinematicInertialPoseObserver.html" title=" " alt="" coords="233,123,467,164"/>
+<area shape="rect" id="node5" href="$structmc__observers_1_1KinematicInertialObserver.html" title=" " alt="" coords="515,123,748,164"/>
+</map>

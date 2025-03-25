@@ -1,0 +1,10 @@
+<map id="include/mc_tasks/TransformTask.h" name="include/mc_tasks/TransformTask.h">
+<area shape="rect" id="node1" title=" " alt="" coords="248,5,452,47"/>
+<area shape="rect" id="node2" href="$AdmittanceTask_8h.html" title=" " alt="" coords="5,95,220,136"/>
+<area shape="rect" id="node6" href="$ImpedanceTask_8h.html" title=" " alt="" coords="245,95,455,136"/>
+<area shape="rect" id="node8" href="$SurfaceTransformTask_8h.html" title=" " alt="" coords="480,95,668,136"/>
+<area shape="rect" id="node3" href="$DampingTask_8h.html" title=" " alt="" coords="13,184,212,225"/>
+<area shape="rect" id="node4" href="$CoPTask_8h.html" title=" " alt="" coords="10,273,215,300"/>
+<area shape="rect" id="node5" href="$StabilizerTask_8h.html" title=" " alt="" coords="15,348,210,389"/>
+<area shape="rect" id="node7" href="$FirstOrderImpedanceTask_8h.html" title=" " alt="" coords="249,184,451,225"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="mc_tasks::MomentumTask" name="mc_tasks::MomentumTask">
+<area shape="rect" id="node1" title="Control the momentum of a robot." alt="" coords="5,169,201,196"/>
+<area shape="rect" id="node2" href="$structmc__tasks_1_1TrajectoryTaskGeneric.html" title="Generic wrapper for a trajectory dynamic over an error function." alt="" coords="11,80,196,121"/>
+<area shape="rect" id="node3" href="$structmc__tasks_1_1MetaTask.html" title="Represents a generic task." alt="" coords="26,5,181,32"/>
+</map>

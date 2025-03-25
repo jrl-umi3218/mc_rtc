@@ -1,0 +1,7 @@
+<map id="mc_tasks::force::FirstOrderImpedanceTask" name="mc_tasks::force::FirstOrderImpedanceTask">
+<area shape="rect" id="node1" title="Impedance&#45;based damping control of the end&#45;effector." alt="" coords="24,319,221,360"/>
+<area shape="rect" id="node2" href="$structmc__tasks_1_1force_1_1ImpedanceTask.html" title="Impedance control of the end&#45;effector." alt="" coords="5,244,240,271"/>
+<area shape="rect" id="node3" href="$structmc__tasks_1_1TransformTask.html" title="Control a frame 6D pose." alt="" coords="29,169,216,196"/>
+<area shape="rect" id="node4" href="$structmc__tasks_1_1TrajectoryTaskGeneric.html" title="Generic wrapper for a trajectory dynamic over an error function." alt="" coords="30,80,215,121"/>
+<area shape="rect" id="node5" href="$structmc__tasks_1_1MetaTask.html" title="Represents a generic task." alt="" coords="45,5,200,32"/>
+</map>

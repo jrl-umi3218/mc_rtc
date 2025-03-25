@@ -1,0 +1,4 @@
+<map id="mc_control::Gripper" name="mc_control::Gripper">
+<area shape="rect" id="node1" title="A robot&#39;s gripper reprensentation." alt="" coords="20,139,171,165"/>
+<area shape="rect" id="node2" href="$structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety.html" title=" " alt="" coords="5,5,185,47"/>
+</map>

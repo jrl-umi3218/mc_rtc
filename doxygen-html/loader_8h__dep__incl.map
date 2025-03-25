@@ -1,0 +1,19 @@
+<map id="include/mc_rtc/loader.h" name="include/mc_rtc/loader.h">
+<area shape="rect" id="node1" title="ltdl wrapper for mc_rtc purpose" alt="" coords="669,5,842,32"/>
+<area shape="rect" id="node2" href="$ControllerLoader_8h.html" title=" " alt="" coords="225,80,371,121"/>
+<area shape="rect" id="node3" href="$StateFactory_8h.html" title=" " alt="" coords="395,80,542,121"/>
+<area shape="rect" id="node10" href="$GlobalPlugin__fwd_8h.html" title=" " alt="" coords="567,80,717,121"/>
+<area shape="rect" id="node11" href="$mc__global__controller_8h.html" title=" " alt="" coords="585,169,758,211"/>
+<area shape="rect" id="node13" href="$GlobalPluginLoader_8h.html" title=" " alt="" coords="682,348,845,389"/>
+<area shape="rect" id="node16" href="$ObserverLoader_8h.html" title=" " alt="" coords="844,80,1008,121"/>
+<area shape="rect" id="node17" href="$RobotLoader_8h.html" title=" " alt="" coords="1033,87,1267,114"/>
+<area shape="rect" id="node4" href="$Executor_8h.html" title=" " alt="" coords="279,259,424,300"/>
+<area shape="rect" id="node9" href="$TransitionMap_8h.html" title=" " alt="" coords="389,169,548,211"/>
+<area shape="rect" id="node5" href="$Controller_8h.html" title=" " alt="" coords="109,348,255,389"/>
+<area shape="rect" id="node8" href="$Meta_8h.html" title=" " alt="" coords="279,348,424,389"/>
+<area shape="rect" id="node6" href="$fsm_2TasksController_8h.html" title=" " alt="" coords="5,437,172,479"/>
+<area shape="rect" id="node7" href="$fsm_2TVMController_8h.html" title=" " alt="" coords="196,437,355,479"/>
+<area shape="rect" id="node12" href="$GlobalPlugin_8h.html" title=" " alt="" coords="453,259,599,300"/>
+<area shape="rect" id="node15" href="$Ticker_8h.html" title=" " alt="" coords="623,259,768,300"/>
+<area shape="rect" id="node14" href="$GlobalPluginMacros_8h.html" title=" " alt="" coords="448,348,615,389"/>
+</map>

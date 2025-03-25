@@ -1,0 +1,8 @@
+<map id="mc_tasks::force::AdmittanceTask" name="mc_tasks::force::AdmittanceTask">
+<area shape="rect" id="node1" title="Hybrid position&#45;force control on a contacting end&#45;effector." alt="" coords="5,244,243,271"/>
+<area shape="rect" id="node5" href="$structmc__tasks_1_1force_1_1DampingTask.html" title="Hybrid position&#45;force control on a contacting end&#45;effector." alt="" coords="13,319,235,345"/>
+<area shape="rect" id="node2" href="$structmc__tasks_1_1TransformTask.html" title="Control a frame 6D pose." alt="" coords="31,169,217,196"/>
+<area shape="rect" id="node3" href="$structmc__tasks_1_1TrajectoryTaskGeneric.html" title="Generic wrapper for a trajectory dynamic over an error function." alt="" coords="31,80,217,121"/>
+<area shape="rect" id="node4" href="$structmc__tasks_1_1MetaTask.html" title="Represents a generic task." alt="" coords="47,5,201,32"/>
+<area shape="rect" id="node6" href="$structmc__tasks_1_1force_1_1CoPTask.html" title="Track center&#45;of&#45;pressure (CoP) references at contact." alt="" coords="31,393,217,420"/>
+</map>

@@ -1,24 +1,26 @@
 /*
-@licstart  The following is the entire license notice for the
-JavaScript code in this file.
+ @licstart  The following is the entire license notice for the JavaScript code in this file.
 
-Copyright (C) 1997-2019 by Dimitri van Heesch
+ The MIT License (MIT)
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of version 2 of the GNU General Public License as published by
-the Free Software Foundation
+ Copyright (C) 1997-2020 by Dimitri van Heesch
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ and associated documentation files (the "Software"), to deal in the Software without restriction,
+ including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ The above copyright notice and this permission notice shall be included in all copies or
+ substantial portions of the Software.
 
-@licend  The above is the entire license notice
-for the JavaScript code in this file
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+ @licend  The above is the entire license notice for the JavaScript code in this file
 */
 var NAVTREE =
 [
@@ -68,28 +70,30 @@ var NAVTREEINDEX =
 [
 "AbscissaOrdinate_8h.html",
 "IntegerInput_8h_source.html",
-"SequenceInterpolator_8h_source.html",
-"classmc__tvm_1_1TransformFunction.html#a3103989670bc9e45faaeca1d04eaddd3",
-"globals_defs.html",
-"logging_8h_source.html",
-"plugins_2ROS_2include_2mc__tasks__ros_2api_8h.html#ad9cb61445fafdd004c409dbab29c15ce",
-"structmc__control_1_1Gripper.html#a3e965969e9340e69f70016d9fc6a0697",
-"structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html",
-"structmc__control_1_1fsm_1_1StabilizerStandingState.html#a6e8df7ef63d968bdfe366e5c12d224e7",
-"structmc__observers_1_1Observer.html#ad50a096eb3ea0ba9a09f3a9b286a73a9",
-"structmc__rbdyn_1_1Frame.html#a9188d603302310854ecb37fccf72249e",
-"structmc__rbdyn_1_1RobotConverter.html#a3ae2e8970a964a2d79149204e0ca3887",
-"structmc__rbdyn_1_1Surface.html#a8c4fe07a3ad4392974c63722916b28db",
-"structmc__rtc_1_1Configuration.html#ab8cc8b0acc61a5bcf4befd1752691e97",
-"structmc__rtc_1_1ObjectLoader_1_1ObjectDeleter.html#ab2c3ffdb618f703a455be33b3612d911",
-"structmc__rtc_1_1gui_1_1details_1_1ForceImpl.html#ac9c8e724499257f3ea21001c6930c6c7",
-"structmc__rtc_1_1log_1_1FlatLog.html#aaab239b6569c991b55472d3811e2360b",
-"structmc__solver_1_1QPSolver.html#ae35ec2765a45413bcfebae5e57bcea5f",
-"structmc__tasks_1_1MetaTask.html#a2827c0bf7b69c7d349c34e9b3db19958",
-"structmc__tasks_1_1TransformTask.html#a4ed9f566928c9c9cfa5b6f971699d84b",
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a157a2ca5ae25905e6db6c0a522e38b27",
-"structmc__trajectory_1_1ExactCubic.html#aec46e0e93dfe6c8483cd4ab96ec133ae",
-"structmc__tvm_1_1Robot.html#ad5f7d733469c9f86df634791e93b7e9b"
+"SimulationContactPair_8h_source.html",
+"classmc__tvm_1_1TransformFunction.html#a46dd9d8ec51f68668814db8b69754c4e",
+"globals_vars.html",
+"logging_8h.html#aeb1d99e566cb5c454074579fcfa712f4",
+"namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06",
+"namespacemc__rtc_1_1log_1_1details.html#aa8cc2cc8dc25d49fa533f32a67f73c33",
+"structmc__control_1_1Contact.html#aa60a2901df9bc2de77f7f42282edf035",
+"structmc__control_1_1MCController.html#a2b6a6f913f0bd3fc5ca43b5a43978327",
+"structmc__control_1_1Ticker_1_1Configuration.html#a0a339189fc6131871afedf65e7bfcd9a",
+"structmc__control_1_1fsm_1_1Transition.html#ad0d49171493519fb008c73e58696edc1a68d8c641ebe12c46d077d8ff720c3bbd",
+"structmc__planning_1_1Pendulum.html#ac1bb8f13c47f89740d86998a2ae36444",
+"structmc__rbdyn_1_1Robot.html#a00856f04c24c914b9197fe11f2d573eb",
+"structmc__rbdyn_1_1RobotModule.html#a10b7fc984b3fa946f5c59a4174a366b8",
+"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a5b9bbb849504eb7763660147da1094a8",
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PolyhedronConfig_01_4.html",
+"structmc__rtc_1_1gui_1_1DataElement.html#a8a959ac2e5e7551b29b81b77034ea255",
+"structmc__rtc_1_1gui_1_1details_1_1PolyhedronTrianglesListImpl.html#a0544b1a5d18edb78fa26d334d3d02f9e",
+"structmc__rtc_1_1schema_1_1details_1_1is__schema.html",
+"structmc__solver_1_1utils_1_1ContactWrenchMatrixToLambdaMatrix.html#a3024b20e8f098756d24cd2082469c055",
+"structmc__tasks_1_1PostureTask.html#a15a1e19481a9a67cc4c0a9db183f7463",
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#aafc8ff52e25c57da0c710ef842cdd6a0",
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a68d1efc50be7bb07bdf12ed98bba24cc",
+"structmc__tvm_1_1CoMInConvexFunction.html#a0cbe2f5914f67550793ed6dfbcc6708c",
+"type__name_8h.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

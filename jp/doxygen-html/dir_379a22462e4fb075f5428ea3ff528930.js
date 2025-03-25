@@ -13,8 +13,8 @@ var dir_379a22462e4fb075f5428ea3ff528930 =
     [ "Default.h", "Default_8h.html", [
       [ "Default", "structmc__rtc_1_1Default.html", null ],
       [ "Default< T, std::enable_if_t< std::is_arithmetic_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01std_1_1enable__if__t_3_01std_1_1is__arithmetic__v_3_01T_01_4_01_4_01_4.html", null ],
-      [ "enable_if_t<(N > 0)> >", "structmc__rtc_1_1Default_3_01Eigen_1_1Matrix_3_01Scalar_00_01N_00_011_00_01Options_00_01MaxRows_a64953bfae576ebbe6be9eab9b3c9612.html", null ],
-      [ "enable_if_t<(N > 1)> >", "structmc__rtc_1_1Default_3_01Eigen_1_1Matrix_3_01Scalar_00_01N_00_01N_00_01Options_00_01MaxRows_78508de69251a7c285946e43e621eeeb.html", null ],
+      [ "Default< Eigen::Matrix< Scalar, N, 1, Options, MaxRows, MaxCols >, std::enable_if_t<(N > 0)> >", "structmc__rtc_1_1Default_3_01Eigen_1_1Matrix_3_01Scalar_00_01N_00_011_00_01Options_00_01MaxRows_a64953bfae576ebbe6be9eab9b3c9612.html", null ],
+      [ "Default< Eigen::Matrix< Scalar, N, N, Options, MaxRows, MaxCols >, std::enable_if_t<(N > 1)> >", "structmc__rtc_1_1Default_3_01Eigen_1_1Matrix_3_01Scalar_00_01N_00_01N_00_01Options_00_01MaxRows_78508de69251a7c285946e43e621eeeb.html", null ],
       [ "Default< sva::PTransformd >", "structmc__rtc_1_1Default_3_01sva_1_1PTransformd_01_4.html", null ],
       [ "Default< sva::MotionVecd >", "structmc__rtc_1_1Default_3_01sva_1_1MotionVecd_01_4.html", null ],
       [ "Default< sva::ForceVecd >", "structmc__rtc_1_1Default_3_01sva_1_1ForceVecd_01_4.html", null ],

@@ -1,0 +1,10 @@
+<map id="include/mc_tasks/OrientationTask.h" name="include/mc_tasks/OrientationTask.h">
+<area shape="rect" id="node1" title=" " alt="" coords="395,5,607,47"/>
+<area shape="rect" id="node2" href="$EndEffectorTask_8h.html" title=" " alt="" coords="281,95,494,136"/>
+<area shape="rect" id="node8" href="$StabilizerTask_8h.html" title=" " alt="" coords="518,95,713,136"/>
+<area shape="rect" id="node3" href="$Controller_8h.html" title=" " alt="" coords="109,184,255,225"/>
+<area shape="rect" id="node6" href="$ComplianceTask_8h.html" title=" " alt="" coords="279,184,495,225"/>
+<area shape="rect" id="node7" href="$RelativeEndEffectorTask_8h.html" title=" " alt="" coords="520,184,713,225"/>
+<area shape="rect" id="node4" href="$fsm_2TasksController_8h.html" title=" " alt="" coords="5,273,172,315"/>
+<area shape="rect" id="node5" href="$fsm_2TVMController_8h.html" title=" " alt="" coords="196,273,355,315"/>
+</map>

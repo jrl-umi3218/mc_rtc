@@ -1,0 +1,6 @@
+<map id="mc_control::fsm::StabilizerStandingState" name="mc_control::fsm::StabilizerStandingState">
+<area shape="rect" id="node1" title="Simple state to control and stabilize the CoM of a biped&#45;like robot using the LIPMStabilizer." alt="" coords="127,448,323,489"/>
+<area shape="rect" id="node2" href="$structmc__control_1_1fsm_1_1State.html" title=" " alt="" coords="140,359,309,385"/>
+<area shape="rect" id="node3" href="$structmc__rtc_1_1Configuration.html" title="Simplify access to values hold within a JSON file." alt="" coords="5,5,167,32"/>
+<area shape="rect" id="node4" href="$structmc__planning_1_1Pendulum.html" title=" " alt="" coords="334,359,513,385"/>
+</map>

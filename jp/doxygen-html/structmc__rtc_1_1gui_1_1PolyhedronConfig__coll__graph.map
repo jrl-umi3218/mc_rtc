@@ -1,0 +1,6 @@
+<map id="mc_rtc::gui::PolyhedronConfig" name="mc_rtc::gui::PolyhedronConfig">
+<area shape="rect" id="node1" title=" " alt="" coords="99,319,315,345"/>
+<area shape="rect" id="node2" href="$structmc__rtc_1_1gui_1_1Color.html" title=" " alt="" coords="139,73,275,99"/>
+<area shape="rect" id="node3" href="$structmc__rtc_1_1gui_1_1LineConfig.html" title=" " alt="" coords="122,229,292,256"/>
+<area shape="rect" id="node4" href="$structmc__rtc_1_1gui_1_1PointConfig.html" title=" " alt="" coords="316,229,492,256"/>
+</map>

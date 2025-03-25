@@ -1,0 +1,8 @@
+<map id="mc_rbdyn::RobotFrame" name="mc_rbdyn::RobotFrame">
+<area shape="rect" id="node1" title=" " alt="" coords="609,93,783,120"/>
+<area shape="rect" id="node2" href="$structmc__rtc_1_1shared.html" title=" " alt="" coords="291,27,507,69"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,241,91"/>
+<area shape="rect" id="node4" href="$structmc__rbdyn_1_1Robot.html" title=" " alt="" coords="333,93,465,120"/>
+<area shape="rect" id="node5" href="$structmc__rbdyn_1_1ForceSensor.html" title=" " alt="" coords="312,144,485,171"/>
+<area shape="rect" id="node6" href="$structmc__rbdyn_1_1Device.html" title=" " alt="" coords="54,144,193,171"/>
+</map>

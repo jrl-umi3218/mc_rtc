@@ -1,0 +1,6 @@
+<map id="mc_tasks::BSplineTrajectoryTask" name="mc_tasks::BSplineTrajectoryTask">
+<area shape="rect" id="node1" title="Track a bezier curve with a robot surface." alt="" coords="5,259,240,285"/>
+<area shape="rect" id="node2" href="$structmc__tasks_1_1SplineTrajectoryTask.html" title=" " alt="" coords="11,169,234,211"/>
+<area shape="rect" id="node3" href="$structmc__tasks_1_1TrajectoryTaskGeneric.html" title="Generic wrapper for a trajectory dynamic over an error function." alt="" coords="30,80,215,121"/>
+<area shape="rect" id="node4" href="$structmc__tasks_1_1MetaTask.html" title="Represents a generic task." alt="" coords="45,5,200,32"/>
+</map>

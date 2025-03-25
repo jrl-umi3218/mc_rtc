@@ -1,0 +1,5 @@
+<map id="mc_rbdyn::Device" name="mc_rbdyn::Device">
+<area shape="rect" id="node1" title=" " alt="" coords="119,5,257,32"/>
+<area shape="rect" id="node2" href="$structmc__rbdyn_1_1BodySensor.html" title=" " alt="" coords="5,80,176,107"/>
+<area shape="rect" id="node3" href="$structmc__rbdyn_1_1ForceSensor.html" title=" " alt="" coords="200,80,373,107"/>
+</map>

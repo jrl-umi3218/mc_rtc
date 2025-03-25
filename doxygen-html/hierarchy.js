@@ -8,10 +8,10 @@ var hierarchy =
     [ "mc_rtc::gui::plot::impl::AbscissaOrdinate< UpdateCacheT >", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html", [
       [ "mc_rtc::gui::plot::impl::AbscissaOrdinateWithColor< UpdateCacheT, GetColor >", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html", null ]
     ] ],
-    [ "aligned_allocator", null, [
+    [ "Eigen::aligned_allocator", null, [
       [ "mc_rtc::internal::Allocator< T, typename T::eigen_aligned_operator_new_marker_type >", "structmc__rtc_1_1internal_1_1Allocator_3_01T_00_01typename_01T_1_1eigen__aligned__operator__new__marker__type_01_4.html", null ]
     ] ],
-    [ "allocator", null, [
+    [ "std::allocator", null, [
       [ "mc_rtc::internal::Allocator< T, typename >", "structmc__rtc_1_1internal_1_1Allocator.html", null ]
     ] ],
     [ "mc_rtc::internal::args_t< T >", "structmc__rtc_1_1internal_1_1args__t.html", null ],
@@ -30,15 +30,15 @@ var hierarchy =
     [ "mc_rtc::gui::details::CheckReturnType< GetT, T, Args... >", "structmc__rtc_1_1gui_1_1details_1_1CheckReturnType_3_01GetT_00_01T_00_01Args_8_8_8_01_4.html", null ],
     [ "mc_rtc::schema::details::Choices< HasChoices >", "structmc__rtc_1_1schema_1_1details_1_1Choices.html", null ],
     [ "mc_rtc::schema::details::Choices< false >", "structmc__rtc_1_1schema_1_1details_1_1Choices_3_01false_01_4.html", null ],
-    [ "mc_rbdyn::Collision", "structmc__rbdyn_1_1Collision.html", null ],
     [ "Collision", "classCollision.html", null ],
+    [ "mc_rbdyn::Collision", "structmc__rbdyn_1_1Collision.html", null ],
     [ "mc_rtc::gui::Color", "structmc__rtc_1_1gui_1_1Color.html", null ],
     [ "mc_control::CompletionCriteria", "structmc__control_1_1CompletionCriteria.html", null ],
     [ "mc_rbdyn::CompoundJointConstraintDescription", "structmc__rbdyn_1_1CompoundJointConstraintDescription.html", null ],
+    [ "mc_control::Ticker::Configuration", "structmc__control_1_1Ticker_1_1Configuration.html", null ],
     [ "mc_rtc::Configuration", "structmc__rtc_1_1Configuration.html", [
       [ "mc_rtc::ConfigurationFile", "structmc__rtc_1_1ConfigurationFile.html", null ]
     ] ],
-    [ "mc_control::Ticker::Configuration", "structmc__control_1_1Ticker_1_1Configuration.html", null ],
     [ "mc_rtc::ConfigurationArrayIterator", "structmc__rtc_1_1ConfigurationArrayIterator.html", null ],
     [ "mc_rtc::ConfigurationLoader< T >", "structmc__rtc_1_1ConfigurationLoader.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_control::Contact >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1Contact_01_4.html", null ],
@@ -62,71 +62,54 @@ var hierarchy =
     [ "mc_rtc::ConfigurationLoader< mc_tasks::force::ImpedanceGains >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_tasks::lipm_stabilizer::ContactState >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< void >", "structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html", null ],
-    [ "const_iterator", null, [
+    [ "std::vector::const_iterator", null, [
       [ "mc_rtc::SharedPtrVectorConstIterator< T >", "structmc__rtc_1_1SharedPtrVectorConstIterator.html", null ]
     ] ],
-    [ "ConstraintFunction", null, [
+    [ "tasks::qp::ConstraintFunction", null, [
       [ "mc_solver::utils::Constraint< tasks::qp::Equality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", [
         [ "mc_solver::utils::EqualityConstraint< UpdateT >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", null ]
-      ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateForce >", "structmc__solver_1_1utils_1_1Constraint.html", [
-        [ "mc_solver::utils::EqualityConstraint< utils::UpdateForce >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", [
-          [ "mc_solver::EqualityConstraintForce", "structmc__solver_1_1EqualityConstraintForce.html", null ]
-        ] ]
-      ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateLambda >", "structmc__solver_1_1utils_1_1Constraint.html", [
-        [ "mc_solver::utils::EqualityConstraint< utils::UpdateLambda >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", [
-          [ "mc_solver::EqualityConstraintLambda", "structmc__solver_1_1EqualityConstraintLambda.html", null ]
-        ] ]
-      ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateRobot >", "structmc__solver_1_1utils_1_1Constraint.html", [
-        [ "mc_solver::utils::EqualityConstraint< utils::UpdateRobot >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", [
-          [ "mc_solver::EqualityConstraintRobot", "structmc__solver_1_1EqualityConstraintRobot.html", null ]
-        ] ]
-      ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", [
-        [ "mc_solver::utils::GenInequalityConstraint< UpdateT >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", null ]
-      ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateForce >", "structmc__solver_1_1utils_1_1Constraint.html", [
-        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateForce >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", [
-          [ "mc_solver::GenInequalityConstraintForce", "structmc__solver_1_1GenInequalityConstraintForce.html", null ]
-        ] ]
-      ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateLambda >", "structmc__solver_1_1utils_1_1Constraint.html", [
-        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateLambda >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", [
-          [ "mc_solver::GenInequalityConstraintLambda", "structmc__solver_1_1GenInequalityConstraintLambda.html", null ]
-        ] ]
-      ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateRobot >", "structmc__solver_1_1utils_1_1Constraint.html", [
-        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateRobot >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", [
-          [ "mc_solver::GenInequalityConstraintRobot", "structmc__solver_1_1GenInequalityConstraintRobot.html", null ]
-        ] ]
       ] ],
       [ "mc_solver::utils::Constraint< tasks::qp::Inequality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", [
         [ "mc_solver::utils::InequalityConstraint< UpdateT >", "structmc__solver_1_1utils_1_1InequalityConstraint.html", null ]
       ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateForce >", "structmc__solver_1_1utils_1_1Constraint.html", [
+      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", [
+        [ "mc_solver::utils::GenInequalityConstraint< UpdateT >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", null ]
+      ] ],
+      [ "mc_solver::details::CompoundJointConstraint", "structmc__solver_1_1details_1_1CompoundJointConstraint.html", null ],
+      [ "mc_solver::utils::Constraint< ConstraintT, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", [
+        [ "mc_solver::utils::EqualityConstraint< utils::UpdateForce >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", [
+          [ "mc_solver::EqualityConstraintForce", "structmc__solver_1_1EqualityConstraintForce.html", null ]
+        ] ],
+        [ "mc_solver::utils::EqualityConstraint< utils::UpdateRobot >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", [
+          [ "mc_solver::EqualityConstraintRobot", "structmc__solver_1_1EqualityConstraintRobot.html", null ]
+        ] ],
+        [ "mc_solver::utils::EqualityConstraint< utils::UpdateLambda >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", [
+          [ "mc_solver::EqualityConstraintLambda", "structmc__solver_1_1EqualityConstraintLambda.html", null ]
+        ] ],
+        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateForce >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", [
+          [ "mc_solver::GenInequalityConstraintForce", "structmc__solver_1_1GenInequalityConstraintForce.html", null ]
+        ] ],
+        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateRobot >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", [
+          [ "mc_solver::GenInequalityConstraintRobot", "structmc__solver_1_1GenInequalityConstraintRobot.html", null ]
+        ] ],
+        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateLambda >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", [
+          [ "mc_solver::GenInequalityConstraintLambda", "structmc__solver_1_1GenInequalityConstraintLambda.html", null ]
+        ] ],
         [ "mc_solver::utils::InequalityConstraint< utils::UpdateForce >", "structmc__solver_1_1utils_1_1InequalityConstraint.html", [
           [ "mc_solver::InequalityConstraintForce", "structmc__solver_1_1InequalityConstraintForce.html", null ]
-        ] ]
-      ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateLambda >", "structmc__solver_1_1utils_1_1Constraint.html", [
+        ] ],
+        [ "mc_solver::utils::InequalityConstraint< utils::UpdateRobot >", "structmc__solver_1_1utils_1_1InequalityConstraint.html", [
+          [ "mc_solver::InequalityConstraintRobot", "structmc__solver_1_1InequalityConstraintRobot.html", null ]
+        ] ],
         [ "mc_solver::utils::InequalityConstraint< utils::UpdateLambda >", "structmc__solver_1_1utils_1_1InequalityConstraint.html", [
           [ "mc_solver::InequalityConstraintLambda", "structmc__solver_1_1InequalityConstraintLambda.html", null ]
         ] ]
-      ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateRobot >", "structmc__solver_1_1utils_1_1Constraint.html", [
-        [ "mc_solver::utils::InequalityConstraint< utils::UpdateRobot >", "structmc__solver_1_1utils_1_1InequalityConstraint.html", [
-          [ "mc_solver::InequalityConstraintRobot", "structmc__solver_1_1InequalityConstraintRobot.html", null ]
-        ] ]
-      ] ],
-      [ "mc_solver::details::CompoundJointConstraint", "structmc__solver_1_1details_1_1CompoundJointConstraint.html", null ],
-      [ "mc_solver::utils::Constraint< ConstraintT, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", null ]
+      ] ]
     ] ],
     [ "mc_solver::ConstraintSet", "structmc__solver_1_1ConstraintSet.html", [
       [ "mc_solver::BoundedSpeedConstr", "structmc__solver_1_1BoundedSpeedConstr.html", null ],
-      [ "mc_solver::CollisionsConstraint", "structmc__solver_1_1CollisionsConstraint.html", null ],
       [ "mc_solver::CoMIncPlaneConstr", "structmc__solver_1_1CoMIncPlaneConstr.html", null ],
+      [ "mc_solver::CollisionsConstraint", "structmc__solver_1_1CollisionsConstraint.html", null ],
       [ "mc_solver::CompoundJointConstraint", "structmc__solver_1_1CompoundJointConstraint.html", null ],
       [ "mc_solver::ContactConstraint", "structmc__solver_1_1ContactConstraint.html", null ],
       [ "mc_solver::KinematicsConstraint", "structmc__solver_1_1KinematicsConstraint.html", [
@@ -148,16 +131,17 @@ var hierarchy =
     [ "mc_rtc::gui::CylinderParameters", "structmc__rtc_1_1gui_1_1CylinderParameters.html", null ],
     [ "mc_rtc::DataStore", "structmc__rtc_1_1DataStore.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html", null ],
-    [ "mc_rtc::Default< T, Enable >", "structmc__rtc_1_1Default.html", null ],
+    [ "mc_rtc::Default< T, Enable >", "structmc__rtc_1_1Default.html", [
+      [ "mc_rtc::Default< std::variant< T, Others... > >", "structmc__rtc_1_1Default_3_01std_1_1variant_3_01T_00_01Others_8_8_8_01_4_01_4.html", null ]
+    ] ],
+    [ "mc_rtc::Default< Eigen::Matrix< Scalar, N, 1, Options, MaxRows, MaxCols >, std::enable_if_t<(N > 0)> >", "structmc__rtc_1_1Default_3_01Eigen_1_1Matrix_3_01Scalar_00_01N_00_011_00_01Options_00_01MaxRows_a64953bfae576ebbe6be9eab9b3c9612.html", null ],
+    [ "mc_rtc::Default< Eigen::Matrix< Scalar, N, N, Options, MaxRows, MaxCols >, std::enable_if_t<(N > 1)> >", "structmc__rtc_1_1Default_3_01Eigen_1_1Matrix_3_01Scalar_00_01N_00_01N_00_01Options_00_01MaxRows_78508de69251a7c285946e43e621eeeb.html", null ],
     [ "mc_rtc::Default< std::string >", "structmc__rtc_1_1Default_3_01std_1_1string_01_4.html", null ],
     [ "mc_rtc::Default< sva::AdmittanceVecd >", "structmc__rtc_1_1Default_3_01sva_1_1AdmittanceVecd_01_4.html", null ],
     [ "mc_rtc::Default< sva::ForceVecd >", "structmc__rtc_1_1Default_3_01sva_1_1ForceVecd_01_4.html", null ],
     [ "mc_rtc::Default< sva::ImpedanceVecd >", "structmc__rtc_1_1Default_3_01sva_1_1ImpedanceVecd_01_4.html", null ],
     [ "mc_rtc::Default< sva::MotionVecd >", "structmc__rtc_1_1Default_3_01sva_1_1MotionVecd_01_4.html", null ],
     [ "mc_rtc::Default< sva::PTransformd >", "structmc__rtc_1_1Default_3_01sva_1_1PTransformd_01_4.html", null ],
-    [ "mc_rtc::Default< T >", "structmc__rtc_1_1Default.html", [
-      [ "mc_rtc::Default< std::variant< T, Others... > >", "structmc__rtc_1_1Default_3_01std_1_1variant_3_01T_00_01Others_8_8_8_01_4_01_4.html", null ]
-    ] ],
     [ "mc_rtc::Default< T, std::enable_if_t< schema::details::is_schema_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01std_1_1enable__if__t_3_01schema_1_1details_1_1is__schema__v_3_01T_01_4_01_4_01_4.html", null ],
     [ "mc_rtc::Default< T, std::enable_if_t< schema::details::is_std_vector_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01std_1_1enable__if__t_3_01schema_1_1details_1_1is__std__vector__v_3_01T_01_4_01_4_01_4.html", null ],
     [ "mc_rtc::Default< T, std::enable_if_t< std::is_arithmetic_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01std_1_1enable__if__t_3_01std_1_1is__arithmetic__v_3_01T_01_4_01_4_01_4.html", null ],
@@ -169,18 +153,13 @@ var hierarchy =
     ] ],
     [ "mc_rtc::gui::Element", "structmc__rtc_1_1gui_1_1Element.html", [
       [ "mc_rtc::gui::CallbackElement< Element, Callback >", "structmc__rtc_1_1gui_1_1CallbackElement.html", [
-        [ "mc_rtc::gui::details::FormImpl< Callback >", "structmc__rtc_1_1gui_1_1details_1_1FormImpl.html", null ],
-        [ "mc_rtc::gui::details::SchemaImpl< Callback >", "structmc__rtc_1_1gui_1_1details_1_1SchemaImpl.html", null ],
         [ "mc_rtc::gui::VoidCallbackElement< Element, Callback >", "structmc__rtc_1_1gui_1_1VoidCallbackElement.html", [
           [ "mc_rtc::gui::details::ButtonImpl< Callback >", "structmc__rtc_1_1gui_1_1details_1_1ButtonImpl.html", null ]
-        ] ]
+        ] ],
+        [ "mc_rtc::gui::details::FormImpl< Callback >", "structmc__rtc_1_1gui_1_1details_1_1FormImpl.html", null ],
+        [ "mc_rtc::gui::details::SchemaImpl< Callback >", "structmc__rtc_1_1gui_1_1details_1_1SchemaImpl.html", null ]
       ] ],
       [ "mc_rtc::gui::DataElement< GetT >", "structmc__rtc_1_1gui_1_1DataElement.html", [
-        [ "mc_rtc::gui::CallbackElement< DataElement< GetT >, Callback >", "structmc__rtc_1_1gui_1_1CallbackElement.html", [
-          [ "mc_rtc::gui::VoidCallbackElement< DataElement< GetT >, Callback >", "structmc__rtc_1_1gui_1_1VoidCallbackElement.html", [
-            [ "mc_rtc::gui::details::CheckboxImpl< GetT, Callback >", "structmc__rtc_1_1gui_1_1details_1_1CheckboxImpl.html", null ]
-          ] ]
-        ] ],
         [ "mc_rtc::gui::CallbackElement< DataElement< GetT >, SetT >", "structmc__rtc_1_1gui_1_1CallbackElement.html", [
           [ "mc_rtc::gui::CommonInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1CommonInputImpl.html", [
             [ "mc_rtc::gui::details::ArrayInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1ArrayInputImpl.html", null ],
@@ -190,14 +169,6 @@ var hierarchy =
             [ "mc_rtc::gui::details::NumberInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1NumberInputImpl.html", null ],
             [ "mc_rtc::gui::details::NumberSliderImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1NumberSliderImpl.html", null ],
             [ "mc_rtc::gui::details::StringInputImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1StringInputImpl.html", null ]
-          ] ]
-        ] ],
-        [ "mc_rtc::gui::CallbackElement< DataElement< GetT >, std::nullptr_t >", "structmc__rtc_1_1gui_1_1CallbackElement.html", [
-          [ "mc_rtc::gui::CommonInputImpl< GetT, std::nullptr_t >", "structmc__rtc_1_1gui_1_1CommonInputImpl.html", [
-            [ "mc_rtc::gui::details::Point3DImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1Point3DImpl.html", null ],
-            [ "mc_rtc::gui::details::RotationImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1RotationImpl.html", null ],
-            [ "mc_rtc::gui::details::TransformImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1TransformImpl.html", null ],
-            [ "mc_rtc::gui::details::XYThetaImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html", null ]
           ] ]
         ] ],
         [ "mc_rtc::gui::details::LabelImpl< GetT >", "structmc__rtc_1_1gui_1_1details_1_1LabelImpl.html", [
@@ -225,16 +196,23 @@ var hierarchy =
     [ "mc_control::ElementId", "structmc__control_1_1ElementId.html", null ],
     [ "ElementT", null, [
       [ "mc_rtc::gui::CallbackElement< ElementT, Callback >", "structmc__rtc_1_1gui_1_1CallbackElement.html", [
+        [ "mc_rtc::gui::CommonInputImpl< GetT, std::nullptr_t >", "structmc__rtc_1_1gui_1_1CommonInputImpl.html", [
+          [ "mc_rtc::gui::details::Point3DImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1Point3DImpl.html", null ],
+          [ "mc_rtc::gui::details::RotationImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1RotationImpl.html", null ],
+          [ "mc_rtc::gui::details::TransformImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1TransformImpl.html", null ],
+          [ "mc_rtc::gui::details::XYThetaImpl< GetT, SetT >", "structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html", null ]
+        ] ],
+        [ "mc_rtc::gui::VoidCallbackElement< DataElement< GetT >, Callback >", "structmc__rtc_1_1gui_1_1VoidCallbackElement.html", [
+          [ "mc_rtc::gui::details::CheckboxImpl< GetT, Callback >", "structmc__rtc_1_1gui_1_1details_1_1CheckboxImpl.html", null ]
+        ] ],
         [ "mc_rtc::gui::VoidCallbackElement< ElementT, Callback >", "structmc__rtc_1_1gui_1_1VoidCallbackElement.html", null ]
       ] ],
       [ "mc_rtc::gui::CallbackElement< ElementT, std::nullptr_t >", "structmc__rtc_1_1gui_1_1CallbackElement_3_01ElementT_00_01std_1_1nullptr__t_01_4.html", null ]
     ] ],
     [ "mc_rtc::schema::details::EmptySchema", "structmc__rtc_1_1schema_1_1details_1_1EmptySchema.html", null ],
-    [ "mc_rtc::enable_if_t<(N > 0)> >", "structmc__rtc_1_1Default_3_01Eigen_1_1Matrix_3_01Scalar_00_01N_00_011_00_01Options_00_01MaxRows_a64953bfae576ebbe6be9eab9b3c9612.html", null ],
-    [ "mc_rtc::enable_if_t<(N > 1)> >", "structmc__rtc_1_1Default_3_01Eigen_1_1Matrix_3_01Scalar_00_01N_00_01N_00_01Options_00_01MaxRows_78508de69251a7c285946e43e621eeeb.html", null ],
     [ "mc_rtc::log::FlatLog::entry", "structmc__rtc_1_1log_1_1FlatLog_1_1entry.html", null ],
     [ "mc_tasks::lipm_stabilizer::StabilizerTask::EnumClassHash", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1EnumClassHash.html", null ],
-    [ "exception", null, [
+    [ "std::exception", null, [
       [ "mc_rtc::Configuration::Exception", "structmc__rtc_1_1Configuration_1_1Exception.html", null ],
       [ "mc_rtc::LoaderException", "structmc__rtc_1_1LoaderException.html", null ]
     ] ],
@@ -243,7 +221,7 @@ var hierarchy =
     [ "mc_filter::ExponentialMovingAverage< Eigen::Vector3d >", "structmc__filter_1_1ExponentialMovingAverage.html", null ],
     [ "mc_tasks::lipm_stabilizer::StabilizerTask::ExternalWrench", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask_1_1ExternalWrench.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html", null ],
-    [ "false_type", null, [
+    [ "std::false_type", null, [
       [ "mc_control::MCController::DeprecatedAnchorFrame< T >", "structmc__control_1_1MCController_1_1DeprecatedAnchorFrame.html", null ],
       [ "mc_rtc::gui::details::is_variant< T >", "structmc__rtc_1_1gui_1_1details_1_1is__variant.html", null ],
       [ "mc_rtc::internal::has_write_builder< T, typename >", "structmc__rtc_1_1internal_1_1has__write__builder.html", null ],
@@ -291,16 +269,16 @@ var hierarchy =
       [ "mc_rtc::gui::FormOneOfInput< T >", "structmc__rtc_1_1gui_1_1FormOneOfInput.html", null ]
     ] ],
     [ "mc_rtc::gui::details::FormElements", "structmc__rtc_1_1gui_1_1details_1_1FormElements.html", [
-      [ "mc_rtc::gui::details::FormImpl< Callback >", "structmc__rtc_1_1gui_1_1details_1_1FormImpl.html", null ],
       [ "mc_rtc::gui::FormGenericArrayInput< T >", "structmc__rtc_1_1gui_1_1FormGenericArrayInput.html", null ],
       [ "mc_rtc::gui::FormObjectInput", "structmc__rtc_1_1gui_1_1FormObjectInput.html", null ],
-      [ "mc_rtc::gui::FormOneOfInput< T >", "structmc__rtc_1_1gui_1_1FormOneOfInput.html", null ]
+      [ "mc_rtc::gui::FormOneOfInput< T >", "structmc__rtc_1_1gui_1_1FormOneOfInput.html", null ],
+      [ "mc_rtc::gui::details::FormImpl< Callback >", "structmc__rtc_1_1gui_1_1details_1_1FormImpl.html", null ]
     ] ],
     [ "mc_rbdyn::RobotModule::FrameDescription", "structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html", null ],
-    [ "Function", null, [
-      [ "mc_tvm::CollisionFunction", "classmc__tvm_1_1CollisionFunction.html", null ],
+    [ "tvm::function::abstract::Function", null, [
       [ "mc_tvm::CoMFunction", "structmc__tvm_1_1CoMFunction.html", null ],
       [ "mc_tvm::CoMInConvexFunction", "structmc__tvm_1_1CoMInConvexFunction.html", null ],
+      [ "mc_tvm::CollisionFunction", "classmc__tvm_1_1CollisionFunction.html", null ],
       [ "mc_tvm::ContactFunction", "classmc__tvm_1_1ContactFunction.html", null ],
       [ "mc_tvm::FrameVelocity", "structmc__tvm_1_1FrameVelocity.html", null ],
       [ "mc_tvm::GazeFunction", "structmc__tvm_1_1GazeFunction.html", null ],
@@ -331,26 +309,26 @@ var hierarchy =
     [ "mc_control::GlobalPlugin", "structmc__control_1_1GlobalPlugin.html", null ],
     [ "mc_control::GlobalPlugin::GlobalPluginConfiguration", "structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html", null ],
     [ "mc_control::GlobalPluginLoader", "structmc__control_1_1GlobalPluginLoader.html", null ],
-    [ "mc_rbdyn::RobotModule::Gripper", "structmc__rbdyn_1_1RobotModule_1_1Gripper.html", null ],
     [ "mc_control::Gripper", "structmc__control_1_1Gripper.html", null ],
+    [ "mc_rbdyn::RobotModule::Gripper", "structmc__rbdyn_1_1RobotModule_1_1Gripper.html", null ],
     [ "mc_rtc::Logger::GUIEvent", "structmc__rtc_1_1Logger_1_1GUIEvent.html", null ],
     [ "mc_solver::GenericLoader< Derived, T >::Handle", "structmc__solver_1_1GenericLoader_1_1Handle.html", null ],
     [ "std::hash< mc_control::Contact >", "structstd_1_1hash_3_01mc__control_1_1Contact_01_4.html", null ],
-    [ "IdentityFunction", null, [
+    [ "tvm::function::IdentityFunction", null, [
       [ "mc_tvm::PostureFunction", "classmc__tvm_1_1PostureFunction.html", null ]
     ] ],
     [ "mc_tasks::force::ImpedanceGains", "structmc__tasks_1_1force_1_1ImpedanceGains.html", null ],
     [ "mc_tasks::force::details::ImpedanceVecd< StrictlyPositive >", "structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html", null ],
     [ "mc_tasks::force::details::ImpedanceVecd< false >", "structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html", null ],
     [ "mc_tasks::force::details::ImpedanceVecd< true >", "structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html", null ],
-    [ "integral_constant", null, [
+    [ "std::integral_constant", null, [
       [ "mc_rbdyn::details::are_strings< T, Args... >", "structmc__rbdyn_1_1details_1_1are__strings_3_01T_00_01Args_8_8_8_01_4.html", null ]
     ] ],
-    [ "is_base_of", null, [
+    [ "std::is_base_of", null, [
       [ "mc_solver::utils::IsUpdate< T >", "structmc__solver_1_1utils_1_1IsUpdate.html", null ]
     ] ],
     [ "mc_rtc::gui::details::is_form_element", "structmc__rtc_1_1gui_1_1details_1_1is__form__element.html", null ],
-    [ "is_same", null, [
+    [ "std::is_same", null, [
       [ "mc_rbdyn::details::are_strings< T >", "structmc__rbdyn_1_1details_1_1are__strings_3_01T_01_4.html", null ]
     ] ],
     [ "mc_rtc::schema::details::is_schema", "structmc__rtc_1_1schema_1_1details_1_1is__schema.html", null ],
@@ -360,7 +338,7 @@ var hierarchy =
     [ "mc_rtc::log::is_serializable_member< T >", "structmc__rtc_1_1log_1_1is__serializable__member.html", null ],
     [ "mc_rtc::log::is_serializable_member< MemberT T::* >", "structmc__rtc_1_1log_1_1is__serializable__member_3_01MemberT_01T_1_1_5_01_4.html", null ],
     [ "mc_rtc::log::IterateBinaryLogData", "structmc__rtc_1_1log_1_1IterateBinaryLogData.html", null ],
-    [ "iterator", null, [
+    [ "std::vector::iterator", null, [
       [ "mc_rtc::SharedPtrVectorIterator< T >", "structmc__rtc_1_1SharedPtrVectorIterator.html", null ]
     ] ],
     [ "mc_rbdyn::JointSensor", "structmc__rbdyn_1_1JointSensor.html", null ],
@@ -380,12 +358,11 @@ var hierarchy =
     [ "mc_filter::LeakyIntegrator< VectorT >", "structmc__filter_1_1LeakyIntegrator.html", null ],
     [ "mc_filter::LeakyIntegrator< Eigen::Vector3d >", "structmc__filter_1_1LeakyIntegrator.html", null ],
     [ "mc_tvm::Limits", "structmc__tvm_1_1Limits.html", null ],
-    [ "LinearFunction", null, [
+    [ "tvm::function::abstract::LinearFunction", null, [
       [ "mc_tvm::CompoundJointFunction", "structmc__tvm_1_1CompoundJointFunction.html", null ],
       [ "mc_tvm::DynamicFunction", "structmc__tvm_1_1DynamicFunction.html", null ]
     ] ],
     [ "mc_trajectory::LinearInterpolation< T >", "structmc__trajectory_1_1LinearInterpolation.html", null ],
-    [ "mc_trajectory::LinearInterpolation< Eigen::Vector6d >", "structmc__trajectory_1_1LinearInterpolation.html", null ],
     [ "mc_trajectory::LinearInterpolation< Value >", "structmc__trajectory_1_1LinearInterpolation.html", null ],
     [ "mc_rtc::gui::LineConfig", "structmc__rtc_1_1gui_1_1LineConfig.html", null ],
     [ "mc_rtc::Loader", "structmc__rtc_1_1Loader.html", null ],
@@ -403,31 +380,29 @@ var hierarchy =
     [ "mc_filter::LowPassCompose< Eigen::Vector3d >", "structmc__filter_1_1LowPassCompose.html", null ],
     [ "mc_rtc::LTDLHandle", "structmc__rtc_1_1LTDLHandle.html", null ],
     [ "mc_rtc::LTDLMutex", "structmc__rtc_1_1LTDLMutex.html", null ],
-    [ "map", null, [
+    [ "std::map", null, [
       [ "mc_rbdyn::VisualMap", "structmc__rbdyn_1_1VisualMap.html", null ]
     ] ],
-    [ "Matrix", null, [
+    [ "Eigen::Matrix", null, [
       [ "mc_rbdyn::Gains< 2 >", "structmc__rbdyn_1_1Gains.html", null ],
       [ "mc_rbdyn::Gains< 3 >", "structmc__rbdyn_1_1Gains.html", null ],
       [ "mc_rbdyn::Gains< N >", "structmc__rbdyn_1_1Gains.html", null ]
     ] ],
     [ "mc_control::MCController", "structmc__control_1_1MCController.html", [
-      [ "mc_control::details::BackendSpecificController< MCController::Backend::Tasks, mc_solver::TasksQPSolver >", "structmc__control_1_1details_1_1BackendSpecificController.html", null ],
-      [ "mc_control::details::BackendSpecificController< MCController::Backend::TVM, mc_solver::TVMQPSolver >", "structmc__control_1_1details_1_1BackendSpecificController.html", null ],
-      [ "mc_control::details::BackendSpecificController< backend, SolverT >", "structmc__control_1_1details_1_1BackendSpecificController.html", [
-        [ "mc_control::TasksController", "structmc__control_1_1TasksController.html", null ],
+      [ "mc_control::details::BackendSpecificController< MCController::Backend::TVM, mc_solver::TVMQPSolver >", "structmc__control_1_1details_1_1BackendSpecificController.html", [
         [ "mc_control::TVMController", "structmc__control_1_1TVMController.html", null ]
       ] ],
-      [ "mc_control::fsm::Controller", "structmc__control_1_1fsm_1_1Controller.html", [
-        [ "mc_control::fsm::details::BackendSpecificController< MCController::Backend::Tasks, mc_solver::TasksQPSolver >", "structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html", [
-          [ "mc_control::fsm::TasksController", "structmc__control_1_1fsm_1_1TasksController.html", null ]
-        ] ],
-        [ "mc_control::fsm::details::BackendSpecificController< MCController::Backend::TVM, mc_solver::TVMQPSolver >", "structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html", [
-          [ "mc_control::fsm::TVMController", "structmc__control_1_1fsm_1_1TVMController.html", null ]
-        ] ],
-        [ "mc_control::fsm::details::BackendSpecificController< backend, SolverT >", "structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html", null ]
+      [ "mc_control::details::BackendSpecificController< MCController::Backend::Tasks, mc_solver::TasksQPSolver >", "structmc__control_1_1details_1_1BackendSpecificController.html", [
+        [ "mc_control::TasksController", "structmc__control_1_1TasksController.html", null ]
       ] ],
-      [ "mc_control::MCPythonController", "structmc__control_1_1MCPythonController.html", null ]
+      [ "mc_control::MCPythonController", "structmc__control_1_1MCPythonController.html", null ],
+      [ "mc_control::details::BackendSpecificController< backend, SolverT >", "structmc__control_1_1details_1_1BackendSpecificController.html", null ],
+      [ "mc_control::fsm::Controller", "structmc__control_1_1fsm_1_1Controller.html", [
+        [ "mc_control::fsm::details::BackendSpecificController< backend, SolverT >", "structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html", [
+          [ "mc_control::fsm::TVMController", "structmc__control_1_1fsm_1_1TVMController.html", null ],
+          [ "mc_control::fsm::TasksController", "structmc__control_1_1fsm_1_1TasksController.html", null ]
+        ] ]
+      ] ]
     ] ],
     [ "mc_control::MCGlobalController", "structmc__control_1_1MCGlobalController.html", null ],
     [ "mc_rtc::schema::details::MemberPointerWrapper< ptr >", "structmc__rtc_1_1schema_1_1details_1_1MemberPointerWrapper.html", null ],
@@ -441,10 +416,14 @@ var hierarchy =
       [ "mc_tasks::EndEffectorTask", "structmc__tasks_1_1EndEffectorTask.html", [
         [ "mc_tasks::RelativeEndEffectorTask", "structmc__tasks_1_1RelativeEndEffectorTask.html", null ]
       ] ],
-      [ "mc_tasks::force::ComplianceTask", "structmc__tasks_1_1force_1_1ComplianceTask.html", null ],
-      [ "mc_tasks::lipm_stabilizer::StabilizerTask", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html", null ],
       [ "mc_tasks::PostureTask", "structmc__tasks_1_1PostureTask.html", null ],
       [ "mc_tasks::TrajectoryTaskGeneric", "structmc__tasks_1_1TrajectoryTaskGeneric.html", [
+        [ "mc_tasks::SplineTrajectoryTask< ExactCubicTrajectoryTask >", "structmc__tasks_1_1SplineTrajectoryTask.html", [
+          [ "mc_tasks::ExactCubicTrajectoryTask", "structmc__tasks_1_1ExactCubicTrajectoryTask.html", null ]
+        ] ],
+        [ "mc_tasks::SplineTrajectoryTask< BSplineTrajectoryTask >", "structmc__tasks_1_1SplineTrajectoryTask.html", [
+          [ "mc_tasks::BSplineTrajectoryTask", "structmc__tasks_1_1BSplineTrajectoryTask.html", null ]
+        ] ],
         [ "mc_tasks::CoMTask", "structmc__tasks_1_1CoMTask.html", null ],
         [ "mc_tasks::GazeTask", "structmc__tasks_1_1GazeTask.html", null ],
         [ "mc_tasks::MomentumTask", "structmc__tasks_1_1MomentumTask.html", null ],
@@ -467,26 +446,22 @@ var hierarchy =
             [ "mc_tasks::LookAtFrameTask", "structmc__tasks_1_1LookAtFrameTask.html", null ],
             [ "mc_tasks::LookAtTFTask", "structmc__tasks_1_1LookAtTFTask.html", null ]
           ] ]
-        ] ],
-        [ "mc_tasks::SplineTrajectoryTask< BSplineTrajectoryTask >", "structmc__tasks_1_1SplineTrajectoryTask.html", [
-          [ "mc_tasks::BSplineTrajectoryTask", "structmc__tasks_1_1BSplineTrajectoryTask.html", null ]
-        ] ],
-        [ "mc_tasks::SplineTrajectoryTask< ExactCubicTrajectoryTask >", "structmc__tasks_1_1SplineTrajectoryTask.html", [
-          [ "mc_tasks::ExactCubicTrajectoryTask", "structmc__tasks_1_1ExactCubicTrajectoryTask.html", null ]
         ] ]
-      ] ]
+      ] ],
+      [ "mc_tasks::force::ComplianceTask", "structmc__tasks_1_1force_1_1ComplianceTask.html", null ],
+      [ "mc_tasks::lipm_stabilizer::StabilizerTask", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html", null ]
     ] ],
     [ "mc_rbdyn::Mimic", "structmc__rbdyn_1_1Mimic.html", null ],
-    [ "mc_tvm::Frame::NewFrameToken", "structmc__tvm_1_1Frame_1_1NewFrameToken.html", [
-      [ "mc_tvm::RobotFrame::NewRobotFrameToken", "structmc__tvm_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
-    ] ],
     [ "mc_rbdyn::Frame::NewFrameToken", "structmc__rbdyn_1_1Frame_1_1NewFrameToken.html", [
       [ "mc_rbdyn::RobotFrame::NewRobotFrameToken", "structmc__rbdyn_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
+    ] ],
+    [ "mc_tvm::Frame::NewFrameToken", "structmc__tvm_1_1Frame_1_1NewFrameToken.html", [
+      [ "mc_tvm::RobotFrame::NewRobotFrameToken", "structmc__tvm_1_1RobotFrame_1_1NewRobotFrameToken.html", null ]
     ] ],
     [ "mc_rbdyn::Robots::NewRobotsToken", "structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html", null ],
     [ "mc_rbdyn::Robot::NewRobotToken", "structmc__rbdyn_1_1Robot_1_1NewRobotToken.html", null ],
     [ "mc_tvm::Robot::NewRobotToken", "structmc__tvm_1_1Robot_1_1NewRobotToken.html", null ],
-    [ "Node", null, [
+    [ "tvm::graph::abstract::Node", null, [
       [ "mc_tvm::CoM", "structmc__tvm_1_1CoM.html", null ],
       [ "mc_tvm::Convex", "structmc__tvm_1_1Convex.html", null ],
       [ "mc_tvm::Frame", "structmc__tvm_1_1Frame.html", [
@@ -495,13 +470,15 @@ var hierarchy =
       [ "mc_tvm::Momentum", "structmc__tvm_1_1Momentum.html", null ],
       [ "mc_tvm::Robot", "structmc__tvm_1_1Robot.html", null ]
     ] ],
+    [ "boost::noncopyable", null, [
+      [ "mc_rtc::ObjectLoader< State >", "structmc__rtc_1_1ObjectLoader.html", [
+        [ "mc_control::fsm::StateFactory", "structmc__control_1_1fsm_1_1StateFactory.html", null ]
+      ] ],
+      [ "mc_rtc::ObjectLoader< T >", "structmc__rtc_1_1ObjectLoader.html", null ]
+    ] ],
     [ "mc_rtc::gui::details::NotAGetter", "structmc__rtc_1_1gui_1_1details_1_1NotAGetter.html", null ],
     [ "mc_tvm::CollisionFunction::ObjectData", "structmc__tvm_1_1CollisionFunction_1_1ObjectData.html", null ],
-    [ "mc_rtc::ObjectLoader::ObjectDeleter", "structmc__rtc_1_1ObjectLoader_1_1ObjectDeleter.html", null ],
-    [ "mc_rtc::ObjectLoader", "structmc__rtc_1_1ObjectLoader.html", null ],
-    [ "mc_rtc::ObjectLoader< State >", "structmc__rtc_1_1ObjectLoader.html", [
-      [ "mc_control::fsm::StateFactory", "structmc__control_1_1fsm_1_1StateFactory.html", null ]
-    ] ],
+    [ "mc_rtc::ObjectLoader< T >::ObjectDeleter", "structmc__rtc_1_1ObjectLoader_1_1ObjectDeleter.html", null ],
     [ "mc_observers::Observer", "structmc__observers_1_1Observer.html", [
       [ "mc_observers::BodySensorObserver", "structmc__observers_1_1BodySensorObserver.html", null ],
       [ "mc_observers::EncoderObserver", "structmc__observers_1_1EncoderObserver.html", null ],
@@ -531,8 +508,8 @@ var hierarchy =
     [ "mc_solver::QPContactPtr", "structmc__solver_1_1QPContactPtr.html", null ],
     [ "mc_solver::QPContactPtrWPoints", "structmc__solver_1_1QPContactPtrWPoints.html", null ],
     [ "mc_solver::QPSolver", "structmc__solver_1_1QPSolver.html", [
-      [ "mc_solver::TasksQPSolver", "structmc__solver_1_1TasksQPSolver.html", null ],
-      [ "mc_solver::TVMQPSolver", "structmc__solver_1_1TVMQPSolver.html", null ]
+      [ "mc_solver::TVMQPSolver", "structmc__solver_1_1TVMQPSolver.html", null ],
+      [ "mc_solver::TasksQPSolver", "structmc__solver_1_1TasksQPSolver.html", null ]
     ] ],
     [ "mc_rbdyn::QuadraticGenerator", "structmc__rbdyn_1_1QuadraticGenerator.html", null ],
     [ "mc_rtc::gui::plot::Range", "structmc__rtc_1_1gui_1_1plot_1_1Range.html", null ],
@@ -599,7 +576,7 @@ var hierarchy =
     [ "mc_control::Ticker", "structmc__control_1_1Ticker.html", null ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],
-    [ "true_type", null, [
+    [ "std::true_type", null, [
       [ "mc_rbdyn::details::are_strings< Args >", "structmc__rbdyn_1_1details_1_1are__strings.html", null ],
       [ "mc_rtc::gui::details::is_variant< std::variant< Args... > >", "structmc__rtc_1_1gui_1_1details_1_1is__variant_3_01std_1_1variant_3_01Args_8_8_8_01_4_01_4.html", null ],
       [ "mc_rtc::internal::has_write_builder< T, std::void_t< decltype(std::declval< const T & >().write(std::declval< MessagePackBuilder & >()))> >", "structmc__rtc_1_1internal_1_1has__write__builder_3_01T_00_01std_1_1void__t_3_01decltype_07std_1_1f30e14306a8a05c633790cd1bae0d02.html", null ],
@@ -608,59 +585,54 @@ var hierarchy =
       [ "mc_rtc::schema::details::is_std_vector< std::vector< T, Allocator > >", "structmc__rtc_1_1schema_1_1details_1_1is__std__vector_3_01std_1_1vector_3_01T_00_01Allocator_01_4_01_4.html", null ]
     ] ],
     [ "mc_tasks::details::TVMTrajectoryTaskGeneric", "structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html", null ],
-    [ "type", null, [
-      [ "mc_rtc::shared< T, BaseT >", "structmc__rtc_1_1shared.html", null ],
-      [ "mc_rtc::shared< Frame >", "structmc__rtc_1_1shared.html", [
-        [ "mc_rbdyn::Frame", "structmc__rbdyn_1_1Frame.html", null ]
-      ] ],
+    [ "std::conditional::type", null, [
       [ "mc_rtc::shared< RobotFrame, Frame >", "structmc__rtc_1_1shared.html", [
         [ "mc_rbdyn::RobotFrame", "structmc__rbdyn_1_1RobotFrame.html", null ]
-      ] ],
+      ] ]
+    ] ],
+    [ "std::conditional::type", null, [
+      [ "mc_rtc::shared< Frame >", "structmc__rtc_1_1shared.html", [
+        [ "mc_rbdyn::Frame", "structmc__rbdyn_1_1Frame.html", null ]
+      ] ]
+    ] ],
+    [ "std::conditional::type", null, [
       [ "mc_rtc::shared< Robots >", "structmc__rtc_1_1shared.html", [
         [ "mc_rbdyn::Robots", "structmc__rbdyn_1_1Robots.html", null ]
       ] ]
     ] ],
-    [ "unique_ptr", null, [
-      [ "mc_rtc::unique_ptr< T, Deleter >", "classmc__rtc_1_1unique__ptr.html", null ],
+    [ "std::conditional::type", null, [
+      [ "mc_rtc::shared< T, BaseT >", "structmc__rtc_1_1shared.html", null ]
+    ] ],
+    [ "std::unique_ptr", null, [
       [ "mc_rtc::unique_ptr< mc_solver::CollisionsConstraint >", "classmc__rtc_1_1unique__ptr.html", null ],
-      [ "mc_rtc::unique_ptr< mc_solver::CompoundJointConstraint >", "classmc__rtc_1_1unique__ptr.html", null ],
       [ "mc_rtc::unique_ptr< mc_solver::ContactConstraint >", "classmc__rtc_1_1unique__ptr.html", null ],
+      [ "mc_rtc::unique_ptr< mc_solver::CompoundJointConstraint >", "classmc__rtc_1_1unique__ptr.html", null ],
+      [ "mc_rtc::unique_ptr< mc_solver::KinematicsConstraint >", "classmc__rtc_1_1unique__ptr.html", null ],
       [ "mc_rtc::unique_ptr< mc_solver::DynamicsConstraint >", "classmc__rtc_1_1unique__ptr.html", null ],
-      [ "mc_rtc::unique_ptr< mc_solver::KinematicsConstraint >", "classmc__rtc_1_1unique__ptr.html", null ]
+      [ "mc_rtc::unique_ptr< T, Deleter >", "classmc__rtc_1_1unique__ptr.html", null ]
     ] ],
     [ "UpdateNrVars", null, [
-      [ "mc_solver::utils::Update< UpdateNrVars >", "structmc__solver_1_1utils_1_1Update.html", [
-        [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateRobot >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
-        [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateRobot >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
-        [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateRobot >", "structmc__solver_1_1utils_1_1Constraint.html", null ]
-      ] ]
+      [ "mc_solver::utils::Update< UpdateNrVars >", "structmc__solver_1_1utils_1_1Update.html", null ]
     ] ],
     [ "mc_solver::utils::UpdateNrVarsData", "structmc__solver_1_1utils_1_1UpdateNrVarsData.html", [
       [ "mc_solver::utils::UpdateNrVarsLambda", "structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html", [
         [ "mc_solver::utils::Update< UpdateNrVarsLambda >", "structmc__solver_1_1utils_1_1Update.html", [
-          [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateLambda >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
-          [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateLambda >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
-          [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateLambda >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
-          [ "mc_solver::utils::UpdateForce", "structmc__solver_1_1utils_1_1UpdateForce.html", [
-            [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateForce >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
-            [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateForce >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
-            [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateForce >", "structmc__solver_1_1utils_1_1Constraint.html", null ]
-          ] ]
+          [ "mc_solver::utils::UpdateForce", "structmc__solver_1_1utils_1_1UpdateForce.html", null ]
         ] ]
       ] ],
       [ "mc_solver::utils::UpdateNrVarsRobot", "structmc__solver_1_1utils_1_1UpdateNrVarsRobot.html", null ]
     ] ],
     [ "UpdateT", null, [
       [ "mc_solver::utils::Constraint< tasks::qp::Equality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
-      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
       [ "mc_solver::utils::Constraint< tasks::qp::Inequality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
+      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", null ],
       [ "mc_solver::utils::Constraint< ConstraintT, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", null ]
     ] ],
     [ "mc_solver::utils::UpdateTag", "structmc__solver_1_1utils_1_1UpdateTag.html", [
-      [ "mc_solver::utils::Update< UpdateNrVars >", "structmc__solver_1_1utils_1_1Update.html", null ],
-      [ "mc_solver::utils::Update< UpdateNrVarsLambda >", "structmc__solver_1_1utils_1_1Update.html", null ]
+      [ "mc_solver::utils::Update< UpdateNrVarsLambda >", "structmc__solver_1_1utils_1_1Update.html", null ],
+      [ "mc_solver::utils::Update< UpdateNrVars >", "structmc__solver_1_1utils_1_1Update.html", null ]
     ] ],
-    [ "vector", null, [
+    [ "std::vector", null, [
       [ "mc_rbdyn::DevicePtrVector", "structmc__rbdyn_1_1DevicePtrVector.html", null ]
     ] ],
     [ "mc_rtc::void_ptr_caster< T >", "structmc__rtc_1_1void__ptr__caster.html", null ],

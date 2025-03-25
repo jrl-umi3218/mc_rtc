@@ -5,5 +5,6 @@ var namespacemc__trajectory =
     [ "InterpolatedRotation", "structmc__trajectory_1_1InterpolatedRotation.html", "structmc__trajectory_1_1InterpolatedRotation" ],
     [ "LinearInterpolation", "structmc__trajectory_1_1LinearInterpolation.html", "structmc__trajectory_1_1LinearInterpolation" ],
     [ "SequenceInterpolator", "structmc__trajectory_1_1SequenceInterpolator.html", "structmc__trajectory_1_1SequenceInterpolator" ],
-    [ "Spline", "structmc__trajectory_1_1Spline.html", "structmc__trajectory_1_1Spline" ]
+    [ "Spline", "structmc__trajectory_1_1Spline.html", "structmc__trajectory_1_1Spline" ],
+    [ "generateInterpolatedWaypoints", "namespacemc__trajectory.html#a9fbcf4dd49d2e09b5d33208fae44f11b", null ]
 ];

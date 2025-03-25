@@ -1,0 +1,13 @@
+<map id="mc_control::MCController" name="mc_control::MCController">
+<area shape="rect" id="node1" title="MCController is the base class to implement all controllers. It assumes that at least two robots are ..." alt="" coords="5,195,192,222"/>
+<area shape="rect" id="node2" href="$structmc__control_1_1details_1_1BackendSpecificController.html" title=" " alt="" coords="247,5,484,76"/>
+<area shape="rect" id="node4" href="$structmc__control_1_1details_1_1BackendSpecificController.html" title=" " alt="" coords="240,100,491,171"/>
+<area shape="rect" id="node6" href="$structmc__control_1_1MCPythonController.html" title=" " alt="" coords="249,195,481,222"/>
+<area shape="rect" id="node7" href="$structmc__control_1_1details_1_1BackendSpecificController.html" title=" " alt="" coords="266,246,465,302"/>
+<area shape="rect" id="node8" href="$structmc__control_1_1fsm_1_1Controller.html" title=" " alt="" coords="266,326,465,353"/>
+<area shape="rect" id="node3" href="$structmc__control_1_1TVMController.html" title=" " alt="" coords="543,27,737,54"/>
+<area shape="rect" id="node5" href="$structmc__control_1_1TasksController.html" title=" " alt="" coords="539,122,741,149"/>
+<area shape="rect" id="node9" href="$structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html" title=" " alt="" coords="541,311,739,367"/>
+<area shape="rect" id="node10" href="$structmc__control_1_1fsm_1_1TVMController.html" title=" " alt="" coords="793,271,1021,327"/>
+<area shape="rect" id="node11" href="$structmc__control_1_1fsm_1_1TasksController.html" title=" " alt="" coords="789,351,1024,407"/>
+</map>

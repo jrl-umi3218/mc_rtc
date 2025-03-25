@@ -1,0 +1,4 @@
+<map id="mc_control::MCPythonController" name="mc_control::MCPythonController">
+<area shape="rect" id="node1" title=" " alt="" coords="5,80,237,107"/>
+<area shape="rect" id="node2" href="$structmc__control_1_1MCController.html" title="MCController is the base class to implement all controllers. It assumes that at least two robots are ..." alt="" coords="28,5,215,32"/>
+</map>

@@ -6,5 +6,6 @@ var namespacemc__observers =
     [ "KinematicInertialPoseObserver", "structmc__observers_1_1KinematicInertialPoseObserver.html", "structmc__observers_1_1KinematicInertialPoseObserver" ],
     [ "Observer", "structmc__observers_1_1Observer.html", "structmc__observers_1_1Observer" ],
     [ "ObserverLoader", "structmc__observers_1_1ObserverLoader.html", null ],
-    [ "ObserverPipeline", "structmc__observers_1_1ObserverPipeline.html", "structmc__observers_1_1ObserverPipeline" ]
+    [ "ObserverPipeline", "structmc__observers_1_1ObserverPipeline.html", "structmc__observers_1_1ObserverPipeline" ],
+    [ "ObserverPtr", "namespacemc__observers.html#a45c5f50ee1e5bcc4959faef24b334643", null ]
 ];

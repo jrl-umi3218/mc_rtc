@@ -1,0 +1,10 @@
+<map id="mc_tasks::TransformTask" name="mc_tasks::TransformTask">
+<area shape="rect" id="node1" title="Control a frame 6D pose." alt="" coords="160,169,347,196"/>
+<area shape="rect" id="node4" href="$structmc__tasks_1_1force_1_1AdmittanceTask.html" title="Hybrid position&#45;force control on a contacting end&#45;effector." alt="" coords="5,244,243,271"/>
+<area shape="rect" id="node7" href="$structmc__tasks_1_1force_1_1ImpedanceTask.html" title="Impedance control of the end&#45;effector." alt="" coords="267,244,501,271"/>
+<area shape="rect" id="node2" href="$structmc__tasks_1_1TrajectoryTaskGeneric.html" title="Generic wrapper for a trajectory dynamic over an error function." alt="" coords="161,80,346,121"/>
+<area shape="rect" id="node3" href="$structmc__tasks_1_1MetaTask.html" title="Represents a generic task." alt="" coords="176,5,331,32"/>
+<area shape="rect" id="node5" href="$structmc__tasks_1_1force_1_1DampingTask.html" title="Hybrid position&#45;force control on a contacting end&#45;effector." alt="" coords="13,326,235,353"/>
+<area shape="rect" id="node6" href="$structmc__tasks_1_1force_1_1CoPTask.html" title="Track center&#45;of&#45;pressure (CoP) references at contact." alt="" coords="31,408,217,435"/>
+<area shape="rect" id="node8" href="$structmc__tasks_1_1force_1_1FirstOrderImpedanceTask.html" title="Impedance&#45;based damping control of the end&#45;effector." alt="" coords="285,319,483,360"/>
+</map>

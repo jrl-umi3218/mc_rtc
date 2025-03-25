@@ -1,0 +1,5 @@
+<map id="mc_control::fsm::Grippers" name="mc_control::fsm::Grippers">
+<area shape="rect" id="node1" title=" " alt="" coords="5,435,196,461"/>
+<area shape="rect" id="node2" href="$structmc__control_1_1fsm_1_1State.html" title=" " alt="" coords="16,359,185,385"/>
+<area shape="rect" id="node3" href="$structmc__rtc_1_1Configuration.html" title="Simplify access to values hold within a JSON file." alt="" coords="20,5,181,32"/>
+</map>

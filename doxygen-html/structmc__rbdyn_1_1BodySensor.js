@@ -5,7 +5,7 @@ var structmc__rbdyn_1_1BodySensor =
     [ "BodySensor", "structmc__rbdyn_1_1BodySensor.html#a53b8def2da6127d7a84f7e5488d5350e", null ],
     [ "BodySensor", "structmc__rbdyn_1_1BodySensor.html#a481adcb82e3dac378ba4c1bd0fee37d4", null ],
     [ "~BodySensor", "structmc__rbdyn_1_1BodySensor.html#ab9ffa63a5396c7eb000ea7fbf716d086", null ],
-    [ "acceleration", "structmc__rbdyn_1_1BodySensor.html#afa92a19538d7c59ff3efa41a557c01ef", null ],
+    [ "acceleration", "structmc__rbdyn_1_1BodySensor.html#a3fd7e69c281f765b383df5c8adfcc69e", null ],
     [ "acceleration", "structmc__rbdyn_1_1BodySensor.html#a1632edbff87a11e1210cf34cfbf6b884", null ],
     [ "angularAcceleration", "structmc__rbdyn_1_1BodySensor.html#a57035ac9c86e2d085cce10e3013b2a5d", null ],
     [ "angularAcceleration", "structmc__rbdyn_1_1BodySensor.html#aabbebc2c66352f66de68032c25bdaa1a", null ],

@@ -1,0 +1,6 @@
+<map id="mc_tasks::AddRemoveContactTask" name="mc_tasks::AddRemoveContactTask">
+<area shape="rect" id="node1" title="Add or remove a contact." alt="" coords="95,80,346,107"/>
+<area shape="rect" id="node3" href="$structmc__tasks_1_1AddContactTask.html" title="Add a contact." alt="" coords="5,155,201,181"/>
+<area shape="rect" id="node4" href="$structmc__tasks_1_1RemoveContactTask.html" title="Remove a contact." alt="" coords="225,155,451,181"/>
+<area shape="rect" id="node2" href="$structmc__tasks_1_1MetaTask.html" title="Represents a generic task." alt="" coords="143,5,298,32"/>
+</map>

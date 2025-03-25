@@ -1,0 +1,6 @@
+<map id="mc_control::fsm::TVMController" name="mc_control::fsm::TVMController">
+<area shape="rect" id="node1" title=" " alt="" coords="5,259,233,285"/>
+<area shape="rect" id="node2" href="$structmc__control_1_1fsm_1_1details_1_1BackendSpecificController.html" title=" " alt="" coords="20,155,219,211"/>
+<area shape="rect" id="node3" href="$structmc__control_1_1fsm_1_1Controller.html" title=" " alt="" coords="20,80,219,107"/>
+<area shape="rect" id="node4" href="$structmc__control_1_1MCController.html" title="MCController is the base class to implement all controllers. It assumes that at least two robots are ..." alt="" coords="26,5,213,32"/>
+</map>

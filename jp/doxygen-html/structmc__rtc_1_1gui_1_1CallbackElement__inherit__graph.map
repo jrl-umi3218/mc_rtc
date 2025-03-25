@@ -1,0 +1,12 @@
+<map id="mc_rtc::gui::CallbackElement&lt; ElementT, Callback &gt;" name="mc_rtc::gui::CallbackElement&lt; ElementT, Callback &gt;">
+<area shape="rect" id="node1" title=" " alt="" coords="137,289,349,330"/>
+<area shape="rect" id="node3" href="$structmc__rtc_1_1gui_1_1CommonInputImpl.html" title=" " alt="" coords="412,173,615,214"/>
+<area shape="rect" id="node8" href="$structmc__rtc_1_1gui_1_1VoidCallbackElement.html" title=" " alt="" coords="402,281,625,337"/>
+<area shape="rect" id="node10" href="$structmc__rtc_1_1gui_1_1VoidCallbackElement.html" title=" " alt="" coords="397,362,629,403"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,296,89,323"/>
+<area shape="rect" id="node4" href="$structmc__rtc_1_1gui_1_1details_1_1Point3DImpl.html" title=" " alt="" coords="685,5,845,61"/>
+<area shape="rect" id="node5" href="$structmc__rtc_1_1gui_1_1details_1_1RotationImpl.html" title=" " alt="" coords="683,85,847,141"/>
+<area shape="rect" id="node6" href="$structmc__rtc_1_1gui_1_1details_1_1TransformImpl.html" title=" " alt="" coords="677,165,852,221"/>
+<area shape="rect" id="node7" href="$structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html" title=" " alt="" coords="683,245,846,301"/>
+<area shape="rect" id="node9" href="$structmc__rtc_1_1gui_1_1details_1_1CheckboxImpl.html" title=" " alt="" coords="678,325,851,381"/>
+</map>

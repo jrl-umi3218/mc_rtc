@@ -1,0 +1,5 @@
+<map id="mc_control::MCGlobalController::GlobalConfiguration" name="mc_control::MCGlobalController::GlobalConfiguration">
+<area shape="rect" id="node1" title="Store the controller configuration." alt="" coords="99,109,328,151"/>
+<area shape="rect" id="node2" href="$structmc__control_1_1ControllerServerConfiguration.html" title=" " alt="" coords="5,5,213,47"/>
+<area shape="rect" id="node3" href="$structmc__rtc_1_1Configuration.html" title="Simplify access to values hold within a JSON file." alt="" coords="238,13,399,39"/>
+</map>

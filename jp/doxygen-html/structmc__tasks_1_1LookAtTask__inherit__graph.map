@@ -1,0 +1,8 @@
+<map id="mc_tasks::LookAtTask" name="mc_tasks::LookAtTask">
+<area shape="rect" id="node1" title="Orient a &quot;gaze&quot; vector defined on a body to look towards a world position. This task is a convenience..." alt="" coords="135,244,301,271"/>
+<area shape="rect" id="node5" href="$structmc__tasks_1_1LookAtFrameTask.html" title="Track a frame position with a &quot;gaze&quot; vector. This task is a convenience wrapper for LookAtTask that t..." alt="" coords="5,319,212,345"/>
+<area shape="rect" id="node6" href="$structmc__tasks_1_1LookAtTFTask.html" title="Control the gaze vector of a body to look towards a world position updated at each iteration from a R..." alt="" coords="237,319,418,345"/>
+<area shape="rect" id="node2" href="$structmc__tasks_1_1VectorOrientationTask.html" title="Control the orientation of a vector attached to a frame." alt="" coords="101,169,335,196"/>
+<area shape="rect" id="node3" href="$structmc__tasks_1_1TrajectoryTaskGeneric.html" title="Generic wrapper for a trajectory dynamic over an error function." alt="" coords="125,80,311,121"/>
+<area shape="rect" id="node4" href="$structmc__tasks_1_1MetaTask.html" title="Represents a generic task." alt="" coords="141,5,295,32"/>
+</map>

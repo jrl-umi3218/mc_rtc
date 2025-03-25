@@ -1,0 +1,15 @@
+<map id="mc_control::fsm::State" name="mc_control::fsm::State">
+<area shape="rect" id="node1" title=" " alt="" coords="5,349,175,375"/>
+<area shape="rect" id="node2" href="$structmc__control_1_1fsm_1_1AddRemoveContactState.html" title=" " alt="" coords="237,5,451,47"/>
+<area shape="rect" id="node3" href="$structmc__control_1_1fsm_1_1EnableControllerState.html" title=" " alt="" coords="223,71,465,112"/>
+<area shape="rect" id="node4" href="$structmc__control_1_1fsm_1_1Grippers.html" title=" " alt="" coords="249,137,439,163"/>
+<area shape="rect" id="node5" href="$structmc__control_1_1fsm_1_1HalfSittingState.html" title=" " alt="" coords="242,188,446,229"/>
+<area shape="rect" id="node6" href="$structmc__control_1_1fsm_1_1MessageState.html" title=" " alt="" coords="247,253,441,295"/>
+<area shape="rect" id="node7" href="$structmc__control_1_1fsm_1_1MetaState.html" title=" " alt="" coords="243,319,445,346"/>
+<area shape="rect" id="node8" href="$structmc__control_1_1fsm_1_1MetaTasksState.html" title=" " alt="" coords="242,371,446,412"/>
+<area shape="rect" id="node9" href="$structmc__control_1_1fsm_1_1ParallelState.html" title=" " alt="" coords="253,436,435,477"/>
+<area shape="rect" id="node10" href="$structmc__control_1_1fsm_1_1PauseState.html" title=" " alt="" coords="241,502,447,529"/>
+<area shape="rect" id="node11" href="$structmc__control_1_1fsm_1_1PostureState.html" title=" " alt="" coords="252,553,436,595"/>
+<area shape="rect" id="node12" href="$structmc__control_1_1fsm_1_1PythonState.html" title=" " alt="" coords="237,619,451,646"/>
+<area shape="rect" id="node13" href="$structmc__control_1_1fsm_1_1StabilizerStandingState.html" title="Simple state to control and stabilize the CoM of a biped&#45;like robot using the LIPMStabilizer." alt="" coords="246,671,442,712"/>
+</map>

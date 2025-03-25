@@ -1,10 +1,13 @@
 var namespacemc__control_1_1fsm =
 [
     [ "details", "namespacemc__control_1_1fsm_1_1details.html", "namespacemc__control_1_1fsm_1_1details" ],
-    [ "AddRemoveContactState", "structmc__control_1_1fsm_1_1AddRemoveContactState.html", "structmc__control_1_1fsm_1_1AddRemoveContactState" ],
     [ "Controller", "structmc__control_1_1fsm_1_1Controller.html", "structmc__control_1_1fsm_1_1Controller" ],
-    [ "EnableControllerState", "structmc__control_1_1fsm_1_1EnableControllerState.html", "structmc__control_1_1fsm_1_1EnableControllerState" ],
     [ "Executor", "structmc__control_1_1fsm_1_1Executor.html", "structmc__control_1_1fsm_1_1Executor" ],
+    [ "PythonState", "structmc__control_1_1fsm_1_1PythonState.html", "structmc__control_1_1fsm_1_1PythonState" ],
+    [ "State", "structmc__control_1_1fsm_1_1State.html", "structmc__control_1_1fsm_1_1State" ],
+    [ "StateFactory", "structmc__control_1_1fsm_1_1StateFactory.html", "structmc__control_1_1fsm_1_1StateFactory" ],
+    [ "AddRemoveContactState", "structmc__control_1_1fsm_1_1AddRemoveContactState.html", "structmc__control_1_1fsm_1_1AddRemoveContactState" ],
+    [ "EnableControllerState", "structmc__control_1_1fsm_1_1EnableControllerState.html", "structmc__control_1_1fsm_1_1EnableControllerState" ],
     [ "Grippers", "structmc__control_1_1fsm_1_1Grippers.html", "structmc__control_1_1fsm_1_1Grippers" ],
     [ "HalfSittingState", "structmc__control_1_1fsm_1_1HalfSittingState.html", "structmc__control_1_1fsm_1_1HalfSittingState" ],
     [ "MessageState", "structmc__control_1_1fsm_1_1MessageState.html", "structmc__control_1_1fsm_1_1MessageState" ],
@@ -13,12 +16,14 @@ var namespacemc__control_1_1fsm =
     [ "ParallelState", "structmc__control_1_1fsm_1_1ParallelState.html", "structmc__control_1_1fsm_1_1ParallelState" ],
     [ "PauseState", "structmc__control_1_1fsm_1_1PauseState.html", "structmc__control_1_1fsm_1_1PauseState" ],
     [ "PostureState", "structmc__control_1_1fsm_1_1PostureState.html", "structmc__control_1_1fsm_1_1PostureState" ],
-    [ "PythonState", "structmc__control_1_1fsm_1_1PythonState.html", "structmc__control_1_1fsm_1_1PythonState" ],
     [ "StabilizerStandingState", "structmc__control_1_1fsm_1_1StabilizerStandingState.html", "structmc__control_1_1fsm_1_1StabilizerStandingState" ],
-    [ "State", "structmc__control_1_1fsm_1_1State.html", "structmc__control_1_1fsm_1_1State" ],
-    [ "StateFactory", "structmc__control_1_1fsm_1_1StateFactory.html", "structmc__control_1_1fsm_1_1StateFactory" ],
     [ "TasksController", "structmc__control_1_1fsm_1_1TasksController.html", null ],
     [ "Transition", "structmc__control_1_1fsm_1_1Transition.html", "structmc__control_1_1fsm_1_1Transition" ],
     [ "TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", "structmc__control_1_1fsm_1_1TransitionMap" ],
-    [ "TVMController", "structmc__control_1_1fsm_1_1TVMController.html", null ]
+    [ "TVMController", "structmc__control_1_1fsm_1_1TVMController.html", null ],
+    [ "Contact", "namespacemc__control_1_1fsm.html#a52d7fbb8d8e312077694e5c761ddac8b", null ],
+    [ "ContactSet", "namespacemc__control_1_1fsm.html#ae900416c9a809910247882838e0d5599", null ],
+    [ "StatePtr", "namespacemc__control_1_1fsm.html#a4c42d903de4c4a1e5ad50c37bc2d547a", null ],
+    [ "AddRemoveContactStateImpl", "namespacemc__control_1_1fsm.html#a2deb94750a61f8f86801bd02f4149d5e", null ],
+    [ "Controller", "namespacemc__control_1_1fsm.html#a3d06e24faff23eaa588f3820e74042b7", null ]
 ];

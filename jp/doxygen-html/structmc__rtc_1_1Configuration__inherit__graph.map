@@ -1,0 +1,4 @@
+<map id="mc_rtc::Configuration" name="mc_rtc::Configuration">
+<area shape="rect" id="node1" title="Simplify access to values hold within a JSON file." alt="" coords="17,5,178,32"/>
+<area shape="rect" id="node2" href="$structmc__rtc_1_1ConfigurationFile.html" title="Configuration object that keeps track of the file it comes from" alt="" coords="5,80,189,107"/>
+</map>

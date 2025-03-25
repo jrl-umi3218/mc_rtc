@@ -22,5 +22,17 @@ var namespacemc__tvm =
     [ "Robot", "structmc__tvm_1_1Robot.html", "structmc__tvm_1_1Robot" ],
     [ "RobotFrame", "structmc__tvm_1_1RobotFrame.html", "structmc__tvm_1_1RobotFrame" ],
     [ "TransformFunction", "classmc__tvm_1_1TransformFunction.html", "classmc__tvm_1_1TransformFunction" ],
-    [ "VectorOrientationFunction", "classmc__tvm_1_1VectorOrientationFunction.html", "classmc__tvm_1_1VectorOrientationFunction" ]
+    [ "VectorOrientationFunction", "classmc__tvm_1_1VectorOrientationFunction.html", "classmc__tvm_1_1VectorOrientationFunction" ],
+    [ "CollisionFunctionPtr", "namespacemc__tvm.html#aa6335c40b8165a9482acfa7d6595f293", null ],
+    [ "CoMInConvexFunctionPtr", "namespacemc__tvm.html#a235c942b4a62a637f7ab48d5355090bc", null ],
+    [ "CompoundJointFunctionPtr", "namespacemc__tvm.html#a20900d9e7637f3028a3e1ea59dd2f496", null ],
+    [ "CoMPtr", "namespacemc__tvm.html#a6b3e6f3b517f90f44e4056830bb66218", null ],
+    [ "ContactFunctionPtr", "namespacemc__tvm.html#a00b8935e036238598507530122aa6b80", null ],
+    [ "ConvexPtr", "namespacemc__tvm.html#a2056a33d9e4c876c1715009a59dded59", null ],
+    [ "DynamicFunctionPtr", "namespacemc__tvm.html#af181c4775ffd6123afe1286668ccc6d8", null ],
+    [ "FramePtr", "namespacemc__tvm.html#afd0f97cca283c1511c87e76f5dee4cbd", null ],
+    [ "FrameVelocityPtr", "namespacemc__tvm.html#a617a72af19f2c7df9c68c994dfa922f5", null ],
+    [ "MomentumPtr", "namespacemc__tvm.html#a36f851b703f67948d4d0bd33f4f65a0b", null ],
+    [ "RobotFramePtr", "namespacemc__tvm.html#ae9d6c0748e1cd84c1140cc266e6c0f14", null ],
+    [ "RobotPtr", "namespacemc__tvm.html#a7c567e7ae320072cd16633637c1ed14b", null ]
 ];

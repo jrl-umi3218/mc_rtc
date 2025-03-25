@@ -1,0 +1,11 @@
+<map id="include/mc_trajectory/api.h" name="include/mc_trajectory/api.h">
+<area shape="rect" id="node1" title=" " alt="" coords="233,5,396,47"/>
+<area shape="rect" id="node2" href="$BSpline_8h.html" title=" " alt="" coords="5,184,168,225"/>
+<area shape="rect" id="node4" href="$ExactCubic_8h.html" title=" " alt="" coords="389,184,552,225"/>
+<area shape="rect" id="node6" href="$InterpolatedRotation_8h.html" title=" " alt="" coords="193,184,365,225"/>
+<area shape="rect" id="node8" href="$Spline_8h.html" title=" " alt="" coords="233,95,396,136"/>
+<area shape="rect" id="node9" href="$spline__utils_8h.html" title=" " alt="" coords="471,95,633,136"/>
+<area shape="rect" id="node3" href="$BSplineTrajectoryTask_8h.html" title=" " alt="" coords="57,363,245,404"/>
+<area shape="rect" id="node5" href="$ExactCubicTrajectoryTask_8h.html" title=" " alt="" coords="292,363,503,404"/>
+<area shape="rect" id="node7" href="$SplineTrajectoryTask_8h.html" title=" " alt="" coords="157,273,400,315"/>
+</map>

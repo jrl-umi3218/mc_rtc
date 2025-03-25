@@ -1,0 +1,5 @@
+<map id="mc_tasks::force::ImpedanceGains" name="mc_tasks::force::ImpedanceGains">
+<area shape="rect" id="node1" title="Represent impedance gains for an ImpedanceTask." alt="" coords="303,43,508,84"/>
+<area shape="rect" id="node2" href="$structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html" title=" " alt="" coords="8,5,197,47"/>
+<area shape="rect" id="node3" href="$structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html" title=" " alt="" coords="5,80,200,121"/>
+</map>

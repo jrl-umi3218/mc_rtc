@@ -1,0 +1,6 @@
+<map id="mc_rbdyn::Surface" name="mc_rbdyn::Surface">
+<area shape="rect" id="node1" title=" " alt="" coords="265,5,408,32"/>
+<area shape="rect" id="node2" href="$structmc__rbdyn_1_1CylindricalSurface.html" title=" " alt="" coords="5,80,217,107"/>
+<area shape="rect" id="node3" href="$structmc__rbdyn_1_1GripperSurface.html" title=" " alt="" coords="241,80,432,107"/>
+<area shape="rect" id="node4" href="$structmc__rbdyn_1_1PlanarSurface.html" title=" " alt="" coords="457,80,641,107"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="mc_control::TasksController" name="mc_control::TasksController">
+<area shape="rect" id="node1" title=" " alt="" coords="539,27,741,54"/>
+<area shape="rect" id="node2" href="$structmc__control_1_1details_1_1BackendSpecificController.html" title=" " alt="" coords="240,5,491,76"/>
+<area shape="rect" id="node3" href="$structmc__control_1_1MCController.html" title="MCController is the base class to implement all controllers. It assumes that at least two robots are ..." alt="" coords="5,27,192,54"/>
+</map>

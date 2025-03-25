@@ -1,0 +1,4 @@
+<map id="mc_rbdyn::RobotConverter" name="mc_rbdyn::RobotConverter">
+<area shape="rect" id="node1" title="Copies all common properties from one robot to another encoders, sensors, etc)" alt="" coords="5,109,201,136"/>
+<area shape="rect" id="node2" href="$structmc__rbdyn_1_1RobotConverterConfig.html" title="Configuration for mc_rbdyn::RobotConverter." alt="" coords="5,5,201,47"/>
+</map>

@@ -1,0 +1,52 @@
+<map id="include/mc_rbdyn/RobotModuleMacros.h" name="include/mc_rbdyn/RobotModuleMacros.h">
+<area shape="rect" id="node1" title=" " alt="" coords="1404,5,1631,47"/>
+<area shape="rect" id="node2" href="$RobotModule_8h.html" title=" " alt="" coords="1331,95,1519,121"/>
+<area shape="rect" id="node50" title=" " alt="" coords="1544,95,1675,121"/>
+<area shape="rect" id="node3" href="$BodySensor_8h.html" title=" " alt="" coords="1409,341,1588,367"/>
+<area shape="rect" id="node5" href="$include_2mc__rbdyn_2api_8h.html" title=" " alt="" coords="713,497,836,524"/>
+<area shape="rect" id="node9" href="$deprecated_8h.html" title=" " alt="" coords="3000,497,3155,524"/>
+<area shape="rect" id="node19" href="$Collision_8h.html" title=" " alt="" coords="941,423,1099,449"/>
+<area shape="rect" id="node21" title=" " alt="" coords="943,572,1006,599"/>
+<area shape="rect" id="node22" href="$CompoundJointConstraintDescription_8h.html" title=" " alt="" coords="1079,333,1335,375"/>
+<area shape="rect" id="node27" title=" " alt="" coords="1501,572,1557,599"/>
+<area shape="rect" id="node29" title=" " alt="" coords="2755,572,2805,599"/>
+<area shape="rect" id="node35" href="$Flexibility_8h.html" title=" " alt="" coords="5,423,171,449"/>
+<area shape="rect" id="node36" href="$ForceSensor_8h.html" title=" " alt="" coords="1714,169,1894,196"/>
+<area shape="rect" id="node39" href="$JointSensor_8h.html" title=" " alt="" coords="362,423,537,449"/>
+<area shape="rect" id="node41" href="$Mimic_8h.html" title=" " alt="" coords="195,423,338,449"/>
+<area shape="rect" id="node42" href="$RobotConverterConfig_8h.html" title=" " alt="" coords="657,251,903,278"/>
+<area shape="rect" id="node43" href="$Springs_8h.html" title=" " alt="" coords="613,423,763,449"/>
+<area shape="rect" id="node44" href="$StabilizerConfiguration_8h.html" title=" " alt="" coords="2037,244,2224,285"/>
+<area shape="rect" id="node47" href="$constants_8h.html" title=" " alt="" coords="2674,251,2819,278"/>
+<area shape="rect" id="node48" title=" " alt="" coords="3281,169,3471,196"/>
+<area shape="rect" id="node49" title=" " alt="" coords="3496,169,3675,196"/>
+<area shape="rect" id="node4" href="$Device_8h.html" title=" " alt="" coords="1456,423,1603,449"/>
+<area shape="rect" id="node18" title=" " alt="" coords="1257,423,1381,449"/>
+<area shape="rect" id="node6" title=" " alt="" coords="1591,572,1783,599"/>
+<area shape="rect" id="node7" title=" " alt="" coords="1339,572,1416,599"/>
+<area shape="rect" id="node8" title=" " alt="" coords="596,572,655,599"/>
+<area shape="rect" id="node10" href="$logging_8h.html" title=" " alt="" coords="3163,572,3293,599"/>
+<area shape="rect" id="node17" title=" " alt="" coords="2931,572,3138,599"/>
+<area shape="rect" id="node11" href="$utils__api_8h.html" title=" " alt="" coords="2665,647,2802,673"/>
+<area shape="rect" id="node12" title=" " alt="" coords="3181,647,3261,673"/>
+<area shape="rect" id="node13" title=" " alt="" coords="2837,647,2968,673"/>
+<area shape="rect" id="node14" title=" " alt="" coords="3286,647,3418,673"/>
+<area shape="rect" id="node15" title=" " alt="" coords="3442,647,3563,673"/>
+<area shape="rect" id="node16" title=" " alt="" coords="2998,647,3157,673"/>
+<area shape="rect" id="node20" title=" " alt="" coords="1012,497,1087,524"/>
+<area shape="rect" id="node23" href="$mc__rtc_2Configuration_8h.html" title=" " alt="" coords="1902,423,2071,449"/>
+<area shape="rect" id="node26" title=" " alt="" coords="2527,647,2619,673"/>
+<area shape="rect" id="node24" href="$MessagePackBuilder_8h.html" title=" " alt="" coords="2113,497,2327,524"/>
+<area shape="rect" id="node25" href="$Gains_8h.html" title=" " alt="" coords="2397,572,2536,599"/>
+<area shape="rect" id="node28" title=" " alt="" coords="2286,572,2373,599"/>
+<area shape="rect" id="node30" title=" " alt="" coords="2025,572,2068,599"/>
+<area shape="rect" id="node31" title=" " alt="" coords="2194,572,2262,599"/>
+<area shape="rect" id="node32" href="$rpy__utils_8h.html" title=" " alt="" coords="1618,497,1777,524"/>
+<area shape="rect" id="node33" title=" " alt="" coords="1801,497,1898,524"/>
+<area shape="rect" id="node34" title=" " alt="" coords="1923,497,2037,524"/>
+<area shape="rect" id="node37" href="$ForceSensorCalibData_8h.html" title=" " alt="" coords="1713,244,1916,285"/>
+<area shape="rect" id="node38" href="$Schema_8h.html" title=" " alt="" coords="1747,341,1882,367"/>
+<area shape="rect" id="node40" title=" " alt="" coords="479,497,537,524"/>
+<area shape="rect" id="node45" href="$ZMPCCConfiguration_8h.html" title=" " alt="" coords="1907,333,2093,375"/>
+<area shape="rect" id="node46" href="$clamp_8h.html" title=" " alt="" coords="2758,497,2925,524"/>
+</map>

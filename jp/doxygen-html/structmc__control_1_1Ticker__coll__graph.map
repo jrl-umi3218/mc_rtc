@@ -1,0 +1,5 @@
+<map id="mc_control::Ticker" name="mc_control::Ticker">
+<area shape="rect" id="node1" title=" " alt="" coords="159,95,300,121"/>
+<area shape="rect" id="node2" href="$structmc__control_1_1MCGlobalController.html" title=" " alt="" coords="5,5,235,32"/>
+<area shape="rect" id="node3" href="$structmc__rtc_1_1Configuration.html" title="Simplify access to values hold within a JSON file." alt="" coords="259,5,421,32"/>
+</map>

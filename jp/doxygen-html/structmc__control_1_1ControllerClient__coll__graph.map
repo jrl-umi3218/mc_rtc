@@ -1,0 +1,6 @@
+<map id="mc_control::ControllerClient" name="mc_control::ControllerClient">
+<area shape="rect" id="node1" title=" " alt="" coords="215,95,419,121"/>
+<area shape="rect" id="node2" href="$structmc__rtc_1_1gui_1_1StateBuilder.html" title=" " alt="" coords="5,5,188,32"/>
+<area shape="rect" id="node3" href="$structmc__control_1_1ControllerServer.html" title=" " alt="" coords="213,5,421,32"/>
+<area shape="rect" id="node4" href="$structmc__rtc_1_1Configuration.html" title="Simplify access to values hold within a JSON file." alt="" coords="445,5,607,32"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="mc_control::fsm::PostureState" name="mc_control::fsm::PostureState">
+<area shape="rect" id="node1" title=" " alt="" coords="167,451,351,492"/>
+<area shape="rect" id="node2" href="$structmc__control_1_1fsm_1_1State.html" title=" " alt="" coords="175,360,344,387"/>
+<area shape="rect" id="node3" href="$structmc__rtc_1_1Configuration.html" title="Simplify access to values hold within a JSON file." alt="" coords="5,5,167,32"/>
+<area shape="rect" id="node4" href="$structmc__control_1_1CompletionCriteria.html" title=" " alt="" coords="368,360,593,387"/>
+</map>

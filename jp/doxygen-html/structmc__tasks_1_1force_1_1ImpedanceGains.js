@@ -6,7 +6,7 @@ var structmc__tasks_1_1force_1_1ImpedanceGains =
     [ "damper", "structmc__tasks_1_1force_1_1ImpedanceGains.html#a6be8a021cc0967787e4bfcd3619d6a10", null ],
     [ "K", "structmc__tasks_1_1force_1_1ImpedanceGains.html#a076633d27b8ad48da2e8f3a19e275377", null ],
     [ "K", "structmc__tasks_1_1force_1_1ImpedanceGains.html#af17ffbe654708a0fb9d823ca0af40766", null ],
-    [ "M", "structmc__tasks_1_1force_1_1ImpedanceGains.html#a0b8191d6f2643bc5a499fd0a1d111044", null ],
+    [ "M", "structmc__tasks_1_1force_1_1ImpedanceGains.html#a6b88536a57828978dc2877d83b65001d", null ],
     [ "M", "structmc__tasks_1_1force_1_1ImpedanceGains.html#a898e2a2ca110dfe75e95402f78cd739f", null ],
     [ "mass", "structmc__tasks_1_1force_1_1ImpedanceGains.html#af439de9cd741d581b292c2cfc8d8b289", null ],
     [ "mass", "structmc__tasks_1_1force_1_1ImpedanceGains.html#a32892f4c1d6ca689541dbd2fc97a1d30", null ],

@@ -1,0 +1,5 @@
+<map id="mc_observers::KinematicInertialObserver" name="mc_observers::KinematicInertialObserver">
+<area shape="rect" id="node1" title=" " alt="" coords="5,169,239,211"/>
+<area shape="rect" id="node2" href="$structmc__observers_1_1KinematicInertialPoseObserver.html" title=" " alt="" coords="5,80,239,121"/>
+<area shape="rect" id="node3" href="$structmc__observers_1_1Observer.html" title="State observation API." alt="" coords="32,5,212,32"/>
+</map>

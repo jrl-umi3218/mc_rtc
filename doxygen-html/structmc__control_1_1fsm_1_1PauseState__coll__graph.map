@@ -1,0 +1,5 @@
+<map id="mc_control::fsm::PauseState" name="mc_control::fsm::PauseState">
+<area shape="rect" id="node1" title=" " alt="" coords="5,435,212,461"/>
+<area shape="rect" id="node2" href="$structmc__control_1_1fsm_1_1State.html" title=" " alt="" coords="24,359,193,385"/>
+<area shape="rect" id="node3" href="$structmc__rtc_1_1Configuration.html" title="Simplify access to values hold within a JSON file." alt="" coords="28,5,189,32"/>
+</map>

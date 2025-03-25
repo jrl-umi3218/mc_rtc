@@ -1,0 +1,8 @@
+<map id="include/mc_filter/LowPass.h" name="include/mc_filter/LowPass.h">
+<area shape="rect" id="node1" title=" " alt="" coords="338,5,539,32"/>
+<area shape="rect" id="node2" href="$LowPassFiniteDifferences_8h.html" title=" " alt="" coords="5,80,195,121"/>
+<area shape="rect" id="node3" href="$KinematicInertialObserver_8h.html" title=" " alt="" coords="219,80,427,121"/>
+<area shape="rect" id="node4" href="$ImpedanceTask_8h.html" title=" " alt="" coords="451,80,661,121"/>
+<area shape="rect" id="node6" href="$StabilizerTask_8h.html" title=" " alt="" coords="685,80,880,121"/>
+<area shape="rect" id="node5" href="$FirstOrderImpedanceTask_8h.html" title=" " alt="" coords="455,169,657,211"/>
+</map>

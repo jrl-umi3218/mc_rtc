@@ -1,0 +1,52 @@
+<map id="include/mc_control/fsm/TasksController.h" name="include/mc_control/fsm/TasksController.h">
+<area shape="rect" id="node1" title=" " alt="" coords="968,5,1134,47"/>
+<area shape="rect" id="node2" href="$Controller_8h.html" title=" " alt="" coords="1910,95,2112,121"/>
+<area shape="rect" id="node50" href="$TasksQPSolver_8h.html" title=" " alt="" coords="326,483,525,509"/>
+<area shape="rect" id="node3" href="$MCController_8h.html" title=" " alt="" coords="1310,408,1504,435"/>
+<area shape="rect" id="node25" title=" " alt="" coords="2964,707,3050,733"/>
+<area shape="rect" id="node39" href="$PostureTask_8h.html" title=" " alt="" coords="2347,483,2526,509"/>
+<area shape="rect" id="node42" href="$Executor_8h.html" title=" " alt="" coords="2352,169,2547,196"/>
+<area shape="rect" id="node47" href="$EndEffectorTask_8h.html" title=" " alt="" coords="1651,169,1854,196"/>
+<area shape="rect" id="node4" href="$mc__control_2Configuration_8h.html" title=" " alt="" coords="2275,632,2472,659"/>
+<area shape="rect" id="node7" href="$mc__control_2Contact_8h.html" title=" " alt="" coords="1555,632,1715,659"/>
+<area shape="rect" id="node8" href="$include_2mc__control_2api_8h.html" title=" " alt="" coords="1595,707,1726,733"/>
+<area shape="rect" id="node10" href="$ObserverPipeline_8h.html" title=" " alt="" coords="2032,483,2272,509"/>
+<area shape="rect" id="node14" href="$Logger_8h.html" title=" " alt="" coords="2496,632,2646,659"/>
+<area shape="rect" id="node18" href="$RobotConverter_8h.html" title=" " alt="" coords="1091,483,1294,509"/>
+<area shape="rect" id="node21" href="$Robots_8h.html" title=" " alt="" coords="631,707,778,733"/>
+<area shape="rect" id="node24" href="$DataStore_8h.html" title=" " alt="" coords="2802,632,2948,659"/>
+<area shape="rect" id="node26" href="$gui_8h.html" title=" " alt="" coords="1881,557,1984,584"/>
+<area shape="rect" id="node27" href="$unique__ptr_8h.html" title=" " alt="" coords="1306,781,1457,808"/>
+<area shape="rect" id="node28" href="$CollisionsConstraint_8h.html" title=" " alt="" coords="1470,557,1704,584"/>
+<area shape="rect" id="node30" href="$CompoundJointConstraint_8h.html" title=" " alt="" coords="549,483,820,509"/>
+<area shape="rect" id="node32" href="$ContactConstraint_8h.html" title=" " alt="" coords="844,483,1066,509"/>
+<area shape="rect" id="node33" href="$DynamicsConstraint_8h.html" title=" " alt="" coords="66,483,303,509"/>
+<area shape="rect" id="node34" href="$KinematicsConstraint_8h.html" title=" " alt="" coords="62,557,307,584"/>
+<area shape="rect" id="node36" href="$QPSolver_8h.html" title=" " alt="" coords="1182,632,1344,659"/>
+<area shape="rect" id="node5" href="$mc__rtc_2Configuration_8h.html" title=" " alt="" coords="2053,781,2222,808"/>
+<area shape="rect" id="node6" title=" " alt="" coords="1343,856,1420,883"/>
+<area shape="rect" id="node9" href="$mc__rbdyn_2Contact_8h.html" title=" " alt="" coords="1419,707,1571,733"/>
+<area shape="rect" id="node11" href="$Observer_8h.html" title=" " alt="" coords="2059,557,2246,584"/>
+<area shape="rect" id="node12" href="$include_2mc__observers_2api_8h.html" title=" " alt="" coords="1790,632,1939,659"/>
+<area shape="rect" id="node13" href="$StateBuilder_8h.html" title=" " alt="" coords="1964,632,2149,659"/>
+<area shape="rect" id="node17" href="$type__name_8h.html" title=" " alt="" coords="2683,707,2838,733"/>
+<area shape="rect" id="node15" href="$logging_8h.html" title=" " alt="" coords="2528,707,2659,733"/>
+<area shape="rect" id="node16" href="$utils__api_8h.html" title=" " alt="" coords="2609,781,2746,808"/>
+<area shape="rect" id="node19" href="$mc__rbdyn_2Robot_8h.html" title=" " alt="" coords="893,781,1033,808"/>
+<area shape="rect" id="node20" href="$RobotConverterConfig_8h.html" title=" " alt="" coords="1048,557,1294,584"/>
+<area shape="rect" id="node22" href="$iterators_8h.html" title=" " alt="" coords="732,781,869,808"/>
+<area shape="rect" id="node23" href="$shared_8h.html" title=" " alt="" coords="581,781,708,808"/>
+<area shape="rect" id="node29" href="$void__ptr_8h.html" title=" " alt="" coords="852,632,986,659"/>
+<area shape="rect" id="node31" title=" " alt="" coords="534,557,666,584"/>
+<area shape="rect" id="node35" title=" " alt="" coords="331,557,510,584"/>
+<area shape="rect" id="node37" href="$include_2mc__solver_2api_8h.html" title=" " alt="" coords="2075,707,2200,733"/>
+<area shape="rect" id="node38" href="$pragma_8h.html" title=" " alt="" coords="1098,707,1230,733"/>
+<area shape="rect" id="node40" href="$MetaTask_8h.html" title=" " alt="" coords="2320,557,2483,584"/>
+<area shape="rect" id="node41" title=" " alt="" coords="2659,557,2787,584"/>
+<area shape="rect" id="node43" href="$State_8h.html" title=" " alt="" coords="2414,408,2587,435"/>
+<area shape="rect" id="node44" href="$StateFactory_8h.html" title=" " alt="" coords="2244,333,2463,360"/>
+<area shape="rect" id="node45" href="$TransitionMap_8h.html" title=" " alt="" coords="2221,244,2412,285"/>
+<area shape="rect" id="node46" title=" " alt="" coords="2538,251,2604,278"/>
+<area shape="rect" id="node48" href="$OrientationTask_8h.html" title=" " alt="" coords="1435,251,1638,278"/>
+<area shape="rect" id="node49" href="$PositionTask_8h.html" title=" " alt="" coords="1662,251,1843,278"/>
+</map>

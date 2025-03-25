@@ -1,0 +1,4 @@
+<map id="mc_trajectory::InterpolatedRotation" name="mc_trajectory::InterpolatedRotation">
+<area shape="rect" id="node1" title="Describes a trajectory with smoothly interpolate rotation between waypoints." alt="" coords="256,20,455,61"/>
+<area shape="rect" id="node2" href="$structmc__trajectory_1_1Spline.html" title=" " alt="" coords="5,5,208,76"/>
+</map>

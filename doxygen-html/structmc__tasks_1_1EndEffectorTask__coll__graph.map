@@ -1,0 +1,4 @@
+<map id="mc_tasks::EndEffectorTask" name="mc_tasks::EndEffectorTask">
+<area shape="rect" id="node1" title="Controls an end&#45;effector." alt="" coords="5,80,200,107"/>
+<area shape="rect" id="node2" href="$structmc__tasks_1_1MetaTask.html" title="Represents a generic task." alt="" coords="25,5,180,32"/>
+</map>
