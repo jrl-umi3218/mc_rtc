@@ -11,9 +11,10 @@
 #include <boost/range/adaptors.hpp>
 namespace bfs = boost::filesystem;
 
+// initialize static members
 std::unique_ptr<mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>> mc_rbdyn::RobotLoader::robot_loader;
 bool mc_rbdyn::RobotLoader::verbose_ = false;
-std::mutex mc_rbdyn::RobotLoader::mtx{};
+std::recursive_mutex mc_rbdyn::RobotLoader::mtx{};
 std::map<std::string, std::vector<std::string>> mc_rbdyn::RobotLoader::aliases{};
 
 namespace
@@ -74,7 +75,7 @@ void RobotLoader::load_aliases(const std::string & fname)
 
 std::vector<std::string> RobotLoader::available_robots()
 {
-  std::lock_guard<std::mutex> guard{mtx};
+  std::lock_guard<std::recursive_mutex> guard{mtx};
   init();
   auto ret = robot_loader->objects();
   for(const auto & a : aliases) { ret.push_back(a.first); }
@@ -83,7 +84,7 @@ std::vector<std::string> RobotLoader::available_robots()
 
 void RobotLoader::update_robot_module_path(const std::vector<std::string> & paths)
 {
-  std::lock_guard<std::mutex> guard{mtx};
+  std::lock_guard<std::recursive_mutex> guard{mtx};
   init();
   robot_loader->load_libraries(paths);
   for(const auto & p : paths) { handle_aliases_dir(bfs::path(p) / "aliases"); }
