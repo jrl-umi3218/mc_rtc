@@ -133,6 +133,8 @@ Robot::Robot(NewRobotToken, const mc_rbdyn::Robot & robot)
   dq_->setZero();
   ddq_->setZero();
   tau_->setZero();
+  tau_ext_ = Eigen::VectorXd::Zero(robot.mb().nrDof());
+  ddq_ext_ = Eigen::VectorXd::Zero(robot.mb().nrDof());
 
   const auto & rjo = robot.refJointOrder();
   refJointIndexToQIndex_.resize(rjo.size());
@@ -156,7 +158,7 @@ Robot::Robot(NewRobotToken, const mc_rbdyn::Robot & robot)
   /** Signal setup */
   registerUpdates(Update::FK, &Robot::updateFK, Update::FV, &Robot::updateFV, Update::FA, &Robot::updateFA,
                   Update::NormalAcceleration, &Robot::updateNormalAcceleration, Update::H, &Robot::updateH, Update::C,
-                  &Robot::updateC);
+                  &Robot::updateC, Update::ExternalForces, &Robot::updateEF);
   /** Output dependencies setup */
   addOutputDependency(Output::FK, Update::FK);
   addOutputDependency(Output::FV, Update::FV);
@@ -165,12 +167,15 @@ Robot::Robot(NewRobotToken, const mc_rbdyn::Robot & robot)
   addOutputDependency(Output::H, Update::H);
   addOutputDependency(Output::C, Update::C);
   addOutputDependency(Output::FV, Update::FV);
+  addOutputDependency(Output::ExternalForces, Update::ExternalForces);
   /** Internal dependencies setup */
   addInternalDependency(Update::FV, Update::FK);
   addInternalDependency(Update::H, Update::FV);
   addInternalDependency(Update::C, Update::FV);
   addInternalDependency(Update::FA, Update::FV);
   addInternalDependency(Update::NormalAcceleration, Update::FV);
+  addInternalDependency(Update::ExternalForces, Update::H);
+  addInternalDependency(Update::ExternalForces, Update::FA);
 }
 
 void Robot::updateFK()
@@ -233,6 +238,15 @@ tvm::VariablePtr Robot::qJoint(size_t jIdx)
   const auto & j = mb.joints()[jIdx];
   return q_->subvariable(tvm::Space(j.dof(), j.params(), j.dof()), j.name(),
                          tvm::Space(offsetDof, offsetParam, offsetDof));
+}
+
+void Robot::updateEF()
+{
+  if(robot_.hasDevice<mc_rbdyn::ExternalTorqueSensor>("externalTorqueSensor"))
+  {
+    tau_ext_ = robot_.device<mc_rbdyn::ExternalTorqueSensor>("externalTorqueSensor").torques();
+  }
+  ddq_ext_ = H().inverse() * tau_ext_;
 }
 
 } // namespace mc_tvm

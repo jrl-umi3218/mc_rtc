@@ -237,6 +237,8 @@ set(mc_rbdyn_SRC
     mc_rbdyn/BodySensor.cpp
     mc_rbdyn/Frame.cpp
     mc_rbdyn/RobotFrame.cpp
+    mc_rbdyn/ExternalTorqueSensor.cpp
+    mc_rbdyn/VirtualTorqueSensor.cpp
 )
 
 set(mc_rbdyn_HDR
@@ -278,6 +280,8 @@ set(mc_rbdyn_HDR
     ../include/mc_rbdyn/Frame.h
     ../include/mc_rbdyn/RobotFrame.h
     ../include/mc_rbdyn/JointSensor.h
+    ../include/mc_rbdyn/ExternalTorqueSensor.h
+    ../include/mc_rbdyn/VirtualTorqueSensor.h
 )
 
 set(mc_tvm_HDR_DIR ../include/mc_tvm)
@@ -516,6 +520,8 @@ set(mc_tasks_SRC
     mc_tasks/lipm_stabilizer/StabilizerTask_log_gui.cpp
     mc_tasks/lipm_stabilizer/ZMPCC.cpp
     mc_tasks/lipm_stabilizer/Contact.cpp
+    mc_tasks/CompliantEndEffectorTask.cpp
+    mc_tasks/CompliantPostureTask.cpp
 )
 
 set(mc_tasks_HDR
@@ -552,6 +558,8 @@ set(mc_tasks_HDR
     ../include/mc_tasks/lipm_stabilizer/StabilizerTask.h
     ../include/mc_tasks/lipm_stabilizer/Contact.h
     ../include/mc_tasks/lipm_stabilizer/ZMPCC.h
+    ../include/mc_tasks/CompliantEndEffectorTask.h
+    ../include/mc_tasks/CompliantPostureTask.h
 )
 
 add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
