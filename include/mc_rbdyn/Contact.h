@@ -177,6 +177,9 @@ private:
   //! If present superseeds friction cone constraints
   std::optional<FeasiblePolytope> feasiblePolytope_;
 
+  // Secures threaded access to the contact object
+  mutable std::mutex contactMutex_;
+
 public:
   static mc_rbdyn::Contact load(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & config);
 
