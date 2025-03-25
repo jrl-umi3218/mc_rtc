@@ -15,6 +15,9 @@ using CoMPtr = std::unique_ptr<CoM>;
 struct Convex;
 using ConvexPtr = std::unique_ptr<Convex>;
 
+struct FeasiblePolytope;
+using PolytopePtr = std::shared_ptr<FeasiblePolytope>;
+
 struct Frame;
 using FramePtr = std::unique_ptr<Frame>;
 
