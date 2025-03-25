@@ -17,6 +17,10 @@ on:
     branches:
       - '**'
 
+env:
+  GITHUB_BRANCH: ${{ github.head_ref || github.ref_name }}
+  GITHUB_REPOSITORY: ${{ github.repository }}
+
 jobs:
   build:
     strategy:
@@ -70,7 +74,12 @@ jobs:
       shell: bash
       run: |
         mkdir -p ${TMPDIR-/tmp}/build-mc-rtc
-        cmake -S ${GITHUB_WORKSPACE}/mc-rtc-superbuild -B ${TMPDIR-/tmp}/build-mc-rtc -DCMAKE_BUILD_TYPE=RelWithDebInfo -DINSTALL_DOCUMENTATION=ON
+        cmake -S ${GITHUB_WORKSPACE}/mc-rtc-superbuild \
+              -B ${TMPDIR-/tmp}/build-mc-rtc \
+              -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+              -DINSTALL_DOCUMENTATION=ON \
+              -DMC_RTC_SUPERBUILD_OVERRIDE_mc_rtc_GITHUB=${GITHUB_REPOSITORY} \
+              -DMC_RTC_SUPERBUILD_OVERRIDE_mc_rtc_GIT_TAG="origin/${GITHUB_BRANCH}"
 
     - name: "[superbuild] Install mc_rtc and related projects"
       if: matrix.os != 'windows-latest'
