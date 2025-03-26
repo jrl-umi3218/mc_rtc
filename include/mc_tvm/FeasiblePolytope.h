@@ -17,7 +17,7 @@
 namespace mc_tvm
 {
 
-/** A Feasible Polytope is a set of planes that can be used as a constraint 
+/** A Feasible Polytope is a set of planes that can be used as a constraint
  * for a variable. It is created from an mc_rbdyn::Contact.
  *
  * Outputs:
@@ -26,9 +26,8 @@ namespace mc_tvm
  */
 struct MC_TVM_DLLAPI FeasiblePolytope : public tvm::graph::abstract::Node<FeasiblePolytope>
 {
+  friend struct mc_rbdyn::Contact;
 
-  // XXX for now not using this, idk what the purpose is
-  // maybe for uniqueness?
 private:
   struct NewPolytopeToken
   {
@@ -40,16 +39,14 @@ public:
 
   /**
    * @brief Construct a new Feasible Polytope object
-   * 
+   *
    * @param contact rbdyn contact associated
    */
-  FeasiblePolytope(/*NewPolytopeToken,*/
-                   const mc_rbdyn::Contact & contact);
+  FeasiblePolytope(NewPolytopeToken, const mc_rbdyn::Contact & contact);
 
   FeasiblePolytope(const FeasiblePolytope &) = delete;
   FeasiblePolytope & operator=(const FeasiblePolytope &) = delete;
 
-  
   /** Access the normals matrix of the polytope */
   inline const Eigen::MatrixX3d & normals() const noexcept { return normals_; }
 
@@ -64,12 +61,10 @@ public:
 private:
   /** Parent instance */
   const mc_rbdyn::Contact & contact_;
-  
+
   /** Set of planes */
   Eigen::MatrixX3d normals_;
   Eigen::VectorXd offsets_;
-
-  
 };
 
 } // namespace mc_tvm

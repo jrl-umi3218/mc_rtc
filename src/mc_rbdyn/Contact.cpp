@@ -9,6 +9,8 @@
 #include <mc_rbdyn/contact_transform.h>
 #include <mc_rtc/logging.h>
 
+#include <mc_tvm/FeasiblePolytope.h>
+
 #include <geos/version.h>
 
 #include <geos/geom/GeometryFactory.h>
@@ -461,6 +463,16 @@ const std::optional<mc_rbdyn::FeasiblePolytope> & Contact::feasiblePolytope() co
 {
   std::lock_guard<std::mutex> lock(contactMutex_);
   return feasiblePolytope_;
+}
+
+mc_tvm::FeasiblePolytope & Contact::tvmPolytope() const
+{
+  if(!tvm_polytope_)
+  {
+    mc_rtc::log::warning("Creating a new feasible polytope tvm object");
+    tvm_polytope_.reset(new mc_tvm::FeasiblePolytope(mc_tvm::FeasiblePolytope::NewPolytopeToken{}, *this));
+  }
+  return *tvm_polytope_;
 }
 
 Contact Contact::swap(const mc_rbdyn::Robots & robots) const

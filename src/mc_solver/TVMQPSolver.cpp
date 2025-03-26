@@ -9,6 +9,8 @@
 #include <mc_tasks/MetaTask.h>
 
 #include <mc_tvm/ContactFunction.h>
+#include <mc_tvm/FeasiblePolytope.h>
+#include <mc_tvm/ForceInPolytopeFunction.h>
 #include <mc_tvm/Robot.h>
 
 #include <mc_rtc/gui/Force.h>
@@ -364,9 +366,14 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
     for(int i = 0; i < forces.numberOfVariables(); ++i)
     {
       auto & f = forces[i];
+      // constraints.push_back(
+      //     problem_.add(dir * feasiblePolytope->planeNormals * f <= dir * feasiblePolytope->planeConstants,
+      //                  {tvm::requirements::PriorityLevel(0)}));
+      // XXX New version: do this now, see how to choose dynamics
+      auto polyFunction = std::make_shared<mc_tvm::ForceInPolytopeFunction>(contact, f, dir);
+      // // We want the force to stay inside of the polytope so the distance value should stay negative
       constraints.push_back(
-          problem_.add(dir * feasiblePolytope->planeNormals * f <= dir * feasiblePolytope->planeConstants,
-                       {tvm::requirements::PriorityLevel(0)}));
+          problem_.add(polyFunction <= 0., tvm::task_dynamics::None(), {tvm::requirements::PriorityLevel(0)}));
     }
   }
   else
