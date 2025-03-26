@@ -236,6 +236,11 @@ Contact::Contact(const Contact & contact)
                               contact.X_b_s(), contact.ambiguityId()}));
   dof_ = contact.dof();
   feasiblePolytope_ = contact.feasiblePolytope();
+  if(contact.tvm_polytope_ != nullptr)
+  {
+    mc_rtc::log::warning("Moving tvm_polytope_ {}", fmt::ptr(contact.tvm_polytope_.get()));
+    this->tvm_polytope_ = std::move(contact.tvm_polytope_);
+  }
 }
 
 Contact & Contact::operator=(const Contact & rhs)
@@ -253,6 +258,11 @@ Contact & Contact::operator=(const Contact & rhs)
   this->impl->ambiguityId = rhs.ambiguityId();
   this->dof_ = rhs.dof();
   this->feasiblePolytope_ = rhs.feasiblePolytope();
+  if(rhs.tvm_polytope_ != nullptr)
+  {
+    mc_rtc::log::warning("Moving tvm_polytope_ {}", fmt::ptr(rhs.tvm_polytope_.get()));
+    this->tvm_polytope_ = std::move(rhs.tvm_polytope_);
+  }
   return *this;
 }
 
