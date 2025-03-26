@@ -397,6 +397,7 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
     const auto & oldContact = contacts_[idx];
     if(oldContact.dof() == contact.dof() && oldContact.friction() == contact.friction())
     {
+      // Nothing to do unless there is a feasible polytope
       return std::make_tuple(idx, hasWork || contact.feasiblePolytope());
     }
     hasWork = contact.feasiblePolytope() || contact.friction() != oldContact.friction();
@@ -435,27 +436,29 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
   return std::make_tuple(idx, hasWork);
 }
 
-void TVMQPSolver::addContact(const mc_rbdyn::Contact & contact)
+void TVMQPSolver::addContact(const mc_rbdyn::Contact & contactTmp)
 {
   size_t idx = contacts_.size();
   bool hasWork = false;
   // Add geometric contact constraint if it is not already present
   // hasWork becomes true if friction or polytope changed, in this case dynamics function must be updated
   // dofs changing do not influence the dynamics so does not matter here
-  std::tie(idx, hasWork) = addVirtualContactImpl(contact);
+  // WARNING: copies the contactTmp passed as argument into contact_[idx]
+  // Any object storing a reference to this contact must use contact_[idx]
+  std::tie(idx, hasWork) = addVirtualContactImpl(contactTmp);
   if(!hasWork) { return; }
   auto & data = contactsData_[idx];
-  const auto & r1 = robot(contact.r1Index());
-  const auto & r2 = robot(contact.r2Index());
-  const auto & s1 = *contact.r1Surface();
-  const auto & s2 = *contact.r2Surface();
+  const auto & r1 = robot(contactTmp.r1Index());
+  const auto & r2 = robot(contactTmp.r2Index());
+  const auto & s1 = *contactTmp.r1Surface();
+  const auto & s2 = *contactTmp.r2Surface();
   const auto & f1 = r1.frame(s1.name());
   const auto & f2 = r2.frame(s2.name());
 
   auto addContactForce = [&](const std::string & robot, const mc_rbdyn::RobotFrame & frame,
                              const std::vector<sva::PTransformd> & points, tvm::VariableVector & forces,
                              std::vector<tvm::TaskWithRequirementsPtr> & constraints, double dir)
-  { addContactToDynamics(robot, frame, points, forces, constraints, contact, dir); };
+  { addContactToDynamics(robot, frame, points, forces, constraints, contacts_[idx], dir); };
 
   // FIXME These points computation are a waste of time if they are not needed
   // FIXME Debug mc_rbdyn::intersection
