@@ -7,18 +7,16 @@
 namespace mc_tvm
 {
 
-FeasiblePolytope::FeasiblePolytope(/*NewPolytopeToken, */const mc_rbdyn::Contact & contact) : contact_(contact)
+FeasiblePolytope::FeasiblePolytope(NewPolytopeToken, const mc_rbdyn::Contact & contact) : contact_(contact)
 {
   registerUpdates(Update::Polytope, &FeasiblePolytope::updatePolytope);
-  
-  // This makes it so that to update the polytope value, it will fetch the rbdyn contact polytope
 
+  // This makes it so that to update the polytope value, it will fetch the rbdyn contact polytope
+  addOutputDependency(Output::Polytope, Update::Polytope);
   // addInputDependency(Update::Value, tvm_frame, Frame::Output::Position);
-  // addOutputDependency(Output::Polytope, Update::Polytope);
 
   // Updating values from the start
   updatePolytope();
-
 }
 
 void FeasiblePolytope::updatePolytope()
@@ -30,6 +28,5 @@ void FeasiblePolytope::updatePolytope()
     offsets_ = feasiblePolytope->planeConstants;
   }
 }
-
 
 } // namespace mc_tvm

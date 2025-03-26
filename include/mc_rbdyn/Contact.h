@@ -8,6 +8,8 @@
 #include <mc_rbdyn/api.h>
 #include <mc_rtc/Configuration.h>
 
+#include <mc_tvm/fwd.h>
+
 #include <Tasks/QPContacts.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
@@ -134,6 +136,13 @@ public:
   void feasiblePolytope(const FeasiblePolytope & polytope);
   const std::optional<FeasiblePolytope> & feasiblePolytope() const noexcept;
 
+  /** Get the TVM polytope associated to this contact
+   *
+   * FIXME Returns a non-const reference from a const method because it is most often used to register dependencies
+   * between TVM nodes which require non-const objects
+   */
+  mc_tvm::FeasiblePolytope & tvmPolytope() const;
+
   std::pair<std::string, std::string> surfaces() const;
 
   sva::PTransformd X_0_r1s(const mc_rbdyn::Robot & robot) const;
@@ -179,6 +188,9 @@ private:
 
   // Secures threaded access to the contact object
   mutable std::mutex contactMutex_;
+
+  /* mutable to allow initialization in const method */
+  mutable mc_tvm::PolytopePtr tvm_polytope_;
 
 public:
   static mc_rbdyn::Contact load(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & config);
