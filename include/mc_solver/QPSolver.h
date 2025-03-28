@@ -218,7 +218,7 @@ public:
   virtual void setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts) = 0;
 
   /** Returns the current set of contacts */
-  inline const std::vector<mc_rbdyn::Contact> & contacts() const noexcept { return contacts_; }
+  inline const std::vector<std::shared_ptr<mc_rbdyn::Contact>> & contacts() const noexcept { return contacts_; }
 
   /** Returns the current set of constraints */
   inline const std::vector<mc_solver::ConstraintSet *> & constraints() const noexcept { return constraints_; }
@@ -303,7 +303,7 @@ protected:
   double timeStep;
 
   /** Holds mc_rbdyn::Contact in the solver */
-  std::vector<mc_rbdyn::Contact> contacts_;
+  std::vector<std::shared_ptr<mc_rbdyn::Contact>> contacts_;
 
   /** Holds MetaTask currently in the solver */
   std::vector<mc_tasks::MetaTask *> metaTasks_;
