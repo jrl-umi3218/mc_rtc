@@ -140,7 +140,7 @@ private:
 
   size_t getContactIdx(const mc_rbdyn::Contact & contact);
   void addContact(const mc_rbdyn::Contact & contact);
-  using ContactIterator = std::vector<mc_rbdyn::Contact>::iterator;
+  using ContactIterator = std::vector<std::shared_ptr<mc_rbdyn::Contact>>::iterator;
   ContactIterator removeContact(size_t idx);
 
   /**

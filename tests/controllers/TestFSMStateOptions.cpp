@@ -60,6 +60,7 @@ public:
       BOOST_REQUIRE(solver().contacts().size() == 2);
       for(const auto & c : solver().contacts())
       {
+        const auto & c = *contacts;
         if(c.r1Surface()->name() == "RightFootCenter") { BOOST_REQUIRE(c.dof() == dof); }
       }
     }
