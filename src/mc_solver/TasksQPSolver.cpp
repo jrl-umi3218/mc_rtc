@@ -96,9 +96,9 @@ void TasksQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Con
   uniContacts_.clear();
   biContacts_.clear();
 
-  for(const mc_rbdyn::Contact & c : contacts_)
+  for(const auto & c : contacts_)
   {
-    QPContactPtr qcptr = c.taskContact(*robots_p);
+    QPContactPtr qcptr = c->taskContact(*robots_p);
     if(qcptr.unilateralContact)
     {
       uniContacts_.push_back(tasks::qp::UnilateralContact(*qcptr.unilateralContact));
