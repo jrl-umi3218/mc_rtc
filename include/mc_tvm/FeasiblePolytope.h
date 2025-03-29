@@ -8,6 +8,7 @@
 #include <mc_tvm/fwd.h>
 
 #include <mc_rbdyn/Contact.h>
+#include <mc_rbdyn/Surface.h>
 #include <mc_rbdyn/fwd.h>
 
 #include <Eigen/Core>
@@ -48,7 +49,7 @@ public:
   FeasiblePolytope & operator=(const FeasiblePolytope &) = delete;
 
   /** Access the normals matrix of the polytope */
-  inline const Eigen::MatrixX3d & normals() const noexcept { return normals_; }
+  inline const Eigen::MatrixXd & normals() const noexcept { return normals_; }
 
   /** Access the offsets vector of the polytope */
   inline const Eigen::VectorXd & offsets() const noexcept { return offsets_; }
@@ -62,8 +63,78 @@ private:
   /** Parent instance */
   const mc_rbdyn::Contact & contact_;
 
+  // Function to generate 3d normals of a friction cone (not the generating rays)
+  Eigen::MatrixX3d generatePolyhedralConeHRep(int numberOfFrictionSides,
+                                              Eigen::Matrix3d rotX_r1_r2,
+                                              double m_frictionCoef)
+  {
+    Eigen::MatrixX3d HRep(numberOfFrictionSides, 3);
+    Eigen::Vector3d contactNormal(Eigen::Vector3d::UnitZ());
+    Eigen::Vector3d tan(Eigen::Vector3d::UnitX());
+
+    // The angle to the contact normal of the friction cone is atan(mu)
+    // (mu for external approximation, mu/sqrt(2) for internal, let's pick internal for H-rep)
+    // But here for hrep we want the normals of the linearized cone's faces
+    // --> there is a 90° angle to add to get the face normal
+    double angle = (M_PI / 2.) + atan(m_frictionCoef / sqrt(2));
+    // This is the first face normal
+    Eigen::Vector3d normal = Eigen::AngleAxisd(angle, tan) * contactNormal;
+
+    // step is the scale decomposition (precision) with which to compute the actual cone (linearization)
+    double step = (M_PI * 2.) / numberOfFrictionSides;
+
+    // here we compute the hrep: the rows will be the normals of the cone faces in the controlled frame
+    for(int i = 0; i < numberOfFrictionSides; i++)
+    {
+      // Rotation around contact normal for each decomposed angle, then transposed in the relative contact frame
+      HRep.row(i) = rotX_r1_r2.transpose() * Eigen::AngleAxisd(step * i, contactNormal) * normal;
+    }
+
+    return HRep;
+  }
+
+  // Function to generate 6d CoP constraint from the points of a rectangular surface contact
+  Eigen::MatrixXd computeCoPMomentsConstraint(const mc_rbdyn::Surface & surface)
+  {
+    const auto & surfacePoints = surface.points();
+    // Find boundaries in surface frame along the surface's sagital (x) and lateral (y) direction
+    double minSagital = std::numeric_limits<double>::max();
+    double minLateral = std::numeric_limits<double>::max();
+    double maxSagital = -std::numeric_limits<double>::max();
+    double maxLateral = -std::numeric_limits<double>::max();
+    for(const auto & point : surfacePoints)
+    {
+      // Points are defined in body frame, convert to surface frame
+      Eigen::Vector3d surfacePoint = surface.X_b_s().rotation() * (point.translation() - surface.X_b_s().translation());
+      double x = surfacePoint.x();
+      double y = surfacePoint.y();
+      minSagital = std::min(minSagital, x);
+      maxSagital = std::max(maxSagital, x);
+      minLateral = std::min(minLateral, y);
+      maxLateral = std::max(maxLateral, y);
+    }
+
+    // These constraints on tau x and tau y are from equations 18 and 19 of
+    // <https://hal.archives-ouvertes.fr/hal-02108449/document>
+    // The other ones come from the friction cone and are taken into account in the polytope constraints
+    // XXX check if bounds on tau z are necessary or redundant with the force polytopes
+
+    // Assuming this is a rectangular contact
+    Eigen::Matrix<double, 4, 6> CoPConstraintMat;
+    // clang-format off
+    CoPConstraintMat <<
+      // mx,  my,  mz,  fx,  fy,  fz,
+        -1,   0,   0,   0,   0,   minLateral,
+        +1,   0,   0,   0,   0,  -maxLateral,
+          0,  -1,   0,   0,   0,  -maxSagital,
+          0,  +1,   0,   0,   0,   minSagital;
+    // clang-format on
+
+    return CoPConstraintMat;
+  }
+
   /** Set of planes */
-  Eigen::MatrixX3d normals_;
+  Eigen::MatrixXd normals_;
   Eigen::VectorXd offsets_;
 };
 
