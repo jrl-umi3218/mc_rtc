@@ -356,36 +356,47 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
     // create decision variables
     // array of decision variables for each contact
     // vec3d for each point
-    forces = dyn.addContact(frame, points, dir);
+    // forces = dyn.addContact3d(frame, points, dir);
+    forces.add(dyn.addContact6d(frame, dir));
     it->second->addToSolverImpl(*this);
   }
 
-  const auto & feasiblePolytope = contact.feasiblePolytope();
-  if(feasiblePolytope)
+  // if(contact.feasiblePolytope())
+  // {
+  mc_rtc::log::info("Adding polytope constraints");
+  // The "constraints" are only acting on the variables ! so 1 force var = 1 constraint, not planes size
+
+  for(int i = 0; i < forces.numberOfVariables(); ++i)
   {
-    mc_rtc::log::info("Adding polytope constraints: planeConstants size {}", feasiblePolytope->planeConstants.size());
-    for(int i = 0; i < forces.numberOfVariables(); ++i)
-    {
-      auto & f = forces[i];
-      // constraints.push_back(
-      //     problem_.add(dir * feasiblePolytope->planeNormals * f <= dir * feasiblePolytope->planeConstants,
-      //                  {tvm::requirements::PriorityLevel(0)}));
-      // XXX New version: do this now, see how to choose dynamics
-      auto polyFunction = std::make_shared<mc_tvm::ForceInPolytopeFunction>(contact, f, dir);
-      // // We want the force to stay inside of the polytope so the distance value should stay negative
-      constraints.push_back(
-          problem_.add(polyFunction <= 0., tvm::task_dynamics::None(), {tvm::requirements::PriorityLevel(0)}));
-    }
+    // it->second->removeFromSolverImpl(*this);
+    auto & f = forces[i];
+    auto polyFunction = std::make_shared<mc_tvm::ForceInPolytopeFunction>(contact, f, dir);
+    // We want the force to stay inside of the polytope so the distance value should stay negative
+    constraints.push_back(
+        problem_.add(polyFunction <= 0., tvm::task_dynamics::None(), {tvm::requirements::PriorityLevel(0)}));
+    auto & dyn = it->second->dynamicFunction();
+    // dyn.addForceConstraintDep(polyFunction);
+    // it->second->addToSolverImpl(*this);
   }
-  else
-  {
-    const auto frictionCone = discretizedFrictionCone(contact.friction());
-    for(int i = 0; i < forces.numberOfVariables(); ++i)
-    {
-      auto & f = forces[i];
-      constraints.push_back(problem_.add(dir * frictionCone * f >= 0.0, {tvm::requirements::PriorityLevel(0)}));
-    }
-  }
+
+  // }
+  // else
+  // {
+  //   const auto frictionCone = discretizedFrictionCone(contact.friction());
+  //   mc_rtc::log::info("Adding simple friction cone constraints: {} constraints", frictionCone.rows());
+  //   mc_rtc::log::info("Before this cone problem had {} constraints", problem_.constraints().size());
+  //   for(int i = 0; i < forces.numberOfVariables(); ++i)
+  //   {
+  //     auto & f = forces[i];
+  //     constraints.push_back(problem_.add(dir * frictionCone * f >= 0.0, {tvm::requirements::PriorityLevel(0)}));
+  //     mc_rtc::log::info("The task with requirements for force {} has a tangent space of dim {} (friction cone)", i,
+  //                       constraints.back()->task.function()->tSize());
+  //     mc_rtc::log::info("The corresponding jacobian for this task is\n{}",
+  //                       problem_.constraint(*constraints.back().get())->jacobian(*f.get()));
+  //   }
+  //   mc_rtc::log::info("Problem has now {} constraints over {} variables", problem_.constraints().size(),
+  //                     problem_.variables().numberOfVariables());
+  // }
 }
 
 auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> std::tuple<size_t, bool>
