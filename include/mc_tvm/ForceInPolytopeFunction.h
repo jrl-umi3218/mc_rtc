@@ -33,7 +33,7 @@ public:
 
   /** Constructor
    */
-  ForceInPolytopeFunction(const mc_rbdyn::Contact & contact, const tvm::VariablePtr & forceVar, const double & dir);
+  ForceInPolytopeFunction(const mc_rbdyn::Contact & contact, const tvm::VariableVector & forceVars, const double & dir);
 
 protected:
   void updateJacobian();
@@ -43,8 +43,9 @@ protected:
 
   // rbdyn contact object that contains the feasible polytope
   const mc_rbdyn::Contact & contact_;
-  // force variable that this function acts on
-  tvm::VariablePtr forceVar_;
+  // force variables that this function acts on
+  // expected: 4 3d forces or 1 6d wrench
+  tvm::VariableVector forceVars_;
   // direction of the constraint (to be able to use the same polytope on a reaction force)
   const double dir_;
 };
