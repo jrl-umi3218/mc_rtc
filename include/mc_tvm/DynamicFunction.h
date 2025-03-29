@@ -38,7 +38,7 @@ public:
   /** Construct the equation of motion for a given robot */
   DynamicFunction(const mc_rbdyn::Robot & robot);
 
-  /** Add a contact to the function
+  /** Add a 3d contact to the function
    *
    * This adds forces variables for every contact point belonging to the
    * robot of this dynamic function.
@@ -51,9 +51,21 @@ public:
    *
    * Returns the force variables that were created by this contact
    */
-  const tvm::VariableVector & addContact(const mc_rbdyn::RobotFrame & frame,
-                                         std::vector<sva::PTransformd> points,
-                                         double dir);
+  const tvm::VariableVector & addContact3d(const mc_rbdyn::RobotFrame & frame,
+                                           std::vector<sva::PTransformd> points,
+                                           double dir);
+
+  /** Add a surface contact to the function
+   *
+   * This adds a 6d wrench variable for the surface contact.
+   *
+   * \param frame Contact frame
+   *
+   * \param dir Contact direction
+   *
+   * Returns the wrench variable that was created by this contact
+   */
+  const tvm::VariablePtr & addContact6d(const mc_rbdyn::RobotFrame & frame, double dir);
 
   /** Removes the contact associated to the given frame
    *
@@ -107,9 +119,44 @@ protected:
     Eigen::MatrixXd force_jac_;
     Eigen::MatrixXd full_jac_;
   };
-  std::vector<ForceContact> contacts_;
 
-  std::vector<ForceContact>::const_iterator findContact(const mc_rbdyn::RobotFrame & frame) const;
+  /** Holds data for the contact wrenches part of the motion equation */
+  struct WrenchContact
+  {
+    /** Constructor for 6D wrench */
+    WrenchContact(const mc_rbdyn::RobotFrame & frame, double dir);
+
+    /** Update jacobian */
+    void updateWrenchJacobian(DynamicFunction & parent);
+
+    /** Return the contact wrench */
+    sva::ForceVecd wrench() const;
+
+    /** Associated frame */
+    mc_rbdyn::ConstRobotFramePtr frame_;
+
+    /** 6D wrench var associated to a contact */
+    tvm::VariablePtr wrench_;
+
+    /** Contact direction */
+    double dir_;
+
+    /** RBDyn jacobian */
+    rbd::Jacobian jac_;
+    /** RBDyn jacobian blocks */
+    rbd::Blocks blocks_;
+
+    /** Used for intermediate Jacobian computation */
+    Eigen::MatrixXd full_jac_;
+  };
+
+  std::vector<ForceContact> contactForces_;
+
+  std::vector<ForceContact>::const_iterator findContactForce(const mc_rbdyn::RobotFrame & frame) const;
+
+  std::vector<WrenchContact> contactWrenches_;
+
+  std::vector<WrenchContact>::const_iterator findContactWrench(const mc_rbdyn::RobotFrame & frame) const;
 
   void updateJacobian();
 };

@@ -64,35 +64,87 @@ sva::ForceVecd DynamicFunction::ForceContact::force() const
   return ret;
 }
 
-const tvm::VariableVector & DynamicFunction::addContact(const mc_rbdyn::RobotFrame & frame,
-                                                        std::vector<sva::PTransformd> points,
-                                                        double dir)
+DynamicFunction::WrenchContact::WrenchContact(const mc_rbdyn::RobotFrame & frame, double dir)
+: frame_(frame), dir_(dir), jac_(frame.tvm_frame().rbdJacobian()), blocks_(jac_.compactPath(frame.robot().mb())),
+  full_jac_(6, frame.robot().mb().nrDof())
+{
+  wrench_ = tvm::Space(6).createVariable("wrench " + frame.name());
+  wrench_->setZero();
+}
+
+void DynamicFunction::WrenchContact::updateWrenchJacobian(DynamicFunction & parent)
+{
+  // In surface contact representation, the wrench variable's jacobian is just the contact frame full jac transposed
+  const auto & robot = frame_->robot();
+  const auto & bodyJac = jac_.bodyJacobian(robot.mb(), robot.mbc());
+  full_jac_.setZero();
+  jac_.addFullJacobian(blocks_, bodyJac, full_jac_);
+  parent.jacobian_[wrench_.get()].noalias() = -dir_ * full_jac_.block(0, 0, 6, robot.mb().nrDof()).transpose();
+  // mc_rtc::log::critical("updated wrench jacobian to {}", parent.jacobian_[wrench_.get()]);
+}
+
+sva::ForceVecd DynamicFunction::WrenchContact::wrench() const
+{
+  auto ret = sva::ForceVecd(wrench_->value());
+  return ret;
+}
+
+const tvm::VariableVector & DynamicFunction::addContact3d(const mc_rbdyn::RobotFrame & frame,
+                                                          std::vector<sva::PTransformd> points,
+                                                          double dir)
 {
   if(frame.robot().name() != robot_.name())
   {
     mc_rtc::log::error_and_throw<std::runtime_error>(
         "Attempted to add a contact for {} to dynamic function belonging to {}", frame.robot().name(), robot_.name());
   }
-  auto & fc = contacts_.emplace_back(frame, std::move(points), dir);
+  // Constructs a ForceContact emplaced in contactForces_ (creates force variables tvm::Space(3))
+  auto & fc = contactForces_.emplace_back(frame, std::move(points), dir);
   for(const auto & var : fc.forces_) { addVariable(var, true); }
+  // Adds dep to call a jacobian update on this function each time the frame jacobian is updated
   addInputDependency<DynamicFunction>(Update::Jacobian, frame.tvm_frame(), mc_tvm::RobotFrame::Output::Jacobian);
   return fc.forces_;
 }
 
+const tvm::VariablePtr & DynamicFunction::addContact6d(const mc_rbdyn::RobotFrame & frame, double dir)
+{
+  if(frame.robot().name() != robot_.name())
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "Attempted to add a contact for {} to dynamic function belonging to {}", frame.robot().name(), robot_.name());
+  }
+  // Constructs a WrenchContact emplaced in contactWrenches_ (creates wrench variable tvm::Space(6))
+  auto & wc = contactWrenches_.emplace_back(frame, dir);
+  addVariable(wc.wrench_, true);
+  // Adds dep to call a jacobian update on this function each time the frame jacobian is updated
+  addInputDependency<DynamicFunction>(Update::Jacobian, frame.tvm_frame(), mc_tvm::RobotFrame::Output::Jacobian);
+  return wc.wrench_;
+}
+
 void DynamicFunction::removeContact(const mc_rbdyn::RobotFrame & frame)
 {
-  auto it = findContact(frame);
-  if(it != contacts_.end())
+  // Find if this contact corresponds to a 3d or 6d var and remove it
+  auto it = findContactForce(frame);
+  if(it != contactForces_.end())
   {
     for(const auto & var : it->forces_) { removeVariable(var); }
-    contacts_.erase(it);
+    contactForces_.erase(it);
+  }
+
+  auto it2 = findContactWrench(frame);
+  if(it2 != contactWrenches_.end())
+  {
+    removeVariable(it2->wrench_);
+    contactWrenches_.erase(it2);
   }
 }
 
 sva::ForceVecd DynamicFunction::contactForce(const mc_rbdyn::RobotFrame & frame) const
 {
-  auto it = findContact(frame);
-  if(it != contacts_.end()) { return (*it).force(); }
+  auto it = findContactForce(frame);
+  auto it2 = findContactWrench(frame);
+  if(it != contactForces_.end()) { return (*it).force(); }
+  else if(it2 != contactWrenches_.end()) { return (*it2).wrench(); }
   else
   {
     mc_rtc::log::error("No contact at frame {} in dynamic function for {}", frame.name(), robot_.name());
@@ -109,12 +161,23 @@ void DynamicFunction::updateJacobian()
 {
   const auto & robot = robot_.tvmRobot();
   splitJacobian(robot.H(), robot.alphaD());
-  for(auto & c : contacts_) { c.updateJacobians(*this); }
+  // update jacobians for every 3D contact and every 6D contact
+  for(auto & c : contactForces_) { c.updateJacobians(*this); }
+  for(auto & c : contactWrenches_) { c.updateWrenchJacobian(*this); }
 }
 
-auto DynamicFunction::findContact(const mc_rbdyn::RobotFrame & frame) const -> std::vector<ForceContact>::const_iterator
+auto DynamicFunction::findContactForce(const mc_rbdyn::RobotFrame & frame) const
+    -> std::vector<ForceContact>::const_iterator
 {
-  return std::find_if(contacts_.begin(), contacts_.end(), [&](const auto & c) { return c.frame_.get() == &frame; });
+  return std::find_if(contactForces_.begin(), contactForces_.end(),
+                      [&](const auto & c) { return c.frame_.get() == &frame; });
+}
+
+auto DynamicFunction::findContactWrench(const mc_rbdyn::RobotFrame & frame) const
+    -> std::vector<WrenchContact>::const_iterator
+{
+  return std::find_if(contactWrenches_.begin(), contactWrenches_.end(),
+                      [&](const auto & c) { return c.frame_.get() == &frame; });
 }
 
 } // namespace mc_tvm
