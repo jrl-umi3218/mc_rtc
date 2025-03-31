@@ -50,11 +50,11 @@ void FeasiblePolytope::updatePolytope()
     normals_ = Eigen::MatrixXd::Zero(nbFrictionSides + nbMomentConstraints, 6);
     offsets_ = Eigen::VectorXd::Zero(nbFrictionSides + nbMomentConstraints);
     // Forces
-    normals_.block(0, 3, 6, 3) =
+    normals_.block(0, 3, nbFrictionSides, 3) =
         generatePolyhedralConeHRep(nbFrictionSides, Eigen::Matrix3d::Identity(), contact_.friction());
     // CoP moments
     // XXX see how to handle the contact not being from the first surface
-    normals_.block(5, 0, 4, 6) = computeCoPMomentsConstraint(*contact_.r1Surface());
+    normals_.block(nbFrictionSides, 0, nbMomentConstraints, 6) = computeCoPMomentsConstraint(*contact_.r1Surface());
 
     // Offsets are all zero in this default case (no second member if unbound polyhedral cone)
     // mc_rtc::log::warning("Feasible Poly: no feasible detected, built default as:\n{}", normals_);
