@@ -80,10 +80,14 @@ private:
     tvm::VariableVector f1_;
     /** Constraints on f1 */
     std::vector<tvm::TaskWithRequirementsPtr> f1Constraints_;
+    /** Target tasks on f1 */
+    std::vector<tvm::TaskWithRequirementsPtr> f1Targets_;
     /** Force variables on r2 side (if any) */
     tvm::VariableVector f2_;
     /** Constraints on f2 */
     std::vector<tvm::TaskWithRequirementsPtr> f2Constraints_;
+    /** Target tasks on f2 */
+    std::vector<tvm::TaskWithRequirementsPtr> f2Targets_;
   };
   /** Related contact functions */
   std::vector<ContactData> contactsData_;
@@ -169,6 +173,7 @@ private:
    * @param points Contact points in the frame's parent body's frame
    * @param forces Ref to where the forces tvm variables created by this contact will be stored
    * @param constraints Ref to where the constraints on these forces will be stored
+   * @param targets Ref to where the target functions for these forces will be stored
    * @param contact mc_rbydn::Contact object for contact friction or feasiblePolytope
    * @param dir Contact direction
    */
@@ -177,6 +182,7 @@ private:
                             const std::vector<sva::PTransformd> & points,
                             tvm::VariableVector & forces,
                             std::vector<tvm::TaskWithRequirementsPtr> & constraints,
+                            std::vector<tvm::TaskWithRequirementsPtr> & targets,
                             const mc_rbdyn::Contact & contact,
                             double dir);
 };

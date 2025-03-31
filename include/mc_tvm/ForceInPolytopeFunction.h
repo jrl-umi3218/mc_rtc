@@ -35,6 +35,9 @@ public:
    */
   ForceInPolytopeFunction(const mc_rbdyn::Contact & contact, const tvm::VariableVector & forceVars, const double & dir);
 
+  inline const bool & constraintSizeChanged() const noexcept { return constraintSizeChanged_; }
+  void constraintSizeChanged(bool changed) { constraintSizeChanged_ = changed; }
+
 protected:
   void updateJacobian();
   void updateb();
@@ -48,6 +51,8 @@ protected:
   tvm::VariableVector forceVars_;
   // direction of the constraint (to be able to use the same polytope on a reaction force)
   const double dir_;
+
+  bool constraintSizeChanged_;
 };
 
 using ForceInPolytopeFunctionPtr = std::shared_ptr<ForceInPolytopeFunction>;
