@@ -15,6 +15,7 @@ PostureFunction::PostureFunction(const mc_rbdyn::Robot & robot)
   j0_(robot_.mb().joint(0).type() == rbd::Joint::Free ? 1 : 0), refVel_(Eigen::VectorXd::Zero(size())),
   refAccel_(Eigen::VectorXd::Zero(size()))
 {
+  registerUpdates(Update::Value, &PostureFunction::updateValue_);
   // For mbc.jointConfig
   addInputDependency<PostureFunction>(Update::Value, robot.tvmRobot(), mc_tvm::Robot::Output::FK);
 
