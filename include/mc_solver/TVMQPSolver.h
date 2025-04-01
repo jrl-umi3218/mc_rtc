@@ -28,6 +28,8 @@ struct MC_SOLVER_DLLAPI TVMQPSolver final : public QPSolver
 
   ~TVMQPSolver() final = default;
 
+  void gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui) override;
+
   void setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts) final;
 
   const sva::ForceVecd desiredContactForce(const mc_rbdyn::Contact & id) const final;
@@ -65,6 +67,22 @@ struct MC_SOLVER_DLLAPI TVMQPSolver final : public QPSolver
     assert(solver.backend() == QPSolver::Backend::TVM);
     return static_cast<const TVMQPSolver &>(solver);
   }
+
+  /** Save the problem graph to a dot file that can be visualized with graphviz or other related tools
+   *
+   * The generated graph is located in <tmp>/mc_rtc_tvm_graph_<date>.dot
+   *
+   * To generate the graph, use (graphviz needs to be installed):
+   * \code
+   *    dot -Tps /tmp/mc_rtc_tvm_graph-latest.dot -o /tmp/tvm_graph.ps
+   * \endcode
+   *
+   * @return true on success
+   **/
+  bool saveGraphDotFile() const;
+
+  /** Same as saveGraphDotFile but with a custom filename */
+  bool saveGraphDotFile(const std::string & filename) const;
 
 private:
   /** Control problem */

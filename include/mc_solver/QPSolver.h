@@ -285,7 +285,7 @@ public:
   std::shared_ptr<mc_rtc::Logger> logger() const;
 
   /** Set the GUI helper for this solver instance */
-  void gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui);
+  virtual void gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui);
   /** Access to the gui instance */
   std::shared_ptr<mc_rtc::gui::StateBuilder> gui() const;
 

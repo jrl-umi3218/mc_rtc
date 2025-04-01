@@ -2,6 +2,7 @@
  * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
+#include <mc_rtc/gui/Button.h>
 #include <mc_solver/TVMQPSolver.h>
 
 #include <mc_solver/DynamicsConstraint.h>
@@ -17,6 +18,9 @@
 
 #include <tvm/solver/defaultLeastSquareSolver.h>
 #include <tvm/task_dynamics/ProportionalDerivative.h>
+
+#include <filesystem>
+namespace fs = std::filesystem;
 
 namespace mc_solver
 {
@@ -34,9 +38,20 @@ inline static Eigen::MatrixXd discretizedFrictionCone(double muI)
 TVMQPSolver::TVMQPSolver(mc_rbdyn::RobotsPtr robots, double dt)
 : QPSolver(robots, dt, Backend::TVM), solver_(tvm::solver::DefaultLSSolverOptions{})
 {
+  tvm::graph::internal::Logger::logger().enable();
 }
 
 TVMQPSolver::TVMQPSolver(double dt) : QPSolver(dt, Backend::TVM), solver_(tvm::solver::DefaultLSSolverOptions{}) {}
+
+void TVMQPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
+{
+  QPSolver::gui(gui);
+
+  gui->removeElements(this);
+
+  gui_->addElement(this, {"Solver", "TVM"},
+                   mc_rtc::gui::Button("Generate Graph dot file (graphviz)", [this]() { this->saveGraphDotFile(); }));
+}
 
 size_t TVMQPSolver::getContactIdx(const mc_rbdyn::Contact & contact)
 {
@@ -563,6 +578,67 @@ auto TVMQPSolver::removeContact(size_t idx) -> ContactIterator
   contactsData_.erase(contactsData_.begin() + static_cast<decltype(contacts_)::difference_type>(idx));
 
   return contacts_.erase(contacts_.begin() + static_cast<decltype(contacts_)::difference_type>(idx));
+}
+
+bool TVMQPSolver::saveGraphDotFile() const
+{
+  constexpr auto prefix = "mc_rtc_tvm_graph";
+  auto get_path = [&]()
+  {
+    std::stringstream ss;
+    auto t = std::time(nullptr);
+    auto tm = std::localtime(&t);
+    // clang-format off
+    ss << prefix
+       << "-" << (1900 + tm->tm_year)
+       << "-" << std::setw(2) << std::setfill('0') << (1 + tm->tm_mon)
+       << "-" << std::setw(2) << std::setfill('0') << tm->tm_mday
+       << "-" << std::setw(2) << std::setfill('0') << tm->tm_hour
+       << "-" << std::setw(2) << std::setfill('0') << tm->tm_min
+       << "-" << std::setw(2) << std::setfill('0') << tm->tm_sec
+       << ".dot";
+    // clang-format on
+    auto directory = fs::temp_directory_path();
+    auto log_path = directory / fs::path(ss.str().c_str());
+    return std::pair{directory, log_path};
+  };
+
+  const auto [directory, log_path] = get_path();
+  bool ret = saveGraphDotFile(log_path.string());
+  if(ret)
+  { // Generate symlink to the latest saved graph
+    std::stringstream ss_sym;
+    ss_sym << prefix << "-latest.dot";
+    fs::path log_sym_path = directory / fs::path(ss_sym.str().c_str());
+    if(fs::is_symlink(log_sym_path)) { fs::remove(log_sym_path); }
+    if(!fs::exists(log_sym_path))
+    {
+      std::error_code ec;
+      fs::create_symlink(log_path, log_sym_path);
+      if(!ec) { mc_rtc::log::info("Updated latest graph symlink: {}", log_sym_path.string()); }
+      else { mc_rtc::log::warning("Failed to create latest graph symlink: {}", ec.message()); }
+    }
+  }
+  return ret;
+}
+
+bool TVMQPSolver::saveGraphDotFile(const std::string & filename) const
+{
+  try
+  {
+    auto graphDot = tvm::graph::internal::Logger::logger().log().generateDot(&problem_.updateGraph());
+    std::ofstream myfile;
+    myfile.open(filename);
+    myfile << graphDot << std::endl;
+    myfile.close();
+    mc_rtc::log::info("[TVMQPSolver] Saved dot graph to {}", filename);
+    return true;
+  }
+  catch(std::exception & e)
+  {
+    mc_rtc::log::error("[TVMQPSolver] Failed to print graph: {}", e.what());
+  }
+  return false;
 }
 
 } // namespace mc_solver
