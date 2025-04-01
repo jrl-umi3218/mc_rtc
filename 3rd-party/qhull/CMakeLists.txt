@@ -67,7 +67,7 @@
 # $Id: //main/2019/qhull/CMakeLists.txt#21 $$Change: 3039 $
 # $DateTime: 2020/09/03 21:26:22 $$Author: bbarber $
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 project(qhull)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_CXX_VISIBILITY_PRESET default)
