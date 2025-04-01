@@ -46,6 +46,7 @@ Robots::Robots(NewRobotsToken) : robots_(), mbs_(), mbcs_(), robotIndex_(0), env
 void Robots::copy(Robots & out) const
 {
   if(&out == this) { return; }
+  for(const auto & r : out.robots_) { out.onRobotRemoved_.signal(r->name()); }
   out.robots_.clear();
   out.robot_modules_ = robot_modules_;
   out.mbs_ = mbs_;
@@ -58,6 +59,7 @@ void Robots::copy(Robots & out) const
     const Robot & robot = *robots_[i];
     out.robots_.push_back(std::make_shared<Robot>(Robot::NewRobotToken{}, robot.name(), out, i, false));
     robot.copyLoadedData(*out.robots_.back());
+    out.onRobotAdded_.signal(robot.name());
   }
 }
 
@@ -161,6 +163,7 @@ void Robots::removeRobot(unsigned int idx)
     return;
   }
   const auto & robotName = robots_[idx]->name();
+  onRobotRemoved_.signal(robotName);
   robotNameToIndex_.erase(robotName);
   robot_modules_.erase(robot_modules_.begin() + idx);
   robots_.erase(robots_.begin() + idx);
@@ -194,6 +197,7 @@ void Robots::robotCopy(const Robot & robot, const std::string & copyName)
   const auto & refRobot = *referenceRobots->robots_[referenceIndex];
   refRobot.copyLoadedData(*robots_.back());
   robotNameToIndex_[copyName] = copyRobotIndex;
+  onRobotAdded_.signal(copyName);
 }
 
 Robot & Robots::load(const std::string & name, const RobotModule & module, const LoadRobotParameters & params)
@@ -210,6 +214,7 @@ Robot & Robots::load(const std::string & name, const RobotModule & module, const
                                             static_cast<unsigned int>(mbs_.size() - 1), true, params));
   robotNameToIndex_[name] = robots_.back()->robotIndex();
   updateIndexes();
+  onRobotAdded_.signal(name);
   return *robots_.back();
 }
 
