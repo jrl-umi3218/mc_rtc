@@ -234,9 +234,10 @@ Contact::Contact(const Contact & contact)
                               contact.r2Surface()->copy(), contact.X_r2s_r1s(), contact.friction(), contact.isFixed(),
                               contact.X_b_s(), contact.ambiguityId()}));
   dof_ = contact.dof();
-  feasiblePolytope_ = contact.feasiblePolytope();
-  mc_rtc::log::warning("Moving tvm_polytope_ {}", fmt::ptr(contact.tvm_polytope_.get()));
-  this->tvm_polytope_ = std::move(contact.tvm_polytope_);
+  feasiblePolytopeR1_ = contact.feasiblePolytopeR1();
+  feasiblePolytopeR2_ = contact.feasiblePolytopeR2();
+  this->tvm_polytopeR1_ = std::move(contact.tvm_polytopeR1_);
+  this->tvm_polytopeR2_ = std::move(contact.tvm_polytopeR2_);
 }
 
 Contact & Contact::operator=(const Contact & rhs)
@@ -253,9 +254,10 @@ Contact & Contact::operator=(const Contact & rhs)
   this->impl->friction = rhs.friction();
   this->impl->ambiguityId = rhs.ambiguityId();
   this->dof_ = rhs.dof();
-  this->feasiblePolytope_ = rhs.feasiblePolytope();
-  mc_rtc::log::warning("Moving tvm_polytope_ {}", fmt::ptr(rhs.tvm_polytope_.get()));
-  this->tvm_polytope_ = std::move(rhs.tvm_polytope_);
+  this->feasiblePolytopeR1_ = rhs.feasiblePolytopeR1();
+  this->feasiblePolytopeR2_ = rhs.feasiblePolytopeR2();
+  this->tvm_polytopeR1_ = std::move(rhs.tvm_polytopeR1_);
+  this->tvm_polytopeR2_ = std::move(rhs.tvm_polytopeR2_);
   return *this;
 }
 
@@ -456,26 +458,50 @@ void Contact::friction(double friction)
   impl->friction = friction;
 }
 
-void Contact::feasiblePolytope(const mc_rbdyn::FeasiblePolytope & polytope)
+void Contact::feasiblePolytopeR1(const mc_rbdyn::FeasiblePolytope & polytope)
 {
   std::lock_guard<std::mutex> lock(contactMutex_);
-  feasiblePolytope_ = polytope;
+  feasiblePolytopeR1_ = polytope;
 }
 
-const std::optional<mc_rbdyn::FeasiblePolytope> & Contact::feasiblePolytope() const noexcept
+void Contact::feasiblePolytopeR2(const mc_rbdyn::FeasiblePolytope & polytope)
 {
   std::lock_guard<std::mutex> lock(contactMutex_);
-  return feasiblePolytope_;
+  feasiblePolytopeR2_ = polytope;
 }
 
-mc_tvm::FeasiblePolytope & Contact::tvmPolytope() const
+const std::optional<mc_rbdyn::FeasiblePolytope> & Contact::feasiblePolytopeR1() const noexcept
 {
-  if(!tvm_polytope_)
+  std::lock_guard<std::mutex> lock(contactMutex_);
+  return feasiblePolytopeR1_;
+}
+
+const std::optional<mc_rbdyn::FeasiblePolytope> & Contact::feasiblePolytopeR2() const noexcept
+{
+  std::lock_guard<std::mutex> lock(contactMutex_);
+  return feasiblePolytopeR2_;
+}
+
+mc_tvm::FeasiblePolytope & Contact::tvmPolytopeR1() const
+{
+  if(!tvm_polytopeR1_)
   {
     mc_rtc::log::warning("Creating a new feasible polytope tvm object");
-    tvm_polytope_.reset(new mc_tvm::FeasiblePolytope(mc_tvm::FeasiblePolytope::NewPolytopeToken{}, *this));
+    tvm_polytopeR1_.reset(
+        new mc_tvm::FeasiblePolytope(mc_tvm::FeasiblePolytope::NewPolytopeToken{}, *this, this->r1Index()));
   }
-  return *tvm_polytope_;
+  return *tvm_polytopeR1_;
+}
+
+mc_tvm::FeasiblePolytope & Contact::tvmPolytopeR2() const
+{
+  if(!tvm_polytopeR2_)
+  {
+    mc_rtc::log::warning("Creating a new feasible polytope tvm object");
+    tvm_polytopeR2_.reset(
+        new mc_tvm::FeasiblePolytope(mc_tvm::FeasiblePolytope::NewPolytopeToken{}, *this, this->r2Index()));
+  }
+  return *tvm_polytopeR2_;
 }
 
 Contact Contact::swap(const mc_rbdyn::Robots & robots) const
