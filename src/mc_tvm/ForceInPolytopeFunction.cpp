@@ -11,9 +11,11 @@ namespace mc_tvm
 
 ForceInPolytopeFunction::ForceInPolytopeFunction(const mc_rbdyn::Contact & contact,
                                                  const tvm::VariableVector & forceVars,
-                                                 const double & dir)
-: tvm::function::abstract::LinearFunction(0), contact_(contact), forceVars_(forceVars), dir_(dir),
-  constraintSizeChanged_(false)
+                                                 const double & dir,
+                                                 const int & rIndex)
+: tvm::function::abstract::LinearFunction(0), contact_(contact), rIndex_(rIndex),
+  tvmPoly_(rIndex == contact.r1Index() ? contact.tvmPolytopeR1() : contact.tvmPolytopeR2()), forceVars_(forceVars),
+  dir_(dir), constraintSizeChanged_(false)
 {
   registerUpdates(Update::Jacobian, &ForceInPolytopeFunction::updateJacobian);
   registerUpdates(Update::B, &ForceInPolytopeFunction::updateb);
@@ -30,12 +32,11 @@ ForceInPolytopeFunction::ForceInPolytopeFunction(const mc_rbdyn::Contact & conta
   addInternalDependency<ForceInPolytopeFunction>(Update::B, Update::Resize);
 
   // Updating Jacobian and B (and resizing) depends on updating the polytope
-  auto & tvmPoly = contact.tvmPolytope();
-  addInputDependency<ForceInPolytopeFunction>(Update::Resize, tvmPoly, FeasiblePolytope::Output::Polytope);
+  addInputDependency<ForceInPolytopeFunction>(Update::Resize, tvmPoly_, FeasiblePolytope::Output::Polytope);
 
   // Resizing dimension of the function to number of polytope planes (must be done every new polytope)
-  tvmPoly.updatePolytope();
-  resize(tvmPoly.offsets().size());
+  tvmPoly_.updatePolytope();
+  resize(tvmPoly_.offsets().size());
   updateJacobian();
   updateb();
 }
@@ -50,10 +51,10 @@ void ForceInPolytopeFunction::updateJacobian()
     if(forceVar->space().size() == 3)
     {
       // The force only normals are the right 3 columns, minus bottom 4 rows (CoP)
-      int nbOfForceConstraints = contact_.tvmPolytope().offsets().size() - 4;
-      jacobian_[forceVar.get()] = dir_ * contact_.tvmPolytope().normals().block(0, 3, nbOfForceConstraints, 3);
+      int nbOfForceConstraints = tvmPoly_.offsets().size() - 4;
+      jacobian_[forceVar.get()] = dir_ * tvmPoly_.normals().block(0, 3, nbOfForceConstraints, 3);
     }
-    else if(forceVar->space().size() == 6) { jacobian_[forceVar.get()] = dir_ * contact_.tvmPolytope().normals(); }
+    else if(forceVar->space().size() == 6) { jacobian_[forceVar.get()] = dir_ * tvmPoly_.normals(); }
     // Not handling other dimensions
 
     // mc_rtc::log::critical("Jacobian task {} updated correctly to\n{}", forceVars_.indexOf(*forceVar.get()),
@@ -69,10 +70,10 @@ void ForceInPolytopeFunction::updateb()
   if(forceVars_[0]->space().size() == 3) // check done on 1st var only, we assume all vars have same dim
   {
     // If the vars are force only, remove the last 4 elements of offsets (CoP)
-    int nbOfForceConstraints = contact_.tvmPolytope().offsets().size() - 4;
-    b_ = dir_ * -contact_.tvmPolytope().offsets().segment(0, nbOfForceConstraints);
+    int nbOfForceConstraints = tvmPoly_.offsets().size() - 4;
+    b_ = dir_ * -tvmPoly_.offsets().segment(0, nbOfForceConstraints);
   }
-  else if(forceVars_[0]->space().size() == 6) { b_ = dir_ * -contact_.tvmPolytope().offsets(); }
+  else if(forceVars_[0]->space().size() == 6) { b_ = dir_ * -tvmPoly_.offsets(); }
   // mc_rtc::log::critical("b task updated correctly to {}", b_.transpose());
 }
 
@@ -81,21 +82,19 @@ void ForceInPolytopeFunction::resizeToPoly()
   // If polytope number of planes changed, update the task dimension
   if(forceVars_[0]->space().size() == 3)
   {
-    if(imageSpace().size() != contact_.tvmPolytope().offsets().size() - 4)
+    if(imageSpace().size() != tvmPoly_.offsets().size() - 4)
     {
-      // mc_rtc::log::warning("Image space changed from {} to {}", imageSpace().size(),
-      //                     contact_.tvmPolytope().offsets().size() - 4);
-      resize(contact_.tvmPolytope().offsets().size() - 4);
+      // mc_rtc::log::warning("Image space changed from {} to {}", imageSpace().size(), tvmPoly_.offsets().size() - 4);
+      resize(tvmPoly_.offsets().size() - 4);
       constraintSizeChanged_ = true;
     }
   }
   else if(forceVars_[0]->space().size() == 6)
   {
-    if(imageSpace().size() != contact_.tvmPolytope().offsets().size())
+    if(imageSpace().size() != tvmPoly_.offsets().size())
     {
-      // mc_rtc::log::warning("Image space changed from {} to {}", imageSpace().size(),
-      //                       contact_.tvmPolytope().offsets().size());
-      resize(contact_.tvmPolytope().offsets().size());
+      // mc_rtc::log::warning("Image space changed from {} to {}", imageSpace().size(), tvmPoly_.offsets().size());
+      resize(tvmPoly_.offsets().size());
       constraintSizeChanged_ = true;
     }
   }

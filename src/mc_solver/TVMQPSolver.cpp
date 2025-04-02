@@ -424,7 +424,7 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
   for(int i = 0; i < forces.numberOfVariables(); ++i)
   {
     auto & f = forces[i];
-    auto polyFunction = std::make_shared<mc_tvm::ForceInPolytopeFunction>(contact, f, dir);
+    auto polyFunction = std::make_shared<mc_tvm::ForceInPolytopeFunction>(contact, f, dir, robots().robotIndex(robot));
     // We want the force to stay inside of the polytope so the distance value should stay negative
     constraints.push_back(
         problem_.add(polyFunction <= 0., tvm::task_dynamics::None(), {tvm::requirements::PriorityLevel(0)}));
