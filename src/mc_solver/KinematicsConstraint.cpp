@@ -39,39 +39,43 @@ void TVMKinematicsConstraint::addToSolver(mc_solver::TVMQPSolver & solver)
   /** Joint limits */
   int startParam = tvm_robot.qFloatingBase()->size();
   auto nParams = tvm_robot.qJoints()->size();
-  auto ql = tvm_robot.limits().ql.segment(startParam, nParams);
-  auto qu = tvm_robot.limits().qu.segment(startParam, nParams);
-  Eigen::VectorXd di = damper_[0] * (qu - ql);
-  Eigen::VectorXd ds = damper_[1] * (qu - ql);
-  for(int i = 0; i < nParams; ++i)
+  // Only build damper and joint limits if there are actuated joints
+  if(nParams != 0)
   {
-    if(std::isinf(di(i)))
+    auto ql = tvm_robot.limits().ql.segment(startParam, nParams);
+    auto qu = tvm_robot.limits().qu.segment(startParam, nParams);
+    Eigen::VectorXd di = damper_[0] * (qu - ql);
+    Eigen::VectorXd ds = damper_[1] * (qu - ql);
+    for(int i = 0; i < nParams; ++i)
     {
-      di(i) = 0.01;
-      ds(i) = 0.005;
+      if(std::isinf(di(i)))
+      {
+        di(i) = 0.01;
+        ds(i) = 0.005;
+      }
     }
+    auto jl = solver.problem().add(
+        ql <= tvm_robot.qJoints() <= qu,
+        tvm::task_dynamics::VelocityDamper(solver.dt(), {di, ds, Eigen::VectorXd::Constant(nParams, 1, 0),
+                                                         Eigen::VectorXd::Constant(nParams, 1, damper_[2])}),
+        {tvm::requirements::PriorityLevel(0)});
+    constraints_.push_back(jl);
+    /** Velocity limits */
+    int startDof = tvm_robot.qFloatingBase()->space().tSize();
+    auto nDof = tvm_robot.qJoints()->space().tSize();
+    auto vl = tvm_robot.limits().vl.segment(startDof, nDof) * velocityPercent_;
+    auto vu = tvm_robot.limits().vu.segment(startDof, nDof) * velocityPercent_;
+    auto vL =
+        solver.problem().add(vl <= tvm::dot(tvm_robot.qJoints()) <= vu,
+                             tvm::task_dynamics::Proportional(1 / solver.dt()), {tvm::requirements::PriorityLevel(0)});
+    constraints_.push_back(vL);
+    /** Acceleration limits */
+    auto al = tvm_robot.limits().al.segment(startDof, nDof);
+    auto au = tvm_robot.limits().au.segment(startDof, nDof);
+    auto aL = solver.problem().add(al <= tvm::dot(tvm_robot.qJoints(), 2) <= au, tvm::task_dynamics::None{},
+                                   {tvm::requirements::PriorityLevel(0)});
+    constraints_.push_back(aL);
   }
-  auto jl = solver.problem().add(
-      ql <= tvm_robot.qJoints() <= qu,
-      tvm::task_dynamics::VelocityDamper(solver.dt(), {di, ds, Eigen::VectorXd::Constant(nParams, 1, 0),
-                                                       Eigen::VectorXd::Constant(nParams, 1, damper_[2])}),
-      {tvm::requirements::PriorityLevel(0)});
-  constraints_.push_back(jl);
-  /** Velocity limits */
-  int startDof = tvm_robot.qFloatingBase()->space().tSize();
-  auto nDof = tvm_robot.qJoints()->space().tSize();
-  auto vl = tvm_robot.limits().vl.segment(startDof, nDof) * velocityPercent_;
-  auto vu = tvm_robot.limits().vu.segment(startDof, nDof) * velocityPercent_;
-  auto vL =
-      solver.problem().add(vl <= tvm::dot(tvm_robot.qJoints()) <= vu, tvm::task_dynamics::Proportional(1 / solver.dt()),
-                           {tvm::requirements::PriorityLevel(0)});
-  constraints_.push_back(vL);
-  /** Acceleration limits */
-  auto al = tvm_robot.limits().al.segment(startDof, nDof);
-  auto au = tvm_robot.limits().au.segment(startDof, nDof);
-  auto aL = solver.problem().add(al <= tvm::dot(tvm_robot.qJoints(), 2) <= au, tvm::task_dynamics::None{},
-                                 {tvm::requirements::PriorityLevel(0)});
-  constraints_.push_back(aL);
   /** Mimic constraints */
   for(const auto & m : tvm_robot.mimics())
   {
