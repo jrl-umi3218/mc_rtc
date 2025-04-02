@@ -43,7 +43,7 @@ public:
    *
    * @param contact rbdyn contact associated
    */
-  FeasiblePolytope(NewPolytopeToken, const mc_rbdyn::Contact & contact);
+  FeasiblePolytope(NewPolytopeToken, const mc_rbdyn::Contact & contact, const int & rIndex);
 
   FeasiblePolytope(const FeasiblePolytope &) = delete;
   FeasiblePolytope & operator=(const FeasiblePolytope &) = delete;
@@ -62,6 +62,13 @@ public:
 private:
   /** Parent instance */
   const mc_rbdyn::Contact & contact_;
+
+  /** Robot index for this polytope */
+  const int rIndex_;
+
+  /** Set of planes */
+  Eigen::MatrixXd normals_;
+  Eigen::VectorXd offsets_;
 
   // Function to generate 3d normals of a friction cone (not the generating rays)
   Eigen::MatrixX3d generatePolyhedralConeHRep(int numberOfFrictionSides,
@@ -132,10 +139,6 @@ private:
 
     return CoPConstraintMat;
   }
-
-  /** Set of planes */
-  Eigen::MatrixXd normals_;
-  Eigen::VectorXd offsets_;
 };
 
 } // namespace mc_tvm

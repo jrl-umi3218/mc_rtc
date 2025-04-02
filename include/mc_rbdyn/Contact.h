@@ -133,15 +133,22 @@ public:
   /** Set the contact friction */
   void friction(double friction);
 
-  void feasiblePolytope(const FeasiblePolytope & polytope);
-  const std::optional<FeasiblePolytope> & feasiblePolytope() const noexcept;
+  void feasiblePolytopeR1(const FeasiblePolytope & polytope);
+  const std::optional<FeasiblePolytope> & feasiblePolytopeR1() const noexcept;
 
-  /** Get the TVM polytope associated to this contact
+  void feasiblePolytopeR2(const FeasiblePolytope & polytope);
+  const std::optional<FeasiblePolytope> & feasiblePolytopeR2() const noexcept;
+
+  /** Get the TVM polytope associated to robot 1 of this contact
    *
    * FIXME Returns a non-const reference from a const method because it is most often used to register dependencies
    * between TVM nodes which require non-const objects
    */
-  mc_tvm::FeasiblePolytope & tvmPolytope() const;
+  mc_tvm::FeasiblePolytope & tvmPolytopeR1() const;
+
+  /** Get the TVM polytope associated to robot 2 of this contact
+   */
+  mc_tvm::FeasiblePolytope & tvmPolytopeR2() const;
 
   std::pair<std::string, std::string> surfaces() const;
 
@@ -184,13 +191,18 @@ private:
                                       const std::vector<sva::PTransformd> & points) const;
 
   //! If present superseeds friction cone constraints
-  std::optional<FeasiblePolytope> feasiblePolytope_;
+  // feasible polytope for r1 of contact
+  std::optional<FeasiblePolytope> feasiblePolytopeR1_;
+
+  // feasible polytope for r2 of contact
+  std::optional<FeasiblePolytope> feasiblePolytopeR2_;
 
   // Secures threaded access to the contact object
   mutable std::mutex contactMutex_;
 
   /* mutable to allow initialization in const method */
-  mutable mc_tvm::PolytopePtr tvm_polytope_;
+  mutable mc_tvm::PolytopePtr tvm_polytopeR1_;
+  mutable mc_tvm::PolytopePtr tvm_polytopeR2_;
 
 public:
   static mc_rbdyn::Contact load(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & config);
