@@ -7,7 +7,8 @@
 namespace mc_tvm
 {
 
-FeasiblePolytope::FeasiblePolytope(NewPolytopeToken, const mc_rbdyn::Contact & contact) : contact_(contact)
+FeasiblePolytope::FeasiblePolytope(NewPolytopeToken, const mc_rbdyn::Contact & contact, const int & rIndex)
+: contact_(contact), rIndex_(rIndex)
 {
   registerUpdates(Update::Polytope, &FeasiblePolytope::updatePolytope);
 
@@ -21,7 +22,12 @@ FeasiblePolytope::FeasiblePolytope(NewPolytopeToken, const mc_rbdyn::Contact & c
 
 void FeasiblePolytope::updatePolytope()
 {
-  const auto feasiblePolytope = contact_.feasiblePolytope();
+  // Use given robot index to know if this poly corresponds to r1 or r2 of the contact
+  bool isR1 = contact_.r1Index() == rIndex_;
+  std::optional<mc_rbdyn::FeasiblePolytope> feasiblePolytope;
+  if(isR1) { feasiblePolytope = contact_.feasiblePolytopeR1(); }
+  else { feasiblePolytope = contact_.feasiblePolytopeR2(); }
+
   if(feasiblePolytope)
   {
     // If there is a feasible polytope, build the contact wrench polytope from the wrench face matrix (moments part) and
@@ -34,8 +40,17 @@ void FeasiblePolytope::updatePolytope()
     offsets_ = Eigen::VectorXd::Zero(nbForceConstraints + nbMomentConstraints);
 
     normals_.block(0, 3, nbForceConstraints, 3) = feasiblePolytope->planeNormals;
-    // XXX see how to handle the contact not being from the first surface
-    normals_.block(nbForceConstraints, 0, nbMomentConstraints, 6) = computeCoPMomentsConstraint(*contact_.r1Surface());
+    // For CoP use the correct robot's surface
+    if(isR1)
+    {
+      normals_.block(nbForceConstraints, 0, nbMomentConstraints, 6) =
+          computeCoPMomentsConstraint(*contact_.r1Surface());
+    }
+    else
+    {
+      normals_.block(nbForceConstraints, 0, nbMomentConstraints, 6) =
+          computeCoPMomentsConstraint(*contact_.r2Surface());
+    }
 
     offsets_.segment(0, nbForceConstraints) = feasiblePolytope->planeConstants;
     // Offsets for wrench face matrix are just zero, nothing else to do
@@ -53,8 +68,15 @@ void FeasiblePolytope::updatePolytope()
     normals_.block(0, 3, nbFrictionSides, 3) =
         generatePolyhedralConeHRep(nbFrictionSides, Eigen::Matrix3d::Identity(), contact_.friction());
     // CoP moments
-    // XXX see how to handle the contact not being from the first surface
-    normals_.block(nbFrictionSides, 0, nbMomentConstraints, 6) = computeCoPMomentsConstraint(*contact_.r1Surface());
+    // Use correct robot's surface
+    if(isR1)
+    {
+      normals_.block(nbFrictionSides, 0, nbMomentConstraints, 6) = computeCoPMomentsConstraint(*contact_.r1Surface());
+    }
+    else
+    {
+      normals_.block(nbFrictionSides, 0, nbMomentConstraints, 6) = computeCoPMomentsConstraint(*contact_.r2Surface());
+    }
 
     // Offsets are all zero in this default case (no second member if unbound polyhedral cone)
     // mc_rtc::log::warning("Feasible Poly: no feasible detected, built default as:\n{}", normals_);
