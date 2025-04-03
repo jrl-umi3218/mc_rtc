@@ -74,7 +74,7 @@ install(FILES "${{CMAKE_CURRENT_BINARY_DIR}}/etc/{controller_name}.yaml" DESTINA
             controller_name=controller_name
         )
         fd.write(
-            """cmake_minimum_required(VERSION 3.1)
+            """cmake_minimum_required(VERSION 3.10)
 
 set(CXX_DISABLE_WERROR 1)
 set(CMAKE_CXX_STANDARD 11)
