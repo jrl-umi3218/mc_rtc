@@ -67,6 +67,22 @@ public:
    */
   const tvm::VariablePtr & addContact6d(const mc_rbdyn::RobotFrame & frame, double dir);
 
+  // FIXME the new logic might allow not using the dir variable : we know dir = 1 if we
+  // create the var and dir = -1 if we reuse an existing one
+  /** Add a surface contact to the function using a pre-existing wrench variable
+   *
+   * This adds the dependency to a pre-existing force variable
+   *
+   * \param frame Contact frame
+   *
+   * \param variables Pre-existing variable to use for dependency
+   *
+   * \param dir Contact direction
+   *
+   * Returns the wrench variable that was created by this contact
+   */
+  void addContact6d(const mc_rbdyn::RobotFrame & frame, const tvm::VariablePtr & variable, double dir);
+
   /** Removes the contact associated to the given frame
    *
    * \param frame Contact frame
@@ -80,6 +96,17 @@ public:
    * \throws If no contact has been added with that frame
    */
   sva::ForceVecd contactForce(const mc_rbdyn::RobotFrame & f) const;
+
+  /**
+   * @brief Finds and returns the force/wrench variables existing for this frame in this dynamics constraint.
+   * This is used to check if a contact force decision variable was already created for this contact by
+   * the other robot dynamics constraint, to reuse it.
+   *
+   * @param contactFrameName Name of the frame to check (names are unique within a robot so this is sufficient)
+   * @return The variable vector of the forces/wrench variable(s) associated to this frame (empty if there are none)
+   */
+  const tvm::VariableVector getForceVariables(const std::string & contactFrameName);
+  // FIXME Handle offsets between contact frames
 
 protected:
   void updateb();
@@ -125,6 +152,9 @@ protected:
   {
     /** Constructor for 6D wrench */
     WrenchContact(const mc_rbdyn::RobotFrame & frame, double dir);
+
+    /** Alternate constructor reusing a pre existing wrench var */
+    WrenchContact(const mc_rbdyn::RobotFrame & frame, const tvm::VariablePtr & wrench, double dir);
 
     /** Update jacobian */
     void updateWrenchJacobian(DynamicFunction & parent);
