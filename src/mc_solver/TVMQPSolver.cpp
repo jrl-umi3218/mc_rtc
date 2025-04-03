@@ -388,6 +388,7 @@ void TVMQPSolver::removeDynamicsConstraint(mc_solver::DynamicsConstraint * dyn)
   }
 }
 
+// FIXME remove dir argument after confirming new logic handles it correctly
 void TVMQPSolver::addContactToDynamics(const std::string & robot,
                                        const mc_rbdyn::RobotFrame & frame,
                                        const std::vector<sva::PTransformd> & points,
@@ -398,10 +399,15 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
                                        double dir)
 {
   auto it = dynamics_.find(robot);
+  // If this robot does not have a dynamics constraint, nothing to add on this side, just return
   if(it == dynamics_.end()) { return; }
   if(constraints.size())
   {
     // FIXME Instead of this we should be able to change C
+    // FIXME We keep this as a safety but in practice this is not called anymore (no hasWork if friction changed) and is
+    // now handled by the feasible polytope constraint automatically
+    mc_rtc::log::critical("[SHOULD NOT APPEAR] removing already existing contact constraint");
+    // XXX if this appears, means I foryor to remove targets as well?
     for(const auto & c : constraints) { problem_.remove(*c); }
     constraints.clear();
   }
@@ -409,11 +415,60 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
   {
     it->second->removeFromSolverImpl(*this);
     auto & dyn = it->second->dynamicFunction();
-    // create decision variables
-    // array of decision variables for each contact
-    // vec3d for each point
-    // forces = dyn.addContact3d(frame, points, dir);
-    forces.add(dyn.addContact6d(frame, dir));
+
+    /* Now we consider the force decision variable for the contact:
+    If this is a completely new contact we want to create the force variable, but if the other side of the contact
+    has already been created by the other robot's dynamic function we want to reuse it with the opposite direction
+    */
+    // XXX this is only handled by 6d contact var, otherwise the total of the force variables must be opposite instead
+    // of just the variables, much more complex logic
+    tvm::VariableVector existingVariables;
+    // Iterate on all dynamics functions in the solver
+    for(const auto & [_, d] : dynamics_)
+    {
+      // check if a dynamics function already handles this contact's other frame
+      // i.e. the force decision variable already exists and we just need to reuse it in direction -1
+      // instead of creating a new one
+
+      if(frame.robot().robotIndex() == contact.r1Index())
+      {
+        // This means the other robot in the contact is r2
+        if(d->robotIndex() == contact.r2Index())
+        {
+          // We found a dynamics function involving the other robot of this contact, check if it has this contact.
+          // The robot frame would be r2surface of this contact
+          existingVariables = d->dynamicFunction().getForceVariables(contact.r2Surface()->name());
+        }
+      }
+      else
+      {
+        // This means the other robot in the contact is r1
+        if(d->robotIndex() == contact.r1Index())
+        {
+          // We found a dynamics function involving the other robot of this contact, check if it has this contact.
+          // The robot frame would be r1surface of this contact
+          existingVariables = d->dynamicFunction().getForceVariables(contact.r1Surface()->name());
+        }
+      }
+    }
+
+    // FIXME need to check what happens to var if first dyn function is destroyed
+    if(existingVariables.numberOfVariables() != 0)
+    {
+      // There were pre existing force variables for the other side of this contact
+      // Use existingVariables with dir -1 for this contact
+      dir = -1;
+      forces.add(existingVariables);
+      dyn.addContact6d(frame, existingVariables[0], dir);
+    }
+    else
+    {
+      // Create decision variables, direction is 1
+      dir = 1;
+      // forces = dyn.addContact3d(frame, points, dir);
+      forces.add(dyn.addContact6d(frame, dir));
+    }
+
     it->second->addToSolverImpl(*this);
   }
 
@@ -461,14 +516,15 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
     const auto & oldContact = *contacts_[idx];
     if(oldContact.dof() == contact.dof() && oldContact.friction() == contact.friction())
     {
-      // Nothing to do unless there is a feasible polytope
-      return std::make_tuple(idx, hasWork || contact.feasiblePolytope());
+      // dof and friction stayed, no copy or work to do
+      return std::make_tuple(idx, hasWork);
     }
-    hasWork = contact.feasiblePolytope() || contact.friction() != oldContact.friction();
+    // Update internal contact map if any change
     *contacts_[idx] = contact;
   }
   else
   {
+    // New contact so need to do everything
     hasWork = true;
     contacts_.emplace_back(std::make_shared<mc_rbdyn::Contact>(contact));
   }
@@ -507,11 +563,13 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
 void TVMQPSolver::addContact(const mc_rbdyn::Contact & contactTmp)
 {
   // Add geometric contact constraint if it is not already present
-  // hasWork becomes true if friction or polytope changed, in this case dynamics function must be updated
-  // dofs changing do not influence the dynamics so does not matter here
+  // hasWork becomes true if new contact, in this case dynamics function must be updated
+  // dofs or friction changing do not influence the dynamics so does not matter here
   // WARNING: copies the contactTmp passed as argument into contact_[idx]
   // Any object storing a reference to this contact must use contact_[idx]
   const auto [idx, hasWork] = addVirtualContactImpl(contactTmp);
+  // If !hasWork, then the contact already existed and is already in the dynamics
+  // addVirtual function updated it if needed, just return now
   if(!hasWork) { return; }
   auto & data = contactsData_[idx];
   const auto & r1 = robot(contactTmp.r1Index());
