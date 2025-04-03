@@ -440,7 +440,9 @@ std::string Contact::toStr() const
 
 bool Contact::operator==(const Contact & rhs) const
 {
-  return (*(this->r1Surface()) == *(rhs.r1Surface())) && (*(this->r2Surface()) == *(rhs.r2Surface()));
+  // FIXME checking contact equality by also checking same robots (surface == only checks names)
+  return (*(this->r1Surface()) == *(rhs.r1Surface())) && (*(this->r2Surface()) == *(rhs.r2Surface()))
+         && (this->r1Index() == rhs.r1Index()) && (this->r2Index() == rhs.r2Index());
 }
 
 bool Contact::operator!=(const Contact & rhs) const
