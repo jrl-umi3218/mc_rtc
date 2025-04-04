@@ -46,9 +46,23 @@ from .my_first_controller import MyFirstController
 }
 {% endhighlight %}
 
-<p><em>Note: if you have enforced Python 2 or Python 3 or if you have installed both then you should explicitly choose <code>Python2</code> or <code>Python3</code>.</em></p>
+<p><em>Note: if you have enforced Python 2 or Python 3 or if you have installed both then you should explicitly choose <code>Python2</code> or <code>Python3</code>. E.g for Python3 use:</em></p>
 
-<p>For this to work, we need to make sure the <code>my_first_controller</code> folder is on the Python path. In fact, given this configuration, mc_rtc will create your controller this way:</p>
+{% highlight json %}
+{
+  "MainRobot": "JVRC1",
+  "Enabled": ["Python3#my_first_controller.MyFirstController"]
+}
+{% endhighlight %}
+
+<p>For this to work, we need to make sure the <code>my_first_controller</code> folder is on the Python path.</p>
+
+{% highlight bash %}
+$ export PYTHONPATH="/path/to/my_first_controller:$PYTHONPATH"
+{% endhighlight %}
+
+
+<p>In fact, given this configuration, mc_rtc will create your controller this way:</p>
 
 {% highlight python %}
 from my_first_controller import MyFirstController
