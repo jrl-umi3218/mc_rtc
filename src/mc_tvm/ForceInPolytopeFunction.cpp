@@ -11,11 +11,11 @@ namespace mc_tvm
 
 ForceInPolytopeFunction::ForceInPolytopeFunction(const mc_rbdyn::Contact & contact,
                                                  const tvm::VariableVector & forceVars,
-                                                 const double & dir,
-                                                 const int & rIndex)
-: tvm::function::abstract::LinearFunction(0), contact_(contact), rIndex_(rIndex),
+                                                 const int & rIndex,
+                                                 const bool & hasForceVar)
+: tvm::function::abstract::LinearFunction(0), contact_(contact), rIndex_(rIndex), hasForceVar_(hasForceVar),
   tvmPoly_(rIndex == contact.r1Index() ? contact.tvmPolytopeR1() : contact.tvmPolytopeR2()), forceVars_(forceVars),
-  dir_(dir), constraintSizeChanged_(false)
+  constraintSizeChanged_(false)
 {
   registerUpdates(Update::Jacobian, &ForceInPolytopeFunction::updateJacobian);
   registerUpdates(Update::B, &ForceInPolytopeFunction::updateb);
@@ -52,11 +52,25 @@ void ForceInPolytopeFunction::updateJacobian()
     {
       // The force only normals are the right 3 columns, minus bottom 4 rows (CoP)
       int nbOfForceConstraints = tvmPoly_.offsets().size() - 4;
-      jacobian_[forceVar.get()] = dir_ * tvmPoly_.normals().block(0, 3, nbOfForceConstraints, 3);
+      // FIXME Not handling other side variable in force case (very different logic,
+      // all force vars should be associated to another etc)
+      jacobian_[forceVar.get()] = tvmPoly_.normals().block(0, 3, nbOfForceConstraints, 3);
     }
-    else if(forceVar->space().size() == 6) { jacobian_[forceVar.get()] = dir_ * tvmPoly_.normals(); }
-    // Not handling other dimensions
+    else if(forceVar->space().size() == 6)
+    {
+      if(hasForceVar_) { jacobian_[forceVar.get()] = tvmPoly_.normals(); }
+      else
+      {
+        // if the force var was created for the other side we need to multiply the normals by the
+        // dual plücker transform matrix (manipulating a force vec)
 
+        // getting the right transform: if this robot is r1, the var is in frame r2 so we need X_r2_r1
+        const auto dualMat =
+            contact_.r1Index() == rIndex_ ? contact_.X_r2s_r1s().dualMatrix() : contact_.X_r2s_r1s().inv().dualMatrix();
+        jacobian_[forceVar.get()] = tvmPoly_.normals() * dualMat;
+      }
+    }
+    // Not handling other dimensions
     // mc_rtc::log::critical("Jacobian task {} updated correctly to\n{}", forceVars_.indexOf(*forceVar.get()),
     //                       jacobian_[forceVar.get()]);
   }
@@ -71,9 +85,9 @@ void ForceInPolytopeFunction::updateb()
   {
     // If the vars are force only, remove the last 4 elements of offsets (CoP)
     int nbOfForceConstraints = tvmPoly_.offsets().size() - 4;
-    b_ = dir_ * -tvmPoly_.offsets().segment(0, nbOfForceConstraints);
+    b_ = -tvmPoly_.offsets().segment(0, nbOfForceConstraints);
   }
-  else if(forceVars_[0]->space().size() == 6) { b_ = dir_ * -tvmPoly_.offsets(); }
+  else if(forceVars_[0]->space().size() == 6) { b_ = -tvmPoly_.offsets(); }
   // mc_rtc::log::critical("b task updated correctly to {}", b_.transpose());
 }
 
