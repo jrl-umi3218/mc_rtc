@@ -395,21 +395,23 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
                                        tvm::VariableVector & forces,
                                        std::vector<tvm::TaskWithRequirementsPtr> & constraints,
                                        std::vector<tvm::TaskWithRequirementsPtr> & targets,
-                                       const mc_rbdyn::Contact & contact,
+                                       mc_rbdyn::Contact & contact,
                                        double dir)
 {
   auto it = dynamics_.find(robot);
+  bool hasForceVar;
   // If this robot does not have a dynamics constraint, nothing to add on this side, just return
   if(it == dynamics_.end()) { return; }
-  if(constraints.size())
+  if(constraints.size() || targets.size())
   {
     // FIXME Instead of this we should be able to change C
     // FIXME We keep this as a safety but in practice this is not called anymore (no hasWork if friction changed) and is
     // now handled by the feasible polytope constraint automatically
     mc_rtc::log::critical("[SHOULD NOT APPEAR] removing already existing contact constraint");
-    // XXX if this appears, means I foryor to remove targets as well?
     for(const auto & c : constraints) { problem_.remove(*c); }
     constraints.clear();
+    for(const auto & t : targets) { problem_.remove(*t); }
+    targets.clear();
   }
   else
   {
@@ -456,17 +458,16 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
     if(existingVariables.numberOfVariables() != 0)
     {
       // There were pre existing force variables for the other side of this contact
-      // Use existingVariables with dir -1 for this contact
-      dir = -1;
+      hasForceVar = false;
       forces.add(existingVariables);
-      dyn.addContact6d(frame, existingVariables[0], dir);
+      dyn.addContact6d(frame, existingVariables[0], contact);
     }
     else
     {
-      // Create decision variables, direction is 1
-      dir = 1;
+      // Create decision variables
+      hasForceVar = true;
       // forces = dyn.addContact3d(frame, points, dir);
-      forces.add(dyn.addContact6d(frame, dir));
+      forces.add(dyn.addContact6d(frame, contact));
     }
 
     it->second->addToSolverImpl(*this);
@@ -479,7 +480,8 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
   for(int i = 0; i < forces.numberOfVariables(); ++i)
   {
     auto & f = forces[i];
-    auto polyFunction = std::make_shared<mc_tvm::ForceInPolytopeFunction>(contact, f, dir, robots().robotIndex(robot));
+    auto polyFunction =
+        std::make_shared<mc_tvm::ForceInPolytopeFunction>(contact, f, robots().robotIndex(robot), hasForceVar);
     // We want the force to stay inside of the polytope so the distance value should stay negative
     constraints.push_back(
         problem_.add(polyFunction <= 0., tvm::task_dynamics::None(), {tvm::requirements::PriorityLevel(0)}));
@@ -579,7 +581,7 @@ void TVMQPSolver::addContact(const mc_rbdyn::Contact & contactTmp)
   const auto & f1 = r1.frame(s1.name());
   const auto & f2 = r2.frame(s2.name());
 
-  const auto & addedContact = *contacts_[idx];
+  auto & addedContact = *contacts_[idx];
 
   auto addContactForce = [&addedContact, this](const std::string & robot, const mc_rbdyn::RobotFrame & frame,
                                                const std::vector<sva::PTransformd> & points,

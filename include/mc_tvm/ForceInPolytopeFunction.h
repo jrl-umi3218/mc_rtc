@@ -36,14 +36,14 @@ public:
    *
    * @param contact Contact containing the polytope
    * @param forceVars Force variable to constraint in the polytope
-   * @param dir Direction of the contact: 1 if the force variable was created for this robot, -1 if it was for another
-   * (then we must track -forceVar)
    * @param rIndex Index of the robot to know which of the contact polytopes to use
+   * @param hasForceVar Whether or not the force variable was created for this robot, true if yes,
+   * false if it was for another (then we must transform the force between the two contact frames)
    */
   ForceInPolytopeFunction(const mc_rbdyn::Contact & contact,
                           const tvm::VariableVector & forceVars,
-                          const double & dir,
-                          const int & rIndex);
+                          const int & rIndex,
+                          const bool & hasForceVar);
 
   inline const bool & constraintSizeChanged() const noexcept { return constraintSizeChanged_; }
   void constraintSizeChanged(bool changed) { constraintSizeChanged_ = changed; }
@@ -63,8 +63,8 @@ protected:
   // force variables that this function acts on
   // expected: 4 3d forces or 1 6d wrench
   tvm::VariableVector forceVars_;
-  // direction of the constraint (to be able to use the same polytope on a reaction force)
-  const double dir_;
+  // bool if the forceVar was created for this robot or the other one (to transform or not between contact frames)
+  const bool hasForceVar_;
   // logic boolean to remove and re add this function to the problem if the dimension changed
   bool constraintSizeChanged_;
 };
