@@ -202,7 +202,7 @@ private:
                             tvm::VariableVector & forces,
                             std::vector<tvm::TaskWithRequirementsPtr> & constraints,
                             std::vector<tvm::TaskWithRequirementsPtr> & targets,
-                            const mc_rbdyn::Contact & contact,
+                            mc_rbdyn::Contact & contact,
                             double dir);
 };
 
