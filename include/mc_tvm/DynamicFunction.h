@@ -61,14 +61,12 @@ public:
    *
    * \param frame Contact frame
    *
-   * \param dir Contact direction
+   * \param contact Contact object
    *
    * Returns the wrench variable that was created by this contact
    */
-  const tvm::VariablePtr & addContact6d(const mc_rbdyn::RobotFrame & frame, double dir);
+  const tvm::VariablePtr & addContact6d(const mc_rbdyn::RobotFrame & frame, mc_rbdyn::Contact & contact);
 
-  // FIXME the new logic might allow not using the dir variable : we know dir = 1 if we
-  // create the var and dir = -1 if we reuse an existing one
   /** Add a surface contact to the function using a pre-existing wrench variable
    *
    * This adds the dependency to a pre-existing force variable
@@ -77,11 +75,11 @@ public:
    *
    * \param variables Pre-existing variable to use for dependency
    *
-   * \param dir Contact direction
+   * \param contact Contact object
    *
    * Returns the wrench variable that was created by this contact
    */
-  void addContact6d(const mc_rbdyn::RobotFrame & frame, const tvm::VariablePtr & variable, double dir);
+  void addContact6d(const mc_rbdyn::RobotFrame & frame, const tvm::VariablePtr & variable, mc_rbdyn::Contact & contact);
 
   /** Removes the contact associated to the given frame
    *
@@ -151,10 +149,10 @@ protected:
   struct WrenchContact
   {
     /** Constructor for 6D wrench */
-    WrenchContact(const mc_rbdyn::RobotFrame & frame, double dir);
+    WrenchContact(const mc_rbdyn::RobotFrame & frame, mc_rbdyn::Contact & contact);
 
     /** Alternate constructor reusing a pre existing wrench var */
-    WrenchContact(const mc_rbdyn::RobotFrame & frame, const tvm::VariablePtr & wrench, double dir);
+    WrenchContact(const mc_rbdyn::RobotFrame & frame, const tvm::VariablePtr & wrench, mc_rbdyn::Contact & contact);
 
     /** Update jacobian */
     void updateWrenchJacobian(DynamicFunction & parent);
@@ -168,8 +166,11 @@ protected:
     /** 6D wrench var associated to a contact */
     tvm::VariablePtr wrench_;
 
-    /** Contact direction */
-    double dir_;
+    /** Pointer to contact for relative transform */
+    mc_rbdyn::Contact * contact_;
+
+    /** Bool to know if variable was created by this dyn function or another */
+    bool hasVariable_;
 
     /** RBDyn jacobian */
     rbd::Jacobian jac_;
