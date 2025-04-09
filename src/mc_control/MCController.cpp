@@ -66,8 +66,7 @@ Contact Contact::from_mc_rbdyn(const MCController & ctl, const mc_rbdyn::Contact
           contact.r1Surface()->name(),
           contact.r2Surface()->name(),
           contact.friction(),
-          dof,
-          contact.feasiblePolytope()};
+          dof};
 }
 
 static thread_local std::string MC_CONTROLLER_LOADING_LOCATION = "";
@@ -796,7 +795,7 @@ void MCController::updateContacts()
       auto r2Index = robot(r2).robotIndex();
       contacts.emplace_back(robots(), r1Index, r2Index, c.r1Surface, c.r2Surface, c.friction);
       contacts.back().dof(c.dof);
-      if(c.feasiblePolytope) { contacts.back().feasiblePolytope(*c.feasiblePolytope); }
+      // XXX check if need to update things here, transfer polytopes etc
 
       if(solver().backend() == Backend::Tasks)
       {
