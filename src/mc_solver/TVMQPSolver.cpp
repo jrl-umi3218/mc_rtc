@@ -488,7 +488,8 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
     // Add a minimization on the force variable with a low weight
     // TODO maybe find a way to parametrize a desired anisotropic weight from the mc_rbdyn::Contact ?
     // TODO write a linear function to target zero (minimize) or a specific target
-    targets.push_back(problem_.add(f == 0.0, {tvm::requirements::PriorityLevel(1), tvm::requirements::Weight(0.0001)}));
+    // targets.push_back(problem_.add(f == 0.0, {tvm::requirements::PriorityLevel(1),
+    // tvm::requirements::Weight(0.0001)}));
   }
 
   // }
