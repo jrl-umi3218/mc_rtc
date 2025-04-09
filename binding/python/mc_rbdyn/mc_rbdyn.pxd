@@ -89,10 +89,13 @@ cdef class CylindricalSurface(Surface):
 cdef CylindricalSurface CylindricalSurfaceFromPtr(c_mc_rbdyn.CylindricalSurface*)
 
 cdef class Contact(object):
+  cdef shared_ptr[c_mc_rbdyn.Contact] ptr
   cdef c_mc_rbdyn.Contact * impl
   cdef cppbool own_impl__
 
 cdef Contact ContactFromC(const c_mc_rbdyn.Contact &, cppbool copy=?)
+
+cdef Contact ContactFromPtr(shared_ptr[c_mc_rbdyn.Contact], cppbool copy=?)
 
 cdef class ContactVector(object):
   cdef vector[c_mc_rbdyn.Contact] * v
