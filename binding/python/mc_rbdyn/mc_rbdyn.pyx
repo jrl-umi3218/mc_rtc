@@ -1191,6 +1191,18 @@ cdef Contact ContactFromC(const c_mc_rbdyn.Contact& c, cppbool copy=True):
   else:
     ret.own_impl__ = False
     ret.impl = &(c_mc_rbdyn.const_cast_contact(c))
+    ret.ptr = shared_ptr[c_mc_rbdyn.Contact]()
+  return ret
+
+cdef Contact ContactFromPtr(shared_ptr[c_mc_rbdyn.Contact] ptr, cppbool copy=True):
+  cdef Contact ret = Contact(skip_alloc = True)
+  if copy:
+    ret.impl = new c_mc_rbdyn.Contact(deref(ptr.get()))
+    ret.own_impl__ = True
+  else:
+    ret.ptr = ptr
+    ret.impl = ptr.get()
+    ret.own_impl__ = False
   return ret
 
 cdef class ContactVector(object):
