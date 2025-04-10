@@ -74,7 +74,7 @@ cdef extern from "<mc_solver/TasksQPSolver.h>" namespace "mc_solver":
   cdef cppclass QPSolver:
     void addConstraintSet(const ConstraintSet&)
     void removeConstraintSet(const ConstraintSet&)
-    const vector[c_mc_rbdyn.Contact] & contacts()
+    const vector[shared_ptr[c_mc_rbdyn.Contact]] & contacts()
     void setContacts(const vector[c_mc_rbdyn.Contact]&)
     void addTask(c_qp.Task *)
     void addTask(c_mc_tasks.MetaTask *)
