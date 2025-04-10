@@ -44,6 +44,9 @@ struct MC_SOLVER_DLLAPI TVMQPSolver final : public QPSolver
   /** Access the internal problem (const) */
   inline const tvm::LinearizedControlProblem & problem() const noexcept { return problem_; }
 
+  /** Access the dynamics constraints map */
+  inline const std::unordered_map<std::string, DynamicsConstraint *> & dynamics() const noexcept { return dynamics_; };
+
   /** Helper to get a \ref TVMQPSolver from a \ref QPSolver instance
    *
    * The caller should make sure the cast is valid by checking the QPSolver backend.
