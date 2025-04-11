@@ -1,7 +1,7 @@
 # Set the minimum CMake version and policies for highest tested version
 cmake_minimum_required(VERSION 3.15...4.0)
 
-project(mc_rtc LANGUAGES CXX)
+project(mc_rtc_python)
 
 # Warn if the user invokes CMake directly
 if (NOT SKBUILD)
@@ -55,7 +55,11 @@ nanobind_add_module(
 
   # Source code goes here
   src/mc_rtc/mc_rtc_module.cpp
+  src/mc_rtc/Configuration.cpp
 )
 
+find_package(mc_rtc REQUIRED)
+target_link_libraries(mc_rtc_python PUBLIC mc_rtc::mc_rtc_utils)
+target_include_directories(mc_rtc_python PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 # Install directive for scikit-build-core
 install(TARGETS mc_rtc_python LIBRARY DESTINATION mc_rtc)
