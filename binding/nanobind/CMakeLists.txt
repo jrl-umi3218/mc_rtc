@@ -63,3 +63,15 @@ target_link_libraries(mc_rtc_python PUBLIC mc_rtc::mc_rtc_utils)
 target_include_directories(mc_rtc_python PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 # Install directive for scikit-build-core
 install(TARGETS mc_rtc_python LIBRARY DESTINATION mc_rtc)
+
+
+
+nanobind_add_stub(
+    mc_rtc_python_stub 
+    MODULE mc_rtc_python 
+    OUTPUT mc_rtc_python.pyi 
+    MARKER_FILE py.typed
+    PYTHON_PATH $<TARGET_FILE_DIR:mc_rtc_python>
+    DEPENDS mc_rtc_python
+)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_python.pyi ${CMAKE_CURRENT_BINARY_DIR}/py.typed DESTINATION mc_rtc)
