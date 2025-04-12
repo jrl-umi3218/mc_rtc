@@ -48,19 +48,17 @@ namespace mc_rtc_python
             // Overload resolution of the return type fails because we have both templated and non-template arguments
             // see https://github.com/pybind/pybind11/issues/1153 for details
             .def("push", static_cast<void (Configuration::*)(bool)>(&Configuration::push))
-            .def("push", static_cast<void (Configuration::*)(int8_t)>(&Configuration::push))
-            .def("push", static_cast<void (Configuration::*)(uint8_t)>(&Configuration::push))
-            .def("push", static_cast<void (Configuration::*)(int16_t)>(&Configuration::push))
-            .def("push", static_cast<void (Configuration::*)(uint16_t)>(&Configuration::push))
-            .def("push", static_cast<void (Configuration::*)(int32_t)>(&Configuration::push))
-            .def("push", static_cast<void (Configuration::*)(uint32_t)>(&Configuration::push))
-            .def("push", static_cast<void (Configuration::*)(int64_t)>(&Configuration::push))
-            .def("push", static_cast<void (Configuration::*)(uint64_t)>(&Configuration::push))
-            .def("push", static_cast<void (Configuration::*)(double)>(&Configuration::push))
-            .def("push", static_cast<void (Configuration::*)(double)>(&Configuration::push))
+            // .def("push", static_cast<void (Configuration::*)(int8_t)>(&Configuration::push))
+            // .def("push", static_cast<void (Configuration::*)(uint8_t)>(&Configuration::push))
+            // .def("push", static_cast<void (Configuration::*)(int16_t)>(&Configuration::push))
+            // .def("push", static_cast<void (Configuration::*)(uint16_t)>(&Configuration::push))
+            // .def("push", static_cast<void (Configuration::*)(int32_t)>(&Configuration::push))
+            // .def("push", static_cast<void (Configuration::*)(uint32_t)>(&Configuration::push))
+            // .def("push", static_cast<void (Configuration::*)(int64_t)>(&Configuration::push))
+            // .def("push", static_cast<void (Configuration::*)(uint64_t)>(&Configuration::push))
             .def("push", static_cast<void (Configuration::*)(double)>(&Configuration::push))
             .def("push", static_cast<void (Configuration::*)(const std::string &)>(&Configuration::push))
-            .def("push", static_cast<void (Configuration::*)(const char *)>(&Configuration::push))
+            // .def("push", static_cast<void (Configuration::*)(const char *)>(&Configuration::push))
             .def("push", static_cast<void (Configuration::*)(const Eigen::Vector2d &)>(&Configuration::push))
             // TODO: missing eigen overloads
 
@@ -85,7 +83,7 @@ namespace mc_rtc_python
         // bind void operator()(const std::string & key, T & v) const
         using Visitor = CallVisitor;
         // XXX: Allow to pass an arbitrary lambda to the Visitor
-        mc_rtc::internal::ForEach<ConfigurationTypes, Visitor>(m);
+        // mc_rtc::internal::ForEach<ConfigurationTypes, Visitor>(m);
     }
 
 }
