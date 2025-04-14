@@ -369,13 +369,13 @@
 <ul>
   <li><strong>エンコーダー観測器</strong>: ロボットの関節の状態（位置と速度）を推定し、フォワードキネマティクスとフォワード速度の計算を行い、ボディの位置と速度を取得します。エンコーダーの位置、エンコーダーの速度（速度センサーや、位置の有限差分から取得）、ロボットの他の関節の値など、さまざまな入力を使用できます。</li>
   <li><strong>ボディセンサー観測器</strong>: ロボットのボディに取り付けられたセンサーから得られた測定値と、センサーと浮遊ベースとの間のキネマティクスに基づいて、ロボットの浮遊ベースの状態を設定します。これは通常、シミュレーターで得られたグラウンドトゥルース測定値を利用する場合や、浮遊ベースに関する情報を提供する外部のコンポーネント（モーションキャプチャー、ロボットのプラットフォームに組み込まれた推定器など）の結果を利用する場合に使用されます。</li>
-  <li><strong>キネマティクス慣性観測器</strong>: mc_rbdyn::BodySensor（IMUの向き）とキネマティクスアンカーフレームから、ロボットの浮遊ベースの姿勢（位置と向き）と速度（ローパスフィルター後の位置の有限差分）を推定します。</li>
+  <li><strong>キネマティクス慣性観測器</strong>: <a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1BodySensor" target="blank_"><code>mc_rbdyn::BodySensor</code></a>（IMUの向き）とキネマティクスアンカーフレームから、ロボットの浮遊ベースの姿勢（位置と向き）と速度（ローパスフィルター後の位置の有限差分）を推定します。</li>
 </ul>
 
 <p>このフレームワークでは、ロボットを表現するための2つのロボットインスタンスのセットが用意されています。</p>
 <ul>
-  <li>mc_control::MCController::robots()は、ロボットの制御状態（目標状態）を表します。</li>
-  <li>mc_control::MCController::realRobots()は、ロボットの実際の状態を表します。これらのロボットの状態をどのように推定するかは、観測器パイプラインで定義する必要があります。</li>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCController#ae45b98b34b9c614d9eb3aaa86371f53d" target="blank_"><code>mc_control::MCController::robots()</code></a>は、ロボットの制御状態（目標状態）を表します。</li>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCController#a0300e29b876797fe06dd7c16c971905d" target="blank_"><code>mc_control::MCController::realRobots()</code></a>は、ロボットの実際の状態を表します。これらのロボットの状態をどのように推定するかは、観測器パイプラインで定義する必要があります。</li>
 </ul>
 
 <h1 id="観測器パイプラインを設定する">観測器パイプラインを設定する</h1>
@@ -482,26 +482,26 @@
 <h2 id="エンコーダー観測器">エンコーダー観測器</h2>
 
 <ul>
-  <li>API: mc_observers::EncoderObserver</li>
+  <li>API: <a href="/mc_rtc/jp/doxygen.html#structmc__observers_1_1EncoderObserver" target="blank_"><code>mc_observers::EncoderObserver</code></a></li>
   <li><a href="../../json.html#Observers/Encoder">JSONスキーマ</a></li>
 </ul>
 
 <p>エンコーダー観測器を使用すると、駆動されているすべての関節の位置と速度を取得できます。</p>
 
 <ul>
-  <li>関節の値は、センサーの値mc_rbdyn::Robot::encoderValues()として取得するか、ロボットの他の関節状態mc_rbdyn::Robot::q()を使用して取得できます。</li>
-  <li>関節の速度は、関節速度センサーの値mc_rbdyn::Robot::encoderValues()として取得するか、（推定された）位置の有限差分による推定値として取得するか、ロボットの他の関節速度mc_rbdyn::Robot::alpha()を使用して取得できます。</li>
-  <li>この観測器では、フォワードキネマティクスmc_rbdyn::Robot::forwardKinematics()とフォワード速度mc_rbdyn::Robot::forwardVelocity()が計算され、該当するボディの位置と速度が更新されます（この位置と速度は、後続の観測器で使用されます）。</li>
+  <li>関節の値は、センサーの値<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#a1da8134deea10a32f7d35fc381649606" target="blank_"><code>mc_rbdyn::Robot::encoderValues()</code></a>として取得するか、ロボットの他の関節状態<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#a485eb8aa4ceb0a0a5010844d16e47f95" target="blank_"><code>mc_rbdyn::Robot::q()</code></a>を使用して取得できます。</li>
+  <li>関節の速度は、関節速度センサーの値<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#a1da8134deea10a32f7d35fc381649606" target="blank_"><code>mc_rbdyn::Robot::encoderValues()</code></a>として取得するか、（推定された）位置の有限差分による推定値として取得するか、ロボットの他の関節速度<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#a5773f91f2a9d0eb5cb4b6a0943551a1b" target="blank_"><code>mc_rbdyn::Robot::alpha()</code></a>を使用して取得できます。</li>
+  <li>この観測器では、フォワードキネマティクス<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#ae46b693d4431e61db9f1d4a05f66dd5e" target="blank_"><code>mc_rbdyn::Robot::forwardKinematics()</code></a>とフォワード速度<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1Robot#afd93342dd86da6803288346a3798d374" target="blank_"><code>mc_rbdyn::Robot::forwardVelocity()</code></a>が計算され、該当するボディの位置と速度が更新されます（この位置と速度は、後続の観測器で使用されます）。</li>
 </ul>
 
 <h2 id="ボディセンサー観測器">ボディセンサー観測器</h2>
 
 <ul>
-  <li>API: mc_observers::BodySensorObserver</li>
+  <li>API: <a href="/mc_rtc/jp/doxygen.html#structmc__observers_1_1BodySensorObserver" target="blank_"><code>mc_observers::BodySensorObserver</code></a></li>
   <li><a href="../../json.html#Observers/BodySensor">JSONスキーマ</a></li>
 </ul>
 
-<p>ボディセンサー観測器では、mc_rbdyn::BodySensorによって与えられた情報に基づいて、浮遊ベースの状態を推定できます。ボディセンサーは、ロボットのボディに取り付けられたセンサーで、ボディの状態を測定した結果が出力されます。<code class="language-plaintext highlighter-rouge">BodySensor</code>には以下の情報が格納されます。</p>
+<p>ボディセンサー観測器では、<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1BodySensor" target="blank_"><code>mc_rbdyn::BodySensor</code></a>によって与えられた情報に基づいて、浮遊ベースの状態を推定できます。ボディセンサーは、ロボットのボディに取り付けられたセンサーで、ボディの状態を測定した結果が出力されます。<code class="language-plaintext highlighter-rouge">BodySensor</code>には以下の情報が格納されます。</p>
 
 <ul>
   <li>センサーが取り付けられているボディとセンサーとの間の運動学的変換（必要に応じて）</li>
@@ -517,7 +517,7 @@
 <h2 id="キネマティクス慣性観測器">キネマティクス慣性観測器</h2>
 
 <ul>
-  <li>API: mc_observers::KinematicInertialObserver</li>
+  <li>API: <a href="/mc_rtc/jp/doxygen.html#structmc__observers_1_1KinematicInertialObserver" target="blank_"><code>mc_observers::KinematicInertialObserver</code></a></li>
   <li><a href="../../json.html#Observers/KinematicInertial">JSONスキーマ</a></li>
   <li><a href="https://scaron.info/teaching/floating-base-estimation.html">この手法に関するStéphane Caronによる詳しい説明</a></li>
 </ul>
@@ -546,7 +546,7 @@
 
 <p>その後、この観測器では、推定された位置と向きの有限差分に基づいて、浮遊ベースの直線速度と角速度が計算されます。さらに、この速度がローパスフィルターによって処理されます。</p>
 
-<p>この観測器の使用例については、<a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンス制御の例を使用したコントローラーのチュートリアル</a>、mc_control::fsm::StabilizerStandingStateを参照してください。また、より複雑な使用例については、<a href="https://github.com/jrl-umi3218/lipm_walking_controller">LIPM歩行コントローラー</a>を参照してください。</p>
+<p>この観測器の使用例については、<a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンス制御の例を使用したコントローラーのチュートリアル</a>、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1StabilizerStandingState" target="blank_"><code>mc_control::fsm::StabilizerStandingState</code></a>を参照してください。また、より複雑な使用例については、<a href="https://github.com/jrl-umi3218/lipm_walking_controller">LIPM歩行コントローラー</a>を参照してください。</p>
 
 <h2 id="推定されたロボットを可視化する">推定されたロボットを可視化する</h2>
 
@@ -608,11 +608,11 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">checkObserverPipeline("RequiredObserverPipeline");</code>を呼び出すと、このパイプラインが存在するかどうかの情報と、問題が発生している観測器とその原因が通知され、パイプライン内に観測器<code class="language-plaintext highlighter-rouge">MyObserver</code>が存在する場合はその観測器に固有のアクションが実行されます。その他の利用可能な機能については、mc_observers::ObserverPipelineのドキュメントを参照してください。</p>
+<p><code class="language-plaintext highlighter-rouge">checkObserverPipeline("RequiredObserverPipeline");</code>を呼び出すと、このパイプラインが存在するかどうかの情報と、問題が発生している観測器とその原因が通知され、パイプライン内に観測器<code class="language-plaintext highlighter-rouge">MyObserver</code>が存在する場合はその観測器に固有のアクションが実行されます。その他の利用可能な機能については、<a href="/mc_rtc/jp/doxygen.html#structmc__observers_1_1ObserverPipeline" target="blank_"><code>mc_observers::ObserverPipeline</code></a>のドキュメントを参照してください。</p>
 
 <h1 id="独自の観測器を作成する">独自の観測器を作成する</h1>
 
-<p>このフレームワークは、ライブラリから観測器を読み込みます。これを正しく機能させるには、観測器をmc_observers::Observerから継承し、以下のを実装する必要があります。</p>
+<p>このフレームワークは、ライブラリから観測器を読み込みます。これを正しく機能させるには、観測器を<a href="/mc_rtc/jp/doxygen.html#structmc__observers_1_1Observer" target="blank_"><code>mc_observers::Observer</code></a>から継承し、以下のを実装する必要があります。</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// YourObserver.h</span>
 <span class="kt">void</span> <span class="n">configure</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span> <span class="o">&amp;</span> <span class="cm">/*ctl*/</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="cm">/*config*/</span><span class="p">)</span> <span class="k">override</span>
@@ -634,7 +634,7 @@
 <div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">add_observer</span><span class="p">(</span>YourObserverName YourObserver.cpp YourObserver.h<span class="p">)</span>
 </code></pre></div></div>
 
-<p>注: フレームワークで提供されたデフォルトの観測器のいずれかから継承したい場合は、その観測器をリンクする必要があります。例えば、mc_observers::BodySensorObserverから継承したい場合、これに対応する<code class="language-plaintext highlighter-rouge">mc_observers::BodySensorObserver</code>ターゲットをリンクする必要があります。</p>
+<p>注: フレームワークで提供されたデフォルトの観測器のいずれかから継承したい場合は、その観測器をリンクする必要があります。例えば、<a href="/mc_rtc/jp/doxygen.html#structmc__observers_1_1BodySensorObserver" target="blank_"><code>mc_observers::BodySensorObserver</code></a>から継承したい場合、これに対応する<code class="language-plaintext highlighter-rouge">mc_observers::BodySensorObserver</code>ターゲットをリンクする必要があります。</p>
 
 <div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">target_link_libraries</span><span class="p">(</span>YourObserverName PUBLIC mc_observers::BodySensorObserver<span class="p">)</span>
 </code></pre></div></div>

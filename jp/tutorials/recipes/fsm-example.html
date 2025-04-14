@@ -421,7 +421,7 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
   <dd class="col-9">コントローラーを各プラットフォームに読み込めるようにするための宣言</dd>
 
   <dt class="col-3">src/MyFirstFSMController.h</dt>
-  <dd class="col-9">コントローラークラスの宣言。mc_control::fsm::Controllerから継承する必要があります。また、少なくともrun関数とreset関数を置き換える必要があります。</dd>
+  <dd class="col-9">コントローラークラスの宣言。<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1Controller" target="blank_"><code>mc_control::fsm::Controller</code></a>から継承する必要があります。また、少なくともrun関数とreset関数を置き換える必要があります。</dd>
 
   <dt class="col-3">src/MyFirstFSMController.cpp</dt>
   <dd class="col-9">独自に作成したコントローラーを実装します。これについては次のセクションで詳しく説明します。</dd>
@@ -526,9 +526,9 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
 
 <p>ここでは3つの制約条件を宣言します。</p>
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">contact</code>: mc_solver::ContactConstraintを追加します。これは、接触面の位置を固定するとともに、生成された力が摩擦円錐の内部に収まるように制限します（力学モードのみ）。</li>
-  <li><code class="language-plaintext highlighter-rouge">dynamics</code>: mc_solver::DynamicsConstraintを追加します。これは、キネマティクスの制約条件と関節可動範囲の制約条件を適用するとともに、関節のトルクを計算します。</li>
-  <li><code class="language-plaintext highlighter-rouge">compoundJoint</code>: mc_solver::CompoundJointConstraintを追加します。これは、相互に関連している関節の可動範囲を処理します（例えば、くるぶしの関節のロール方向の可動範囲は、現在のヨー角度によって決まります）。</li>
+  <li><code class="language-plaintext highlighter-rouge">contact</code>: <a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1ContactConstraint" target="blank_"><code>mc_solver::ContactConstraint</code></a>を追加します。これは、接触面の位置を固定するとともに、生成された力が摩擦円錐の内部に収まるように制限します（力学モードのみ）。</li>
+  <li><code class="language-plaintext highlighter-rouge">dynamics</code>: <a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1DynamicsConstraint" target="blank_"><code>mc_solver::DynamicsConstraint</code></a>を追加します。これは、キネマティクスの制約条件と関節可動範囲の制約条件を適用するとともに、関節のトルクを計算します。</li>
+  <li><code class="language-plaintext highlighter-rouge">compoundJoint</code>: <a href="/mc_rtc/jp/doxygen.html#structmc__solver_1_1CompoundJointConstraint" target="blank_"><code>mc_solver::CompoundJointConstraint</code></a>を追加します。これは、相互に関連している関節の可動範囲を処理します（例えば、くるぶしの関節のロール方向の可動範囲は、現在のヨー角度によって決まります）。</li>
 </ul>
 
 <h1 id="接触面">接触面</h1>
@@ -551,7 +551,7 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
 
 <h1 id="衝突メッシュ">衝突メッシュ</h1>
 
-<p>次に、衝突メッシュの初期セットを追加する方法について見ていきましょう。接触面の場合と同様に、状態を使用して衝突メッシュを後で追加・削除できます。<code class="language-plaintext highlighter-rouge">collisions</code>要素は、<a href="/mc_rtc/jp/json-full.html#ConstraintSet/CollisionsConstraint">CollisionConstraint</a>オブジェクトの配列で構成されます。<code class="language-plaintext highlighter-rouge">MainRobot</code>については、自己衝突メッシュのデフォルトのリストがmc_rbdyn::RobotModuleで定義されており、それらをここで使用できます。</p>
+<p>次に、衝突メッシュの初期セットを追加する方法について見ていきましょう。接触面の場合と同様に、状態を使用して衝突メッシュを後で追加・削除できます。<code class="language-plaintext highlighter-rouge">collisions</code>要素は、<a href="/mc_rtc/jp/json-full.html#ConstraintSet/CollisionsConstraint">CollisionConstraint</a>オブジェクトの配列で構成されます。<code class="language-plaintext highlighter-rouge">MainRobot</code>については、自己衝突メッシュのデフォルトのリストが<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1RobotModule" target="blank_"><code>mc_rbdyn::RobotModule</code></a>で定義されており、それらをここで使用できます。</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 干渉回避制約</span>
 <span class="na">collisions</span><span class="pi">:</span>
@@ -575,25 +575,25 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
 <ul>
   <li><code class="language-plaintext highlighter-rouge">MetaTasks</code>: 設定からタスクを読み込んでソルバーに追加します。また、タスクが完了したかどうかをチェックします。
     <ul>
-      <li>API: mc_control::fsm::MetaTasksState</li>
+      <li>API: <a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1MetaTasksState" target="blank_"><code>mc_control::fsm::MetaTasksState</code></a></li>
       <li>YAML: <a href="/mc_rtc/jp/json.html#State/MetaTasks">JSONスキーマのドキュメント</a></li>
     </ul>
   </li>
   <li><code class="language-plaintext highlighter-rouge">Parallel</code>: 複数の状態を実行する
     <ul>
-      <li>API: mc_control::fsm::ParallelState</li>
+      <li>API: <a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1ParallelState" target="blank_"><code>mc_control::fsm::ParallelState</code></a></li>
       <li>YAML: <a href="/mc_rtc/jp/json.html#State/Parallel">JSONスキーマのドキュメント</a></li>
     </ul>
   </li>
   <li><code class="language-plaintext highlighter-rouge">Meta</code>: 状態内に有限オートマトンを作成する
     <ul>
-      <li>API: mc_control::fsm::MetaState</li>
+      <li>API: <a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1MetaState" target="blank_"><code>mc_control::fsm::MetaState</code></a></li>
       <li>YAML: <a href="/mc_rtc/jp/json.html#State/Meta">JSONスキーマのドキュメント</a></li>
     </ul>
   </li>
   <li><code class="language-plaintext highlighter-rouge">Posture</code>: グローバルな姿勢制御タスクのゲインと目標を処理します。
     <ul>
-      <li>API: mc_control::fsm::PostureState</li>
+      <li>API: <a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1PostureState" target="blank_"><code>mc_control::fsm::PostureState</code></a></li>
       <li>YAML: <a href="/mc_rtc/jp/json.html#State/Posture">JSONスキーマのドキュメント</a></li>
     </ul>
   </li>
@@ -621,7 +621,7 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
   <li>状態内から状態遷移の流れを制御する方法</li>
 </ol>
 
-<p>この状態は<code class="language-plaintext highlighter-rouge">src/states/Door_Initial.cpp</code>で定義されており、この処理で必要とされる仮想関数<code class="language-plaintext highlighter-rouge">configure</code>、<code class="language-plaintext highlighter-rouge">start</code>、<code class="language-plaintext highlighter-rouge">run</code>と関数<code class="language-plaintext highlighter-rouge">teardown</code>を置き換えます（mc_control::fsm::StateのAPIのドキュメントを参照）。ここでは、状態開始時にGUIにボタンを追加します。そして、このボタンがクリックされたときに、bool型の状態<code class="language-plaintext highlighter-rouge">openDoor_</code>を変化させます（後で「OpenDoor」状態に遷移するのに使用します）。これを実現するには、<code class="language-plaintext highlighter-rouge">output("OpenDoor")</code>を呼び出し、<code class="language-plaintext highlighter-rouge">bool Door_Initial::run</code>関数で<code class="language-plaintext highlighter-rouge">true</code>を返します。これは、この状態の処理が完了して次の状態に遷移できることを表します。なお、この状態遷移がどのように起こるかは、状態遷移マップの設定によって定義されています（mc_control::fsm::TransitionMapを参照）。</p>
+<p>この状態は<code class="language-plaintext highlighter-rouge">src/states/Door_Initial.cpp</code>で定義されており、この処理で必要とされる仮想関数<code class="language-plaintext highlighter-rouge">configure</code>、<code class="language-plaintext highlighter-rouge">start</code>、<code class="language-plaintext highlighter-rouge">run</code>と関数<code class="language-plaintext highlighter-rouge">teardown</code>を置き換えます（<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1State" target="blank_"><code>mc_control::fsm::State</code></a>のAPIのドキュメントを参照）。ここでは、状態開始時にGUIにボタンを追加します。そして、このボタンがクリックされたときに、bool型の状態<code class="language-plaintext highlighter-rouge">openDoor_</code>を変化させます（後で「OpenDoor」状態に遷移するのに使用します）。これを実現するには、<code class="language-plaintext highlighter-rouge">output("OpenDoor")</code>を呼び出し、<code class="language-plaintext highlighter-rouge">bool Door_Initial::run</code>関数で<code class="language-plaintext highlighter-rouge">true</code>を返します。これは、この状態の処理が完了して次の状態に遷移できることを表します。なお、この状態遷移がどのように起こるかは、状態遷移マップの設定によって定義されています（<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1TransitionMap" target="blank_"><code>mc_control::fsm::TransitionMap</code></a>を参照）。</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_control/fsm/Controller.h&gt;</span><span class="cp">
 </span>
@@ -689,7 +689,7 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
           <span class="pi">-</span> <span class="na">speed</span><span class="pi">:</span> <span class="s">1e-4</span>
 </code></pre></div></div>
 
-<p>この状態では、フレームワークで用意されているmc_control::fsm::MetaTasksStateというC++状態が使用され、YAMLの記述から一連のタスクが読み込まれます。ここでは、<code class="language-plaintext highlighter-rouge">RightHandTrajectory</code>という名前の<code class="language-plaintext highlighter-rouge">surfaceTransform</code>型（<a href="/mc_rtc/jp/json.html#MetaTask/SurfaceTransformTask">YAMLのドキュメントを参照</a>）のタスクが読み込まれます。これにより、mc_tasks::SurfaceTransformTaskがソルバーに追加され、ドアのハンドル表面を基準として定義された目標がこのタスクに設定されます。また、<code class="language-plaintext highlighter-rouge">completion</code>要素によってmc_control::CompletionCriteriaが作成され、タスクの実行が完了したとみなしてよいかどうかをチェックする論理関数が構築されます。デフォルトでは、タスクの完了基準が満たされると<code class="language-plaintext highlighter-rouge">MetaTasks</code>状態によって<code class="language-plaintext highlighter-rouge">"OK"</code>が出力されます。</p>
+<p>この状態では、フレームワークで用意されている<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1MetaTasksState" target="blank_"><code>mc_control::fsm::MetaTasksState</code></a>というC++状態が使用され、YAMLの記述から一連のタスクが読み込まれます。ここでは、<code class="language-plaintext highlighter-rouge">RightHandTrajectory</code>という名前の<code class="language-plaintext highlighter-rouge">surfaceTransform</code>型（<a href="/mc_rtc/jp/json.html#MetaTask/SurfaceTransformTask">YAMLのドキュメントを参照</a>）のタスクが読み込まれます。これにより、mc_tasks::SurfaceTransformTaskがソルバーに追加され、ドアのハンドル表面を基準として定義された目標がこのタスクに設定されます。また、<code class="language-plaintext highlighter-rouge">completion</code>要素によって<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1CompletionCriteria" target="blank_"><code>mc_control::CompletionCriteria</code></a>が作成され、タスクの実行が完了したとみなしてよいかどうかをチェックする論理関数が構築されます。デフォルトでは、タスクの完了基準が満たされると<code class="language-plaintext highlighter-rouge">MetaTasks</code>状態によって<code class="language-plaintext highlighter-rouge">"OK"</code>が出力されます。</p>
 
 <p>すると、<code class="language-plaintext highlighter-rouge">OpenDoorFSM</code>は次の状態である<code class="language-plaintext highlighter-rouge">[Door::ReachHandle, OK, Door::MoveHandle, Auto]</code>に遷移します。</p>
 
@@ -712,7 +712,7 @@ usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</sp
     <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">Handle</span>
 </code></pre></div></div>
 
-<p>この状態は、mc_control::fsm::PostureState（<a href="/mc_rtc/jp/json.html#States/Posture">JSONのドキュメントを参照</a>）がベースとなっています。この状態では、フレームワークによって各ロボットに自動的に追加されたグローバルな姿勢制御タスクのゲインと目標が変更されます。まず、二次計画法によってロボットの<code class="language-plaintext highlighter-rouge">RightGripper</code>とドアの<code class="language-plaintext highlighter-rouge">Handle</code>の表面の相対位置がずれるのを防ぐため、これらの表面を接触させます。また、ロボットとドアを相互作用させる動的な力を計算するための摩擦円錐制約条件を追加します。これにより、ハンドルの関節が回転すると、JVRC1ロボットの関節も回転するようになります。</p>
+<p>この状態は、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1fsm_1_1PostureState" target="blank_"><code>mc_control::fsm::PostureState</code></a>（<a href="/mc_rtc/jp/json.html#States/Posture">JSONのドキュメントを参照</a>）がベースとなっています。この状態では、フレームワークによって各ロボットに自動的に追加されたグローバルな姿勢制御タスクのゲインと目標が変更されます。まず、二次計画法によってロボットの<code class="language-plaintext highlighter-rouge">RightGripper</code>とドアの<code class="language-plaintext highlighter-rouge">Handle</code>の表面の相対位置がずれるのを防ぐため、これらの表面を接触させます。また、ロボットとドアを相互作用させる動的な力を計算するための摩擦円錐制約条件を追加します。これにより、ハンドルの関節が回転すると、JVRC1ロボットの関節も回転するようになります。</p>
 
 <p>この状態の処理が完了したら、次の状態である<code class="language-plaintext highlighter-rouge">[Door::MoveHandle, OK, Door::OpenDoor, Auto]</code>に遷移します。この状態は、先の状態と非常によく似ています。この状態では、ロボットがドアを開けられるように、ドアの蝶番の目標関節角度を変更します。この状態が先の状態（<code class="language-plaintext highlighter-rouge">base: Door::MoveHandle</code>）をどのように継承しているかに注目してください。この状態は、新しい目標を再定義している点だけが先の状態と異なります。</p>
 
