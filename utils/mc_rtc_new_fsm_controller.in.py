@@ -6,15 +6,23 @@
 #
 
 import argparse
-import imp
+from importlib import util, machinery
 import os
 
+
+def load_source(modname, filename):
+    loader = machinery.SourceFileLoader(modname, filename)
+    spec = util.spec_from_file_location(modname, filename, loader=loader)
+    module = util.module_from_spec(spec)
+    loader.exec_module(module)
+    return module
+
 try:
-    mod = imp.load_source(
+    mod = load_source(
         "mc_rtc_new_controller", os.path.dirname(__file__) + "/mc_rtc_new_controller"
     )
 except FileNotFoundError:
-    mod = imp.load_source(
+    mod = load_source(
         "mc_rtc_new_controller", os.path.dirname(__file__) + "/mc_rtc_new_controller.py"
     )
 new_controller = mod.new_controller
