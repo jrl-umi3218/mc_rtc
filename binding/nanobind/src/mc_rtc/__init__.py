@@ -1,1 +1,1 @@
-from .mc_rtc_python import Configuration, add, __doc__
+from ._mc_rtc import add, Configuration, __doc__
