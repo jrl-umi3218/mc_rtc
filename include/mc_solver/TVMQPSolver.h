@@ -33,6 +33,7 @@ struct MC_SOLVER_DLLAPI TVMQPSolver final : public QPSolver
   void setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts) final;
 
   const sva::ForceVecd desiredContactForce(const mc_rbdyn::Contact & id) const final;
+  const sva::ForceVecd desiredContactForce2(const mc_rbdyn::Contact & id) const;
 
   double solveTime() final;
 
