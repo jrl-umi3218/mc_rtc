@@ -95,12 +95,14 @@ void DynamicFunction::WrenchContact::updateWrenchJacobian(DynamicFunction & pare
   else
   {
     // Then this is the second robot with a dynamics function in the contact
-    // The jacobian to the wrench var must be transformed from the other frame to this one
+    // The jacobian to the wrench var must be transformed from the other frame to this one, and negated
+    // This way the wrench applied in the second contact frame results in - the first wrench if expressed in the
+    // first contact frame
 
     // getting the right transform: if this robot is r1, the var is in frame r2 so we need X_r2_r1
     const auto dualMatrix = contact_->r1Surface()->name() == frame_->name() ? contact_->X_r2s_r1s().dualMatrix()
                                                                             : contact_->X_r2s_r1s().inv().dualMatrix();
-    parent.jacobian_[wrench_.get()].noalias() = -full_jac_.block(0, 0, 6, robot.mb().nrDof()).transpose() * dualMatrix;
+    parent.jacobian_[wrench_.get()].noalias() = -full_jac_.block(0, 0, 6, robot.mb().nrDof()).transpose() * -dualMatrix;
     // mc_rtc::log::critical("Updating a dual wrench for dynamics constraint");
   }
   // mc_rtc::log::critical("updated wrench jacobian to {}", parent.jacobian_[wrench_.get()]);
@@ -186,7 +188,20 @@ sva::ForceVecd DynamicFunction::contactForce(const mc_rbdyn::RobotFrame & frame)
   auto it = findContactForce(frame);
   auto it2 = findContactWrench(frame);
   if(it != contactForces_.end()) { return (*it).force(); }
-  else if(it2 != contactWrenches_.end()) { return (*it2).wrench(); }
+  else if(it2 != contactWrenches_.end())
+  {
+    // Check if need to return the wrench var as is or transform var (other side)
+    if(it2->hasVariable_) { return (*it2).wrench(); }
+    else
+    {
+      // getting the right transform: if this robot is r1, the var is in frame r2 so we need X_r2_r1
+      // if this is r2, variable is w1 so we need X_r1_r2
+      const auto dualMatrix = it2->contact_->r1Surface()->name() == it2->frame_->name()
+                                  ? it2->contact_->X_r2s_r1s().dualMatrix()
+                                  : it2->contact_->X_r2s_r1s().inv().dualMatrix();
+      return sva::ForceVecd(-dualMatrix * it2->wrench().vector());
+    }
+  }
   else
   {
     mc_rtc::log::error("No contact at frame {} in dynamic function for {}", frame.name(), robot_.name());

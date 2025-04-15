@@ -61,13 +61,13 @@ void ForceInPolytopeFunction::updateJacobian()
       if(hasForceVar_) { jacobian_[forceVar.get()] = tvmPoly_.normals(); }
       else
       {
-        // if the force var was created for the other side we need to multiply the normals by the
-        // dual plücker transform matrix (manipulating a force vec)
+        // if the force var was created for the other side we need to multiply the var by minus the
+        // dual plücker transform matrix (manipulating a force vec) to get the wrench for this side
 
         // getting the right transform: if this robot is r1, the var is in frame r2 so we need X_r2_r1
         const auto dualMat =
             contact_.r1Index() == rIndex_ ? contact_.X_r2s_r1s().dualMatrix() : contact_.X_r2s_r1s().inv().dualMatrix();
-        jacobian_[forceVar.get()] = tvmPoly_.normals() * dualMat;
+        jacobian_[forceVar.get()] = tvmPoly_.normals() * -dualMat;
       }
     }
     // Not handling other dimensions
