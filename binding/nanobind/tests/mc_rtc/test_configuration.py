@@ -6,6 +6,10 @@ c.add_null("null_key")
 
 arr = c.array("empty_array")
 arr.push(3.5)
-print(c["empty_array"])
-v = 3.0
-val = c("test")
+
+np_vec2 = np.array([1.0, 2.0])
+c.add("vec2", np_vec2)
+c.add("float", 3.0)
+
+c2 = mc_rtc.Configuration()
+c.add("config", c2)
