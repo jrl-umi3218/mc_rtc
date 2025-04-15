@@ -1,11 +1,14 @@
 # Set the minimum CMake version and policies for highest tested version
 cmake_minimum_required(VERSION 3.15...4.0)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-project(mc_rtc_python)
+project(mc_rtc)
 
 # Warn if the user invokes CMake directly
-if (NOT SKBUILD)
-  message(WARNING "\
+if(NOT SKBUILD)
+  message(
+    WARNING
+      "\
   This CMake file is meant to be executed using 'scikit-build-core'.
   Running it directly will almost certainly not produce the desired
   result. If you are a user trying to install this package, use the
@@ -24,13 +27,16 @@ if (NOT SKBUILD)
   =====================================================================
   You may optionally add -Ceditable.rebuild=true to auto-rebuild when
   the package is imported. Otherwise, you need to rerun the above
-  after editing C++ files.")
+  after editing C++ files."
+  )
 endif()
 
 # Try to import all Python components potentially needed by nanobind
-find_package(Python 3.8
-  REQUIRED COMPONENTS Interpreter Development.Module
-  OPTIONAL_COMPONENTS Development.SABIModule)
+find_package(
+  Python 3.8 REQUIRED
+  COMPONENTS Interpreter Development.Module
+  OPTIONAL_COMPONENTS Development.SABIModule
+)
 
 # Import nanobind through CMake's find_package mechanism
 find_package(nanobind CONFIG REQUIRED)
@@ -38,40 +44,42 @@ find_package(nanobind CONFIG REQUIRED)
 # We are now ready to compile the actual extension module
 nanobind_add_module(
   # Name of the extension
-  mc_rtc_python
-
-  # Target the stable ABI for Python 3.12+, which reduces
-  # the number of binary wheels that must be built. This
-  # does nothing on older Python versions
+  _mc_rtc
+  # Target the stable ABI for Python 3.12+, which reduces the number of binary wheels
+  # that must be built. This does nothing on older Python versions
   STABLE_ABI
-
-  # Build libnanobind statically and merge it into the
-  # extension (which itself remains a shared library)
+  # Build libnanobind statically and merge it into the extension (which itself remains a
+  # shared library)
   #
-  # If your project builds multiple extensions, you can
-  # replace this flag by NB_SHARED to conserve space by
-  # reusing a shared libnanobind across libraries
+  # If your project builds multiple extensions, you can replace this flag by NB_SHARED
+  # to conserve space by reusing a shared libnanobind across libraries
   NB_STATIC
-
   # Source code goes here
   src/mc_rtc/mc_rtc_module.cpp
   src/mc_rtc/Configuration.cpp
 )
 
 find_package(mc_rtc REQUIRED)
-target_link_libraries(mc_rtc_python PUBLIC mc_rtc::mc_rtc_utils)
-target_include_directories(mc_rtc_python PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+target_link_libraries(_mc_rtc PUBLIC mc_rtc::mc_rtc_utils)
+target_include_directories(
+  _mc_rtc PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+)
 # Install directive for scikit-build-core
-install(TARGETS mc_rtc_python LIBRARY DESTINATION mc_rtc)
-
-
+install(TARGETS _mc_rtc LIBRARY DESTINATION mc_rtc)
 
 nanobind_add_stub(
-    mc_rtc_python_stub 
-    MODULE mc_rtc_python 
-    OUTPUT mc_rtc_python.pyi 
-    MARKER_FILE py.typed
-    PYTHON_PATH $<TARGET_FILE_DIR:mc_rtc_python>
-    DEPENDS mc_rtc_python
+  _mc_rtc_stub
+  MODULE
+  _mc_rtc
+  OUTPUT
+  _mc_rtc.pyi
+  MARKER_FILE
+  py.typed
+  PYTHON_PATH
+  $<TARGET_FILE_DIR:_mc_rtc>
+  DEPENDS
+  _mc_rtc
 )
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_python.pyi ${CMAKE_CURRENT_BINARY_DIR}/py.typed DESTINATION mc_rtc)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/_mc_rtc.pyi
+              ${CMAKE_CURRENT_BINARY_DIR}/py.typed DESTINATION mc_rtc
+)
