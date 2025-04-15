@@ -8,3 +8,4 @@ arr = c.array("empty_array")
 arr.push(3.5)
 print(c["empty_array"])
 v = 3.0
+val = c("test")
