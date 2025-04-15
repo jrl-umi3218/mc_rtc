@@ -11,19 +11,19 @@
 
 namespace nb = nanobind;
 using namespace nb::literals;
+using Configuration = mc_rtc::Configuration;
 
 namespace mc_rtc_python
 {
-// XXX: Replace with lamda
+
 struct AddVisitor
 {
-  template<typename T>
-  static constexpr void Visit(nb::module_ & m)
+  template<typename T, typename NBClass>
+  static constexpr void Visit(NBClass & class_)
   {
-    std::cout << "visit for type " << mc_rtc::type_name<T>() << std::endl;
-    m.def("add", static_cast<void (mc_rtc::Configuration::*)(const std::string &, double)>(&mc_rtc::Configuration::add),
-          "key"_a, "value"_a,
-          fmt::format("Add an object of type {} to the configuration", mc_rtc::type_name<T>()).c_str());
+    class_.def("add", static_cast<void (Configuration::*)(const std::string &, T)>(&Configuration::add), "key"_a,
+               "value"_a,
+               fmt::format("Add an object of type \"{}\" to the configuration", mc_rtc::type_name<T>()).c_str());
   }
 };
 
@@ -53,13 +53,15 @@ void bind_configuration(nb::module_ & m)
       .def("__call__", [](Configuration & self, const std::string & key, double & value) { self(key, value); });
 
   // All overload types supported by Configuration
-  using ConfigurationTypes = mc_rtc::internal::TypeList<bool, double>;
-  // For all supported types,
-  // XXX: Allow to pass an arbitrary lambda to the Visitor
-  // mc_rtc::internal::ForEach<ConfigurationTypes, AddVisitor>(m);
+  // TODO: missing quaternion and sva types
+  using ConfigurationTypes =
+      mc_rtc::internal::TypeList<bool, double, int, const Eigen::Vector2d &, const Eigen::Vector3d &,
+                                 const Eigen::Vector4d &, const Eigen::Vector6d &, const Eigen::VectorXd &,
+                                 const Eigen::Matrix3d &, const Eigen::Matrix6d &, const Eigen::MatrixXd &,
+                                 const Configuration &>;
 
-  c.def("add", static_cast<void (Configuration::*)(const std::string &, double)>(&Configuration::add), "key"_a,
-        "value"_a, fmt::format("Add an object of type {} to the configuration", mc_rtc::type_name<double>()).c_str());
+  // Bind "add" for all supported types
+  mc_rtc::internal::ForEach<ConfigurationTypes, AddVisitor>(c);
 }
 
 } // namespace mc_rtc_python
