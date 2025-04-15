@@ -7,6 +7,7 @@
 #include <typelist_visitor.h>
 
 #include <mc_rtc/Configuration.h>
+#include <mc_rtc/type_name.h>
 
 namespace nb = nanobind;
 using namespace nb::literals;
@@ -14,21 +15,23 @@ using namespace nb::literals;
 namespace mc_rtc_python
 {
 // XXX: Replace with lamda
-struct CallVisitor
+struct AddVisitor
 {
   template<typename T>
   static constexpr void Visit(nb::module_ & m)
   {
     std::cout << "visit for type " << mc_rtc::type_name<T>() << std::endl;
-    m.def("__call__", [](mc_rtc::Configuration & self, const std::string & key, T value) { self(key, value); });
+    m.def("add", static_cast<void (mc_rtc::Configuration::*)(const std::string &, double)>(&mc_rtc::Configuration::add),
+          "key"_a, "value"_a,
+          fmt::format("Add an object of type {} to the configuration", mc_rtc::type_name<T>()).c_str());
   }
 };
 
 void bind_configuration(nb::module_ & m)
 {
   using Configuration = mc_rtc::Configuration;
-  nb::class_<mc_rtc::Configuration>(m, "Configuration")
-      .def(nb::init<>(), "Creates an empty configuration")
+  auto c = nb::class_<mc_rtc::Configuration>(m, "Configuration");
+  c.def(nb::init<>(), "Creates an empty configuration")
       .def(nb::init<const std::string &>(), "Create a configuration from file (yaml or json)")
       .def("add_null", &Configuration::add_null, "key"_a,
            "Add a null element. Overrides the existing value if it holds one for the given key.")
@@ -46,15 +49,17 @@ void bind_configuration(nb::module_ & m)
 
       .def("__getitem__", [](Configuration & self, const std::string & key) { return self(key); })
       // void operator()(const std::string & key, T & v) const
-      .def("__call__", [](Configuration & self, const std::string & key, double value) { self(key, value); });
+      .def("__call__", [](Configuration & self, const std::string & key) { return self(key); })
+      .def("__call__", [](Configuration & self, const std::string & key, double & value) { self(key, value); });
 
-  // // All overload types supported by Configuration
-  // using ConfigurationTypes = mc_rtc::internal::TypeList<bool, int64_t, double>;
-  // // For all supported types,
-  // // bind void operator()(const std::string & key, T & v) const
-  // using Visitor = CallVisitor;
-  // // XXX: Allow to pass an arbitrary lambda to the Visitor
-  // mc_rtc::internal::ForEach<ConfigurationTypes, Visitor>(m);
+  // All overload types supported by Configuration
+  using ConfigurationTypes = mc_rtc::internal::TypeList<bool, double>;
+  // For all supported types,
+  // XXX: Allow to pass an arbitrary lambda to the Visitor
+  // mc_rtc::internal::ForEach<ConfigurationTypes, AddVisitor>(m);
+
+  c.def("add", static_cast<void (Configuration::*)(const std::string &, double)>(&Configuration::add), "key"_a,
+        "value"_a, fmt::format("Add an object of type {} to the configuration", mc_rtc::type_name<double>()).c_str());
 }
 
 } // namespace mc_rtc_python
