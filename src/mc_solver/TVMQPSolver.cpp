@@ -91,11 +91,16 @@ void TVMQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Conta
 const sva::ForceVecd TVMQPSolver::desiredContactForce(const mc_rbdyn::Contact & id) const
 {
   const auto & r1 = robot(id.r1Index());
-  auto it1 = dynamics_.find(r1.name());
-  if(it1 != dynamics_.end()) { return it1->second->dynamicFunction().contactForce(r1.frame(id.r1Surface()->name())); }
+  auto it = dynamics_.find(r1.name());
+  if(it != dynamics_.end()) { return it->second->dynamicFunction().contactForce(r1.frame(id.r1Surface()->name())); }
+  return sva::ForceVecd::Zero();
+}
+
+const sva::ForceVecd TVMQPSolver::desiredContactForce2(const mc_rbdyn::Contact & id) const
+{
   const auto & r2 = robot(id.r2Index());
-  auto it2 = dynamics_.find(r2.name());
-  if(it2 != dynamics_.end()) { return it2->second->dynamicFunction().contactForce(r2.frame(id.r2Surface()->name())); }
+  auto it = dynamics_.find(r2.name());
+  if(it != dynamics_.end()) { return it->second->dynamicFunction().contactForce(r2.frame(id.r2Surface()->name())); }
   return sva::ForceVecd::Zero();
 }
 
@@ -548,11 +553,14 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
                                            {tvm::requirements::PriorityLevel(0)});
     logger_->addLogEntry(fmt::format("contact_{}::{}_{}::{}", r1.name(), f1.name(), r2.name(), f2.name()),
                          [this, storedContact]() { return desiredContactForce(*storedContact); });
-    gui_->addElement({"Contacts", "Forces"},
-                     mc_rtc::gui::Force(
-                         fmt::format("{}::{}/{}::{}", r1.name(), f1.name(), r2.name(), f2.name()),
-                         [this, storedContact]() { return desiredContactForce(*storedContact); },
-                         [&f1]() { return f1.position(); }));
+    gui_->addElement(
+        {"Contacts", "Forces"},
+        mc_rtc::gui::Force(
+            fmt::format("{}::{}/{}::{}", r1.name(), f1.name(), r2.name(), f2.name()),
+            [this, storedContact]() { return desiredContactForce(*storedContact); }, [&f1]() { return f1.position(); }),
+        mc_rtc::gui::Force(
+            fmt::format("{}::{}/{}::{}", r2.name(), f2.name(), r1.name(), f1.name()), [this, storedContact]()
+            { return desiredContactForce2(*storedContact); }, [&f2]() { return f2.position(); }));
   }
   else
   {

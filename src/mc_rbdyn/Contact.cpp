@@ -357,6 +357,7 @@ sva::PTransformd Contact::compute_X_r2s_r1s(const mc_rbdyn::Robots & robots) con
 {
   sva::PTransformd X_0_r1 = impl->r1Surface->X_0_s(robots.robot(impl->r1Index));
   sva::PTransformd X_0_r2 = impl->r2Surface->X_0_s(robots.robot(impl->r2Index));
+  impl->X_r2s_r1s = X_0_r1 * X_0_r2.inv();
   return X_0_r1 * X_0_r2.inv();
 }
 
