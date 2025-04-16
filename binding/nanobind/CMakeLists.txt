@@ -44,7 +44,7 @@ find_package(nanobind CONFIG REQUIRED)
 # We are now ready to compile the actual extension module
 nanobind_add_module(
   # Name of the extension
-  _mc_rtc
+  mc_rtc_python
   # Target the stable ABI for Python 3.12+, which reduces the number of binary wheels
   # that must be built. This does nothing on older Python versions
   STABLE_ABI
@@ -60,26 +60,26 @@ nanobind_add_module(
 )
 
 find_package(mc_rtc REQUIRED)
-target_link_libraries(_mc_rtc PUBLIC mc_rtc::mc_rtc_utils)
+target_link_libraries(mc_rtc_python PUBLIC mc_rtc::mc_rtc_utils)
 target_include_directories(
-  _mc_rtc PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  mc_rtc_python PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 # Install directive for scikit-build-core
-install(TARGETS _mc_rtc LIBRARY DESTINATION mc_rtc)
+install(TARGETS mc_rtc_python LIBRARY DESTINATION mc_rtc)
 
 nanobind_add_stub(
-  _mc_rtc_stub
+  mc_rtc_python_stub
   MODULE
-  _mc_rtc
+  mc_rtc_python
   OUTPUT
-  _mc_rtc.pyi
+  mc_rtc_python.pyi
   MARKER_FILE
   py.typed
   PYTHON_PATH
-  $<TARGET_FILE_DIR:_mc_rtc>
+  $<TARGET_FILE_DIR:mc_rtc_python>
   DEPENDS
-  _mc_rtc
+  mc_rtc_python
 )
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/_mc_rtc.pyi
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_python.pyi
               ${CMAKE_CURRENT_BINARY_DIR}/py.typed DESTINATION mc_rtc
 )

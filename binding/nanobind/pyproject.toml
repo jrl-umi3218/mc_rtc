@@ -1,5 +1,7 @@
 [build-system]
-requires = ["scikit-build-core >=0.10", "nanobind >=1.3.2", "nanobind-stubgen >= 0.1.5", "typing_extensions"]
+# We require numpy <= 2.1 since numpy 2.2 introduces typing regressions
+# In particular this causes typing issues with ArrayLike expressions (eigen matrices)
+requires = ["scikit-build-core >=0.10", "nanobind >=1.3.2", "nanobind-stubgen >= 0.1.5", "numpy <= 2.1", "typing_extensions"]
 build-backend = "scikit_build_core.build"
 
 [project]
