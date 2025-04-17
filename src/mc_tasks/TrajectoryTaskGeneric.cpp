@@ -338,8 +338,9 @@ void TrajectoryTaskGeneric::selectActiveJoints(const std::vector<std::string> & 
 {
   if(inSolver_)
   {
-    mc_rtc::log::warning("selectActiveJoints(names) ignored: use selectActiveJoints(solver, names) for a task already "
-                         "added to the solver");
+    mc_rtc::log::warning(
+        "selectActiveJoints(names) ignored: use selectActiveJoints(solver, names) for a task already "
+        "added to the solver");
     return;
   }
   if(checkJoints) { ensureHasJoints(robots.robot(rIndex), activeJointsName, "[" + name() + "::selectActiveJoints]"); }
