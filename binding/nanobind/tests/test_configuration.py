@@ -3,6 +3,7 @@ import mc_rtc
 
 # import pytest
 
+
 def test_configuration_manual():
     c = mc_rtc.Configuration()
     c.add_null("null_key")
@@ -35,4 +36,4 @@ def test_configuration_manual():
 
     true_bool = True
     c.add("bool", true_bool)
-    assert c.get_bool("bool") == True
+    assert c.get_bool("bool")
