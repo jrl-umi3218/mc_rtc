@@ -5,3 +5,5 @@
 # The "as Symbol" is used to bring the otherwise private symols into the public namespace
 
 from .mc_rtc_python import Configuration as Configuration
+
+__all__ = ["Configuration"]
