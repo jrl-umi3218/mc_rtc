@@ -1,17 +1,62 @@
 #pragma once
+#include <cstdint>
+#include <tuple>
 
 namespace mc_rtc
 {
 namespace internal
 {
+
 // Compile-time iteration over a typelist
-// Applies a Visitor for each type T
+// See https://github.com/lipk/cpp-typelist/blob/master/typelist.hpp and tmplbook for inspiration
 
 template<typename... Args>
 struct TypeList
 {
+  /**
+   * Wraps adds a surrounding type around each element in a TypeList, e.g
+   *
+   * ```
+   * using simple = TypeList<int, std::vector<float>, std::string>;
+   * using ptrs = simple::wrap<std::shared_ptr>;
+   * ```
+   *
+   * ptrs is now TypeList<std::shared_ptr<int>, std::shared_ptr<std::vector<float>>, std::shared_ptr<std::string>>;
+   */
+  template<template<typename> class W>
+  using wrap = TypeList<W<Args>...>;
+
+  /**
+   * map is the generic form of wrap.
+   * It takes some M template class as input, too, but it outputs M<T>::type for each T element,
+   * instead of simply M<T>.
+   * Example: convert a list of scalar types into a list of std::vectors.
+   *
+   * ```
+   *   template <typename T>
+   *   struct wrap_in_vector { using type = std::vector<T>; };
+   *   using simple = type_list<double, int, float>;
+   *   using vecs = simple::map<wrap_in_vector>;
+   * ```
+   *
+   */
+  template<template<typename> class M>
+  using map = TypeList<typename M<Args>::type...>;
 };
 
+template<typename ta, typename tb>
+struct type_cat;
+
+// Concatenates two type_list
+template<typename... a, typename... b>
+struct type_cat<TypeList<a...>, TypeList<b...>>
+{
+  typedef TypeList<a..., b...> type;
+};
+
+/**
+ * Applies a Visitor for each type T
+ */
 namespace Detail
 {
 
@@ -73,5 +118,6 @@ constexpr void ForEach(Param & arg)
 // template<> constexpr void Visitor::Visit<double>(nb::module_ & ) {
 //   static_assert(sizeof(double) == 8, "");
 // }
+
 } // namespace internal
 } // namespace mc_rtc
