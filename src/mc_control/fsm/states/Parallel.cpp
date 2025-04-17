@@ -53,9 +53,10 @@ void ParallelState::start(Controller & ctl)
   {
     if(std::find(states.begin(), states.end(), sName) == states.end())
     {
-      mc_rtc::log::error_and_throw("[{}] Invalid output state name {}. It should be one of the "
-                                   "following states: {}. Check your \"outputs\" configuration.",
-                                   name(), sName, mc_rtc::io::to_string(states));
+      mc_rtc::log::error_and_throw(
+          "[{}] Invalid output state name {}. It should be one of the "
+          "following states: {}. Check your \"outputs\" configuration.",
+          name(), sName, mc_rtc::io::to_string(states));
     }
   }
   auto states_config = config_("configs", mc_rtc::Configuration{});

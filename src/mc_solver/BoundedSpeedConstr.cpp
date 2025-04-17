@@ -262,9 +262,10 @@ void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver,
     {
       if(lowerSpeed.size() != 6 || upperSpeed.size() != 6)
       {
-        mc_rtc::log::error_and_throw("[BoundedSpeedConstr] In TVM backend you have to specify the 6D speed but "
-                                     "lowerSpeed size ({}) or upperSpeed size ({}) is wrong",
-                                     lowerSpeed.size(), upperSpeed.size());
+        mc_rtc::log::error_and_throw(
+            "[BoundedSpeedConstr] In TVM backend you have to specify the 6D speed but "
+            "lowerSpeed size ({}) or upperSpeed size ({}) is wrong",
+            lowerSpeed.size(), upperSpeed.size());
       }
       if(dof.rows() != 6 || dof.cols() != 6)
       {

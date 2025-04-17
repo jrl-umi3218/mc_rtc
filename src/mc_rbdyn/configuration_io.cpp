@@ -1030,9 +1030,10 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
     {
       if(rm._collisionTransforms.count(ctf.first))
       {
-        mc_rtc::log::warning("The collision transform for {} was already loaded from the URDF, the one specified in "
-                             "the module will be ignored",
-                             ctf.first);
+        mc_rtc::log::warning(
+            "The collision transform for {} was already loaded from the URDF, the one specified in "
+            "the module will be ignored",
+            ctf.first);
         continue;
       }
       rm._collisionTransforms[ctf.first] = ctf.second;

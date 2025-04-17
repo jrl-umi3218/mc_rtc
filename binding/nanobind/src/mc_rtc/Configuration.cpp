@@ -76,21 +76,12 @@ typename std::enable_if_t<std::is_same_v<int, T>, std::string> explicit_type_nam
 }
 
 template<typename T>
-typename std::enable_if_t<std::is_same_v<unsigned int, T>, std::string> explicit_type_name_()
-{
-  return "uint";
-}
-
-template<typename T>
-typename std::enable_if_t<std::is_same_v<float, T>, std::string> explicit_type_name_()
-{
-  return "float";
-}
-
-template<typename T>
 typename std::enable_if_t<std::is_same_v<double, T>, std::string> explicit_type_name_()
 {
-  return "double";
+  // This is intentional: python does not have a double type, in python float is usually a 64bit floating-point number
+  // For the purposes of the bindings, we thus use double as the actual c++ type, but return it as "float" name for
+  // python typing purposes
+  return "float";
 }
 
 template<typename T>
@@ -232,6 +223,17 @@ struct GetVisitor
   }
 };
 
+struct ToConversionVisitor
+{
+  template<typename T, typename NBClass>
+  static constexpr void Visit(NBClass & class_)
+  {
+    auto typeName = mc_rtc::explicit_type_name<T>();
+    class_.def(("to_" + typeName).c_str(), [](Configuration & self) { return static_cast<T>(self); },
+               fmt::format("Convert this configuration object to type {}", typeName).c_str());
+  }
+};
+
 struct ArrayAtVisitor
 {
   template<typename T, typename NBClass>
@@ -263,8 +265,14 @@ struct AssignmentOperatorVisitor
   {
     auto typeName = mc_rtc::explicit_type_name<T>();
     class_.def(
-        "__call__", [](Configuration & self, const std::string & key, T default_value)
-        { return self(key, default_value); }, "key"_a, "default_value"_a,
+        "__call__",
+        [typeName](Configuration & self, const std::string & key,
+                   const T default_value) -> std::decay_t<T> // XXX: check if we always want to return by value here
+        {
+          mc_rtc::log::info("call for type {}", typeName);
+          return self(key, default_value);
+        },
+        "key"_a, "default_value"_a,
         fmt::format(R"(Retrieve a given value (of type {0}) stored within the configuration with a default value.
 
 If the key is not stored in the Configuration or if the underyling value
@@ -294,13 +302,27 @@ void bind_configuration(nb::module_ & m)
   c.def(nb::init<>(), "Creates an empty configuration")
       .def(nb::init<const std::string &>(), "Create a configuration from file (yaml or json)")
       .def("has", &Configuration::has, "key"_a, "Check if the key is part of the configuration")
-      .def("rootArray", &Configuration::rootArray, "Return a Configuration with an array as root entry")
+      .def_static("rootArray", &Configuration::rootArray, "Return a Configuration with an array as root entry")
       .def_static(
           "fromJSONData", [](const std::string & data) { return Configuration::fromData(data); }, "json_data"_a,
           "Static constructor to load from JSON data")
       .def_static(
           "fromYAMLData", [](const std::string & data) { return Configuration::fromYAMLData(data); }, "json_data"_a,
           "Static constructor to load from YAML data")
+      .def("loadJSONData", &Configuration::loadData, "json_data"_a,
+           R"(Load JSON data into the configuration
+
+Same rules apply as ::load methods
+
+Parameters:
+- json_data: JSON data to load)")
+      .def("loadYAMLData", &Configuration::loadData, "yaml_data"_a,
+           R"(Load YAML data into the configuration
+
+Same rules apply as ::load methods
+
+Parameters:
+- yaml_data: YAML data to load)")
       .def_static(
           "fromMessagePack",
           [](const std::string & data, size_t size) { return Configuration::fromMessagePack(data.c_str(), size); },
@@ -390,6 +412,14 @@ Throws: if i >= size())")
 
   // Bind "add" for all supported types
   mc_rtc::internal::ForEach<AllConfigurationTypes, AddVisitor>(c);
+  c.def("add", static_cast<Configuration (Configuration::*)(const std::string &)>(&Configuration::add), "key"_a,
+        R"(Create an empty object in the Configuration
+
+Overwrite existing content if any.
+
+Parameters:
+- key: Key to add)");
+
   // Bind "get_<type> for all supported types
   // This replaces T operator()(const std::string & key)
   // and           T operator()(const std::string & key, const T & default_value)
@@ -400,6 +430,7 @@ Throws: if i >= size())")
   //    int_val = config("key", int)
   // This is much more complicated and without real added value compared to get_<type>
   mc_rtc::internal::ForEach<AllConfigurationTypes, GetVisitor>(c);
+  mc_rtc::internal::ForEach<AllConfigurationTypes, ToConversionVisitor>(c);
   // Bind "push" for arrays
   mc_rtc::internal::ForEach<AllConfigurationTypes, PushVisitor>(c);
   // Bind "at(i, default_value)" for arrays
@@ -408,6 +439,18 @@ Throws: if i >= size())")
   // template<typename T>
   // T operator()(const std::string & key, const T & v) const
   mc_rtc::internal::ForEach<AllConfigurationTypes, AssignmentOperatorVisitor>(c);
+  c.def(
+      "__call__", [](Configuration & self, const std::string & key) { return self(key); }, "key"_a,
+      R"(Returns an entry value stored within the configuration
+
+Parameters:
+key The key used to store the value
+
+Return:
+The configuration object stored in the configuration in the key entry
+
+Throws:
+If key is not stored in the Configuration)");
 
   // Binds
   // template<typename t>
