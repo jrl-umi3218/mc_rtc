@@ -124,9 +124,10 @@ void SplineTrajectoryTask<Derived>::load(mc_solver::QPSolver & solver, const mc_
         }
         catch(mc_rtc::Configuration::Exception & e)
         {
-          mc_rtc::log::critical("[{}] {} interpolation values are expected to be either vector<pair<double, "
-                                "Vector6d>> or vector<pair<double, double>>",
-                                name(), key);
+          mc_rtc::log::critical(
+              "[{}] {} interpolation values are expected to be either vector<pair<double, "
+              "Vector6d>> or vector<pair<double, double>>",
+              name(), key);
           throw e;
         }
       }
