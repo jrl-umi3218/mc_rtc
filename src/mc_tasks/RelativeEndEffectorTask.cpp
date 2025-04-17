@@ -177,8 +177,9 @@ mc_tasks::MetaTaskPtr load_position_task(mc_solver::QPSolver & solver, const mc_
 {
   if(config.has("bodyPoint"))
   {
-    mc_rtc::log::error_and_throw("[PositionTaskLoader] bodyPoint is not supported anymore.\nYou can create a frame "
-                                 "with the corresponding body point instead");
+    mc_rtc::log::error_and_throw(
+        "[PositionTaskLoader] bodyPoint is not supported anymore.\nYou can create a frame "
+        "with the corresponding body point instead");
   }
   const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
   {
@@ -200,8 +201,9 @@ mc_tasks::MetaTaskPtr load_ef_task(mc_solver::QPSolver & solver, const mc_rtc::C
 {
   if(config.has("bodyPoint"))
   {
-    mc_rtc::log::error_and_throw("[EndEffectorTaskLoader] bodyPoint is not supported anymore.\nYou can create a frame "
-                                 "with the corresponding body point instead");
+    mc_rtc::log::error_and_throw(
+        "[EndEffectorTaskLoader] bodyPoint is not supported anymore.\nYou can create a frame "
+        "with the corresponding body point instead");
   }
   const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
   {
@@ -224,8 +226,9 @@ mc_tasks::MetaTaskPtr load_relef_task(mc_solver::QPSolver & solver, const mc_rtc
 {
   if(config.has("bodyPoint"))
   {
-    mc_rtc::log::error_and_throw("[RelativeEndEffectorTaskLoader] bodyPoint is not supported anymore.\nYou can create "
-                                 "a frame with the corresponding body point instead");
+    mc_rtc::log::error_and_throw(
+        "[RelativeEndEffectorTaskLoader] bodyPoint is not supported anymore.\nYou can create "
+        "a frame with the corresponding body point instead");
   }
   const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
   {
