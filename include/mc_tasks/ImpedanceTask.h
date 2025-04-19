@@ -73,7 +73,10 @@ public:
                 const mc_rbdyn::Robots & robots,
                 unsigned robotIndex,
                 double stiffness = 5.0,
-                double weight = 1000.0);
+                double weight = 1000.0,
+                bool showTarget = true,
+                bool showPose = true,
+                bool showCompliance = true);
 
   /** \brief Constructor
    *
@@ -85,7 +88,12 @@ public:
    *
    * \throws If the frame does not have a force sensor attached to it
    */
-  ImpedanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness = 5.0, double weight = 1000.0);
+  ImpedanceTask(const mc_rbdyn::RobotFrame & frame,
+                double stiffness = 5.0,
+                double weight = 1000.0,
+                bool showTarget = true,
+                bool showPose = true,
+                bool showCompliance = true);
 
   /*! \brief Reset the task
    *
@@ -182,6 +190,10 @@ public:
 
 protected:
   ImpedanceGains gains_ = ImpedanceGains::Default();
+
+  bool showTarget_ = true;
+  bool showPose_ = true;
+  bool showCompliance_ = true;
 
   /** Relative pose, velocity, and acceleration from target frame to compliance frame represented in the world frame.
    *  To store these values across control cycles, represent them in a constant world frame instead of the time-varying
