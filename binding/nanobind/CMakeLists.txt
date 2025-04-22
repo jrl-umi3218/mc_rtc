@@ -55,11 +55,11 @@ nanobind_add_module(
   # to conserve space by reusing a shared libnanobind across libraries
   NB_STATIC
   # Source code goes here
-  src/mc_rtc/mc_rtc_module.cpp
-  src/mc_rtc/bind_Configuration.cpp
+  src/mc_rtc_module/mc_rtc_module.cpp
+  src/mc_rtc_module/bind_Configuration.cpp
   # mc_rtc.mc_rbdyn submodule
-  src/mc_rtc/mc_rbdyn/mc_rbdyn_module.cpp
-  src/mc_rtc/mc_rbdyn/bind_RobotModule.cpp
+  src/mc_rtc_module/mc_rbdyn/mc_rbdyn_module.cpp
+  src/mc_rtc_module/mc_rbdyn/bind_RobotModule.cpp
 )
 
 find_package(mc_rtc REQUIRED)
@@ -87,6 +87,7 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_python.pyi
               ${CMAKE_CURRENT_BINARY_DIR}/py.typed DESTINATION mc_rtc
 )
 
+# Generate stub for each submodule
 nanobind_add_stub(
   mc_rbdyn_stub
   MODULE
