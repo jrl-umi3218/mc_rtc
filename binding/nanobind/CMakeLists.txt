@@ -56,11 +56,14 @@ nanobind_add_module(
   NB_STATIC
   # Source code goes here
   src/mc_rtc/mc_rtc_module.cpp
-  src/mc_rtc/Configuration.cpp
+  src/mc_rtc/bind_Configuration.cpp
+  # mc_rtc.mc_rbdyn submodule
+  src/mc_rtc/mc_rbdyn/mc_rbdyn_module.cpp
+  src/mc_rtc/mc_rbdyn/bind_RobotModule.cpp
 )
 
 find_package(mc_rtc REQUIRED)
-target_link_libraries(mc_rtc_python PUBLIC mc_rtc::mc_rtc_utils)
+target_link_libraries(mc_rtc_python PUBLIC mc_rtc::mc_rtc_utils mc_rtc::mc_rbdyn)
 target_include_directories(
   mc_rtc_python PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
@@ -83,3 +86,16 @@ nanobind_add_stub(
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_python.pyi
               ${CMAKE_CURRENT_BINARY_DIR}/py.typed DESTINATION mc_rtc
 )
+
+nanobind_add_stub(
+  mc_rbdyn_stub
+  MODULE
+  mc_rtc_python.mc_rbdyn
+  OUTPUT
+  __init__.pyi
+  PYTHON_PATH
+  $<TARGET_FILE_DIR:mc_rtc_python>
+  DEPENDS
+  mc_rtc_python_stub
+)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/__init__.pyi DESTINATION mc_rtc/mc_rbdyn)
