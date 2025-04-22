@@ -11,6 +11,7 @@ namespace mc_rtc_python
 {
   void bind_RobotModule(nanobind::module_ &m)
   {
+      m.def("hello", []() { }, "hello documentation");
     auto c = nb::class_<mc_rbdyn::RobotModule>(m, "RobotModule");
     c.def(nb::init<const std::string &, const std::string &>(),
         R"(Construct from a provided path and name

@@ -11,7 +11,6 @@ namespace mc_rtc_python
 void bind_mc_rbdyn_module(nb::module_ & m)
 {
   m.doc() = "mc_rbdyn bindings";
-  m.def("test", []() { std::cout << "hello" << std::endl; }, "test doc");
   bind_RobotModule(m);
 }
 
