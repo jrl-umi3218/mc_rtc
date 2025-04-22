@@ -93,10 +93,10 @@ nanobind_add_stub(
   MODULE
   mc_rtc_python.mc_rbdyn
   OUTPUT
-  __init__.pyi
+  mc_rbdyn.pyi
   PYTHON_PATH
   $<TARGET_FILE_DIR:mc_rtc_python>
   DEPENDS
   mc_rtc_python_stub
 )
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/__init__.pyi DESTINATION mc_rtc/mc_rbdyn)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mc_rbdyn.pyi DESTINATION mc_rtc/mc_rbdyn)

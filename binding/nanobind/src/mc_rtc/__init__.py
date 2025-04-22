@@ -6,8 +6,7 @@
 
 # from .mc_rtc_python import Configuration as Configuration
 # from .mc_rtc_python import mc_rbdyn as mc_rbdyn
-from .mc_rtc_python import *
+from .mc_rtc_python import Configuration as Configuration
+from .mc_rtc_python import mc_rbdyn as mc_rbdyn
 
-# FIXME: how to import this for stubs
-# from .mc_rtc_python.mc_rbdyn import RobotModule as RobotModule
-__all__ = ["Configuration", "mc_rbdyn"]
+__all__ = ["Configuration"]
