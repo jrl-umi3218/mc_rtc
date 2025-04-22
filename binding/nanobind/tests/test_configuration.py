@@ -9,7 +9,6 @@ import os
 import pytest
 import tempfile
 
-
 def makeConfigFile(data: str):
     f = tempfile.NamedTemporaryFile(delete=False)
     _ = f.write(data.encode("ascii"))
