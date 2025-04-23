@@ -2,7 +2,7 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-import mc_rtc
+from mc_rtc import mc_rtc
 import numpy as np
 
 import os

@@ -194,8 +194,7 @@ struct PushVisitor
                fmt::format(
                    R"(Insert a {0} element into an array
 
-Parameters:
-- value ({0}): Value to add
+:param: value: Value to add
 
 Throws: If the underlying Json value is not an array)",
                    typeName)
@@ -244,12 +243,10 @@ struct ArrayAtVisitor
         "at", [](Configuration & self, size_t i, T v) { return self.at(i, v); }, "i"_a, "default_value"_a,
         fmt::format(R"(Retrieve a given value ({0}) from a JSON array
 
-Parameters:
-- i (size_t): Index to retrieve
-- v ({0}): The default value
+:param i (size_t): Index to retrieve
+:param v ({0}): The default value
 
-Returns:
-the default value if the index is too high or if the underlying value does not match the requested type.)",
+:returns: the default value if the index is too high or if the underlying value does not match the requested type.)",
                     typeName)
             .c_str());
   }
@@ -257,7 +254,7 @@ the default value if the index is too high or if the underlying value does not m
 
 // Binds
 // template<typename T>
-// T operator()(const std::string & key, const T & v) const
+// T opertor()(const std::string & key, const T & v) const
 struct AssignmentOperatorVisitor
 {
   template<typename T, typename NBClass>
@@ -278,9 +275,8 @@ struct AssignmentOperatorVisitor
 If the key is not stored in the Configuration or if the underyling value
 does not match the requested type, the default value is returned.
 
-Parameters:
-- key (str): The key used to store the value
-- default_value ({0}): The default value)",
+:param key: The key used to store the value
+:param default_value: The default value)",
                     typeName)
             .c_str());
   }
@@ -314,15 +310,13 @@ void bind_configuration(nb::module_ & m)
 
 Same rules apply as ::load methods
 
-Parameters:
-- json_data: JSON data to load)")
+:param json_data: JSON data to load)")
       .def("loadYAMLData", &Configuration::loadData, "yaml_data"_a,
            R"(Load YAML data into the configuration
 
 Same rules apply as ::load methods
 
-Parameters:
-- yaml_data: YAML data to load)")
+:param yaml_data: YAML data to load)")
       .def_static(
           "fromMessagePack",
           [](const std::string & data, size_t size) { return Configuration::fromMessagePack(data.c_str(), size); },
@@ -331,34 +325,33 @@ Parameters:
            R"(Load additional data into the configuration
 
 For any key existing in both objects:
-- self(key) is overwritten for values and arrays
-- config(key) is loaded into self(key) for objects
+
+* self(key) is overwritten for values and arrays
+* config(key) is loaded into self(key) for objects
 )")
       .def("load", nb::overload_cast<const mc_rtc::Configuration &>(&Configuration::load), "config"_a,
            R"(Load data from another Configuration object
 
 For any key existing in both objects:
-- self(key) is overwritten for values and arrays
-- if config(key) and self(key) are objects, config(key) is loaded into self(key)
-- otherwise, config(key) overwrites self(key)
 
-Parameters:
-config (str): The configuration object)")
+* self(key) is overwritten for values and arrays
+* if config(key) and self(key) are objects, config(key) is loaded into self(key)
+* otherwise, config(key) overwrites self(key)
+
+:param config: The configuration object)")
       .def("save", &Configuration::save, "path"_a, "pretty"_a = true,
            R"(Save the configuration to a file.
 
 If the path extension is yaml or yml then save in YAML format
 
-Parameters:
-path (str): Path to the configuration file
+:param path: Path to the configuration file
 
-pretty (bool): Writes a human-readable file, defaults to true)")
+:param pretty: Writes a human-readable file, defaults to true)")
       .def("dump", &Configuration::dump, "pretty"_a = false, "yaml"_a = false,
            R"(Dump the configuration into a string.
 
-Parameters:
-- pretty (bool): Writes a human-readable string, defaults to false
-- yaml (bool): Writes YAML instead of JSON, defaults to false
+:param pretty: Writes a human-readable string, defaults to false
+:param yaml: Writes YAML instead of JSON, defaults to false
 )")
       .def("add_null", &Configuration::add_null, "key"_a,
            "Add a null element. Overrides the existing value if it holds one for the given key.")
@@ -380,8 +373,7 @@ See push(bool))")
           "__getitem__", [](Configuration & self, size_t i) { return self[i]; }, "i"_a,
           R"(If the stored value is an array, returns a Configuration element for the i-th element.
 
-Parameters:
-- i (uint): Access i-th element
+:param i: Access i-th element
 
 Throws: if i >= size())")
       .def("__getitem__", [](Configuration & self, const std::string & key) { return self(key); });
@@ -417,8 +409,7 @@ Throws: if i >= size())")
 
 Overwrite existing content if any.
 
-Parameters:
-- key: Key to add)");
+:param key: Key to add)");
 
   // Bind "get_<type> for all supported types
   // This replaces T operator()(const std::string & key)
@@ -443,11 +434,9 @@ Parameters:
       "__call__", [](Configuration & self, const std::string & key) { return self(key); }, "key"_a,
       R"(Returns an entry value stored within the configuration
 
-Parameters:
-key The key used to store the value
+:param key: The key used to store the value
 
-Return:
-The configuration object stored in the configuration in the key entry
+:returns: The configuration object stored in the configuration in the key entry
 
 Throws:
 If key is not stored in the Configuration)");
