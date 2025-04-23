@@ -136,7 +136,7 @@ std::string LTDLHandle::dir() const
 
 Loader::callback_t Loader::default_cb = [](const std::string &, LTDLHandle &) {};
 
-std::string Loader::debug_suffix = "@MC_RTC_LOADER_DEBUG_SUFFIX";
+std::string Loader::debug_suffix = "@MC_RTC_LOADER_DEBUG_SUFFIX@";
 
 unsigned int Loader::init_count_ = 0;
 
