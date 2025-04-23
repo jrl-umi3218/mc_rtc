@@ -353,7 +353,7 @@
         <h1>Implement a new plugin for mc_rtc</h1>
         
 
-        <p>In mc_rtc, every interface uses the <a href="/mc_rtc/doxygen.html#structmc__control_1_1MCGlobalController" target="blank_"><code>mc_control::MCGlobalController</code></a> class to initialize and run the controllers in the framework. In particular, they will run the <a href="/mc_rtc/doxygen.html#structmc__control_1_1MCGlobalController#a153432b8c6ebfc4f9484deb1439ca3ee" target="blank_"><code>mc_control::MCGlobalController::run()</code></a> function on every iteration.</p>
+        <p>In mc_rtc, every interface uses the mc_control::MCGlobalController class to initialize and run the controllers in the framework. In particular, they will run the mc_control::MCGlobalController::run() function on every iteration.</p>
 
 <p>The plugin system allows one to write a component that will run at the start and/or end of this run function.</p>
 
@@ -368,13 +368,13 @@
 <h2 id="writing-your-own-plugin">Writing your own plugin</h2>
 
 
-<p>To write a plugin you should write a class that derives from the <a href="/mc_rtc/doxygen.html#structmc__control_1_1GlobalPlugin" target="blank_"><code>mc_control::GlobalPlugin</code></a> class. Then you must implement the following functions:</p>
+<p>To write a plugin you should write a class that derives from the mc_control::GlobalPlugin class. Then you must implement the following functions:</p>
 
 <ul>
-  <li><a href="/mc_rtc/doxygen.html#structmc__control_1_1GlobalPlugin#acd8832c0335bbf2493bd04697b721bd7" target="blank_"><code>mc_control::GlobalPlugin::init()</code></a> is called by mc_rtc when <a href="/mc_rtc/doxygen.html#structmc__control_1_1MCGlobalController#ac49cb563047d30361c781b96ec2a8e5d" target="blank_"><code>mc_control::MCGlobalController::init()</code></a> is called</li>
-  <li><a href="/mc_rtc/doxygen.html#structmc__control_1_1GlobalPlugin#a034ddfcb8958c36c5812cdb7e0a2e9ca" target="blank_"><code>mc_control::GlobalPlugin::reset()</code></a> is called by mc_rtc when the controller is changed</li>
-  <li><a href="/mc_rtc/doxygen.html#structmc__control_1_1GlobalPlugin#a83ce36f99de7b4a3e7af152ed88e0f5b" target="blank_"><code>mc_control::GlobalPlugin::before()</code></a> is called by mc_rtc at the beginning of the run function</li>
-  <li><a href="/mc_rtc/doxygen.html#structmc__control_1_1GlobalPlugin#ab661e381f418ad5f9afa4adf25b4f282" target="blank_"><code>mc_control::GlobalPlugin::after()</code></a> is called by mc_rtc at the end of the run function</li>
+  <li>mc_control::GlobalPlugin::init() is called by mc_rtc when mc_control::MCGlobalController::init() is called</li>
+  <li>mc_control::GlobalPlugin::reset() is called by mc_rtc when the controller is changed</li>
+  <li>mc_control::GlobalPlugin::before() is called by mc_rtc at the beginning of the run function</li>
+  <li>mc_control::GlobalPlugin::after() is called by mc_rtc at the end of the run function</li>
 </ul>
 
 <div class="alert alert-warning">mc_rtc will not call the reset method when the first controller is started &mdash; only the init method is called in that case. If needed, you can call the reset method from the init method.</div>
