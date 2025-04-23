@@ -1,12 +1,4 @@
-#
-# In order for stubs to work correctly, we need to import each symbol as
-# from .mc_rtc_python import Symbol as Symbol
-#
-# The "as Symbol" is used to bring the otherwise private symols into the public namespace
+from . import mc_rbdyn
+from . import mc_rtc
 
-# from .mc_rtc_python import Configuration as Configuration
-# from .mc_rtc_python import mc_rbdyn as mc_rbdyn
-from .mc_rtc_python import Configuration as Configuration
-from .mc_rtc_python import mc_rbdyn as mc_rbdyn
-
-__all__ = ["Configuration"]
+__all__ = ["mc_rbdyn", "mc_rtc"]
