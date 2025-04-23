@@ -75,7 +75,7 @@ nanobind_add_stub(
   MODULE
   mc_rtc_python
   OUTPUT
-  mc_rtc_python.pyi
+  __init__.pyi
   MARKER_FILE
   py.typed
   PYTHON_PATH
@@ -83,20 +83,32 @@ nanobind_add_stub(
   DEPENDS
   mc_rtc_python
 )
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_python.pyi
-              ${CMAKE_CURRENT_BINARY_DIR}/py.typed DESTINATION mc_rtc
-)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/py.typed DESTINATION mc_rtc)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/__init__.pyi DESTINATION mc_rtc)
 
 # Generate stub for each submodule
 nanobind_add_stub(
-  mc_rbdyn_stub
+  mc_rtc_stub
   MODULE
-  mc_rtc_python.mc_rbdyn
+  mc_rtc_python.mc_rtc
   OUTPUT
-  mc_rbdyn.pyi
+  mc_rtc/__init__.pyi
   PYTHON_PATH
   $<TARGET_FILE_DIR:mc_rtc_python>
   DEPENDS
   mc_rtc_python_stub
 )
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mc_rbdyn.pyi DESTINATION mc_rtc/mc_rbdyn)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mc_rtc/__init__.pyi DESTINATION mc_rtc/mc_rtc)
+
+nanobind_add_stub(
+  mc_rbdyn_stub
+  MODULE
+  mc_rtc_python.mc_rbdyn
+  OUTPUT
+  mc_rbdyn/__init__.pyi
+  PYTHON_PATH
+  $<TARGET_FILE_DIR:mc_rtc_python>
+  DEPENDS
+  mc_rtc_python_stub
+)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mc_rbdyn/__init__.pyi DESTINATION mc_rtc/mc_rbdyn)

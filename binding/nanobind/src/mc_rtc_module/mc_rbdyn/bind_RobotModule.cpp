@@ -17,17 +17,17 @@ namespace mc_rtc_python
         R"(Construct from a provided path and name
 
 As a result:
-- name is defined as \p name
-- path is defined as \p path
-- urdf_path is path + /urdf/ + name + .urdf
-- rsdf_dir is path + /rsdf/ + name
-- calib_dir is path + /calib/ + name:q
+
+* name is defined as \p name
+* path is defined as \p path
+* urdf_path is path + /urdf/ + name + .urdf
+* rsdf_dir is path + /rsdf/ + name
+* calib_dir is path + /calib/ + name:q
 
 No further action is taken. This constructor is useful to inherit from
 
-Parameters:
-- path Path to the robot description
-- name Name of the robot)"),
+:param path: Path to the robot description
+:param name: Name of the robot)"),
     c.def(nb::init<const std::string &, const std::string &, const std::string &>(),
     R"(Construct from a provided path, name and urdf_path
 
@@ -35,10 +35,9 @@ Parameters:
 
   The different is that urdf_path is defined to \p urdf_path
 
-  Parameters:
-  - path Path to the robot description
-  - name Name of the robot
-  - urdf_path Path to the robot URDF)");
+:param path: Path to the robot description
+:param name: Name of the robot
+:param urdf_path: Path to the robot URDF)");
 
   // RobotModule(const std::string & name, const rbd::parsers::ParserResult & res);
   // void init(const rbd::parsers::ParserResult & res);
