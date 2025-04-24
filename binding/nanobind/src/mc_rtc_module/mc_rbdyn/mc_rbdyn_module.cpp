@@ -1,6 +1,6 @@
+#include <iostream>
 #include <mc_rtc_python/mc_rbdyn/mc_rbdyn_module.h>
 #include <nanobind/nanobind.h>
-#include <iostream>
 
 namespace nb = nanobind;
 using namespace nb::literals;

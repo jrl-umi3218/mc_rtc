@@ -1,19 +1,77 @@
-#include <mc_rtc_python/mc_rbdyn/mc_rbdyn_module.h>
-#include <mc_rbdyn/RobotModule.h>
+#include <mc_rbdyn/RobotLoader.h>
 
+#include <nanobind/stl/array.h>
+#include <nanobind/stl/map.h>
+#include <nanobind/stl/pair.h>
+#include <nanobind/stl/shared_ptr.h>
 #include <nanobind/stl/string.h>
+#include <nanobind/stl/vector.h>
 
 namespace nb = nanobind;
 using namespace nb::literals;
 using RobotModule = mc_rbdyn::RobotModule;
+using RobotLoader = mc_rbdyn::RobotLoader;
 
 namespace mc_rtc_python
 {
-  void bind_RobotModule(nanobind::module_ &m)
-  {
-      m.def("hello", []() { }, "hello documentation");
-    auto c = nb::class_<mc_rbdyn::RobotModule>(m, "RobotModule");
-    c.def(nb::init<const std::string &, const std::string &>(),
+void bind_RobotLoader(nanobind::module_ & m)
+{
+  auto c = nb::class_<mc_rbdyn::RobotLoader>(m, "RobotLoader");
+  c.doc() = R"(
+        Load RobotModule instances from shared libraries and robot aliases
+    )";
+  c.def_static(
+       "get_robot_module",
+       [](const std::string & robotName) { return mc_rbdyn::RobotLoader::get_robot_module(robotName); }, "robotName"_a,
+       R"(
+  :returns: a RobotModule constructed with the provided Args
+
+  :param: name The module name
+        )")
+      .def_static(
+          "get_robot_module",
+          [](const std::vector<std::string> & args) { return mc_rbdyn::RobotLoader::get_robot_module(args); }, "args"_a,
+          R"(
+  :returns: a RobotModule constructed with the provided Args
+
+  :param args: Arguments to pass to the robot module creation. This is arbitrarly limited to 3 parameters
+        )");
+  c.def_static("update_robot_module_path", RobotLoader::update_robot_module_path, "paths"_a,
+               R"(
+  Add additional directories to the robot module path
+
+  :param paths: Directories to be added to the module path
+                    )");
+  c.def_static("has_robot", &RobotLoader::has_robot, "name"_a,
+               R"(
+  Check if a robot is available
+
+  :param name: Robot name
+  :returns: True if the robot is available
+                    )");
+  c.def_static("set_verbosity", &RobotLoader::set_verbosity, "verbose"_a);
+  c.def_static("available_robots", &RobotLoader::available_robots,
+               R"(
+          :returns: a list of available robots
+          )");
+  c.def_static("load_aliases", &RobotLoader::load_aliases, "fname"_a,
+               R"(
+  Load aliases
+
+  An aliases file should be a map of alias to param vector
+
+  :param fname: A JSON or YAML containing aliases
+          )");
+}
+
+void bind_RobotModule(nanobind::module_ & m)
+{
+  auto c = nb::class_<mc_rbdyn::RobotModule>(m, "RobotModule");
+  c.doc() = R"(
+    A robot module contains all information needed to represent a robot. This can be used to construct an actual :py:ref:mc_rbdyn.Robot instance. It also contains additional information that can be used by interface (e.g ref_joint_order) and simulators.
+    )";
+
+  c.def(nb::init<const std::string &, const std::string &>(), "path"_a, "name"_a,
         R"(Construct from a provided path and name
 
 As a result:
@@ -28,12 +86,13 @@ No further action is taken. This constructor is useful to inherit from
 
 :param path: Path to the robot description
 :param name: Name of the robot)"),
-    c.def(nb::init<const std::string &, const std::string &, const std::string &>(),
-    R"(Construct from a provided path, name and urdf_path
+      c.def(nb::init<const std::string &, const std::string &, const std::string &>(), "path"_a, "name"_a,
+            "urdf_path"_a,
+            R"(Construct from a provided path, name and urdf_path
 
   See: RobotModule(const std::string &, const std::string &)
 
-  The different is that urdf_path is defined to \p urdf_path
+  The difference is that urdf_path is defined to urdf_path
 
 :param path: Path to the robot description
 :param name: Name of the robot
@@ -42,11 +101,218 @@ No further action is taken. This constructor is useful to inherit from
   // RobotModule(const std::string & name, const rbd::parsers::ParserResult & res);
   // void init(const rbd::parsers::ParserResult & res);
 
+  // const std::vector<std::map<std::string, std::vector<double>>> & bounds() const { return _bounds; }
+  c.def_rw("bounds", &RobotModule::_bounds,
+           R"(
+  Returns the robot's bounds obtained from parsing a urdf
 
+  The vector should hold 6 string -> vector<double> map
 
-      // .def(nb::init<const std::string &>(), "Create a configuration from file (yaml or json)")
-      // .def("has", &Configuration::has, "key"_a, "Check if the key is part of the configuration")
-      // .def_static("rootArray", &Configuration::rootArray, "Return a Configuration with an array as root entry")
-      // .def_static(
-  }
+  Each map's keys are joint names and values are joint limits.
+
+  They should be provided in the following order:
+
+  * joint limits (lower/upper)
+  * velocity limits (lower/upper)
+  * torque limits (lower/upper))");
+
+  // const std::vector<std::map<std::string, std::vector<double>>> & accelerationBounds() const
+  c.def_rw("accelerationBounds", &RobotModule::_accelerationBounds,
+           R"(
+   The robot's acceleration bounds
+
+   The vector should hold 2 string -> vector<double> map
+
+   Each map's keys are joint names and values are joint limits.
+
+   They should be provided in the following order:
+
+   * acceleration limits (lower/upper)
+           )");
+
+  // const std::vector<std::map<std::string, std::vector<double>>> & jerkBounds() const { return _jerkBounds; }
+  c.def_rw("jerkBounds", &RobotModule::_jerkBounds,
+           R"(
+  The robot's jerk bounds
+
+  The vector should hold 2 string -> vector<double> map
+
+  Each map's keys are joint names and values are joint limits.
+
+  They should be provided in the following order:
+
+  * jerk limits (lower/upper))");
+
+  // const std::vector<std::map<std::string, std::vector<double>>> & torqueDerivativeBounds() const
+  c.def_rw("torqueDerivativeBounds", &RobotModule::_torqueDerivativeBounds,
+           R"(
+  The robot's torque-derivative bounds
+
+  The vector should hold 2 string -> vector<double> map
+
+  Each map's keys are joint names and values are joint limits.
+
+  They should be provided in the following order:
+
+  * torque-derivative limits (lower/upper)
+
+          )");
+
+  // const std::map<std::string, std::vector<double>> & stance() const { return _stance; }
+  c.def_rw("stance", &RobotModule::_stance,
+           R"(
+  A default configuration for the robot
+
+  Keys are joint names and values are joint configurations.
+
+  It should be ok to include joints that are not in the robot (e.g. generate
+  the same default stance for variants of a robot. However, each actuated
+  joint in the robot should have a valid entry, see \ref expand_stance
+
+  For the floating base see \ref default_attitude
+  )");
+
+  // const std::map<std::string, std::pair<std::string, std::string>> & convexHull() const { return _convexHull; }
+  c.def_rw("convexHull", &RobotModule::_convexHull,
+           R"(
+  A map describing the convex hulls for the robot
+
+  A key defines a valid collision name, there should be no collision with the names in \ref collisionObjects()
+
+  A value is composed of two strings:
+
+  1. the name of the body the convex is attached to
+  2. the path to the file containing the convex description
+
+  The transformation between the convex and the body it's attached to are
+  provided in a separate map see \ref collisionTransforms()
+  )");
+
+  // TODO:
+  // const std::map<std::string, std::pair<std::string, S_ObjectPtr>> & collisionObjects() const
+
+  // const std::map<std::string, std::pair<std::string, std::string>> & stpbvHull() const { return _stpbvHull; }
+  c.def_rw("stpbvHull", &RobotModule::_stpbvHull,
+           R"(
+  Returns a map describing the STPBV hulls for the robot
+
+  A key defines a valid collision name, a value is composed of two strings:
+
+  1. the name of the body the convex is attached to
+
+  2. the path to the file containing the STPBV description
+
+  The transformation between the STPBV and the body it's attached to are
+  provided in a separate map see \ref collisionTransforms()
+  )");
+
+  // const std::map<std::string, sva::PTransformd> & collisionTransforms() const { return _collisionTransforms; }
+  c.def_rw("collisionTransforms", &RobotModule::_collisionTransforms,
+           R"(
+  Returns a map describing the transformation between convex/STPBV hulls
+  and their parent bodies
+
+  A key defines the collision name. The value is the transformation between
+  this collision object and its parent body
+  )");
+
+  // TODO:
+  // const std::vector<Flexibility> & flexibility() const { return _flexibility; }
+  // const std::vector<ForceSensor> & forceSensors() const { return _forceSensors; }
+  // const BodySensorVector & bodySensors() const { return _bodySensors; }
+  // const std::vector<JointSensor> & jointSensors() const { return _jointSensors; }
+  // const Springs & springs() const { return _springs; }
+  // const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() const { return _minimalSelfCollisions; }
+  // const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() const { return _commonSelfCollisions; }
+  // const std::vector<Gripper> & grippers() const { return _grippers; }
+  // inline const Gripper::Safety & gripperSafety() const { return _gripperSafety; }
+  //
+
+  // const std::vector<std::string> & ref_joint_order() const { return _ref_joint_order; }
+  c.def_rw("ref_joint_order", &RobotModule::_ref_joint_order,
+           R"(
+  :return: the reference (native controller) joint order of the robot
+
+  If it is empty, \ref make_default_ref_joint_order() will be used to
+  generate one
+          )");
+
+  // const std::array<double, 7> & default_attitude() const { return _default_attitude; }
+  c.def_rw("default_attitude", &RobotModule::_default_attitude,
+           R"(
+  :return: the default attitude of the floating base
+
+  This attitute is associated to the \ref stance() configuration
+
+          )");
+
+  // TODO:
+  // const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & defaultLIPMStabilizerConfiguration() const
+  // void boundsFromURDF(const rbd::parsers::Limits & limits);
+
+  // void expand_stance();
+  c.def("expand_stance", &RobotModule::expand_stance,
+        R"(
+  Add missing elements to the current module stance
+
+  If joints are present in the MultiBody but absent from the default stance,
+  this will add a default value for this joint to the stance (the joint's
+  zero configuration).
+          )");
+
+  // void make_default_ref_joint_order();
+  c.def("make_default_ref_joint_order", &RobotModule::make_default_ref_joint_order,
+        R"(
+  Make a valid ref_joint_order
+
+  If \ref ref_joint_order() is empty, this will generate a list of actuated
+  joints in the order they appear in the kinematic tree
+          )");
+
+  // TODO:
+  // inline const CompoundJointConstraintDescriptionVector & compoundJoints() const { return _compoundJoints; }
+  //
+
+  // inline const std::vector<std::string> & parameters() const { return _parameters; }
+  c.def_rw("parameters", &RobotModule::_parameters,
+           R"(
+  List of parameters passed to mc_rbdyn::RobotLoader::get_robot_module to obtain this module)");
+
+  // inline const std::vector<std::string> & canonicalParameters() const { return _canonicalParameters; }
+  c.def_rw("canonicalParameters", &RobotModule::_canonicalParameters,
+           R"(
+  List of parameters to get a RobotModule that is a canonical representation of this module
+  )");
+
+  // TODO:
+  // RobotConverterConfig controlToCanonicalConfig;
+  // std::function<void(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical)> controlToCanonicalPostProcess =
+
+  // std::string real_urdf() const { return _real_urdf; }
+  c.def_rw("real_urdf", &RobotModule::_real_urdf,
+           R"(
+  Path to a "real" URDF file
+
+  This will be used to show a visually distinct robot for displaying the
+  control and observed models simulatenously.
+
+  This defaults to urdf_path
+          )");
+
+  // TODO:
+  // inline const DevicePtrVector & devices() const { return _devices; }
+
+  // inline const std::vector<FrameDescription> & frames() const noexcept { return _frames; }
+
+  c.def_rw("path", &RobotModule::path, "Path to the robot's description package")
+      .def_rw("name", &RobotModule::name, "(default) Name of the robot")
+      .def_rw("urdf_path", &RobotModule::path, "Path to the robot's urdf file")
+      .def_rw("rsdf_dir", &RobotModule::rsdf_dir, "Path to the robot's RSDF folder (surfaces)")
+      .def_rw("calib_dir", &RobotModule::calib_dir, "Path to the robot's calib folder");
+
+  // TODO:
+  // All properties that depend on custom types
+
+  bind_RobotLoader(m);
 }
+} // namespace mc_rtc_python

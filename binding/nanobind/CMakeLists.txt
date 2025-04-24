@@ -111,4 +111,6 @@ nanobind_add_stub(
   DEPENDS
   mc_rtc_python_stub
 )
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mc_rbdyn/__init__.pyi DESTINATION mc_rtc/mc_rbdyn)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mc_rbdyn/__init__.pyi
+        DESTINATION mc_rtc/mc_rbdyn
+)
