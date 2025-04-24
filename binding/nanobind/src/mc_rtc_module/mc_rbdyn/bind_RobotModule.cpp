@@ -1,10 +1,14 @@
+#include <mc_rbdyn/Collision.h>
+#include <mc_rbdyn/Flexibility.h>
 #include <mc_rbdyn/Mimic.h>
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/RobotModule.h>
 
 #include <nanobind/nanobind.h>
+#include <nanobind/operators.h>
 #include <nanobind/stl/array.h>
 #include <nanobind/stl/map.h>
+#include <nanobind/stl/optional.h>
 #include <nanobind/stl/pair.h>
 #include <nanobind/stl/shared_ptr.h>
 #include <nanobind/stl/string.h>
@@ -78,6 +82,103 @@ void bind_Mimic(nb::module_ & m)
       .def_rw("offset", &Mimic::offset, "Mimic offset");
 }
 
+void bind_Flexibility(nb::module_ & m)
+{
+  using Flexibility = mc_rbdyn::Flexibility;
+  auto flex = nb::class_<Flexibility>(m, "Flexibility");
+  flex.doc() = R"(
+  This structure holds a flexible joint, if such a joint is part of a robot,
+  then the following dynamic constraint will be applied for the flexible joint
+  torques:
+
+  \f{align}
+  \underline{\mathbf{\tau}} = \overline{\mathbf{\tau}} = -K\mathbf{q} -C\dot{\mathbf{q}} - O
+  \f}
+)";
+  flex.def_rw("jointName", &Flexibility::jointName, "Name of the joint")
+      .def_rw("K", &Flexibility::K, "Stiffness")
+      .def_rw("C", &Flexibility::C, "Damping")
+      .def_rw("O", &Flexibility::O, "Bias");
+}
+
+void bind_Springs(nb::module_ & m)
+{
+  using Springs = mc_rbdyn::Springs;
+  auto springs = nb::class_<Springs>(m, "Springs");
+  springs.doc() = "Holds data regarding springs in a robot";
+  springs.def_rw("springBodies", &Springs::springsBodies, "Bodies that have springs attached to them")
+      .def_rw("afterSpringsBodies", &Springs::afterSpringsBodies,
+              "Bodies that come after the bodies that have springs attached to them")
+      .def_rw("springsJoints", &Springs::springsJoints, "Joints forming the spring");
+}
+
+void bind_Collision(nb::module_ & m)
+{
+  using Col = mc_rbdyn::Collision;
+  auto col = nb::class_<mc_rbdyn::Collision>(m, "Collision");
+  col.doc() = "Used to define a collision constraint between two bodies";
+  col.def(nb::init())
+      .def(nb::init<const std::string &, const std::string &, double, double, double,
+                    const std::optional<std::vector<std::string>> &, const std::optional<std::vector<std::string>> &,
+                    bool, bool>(),
+           "body1"_a, "body2"_a, "iDist"_a, "sDist"_a, "damping"_a, "r1Joints"_a = {}, "r2Joints"_a = {},
+           "r1JointsInactive"_a = false, "r2JointsInactive"_a = false);
+
+  col.def_rw("body1", &Col::body1, "First body in the constraint")
+      .def_rw("body2", &Col::body2, "Second body in the constraint")
+      .def_rw("iDist", &Col::iDist, "Interaction distance")
+      .def_rw("sDist", &Col::sDist, "Security distance")
+      .def_rw("damping", &Col::damping, "Damping (0 is automatic)")
+      .def_rw("r1Joints", &Col::r1Joints,
+              R"(
+  Active/Inactive joints in the first robot:
+
+  * no value specified = all joints selected
+  * value specified:
+    * if r1JointsInactive = false : specified joints are treated as active
+    * if r1JointsInactive = true : specified joints are treated as inactive)")
+      .def_rw("r2Joints", &Col::r2Joints, "See :py:attr:`r1Joints`")
+      .def_rw("r1JointsInactive", &Col::r1JointsInactive,
+              "When true the selected joints in r1ActiveJoints are considered inactive")
+      .def_rw("r2JointsInactive", &Col::r2JointsInactive,
+              "When true the selected joints in r2ActiveJoints are considered inactive")
+      .def("isNone", &Col::isNone)
+      .def(nb::self == nb::self)
+      .def(nb::self != nb::self)
+      .def("__repr__",
+           [](const Col & col)
+           {
+             std::ostringstream os;
+             os << col;
+             return os.str();
+           });
+}
+
+// FIXME: incomplete because of sva::PTransformd
+void bind_FrameDescription(nb::class_<RobotModule> & rm)
+{
+  using FrameDescription = RobotModule::FrameDescription;
+  auto frameDescription = nb::class_<FrameDescription>(rm, "FrameDescription");
+  frameDescription.doc() = R"(
+        A lightweight frame description
+
+        This will be used when creating extra frames in the robot
+
+        These frames shouldn't:
+
+        * share a name with bodies in the robot
+        * share a name with surfaces in the robot
+        )";
+
+  // FIXME: how to bind sva::PTransformd?
+  frameDescription.def(nb::init<const std::string &, const std::string &, const sva::PTransformd &, bool>(), "name"_a,
+                       "parent"_a, "X_parentToFrame"_a, "baked"_a);
+  frameDescription.def_rw("name", &FrameDescription::name, "Name of the frame")
+      .def_rw("parent", &FrameDescription::parent, "Parent of the frame")
+      .def_rw("X_p_f", &FrameDescription::X_p_f, "Transformation from the parent frame to this one")
+      .def_rw("baked", &FrameDescription::baked, "When true the frame is baked");
+}
+
 void bind_Gripper(nb::class_<RobotModule> & rm)
 {
   using Gripper = RobotModule::Gripper;
@@ -129,17 +230,22 @@ void bind_Gripper(nb::class_<RobotModule> & rm)
 
 void bind_RobotModule(nanobind::module_ & m)
 {
+  // TODO: move to their own files
   bind_Mimic(m);
+  bind_Flexibility(m);
+  bind_Springs(m);
+  bind_Collision(m);
 
-  auto c = nb::class_<mc_rbdyn::RobotModule>(m, "RobotModule");
-  c.doc() = R"(
+  auto rm = nb::class_<mc_rbdyn::RobotModule>(m, "RobotModule");
+  rm.doc() = R"(
     A robot module contains all information needed to represent a robot. This can be used to construct an actual :py:class:`mc_rtc.mc_rbdyn.Robot` instance. It also contains additional information that can be used by interface (e.g :py:attr:`ref_joint_order`) and simulators.
     )";
 
-  bind_Gripper(c);
+  bind_FrameDescription(rm);
+  bind_Gripper(rm);
 
-  c.def(nb::init<const std::string &, const std::string &>(), "path"_a, "name"_a,
-        R"(Construct from a provided path and name
+  rm.def(nb::init<const std::string &, const std::string &>(), "path"_a, "name"_a,
+         R"(Construct from a provided path and name
 
 As a result:
 
@@ -153,9 +259,9 @@ No further action is taken. This constructor is useful to inherit from
 
 :param path: Path to the robot description
 :param name: Name of the robot)"),
-      c.def(nb::init<const std::string &, const std::string &, const std::string &>(), "path"_a, "name"_a,
-            "urdf_path"_a,
-            R"(Construct from a provided path, name and urdf_path
+      rm.def(nb::init<const std::string &, const std::string &, const std::string &>(), "path"_a, "name"_a,
+             "urdf_path"_a,
+             R"(Construct from a provided path, name and urdf_path
 
   See: RobotModule(const std::string &, const std::string &)
 
@@ -169,8 +275,8 @@ No further action is taken. This constructor is useful to inherit from
   // void init(const rbd::parsers::ParserResult & res);
 
   // const std::vector<std::map<std::string, std::vector<double>>> & bounds() const { return _bounds; }
-  c.def_rw("bounds", &RobotModule::_bounds,
-           R"(
+  rm.def_rw("bounds", &RobotModule::_bounds,
+            R"(
   Returns the robot's bounds obtained from parsing a urdf
 
   The vector should hold 6 string -> vector<double> map
@@ -184,8 +290,8 @@ No further action is taken. This constructor is useful to inherit from
   * torque limits (lower/upper))");
 
   // const std::vector<std::map<std::string, std::vector<double>>> & accelerationBounds() const
-  c.def_rw("accelerationBounds", &RobotModule::_accelerationBounds,
-           R"(
+  rm.def_rw("accelerationBounds", &RobotModule::_accelerationBounds,
+            R"(
    The robot's acceleration bounds
 
    The vector should hold 2 string -> vector<double> map
@@ -198,8 +304,8 @@ No further action is taken. This constructor is useful to inherit from
            )");
 
   // const std::vector<std::map<std::string, std::vector<double>>> & jerkBounds() const { return _jerkBounds; }
-  c.def_rw("jerkBounds", &RobotModule::_jerkBounds,
-           R"(
+  rm.def_rw("jerkBounds", &RobotModule::_jerkBounds,
+            R"(
   The robot's jerk bounds
 
   The vector should hold 2 string -> vector<double> map
@@ -211,8 +317,8 @@ No further action is taken. This constructor is useful to inherit from
   * jerk limits (lower/upper))");
 
   // const std::vector<std::map<std::string, std::vector<double>>> & torqueDerivativeBounds() const
-  c.def_rw("torqueDerivativeBounds", &RobotModule::_torqueDerivativeBounds,
-           R"(
+  rm.def_rw("torqueDerivativeBounds", &RobotModule::_torqueDerivativeBounds,
+            R"(
   The robot's torque-derivative bounds
 
   The vector should hold 2 string -> vector<double> map
@@ -226,8 +332,8 @@ No further action is taken. This constructor is useful to inherit from
           )");
 
   // const std::map<std::string, std::vector<double>> & stance() const { return _stance; }
-  c.def_rw("stance", &RobotModule::_stance,
-           R"(
+  rm.def_rw("stance", &RobotModule::_stance,
+            R"(
   A default configuration for the robot
 
   Keys are joint names and values are joint configurations.
@@ -240,8 +346,8 @@ No further action is taken. This constructor is useful to inherit from
   )");
 
   // const std::map<std::string, std::pair<std::string, std::string>> & convexHull() const { return _convexHull; }
-  c.def_rw("convexHull", &RobotModule::_convexHull,
-           R"(
+  rm.def_rw("convexHull", &RobotModule::_convexHull,
+            R"(
   A map describing the convex hulls for the robot
 
   A key defines a valid collision name, there should be no collision with the names in :py:attr:`collisionObjects`
@@ -259,8 +365,8 @@ No further action is taken. This constructor is useful to inherit from
   // const std::map<std::string, std::pair<std::string, S_ObjectPtr>> & collisionObjects() const
 
   // const std::map<std::string, std::pair<std::string, std::string>> & stpbvHull() const { return _stpbvHull; }
-  c.def_rw("stpbvHull", &RobotModule::_stpbvHull,
-           R"(
+  rm.def_rw("stpbvHull", &RobotModule::_stpbvHull,
+            R"(
   Returns a map describing the STPBV hulls for the robot
 
   A key defines a valid collision name, a value is composed of two strings:
@@ -274,8 +380,8 @@ No further action is taken. This constructor is useful to inherit from
   )");
 
   // const std::map<std::string, sva::PTransformd> & collisionTransforms() const { return _collisionTransforms; }
-  c.def_rw("collisionTransforms", &RobotModule::_collisionTransforms,
-           R"(
+  rm.def_rw("collisionTransforms", &RobotModule::_collisionTransforms,
+            R"(
   Returns a map describing the transformation between convex/STPBV hulls
   and their parent bodies
 
@@ -283,21 +389,54 @@ No further action is taken. This constructor is useful to inherit from
   this collision object and its parent body
   )");
 
+  rm.def_rw("flexibility", &RobotModule::_flexibility,
+            R"(
+  Flexibilities of the robot
+
+  See :py:class:`Flexibility` for details on the expected data
+                  )");
+
+  rm.def_rw("springs", &RobotModule::_springs,
+            R"(
+  Springs of a robot
+
+  See :py:class:`Spring` for details on the expected data
+                  )");
+
+  // const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() const { return _minimalSelfCollisions; }
+  // const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() const { return _commonSelfCollisions; }
+  rm.def_rw("minimalSelfCollisions", &RobotModule::_minimalSelfCollisions,
+            R"(
+  Minimal self-collision set.
+
+  This set of collision describe self-collisions that you always want to
+  enable regardless of the application
+
+  See :py:class:`Collision` for details on the expected data
+  See also :py:attr:commonSelfCollisions:
+          )");
+  rm.def_rw("commonSelfCollisions", &RobotModule::_commonSelfCollisions,
+            R"(
+  common self-collision set.
+
+  This set of collision describe self-collisions that you always want to
+  enable regardless of the application
+
+  See :py:class:`Collision` for details on the expected data
+  See also :py:attr:minimalSelfCollisions:
+          )");
+
   // TODO:
-  // const std::vector<Flexibility> & flexibility() const { return _flexibility; }
   // const std::vector<ForceSensor> & forceSensors() const { return _forceSensors; }
   // const BodySensorVector & bodySensors() const { return _bodySensors; }
   // const std::vector<JointSensor> & jointSensors() const { return _jointSensors; }
-  // const Springs & springs() const { return _springs; }
-  // const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() const { return _minimalSelfCollisions; }
-  // const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() const { return _commonSelfCollisions; }
-  c.def_rw("grippers", &RobotModule::_grippers,
-           R"(
+  rm.def_rw("grippers", &RobotModule::_grippers,
+            R"(
   :returns: the grippers in the robot
 
   See :py:class:`mc_rtc.mc_rbdyn.Gripper` for details on the expected data)");
-  c.def_rw("grippersSafety", &RobotModule::_gripperSafety,
-           R"(
+  rm.def_rw("grippersSafety", &RobotModule::_gripperSafety,
+            R"(
   :returns: default gripper safety parameters if one is not provided by a gripper.
 
   This can also be used to provide identical settings for every grippers in a robot
@@ -305,8 +444,8 @@ No further action is taken. This constructor is useful to inherit from
   See :py:class:`mc_rtc.mc_rbdyn.Gripper.Safety` for details on the safety parameters)");
 
   // const std::vector<std::string> & ref_joint_order() const { return _ref_joint_order; }
-  c.def_rw("ref_joint_order", &RobotModule::_ref_joint_order,
-           R"(
+  rm.def_rw("ref_joint_order", &RobotModule::_ref_joint_order,
+            R"(
   :return: the reference (native controller) joint order of the robot
 
   If it is empty, :py:func:`make_default_ref_joint_order` will be used to
@@ -314,8 +453,8 @@ No further action is taken. This constructor is useful to inherit from
           )");
 
   // const std::array<double, 7> & default_attitude() const { return _default_attitude; }
-  c.def_rw("default_attitude", &RobotModule::_default_attitude,
-           R"(
+  rm.def_rw("default_attitude", &RobotModule::_default_attitude,
+            R"(
   :return: the default attitude of the floating base
 
   This attitute is associated to the :py:attr:`stance` configuration
@@ -327,8 +466,8 @@ No further action is taken. This constructor is useful to inherit from
   // void boundsFromURDF(const rbd::parsers::Limits & limits);
 
   // void expand_stance();
-  c.def("expand_stance", &RobotModule::expand_stance,
-        R"(
+  rm.def("expand_stance", &RobotModule::expand_stance,
+         R"(
   Add missing elements to the current module stance
 
   If joints are present in the MultiBody but absent from the default stance,
@@ -337,8 +476,8 @@ No further action is taken. This constructor is useful to inherit from
           )");
 
   // void make_default_ref_joint_order();
-  c.def("make_default_ref_joint_order", &RobotModule::make_default_ref_joint_order,
-        R"(
+  rm.def("make_default_ref_joint_order", &RobotModule::make_default_ref_joint_order,
+         R"(
   Make a valid ref_joint_order
 
   If :py:attr:`ref_joint_order` is empty, this will generate a list of actuated
@@ -350,13 +489,13 @@ No further action is taken. This constructor is useful to inherit from
   //
 
   // inline const std::vector<std::string> & parameters() const { return _parameters; }
-  c.def_rw("parameters", &RobotModule::_parameters,
-           R"(
+  rm.def_rw("parameters", &RobotModule::_parameters,
+            R"(
   List of parameters passed to mc_rbdyn::RobotLoader::get_robot_module to obtain this module)");
 
   // inline const std::vector<std::string> & canonicalParameters() const { return _canonicalParameters; }
-  c.def_rw("canonicalParameters", &RobotModule::_canonicalParameters,
-           R"(
+  rm.def_rw("canonicalParameters", &RobotModule::_canonicalParameters,
+            R"(
   List of parameters to get a RobotModule that is a canonical representation of this module
   )");
 
@@ -365,8 +504,8 @@ No further action is taken. This constructor is useful to inherit from
   // std::function<void(const mc_rbdyn::Robot & control, mc_rbdyn::Robot & canonical)> controlToCanonicalPostProcess =
 
   // std::string real_urdf() const { return _real_urdf; }
-  c.def_rw("real_urdf", &RobotModule::_real_urdf,
-           R"(
+  rm.def_rw("real_urdf", &RobotModule::_real_urdf,
+            R"(
   Path to a "real" URDF file
 
   This will be used to show a visually distinct robot for displaying the
@@ -380,7 +519,7 @@ No further action is taken. This constructor is useful to inherit from
 
   // inline const std::vector<FrameDescription> & frames() const noexcept { return _frames; }
 
-  c.def_rw("path", &RobotModule::path, "Path to the robot's description package")
+  rm.def_rw("path", &RobotModule::path, "Path to the robot's description package")
       .def_rw("name", &RobotModule::name, "(default) Name of the robot")
       .def_rw("urdf_path", &RobotModule::path, "Path to the robot's urdf file")
       .def_rw("rsdf_dir", &RobotModule::rsdf_dir, "Path to the robot's RSDF folder (surfaces)")
