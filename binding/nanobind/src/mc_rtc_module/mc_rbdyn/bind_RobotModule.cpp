@@ -1,5 +1,8 @@
+#include <mc_rbdyn/Mimic.h>
 #include <mc_rbdyn/RobotLoader.h>
+#include <mc_rbdyn/RobotModule.h>
 
+#include <nanobind/nanobind.h>
 #include <nanobind/stl/array.h>
 #include <nanobind/stl/map.h>
 #include <nanobind/stl/pair.h>
@@ -64,12 +67,76 @@ void bind_RobotLoader(nanobind::module_ & m)
           )");
 }
 
+void bind_Mimic(nb::module_ & m)
+{
+  using Mimic = mc_rbdyn::Mimic;
+  auto mimic = nb::class_<mc_rbdyn::Mimic>(m, "Mimic");
+  mimic.doc() = "Stores mimic joint information";
+  mimic.def_rw("name", &Mimic::name, "Name of the mimic joint")
+      .def_rw("joint", &Mimic::joint, "Which joint this joint mimics")
+      .def_rw("multiplier", &Mimic::multiplier, "Mimic multiplier (usually -1/+1)")
+      .def_rw("offset", &Mimic::offset, "Mimic offset");
+}
+
+void bind_Gripper(nb::class_<RobotModule> & rm)
+{
+  using Gripper = RobotModule::Gripper;
+  using Safety = Gripper::Safety;
+  using Mimic = mc_rbdyn::Mimic;
+
+  auto gripper = nb::class_<mc_rbdyn::RobotModule::Gripper>(rm, "Gripper");
+  gripper.doc() = "Holds necessary information to create a gripper";
+
+  auto safety = nb::class_<mc_rbdyn::RobotModule::Gripper::Safety>(gripper, "Safety");
+  safety
+      .def_ro_static("DEFAULT_PERCENT_VMAX", &Safety::DEFAULT_PERCENT_VMAX,
+                     "Percentage of max velocity of active joints in the gripper")
+      .def_ro_static("DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER", &Safety::DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER,
+                     "Difference between the command and the reality that triggers the safety")
+      .def_ro_static("DEFAULT_RELEASE_OFFSET", &Safety::DEFAULT_RELEASE_OFFSET, "Release offset [gripper units]")
+      .def_ro_static("DEFAULT_OVER_COMMAND_LIMIT_ITER_N", &Safety::DEFAULT_OVER_COMMAND_LIMIT_ITER_N,
+                     "Number of iterations before the security is triggered");
+
+  safety.def(nb::init())
+      .def(nb::init<double, double, double, unsigned int>(), "percentVMax"_a, "actualCommandDiffTrigger"_a,
+           "releaseSafetyOffset"_a, "overCommandLimitIterN"_a);
+
+  safety.def("load", &Safety::load, "config"_a, "Load safety parameters from a configuration object");
+  safety.def("save", &Safety::save, "Save safety parameters");
+
+  safety.def_rw("percentVMax", &Safety::percentVMax, "Percentage of max velocity of active joints in the gripper")
+      .def_rw("actualCommandDiffTrigger", &Safety::actualCommandDiffTrigger,
+              "Difference between the command and the reality that triggers the safety")
+      .def_rw("releaseSafetyOffset", &Safety::releaseSafetyOffset,
+              "Offset by which the gripper is released when safety is triggered")
+      .def_rw("overCommandLimitIterN", &Safety::overCommandLimitIterN,
+              "Number of iterations before the security is triggered");
+
+  gripper
+      .def(nb::init<const std::string &, const std::vector<std::string> &, bool>(), "name"_a, "joints"_a,
+           "reverse_limits"_a, "Constructor with no mimics and no safety information")
+      .def(nb::init<const std::string &, const std::vector<std::string> &, bool, const Safety &>(), "name"_a,
+           "joints"_a, "reverse_limits"_a, "safety"_a, "Constructor with safety parameters but not mimics information")
+      .def(nb::init<const std::string &, const std::vector<std::string> &, bool, const Safety &,
+                    const std::vector<Mimic> &>(),
+           "name"_a, "joints"_a, "reverse_limits"_a, "safety"_a, "mimics"_a,
+           "Constructor with mimics and safety information");
+  gripper.def_rw("name", &Gripper::name, "Gripper's name")
+      .def_rw("joints", &Gripper::joints, "Active joints in the gripper")
+      .def_rw("reverse_limits", &Gripper::reverse_limits,
+              "Wheter the limits should be reversed, see :py:class:`mc_rtc.mc_control.Gripper`");
+}
+
 void bind_RobotModule(nanobind::module_ & m)
 {
+  bind_Mimic(m);
+
   auto c = nb::class_<mc_rbdyn::RobotModule>(m, "RobotModule");
   c.doc() = R"(
-    A robot module contains all information needed to represent a robot. This can be used to construct an actual :py:ref:mc_rbdyn.Robot instance. It also contains additional information that can be used by interface (e.g ref_joint_order) and simulators.
+    A robot module contains all information needed to represent a robot. This can be used to construct an actual :py:class:`mc_rtc.mc_rbdyn.Robot` instance. It also contains additional information that can be used by interface (e.g :py:attr:`ref_joint_order`) and simulators.
     )";
+
+  bind_Gripper(c);
 
   c.def(nb::init<const std::string &, const std::string &>(), "path"_a, "name"_a,
         R"(Construct from a provided path and name
@@ -167,9 +234,9 @@ No further action is taken. This constructor is useful to inherit from
 
   It should be ok to include joints that are not in the robot (e.g. generate
   the same default stance for variants of a robot. However, each actuated
-  joint in the robot should have a valid entry, see \ref expand_stance
+  joint in the robot should have a valid entry, see :py:func:`expand_stance`
 
-  For the floating base see \ref default_attitude
+  For the floating base see :py:attr:`default_attitude`
   )");
 
   // const std::map<std::string, std::pair<std::string, std::string>> & convexHull() const { return _convexHull; }
@@ -177,7 +244,7 @@ No further action is taken. This constructor is useful to inherit from
            R"(
   A map describing the convex hulls for the robot
 
-  A key defines a valid collision name, there should be no collision with the names in \ref collisionObjects()
+  A key defines a valid collision name, there should be no collision with the names in :py:attr:`collisionObjects`
 
   A value is composed of two strings:
 
@@ -185,7 +252,7 @@ No further action is taken. This constructor is useful to inherit from
   2. the path to the file containing the convex description
 
   The transformation between the convex and the body it's attached to are
-  provided in a separate map see \ref collisionTransforms()
+  provided in a separate map see :py:attr:`collisionTransforms`
   )");
 
   // TODO:
@@ -203,7 +270,7 @@ No further action is taken. This constructor is useful to inherit from
   2. the path to the file containing the STPBV description
 
   The transformation between the STPBV and the body it's attached to are
-  provided in a separate map see \ref collisionTransforms()
+  provided in a separate map see :py:attr:`collisionTransforms`
   )");
 
   // const std::map<std::string, sva::PTransformd> & collisionTransforms() const { return _collisionTransforms; }
@@ -224,16 +291,25 @@ No further action is taken. This constructor is useful to inherit from
   // const Springs & springs() const { return _springs; }
   // const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() const { return _minimalSelfCollisions; }
   // const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() const { return _commonSelfCollisions; }
-  // const std::vector<Gripper> & grippers() const { return _grippers; }
-  // inline const Gripper::Safety & gripperSafety() const { return _gripperSafety; }
-  //
+  c.def_rw("grippers", &RobotModule::_grippers,
+           R"(
+  :returns: the grippers in the robot
+
+  See :py:class:`mc_rtc.mc_rbdyn.Gripper` for details on the expected data)");
+  c.def_rw("grippersSafety", &RobotModule::_gripperSafety,
+           R"(
+  :returns: default gripper safety parameters if one is not provided by a gripper.
+
+  This can also be used to provide identical settings for every grippers in a robot
+
+  See :py:class:`mc_rtc.mc_rbdyn.Gripper.Safety` for details on the safety parameters)");
 
   // const std::vector<std::string> & ref_joint_order() const { return _ref_joint_order; }
   c.def_rw("ref_joint_order", &RobotModule::_ref_joint_order,
            R"(
   :return: the reference (native controller) joint order of the robot
 
-  If it is empty, \ref make_default_ref_joint_order() will be used to
+  If it is empty, :py:func:`make_default_ref_joint_order` will be used to
   generate one
           )");
 
@@ -242,7 +318,7 @@ No further action is taken. This constructor is useful to inherit from
            R"(
   :return: the default attitude of the floating base
 
-  This attitute is associated to the \ref stance() configuration
+  This attitute is associated to the :py:attr:`stance` configuration
 
           )");
 
@@ -265,7 +341,7 @@ No further action is taken. This constructor is useful to inherit from
         R"(
   Make a valid ref_joint_order
 
-  If \ref ref_joint_order() is empty, this will generate a list of actuated
+  If :py:attr:`ref_joint_order` is empty, this will generate a list of actuated
   joints in the order they appear in the kinematic tree
           )");
 

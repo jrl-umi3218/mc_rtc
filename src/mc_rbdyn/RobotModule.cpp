@@ -82,8 +82,7 @@ RobotModule::Gripper::Gripper(const std::string & name,
                               bool reverse_limits,
                               const Safety * safety,
                               const std::vector<Mimic> * mimics)
-: name(name), joints(joints), reverse_limits(reverse_limits), hasSafety_(safety != nullptr),
-  hasMimics_(mimics != nullptr)
+: name(name), joints(joints), reverse_limits(reverse_limits)
 {
   if(mimics) { mimics_ = *mimics; }
   if(safety) { safety_ = *safety; }
