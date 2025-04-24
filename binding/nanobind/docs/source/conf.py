@@ -6,23 +6,24 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'mc_rtc'
-copyright = '2025, CNRS-AIST JRL, LIRMM'
-author = 'CNRS-AIST JRL, LIRMM'
-release = '2.12.0'
+project = "mc_rtc"
+copyright = "2025, CNRS-AIST JRL, LIRMM"
+author = "CNRS-AIST JRL, LIRMM"
+release = "2.12.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = [                                          
-    'autoapi.extension'
-]
+extensions = ["autoapi.extension"]
 
-templates_path = ['_templates']
+templates_path = ["_templates"]
 exclude_patterns = []
 
-autoapi_dirs = ['/home/vscode/workspace/python-venv/lib/python3.12/site-packages/mc_rtc']
+autoapi_dirs = [
+    "/home/vscode/workspace/python-venv/lib/python3.12/site-packages/mc_rtc"
+]
 autoapi_file_patterns = ["*.pyi", "*.py"]
+autoapi_python_class_content = "both"
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -30,7 +31,7 @@ autoapi_file_patterns = ["*.pyi", "*.py"]
 
 # html_theme = 'alabaster'
 
-html_theme = 'sphinx_book_theme'
+html_theme = "sphinx_book_theme"
 html_theme_options = {
     "repository_url": "https://github.com/jrl-umi3218/mc_rtc",
     "use_repository_button": True,
@@ -40,6 +41,6 @@ html_title = ""
 html_logo = "_static/images/mc_rtc_logo.png"
 
 
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
 autodoc_typehints = "description"
