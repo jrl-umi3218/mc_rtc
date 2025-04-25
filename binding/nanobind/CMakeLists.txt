@@ -44,7 +44,7 @@ find_package(nanobind CONFIG REQUIRED)
 # We are now ready to compile the actual extension module
 nanobind_add_module(
   # Name of the extension
-  mc_rtc_python
+  _mc_rtc
   # Target the stable ABI for Python 3.12+, which reduces the number of binary wheels
   # that must be built. This does nothing on older Python versions
   STABLE_ABI
@@ -54,65 +54,65 @@ nanobind_add_module(
   # If your project builds multiple extensions, you can replace this flag by NB_SHARED
   # to conserve space by reusing a shared libnanobind across libraries
   NB_STATIC
-  # Source code goes here
+  # Main mc_rtc module
   src/mc_rtc_module/mc_rtc_module.cpp
-  src/mc_rtc_module/bind_Configuration.cpp
+  # mc_rtc.mc_rtc submodule
+  src/mc_rtc_module/mc_rtc/bind_Configuration.cpp
   # mc_rtc.mc_rbdyn submodule
   src/mc_rtc_module/mc_rbdyn/mc_rbdyn_module.cpp
   src/mc_rtc_module/mc_rbdyn/bind_RobotModule.cpp
 )
 
 find_package(mc_rtc REQUIRED)
-target_link_libraries(mc_rtc_python PUBLIC mc_rtc::mc_rtc_utils mc_rtc::mc_rbdyn)
+target_link_libraries(_mc_rtc PUBLIC mc_rtc::mc_rtc_utils mc_rtc::mc_rbdyn)
 target_include_directories(
-  mc_rtc_python PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  _mc_rtc PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 # Install directive for scikit-build-core
-install(TARGETS mc_rtc_python LIBRARY DESTINATION mc_rtc)
+install(TARGETS _mc_rtc LIBRARY DESTINATION mc_rtc)
 
 # Display output of stub generation
 set(CMAKE_EXECUTE_PROCESS_COMMAND_ECHO STDOUT)
 
 nanobind_add_stub(
-  mc_rtc_python_stub
+  mc_rtc_stub
   MODULE
-  mc_rtc_python
+  mc_rtc
   OUTPUT
   ${SKBUILD_PLATLIB_DIR}/mc_rtc/__init__.pyi
   MARKER_FILE
   ${SKBUILD_PLATLIB_DIR}/mc_rtc/py.typed
   PYTHON_PATH
   ${SKBUILD_PLATLIB_DIR}/mc_rtc/
-  # $<TARGET_FILE_DIR:mc_rtc_python>
   DEPENDS
-  mc_rtc_python
+  _mc_rtc
   VERBOSE
   INSTALL_TIME
 )
 
-# Generate stub for each submodule
+# # Generate stub for each submodule
 nanobind_add_stub(
-  mc_rtc_stub
+  mc_rtc_mc_rtc_stub
   MODULE
-  mc_rtc_python.mc_rtc
+  mc_rtc.mc_rtc
   OUTPUT
   ${SKBUILD_PLATLIB_DIR}/mc_rtc/mc_rtc/__init__.pyi
   PYTHON_PATH
   ${SKBUILD_PLATLIB_DIR}/mc_rtc/
   DEPENDS
-  mc_rtc_python_stub
+  _mc_rtc
   INSTALL_TIME
 )
 
 nanobind_add_stub(
-  mc_rbdyn_stub
+  mc_rtc_mc_rbdyn_stub
   MODULE
-  mc_rtc_python.mc_rbdyn
+  mc_rtc.mc_rbdyn
   OUTPUT
   ${SKBUILD_PLATLIB_DIR}/mc_rtc/mc_rbdyn/__init__.pyi
   PYTHON_PATH
   ${SKBUILD_PLATLIB_DIR}/mc_rtc/
   DEPENDS
-  mc_rtc_python_stub
+  _mc_rtc
   INSTALL_TIME
 )
