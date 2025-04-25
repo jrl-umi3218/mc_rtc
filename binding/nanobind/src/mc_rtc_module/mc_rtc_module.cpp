@@ -7,6 +7,8 @@ using namespace nb::literals;
 
 NB_MODULE(mc_rtc_python, mc_rtc_module)
 {
+  nb::module_ sva = nb::module_::import_("sva");
+
   mc_rtc_module.doc() = "This is a \"hello world\" example with nanobind";
 
   nb::module_ mc_rtc_submodule = mc_rtc_module.def_submodule("mc_rtc", "mc_rtc submodule of 'mc_rtc'");

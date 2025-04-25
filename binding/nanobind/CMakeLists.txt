@@ -70,21 +70,25 @@ target_include_directories(
 # Install directive for scikit-build-core
 install(TARGETS mc_rtc_python LIBRARY DESTINATION mc_rtc)
 
+# Display output of stub generation
+set(CMAKE_EXECUTE_PROCESS_COMMAND_ECHO STDOUT)
+
 nanobind_add_stub(
   mc_rtc_python_stub
   MODULE
   mc_rtc_python
   OUTPUT
-  __init__.pyi
+  ${SKBUILD_PLATLIB_DIR}/mc_rtc/__init__.pyi
   MARKER_FILE
-  py.typed
+  ${SKBUILD_PLATLIB_DIR}/mc_rtc/py.typed
   PYTHON_PATH
-  $<TARGET_FILE_DIR:mc_rtc_python>
+  ${SKBUILD_PLATLIB_DIR}/mc_rtc/
+  # $<TARGET_FILE_DIR:mc_rtc_python>
   DEPENDS
   mc_rtc_python
+  VERBOSE
+  INSTALL_TIME
 )
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/py.typed DESTINATION mc_rtc)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/__init__.pyi DESTINATION mc_rtc)
 
 # Generate stub for each submodule
 nanobind_add_stub(
@@ -92,25 +96,23 @@ nanobind_add_stub(
   MODULE
   mc_rtc_python.mc_rtc
   OUTPUT
-  mc_rtc/__init__.pyi
+  ${SKBUILD_PLATLIB_DIR}/mc_rtc/mc_rtc/__init__.pyi
   PYTHON_PATH
-  $<TARGET_FILE_DIR:mc_rtc_python>
+  ${SKBUILD_PLATLIB_DIR}/mc_rtc/
   DEPENDS
   mc_rtc_python_stub
+  INSTALL_TIME
 )
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mc_rtc/__init__.pyi DESTINATION mc_rtc/mc_rtc)
 
 nanobind_add_stub(
   mc_rbdyn_stub
   MODULE
   mc_rtc_python.mc_rbdyn
   OUTPUT
-  mc_rbdyn/__init__.pyi
+  ${SKBUILD_PLATLIB_DIR}/mc_rtc/mc_rbdyn/__init__.pyi
   PYTHON_PATH
-  $<TARGET_FILE_DIR:mc_rtc_python>
+  ${SKBUILD_PLATLIB_DIR}/mc_rtc/
   DEPENDS
   mc_rtc_python_stub
-)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mc_rbdyn/__init__.pyi
-        DESTINATION mc_rtc/mc_rbdyn
+  INSTALL_TIME
 )
