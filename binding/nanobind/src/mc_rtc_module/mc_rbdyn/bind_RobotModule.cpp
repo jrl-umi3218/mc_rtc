@@ -121,8 +121,8 @@ void bind_Collision(nb::module_ & m)
       .def(nb::init<const std::string &, const std::string &, double, double, double,
                     const std::optional<std::vector<std::string>> &, const std::optional<std::vector<std::string>> &,
                     bool, bool>(),
-           "body1"_a, "body2"_a, "iDist"_a, "sDist"_a, "damping"_a, "r1Joints"_a = {}, "r2Joints"_a = {},
-           "r1JointsInactive"_a = false, "r2JointsInactive"_a = false);
+           "body1"_a, "body2"_a, "iDist"_a, "sDist"_a, "damping"_a, "r1Joints"_a = nb::none(),
+           "r2Joints"_a = nb::none(), "r1JointsInactive"_a = false, "r2JointsInactive"_a = false);
 
   col.def_rw("body1", &Col::body1, "First body in the constraint")
       .def_rw("body2", &Col::body2, "Second body in the constraint")
