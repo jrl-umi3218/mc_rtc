@@ -68,6 +68,7 @@ public:
   using convex_pair_t = std::pair<std::string, S_ObjectPtr>;
 
 public:
+  Robot() = delete;
   Robot(Robot &&);
   Robot & operator=(Robot &&);
 
