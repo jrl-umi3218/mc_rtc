@@ -12,6 +12,8 @@ void bind_mc_rbdyn_module(nb::module_ & m)
 {
   nb::module_ sva = nb::module_::import_("sva");
   m.doc() = "mc_rbdyn bindings";
+  bind_ForceSensorCalibData(m);
+  bind_ForceSensor(m);
   bind_RobotModule(m);
 }
 

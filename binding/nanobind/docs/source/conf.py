@@ -21,7 +21,7 @@ exclude_patterns = []
 
 autoapi_dirs = [
     "/home/vscode/workspace/python-venv/lib/python3.12/site-packages/mc_rtc",
-    "/home/vscode/workspace/python-venv/lib/python3.12/site-packages/sva"
+    "/home/vscode/workspace/python-venv/lib/python3.12/site-packages/sva",
 ]
 autoapi_file_patterns = ["*.pyi", "*.py"]
 autoapi_python_class_content = "both"

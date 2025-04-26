@@ -1,11 +1,12 @@
 #pragma once
 
+#include <mc_rbdyn/api.h>
 #include <mc_rtc/Schema.h>
 
 namespace mc_rbdyn::detail
 {
 
-struct ForceSensorCalibData
+struct MC_RBDYN_DLLAPI ForceSensorCalibData
 {
   MC_RTC_NEW_SCHEMA(ForceSensorCalibData)
 #define MEMBER(...) MC_RTC_PP_ID(MC_RTC_SCHEMA_REQUIRED_DEFAULT_MEMBER(ForceSensorCalibData, __VA_ARGS__))
