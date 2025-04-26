@@ -63,6 +63,7 @@ nanobind_add_module(
   src/mc_rtc_module/mc_rbdyn/mc_rbdyn_module.cpp
   src/mc_rtc_module/mc_rbdyn/bind_ForceSensor.cpp
   src/mc_rtc_module/mc_rbdyn/bind_RobotModule.cpp
+  src/mc_rtc_module/mc_rbdyn/bind_Robots.cpp
   src/mc_rtc_module/mc_rbdyn/bind_Robot.cpp
 )
 
