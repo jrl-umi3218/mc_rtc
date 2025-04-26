@@ -154,7 +154,6 @@ void bind_Collision(nb::module_ & m)
            });
 }
 
-// FIXME: incomplete because of sva::PTransformd
 void bind_FrameDescription(nb::class_<RobotModule> & rm)
 {
   using FrameDescription = RobotModule::FrameDescription;
@@ -170,7 +169,6 @@ void bind_FrameDescription(nb::class_<RobotModule> & rm)
         * share a name with surfaces in the robot
         )";
 
-  // FIXME: how to bind sva::PTransformd?
   frameDescription.def(nb::init<const std::string &, const std::string &, const sva::PTransformd &, bool>(), "name"_a,
                        "parent"_a, "X_parentToFrame"_a, "baked"_a);
   frameDescription.def_rw("name", &FrameDescription::name, "Name of the frame")
