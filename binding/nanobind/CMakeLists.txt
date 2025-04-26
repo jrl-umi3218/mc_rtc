@@ -1,6 +1,7 @@
 # Set the minimum CMake version and policies for highest tested version
 cmake_minimum_required(VERSION 3.15...4.0)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 17)
 
 project(mc_rtc)
 
@@ -60,7 +61,9 @@ nanobind_add_module(
   src/mc_rtc_module/mc_rtc/bind_Configuration.cpp
   # mc_rtc.mc_rbdyn submodule
   src/mc_rtc_module/mc_rbdyn/mc_rbdyn_module.cpp
+  src/mc_rtc_module/mc_rbdyn/bind_ForceSensor.cpp
   src/mc_rtc_module/mc_rbdyn/bind_RobotModule.cpp
+  src/mc_rtc_module/mc_rbdyn/bind_Robot.cpp
 )
 
 find_package(mc_rtc REQUIRED)
