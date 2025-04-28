@@ -1,4 +1,5 @@
 #include <mc_rbdyn/Robot.h>
+// #include <RBDyn/MultiBodyConfig.h>
 
 #include <nanobind/nanobind.h>
 #include <nanobind/operators.h>
@@ -50,6 +51,7 @@ void bind_Robot(nb::module_ & m)
   //
   // :param body: Body to query
   //                                               )");
+  robot.def("mbc", [](Robot & self) -> rbd::MultiBodyConfig & { return self.mbc(); });
 }
 
 } // namespace mc_rtc_python

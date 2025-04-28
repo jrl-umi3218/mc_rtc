@@ -15,8 +15,8 @@ void bind_mc_rbdyn_module(nb::module_ & m)
   bind_ForceSensorCalibData(m);
   bind_ForceSensor(m);
   bind_RobotModule(m);
-  bind_Robots(m);
   bind_Robot(m);
+  bind_Robots(m);
 }
 
 } // namespace mc_rtc_python
