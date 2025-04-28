@@ -4,7 +4,7 @@ JSON Schema is a [specification](https://json-schema.org/) that allows to docume
 
 It is used in [mc_rtc](https://jrl-umi3218.github.io/mc_rtc/json.html) to document the expected data for loading objects -- e.g. tasks or constraints -- into the framework.
 
-As you write code within mc_rtc you will likely encounter a scenarion where you load a number of parameters from an {% include link_tutorial.html category="usage" tutorial="mc_rtc_configuration" %} object.
+As you write code within mc_rtc you will likely encounter a scenario where you load a number of parameters from an {% include link_tutorial.html category="usage" tutorial="mc_rtc_configuration" %} object.
 
 In addition to loading this configuration object into your data structure, you will also likely be interested in:
 
