@@ -10,8 +10,13 @@
 #include <nanobind/stl/optional.h>
 #include <nanobind/stl/pair.h>
 #include <nanobind/stl/shared_ptr.h>
+#include <nanobind/stl/unordered_map.h>
+// FIXME: fails for grippersByName
+// #include <nanobind/stl/unique_ptr.h>
 #include <nanobind/stl/string.h>
 #include <nanobind/stl/vector.h>
+
+#include <algorithm>
 
 namespace nb = nanobind;
 using namespace nb::literals;
@@ -111,6 +116,48 @@ void bind_Robot(nb::module_ & m)
         return devices;
       },
       "Get all devices attached to a robot");
+
+  // XXX: This is not stricly speaking a binding issue,
+  // but robot().grippers() is empty until the MCController is created
+  // This is at best unexpected from the user perspective.
+  // My guess is that this was done because the grippers implementation is in mc_control while the robot is in mc_rbdyn
+  robot.def("hasGripper",
+          &Robot::hasGripper,
+          "gripper"_a,
+          R"(
+   Access a gripper by name
+
+  :param gripper: Gripper name
+
+  :throws: If the gripper does not exist within this robot
+
+  :note: The grippers does not exist until :py:class:`mc_control.MCController` has been created. Use :py:attr:`RobotModule.gripper` instead.
+          )")
+      .def("grippersByName",
+              [](Robot & self)
+              {
+                std::map<std::string, mc_control::Gripper *> gout;
+                // convert as raw pointer
+                for(const auto & [name, gripperPtr] : self.grippersByName())
+                {
+                    gout.emplace(std::make_pair(name, gripperPtr.get()));
+                }
+                return gout;
+              }
+              )
+      .def("grippers",
+              [](Robot & self)
+              { // convert as vector of pointers to remove use of reference_wrapper
+                const auto & gin = self.grippers();
+                std::vector<mc_control::Gripper *> gout(gin.size());
+                std::transform(gin.begin(), gin.end(), gout.begin(),
+                        [](const auto & g) { return &g.get(); });
+                return gout;
+              },
+              R"(:returns: all grippers
+
+  :note: The grippers does not exist until :py:class:`mc_control.MCController` has been created. Use :py:attr:`RobotModule.gripper` instead.
+              )");
 
   robot.def("mbc", [](Robot & self) -> rbd::MultiBodyConfig & { return self.mbc(); });
 }
