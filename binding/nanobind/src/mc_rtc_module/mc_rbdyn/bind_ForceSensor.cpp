@@ -42,12 +42,20 @@ void bind_ForceSensorCalibData(nb::module_ & m)
   :param X_0_p: the transform in the world frame of the parent body of the sensor
   :param X_p_f: the transform from the parent body to the sensor itself
                                                   )");
+
+  // bind schema parameters
+  // XXX: could we do that automagically?
+  fd.def_rw("mass", &FD::mass, "Mass of the link generating the wrench");
+  fd.def_rw("worldForce", &FD::worldForce, "Constant gravity wrench applied on the force sensor in the world frame");
+  fd.def_rw("X_f_ds", &FD::X_f_ds, "Local rotation between the model force and the real one");
+  fd.def_rw("X_p_vb", &FD::X_p_vb, "Transform from the parent body to the virtual link CoM");
+  fd.def_rw("offset", &FD::offset, "Force/torque offset");
 }
 
 void bind_ForceSensor(nb::module_ & m)
 {
   using FS = mc_rbdyn::ForceSensor;
-  auto fs = nb::class_<mc_rbdyn::ForceSensor>(m, "ForceSensor");
+  auto fs = nb::class_<mc_rbdyn::ForceSensor, mc_rbdyn::Device>(m, "ForceSensor");
 
   fs.doc() = R"(
 This class is intended to hold static information about a force sensor

@@ -62,7 +62,10 @@ nanobind_add_module(
   # mc_rtc.mc_rbdyn submodule
   src/mc_rtc_module/mc_rbdyn/mc_rbdyn_module.cpp
   src/mc_rtc_module/mc_rbdyn/bind_ForceSensor.cpp
+  src/mc_rtc_module/mc_rbdyn/bind_JointSensor.cpp
   src/mc_rtc_module/mc_rbdyn/bind_RobotModule.cpp
+  src/mc_rtc_module/mc_rbdyn/bind_Device.cpp
+  src/mc_rtc_module/mc_rbdyn/bind_RobotData.cpp
   src/mc_rtc_module/mc_rbdyn/bind_Robots.cpp
   src/mc_rtc_module/mc_rbdyn/bind_Robot.cpp
 )
