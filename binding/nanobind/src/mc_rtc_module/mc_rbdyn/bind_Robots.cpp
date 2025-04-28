@@ -1,4 +1,5 @@
 #include <mc_rbdyn/Robot.h>
+#include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn/Robots.h>
 
 #include <memory>
@@ -15,6 +16,8 @@
 namespace nb = nanobind;
 using namespace nb::literals;
 using Robots = mc_rbdyn::Robots;
+using RobotsPtr = mc_rbdyn::RobotsPtr;
+using Robot = mc_rbdyn::Robot;
 using RobotModule = mc_rbdyn::RobotModule;
 using LoadRobotParameters = mc_rbdyn::LoadRobotParameters;
 
@@ -23,55 +26,53 @@ namespace mc_rtc_python
 
 void bind_LoadRobotParameters(nb::module_ & m)
 {
-auto l = nb::class_<LoadRobotParameters>(m, "LoadRobotParameters");
-l.def("base_tf", &LoadRobotParameters::base_tf,
-"value"_a,
-"Initial transformation betwen the base and the world")
-                .def("base", &LoadRobotParameters::base,
-                                                "Use this body as the base instead of the RobotModule provided one")
-                .def("warn_on_missing_files",
-                                                &LoadRobotParameters::warn_on_missing_files, "If true, print warning messages for missing files")
-                .def("data", &LoadRobotParameters::data, "If provided, this is used as RobotData for the given robot, otherwise a new RobotData is created");
+  auto l = nb::class_<mc_rbdyn::LoadRobotParameters>(m, "LoadRobotParameters");
+  l.def(nb::init());
+  l.def("base_tf", &LoadRobotParameters::base_tf, "value"_a, "Initial transformation betwen the base and the world")
+      .def("base", &LoadRobotParameters::base, "Use this body as the base instead of the RobotModule provided one")
+      .def("warn_on_missing_files", &LoadRobotParameters::warn_on_missing_files,
+           "If true, print warning messages for missing files")
+      .def("data", &LoadRobotParameters::data,
+           "If provided, this is used as RobotData for the given robot, otherwise a new RobotData is created");
 }
 
 void bind_Robots(nb::module_ & m)
 {
-auto robots = nb::class_<mc_rbdyn::Robots>(m, "Robots");
+  auto robots = nb::class_<mc_rbdyn::Robots>(m, "Robots");
 
-// FIXME: symbol not found
-// robots.def("robotModules",
-//                                 &Robots::robotModules,
-//                                 R"(
-//   Give access to the underlying list of RobotModule objects
-//                                 )");
-                robots.def("mbs",
-                                                nb::overload_cast<>(&Robots::mbs),
-                                                "Give access to the underlying list of rbd::MultiBody objects")
-                .def("mbs",
-                                                nb::overload_cast<>(&Robots::mbs, nb::const_),
-                                                "Give access to the underlying list of rbd::MultiBody objects (const)")
-                .def("mbcs",
-                                                nb::overload_cast<>(&Robots::mbs),
-                                                "Give access to the underlying list of rbd::MultiBodyConfig objects")
-                .def("mbcs",
-                                                nb::overload_cast<>(&Robots::mbs, nb::const_),
-                                                "Give access to the underlying list of rbd::MultiBodyConfig objects (const)");
-robots.def("hasRobot", &Robots::hasRobot, "name"_a, "True if the given robot is part of this instance");
+  // FIXME: symbol not found
+  // robots.def("robotModules",
+  //                                 &Robots::robotModules,
+  //                                 R"(
+  //   Give access to the underlying list of RobotModule objects
+  //                                 )");
+  robots.def("mbs", nb::overload_cast<>(&Robots::mbs), "Give access to the underlying list of rbd::MultiBody objects")
+      .def("mbs", nb::overload_cast<>(&Robots::mbs, nb::const_),
+           "Give access to the underlying list of rbd::MultiBody objects (const)")
+      .def("mbcs", nb::overload_cast<>(&Robots::mbs),
+           "Give access to the underlying list of rbd::MultiBodyConfig objects")
+      .def("mbcs", nb::overload_cast<>(&Robots::mbs, nb::const_),
+           "Give access to the underlying list of rbd::MultiBodyConfig objects (const)");
+  robots.def("hasRobot", &Robots::hasRobot, "name"_a, "True if the given robot is part of this instance");
 
-
-                robots.def("robotIndex", static_cast<unsigned int (Robots::*)() const>(&Robots::robotIndex), "Index of the main robot")
-                .def("robotIndex", static_cast<unsigned int (Robots::*)(const std::string &) const>(&Robots::robotIndex), "name"_a,
-                                                R"(
+  robots
+      .def("robotIndex", static_cast<unsigned int (Robots::*)() const>(&Robots::robotIndex), "Index of the main robot")
+      .def("robotIndex", static_cast<unsigned int (Robots::*)(const std::string &) const>(&Robots::robotIndex),
+           "name"_a,
+           R"(
   Index of a robot by name
 
   :throws: if the robot does not exist
                                                 )");
-                robots.def("envIndex", &Robots::envIndex, "Index of the first non-actuated robot (or the last actuated robot if no unactuated robot are loaded)");
+  robots.def("envIndex", &Robots::envIndex,
+             "Index of the first non-actuated robot (or the last actuated robot if no unactuated robot are loaded)");
 
-robots.def("load",
-nb::overload_cast<const std::string &, const mc_rbdyn::RobotModule &, const mc_rbdyn::LoadRobotParameters &>(&Robots::load),
-"name"_a, "module"_a, "params"_a,
-R"(
+  robots
+      .def("load",
+           nb::overload_cast<const std::string &, const mc_rbdyn::RobotModule &, const mc_rbdyn::LoadRobotParameters &>(
+               &Robots::load),
+           "name"_a, "module"_a, "params"_a,
+           R"(
    Load a single robot from a RobotModule with the provided parameters
 
   :param name: Name of the new robot. Must be unique.
@@ -82,28 +83,38 @@ R"(
 
   :throws: If a robot named <name> already exists
 )")
-                .def("load",
-nb::overload_cast<const mc_rbdyn::RobotModule &, const mc_rbdyn::LoadRobotParameters &>(&Robots::load),
-"module"_a, "params"_a,
-R"(
+      .def("load",
+           nb::overload_cast<const mc_rbdyn::RobotModule &, const mc_rbdyn::LoadRobotParameters &>(&Robots::load),
+           "module"_a, "params"_a,
+           R"(
    Load a single robot from a RobotModule
 
   Use the name in the module to load the robot
 )")
-                .def("load",
-nb::overload_cast<const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> &>(&Robots::load),
-"modules"_a,
-R"(
+      .def("load", nb::overload_cast<const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> &>(&Robots::load),
+           "modules"_a,
+           R"(
    Load multiple robots from as many RobotModule instances
 
   :param modules: List of RobotModule to load the robots from
 )");
 
-robots.def("robot", nb::overload_cast<>(&Robots::robot), nb::rv_policy::reference, "Access the main robot");
-robots.def("robot", nb::overload_cast<>(&Robots::robot, nb::const_), nb::rv_policy::reference, "Access the main robot (const)");
+  robots.def("robot", static_cast<Robot & (Robots::*)()>(&Robots::robot), nb::rv_policy::reference,
+             ":returns: The main robot");
 
-m.def("loadRobot", nb::overload_cast<const RobotModule &, const LoadRobotParameters &>(&mc_rbdyn::loadRobot), nb::rv_policy::reference, "module"_a, "params"_a = LoadRobotParameters{});
-m.def("loadRobot", nb::overload_cast<const std::string &, const RobotModule &, const LoadRobotParameters &>(&mc_rbdyn::loadRobot), nb::rv_policy::reference, "name"_a, "module"_a, "params"_a = LoadRobotParameters{});
+  // MC_RBDYN_DLLAPI RobotsPtr loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules);
+  m.def("loadRobots", &mc_rbdyn::loadRobots, "modules"_a);
+
+  // FIXME: causes std::bad_cast, maybe because RobotDataPtr is not bound?
+  // { return mc_rbdyn::loadRobot(rm, params); });
+  // m.def("loadRobot", static_cast<RobotsPtr (*)(const RobotModule &, const LoadRobotParameters
+  // &)>(&mc_rbdyn::loadRobot), "module"_a, "params"_a = LoadRobotParameters{});
+  m.def(
+      "loadRobot", [](const mc_rbdyn::RobotModule & rm) -> RobotsPtr { return mc_rbdyn::loadRobot(rm); }, "module"_a,
+      "Load robot from a RobotModule. The name of the robot is that of :py:arg:`RobotModule.name`");
+
+  // m.def("loadRobot", nb::overload_cast<const std::string &, const RobotModule &, const LoadRobotParameters
+  // &>(&mc_rbdyn::loadRobot), nb::rv_policy::reference, "name"_a, "module"_a, "params"_a = LoadRobotParameters{});
 }
 
-}
+} // namespace mc_rtc_python
