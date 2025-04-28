@@ -228,7 +228,6 @@ void bind_Gripper(nb::class_<RobotModule> & rm)
 
 void bind_RobotModule(nanobind::module_ & m)
 {
-  // TODO: move to their own files
   bind_Mimic(m);
   bind_Flexibility(m);
   bind_Springs(m);
@@ -425,7 +424,12 @@ No further action is taken. This constructor is useful to inherit from
           )");
 
   // TODO:
-  // const std::vector<ForceSensor> & forceSensors() const { return _forceSensors; }
+  // rm.def_rw("forceSensors", &RobotModule::forceSensors,
+  //                 R"(
+  // Force sensors of the robot
+  //
+  // See :py:class:`ForceSensor` for details on the expected data
+  //                 )");
   // const BodySensorVector & bodySensors() const { return _bodySensors; }
   // const std::vector<JointSensor> & jointSensors() const { return _jointSensors; }
   rm.def_rw("grippers", &RobotModule::_grippers,
