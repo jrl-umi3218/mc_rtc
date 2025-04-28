@@ -1,3 +1,4 @@
+#include <mc_rtc_python/mc_control/mc_control_module.h>
 #include <mc_rtc_python/mc_rbdyn/mc_rbdyn_module.h>
 #include <mc_rtc_python/mc_rtc_module.h>
 #include <nanobind/nanobind.h>
@@ -29,4 +30,7 @@ NB_MODULE(_mc_rtc, _unsued_module)
 
   nb::module_ mc_rbdyn_submodule = mc_rtc.def_submodule("mc_rbdyn", "mc_rbdyn submodule of 'mc_rtc'");
   mc_rtc_python::bind_mc_rbdyn_module(mc_rbdyn_submodule);
+
+  nb::module_ mc_control_submodule = mc_rtc.def_submodule("mc_control", "mc_control submodule of 'mc_rtc'");
+  mc_rtc_python::bind_mc_control_module(mc_control_submodule);
 }

@@ -1086,12 +1086,23 @@ public:
   /** Checks whether a gripper is part of this robot */
   bool hasGripper(const std::string & gripper) const;
 
+  /**
+   * Get a gripper by name
+   *
+   * \note: The grippers do not exist until :py:class:`mc_control.MCController` has been created. Use \ref
+   *mc_rbdyn::RobotModule::gripper instead.
+   **/
   inline const std::unordered_map<std::string, mc_control::GripperPtr> & grippersByName() const noexcept
   {
     return data_->grippers;
   }
 
-  /** Access all grippers */
+  /**
+   * \brief Access all grippers
+   *
+   * \note: The grippers do not exist until :py:class:`mc_control.MCController` has been created. Use \ref
+   *mc_rbdyn::RobotModule::gripper instead.
+   **/
   inline const std::vector<mc_control::GripperRef> & grippers() const noexcept { return data_->grippersRef; }
 
   /** Access the data associated to this object */

@@ -17,7 +17,7 @@ namespace mc_rtc_python
 
 void bind_RobotData(nb::module_ & m)
 {
-  using RD = RobotData;
+  // using RD = RobotData;
   // auto rd = nb::class_<RobotData>(m, "RobotData");
   //
   // rd.doc() = R"(

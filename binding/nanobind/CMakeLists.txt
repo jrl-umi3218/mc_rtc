@@ -68,6 +68,9 @@ nanobind_add_module(
   src/mc_rtc_module/mc_rbdyn/bind_RobotData.cpp
   src/mc_rtc_module/mc_rbdyn/bind_Robots.cpp
   src/mc_rtc_module/mc_rbdyn/bind_Robot.cpp
+  # mc_rtc.mc_control submodule
+  src/mc_rtc_module/mc_control/mc_control_module.cpp
+  src/mc_rtc_module/mc_control/bind_Gripper.cpp
 )
 
 find_package(mc_rtc REQUIRED)
@@ -97,29 +100,29 @@ nanobind_add_stub(
   INSTALL_TIME
 )
 
-# # Generate stub for each submodule
-nanobind_add_stub(
-  mc_rtc_mc_rtc_stub
-  MODULE
-  mc_rtc.mc_rtc
-  OUTPUT
-  ${SKBUILD_PLATLIB_DIR}/mc_rtc/mc_rtc/__init__.pyi
-  PYTHON_PATH
-  ${SKBUILD_PLATLIB_DIR}/mc_rtc/
-  DEPENDS
-  _mc_rtc
-  INSTALL_TIME
-)
+set(MC_RTC_MODULES mc_rtc mc_rbdyn mc_control)
 
-nanobind_add_stub(
-  mc_rtc_mc_rbdyn_stub
-  MODULE
-  mc_rtc.mc_rbdyn
-  OUTPUT
-  ${SKBUILD_PLATLIB_DIR}/mc_rtc/mc_rbdyn/__init__.pyi
-  PYTHON_PATH
-  ${SKBUILD_PLATLIB_DIR}/mc_rtc/
-  DEPENDS
-  _mc_rtc
-  INSTALL_TIME
-)
+# Generate stub for each submodule
+foreach(MODULE IN LISTS MC_RTC_MODULES)
+  message(STATUS "setting up stubs for module ${MODULE}")
+  nanobind_add_stub(
+    mc_rtc_${MODULE}_stub
+    MODULE
+    mc_rtc.${MODULE}
+    OUTPUT
+    ${SKBUILD_PLATLIB_DIR}/mc_rtc/${MODULE}/__init__.pyi
+    PYTHON_PATH
+    ${SKBUILD_PLATLIB_DIR}/mc_rtc/
+    DEPENDS
+    _mc_rtc
+    INSTALL_TIME
+  )
+endforeach()
+
+# nanobind_add_stub( mc_rtc_mc_rtc_stub MODULE mc_rtc.mc_rtc OUTPUT
+# ${SKBUILD_PLATLIB_DIR}/mc_rtc/mc_rtc/__init__.pyi PYTHON_PATH
+# ${SKBUILD_PLATLIB_DIR}/mc_rtc/ DEPENDS _mc_rtc INSTALL_TIME )
+#
+# nanobind_add_stub( mc_rtc_mc_rbdyn_stub MODULE mc_rtc.mc_rbdyn OUTPUT
+# ${SKBUILD_PLATLIB_DIR}/mc_rtc/mc_rbdyn/__init__.pyi PYTHON_PATH
+# ${SKBUILD_PLATLIB_DIR}/mc_rtc/ DEPENDS _mc_rtc INSTALL_TIME )
