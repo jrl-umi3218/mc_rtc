@@ -32,6 +32,14 @@ struct Robot;
  */
 struct RobotData
 {
+  RobotData() = default;
+
+  // Delete copy constructor (std::unique_ptr is non-copyable)
+  RobotData(const RobotData &) = delete;
+
+  // Define move constructor
+  RobotData(RobotData &&) = default;
+
   /** Reference joint order see mc_rbdyn::RobotModule */
   std::vector<std::string> refJointOrder;
   /** Encoders' positions provided in the robot's ref joint order */
