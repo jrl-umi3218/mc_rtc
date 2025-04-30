@@ -208,9 +208,10 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> TransformTask::bu
   {
     if(!frame_->hasForceSensor())
     {
-      mc_rtc::log::error_and_throw<std::invalid_argument>("[{}] Attempted to use \"wrench\" as completion criteria but "
-                                                          "frame \"{}\" is not attached to a force sensor",
-                                                          name(), frame_->name());
+      mc_rtc::log::error_and_throw<std::invalid_argument>(
+          "[{}] Attempted to use \"wrench\" as completion criteria but "
+          "frame \"{}\" is not attached to a force sensor",
+          name(), frame_->name());
     }
     sva::ForceVecd target_w = config("wrench");
     Eigen::Vector6d target = target_w.vector();

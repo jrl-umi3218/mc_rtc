@@ -173,20 +173,15 @@ struct MC_RBDYN_DLLAPI RobotModule
     /*! Whether the limits should be reversed, see mc_control::Gripper */
     bool reverse_limits;
 
-    // FIXME In C++17 std::optional is a better semantic
-    /*! Returns the safety parameters if provided, otherwise a nullptr */
-    inline const Safety * safety() const { return hasSafety_ ? &safety_ : nullptr; }
+    /*! Returns the safety parameters if provided */
+    inline const std::optional<Safety> safety() const { return safety_; }
 
     /*! Returns the mimics parameters if provided, otherwise a nullptr */
-    inline const std::vector<Mimic> * mimics() const { return hasMimics_ ? &mimics_ : nullptr; }
+    inline const std::optional<std::vector<Mimic>> mimics() const { return mimics_; }
 
   private:
-    /*! True if safety parameters were provided by the user */
-    bool hasSafety_ = false;
     /*! Gripper safety parameters */
     Safety safety_;
-    /*! True if mimic parameters were provided by the user */
-    bool hasMimics_ = false;
     /*! User-provided mimic information */
     std::vector<Mimic> mimics_;
     /*! Internal constructor used by the others */
@@ -664,16 +659,16 @@ inline bool operator==(const RobotModule::Gripper & lhs, const RobotModule::Grip
   {
     auto lmimics = lhs.mimics();
     auto rmimics = rhs.mimics();
-    if(lmimics == nullptr && rmimics == nullptr) { return true; }
-    if(lmimics == nullptr || rmimics == nullptr) { return false; }
+    if(!lmimics && !rmimics) { return true; }
+    if(!lmimics || !rmimics) { return false; }
     return *lmimics == *rmimics;
   };
   auto compareSafety = [&]()
   {
     auto lsafety = lhs.safety();
     auto rsafety = rhs.safety();
-    if(lsafety == nullptr && rsafety == nullptr) { return true; }
-    if(lsafety == nullptr || rsafety == nullptr) { return false; }
+    if(!lsafety && !rsafety) { return true; }
+    if(!lsafety || !rsafety) { return false; }
     return *lsafety == *rsafety;
   };
   return lhs.name == rhs.name && lhs.joints == rhs.joints && lhs.reverse_limits == rhs.reverse_limits && compareSafety()
