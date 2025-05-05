@@ -127,7 +127,9 @@ void DynamicsConstraint::addToSolverImpl(QPSolver & solver)
       auto dyn = problem.add(dyn_fn == 0., tvm::task_dynamics::None(), {tvm::requirements::PriorityLevel(0)});
       constraints_.push_back(dyn);
       auto cstr = problem.constraint(*dyn);
-      problem.add(tvm::hint::Substitution(cstr, tvm_robot.tau()));
+      // FIXME the substitutions lose some relations between variables if tasks are added or removed,
+      // commenting it for now
+      // problem.add(tvm::hint::Substitution(cstr, tvm_robot.tau()));
       break;
     }
     default:
@@ -150,7 +152,9 @@ void DynamicsConstraint::removeFromSolverImpl(QPSolver & solver)
     {
       auto & constr = *static_cast<TVMKinematicsConstraint *>(constraint_.get());
       auto & problem = tvm_solver(solver).problem();
-      problem.removeSubstitutionFor(*problem.constraint(*constr.constraints_.back()));
+      // FIXME the substitutions lose some relations between variables if tasks are added or removed,
+      // commenting it for now
+      // problem.removeSubstitutionFor(*problem.constraint(*constr.constraints_.back()));
       KinematicsConstraint::removeFromSolverImpl(solver);
       break;
     }
