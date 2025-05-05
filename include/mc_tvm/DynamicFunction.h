@@ -106,6 +106,20 @@ public:
   const tvm::VariableVector getForceVariables(const std::string & contactFrameName);
   // FIXME Handle offsets between contact frames
 
+  /**
+   * @brief Returns a map of the force/wrench variables taken into account in this dynamics constraint, and
+   * their plücker transform towards the CoM.
+   * This should be used by other tasks for multi-contact balancing.
+   *
+   * @return map of the X_w_C transforms.
+   */
+  const std::map<const tvm::VariablePtr, sva::PTransformd> & getCoMWrenchTransforms() const noexcept
+  {
+    return CoMWrenchTransforms_;
+  };
+  // FIXME add this as an output of the dynamic function (and dependency in the tasks) so that the graph is up to date
+  // when it is called
+
 protected:
   void updateb();
 
@@ -188,6 +202,8 @@ protected:
   std::vector<WrenchContact> contactWrenches_;
 
   std::vector<WrenchContact>::const_iterator findContactWrench(const mc_rbdyn::RobotFrame & frame) const;
+
+  std::map<const tvm::VariablePtr, sva::PTransformd> CoMWrenchTransforms_;
 
   void updateJacobian();
 };
