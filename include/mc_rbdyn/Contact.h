@@ -48,7 +48,7 @@ MC_RBDYN_DLLAPI std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surf
 
 struct FeasiblePolytope
 {
-  Eigen::MatrixX3d planeNormals;
+  Eigen::MatrixXd planeNormals;
   Eigen::VectorXd planeConstants;
 };
 
