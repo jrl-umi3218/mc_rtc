@@ -127,9 +127,11 @@ void DynamicsConstraint::addToSolverImpl(QPSolver & solver)
       auto dyn = problem.add(dyn_fn == 0., tvm::task_dynamics::None(), {tvm::requirements::PriorityLevel(0)});
       constraints_.push_back(dyn);
       auto cstr = problem.constraint(*dyn);
-      // FIXME the substitutions lose some relations between variables if tasks are added or removed,
-      // commenting it for now
-      // problem.add(tvm::hint::Substitution(cstr, tvm_robot.tau()));
+      // FIXME [BUG] the substitutions lose some relations between variables if tasks are added or removed,
+      // but without it some solver events are not triggered correctly. For now we add and remove it
+      // immediately when the constraint is added to the solver.
+      problem.add(tvm::hint::Substitution(cstr, tvm_robot.tau()));
+      problem.removeSubstitutionFor(*cstr);
       break;
     }
     default:
