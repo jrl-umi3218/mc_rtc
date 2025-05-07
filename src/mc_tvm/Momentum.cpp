@@ -14,6 +14,7 @@ Momentum::Momentum(NewMomentumToken, CoM & com) : com_(com), mat_(robot().robot(
   // clang-format off
   registerUpdates(
                   Update::Momentum, &Momentum::updateMomentum,
+                  Update::Velocity, &Momentum::updateVelocity,
                   Update::Jacobian, &Momentum::updateJacobian,
                   Update::NormalAcceleration, &Momentum::updateNormalAcceleration,
                   Update::JDot, &Momentum::updateJDot);
@@ -22,6 +23,11 @@ Momentum::Momentum(NewMomentumToken, CoM & com) : com_(com), mat_(robot().robot(
   addOutputDependency(Output::Momentum, Update::Momentum);
   addInputDependency(Update::Momentum, robot(), Robot::Output::FK);
   addInputDependency(Update::Momentum, com_, CoM::Output::CoM);
+
+  addOutputDependency(Output::Velocity, Update::Velocity);
+  addInputDependency(Update::Velocity, robot(), Robot::Output::FV);
+  addInputDependency(Update::Velocity, com_, CoM::Output::CoM);
+  addInputDependency(Update::Velocity, com_, CoM::Output::Velocity);
 
   addOutputDependency(Output::Jacobian, Update::Jacobian);
   addInputDependency(Update::Jacobian, robot(), Robot::Output::FV);
@@ -47,6 +53,12 @@ void Momentum::updateMomentum()
 {
   const auto & r = robot().robot();
   momentum_ = rbd::computeCentroidalMomentum(r.mb(), r.mbc(), com_.com());
+}
+
+void Momentum::updateVelocity()
+{
+  const auto & r = robot().robot();
+  velocity_ = rbd::computeCentroidalMomentumDot(r.mb(), r.mbc(), com_.com(), com_.velocity());
 }
 
 void Momentum::updateNormalAcceleration()
