@@ -30,6 +30,7 @@ MomentumFunction::MomentumFunction(const mc_rbdyn::Robot & robot)
   addOutputDependency<MomentumFunction>(Output::JDot, Update::JDot);
   addVariable(robot.tvmRobot().q(), false);
   addInputDependency<MomentumFunction>(Update::Value, momentumAlgo_, mc_tvm::Momentum::Output::Momentum);
+  addInputDependency<MomentumFunction>(Update::Velocity, momentumAlgo_, mc_tvm::Momentum::Output::Velocity);
   addInputDependency<MomentumFunction>(Update::Jacobian, momentumAlgo_, mc_tvm::Momentum::Output::Jacobian);
   addInputDependency<MomentumFunction>(Update::NormalAcceleration, momentumAlgo_,
                                        mc_tvm::Momentum::Output::NormalAcceleration);
@@ -50,7 +51,9 @@ void MomentumFunction::updateValue()
 
 void MomentumFunction::updateVelocity()
 {
-  velocity_ = -refVel_;
+  // XXX old update velocity was just -ref, assume it was a mistake
+  // velocity_ = -refVel_;
+  velocity_ = (momentumAlgo_.velocity() - refVel_).vector();
 }
 
 void MomentumFunction::updateJacobian()
