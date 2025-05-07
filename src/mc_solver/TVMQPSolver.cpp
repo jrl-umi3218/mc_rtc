@@ -150,7 +150,7 @@ bool TVMQPSolver::runCommon()
     int i = 0;
     for(const auto & f1contraint : contactTVMQP.f1Constraints_)
     {
-      mc_rtc::log::info("Force {} has {} planes constraints", i, f1contraint->task.function()->tSize());
+      // mc_rtc::log::info("Force {} has {} planes constraints", i, f1contraint->task.function()->tSize());
       auto poly_fn = std::static_pointer_cast<mc_tvm::ForceInPolytopeFunction>(f1contraint->task.function());
       if(poly_fn->constraintSizeChanged())
       {
@@ -165,7 +165,7 @@ bool TVMQPSolver::runCommon()
     // Now also run on other side of the constraint
     for(const auto & f2contraint : contactTVMQP.f2Constraints_)
     {
-      mc_rtc::log::info("Force {} has {} planes constraints", i, f2contraint->task.function()->tSize());
+      // mc_rtc::log::info("Force {} has {} planes constraints", i, f2contraint->task.function()->tSize());
       auto poly_fn = std::static_pointer_cast<mc_tvm::ForceInPolytopeFunction>(f2contraint->task.function());
       if(poly_fn->constraintSizeChanged())
       {
