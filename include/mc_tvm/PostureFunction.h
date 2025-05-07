@@ -17,7 +17,7 @@ namespace mc_tvm
 class MC_TVM_DLLAPI PostureFunction : public tvm::function::IdentityFunction
 {
 public:
-  SET_UPDATES(PostureFunction, Value)
+  SET_UPDATES(PostureFunction, Value, Velocity)
 
   /** Constructor
    *
