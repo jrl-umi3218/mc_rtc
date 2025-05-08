@@ -51,7 +51,11 @@ public:
    * \throws If the frame does not have a force sensor attached
    *
    */
-  AdmittanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness = 5.0, double weight = 1000.0);
+  AdmittanceTask(const mc_rbdyn::RobotFrame & frame,
+                 double stiffness = 5.0,
+                 double weight = 1000.0,
+                 bool showTarget = true,
+                 bool showPose = true);
 
   /*! \brief Initialize a new admittance task.
    *
@@ -74,7 +78,9 @@ public:
                  const mc_rbdyn::Robots & robots,
                  unsigned robotIndex,
                  double stiffness = 5.0,
-                 double weight = 1000.0);
+                 double weight = 1000.0,
+                 bool showTarget = true,
+                 bool showPose = true);
 
   /*! \brief Reset the task
    *
@@ -204,6 +210,9 @@ protected:
 
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
   void addToLogger(mc_rtc::Logger & logger) override;
+
+  bool showTarget_ = true;
+  bool showPose_ = true;
 
   /** Transform's refVelB() becomes internal to the task. */
   using TransformTask::refVelB;
