@@ -196,6 +196,19 @@ private:
     bool isString() const noexcept;
     /** True if the value is numeric */
     bool isNumeric() const noexcept;
+    /** True if the value is an integer (int32, int64, uint32 or uint64) **/
+    bool isInteger() const noexcept;
+    /** True if the value is an int (32 bits) **/
+    bool isInt32() const noexcept;
+    /** True if the value is an int (64 bits) **/
+    bool isInt64() const noexcept;
+    /** True if the value is an unsigned int (32 bits) **/
+    bool isUInt32() const noexcept;
+    /** True if the value is an unsigned int (64 bits) **/
+    bool isUInt64() const noexcept;
+    /** True if the value is a double */
+    bool isDouble() const noexcept;
+
     /** Access the value as a double
      *
      * \throws If isNumeric() is false
@@ -880,6 +893,18 @@ public:
 
   /*! \brief Returns true if the underlying value is numeric */
   inline bool isNumeric() const noexcept { return v.isNumeric(); }
+  /** True if the underlying value is an integer (int32, int64, uint32 or uint64) **/
+  inline bool isInteger() const noexcept { return v.isInteger(); }
+  /** True if the underlying value is an int (32 bits) **/
+  inline bool isInt32() const noexcept { return v.isInt32(); }
+  /** True if the underlying value is an int (64 bits) **/
+  inline bool isInt64() const noexcept { return v.isInt64(); }
+  /** True if the underlying value is an unsigned int (32 bits) **/
+  inline bool isUInt32() const noexcept { return v.isUInt32(); }
+  /** True if the underlying value is an unsigned int (64 bits) **/
+  inline bool isUInt64() const noexcept { return v.isUInt64(); }
+  /** True if the underlying value is a double */
+  inline bool isDouble() const noexcept { return v.isDouble(); }
 
   /*! \brief If the stored value is an array, return a Configuration element
    * for the i-th element.

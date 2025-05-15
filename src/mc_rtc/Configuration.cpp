@@ -159,6 +159,48 @@ bool Configuration::Json::isNumeric() const noexcept
   return value->IsNumber();
 }
 
+bool Configuration::Json::isDouble() const noexcept
+{
+  assert(value_);
+  auto * value = static_cast<internal::RapidJSONValue *>(value_);
+  return value->IsDouble();
+}
+
+bool Configuration::Json::isInteger() const noexcept
+{
+  assert(value_);
+  auto * value = static_cast<internal::RapidJSONValue *>(value_);
+  return value->IsInt() || value->IsInt64() || value->IsUint() || value->IsUint64();
+}
+
+bool Configuration::Json::isInt32() const noexcept
+{
+  assert(value_);
+  auto * value = static_cast<internal::RapidJSONValue *>(value_);
+  return value->IsInt();
+}
+
+bool Configuration::Json::isInt64() const noexcept
+{
+  assert(value_);
+  auto * value = static_cast<internal::RapidJSONValue *>(value_);
+  return value->IsInt64();
+}
+
+bool Configuration::Json::isUInt32() const noexcept
+{
+  assert(value_);
+  auto * value = static_cast<internal::RapidJSONValue *>(value_);
+  return value->IsUint();
+}
+
+bool Configuration::Json::isUInt64() const noexcept
+{
+  assert(value_);
+  auto * value = static_cast<internal::RapidJSONValue *>(value_);
+  return value->IsUint64();
+}
+
 double Configuration::Json::asDouble() const
 {
   assert(isNumeric());

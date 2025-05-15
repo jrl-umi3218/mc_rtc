@@ -5,6 +5,7 @@
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/pragma.h>
 
+#include <boost/test/tools/old/interface.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/filesystem.hpp>
@@ -195,6 +196,11 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     /*! Check that we can access a direct int entry */
     int a = config("int");
     BOOST_CHECK_EQUAL(a, 42);
+    BOOST_CHECK(config("int").isInteger());
+    BOOST_CHECK(config("int").isInt32());
+    BOOST_CHECK(config("int").isInt64());
+    BOOST_CHECK(config("int").isUInt32());
+    BOOST_CHECK(config("int").isUInt64());
 
     /*! Check that we can get the value of an int entry out of there */
     int b = 0;
@@ -212,6 +218,7 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     int d = 10;
     config("double", d);
     BOOST_CHECK_EQUAL(d, 10);
+    BOOST_CHECK_EQUAL(config("double").isDouble(), true);
 
     /*! Access a int from a dict */
     int f = 0;
@@ -249,6 +256,8 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     /*! Check that we can access a direct unsigned int entry */
     unsigned int a = config("int");
     BOOST_CHECK_EQUAL(a, 42);
+    BOOST_CHECK(config("int").isUInt32());
+    BOOST_CHECK(config("int").isUInt64());
 
     /*! Check that we can get the value of an unsigned int entry out of there */
     unsigned int b = 0;
@@ -293,6 +302,7 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     /*! Check that we can access a direct double entry */
     double a = config("double");
     BOOST_CHECK_EQUAL(a, 42.5);
+    BOOST_CHECK_EQUAL(config("double").isDouble(), true);
 
     /*! Check that we can get the value of an double entry out of there */
     double b = 0.;
@@ -900,6 +910,11 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     /* Check that other values are still there */
     int b = config("sint");
     BOOST_CHECK_EQUAL(b, -42);
+    BOOST_CHECK(config("sint").isInteger());
+    BOOST_CHECK(config("sint").isInt32());
+    BOOST_CHECK(config("sint").isInt64());
+    BOOST_CHECK(!config("sint").isUInt32());
+    BOOST_CHECK(!config("sint").isUInt64());
 
     /* Check with a more complex type */
     std::vector<std::string> ref2 = {"a2", "b2", "c2"};
