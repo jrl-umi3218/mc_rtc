@@ -133,8 +133,8 @@ private:
       // mx,  my,  mz,  fx,  fy,  fz,
         -1,   0,   0,   0,   0,   minLateral,
         +1,   0,   0,   0,   0,  -maxLateral,
-          0,  -1,   0,   0,   0,  -maxSagital,
-          0,  +1,   0,   0,   0,   minSagital;
+         0,  -1,   0,   0,   0,  -maxSagital,
+         0,  +1,   0,   0,   0,   minSagital;
     // clang-format on
 
     return CoPConstraintMat;
