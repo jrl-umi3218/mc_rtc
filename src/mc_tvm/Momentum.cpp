@@ -25,7 +25,6 @@ Momentum::Momentum(NewMomentumToken, CoM & com) : com_(com), mat_(robot().robot(
   addInputDependency(Update::Momentum, com_, CoM::Output::CoM);
 
   addOutputDependency(Output::Velocity, Update::Velocity);
-  addInputDependency(Update::Velocity, robot(), Robot::Output::FV);
   addInputDependency(Update::Velocity, com_, CoM::Output::CoM);
   addInputDependency(Update::Velocity, com_, CoM::Output::Velocity);
 
