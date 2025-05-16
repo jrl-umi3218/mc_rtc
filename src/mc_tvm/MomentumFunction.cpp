@@ -28,8 +28,12 @@ MomentumFunction::MomentumFunction(const mc_rbdyn::Robot & robot)
   addOutputDependency<MomentumFunction>(Output::Jacobian, Update::Jacobian);
   addOutputDependency<MomentumFunction>(Output::NormalAcceleration, Update::NormalAcceleration);
   addOutputDependency<MomentumFunction>(Output::JDot, Update::JDot);
+  // FIXME The variable for the momentum should be dot(q), but the way TVM task dynamics are implemented
+  // relies on the derivative order of the variables. If dot(q) is given, the dynamics will simply be
+  // a proportional.
   addVariable(robot.tvmRobot().q(), false);
   addInputDependency<MomentumFunction>(Update::Value, momentumAlgo_, mc_tvm::Momentum::Output::Momentum);
+  // Still add momentum velocity dependency so that it is computed in the graph for logging
   addInputDependency<MomentumFunction>(Update::Velocity, momentumAlgo_, mc_tvm::Momentum::Output::Velocity);
   addInputDependency<MomentumFunction>(Update::Jacobian, momentumAlgo_, mc_tvm::Momentum::Output::Jacobian);
   addInputDependency<MomentumFunction>(Update::NormalAcceleration, momentumAlgo_,
@@ -51,9 +55,9 @@ void MomentumFunction::updateValue()
 
 void MomentumFunction::updateVelocity()
 {
-  // XXX old update velocity was just -ref, assume it was a mistake
-  // velocity_ = -refVel_;
-  velocity_ = (momentumAlgo_.velocity() - refVel_).vector();
+  // Giving -refVel as velocity error and not momentumAlgo_.velocity() - refVel_
+  // because it's a feedforward (momentum is already a velocity)
+  velocity_ = -refVel_;
 }
 
 void MomentumFunction::updateJacobian()
