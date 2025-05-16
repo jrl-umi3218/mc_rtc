@@ -204,9 +204,9 @@ void DynamicFunction::removeContact(const mc_rbdyn::RobotFrame & frame)
   auto it2 = findContactWrench(frame);
   if(it2 != contactWrenches_.end())
   {
+    CoMWrenchTransforms_.erase(it2->wrench_);
     removeVariable(it2->wrench_);
     contactWrenches_.erase(it2);
-    CoMWrenchTransforms_.erase(it2->wrench_);
   }
 }
 
