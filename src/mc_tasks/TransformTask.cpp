@@ -88,7 +88,7 @@ void TransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
   {
     const auto & c = config("targetFrame");
     const auto robotIndex = robotIndexFromConfig(c, solver.robots(), name());
-    X_0_t = c("offset", sva::PTransformd::Identity() * robots.robot(robotIndex).frame(c("frame")).position());
+    X_0_t = c("offset", sva::PTransformd::Identity()) * robots.robot(robotIndex).frame(c("frame")).position();
   }
   else if(config.has("target")) { X_0_t = config("target"); }
   else if(config.has("relative"))
