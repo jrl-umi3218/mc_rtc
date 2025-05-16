@@ -88,7 +88,7 @@ void TransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
   {
     const auto & c = config("targetFrame");
     const auto robotIndex = robotIndexFromConfig(c, solver.robots(), name());
-    target(robots.robot(robotIndex).frame(c("frame")), c("offset", sva::PTransformd::Identity()));
+    X_0_t = c("offset", sva::PTransformd::Identity() * robots.robot(robotIndex).frame(c("frame")).position());
   }
   else if(config.has("target")) { X_0_t = config("target"); }
   else if(config.has("relative"))
@@ -102,7 +102,7 @@ void TransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
     auto X_s1_s2 = X_0_s2 * X_0_s1.inv();
     X_s1_s2.translation() = X_s1_s2.translation() / 2;
     auto X_0_relative = X_s1_s2 * X_0_s1;
-    this->target(target * X_0_relative);
+    X_0_t = target * X_0_relative;
   }
   else
   {
