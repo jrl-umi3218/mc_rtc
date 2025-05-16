@@ -380,6 +380,10 @@ const RobotModule & Robots::robotModule(size_t idx) const
   return robot_modules_[idx];
 }
 
+RobotModule & Robots::robotModule(size_t idx){
+  return robot_modules_[idx];
+}
+
 MC_RTC_diagnostic_pop
 
 } // namespace mc_rbdyn
