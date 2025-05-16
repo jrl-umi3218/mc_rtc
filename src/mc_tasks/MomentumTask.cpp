@@ -98,6 +98,8 @@ void MomentumTask::addToLogger(mc_rtc::Logger & logger)
     case Backend::TVM:
       logger.addLogEntry(name_ + "_momentum", this,
                          [this]() -> const sva::ForceVecd & { return tvm_error(errorT)->algo().momentum(); });
+      logger.addLogEntry(name_ + "_momentum dot", this,
+                         [this]() -> const sva::ForceVecd & { return tvm_error(errorT)->algo().velocity(); });
       break;
     default:
       break;
