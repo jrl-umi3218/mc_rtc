@@ -525,7 +525,8 @@ const RobotModule & Robot::module() const
   return robots_->robotModule(robots_idx_);
 }
 
-RobotModule & Robot::module(){
+RobotModule & Robot::module()
+{
   return robots_->robotModule(robots_idx_);
 }
 
