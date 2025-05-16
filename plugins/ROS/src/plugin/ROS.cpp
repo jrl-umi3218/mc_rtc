@@ -36,15 +36,21 @@ void ROSPlugin::reset(mc_control::MCGlobalController & controller)
   if(publish_control)
   {
     mc_rtc::ROSBridge::init_robot_publisher("control", controller.timestep(), controller.controller().outputRobot());
+    controller.robot().module().addParameter("control");
   }
   if(publish_env)
   {
     auto publish_env = [&controller](const std::string & prefix, mc_rbdyn::Robots & robots, bool use_real)
     {
+      size_t env_i = 1;
       for(size_t i = 1; i < robots.size(); ++i)
       {
-        mc_rtc::ROSBridge::init_robot_publisher(prefix + "_" + std::to_string(i), controller.timestep(),
-                                                robots.robot(i), use_real);
+        auto & r = robots.robot(i);
+        r.module().addParameter(prefix + "_" + std::to_string(env_i));
+        if(r.robotIndex() == robots.robotIndex()) { continue; }
+        mc_rtc::ROSBridge::init_robot_publisher(prefix + "_" + std::to_string(env_i), controller.timestep(), r,
+                                                use_real);
+        env_i++;
       }
     };
     publish_env("control/env", controller.controller().outputRobots(), false);
@@ -68,10 +74,17 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
   {
     auto update_env = [this, &controller](const std::string & prefix, mc_rbdyn::Robots & robots)
     {
+      size_t env_i = 1;
       for(size_t i = 1; i < robots.size(); ++i)
       {
-        mc_rtc::ROSBridge::update_robot_publisher(prefix + "_" + std::to_string(i), controller.timestep(),
-                                                  robots.robot(i));
+        auto & r = robots.robot(i);
+        if(std::count(r.module().parameters().begin(), r.module().parameters().end(), prefix + "_" + std::to_string(env_i)) == 0){
+          r.module().addParameter(prefix + "_" + std::to_string(env_i));
+        }
+
+        if(r.robotIndex() == robots.robotIndex()) { continue; }
+        mc_rtc::ROSBridge::update_robot_publisher(prefix + "_" + std::to_string(env_i), controller.timestep(), r);
+        env_i++;
       }
       published_env = std::max<size_t>(publish_env, robots.size() - 1);
     };
