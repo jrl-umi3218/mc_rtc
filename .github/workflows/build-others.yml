@@ -19,8 +19,6 @@ on:
 env:
   # Branch that triggered this workflow
   GITHUB_BRANCH: ${{ github.head_ref || github.ref_name }}
-  # Repository that triggered this workflow
-  GITHUB_REPO_TRIGGER: ${{ github.actor }}/${{ github.event.repository.name }}
 
 jobs:
   build:
@@ -30,6 +28,20 @@ jobs:
         os: ["debian_bullseye", "ubuntu_22.04"]
     runs-on: ubuntu-22.04
     steps:
+    - name: Dump github context
+      run:   echo "$GITHUB_CONTEXT"
+      shell: bash
+      env:
+       GITHUB_CONTEXT: ${{ toJson(github) }}
+    - name: Set repository name based on event (pull_request/push)
+      run: |
+         if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+           echo "GITHUB_REPO_TRIGGER=${{ github.event.pull_request.head.repo.full_name }}" >> $GITHUB_ENV
+         else
+           echo "GITHUB_REPO_TRIGGER=${{ github.repository }}" >> $GITHUB_ENV
+         fi
+    - name: Use repository name
+      run: echo "The triggering repository is $GITHUB_REPO_TRIGGER"
     - uses: actions/checkout@v4
       with:
         submodules: recursive
