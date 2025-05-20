@@ -101,11 +101,12 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
     mc_rtc::ROSBridge::update_robot_publisher("real", controller.timestep(), real_robot);
   }
 
-  if(controller.robots().size() != mc_rtc::ROSBridge::nb_robot_publisher() / (publish_real ? 2 : 1)){
-    for(size_t i = mc_rtc::ROSBridge::nb_robot_publisher() / (publish_real ? 2 : 1); i > controller.robots().size(); i--){
-      if(publish_real){
-        mc_rtc::ROSBridge::stop_robot_publisher("real/env_" + std::to_string(i - 1));
-      }
+  if(controller.robots().size() != mc_rtc::ROSBridge::nb_robot_publisher() / (publish_real ? 2 : 1))
+  {
+    for(size_t i = mc_rtc::ROSBridge::nb_robot_publisher() / (publish_real ? 2 : 1); i > controller.robots().size();
+        i--)
+    {
+      if(publish_real) { mc_rtc::ROSBridge::stop_robot_publisher("real/env_" + std::to_string(i - 1)); }
 
       mc_rtc::ROSBridge::stop_robot_publisher("control/env_" + std::to_string(i - 1));
     }
