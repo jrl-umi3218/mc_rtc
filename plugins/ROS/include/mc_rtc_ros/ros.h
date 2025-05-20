@@ -99,6 +99,12 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
    * \param publisher Name of the publisher
    */
   static void stop_robot_publisher(const std::string & publisher);
+  
+  /** Return number of robot publisher
+   * 
+   * @return size_t 
+   */
+  static size_t nb_robot_publisher();
 
   /*! \brief Stop ROS */
   static void shutdown();
