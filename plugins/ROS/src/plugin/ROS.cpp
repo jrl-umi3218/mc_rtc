@@ -78,7 +78,10 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
       for(size_t i = 1; i < robots.size(); ++i)
       {
         auto & r = robots.robot(i);
-        if(std::count(r.module().parameters().begin(), r.module().parameters().end(), prefix + "_" + std::to_string(env_i)) == 0){
+        if(std::count(r.module().parameters().begin(), r.module().parameters().end(),
+                      prefix + "_" + std::to_string(env_i))
+           == 0)
+        {
           r.module().addParameter(prefix + "_" + std::to_string(env_i));
         }
 

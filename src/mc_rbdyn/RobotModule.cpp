@@ -185,7 +185,7 @@ RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
   return ret;
 }
 
-void RobotModule::addParameter(const std::string &param)
+void RobotModule::addParameter(const std::string & param)
 {
   _parameters.push_back(param);
 }
