@@ -119,10 +119,12 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
    */
   static size_t nb_robot_publisher();
 
-  /** Remove the publisher of every removed robot
+  /** Check if publisher with the given name exists
    *
-   * \param robots Controller's robots
+   * \param topic topic name
    */
+  static bool has_publisher(const std::string & topic);
+
   static void remove_extra_robot_publishers(const mc_rbdyn::Robots & robots);
 
   /*! \brief Stop ROS */

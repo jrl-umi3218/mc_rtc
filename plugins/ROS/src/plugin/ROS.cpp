@@ -48,7 +48,10 @@ void ROSPlugin::reset(mc_control::MCGlobalController & controller)
 
 void ROSPlugin::after(mc_control::MCGlobalController & controller)
 {
-  auto update_robots = [this, &controller](const std::string & prefix, mc_rbdyn::Robots & robots)
+  // mc_rtc::ROSBridge::update_robot_publisher("control/" + controller.robot().name(), controller.timestep(),
+  // controller.controller().outputRobot());
+
+  auto update_env = [this, &controller](const std::string & prefix, mc_rbdyn::Robots & robots)
   {
     for(auto & r : robots) { mc_rtc::ROSBridge::update_robot_publisher(prefix + r.name(), controller.timestep(), r); }
     published_topics = robots.size() - 1;
@@ -58,13 +61,7 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
 
   if(controller.robots().size() != mc_rtc::ROSBridge::nb_robot_publisher() / (publish_real ? 2 : 1))
   {
-    for(size_t i = mc_rtc::ROSBridge::nb_robot_publisher() / (publish_real ? 2 : 1); i > controller.robots().size();
-        i--)
-    {
-      if(publish_real) { mc_rtc::ROSBridge::stop_robot_publisher("real/env_" + std::to_string(i - 1)); }
-
-      mc_rtc::ROSBridge::stop_robot_publisher("control/env_" + std::to_string(i - 1));
-    }
+    mc_rtc::ROSBridge::remove_extra_robot_publishers(controller.robots());
   }
 }
 
