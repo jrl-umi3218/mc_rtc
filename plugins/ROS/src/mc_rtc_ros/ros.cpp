@@ -2,7 +2,6 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_rbdyn/Robots.h>
 #include <mc_rtc/config.h>
 #include <mc_rtc/logging.h>
 #include <mc_rtc/utils.h>
@@ -668,6 +667,23 @@ void ROSBridge::stop_robot_publisher(const std::string & publisher)
   auto it = impl.rpubs.find(publisher);
   if(it == impl.rpubs.end()) { return; }
   impl.rpubs.erase(it);
+}
+
+void ROSBridge::remove_extra_robot_publishers(const mc_rbdyn::Robots & robots)
+{
+  static auto & impl = impl_();
+
+  for(auto it = impl.rpubs.begin(); it != impl.rpubs.end();)
+  {
+    const std::string & topic = it->first;
+
+    size_t pos = topic.find('/');
+    if(pos != std::string::npos && pos + 1 < topic.size())
+    {
+      if(!robots.hasRobot(topic.substr(pos + 1))) { it = impl.rpubs.erase(it); }
+      else { ++it; }
+    }
+  }
 }
 
 void ROSBridge::shutdown()
