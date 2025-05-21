@@ -82,7 +82,6 @@ public:
 
   /** Retrieve the associated RobotModule */
   const RobotModule & module() const;
-  RobotModule & module();
 
   /** @name Body sensors
    *
