@@ -530,9 +530,19 @@ optional arguments:
   </span><span class="nl">"Enabled"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Python#my_first_controller.MyFirstController"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
-<p><em>Note: if you have enforced Python 2 or Python 3 or if you have installed both then you should explicitly choose <code>Python2</code> or <code>Python3</code>.</em></p>
+<p><em>Note: if you have enforced Python 2 or Python 3 or if you have installed both then you should explicitly choose <code>Python2</code> or <code>Python3</code>. E.g for Python3 use:</em></p>
 
-<p>For this to work, we need to make sure the <code>my_first_controller</code> folder is on the Python path. In fact, given this configuration, mc_rtc will create your controller this way:</p>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"MainRobot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JVRC1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"Enabled"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Python3#my_first_controller.MyFirstController"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<p>For this to work, we need to make sure the <code>my_first_controller</code> folder is on the Python path.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">"/path/to/my_first_controller:</span><span class="nv">$PYTHONPATH</span><span class="s2">"</span></code></pre></figure>
+
+
+<p>In fact, given this configuration, mc_rtc will create your controller this way:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">my_first_controller</span> <span class="kn">import</span> <span class="n">MyFirstController</span>
 <span class="n">controller</span> <span class="o">=</span> <span class="n">MyFirstController</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">rm</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>

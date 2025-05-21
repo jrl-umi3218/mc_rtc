@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">mc_rtc
-   &#160;<span id="projectnumber">2.12.0</span>
+   &#160;<span id="projectnumber">2.13.0</span>
    </div>
   </td>
  </tr>
@@ -311,6 +311,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a75e3c78e014ad6e5b66cf3a9f82dbb9b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Configuration.html#a75e3c78e014ad6e5b66cf3a9f82dbb9b">isNumeric</a> () const noexcept</td></tr>
 <tr class="memdesc:a75e3c78e014ad6e5b66cf3a9f82dbb9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the underlying value is numeric.  <a href="structmc__rtc_1_1Configuration.html#a75e3c78e014ad6e5b66cf3a9f82dbb9b">More...</a><br /></td></tr>
 <tr class="separator:a75e3c78e014ad6e5b66cf3a9f82dbb9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2f186db3dccbafdccdd5ebefb093f1c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Configuration.html#af2f186db3dccbafdccdd5ebefb093f1c">isInteger</a> () const noexcept</td></tr>
+<tr class="separator:af2f186db3dccbafdccdd5ebefb093f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac579e9c7cfc38e1e152b87fd401f6a6a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Configuration.html#ac579e9c7cfc38e1e152b87fd401f6a6a">isInt32</a> () const noexcept</td></tr>
+<tr class="separator:ac579e9c7cfc38e1e152b87fd401f6a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86591482e0f64a82a15969f2225e0649"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Configuration.html#a86591482e0f64a82a15969f2225e0649">isInt64</a> () const noexcept</td></tr>
+<tr class="separator:a86591482e0f64a82a15969f2225e0649"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f943f5a9d4f296688405861efd64d60"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Configuration.html#a9f943f5a9d4f296688405861efd64d60">isUInt32</a> () const noexcept</td></tr>
+<tr class="separator:a9f943f5a9d4f296688405861efd64d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14aa7e107a96d7912ffb7253b0637962"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Configuration.html#a14aa7e107a96d7912ffb7253b0637962">isUInt64</a> () const noexcept</td></tr>
+<tr class="separator:a14aa7e107a96d7912ffb7253b0637962"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacf3f0f428640e0fc67dfd0fdb76f46e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Configuration.html#aacf3f0f428640e0fc67dfd0fdb76f46e">isDouble</a> () const noexcept</td></tr>
+<tr class="separator:aacf3f0f428640e0fc67dfd0fdb76f46e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af63d0b9fe005fd5fea2078a17c62b2e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1Configuration.html">Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Configuration.html#af63d0b9fe005fd5fea2078a17c62b2e7">operator[]</a> (size_t i) const</td></tr>
 <tr class="memdesc:af63d0b9fe005fd5fea2078a17c62b2e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the stored value is an array, return a <a class="el" href="structmc__rtc_1_1Configuration.html" title="Simplify access to values hold within a JSON file.">Configuration</a> element for the i-th element.  <a href="structmc__rtc_1_1Configuration.html#af63d0b9fe005fd5fea2078a17c62b2e7">More...</a><br /></td></tr>
 <tr class="separator:af63d0b9fe005fd5fea2078a17c62b2e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2605,6 +2617,110 @@ template&lt;typename T , typename... Args&gt; </div>
 
 </div>
 </div>
+<a id="aacf3f0f428640e0fc67dfd0fdb76f46e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacf3f0f428640e0fc67dfd0fdb76f46e">&#9670;&nbsp;</a></span>isDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rtc::Configuration::isDouble </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>True if the underlying value is a double </p>
+
+</div>
+</div>
+<a id="ac579e9c7cfc38e1e152b87fd401f6a6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac579e9c7cfc38e1e152b87fd401f6a6a">&#9670;&nbsp;</a></span>isInt32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rtc::Configuration::isInt32 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>True if the underlying value is an int (32 bits) </p>
+
+</div>
+</div>
+<a id="a86591482e0f64a82a15969f2225e0649"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86591482e0f64a82a15969f2225e0649">&#9670;&nbsp;</a></span>isInt64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rtc::Configuration::isInt64 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>True if the underlying value is an int (64 bits) </p>
+
+</div>
+</div>
+<a id="af2f186db3dccbafdccdd5ebefb093f1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2f186db3dccbafdccdd5ebefb093f1c">&#9670;&nbsp;</a></span>isInteger()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rtc::Configuration::isInteger </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>True if the underlying value is an integer (int32, int64, uint32 or uint64) </p>
+
+</div>
+</div>
 <a id="a983c430fc82d271e83397cc546197c6d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a983c430fc82d271e83397cc546197c6d">&#9670;&nbsp;</a></span>isMember()</h2>
 
@@ -2710,6 +2826,58 @@ template&lt;typename T , typename... Args&gt; </div>
 </div><div class="memdoc">
 
 <p>Returns true if the underlying value is a string. </p>
+
+</div>
+</div>
+<a id="a9f943f5a9d4f296688405861efd64d60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f943f5a9d4f296688405861efd64d60">&#9670;&nbsp;</a></span>isUInt32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rtc::Configuration::isUInt32 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>True if the underlying value is an unsigned int (32 bits) </p>
+
+</div>
+</div>
+<a id="a14aa7e107a96d7912ffb7253b0637962"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14aa7e107a96d7912ffb7253b0637962">&#9670;&nbsp;</a></span>isUInt64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rtc::Configuration::isUInt64 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>True if the underlying value is an unsigned int (64 bits) </p>
 
 </div>
 </div>

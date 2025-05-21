@@ -1,5 +1,11 @@
 var NAVTREEINDEX16 =
 {
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration_01_4.html":[6,0,6,15],
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ArrowConfig_01_4.html":[6,0,6,35],
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1Color_01_4.html":[6,0,6,33],
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ForceConfig_01_4.html":[6,0,6,36],
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1LineConfig_01_4.html":[6,0,6,34],
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PointConfig_01_4.html":[6,0,6,37],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PolyhedronConfig_01_4.html":[6,0,6,38],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html":[6,0,6,54],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html":[6,0,6,55],
@@ -86,8 +92,8 @@ var NAVTREEINDEX16 =
 "structmc__rtc_1_1Logger.html#a89fb05a7430fab3ebe3ccb5061dddc60":[6,0,6,46,22],
 "structmc__rtc_1_1Logger.html#a93a57921c9019097a0903b86d0ba7571":[6,0,6,46,27],
 "structmc__rtc_1_1Logger.html#a986b2719c1337aa9d1e84e2b0b34481c":[6,0,6,46,25],
-"structmc__rtc_1_1Logger.html#ab215a02a76f5d36bb65353cf256fcdc6":[6,0,6,46,13],
 "structmc__rtc_1_1Logger.html#ab215a02a76f5d36bb65353cf256fcdc6":[6,0,6,46,12],
+"structmc__rtc_1_1Logger.html#ab215a02a76f5d36bb65353cf256fcdc6":[6,0,6,46,13],
 "structmc__rtc_1_1Logger.html#acf6c621790b393b717c9a6b0c0ec0394":[6,0,6,46,21],
 "structmc__rtc_1_1Logger.html#add61975ae8f4cc74dcb640dceb3d2282":[6,0,6,46,14],
 "structmc__rtc_1_1Logger.html#aeb0d9597ada6a67eb2a89fcda8c74e7d":[6,0,6,46,28],
@@ -243,11 +249,5 @@ var NAVTREEINDEX16 =
 "structmc__rtc_1_1gui_1_1Color.html#af5fa54af25cd633fec4abb5cd14c0b17":[6,0,6,0,16,14],
 "structmc__rtc_1_1gui_1_1CommonInputImpl.html":[6,0,6,0,7],
 "structmc__rtc_1_1gui_1_1CommonInputImpl.html#a1d18c6be098836d8c4dc9cd9bcae1072":[6,0,6,0,7,0],
-"structmc__rtc_1_1gui_1_1CommonInputImpl.html#aee87ac9fbe3573e62fd457a0065118e8":[6,0,6,0,7,1],
-"structmc__rtc_1_1gui_1_1CylinderParameters.html":[6,0,6,0,2],
-"structmc__rtc_1_1gui_1_1CylinderParameters.html#a71d38bcd40c65aa16e30a241b7a10c3f":[6,0,6,0,2,1],
-"structmc__rtc_1_1gui_1_1CylinderParameters.html#a9fb3c42eaa3f48060b6766ec829bce83":[6,0,6,0,2,0],
-"structmc__rtc_1_1gui_1_1DataElement.html":[6,0,6,0,4],
-"structmc__rtc_1_1gui_1_1DataElement.html#a16c128617f3f6e4bc2257f811721e92d":[6,0,6,0,4,1],
-"structmc__rtc_1_1gui_1_1DataElement.html#a65d486d790fd684f1fdd422a36a4b662":[6,0,6,0,4,0]
+"structmc__rtc_1_1gui_1_1CommonInputImpl.html#aee87ac9fbe3573e62fd457a0065118e8":[6,0,6,0,7,1]
 };

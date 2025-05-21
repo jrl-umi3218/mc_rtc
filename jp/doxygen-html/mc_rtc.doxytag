@@ -6988,6 +6988,7 @@
     <path>/tmp/build-mc-rtc/src/mc_rtc/plugins/ROS/include/mc_rtc_ros/</path>
     <filename>mc__rtc__ros_2ros_8h.html</filename>
     <includes id="plugins_2ROS_2include_2mc__rtc__ros_2api_8h" name="api.h" local="no" imported="no">mc_rtc_ros/api.h</includes>
+    <includes id="Robots_8h" name="Robots.h" local="no" imported="no">mc_rbdyn/Robots.h</includes>
     <class kind="struct">mc_rtc::ROSBridge</class>
     <class kind="struct">mc_rtc::RobotPublisher</class>
     <namespace>ros</namespace>
@@ -11379,6 +11380,48 @@
       <name>isNumeric</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
       <anchor>a75e3c78e014ad6e5b66cf3a9f82dbb9b</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>isInteger</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>af2f186db3dccbafdccdd5ebefb093f1c</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>isInt32</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>ac579e9c7cfc38e1e152b87fd401f6a6a</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>isInt64</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a86591482e0f64a82a15969f2225e0649</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>isUInt32</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a9f943f5a9d4f296688405861efd64d60</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>isUInt64</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a14aa7e107a96d7912ffb7253b0637962</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>isDouble</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>aacf3f0f428640e0fc67dfd0fdb76f46e</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
@@ -36566,6 +36609,13 @@
       <anchorfile>structmc__rtc_1_1ROSBridge.html</anchorfile>
       <anchor>a52bd7ffa7137fa42036438687165fde5</anchor>
       <arglist>(const std::string &amp;publisher)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static void</type>
+      <name>remove_extra_robot_publishers</name>
+      <anchorfile>structmc__rtc_1_1ROSBridge.html</anchorfile>
+      <anchor>a56125a61198c9f46b12dc30ecb7baa71</anchor>
+      <arglist>(const mc_rbdyn::Robots &amp;robots)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static void</type>

@@ -1,5 +1,11 @@
 var NAVTREEINDEX20 =
 {
+"structmc__solver_1_1utils_1_1Constraint.html#aab0cc49bca85557519c9a110b54c65ca":[6,0,7,1,3,2],
+"structmc__solver_1_1utils_1_1Constraint.html#ab383394a69ab62c4fab23378e64868de":[6,0,7,1,3,5],
+"structmc__solver_1_1utils_1_1Constraint.html#adcc2b9ec9fbd3b47e0183ef0ce034c73":[6,0,7,1,3,0],
+"structmc__solver_1_1utils_1_1Constraint.html#ae5a2073ed0b8b0432593221fec955e4e":[6,0,7,1,3,1],
+"structmc__solver_1_1utils_1_1ContactWrenchMatrixToLambdaMatrix.html":[6,0,7,1,4],
+"structmc__solver_1_1utils_1_1ContactWrenchMatrixToLambdaMatrix.html#a023d5ba6b69792d96db4ca6e8fd20e2c":[6,0,7,1,4,0],
 "structmc__solver_1_1utils_1_1ContactWrenchMatrixToLambdaMatrix.html#a3024b20e8f098756d24cd2082469c055":[6,0,7,1,4,2],
 "structmc__solver_1_1utils_1_1ContactWrenchMatrixToLambdaMatrix.html#ae56a8607e4c339c9a345155ec613032d":[6,0,7,1,4,1],
 "structmc__solver_1_1utils_1_1EqualityConstraint.html":[6,0,7,1,0],
@@ -243,11 +249,5 @@ var NAVTREEINDEX20 =
 "structmc__tasks_1_1PositionTask.html#a4e0abb585b67f4f3026269e5809e41d4":[6,0,8,18,10],
 "structmc__tasks_1_1PositionTask.html#a86e8cb6cb49e5269c931ed57eda6e113":[6,0,8,18,8],
 "structmc__tasks_1_1PositionTask.html#a8b27ece320044774405b64dcfd78147c":[6,0,8,18,2],
-"structmc__tasks_1_1PositionTask.html#aa378d22beb76bd40f05e36e2418d486b":[6,0,8,18,0],
-"structmc__tasks_1_1PositionTask.html#ab333c1b08462c2014c404b1b2b886246":[6,0,8,18,9],
-"structmc__tasks_1_1PositionTask.html#ada68a975c5586850572384f476a77883":[6,0,8,18,6],
-"structmc__tasks_1_1PositionTask.html#af67679b5190933536dbc6f20adc44aac":[6,0,8,18,1],
-"structmc__tasks_1_1PostureTask.html":[6,0,8,19],
-"structmc__tasks_1_1PostureTask.html#a0c8b2d553a214e9c07c1f51a4eaa4962":[6,0,8,19,31],
-"structmc__tasks_1_1PostureTask.html#a0d4d5b303516826dac52c0177ac8f505":[6,0,8,19,4]
+"structmc__tasks_1_1PositionTask.html#aa378d22beb76bd40f05e36e2418d486b":[6,0,8,18,0]
 };

@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">mc_rtc
-   &#160;<span id="projectnumber">2.12.0</span>
+   &#160;<span id="projectnumber">2.13.0</span>
    </div>
   </td>
  </tr>
@@ -115,6 +115,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a4972e3f6b94d800663017ba05364f172"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52bd7ffa7137fa42036438687165fde5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ROSBridge.html#a52bd7ffa7137fa42036438687165fde5">stop_robot_publisher</a> (const std::string &amp;publisher)</td></tr>
 <tr class="separator:a52bd7ffa7137fa42036438687165fde5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56125a61198c9f46b12dc30ecb7baa71"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ROSBridge.html#a56125a61198c9f46b12dc30ecb7baa71">remove_extra_robot_publishers</a> (const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;robots)</td></tr>
+<tr class="separator:a56125a61198c9f46b12dc30ecb7baa71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ad7c399069ed81e3fb57a415babe0e8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ROSBridge.html#a9ad7c399069ed81e3fb57a415babe0e8">shutdown</a> ()</td></tr>
 <tr class="memdesc:a9ad7c399069ed81e3fb57a415babe0e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop ROS.  <a href="structmc__rtc_1_1ROSBridge.html#a9ad7c399069ed81e3fb57a415babe0e8">More...</a><br /></td></tr>
 <tr class="separator:a9ad7c399069ed81e3fb57a415babe0e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -203,6 +205,39 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">dt</td><td>Controller timestep</td></tr>
     <tr><td class="paramname">robot</td><td>Which robot to publish</td></tr>
     <tr><td class="paramname">use_real</td><td>Use the real URDF rather than the default one </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a56125a61198c9f46b12dc30ecb7baa71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56125a61198c9f46b12dc30ecb7baa71">&#9670;&nbsp;</a></span>remove_extra_robot_publishers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void mc_rtc::ROSBridge::remove_extra_robot_publishers </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>robots</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Remove the publisher of every removed robot</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">robots</td><td>Controller's robots </td></tr>
   </table>
   </dd>
 </dl>
