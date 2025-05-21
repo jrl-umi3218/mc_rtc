@@ -126,7 +126,7 @@ public:
   /* End of Robot(s) loading/unloading functions group */
 
   const RobotModule & robotModule(size_t idx) const;
-  
+
   Robot & robot();
   const Robot & robot() const;
 
