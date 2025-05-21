@@ -669,12 +669,6 @@ void ROSBridge::stop_robot_publisher(const std::string & publisher)
   impl.rpubs.erase(it);
 }
 
-size_t ROSBridge::nb_robot_publisher()
-{
-  static auto & impl = impl_();
-  return impl.rpubs.size();
-}
-
 void ROSBridge::remove_extra_robot_publishers(const mc_rbdyn::Robots & robots)
 {
   static auto & impl = impl_();
