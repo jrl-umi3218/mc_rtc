@@ -689,7 +689,7 @@ size_t ROSBridge::nb_robot_publisher()
   return impl.rpubs.size();
 }
 
-void ROSBridge::remove_extra_robot_publishers(const mc_rbdyn::Robots &robots)
+void ROSBridge::remove_extra_robot_publishers(const mc_rbdyn::Robots & robots)
 {
   static auto & impl = impl_();
 
@@ -701,10 +701,7 @@ void ROSBridge::remove_extra_robot_publishers(const mc_rbdyn::Robots &robots)
     if(pos != std::string::npos && pos + 1 < topic.size())
     {
       if(!robots.hasRobot(topic.substr(pos + 1))) { it = impl.rpubs.erase(it); }
-      else
-      {
-        ++it;
-      }
+      else { ++it; }
     }
   }
 }
