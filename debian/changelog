@@ -1,3 +1,9 @@
+mc-rtc (2.13.0-1debian1) unstable; urgency=medium
+
+  * Upstream update: see CHANGELOG.md
+
+ -- Arnaud TANGUY <arn.tanguy+ppa@gmail.com>  Mon, 19 Mai 2025 14:00:00 +0000
+
 mc-rtc (2.12.0-1debian1) unstable; urgency=medium
 
   * Upstream update: see CHANGELOG.md

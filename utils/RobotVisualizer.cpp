@@ -140,8 +140,8 @@ void RobotVisualizer::addRobot()
                                                 name, [this, name]() { return selected_frames[name]; },
                                                 [this, name]()
                                                 {
-                                                  if(selected_frames[name]) { addFrame(name); }
-                                                  else { removeFrame(name); }
+                                                  if(selected_frames[name]) { removeFrame(name); }
+                                                  else { addFrame(name); }
                                                 }));
   }
   for(const auto & name : robot.availableSurfaces())
