@@ -8,6 +8,8 @@
 
 #include <mc_rtc/config.h>
 
+#include <mc_rbdyn/Robots.h>
+
 #include <SpaceVecAlg/SpaceVecAlg>
 
 #include <Eigen/Geometry>
@@ -102,9 +104,16 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
   
   /** Return number of robot publisher
    * 
-   * @return size_t 
    */
   static size_t nb_robot_publisher();
+
+  /** Check if publisher with the given name exists 
+   * 
+   * \param topic topic name
+   */
+  static bool has_publisher(const std::string &topic);
+
+  static void remove_extra_robot_publishers(const mc_rbdyn::Robots &robots);
 
   /*! \brief Stop ROS */
   static void shutdown();

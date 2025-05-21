@@ -33,82 +33,38 @@ void ROSPlugin::init(mc_control::MCGlobalController & controller, const mc_rtc::
 
 void ROSPlugin::reset(mc_control::MCGlobalController & controller)
 {
-  if(publish_control)
+
+  auto publish_env = [&controller](const std::string & prefix, mc_rbdyn::Robots & robots, bool use_real)
   {
-    mc_rtc::ROSBridge::init_robot_publisher("control", controller.timestep(), controller.controller().outputRobot());
-    controller.robot().module().addParameter("control");
-  }
-  if(publish_env)
-  {
-    auto publish_env = [&controller](const std::string & prefix, mc_rbdyn::Robots & robots, bool use_real)
+    for(const auto & r : robots)
     {
-      size_t env_i = 1;
-      for(size_t i = 1; i < robots.size(); ++i)
-      {
-        auto & r = robots.robot(i);
-        r.module().addParameter(prefix + "_" + std::to_string(env_i));
-        if(r.robotIndex() == robots.robotIndex()) { continue; }
-        mc_rtc::ROSBridge::init_robot_publisher(prefix + "_" + std::to_string(env_i), controller.timestep(), r,
-                                                use_real);
-        env_i++;
-      }
-    };
-    publish_env("control/env", controller.controller().outputRobots(), false);
-    if(publish_real) { publish_env("real/env", controller.controller().outputRealRobots(), true); }
-  }
-  if(publish_real)
-  {
-    const auto & real_robot = controller.controller().outputRealRobot();
-    mc_rtc::ROSBridge::init_robot_publisher("real", controller.timestep(), real_robot, true);
-  }
+      mc_rtc::ROSBridge::init_robot_publisher(prefix + r.name(), controller.timestep(), r,
+                                              use_real);
+    }
+  };
+
+  publish_env("control/", controller.robots(), false);
+
+  if(publish_real) { publish_env("real/", controller.robots(), true); }
 }
 
 void ROSPlugin::after(mc_control::MCGlobalController & controller)
 {
-  if(publish_control)
-  {
-    mc_rtc::ROSBridge::update_robot_publisher("control", controller.timestep(), controller.controller().outputRobot());
-  }
-  // Publish environment state
-  if(publish_env)
-  {
-    auto update_env = [this, &controller](const std::string & prefix, mc_rbdyn::Robots & robots)
-    {
-      size_t env_i = 1;
-      for(size_t i = 1; i < robots.size(); ++i)
-      {
-        auto & r = robots.robot(i);
-        if(std::count(r.module().parameters().begin(), r.module().parameters().end(),
-                      prefix + "_" + std::to_string(env_i))
-           == 0)
-        {
-          r.module().addParameter(prefix + "_" + std::to_string(env_i));
-        }
+  // mc_rtc::ROSBridge::update_robot_publisher("control/" + controller.robot().name(), controller.timestep(), controller.controller().outputRobot());
 
-        if(r.robotIndex() == robots.robotIndex()) { continue; }
-        mc_rtc::ROSBridge::update_robot_publisher(prefix + "_" + std::to_string(env_i), controller.timestep(), r);
-        env_i++;
-      }
-      published_env = std::max<size_t>(publish_env, robots.size() - 1);
-    };
-    update_env("control/env", controller.controller().outputRobots());
-    if(publish_real) { update_env("real/env", controller.controller().outputRealRobots()); }
-  }
-  // Publish real robot
-  if(publish_real)
+  auto update_env = [this, &controller](const std::string & prefix, mc_rbdyn::Robots & robots)
   {
-    auto & real_robot = controller.controller().outputRealRobot();
-    mc_rtc::ROSBridge::update_robot_publisher("real", controller.timestep(), real_robot);
-  }
+    for(const auto & r : robots)
+    {
+      mc_rtc::ROSBridge::update_robot_publisher(prefix + r.name(), controller.timestep(), r);
+    }
+    published_topics = robots.size() - 1;
+  };
+  update_env("control/", controller.robots());
+  if(publish_real) { update_env("real/", controller.robots()); }
 
   if(controller.robots().size() != mc_rtc::ROSBridge::nb_robot_publisher() / (publish_real ? 2 : 1)){
-    for(size_t i = mc_rtc::ROSBridge::nb_robot_publisher() / (publish_real ? 2 : 1); i > controller.robots().size(); i--){
-      if(publish_real){
-        mc_rtc::ROSBridge::stop_robot_publisher("real/env_" + std::to_string(i - 1));
-      }
-
-      mc_rtc::ROSBridge::stop_robot_publisher("control/env_" + std::to_string(i - 1));
-    }
+    mc_rtc::ROSBridge::remove_extra_robot_publishers(controller.robots());
   }
 }
 
@@ -116,7 +72,7 @@ ROSPlugin::~ROSPlugin()
 {
   mc_rtc::ROSBridge::stop_robot_publisher("control");
   mc_rtc::ROSBridge::stop_robot_publisher("real");
-  for(size_t i = 0; i < published_env; ++i)
+  for(size_t i = 0; i < published_topics; ++i)
   {
     mc_rtc::ROSBridge::stop_robot_publisher("control/env_" + std::to_string(i + 1));
     mc_rtc::ROSBridge::stop_robot_publisher("real/env_" + std::to_string(i + 1));

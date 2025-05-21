@@ -185,11 +185,6 @@ RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
   return ret;
 }
 
-void RobotModule::addParameter(const std::string & param)
-{
-  _parameters.push_back(param);
-}
-
 bool check_module_compatibility(const RobotModule & lhs, const RobotModule & rhs)
 {
   bool is_ok = true;

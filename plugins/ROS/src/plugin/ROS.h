@@ -37,7 +37,7 @@ private:
   bool publish_env = true;
   bool publish_real = true;
   double publish_timestep = 0.01;
-  size_t published_env = 0;
+  size_t published_topics = 0;
   std::unique_ptr<ROSServices> services_;
 
   void build(mc_control::MCGlobalController & controller);
