@@ -20,8 +20,6 @@ on:
 env:
   # Branch that triggered this workflow
   GITHUB_BRANCH: ${{ github.head_ref || github.ref_name }}
-  # Repository that triggered this workflow
-  GITHUB_REPO_TRIGGER: ${{ github.actor }}/${{ github.event.repository.name }}
 
 jobs:
   build:
@@ -43,6 +41,22 @@ jobs:
             build-type: Debug
     runs-on: ${{ matrix.os }}
     steps:
+    - name: Dump github context
+      run:   echo "$GITHUB_CONTEXT"
+      shell: bash
+      env:
+       GITHUB_CONTEXT: ${{ toJson(github) }}
+    - name: Set repository name based on event (pull_request/push)
+      shell: bash
+      run: |
+         if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+           echo "GITHUB_REPO_TRIGGER=${{ github.event.pull_request.head.repo.full_name }}" >> $GITHUB_ENV
+         else
+           echo "GITHUB_REPO_TRIGGER=${{ github.repository }}" >> $GITHUB_ENV
+         fi
+    - name: Use repository name
+      shell: bash
+      run: echo "The triggering repository is $GITHUB_REPO_TRIGGER"
     - name: Linux cleanup
       if: matrix.os == 'ubuntu-22.04'
       run: |
