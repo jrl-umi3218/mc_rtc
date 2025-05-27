@@ -233,14 +233,8 @@ void MCGlobalController::init(const std::vector<double> & initq)
     }
     else
     {
-      mc_rtc::log::info("Initializing attitude from robot module: q=[{}]",
-                        mc_rtc::io::to_string(controller().robot().module().default_attitude(), ", ", 3));
-      if(q[0].size() == 7)
-      {
-        const auto & initAttitude = controller().robot().module().default_attitude();
-        q[0] = {std::begin(initAttitude), std::end(initAttitude)};
-        controller().robot().forwardKinematics();
-      }
+      // Do nothing, if no attitude is provided then the robot was already loaded
+      // with either the default attitude or the controller's init_pos configuration (in MCController cstr)
     }
   }
   for(auto & robot : controller().robots())
@@ -270,13 +264,8 @@ void MCGlobalController::init(const std::map<std::string, std::vector<double>> &
     if(initatt_it != initAttitudes.end()) { robot.posW(initatt_it->second); }
     else
     {
-      auto & q = robot.mbc().q;
-      if(q[0].size() == 7)
-      {
-        const auto & initAttitude = robot.module().default_attitude();
-        q[0] = {std::begin(initAttitude), std::end(initAttitude)};
-        robot.forwardKinematics();
-      }
+      // Do nothing, if no attitude is provided then the robot was already loaded
+      // with either the default attitude or the controller's init_pos configuration (in MCController cstr)
     }
   }
   initController(reset);
