@@ -100,15 +100,19 @@ private:
     return HRep;
   }
 
-  // Function to generate 6d CoP constraint from the points of a rectangular surface contact
-  Eigen::MatrixXd computeCoPMomentsConstraint(const mc_rbdyn::Surface & surface)
+  // Function to generate 6D CoP and rotational friction constraints from the points of a rectangular surface contact
+  Eigen::MatrixXd computeSurfaceTorqueConstraint(const mc_rbdyn::Surface & surface, double frictionCoeff)
   {
     const auto & surfacePoints = surface.points();
+    // Using the inner friction coeff approximation (linearization)
+    const auto mu = frictionCoeff / sqrt(2);
     // Find boundaries in surface frame along the surface's sagital (x) and lateral (y) direction
     double minSagital = std::numeric_limits<double>::max();
     double minLateral = std::numeric_limits<double>::max();
     double maxSagital = -std::numeric_limits<double>::max();
     double maxLateral = -std::numeric_limits<double>::max();
+
+    Eigen::Vector3d surfaceCenter(0., 0., 0.);
     for(const auto & point : surfacePoints)
     {
       // Points are defined in body frame, convert to surface frame
@@ -119,25 +123,44 @@ private:
       maxSagital = std::max(maxSagital, x);
       minLateral = std::min(minLateral, y);
       maxLateral = std::max(maxLateral, y);
+      surfaceCenter += surfacePoint;
     }
+    // Getting the surface center (s) in the contact surface frame (c)
+    surfaceCenter /= double(surfacePoints.size());
+    sva::PTransformd X_c_s = sva::PTransformd(surfaceCenter);
 
-    // These constraints on tau x and tau y are from equations 18 and 19 of
+    // Getting half-width Y and half-length X
+    auto X = (maxSagital - minSagital) / 2.;
+    auto Y = (maxLateral - minLateral) / 2.;
+
+    // The CoP constraints on tau x and tau y are from equations 18 and 19 of
     // <https://hal.archives-ouvertes.fr/hal-02108449/document>
-    // The other ones come from the friction cone and are taken into account in the polytope constraints
-    // XXX check if bounds on tau z are necessary or redundant with the force polytopes
+    // The tau z constraints are the 8 derived inequalities from equation 20
+    // The other ones come from the friction cone and are already taken into account in the polytope
 
     // Assuming this is a rectangular contact
-    Eigen::Matrix<double, 4, 6> CoPConstraintMat;
+    Eigen::Matrix<double, 12, 6> centeredSurfaceConstraintMat;
     // clang-format off
-    CoPConstraintMat <<
-      // mx,  my,  mz,  fx,  fy,  fz,
-        -1,   0,   0,   0,   0,   minLateral,
-        +1,   0,   0,   0,   0,  -maxLateral,
-         0,  -1,   0,   0,   0,  -maxSagital,
-         0,  +1,   0,   0,   0,   minSagital;
+    centeredSurfaceConstraintMat <<
+    // mx,  my,  mz,  fx,  fy,            fz,
+       -1,   0,   0,   0,   0,            -Y,
+       +1,   0,   0,   0,   0,            -Y,
+        0,  -1,   0,   0,   0,            -X,
+        0,  +1,   0,   0,   0,            -X,
+      +mu, +mu,  -1,  -Y,  -X, -(X + Y) * mu,
+      +mu, -mu,  -1,  -Y,  +X, -(X + Y) * mu,
+      -mu, +mu,  -1,  +Y,  -X, -(X + Y) * mu,
+      -mu, -mu,  -1,  +Y,  +X, -(X + Y) * mu,
+      +mu, +mu,  +1,  +Y,  +X, -(X + Y) * mu,
+      +mu, -mu,  +1,  +Y,  -X, -(X + Y) * mu,
+      -mu, +mu,  +1,  -Y,  +X, -(X + Y) * mu,
+      -mu, -mu,  +1,  -Y,  -X, -(X + Y) * mu;
     // clang-format on
 
-    return CoPConstraintMat;
+    // Transform constraints from surface center to contact frame
+    Eigen::Matrix<double, 12, 6> surfaceConstraintMat = centeredSurfaceConstraintMat * X_c_s.dualMatrix();
+
+    return surfaceConstraintMat;
   }
 };
 
