@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <mc_rtc/utils/fmt_eigen.h>
 #include <mc_rtc/utils_api.h>
 
 #include <iostream>
