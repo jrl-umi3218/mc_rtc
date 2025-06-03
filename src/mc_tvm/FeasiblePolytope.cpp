@@ -33,13 +33,15 @@ void FeasiblePolytope::updatePolytope()
     // If there is a feasible polytope, build the contact wrench polytope from the wrench face matrix and
     // the feasible polytope
     // The moments are the 3 first columns, the forces the 3 next
-    // Nb of lines: force poly constraints + 4 CoP constraints
+    // Nb of lines: force poly constraints + 12 surface constraints (4 CoP, 8 yaw torque)
+    // Note: the 12 surface constraints assume a rectangular surface !
     int nbPolyConstraints = feasiblePolytope->planeConstants.size();
-    int nbCoPConstraints = 4; // 4 CoP constraints assuming a rectangular constraint
-    // TODO Add 8 torsional friction constraints
-    normals_ = Eigen::MatrixXd::Zero(nbPolyConstraints + nbCoPConstraints, 6);
-    offsets_ = Eigen::VectorXd::Zero(nbPolyConstraints + nbCoPConstraints);
+    int nbSurfaceConstraints = 12;
 
+    normals_ = Eigen::MatrixXd::Zero(nbPolyConstraints + nbSurfaceConstraints, 6);
+    offsets_ = Eigen::VectorXd::Zero(nbPolyConstraints + nbSurfaceConstraints);
+
+    // Fill polytope in force part only if it's a force polytope, in full matrix if it's a wrench polytope
     if(feasiblePolytope->planeNormals.cols() == 3)
     {
       normals_.block(0, 3, nbPolyConstraints, 3) = feasiblePolytope->planeNormals;
@@ -54,14 +56,16 @@ void FeasiblePolytope::updatePolytope()
                          isR1 ? contact_.r1Surface()->name() : contact_.r2Surface()->name());
     }
 
-    // For CoP use the correct robot's surface
+    // For surface constraints use the correct robot's surface
     if(isR1)
     {
-      normals_.block(nbPolyConstraints, 0, nbCoPConstraints, 6) = computeCoPMomentsConstraint(*contact_.r1Surface());
+      normals_.block(nbPolyConstraints, 0, nbSurfaceConstraints, 6) =
+          computeSurfaceTorqueConstraint(*contact_.r1Surface(), contact_.friction());
     }
     else
     {
-      normals_.block(nbPolyConstraints, 0, nbCoPConstraints, 6) = computeCoPMomentsConstraint(*contact_.r2Surface());
+      normals_.block(nbPolyConstraints, 0, nbSurfaceConstraints, 6) =
+          computeSurfaceTorqueConstraint(*contact_.r2Surface(), contact_.friction());
     }
 
     offsets_.segment(0, nbPolyConstraints) = feasiblePolytope->planeConstants;
@@ -70,24 +74,26 @@ void FeasiblePolytope::updatePolytope()
   }
   else
   {
-    // There is no feasible polytope, build a default one with just friction cone and CoP matrix
+    // There is no feasible polytope, build a default one with just friction cone and surface matrix
+    // Note: the 12 surface constraints assume a rectangular surface !
     int nbFrictionSides = 5;
-    int nbCoPConstraints = 4;
-    // TODO Add 8 torsional friction constraints
+    int nbSurfaceConstraints = 12;
 
-    normals_ = Eigen::MatrixXd::Zero(nbFrictionSides + nbCoPConstraints, 6);
-    offsets_ = Eigen::VectorXd::Zero(nbFrictionSides + nbCoPConstraints);
+    normals_ = Eigen::MatrixXd::Zero(nbFrictionSides + nbSurfaceConstraints, 6);
+    offsets_ = Eigen::VectorXd::Zero(nbFrictionSides + nbSurfaceConstraints);
     // Translational friction cones
     normals_.block(0, 3, nbFrictionSides, 3) =
         generatePolyhedralConeHRep(nbFrictionSides, Eigen::Matrix3d::Identity(), contact_.friction());
-    // CoP constraints
+    // Surface constraints
     if(isR1) // Use correct robot's surface
     {
-      normals_.block(nbFrictionSides, 0, nbCoPConstraints, 6) = computeCoPMomentsConstraint(*contact_.r1Surface());
+      normals_.block(nbFrictionSides, 0, nbSurfaceConstraints, 6) =
+          computeSurfaceTorqueConstraint(*contact_.r1Surface(), contact_.friction());
     }
     else
     {
-      normals_.block(nbFrictionSides, 0, nbCoPConstraints, 6) = computeCoPMomentsConstraint(*contact_.r2Surface());
+      normals_.block(nbFrictionSides, 0, nbSurfaceConstraints, 6) =
+          computeSurfaceTorqueConstraint(*contact_.r2Surface(), contact_.friction());
     }
 
     // Offsets are all zero in this default case (no second member if unbound polyhedral cone)
