@@ -50,8 +50,8 @@ void ForceInPolytopeFunction::updateJacobian()
   {
     if(forceVar->space().size() == 3)
     {
-      // The force only normals are the right 3 columns, minus bottom 4 rows (CoP)
-      int nbOfForceConstraints = tvmPoly_.offsets().size() - 4;
+      // The force only normals are the right 3 columns, minus bottom 12 rows (CoP + yaw torque)
+      int nbOfForceConstraints = tvmPoly_.offsets().size() - 12;
       // FIXME Not handling other side variable in force case (very different logic,
       // all force vars should be associated to another etc)
       jacobian_[forceVar.get()] = tvmPoly_.normals().block(0, 3, nbOfForceConstraints, 3);
@@ -83,8 +83,8 @@ void ForceInPolytopeFunction::updateb()
 
   if(forceVars_[0]->space().size() == 3) // check done on 1st var only, we assume all vars have same dim
   {
-    // If the vars are force only, remove the last 4 elements of offsets (CoP)
-    int nbOfForceConstraints = tvmPoly_.offsets().size() - 4;
+    // If the vars are force only, remove the last 12 elements of offsets (CoP + yaw torque)
+    int nbOfForceConstraints = tvmPoly_.offsets().size() - 12;
     b_ = -tvmPoly_.offsets().segment(0, nbOfForceConstraints);
   }
   else if(forceVars_[0]->space().size() == 6) { b_ = -tvmPoly_.offsets(); }
@@ -94,12 +94,14 @@ void ForceInPolytopeFunction::updateb()
 void ForceInPolytopeFunction::resizeToPoly()
 {
   // If polytope number of planes changed, update the task dimension
+  // The dimension is the number of constraints : it is both the jacobian rows and the output space
   if(forceVars_[0]->space().size() == 3)
   {
-    if(imageSpace().size() != tvmPoly_.offsets().size() - 4)
+    // If we manipulate forces only, we don't need the 6D related constraint (CoP, torsional friction)
+    if(imageSpace().size() != tvmPoly_.offsets().size() - 12)
     {
-      // mc_rtc::log::warning("Image space changed from {} to {}", imageSpace().size(), tvmPoly_.offsets().size() - 4);
-      resize(tvmPoly_.offsets().size() - 4);
+      // mc_rtc::log::warning("Image space changed from {} to {}", imageSpace().size(), tvmPoly_.offsets().size() - 12);
+      resize(tvmPoly_.offsets().size() - 12);
       constraintSizeChanged_ = true;
     }
   }
