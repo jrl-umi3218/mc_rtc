@@ -115,11 +115,12 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   {
     mc_rtc::log::error(
         "No controller selected or selected controller is not enabled, please check your configuration file");
-    mc_rtc::log::info("Note common reasons for this error include:\n"
-                      "\t- The controller name does not match the name exported by CONTROLLER_CONSTRUCTOR\n"
-                      "\t- The controller library is not in a path read by mc_rtc\n"
-                      "\t- The controller constuctor segfaults\n"
-                      "\t- The controller library hasn't been properly linked");
+    mc_rtc::log::info(
+        "Note common reasons for this error include:\n"
+        "\t- The controller name does not match the name exported by CONTROLLER_CONSTRUCTOR\n"
+        "\t- The controller library is not in a path read by mc_rtc\n"
+        "\t- The controller constuctor segfaults\n"
+        "\t- The controller library hasn't been properly linked");
     mc_rtc::log::error_and_throw("No controller enabled");
   }
 
@@ -225,9 +226,10 @@ void MCGlobalController::init(const std::vector<double> & initq)
         }
         else
         {
-          mc_rtc::log::error_and_throw<std::invalid_argument>("No body sensor named {}, could not initialize attitude. "
-                                                              "Please check your InitAttitudeSensor configuration.",
-                                                              config.init_attitude_sensor);
+          mc_rtc::log::error_and_throw<std::invalid_argument>(
+              "No body sensor named {}, could not initialize attitude. "
+              "Please check your InitAttitudeSensor configuration.",
+              config.init_attitude_sensor);
         }
       }
     }

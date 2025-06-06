@@ -96,9 +96,10 @@ void Contact::findSurfaceBoundaries(const mc_rbdyn::Surface & surface)
 
   if(maxSagital + minSagital > 1e-4 || maxLateral + minLateral > 1e-4)
   {
-    mc_rtc::log::warning("LIPMStabilizer contact surface is expected to be a centered rectangle, but the surface {} is "
-                         "not centered (sagital: {},{}, lateral: {}, {})",
-                         surface.name(), minSagital, maxSagital, minLateral, maxLateral);
+    mc_rtc::log::warning(
+        "LIPMStabilizer contact surface is expected to be a centered rectangle, but the surface {} is "
+        "not centered (sagital: {},{}, lateral: {}, {})",
+        surface.name(), minSagital, maxSagital, minLateral, maxLateral);
   }
 
   // Add world points to the support polygon

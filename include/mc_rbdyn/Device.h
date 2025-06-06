@@ -69,7 +69,7 @@ struct MC_RBDYN_DLLAPI Device
   /** Change the parent to sensor transformation */
   inline void X_p_s(const sva::PTransformd & pt) { X_p_s_ = pt; }
 
-  /** Returns the deviec position in the inertial frame (convenience function) */
+  /** Returns the device position in the inertial frame (convenience function) */
   inline sva::PTransformd X_0_d(const mc_rbdyn::Robot & robot) const { return X_0_s(robot); }
 
   /** Returns the sensor position in the inertial frame (convenience function) */
