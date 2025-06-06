@@ -16,10 +16,12 @@
 // fmt 9.0.0 removed automated operator<< discovery we use fmt::streamed instead when needed through a macro
 #if FMT_VERSION >= 9 * 10000
 #  define MC_FMT_STREAMED(X) fmt::streamed(X)
-#  include<Eigen/Core>
-#  include<fmt/ostream.h>
-template <typename T>
-struct fmt::formatter<T, std::enable_if_t<std::is_base_of_v<Eigen::DenseBase<T>, T>, char>> : ostream_formatter {};
+#  include <Eigen/Core>
+#  include <fmt/ostream.h>
+template<typename T>
+struct fmt::formatter<T, std::enable_if_t<std::is_base_of_v<Eigen::DenseBase<T>, T>, char>> : ostream_formatter
+{
+};
 #else
 #  define MC_FMT_STREAMED(X) X
 #endif
