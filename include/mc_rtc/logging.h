@@ -22,6 +22,23 @@ template<typename T>
 struct fmt::formatter<T, std::enable_if_t<std::is_base_of_v<Eigen::DenseBase<T>, T>, char>> : ostream_formatter
 {
 };
+
+template<typename MatrixType>
+struct fmt::formatter<Eigen::Transpose<MatrixType>> : ostream_formatter
+{
+};
+
+template<typename Scalar, int Rows, int Cols, int BlockRows, int BlockCols, bool InnerPanel>
+struct fmt::formatter<Eigen::Block<Eigen::Matrix<Scalar, Rows, Cols>, BlockRows, BlockCols, InnerPanel>>
+: ostream_formatter
+{
+};
+
+template<typename Scalar, int Rows, int Cols>
+struct fmt::formatter<Eigen::Diagonal<Eigen::Matrix<Scalar, Rows, Cols>>> : ostream_formatter
+{
+};
+
 #else
 #  define MC_FMT_STREAMED(X) X
 #endif
