@@ -43,7 +43,7 @@ void ROSPlugin::reset(mc_control::MCGlobalController & controller)
 
   publish_robots("control/", controller.robots(), false);
 
-  if(publish_real) { publish_robots("real/", controller.robots(), true); }
+  if(publish_real) { publish_robots("real/", controller.realRobots(), true); }
 }
 
 void ROSPlugin::after(mc_control::MCGlobalController & controller)
@@ -57,7 +57,7 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
     published_topics = robots.size() - 1;
   };
   update_robots("control/", controller.robots());
-  if(publish_real) { update_robots("real/", controller.robots()); }
+  if(publish_real) { update_robots("real/", controller.realRobots()); }
 
   mc_rtc::ROSBridge::remove_extra_robot_publishers(controller.robots());
 }
