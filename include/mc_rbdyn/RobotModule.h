@@ -23,6 +23,8 @@
 
 #include <sch/S_Object/S_Object.h>
 
+#include <mesh_sampling/mesh_sampling.h>
+
 #include <array>
 #include <map>
 #include <vector>
@@ -274,6 +276,11 @@ struct MC_RBDYN_DLLAPI RobotModule
    * - Create a default stance
    */
   void init(const rbd::parsers::ParserResult & res);
+
+  // /** Generate robot body convexes
+  //  * 
+  //  */
+  void generate_convexes();
 
   /** Returns the robot's bounds obtained from parsing a urdf
    *

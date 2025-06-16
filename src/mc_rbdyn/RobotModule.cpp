@@ -5,6 +5,10 @@
 #include <mc_rbdyn/RobotModule.h>
 
 #include <mc_rbdyn/Robot.h>
+#include "mc_rtc/logging.h"
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 namespace mc_rbdyn
 {
@@ -53,6 +57,20 @@ void RobotModule::init(const rbd::parsers::ParserResult & res)
   _collision = res.collision;
   if(_ref_joint_order.size() == 0) { make_default_ref_joint_order(); }
   expand_stance();
+}
+
+void RobotModule::generate_convexes(){
+  if(fs::exists(fs::path(path) / "meshes")){
+    for(const auto &entry : fs::directory_iterator(fs::path(path) / "meshes")){
+      mesh_sampling::MeshSampling sampler(entry);
+
+      auto meshes = sampler.create_clouds(4000);
+      sampler.create_convexes(meshes, {});
+    }
+  }
+  else{
+    mc_rtc::log::warning("Couldn't find meshes at {} for {}", fs::path(path) / "meshes", name);
+  }
 }
 
 RobotModule::Gripper::Gripper(const std::string & name, const std::vector<std::string> & joints, bool reverse_limits)

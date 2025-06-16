@@ -343,6 +343,7 @@ target_link_libraries(
          mc_filter
          GEOS::geos
          TVM::TVM
+         mesh_sampling::mesh_sampling
 )
 target_compile_definitions(mc_rbdyn PUBLIC -DUSE_UNSTABLE_GEOS_CPP_API)
 # qhull
@@ -354,9 +355,9 @@ if(MC_RTC_BUILD_STATIC)
 else()
   target_link_libraries(mc_rbdyn PRIVATE qhullstatic_r qhullcpp)
 endif()
-target_include_directories(
-  mc_rbdyn SYSTEM PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../3rd-party/qhull/src"
-)
+# target_include_directories(
+#   mc_rbdyn SYSTEM PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../3rd-party/qhull/src"
+# )
 install_mc_rtc_lib(mc_rbdyn)
 
 set(mc_rtc_gui_SRC mc_rtc/gui/StateBuilder.cpp mc_rbdyn/gui/RobotConvex.cpp

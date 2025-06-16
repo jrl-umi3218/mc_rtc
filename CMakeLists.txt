@@ -267,6 +267,8 @@ endif(MSVC)
 
 include(CMakeModules/ListAllFiles.cmake)
 
+find_package(mesh_sampling REQUIRED)
+
 add_subdirectory(CMakeModules)
 add_subdirectory(doc)
 add_subdirectory(src)
