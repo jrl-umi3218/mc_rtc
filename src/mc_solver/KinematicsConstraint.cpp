@@ -88,8 +88,10 @@ void TVMKinematicsConstraint::addToSolver(mc_solver::TVMQPSolver & solver)
       Eigen::MatrixXd A = mimicMult.segment(startIdx, f->size());
       auto mimic = solver.problem().add(A * tvm::dot(leader, 2) - tvm::dot(f, 2) == 0., tvm::task_dynamics::None{},
                                         {tvm::requirements::PriorityLevel(0)});
-      solver.problem().add(tvm::hint::Substitution(solver.problem().constraint(*mimic), tvm::dot(f, 2),
-                                                   tvm::constant::fullRank, tvm::hint::internal::DiagonalCalculator{}));
+      // FIXME substitutions are broken in tvm for now
+      // solver.problem().add(tvm::hint::Substitution(solver.problem().constraint(*mimic), tvm::dot(f, 2),
+      //                                              tvm::constant::fullRank,
+      //                                              tvm::hint::internal::DiagonalCalculator{}));
       mimics_constraints_.push_back(mimic);
       startIdx += f->size();
     }
@@ -101,7 +103,8 @@ void TVMKinematicsConstraint::removeFromSolver(mc_solver::TVMQPSolver & solver)
 {
   for(auto & c : mimics_constraints_)
   {
-    solver.problem().removeSubstitutionFor(*solver.problem().constraint(*c));
+    // FIXME substitutions are broken in tvm for now
+    // solver.problem().removeSubstitutionFor(*solver.problem().constraint(*c));
     solver.problem().remove(*c);
   }
   for(auto & c : constraints_) { solver.problem().remove(*c); }

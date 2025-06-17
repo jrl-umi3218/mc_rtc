@@ -77,7 +77,12 @@ void TVMQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Conta
       const std::string & r2 = robots().robot(c->r2Index()).name();
       const std::string & r2S = c->r2Surface()->name();
       logger_->removeLogEntry("contact_" + r1 + "::" + r1S + "_" + r2 + "::" + r2S);
-      if(gui_) { gui_->removeElement({"Contacts", "Forces"}, fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S)); }
+      logger_->removeLogEntry("contact_" + r2 + "::" + r2S + "_" + r1 + "::" + r1S);
+      if(gui_)
+      {
+        gui_->removeElement({"Contacts", "Forces"}, fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S));
+        gui_->removeElement({"Contacts", "Forces"}, fmt::format("{}::{}/{}::{}", r2, r2S, r1, r1S));
+      }
       it = removeContact(i);
     }
     else
@@ -143,40 +148,6 @@ bool TVMQPSolver::runCommon()
     t->incrementIterInSolver();
   }
   auto start_t = mc_rtc::clock::now();
-
-  // Update force/wrench constraints if the size of the constraint changed
-  for(const auto & contactTVMQP : contactsData_)
-  {
-    int i = 0;
-    for(const auto & f1contraint : contactTVMQP.f1Constraints_)
-    {
-      // mc_rtc::log::info("Force {} has {} planes constraints", i, f1contraint->task.function()->tSize());
-      auto poly_fn = std::static_pointer_cast<mc_tvm::ForceInPolytopeFunction>(f1contraint->task.function());
-      if(poly_fn->constraintSizeChanged())
-      {
-        // FIXME find a more automated way with a tvm event to avoid removing and re adding
-        mc_rtc::log::info("Updating the solver for this task");
-        problem_.remove(*f1contraint);
-        problem_.add(f1contraint);
-        poly_fn->constraintSizeChanged(false);
-      }
-      i++;
-    }
-    // Now also run on other side of the constraint
-    for(const auto & f2contraint : contactTVMQP.f2Constraints_)
-    {
-      // mc_rtc::log::info("Force {} has {} planes constraints", i, f2contraint->task.function()->tSize());
-      auto poly_fn = std::static_pointer_cast<mc_tvm::ForceInPolytopeFunction>(f2contraint->task.function());
-      if(poly_fn->constraintSizeChanged())
-      {
-        mc_rtc::log::info("Updating the solver for this task");
-        problem_.remove(*f2contraint);
-        problem_.add(f2contraint);
-        poly_fn->constraintSizeChanged(false);
-      }
-      i++;
-    }
-  }
   auto r = solver_.solve(problem_);
   solve_dt_ = mc_rtc::clock::now() - start_t;
   return r;
@@ -319,9 +290,6 @@ void TVMQPSolver::addDynamicsConstraint(mc_solver::DynamicsConstraint * dyn)
                                  r.name());
   }
   dynamics_[r.name()] = dyn;
-  // NOTE: Add polytope to contact mc_rbdyn::Contact
-  // TODO: Pass polytope + offsets to addContactToDynamics
-  // TODO: Reformulate friction cone constraint
   for(size_t i = 0; i < contacts_.size(); ++i)
   {
     const auto & contact = contacts_[i];
@@ -420,7 +388,6 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
   }
   else
   {
-    it->second->removeFromSolverImpl(*this);
     auto & dyn = it->second->dynamicFunction();
 
     /* Now we consider the force decision variable for the contact:
@@ -474,13 +441,7 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
       // forces = dyn.addContact3d(frame, points, dir);
       forces.add(dyn.addContact6d(frame, contact));
     }
-
-    it->second->addToSolverImpl(*this);
   }
-
-  // if(contact.feasiblePolytope())
-  // {
-  // mc_rtc::log::info("Adding polytope constraints");
 
   for(int i = 0; i < forces.numberOfVariables(); ++i)
   {
@@ -496,26 +457,11 @@ void TVMQPSolver::addContactToDynamics(const std::string & robot,
     // targets.push_back(problem_.add(f == 0.0, {tvm::requirements::PriorityLevel(1),
     // tvm::requirements::Weight(0.0001)}));
   }
-
-  // }
-  // else
-  // {
-  //   const auto frictionCone = discretizedFrictionCone(contact.friction());
-  //   mc_rtc::log::info("Adding simple friction cone constraints: {} constraints", frictionCone.rows());
-  //   for(int i = 0; i < forces.numberOfVariables(); ++i)
-  //   {
-  //     auto & f = forces[i];
-  //     constraints.push_back(problem_.add(dir * frictionCone * f >= 0.0, {tvm::requirements::PriorityLevel(0)}));
-  //     mc_rtc::log::info("The task with requirements for force {} has a tangent space of dim {} (friction cone)", i,
-  //                       constraints.back()->task.function()->tSize());
-  //     mc_rtc::log::info("The corresponding jacobian for this task is\n{}",
-  //                       problem_.constraint(*constraints.back().get())->jacobian(*f.get()));
-  //   }
-  // }
 }
 
 auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> std::tuple<size_t, bool>
 {
+  // FIXME handle swapping of contact
   bool hasWork = false;
   auto idx = getContactIdx(contact);
   if(idx < contacts_.size())
@@ -553,6 +499,8 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
                                            {tvm::requirements::PriorityLevel(0)});
     logger_->addLogEntry(fmt::format("contact_{}::{}_{}::{}", r1.name(), f1.name(), r2.name(), f2.name()),
                          [this, storedContact]() { return desiredContactForce(*storedContact); });
+    logger_->addLogEntry(fmt::format("contact_{}::{}_{}::{}", r2.name(), f2.name(), r1.name(), f1.name()),
+                         [this, storedContact]() { return desiredContactForce2(*storedContact); });
     gui_->addElement(
         {"Contacts", "Forces"},
         mc_rtc::gui::Force(
@@ -623,17 +571,13 @@ auto TVMQPSolver::removeContact(size_t idx) -> ContactIterator
   auto r1DynamicsIt = dynamics_.find(r1.name());
   if(r1DynamicsIt != dynamics_.end())
   {
-    r1DynamicsIt->second->removeFromSolverImpl(*this);
     r1DynamicsIt->second->dynamicFunction().removeContact(r1.frame(contact.r1Surface()->name()));
-    r1DynamicsIt->second->addToSolverImpl(*this);
   }
   const auto & r2 = robot(contact.r2Index());
   auto r2DynamicsIt = dynamics_.find(r2.name());
   if(r2DynamicsIt != dynamics_.end())
   {
-    r2DynamicsIt->second->removeFromSolverImpl(*this);
     r2DynamicsIt->second->dynamicFunction().removeContact(r2.frame(contact.r2Surface()->name()));
-    r2DynamicsIt->second->addToSolverImpl(*this);
   }
   for(const auto & c : data.f1Constraints_) { problem_.remove(*c); }
   for(const auto & c : data.f2Constraints_) { problem_.remove(*c); }
