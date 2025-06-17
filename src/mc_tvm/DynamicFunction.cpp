@@ -40,6 +40,9 @@ DynamicFunction::ForceContact::ForceContact(const mc_rbdyn::RobotFrame & frame,
 
 void DynamicFunction::ForceContact::updateJacobians(DynamicFunction & parent)
 {
+  /* Note: in this original ForceContact formulation the jacobian chosen for the force is the bodyJacobian
+  This means the force variables are chosen to be in body frame, and they are translated for each point in body frame.
+  */
   const auto & robot = frame_->robot();
   const auto & bodyJac = jac_.bodyJacobian(robot.mb(), robot.mbc());
   for(int i = 0; i < forces_.numberOfVariables(); ++i)
@@ -83,11 +86,20 @@ DynamicFunction::WrenchContact::WrenchContact(const mc_rbdyn::RobotFrame & frame
 
 void DynamicFunction::WrenchContact::updateWrenchJacobian(DynamicFunction & parent)
 {
-  // In surface contact representation, the wrench variable's jacobian is just the contact frame full jac transposed
   const auto & robot = frame_->robot();
-  const auto & bodyJac = jac_.bodyJacobian(robot.mb(), robot.mbc());
+
+  /* IMPORTANT: in the original ForceContact formulation the jacobian chosen for the force is the bodyJacobian
+  This means the force variables are chosen to be in body frame, and they are translated for each point in body frame.
+  Here we would like the variables in contact frame so that they can be directly reused easily (for example
+  in the CoMWrenchTransforms_) so we use the jacobian at the contact frame instead.
+  */
+
+  const auto X_0_contact = frame_->position();
+  const auto & contactJac = jac_.jacobian(robot.mb(), robot.mbc(), X_0_contact);
   full_jac_.setZero();
-  jac_.addFullJacobian(blocks_, bodyJac, full_jac_);
+  // In surface contact representation, the wrench variable's jacobian is just the contact frame full jac transposed
+  jac_.addFullJacobian(blocks_, contactJac, full_jac_);
+
   if(hasVariable_)
   {
     parent.jacobian_[wrench_.get()].noalias() = -full_jac_.block(0, 0, 6, robot.mb().nrDof()).transpose();
@@ -100,22 +112,26 @@ void DynamicFunction::WrenchContact::updateWrenchJacobian(DynamicFunction & pare
   }
   else
   {
-    // Then this is the second robot with a dynamics function in the contact
+    // We don't own the var so this is the second robot with a dynamics function in the contact.
     // The jacobian to the wrench var must be transformed from the other frame to this one, and negated
     // This way the wrench applied in the second contact frame results in - the first wrench if expressed in the
     // first contact frame
 
-    // getting the right transform: if this robot is r1, the var is in frame r2 so we need X_r2_r1
-    const auto dualMatrix = contact_->r1Surface()->name() == frame_->name() ? contact_->X_r2s_r1s().dualMatrix()
-                                                                            : contact_->X_r2s_r1s().inv().dualMatrix();
-    parent.jacobian_[wrench_.get()].noalias() = -full_jac_.block(0, 0, 6, robot.mb().nrDof()).transpose() * -dualMatrix;
-    // Update transform map with same logic
+    // Getting the right transform: if this robot is r1, the var is in frame r2 so we need X_r2_r1
+    const auto X_var_f =
+        contact_->r1Surface()->name() == frame_->name() ? contact_->X_r2s_r1s() : contact_->X_r2s_r1s().inv();
+
+    parent.jacobian_[wrench_.get()].noalias() =
+        -full_jac_.block(0, 0, 6, robot.mb().nrDof()).transpose() * -X_var_f.dualMatrix();
+    // Then we simply emplace the transform between the variable frame and this robot's CoM,
+    // taking the opposite into account
     // FIXME make sure the frame AND the com are up to date and use the tvm versions
     auto X_0_f = frame_->position();
     auto X_0_C = sva::PTransformd(frame_->robot().com());
-    auto X_var_f =
-        contact_->r1Surface()->name() == frame_->name() ? contact_->X_r2s_r1s() : contact_->X_r2s_r1s().inv();
-    auto X_var_C = (X_0_C * X_0_f.inv() * X_var_f);
+    // This transforms to the negative frame
+    auto X_negative = sva::PTransformd(-Eigen::Matrix3d::Identity(), Eigen::Vector3d::Zero());
+
+    auto X_var_C = X_0_C * X_0_f.inv() * X_negative * X_var_f;
     parent.CoMWrenchTransforms_[wrench_] = X_var_C;
   }
   // mc_rtc::log::critical("updated wrench jacobian to {}", parent.jacobian_[wrench_.get()]);
@@ -180,10 +196,12 @@ void DynamicFunction::addContact6d(const mc_rbdyn::RobotFrame & frame,
   // add this variable to the dual wrenches map (it was created by the other frame of the contact)
   auto X_0_f = frame.position();
   auto X_0_C = sva::PTransformd(robot_.tvmRobot().comAlgo().com());
-  // getting the transform from variable to this robot's frame: if this robot is r1, the var is in frame r2 so we need
-  // X_r2_r1
+  // Getting the transform from variable to this robot's frame: if this robot is r1,
+  // the var is in frame r2 so we need X_r2_r1, otherwise X_r1_r2
+  // After this, since the given variable is opposite to this one (Newton) we negate the wrench value in the transform
+  auto X_negative = sva::PTransformd(-Eigen::Matrix3d::Identity(), Eigen::Vector3d::Zero());
   const auto X_var_f = contact.r1Surface()->name() == frame.name() ? contact.X_r2s_r1s() : contact.X_r2s_r1s().inv();
-  auto X_var_C = (X_0_C * X_0_f.inv() * X_var_f);
+  auto X_var_C = X_0_C * X_0_f.inv() * X_negative * X_var_f;
   CoMWrenchTransforms_.emplace(wc.wrench_, X_var_C);
   // Adds dep to call a jacobian update on this function each time the frame jacobian is updated
   // FIXME Add a dependency on the contact instead of the frame, this way if the second frame is updated, this jacobian
