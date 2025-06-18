@@ -131,7 +131,7 @@ void DynamicFunction::WrenchContact::updateWrenchJacobian(DynamicFunction & pare
     // This transforms to the negative frame
     auto X_negative = sva::PTransformd(-Eigen::Matrix3d::Identity(), Eigen::Vector3d::Zero());
 
-    auto X_var_C = X_0_C * X_0_f.inv() * X_negative * X_var_f;
+    auto X_var_C = X_negative * X_0_C * X_0_f.inv() * X_var_f;
     parent.CoMWrenchTransforms_[wrench_] = X_var_C;
   }
   // mc_rtc::log::critical("updated wrench jacobian to {}", parent.jacobian_[wrench_.get()]);
