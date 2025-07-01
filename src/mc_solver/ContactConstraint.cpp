@@ -5,6 +5,7 @@
 #include <mc_solver/ContactConstraint.h>
 
 #include <mc_solver/ConstraintSetLoader.h>
+#include <mc_solver/TVMQPSolver.h>
 #include <mc_solver/TasksQPSolver.h>
 
 #include <mc_rtc/logging.h>
@@ -44,7 +45,7 @@ static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend,
 }
 
 ContactConstraint::ContactConstraint(double timeStep, ContactType contactType)
-: constraint_(make_constraint(backend_, timeStep, contactType))
+: constraint_(make_constraint(backend_, timeStep, contactType)), contactType_(contactType)
 {
 }
 
@@ -57,6 +58,8 @@ void ContactConstraint::addToSolverImpl(QPSolver & solver)
           ->addToSolver(solver.robots().mbs(), tasks_solver(solver).solver());
       break;
     case QPSolver::Backend::TVM:
+      // Let's assume the parameter is set when the created constraint is "added"
+      mc_solver::TVMQPSolver::from_solver(solver).contactConstraintType(contactType_);
       break;
     default:
       break;
@@ -71,6 +74,8 @@ void ContactConstraint::removeFromSolverImpl(QPSolver & solver)
       static_cast<tasks::qp::ContactConstr *>(constraint_.get())->removeFromSolver(tasks_solver(solver).solver());
       break;
     case QPSolver::Backend::TVM:
+      // It makes no sense to remove the geometric contact constraint in TVM for now as they are set in any case but we
+      // could imagine a type "none" that removes them
       break;
     default:
       break;

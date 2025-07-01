@@ -64,6 +64,7 @@ private:
    * No-op in TVM backend
    */
   mc_rtc::void_ptr constraint_;
+  int contactType_;
 };
 
 } // namespace mc_solver

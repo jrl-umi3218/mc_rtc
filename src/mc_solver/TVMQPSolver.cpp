@@ -384,8 +384,39 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
   if(!data.contactConstraint_) // New contact
   {
     auto contact_fn = std::make_shared<mc_tvm::ContactFunction>(f1, f2, contact.dof());
-    data.contactConstraint_ = problem_.add(contact_fn == 0., tvm::task_dynamics::PD(1.0 / dt(), 1.0 / dt()),
-                                           {tvm::requirements::PriorityLevel(0)});
+    switch(contactConstraintType_)
+    {
+      case ContactConstraintTypes::Acceleration:
+      {
+        // Acceleration constraint: the second order dynamics of the contact function, ie the relative acceleration
+        // between the frames tracks a reference of zero
+        // XXX A non zero reference could be tracked using the tvm::task_dynamics::ReferenceAcceleration for example
+        data.contactConstraint_ =
+            problem_.add(contact_fn == 0., tvm::task_dynamics::PD(0., 0.), {tvm::requirements::PriorityLevel(0)});
+        break;
+      }
+      case ContactConstraintTypes::Velocity:
+      {
+        // Velocity constraint: the dynamics of the contact function track only the velocity error
+        data.contactConstraint_ = problem_.add(contact_fn == 0., tvm::task_dynamics::PD(0., 1.0 / dt()),
+                                               {tvm::requirements::PriorityLevel(0)});
+        break;
+      }
+      case ContactConstraintTypes::Position:
+      {
+        // Position constraint: regular contact function and position error tracking with PD dynamics
+        // Using a PD dynamics with these gains basically equates to a one-step to convergence
+        data.contactConstraint_ = problem_.add(contact_fn == 0., tvm::task_dynamics::PD(1.0 / dt(), 1.0 / dt()),
+                                               {tvm::requirements::PriorityLevel(0)});
+        break;
+      }
+
+      default:
+        mc_rtc::log::error_and_throw("[TVMQPSolver] The geometric contact constraint type is invalid: {}",
+                                     contactConstraintType_);
+        break;
+    }
+
     logger_->addLogEntry(fmt::format("contact_{}::{}_{}::{}", r1.name(), f1.name(), r2.name(), f2.name()),
                          [this, contact]() { return desiredContactForce(contact); });
     gui_->addElement({"Contacts", "Forces"},
