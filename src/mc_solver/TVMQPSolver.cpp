@@ -4,8 +4,8 @@
 
 #include <mc_solver/TVMQPSolver.h>
 
-#include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/ContactConstraint.h>
+#include <mc_solver/DynamicsConstraint.h>
 
 #include <mc_tasks/MetaTask.h>
 
