@@ -59,7 +59,7 @@ void ContactConstraint::addToSolverImpl(QPSolver & solver)
       break;
     case QPSolver::Backend::TVM:
       // Let's assume the parameter is set when the created constraint is "added"
-      mc_solver::TVMQPSolver::from_solver(solver).contactConstraintType(contactType_);
+      mc_solver::TVMQPSolver::from_solver(solver).setContactConstraintType(contactType_);
       break;
     default:
       break;

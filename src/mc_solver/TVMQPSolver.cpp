@@ -5,6 +5,7 @@
 #include <mc_solver/TVMQPSolver.h>
 
 #include <mc_solver/DynamicsConstraint.h>
+#include <mc_solver/ContactConstraint.h>
 
 #include <mc_tasks/MetaTask.h>
 
@@ -386,7 +387,7 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
     auto contact_fn = std::make_shared<mc_tvm::ContactFunction>(f1, f2, contact.dof());
     switch(contactConstraintType_)
     {
-      case ContactConstraintTypes::Acceleration:
+      case ContactConstraint::Acceleration:
       {
         // Acceleration constraint: the second order dynamics of the contact function, ie the relative acceleration
         // between the frames tracks a reference of zero
@@ -395,14 +396,14 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
             problem_.add(contact_fn == 0., tvm::task_dynamics::PD(0., 0.), {tvm::requirements::PriorityLevel(0)});
         break;
       }
-      case ContactConstraintTypes::Velocity:
+      case ContactConstraint::Velocity:
       {
         // Velocity constraint: the dynamics of the contact function track only the velocity error
         data.contactConstraint_ = problem_.add(contact_fn == 0., tvm::task_dynamics::PD(0., 1.0 / dt()),
                                                {tvm::requirements::PriorityLevel(0)});
         break;
       }
-      case ContactConstraintTypes::Position:
+      case ContactConstraint::Position:
       {
         // Position constraint: regular contact function and position error tracking with PD dynamics
         // Using a PD dynamics with these gains basically equates to a one-step to convergence

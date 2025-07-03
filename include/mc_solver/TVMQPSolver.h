@@ -22,17 +22,6 @@ namespace mc_solver
  */
 struct MC_SOLVER_DLLAPI TVMQPSolver final : public QPSolver
 {
-  /** Types for the geometric contact constraints */
-  enum ContactConstraintTypes
-  {
-    /** Acceleration constraint */
-    Acceleration = 0,
-    /** Velocity constraint */
-    Velocity = 1,
-    /** Position constraint */
-    Position = 2
-  };
-
   TVMQPSolver(mc_rbdyn::RobotsPtr robots, double timeStep);
 
   TVMQPSolver(double timeStep);
@@ -78,7 +67,7 @@ struct MC_SOLVER_DLLAPI TVMQPSolver final : public QPSolver
   }
 
   /** Setter for the global contact constraint type */
-  void contactConstraintType(int type) { contactConstraintType_ = type; }
+  void setContactConstraintType(int type) { contactConstraintType_ = type; }
 
   /** Getter overload */
   int contactConstraintType() { return contactConstraintType_; }
@@ -105,7 +94,7 @@ private:
   /** Related contact functions */
   std::vector<ContactData> contactsData_;
   /** Contact constraint type currently set (position by default) */
-  int contactConstraintType_{Position};
+  int contactConstraintType_;
 
   /** Runtime of the latest run call */
   mc_rtc::duration_ms solve_dt_{0};
