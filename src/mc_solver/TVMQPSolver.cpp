@@ -30,11 +30,16 @@ inline static Eigen::MatrixXd discretizedFrictionCone(double muI)
 }
 
 TVMQPSolver::TVMQPSolver(mc_rbdyn::RobotsPtr robots, double dt)
-: QPSolver(robots, dt, Backend::TVM), solver_(tvm::solver::DefaultLSSolverOptions{}), contactConstraintType_(ContactConstraint::Velocity)
+: QPSolver(robots, dt, Backend::TVM), solver_(tvm::solver::DefaultLSSolverOptions{}),
+  contactConstraintType_(ContactConstraint::Velocity)
 {
 }
 
-TVMQPSolver::TVMQPSolver(double dt) : QPSolver(dt, Backend::TVM), solver_(tvm::solver::DefaultLSSolverOptions{}), contactConstraintType_(ContactConstraint::Velocity) {}
+TVMQPSolver::TVMQPSolver(double dt)
+: QPSolver(dt, Backend::TVM), solver_(tvm::solver::DefaultLSSolverOptions{}),
+  contactConstraintType_(ContactConstraint::Velocity)
+{
+}
 
 size_t TVMQPSolver::getContactIdx(const mc_rbdyn::Contact & contact)
 {
