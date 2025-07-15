@@ -1476,7 +1476,7 @@ void Robot::addDevice(DevicePtr device)
   data_->devices.push_back(std::move(device));
   auto & d = data_->devices.back();
   if(d->parent() == "") { d->parent(mb().body(0).name()); }
-  data_->devicesIndex[device->name()] = data_->devices.size() - 1;
+  data_->devicesIndex[data_->devices.back()->name()] = data_->devices.size() - 1;
 }
 
 std::vector<std::string> Robot::frames() const
