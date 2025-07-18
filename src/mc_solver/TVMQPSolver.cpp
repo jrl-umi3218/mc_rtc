@@ -425,6 +425,8 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
                                          contactType);
             break;
         }
+        // Breaking out of the for loop in case there is more than one contact constraint in the solver
+        break;
       }
     }
 

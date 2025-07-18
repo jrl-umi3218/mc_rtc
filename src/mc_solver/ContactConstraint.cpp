@@ -5,7 +5,6 @@
 #include <mc_solver/ContactConstraint.h>
 
 #include <mc_solver/ConstraintSetLoader.h>
-#include <mc_solver/TVMQPSolver.h>
 #include <mc_solver/TasksQPSolver.h>
 
 #include <mc_rtc/logging.h>
