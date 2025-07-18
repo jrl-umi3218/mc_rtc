@@ -30,16 +30,11 @@ inline static Eigen::MatrixXd discretizedFrictionCone(double muI)
 }
 
 TVMQPSolver::TVMQPSolver(mc_rbdyn::RobotsPtr robots, double dt)
-: QPSolver(robots, dt, Backend::TVM), solver_(tvm::solver::DefaultLSSolverOptions{}),
-  contactConstraintType_(ContactConstraint::Velocity)
+: QPSolver(robots, dt, Backend::TVM), solver_(tvm::solver::DefaultLSSolverOptions{})
 {
 }
 
-TVMQPSolver::TVMQPSolver(double dt)
-: QPSolver(dt, Backend::TVM), solver_(tvm::solver::DefaultLSSolverOptions{}),
-  contactConstraintType_(ContactConstraint::Velocity)
-{
-}
+TVMQPSolver::TVMQPSolver(double dt) : QPSolver(dt, Backend::TVM), solver_(tvm::solver::DefaultLSSolverOptions{}) {}
 
 size_t TVMQPSolver::getContactIdx(const mc_rbdyn::Contact & contact)
 {
@@ -390,37 +385,47 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
   if(!data.contactConstraint_) // New contact
   {
     auto contact_fn = std::make_shared<mc_tvm::ContactFunction>(f1, f2, contact.dof());
-    switch(contactConstraintType_)
+    // Check if a contact constraint exists in the QP
+    for(const auto & constraint : constraints())
     {
-      case ContactConstraint::Acceleration:
+      if(auto contactConstraint = dynamic_cast<mc_solver::ContactConstraint *>(constraint))
       {
-        // Acceleration constraint: the second order dynamics of the contact function, ie the relative acceleration
-        // between the frames tracks a reference of zero
-        // XXX A non zero reference could be tracked using the tvm::task_dynamics::ReferenceAcceleration for example
-        data.contactConstraint_ =
-            problem_.add(contact_fn == 0., tvm::task_dynamics::PD(0., 0.), {tvm::requirements::PriorityLevel(0)});
-        break;
-      }
-      case ContactConstraint::Velocity:
-      {
-        // Velocity constraint: the dynamics of the contact function track only the velocity error
-        data.contactConstraint_ = problem_.add(contact_fn == 0., tvm::task_dynamics::PD(0., 1.0 / dt()),
-                                               {tvm::requirements::PriorityLevel(0)});
-        break;
-      }
-      case ContactConstraint::Position:
-      {
-        // Position constraint: regular contact function and position error tracking with PD dynamics
-        // Using a PD dynamics with these gains basically equates to a one-step to convergence
-        data.contactConstraint_ = problem_.add(contact_fn == 0., tvm::task_dynamics::PD(1.0 / dt(), 1.0 / dt()),
-                                               {tvm::requirements::PriorityLevel(0)});
-        break;
-      }
+        auto contactType = contactConstraint->contactType();
 
-      default:
-        mc_rtc::log::error_and_throw("[TVMQPSolver] The geometric contact constraint type is invalid: {}",
-                                     contactConstraintType_);
-        break;
+        // Add geometric constraint according to the type of the solver contact constraint
+        switch(contactType)
+        {
+          case ContactConstraint::ContactType::Acceleration:
+          {
+            // Acceleration constraint: the second order dynamics of the contact function, ie the relative acceleration
+            // between the frames tracks a reference of zero
+            // XXX A non zero reference could be tracked using the tvm::task_dynamics::ReferenceAcceleration for example
+            data.contactConstraint_ =
+                problem_.add(contact_fn == 0., tvm::task_dynamics::PD(0., 0.), {tvm::requirements::PriorityLevel(0)});
+            break;
+          }
+          case ContactConstraint::ContactType::Velocity:
+          {
+            // Velocity constraint: the dynamics of the contact function track only the velocity error
+            data.contactConstraint_ = problem_.add(contact_fn == 0., tvm::task_dynamics::PD(0., 1.0 / dt()),
+                                                   {tvm::requirements::PriorityLevel(0)});
+            break;
+          }
+          case ContactConstraint::ContactType::Position:
+          {
+            // Position constraint: regular contact function and position error tracking with PD dynamics
+            // Using a PD dynamics with these gains basically equates to a one-step to convergence
+            data.contactConstraint_ = problem_.add(contact_fn == 0., tvm::task_dynamics::PD(1.0 / dt(), 1.0 / dt()),
+                                                   {tvm::requirements::PriorityLevel(0)});
+            break;
+          }
+
+          default:
+            mc_rtc::log::error_and_throw("[TVMQPSolver] The geometric contact constraint type is invalid: {}",
+                                         contactType);
+            break;
+        }
+      }
     }
 
     logger_->addLogEntry(fmt::format("contact_{}::{}_{}::{}", r1.name(), f1.name(), r2.name(), f2.name()),

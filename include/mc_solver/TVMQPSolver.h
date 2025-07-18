@@ -66,12 +66,6 @@ struct MC_SOLVER_DLLAPI TVMQPSolver final : public QPSolver
     return static_cast<const TVMQPSolver &>(solver);
   }
 
-  /** Setter for the global contact constraint type */
-  void setContactConstraintType(int type) { contactConstraintType_ = type; }
-
-  /** Getter overload */
-  int contactConstraintType() { return contactConstraintType_; }
-
 private:
   /** Control problem */
   tvm::LinearizedControlProblem problem_;
@@ -93,8 +87,6 @@ private:
   };
   /** Related contact functions */
   std::vector<ContactData> contactsData_;
-  /** Contact constraint type currently set (position by default) */
-  int contactConstraintType_;
 
   /** Runtime of the latest run call */
   mc_rtc::duration_ms solve_dt_{0};

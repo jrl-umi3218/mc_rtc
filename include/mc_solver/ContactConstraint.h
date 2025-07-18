@@ -23,7 +23,7 @@ public:
   /** This enum list the possible types of ContactConstr, see Tasks
    * documentation for mathematical details on each of them
    */
-  enum ContactType
+  enum class ContactType
   {
     /** Acceleration constraint */
     Acceleration = 0,
@@ -41,7 +41,7 @@ public:
    * \param contactType Enable different geometric constraint
    *
    */
-  ContactConstraint(double timeStep, ContactType contactType = Velocity);
+  ContactConstraint(double timeStep, ContactType contactType = ContactType::Velocity);
 
   /** Implementation of mc_solver::ConstraintSet::addToSolver */
   void addToSolverImpl(QPSolver & solver) override;
@@ -55,6 +55,9 @@ public:
    */
   tasks::qp::ContactConstr * contactConstr();
 
+  /** Returns the contact type for this constraint */
+  ContactType contactType() const noexcept { return contactType_; }
+
 private:
   /** Holds the contact constraint implementation
    *
@@ -64,7 +67,7 @@ private:
    * No-op in TVM backend
    */
   mc_rtc::void_ptr constraint_;
-  int contactType_;
+  ContactType contactType_;
 };
 
 } // namespace mc_solver

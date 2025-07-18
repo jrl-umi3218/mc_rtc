@@ -36,9 +36,9 @@ cdef extern from "<mc_solver/ConstraintSet.h>" namespace "mc_solver":
 
 cdef extern from "<mc_solver/ContactConstraint.h>" namespace "mc_solver":
   ctypedef enum ContactConstraintContactType "mc_solver::ContactConstraint::ContactType":
-    ContactTypeAcceleration "mc_solver::ContactConstraint::Acceleration"
-    ContactTypeVelocity "mc_solver::ContactConstraint::Velocity"
-    ContactTypePosition "mc_solver::ContactConstraint::Position"
+    ContactTypeAcceleration "mc_solver::ContactConstraint::ContactType::Acceleration"
+    ContactTypeVelocity "mc_solver::ContactConstraint::ContactType::Velocity"
+    ContactTypePosition "mc_solver::ContactConstraint::ContactType::Position"
 
   cdef cppclass ContactConstraint(ConstraintSet):
     ContactConstraint(double, ContactConstraintContactType)
