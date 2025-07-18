@@ -177,29 +177,29 @@ void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
   if(config.has("gains")) { gains_ = config("gains"); }
   if(config.has("wrench")) { targetWrench(config("wrench")); }
   if(config.has("cutoffPeriod")) { cutoffPeriod(config("cutoffPeriod")); }
-  if(config.has("deltaCompPoseLinLimit"))
+  if(auto deltaCompPoseLinLimit = config.find("deltaCompPoseLinLimit"))
   {
-    deltaCompPoseLinLimit_ = std::max(static_cast<double>(config("deltaCompPoseLinLimit")), 0.0);
+    deltaCompPoseLinLimit_ = std::max<double>(*deltaCompPoseLinLimit, 0.0);
   }
-  if(config.has("deltaCompPoseAngLimit"))
+  if(auto deltaCompPoseAngLimit = config.find("deltaCompPoseAngLimit"))
   {
-    deltaCompPoseAngLimit_ = std::max(static_cast<double>(config("deltaCompPoseAngLimit")), 0.0);
+    deltaCompPoseAngLimit_ = std::max<double>(*deltaCompPoseAngLimit, 0.0);
   }
-  if(config.has("deltaCompVelLinLimit"))
+  if(auto deltaCompVelLinLimit = config.find("deltaCompVelLinLimit"))
   {
-    deltaCompVelLinLimit_ = std::max(static_cast<double>(config("deltaCompVelLinLimit")), 0.0);
+    deltaCompVelLinLimit_ = std::max<double>(*deltaCompVelLinLimit, 0.0);
   }
-  if(config.has("deltaCompVelAngLimit"))
+  if(auto deltaCompVelAngLimit = config.find("deltaCompVelAngLimit"))
   {
-    deltaCompVelAngLimit_ = std::max(static_cast<double>(config("deltaCompVelAngLimit")), 0.0);
+    deltaCompVelAngLimit_ = std::max<double>(*deltaCompVelAngLimit, 0.0);
   }
-  if(config.has("deltaCompAccelLinLimit"))
+  if(auto deltaCompAccelLinLimit = config.find("deltaCompAccelLinLimit"))
   {
-    deltaCompAccelLinLimit_ = std::max(static_cast<double>(config("deltaCompAccelLinLimit")), 0.0);
+    deltaCompAccelLinLimit_ = std::max<double>(*deltaCompAccelLinLimit, 0.0);
   }
-  if(config.has("deltaCompAccelAngLimit"))
+  if(auto deltaCompAccelAngLimit = config.find("deltaCompAccelAngLimit"))
   {
-    deltaCompAccelAngLimit_ = std::max(static_cast<double>(config("deltaCompAccelAngLimit")), 0.0);
+    deltaCompAccelAngLimit_ = std::max<double>(*deltaCompAccelAngLimit, 0.0);
   }
   TransformTask::load(solver, config);
   // The TransformTask::load function above only sets
