@@ -92,6 +92,7 @@ std::vector<sva::PTransformd> & Surface::points()
   return impl->points;
 }
 
+// FIXME this does not ensure equality !! the same surface name can be present on different robots
 bool Surface::operator==(const Surface & rhs)
 {
   return this->name() == rhs.name();
