@@ -87,6 +87,7 @@ private:
   };
   /** Related contact functions */
   std::vector<ContactData> contactsData_;
+
   /** Runtime of the latest run call */
   mc_rtc::duration_ms solve_dt_{0};
 

@@ -44,7 +44,7 @@ static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend,
 }
 
 ContactConstraint::ContactConstraint(double timeStep, ContactType contactType)
-: constraint_(make_constraint(backend_, timeStep, contactType))
+: constraint_(make_constraint(backend_, timeStep, contactType)), contactType_(contactType)
 {
 }
 
@@ -57,6 +57,7 @@ void ContactConstraint::addToSolverImpl(QPSolver & solver)
           ->addToSolver(solver.robots().mbs(), tasks_solver(solver).solver());
       break;
     case QPSolver::Backend::TVM:
+      // No specific impl, contactType_ will be checked by TVMQPSolver
       break;
     default:
       break;
@@ -71,6 +72,7 @@ void ContactConstraint::removeFromSolverImpl(QPSolver & solver)
       static_cast<tasks::qp::ContactConstr *>(constraint_.get())->removeFromSolver(tasks_solver(solver).solver());
       break;
     case QPSolver::Backend::TVM:
+      // No specific impl, TVMQPSolver will not add geometric contact constraints if this is not in the solver
       break;
     default:
       break;
@@ -96,9 +98,9 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
     {
       std::string cTypeStr = config("contactType", std::string{"velocity"});
-      auto cType = mc_solver::ContactConstraint::Velocity;
-      if(cTypeStr == "acceleration") { cType = mc_solver::ContactConstraint::Acceleration; }
-      else if(cTypeStr == "position") { cType = mc_solver::ContactConstraint::Position; }
+      auto cType = mc_solver::ContactConstraint::ContactType::Velocity;
+      if(cTypeStr == "acceleration") { cType = mc_solver::ContactConstraint::ContactType::Acceleration; }
+      else if(cTypeStr == "position") { cType = mc_solver::ContactConstraint::ContactType::Position; }
       else if(cTypeStr != "velocity")
       {
         mc_rtc::log::error("Stored contact type for contact constraint not recognized, default to velocity");
