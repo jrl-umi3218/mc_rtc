@@ -13,7 +13,9 @@ namespace mc_solver
 namespace utils
 {
 
-struct MC_SOLVER_DLLAPI UpdateTag{};
+struct MC_SOLVER_DLLAPI UpdateTag
+{
+};
 
 template<typename UpdateNrVars>
 struct Update : public UpdateNrVars, UpdateTag

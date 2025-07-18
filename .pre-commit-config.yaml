@@ -13,7 +13,7 @@ repos:
   - id: check-useless-excludes
   - id: check-hooks-apply
 - repo: https://github.com/pre-commit/mirrors-clang-format
-  rev: v19.1.7
+  rev: v20.1.7
   hooks:
   - id: clang-format
     'types_or': [c++, c]
@@ -63,7 +63,7 @@ repos:
           utils/mc_log_gui/mc_log_ui/ui/.*
       )$
 - repo: https://github.com/PyCQA/flake8
-  rev: 7.1.2
+  rev: 7.3.0
   hooks:
   - id: flake8
     args:
