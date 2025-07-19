@@ -183,7 +183,8 @@ struct ConstraintTester<mc_solver::ContactConstraint>
 {
   mc_solver::ConstraintSetPtr make_ref(mc_solver::QPSolver & solver)
   {
-    return std::make_shared<mc_solver::ContactConstraint>(solver.dt(), mc_solver::ContactConstraint::Position);
+    return std::make_shared<mc_solver::ContactConstraint>(solver.dt(),
+                                                          mc_solver::ContactConstraint::ContactType::Position);
   }
 
   std::string json()

@@ -421,8 +421,7 @@ auto TVMQPSolver::addVirtualContactImpl(const mc_rbdyn::Contact & contact) -> st
           }
 
           default:
-            mc_rtc::log::error_and_throw("[TVMQPSolver] The geometric contact constraint type is invalid: {}",
-                                         contactType);
+            mc_rtc::log::error_and_throw("[TVMQPSolver] The geometric contact constraint type is invalid");
             break;
         }
         // Breaking out of the for loop in case there is more than one contact constraint in the solver
