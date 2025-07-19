@@ -1,6 +1,5 @@
 var NAVTREEINDEX4 =
 {
-"globals_vars.html":[7,1,2],
 "group__robotFromConfig.html":[4,0],
 "group__robotFromConfig.html#ga40325ac769295d23f270976eead26245":[4,0,2],
 "group__robotFromConfig.html#ga40325ac769295d23f270976eead26245":[5,0,6,83],
@@ -249,5 +248,6 @@ var NAVTREEINDEX4 =
 "logging_8h.html#ac6c926a2075cbaa39c4e9d12a2cac7e2":[7,0,0,6,17,1],
 "logging_8h.html#ad8493c09711c1562481e104d334694db":[7,0,0,6,17,5],
 "logging_8h.html#ada5a572b2a8b25bcd9f471bc5c3c0787":[7,0,0,6,17,4],
-"logging_8h.html#ae0e43eaf4d638a83e59084a107b3b62f":[7,0,0,6,17,2]
+"logging_8h.html#ae0e43eaf4d638a83e59084a107b3b62f":[7,0,0,6,17,2],
+"logging_8h.html#aeb1d99e566cb5c454074579fcfa712f4":[7,0,0,6,17,22]
 };

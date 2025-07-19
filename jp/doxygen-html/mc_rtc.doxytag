@@ -13386,49 +13386,16 @@
       <anchorfile>structmc__solver_1_1ContactConstraint.html</anchorfile>
       <anchor>aa1038fc325c517503d2f68a3feec1c30</anchor>
       <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>Acceleration</name>
-      <anchorfile>structmc__solver_1_1ContactConstraint.html</anchorfile>
-      <anchor>aa1038fc325c517503d2f68a3feec1c30acbc392a30777e1fa953eea2c011ea2c3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>Velocity</name>
-      <anchorfile>structmc__solver_1_1ContactConstraint.html</anchorfile>
-      <anchor>aa1038fc325c517503d2f68a3feec1c30a15d06b5b0997a0a5e17eccd053c7c652</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>Position</name>
-      <anchorfile>structmc__solver_1_1ContactConstraint.html</anchorfile>
-      <anchor>aa1038fc325c517503d2f68a3feec1c30a75ced229938828d7cf205928657fd137</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>Acceleration</name>
-      <anchorfile>structmc__solver_1_1ContactConstraint.html</anchorfile>
-      <anchor>aa1038fc325c517503d2f68a3feec1c30acbc392a30777e1fa953eea2c011ea2c3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>Velocity</name>
-      <anchorfile>structmc__solver_1_1ContactConstraint.html</anchorfile>
-      <anchor>aa1038fc325c517503d2f68a3feec1c30a15d06b5b0997a0a5e17eccd053c7c652</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="enumvalue">
-      <name>Position</name>
-      <anchorfile>structmc__solver_1_1ContactConstraint.html</anchorfile>
-      <anchor>aa1038fc325c517503d2f68a3feec1c30a75ced229938828d7cf205928657fd137</anchor>
-      <arglist></arglist>
+      <enumvalue file="structmc__solver_1_1ContactConstraint.html" anchor="aa1038fc325c517503d2f68a3feec1c30a3b926d163371fd620b09b63219b12f52">Acceleration</enumvalue>
+      <enumvalue file="structmc__solver_1_1ContactConstraint.html" anchor="aa1038fc325c517503d2f68a3feec1c30a88156d46910a2d733443c339a9231d12">Velocity</enumvalue>
+      <enumvalue file="structmc__solver_1_1ContactConstraint.html" anchor="aa1038fc325c517503d2f68a3feec1c30a52f5e0bc3859bc5f5e25130b6c7e8881">Position</enumvalue>
     </member>
     <member kind="function">
       <type></type>
       <name>ContactConstraint</name>
       <anchorfile>structmc__solver_1_1ContactConstraint.html</anchorfile>
-      <anchor>a544f184a51c137915111ec31c7f03826</anchor>
-      <arglist>(double timeStep, ContactType contactType=Velocity)</arglist>
+      <anchor>a332678b52d037cb610674bf252eaa9eb</anchor>
+      <arglist>(double timeStep, ContactType contactType=ContactType::Velocity)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -13450,6 +13417,13 @@
       <anchorfile>structmc__solver_1_1ContactConstraint.html</anchorfile>
       <anchor>aa06cba392d88e851509f3ee9663fb248</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>ContactType</type>
+      <name>contactType</name>
+      <anchorfile>structmc__solver_1_1ContactConstraint.html</anchorfile>
+      <anchor>a294d7bbf497e6bab544222a8e14ce938</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
   </compound>
   <compound kind="struct">

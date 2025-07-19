@@ -1,6 +1,5 @@
 var NAVTREEINDEX15 =
 {
-"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a5b9bbb849504eb7763660147da1094a8":[6,0,5,2,2,1],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a6e4162251f42ce05989ad8f40465d3b9":[6,0,5,2,2,5],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a7280e47779527fa1f63dc2603c00d9da":[6,0,5,2,2,2],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a7b736726261a83dd3bf62d9d5a5fbb01":[6,0,5,2,2,11],
@@ -249,5 +248,6 @@ var NAVTREEINDEX15 =
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1FDMPCWeights_01_4.html":[6,0,6,10],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1FDQPWeights_01_4.html":[6,0,6,9],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds_01_4.html":[6,0,6,11],
-"structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration_01_4.html":[6,0,6,14]
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration_01_4.html":[6,0,6,14],
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration_01_4.html":[6,0,6,15]
 };

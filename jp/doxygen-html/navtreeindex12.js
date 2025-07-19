@@ -1,6 +1,5 @@
 var NAVTREEINDEX12 =
 {
-"structmc__planning_1_1Pendulum.html#ac1bb8f13c47f89740d86998a2ae36444":[6,0,4,0,19],
 "structmc__planning_1_1Pendulum.html#ad8c91f4b7e9ce0496255708e646771a0":[6,0,4,0,20],
 "structmc__planning_1_1Pendulum.html#ae21f70bd3ef4380e2ca61c176fa03d25":[6,0,4,0,17],
 "structmc__planning_1_1Pendulum.html#ae4b2565ec3cbea0520108495f93a5a69":[6,0,4,0,14],
@@ -249,5 +248,6 @@ var NAVTREEINDEX12 =
 "structmc__rbdyn_1_1QuadraticGenerator.html#a40b29a7315dee567088c1db1c49108c6":[6,0,5,18,0],
 "structmc__rbdyn_1_1Robot.html":[6,0,5,22],
 "structmc__rbdyn_1_1Robot.html#a0051e9ce612a34601d6934f7d5caaeb4":[6,0,5,22,121],
-"structmc__rbdyn_1_1Robot.html#a005d9859a7272ac6dbcab9c31aef8092":[6,0,5,22,70]
+"structmc__rbdyn_1_1Robot.html#a005d9859a7272ac6dbcab9c31aef8092":[6,0,5,22,70],
+"structmc__rbdyn_1_1Robot.html#a00856f04c24c914b9197fe11f2d573eb":[6,0,5,22,137]
 };

@@ -1,6 +1,5 @@
 var NAVTREEINDEX7 =
 {
-"namespacemc__rtc_1_1log_1_1details.html#aa8cc2cc8dc25d49fa533f32a67f73c33":[5,0,7,5,0,2],
 "namespacemc__rtc_1_1schema.html":[5,0,7,6],
 "namespacemc__rtc_1_1schema.html#a15f4869545d422356046efaa1b21f1e7":[5,0,7,6,4],
 "namespacemc__rtc_1_1schema.html#a2c4642904dea17770a3de76075faf8a0":[5,0,7,6,2],
@@ -249,5 +248,6 @@ var NAVTREEINDEX7 =
 "structmc__control_1_1Contact.html#a55602d7741637a009f1feea7e61965bf":[6,0,1,3,1],
 "structmc__control_1_1Contact.html#a6fcb0b1d485b941fea26550ae9342f9f":[6,0,1,3,8],
 "structmc__control_1_1Contact.html#a8c2071dd5b22cda3ca23783b524ce060":[6,0,1,3,6],
-"structmc__control_1_1Contact.html#a9aebb4a6b7be2fecc5d3d745ffb239f4":[6,0,1,3,4]
+"structmc__control_1_1Contact.html#a9aebb4a6b7be2fecc5d3d745ffb239f4":[6,0,1,3,4],
+"structmc__control_1_1Contact.html#aa60a2901df9bc2de77f7f42282edf035":[6,0,1,3,0]
 };

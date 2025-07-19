@@ -1,6 +1,5 @@
 var NAVTREEINDEX5 =
 {
-"logging_8h.html#aeb1d99e566cb5c454074579fcfa712f4":[7,0,0,6,17,22],
 "logging_8h_source.html":[7,0,0,6,17],
 "mc__control_2Configuration_8h.html":[7,0,0,0,4],
 "mc__control_2Configuration_8h.html#a6e724381ca619d4c38da5fd7cdbfe9c0":[7,0,0,0,4,0],
@@ -249,5 +248,6 @@ var NAVTREEINDEX5 =
 "namespacemc__rtc_1_1gui.html#a26b235beda7821339526e15be9a24207":[5,0,7,2,34],
 "namespacemc__rtc_1_1gui.html#a2898e1d53ebbac94fbd3ab7976c8529b":[5,0,7,2,65],
 "namespacemc__rtc_1_1gui.html#a2aea12248e83169f7b0b437aedf98d67":[5,0,7,2,54],
-"namespacemc__rtc_1_1gui.html#a320502193505116660b40b8f4529c572":[5,0,7,2,61]
+"namespacemc__rtc_1_1gui.html#a320502193505116660b40b8f4529c572":[5,0,7,2,61],
+"namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06":[5,0,7,2,23]
 };

@@ -1,6 +1,5 @@
 var NAVTREEINDEX8 =
 {
-"structmc__control_1_1Contact.html#aa60a2901df9bc2de77f7f42282edf035":[6,0,1,3,0],
 "structmc__control_1_1Contact.html#aa9df2c031fd0ae28d6a4036008b83296":[6,0,1,3,7],
 "structmc__control_1_1Contact.html#ab80b4324544da978d26ea2108195b549":[6,0,1,3,5],
 "structmc__control_1_1Contact.html#adf4fb97372fa11af1a759a1d0b237b9b":[6,0,1,3,2],
@@ -249,5 +248,6 @@ var NAVTREEINDEX8 =
 "structmc__control_1_1MCController.html#a24e996fa1da0b182546e44ca000136e7":[6,0,1,17,43],
 "structmc__control_1_1MCController.html#a282081d4de374d22bfc04f3aaae1a1bc":[6,0,1,17,48],
 "structmc__control_1_1MCController.html#a2963e586daefa5602cd71756be0e2a63":[6,0,1,17,56],
-"structmc__control_1_1MCController.html#a2a5755e56c9afd7cb7ca3bd06b67a1a2":[6,0,1,17,7]
+"structmc__control_1_1MCController.html#a2a5755e56c9afd7cb7ca3bd06b67a1a2":[6,0,1,17,7],
+"structmc__control_1_1MCController.html#a2b6a6f913f0bd3fc5ca43b5a43978327":[6,0,1,17,6]
 };

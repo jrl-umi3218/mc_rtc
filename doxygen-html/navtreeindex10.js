@@ -1,6 +1,5 @@
 var NAVTREEINDEX10 =
 {
-"structmc__control_1_1Ticker_1_1Configuration.html#a0a339189fc6131871afedf65e7bfcd9a":[6,0,1,20,0,3],
 "structmc__control_1_1Ticker_1_1Configuration.html#a11a40ada8b788cc66cc1f279edfaa6d1":[6,0,1,20,0,2],
 "structmc__control_1_1Ticker_1_1Configuration.html#a1e006e136d75d76dc946431db52ac1b6":[6,0,1,20,0,4],
 "structmc__control_1_1Ticker_1_1Configuration.html#a6aa66504fbfe23a71688c86b33bd98fd":[6,0,1,20,0,6],
@@ -249,5 +248,6 @@ var NAVTREEINDEX10 =
 "structmc__control_1_1fsm_1_1Transition.html#a9fc7e260a07a8da86ee5724d47f9664a":[6,0,1,1,18,1],
 "structmc__control_1_1fsm_1_1Transition.html#ad0d49171493519fb008c73e58696edc1":[6,0,1,1,18,0],
 "structmc__control_1_1fsm_1_1Transition.html#ad0d49171493519fb008c73e58696edc1a06b9281e396db002010bde1de57262eb":[6,0,1,1,18,0,1],
-"structmc__control_1_1fsm_1_1Transition.html#ad0d49171493519fb008c73e58696edc1a2e979835dd62324f5bfe217449ba4974":[6,0,1,1,18,0,2]
+"structmc__control_1_1fsm_1_1Transition.html#ad0d49171493519fb008c73e58696edc1a2e979835dd62324f5bfe217449ba4974":[6,0,1,1,18,0,2],
+"structmc__control_1_1fsm_1_1Transition.html#ad0d49171493519fb008c73e58696edc1a68d8c641ebe12c46d077d8ff720c3bbd":[6,0,1,1,18,0,0]
 };

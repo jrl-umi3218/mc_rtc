@@ -1,6 +1,5 @@
 var NAVTREEINDEX6 =
 {
-"namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06":[5,0,7,2,23],
 "namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a0f4e1aaabd074689b7d3ead824d1ee8e":[5,0,7,2,23,19],
 "namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a104632c63520385967d8e185f7aa68dc":[5,0,7,2,23,27],
 "namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a1685c4cb9754df6a8c65c8564d8d0d74":[5,0,7,2,23,11],
@@ -249,5 +248,6 @@ var NAVTREEINDEX6 =
 "namespacemc__rtc_1_1log_1_1details.html#a2e57684e4d69b10eb5c9f41cf59c11ea":[5,0,7,5,0,4],
 "namespacemc__rtc_1_1log_1_1details.html#a4be6522543b254e76db5d80f58a4e290":[5,0,7,5,0,6],
 "namespacemc__rtc_1_1log_1_1details.html#a61a4f2b21a3c9e57114e8d852bc125ce":[5,0,7,5,0,3],
-"namespacemc__rtc_1_1log_1_1details.html#a825688a25acf02d7518a7a1f19c83e04":[5,0,7,5,0,5]
+"namespacemc__rtc_1_1log_1_1details.html#a825688a25acf02d7518a7a1f19c83e04":[5,0,7,5,0,5],
+"namespacemc__rtc_1_1log_1_1details.html#aa8cc2cc8dc25d49fa533f32a67f73c33":[5,0,7,5,0,2]
 };
