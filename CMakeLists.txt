@@ -369,8 +369,8 @@ add_subdirectory(src)
 add_subdirectory(plugins)
 add_subdirectory(utils)
 
-if(${PYTHON_BINDING})
-  add_subdirectory(binding/python)
+if(NANOBIND_BINDINGS OR PYTHON_BINDING)
+  add_subdirectory(binding)
 endif()
 
 if(${BUILD_TESTING})
