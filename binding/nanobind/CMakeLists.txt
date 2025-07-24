@@ -66,6 +66,7 @@ nanobind_add_module(
   src/mc_rtc_module/mc_rbdyn/bind_RobotModule.cpp
   src/mc_rtc_module/mc_rbdyn/bind_Device.cpp
   src/mc_rtc_module/mc_rbdyn/bind_RobotData.cpp
+  src/mc_rtc_module/mc_rbdyn/bind_RobotFrame.cpp
   src/mc_rtc_module/mc_rbdyn/bind_Robots.cpp
   src/mc_rtc_module/mc_rbdyn/bind_Robot.cpp
   # mc_rtc.mc_control submodule

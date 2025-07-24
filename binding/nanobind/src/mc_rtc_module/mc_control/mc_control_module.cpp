@@ -10,7 +10,6 @@ namespace mc_rtc_python
 
 void bind_mc_control_module(nb::module_ & m)
 {
-  nb::module_ sva = nb::module_::import_("sva");
   m.doc() = "mc_control bindings";
   bind_Gripper(m);
 }
