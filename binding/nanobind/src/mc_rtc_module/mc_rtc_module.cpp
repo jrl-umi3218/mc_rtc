@@ -20,8 +20,9 @@ NB_MODULE(_mc_rtc, _unsued_module)
   (void)_unsued_module; // unused
   nb::module_ mc_rtc = nb::module_::import_("mc_rtc");
 
-  // Import sva bindings
+  // Import dependent bindings
   nb::module_ sva = nb::module_::import_("sva");
+  nb::module_ rbdyn = nb::module_::import_("rbdyn");
 
   mc_rtc.doc() = "Python bindings for mc_rtc";
 

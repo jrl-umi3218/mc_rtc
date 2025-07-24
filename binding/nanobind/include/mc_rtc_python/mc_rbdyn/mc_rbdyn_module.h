@@ -12,6 +12,7 @@ void bind_RobotModule(nanobind::module_ & m);
 void bind_LoadRobotParameters(nanobind::module_ & m);
 void bind_Device(nanobind::module_ & m);
 void bind_RobotData(nanobind::module_ & m);
+void bind_RobotFrame(nanobind::module_ & m);
 void bind_Robots(nanobind::module_ & m);
 void bind_Robot(nanobind::module_ & m);
 } // namespace mc_rtc_python
