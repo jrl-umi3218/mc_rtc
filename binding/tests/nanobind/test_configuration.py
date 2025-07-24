@@ -4,7 +4,7 @@
 
 from mc_rtc import mc_rtc
 import numpy as np
-
+from mc_rtc import mc_rbdyn
 import os
 import pytest
 import tempfile
