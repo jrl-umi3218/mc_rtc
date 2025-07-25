@@ -12,12 +12,14 @@
 #include <nanobind/stl/pair.h>
 #include <nanobind/stl/shared_ptr.h>
 #include <nanobind/stl/string.h>
+#include <nanobind/stl/unique_ptr.h>
 #include <nanobind/stl/vector.h>
 
 namespace nb = nanobind;
 using namespace nb::literals;
 using RobotModule = mc_rbdyn::RobotModule;
 using RobotLoader = mc_rbdyn::RobotLoader;
+using Device = mc_rbdyn::Device;
 
 namespace mc_rtc_python
 {
@@ -516,10 +518,11 @@ No further action is taken. This constructor is useful to inherit from
   This defaults to urdf_path
           )");
 
-  // TODO:
-  // inline const DevicePtrVector & devices() const { return _devices; }
+  // FIXME(nanobind): returns a DevicePtrVector, which is not a support type in python
+  // rm.def_rw("devices", &RobotModule::_devices,
+  //           R"(Returns a list of non standard sensors supported by this module)");
 
-  // inline const std::vector<FrameDescription> & frames() const noexcept { return _frames; }
+  rm.def_rw("frames", &RobotModule::_frames, R"(List of robot frames supported by this module)");
 
   rm.def_rw("path", &RobotModule::path, "Path to the robot's description package")
       .def_rw("name", &RobotModule::name, "(default) Name of the robot")

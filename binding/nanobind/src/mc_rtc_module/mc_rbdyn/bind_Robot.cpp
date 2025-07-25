@@ -146,6 +146,7 @@ void bind_Robot(nb::module_ & m)
   :param refJointOrderIndex: Joint index in refJointOrder
   :throws: If jointIndex >= refJointOrder.size()
               )")
+      .def("refJointOrder", &Robot::refJointOrder, R"(Return the reference joint order for this robot)")
       .def("bodyIndexByName", &Robot::bodyIndexByName, "name"_a,
            R"(
   :returns: the body index of joint named **name**
@@ -214,9 +215,9 @@ void bind_Robot(nb::module_ & m)
   // This is at best unexpected from the user perspective.
   // My guess is that this was done because the grippers implementation is in mc_control while the robot is in mc_rbdyn
   robot.def("hasGripper",
-          &Robot::hasGripper,
-          "gripper"_a,
-          R"(
+            &Robot::hasGripper,
+            "gripper"_a,
+            R"(
    Access a gripper by name
 
   :param gripper: Gripper name
@@ -225,31 +226,138 @@ void bind_Robot(nb::module_ & m)
 
   :note: The grippers does not exist until :py:class:`mc_control.MCController` has been created. Use :py:attr:`RobotModule.gripper` instead.
           )")
-      .def("grippersByName",
-              [](Robot & self)
-              {
+        .def("grippersByName",
+                [](Robot & self)
+                {
                 std::map<std::string, mc_control::Gripper *> gout;
                 // convert as raw pointer
                 for(const auto & [name, gripperPtr] : self.grippersByName())
                 {
-                    gout.emplace(std::make_pair(name, gripperPtr.get()));
+                gout.emplace(std::make_pair(name, gripperPtr.get()));
                 }
                 return gout;
-              }
-              )
-      .def("grippers",
-              [](Robot & self)
-              { // convert as vector of pointers to remove use of reference_wrapper
+                }
+            )
+        .def("grippers",
+                [](Robot & self)
+                { // convert as vector of pointers to remove use of reference_wrapper
                 const auto & gin = self.grippers();
                 std::vector<mc_control::Gripper *> gout(gin.size());
                 std::transform(gin.begin(), gin.end(), gout.begin(),
                         [](const auto & g) { return &g.get(); });
                 return gout;
-              },
-              R"(:returns: all grippers
+                },
+                R"(:returns: all grippers
 
   :note: The grippers does not exist until :py:class:`mc_control.MCController` has been created. Use :py:attr:`RobotModule.gripper` instead.
               )");
+
+  // XXX: Added by IA from here
+  // --- Frames ---
+  robot.def("makeFrame", &Robot::makeFrame, nb::rv_policy::reference, "name"_a, "parent"_a, "X_p_f"_a,
+            "baked"_a = false,
+            R"(
+Create a new frame attached to this robot.
+
+:param name: Name of the frame
+:param parent: Parent frame
+:param X_p_f: Transformation from parent to frame
+:param baked: Attach to parent's body if true
+:returns: The newly created frame
+:throws: If parent does not belong to this robot or name already exists
+)");
+  robot.def("makeTemporaryFrame", &Robot::makeTemporaryFrame, nb::rv_policy::reference, "name"_a, "parent"_a, "X_p_f"_a,
+            "baked"_a = false,
+            R"(
+Create a new temporary frame.
+
+:param name: Name of the frame
+:param parent: Parent frame
+:param X_p_f: Transformation from parent to frame
+:param baked: Attach to parent's body if true
+:returns: The newly created frame
+:throws: If parent does not belong to this robot
+)");
+  robot.def("makeFrames", &Robot::makeFrames, "frames"_a,
+            R"(
+Create new frames attached to this robot.
+
+:param frames: Description of the frames
+:throws: If any parent does not belong to this robot or name already exists
+)");
+
+  // --- MultiBody / MultiBodyGraph ---
+  bind_ref_cref_accessor(robot, "mb", &Robot::mb, &Robot::mb, "Access the MultiBody representation of the robot");
+  bind_ref_cref_accessor(robot, "mbg", &Robot::mbg, &Robot::mbg,
+                         "Access the MultiBodyGraph that generated the robot's mb()");
+  bind_ref_cref_accessor(robot, "mbc", &Robot::mbc, &Robot::mbc, "Access the MultiBodyConfig of the robot's mb");
+
+  // --- q/alpha/alphaD/jointTorque/controlTorque ---
+  bind_ref_cref_accessor(robot, "q", &Robot::q, &Robot::q,
+                         R"(Equivalent to :py:attr:`rbdyn.MultiBodyConfig.q` returned by :py:func:`mbc`)");
+  bind_ref_cref_accessor(robot, "alpha", &Robot::alpha, &Robot::alpha, R"(Equivalent to :py:attr:`mbc().alpha`)");
+  bind_ref_cref_accessor(robot, "alphaD", &Robot::alphaD, &Robot::alphaD, R"(Equivalent to :py:attr:`mbc().alphaD`)");
+  bind_ref_cref_accessor(robot, "jointTorque", &Robot::jointTorque, &Robot::jointTorque,
+                         R"(Equivalent to :py:attr:`mbc().jointTorque`)");
+  bind_ref_cref_accessor(robot, "controlTorque", &Robot::controlTorque, &Robot::controlTorque,
+                         R"(Access the desired control torque)");
+
+  // --- Per-body accessors (vector) ---
+  bind_ref_cref_accessor(robot, "bodyPosW", &Robot::bodyPosW, &Robot::bodyPosW,
+                         R"(Equivalent to :py:attr:`mbc().bodyPosW`)");
+  bind_ref_cref_accessor(robot, "bodyVelW", &Robot::bodyVelW, &Robot::bodyVelW,
+                         R"(Equivalent to :py:attr:`mbc().bodyVelW`)");
+  bind_ref_cref_accessor(robot, "bodyVelB", &Robot::bodyVelB, &Robot::bodyVelB,
+                         R"(Equivalent to :py:attr:`mbc().bodyVelB`)");
+  bind_ref_cref_accessor(robot, "bodyAccB", &Robot::bodyAccB, &Robot::bodyAccB,
+                         R"(Equivalent to :py:attr:`mbc().bodyAccB`)");
+
+  // --- Limits ---
+  bind_ref_cref_accessor(robot, "ql", &Robot::ql, &Robot::ql, "Access the robot's angular lower limits");
+  bind_ref_cref_accessor(robot, "qu", &Robot::qu, &Robot::qu, "Access the robot's angular upper limits");
+  bind_ref_cref_accessor(robot, "vl", &Robot::vl, &Robot::vl, "Access the robot's angular lower velocity limits");
+  bind_ref_cref_accessor(robot, "vu", &Robot::vu, &Robot::vu, "Access the robot's angular upper velocity limits");
+  bind_ref_cref_accessor(robot, "al", &Robot::al, &Robot::al, "Access the robot's angular lower acceleration limits");
+  bind_ref_cref_accessor(robot, "au", &Robot::au, &Robot::au, "Access the robot's angular upper acceleration limits");
+  bind_ref_cref_accessor(robot, "jl", &Robot::jl, &Robot::jl, "Access the robot's angular lower jerk limits");
+  bind_ref_cref_accessor(robot, "ju", &Robot::ju, &Robot::ju, "Access the robot's angular upper jerk limits");
+  bind_ref_cref_accessor(robot, "tl", &Robot::tl, &Robot::tl, "Access the robot's angular lower torque limits");
+  bind_ref_cref_accessor(robot, "tu", &Robot::tu, &Robot::tu, "Access the robot's angular upper torque limits");
+  bind_ref_cref_accessor(robot, "tdl", &Robot::tdl, &Robot::tdl,
+                         "Access the robot's angular lower torque-derivative limits");
+  bind_ref_cref_accessor(robot, "tdu", &Robot::tdu, &Robot::tdu,
+                         "Access the robot's angular upper torque-derivative limits");
+
+  // --- Flexibility ---
+  bind_ref_cref_accessor(robot, "flexibility", &Robot::flexibility, &Robot::flexibility,
+                         "Return the flexibilities of the robot");
+
+  // --- ZMP Target ---
+  robot.def_prop_rw(
+      "zmpTarget", [](Robot & self) -> const Eigen::Vector3d & { return self.zmpTarget(); }, // getter
+      [](Robot & self, const Eigen::Vector3d & v) { self.zmpTarget(v); }, // setter
+      nb::rv_policy::reference,
+      R"(
+Get or set the target ZMP defined with respect to base-link.
+
+:returns: Target ZMP (Eigen::Vector3d)
+:setter: Set the target ZMP (Eigen::Vector3d)
+)");
+
+  // --- Mass ---
+  robot.def("mass", &Robot::mass, "Returns the mass of the robot");
+
+  // --- Devices (vector) ---
+  robot.def(
+      "devices",
+      [](Robot & self) -> std::vector<Device *>
+      {
+        auto & rd = self.devices();
+        std::vector<Device *> devices(rd.size());
+        std::transform(rd.begin(), rd.end(), devices.begin(), [](const auto & device) { return device.get(); });
+        return devices;
+      },
+      "Get all devices attached to a robot");
 }
 
 } // namespace mc_rtc_python
