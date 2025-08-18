@@ -57,16 +57,19 @@ void RobotModule::init(const rbd::parsers::ParserResult & res)
   _collision = res.collision;
   if(_ref_joint_order.size() == 0) { make_default_ref_joint_order(); }
   expand_stance();
+  //generate_convexes();
 }
 
 void RobotModule::generate_convexes(){
-  if(fs::exists(fs::path(path) / "meshes")){
-    for(const auto &entry : fs::directory_iterator(fs::path(path) / "meshes")){
-      mesh_sampling::MeshSampling sampler(entry);
-
-      auto meshes = sampler.create_clouds(4000);
-      sampler.create_convexes(meshes, {});
+  if(fs::exists(path)){
+    if(!fs::exists(fs::path("/tmp/mc_robot_convex") / name)){
+      fs::create_directories(fs::path("/tmp/mc_robot_convex") / name);
     }
+
+    mesh_sampling::MeshSampling sampler(fs::path(path) / "meshes");
+
+    auto meshes = sampler.create_clouds(4000);
+    auto convexes = sampler.create_convexes(meshes, fs::path("/tmp/mc_robot_convex") / name, false);
   }
   else{
     mc_rtc::log::warning("Couldn't find meshes at {} for {}", fs::path(path) / "meshes", name);

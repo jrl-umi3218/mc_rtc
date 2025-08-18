@@ -124,6 +124,7 @@ endif()
 add_project_dependency(eigen-quadprog REQUIRED)
 add_project_dependency(state-observation REQUIRED)
 add_project_dependency(ndcurves REQUIRED)
+add_project_dependency(mesh_sampling REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 
@@ -266,8 +267,6 @@ if(MSVC)
 endif(MSVC)
 
 include(CMakeModules/ListAllFiles.cmake)
-
-add_project_dependency(mesh_sampling REQUIRED)
 
 add_subdirectory(CMakeModules)
 add_subdirectory(doc)

@@ -277,9 +277,9 @@ struct MC_RBDYN_DLLAPI RobotModule
    */
   void init(const rbd::parsers::ParserResult & res);
 
-  // /** Generate robot body convexes
-  //  * 
-  //  */
+  /** Generate robot body convexes
+   * 
+   */
   void generate_convexes();
 
   /** Returns the robot's bounds obtained from parsing a urdf
