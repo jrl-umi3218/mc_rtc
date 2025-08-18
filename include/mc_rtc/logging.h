@@ -5,6 +5,7 @@
 #pragma once
 
 #include <mc_rtc/utils_api.h>
+#include <mc_rtc/log/fmt_formatter.h>
 
 #include <iostream>
 
