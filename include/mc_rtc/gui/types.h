@@ -68,7 +68,8 @@ struct MC_RTC_GUI_DLLAPI Color
       catch(mc_rtc::Configuration::Exception & e)
       {
         e.silence();
-        auto msg = std::string{"Color is neither an array of size 4, nor a valid color string"};
+        auto msg = std::string{"Color is neither an array of size 4, nor a valid color string, attempted to extract "}
+                   + config.dump(true, true);
         mc_rtc::log::error(msg);
         throw mc_rtc::Configuration::Exception(msg, config);
       }
@@ -352,8 +353,8 @@ struct PointConfig
 
   void fromConfig(const mc_rtc::Configuration & config)
   {
-    color.fromConfig(config);
     config("scale", scale);
+    config("color", color);
   }
 
   mc_rtc::Configuration saveConfig() const
