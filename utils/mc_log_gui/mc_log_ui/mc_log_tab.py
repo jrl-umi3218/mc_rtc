@@ -802,7 +802,8 @@ class MCLogTab(QtWidgets.QWidget):
             font_metric = QtGui.QFontMetrics(ySelector.font())
 
             for index in indices:
-                if not index.isValid() or not (text := index.data()): continue
+                if not index.isValid() or not (text := index.data()):
+                    continue
 
                 depth = 0
                 parent = index.parent()
@@ -810,7 +811,11 @@ class MCLogTab(QtWidgets.QWidget):
                     depth += 1
                     parent = parent.parent()
 
-                total_width = (ySelector.indentation() * depth if hasattr(ySelector, "indentation") else 20 * depth) + font_metric.horizontalAdvance(text)
+                total_width = (
+                    ySelector.indentation() * depth
+                    if hasattr(ySelector, "indentation")
+                    else 20 * depth
+                ) + font_metric.horizontalAdvance(text)
 
                 if total_width > cwidth:
                     cwidth = total_width
