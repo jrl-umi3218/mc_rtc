@@ -183,7 +183,7 @@ void write_data<std::vector<double>>(std::ofstream & ofs, const std::vector<doub
 }
 
 template<>
-void write_data<double>(std::ofstream &ofs, const double & data, size_t s)
+void write_data<double>(std::ofstream & ofs, const double & data, size_t s)
 {
   ofs << std::fixed << std::setprecision(7);
   ofs << data;
