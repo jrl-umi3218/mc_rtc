@@ -4,7 +4,7 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 
 try:
     from . import ui
@@ -788,9 +788,41 @@ class MCLogTab(QtWidgets.QWidget):
 
         def update_y_selector(ySelector):
             self.tree_view.update_y_selector(ySelector, ySelector)
+            font_metric = QtGui.QFontMetrics(ySelector.font())
+
+            indices = ySelector.model().match(
+                ySelector.model().index(0, 0),
+                QtCore.Qt.DisplayRole,
+                "*",
+                -1,
+                QtCore.Qt.MatchWildcard | QtCore.Qt.MatchRecursive,
+            )
+
+            cwidth = 0
+            font_metric = QtGui.QFontMetrics(ySelector.font())
+
+            for index in indices:
+                if not index.isValid() or not (text := index.data()):
+                    continue
+
+                depth = 0
+                parent = index.parent()
+                while parent.isValid():
+                    depth += 1
+                    parent = parent.parent()
+
+                total_width = (
+                    ySelector.indentation() * depth
+                    if hasattr(ySelector, "indentation")
+                    else 20 * depth
+                ) + font_metric.horizontalAdvance(text)
+
+                if total_width > cwidth:
+                    cwidth = total_width
+
+            ySelector.setMinimumWidth(cwidth)
+            ySelector.setMaximumWidth(cwidth + 75)
             ySelector.resizeColumnToContents(0)
-            cWidth = ySelector.sizeHintForColumn(0)
-            ySelector.setMaximumWidth(cWidth + 75)
 
         update_y_selector(self.ui.y1Selector)
         update_y_selector(self.ui.y2Selector)
