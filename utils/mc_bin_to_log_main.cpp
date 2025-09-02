@@ -4,8 +4,8 @@
 
 #include <mc_rtc/logging.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include "mc_bin_to_log.h"
 
@@ -26,7 +26,7 @@ int main(int argc, char * argv[])
   if(argc == 3) { out = argv[2]; }
   else
   {
-    out = bfs::path(argv[1]).filename().replace_extension(".csv").string();
+    out = fs::path(argv[1]).filename().replace_extension(".csv").string();
     if(out == in)
     {
       mc_rtc::log::error("Please specify a different output name");
@@ -35,5 +35,6 @@ int main(int argc, char * argv[])
     mc_rtc::log::info("Output converted log to {}", out);
   }
   mc_bin_to_log(in, out);
+  mc_rtc::log::success("Log successfully converted to {}", out);
   return 0;
 }

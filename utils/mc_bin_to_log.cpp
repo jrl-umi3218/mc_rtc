@@ -4,7 +4,7 @@
 
 #include "mc_bin_utils.h"
 #include <fstream>
-
+#include <iomanip>
 struct SizedType
 {
   mc_rtc::log::LogType type;
@@ -180,6 +180,13 @@ void write_data<std::vector<double>>(std::ofstream & ofs, const std::vector<doub
   {
     if(i + 1 != fsize) { ofs << ';'; }
   }
+}
+
+template<>
+void write_data<double>(std::ofstream & ofs, const double & data, size_t s)
+{
+  ofs << std::fixed << std::setprecision(7);
+  ofs << data;
 }
 
 template<>
