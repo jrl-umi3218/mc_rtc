@@ -34,6 +34,26 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       config.load(globalPath);
     }
 
+    // If the env MC_RTC_CONTROLLER_CONFIG is set, load this file as well
+    const char * env_config = std::getenv("MC_RTC_CONTROLLER_CONFIG");
+    if(env_config)
+    {
+      bfs::path envConfigPath(env_config);
+      if(bfs::exists(envConfigPath))
+      {
+        mc_rtc::log::info(
+            "Loading additional global configuration from MC_RTC_CONTROLLER_CONFIG environment variable {}",
+            envConfigPath.string());
+        config.load(envConfigPath.string());
+      }
+      else if(envConfigPath.string().size())
+      {
+        mc_rtc::log::error_and_throw(
+            "MC_RTC_CONTROLLER_CONFIG environment variable is set to \"{}\", but this file does not exist",
+            envConfigPath.string());
+      }
+    }
+
     bfs::path config_path = mc_rtc::user_config_directory_path("mc_rtc.conf");
     // Load user's local configuration if it exists
     if(!bfs::exists(config_path)) { config_path.replace_extension(".yaml"); }
