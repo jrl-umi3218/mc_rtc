@@ -434,9 +434,10 @@ private:
     using fn_t = std::function<RetT(FuncArgsT...)>;
     if(!data.same(typeid(fn_t).hash_code()) && !data.same_name(type_name<fn_t>()))
     {
-      log::error_and_throw("[{}] Function for key \"{}\" does not have the same signature as the "
-                           "requested one. Stored {} but requested {}",
-                           name_, name, data.type(), type_name<fn_t>());
+      log::error_and_throw(
+          "[{}] Function for key \"{}\" does not have the same signature as the "
+          "requested one. Stored {} but requested {}",
+          name_, name, data.type(), type_name<fn_t>());
     }
     auto & fn = *(reinterpret_cast<fn_t *>(data.buffer.get()));
     return fn(std::forward<ArgsT>(args)...);

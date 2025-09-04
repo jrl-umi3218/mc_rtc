@@ -75,8 +75,9 @@ extern "C"
     }
     else
     {
-      mc_rtc::log::error("Failed to get signal.signal, signal.getsignal, signal.default_int_handler, signal.SIGINT "
-                         "and/or signal.SIG_DFL");
+      mc_rtc::log::error(
+          "Failed to get signal.signal, signal.getsignal, signal.default_int_handler, signal.SIGINT "
+          "and/or signal.SIG_DFL");
     }
 
     auto mc_rbdyn_mod = PyImport_ImportModule("mc_rbdyn");
