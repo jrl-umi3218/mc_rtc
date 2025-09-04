@@ -9,6 +9,8 @@
 #include <mc_rbdyn/contact_transform.h>
 #include <mc_rtc/logging.h>
 
+#include <mc_tvm/FeasiblePolytope.h>
+
 #include <geos/version.h>
 
 #include <geos/geom/GeometryFactory.h>
@@ -28,7 +30,6 @@ constexpr double Contact::defaultFriction;
 
 struct ContactImpl
 {
-public:
   unsigned int r1Index;
   unsigned int r2Index;
   std::shared_ptr<mc_rbdyn::Surface> r1Surface;
@@ -228,14 +229,20 @@ std::vector<mc_rbdyn::Contact> Contact::loadVector(const mc_rbdyn::Robots & robo
 
 Contact::Contact(const Contact & contact)
 {
+  std::lock_guard<std::mutex> lock(contactMutex_);
   impl.reset(new ContactImpl({contact.r1Index(), contact.r2Index(), contact.r1Surface()->copy(),
                               contact.r2Surface()->copy(), contact.X_r2s_r1s(), contact.friction(), contact.isFixed(),
                               contact.X_b_s(), contact.ambiguityId()}));
   dof_ = contact.dof();
+  feasiblePolytopeR1_ = contact.feasiblePolytopeR1();
+  feasiblePolytopeR2_ = contact.feasiblePolytopeR2();
+  this->tvm_polytopeR1_ = std::move(contact.tvm_polytopeR1_);
+  this->tvm_polytopeR2_ = std::move(contact.tvm_polytopeR2_);
 }
 
 Contact & Contact::operator=(const Contact & rhs)
 {
+  std::lock_guard<std::mutex> lock(contactMutex_);
   if(this == &rhs) { return *this; }
   this->impl->r1Index = rhs.r1Index();
   this->impl->r2Index = rhs.r2Index();
@@ -247,6 +254,10 @@ Contact & Contact::operator=(const Contact & rhs)
   this->impl->friction = rhs.friction();
   this->impl->ambiguityId = rhs.ambiguityId();
   this->dof_ = rhs.dof();
+  this->feasiblePolytopeR1_ = rhs.feasiblePolytopeR1();
+  this->feasiblePolytopeR2_ = rhs.feasiblePolytopeR2();
+  this->tvm_polytopeR1_ = std::move(rhs.tvm_polytopeR1_);
+  this->tvm_polytopeR2_ = std::move(rhs.tvm_polytopeR2_);
   return *this;
 }
 
@@ -346,6 +357,7 @@ sva::PTransformd Contact::compute_X_r2s_r1s(const mc_rbdyn::Robots & robots) con
 {
   sva::PTransformd X_0_r1 = impl->r1Surface->X_0_s(robots.robot(impl->r1Index));
   sva::PTransformd X_0_r2 = impl->r2Surface->X_0_s(robots.robot(impl->r2Index));
+  impl->X_r2s_r1s = X_0_r1 * X_0_r2.inv();
   return X_0_r1 * X_0_r2.inv();
 }
 
@@ -429,7 +441,9 @@ std::string Contact::toStr() const
 
 bool Contact::operator==(const Contact & rhs) const
 {
-  return (*(this->r1Surface()) == *(rhs.r1Surface())) && (*(this->r2Surface()) == *(rhs.r2Surface()));
+  // FIXME checking contact equality by also checking same robots (surface == only checks names)
+  return (*(this->r1Surface()) == *(rhs.r1Surface())) && (*(this->r2Surface()) == *(rhs.r2Surface()))
+         && (this->r1Index() == rhs.r1Index()) && (this->r2Index() == rhs.r2Index());
 }
 
 bool Contact::operator!=(const Contact & rhs) const
@@ -445,6 +459,52 @@ double Contact::friction() const
 void Contact::friction(double friction)
 {
   impl->friction = friction;
+}
+
+void Contact::feasiblePolytopeR1(const mc_rbdyn::FeasiblePolytope & polytope)
+{
+  std::lock_guard<std::mutex> lock(contactMutex_);
+  feasiblePolytopeR1_ = polytope;
+}
+
+void Contact::feasiblePolytopeR2(const mc_rbdyn::FeasiblePolytope & polytope)
+{
+  std::lock_guard<std::mutex> lock(contactMutex_);
+  feasiblePolytopeR2_ = polytope;
+}
+
+const std::optional<mc_rbdyn::FeasiblePolytope> & Contact::feasiblePolytopeR1() const noexcept
+{
+  std::lock_guard<std::mutex> lock(contactMutex_);
+  return feasiblePolytopeR1_;
+}
+
+const std::optional<mc_rbdyn::FeasiblePolytope> & Contact::feasiblePolytopeR2() const noexcept
+{
+  std::lock_guard<std::mutex> lock(contactMutex_);
+  return feasiblePolytopeR2_;
+}
+
+mc_tvm::FeasiblePolytope & Contact::tvmPolytopeR1() const
+{
+  if(!tvm_polytopeR1_)
+  {
+    mc_rtc::log::warning("Creating a new feasible polytope tvm object");
+    tvm_polytopeR1_.reset(
+        new mc_tvm::FeasiblePolytope(mc_tvm::FeasiblePolytope::NewPolytopeToken{}, *this, this->r1Index()));
+  }
+  return *tvm_polytopeR1_;
+}
+
+mc_tvm::FeasiblePolytope & Contact::tvmPolytopeR2() const
+{
+  if(!tvm_polytopeR2_)
+  {
+    mc_rtc::log::warning("Creating a new feasible polytope tvm object");
+    tvm_polytopeR2_.reset(
+        new mc_tvm::FeasiblePolytope(mc_tvm::FeasiblePolytope::NewPolytopeToken{}, *this, this->r2Index()));
+  }
+  return *tvm_polytopeR2_;
 }
 
 Contact Contact::swap(const mc_rbdyn::Robots & robots) const
