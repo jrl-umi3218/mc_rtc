@@ -1,9 +1,12 @@
 #include <mc_rtc/config.h>
 #include <mc_rtc/path.h>
+#include <fmt/format.h>
 
 #include <filesystem>
+#include <boost/filesystem.hpp>
 #include <string_view>
 namespace fs = std::filesystem;
+namespace bfs = boost::filesystem;
 
 namespace mc_rtc
 {
@@ -72,6 +75,17 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
   const std::string file = "file://";
   if(uri.size() >= file.size() && uri.find(file) == 0) { return fs::path(uri.substr(file.size())); }
   return uri;
+}
+
+std::string make_temporary_path(const std::string & prefix)
+{
+  auto tmp = bfs::temp_directory_path();
+  auto pattern = fmt::format("{}-%%%%-%%%%-%%%%-%%%%", prefix);
+  // std::filesystem does not have a unique_path function in c++17
+  // keep boost around for now
+  auto out = tmp / bfs::unique_path(pattern).string();
+  bfs::create_directories(out);
+  return out.string();
 }
 
 } // namespace mc_rtc
