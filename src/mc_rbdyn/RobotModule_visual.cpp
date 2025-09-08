@@ -31,21 +31,27 @@ sva::RBInertiad computeInertiaFromVisual(const rbd::parsers::Visual & visual, do
           mc_rtc::details::getVisualGeometry<rbd::parsers::Geometry::BOX>(const_cast<rbd::parsers::Visual &>(visual));
       return computeBoxInertia(mass, geom.size);
     }
-    break;
     case rbd::parsers::Geometry::SPHERE:
     {
       auto geom = mc_rtc::details::getVisualGeometry<rbd::parsers::Geometry::SPHERE>(
           const_cast<rbd::parsers::Visual &>(visual));
       return computeSphereInertia(mass, geom.radius);
     }
-    break;
     case rbd::parsers::Geometry::CYLINDER:
     {
       auto geom = mc_rtc::details::getVisualGeometry<rbd::parsers::Geometry::CYLINDER>(
           const_cast<rbd::parsers::Visual &>(visual));
       return computeCylinderInertia(mass, geom.radius, geom.length);
     }
-    break;
+    case rbd::parsers::Geometry::SUPERELLIPSOID:
+    {
+      auto geom = mc_rtc::details::getVisualGeometry<rbd::parsers::Geometry::SUPERELLIPSOID>(
+          const_cast<rbd::parsers::Visual &>(visual));
+      return computeSuperEllipsoidInertia(mass, geom.size, geom.epsilon1, geom.epsilon2);
+    }
+    case rbd::parsers::Geometry::MESH:
+      mc_rtc::log::error_and_throw("computeIntertiaFromVisual: Mesh geometry not supported for inertia computation");
+      break;
     default:
       mc_rtc::log::error_and_throw("computeIntertiaFromVisual: Unsupported geometry type {}", visual.geometry.type);
   }
@@ -71,33 +77,18 @@ std::vector<std::shared_ptr<Surface>> genSurfacesFromVisual(const rbd::parsers::
   auto surfaces = std::vector<std::shared_ptr<Surface>>{};
   surfaces.reserve(generators.size());
 
-  for(const auto & [name, dir, rpyExterior, rpyInterior] : generators)
+  for(const auto & generator : generators)
   {
+    auto & name = generator.name;
+    auto & dir = generator.direction;
+    auto & rpyExterior = generator.rpy;
+    auto & rpyInterior = generator.rpyFlipped;
 
     Eigen::Matrix3d rotation = mc_rbdyn::rpyToMat(rpyExterior).inverse();
     Eigen::Matrix3d rotationFlipped = mc_rbdyn::rpyToMat(rpyInterior).inverse();
 
-    if(visual.geometry.type == rbd::parsers::Geometry::SPHERE)
+    auto genBoxSurfaces = [&](const Eigen::Vector3d & size)
     {
-      auto geom = mc_rtc::details::getVisualGeometry<rbd::parsers::Geometry::SPHERE>(
-          const_cast<rbd::parsers::Visual &>(visual));
-      auto d = geom.radius;
-      surfaces.emplace_back(std::make_shared<mc_rbdyn::PlanarSurface>(
-          name + "_exterior",
-          visual.name, // bodyName
-          sva::PTransformd(rotation, dir * d), // X_b_s
-
-          "plastic", // materialName
-          std::vector<std::pair<double, double>>{{-d, -d}, {d, -d}, {d, d}, {-d, d}}));
-      surfaces.emplace_back(surfaces.back()->copy());
-      surfaces.back()->name(name + "_interior");
-      surfaces.back()->X_b_s(sva::PTransformd{rotationFlipped, dir * d});
-    }
-    else if(visual.geometry.type == rbd::parsers::Geometry::BOX)
-    {
-      auto geom =
-          mc_rtc::details::getVisualGeometry<rbd::parsers::Geometry::BOX>(const_cast<rbd::parsers::Visual &>(visual));
-      const auto & size = geom.size;
       double hx = size.x() / 2.0;
       double hy = size.y() / 2.0;
       double hz = size.z() / 2.0;
@@ -132,6 +123,36 @@ std::vector<std::shared_ptr<Surface>> genSurfacesFromVisual(const rbd::parsers::
                                                                    * (std::abs(dir.x())   ? hx
                                                                       : std::abs(dir.y()) ? hy
                                                                                           : hz)});
+    };
+
+    if(visual.geometry.type == rbd::parsers::Geometry::SPHERE)
+    {
+      auto geom = mc_rtc::details::getVisualGeometry<rbd::parsers::Geometry::SPHERE>(
+          const_cast<rbd::parsers::Visual &>(visual));
+      auto d = geom.radius;
+      surfaces.emplace_back(std::make_shared<mc_rbdyn::PlanarSurface>(
+          name + "_exterior",
+          visual.name, // bodyName
+          sva::PTransformd(rotation, dir * d), // X_b_s
+
+          "plastic", // materialName
+          std::vector<std::pair<double, double>>{{-d, -d}, {d, -d}, {d, d}, {-d, d}}));
+      surfaces.emplace_back(surfaces.back()->copy());
+      surfaces.back()->name(name + "_interior");
+      surfaces.back()->X_b_s(sva::PTransformd{rotationFlipped, dir * d});
+    }
+    else if(visual.geometry.type == rbd::parsers::Geometry::BOX)
+    {
+      auto geom =
+          mc_rtc::details::getVisualGeometry<rbd::parsers::Geometry::BOX>(const_cast<rbd::parsers::Visual &>(visual));
+      genBoxSurfaces(geom.size);
+    }
+    else if(visual.geometry.type == rbd::parsers::Geometry::SUPERELLIPSOID)
+    {
+      auto geom = mc_rtc::details::getVisualGeometry<rbd::parsers::Geometry::SUPERELLIPSOID>(
+          const_cast<rbd::parsers::Visual &>(visual));
+      // a superellispoid is a rounded box
+      genBoxSurfaces(geom.size);
     }
   }
 
@@ -217,13 +238,26 @@ RobotModulePtr robotModuleFromVisual(const std::string & name, const mc_rtc::Con
   if(auto inertiaC = config.find("inertia"))
   {
     if(auto mass_ = inertiaC->find("mass")) { mass = *mass_; }
-    else { mc_rtc::log::error_and_throw("robotModuleFromVisualConfig: inertia provided but no mass"); }
+    else
+    {
+      mc_rtc::log::error_and_throw("robotModuleFromVisualConfig for visual {}: inertia provided but no mass. You may "
+                                   "ommit other inertia fields, in which case a default inertia will be computed based "
+                                   "on the type of geometry and assuming an homogeneous mass distribution",
+                                   name);
+    }
 
+    // explicit inertia is provided
     if(auto spatialMomentum = inertiaC->find("momentum"))
     {
       if(auto inertia_ = inertiaC->find("inertia")) { inertia = sva::RBInertiad(mass, *spatialMomentum, *inertia_); }
       else { mc_rtc::log::error_and_throw("robotModuleFromVisualConfig: momentum provided but no inertia matrix"); }
     }
+  }
+  else
+  {
+    mc_rtc::log::error_and_throw("robotModuleFromVisualConfig for visual {}: you must provide an inertia with at least "
+                                 "the mass, e.g:\ninertia:\n  mass: 2.0",
+                                 name);
   }
 
   rbd::parsers::Visual visual = config;
