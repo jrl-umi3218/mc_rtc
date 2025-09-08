@@ -27,6 +27,7 @@ struct Surface;
 MC_RBDYN_DLLAPI tinyxml2::XMLElement * tfToOriginDom(tinyxml2::XMLDocument & doc,
                                                      const sva::PTransformd & X,
                                                      const std::string_view & tagName = "origin");
+MC_RBDYN_DLLAPI sva::PTransformd tfFromOriginDom(const tinyxml2::XMLElement & dom);
 
 /**
  * @brief Add a <robot> element and its surfaces to an XML document.

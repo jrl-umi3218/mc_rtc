@@ -71,6 +71,39 @@ const double & GripperSurface::motorMaxTorque() const
   return impl->motorMaxTorque;
 }
 
+std::unique_ptr<GripperSurface> GripperSurface::fromXML(const tinyxml2::XMLElement & elem)
+{
+  std::string name = elem.Attribute("name");
+  std::string bodyName = elem.Attribute("link");
+  sva::PTransformd X_b_s = tfFromOriginDom(*elem.FirstChildElement("origin"));
+  std::string materialName;
+  if(auto * matElem = elem.FirstChildElement("material")) materialName = matElem->Attribute("name");
+
+  // Motor
+  auto * motorElem = elem.FirstChildElement("motor");
+  double motorMaxTorque = 0.0;
+  sva::PTransformd X_b_motor;
+  if(motorElem)
+  {
+    motorMaxTorque = motorElem->DoubleAttribute("max_torque");
+    X_b_motor = tfFromOriginDom(*motorElem);
+  }
+
+  // Points
+  std::vector<sva::PTransformd> points;
+  auto * pointsElem = elem.FirstChildElement("points");
+  if(pointsElem)
+  {
+    for(auto * pointElem = pointsElem->FirstChildElement("origin"); pointElem;
+        pointElem = pointElem->NextSiblingElement("origin"))
+    {
+      points.push_back(tfFromOriginDom(*pointElem));
+    }
+  }
+
+  return std::make_unique<GripperSurface>(name, bodyName, X_b_s, materialName, points, X_b_motor, motorMaxTorque);
+}
+
 tinyxml2::XMLElement * GripperSurface::toXML(tinyxml2::XMLDocument & doc) const
 {
   auto * gripElem = doc.NewElement("gripper_surface");

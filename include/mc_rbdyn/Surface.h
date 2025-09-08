@@ -32,6 +32,17 @@ public:
 
   virtual ~Surface();
 
+  /**
+   * @brief Construct a Surface (of the appropriate derived type) from an XML element.
+   *
+   * This factory method dispatches to the correct derived surface type based on the XML tag name
+   * (e.g., "planar_surface", "cylindrical_surface", "gripper_surface").
+   *
+   * @param elem The XML element describing the surface.
+   * @return Unique pointer to the constructed Surface, or nullptr if the type is unknown or parsing fails.
+   */
+  static std::unique_ptr<Surface> fromXML(const tinyxml2::XMLElement & elem);
+
   const std::string & name() const;
 
   void name(const std::string & name);
