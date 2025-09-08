@@ -6,10 +6,7 @@
 #include <mc_rtc/config.h>
 
 #include <mc_rbdyn/Robot.h>
-#include "mc_rtc/logging.h"
-#include <cstdint>
 #include <filesystem>
-#include <functional>
 
 #ifdef MC_RTC_HAS_ROS_SUPPORT
 #  ifdef MC_RTC_ROS_IS_ROS2
