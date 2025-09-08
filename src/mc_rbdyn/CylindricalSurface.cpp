@@ -64,6 +64,17 @@ std::string CylindricalSurface::type() const
   return "cylindrical";
 }
 
+std::unique_ptr<CylindricalSurface> CylindricalSurface::fromXML(const tinyxml2::XMLElement & elem)
+{
+  std::string name = elem.Attribute("name");
+  std::string bodyName = elem.Attribute("link");
+  sva::PTransformd X_b_s = tfFromOriginDom(*elem.FirstChildElement("origin"));
+  double radius = elem.DoubleAttribute("radius");
+  double width = elem.DoubleAttribute("width");
+  std::string materialName;
+  if(auto * matElem = elem.FirstChildElement("material")) materialName = matElem->Attribute("name");
+  return std::make_unique<CylindricalSurface>(name, bodyName, X_b_s, materialName, radius, width);
+}
 tinyxml2::XMLElement * CylindricalSurface::toXML(tinyxml2::XMLDocument & doc) const
 {
   auto * cylElem = doc.NewElement("cylindrical_surface");

@@ -2,6 +2,9 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
+#include <mc_rbdyn/CylindricalSurface.h>
+#include <mc_rbdyn/GripperSurface.h>
+#include <mc_rbdyn/PlanarSurface.h>
 #include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/Surface.h>
 
@@ -24,6 +27,18 @@ Surface::Surface(const std::string & name,
                  const std::string & materialName)
 : impl(new SurfaceImpl({name, bodyName, X_b_s, materialName, {}}))
 {
+}
+
+std::unique_ptr<Surface> Surface::fromXML(const tinyxml2::XMLElement & elem)
+{
+  std::string tag = elem.Name();
+  if(tag == "planar_surface")
+    return PlanarSurface::fromXML(elem);
+  else if(tag == "cylindrical_surface")
+    return CylindricalSurface::fromXML(elem);
+  else if(tag == "gripper_surface")
+    return GripperSurface::fromXML(elem);
+  return nullptr;
 }
 
 Surface::~Surface() {}
