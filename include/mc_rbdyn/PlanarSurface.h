@@ -31,6 +31,8 @@ struct MC_RBDYN_DLLAPI PlanarSurface : public Surface
 
   void planarPoints(const std::vector<std::pair<double, double>> & planarPoints);
 
+  tinyxml2::XMLElement * toXML(tinyxml2::XMLDocument & doc) const override;
+
   std::shared_ptr<Surface> copy() const override;
 
   std::string type() const override;

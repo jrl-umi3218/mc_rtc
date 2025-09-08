@@ -2,6 +2,7 @@
 #include <mc_rbdyn/RobotModule_visual.h>
 #include <mc_rbdyn/configuration_io.h>
 #include <mc_rbdyn/inertia.h>
+#include <mc_rbdyn/surface_utils.h>
 #include <mc_rtc/visual_utils.h> // for makeVisualSphere...
 #include <RBDyn/parsers/urdf.h>
 #include <filesystem>
@@ -48,43 +49,6 @@ sva::RBInertiad computeInertiaFromVisual(const rbd::parsers::Visual & visual, do
     default:
       mc_rtc::log::error_and_throw("computeIntertiaFromVisual: Unsupported geometry type {}", visual.geometry.type);
   }
-}
-
-std::string surfaceToXML(const Surface & surface)
-{
-  const auto & X_b_s = surface.X_b_s();
-  Eigen::Vector3d xyz = X_b_s.translation();
-  Eigen::Vector3d rpy = mc_rbdyn::rpyFromMat(X_b_s.rotation().transpose()); // Implement or use existing
-
-  if(surface.type() == "planar")
-  {
-    auto & planarSurface = static_cast<const mc_rbdyn::PlanarSurface &>(surface);
-    std::string xml =
-        fmt::format("<planar_surface name=\"{}\" link=\"{}\">\n"
-                    "  <origin rpy=\"{:.8f} {:.8f} {:.8f}\" xyz=\"{:.8f} {:.8f} {:.8f}\" />\n"
-                    "  <points>\n",
-                    surface.name(), surface.bodyName(), rpy.x(), rpy.y(), rpy.z(), xyz.x(), xyz.y(), xyz.z());
-
-    for(const auto & pt : planarSurface.planarPoints())
-    {
-      xml += fmt::format("    <point xy=\"{:.8f} {:.8f}\" />\n", pt.first, pt.second);
-    }
-    xml += "  </points>\n";
-
-    if(!surface.materialName().empty()) { xml += fmt::format("  <material name=\"{}\" />\n", surface.materialName()); }
-
-    xml += "</planar_surface>\n";
-    return xml;
-  }
-  mc_rtc::log::error_and_throw("surfaceToXML: Unsupported surface type {}", surface.type());
-}
-
-std::string surfacesToXML(const std::string & robotName, const std::vector<std::shared_ptr<Surface>> & surfaces)
-{
-  std::string xml = fmt::format("<?xml version=\"1.0\" ?>\n<robot name=\"{}\">\n", robotName);
-  for(const auto & s : surfaces) { xml += surfaceToXML(*s); }
-  xml += "</robot>\n";
-  return xml;
 }
 
 std::vector<std::shared_ptr<Surface>> genSurfacesFromVisual(const rbd::parsers::Visual & visual)
@@ -208,12 +172,11 @@ RobotModulePtr robotModuleFromVisual(const std::string & name,
 
     auto rsdf_dir = fs::path(path) / "rsdf";
     if(!fs::exists(rsdf_dir)) { fs::create_directories(rsdf_dir); }
-    auto surfaces_xml = surfacesToXML(name, surfaces);
-    {
-      auto rsdf_path = (rsdf_dir / (name + ".rsdf")).string();
-      std::ofstream ofs(rsdf_path);
-      ofs << surfaces_xml;
-    }
+
+    auto doc = tinyxml2::XMLDocument{};
+    surfacesToXML(doc, name, surfaces);
+    auto rsdf_path = (rsdf_dir / (name + ".rsdf")).string();
+    doc.SaveFile(rsdf_path.c_str());
 
     std::ofstream ofs(urdf_path);
     ofs << rbd::parsers::to_urdf(pr);

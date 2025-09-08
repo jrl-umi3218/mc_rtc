@@ -23,25 +23,6 @@ struct Surface;
 MC_RBDYN_DLLAPI sva::RBInertiad computeInertiaFromVisual(const rbd::parsers::Visual & visual, double mass);
 
 /**
- * @brief Converts a Surface object to its XML representation.
- *
- * @param surface The surface to convert.
- * @return std::string XML representation of the surface.
- * @throws Throws if the surface type is unsupported.
- */
-MC_RBDYN_DLLAPI std::string surfaceToXML(const Surface & surface);
-
-/**
- * @brief Converts a vector of surfaces to an XML representation for a robot.
- *
- * @param robotName Name of the robot.
- * @param surfaces Vector of shared pointers to Surface objects.
- * @return std::string XML representation of all surfaces.
- */
-MC_RBDYN_DLLAPI std::string surfacesToXML(const std::string & robotName,
-                                          const std::vector<std::shared_ptr<Surface>> & surfaces);
-
-/**
  * @brief Generates planar surfaces from a visual geometry description.
  *
  * @param visual The visual geometry description.
