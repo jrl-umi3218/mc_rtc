@@ -156,6 +156,7 @@ jobs:
           - path: jrl-umi3218/state-observation
           - path: jrl-umi3218/tvm
             options: -DTVM_WITH_ROBOT:BOOL=OFF
+          - path: jrl-umi3218/mesh_sampling
     - name: "[windows] Build and test"
       if: matrix.os == 'windows-latest' && (matrix.build-type == 'RelWithDebInfo' || (matrix.build-type == 'Debug' && github.ref == 'refs/heads/master'))
       uses: jrl-umi3218/github-actions/build-cmake-project@master
