@@ -46,4 +46,22 @@ sva::RBInertiad computeSphereInertia(double mass, double radius);
  */
 sva::RBInertiad computeCylinderInertia(double mass, double radius, double length);
 
+/**
+ * @brief Compute the inertia of a superellipsoid by interpolating between box and ellipsoid inertia.
+ *
+ * The superellipsoid is defined by its bounding box (size) and exponents epsilon1 and epsilon2.
+ * This function approximates the inertia tensor by interpolating between the inertia of a box
+ * (epsilon1, epsilon2 → 0) and an ellipsoid (epsilon1, epsilon2 = 1) with the same bounding box.
+ *
+ * @param mass The mass of the superellipsoid.
+ * @param size The size (bounding box) as an Eigen::Vector3d (x, y, z).
+ * @param epsilon1 The first superellipsoid exponent (controls roundness).
+ * @param epsilon2 The second superellipsoid exponent (controls roundness).
+ * @return sva::RBInertiad The computed inertia.
+ */
+sva::RBInertiad computeSuperEllipsoidInertia(double mass,
+                                             const Eigen::Vector3d & size,
+                                             double epsilon1,
+                                             double epsilon2);
+
 } // namespace mc_rbdyn
