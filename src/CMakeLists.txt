@@ -357,7 +357,9 @@ else()
 endif()
 
 if(NOT DISABLE_ROS)
-  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/plugins/ROS/CMakeModules)
+  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
+                        ${PROJECT_SOURCE_DIR}/plugins/ROS/CMakeModules
+  )
   find_package(mc_rtc_3rd_party_ros REQUIRED)
   if(NOT ${ROSCPP_FOUND})
     return()

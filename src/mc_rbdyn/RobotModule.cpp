@@ -84,8 +84,8 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
       std::string pkg = uri.substr(package.size(), split - package.size());
       auto leaf = fs::path(uri.substr(split + 1));
       fs::path MC_ENV_DESCRIPTION_PATH(mc_rtc::MC_ENV_DESCRIPTION_PATH);
-  #ifndef __EMSCRIPTEN__
-  #  ifndef MC_RTC_HAS_ROS_SUPPORT
+#ifndef __EMSCRIPTEN__
+#  ifndef MC_RTC_HAS_ROS_SUPPORT
       // FIXME Prompt the user for unknown packages
       if(pkg == "jvrc_description") { pkg = (MC_ENV_DESCRIPTION_PATH / ".." / "jvrc_description").string(); }
       else if(pkg == "mc_env_description") { pkg = MC_ENV_DESCRIPTION_PATH.string(); }
@@ -94,16 +94,16 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
         pkg = (MC_ENV_DESCRIPTION_PATH / ".." / "mc_int_obj_description").string();
       }
       else { pkg = default_dir; }
-  #  else
-  #    ifdef MC_RTC_ROS_IS_ROS2
+#  else
+#    ifdef MC_RTC_ROS_IS_ROS2
       pkg = ament_index_cpp::get_package_share_directory(pkg);
-  #    else
+#    else
       pkg = ros::package::getPath(pkg);
-  #    endif
-  #  endif
-  #else
+#    endif
+#  endif
+#else
       pkg = "/assets/" + pkg;
-  #endif
+#endif
       return pkg / leaf;
     }
     const std::string file = "file://";
@@ -111,7 +111,8 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
     return uri;
   };
 
-  auto urdfCRC = [&] () {
+  auto urdfCRC = [&]()
+  {
     uint32_t crc = 0;
     for(const auto & col : _collision)
     {
@@ -121,44 +122,42 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
         {
           const auto & mesh_path = fs::path(boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data).filename);
           crc += fs::file_size(converURI(mesh_path));
-        }   
+        }
       }
-    }  
+    }
     return crc;
   };
 
-  auto generate = [&] (const fs::path &mesh_file, const fs::path &output_convex_dir) {
-    
-    if (!fs::exists(mesh_file))
-    {
-      mc_rtc::log::error_and_throw("Couldn't find meshes at {} for {}", mesh_file, name);
-    }
+  auto generate = [&](const fs::path & mesh_file, const fs::path & output_convex_dir)
+  {
+    if(!fs::exists(mesh_file)) { mc_rtc::log::error_and_throw("Couldn't find meshes at {} for {}", mesh_file, name); }
 
     mesh_sampling::MeshSampling sampler(mesh_file);
-    const auto &meshes = sampler.create_clouds(sampling_point);
+    const auto & meshes = sampler.create_clouds(sampling_point);
     sampler.create_convexes(meshes, output_convex_dir, false);
   };
 
-  #ifdef _WIN32
-    fs::path cache_root = fs::path(std::getenv("LOCALAPPDATA")) / name
-  #else
-    fs::path cache_root = fs::path(std::getenv("HOME")) / ".local" / "share" / name;
-  #endif
-  fs::create_directories(cache_root);
+#ifdef _WIN32
+  fs::path cache_root = fs::path(std::getenv("LOCALAPPDATA"))
+                        / name
+#else
+  fs::path cache_root = fs::path(std::getenv("HOME")) / ".local" / "share" / name;
+#endif
+                            fs::create_directories(cache_root);
 
   std::string variant_name = fs::path(urdf_path).filename().stem().string();
   std::string target_folder_name = variant_name + "-" + std::to_string(urdfCRC());
   convex_dir = cache_root / target_folder_name;
 
-  if (!fs::exists(convex_dir) || regenerate)
+  if(!fs::exists(convex_dir) || regenerate)
   {
     // Clean up any old folders for the same variant
-    for (const auto &cache_entry : fs::directory_iterator(cache_root))
+    for(const auto & cache_entry : fs::directory_iterator(cache_root))
     {
-      if (!fs::is_directory(cache_entry)) continue;
+      if(!fs::is_directory(cache_entry)) continue;
 
       std::string folder_name = cache_entry.path().filename().string();
-      if (folder_name.rfind(variant_name + "-", 0) == 0 && folder_name != target_folder_name)
+      if(folder_name.rfind(variant_name + "-", 0) == 0 && folder_name != target_folder_name)
       {
         fs::remove_all(cache_entry);
       }
@@ -174,9 +173,9 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
         {
           const auto & mesh_file = fs::path(boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data).filename);
           generate(converURI(mesh_file), convex_dir);
-        }   
+        }
       }
-    }  
+    }
   }
 }
 
@@ -197,9 +196,9 @@ void RobotModule::bind_convexes()
           mc_rtc::log::error("Convex hull file does not exist: {}", convex_path.string());
           continue;
         }
-        
+
         _convexHull[b.name()] = {b.name(), convex_path};
-      }        
+      }
       continue;
     }
 
@@ -218,7 +217,7 @@ void RobotModule::bind_convexes()
         }
 
         _convexHull[b.name() + "_" + std::to_string(added)] = {b.name() + "_" + std::to_string(added), convex_path};
-      }  
+      }
     }
   }
 }
