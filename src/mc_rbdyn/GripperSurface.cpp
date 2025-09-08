@@ -5,6 +5,7 @@
 #include <mc_rbdyn/GripperSurface.h>
 #include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/contact_transform.h>
+#include <mc_rbdyn/surface_utils.h>
 
 namespace mc_rbdyn
 {
@@ -68,6 +69,37 @@ const sva::PTransformd & GripperSurface::X_b_motor() const
 const double & GripperSurface::motorMaxTorque() const
 {
   return impl->motorMaxTorque;
+}
+
+tinyxml2::XMLElement * GripperSurface::toXML(tinyxml2::XMLDocument & doc) const
+{
+  auto * gripElem = doc.NewElement("gripper_surface");
+  gripElem->SetAttribute("name", name().c_str());
+  gripElem->SetAttribute("link", bodyName().c_str());
+
+  // Origin
+  gripElem->InsertEndChild(tfToOriginDom(doc, X_b_s(), "origin"));
+
+  // Material
+  if(!materialName().empty())
+  {
+    auto * matElem = doc.NewElement("material");
+    matElem->SetAttribute("name", materialName().c_str());
+    gripElem->InsertEndChild(matElem);
+  }
+
+  // Motor
+  auto * motorElem = doc.NewElement("motor");
+  motorElem->SetAttribute("max_torque", fmt::format("{:.8f}", impl->motorMaxTorque).c_str());
+  motorElem->InsertEndChild(tfToOriginDom(doc, impl->X_b_motor, "origin"));
+  gripElem->InsertEndChild(motorElem);
+
+  // Points
+  auto * pointsElem = doc.NewElement("points");
+  for(const auto & p : impl->pointsFromOrigin) { pointsElem->InsertEndChild(tfToOriginDom(doc, p, "origin")); }
+  gripElem->InsertEndChild(pointsElem);
+
+  return gripElem;
 }
 
 } // namespace mc_rbdyn

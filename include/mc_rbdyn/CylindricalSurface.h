@@ -36,6 +36,8 @@ struct MC_RBDYN_DLLAPI CylindricalSurface : public Surface
 
   std::string type() const override;
 
+  tinyxml2::XMLElement * toXML(tinyxml2::XMLDocument & doc) const override;
+
 private:
   std::unique_ptr<CylindricalSurfaceImpl> impl;
 };

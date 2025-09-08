@@ -38,6 +38,8 @@ public:
 
   const double & motorMaxTorque() const;
 
+  tinyxml2::XMLElement * toXML(tinyxml2::XMLDocument & doc) const override;
+
 private:
   std::unique_ptr<GripperSurfaceImpl> impl;
 };

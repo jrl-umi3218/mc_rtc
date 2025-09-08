@@ -5,6 +5,7 @@
 #include <mc_rbdyn/CylindricalSurface.h>
 #include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/contact_transform.h>
+#include <mc_rbdyn/surface_utils.h>
 
 namespace mc_rbdyn
 {
@@ -61,6 +62,42 @@ std::shared_ptr<Surface> CylindricalSurface::copy() const
 std::string CylindricalSurface::type() const
 {
   return "cylindrical";
+}
+
+tinyxml2::XMLElement * CylindricalSurface::toXML(tinyxml2::XMLDocument & doc) const
+{
+  auto * cylElem = doc.NewElement("cylindrical_surface");
+  cylElem->SetAttribute("name", name().c_str());
+  cylElem->SetAttribute("link", bodyName().c_str());
+
+  // Origin
+  cylElem->InsertEndChild(tfToOriginDom(doc, X_b_s(), "origin"));
+
+  // Radius and width
+  cylElem->SetAttribute("radius", fmt::format("{:.8f}", radius()).c_str());
+  cylElem->SetAttribute("width", fmt::format("{:.8f}", width()).c_str());
+
+  // Points
+  auto * pointsElem = doc.NewElement("points");
+  for(const auto & pt : points())
+  {
+    auto * pointElem = doc.NewElement("point");
+    pointElem->SetAttribute(
+        "xyz",
+        fmt::format("{:.8f} {:.8f} {:.8f}", pt.translation().x(), pt.translation().y(), pt.translation().z()).c_str());
+    pointsElem->InsertEndChild(pointElem);
+  }
+  cylElem->InsertEndChild(pointsElem);
+
+  // Material
+  if(!materialName().empty())
+  {
+    auto * matElem = doc.NewElement("material");
+    matElem->SetAttribute("name", materialName().c_str());
+    cylElem->InsertEndChild(matElem);
+  }
+
+  return cylElem;
 }
 
 } // namespace mc_rbdyn

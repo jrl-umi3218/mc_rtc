@@ -4,6 +4,9 @@
 
 #include <mc_rbdyn/PlanarSurface.h>
 #include <mc_rbdyn/contact_transform.h>
+#include <mc_rbdyn/surface_utils.h>
+#include <fmt/format.h>
+#include <tinyxml2.h>
 
 namespace mc_rbdyn
 {
@@ -69,6 +72,36 @@ std::shared_ptr<Surface> PlanarSurface::copy() const
 std::string PlanarSurface::type() const
 {
   return "planar";
+}
+
+tinyxml2::XMLElement * PlanarSurface::toXML(tinyxml2::XMLDocument & doc) const
+{
+  auto * planarElem = doc.NewElement("planar_surface");
+  planarElem->SetAttribute("name", name().c_str());
+  planarElem->SetAttribute("link", bodyName().c_str());
+
+  // Origin
+  planarElem->InsertEndChild(tfToOriginDom(doc, X_b_s(), "origin"));
+
+  // Points
+  auto * pointsElem = doc.NewElement("points");
+  for(const auto & pt : planarPoints())
+  {
+    auto * pointElem = doc.NewElement("point");
+    pointElem->SetAttribute("xy", fmt::format("{:.8f} {:.8f}", pt.first, pt.second).c_str());
+    pointsElem->InsertEndChild(pointElem);
+  }
+  planarElem->InsertEndChild(pointsElem);
+
+  // Material
+  if(!materialName().empty())
+  {
+    auto * matElem = doc.NewElement("material");
+    matElem->SetAttribute("name", materialName().c_str());
+    planarElem->InsertEndChild(matElem);
+  }
+
+  return planarElem;
 }
 
 } // namespace mc_rbdyn

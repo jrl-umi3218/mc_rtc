@@ -12,6 +12,7 @@
 
 #include <memory>
 #include <string>
+#include <tinyxml2.h>
 #include <vector>
 
 namespace mc_rbdyn
@@ -54,6 +55,7 @@ public:
   virtual void computePoints() = 0;
 
   std::string toStr();
+  virtual tinyxml2::XMLElement * toXML(tinyxml2::XMLDocument & doc) const = 0;
 
   virtual std::shared_ptr<Surface> copy() const = 0;
 
