@@ -1,3 +1,4 @@
+<!-- <pre>{{ include | jsonify }}</pre> -->
 <tr>
   {% assign required = false %}
   {% for req in include.required %}
@@ -17,7 +18,31 @@
     {% assign oneOf = include.data.oneOf %}
     {% for data in oneOf %}
       {% capture id %}{{include.id}}{{forloop.index0}}{% endcapture %}
-      {% if data contains "description" %}
+      {% if data contains "properties" %}
+        {% for propData in data.properties %}
+          <!-- PROPERTY data <pre>{{ propData | jsonify }}</pre> -->
+          {% assign propDataItem = propData[1] %}
+          {% assign propName = propData[0] %}
+          {% if data contains "description" or propDataItem contains "description" %}
+            <td>
+              <span class="text-secondary">{{propName}}:&nbsp;</span>
+              {% include json_schema_item.html data=propDataItem id=id %}
+            </td>
+            <td>
+              {% if data contains "description" %}
+                <span class="text-secondary"><small>{{ data.description | liquefy}}</small></span>
+              {% else if propDataItem contains "description" %}
+                <span class="text-secondary"><small>{{ propDataItem.description | liquefy}}</small></span>
+              {% endif %}
+            </td>
+          {% else %}
+            <td colspan="2">
+              <span class="text-secondary">{{propName}}:&nbsp;</span>
+              {% include json_schema_item.html data=propDataItem id=id %}
+            </td>
+          {% endif %}
+        {% endfor %}
+      {% else if data contains "description" %}
         <td>
           {% include json_schema_item.html data=data id=id %}
         </td>
