@@ -1,9 +1,10 @@
 {
   "title": "rbd::parsers::Geometry::Sphere",
+  "description": "A sphere geometry defined by a single radius parameter. The sphere is centered at the origin.",
   "type": "object",
   "properties":
   {
-    "radius": { "type": "number" }
+    "radius": { "type": "number", "description": "The radius of the sphere [m]" }
   },
   "required": ["radius"],
   "additionalProperties": false

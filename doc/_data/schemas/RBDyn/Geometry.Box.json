@@ -1,9 +1,10 @@
 {
   "title": "rbd::parsers::Geometry::Box",
+  "description": "A box geometry. The box is centered at the origin.",
   "type": "object",
   "properties":
   {
-    "size": { "type": "number" }
+    "size": { "$ref": "/../../Eigen/Vector3d.json", "description": "The size of the box edges (x, y, z) [m]" }
   },
   "required": ["size"],
   "additionalProperties": false

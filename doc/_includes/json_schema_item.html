@@ -1,3 +1,4 @@
+<!-- <pre>ITEM: {{ include | jsonify }}</pre> -->
 {% if include.data contains "enum" %}
   {% capture enum_size %}{{ include.data.enum | size }}{% endcapture %}
   {% if enum_size == "1" %}
@@ -17,6 +18,7 @@
     &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-{{type}}">{{include.data.default}}</span>
   {% endif %}
   {% capture INCLUDE_AFTER %}
+  {{INCLUDE_AFTER}}
   <tr class="collapse" id="collapse{{include.id}}">
     <td colspan="3">
       {% include json_schema.html schema=include.data id=include.id %}
@@ -46,6 +48,7 @@
     {% endif %}
     {% include json_schema_array.html minItems=minItems maxItems=include.data.maxItems items=include.data.items id=include.id %}
   {% elsif type == "object" %}
+    <!-- <pre>OBJECT: {{ include.data | jsonify }}</pre> -->
     {% if include.data.title %}
       {% capture TITLE %}{{ include.data.title }}{% endcapture %}
     {% else %}
