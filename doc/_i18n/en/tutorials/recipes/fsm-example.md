@@ -51,7 +51,12 @@ You should now see the JVRC1 robot standing in RVIZ. Let's now see how to re-imp
 Loading the additional robots
 ==
 
-First we need to declare which robots will be used in this controller in addition to the main robot. By default the framework provides many robots and environments, which can be conveniently loaded with robot aliases. These provide a short name for each robot, and provides mc_rtc with the necessary information for loading then (path to the robot description package, etc). Start the controller to see a full list of available robot aliases. Alternatively, you can look into <code>/usr/local/lib/mc_robots/aliases/</code>. For the purposes of this controller, we need a fixed planar surface to represent the ground provided as `env/ground`, and an articulated robot to represent the door with its handle provided as `env/door`. Refer to the [environment creation tutorial]({{site.baseurl}}/tutorials/advanced/new-environment.html) for details on how to create your own environment.
+First we need to declare which robots will be used in this controller in addition to the main robot.
+
+Loading an existing robot module
+====
+
+By default the framework provides many robots and environments, which can be conveniently loaded with robot aliases. These provide a short name for each robot, and provides mc_rtc with the necessary information for loading then (path to the robot description package, etc). Start the controller to see a full list of available robot aliases. Alternatively, you can look into <code>/usr/local/lib/mc_robots/aliases/</code>. For the purposes of this controller, we need a fixed planar surface to represent the ground provided as `env/ground`, and an articulated robot to represent the door with its handle provided as `env/door`. Refer to the [environment creation tutorial]({{site.baseurl}}/tutorials/advanced/new-environment.html) for details on how to create your own environment.
 
 ```yaml
 robots:
@@ -63,6 +68,48 @@ robots:
       translation: [0.70, 0.5, 0.0]
       rotation: [0.0, 0.0, 1.57]
 ```
+
+
+Loading a robot from a visual element (geometric shape)
+====
+
+For convenience, the framework also allows to crete and load robot module directly from a visual geometry description, without requiring a full URDF or YAML robot file. This is useful for quickly prototyping simple objects (boxes, cylinders, spheres, superellipsoids, etc.) as manipulable robots in your controller.
+
+To use this feature, you can specify a robot in your configuration using a `visual` field, which describes the geometry, pose, and inertia of the object. Please refer to the [RobotModuleVisual Schema]({{site.baseurl}}/json-full.html#mc_rbdyn/RobotModuleVisual) documentation for a full list of available fields. For example, to add a simple box as a robot:
+
+```yaml
+robots:
+  box:
+    visual:
+      name: box
+      origin:
+        translation: [0, 0, 0]
+        rotation: [0, 0, 0]
+      material:
+        color:
+          r: 1
+          g: 0
+          b: 0
+          a: 1
+      geometry:
+        box:
+          size: [1.0, 0.5, 2.0]
+      inertia:
+        mass: 10.0
+```
+
+Supported geometry types include:
+- `box`
+- `sphere`
+- `cylinder`
+- `superellipsoid`
+
+The `inertia` field is required and must at least specify the `mass`. If you omit the other inertia fields, mc_rtc will compute a default inertia based on the geometry, assuming a homogeneous mass distribution.
+
+You can also use this feature programmatically via the `mc_rbdyn::robotModuleFromVisual` function, passing a visual configuration or a parsed visual element.
+
+This approach is ideal for quickly adding simple objects to your simulation or for testing controllers with custom shapes, without the need to create a full robot description package.
+
 
 Adding global contacts and constraints
 ==
