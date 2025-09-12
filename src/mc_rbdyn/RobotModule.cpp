@@ -10,7 +10,6 @@
 
 #include <mesh_sampling/mesh_sampling.h>
 
-
 namespace fs = std::filesystem;
 
 namespace mc_rbdyn
@@ -131,9 +130,7 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
       }
     }
   }
-  else {
-    mc_rtc::log::error("[RobotModule] name is empty, cannot generate convexes");
-  }
+  else { mc_rtc::log::error("[RobotModule] name is empty, cannot generate convexes"); }
 }
 
 void RobotModule::bind_convexes()

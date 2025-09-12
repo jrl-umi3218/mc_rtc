@@ -48,7 +48,7 @@ There are three ways to check whether `mc_rtc` has ROS support.
 #endif
 ```
 
-2. Runtime constant 
+2. Runtime constant
 
 ```cpp
 #include <mc_rtc/config.h>
