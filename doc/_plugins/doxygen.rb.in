@@ -1,6 +1,6 @@
 require 'nokogiri'
 
-doxytag = "@CMAKE_CURRENT_BINARY_DIR@/mc_rtc.doxytag";
+doxytag = "@CMAKE_INSTALL_PREFIX@/share/doc/mc_rtc/doxygen-html/mc_rtc.doxytag"
 if File.file?(doxytag) then
   $doc = Nokogiri::XML(File.new(doxytag));
 else

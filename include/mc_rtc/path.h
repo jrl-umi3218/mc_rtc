@@ -33,4 +33,16 @@ MC_RTC_UTILS_DLLAPI std::string temp_directory_path(const std::string & suffix =
  */
 MC_RTC_UTILS_DLLAPI std::string user_config_directory_path(const std::string & suffix = "");
 
+/**
+ * @brief Creates a unique temporary directory path with the given prefix.
+ *
+ * This function generates a unique path in the system's temporary directory,
+ * using the specified prefix and a random pattern. It creates the directory
+ * before returning the path as a string.
+ *
+ * @param prefix Prefix to use for the temporary directory name.
+ * @return std::string The full path to the created temporary directory.
+ */
+MC_RTC_UTILS_DLLAPI std::string make_temporary_path(const std::string & prefix);
+
 } // namespace mc_rtc

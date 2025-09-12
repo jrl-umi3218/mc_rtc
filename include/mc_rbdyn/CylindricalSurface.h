@@ -24,6 +24,22 @@ struct MC_RBDYN_DLLAPI CylindricalSurface : public Surface
 
   ~CylindricalSurface() override;
 
+  /**
+   * @brief Construct a CylindricalSurface from an XML element.
+   *
+   * Example XML:
+   * @code{.xml}
+   *  <cylindrical_surface name="Cylinder" link="some_link" radius="0.05" width="0.2">
+   *    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+   *    <material name="plastic" />
+   *  </cylindrical_surface>
+   * @endcode
+   *
+   * @param elem The XML element describing the cylindrical surface.
+   * @return Unique pointer to the constructed CylindricalSurface.
+   */
+  static std::unique_ptr<CylindricalSurface> fromXML(const tinyxml2::XMLElement & elem);
+
   void computePoints() override;
 
   const double & radius() const;
@@ -35,6 +51,8 @@ struct MC_RBDYN_DLLAPI CylindricalSurface : public Surface
   std::shared_ptr<Surface> copy() const override;
 
   std::string type() const override;
+
+  tinyxml2::XMLElement * toXML(tinyxml2::XMLDocument & doc) const override;
 
 private:
   std::unique_ptr<CylindricalSurfaceImpl> impl;

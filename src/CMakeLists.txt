@@ -230,6 +230,8 @@ set(mc_rbdyn_SRC
     mc_rbdyn/Collision.cpp
     mc_rbdyn/ForceSensor.cpp
     mc_rbdyn/RobotModule.cpp
+    mc_rbdyn/RobotModule_visual.cpp
+    mc_rbdyn/inertia.cpp
     mc_rbdyn/configuration_io.cpp
     mc_rbdyn/ZMP.cpp
     mc_control/generic_gripper.cpp
@@ -256,6 +258,8 @@ set(mc_rbdyn_HDR
     ../include/mc_rbdyn/RobotLoader.h
     ../include/mc_rbdyn/RobotConverter.h
     ../include/mc_rbdyn/RobotModule.h
+    ../include/mc_rbdyn/RobotModule_visual.h
+    ../include/mc_rbdyn/inertia.h
     ../include/mc_rbdyn/RobotModuleMacros.h
     ../include/mc_rbdyn/SCHAddon.h
     ../include/mc_rbdyn/Surface.h

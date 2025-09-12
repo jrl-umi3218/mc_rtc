@@ -24,6 +24,29 @@ public:
 
   ~GripperSurface() override;
 
+  /**
+   * @brief Construct a GripperSurface from an XML element.
+   *
+   * Example XML:
+   * @code{.xml}
+   *  <gripper_surface name="LeftGripper" link="l_wrist">
+   *    <origin rpy="3.14 0.0 0.0" xyz="0.0 -0.0085 -0.095" />
+   *    <motor rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" max_torque="1000" />
+   *    <points>
+   *      <origin rpy="-1.5707964897155762 -0.0 0.0" xyz="0.0 0.02 0.0" />
+   *      <origin rpy="1.5707969665527344 -0.0 0.0" xyz="0.0 -0.02 0.0" />
+   *      <origin rpy="0.0 -0.0 0.0" xyz="0.0 0.0 0.015" />
+   *      <origin rpy="3.1415939331054688 -0.0 0.0" xyz="0.0 0.0 -0.005" />
+   *    </points>
+   *    <material name="plastic" />
+   *  </gripper_surface>
+   * @endcode
+   *
+   * @param elem The XML element describing the gripper surface.
+   * @return Unique pointer to the constructed GripperSurface.
+   */
+  static std::unique_ptr<GripperSurface> fromXML(const tinyxml2::XMLElement & elem);
+
   void computePoints() override;
 
   void originTransform(const sva::PTransformd & X_s_sp);
@@ -37,6 +60,8 @@ public:
   const sva::PTransformd & X_b_motor() const;
 
   const double & motorMaxTorque() const;
+
+  tinyxml2::XMLElement * toXML(tinyxml2::XMLDocument & doc) const override;
 
 private:
   std::unique_ptr<GripperSurfaceImpl> impl;

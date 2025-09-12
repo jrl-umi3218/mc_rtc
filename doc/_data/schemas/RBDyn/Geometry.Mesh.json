@@ -1,11 +1,12 @@
 {
   "title": "rbd::parsers::Geometry::Mesh",
+  "description": "A mesh geometry loaded from file.",
   "type": "object",
   "properties":
   {
-    "filename": { "type": "string" },
-    "scale": { "type": "number" }
+    "filename": { "type": "string", "description": "The path to the mesh file" },
+    "scale": { "type": "number", "default": 1.0, "description": "The scale factor to apply to the mesh" }
   },
-  "required": ["filename", "scale"],
+  "required": ["filename"],
   "additionalProperties": false
 }

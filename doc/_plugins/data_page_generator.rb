@@ -37,15 +37,19 @@ module Jekyll
       @categories = categories
 
       menu = {}
-      categories.each{ |category|
+      categories.each do |category|
         menu[category] = {}
-        schemas[category].each { |name, schema|
+        schemas[category].each do |name, schema|
+          # one can include the full namespace API
+          # in the title to automatically link it with the corresponding doxygen page
+          # Strip the namespace for the menu display
+          display = schema["title"].split("::").last
           menu[category][name] = {
             "active" => false,
-            "display" => schema["title"].split("::").drop(1).join("::")
+            "display" => display
           }
-        }
-      }
+        end
+      end
 
       self.process(@name)
       self.read_yaml(File.join(base, '_layouts'), "json.html")

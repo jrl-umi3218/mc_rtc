@@ -1,0 +1,23 @@
+{
+  "name": "box",
+  "origin": {
+    "translation": [0, 0, 0],
+    "rotation": [0, 0, 0]
+  },
+  "material": {
+    "color": {
+      "r": 1,
+      "g": 0,
+      "b": 0,
+      "a": 1
+    }
+  },
+  "geometry": {
+    "box": {
+      "size": [1.0, 0.5, 2.0]
+    }
+  },
+  "inertia": {
+    "mass": 10.0
+  }
+}
