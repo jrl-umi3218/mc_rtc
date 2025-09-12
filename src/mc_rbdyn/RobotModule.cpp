@@ -4,17 +4,12 @@
 
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rtc/config.h>
+#include <mc_rtc/path.h>
 
 #include <mc_rbdyn/Robot.h>
-#include <filesystem>
 
-#ifdef MC_RTC_HAS_ROS_SUPPORT
-#  ifdef MC_RTC_ROS_IS_ROS2
-#    include <ament_index_cpp/get_package_share_directory.hpp>
-#  else
-#    include <ros/package.h>
-#  endif
-#endif
+#include <mesh_sampling/mesh_sampling.h>
+
 
 namespace fs = std::filesystem;
 
@@ -72,42 +67,6 @@ void RobotModule::init(const rbd::parsers::ParserResult & res)
 
 void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point)
 {
-  auto converURI = [](const std::string & uri, [[maybe_unused]] std::string_view default_dir = "") -> fs::path
-  {
-    const std::string package = "package://";
-    if(uri.size() >= package.size() && uri.find(package) == 0)
-    {
-      size_t split = uri.find('/', package.size());
-      std::string pkg = uri.substr(package.size(), split - package.size());
-      auto leaf = fs::path(uri.substr(split + 1));
-      fs::path MC_ENV_DESCRIPTION_PATH(mc_rtc::MC_ENV_DESCRIPTION_PATH);
-#ifndef __EMSCRIPTEN__
-#  ifndef MC_RTC_HAS_ROS_SUPPORT
-      // FIXME Prompt the user for unknown packages
-      if(pkg == "jvrc_description") { pkg = (MC_ENV_DESCRIPTION_PATH / ".." / "jvrc_description").string(); }
-      else if(pkg == "mc_env_description") { pkg = MC_ENV_DESCRIPTION_PATH.string(); }
-      else if(pkg == "mc_int_obj_description")
-      {
-        pkg = (MC_ENV_DESCRIPTION_PATH / ".." / "mc_int_obj_description").string();
-      }
-      else { pkg = default_dir; }
-#  else
-#    ifdef MC_RTC_ROS_IS_ROS2
-      pkg = ament_index_cpp::get_package_share_directory(pkg);
-#    else
-      pkg = ros::package::getPath(pkg);
-#    endif
-#  endif
-#else
-      pkg = "/assets/" + pkg;
-#endif
-      return pkg / leaf;
-    }
-    const std::string file = "file://";
-    if(uri.size() >= file.size() && uri.find(file) == 0) { return fs::path(uri.substr(file.size())); }
-    return uri;
-  };
-
   auto urdfCRC = [&]()
   {
     uint32_t crc = 0;
@@ -118,7 +77,7 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
         if(c.geometry.type == rbd::parsers::Geometry::Type::MESH)
         {
           const auto & mesh_path = fs::path(boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data).filename);
-          crc += fs::file_size(converURI(mesh_path));
+          crc += fs::file_size(mc_rtc::convertURI(mesh_path));
         }
       }
     }
@@ -134,45 +93,46 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
     sampler.create_convexes(meshes, output_convex_dir, false);
   };
 
-#ifdef _WIN32
-  fs::path cache_root = fs::path(std::getenv("LOCALAPPDATA"))
-                        / name
-#else
-  fs::path cache_root = fs::path(std::getenv("HOME")) / ".local" / "share" / name;
-#endif
-                            fs::create_directories(cache_root);
-
-  std::string variant_name = fs::path(urdf_path).filename().stem().string();
-  std::string target_folder_name = variant_name + "-" + std::to_string(urdfCRC());
-  convex_dir = cache_root / target_folder_name;
-
-  if(!fs::exists(convex_dir) || regenerate)
+  if(!name.empty())
   {
-    // Clean up any old folders for the same variant
-    for(const auto & cache_entry : fs::directory_iterator(cache_root))
+    auto cache_root = fs::path(mc_rtc::local_share_directory(name));
+    fs::create_directories(cache_root);
+
+    std::string variant_name = fs::path(urdf_path).filename().stem().string();
+    std::string target_folder_name = variant_name + "-" + std::to_string(urdfCRC());
+    convex_dir = cache_root / target_folder_name;
+
+    if(!fs::exists(convex_dir) || regenerate)
     {
-      if(!fs::is_directory(cache_entry)) continue;
-
-      std::string folder_name = cache_entry.path().filename().string();
-      if(folder_name.rfind(variant_name + "-", 0) == 0 && folder_name != target_folder_name)
+      // Clean up any old folders for the same variant
+      for(const auto & cache_entry : fs::directory_iterator(cache_root))
       {
-        fs::remove_all(cache_entry);
-      }
-    }
+        if(!fs::is_directory(cache_entry)) continue;
 
-    fs::create_directories(convex_dir);
-
-    for(const auto & col : _collision)
-    {
-      for(const auto & c : col.second)
-      {
-        if(c.geometry.type == rbd::parsers::Geometry::Type::MESH)
+        std::string folder_name = mc_rtc::filename(cache_entry, true);
+        if(folder_name.rfind(variant_name + "-", 0) == 0 && folder_name != target_folder_name)
         {
-          const auto & mesh_file = fs::path(boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data).filename);
-          generate(converURI(mesh_file), convex_dir);
+          fs::remove_all(cache_entry);
+        }
+      }
+
+      fs::create_directories(convex_dir);
+
+      for(const auto & col : _collision)
+      {
+        for(const auto & c : col.second)
+        {
+          if(c.geometry.type == rbd::parsers::Geometry::Type::MESH)
+          {
+            const auto & mesh_file = fs::path(boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data).filename);
+            generate(mc_rtc::convertURI(mesh_file), convex_dir);
+          }
         }
       }
     }
+  }
+  else {
+    mc_rtc::log::error("[RobotModule] name is empty, cannot generate convexes");
   }
 }
 
@@ -186,7 +146,7 @@ void RobotModule::bind_convexes()
       if(collisions[0].geometry.type == rbd::parsers::Geometry::Type::MESH)
       {
         const auto & mesh_file = boost::get<rbd::parsers::Geometry::Mesh>(collisions[0].geometry.data).filename;
-        fs::path convex_path = fs::path(convex_dir) / (fs::path(mesh_file).filename().stem().string() + "-ch.txt");
+        fs::path convex_path = fs::path(convex_dir) / (mc_rtc::filename(mesh_file) + "-ch.txt");
 
         if(!fs::exists(convex_path))
         {
@@ -205,7 +165,7 @@ void RobotModule::bind_convexes()
       if(col.geometry.type == rbd::parsers::Geometry::Type::MESH)
       {
         const auto & mesh_file = boost::get<rbd::parsers::Geometry::Mesh>(col.geometry.data).filename;
-        fs::path convex_path = fs::path(convex_dir) / (fs::path(mesh_file).filename().stem().string() + "-ch.txt");
+        fs::path convex_path = fs::path(convex_dir) / (mc_rtc::filename(mesh_file) + "-ch.txt");
 
         if(!fs::exists(convex_path))
         {
@@ -214,6 +174,7 @@ void RobotModule::bind_convexes()
         }
 
         _convexHull[b.name() + "_" + std::to_string(added)] = {b.name() + "_" + std::to_string(added), convex_path};
+        added++;
       }
     }
   }

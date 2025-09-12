@@ -23,12 +23,6 @@
 
 #include <sch/S_Object/S_Object.h>
 
-#include <mesh_sampling/mesh_sampling.h>
-
-#include <array>
-#include <map>
-#include <vector>
-
 /* This is an interface designed to provide additionnal information about a robot */
 
 namespace mc_rbdyn
