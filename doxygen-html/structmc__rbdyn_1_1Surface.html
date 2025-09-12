@@ -91,6 +91,7 @@ $(document).ready(function(){initNavTree('structmc__rbdyn_1_1Surface.html',''); 
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="structmc__rbdyn_1_1Surface-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -141,6 +142,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a33acf44c62df472853a89de4d24b8c93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc29cfce0c121597c6805119fd4419b0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Surface.html#adc29cfce0c121597c6805119fd4419b0">toStr</a> ()</td></tr>
 <tr class="separator:adc29cfce0c121597c6805119fd4419b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88c85867ba9a9e3c0889cb62b8afd70a"><td class="memItemLeft" align="right" valign="top">virtual tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Surface.html#a88c85867ba9a9e3c0889cb62b8afd70a">toXML</a> (tinyxml2::XMLDocument &amp;doc) const =0</td></tr>
+<tr class="separator:a88c85867ba9a9e3c0889cb62b8afd70a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c7f119cc271f7ff2c076a31cbe9b4df"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Surface.html#a7c7f119cc271f7ff2c076a31cbe9b4df">copy</a> () const =0</td></tr>
 <tr class="separator:a7c7f119cc271f7ff2c076a31cbe9b4df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9239b4ea2aad13c55bd6ba6698826ad"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Surface.html#ad9239b4ea2aad13c55bd6ba6698826ad">type</a> () const =0</td></tr>
@@ -149,6 +152,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac98cc668051445fd3b94aaac36c4db58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80309f23f677b1441f6e8c922b67fe8f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Surface.html#a80309f23f677b1441f6e8c922b67fe8f">operator!=</a> (const <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> &amp;rhs)</td></tr>
 <tr class="separator:a80309f23f677b1441f6e8c922b67fe8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a0a4175a368d5cb4851b2253761817438"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Surface.html#a0a4175a368d5cb4851b2253761817438">fromXML</a> (const tinyxml2::XMLElement &amp;elem)</td></tr>
+<tr class="memdesc:a0a4175a368d5cb4851b2253761817438"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> (of the appropriate derived type) from an XML element.  <a href="structmc__rbdyn_1_1Surface.html#a0a4175a368d5cb4851b2253761817438">More...</a><br /></td></tr>
+<tr class="separator:a0a4175a368d5cb4851b2253761817438"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -311,6 +320,42 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a0a4175a368d5cb4851b2253761817438"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a4175a368d5cb4851b2253761817438">&#9670;&nbsp;</a></span>fromXML()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::unique_ptr&lt;<a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a>&gt; mc_rbdyn::Surface::fromXML </td>
+          <td>(</td>
+          <td class="paramtype">const tinyxml2::XMLElement &amp;&#160;</td>
+          <td class="paramname"><em>elem</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> (of the appropriate derived type) from an XML element. </p>
+<p>This factory method dispatches to the correct derived surface type based on the XML tag name (e.g., "planar_surface", "cylindrical_surface", "gripper_surface").</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">elem</td><td>The XML element describing the surface. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Unique pointer to the constructed <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a>, or nullptr if the type is unknown or parsing fails. </dd></dl>
+
+</div>
+</div>
 <a id="a6a83f90ee05eb45299d239c701a40f99"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6a83f90ee05eb45299d239c701a40f99">&#9670;&nbsp;</a></span>materialName()</h2>
 
@@ -455,6 +500,34 @@ Protected Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a88c85867ba9a9e3c0889cb62b8afd70a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88c85867ba9a9e3c0889cb62b8afd70a">&#9670;&nbsp;</a></span>toXML()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual tinyxml2::XMLElement* mc_rbdyn::Surface::toXML </td>
+          <td>(</td>
+          <td class="paramtype">tinyxml2::XMLDocument &amp;&#160;</td>
+          <td class="paramname"><em>doc</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="structmc__rbdyn_1_1PlanarSurface.html#a5568070d0fd2dd3a34e39f2efadbd56b">mc_rbdyn::PlanarSurface</a>, <a class="el" href="structmc__rbdyn_1_1GripperSurface.html#a8d42e7f3aa0afcb51f31438a0f2135a2">mc_rbdyn::GripperSurface</a>, and <a class="el" href="structmc__rbdyn_1_1CylindricalSurface.html#ae637e44402418cea0bd346bf98ee053c">mc_rbdyn::CylindricalSurface</a>.</p>
 
 </div>
 </div>

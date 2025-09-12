@@ -1,10 +1,11 @@
 <map id="include/mc_rbdyn/GripperSurface.h" name="include/mc_rbdyn/GripperSurface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="445,5,635,47"/>
-<area shape="rect" id="node2" href="$Surface_8h.html" title=" " alt="" coords="465,95,615,121"/>
+<area shape="rect" id="node1" title=" " alt="" coords="525,5,715,47"/>
+<area shape="rect" id="node2" href="$Surface_8h.html" title=" " alt="" coords="545,95,695,121"/>
 <area shape="rect" id="node3" href="$include_2mc__rbdyn_2api_8h.html" title=" " alt="" coords="5,169,128,196"/>
 <area shape="rect" id="node4" title=" " alt="" coords="152,169,341,196"/>
 <area shape="rect" id="node5" title=" " alt="" coords="365,169,557,196"/>
 <area shape="rect" id="node6" title=" " alt="" coords="581,169,659,196"/>
 <area shape="rect" id="node7" title=" " alt="" coords="683,169,741,196"/>
-<area shape="rect" id="node8" title=" " alt="" coords="766,169,829,196"/>
+<area shape="rect" id="node8" title=" " alt="" coords="766,169,858,196"/>
+<area shape="rect" id="node9" title=" " alt="" coords="882,169,945,196"/>
 </map>

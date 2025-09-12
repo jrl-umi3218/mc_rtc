@@ -2122,6 +2122,41 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>inertia.h</name>
+    <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rbdyn/</path>
+    <filename>inertia_8h.html</filename>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <namespace>mc_rbdyn</namespace>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI sva::RBInertiad</type>
+      <name>computeBoxInertia</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>acfb71fae5aad04d6fb271863a742d6c5</anchor>
+      <arglist>(double mass, const Eigen::Vector3d &amp;size)</arglist>
+    </member>
+    <member kind="function">
+      <type>sva::RBInertiad</type>
+      <name>computeSphereInertia</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a0d5e6b7e990cf81dfd52a8677c478e10</anchor>
+      <arglist>(double mass, double radius)</arglist>
+    </member>
+    <member kind="function">
+      <type>sva::RBInertiad</type>
+      <name>computeCylinderInertia</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>ae6c239edf331d7804f9ccc48ae16eefd</anchor>
+      <arglist>(double mass, double radius, double length)</arglist>
+    </member>
+    <member kind="function">
+      <type>sva::RBInertiad</type>
+      <name>computeSuperEllipsoidInertia</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a1d9afe961e7182ad77ea949610694c9c</anchor>
+      <arglist>(double mass, const Eigen::Vector3d &amp;size, double epsilon1, double epsilon2)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>JointSensor.h</name>
     <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rbdyn/</path>
     <filename>JointSensor_8h.html</filename>
@@ -2475,6 +2510,50 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>RobotModule_visual.h</name>
+    <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rbdyn/</path>
+    <filename>RobotModule__visual_8h.html</filename>
+    <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
+    <includes id="path_8h" name="path.h" local="no" imported="no">mc_rtc/path.h</includes>
+    <includes id="RobotModule_8h" name="RobotModule.h" local="no" imported="no">mc_rbdyn/RobotModule.h</includes>
+    <namespace>mc_rbdyn</namespace>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI sva::RBInertiad</type>
+      <name>computeInertiaFromVisual</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>ad1f768f7943105d5305f44a68d82d08f</anchor>
+      <arglist>(const rbd::parsers::Visual &amp;visual, double mass)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI std::vector&lt; std::shared_ptr&lt; Surface &gt; &gt;</type>
+      <name>genSurfacesFromVisual</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>ac6e84d3cee94947436ce86bc5dc3ba5b</anchor>
+      <arglist>(const rbd::parsers::Visual &amp;visual)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI RobotModulePtr</type>
+      <name>robotModuleFromVisual</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>abd5577dce1882ca4ddddd23406999eb1</anchor>
+      <arglist>(const std::string &amp;name, const rbd::parsers::Visual &amp;visual, const sva::RBInertiad &amp;inertia, bool isFixed=true)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI RobotModulePtr</type>
+      <name>robotModuleFromVisual</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a7b25f9b496b7e7dcaddf21a0ef89d9bf</anchor>
+      <arglist>(const std::string &amp;name, const rbd::parsers::Visual &amp;visual, double mass, bool isFixed=true)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI RobotModulePtr</type>
+      <name>robotModuleFromVisual</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>ac5ff9f7e311c824b60a199a2b7456a96</anchor>
+      <arglist>(const std::string &amp;name, const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>RobotModuleMacros.h</name>
     <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rbdyn/</path>
     <filename>RobotModuleMacros_8h.html</filename>
@@ -2725,6 +2804,27 @@
     <filename>surface__utils_8h.html</filename>
     <includes id="include_2mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <namespace>mc_rbdyn</namespace>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI tinyxml2::XMLElement *</type>
+      <name>tfToOriginDom</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>aeca77b3ea04c19e893ac88b1d4694a4c</anchor>
+      <arglist>(tinyxml2::XMLDocument &amp;doc, const sva::PTransformd &amp;X, const std::string_view &amp;tagName=&quot;origin&quot;)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI sva::PTransformd</type>
+      <name>tfFromOriginDom</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>ad34cb9fa32ea84d4bcf1bed1112a8392</anchor>
+      <arglist>(const tinyxml2::XMLElement &amp;dom)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI void</type>
+      <name>surfacesToXML</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a76a6112bfb9e5474095c7097f812e65d</anchor>
+      <arglist>(tinyxml2::XMLDocument &amp;doc, const std::string &amp;robotName, const std::vector&lt; std::shared_ptr&lt; Surface &gt;&gt; &amp;surfaces)</arglist>
+    </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI std::vector&lt; std::shared_ptr&lt; Surface &gt; &gt;</type>
       <name>readRSDFFromDir</name>
@@ -5412,6 +5512,13 @@
       <anchorfile>namespacemc__rtc.html</anchorfile>
       <anchor>a0e4bce12cf517283be1a0b784e881dfe</anchor>
       <arglist>(const std::string &amp;suffix=&quot;&quot;)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RTC_UTILS_DLLAPI std::string</type>
+      <name>make_temporary_path</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ac274591c17dbd2c3d4c93f5eba9a228b</anchor>
+      <arglist>(const std::string &amp;prefix)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -14846,6 +14953,20 @@
       <anchor>a221eebcca494033504b7898f95396b73</anchor>
       <arglist>() const override</arglist>
     </member>
+    <member kind="function">
+      <type>tinyxml2::XMLElement *</type>
+      <name>toXML</name>
+      <anchorfile>structmc__rbdyn_1_1CylindricalSurface.html</anchorfile>
+      <anchor>ae637e44402418cea0bd346bf98ee053c</anchor>
+      <arglist>(tinyxml2::XMLDocument &amp;doc) const override</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static std::unique_ptr&lt; CylindricalSurface &gt;</type>
+      <name>fromXML</name>
+      <anchorfile>structmc__rbdyn_1_1CylindricalSurface.html</anchorfile>
+      <anchor>a5e08d11940e1c29a6dafe16de08403f2</anchor>
+      <arglist>(const tinyxml2::XMLElement &amp;elem)</arglist>
+    </member>
   </compound>
   <compound kind="struct">
     <name>mc_tasks::force::DampingTask</name>
@@ -21257,6 +21378,20 @@
       <anchorfile>structmc__rbdyn_1_1GripperSurface.html</anchorfile>
       <anchor>a88a3339b86716f672000736fefbb267a</anchor>
       <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>tinyxml2::XMLElement *</type>
+      <name>toXML</name>
+      <anchorfile>structmc__rbdyn_1_1GripperSurface.html</anchorfile>
+      <anchor>a8d42e7f3aa0afcb51f31438a0f2135a2</anchor>
+      <arglist>(tinyxml2::XMLDocument &amp;doc) const override</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static std::unique_ptr&lt; GripperSurface &gt;</type>
+      <name>fromXML</name>
+      <anchorfile>structmc__rbdyn_1_1GripperSurface.html</anchorfile>
+      <anchor>af219552c8280653f78155e9068d30add</anchor>
+      <arglist>(const tinyxml2::XMLElement &amp;elem)</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -29956,6 +30091,13 @@
       <arglist>(const std::vector&lt; std::pair&lt; double, double &gt;&gt; &amp;planarPoints)</arglist>
     </member>
     <member kind="function">
+      <type>tinyxml2::XMLElement *</type>
+      <name>toXML</name>
+      <anchorfile>structmc__rbdyn_1_1PlanarSurface.html</anchorfile>
+      <anchor>a5568070d0fd2dd3a34e39f2efadbd56b</anchor>
+      <arglist>(tinyxml2::XMLDocument &amp;doc) const override</arglist>
+    </member>
+    <member kind="function">
       <type>std::shared_ptr&lt; Surface &gt;</type>
       <name>copy</name>
       <anchorfile>structmc__rbdyn_1_1PlanarSurface.html</anchorfile>
@@ -29968,6 +30110,13 @@
       <anchorfile>structmc__rbdyn_1_1PlanarSurface.html</anchorfile>
       <anchor>a183b940ce2bf200eed3056d5996588d3</anchor>
       <arglist>() const override</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static std::unique_ptr&lt; PlanarSurface &gt;</type>
+      <name>fromXML</name>
+      <anchorfile>structmc__rbdyn_1_1PlanarSurface.html</anchorfile>
+      <anchor>a736157d1d3eddbab9852a9456585788f</anchor>
+      <arglist>(const tinyxml2::XMLElement &amp;elem)</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -42560,6 +42709,13 @@
       <arglist>()</arglist>
     </member>
     <member kind="function" virtualness="pure">
+      <type>virtual tinyxml2::XMLElement *</type>
+      <name>toXML</name>
+      <anchorfile>structmc__rbdyn_1_1Surface.html</anchorfile>
+      <anchor>a88c85867ba9a9e3c0889cb62b8afd70a</anchor>
+      <arglist>(tinyxml2::XMLDocument &amp;doc) const =0</arglist>
+    </member>
+    <member kind="function" virtualness="pure">
       <type>virtual std::shared_ptr&lt; Surface &gt;</type>
       <name>copy</name>
       <anchorfile>structmc__rbdyn_1_1Surface.html</anchorfile>
@@ -42586,6 +42742,13 @@
       <anchorfile>structmc__rbdyn_1_1Surface.html</anchorfile>
       <anchor>a80309f23f677b1441f6e8c922b67fe8f</anchor>
       <arglist>(const Surface &amp;rhs)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static std::unique_ptr&lt; Surface &gt;</type>
+      <name>fromXML</name>
+      <anchorfile>structmc__rbdyn_1_1Surface.html</anchorfile>
+      <anchor>a0a4175a368d5cb4851b2253761817438</anchor>
+      <arglist>(const tinyxml2::XMLElement &amp;elem)</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>std::vector&lt; sva::PTransformd &gt; &amp;</type>
@@ -45591,6 +45754,34 @@
       <arglist>(const Eigen::Vector3d &amp;v)</arglist>
     </member>
     <member kind="function">
+      <type>MC_RBDYN_DLLAPI sva::RBInertiad</type>
+      <name>computeBoxInertia</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>acfb71fae5aad04d6fb271863a742d6c5</anchor>
+      <arglist>(double mass, const Eigen::Vector3d &amp;size)</arglist>
+    </member>
+    <member kind="function">
+      <type>sva::RBInertiad</type>
+      <name>computeSphereInertia</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a0d5e6b7e990cf81dfd52a8677c478e10</anchor>
+      <arglist>(double mass, double radius)</arglist>
+    </member>
+    <member kind="function">
+      <type>sva::RBInertiad</type>
+      <name>computeCylinderInertia</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>ae6c239edf331d7804f9ccc48ae16eefd</anchor>
+      <arglist>(double mass, double radius, double length)</arglist>
+    </member>
+    <member kind="function">
+      <type>sva::RBInertiad</type>
+      <name>computeSuperEllipsoidInertia</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a1d9afe961e7182ad77ea949610694c9c</anchor>
+      <arglist>(double mass, const Eigen::Vector3d &amp;size, double epsilon1, double epsilon2)</arglist>
+    </member>
+    <member kind="function">
       <type>bool</type>
       <name>operator==</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
@@ -45666,6 +45857,41 @@
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
       <anchor>a5e07749ee4441c7ee3c8d1b9508f6126</anchor>
       <arglist>(const RobotModule::Gripper &amp;lhs, const RobotModule::Gripper &amp;rhs)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI sva::RBInertiad</type>
+      <name>computeInertiaFromVisual</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>ad1f768f7943105d5305f44a68d82d08f</anchor>
+      <arglist>(const rbd::parsers::Visual &amp;visual, double mass)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI std::vector&lt; std::shared_ptr&lt; Surface &gt; &gt;</type>
+      <name>genSurfacesFromVisual</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>ac6e84d3cee94947436ce86bc5dc3ba5b</anchor>
+      <arglist>(const rbd::parsers::Visual &amp;visual)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI RobotModulePtr</type>
+      <name>robotModuleFromVisual</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>abd5577dce1882ca4ddddd23406999eb1</anchor>
+      <arglist>(const std::string &amp;name, const rbd::parsers::Visual &amp;visual, const sva::RBInertiad &amp;inertia, bool isFixed=true)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI RobotModulePtr</type>
+      <name>robotModuleFromVisual</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a7b25f9b496b7e7dcaddf21a0ef89d9bf</anchor>
+      <arglist>(const std::string &amp;name, const rbd::parsers::Visual &amp;visual, double mass, bool isFixed=true)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI RobotModulePtr</type>
+      <name>robotModuleFromVisual</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>ac5ff9f7e311c824b60a199a2b7456a96</anchor>
+      <arglist>(const std::string &amp;name, const mc_rtc::Configuration &amp;config)</arglist>
     </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI RobotsPtr</type>
@@ -45785,6 +46011,27 @@
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
       <anchor>a70b7277a0499a32774e608f8def99043</anchor>
       <arglist>(const mc_rbdyn::GripperSurface &amp;surface, const double &amp;depth)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI tinyxml2::XMLElement *</type>
+      <name>tfToOriginDom</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>aeca77b3ea04c19e893ac88b1d4694a4c</anchor>
+      <arglist>(tinyxml2::XMLDocument &amp;doc, const sva::PTransformd &amp;X, const std::string_view &amp;tagName=&quot;origin&quot;)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI sva::PTransformd</type>
+      <name>tfFromOriginDom</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>ad34cb9fa32ea84d4bcf1bed1112a8392</anchor>
+      <arglist>(const tinyxml2::XMLElement &amp;dom)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RBDYN_DLLAPI void</type>
+      <name>surfacesToXML</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>a76a6112bfb9e5474095c7097f812e65d</anchor>
+      <arglist>(tinyxml2::XMLDocument &amp;doc, const std::string &amp;robotName, const std::vector&lt; std::shared_ptr&lt; Surface &gt;&gt; &amp;surfaces)</arglist>
     </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI std::vector&lt; std::shared_ptr&lt; Surface &gt; &gt;</type>
@@ -46011,6 +46258,13 @@
       <anchorfile>namespacemc__rtc.html</anchorfile>
       <anchor>a0e4bce12cf517283be1a0b784e881dfe</anchor>
       <arglist>(const std::string &amp;suffix=&quot;&quot;)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RTC_UTILS_DLLAPI std::string</type>
+      <name>make_temporary_path</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ac274591c17dbd2c3d4c93f5eba9a228b</anchor>
+      <arglist>(const std::string &amp;prefix)</arglist>
     </member>
     <member kind="function">
       <type>std::string</type>

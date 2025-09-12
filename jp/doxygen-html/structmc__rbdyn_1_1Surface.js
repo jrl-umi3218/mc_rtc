@@ -14,6 +14,7 @@ var structmc__rbdyn_1_1Surface =
     [ "points", "structmc__rbdyn_1_1Surface.html#ad714df25bed40fed15f512f0a09db694", null ],
     [ "points", "structmc__rbdyn_1_1Surface.html#a9ba0501f73d2f4907de1bbffc0933bc1", null ],
     [ "toStr", "structmc__rbdyn_1_1Surface.html#adc29cfce0c121597c6805119fd4419b0", null ],
+    [ "toXML", "structmc__rbdyn_1_1Surface.html#a88c85867ba9a9e3c0889cb62b8afd70a", null ],
     [ "type", "structmc__rbdyn_1_1Surface.html#ad9239b4ea2aad13c55bd6ba6698826ad", null ],
     [ "X_0_s", "structmc__rbdyn_1_1Surface.html#a66394541590f20a259e662ee995833b4", null ],
     [ "X_0_s", "structmc__rbdyn_1_1Surface.html#af30be45b61b6a2d617ff2e18bb2f4903", null ],

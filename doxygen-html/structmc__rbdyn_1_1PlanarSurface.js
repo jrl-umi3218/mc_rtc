@@ -7,5 +7,6 @@ var structmc__rbdyn_1_1PlanarSurface =
     [ "planarPoints", "structmc__rbdyn_1_1PlanarSurface.html#a8d6d8fdf89e2a53cfaf933d2f4d70e7c", null ],
     [ "planarPoints", "structmc__rbdyn_1_1PlanarSurface.html#a0eab075507f287b7127f484f23fe3039", null ],
     [ "planarTransform", "structmc__rbdyn_1_1PlanarSurface.html#ab49f9384bc47d3f19bcce47d4c22ca5c", null ],
+    [ "toXML", "structmc__rbdyn_1_1PlanarSurface.html#a5568070d0fd2dd3a34e39f2efadbd56b", null ],
     [ "type", "structmc__rbdyn_1_1PlanarSurface.html#a183b940ce2bf200eed3056d5996588d3", null ]
 ];

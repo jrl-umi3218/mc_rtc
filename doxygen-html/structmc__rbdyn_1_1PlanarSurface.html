@@ -91,6 +91,7 @@ $(document).ready(function(){initNavTree('structmc__rbdyn_1_1PlanarSurface.html'
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="structmc__rbdyn_1_1PlanarSurface-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">mc_rbdyn::PlanarSurface Struct Reference</div>  </div>
@@ -131,6 +132,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8d6d8fdf89e2a53cfaf933d2f4d70e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0eab075507f287b7127f484f23fe3039"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1PlanarSurface.html#a0eab075507f287b7127f484f23fe3039">planarPoints</a> (const std::vector&lt; std::pair&lt; double, double &gt;&gt; &amp;planarPoints)</td></tr>
 <tr class="separator:a0eab075507f287b7127f484f23fe3039"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5568070d0fd2dd3a34e39f2efadbd56b"><td class="memItemLeft" align="right" valign="top">tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1PlanarSurface.html#a5568070d0fd2dd3a34e39f2efadbd56b">toXML</a> (tinyxml2::XMLDocument &amp;doc) const override</td></tr>
+<tr class="separator:a5568070d0fd2dd3a34e39f2efadbd56b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a798203ec1bf48a3390f89f3586b6ea85"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1PlanarSurface.html#a798203ec1bf48a3390f89f3586b6ea85">copy</a> () const override</td></tr>
 <tr class="separator:a798203ec1bf48a3390f89f3586b6ea85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a183b940ce2bf200eed3056d5996588d3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1PlanarSurface.html#a183b940ce2bf200eed3056d5996588d3">type</a> () const override</td></tr>
@@ -166,6 +169,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac98cc668051445fd3b94aaac36c4db58 inherit pub_methods_structmc__rbdyn_1_1Surface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80309f23f677b1441f6e8c922b67fe8f inherit pub_methods_structmc__rbdyn_1_1Surface"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Surface.html#a80309f23f677b1441f6e8c922b67fe8f">operator!=</a> (const <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> &amp;rhs)</td></tr>
 <tr class="separator:a80309f23f677b1441f6e8c922b67fe8f inherit pub_methods_structmc__rbdyn_1_1Surface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a736157d1d3eddbab9852a9456585788f"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="structmc__rbdyn_1_1PlanarSurface.html">PlanarSurface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1PlanarSurface.html#a736157d1d3eddbab9852a9456585788f">fromXML</a> (const tinyxml2::XMLElement &amp;elem)</td></tr>
+<tr class="memdesc:a736157d1d3eddbab9852a9456585788f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="structmc__rbdyn_1_1PlanarSurface.html">PlanarSurface</a> from an XML element.  <a href="structmc__rbdyn_1_1PlanarSurface.html#a736157d1d3eddbab9852a9456585788f">More...</a><br /></td></tr>
+<tr class="separator:a736157d1d3eddbab9852a9456585788f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_methods_structmc__rbdyn_1_1Surface"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_structmc__rbdyn_1_1Surface')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="structmc__rbdyn_1_1Surface.html">mc_rbdyn::Surface</a></td></tr>
+<tr class="memitem:a0a4175a368d5cb4851b2253761817438 inherit pub_static_methods_structmc__rbdyn_1_1Surface"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Surface.html#a0a4175a368d5cb4851b2253761817438">fromXML</a> (const tinyxml2::XMLElement &amp;elem)</td></tr>
+<tr class="memdesc:a0a4175a368d5cb4851b2253761817438 inherit pub_static_methods_structmc__rbdyn_1_1Surface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> (of the appropriate derived type) from an XML element.  <a href="structmc__rbdyn_1_1Surface.html#a0a4175a368d5cb4851b2253761817438">More...</a><br /></td></tr>
+<tr class="separator:a0a4175a368d5cb4851b2253761817438 inherit pub_static_methods_structmc__rbdyn_1_1Surface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -300,6 +313,51 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a736157d1d3eddbab9852a9456585788f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a736157d1d3eddbab9852a9456585788f">&#9670;&nbsp;</a></span>fromXML()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::unique_ptr&lt;<a class="el" href="structmc__rbdyn_1_1PlanarSurface.html">PlanarSurface</a>&gt; mc_rbdyn::PlanarSurface::fromXML </td>
+          <td>(</td>
+          <td class="paramtype">const tinyxml2::XMLElement &amp;&#160;</td>
+          <td class="paramname"><em>elem</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a <a class="el" href="structmc__rbdyn_1_1PlanarSurface.html">PlanarSurface</a> from an XML element. </p>
+<p>Example XML: </p><div class="fragment"><div class="line">&lt;<span class="keywordtype">planar_surface</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;Top&quot;</span> <span class="keyword">link</span>=<span class="stringliteral">&quot;box_table&quot;</span>&gt;</div>
+<div class="line">  &lt;<span class="keywordtype">origin</span> <span class="keyword">rpy</span>=<span class="stringliteral">&quot;0.0 0.0 0.0&quot;</span> <span class="keyword">xyz</span>=<span class="stringliteral">&quot;0.0 0.0 0.3632499873638153&quot;</span> /&gt;</div>
+<div class="line">  &lt;<span class="keywordtype">points</span>&gt;</div>
+<div class="line">    &lt;<span class="keywordtype">point</span> <span class="keyword">xy</span>=<span class="stringliteral">&quot;-0.17499999701976776 -0.2750000059604645&quot;</span> /&gt;</div>
+<div class="line">    &lt;<span class="keywordtype">point</span> <span class="keyword">xy</span>=<span class="stringliteral">&quot;0.17499999701976776 -0.2750000059604645&quot;</span> /&gt;</div>
+<div class="line">    &lt;<span class="keywordtype">point</span> <span class="keyword">xy</span>=<span class="stringliteral">&quot;0.17499999701976776 0.2750000059604645&quot;</span> /&gt;</div>
+<div class="line">    &lt;<span class="keywordtype">point</span> <span class="keyword">xy</span>=<span class="stringliteral">&quot;-0.17499999701976776 0.2750000059604645&quot;</span> /&gt;</div>
+<div class="line">  &lt;/<span class="keywordtype">points</span>&gt;</div>
+<div class="line">  &lt;<span class="keywordtype">material</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;plastic&quot;</span> /&gt;</div>
+<div class="line">&lt;/<span class="keywordtype">planar_surface</span>&gt;</div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">elem</td><td>The XML element describing the planar surface. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Unique pointer to the constructed <a class="el" href="structmc__rbdyn_1_1PlanarSurface.html">PlanarSurface</a>. </dd></dl>
+
+</div>
+</div>
 <a id="a8d6d8fdf89e2a53cfaf933d2f4d70e7c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8d6d8fdf89e2a53cfaf933d2f4d70e7c">&#9670;&nbsp;</a></span>planarPoints() <span class="overload">[1/2]</span></h2>
 
@@ -366,6 +424,34 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5568070d0fd2dd3a34e39f2efadbd56b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5568070d0fd2dd3a34e39f2efadbd56b">&#9670;&nbsp;</a></span>toXML()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tinyxml2::XMLElement* mc_rbdyn::PlanarSurface::toXML </td>
+          <td>(</td>
+          <td class="paramtype">tinyxml2::XMLDocument &amp;&#160;</td>
+          <td class="paramname"><em>doc</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="structmc__rbdyn_1_1Surface.html#a88c85867ba9a9e3c0889cb62b8afd70a">mc_rbdyn::Surface</a>.</p>
 
 </div>
 </div>

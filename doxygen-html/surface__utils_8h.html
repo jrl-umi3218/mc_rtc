@@ -97,19 +97,23 @@ $(document).ready(function(){initNavTree('surface__utils_8h.html',''); initResiz
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="include_2mc__rbdyn_2api_8h_source.html">mc_rbdyn/api.h</a>&gt;</code><br />
+<code>#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
+<code>#include &lt;tinyxml2.h&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for surface_utils.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="surface__utils_8h__incl.png" border="0" usemap="#ainclude_2mc__rbdyn_2surface__utils_8h" alt=""/></div>
 <map name="ainclude_2mc__rbdyn_2surface__utils_8h" id="ainclude_2mc__rbdyn_2surface__utils_8h">
-<area shape="rect" title=" " alt="" coords="141,5,331,47"/>
+<area shape="rect" title=" " alt="" coords="357,5,547,47"/>
 <area shape="rect" href="include_2mc__rbdyn_2api_8h.html" title=" " alt="" coords="5,95,128,121"/>
-<area shape="rect" title=" " alt="" coords="152,95,229,121"/>
-<area shape="rect" title=" " alt="" coords="253,95,312,121"/>
-<area shape="rect" title=" " alt="" coords="337,95,399,121"/>
+<area shape="rect" title=" " alt="" coords="152,95,344,121"/>
+<area shape="rect" title=" " alt="" coords="368,95,445,121"/>
+<area shape="rect" title=" " alt="" coords="469,95,528,121"/>
+<area shape="rect" title=" " alt="" coords="553,95,645,121"/>
+<area shape="rect" title=" " alt="" coords="669,95,731,121"/>
 </map>
 </div>
 </div>
@@ -122,7 +126,16 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:aeca77b3ea04c19e893ac88b1d4694a4c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#aeca77b3ea04c19e893ac88b1d4694a4c">mc_rbdyn::tfToOriginDom</a> (tinyxml2::XMLDocument &amp;doc, const sva::PTransformd &amp;X, const std::string_view &amp;tagName=&quot;origin&quot;)</td></tr>
+<tr class="memdesc:aeca77b3ea04c19e893ac88b1d4694a4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an &lt;origin&gt; XML element from a spatial transform.  <a href="namespacemc__rbdyn.html#aeca77b3ea04c19e893ac88b1d4694a4c">More...</a><br /></td></tr>
+<tr class="separator:aeca77b3ea04c19e893ac88b1d4694a4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad34cb9fa32ea84d4bcf1bed1112a8392"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#ad34cb9fa32ea84d4bcf1bed1112a8392">mc_rbdyn::tfFromOriginDom</a> (const tinyxml2::XMLElement &amp;dom)</td></tr>
+<tr class="separator:ad34cb9fa32ea84d4bcf1bed1112a8392"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76a6112bfb9e5474095c7097f812e65d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a76a6112bfb9e5474095c7097f812e65d">mc_rbdyn::surfacesToXML</a> (tinyxml2::XMLDocument &amp;doc, const std::string &amp;robotName, const std::vector&lt; std::shared_ptr&lt; Surface &gt;&gt; &amp;surfaces)</td></tr>
+<tr class="memdesc:a76a6112bfb9e5474095c7097f812e65d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a &lt;robot&gt; element and its surfaces to an XML document.  <a href="namespacemc__rbdyn.html#a76a6112bfb9e5474095c7097f812e65d">More...</a><br /></td></tr>
+<tr class="separator:a76a6112bfb9e5474095c7097f812e65d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01a984b0ca29b3b20b799b01e7239a9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt; std::shared_ptr&lt; Surface &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a01a984b0ca29b3b20b799b01e7239a9b">mc_rbdyn::readRSDFFromDir</a> (const std::string &amp;dirname)</td></tr>
+<tr class="memdesc:a01a984b0ca29b3b20b799b01e7239a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read all RSDF files from a directory and parse them into <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> objects.  <a href="namespacemc__rbdyn.html#a01a984b0ca29b3b20b799b01e7239a9b">More...</a><br /></td></tr>
 <tr class="separator:a01a984b0ca29b3b20b799b01e7239a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

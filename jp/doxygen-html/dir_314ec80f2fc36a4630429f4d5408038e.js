@@ -31,6 +31,7 @@ var dir_314ec80f2fc36a4630429f4d5408038e =
       [ "GripperSurface", "structmc__rbdyn_1_1GripperSurface.html", "structmc__rbdyn_1_1GripperSurface" ]
     ] ],
     [ "hat.h", "hat_8h.html", "hat_8h" ],
+    [ "inertia.h", "inertia_8h.html", "inertia_8h" ],
     [ "JointSensor.h", "JointSensor_8h.html", "JointSensor_8h" ],
     [ "Mimic.h", "Mimic_8h.html", "Mimic_8h" ],
     [ "PlanarSurface.h", "PlanarSurface_8h.html", [
@@ -52,6 +53,7 @@ var dir_314ec80f2fc36a4630429f4d5408038e =
     ] ],
     [ "RobotLoader.h", "RobotLoader_8h.html", "RobotLoader_8h" ],
     [ "RobotModule.h", "RobotModule_8h.html", "RobotModule_8h" ],
+    [ "RobotModule_visual.h", "RobotModule__visual_8h.html", "RobotModule__visual_8h" ],
     [ "RobotModuleMacros.h", "RobotModuleMacros_8h.html", "RobotModuleMacros_8h" ],
     [ "Robots.h", "Robots_8h.html", "Robots_8h" ],
     [ "rpy_utils.h", "rpy__utils_8h.html", "rpy__utils_8h" ],

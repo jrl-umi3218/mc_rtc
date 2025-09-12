@@ -244,6 +244,16 @@ Functions</h2></td></tr>
 <tr class="separator:a5aa4dab41fa3cd48e13c4fd628bcb630"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adfd1b3b7507cf3de890aeb3eca8376d0"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#adfd1b3b7507cf3de890aeb3eca8376d0">hat</a> (const Eigen::Vector3d &amp;v)</td></tr>
 <tr class="separator:adfd1b3b7507cf3de890aeb3eca8376d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfb71fae5aad04d6fb271863a742d6c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sva::RBInertiad&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#acfb71fae5aad04d6fb271863a742d6c5">computeBoxInertia</a> (double mass, const Eigen::Vector3d &amp;size)</td></tr>
+<tr class="separator:acfb71fae5aad04d6fb271863a742d6c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d5e6b7e990cf81dfd52a8677c478e10"><td class="memItemLeft" align="right" valign="top">sva::RBInertiad&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a0d5e6b7e990cf81dfd52a8677c478e10">computeSphereInertia</a> (double mass, double radius)</td></tr>
+<tr class="separator:a0d5e6b7e990cf81dfd52a8677c478e10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6c239edf331d7804f9ccc48ae16eefd"><td class="memItemLeft" align="right" valign="top">sva::RBInertiad&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#ae6c239edf331d7804f9ccc48ae16eefd">computeCylinderInertia</a> (double mass, double radius, double length)</td></tr>
+<tr class="memdesc:ae6c239edf331d7804f9ccc48ae16eefd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the inertia of a solid cylinder.  <a href="namespacemc__rbdyn.html#ae6c239edf331d7804f9ccc48ae16eefd">More...</a><br /></td></tr>
+<tr class="separator:ae6c239edf331d7804f9ccc48ae16eefd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d9afe961e7182ad77ea949610694c9c"><td class="memItemLeft" align="right" valign="top">sva::RBInertiad&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a1d9afe961e7182ad77ea949610694c9c">computeSuperEllipsoidInertia</a> (double mass, const Eigen::Vector3d &amp;size, double epsilon1, double epsilon2)</td></tr>
+<tr class="memdesc:a1d9afe961e7182ad77ea949610694c9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the inertia of a superellipsoid by interpolating between box and ellipsoid inertia.  <a href="namespacemc__rbdyn.html#a1d9afe961e7182ad77ea949610694c9c">More...</a><br /></td></tr>
+<tr class="separator:a1d9afe961e7182ad77ea949610694c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8925faa2c281c5667b4227aee573c835"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a8925faa2c281c5667b4227aee573c835">operator==</a> (const <a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a> &amp;lhs, const <a class="el" href="structmc__rbdyn_1_1JointSensor.html">JointSensor</a> &amp;rhs)</td></tr>
 <tr class="separator:a8925faa2c281c5667b4227aee573c835"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc171bbf6f9fa58525ac71fa8c54a2f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#acc171bbf6f9fa58525ac71fa8c54a2f4">operator==</a> (const <a class="el" href="structmc__rbdyn_1_1Mimic.html">Mimic</a> &amp;lhs, const <a class="el" href="structmc__rbdyn_1_1Mimic.html">Mimic</a> &amp;rhs)</td></tr>
@@ -270,6 +280,21 @@ Functions</h2></td></tr>
 <tr class="separator:abaf5b2b5f77f9658f757b3a1dbdcf030"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e07749ee4441c7ee3c8d1b9508f6126"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a5e07749ee4441c7ee3c8d1b9508f6126">operator==</a> (const <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1Gripper.html">RobotModule::Gripper</a> &amp;lhs, const <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1Gripper.html">RobotModule::Gripper</a> &amp;rhs)</td></tr>
 <tr class="separator:a5e07749ee4441c7ee3c8d1b9508f6126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1f768f7943105d5305f44a68d82d08f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sva::RBInertiad&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#ad1f768f7943105d5305f44a68d82d08f">computeInertiaFromVisual</a> (const rbd::parsers::Visual &amp;visual, double mass)</td></tr>
+<tr class="memdesc:ad1f768f7943105d5305f44a68d82d08f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the inertia from a visual geometry description.  <a href="namespacemc__rbdyn.html#ad1f768f7943105d5305f44a68d82d08f">More...</a><br /></td></tr>
+<tr class="separator:ad1f768f7943105d5305f44a68d82d08f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6e84d3cee94947436ce86bc5dc3ba5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt; std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#ac6e84d3cee94947436ce86bc5dc3ba5b">genSurfacesFromVisual</a> (const rbd::parsers::Visual &amp;visual)</td></tr>
+<tr class="memdesc:ac6e84d3cee94947436ce86bc5dc3ba5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates planar surfaces from a visual geometry description.  <a href="namespacemc__rbdyn.html#ac6e84d3cee94947436ce86bc5dc3ba5b">More...</a><br /></td></tr>
+<tr class="separator:ac6e84d3cee94947436ce86bc5dc3ba5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd5577dce1882ca4ddddd23406999eb1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#af67e459a90b9a864418fca7d55d959a3">RobotModulePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#abd5577dce1882ca4ddddd23406999eb1">robotModuleFromVisual</a> (const std::string &amp;name, const rbd::parsers::Visual &amp;visual, const sva::RBInertiad &amp;inertia, bool isFixed=true)</td></tr>
+<tr class="memdesc:abd5577dce1882ca4ddddd23406999eb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> from a visual geometry and inertia.  <a href="namespacemc__rbdyn.html#abd5577dce1882ca4ddddd23406999eb1">More...</a><br /></td></tr>
+<tr class="separator:abd5577dce1882ca4ddddd23406999eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b25f9b496b7e7dcaddf21a0ef89d9bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#af67e459a90b9a864418fca7d55d959a3">RobotModulePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a7b25f9b496b7e7dcaddf21a0ef89d9bf">robotModuleFromVisual</a> (const std::string &amp;name, const rbd::parsers::Visual &amp;visual, double mass, bool isFixed=true)</td></tr>
+<tr class="memdesc:a7b25f9b496b7e7dcaddf21a0ef89d9bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> from a visual geometry and mass. The inertia is computed based on the geometry type assuming the CoM to be at the geometric center of the shape and an homogenous density.  <a href="namespacemc__rbdyn.html#a7b25f9b496b7e7dcaddf21a0ef89d9bf">More...</a><br /></td></tr>
+<tr class="separator:a7b25f9b496b7e7dcaddf21a0ef89d9bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5ff9f7e311c824b60a199a2b7456a96"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#af67e459a90b9a864418fca7d55d959a3">RobotModulePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#ac5ff9f7e311c824b60a199a2b7456a96">robotModuleFromVisual</a> (const std::string &amp;name, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
+<tr class="memdesc:ac5ff9f7e311c824b60a199a2b7456a96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> from a configuration.  <a href="namespacemc__rbdyn.html#ac5ff9f7e311c824b60a199a2b7456a96">More...</a><br /></td></tr>
+<tr class="separator:ac5ff9f7e311c824b60a199a2b7456a96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ac28a8438587660a42d241937783322"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#ac024daf249dfc12f828218d5c2410b4c">RobotsPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a7ac28a8438587660a42d241937783322">loadRobot</a> (const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;module, const <a class="el" href="structmc__rbdyn_1_1LoadRobotParameters.html">LoadRobotParameters</a> &amp;params={})</td></tr>
 <tr class="separator:a7ac28a8438587660a42d241937783322"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a023b9824634ace45cf7ebb23a5abdc00"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#ac024daf249dfc12f828218d5c2410b4c">RobotsPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a023b9824634ace45cf7ebb23a5abdc00">loadRobot</a> (const std::string &amp;name, const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> &amp;module, const <a class="el" href="structmc__rbdyn_1_1LoadRobotParameters.html">LoadRobotParameters</a> &amp;params={})</td></tr>
@@ -305,7 +330,16 @@ Functions</h2></td></tr>
 <tr class="separator:adcd59f0c2e8c9cd94a6f9800c164e723"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70b7277a0499a32774e608f8def99043"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sch::S_Object *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a70b7277a0499a32774e608f8def99043">gripper_hull</a> (const <a class="el" href="structmc__rbdyn_1_1GripperSurface.html">mc_rbdyn::GripperSurface</a> &amp;surface, const double &amp;depth)</td></tr>
 <tr class="separator:a70b7277a0499a32774e608f8def99043"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeca77b3ea04c19e893ac88b1d4694a4c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#aeca77b3ea04c19e893ac88b1d4694a4c">tfToOriginDom</a> (tinyxml2::XMLDocument &amp;doc, const sva::PTransformd &amp;X, const std::string_view &amp;tagName=&quot;origin&quot;)</td></tr>
+<tr class="memdesc:aeca77b3ea04c19e893ac88b1d4694a4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an &lt;origin&gt; XML element from a spatial transform.  <a href="namespacemc__rbdyn.html#aeca77b3ea04c19e893ac88b1d4694a4c">More...</a><br /></td></tr>
+<tr class="separator:aeca77b3ea04c19e893ac88b1d4694a4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad34cb9fa32ea84d4bcf1bed1112a8392"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#ad34cb9fa32ea84d4bcf1bed1112a8392">tfFromOriginDom</a> (const tinyxml2::XMLElement &amp;dom)</td></tr>
+<tr class="separator:ad34cb9fa32ea84d4bcf1bed1112a8392"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76a6112bfb9e5474095c7097f812e65d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a76a6112bfb9e5474095c7097f812e65d">surfacesToXML</a> (tinyxml2::XMLDocument &amp;doc, const std::string &amp;robotName, const std::vector&lt; std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> &gt;&gt; &amp;surfaces)</td></tr>
+<tr class="memdesc:a76a6112bfb9e5474095c7097f812e65d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a &lt;robot&gt; element and its surfaces to an XML document.  <a href="namespacemc__rbdyn.html#a76a6112bfb9e5474095c7097f812e65d">More...</a><br /></td></tr>
+<tr class="separator:a76a6112bfb9e5474095c7097f812e65d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01a984b0ca29b3b20b799b01e7239a9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt; std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a01a984b0ca29b3b20b799b01e7239a9b">readRSDFFromDir</a> (const std::string &amp;dirname)</td></tr>
+<tr class="memdesc:a01a984b0ca29b3b20b799b01e7239a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read all RSDF files from a directory and parse them into <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> objects.  <a href="namespacemc__rbdyn.html#a01a984b0ca29b3b20b799b01e7239a9b">More...</a><br /></td></tr>
 <tr class="separator:a01a984b0ca29b3b20b799b01e7239a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a329453006944dae96fa60d86dca66db8"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d <a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rbdyn.html#a329453006944dae96fa60d86dca66db8">zmp</a> (const sva::ForceVecd &amp;netTotalWrench, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.)</td></tr>
 <tr class="memdesc:a329453006944dae96fa60d86dca66db8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual ZMP computation from net total wrench and the ZMP plane.  <a href="namespacemc__rbdyn.html#a329453006944dae96fa60d86dca66db8">More...</a><br /></td></tr>
@@ -643,6 +677,125 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="acfb71fae5aad04d6fb271863a742d6c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfb71fae5aad04d6fb271863a742d6c5">&#9670;&nbsp;</a></span>computeBoxInertia()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sva::RBInertiad mc_rbdyn::computeBoxInertia </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>mass</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae6c239edf331d7804f9ccc48ae16eefd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6c239edf331d7804f9ccc48ae16eefd">&#9670;&nbsp;</a></span>computeCylinderInertia()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">sva::RBInertiad mc_rbdyn::computeCylinderInertia </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>mass</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>radius</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes the inertia of a solid cylinder. </p>
+<p>This function calculates the rotational inertia tensor for a cylinder given its mass, radius, and length.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mass</td><td>Mass of the cylinder. </td></tr>
+    <tr><td class="paramname">radius</td><td>Radius of the cylinder. </td></tr>
+    <tr><td class="paramname">length</td><td>Length of the cylinder. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>sva::RBInertiad Inertia of the cylinder. </dd></dl>
+
+</div>
+</div>
+<a id="ad1f768f7943105d5305f44a68d82d08f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1f768f7943105d5305f44a68d82d08f">&#9670;&nbsp;</a></span>computeInertiaFromVisual()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sva::RBInertiad mc_rbdyn::computeInertiaFromVisual </td>
+          <td>(</td>
+          <td class="paramtype">const rbd::parsers::Visual &amp;&#160;</td>
+          <td class="paramname"><em>visual</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>mass</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes the inertia from a visual geometry description. </p>
+<p>This function determines the inertia based on the type of geometry (box, sphere, etc.) and its parameters.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">visual</td><td>The visual geometry description. </td></tr>
+    <tr><td class="paramname">mass</td><td>The mass of the object. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>sva::RBInertiad The computed inertia. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Throws</td><td>if the geometry type is unsupported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a736c36f68b3eff9f08124c8b1a58cba3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a736c36f68b3eff9f08124c8b1a58cba3">&#9670;&nbsp;</a></span>computePoints()</h2>
 
@@ -674,6 +827,87 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0d5e6b7e990cf81dfd52a8677c478e10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d5e6b7e990cf81dfd52a8677c478e10">&#9670;&nbsp;</a></span>computeSphereInertia()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">sva::RBInertiad mc_rbdyn::computeSphereInertia </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>mass</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>radius</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1d9afe961e7182ad77ea949610694c9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d9afe961e7182ad77ea949610694c9c">&#9670;&nbsp;</a></span>computeSuperEllipsoidInertia()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">sva::RBInertiad mc_rbdyn::computeSuperEllipsoidInertia </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>mass</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>epsilon1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>epsilon2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the inertia of a superellipsoid by interpolating between box and ellipsoid inertia. </p>
+<p>The superellipsoid is defined by its bounding box (size) and exponents epsilon1 and epsilon2. This function approximates the inertia tensor by interpolating between the inertia of a box (epsilon1, epsilon2 → 0) and an ellipsoid (epsilon1, epsilon2 = 1) with the same bounding box.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mass</td><td>The mass of the superellipsoid. </td></tr>
+    <tr><td class="paramname">size</td><td>The size (bounding box) as an Eigen::Vector3d (x, y, z). </td></tr>
+    <tr><td class="paramname">epsilon1</td><td>The first superellipsoid exponent (controls roundness). </td></tr>
+    <tr><td class="paramname">epsilon2</td><td>The second superellipsoid exponent (controls roundness). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>sva::RBInertiad The computed inertia. </dd></dl>
 
 </div>
 </div>
@@ -764,6 +998,33 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac6e84d3cee94947436ce86bc5dc3ba5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6e84d3cee94947436ce86bc5dc3ba5b">&#9670;&nbsp;</a></span>genSurfacesFromVisual()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt;std::shared_ptr&lt;<a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a>&gt; &gt; mc_rbdyn::genSurfacesFromVisual </td>
+          <td>(</td>
+          <td class="paramtype">const rbd::parsers::Visual &amp;&#160;</td>
+          <td class="paramname"><em>visual</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates planar surfaces from a visual geometry description. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">visual</td><td>The visual geometry description. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;std::shared_ptr&lt;Surface&gt;&gt; Vector of generated surfaces. </dd></dl>
 
 </div>
 </div>
@@ -1401,6 +1662,177 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Read all RSDF files from a directory and parse them into <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> objects. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dirname</td><td>The directory containing .rsdf files. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector of shared pointers to parsed <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> objects. </dd></dl>
+
+</div>
+</div>
+<a id="ac5ff9f7e311c824b60a199a2b7456a96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5ff9f7e311c824b60a199a2b7456a96">&#9670;&nbsp;</a></span>robotModuleFromVisual() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#af67e459a90b9a864418fca7d55d959a3">RobotModulePtr</a> mc_rbdyn::robotModuleFromVisual </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> from a configuration. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name of the robot module. </td></tr>
+    <tr><td class="paramname">config</td><td>Configuration object. This should be the configuration of a rbd::parsers::Visual, with the addition of an inertia field. The inertia field is expected in the format of RBInertiad configuration, i.e.:<ul>
+<li>mass: double # mandatory</li>
+<li>momentum: [x, y, z] # optional, defaults to [0,0,0]</li>
+<li>inertia: [[Ixx, Ixy, Ixz], [Iyx, Iyy, Iyz], [Izx, Izy, Izz]] # optional, defaults to the shape's inertia, mandatory if momentum is provided</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="fragment"><div class="line">name: box</div>
+<div class="line">origin:</div>
+<div class="line">  translation: [0, 0, 0]</div>
+<div class="line">  rotation: [0, 0, 0]</div>
+<div class="line">material:</div>
+<div class="line">  color:</div>
+<div class="line">    r: 1</div>
+<div class="line">    g: 0</div>
+<div class="line">    b: 0</div>
+<div class="line">    a: 1</div>
+<div class="line">geometry:</div>
+<div class="line">  box:</div>
+<div class="line">    size: [1., 0.5, 2.]</div>
+<div class="line">inertia:</div>
+<div class="line">  mass: 10.0</div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>RobotModulePtr Shared pointer to the created <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a>. </dd></dl>
+
+</div>
+</div>
+<a id="abd5577dce1882ca4ddddd23406999eb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd5577dce1882ca4ddddd23406999eb1">&#9670;&nbsp;</a></span>robotModuleFromVisual() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#af67e459a90b9a864418fca7d55d959a3">RobotModulePtr</a> mc_rbdyn::robotModuleFromVisual </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const rbd::parsers::Visual &amp;&#160;</td>
+          <td class="paramname"><em>visual</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const sva::RBInertiad &amp;&#160;</td>
+          <td class="paramname"><em>inertia</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isFixed</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> from a visual geometry and inertia. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name of the robot module. </td></tr>
+    <tr><td class="paramname">visual</td><td>The visual geometry description. </td></tr>
+    <tr><td class="paramname">inertia</td><td>The inertia of the robot. </td></tr>
+    <tr><td class="paramname">isFixed</td><td>Whether the robot is fixed (default: true). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>RobotModulePtr Shared pointer to the created <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a>. </dd></dl>
+
+</div>
+</div>
+<a id="a7b25f9b496b7e7dcaddf21a0ef89d9bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b25f9b496b7e7dcaddf21a0ef89d9bf">&#9670;&nbsp;</a></span>robotModuleFromVisual() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="el" href="namespacemc__rbdyn.html#af67e459a90b9a864418fca7d55d959a3">RobotModulePtr</a> mc_rbdyn::robotModuleFromVisual </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const rbd::parsers::Visual &amp;&#160;</td>
+          <td class="paramname"><em>visual</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>mass</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isFixed</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> from a visual geometry and mass. The inertia is computed based on the geometry type assuming the CoM to be at the geometric center of the shape and an homogenous density. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name of the generated robot module. </td></tr>
+    <tr><td class="paramname">visual</td><td>The visual geometry description. </td></tr>
+    <tr><td class="paramname">mass</td><td>The mass of the robot. </td></tr>
+    <tr><td class="paramname">isFixed</td><td>Whether the robot is fixed (default: true). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>RobotModulePtr Shared pointer to the created <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a>. </dd></dl>
+
 </div>
 </div>
 <a id="a0948fb6dc9382e116f65c76261d26ea0"></a>
@@ -1717,6 +2149,113 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a76a6112bfb9e5474095c7097f812e65d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76a6112bfb9e5474095c7097f812e65d">&#9670;&nbsp;</a></span>surfacesToXML()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> void mc_rbdyn::surfacesToXML </td>
+          <td>(</td>
+          <td class="paramtype">tinyxml2::XMLDocument &amp;&#160;</td>
+          <td class="paramname"><em>doc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>robotName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1Surface.html">Surface</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>surfaces</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a &lt;robot&gt; element and its surfaces to an XML document. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">doc</td><td>The XML document to populate. </td></tr>
+    <tr><td class="paramname">robotName</td><td>The name of the robot. </td></tr>
+    <tr><td class="paramname">surfaces</td><td>The surfaces to add as children of the robot element. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad34cb9fa32ea84d4bcf1bed1112a8392"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad34cb9fa32ea84d4bcf1bed1112a8392">&#9670;&nbsp;</a></span>tfFromOriginDom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sva::PTransformd mc_rbdyn::tfFromOriginDom </td>
+          <td>(</td>
+          <td class="paramtype">const tinyxml2::XMLElement &amp;&#160;</td>
+          <td class="paramname"><em>dom</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aeca77b3ea04c19e893ac88b1d4694a4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeca77b3ea04c19e893ac88b1d4694a4c">&#9670;&nbsp;</a></span>tfToOriginDom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2mc__rbdyn_2api_8h.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> tinyxml2::XMLElement* mc_rbdyn::tfToOriginDom </td>
+          <td>(</td>
+          <td class="paramtype">tinyxml2::XMLDocument &amp;&#160;</td>
+          <td class="paramname"><em>doc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const sva::PTransformd &amp;&#160;</td>
+          <td class="paramname"><em>X</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string_view &amp;&#160;</td>
+          <td class="paramname"><em>tagName</em> = <code>&quot;origin&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create an &lt;origin&gt; XML element from a spatial transform. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">doc</td><td>The XML document to which the element will belong. </td></tr>
+    <tr><td class="paramname">X</td><td>The spatial transform (position and orientation). It will be represented as rpy and xyz attributes. </td></tr>
+    <tr><td class="paramname">tagName</td><td>The tag name for the element (default: "origin"). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the created tinyxml2::XMLElement. </dd></dl>
 
 </div>
 </div>

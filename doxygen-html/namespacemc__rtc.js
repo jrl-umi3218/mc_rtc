@@ -88,6 +88,7 @@ var namespacemc__rtc =
     [ "debug", "namespacemc__rtc.html#a0bd63387904206fef1971ac84987b3bc", null ],
     [ "fromVectorOrElement", "namespacemc__rtc.html#a9c308b4400fb83031251be1f6ab0adb2", null ],
     [ "fromVectorOrElement", "namespacemc__rtc.html#ac1107b5d5bcf197a41add86ce445c866", null ],
+    [ "make_temporary_path", "namespacemc__rtc.html#ac274591c17dbd2c3d4c93f5eba9a228b", null ],
     [ "make_void_ptr", "namespacemc__rtc.html#aa0b92b93372ae4db1cf2eb6ee6cd0828", null ],
     [ "make_void_ptr", "namespacemc__rtc.html#a05e165ab46d424a119034202cbc79999", null ],
     [ "makeVisualBox", "namespacemc__rtc.html#a3ce6a1fbc6cbfa50125c3f80b1cd0851", null ],

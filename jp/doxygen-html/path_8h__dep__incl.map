@@ -1,6 +1,7 @@
 <map id="include/mc_rtc/path.h" name="include/mc_rtc/path.h">
-<area shape="rect" id="node1" title=" " alt="" coords="93,5,256,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="220,5,383,32"/>
 <area shape="rect" id="node2" href="$ControllerServerConfiguration_8h.html" title=" " alt="" coords="59,80,290,121"/>
+<area shape="rect" id="node10" href="$RobotModule__visual_8h.html" title=" " alt="" coords="315,80,541,121"/>
 <area shape="rect" id="node3" href="$ControllerServer_8h.html" title=" " alt="" coords="102,169,247,211"/>
 <area shape="rect" id="node4" href="$ControllerClient_8h.html" title=" " alt="" coords="10,259,155,300"/>
 <area shape="rect" id="node5" href="$mc__global__controller_8h.html" title=" " alt="" coords="180,259,353,300"/>

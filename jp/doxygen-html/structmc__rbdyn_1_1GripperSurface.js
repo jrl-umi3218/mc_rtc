@@ -7,6 +7,7 @@ var structmc__rbdyn_1_1GripperSurface =
     [ "motorMaxTorque", "structmc__rbdyn_1_1GripperSurface.html#a88a3339b86716f672000736fefbb267a", null ],
     [ "originTransform", "structmc__rbdyn_1_1GripperSurface.html#a8df89e1076a2b0962ea1892b5db0070e", null ],
     [ "pointsFromOrigin", "structmc__rbdyn_1_1GripperSurface.html#a027aa5e8df99bc421791c350e2793213", null ],
+    [ "toXML", "structmc__rbdyn_1_1GripperSurface.html#a8d42e7f3aa0afcb51f31438a0f2135a2", null ],
     [ "type", "structmc__rbdyn_1_1GripperSurface.html#a8c620aadf02e4692a512bc250643df80", null ],
     [ "X_b_motor", "structmc__rbdyn_1_1GripperSurface.html#a754909a2d87e053e76c070df2f5c876b", null ]
 ];
