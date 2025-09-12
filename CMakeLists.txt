@@ -253,6 +253,13 @@ mc_rtc_set_prefix(CONTROLLER mc_controller)
 set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
 set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
 
+find_package(mc_rtc_3rd_party_ros OPTIONAL)
+if(TARGET mc_rtc_3rd_party::ROS)
+  set(MC_RTC_HAS_ROS_SUPPORT "true")
+else()
+  set(MC_RTC_HAS_ROS_SUPPORT "false")
+endif()
+
 configure_file(
   ${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in
   ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h

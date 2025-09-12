@@ -160,6 +160,9 @@ target_link_libraries(
          ${CMAKE_DL_LIBS}
   PRIVATE $<BUILD_INTERFACE:mc_rtc_3rd_party::RapidJSON>
 )
+if(TARGET mc_rtc_3rd_party::ROS)
+  target_link_libraries(mc_rtc_utils PRIVATE mc_rtc_3rd_party::ROS)
+endif()
 if(TARGET PkgConfig::mc_rtc_3rd_party_libnotify)
   target_link_libraries(mc_rtc_utils PUBLIC PkgConfig::mc_rtc_3rd_party_libnotify)
   target_compile_definitions(mc_rtc_utils PRIVATE MC_RTC_HAS_LIBNOTIFY)
@@ -356,15 +359,7 @@ else()
   target_link_libraries(mc_rbdyn PRIVATE qhullstatic_r qhullcpp)
 endif()
 
-if(NOT DISABLE_ROS)
-  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
-                        ${PROJECT_SOURCE_DIR}/plugins/ROS/CMakeModules
-  )
-  find_package(mc_rtc_3rd_party_ros REQUIRED)
-  if(NOT ${ROSCPP_FOUND})
-    return()
-  endif()
-  target_compile_definitions(mc_rbdyn PRIVATE MC_RTC_HAS_ROS_SUPPORT)
+if(TARGET mc_rtc_3rd_party::ROS)
   target_link_libraries(mc_rbdyn PRIVATE mc_rtc_3rd_party::ROS)
 endif()
 
