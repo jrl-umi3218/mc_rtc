@@ -5,7 +5,6 @@
 #pragma once
 
 #include <mc_rtc/utils_api.h>
-#include <mc_rtc/log/fmt_formatter.h>
 
 #include <iostream>
 
@@ -16,27 +15,31 @@
 // fmt 9.0.0 removed automated operator<< discovery we use fmt::streamed instead when needed through a macro
 #if FMT_VERSION >= 9 * 10000
 #  define MC_FMT_STREAMED(X) fmt::streamed(X)
+#  include <boost/filesystem.hpp>
 #  include <Eigen/Core>
 #  include <fmt/ostream.h>
-template<typename T>
-struct fmt::formatter<T, std::enable_if_t<std::is_base_of_v<Eigen::DenseBase<T>, T>, char>> : ostream_formatter
+#  include <fmt/ranges.h>
+#  include <type_traits>
+
+// Formatter for Eigen dense types (like Eigen::Matrix, Eigen::Array)
+template<typename T, typename Char>
+struct fmt::formatter<T,
+                      Char,
+                      std::enable_if_t<std::is_base_of_v<Eigen::DenseBase<T>, T>
+                                       && (fmt::range_format_kind<T, Char, void>::value == fmt::range_format::disabled)>>
+: fmt::ostream_formatter
 {
 };
 
-template<typename MatrixType>
-struct fmt::formatter<Eigen::Transpose<MatrixType>> : ostream_formatter
+// Formatter for boost::filesystem::path
+template<>
+struct fmt::formatter<boost::filesystem::path> : fmt::formatter<std::string>
 {
-};
-
-template<typename Scalar, int Rows, int Cols, int BlockRows, int BlockCols, bool InnerPanel>
-struct fmt::formatter<Eigen::Block<Eigen::Matrix<Scalar, Rows, Cols>, BlockRows, BlockCols, InnerPanel>>
-: ostream_formatter
-{
-};
-
-template<typename Scalar, int Rows, int Cols>
-struct fmt::formatter<Eigen::Diagonal<Eigen::Matrix<Scalar, Rows, Cols>>> : ostream_formatter
-{
+  template<typename FormatContext>
+  auto format(const boost::filesystem::path & p, FormatContext & ctx)
+  {
+    return fmt::formatter<std::string>::format(p.string(), ctx);
+  }
 };
 
 #else
