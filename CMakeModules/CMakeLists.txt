@@ -31,6 +31,8 @@ if(NOT WIN32)
   add3rdpartymodule(libnotify)
 endif()
 
+add3rdpartymodule(ros)
+
 set(PACKAGE_EXTRA_MACROS
     ${PACKAGE_EXTRA_MACROS}
     PARENT_SCOPE
