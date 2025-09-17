@@ -62,7 +62,27 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
     else { pkg = default_dir; }
 #  else
 #    ifdef MC_RTC_ROS_IS_ROS2
-    pkg = ament_index_cpp::get_package_share_directory(pkg);
+    try
+    {
+      pkg = ament_index_cpp::get_package_share_directory(pkg);
+    }
+    catch(const ament_index_cpp::PackageNotFoundError & e)
+    {
+      if(pkg == "jvrc_description") { pkg = (MC_ENV_DESCRIPTION_PATH / ".." / "jvrc_description").string(); }
+      else if(pkg == "mc_env_description") { pkg = MC_ENV_DESCRIPTION_PATH.string(); }
+      else if(pkg == "mc_int_obj_description")
+      {
+        pkg = (MC_ENV_DESCRIPTION_PATH / ".." / "mc_int_obj_description").string();
+      }
+      else { pkg = default_dir; }
+
+      if(!fs::is_directory(pkg))
+      {
+        std::runtime_error(fmt::format(
+            "Could find package {}, make sure your package is built as a ros package or update filename argument. {}",
+            pkg, e.what()));
+      }
+    }
 #    else
     pkg = ros::package::getPath(pkg);
 #    endif
