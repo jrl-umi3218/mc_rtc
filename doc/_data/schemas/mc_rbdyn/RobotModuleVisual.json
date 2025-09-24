@@ -2,7 +2,7 @@
   "allOf":
   [
     {
-      "$ref": "/../../RBDyn/Visual.json"
+      "$ref": "../RBDyn/Visual.json"
     },
     {
       "title": "RobotModuleVisual",
@@ -17,8 +17,8 @@
           "properties":
           {
             "mass": { "type": "number" },
-            "momentum": { "$ref": "/../../Eigen/Vector3d.json", "description": "Spatial momentum" },
-            "inertia": { "$ref": "/../../Eigen/Matrix3d.json", "description": "inertia matrix" }
+            "momentum": { "$ref": "../Eigen/Vector3d.json", "description": "Spatial momentum" },
+            "inertia": { "$ref": "../Eigen/Matrix3d.json", "description": "inertia matrix" }
           },
           "required": ["mass"]
         }

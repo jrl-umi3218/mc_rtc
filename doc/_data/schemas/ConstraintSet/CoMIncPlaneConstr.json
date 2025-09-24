@@ -4,7 +4,7 @@
   "properties":
   {
     "type": { "enum": ["CoMIncPlane"] },
-    "robot": { "$ref": "/../../common/ConstraintSet_robot.json" }
+    "robot": { "$ref": "../common/ConstraintSet_robot.json" }
   },
   "required": ["type"]
 }

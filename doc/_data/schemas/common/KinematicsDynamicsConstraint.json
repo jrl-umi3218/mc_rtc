@@ -2,7 +2,7 @@
   "properties":
   {
     "type": { "enum": ["kinematics", "dynamics"] },
-    "robot": { "$ref": "/../../common/ConstraintSet_robot.json" },
+    "robot": { "$ref": "../common/ConstraintSet_robot.json" },
     "damper":
     {
       "type": "array",

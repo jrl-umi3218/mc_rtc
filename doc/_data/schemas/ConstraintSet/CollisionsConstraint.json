@@ -30,7 +30,7 @@
       "description": "List of collisions in the constraint",
       "items":
       {
-        "$ref": "/../../mc_rbdyn/Collision.json"
+        "$ref": "../mc_rbdyn/Collision.json"
       }
     }
   },

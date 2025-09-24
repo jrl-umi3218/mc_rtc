@@ -4,7 +4,7 @@
   "type": "object",
   "properties":
   {
-    "size": { "$ref": "/../../Eigen/Vector3d.json", "description": "The size of the bounding box edges (x, y, z) [m]" },
+    "size": { "$ref": "../Eigen/Vector3d.json", "description": "The size of the bounding box edges (x, y, z) [m]" },
     "epsilon1": { "type": "number", "description": "Roundness coefficient" },
     "epsilon2": { "type": "number", "description": "Roundness coefficient" }
   },

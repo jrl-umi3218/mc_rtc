@@ -14,18 +14,18 @@
       "description": "Configuration of the tasks managed by the stabilizer: CoM, left and right contact CoP tasks, and torso and pelvis regularization tasks",
       "properties":
       {
-        "com": {"$ref": "/../../common/com.json"},
-        "contact": {"$ref": "/../../common/contact.json"},
-        "pelvis": {"$ref": "/../../common/pelvis.json"},
-        "torso": {"$ref": "/../../common/torso.json"}
+        "com": {"$ref": "../common/com.json"},
+        "contact": {"$ref": "../common/contact.json"},
+        "pelvis": {"$ref": "../common/pelvis.json"},
+        "torso": {"$ref": "../common/torso.json"}
       }
     },
-    "safety_thresholds": {"$ref": "/../../common/stabilizer_safety_thresholds.json"},
-    "fdqp_weights": {"$ref": "/../../common/fdqp_weights.json"},
-    "vdc": {"$ref": "/../../common/vdc.json"},
-    "admittance": {"$ref": "/../../common/admittance.json"},
-    "dcm_tracking": {"$ref": "/../../common/dcm_tracking.json"},
-    "dcm_bias": {"$ref": "/../../common/dcm_bias.json"},
-    "external_wrench": {"$ref": "/../../common/external_wrench.json"}
+    "safety_thresholds": {"$ref": "../common/stabilizer_safety_thresholds.json"},
+    "fdqp_weights": {"$ref": "../common/fdqp_weights.json"},
+    "vdc": {"$ref": "../common/vdc.json"},
+    "admittance": {"$ref": "../common/admittance.json"},
+    "dcm_tracking": {"$ref": "../common/dcm_tracking.json"},
+    "dcm_bias": {"$ref": "../common/dcm_bias.json"},
+    "external_wrench": {"$ref": "../common/external_wrench.json"}
   }
 }

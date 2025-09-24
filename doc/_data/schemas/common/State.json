@@ -1,21 +1,21 @@
 {
   "properties":
   {
-    "AddContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
+    "AddContacts": { "type": "array", "items": { "$ref": "../common/fsm_contact.json" },
                      "description": "Add the specified contacts during the state's start"  },
-    "RemoveContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
+    "RemoveContacts": { "type": "array", "items": { "$ref": "../common/fsm_contact.json" },
                         "description": "Remove the specified contacts during the state's start"  },
-    "AddContactsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
+    "AddContactsAfter": { "type": "array", "items": { "$ref": "../common/fsm_contact.json" },
                           "description": "Add the specified contacts during the state's teardown"  },
-    "RemoveContactsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
+    "RemoveContactsAfter": { "type": "array", "items": { "$ref": "../common/fsm_contact.json" },
                              "description": "Remove the specified contacts during the state's teardown"  },
-    "AddCollisions": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
+    "AddCollisions": { "type": "array", "items": { "$ref": "../common/fsm_collision.json" },
                        "description": "Add the specified collisions during the state's start" },
-    "RemoveCollisions": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
+    "RemoveCollisions": { "type": "array", "items": { "$ref": "../common/fsm_collision.json" },
                           "description": "Remove the specified collisions during the state's start" },
-    "AddCollisionsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
+    "AddCollisionsAfter": { "type": "array", "items": { "$ref": "../common/fsm_collision.json" },
                             "description": "Add the specified collisions during the state's teardown" },
-    "RemoveCollisionsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
+    "RemoveCollisionsAfter": { "type": "array", "items": { "$ref": "../common/fsm_collision.json" },
                                "description": "Remove the specified collisions during the state's teardown" },
     "DisablePostureTask":
     {

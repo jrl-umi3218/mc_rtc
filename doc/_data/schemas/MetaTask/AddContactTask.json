@@ -10,7 +10,7 @@
       }
     },
     {
-      "$ref": "/../../common/AddRemoveContactTask_common.json"
+      "$ref": "../common/AddRemoveContactTask_common.json"
     }
   ],
   "required": ["type", "contact"]

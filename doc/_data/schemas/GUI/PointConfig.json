@@ -4,6 +4,6 @@
   "properties":
   {
     "scale": {"type": "number"},
-    "color": { "$ref": "/../../GUI/Color.json" }
+    "color": { "$ref": "../GUI/Color.json" }
   }
 }

@@ -54,7 +54,7 @@
       }
     },
     {
-      "$ref": "/../../common/completion_common.json"
+      "$ref": "../common/completion_common.json"
     }
   ]
 }

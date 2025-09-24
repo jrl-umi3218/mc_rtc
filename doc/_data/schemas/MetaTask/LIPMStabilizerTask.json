@@ -9,11 +9,11 @@
       {
         "type": { "enum": ["lipm_stabilizer"] },
         "name": { "type": "string" },
-        "robot": { "$ref": "/../../common/MetaTask_robot.json" }
+        "robot": { "$ref": "../common/MetaTask_robot.json" }
       }
     },
     {
-      "$ref": "/../../common/LIPMStabilizerTaskConfiguration.json"
+      "$ref": "../common/LIPMStabilizerTaskConfiguration.json"
     },
     {
       "allOf":
@@ -34,7 +34,7 @@
           {
             "*" :
             {
-              "$ref": "/../../common/LIPMStabilizerTaskConfiguration.json"
+              "$ref": "../common/LIPMStabilizerTaskConfiguration.json"
             }
           }
         }
