@@ -17,13 +17,13 @@
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/unique_ptr.h>
 
+#include <mc_solver/CoincidenceConstr.h>
 #include <mc_solver/CollisionsConstraint.h>
 #include <mc_solver/CompoundJointConstraint.h>
 #include <mc_solver/ContactConstraint.h>
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/KinematicsConstraint.h>
 #include <mc_solver/QPSolver.h>
-#include <mc_solver/CoincidenceConstr.h>
 
 #include <mc_tasks/PostureTask.h>
 

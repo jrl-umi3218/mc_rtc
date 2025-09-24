@@ -56,7 +56,8 @@ void RobotModule::init(const rbd::parsers::ParserResult & res, const YAML::Node 
 
   if(res_yaml)
   {
-    if(res_yaml["name_mot"] && res_yaml["closed_loop"] && res_yaml["type"] && !res_yaml["name_mot"].IsNull() && !res_yaml["closed_loop"].IsNull() && !res_yaml["type"].IsNull())
+    if(res_yaml["name_mot"] && res_yaml["closed_loop"] && res_yaml["type"] && !res_yaml["name_mot"].IsNull()
+       && !res_yaml["closed_loop"].IsNull() && !res_yaml["type"].IsNull())
     {
       link_names_ = res_yaml["closed_loop"].as<std::vector<std::vector<std::string>>>();
       types_ = res_yaml["type"].as<std::vector<std::string>>();

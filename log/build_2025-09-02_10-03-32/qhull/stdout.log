@@ -26,7 +26,7 @@
 -- Looking for ftello - found
 -- Looking for PRIdMAX
 -- Looking for PRIdMAX - found
--- 
+--
 -- ========== qhull Build Information ==========
 -- Build Version:                             8.0.2
 -- Install Prefix (CMAKE_INSTALL_PREFIX):     /home/celian/workspace/src/mc_rtc/install
@@ -35,16 +35,16 @@
 -- Include Directory (INCLUDE_INSTALL_DIR):   include
 -- Documentation Directory (DOC_INSTALL_DIR): share/doc/qhull
 -- Man Pages Directory (MAN_INSTALL_DIR):     share/man/man1
--- Build Type (CMAKE_BUILD_TYPE):             
+-- Build Type (CMAKE_BUILD_TYPE):
 -- Build static libraries:                    ON
 -- Build shared library:                      ON
 -- Use shared library for linking apps:       OFF
 -- To override these options, add -D{OPTION_NAME}=... to the cmake command
 --   Build the debug targets                  -DCMAKE_BUILD_TYPE=Debug
--- 
+--
 -- To build and install qhull, enter "make" and "make install"
 -- To smoketest qhull, enter "ctest"
--- 
+--
 -- Configuring done (0.7s)
 -- Generating done (0.0s)
 -- Build files have been written to: /home/celian/workspace/src/mc_rtc/build/qhull

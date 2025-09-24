@@ -3,11 +3,11 @@
 [0.065s]   No project() command is present.  The top-level CMakeLists.txt file must
 [0.066s]   contain a literal, direct call to the project() command.  Add a line of
 [0.066s]   code such as
-[0.066s] 
+[0.066s]
 [0.066s]     project(ProjectName)
-[0.066s] 
+[0.066s]
 [0.066s]   near the top of the file, but after cmake_minimum_required().
-[0.066s] 
+[0.066s]
 [0.066s]   CMake is pretending there is a "project(Project)" command on the first
 [0.067s]   line.
 [0.067s] This warning is for project developers.  Use -Wno-dev to suppress it.
@@ -32,12 +32,12 @@
 [0.365s] -- Detecting CXX compile features - done
 [0.371s] [31mCMake Error in CMakeLists.txt:
 [0.371s]   No cmake_minimum_required command is present.  A line of code such as
-[0.371s] 
+[0.371s]
 [0.371s]     cmake_minimum_required(VERSION 4.0)
-[0.371s] 
+[0.371s]
 [0.371s]   should be added at the top of the file.  The version specified may be lower
 [0.371s]   if you wish to support older CMake versions for this project.  For more
 [0.371s]   information run "cmake --help-policy CMP0000".
-[0.371s] 
+[0.371s]
 [0.371s] [0m
 [0.372s] -- Configuring incomplete, errors occurred!

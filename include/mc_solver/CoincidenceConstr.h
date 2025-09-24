@@ -1,7 +1,7 @@
 #pragma once
 
-#include <mc_solver/ConstraintSet.h>
 #include <mc_rtc/void_ptr.h>
+#include <mc_solver/ConstraintSet.h>
 #include <Tasks/QPCoincidenceConstr.h>
 
 namespace mc_rbdyn
@@ -16,9 +16,9 @@ struct QPSolver;
 
 /** \class CoincidenceConstraint
  *
- * Constraint to maintain coincidence between two points on a robot 
+ * Constraint to maintain coincidence between two points on a robot
  */
-struct MC_SOLVER_DLLAPI CoincidenceConstraint : public ConstraintSet 
+struct MC_SOLVER_DLLAPI CoincidenceConstraint : public ConstraintSet
 {
 public:
   /** Constructor
@@ -29,7 +29,12 @@ public:
    * \param type Type of the joint
    * \param dt Time step of the control
    */
-  CoincidenceConstraint(const mc_rbdyn::Robots & robots, std::string name1, std::string name2, std::string type, const Eigen::VectorXd & joints, double dt);
+  CoincidenceConstraint(const mc_rbdyn::Robots & robots,
+                        std::string name1,
+                        std::string name2,
+                        std::string type,
+                        const Eigen::VectorXd & joints,
+                        double dt);
 
   void addToSolverImpl(QPSolver & solver) override;
 

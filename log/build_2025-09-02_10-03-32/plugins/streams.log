@@ -3,11 +3,11 @@
 [0.057s]   No project() command is present.  The top-level CMakeLists.txt file must
 [0.057s]   contain a literal, direct call to the project() command.  Add a line of
 [0.057s]   code such as
-[0.057s] 
+[0.057s]
 [0.057s]     project(ProjectName)
-[0.057s] 
+[0.057s]
 [0.057s]   near the top of the file, but after cmake_minimum_required().
-[0.057s] 
+[0.057s]
 [0.057s]   CMake is pretending there is a "project(Project)" command on the first
 [0.057s]   line.
 [0.057s] This warning is for project developers.  Use -Wno-dev to suppress it.
@@ -33,17 +33,17 @@
 [0.351s] [0mCMake Deprecation Warning at ROS/CMakeLists.txt:1 (cmake_minimum_required):
 [0.351s]   Compatibility with CMake < 3.10 will be removed from a future version of
 [0.351s]   CMake.
-[0.351s] 
+[0.351s]
 [0.351s]   Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
 [0.351s]   to tell CMake that the project requires at least <min> but has been updated
 [0.351s]   to work with policies introduced by <max> or earlier.
-[0.351s] 
+[0.351s]
 [0.351s] [0m
 [0.353s] [33mCMake Warning (dev) at /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package):
 [0.353s]   Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
 [0.353s]   --help-policy CMP0167" for policy details.  Use the cmake_policy command to
 [0.353s]   set the policy and suppress this warning.
-[0.353s] 
+[0.353s]
 [0.353s] Call Stack (most recent call first):
 [0.353s]   /home/celian/workspace/install/lib/cmake/mc_rtc/mc_rtcConfig.cmake:152 (find_dependency)
 [0.354s]   ROS/CMakeLists.txt:18 (find_package)
@@ -55,7 +55,7 @@
 [0.397s]   Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
 [0.397s]   --help-policy CMP0167" for policy details.  Use the cmake_policy command to
 [0.397s]   set the policy and suppress this warning.
-[0.397s] 
+[0.397s]
 [0.397s] Call Stack (most recent call first):
 [0.397s]   /home/celian/workspace/install/lib/cmake/RBDyn/RBDynConfig.cmake:148 (find_dependency)
 [0.397s]   /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)
@@ -72,7 +72,7 @@
 [0.414s]   Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
 [0.414s]   --help-policy CMP0167" for policy details.  Use the cmake_policy command to
 [0.414s]   set the policy and suppress this warning.
-[0.414s] 
+[0.414s]
 [0.414s] Call Stack (most recent call first):
 [0.414s]   /home/celian/workspace/install/lib/cmake/sch-core/sch-coreConfig.cmake:144 (find_dependency)
 [0.414s]   /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)
@@ -87,7 +87,7 @@
 [0.422s]   Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
 [0.422s]   --help-policy CMP0167" for policy details.  Use the cmake_policy command to
 [0.422s]   set the policy and suppress this warning.
-[0.422s] 
+[0.422s]
 [0.422s] Call Stack (most recent call first):
 [0.422s]   /home/celian/workspace/install/lib/cmake/Tasks/TasksConfig.cmake:150 (find_dependency)
 [0.422s]   /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)
@@ -142,12 +142,12 @@
 [1.487s] [0m
 [1.487s] [31mCMake Error in CMakeLists.txt:
 [1.487s]   No cmake_minimum_required command is present.  A line of code such as
-[1.487s] 
+[1.487s]
 [1.487s]     cmake_minimum_required(VERSION 4.0)
-[1.487s] 
+[1.487s]
 [1.487s]   should be added at the top of the file.  The version specified may be lower
 [1.487s]   if you wish to support older CMake versions for this project.  For more
 [1.488s]   information run "cmake --help-policy CMP0000".
-[1.488s] 
+[1.488s]
 [1.488s] [0m
 [1.488s] -- Configuring incomplete, errors occurred!

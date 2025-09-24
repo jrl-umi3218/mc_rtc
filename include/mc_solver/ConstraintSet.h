@@ -14,7 +14,7 @@ namespace mc_solver
 /** \class ConstraintSet
  * \brief This class is a basis to wrap Constraint functions from Tasks. The aim of such wrappers should be two-folds:
  *   - provide a safe alternative to the Tasks version wrapped
- *   - make the class easier to use with mc_* facilities 
+ *   - make the class easier to use with mc_* facilities
  */
 
 struct MC_SOLVER_DLLAPI ConstraintSet

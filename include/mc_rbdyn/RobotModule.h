@@ -635,7 +635,6 @@ public:
   std::vector<std::vector<std::string>> link_names_;
   std::vector<std::string> types_;
   std::vector<std::vector<std::string>> motors_;
-  
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;

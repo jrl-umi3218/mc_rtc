@@ -16,4 +16,3 @@ struct MC_SOLVER_DLLAPI ConstraintSetLoader : public mc_solver::GenericLoader<Co
 };
 
 } // namespace mc_solver
- 

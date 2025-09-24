@@ -36,7 +36,7 @@ namespace bfs = boost::filesystem;
 #include <fstream>
 
 namespace mc_rtc
-{ 
+{
 
 mc_control::Contact ConfigurationLoader<mc_control::Contact>::load(const mc_rtc::Configuration & config)
 {
@@ -399,7 +399,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
                                           const std::string & name,
                                           mc_rbdyn::Robots & robots,
                                           const mc_rbdyn::LoadRobotParameters & params)
-{ 
+{
   assert(rm);
   auto & r = robots.load(name, *rm, params);
   r.mbc().gravity = mc_rtc::constants::gravity;
@@ -1018,33 +1018,33 @@ mc_rtc::Configuration MCController::robot_config(const std::string & robot) cons
 
 void MCController::loop_closing(const mc_rbdyn::Robot & robot)
 {
-  try 
+  try
   {
     for(size_t n = 0; n < robot.module().types_.size(); ++n)
     {
 
       // creation of the joint selector matrix
-      std::vector<std::string> motors = robot.module().motors_[n];    
+      std::vector<std::string> motors = robot.module().motors_[n];
       Eigen::VectorXd joints_vec = Eigen::VectorXd::Zero(robot.mb().nrDof());
-      int idx = 5; //we do not considerate the fisrt 6 values of the body pos
-      for (int i =0 ; i<std::size(robot.mbc().alphaD); i++){
-        if (robot.mb().joint(i).dof()>=1){
+      int idx = 5; // we do not considerate the fisrt 6 values of the body pos
+      for(int i = 0; i < std::size(robot.mbc().alphaD); i++)
+      {
+        if(robot.mb().joint(i).dof() >= 1)
+        {
           auto it = std::find(motors.begin(), motors.end(), robot.mb().joint(i).name());
-          if(it != motors.end())
-          {
-            joints_vec[idx] = 1.0;
-          }
-        idx ++;
+          if(it != motors.end()) { joints_vec[idx] = 1.0; }
+          idx++;
         }
       }
-      
+
       auto frame_pair = robot.module().link_names_[n];
       std::string name1 = frame_pair[0];
       std::string name2 = frame_pair[1];
       std::string type = robot.module().types_[n];
-      auto coincidence_constraint = std::make_shared<mc_solver::CoincidenceConstraint>(robots(), name1, name2, type, joints_vec, solver().dt());
+      auto coincidence_constraint =
+          std::make_shared<mc_solver::CoincidenceConstraint>(robots(), name1, name2, type, joints_vec, solver().dt());
       coincidence_constraints_.push_back(coincidence_constraint);
-      solver().addConstraintSet(*coincidence_constraint);    
+      solver().addConstraintSet(*coincidence_constraint);
     }
   }
   catch(const std::exception & e)

@@ -2,11 +2,11 @@
 [0.053s] [0mCMake Deprecation Warning at CMakeLists.txt:70 (cmake_minimum_required):
 [0.053s]   Compatibility with CMake < 3.10 will be removed from a future version of
 [0.053s]   CMake.
-[0.053s] 
+[0.053s]
 [0.053s]   Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
 [0.053s]   to tell CMake that the project requires at least <min> but has been updated
 [0.053s]   to work with policies introduced by <max> or earlier.
-[0.053s] 
+[0.053s]
 [0.053s] [0m
 [0.121s] -- The C compiler identification is GNU 11.4.0
 [0.170s] -- The CXX compiler identification is GNU 11.4.0
@@ -36,7 +36,7 @@
 [0.682s] -- Looking for ftello - found
 [0.682s] -- Looking for PRIdMAX
 [0.727s] -- Looking for PRIdMAX - found
-[0.727s] -- 
+[0.727s] --
 [0.727s] -- ========== qhull Build Information ==========
 [0.727s] -- Build Version:                             8.0.2
 [0.727s] -- Install Prefix (CMAKE_INSTALL_PREFIX):     /home/celian/workspace/src/mc_rtc/install
@@ -45,16 +45,16 @@
 [0.728s] -- Include Directory (INCLUDE_INSTALL_DIR):   include
 [0.728s] -- Documentation Directory (DOC_INSTALL_DIR): share/doc/qhull
 [0.728s] -- Man Pages Directory (MAN_INSTALL_DIR):     share/man/man1
-[0.728s] -- Build Type (CMAKE_BUILD_TYPE):             
+[0.728s] -- Build Type (CMAKE_BUILD_TYPE):
 [0.728s] -- Build static libraries:                    ON
 [0.728s] -- Build shared library:                      ON
 [0.728s] -- Use shared library for linking apps:       OFF
 [0.728s] -- To override these options, add -D{OPTION_NAME}=... to the cmake command
 [0.728s] --   Build the debug targets                  -DCMAKE_BUILD_TYPE=Debug
-[0.728s] -- 
+[0.728s] --
 [0.728s] -- To build and install qhull, enter "make" and "make install"
 [0.728s] -- To smoketest qhull, enter "ctest"
-[0.728s] -- 
+[0.728s] --
 [0.728s] -- Configuring done (0.7s)
 [0.739s] -- Generating done (0.0s)
 [0.740s] -- Build files have been written to: /home/celian/workspace/src/mc_rtc/build/qhull

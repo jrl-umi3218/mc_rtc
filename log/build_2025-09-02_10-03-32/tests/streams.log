@@ -7,11 +7,11 @@
 [0.261s]   No project() command is present.  The top-level CMakeLists.txt file must
 [0.261s]   contain a literal, direct call to the project() command.  Add a line of
 [0.262s]   code such as
-[0.262s] 
+[0.262s]
 [0.262s]     project(ProjectName)
-[0.262s] 
+[0.262s]
 [0.262s]   near the top of the file, but after cmake_minimum_required().
-[0.262s] 
+[0.262s]
 [0.262s]   CMake is pretending there is a "project(Project)" command on the first
 [0.262s]   line.
 [0.262s] This warning is for project developers.  Use -Wno-dev to suppress it.
@@ -34,7 +34,7 @@
 [0.372s]   Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
 [0.372s]   --help-policy CMP0167" for policy details.  Use the cmake_policy command to
 [0.372s]   set the policy and suppress this warning.
-[0.372s] 
+[0.372s]
 [0.372s] This warning is for project developers.  Use -Wno-dev to suppress it.
 [0.372s] [0m
 [0.387s] -- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: unit_test_framework timer
@@ -42,16 +42,16 @@
 [0.389s]   Unknown CMake command "generate_msvc_dot_user_file".
 [0.389s] Call Stack (most recent call first):
 [0.389s]   CMakeLists.txt:84 (mc_rtc_test)
-[0.389s] 
+[0.389s]
 [0.389s] [0m
 [0.389s] [31mCMake Error in CMakeLists.txt:
 [0.389s]   No cmake_minimum_required command is present.  A line of code such as
-[0.389s] 
+[0.389s]
 [0.389s]     cmake_minimum_required(VERSION 4.0)
-[0.389s] 
+[0.389s]
 [0.389s]   should be added at the top of the file.  The version specified may be lower
 [0.390s]   if you wish to support older CMake versions for this project.  For more
 [0.390s]   information run "cmake --help-policy CMP0000".
-[0.390s] 
+[0.390s]
 [0.390s] [0m
 [0.390s] -- Configuring incomplete, errors occurred!

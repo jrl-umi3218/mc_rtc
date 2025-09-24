@@ -3,11 +3,11 @@
 [0.065s]   No project() command is present.  The top-level CMakeLists.txt file must
 [0.065s]   contain a literal, direct call to the project() command.  Add a line of
 [0.065s]   code such as
-[0.066s] 
+[0.066s]
 [0.066s]     project(ProjectName)
-[0.066s] 
+[0.066s]
 [0.066s]   near the top of the file, but after cmake_minimum_required().
-[0.066s] 
+[0.066s]
 [0.066s]   CMake is pretending there is a "project(Project)" command on the first
 [0.066s]   line.
 [0.066s] This warning is for project developers.  Use -Wno-dev to suppress it.
@@ -37,16 +37,16 @@
 [0.433s]   Unknown CMake command "generate_msvc_dot_user_file".
 [0.433s] Call Stack (most recent call first):
 [0.433s]   CMakeLists.txt:30 (mc_rtc_benchmark)
-[0.433s] 
+[0.433s]
 [0.433s] [0m
 [0.433s] [31mCMake Error in CMakeLists.txt:
 [0.433s]   No cmake_minimum_required command is present.  A line of code such as
-[0.433s] 
+[0.433s]
 [0.433s]     cmake_minimum_required(VERSION 4.0)
-[0.433s] 
+[0.433s]
 [0.433s]   should be added at the top of the file.  The version specified may be lower
 [0.434s]   if you wish to support older CMake versions for this project.  For more
 [0.434s]   information run "cmake --help-policy CMP0000".
-[0.434s] 
+[0.434s]
 [0.434s] [0m
 [0.434s] -- Configuring incomplete, errors occurred!
