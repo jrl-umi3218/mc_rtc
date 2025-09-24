@@ -1,9 +1,0 @@
--- The CXX compiler identification is GNU 11.4.0
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: /usr/bin/c++ - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
--- Configuring done (0.2s)
--- Generating done (0.0s)
--- Build files have been written to: /home/celian/workspace/src/mc_rtc/build/jrl-cmakemodules

@@ -1,1 +1,0 @@
-Invoking command in '/home/celian/workspace/src/mc_rtc/build/qhull': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/3rd-party/qhull -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install

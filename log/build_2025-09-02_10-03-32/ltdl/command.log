@@ -1,1 +1,0 @@
-Invoking command in '/home/celian/workspace/src/mc_rtc/build/ltdl': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/3rd-party/ltdl -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install

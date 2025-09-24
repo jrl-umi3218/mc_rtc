@@ -1,1 +1,0 @@
-Invoking command in '/home/celian/workspace/src/mc_rtc/build/plugins': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/plugins -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install

@@ -1,1 +1,0 @@
-Invoking command in '/home/celian/workspace/src/mc_rtc/build/tests': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/tests -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install
