@@ -1,0 +1,60 @@
+[0.031s] Invoking command in '/home/celian/workspace/src/mc_rtc/build/qhull': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/3rd-party/qhull -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install
+[0.053s] [0mCMake Deprecation Warning at CMakeLists.txt:70 (cmake_minimum_required):
+[0.053s]   Compatibility with CMake < 3.10 will be removed from a future version of
+[0.053s]   CMake.
+[0.053s] 
+[0.053s]   Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+[0.053s]   to tell CMake that the project requires at least <min> but has been updated
+[0.053s]   to work with policies introduced by <max> or earlier.
+[0.053s] 
+[0.053s] [0m
+[0.121s] -- The C compiler identification is GNU 11.4.0
+[0.170s] -- The CXX compiler identification is GNU 11.4.0
+[0.178s] -- Detecting C compiler ABI info
+[0.234s] -- Detecting C compiler ABI info - done
+[0.247s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.248s] -- Detecting C compile features
+[0.248s] -- Detecting C compile features - done
+[0.258s] -- Detecting CXX compiler ABI info
+[0.332s] -- Detecting CXX compiler ABI info - done
+[0.349s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.349s] -- Detecting CXX compile features
+[0.350s] -- Detecting CXX compile features - done
+[0.356s] -- Looking for sys/types.h
+[0.403s] -- Looking for sys/types.h - found
+[0.403s] -- Looking for inttypes.h
+[0.449s] -- Looking for inttypes.h - found
+[0.449s] -- Looking for stddef.h
+[0.497s] -- Looking for stddef.h - found
+[0.497s] -- Looking for stdint.h
+[0.540s] -- Looking for stdint.h - found
+[0.541s] -- Check size of off_t
+[0.588s] -- Check size of off_t - done
+[0.588s] -- Looking for fseeko
+[0.635s] -- Looking for fseeko - found
+[0.635s] -- Looking for ftello
+[0.682s] -- Looking for ftello - found
+[0.682s] -- Looking for PRIdMAX
+[0.727s] -- Looking for PRIdMAX - found
+[0.727s] -- 
+[0.727s] -- ========== qhull Build Information ==========
+[0.727s] -- Build Version:                             8.0.2
+[0.727s] -- Install Prefix (CMAKE_INSTALL_PREFIX):     /home/celian/workspace/src/mc_rtc/install
+[0.727s] -- Binary Directory (BIN_INSTALL_DIR):        bin
+[0.728s] -- Library Directory (LIB_INSTALL_DIR):       lib
+[0.728s] -- Include Directory (INCLUDE_INSTALL_DIR):   include
+[0.728s] -- Documentation Directory (DOC_INSTALL_DIR): share/doc/qhull
+[0.728s] -- Man Pages Directory (MAN_INSTALL_DIR):     share/man/man1
+[0.728s] -- Build Type (CMAKE_BUILD_TYPE):             
+[0.728s] -- Build static libraries:                    ON
+[0.728s] -- Build shared library:                      ON
+[0.728s] -- Use shared library for linking apps:       OFF
+[0.728s] -- To override these options, add -D{OPTION_NAME}=... to the cmake command
+[0.728s] --   Build the debug targets                  -DCMAKE_BUILD_TYPE=Debug
+[0.728s] -- 
+[0.728s] -- To build and install qhull, enter "make" and "make install"
+[0.728s] -- To smoketest qhull, enter "ctest"
+[0.728s] -- 
+[0.728s] -- Configuring done (0.7s)
+[0.739s] -- Generating done (0.0s)
+[0.740s] -- Build files have been written to: /home/celian/workspace/src/mc_rtc/build/qhull

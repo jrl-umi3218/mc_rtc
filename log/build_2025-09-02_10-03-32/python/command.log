@@ -1,0 +1,1 @@
+Invoking command in '/home/celian/workspace/src/mc_rtc/build/python': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/binding/python -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install

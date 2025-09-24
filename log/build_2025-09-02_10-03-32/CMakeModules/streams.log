@@ -1,0 +1,71 @@
+[0.043s] Invoking command in '/home/celian/workspace/src/mc_rtc/build/CMakeModules': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/CMakeModules -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install
+[0.070s] [33mCMake Warning (dev) in CMakeLists.txt:
+[0.071s]   No project() command is present.  The top-level CMakeLists.txt file must
+[0.071s]   contain a literal, direct call to the project() command.  Add a line of
+[0.071s]   code such as
+[0.071s] 
+[0.071s]     project(ProjectName)
+[0.071s] 
+[0.071s]   near the top of the file, but after cmake_minimum_required().
+[0.071s] 
+[0.071s]   CMake is pretending there is a "project(Project)" command on the first
+[0.071s]   line.
+[0.071s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.071s] [0m
+[0.071s] [33mCMake Warning (dev) in CMakeLists.txt:
+[0.071s]   cmake_minimum_required() should be called prior to this top-level project()
+[0.071s]   call.  Please see the cmake-commands(7) manual for usage documentation of
+[0.071s]   both commands.
+[0.071s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.071s] [0m
+[0.143s] -- The C compiler identification is GNU 11.4.0
+[0.211s] -- The CXX compiler identification is GNU 11.4.0
+[0.219s] -- Detecting C compiler ABI info
+[0.282s] -- Detecting C compiler ABI info - done
+[0.300s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.300s] -- Detecting C compile features
+[0.301s] -- Detecting C compile features - done
+[0.310s] -- Detecting CXX compiler ABI info
+[0.364s] -- Detecting CXX compiler ABI info - done
+[0.377s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.377s] -- Detecting CXX compile features
+[0.377s] -- Detecting CXX compile features - done
+[0.381s] [31mCMake Error at CMakeLists.txt:12 (install):
+[0.381s]   install FILES given no DESTINATION!
+[0.381s] Call Stack (most recent call first):
+[0.381s]   CMakeLists.txt:20 (add3rdpartymodule)
+[0.381s] 
+[0.381s] [0m
+[0.382s] [31mCMake Error at CMakeLists.txt:12 (install):
+[0.382s]   install FILES given no DESTINATION!
+[0.382s] Call Stack (most recent call first):
+[0.382s]   CMakeLists.txt:23 (add3rdpartymodule)
+[0.382s] 
+[0.382s] [0m
+[0.382s] [31mCMake Error at CMakeLists.txt:12 (install):
+[0.382s]   install FILES given no DESTINATION!
+[0.382s] Call Stack (most recent call first):
+[0.382s]   CMakeLists.txt:27 (add3rdpartymodule)
+[0.382s] 
+[0.382s] [0m
+[0.382s] [31mCMake Error at CMakeLists.txt:12 (install):
+[0.382s]   install FILES given no DESTINATION!
+[0.382s] Call Stack (most recent call first):
+[0.382s]   CMakeLists.txt:31 (add3rdpartymodule)
+[0.382s] 
+[0.382s] [0m
+[0.383s] [33mCMake Warning (dev) at CMakeLists.txt:34 (set):
+[0.383s]   Cannot set "PACKAGE_EXTRA_MACROS": current scope has no parent.
+[0.383s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.383s] [0m
+[0.383s] -- Configuring incomplete, errors occurred!
+[0.383s] [31mCMake Error in CMakeLists.txt:
+[0.383s]   No cmake_minimum_required command is present.  A line of code such as
+[0.383s] 
+[0.383s]     cmake_minimum_required(VERSION 4.0)
+[0.383s] 
+[0.383s]   should be added at the top of the file.  The version specified may be lower
+[0.383s]   if you wish to support older CMake versions for this project.  For more
+[0.383s]   information run "cmake --help-policy CMP0000".
+[0.383s] 
+[0.384s] [0m

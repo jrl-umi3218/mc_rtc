@@ -1,0 +1,6 @@
+source;share/mc_rtc_ros_plugin/hook/path.ps1
+source;share/mc_rtc_ros_plugin/hook/path.dsv
+source;share/mc_rtc_ros_plugin/hook/path.sh
+source;share/mc_rtc_ros_plugin/hook/pythonscriptspath.ps1
+source;share/mc_rtc_ros_plugin/hook/pythonscriptspath.dsv
+source;share/mc_rtc_ros_plugin/hook/pythonscriptspath.sh

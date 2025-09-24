@@ -1,0 +1,12 @@
+[0.034s] Invoking command in '/home/celian/workspace/src/mc_rtc/build/jrl-cmakemodules': CMAKE_PREFIX_PATH=/opt/ros/humble:${CMAKE_PREFIX_PATH} /usr/bin/cmake /home/celian/workspace/src/mc_rtc/cmake -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install
+[0.151s] -- The CXX compiler identification is GNU 11.4.0
+[0.162s] -- Detecting CXX compiler ABI info
+[0.240s] -- Detecting CXX compiler ABI info - done
+[0.259s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.260s] -- Detecting CXX compile features
+[0.260s] -- Detecting CXX compile features - done
+[0.275s] -- Configuring done (0.2s)
+[0.276s] -- Generating done (0.0s)
+[0.277s] -- Build files have been written to: /home/celian/workspace/src/mc_rtc/build/jrl-cmakemodules
+[0.281s] Invoked command in '/home/celian/workspace/src/mc_rtc/build/jrl-cmakemodules' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble:${CMAKE_PREFIX_PATH} /usr/bin/cmake /home/celian/workspace/src/mc_rtc/cmake -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install
+[0.286s] Invoking command in '/home/celian/workspace/src/mc_rtc/build/jrl-cmakemodules': CMAKE_PREFIX_PATH=/opt/ros/humble:${CMAKE_PREFIX_PATH} /usr/bin/cmake --build /home/celian/workspace/src/mc_rtc/build/jrl-cmakemodules -- -j22 -l22

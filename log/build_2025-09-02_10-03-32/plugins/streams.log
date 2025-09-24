@@ -1,0 +1,153 @@
+[0.032s] Invoking command in '/home/celian/workspace/src/mc_rtc/build/plugins': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/plugins -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install
+[0.057s] [33mCMake Warning (dev) in CMakeLists.txt:
+[0.057s]   No project() command is present.  The top-level CMakeLists.txt file must
+[0.057s]   contain a literal, direct call to the project() command.  Add a line of
+[0.057s]   code such as
+[0.057s] 
+[0.057s]     project(ProjectName)
+[0.057s] 
+[0.057s]   near the top of the file, but after cmake_minimum_required().
+[0.057s] 
+[0.057s]   CMake is pretending there is a "project(Project)" command on the first
+[0.057s]   line.
+[0.057s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.057s] [0m
+[0.057s] [33mCMake Warning (dev) in CMakeLists.txt:
+[0.057s]   cmake_minimum_required() should be called prior to this top-level project()
+[0.057s]   call.  Please see the cmake-commands(7) manual for usage documentation of
+[0.057s]   both commands.
+[0.057s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.057s] [0m
+[0.122s] -- The C compiler identification is GNU 11.4.0
+[0.174s] -- The CXX compiler identification is GNU 11.4.0
+[0.182s] -- Detecting C compiler ABI info
+[0.236s] -- Detecting C compiler ABI info - done
+[0.253s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.254s] -- Detecting C compile features
+[0.254s] -- Detecting C compile features - done
+[0.265s] -- Detecting CXX compiler ABI info
+[0.334s] -- Detecting CXX compiler ABI info - done
+[0.349s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.349s] -- Detecting CXX compile features
+[0.349s] -- Detecting CXX compile features - done
+[0.351s] [0mCMake Deprecation Warning at ROS/CMakeLists.txt:1 (cmake_minimum_required):
+[0.351s]   Compatibility with CMake < 3.10 will be removed from a future version of
+[0.351s]   CMake.
+[0.351s] 
+[0.351s]   Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+[0.351s]   to tell CMake that the project requires at least <min> but has been updated
+[0.351s]   to work with policies introduced by <max> or earlier.
+[0.351s] 
+[0.351s] [0m
+[0.353s] [33mCMake Warning (dev) at /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package):
+[0.353s]   Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
+[0.353s]   --help-policy CMP0167" for policy details.  Use the cmake_policy command to
+[0.353s]   set the policy and suppress this warning.
+[0.353s] 
+[0.353s] Call Stack (most recent call first):
+[0.353s]   /home/celian/workspace/install/lib/cmake/mc_rtc/mc_rtcConfig.cmake:152 (find_dependency)
+[0.354s]   ROS/CMakeLists.txt:18 (find_package)
+[0.354s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.354s] [0m
+[0.372s] -- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: filesystem timer stacktrace_backtrace
+[0.382s] -- Tasks not FOUND.
+[0.396s] [33mCMake Warning (dev) at /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package):
+[0.397s]   Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
+[0.397s]   --help-policy CMP0167" for policy details.  Use the cmake_policy command to
+[0.397s]   set the policy and suppress this warning.
+[0.397s] 
+[0.397s] Call Stack (most recent call first):
+[0.397s]   /home/celian/workspace/install/lib/cmake/RBDyn/RBDynConfig.cmake:148 (find_dependency)
+[0.397s]   /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)
+[0.397s]   /home/celian/workspace/install/lib/cmake/Tasks/TasksConfig.cmake:147 (find_dependency)
+[0.397s]   /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)
+[0.397s]   /home/celian/workspace/install/lib/cmake/mc_rtc/mc_rtcConfig.cmake:153 (find_dependency)
+[0.397s]   ROS/CMakeLists.txt:18 (find_package)
+[0.397s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.397s] [0m
+[0.403s] -- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: system
+[0.410s] -- Found RBDyn_TinyXML2: /usr/lib/x86_64-linux-gnu/libtinyxml2.so
+[0.414s] -- sch-core not FOUND.
+[0.414s] [33mCMake Warning (dev) at /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package):
+[0.414s]   Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
+[0.414s]   --help-policy CMP0167" for policy details.  Use the cmake_policy command to
+[0.414s]   set the policy and suppress this warning.
+[0.414s] 
+[0.414s] Call Stack (most recent call first):
+[0.414s]   /home/celian/workspace/install/lib/cmake/sch-core/sch-coreConfig.cmake:144 (find_dependency)
+[0.414s]   /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)
+[0.414s]   /home/celian/workspace/install/lib/cmake/Tasks/TasksConfig.cmake:148 (find_dependency)
+[0.415s]   /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)
+[0.415s]   /home/celian/workspace/install/lib/cmake/mc_rtc/mc_rtcConfig.cmake:153 (find_dependency)
+[0.415s]   ROS/CMakeLists.txt:18 (find_package)
+[0.415s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.415s] [0m
+[0.418s] -- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: serialization
+[0.421s] [33mCMake Warning (dev) at /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package):
+[0.422s]   Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
+[0.422s]   --help-policy CMP0167" for policy details.  Use the cmake_policy command to
+[0.422s]   set the policy and suppress this warning.
+[0.422s] 
+[0.422s] Call Stack (most recent call first):
+[0.422s]   /home/celian/workspace/install/lib/cmake/Tasks/TasksConfig.cmake:150 (find_dependency)
+[0.422s]   /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)
+[0.422s]   /home/celian/workspace/install/lib/cmake/mc_rtc/mc_rtcConfig.cmake:153 (find_dependency)
+[0.422s]   ROS/CMakeLists.txt:18 (find_package)
+[0.422s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.422s] [0m
+[0.424s] -- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: timer
+[0.433s] -- state-observation FOUND. state-observation at /home/celian/workspace/install/lib/libstate-observation.so
+[0.650s] -- Default C++ standard: 201703
+[0.650s] -- Minimal C++ standard upgraded to 14
+[0.650s] -- C++ standard sufficient: Minimal required 14, currently defined: 17
+[0.650s] -- CMAKE_CXX_STANDARD was not set: automatically set to currently defined standard 17
+[0.654s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.699s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.699s] -- Found Threads: TRUE
+[0.707s] -- Found PkgConfig: /usr/bin/pkg-config (found version "0.29.2")
+[0.715s] -- Checking for one of the modules 'nanomsg;libnanomsg'
+[0.749s] [0m-- Found nanomsg libraries: /usr/lib/x86_64-linux-gnu/libnanomsg.so[0m
+[0.749s] [0m-- Found nanomsg include directories: /usr/include[0m
+[0.750s] -- Found mc_rtc_3rd_party_ltdl: /usr/lib/x86_64-linux-gnu/libltdl.so
+[0.751s] -- Checking for module 'libnotify'
+[0.763s] --   Found libnotify, version 0.7.9
+[0.895s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter
+[1.008s] -- Found rosidl_generator_c: 3.1.7 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[1.012s] -- Found rosidl_adapter: 3.1.7 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[1.020s] -- Found rosidl_generator_cpp: 3.1.7 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[1.032s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.045s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.089s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[1.092s] -- Found rmw_fastrtps_cpp: 6.2.8 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[1.171s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")
+[1.192s] -- Found FastRTPS: /opt/ros/humble/include
+[1.226s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.277s] -- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)
+[1.306s] -- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+[1.331s] -- Found mc_rtc_msgs: 1.1.2 (/home/celian/workspace/src/catkin_data_ws/install/share/mc_rtc_msgs/cmake)
+[1.355s] -- Found tf2_ros: 0.25.15 (/opt/ros/humble/share/tf2_ros/cmake)
+[1.461s] -- Found rosbag2_cpp: 0.15.15 (/opt/ros/humble/share/rosbag2_cpp/cmake)
+[1.486s] -- C++ standard sufficient: Minimal required 14, currently defined: 17
+[1.486s] [33mCMake Warning (dev) at ROS/CMakeLists.txt:77 (install):
+[1.486s]   Policy CMP0177 is not set: install() DESTINATION paths are normalized.  Run
+[1.486s]   "cmake --help-policy CMP0177" for policy details.  Use the cmake_policy
+[1.486s]   command to set the policy and suppress this warning.
+[1.486s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[1.486s] [0m
+[1.487s] [33mCMake Warning (dev) at ROS/CMakeLists.txt:83 (install):
+[1.487s]   Policy CMP0177 is not set: install() DESTINATION paths are normalized.  Run
+[1.487s]   "cmake --help-policy CMP0177" for policy details.  Use the cmake_policy
+[1.487s]   command to set the policy and suppress this warning.
+[1.487s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[1.487s] [0m
+[1.487s] [31mCMake Error in CMakeLists.txt:
+[1.487s]   No cmake_minimum_required command is present.  A line of code such as
+[1.487s] 
+[1.487s]     cmake_minimum_required(VERSION 4.0)
+[1.487s] 
+[1.487s]   should be added at the top of the file.  The version specified may be lower
+[1.487s]   if you wish to support older CMake versions for this project.  For more
+[1.488s]   information run "cmake --help-policy CMP0000".
+[1.488s] 
+[1.488s] [0m
+[1.488s] -- Configuring incomplete, errors occurred!

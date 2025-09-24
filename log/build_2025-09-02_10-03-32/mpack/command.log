@@ -1,0 +1,1 @@
+Invoking command in '/home/celian/workspace/src/mc_rtc/build/mpack': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/3rd-party/mpack -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install

@@ -1,0 +1,73 @@
+[0mCMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+[0m
+[33mCMake Warning (dev) at /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package):
+  Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
+  --help-policy CMP0167" for policy details.  Use the cmake_policy command to
+  set the policy and suppress this warning.
+
+Call Stack (most recent call first):
+  /home/celian/workspace/install/lib/cmake/mc_rtc/mc_rtcConfig.cmake:152 (find_dependency)
+  CMakeLists.txt:18 (find_package)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+[0m
+[33mCMake Warning (dev) at /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package):
+  Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
+  --help-policy CMP0167" for policy details.  Use the cmake_policy command to
+  set the policy and suppress this warning.
+
+Call Stack (most recent call first):
+  /home/celian/workspace/install/lib/cmake/RBDyn/RBDynConfig.cmake:148 (find_dependency)
+  /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)
+  /home/celian/workspace/install/lib/cmake/Tasks/TasksConfig.cmake:147 (find_dependency)
+  /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)
+  /home/celian/workspace/install/lib/cmake/mc_rtc/mc_rtcConfig.cmake:153 (find_dependency)
+  CMakeLists.txt:18 (find_package)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+[0m
+[33mCMake Warning (dev) at /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package):
+  Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
+  --help-policy CMP0167" for policy details.  Use the cmake_policy command to
+  set the policy and suppress this warning.
+
+Call Stack (most recent call first):
+  /home/celian/workspace/install/lib/cmake/sch-core/sch-coreConfig.cmake:144 (find_dependency)
+  /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)
+  /home/celian/workspace/install/lib/cmake/Tasks/TasksConfig.cmake:148 (find_dependency)
+  /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)
+  /home/celian/workspace/install/lib/cmake/mc_rtc/mc_rtcConfig.cmake:153 (find_dependency)
+  CMakeLists.txt:18 (find_package)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+[0m
+[33mCMake Warning (dev) at /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package):
+  Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
+  --help-policy CMP0167" for policy details.  Use the cmake_policy command to
+  set the policy and suppress this warning.
+
+Call Stack (most recent call first):
+  /home/celian/workspace/install/lib/cmake/Tasks/TasksConfig.cmake:150 (find_dependency)
+  /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)
+  /home/celian/workspace/install/lib/cmake/mc_rtc/mc_rtcConfig.cmake:153 (find_dependency)
+  CMakeLists.txt:18 (find_package)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+[0m
+[0m-- Found nanomsg libraries: /usr/lib/x86_64-linux-gnu/libnanomsg.so[0m
+[0m-- Found nanomsg include directories: /usr/include[0m
+[33mCMake Warning (dev) at CMakeLists.txt:77 (install):
+  Policy CMP0177 is not set: install() DESTINATION paths are normalized.  Run
+  "cmake --help-policy CMP0177" for policy details.  Use the cmake_policy
+  command to set the policy and suppress this warning.
+This warning is for project developers.  Use -Wno-dev to suppress it.
+[0m
+[33mCMake Warning (dev) at CMakeLists.txt:83 (install):
+  Policy CMP0177 is not set: install() DESTINATION paths are normalized.  Run
+  "cmake --help-policy CMP0177" for policy details.  Use the cmake_policy
+  command to set the policy and suppress this warning.
+This warning is for project developers.  Use -Wno-dev to suppress it.
+[0m

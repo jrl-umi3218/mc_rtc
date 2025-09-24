@@ -1,0 +1,53 @@
+[0.031s] Invoking command in '/home/celian/workspace/src/mc_rtc/build/utils': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/utils -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install
+[0.326s] -- The C compiler identification is GNU 11.4.0
+[0.327s] -- The CXX compiler identification is GNU 11.4.0
+[0.327s] -- Detecting C compiler ABI info
+[0.327s] -- Detecting C compiler ABI info - done
+[0.327s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.327s] -- Detecting C compile features
+[0.327s] -- Detecting C compile features - done
+[0.327s] -- Detecting CXX compiler ABI info
+[0.330s] [33mCMake Warning (dev) in CMakeLists.txt:
+[0.330s]   No project() command is present.  The top-level CMakeLists.txt file must
+[0.330s]   contain a literal, direct call to the project() command.  Add a line of
+[0.330s]   code such as
+[0.330s] 
+[0.330s]     project(ProjectName)
+[0.330s] 
+[0.330s]   near the top of the file, but after cmake_minimum_required().
+[0.330s] 
+[0.330s]   CMake is pretending there is a "project(Project)" command on the first
+[0.330s]   line.
+[0.330s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.331s] [0m
+[0.331s] [33mCMake Warning (dev) in CMakeLists.txt:
+[0.331s]   cmake_minimum_required() should be called prior to this top-level project()
+[0.331s]   call.  Please see the cmake-commands(7) manual for usage documentation of
+[0.331s]   both commands.
+[0.331s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.331s] [0m
+[0.340s] -- Detecting CXX compiler ABI info - done
+[0.355s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.355s] -- Detecting CXX compile features
+[0.356s] -- Detecting CXX compile features - done
+[0.362s] [33mCMake Warning (dev) at CMakeLists.txt:15 (find_package):
+[0.362s]   Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
+[0.362s]   --help-policy CMP0167" for policy details.  Use the cmake_policy command to
+[0.362s]   set the policy and suppress this warning.
+[0.362s] 
+[0.362s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.362s] [0m
+[0.378s] -- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: program_options timer
+[0.396s] <string>:1: DeprecationWarning: The distutils package is deprecated and slated for removal in Python 3.12. Use setuptools or check PEP 632 for potential alternatives
+[0.397s] <string>:1: DeprecationWarning: The distutils.sysconfig module is deprecated, use sysconfig instead
+[0.401s] [31mCMake Error in CMakeLists.txt:
+[0.401s]   No cmake_minimum_required command is present.  A line of code such as
+[0.401s] 
+[0.401s]     cmake_minimum_required(VERSION 4.0)
+[0.401s] 
+[0.401s]   should be added at the top of the file.  The version specified may be lower
+[0.401s]   if you wish to support older CMake versions for this project.  For more
+[0.401s]   information run "cmake --help-policy CMP0000".
+[0.401s] 
+[0.401s] [0m
+[0.401s] -- Configuring incomplete, errors occurred!

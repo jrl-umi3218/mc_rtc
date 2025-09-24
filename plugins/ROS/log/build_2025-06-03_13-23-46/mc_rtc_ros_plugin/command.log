@@ -1,0 +1,6 @@
+Invoking command in '/home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/plugins/ROS -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin
+Invoked command in '/home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin' returned '0': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/plugins/ROS -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin
+Invoking command in '/home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin': /usr/bin/cmake --build /home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin -- -j22 -l22
+Invoked command in '/home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin' returned '0': /usr/bin/cmake --build /home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin -- -j22 -l22
+Invoking command in '/home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin': /usr/bin/cmake --install /home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin
+Invoked command in '/home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin' returned '0': /usr/bin/cmake --install /home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin

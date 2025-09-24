@@ -1,0 +1,2 @@
+Invoking command in '/home/celian/workspace/src/mc_rtc/build/observers': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/observers -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install
+Invoked command in '/home/celian/workspace/src/mc_rtc/build/observers' returned '1': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/observers -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install

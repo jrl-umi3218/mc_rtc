@@ -1,0 +1,424 @@
+[0.000000] (-) TimerEvent: {}
+[0.000341] (mc_rtc_ros_plugin) JobQueued: {'identifier': 'mc_rtc_ros_plugin', 'dependencies': OrderedDict()}
+[0.000384] (mc_rtc_ros_plugin) JobStarted: {'identifier': 'mc_rtc_ros_plugin'}
+[0.011984] (mc_rtc_ros_plugin) JobProgress: {'identifier': 'mc_rtc_ros_plugin', 'progress': 'cmake'}
+[0.012761] (mc_rtc_ros_plugin) Command: {'cmd': ['/usr/bin/cmake', '/home/celian/workspace/src/mc_rtc/plugins/ROS', '-DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin'], 'cwd': '/home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'celian'), ('LC_TIME', 'ja_JP.UTF-8'), ('ROS_PACKAGE_PATH', '/home/celian/workspace/src/catkin_ws/install/share'), ('XDG_SESSION_TYPE', 'x11'), ('GIT_ASKPASS', '/usr/share/code/resources/app/extensions/git/dist/askpass.sh'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/celian/workspace/install/lib:/home/celian/ros/ws_mujoco/install/mujoco_ros_utils/lib:/home/celian/workspace/src/catkin_ws/install/lib:/home/celian/workspace/src/catkin_data_ws/install/lib:/home/celian/workspace/install/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/celian'), ('CHROME_DESKTOP', 'code.desktop'), ('OLDPWD', '/home/celian/workspace/src/mc_rtc/plugins'), ('TERM_PROGRAM_VERSION', '1.99.3'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/code.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('VSCODE_GIT_ASKPASS_MAIN', '/usr/share/code/resources/app/extensions/git/dist/askpass-main.js'), ('LC_MONETARY', 'ja_JP.UTF-8'), ('VSCODE_GIT_ASKPASS_NODE', '/usr/share/code/code'), ('MANAGERPID', '2338'), ('SYSTEMD_EXEC_PID', '2860'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('RTM_IDL_DIR2', '/usr/share/openrtm-2.0/idl'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '8166'), ('COLCON_PREFIX_PATH', '/home/celian/ros/ws_mujoco/install:/home/celian/workspace/src/catkin_ws/install:/home/celian/workspace/src/catkin_data_ws/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'celian'), ('JOURNAL_STREAM', '8:3948'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('PKG_CONFIG_PATH', '/home/celian/workspace/install/lib/pkgconfig:/home/celian/ros/ws_mujoco/install/mujoco_ros_utils/lib/pkgconfig:/home/celian/workspace/src/catkin_ws/install/lib/x86_64-linux-gnu/pkgconfig:/home/celian/workspace/src/catkin_ws/install/lib/pkgconfig:/home/celian/workspace/install/lib/pkgconfig:'), ('XDG_SESSION_CLASS', 'user'), ('MUJOCO_HOME', '/home/celian/.mujoco/mujoco301'), ('USERNAME', 'celian'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('RTM_JAVA_ROOT', '/usr/lib/x86_64-linux-gnu/openrtm-2.0'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/home/celian/workspace/install/bin:/home/celian/.local/bin:/home/celian/workspace/src/catkin_ws/install/bin:/home/celian/workspace/install/bin:/opt/ros/humble/bin:/home/celian/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/celian-Alienware-m16-R2:@/tmp/.ICE-unix/2802,unix/celian-Alienware-m16-R2:/tmp/.ICE-unix/2802'), ('INVOCATION_ID', '769c9bacc9b94655a1783164eb3b8a5e'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ja_JP.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'Unity'), ('ROS_PARALLEL_JOBS', '-j22 -l22'), ('LC_TELEPHONE', 'ja_JP.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/run/user/1000/vscode-git-66e5d504e7.sock'), ('TERM_PROGRAM', 'vscode'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/celian/ros/ws_mujoco/install/mujoco_ros_utils:/home/celian/workspace/src/catkin_ws/install:/home/celian/workspace/src/catkin_data_ws/install:/opt/ros/humble'), ('ORIGINAL_XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ja_JP.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'ja_JP.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'ja_JP.UTF-8'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/celian/workspace/install/lib/python3.10/site-packages:/home/celian/ros/ws_mujoco/install/mujoco_ros_utils/local/lib/python3.10/dist-packages:/home/celian/workspace/src/catkin_data_ws/install/local/lib/python3.10/dist-packages:/home/celian/workspace/install/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'ja_JP.UTF-8'), ('LC_PAPER', 'ja_JP.UTF-8'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/celian/ros/ws_mujoco/install/mujoco_ros_utils:/home/celian/workspace/src/catkin_ws/install:/home/celian/workspace/src/catkin_data_ws/install')]), 'shell': False}
+[0.023445] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[0mCMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):\n'}
+[0.023582] (mc_rtc_ros_plugin) StderrLine: {'line': b'  Compatibility with CMake < 3.10 will be removed from a future version of\n'}
+[0.023645] (mc_rtc_ros_plugin) StderrLine: {'line': b'  CMake.\n'}
+[0.023702] (mc_rtc_ros_plugin) StderrLine: {'line': b'\n'}
+[0.023757] (mc_rtc_ros_plugin) StderrLine: {'line': b'  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax\n'}
+[0.023811] (mc_rtc_ros_plugin) StderrLine: {'line': b'  to tell CMake that the project requires at least <min> but has been updated\n'}
+[0.023866] (mc_rtc_ros_plugin) StderrLine: {'line': b'  to work with policies introduced by <max> or earlier.\n'}
+[0.023929] (mc_rtc_ros_plugin) StderrLine: {'line': b'\n'}
+[0.023983] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[0m\n'}
+[0.069961] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[0.074989] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.099601] (-) TimerEvent: {}
+[0.126865] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.139268] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[0.139578] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.139915] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.148288] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package):\n'}
+[0.148514] (mc_rtc_ros_plugin) StderrLine: {'line': b'  Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake\n'}
+[0.148603] (mc_rtc_ros_plugin) StderrLine: {'line': b'  --help-policy CMP0167" for policy details.  Use the cmake_policy command to\n'}
+[0.148680] (mc_rtc_ros_plugin) StderrLine: {'line': b'  set the policy and suppress this warning.\n'}
+[0.148755] (mc_rtc_ros_plugin) StderrLine: {'line': b'\n'}
+[0.148827] (mc_rtc_ros_plugin) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[0.148912] (mc_rtc_ros_plugin) StderrLine: {'line': b'  /home/celian/workspace/install/lib/cmake/mc_rtc/mc_rtcConfig.cmake:152 (find_dependency)\n'}
+[0.148989] (mc_rtc_ros_plugin) StderrLine: {'line': b'  CMakeLists.txt:18 (find_package)\n'}
+[0.149060] (mc_rtc_ros_plugin) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[0.149131] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[0m\n'}
+[0.157266] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: filesystem timer stacktrace_backtrace\n'}
+[0.167477] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Tasks not FOUND.\n'}
+[0.173668] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package):\n'}
+[0.173815] (mc_rtc_ros_plugin) StderrLine: {'line': b'  Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake\n'}
+[0.173954] (mc_rtc_ros_plugin) StderrLine: {'line': b'  --help-policy CMP0167" for policy details.  Use the cmake_policy command to\n'}
+[0.174016] (mc_rtc_ros_plugin) StderrLine: {'line': b'  set the policy and suppress this warning.\n'}
+[0.174046] (mc_rtc_ros_plugin) StderrLine: {'line': b'\n'}
+[0.174071] (mc_rtc_ros_plugin) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[0.174096] (mc_rtc_ros_plugin) StderrLine: {'line': b'  /home/celian/workspace/install/lib/cmake/RBDyn/RBDynConfig.cmake:148 (find_dependency)\n'}
+[0.174121] (mc_rtc_ros_plugin) StderrLine: {'line': b'  /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)\n'}
+[0.174144] (mc_rtc_ros_plugin) StderrLine: {'line': b'  /home/celian/workspace/install/lib/cmake/Tasks/TasksConfig.cmake:147 (find_dependency)\n'}
+[0.174166] (mc_rtc_ros_plugin) StderrLine: {'line': b'  /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)\n'}
+[0.174188] (mc_rtc_ros_plugin) StderrLine: {'line': b'  /home/celian/workspace/install/lib/cmake/mc_rtc/mc_rtcConfig.cmake:153 (find_dependency)\n'}
+[0.174210] (mc_rtc_ros_plugin) StderrLine: {'line': b'  CMakeLists.txt:18 (find_package)\n'}
+[0.174232] (mc_rtc_ros_plugin) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[0.174254] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[0m\n'}
+[0.176925] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: system\n'}
+[0.178621] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found RBDyn_TinyXML2: /usr/lib/x86_64-linux-gnu/libtinyxml2.so\n'}
+[0.180634] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- sch-core not FOUND.\n'}
+[0.180700] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package):\n'}
+[0.180740] (mc_rtc_ros_plugin) StderrLine: {'line': b'  Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake\n'}
+[0.180764] (mc_rtc_ros_plugin) StderrLine: {'line': b'  --help-policy CMP0167" for policy details.  Use the cmake_policy command to\n'}
+[0.180785] (mc_rtc_ros_plugin) StderrLine: {'line': b'  set the policy and suppress this warning.\n'}
+[0.180807] (mc_rtc_ros_plugin) StderrLine: {'line': b'\n'}
+[0.180829] (mc_rtc_ros_plugin) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[0.180851] (mc_rtc_ros_plugin) StderrLine: {'line': b'  /home/celian/workspace/install/lib/cmake/sch-core/sch-coreConfig.cmake:144 (find_dependency)\n'}
+[0.180872] (mc_rtc_ros_plugin) StderrLine: {'line': b'  /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)\n'}
+[0.180898] (mc_rtc_ros_plugin) StderrLine: {'line': b'  /home/celian/workspace/install/lib/cmake/Tasks/TasksConfig.cmake:148 (find_dependency)\n'}
+[0.180920] (mc_rtc_ros_plugin) StderrLine: {'line': b'  /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)\n'}
+[0.180942] (mc_rtc_ros_plugin) StderrLine: {'line': b'  /home/celian/workspace/install/lib/cmake/mc_rtc/mc_rtcConfig.cmake:153 (find_dependency)\n'}
+[0.180964] (mc_rtc_ros_plugin) StderrLine: {'line': b'  CMakeLists.txt:18 (find_package)\n'}
+[0.180985] (mc_rtc_ros_plugin) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[0.181010] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[0m\n'}
+[0.183890] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: serialization\n'}
+[0.185591] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package):\n'}
+[0.185624] (mc_rtc_ros_plugin) StderrLine: {'line': b'  Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake\n'}
+[0.185646] (mc_rtc_ros_plugin) StderrLine: {'line': b'  --help-policy CMP0167" for policy details.  Use the cmake_policy command to\n'}
+[0.185668] (mc_rtc_ros_plugin) StderrLine: {'line': b'  set the policy and suppress this warning.\n'}
+[0.185690] (mc_rtc_ros_plugin) StderrLine: {'line': b'\n'}
+[0.185712] (mc_rtc_ros_plugin) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[0.185733] (mc_rtc_ros_plugin) StderrLine: {'line': b'  /home/celian/workspace/install/lib/cmake/Tasks/TasksConfig.cmake:150 (find_dependency)\n'}
+[0.185755] (mc_rtc_ros_plugin) StderrLine: {'line': b'  /usr/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)\n'}
+[0.185777] (mc_rtc_ros_plugin) StderrLine: {'line': b'  /home/celian/workspace/install/lib/cmake/mc_rtc/mc_rtcConfig.cmake:153 (find_dependency)\n'}
+[0.185799] (mc_rtc_ros_plugin) StderrLine: {'line': b'  CMakeLists.txt:18 (find_package)\n'}
+[0.185822] (mc_rtc_ros_plugin) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[0.185843] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[0m\n'}
+[0.188086] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: timer\n'}
+[0.192491] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- state-observation FOUND. state-observation at /home/celian/workspace/install/lib/libstate-observation.so\n'}
+[0.199652] (-) TimerEvent: {}
+[0.299873] (-) TimerEvent: {}
+[0.385896] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Default C++ standard: 201703\n'}
+[0.386071] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Minimal C++ standard upgraded to 14\n'}
+[0.386187] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- C++ standard sufficient: Minimal required 14, currently defined: 17\n'}
+[0.386244] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- CMAKE_CXX_STANDARD was not set: automatically set to currently defined standard 17\n'}
+[0.390525] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[0.399910] (-) TimerEvent: {}
+[0.448545] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[0.449727] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found Threads: TRUE\n'}
+[0.456493] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found PkgConfig: /usr/bin/pkg-config (found version "0.29.2")\n'}
+[0.463858] (mc_rtc_ros_plugin) StdoutLine: {'line': b"-- Checking for one of the modules 'nanomsg;libnanomsg'\n"}
+[0.499999] (-) TimerEvent: {}
+[0.503154] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[0m-- Found nanomsg libraries: /usr/lib/x86_64-linux-gnu/libnanomsg.so\x1b[0m\n'}
+[0.503271] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[0m-- Found nanomsg include directories: /usr/include\x1b[0m\n'}
+[0.504462] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found mc_rtc_3rd_party_ltdl: /usr/lib/x86_64-linux-gnu/libltdl.so\n'}
+[0.504688] (mc_rtc_ros_plugin) StdoutLine: {'line': b"-- Checking for module 'libnotify'\n"}
+[0.514538] (mc_rtc_ros_plugin) StdoutLine: {'line': b'--   Found libnotify, version 0.7.9\n'}
+[0.600134] (-) TimerEvent: {}
+[0.662182] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter\n'}
+[0.700312] (-) TimerEvent: {}
+[0.756765] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.6 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[0.760393] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.6 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.766322] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.6 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[0.774551] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.785638] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.800425] (-) TimerEvent: {}
+[0.819032] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[0.820864] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[0.890703] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")\n'}
+[0.900489] (-) TimerEvent: {}
+[0.911574] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/humble/include\n'}
+[0.939603] (mc_rtc_ros_plugin) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[0.980570] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found nav_msgs: 4.8.0 (/opt/ros/humble/share/nav_msgs/cmake)\n'}
+[1.000583] (-) TimerEvent: {}
+[1.005708] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found sensor_msgs: 4.8.0 (/opt/ros/humble/share/sensor_msgs/cmake)\n'}
+[1.028136] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found mc_rtc_msgs: 1.1.1 (/home/celian/workspace/src/catkin_data_ws/install/share/mc_rtc_msgs/cmake)\n'}
+[1.049624] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found tf2_ros: 0.25.12 (/opt/ros/humble/share/tf2_ros/cmake)\n'}
+[1.100680] (-) TimerEvent: {}
+[1.136649] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Found rosbag2_cpp: 0.15.14 (/opt/ros/humble/share/rosbag2_cpp/cmake)\n'}
+[1.156544] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- C++ standard sufficient: Minimal required 14, currently defined: 17\n'}
+[1.157105] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at CMakeLists.txt:77 (install):\n'}
+[1.157242] (mc_rtc_ros_plugin) StderrLine: {'line': b'  Policy CMP0177 is not set: install() DESTINATION paths are normalized.  Run\n'}
+[1.157317] (mc_rtc_ros_plugin) StderrLine: {'line': b'  "cmake --help-policy CMP0177" for policy details.  Use the cmake_policy\n'}
+[1.157414] (mc_rtc_ros_plugin) StderrLine: {'line': b'  command to set the policy and suppress this warning.\n'}
+[1.157538] (mc_rtc_ros_plugin) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[1.157599] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[0m\n'}
+[1.157656] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at CMakeLists.txt:83 (install):\n'}
+[1.157711] (mc_rtc_ros_plugin) StderrLine: {'line': b'  Policy CMP0177 is not set: install() DESTINATION paths are normalized.  Run\n'}
+[1.157768] (mc_rtc_ros_plugin) StderrLine: {'line': b'  "cmake --help-policy CMP0177" for policy details.  Use the cmake_policy\n'}
+[1.157822] (mc_rtc_ros_plugin) StderrLine: {'line': b'  command to set the policy and suppress this warning.\n'}
+[1.157892] (mc_rtc_ros_plugin) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[1.157953] (mc_rtc_ros_plugin) StderrLine: {'line': b'\x1b[0m\n'}
+[1.158007] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Configuring done (1.1s)\n'}
+[1.180469] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Generating done (0.0s)\n'}
+[1.186489] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Build files have been written to: /home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin\n'}
+[1.196088] (mc_rtc_ros_plugin) CommandEnded: {'returncode': 0}
+[1.196547] (mc_rtc_ros_plugin) JobProgress: {'identifier': 'mc_rtc_ros_plugin', 'progress': 'build'}
+[1.196579] (mc_rtc_ros_plugin) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin', '--', '-j22', '-l22'], 'cwd': '/home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'celian'), ('LC_TIME', 'ja_JP.UTF-8'), ('ROS_PACKAGE_PATH', '/home/celian/workspace/src/catkin_ws/install/share'), ('XDG_SESSION_TYPE', 'x11'), ('GIT_ASKPASS', '/usr/share/code/resources/app/extensions/git/dist/askpass.sh'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/celian/workspace/install/lib:/home/celian/ros/ws_mujoco/install/mujoco_ros_utils/lib:/home/celian/workspace/src/catkin_ws/install/lib:/home/celian/workspace/src/catkin_data_ws/install/lib:/home/celian/workspace/install/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/celian'), ('CHROME_DESKTOP', 'code.desktop'), ('OLDPWD', '/home/celian/workspace/src/mc_rtc/plugins'), ('TERM_PROGRAM_VERSION', '1.99.3'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/code.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('VSCODE_GIT_ASKPASS_MAIN', '/usr/share/code/resources/app/extensions/git/dist/askpass-main.js'), ('LC_MONETARY', 'ja_JP.UTF-8'), ('VSCODE_GIT_ASKPASS_NODE', '/usr/share/code/code'), ('MANAGERPID', '2338'), ('SYSTEMD_EXEC_PID', '2860'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('RTM_IDL_DIR2', '/usr/share/openrtm-2.0/idl'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '8166'), ('COLCON_PREFIX_PATH', '/home/celian/ros/ws_mujoco/install:/home/celian/workspace/src/catkin_ws/install:/home/celian/workspace/src/catkin_data_ws/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'celian'), ('JOURNAL_STREAM', '8:3948'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('PKG_CONFIG_PATH', '/home/celian/workspace/install/lib/pkgconfig:/home/celian/ros/ws_mujoco/install/mujoco_ros_utils/lib/pkgconfig:/home/celian/workspace/src/catkin_ws/install/lib/x86_64-linux-gnu/pkgconfig:/home/celian/workspace/src/catkin_ws/install/lib/pkgconfig:/home/celian/workspace/install/lib/pkgconfig:'), ('XDG_SESSION_CLASS', 'user'), ('MUJOCO_HOME', '/home/celian/.mujoco/mujoco301'), ('USERNAME', 'celian'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('RTM_JAVA_ROOT', '/usr/lib/x86_64-linux-gnu/openrtm-2.0'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/home/celian/workspace/install/bin:/home/celian/.local/bin:/home/celian/workspace/src/catkin_ws/install/bin:/home/celian/workspace/install/bin:/opt/ros/humble/bin:/home/celian/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/celian-Alienware-m16-R2:@/tmp/.ICE-unix/2802,unix/celian-Alienware-m16-R2:/tmp/.ICE-unix/2802'), ('INVOCATION_ID', '769c9bacc9b94655a1783164eb3b8a5e'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ja_JP.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'Unity'), ('ROS_PARALLEL_JOBS', '-j22 -l22'), ('LC_TELEPHONE', 'ja_JP.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/run/user/1000/vscode-git-66e5d504e7.sock'), ('TERM_PROGRAM', 'vscode'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/celian/ros/ws_mujoco/install/mujoco_ros_utils:/home/celian/workspace/src/catkin_ws/install:/home/celian/workspace/src/catkin_data_ws/install:/opt/ros/humble'), ('ORIGINAL_XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ja_JP.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'ja_JP.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'ja_JP.UTF-8'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/celian/workspace/install/lib/python3.10/site-packages:/home/celian/ros/ws_mujoco/install/mujoco_ros_utils/local/lib/python3.10/dist-packages:/home/celian/workspace/src/catkin_data_ws/install/local/lib/python3.10/dist-packages:/home/celian/workspace/install/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'ja_JP.UTF-8'), ('LC_PAPER', 'ja_JP.UTF-8'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/celian/ros/ws_mujoco/install/mujoco_ros_utils:/home/celian/workspace/src/catkin_ws/install:/home/celian/workspace/src/catkin_data_ws/install')]), 'shell': False}
+[1.200767] (-) TimerEvent: {}
+[1.219966] (mc_rtc_ros_plugin) StdoutLine: {'line': b'[ 10%] \x1b[32mBuilding CXX object CMakeFiles/mc_rtc_ros.dir/src/mc_rtc_ros/ros.cpp.o\x1b[0m\n'}
+[1.300932] (-) TimerEvent: {}
+[1.401411] (-) TimerEvent: {}
+[1.501866] (-) TimerEvent: {}
+[1.602403] (-) TimerEvent: {}
+[1.702729] (-) TimerEvent: {}
+[1.803069] (-) TimerEvent: {}
+[1.903404] (-) TimerEvent: {}
+[2.003736] (-) TimerEvent: {}
+[2.104106] (-) TimerEvent: {}
+[2.204587] (-) TimerEvent: {}
+[2.305019] (-) TimerEvent: {}
+[2.405369] (-) TimerEvent: {}
+[2.505694] (-) TimerEvent: {}
+[2.606016] (-) TimerEvent: {}
+[2.706345] (-) TimerEvent: {}
+[2.806679] (-) TimerEvent: {}
+[2.907023] (-) TimerEvent: {}
+[3.007356] (-) TimerEvent: {}
+[3.107692] (-) TimerEvent: {}
+[3.208035] (-) TimerEvent: {}
+[3.308354] (-) TimerEvent: {}
+[3.408695] (-) TimerEvent: {}
+[3.509051] (-) TimerEvent: {}
+[3.609385] (-) TimerEvent: {}
+[3.709737] (-) TimerEvent: {}
+[3.810082] (-) TimerEvent: {}
+[3.910409] (-) TimerEvent: {}
+[4.010735] (-) TimerEvent: {}
+[4.111077] (-) TimerEvent: {}
+[4.211409] (-) TimerEvent: {}
+[4.311740] (-) TimerEvent: {}
+[4.412100] (-) TimerEvent: {}
+[4.512443] (-) TimerEvent: {}
+[4.612774] (-) TimerEvent: {}
+[4.713156] (-) TimerEvent: {}
+[4.813491] (-) TimerEvent: {}
+[4.913844] (-) TimerEvent: {}
+[5.014204] (-) TimerEvent: {}
+[5.114517] (-) TimerEvent: {}
+[5.214875] (-) TimerEvent: {}
+[5.315225] (-) TimerEvent: {}
+[5.415615] (-) TimerEvent: {}
+[5.516046] (-) TimerEvent: {}
+[5.616370] (-) TimerEvent: {}
+[5.716719] (-) TimerEvent: {}
+[5.817064] (-) TimerEvent: {}
+[5.917401] (-) TimerEvent: {}
+[6.017728] (-) TimerEvent: {}
+[6.118081] (-) TimerEvent: {}
+[6.218402] (-) TimerEvent: {}
+[6.318729] (-) TimerEvent: {}
+[6.419074] (-) TimerEvent: {}
+[6.519461] (-) TimerEvent: {}
+[6.619923] (-) TimerEvent: {}
+[6.720382] (-) TimerEvent: {}
+[6.820908] (-) TimerEvent: {}
+[6.921386] (-) TimerEvent: {}
+[7.021789] (-) TimerEvent: {}
+[7.122114] (-) TimerEvent: {}
+[7.222428] (-) TimerEvent: {}
+[7.322734] (-) TimerEvent: {}
+[7.423053] (-) TimerEvent: {}
+[7.523371] (-) TimerEvent: {}
+[7.623683] (-) TimerEvent: {}
+[7.723998] (-) TimerEvent: {}
+[7.824311] (-) TimerEvent: {}
+[7.924630] (-) TimerEvent: {}
+[8.024961] (-) TimerEvent: {}
+[8.125276] (-) TimerEvent: {}
+[8.225605] (-) TimerEvent: {}
+[8.326012] (-) TimerEvent: {}
+[8.426393] (-) TimerEvent: {}
+[8.526722] (-) TimerEvent: {}
+[8.627056] (-) TimerEvent: {}
+[8.727391] (-) TimerEvent: {}
+[8.827751] (-) TimerEvent: {}
+[8.928232] (-) TimerEvent: {}
+[9.028614] (-) TimerEvent: {}
+[9.128964] (-) TimerEvent: {}
+[9.166081] (mc_rtc_ros_plugin) StdoutLine: {'line': b'[ 20%] \x1b[32m\x1b[1mLinking CXX shared library libmc_rtc_ros.so\x1b[0m\n'}
+[9.229070] (-) TimerEvent: {}
+[9.329385] (-) TimerEvent: {}
+[9.429735] (-) TimerEvent: {}
+[9.483769] (mc_rtc_ros_plugin) StdoutLine: {'line': b'[ 20%] Built target mc_rtc_ros\n'}
+[9.494786] (mc_rtc_ros_plugin) StdoutLine: {'line': b'[ 30%] \x1b[32mBuilding CXX object CMakeFiles/mc_tasks_ros.dir/src/mc_tasks_ros/LookAtTFTask.cpp.o\x1b[0m\n'}
+[9.495138] (mc_rtc_ros_plugin) StdoutLine: {'line': b'[ 40%] \x1b[32mBuilding CXX object CMakeFiles/mc_bin_to_rosbag.dir/utils/mc_bin_to_rosbag.cpp.o\x1b[0m\n'}
+[9.495326] (mc_rtc_ros_plugin) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/mc_bin_to_rosbag.dir/utils/mc_bin_to_rosbag_main.cpp.o\x1b[0m\n'}
+[9.529904] (-) TimerEvent: {}
+[9.630294] (-) TimerEvent: {}
+[9.730710] (-) TimerEvent: {}
+[9.831218] (-) TimerEvent: {}
+[9.931494] (-) TimerEvent: {}
+[10.031806] (-) TimerEvent: {}
+[10.132147] (-) TimerEvent: {}
+[10.232470] (-) TimerEvent: {}
+[10.332801] (-) TimerEvent: {}
+[10.433126] (-) TimerEvent: {}
+[10.533410] (-) TimerEvent: {}
+[10.633676] (-) TimerEvent: {}
+[10.733954] (-) TimerEvent: {}
+[10.834261] (-) TimerEvent: {}
+[10.934555] (-) TimerEvent: {}
+[11.034823] (-) TimerEvent: {}
+[11.135144] (-) TimerEvent: {}
+[11.235491] (-) TimerEvent: {}
+[11.335864] (-) TimerEvent: {}
+[11.436123] (-) TimerEvent: {}
+[11.536364] (-) TimerEvent: {}
+[11.636605] (-) TimerEvent: {}
+[11.736906] (-) TimerEvent: {}
+[11.837172] (-) TimerEvent: {}
+[11.937442] (-) TimerEvent: {}
+[12.037753] (-) TimerEvent: {}
+[12.138064] (-) TimerEvent: {}
+[12.238316] (-) TimerEvent: {}
+[12.338523] (-) TimerEvent: {}
+[12.438829] (-) TimerEvent: {}
+[12.539165] (-) TimerEvent: {}
+[12.639464] (-) TimerEvent: {}
+[12.739765] (-) TimerEvent: {}
+[12.840051] (-) TimerEvent: {}
+[12.940334] (-) TimerEvent: {}
+[13.040611] (-) TimerEvent: {}
+[13.140938] (-) TimerEvent: {}
+[13.218445] (mc_rtc_ros_plugin) StdoutLine: {'line': b'[ 60%] \x1b[32m\x1b[1mLinking CXX executable mc_bin_to_rosbag\x1b[0m\n'}
+[13.241035] (-) TimerEvent: {}
+[13.341302] (-) TimerEvent: {}
+[13.400563] (mc_rtc_ros_plugin) StdoutLine: {'line': b'[ 60%] Built target mc_bin_to_rosbag\n'}
+[13.441376] (-) TimerEvent: {}
+[13.541646] (-) TimerEvent: {}
+[13.641967] (-) TimerEvent: {}
+[13.742302] (-) TimerEvent: {}
+[13.842630] (-) TimerEvent: {}
+[13.942967] (-) TimerEvent: {}
+[14.043299] (-) TimerEvent: {}
+[14.143675] (-) TimerEvent: {}
+[14.244124] (-) TimerEvent: {}
+[14.344384] (-) TimerEvent: {}
+[14.444724] (-) TimerEvent: {}
+[14.545114] (-) TimerEvent: {}
+[14.645527] (-) TimerEvent: {}
+[14.745859] (-) TimerEvent: {}
+[14.846200] (-) TimerEvent: {}
+[14.946529] (-) TimerEvent: {}
+[15.046858] (-) TimerEvent: {}
+[15.147193] (-) TimerEvent: {}
+[15.247526] (-) TimerEvent: {}
+[15.347867] (-) TimerEvent: {}
+[15.448234] (-) TimerEvent: {}
+[15.548564] (-) TimerEvent: {}
+[15.648909] (-) TimerEvent: {}
+[15.749213] (-) TimerEvent: {}
+[15.849535] (-) TimerEvent: {}
+[15.949853] (-) TimerEvent: {}
+[16.050184] (-) TimerEvent: {}
+[16.150501] (-) TimerEvent: {}
+[16.250819] (-) TimerEvent: {}
+[16.351148] (-) TimerEvent: {}
+[16.451507] (-) TimerEvent: {}
+[16.551929] (-) TimerEvent: {}
+[16.652277] (-) TimerEvent: {}
+[16.721149] (mc_rtc_ros_plugin) StdoutLine: {'line': b'[ 70%] \x1b[32m\x1b[1mLinking CXX shared library libmc_tasks_ros.so\x1b[0m\n'}
+[16.752460] (-) TimerEvent: {}
+[16.852835] (-) TimerEvent: {}
+[16.953182] (-) TimerEvent: {}
+[16.972843] (mc_rtc_ros_plugin) StdoutLine: {'line': b'[ 70%] Built target mc_tasks_ros\n'}
+[16.982732] (mc_rtc_ros_plugin) StdoutLine: {'line': b'[ 80%] \x1b[32mBuilding CXX object CMakeFiles/ROS.dir/src/plugin/ROS.cpp.o\x1b[0m\n'}
+[16.983100] (mc_rtc_ros_plugin) StdoutLine: {'line': b'[ 90%] \x1b[32mBuilding CXX object CMakeFiles/ROS.dir/src/plugin/Services.cpp.o\x1b[0m\n'}
+[17.053283] (-) TimerEvent: {}
+[17.153594] (-) TimerEvent: {}
+[17.253896] (-) TimerEvent: {}
+[17.354285] (-) TimerEvent: {}
+[17.454665] (-) TimerEvent: {}
+[17.555077] (-) TimerEvent: {}
+[17.655454] (-) TimerEvent: {}
+[17.755814] (-) TimerEvent: {}
+[17.856194] (-) TimerEvent: {}
+[17.956566] (-) TimerEvent: {}
+[18.056993] (-) TimerEvent: {}
+[18.157312] (-) TimerEvent: {}
+[18.257632] (-) TimerEvent: {}
+[18.357944] (-) TimerEvent: {}
+[18.458237] (-) TimerEvent: {}
+[18.558467] (-) TimerEvent: {}
+[18.658740] (-) TimerEvent: {}
+[18.758955] (-) TimerEvent: {}
+[18.859250] (-) TimerEvent: {}
+[18.959538] (-) TimerEvent: {}
+[19.059790] (-) TimerEvent: {}
+[19.160125] (-) TimerEvent: {}
+[19.260433] (-) TimerEvent: {}
+[19.360739] (-) TimerEvent: {}
+[19.461072] (-) TimerEvent: {}
+[19.561406] (-) TimerEvent: {}
+[19.661718] (-) TimerEvent: {}
+[19.761988] (-) TimerEvent: {}
+[19.862302] (-) TimerEvent: {}
+[19.962630] (-) TimerEvent: {}
+[20.062962] (-) TimerEvent: {}
+[20.163287] (-) TimerEvent: {}
+[20.263599] (-) TimerEvent: {}
+[20.363927] (-) TimerEvent: {}
+[20.464333] (-) TimerEvent: {}
+[20.564785] (-) TimerEvent: {}
+[20.665111] (-) TimerEvent: {}
+[20.765489] (-) TimerEvent: {}
+[20.865922] (-) TimerEvent: {}
+[20.966239] (-) TimerEvent: {}
+[21.066561] (-) TimerEvent: {}
+[21.166859] (-) TimerEvent: {}
+[21.267151] (-) TimerEvent: {}
+[21.367384] (-) TimerEvent: {}
+[21.467619] (-) TimerEvent: {}
+[21.567892] (-) TimerEvent: {}
+[21.668195] (-) TimerEvent: {}
+[21.768485] (-) TimerEvent: {}
+[21.868752] (-) TimerEvent: {}
+[21.969027] (-) TimerEvent: {}
+[22.069277] (-) TimerEvent: {}
+[22.169587] (-) TimerEvent: {}
+[22.269916] (-) TimerEvent: {}
+[22.370280] (-) TimerEvent: {}
+[22.470605] (-) TimerEvent: {}
+[22.570899] (-) TimerEvent: {}
+[22.671218] (-) TimerEvent: {}
+[22.771541] (-) TimerEvent: {}
+[22.871869] (-) TimerEvent: {}
+[22.972176] (-) TimerEvent: {}
+[23.072473] (-) TimerEvent: {}
+[23.172782] (-) TimerEvent: {}
+[23.273122] (-) TimerEvent: {}
+[23.373428] (-) TimerEvent: {}
+[23.473732] (-) TimerEvent: {}
+[23.574043] (-) TimerEvent: {}
+[23.674344] (-) TimerEvent: {}
+[23.774649] (-) TimerEvent: {}
+[23.874961] (-) TimerEvent: {}
+[23.975274] (-) TimerEvent: {}
+[24.075589] (-) TimerEvent: {}
+[24.175892] (-) TimerEvent: {}
+[24.276185] (-) TimerEvent: {}
+[24.376491] (-) TimerEvent: {}
+[24.476765] (-) TimerEvent: {}
+[24.576959] (-) TimerEvent: {}
+[24.677203] (-) TimerEvent: {}
+[24.777522] (-) TimerEvent: {}
+[24.877836] (-) TimerEvent: {}
+[24.978188] (-) TimerEvent: {}
+[25.024193] (mc_rtc_ros_plugin) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX shared library ROS.so\x1b[0m\n'}
+[25.078363] (-) TimerEvent: {}
+[25.178801] (-) TimerEvent: {}
+[25.279135] (-) TimerEvent: {}
+[25.379462] (-) TimerEvent: {}
+[25.379864] (mc_rtc_ros_plugin) StdoutLine: {'line': b'[100%] Built target ROS\n'}
+[25.385202] (mc_rtc_ros_plugin) CommandEnded: {'returncode': 0}
+[25.386381] (mc_rtc_ros_plugin) JobProgress: {'identifier': 'mc_rtc_ros_plugin', 'progress': 'install'}
+[25.390664] (mc_rtc_ros_plugin) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin'], 'cwd': '/home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'celian'), ('LC_TIME', 'ja_JP.UTF-8'), ('ROS_PACKAGE_PATH', '/home/celian/workspace/src/catkin_ws/install/share'), ('XDG_SESSION_TYPE', 'x11'), ('GIT_ASKPASS', '/usr/share/code/resources/app/extensions/git/dist/askpass.sh'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/celian/workspace/install/lib:/home/celian/ros/ws_mujoco/install/mujoco_ros_utils/lib:/home/celian/workspace/src/catkin_ws/install/lib:/home/celian/workspace/src/catkin_data_ws/install/lib:/home/celian/workspace/install/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/celian'), ('CHROME_DESKTOP', 'code.desktop'), ('OLDPWD', '/home/celian/workspace/src/mc_rtc/plugins'), ('TERM_PROGRAM_VERSION', '1.99.3'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/code.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('VSCODE_GIT_ASKPASS_MAIN', '/usr/share/code/resources/app/extensions/git/dist/askpass-main.js'), ('LC_MONETARY', 'ja_JP.UTF-8'), ('VSCODE_GIT_ASKPASS_NODE', '/usr/share/code/code'), ('MANAGERPID', '2338'), ('SYSTEMD_EXEC_PID', '2860'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('RTM_IDL_DIR2', '/usr/share/openrtm-2.0/idl'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '8166'), ('COLCON_PREFIX_PATH', '/home/celian/ros/ws_mujoco/install:/home/celian/workspace/src/catkin_ws/install:/home/celian/workspace/src/catkin_data_ws/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'celian'), ('JOURNAL_STREAM', '8:3948'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('PKG_CONFIG_PATH', '/home/celian/workspace/install/lib/pkgconfig:/home/celian/ros/ws_mujoco/install/mujoco_ros_utils/lib/pkgconfig:/home/celian/workspace/src/catkin_ws/install/lib/x86_64-linux-gnu/pkgconfig:/home/celian/workspace/src/catkin_ws/install/lib/pkgconfig:/home/celian/workspace/install/lib/pkgconfig:'), ('XDG_SESSION_CLASS', 'user'), ('MUJOCO_HOME', '/home/celian/.mujoco/mujoco301'), ('USERNAME', 'celian'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('RTM_JAVA_ROOT', '/usr/lib/x86_64-linux-gnu/openrtm-2.0'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/home/celian/workspace/install/bin:/home/celian/.local/bin:/home/celian/workspace/src/catkin_ws/install/bin:/home/celian/workspace/install/bin:/opt/ros/humble/bin:/home/celian/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/celian-Alienware-m16-R2:@/tmp/.ICE-unix/2802,unix/celian-Alienware-m16-R2:/tmp/.ICE-unix/2802'), ('INVOCATION_ID', '769c9bacc9b94655a1783164eb3b8a5e'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ja_JP.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'Unity'), ('ROS_PARALLEL_JOBS', '-j22 -l22'), ('LC_TELEPHONE', 'ja_JP.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/run/user/1000/vscode-git-66e5d504e7.sock'), ('TERM_PROGRAM', 'vscode'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/celian/ros/ws_mujoco/install/mujoco_ros_utils:/home/celian/workspace/src/catkin_ws/install:/home/celian/workspace/src/catkin_data_ws/install:/opt/ros/humble'), ('ORIGINAL_XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ja_JP.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'ja_JP.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'ja_JP.UTF-8'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/celian/workspace/src/mc_rtc/plugins/ROS/build/mc_rtc_ros_plugin'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/celian/workspace/install/lib/python3.10/site-packages:/home/celian/ros/ws_mujoco/install/mujoco_ros_utils/local/lib/python3.10/dist-packages:/home/celian/workspace/src/catkin_data_ws/install/local/lib/python3.10/dist-packages:/home/celian/workspace/install/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'ja_JP.UTF-8'), ('LC_PAPER', 'ja_JP.UTF-8'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/celian/ros/ws_mujoco/install/mujoco_ros_utils:/home/celian/workspace/src/catkin_ws/install:/home/celian/workspace/src/catkin_data_ws/install')]), 'shell': False}
+[25.394083] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[25.394224] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/include/mc_rtc_ros/ros.h\n'}
+[25.394276] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/include/mc_rtc_ros/api.h\n'}
+[25.394343] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/include/mc_rtc/ros.h\n'}
+[25.394403] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/include/mc_tasks_ros/LookAtTFTask.h\n'}
+[25.394451] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/include/mc_tasks_ros/api.h\n'}
+[25.394506] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/include/mc_tasks/LookAtTFTask.h\n'}
+[25.394569] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/bin/mc_bin_to_rosbag\n'}
+[25.395150] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/bin/mc_bin_to_rosbag" to ""\n'}
+[25.395908] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/install/lib/libmc_rtc_ros.so.1.0.0\n'}
+[25.398777] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Up-to-date: /home/celian/workspace/install/lib/libmc_rtc_ros.so.1\n'}
+[25.398864] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/celian/workspace/install/lib/libmc_rtc_ros.so.1.0.0" to ""\n'}
+[25.398917] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/install/lib/libmc_rtc_ros.so\n'}
+[25.399214] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/install/lib/libmc_tasks_ros.so.1.0.0\n'}
+[25.400239] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Up-to-date: /home/celian/workspace/install/lib/libmc_tasks_ros.so.1\n'}
+[25.400339] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/celian/workspace/install/lib/libmc_tasks_ros.so.1.0.0" to ""\n'}
+[25.400390] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/install/lib/libmc_tasks_ros.so\n'}
+[25.400434] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/lib/cmake/mc_rtc/plugins/mc_rtc_3rd_party_rosTargets.cmake\n'}
+[25.400481] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/lib/cmake/mc_rtc/plugins/mc_rtc_rosTargets.cmake\n'}
+[25.400529] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/lib/cmake/mc_rtc/plugins/mc_rtc_rosTargets-noconfig.cmake\n'}
+[25.400628] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/install/lib/mc_plugins/ROS.so\n'}
+[25.404160] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/celian/workspace/install/lib/mc_plugins/ROS.so" to ""\n'}
+[25.404245] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Installing: /home/celian/workspace/install/lib/mc_plugins/autoload/ROS.yaml\n'}
+[25.404299] (mc_rtc_ros_plugin) StdoutLine: {'line': b'-- Up-to-date: /home/celian/workspace/install/lib/mc_plugins/etc/ROS.yaml\n'}
+[25.405176] (mc_rtc_ros_plugin) CommandEnded: {'returncode': 0}
+[25.413187] (mc_rtc_ros_plugin) JobEnded: {'identifier': 'mc_rtc_ros_plugin', 'rc': 0}
+[25.413622] (-) EventReactorShutdown: {}

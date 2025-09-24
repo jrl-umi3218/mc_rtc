@@ -1,0 +1,3 @@
+Invoking command in '/home/celian/workspace/src/mc_rtc/build/jrl-cmakemodules': CMAKE_PREFIX_PATH=/opt/ros/humble:${CMAKE_PREFIX_PATH} /usr/bin/cmake /home/celian/workspace/src/mc_rtc/cmake -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install
+Invoked command in '/home/celian/workspace/src/mc_rtc/build/jrl-cmakemodules' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble:${CMAKE_PREFIX_PATH} /usr/bin/cmake /home/celian/workspace/src/mc_rtc/cmake -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install
+Invoking command in '/home/celian/workspace/src/mc_rtc/build/jrl-cmakemodules': CMAKE_PREFIX_PATH=/opt/ros/humble:${CMAKE_PREFIX_PATH} /usr/bin/cmake --build /home/celian/workspace/src/mc_rtc/build/jrl-cmakemodules -- -j22 -l22

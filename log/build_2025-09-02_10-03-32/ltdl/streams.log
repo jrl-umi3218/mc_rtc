@@ -1,0 +1,64 @@
+[0.034s] Invoking command in '/home/celian/workspace/src/mc_rtc/build/ltdl': /usr/bin/cmake /home/celian/workspace/src/mc_rtc/3rd-party/ltdl -DCMAKE_INSTALL_PREFIX=/home/celian/workspace/src/mc_rtc/install
+[0.062s] [33mCMake Warning (dev) in CMakeLists.txt:
+[0.062s]   No project() command is present.  The top-level CMakeLists.txt file must
+[0.062s]   contain a literal, direct call to the project() command.  Add a line of
+[0.062s]   code such as
+[0.062s] 
+[0.062s]     project(ProjectName)
+[0.062s] 
+[0.062s]   near the top of the file, but after cmake_minimum_required().
+[0.062s] 
+[0.062s]   CMake is pretending there is a "project(Project)" command on the first
+[0.062s]   line.
+[0.062s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.062s] [0m
+[0.062s] [33mCMake Warning (dev) in CMakeLists.txt:
+[0.062s]   cmake_minimum_required() should be called prior to this top-level project()
+[0.062s]   call.  Please see the cmake-commands(7) manual for usage documentation of
+[0.062s]   both commands.
+[0.062s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.062s] [0m
+[0.128s] -- The C compiler identification is GNU 11.4.0
+[0.180s] -- The CXX compiler identification is GNU 11.4.0
+[0.189s] -- Detecting C compiler ABI info
+[0.249s] -- Detecting C compiler ABI info - done
+[0.262s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.262s] -- Detecting C compile features
+[0.263s] -- Detecting C compile features - done
+[0.272s] -- Detecting CXX compiler ABI info
+[0.342s] -- Detecting CXX compiler ABI info - done
+[0.355s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.355s] -- Detecting CXX compile features
+[0.355s] -- Detecting CXX compile features - done
+[0.360s] [33mCMake Warning (dev) at CMakeLists.txt:22 (set):
+[0.360s]   Cannot set "LTDL": current scope has no parent.
+[0.360s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.360s] [0m
+[0.372s] [31mCMake Error at CMakeLists.txt:23 (find_package):
+[0.373s]   By not providing "Findmc_rtc_3rd_party_ltdl.cmake" in CMAKE_MODULE_PATH
+[0.373s]   this project has asked CMake to find a package configuration file provided
+[0.373s]   by "mc_rtc_3rd_party_ltdl", but CMake did not find one.
+[0.373s] 
+[0.373s]   Could not find a package configuration file provided by
+[0.373s]   "mc_rtc_3rd_party_ltdl" with any of the following names:
+[0.373s] 
+[0.373s]     mc_rtc_3rd_party_ltdlConfig.cmake
+[0.373s]     mc_rtc_3rd_party_ltdl-config.cmake
+[0.373s] 
+[0.373s]   Add the installation prefix of "mc_rtc_3rd_party_ltdl" to CMAKE_PREFIX_PATH
+[0.373s]   or set "mc_rtc_3rd_party_ltdl_DIR" to a directory containing one of the
+[0.373s]   above files.  If "mc_rtc_3rd_party_ltdl" provides a separate development
+[0.373s]   package or SDK, be sure it has been installed.
+[0.373s] 
+[0.373s] [0m
+[0.373s] [31mCMake Error in CMakeLists.txt:
+[0.373s]   No cmake_minimum_required command is present.  A line of code such as
+[0.373s] 
+[0.373s]     cmake_minimum_required(VERSION 4.0)
+[0.373s] 
+[0.373s]   should be added at the top of the file.  The version specified may be lower
+[0.373s]   if you wish to support older CMake versions for this project.  For more
+[0.373s]   information run "cmake --help-policy CMP0000".
+[0.373s] 
+[0.373s] [0m
+[0.373s] -- Configuring incomplete, errors occurred!

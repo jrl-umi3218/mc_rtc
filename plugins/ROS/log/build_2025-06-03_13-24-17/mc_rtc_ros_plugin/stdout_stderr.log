@@ -1,0 +1,24 @@
+[ 20%] Built target mc_rtc_ros
+[ 50%] Built target mc_tasks_ros
+[ 70%] Built target mc_bin_to_rosbag
+[100%] Built target ROS
+-- Install configuration: ""
+-- Up-to-date: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/include/mc_rtc_ros/ros.h
+-- Up-to-date: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/include/mc_rtc_ros/api.h
+-- Up-to-date: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/include/mc_rtc/ros.h
+-- Up-to-date: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/include/mc_tasks_ros/LookAtTFTask.h
+-- Up-to-date: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/include/mc_tasks_ros/api.h
+-- Up-to-date: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/include/mc_tasks/LookAtTFTask.h
+-- Up-to-date: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/bin/mc_bin_to_rosbag
+-- Up-to-date: /home/celian/workspace/install/lib/libmc_rtc_ros.so.1.0.0
+-- Up-to-date: /home/celian/workspace/install/lib/libmc_rtc_ros.so.1
+-- Up-to-date: /home/celian/workspace/install/lib/libmc_rtc_ros.so
+-- Up-to-date: /home/celian/workspace/install/lib/libmc_tasks_ros.so.1.0.0
+-- Up-to-date: /home/celian/workspace/install/lib/libmc_tasks_ros.so.1
+-- Up-to-date: /home/celian/workspace/install/lib/libmc_tasks_ros.so
+-- Up-to-date: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/lib/cmake/mc_rtc/plugins/mc_rtc_3rd_party_rosTargets.cmake
+-- Up-to-date: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/lib/cmake/mc_rtc/plugins/mc_rtc_rosTargets.cmake
+-- Up-to-date: /home/celian/workspace/src/mc_rtc/plugins/ROS/install/mc_rtc_ros_plugin/lib/cmake/mc_rtc/plugins/mc_rtc_rosTargets-noconfig.cmake
+-- Up-to-date: /home/celian/workspace/install/lib/mc_plugins/ROS.so
+-- Up-to-date: /home/celian/workspace/install/lib/mc_plugins/autoload/ROS.yaml
+-- Up-to-date: /home/celian/workspace/install/lib/mc_plugins/etc/ROS.yaml
