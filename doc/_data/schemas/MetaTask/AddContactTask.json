@@ -6,7 +6,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["addContact"] }
+        "type": { "const": "addContact" }
       }
     },
     {

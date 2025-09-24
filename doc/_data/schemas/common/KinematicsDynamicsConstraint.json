@@ -1,4 +1,5 @@
 {
+  "type": "object",
   "properties":
   {
     "type": { "enum": ["kinematics", "dynamics"] },
