@@ -15,7 +15,7 @@
       },
       "default": ["Left", "Right"]
     },
-    "Left": { "$ref": "../../common/contactTarget.json" },
-    "Right": { "$ref": "../../common/contactTarget.json" }
+    "Left": { "$ref": "../common/contactTarget.json" },
+    "Right": { "$ref": "../common/contactTarget.json" }
   }
 }

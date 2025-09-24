@@ -2,7 +2,7 @@
   "allOf":
   [
     {
-      "$ref": "../../common/KinematicsDynamicsConstraint.json"
+      "$ref": "../common/KinematicsDynamicsConstraint.json"
     },
     {
       "title": "mc_solver::KinematicsConstraint",

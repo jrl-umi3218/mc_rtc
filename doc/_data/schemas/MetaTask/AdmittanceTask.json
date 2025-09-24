@@ -19,7 +19,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["admittance"] },
+        "type": { "const": "admittance" },
         "weight": { "default": 1000},
         "stiffness": { "default": 5 },
         "targetSurface": { "$ref" : "../common/targetSurface.json" },
@@ -39,5 +39,5 @@
       }
     }
   ],
-  "required": ["type", "surface"]
+  "required": ["type", "frame"]
 }
