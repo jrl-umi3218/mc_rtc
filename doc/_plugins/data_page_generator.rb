@@ -61,16 +61,34 @@ module Jekyll
         if display_category(category)
           self.data['all_schemas'][category] = {}
           cat_schemas.each { |name, schema|
+                      
             self.data['all_schemas'][category][name] = {}
-            self.data['all_schemas'][category][name]["schema"] = schema;
+            self.data['all_schemas'][category][name]["schema"] = schema
+
             example_json = {}
             example_json["lang"] = "json"
             example_json["name"] = "JSON"
-            example_json["source"] = File.read(File.join(base, '_examples', 'json', category, name + '.json'))
+            json_path = File.join(base, '_examples', 'json', category, name + '.json')
+            begin
+              example_json["source"] = File.read(json_path)
+            rescue Errno::ENOENT
+              msg = "ERROR: JSON example file not found. Please create: #{json_path}"
+              example_json["source"] = "//#{msg}"
+              puts msg
+            end
+
             example_yaml = {}
             example_yaml["lang"] = "yaml"
             example_yaml["name"] = "YAML"
-            example_yaml["source"] = File.read(File.join(base, '_examples', 'yaml', category, name + '.yaml'))
+            yaml_path = File.join(base, '_examples', 'yaml', category, name + '.yaml')
+            begin
+              example_yaml["source"] = File.read(yaml_path)
+            rescue Errno::ENOENT
+              msg = "ERROR: YAML example file not found. Please create: #{yaml_path}"
+              example_yaml["source"] = "# #{msg}"
+              puts msg
+            end
+
             self.data['all_schemas'][category][name]["example"] = [example_json, example_yaml]
           }
         end
