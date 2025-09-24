@@ -18,7 +18,7 @@
           "description": "Map of gripper name -> gripper configuration",
           "properties":
           {
-            "*": { "$ref": "/../../mc_control/generic_gripper.json" }
+            "*": { "$ref": "../mc_control/generic_gripper.json" }
           }
         },
         "keepSafetyConfig": { "type": "boolean", "default": false, "description": "When true, keep this gripper's safety configuration after the state has been destroyed, otherwise restore it to its former value" }
@@ -26,7 +26,7 @@
       "required": []
     },
     {
-      "$ref": "/../../common/State.json"
+      "$ref": "../common/State.json"
     }
   ]
 }

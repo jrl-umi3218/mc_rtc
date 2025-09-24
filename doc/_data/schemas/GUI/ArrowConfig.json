@@ -9,6 +9,6 @@
     "scale": {"type": "number"},
     "start_point_scale": {"type": "number"},
     "end_point_scale": {"type": "number"},
-    "color": { "$ref": "/../../GUI/Color.json" }
+    "color": { "$ref": "../GUI/Color.json" }
   }
 }

@@ -4,8 +4,8 @@
   "properties":
   {
     "mass": { "type": "number", "minimum": 0 },
-    "momentum": { "$ref": "/../../Eigen/Vector3d.json" },
-    "inertia": { "$ref": "/../../Eigen/Matrix3d.json" }
+    "momentum": { "$ref": "../Eigen/Vector3d.json" },
+    "inertia": { "$ref": "../Eigen/Matrix3d.json" }
   },
   "required": ["mass", "momentum", "inertia"],
   "additionalProperties": false

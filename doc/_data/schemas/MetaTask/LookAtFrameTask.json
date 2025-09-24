@@ -5,10 +5,10 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/MetaTask_common.json"
+      "$ref": "../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_frame.json"
+      "$ref": "../common/MetaTask_frame.json"
     },
     {
       "properties":
@@ -16,7 +16,7 @@
         "type": { "enum": ["lookAtFrame"] },
         "frameVector":
         {
-          "$ref": "/../../Eigen/Vector3d.json",
+          "$ref": "../Eigen/Vector3d.json",
           "description": "Unit vector in control frame representing the direction that will be aligned with the target vector"
         },
         "target":
@@ -35,18 +35,18 @@
           },
           "required": ["frame"]
         },
-        "offset": { "$ref": "/../../SpaceVecAlg/PTransformd.json" }
+        "offset": { "$ref": "../SpaceVecAlg/PTransformd.json" }
       }
     },
     {
-      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+      "$ref": "../common/TrajectoryTaskGeneric.json"
     },
     {
       "properties":
       {
         "weight": { "default": 200 },
         "stiffness": { "default": 0.5 },
-        "dimWeight": { "$ref": "/../../Eigen/Vector3d.json" }
+        "dimWeight": { "$ref": "../Eigen/Vector3d.json" }
       }
     }
   ],

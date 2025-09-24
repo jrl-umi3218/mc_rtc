@@ -15,7 +15,7 @@
       "required": []
     },
     {
-      "$ref": "/../../common/State.json"
+      "$ref": "../common/State.json"
     }
   ]
 }

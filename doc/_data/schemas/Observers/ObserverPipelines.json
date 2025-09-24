@@ -4,6 +4,6 @@
   "type": "array",
   "items":
   {
-    "$ref": "/../../Observers/ObserverPipeline.json"
+    "$ref": "../Observers/ObserverPipeline.json"
   }
 }
