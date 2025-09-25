@@ -61,7 +61,7 @@ module Jekyll
         if display_category(category)
           self.data['all_schemas'][category] = {}
           cat_schemas.each { |name, schema|
-                      
+
             self.data['all_schemas'][category][name] = {}
             self.data['all_schemas'][category][name]["schema"] = schema
 
@@ -122,8 +122,8 @@ module Jekyll
       }
     end
 
-    
-    
+
+
     # FIXME::
     # - does not resolve oneOf within "array": { "item": { ... } }
     # - resolve additionalProperties

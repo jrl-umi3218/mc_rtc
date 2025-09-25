@@ -17,7 +17,7 @@
 {% endfor %}
 
 
-<!-- 
+<!--
 handle additional properties
 
 if additionalProperties contains a _expand: true element, resolve the additionalProperties
@@ -36,8 +36,8 @@ otherwise only display the top-level
     </td>
   </tr>
 {%- elsif include.additionalProperties -%}
-    {% if include.additionalProperties contains "_expand" 
-       and include.additionalProperties["_expand"] 
+    {% if include.additionalProperties contains "_expand"
+       and include.additionalProperties["_expand"]
     %}
     <!-- Render wildcard property for additionalProperties schema -->
     {% assign NAME = "*" %}

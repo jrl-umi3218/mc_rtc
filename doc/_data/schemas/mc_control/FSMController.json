@@ -85,8 +85,8 @@
     "states": {
       "type": "object",
       "description": "Additional text states. Each state should derive from a 'base' state, which can be one of the following:\n- a C++ or Python state within StatesLibraries\n- a YAML state defined within StatesFiles\n- a state defined within this 'states' property.\n See <a href=\"{{site.baseurl}}/json.html#State\">State objects</a>",
-      "additionalProperties": 
-      { 
+      "additionalProperties":
+      {
         "_expand": false,
         "_expand_alternate": "Additional text states. Each state should derive from a 'base' state, which can be one of the following:<ul><li>a C++ or Python state within StatesLibraries</li><li>a YAML state defined within StatesFiles</li><li>a state defined within this 'states' property.</li><li> See <a href=\"{{site.baseurl}}/json.html#State\">State objects</a></li>",
         "$ref": "../common/StatesProperty.json"
