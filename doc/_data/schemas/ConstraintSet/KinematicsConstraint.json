@@ -9,7 +9,7 @@
       "type": "object",
       "properties":
       {
-        "type": { "enum": ["kinematics"] }
+        "type": { "const": "kinematics" }
       }
     }
   ]

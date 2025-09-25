@@ -1,17 +1,25 @@
 <!-- <pre>ITEM: {{ include | jsonify }}</pre> -->
-{% if include.data contains "enum" %}
-  {% capture enum_size %}{{ include.data.enum | size }}{% endcapture %}
-  {% if enum_size == "1" %}
+{% if include.data contains "enum" or include.data contains "const" %}
+  {% if include.data contains "const" %}
     <span class="text-secondary">constant&nbsp;</span>
+    {% if include.data contains "type" %}
+      <span class="text-{{include.data.type}}">{{include.data.type}}</span>&nbsp;
+    {% endif %}
+    <span class="text-enum">{{include.data["const"]}}</span>&nbsp;
   {% else %}
-    <span class="text-secondary">enum&nbsp;</span>
+    {% capture enum_size %}{{ include.data.enum | size }}{% endcapture %}
+    {% if enum_size == "1" %}
+      <span class="text-secondary">constant&nbsp;</span>
+    {% else %}
+      <span class="text-secondary">enum&nbsp;</span>
+    {% endif %}
+    {% if include.data contains "type" %}
+      <span class="text-{{include.data.type}}">{{include.data.type}}</span>&nbsp;
+    {% endif %}
+    {% for e in include.data.enum %}
+      <span class="text-enum">{{e}}</span>&nbsp;
+    {% endfor %}
   {% endif %}
-  {% if include.data contains "type" %}
-    <span class="text-{{include.data.type}}">{{include.data.type}}</span>&nbsp;
-  {% endif %}
-  {% for e in include.data.enum %}
-    <span class="text-enum">{{e}}</span>&nbsp;
-  {% endfor %}
 {% elsif include.data contains "REF" %}
   <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapse{{include.id}}" aria-expanded="false" aria-controls="collapse{{include.id}}">{{include.data.title}}</a>
   {% if include.data contains "default" %}

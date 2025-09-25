@@ -3,7 +3,7 @@
   "type": "object",
   "properties":
   {
-    "type": { "enum": ["CoMIncPlane"] },
+    "type": { "const": "CoMIncPlane" },
     "robot": { "$ref": "../common/ConstraintSet_robot.json" }
   },
   "required": ["type"]
