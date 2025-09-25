@@ -41,13 +41,20 @@
             "properties": {
               "module": {
                 "type": "string",
-                "description": "Module path for the robot."
-              }
+                "description": "Module name: this can be any robot module name, robot alias (such as env/ground or object/box), or any path supported by RobotLoader"
+              },
+              "init_pos": { "$ref": "../SpaceVecAlg/PTransformd.json", "description": "Initial position of the robot in the world frame." }
             },
             "required": ["module"]
           },
           {
-            "$ref": "../mc_rbdyn/RobotModuleVisual.json"
+            "allOf": [
+              "$ref": "../mc_rbdyn/RobotModuleVisual.json",
+              "properties": {
+                "init_pos": { "$ref": "../SpaceVecAlg/PTransformd.json", "description": "Initial position of the robot in the world frame." }
+              },
+              "required": ["name", "origin", "geometry", "inertia"]
+            ]
           }
         ]
       }
@@ -71,9 +78,9 @@
       "description": "Initial set of contacts.",
       "items": { "type": "object" }
     },
-    "jvrc1": {
+    "<robot_name>": {
       "$ref": "#/definitions/RobotOptions",
-      "description": "Options for the jvrc1 robot."
+      "description": "Options for the robot with name <robot_name>."
     },
     "states": {
       "type": "object",
@@ -134,21 +141,6 @@
             "weight": {
               "type": "number",
               "description": "Weight value for posture task."
-            }
-          },
-          "required": ["stiffness", "weight"]
-        },
-        "ff": {
-          "type": "object",
-          "description": "Feedforward task options.",
-          "properties": {
-            "stiffness": {
-              "type": "number",
-              "description": "Stiffness value for feedforward task."
-            },
-            "weight": {
-              "type": "number",
-              "description": "Weight value for feedforward task."
             }
           },
           "required": ["stiffness", "weight"]
