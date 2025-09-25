@@ -31,11 +31,10 @@
     },
     "robots": {
       "type": "object",
+      "title": "Additional Robots",
       "description": "Additional robots to load. Keys are robot names, values are robot module definitions or visual geometry.",
-      "additionalProperties":
-      {
-        "oneOf":
-        [
+      "additionalProperties": {
+        "oneOf": [
           {
             "type": "object",
             "properties": {
@@ -44,7 +43,7 @@
                 "description": "Module path for the robot."
               }
             },
-            "required": []
+            "required": ["module"]
           },
           {
             "$ref": "../mc_rbdyn/RobotModuleVisual.json"

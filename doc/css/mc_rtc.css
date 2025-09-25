@@ -150,7 +150,21 @@ body
   margin-bottom: 10px;
 }
 
+
 .object-property td
+{
+  padding-bottom: 6px;
+  padding-top: 6px;
+}
+
+.sub-object-property
+{
+  margin-bottom: 10px;
+  background-color: #fafafa;
+}
+
+
+.sub-object-property td
 {
   padding-bottom: 6px;
   padding-top: 6px;
