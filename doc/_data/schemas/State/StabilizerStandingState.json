@@ -7,9 +7,10 @@
       "type": "object",
       "properties":
       {
+        "base": { "const": "StabilizerStanding" },
         "StabilizerConfig":
         {
-          "$ref": "/../MetaTask/LIPMStabilizerTask.json"
+          "$ref": "../MetaTask/LIPMStabilizerTask.json"
         },
         "stiffness": { "type": "number", "minimum": 0, "default": 5, "description": "Stiffness of CoM target" },
         "damping": { "type": "number", "minimum": 0, "description": "Damping of CoM target (default=2*sqrt(stiffness))" },
@@ -27,7 +28,7 @@
         },
         "anchorFrameFunction": { "type": "string", "default": "KinematicAnchorFrame::&lt;robot&gt;", "description": "Name of the datastore entry providing a kinematic anchor frame for both the control/real robots. This anchor frame may be used by observers to compute the state of the real robot instance." }
       },
-      "required": []
+      "required": ["base"]
     },
     {
       "$ref": "../common/State.json"

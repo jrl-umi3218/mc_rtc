@@ -122,6 +122,11 @@ module Jekyll
       }
     end
 
+    
+    
+    # FIXME::
+    # - does not resolve oneOf within "array": { "item": { ... } }
+    # - resolve additionalProperties
     def resolveRef(site, schema, parent = nil, key_out = nil, root = nil)
       if root == nil
         root = schema
@@ -138,10 +143,19 @@ module Jekyll
         if key == "$ref"
           category = value.split('/')[-2]
           name = value.split('/')[-1].gsub(".json", "").gsub(".", "")
+          puts "[resolveRef] Resolved: name=#{name}, path=#{value}"
           if category != "definitions"
-            resolveRef(site, site.data["schemas"][category][name])
+            if site.data["schemas"].key?(category) && site.data["schemas"][category].key?(name)
+              resolveRef(site, site.data["schemas"][category][name])
+            else
+              puts "[resolveRef] WARNING: Path does not exist: site.data['schemas'][#{category}][#{name}]"
+            end
           else
-            resolveRef(site, root[category][name], nil, nil, root)
+            if root.is_a?(Hash) && root.key?(category) && root[category].is_a?(Hash) && root[category].key?(name)
+              resolveRef(site, root[category][name], nil, nil, root)
+            else
+              puts "[resolveRef] WARNING: Path does not exist: root['#{category}']['#{name}']"
+            end
           end
           has_desc = false
           if parent[key_out].key?("description")
@@ -154,13 +168,20 @@ module Jekyll
             default = parent[key_out]["default"].dup()
           end
           if category != "definitions"
-            # Merge with surrounding schema
-            parent[key_out] = site.data["schemas"][category][name].dup()
-            if parent[key_out].has_key?("title")
-              parent[key_out]["REF"] = "#{category}.#{name}"
+            if site.data["schemas"].key?(category) && site.data["schemas"][category].key?(name)
+              parent[key_out] = site.data["schemas"][category][name].dup()
+              if parent[key_out].has_key?("title")
+                parent[key_out]["REF"] = "#{category}.#{name}"
+              end
+            else
+              parent[key_out] = {}
             end
           else
-            parent[key_out] = root[category][name].dup()
+            if root.is_a?(Hash) && root.key?(category) && root[category].is_a?(Hash) && root[category].key?(name)
+              parent[key_out] = root[category][name].dup()
+            else
+              parent[key_out] = {}
+            end
           end
           if has_desc
             parent[key_out]["DESC"] = desc
@@ -173,6 +194,8 @@ module Jekyll
         end
       }
     end
+
+
 
     # Try to resolve Doxygen link based on the schema's title and the doxytag file
     # Fills schema.api:

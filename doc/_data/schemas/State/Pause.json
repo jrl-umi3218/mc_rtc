@@ -7,9 +7,10 @@
       "type": "object",
       "properties":
       {
+        "base": { "const": "Pause" },
         "duration": { "type": "number", "minimum": 0, "description": "Pause duration in seconds" }
       },
-      "required": []
+      "required": ["base"]
     },
     {
       "$ref": "../common/State.json"

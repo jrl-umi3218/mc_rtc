@@ -9,7 +9,7 @@
       "type": "object",
       "properties":
       {
-        "type": { "enum": ["dynamics"] },
+        "type": { "const": "dynamics" },
         "infTorque":
         {
           "type": "boolean",

@@ -4,7 +4,7 @@
   "type": "object",
   "properties":
   {
-    "type": { "enum": ["compoundJoint"] },
+    "type": { "const": "compoundJoint" },
     "robot": { "$ref": "../common/ConstraintSet_robot.json" },
     "constraints":
     {
