@@ -2,9 +2,6 @@
   "allOf":
   [
     {
-      "$ref": "../RBDyn/Visual.json"
-    },
-    {
       "title": "RobotModuleVisual",
       "description": "Visual element with inertia properties. This is intentded to be used to load a robot module with {% doxygen mc_rbdyn::robotModuleFromVisual %}. See also the <a href=\"{{site.baseurl}}/tutorials/recipes/fsm-example.html#loading-a-robot-from-a-visual-element-geometric-shape\">tutorial</a> to load it from your controller's FSM configuration",
       "properties":
@@ -23,6 +20,9 @@
           "required": ["mass"]
         }
       }
+    },
+    {
+      "$ref": "../RBDyn/Visual.json"
     },
     {
       "required": ["name", "origin", "geometry", "inertia"]
