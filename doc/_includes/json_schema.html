@@ -21,7 +21,7 @@
       {% endif %}
       {% include json_schema_array.html minItems=minItems maxItems=include.schema.maxItems items=include.schema.items id=include.id %}
     {% elsif include.schema.type == "object" %}
-      {% include json_schema_object.html properties=include.schema.properties required=include.schema.required id=include.id patternProperties=include.schema.patternProperties %}
+      {% include json_schema_object.html properties=include.schema.properties additionalProperties=include.schema.additionalProperties required=include.schema.required id=include.id patternProperties=include.schema.patternProperties %}
     {% else %}
     <div class="alert alert-danger" role="alert">
       Cannot handle type: {{include.schema.type}}
