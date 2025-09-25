@@ -31,7 +31,7 @@
         "$ref": "../common/ConstraintSetProperty.json"
       }
     },
-    "tasks": { 
+    "tasks": {
       "type": "object",
       "description": "Tasks that will be added when the state starts and removed when the state stops.<br/>Keys are names for the tasks and values are <a href=\"{{site.baseurl}}/json.html#MetaTask\">MetaTask objects</a>.",
       "additionalProperties": {
