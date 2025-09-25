@@ -143,7 +143,7 @@ module Jekyll
         if key == "$ref"
           category = value.split('/')[-2]
           name = value.split('/')[-1].gsub(".json", "").gsub(".", "")
-          puts "[resolveRef] Resolved: name=#{name}, path=#{value}"
+          # puts "[resolveRef] Resolved: name=#{name}, path=#{value}"
           if category != "definitions"
             if site.data["schemas"].key?(category) && site.data["schemas"][category].key?(name)
               resolveRef(site, site.data["schemas"][category][name])

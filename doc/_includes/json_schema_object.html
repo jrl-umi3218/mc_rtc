@@ -17,7 +17,12 @@
 {% endfor %}
 
 
-<!-- handle additional properties -->
+<!-- 
+handle additional properties
+
+if additionalProperties contains a _expand: true element, resolve the additionalProperties
+otherwise only display the top-level
+-->
 {%- if include.additionalProperties == true -%}
   <tr>
     <td colspan="3">
@@ -31,19 +36,25 @@
     </td>
   </tr>
 {%- elsif include.additionalProperties -%}
-  <!-- Render wildcard property for additionalProperties schema -->
-  {% assign NAME = "*" %}
-  {% assign REF = include.additionalProperties %}
-  {% capture ID %}{{include.id | replace: "::", "_"}}_PROP_ADDITIONAL{% endcapture %}
-  {% assign HAS_DESC = false %}
-  {% if REF.DESC %}
-    {% assign HAS_DESC = true %}
-    {% capture DESC %}{{REF.DESC}}{% endcapture %}
-  {% elsif REF.description and REF.description != "" %}
-    {% assign HAS_DESC = true %}
-    {% capture DESC %}{{REF.description}}{% endcapture %}
+    {% if include.additionalProperties contains "_expand" 
+       and include.additionalProperties["_expand"] 
+    %}
+    <!-- Render wildcard property for additionalProperties schema -->
+    {% assign NAME = "*" %}
+    {% assign REF = include.additionalProperties %}
+    {% capture ID %}{{include.id | replace: "::", "_"}}_PROP_ADDITIONAL{% endcapture %}
+    {% assign HAS_DESC = false %}
+    {% if REF.DESC %}
+      {% assign HAS_DESC = true %}
+      {% capture DESC %}{{REF.DESC}}{% endcapture %}
+    {% elsif REF.description and REF.description != "" %}
+      {% assign HAS_DESC = true %}
+      {% capture DESC %}{{REF.description}}{% endcapture %}
+    {% endif %}
+    {% include json_schema_object_property.html id=ID name=NAME data=REF required=include.required has_description=HAS_DESC description=DESC pattern=false %}
+  {% else %}
+    <span class="text-info"><i>This schema contains additional properties, please refer to the description and examples for details.</i></span>
   {% endif %}
-  {% include json_schema_object_property.html id=ID name=NAME data=REF required=include.required has_description=HAS_DESC description=DESC pattern=false %}
 {%- endif -%}
 
 
