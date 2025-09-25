@@ -10,6 +10,8 @@
   desc: <p>Objects used in <a href="{{site.baseurl}}/tutorials/usage/gui.html">mc_rtc GUI description</a>.</p>
 - name: mc_rbdyn
   desc: <p>Objects from mc_rbdyn. Used in various places in the framework.</p>
+- name: mc_rtc
+  desc: <p>Objects from mc_rtc.</p>
 - name: ConstraintSet
   desc: "{% include schema_categories/ConstraintSet.html %}"
 - name: MetaTask
