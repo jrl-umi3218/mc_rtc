@@ -12,7 +12,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["orientation"] },
+        "type": { "const": "orientation" },
         "orientation": { "$ref": "../Eigen/Matrix3d.json" },
         "relative":
         {

@@ -12,7 +12,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["gaze"] },
+        "type": { "const": "gaze" },
         "weight": { "default": 500 },
         "stiffness": { "default": 2 }
       }

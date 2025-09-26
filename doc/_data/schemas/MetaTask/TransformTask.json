@@ -12,7 +12,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["transform"] }
+        "type": { "const": "transform" }
       }
     },
     {

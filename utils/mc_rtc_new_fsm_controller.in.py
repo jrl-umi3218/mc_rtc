@@ -231,9 +231,8 @@ lspconfig.yamlls.setup{
     yaml = {
       schemas = {
         ["https://arntanguy.github.io/mc_rtc/schemas/mc_rtc/mc_rtc.json"] = "**/mc_rtc.yaml",
-        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json"] = "etc/{controller_name}.in.yaml"
-        }},
-        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMStates.json"] = {{ "src/states/data/*.yaml" }},
+        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json"] = "etc/TestRobotModuleConnect.in.yaml",
+        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMStates.json"] = "src/states/data/*.yaml",
 
       },
       validate = true,

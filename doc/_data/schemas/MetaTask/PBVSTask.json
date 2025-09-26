@@ -12,7 +12,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["pbvs"] }
+        "type": { "const": "pbvs" }
       }
     },
     {

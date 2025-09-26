@@ -12,7 +12,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["vectorOrientation"] },
+        "type": { "const": "vectorOrientation" },
         "frameVector": { "$ref": "../Eigen/Vector3d.json" },
         "targetVector": { "$ref": "../Eigen/Vector3d.json" },
         "relativeVector":

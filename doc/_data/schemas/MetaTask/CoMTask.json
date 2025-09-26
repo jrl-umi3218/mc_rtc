@@ -16,7 +16,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["com"] },
+        "type": { "const": "com" },
         "stiffness": { "default": 5},
         "weight": { "default": 100}
       }

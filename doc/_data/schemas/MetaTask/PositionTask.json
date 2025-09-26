@@ -12,7 +12,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["position"] },
+        "type": { "const": "position" },
         "position": { "$ref": "../Eigen/Vector3d.json" },
         "relative":
         {

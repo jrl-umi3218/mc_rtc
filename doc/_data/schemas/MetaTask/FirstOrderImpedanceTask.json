@@ -19,7 +19,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["firstOrderImpedance"] },
+        "type": { "const": "firstOrderImpedance" },
         "weight": { "default": 1000},
         "stiffness": { "default": 5 },
         "target": { "$ref" : "../SpaceVecAlg/PTransformd.json" },

@@ -9,7 +9,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["posture"] },
+        "type": { "const": "posture" },
         "dimWeight": { "$ref": "../Eigen/VectorXd.json", "description": "Ignored by PostureTask" }
       }
     },

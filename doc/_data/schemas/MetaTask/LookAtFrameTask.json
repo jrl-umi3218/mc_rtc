@@ -13,7 +13,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["lookAtFrame"] },
+        "type": { "const": "lookAtFrame" },
         "frameVector":
         {
           "$ref": "../Eigen/Vector3d.json",

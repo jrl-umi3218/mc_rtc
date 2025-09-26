@@ -12,7 +12,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["relBody6d"] },
+        "type": { "const": "relBody6d" },
         "relativeFrame":
         {
           "type": "object",

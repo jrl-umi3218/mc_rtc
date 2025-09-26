@@ -13,7 +13,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["cop"] },
+        "type": { "const": "cop" },
         "admittance": { "$ref": "../SpaceVecAlg/ForceVecd.json", "description": "Admittance gains. Non-zero gains will be used to compute which surface velocity to apply in order to move the CoP towards its target" },
         "cop": { "$ref": "../Eigen/Vector2d.json", "description": "Desired CoP in controlled surface frame" },
         "force": { "$ref": "../Eigen/Vector3d.json", "description": "Desired force in controlled surface frame"},
