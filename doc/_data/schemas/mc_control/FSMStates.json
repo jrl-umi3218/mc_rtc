@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "title": "Map of FSM States",
+  "description": "Map of additional text states where keys are state names, objects represent a State. Each state should derive from a 'base' state, which can be one of the following:\n- a C++ or Python state within StatesLibraries\n- a YAML state defined within StatesFiles\n- a state defined within this 'states' property.\n See <a href=\"{{site.baseurl}}/json.html#State\">State objects</a>",
+  "properties": {},
+  "additionalProperties":
+  {
+    "_expand": "true",
+    "$ref": "../common/StatesProperty.json"
+  }
+}
