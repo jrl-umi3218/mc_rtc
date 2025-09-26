@@ -31,30 +31,34 @@
       ]
     },
     "Enabled": {
-      "description": "List of enabled controllers (string or array of strings)",
       "oneOf": [
-        { "$ref": "#/definitions/SampleControllerNames" },
+        { "$ref": "#/definitions/SampleControllerNames", "description": "Name of a single controller to enable" },
         {
           "type": "array",
-          "items": { "$ref": "#/definitions/SampleControllerNames" }
+          "items": { "$ref": "#/definitions/SampleControllerNames"},
+          "description": "Names of multiple controllers to enable"
         }
       ]
     },
     "Timestep": {
       "type": "number",
       "examples": [0.005, 0.002],
-      "description": "Controller timestep"
+      "description": "Controller timestep [ms]"
     },
     "InitAttitudeFromSensor": {
       "type": "boolean",
-      "description": "Initialize attitude from the specified body sensor"
+      "default": false,
+      "description": "When true: initialize attitude from the body sensor specified in InitAttitudeSensor.\nOtherwise use the robot module halfsitting stance."
     },
     "InitAttitudeSensor": {
       "type": "string",
-      "description": "Name of the body sensor to initialize from"
+      "default": "",
+      "examples": ["", "FloatingBase"],
+      "description": "Empty string: use the default body sensor\nOtherwise use the provided sensor name\nNote that the robot model and encoder values are used to transform the sensor measurements to the floating base frame"
     },
     "Log": {
       "type": "boolean",
+      "default": true,
       "description": "Enable or disable logging"
     },
     "LogPolicy": {
@@ -65,22 +69,28 @@
     },
     "LogDirectory": {
       "type": "string",
+      "default": "/tmp",
       "description": "Directory where log files are stored"
     },
     "LogTemplate": {
       "type": "string",
+      "default": "mc-control",
       "description": "Template for log file names"
     },
     "GUIServer": {
       "type": "object",
+      "title": "GUIServer",
       "properties": {
         "Enable": {
           "type": "boolean",
+          "default": true,
           "description": "Enable or disable the GUI server"
         },
         "Timestep": {
           "type": "number",
-          "description": "GUI publication timestep"
+          "default": 0.05,
+          "examples": [0.05, 0.0],
+          "description": "GUI publication timestep. Actual rate is rounded up depending on the controller timestep, a value of 0 indicates that the GUI timestep should be equal to the controller timestep"
         },
         "IPC": {
           "type": "object",
@@ -97,24 +107,47 @@
           "properties": {
             "Host": {
               "type": "string",
-              "description": "TCP binding host"
+              "default": "*",
+              "description": "TCP binding host, * binds to all interfaces"
             },
             "Ports": {
               "type": "array",
               "items": { "type": "integer" },
+              "default": [4242, 4343],
               "minItems": 2,
               "maxItems": 2,
-              "description": "TCP binding ports"
+              "description": "TCP binding ports: the first is used for PUB socket and the second for the PULL socket"
             }
           },
           "required": ["Host", "Ports"],
           "description": "TCP configuration"
+        },
+        "WS": {
+          "type": "object",
+          "properties": {
+            "Host": {
+              "type": "string",
+              "default": "*",
+              "description": "WebSocket binding host, * binds to all interfaces"
+            },
+            "Ports": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "default": [4242, 4343],
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "WebSocket binding ports: the first is used for PUB socket and the second for the PULL socket"
+            }
+          },
+          "required": ["Host", "Ports"],
+          "description": "WebSocket configuration"
         }
       },
       "description": "GUI server configuration"
     },
     "VerboseLoader": {
       "type": "boolean",
+      "default": false,
       "description": "Verbosity of the controller and robot loader"
     },
     "ControllerModulePaths": {
@@ -139,44 +172,26 @@
     },
     "ClearControllerModulePath": {
       "type": "boolean",
+      "default": false,
       "description": "Clear default controller module path"
     },
     "ClearRobotModulePath": {
       "type": "boolean",
+      "default": false,
       "description": "Clear default robot module path"
     },
     "ClearObserverModulePath": {
       "type": "boolean",
+      "default": false,
       "description": "Clear default observer module path"
     },
     "ClearGlobalPluginPath": {
       "type": "boolean",
+      "default": false,
       "description": "Clear default global plugin path"
     },
     "ObserverPipelines": {
-      "type": "array",
-      "description": "State observation pipelines",
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": { "type": "string" },
-          "observers": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "type": { "type": "string" },
-                "update": { "type": "boolean" },
-                "log": { "type": "boolean" },
-                "gui": { "type": "boolean" },
-                "config": { "type": "object" }
-              },
-              "required": ["type"]
-            }
-          }
-        },
-        "required": ["name", "observers"]
-      }
+      "$ref": "../Observers/ObserverPipelines.json"
     }
   },
   "definitions": {
