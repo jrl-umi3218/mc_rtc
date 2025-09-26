@@ -143,52 +143,33 @@ module Jekyll
         if key == "$ref"
           category = value.split('/')[-2]
           name = value.split('/')[-1].gsub(".json", "").gsub(".", "")
-          # puts "[resolveRef] Resolved: name=#{name}, path=#{value}"
+          # Recursively resolve the referenced schema
           if category != "definitions"
             if site.data["schemas"].key?(category) && site.data["schemas"][category].key?(name)
               resolveRef(site, site.data["schemas"][category][name])
+              referenced = site.data["schemas"][category][name].dup()
             else
               puts "[resolveRef] WARNING: Path does not exist: site.data['schemas'][#{category}][#{name}]"
+              referenced = {}
             end
           else
             if root.is_a?(Hash) && root.key?(category) && root[category].is_a?(Hash) && root[category].key?(name)
               resolveRef(site, root[category][name], nil, nil, root)
+              referenced = root[category][name].dup()
             else
               puts "[resolveRef] WARNING: Path does not exist: root['#{category}']['#{name}']"
+              referenced = {}
             end
           end
-          has_desc = false
-          if parent[key_out].key?("description")
-            has_desc = true
-            desc = parent[key_out]["description"].dup()
-          end
-          has_default = false
-          if parent[key_out].key?("default")
-            has_default = true
-            default = parent[key_out]["default"].dup()
-          end
-          if category != "definitions"
-            if site.data["schemas"].key?(category) && site.data["schemas"][category].key?(name)
-              parent[key_out] = site.data["schemas"][category][name].dup()
-              if parent[key_out].has_key?("title")
-                parent[key_out]["REF"] = "#{category}.#{name}"
-              end
-            else
-              parent[key_out] = {}
-            end
-          else
-            if root.is_a?(Hash) && root.key?(category) && root[category].is_a?(Hash) && root[category].key?(name)
-              parent[key_out] = root[category][name].dup()
-            else
-              parent[key_out] = {}
-            end
-          end
-          if has_desc
-            parent[key_out]["DESC"] = desc
-          end
-          if has_default
-            parent[key_out]["default"] = default
-          end
+
+          # Remove $ref from the referencing object before merging
+          referencing = parent[key_out].dup
+          referencing.delete("$ref")
+
+          # Merge referenced schema and referencing object, referencing takes precedence
+          merged = referenced.deep_merge(referencing)
+
+          parent[key_out] = merged
         else
           resolveRef(site, value, schema, key, root)
         end
@@ -220,7 +201,7 @@ module Jekyll
         end
       }
       # Write generated schemas to a temporary file (for debug purposes)
-      # File.open('/tmp/mc-rtc-doc-json-schemas.json', 'w') { |file| file.write(JSON.pretty_generate(site.data["schemas"])) }
+      File.open('/tmp/mc-rtc-doc-json-schemas.json', 'w') { |file| file.write(JSON.pretty_generate(site.data["schemas"])) }
       # puts "Generated json schema has been saved to /tmp/mc-rtc-doc-json-schemas.json"
       default_categories = ["mc_rtc", "mc_control", "mc_rbdyn", "ConstraintSet", "MetaTask", "State", "Observers"]
       site.pages << AllSchemasPage.new(site, site.source, 'json.html', site.data["schemas"], default_categories, {"All objects" => 'json-full.html'})
