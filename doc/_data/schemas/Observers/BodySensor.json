@@ -4,6 +4,7 @@
   "description": "BodySensor: updates floating base state from a body sensor. This is typically used to set the floating base state from a simulator ground truth",
   "properties":
   {
+    "type": { "const": "BodySensor" },
     "robot": {"type": "string", "default": "MainRobot", "description": "Name of the robot to observe" },
     "updateRobot": { "type": "string", "default": "&lt;robot&gt;", "description": "Name of the robot to update" },
     "updatePose": { "type": "boolean", "default": true, "description": "When true updates the real robot base pose" },
