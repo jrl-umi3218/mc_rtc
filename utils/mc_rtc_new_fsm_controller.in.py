@@ -217,6 +217,38 @@ EXPORT_SINGLE_STATE("{controller_name}_Initial", {controller_name}_Initial)
                 controller_class_name=controller_class_name,
             )
         )
+    # TODO: vscode intellisense
+    # os.makedirs(project_dir + "/.vscode")
+    with open(project_dir + "/.nvim.lua", "w") as fd:
+        fd.write(
+            """-- Project-specific Neovim configuration
+
+-- Set up YAML schema association for this project
+local lspconfig = require('lspconfig')
+
+lspconfig.yamlls.setup{
+  settings = {
+    yaml = {
+      schemas = {
+        ["https://arntanguy.github.io/mc_rtc/schemas/mc_rtc/mc_rtc.json"] = "**/mc_rtc.yaml",
+        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json"] = "etc/{controller_name}.in.yaml"
+        }},
+        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMStates.json"] = {{ "src/states/data/*.yaml" }},
+
+      },
+      validate = true,
+      format = {{ enable = true }},
+      hover = true,
+      completion = true,
+    }
+  }
+}
+-- You can add more project-specific Neovim or LSP settings below
+""".format(
+                controller_name=controller_name
+            )
+        )
+
     repo.index.add(
         [
             f.format(controller_name)
