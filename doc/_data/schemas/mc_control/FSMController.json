@@ -49,12 +49,14 @@
           },
           {
             "allOf": [
-              "$ref": "../mc_rbdyn/RobotModuleVisual.json",
-              "properties": {
+              { "$ref": "../mc_rbdyn/RobotModuleVisual.json" },
+              {
+                "properties": {
                 "init_pos": { "$ref": "../SpaceVecAlg/PTransformd.json", "description": "Initial position of the robot in the world frame." }
-              },
-              "required": ["name", "origin", "geometry", "inertia"]
-            ]
+                }
+              }
+            ],
+            "required": ["name", "origin", "geometry", "inertia"]
           }
         ]
       }
@@ -85,10 +87,10 @@
     "states": {
       "type": "object",
       "description": "Additional text states. Each state should derive from a 'base' state, which can be one of the following:\n- a C++ or Python state within StatesLibraries\n- a YAML state defined within StatesFiles\n- a state defined within this 'states' property.\n See <a href=\"{{site.baseurl}}/json.html#State\">State objects</a>",
+      "descriptionHtml": "Additional text states. Each state should derive from a 'base' state, which can be one of the following:<ul><li>a C++ or Python state within StatesLibraries</li><li>a YAML state defined within StatesFiles</li><li>a state defined within this 'states' property.</li><li> See <a href=\"{{site.baseurl}}/json.html#State\">State objects</a></li>",
       "additionalProperties":
       {
         "_expand": false,
-        "_expand_alternate": "Additional text states. Each state should derive from a 'base' state, which can be one of the following:<ul><li>a C++ or Python state within StatesLibraries</li><li>a YAML state defined within StatesFiles</li><li>a state defined within this 'states' property.</li><li> See <a href=\"{{site.baseurl}}/json.html#State\">State objects</a></li>",
         "$ref": "../common/StatesProperty.json"
       }
     },
