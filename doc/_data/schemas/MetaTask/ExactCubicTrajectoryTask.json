@@ -7,7 +7,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["exact_cubic_trajectory"] }
+        "type": { "const": "exact_cubic_trajectory" }
       }
     },
     {

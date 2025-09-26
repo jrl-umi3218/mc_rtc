@@ -12,7 +12,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["compliance"] },
+        "type": { "const": "compliance" },
         "wrench": { "$ref": "../SpaceVecAlg/ForceVecd.json" },
         "dof": { "$ref": "../Eigen/Matrix6d.json" },
         "forceThresh": { "type": "number" },

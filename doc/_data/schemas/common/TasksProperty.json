@@ -25,5 +25,6 @@
     { "$ref": "../MetaTask/RemoveContactTask.json" },
     { "$ref": "../MetaTask/TransformTask.json" },
     { "$ref": "../MetaTask/VectorOrientationTask.json" }
-  ]
+  ],
+  "discriminator": { "propertyName": "type" }
 }

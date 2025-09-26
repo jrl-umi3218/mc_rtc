@@ -12,7 +12,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["lookAt"] },
+        "type": { "const": "lookAt" },
         "frameVector": { "$ref": "../Eigen/Vector3d.json" },
         "targetPos": { "$ref": "../Eigen/Vector3d.json" },
         "targetVector": { "$ref": "../Eigen/Vector3d.json" },

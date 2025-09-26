@@ -12,7 +12,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["body6d"] },
+        "type": { "const": "body6d" },
         "bodyPoint": { "$ref": "../Eigen/Vector3d.json" },
         "orientation": { "$ref": "../Eigen/Matrix3d.json" },
         "position": { "$ref": "../Eigen/Vector3d.json" },

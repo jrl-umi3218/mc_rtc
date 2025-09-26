@@ -12,7 +12,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["lookAtTF"] },
+        "type": { "const": "lookAtTF" },
         "frameVector": { "$ref": "../Eigen/Vector3d.json" },
         "sourceFrame": { "type": "string" },
         "targetFrame": { "type": "string" }

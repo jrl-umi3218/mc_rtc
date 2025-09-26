@@ -7,7 +7,7 @@
     {
       "properties":
       {
-        "type": { "enum": ["bspline_trajectory"] }
+        "type": { "const": "bspline_trajectory" }
       }
     },
     {
