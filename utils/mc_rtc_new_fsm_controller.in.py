@@ -218,7 +218,6 @@ EXPORT_SINGLE_STATE("{controller_name}_Initial", {controller_name}_Initial)
             )
         )
 
-
     # VSCode config
     vscode_dir = os.path.join(project_dir, ".vscode")
     os.makedirs(vscode_dir, exist_ok=True)
@@ -226,12 +225,12 @@ EXPORT_SINGLE_STATE("{controller_name}_Initial", {controller_name}_Initial)
         "yaml.schemas": {
             "https://arntanguy.github.io/mc_rtc/schemas/mc_rtc/mc_rtc.json": "**/mc_rtc.yaml",
             "https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json": "etc/TestRobotModuleConnect.in.yaml",
-            "https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMStates.json": "src/states/data/*.yaml"
+            "https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMStates.json": "src/states/data/*.yaml",
         },
         "yaml.validate": True,
         "yaml.format.enable": False,
         "yaml.hover": True,
-        "yaml.completion": True
+        "yaml.completion": True,
     }
     with open(os.path.join(vscode_dir, "settings.json"), "w") as f:
         json.dump(vscode_settings, f, indent=2)
@@ -261,7 +260,9 @@ lspconfig.yamlls.setup{
   }
 }
 -- You can add more project-specific Neovim or LSP settings below
-""".format(controller_name=controller_name)
+""".format(
+                controller_name=controller_name
+            )
         )
 
     repo.index.add(
