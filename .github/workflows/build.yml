@@ -165,6 +165,13 @@ jobs:
         build-type: ${{ matrix.build-type }}
         windows-options: -DPYTHON_BINDING:BOOL=OFF
 
+    - name: Generate directory listing for schemas
+      # Only run on master branch and for one configuration
+      if: matrix.os == 'ubuntu-22.04' && matrix.build-type == 'RelWithDebInfo' && matrix.compiler == 'gcc' && github.ref == 'refs/heads/topic/SchemaCompletion' && github.repository == 'arntanguy/mc_rtc'
+      uses: jayanta525/github-pages-directory-listing@v4.0.0
+      with:
+        FOLDER: /tmp/build-mc-rtc/src/mc_rtc/doc/_data/schemas
+
     - name: Upload documentation (tmp for pr)
       # Only run on master branch and for one configuration
       if: matrix.os == 'ubuntu-22.04' && matrix.build-type == 'RelWithDebInfo' && matrix.compiler == 'gcc' && github.ref == 'refs/heads/topic/SchemaCompletion' && github.repository == 'arntanguy/mc_rtc'
