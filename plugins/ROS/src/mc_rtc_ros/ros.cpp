@@ -407,8 +407,8 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
   data.odom.header.seq = data.js.header.seq;
 #endif
   data.odom.header.stamp = data.js.header.stamp;
-  const auto & odom_p = robot.bodySensor().position();
-  Eigen::Quaterniond odom_q = robot.bodySensor().orientation();
+  const auto & odom_p = robot.posW().translation();
+  Eigen::Quaterniond odom_q(robot.posW().rotation());
   data.odom.pose.pose.position.x = odom_p.x();
   data.odom.pose.pose.position.y = odom_p.y();
   data.odom.pose.pose.position.z = odom_p.z();
