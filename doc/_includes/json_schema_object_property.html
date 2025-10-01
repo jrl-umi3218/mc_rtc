@@ -24,11 +24,10 @@
         {% for propData in data.properties %}
           <!-- XXX: we should use a collapsible element instead -->
           <tr class="sub-object-property">
-            <!-- PROPERTY data <pre>{{ propData | jsonify }}</pre> -->
             {% assign propDataItem = propData[1] %}
             {% assign propName = propData[0] %}
             {% if data contains "description" or propDataItem contains "description" %}
-              <td>
+              <td colspan="2">
                 <span class="text-secondary">{{propName}}:&nbsp;</span>
                 {% include json_schema_item.html data=propDataItem id=id %}
               </td>
