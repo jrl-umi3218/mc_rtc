@@ -5,6 +5,7 @@
 set(MC_RTC_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../include")
 
 set(VERSION_SCRIPT_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/version-script.lds")
+set(MC_RTC_ALL_TARGETS)
 
 if(UNIX AND NOT EMSCRIPTEN)
   include(CheckCXXSourceCompiles)
@@ -45,6 +46,11 @@ macro(install_mc_rtc_lib_common MC_LIB KWD)
     target_compile_definitions(${MC_LIB} ${KWD} MC_RTC_BUILD_STATIC)
   endif()
   add_library(mc_rtc::${MC_LIB} ALIAS ${MC_LIB})
+  list(APPEND MC_RTC_ALL_TARGETS ${MC_LIB})
+  set(MC_RTC_ALL_TARGETS
+      "${MC_RTC_ALL_TARGETS}"
+      PARENT_SCOPE
+  )
 endmacro()
 
 macro(install_mc_rtc_header_lib MC_LIB)
@@ -89,7 +95,7 @@ add_custom_command(
     -DPROJECT_VERSION_MAJOR="${PROJECT_VERSION_MAJOR}"
     -DMC_RTC_DEVELOPER_MODE="${MC_RTC_DEVELOPER_MODE}" -P
     "${PROJECT_SOURCE_DIR}/CMakeModules/MakeVersionHeader.cmake"
-  DEPENDS ${MC_RTC_ALL_FILES}
+  DEPENDS ${MC_RTC_ALL_TARGETS}
 )
 
 set(DEBUG_SOURCE "${PROJECT_BINARY_DIR}/src/mc_rtc/$<LOWER_CASE:$<CONFIG>>/debug.cpp")
