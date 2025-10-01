@@ -103,6 +103,20 @@ struct is_eigen_vector<Eigen::Matrix<Scalar, Rows, 1, Options, MaxRows, 1>> : pu
 template<typename T>
 inline constexpr bool is_eigen_vector_v = is_eigen_vector<T>::value;
 
+/** Type-trait to detect if something is an Eigen::MatrixXd */
+template<typename T>
+struct is_eigen_matrixxd : public std::false_type
+{
+};
+
+template<>
+struct is_eigen_matrixxd<Eigen::MatrixXd> : public std::true_type
+{
+};
+
+template<typename T>
+inline constexpr bool is_eigen_matrixxd_v = is_eigen_matrixxd<T>::value;
+
 template<typename T, bool IsRequired, bool IsInteractive, bool HasChoices = false, bool IsStatic = false>
 void addValueToForm(const T & value,
                     const std::string & description,
@@ -199,6 +213,10 @@ void addValueToForm(const T & value,
   else if constexpr(std::is_same_v<T, sva::ForceVecd> || details::is_eigen_vector_v<T>)
   {
     form.addElement(mc_rtc::gui::FormArrayInput(description, IsRequired, get_value));
+  }
+  else if constexpr(details::is_eigen_matrixxd_v<T>)
+  {
+    // do nothing, we don't support MatrixXd in forms for now but allow MatrixXd in schemas
   }
   else { static_assert(!std::is_same_v<T, T>, "addValueToForm must be implemented for this value type"); }
 }
