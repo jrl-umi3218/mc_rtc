@@ -324,7 +324,7 @@ struct Operations
       load(self, in);
       T & value = static_cast<Schema *>(self)->*ptr;
       if(in.has(name)) { value = in(name).operator T(); }
-      else if constexpr(IsRequired) { mc_rtc::log::error_and_throw("{} is required"); }
+      else if constexpr(IsRequired) { mc_rtc::log::error_and_throw("{} is required", name); }
     };
     formToStd = [formToStd = formToStd, name, description](const Configuration & in, Configuration & out)
     {
