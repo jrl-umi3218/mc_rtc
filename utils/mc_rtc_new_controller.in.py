@@ -231,6 +231,53 @@ void {controller_class_name}::reset(const mc_control::ControllerResetData & rese
         )
     with open(project_dir + "/etc/" + controller_name + ".in.yaml", "w") as fd:
         fd.write("---\n")
+
+    # VSCode config
+    vscode_dir = os.path.join(project_dir, ".vscode")
+    os.makedirs(vscode_dir, exist_ok=True)
+    vscode_settings = {
+        "yaml.schemas": {
+            "https://arntanguy.github.io/mc_rtc/schemas/mc_rtc/mc_rtc.json": "**/mc_rtc.yaml",
+            "https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json": "etc/{}.yaml".format(
+                controller_name
+            ),
+        },
+        "yaml.validate": True,
+        "yaml.format.enable": False,
+        "yaml.hover": True,
+        "yaml.completion": True,
+    }
+    with open(os.path.join(vscode_dir, "settings.json"), "w") as f:
+        json.dump(vscode_settings, f, indent=2)
+
+    # Neovim config
+    with open(project_dir + "/.nvim.lua", "w") as fd:
+        fd.write(
+            """-- Project-specific Neovim configuration
+
+-- Set up YAML schema association for this project
+local lspconfig = require('lspconfig')
+
+lspconfig.yamlls.setup{
+  settings = {
+    yaml = {
+      schemas = {
+        ["https://arntanguy.github.io/mc_rtc/schemas/mc_rtc/mc_rtc.json"] = "**/mc_rtc.yaml",
+        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json"] = "etc/{controller_name}.yaml"
+
+      },
+      validate = true,
+      format = {{ enable = false }},
+      hover = true,
+      completion = true,
+    }
+  }
+}
+-- You can add more project-specific Neovim or LSP settings below
+""".format(
+                controller_name=controller_name
+            )
+        )
     repo.index.add(
         [
             s.format(controller_class_name)
@@ -241,6 +288,8 @@ void {controller_class_name}::reset(const mc_control::ControllerResetData & rese
                 "etc/" + controller_name + ".in.yaml",
                 "src/{}.h",
                 "src/{}.cpp",
+                ".vscode/",
+                ".nvim.lua",
             ]
         ]
     )
