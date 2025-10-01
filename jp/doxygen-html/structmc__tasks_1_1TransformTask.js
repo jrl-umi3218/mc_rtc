@@ -1,7 +1,7 @@
 var structmc__tasks_1_1TransformTask =
 [
-    [ "TransformTask", "structmc__tasks_1_1TransformTask.html#af76f18eb60ebc27c1e8b7612535aecc9", null ],
-    [ "TransformTask", "structmc__tasks_1_1TransformTask.html#a9d566e2a0f59e9b4ed91c9a5849e31af", null ],
+    [ "TransformTask", "structmc__tasks_1_1TransformTask.html#a4d1b88687a9afd9b6ec428c9e290bab3", null ],
+    [ "TransformTask", "structmc__tasks_1_1TransformTask.html#a7c51a08d891c13c0bce6c848cbf8e5ad", null ],
     [ "addToGUI", "structmc__tasks_1_1TransformTask.html#abc682d060a6d0815896f02614c0f1014", null ],
     [ "addToLogger", "structmc__tasks_1_1TransformTask.html#ac5022750a20f51ed0943833faa9b29ed", null ],
     [ "buildCompletionCriteria", "structmc__tasks_1_1TransformTask.html#a02daab9367d54190e6a5151d194504b2", null ],
@@ -35,5 +35,7 @@ var structmc__tasks_1_1TransformTask =
     [ "targetFrameVelocity", "structmc__tasks_1_1TransformTask.html#a99c956fd7bcebd7bbebb2885fe192f1c", null ],
     [ "targetSurface", "structmc__tasks_1_1TransformTask.html#ab9bc862aa7bb14da29be6a9103e91ea5", null ],
     [ "targetVel", "structmc__tasks_1_1TransformTask.html#aca97ce8515f92288be63e19cec0b6c72", null ],
-    [ "frame_", "structmc__tasks_1_1TransformTask.html#a078d35f229cfe10dfa0e4672cb3304d9", null ]
+    [ "frame_", "structmc__tasks_1_1TransformTask.html#a078d35f229cfe10dfa0e4672cb3304d9", null ],
+    [ "showPose_", "structmc__tasks_1_1TransformTask.html#ab014bb5e3073c5c41569557e2f92aa4a", null ],
+    [ "showTarget_", "structmc__tasks_1_1TransformTask.html#a541c989c4151475146ef3f2cab003a4b", null ]
 ];

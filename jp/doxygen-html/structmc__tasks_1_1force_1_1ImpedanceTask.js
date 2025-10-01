@@ -1,7 +1,7 @@
 var structmc__tasks_1_1force_1_1ImpedanceTask =
 [
-    [ "ImpedanceTask", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a0ef3a7aced29828c13a1db97ca2c4d0b", null ],
-    [ "ImpedanceTask", "structmc__tasks_1_1force_1_1ImpedanceTask.html#ad22745f66f514b82fe1aaa047f07d90f", null ],
+    [ "ImpedanceTask", "structmc__tasks_1_1force_1_1ImpedanceTask.html#afc1eef30c25ea8b9375bf27645d775ef", null ],
+    [ "ImpedanceTask", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a9706aa71098a06b27210c14391f23065", null ],
     [ "addToGUI", "structmc__tasks_1_1force_1_1ImpedanceTask.html#ae6658a431750580958b194b2d0a4963c", null ],
     [ "addToLogger", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a2d68f87660e62b62cbaa910632d68a3c", null ],
     [ "addToSolver", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a1014edb78929f3768bd4dd9c2260fab1", null ],
@@ -42,6 +42,9 @@ var structmc__tasks_1_1force_1_1ImpedanceTask =
     [ "hold_", "structmc__tasks_1_1force_1_1ImpedanceTask.html#ae1abae5aed22bdd4007eaccabffdc4ca", null ],
     [ "lowPass_", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a51861dc893e2a8aa733f48423e48c6c1", null ],
     [ "measuredWrench_", "structmc__tasks_1_1force_1_1ImpedanceTask.html#acdc427a08b2669b8010a47f912c31a96", null ],
+    [ "showCompliance_", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a3c377d3700f9ff5efa84169b17d86ab1", null ],
+    [ "showPose_", "structmc__tasks_1_1force_1_1ImpedanceTask.html#aa6b586b8796ac8ec3e2195ce60c0d30e", null ],
+    [ "showTarget_", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a1edde6b0f7fe6095497d56ecead07b1e", null ],
     [ "targetAccelW_", "structmc__tasks_1_1force_1_1ImpedanceTask.html#afda9ff98e5fdb2421896a9179e5e0f2f", null ],
     [ "targetPoseW_", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a34c17bbcd0348e7b67a99241a97aa7f0", null ],
     [ "targetVelW_", "structmc__tasks_1_1force_1_1ImpedanceTask.html#a4e705a22da0d1a9d49bf015e868be245", null ],

@@ -7663,15 +7663,15 @@
       <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</type>
       <name>AdmittanceTask</name>
       <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
-      <anchor>aeb260767d5027918e1931e5365f5ecf3</anchor>
-      <arglist>(const mc_rbdyn::RobotFrame &amp;frame, double stiffness=5.0, double weight=1000.0)</arglist>
+      <anchor>ad92ec442ebd899b296fde056cdbeeec3</anchor>
+      <arglist>(const mc_rbdyn::RobotFrame &amp;frame, double stiffness=5.0, double weight=1000.0, bool showTarget=true, bool showPose=true)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>AdmittanceTask</name>
       <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
-      <anchor>adc9e5dddfd6c66644832803aa5187181</anchor>
-      <arglist>(const std::string &amp;robotSurface, const mc_rbdyn::Robots &amp;robots, unsigned robotIndex, double stiffness=5.0, double weight=1000.0)</arglist>
+      <anchor>a403c4203bcea5163857a6367d425f105</anchor>
+      <arglist>(const std::string &amp;robotSurface, const mc_rbdyn::Robots &amp;robots, unsigned robotIndex, double stiffness=5.0, double weight=1000.0, bool showTarget=true, bool showPose=true)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -7930,6 +7930,20 @@
       <name>refVelB_</name>
       <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
       <anchor>a2eeb8d4440242d2c4526226e15efaf87</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>showTarget_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
+      <anchor>a60e58bb75bb89731f7cceaedf60354f6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>showPose_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
+      <anchor>af7408c76b5c729cc527747759e67fe8b</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -21686,15 +21700,15 @@
       <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</type>
       <name>ImpedanceTask</name>
       <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
-      <anchor>a0ef3a7aced29828c13a1db97ca2c4d0b</anchor>
-      <arglist>(const std::string &amp;surfaceName, const mc_rbdyn::Robots &amp;robots, unsigned robotIndex, double stiffness=5.0, double weight=1000.0)</arglist>
+      <anchor>afc1eef30c25ea8b9375bf27645d775ef</anchor>
+      <arglist>(const std::string &amp;surfaceName, const mc_rbdyn::Robots &amp;robots, unsigned robotIndex, double stiffness=5.0, double weight=1000.0, bool showTarget=true, bool showPose=true, bool showCompliance=true)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>ImpedanceTask</name>
       <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
-      <anchor>ad22745f66f514b82fe1aaa047f07d90f</anchor>
-      <arglist>(const mc_rbdyn::RobotFrame &amp;frame, double stiffness=5.0, double weight=1000.0)</arglist>
+      <anchor>a9706aa71098a06b27210c14391f23065</anchor>
+      <arglist>(const mc_rbdyn::RobotFrame &amp;frame, double stiffness=5.0, double weight=1000.0, bool showTarget=true, bool showPose=true, bool showCompliance=true)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -21876,6 +21890,27 @@
       <name>gains_</name>
       <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
       <anchor>a650f1aad54ff5b3f1b7b9a344c975187</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>showTarget_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a1edde6b0f7fe6095497d56ecead07b1e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>showPose_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>aa6b586b8796ac8ec3e2195ce60c0d30e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>showCompliance_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a3c377d3700f9ff5efa84169b17d86ab1</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -43792,15 +43827,15 @@
       <type></type>
       <name>TransformTask</name>
       <anchorfile>structmc__tasks_1_1TransformTask.html</anchorfile>
-      <anchor>af76f18eb60ebc27c1e8b7612535aecc9</anchor>
-      <arglist>(const mc_rbdyn::RobotFrame &amp;frame, double stiffness=2.0, double weight=500.0)</arglist>
+      <anchor>a4d1b88687a9afd9b6ec428c9e290bab3</anchor>
+      <arglist>(const mc_rbdyn::RobotFrame &amp;frame, double stiffness=2.0, double weight=500.0, bool showTarget=true, bool showPose=true)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>TransformTask</name>
       <anchorfile>structmc__tasks_1_1TransformTask.html</anchorfile>
-      <anchor>a9d566e2a0f59e9b4ed91c9a5849e31af</anchor>
-      <arglist>(const std::string &amp;surfaceName, const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness=2.0, double weight=500)</arglist>
+      <anchor>a7c51a08d891c13c0bce6c848cbf8e5ad</anchor>
+      <arglist>(const std::string &amp;surfaceName, const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness=2.0, double weight=500, bool showTarget=true, bool showPose=true)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -44038,6 +44073,20 @@
       <name>frame_</name>
       <anchorfile>structmc__tasks_1_1TransformTask.html</anchorfile>
       <anchor>a078d35f229cfe10dfa0e4672cb3304d9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>showTarget_</name>
+      <anchorfile>structmc__tasks_1_1TransformTask.html</anchorfile>
+      <anchor>a541c989c4151475146ef3f2cab003a4b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>showPose_</name>
+      <anchorfile>structmc__tasks_1_1TransformTask.html</anchorfile>
+      <anchor>ab014bb5e3073c5c41569557e2f92aa4a</anchor>
       <arglist></arglist>
     </member>
   </compound>
