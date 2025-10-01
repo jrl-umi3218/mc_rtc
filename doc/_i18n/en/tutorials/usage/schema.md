@@ -230,6 +230,12 @@ If you are using a `_DEFAULT_` macro, this is `mc_rtc::Default<T>` which is:
 - `mc_rtc::Default<T>` for `std::variant<T, Others...>`
 - Default values for a schema-based structure
 
+Note that for some types such as `Eigen::MatrixXd`, `Eigen::VecotrXd`, no reasonable default can be guessed and one must be provided explicitly. Use `MC_RTC_SCHEMA_MEMBER` for these elements.
+
+```cpp
+MC_RTC_SCHEMA_MEMBER(MySchema, Eigen::MatrixXd, matrix, "Some matrix", mc_rtc::schema::Required, Eigen::MatrixXd::Identity(12, 4))
+```
+
 ### About `NAMES`
 
 These extra parameter has two possible use-case:

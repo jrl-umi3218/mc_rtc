@@ -18,4 +18,10 @@ struct SimpleSchema
   MEMBER(Eigen::Vector2d, v2d, "Some 2d setting")
   MEMBER(Eigen::Vector4d, v4d, "Some 4d setting")
 #undef MEMBER
+  MC_RTC_SCHEMA_MEMBER(SimpleSchema,
+                       Eigen::MatrixXd,
+                       matrixXd,
+                       "Some MatrixXd setting",
+                       mc_rtc::schema::None,
+                       Eigen::MatrixXd::Identity(6, 6))
 };

@@ -229,6 +229,18 @@ void MessagePackBuilder::write(const Eigen::Matrix3d & m)
   finish_array();
 }
 
+void MessagePackBuilder::write(const Eigen::MatrixXd & m)
+{
+  start_array(static_cast<size_t>(m.rows()));
+  for(Eigen::Index i = 0; i < m.rows(); ++i)
+  {
+    start_array(static_cast<size_t>(m.cols()));
+    for(Eigen::Index j = 0; j < m.cols(); ++j) { write(m(i, j)); }
+    finish_array();
+  }
+  finish_array();
+}
+
 void MessagePackBuilder::write(const sva::PTransformd & pt)
 {
   start_array(12);
