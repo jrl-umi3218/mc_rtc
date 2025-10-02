@@ -28,6 +28,17 @@ auto config = mc_rtc::Configuration::fromData(data);
 auto config = mc_rtc::Configuration::fromYAMLData(data);
 ```
 
+#### A note on YAML
+
+When reading from YAML configuration, be aware of the following caveats:
+
+- YAML is using indentation to represent structure, make sure your indentation is consistent (e.g. do not mix spaces and tabs, always use the same number of spaces)
+- Numbers are handled in the following way:
+  - A number starting with a trailing zero is assumed to be octal (e.g `0123` will be parsed as `83` in decimal)
+  - A string composed of only numeric characters is parsed as a scalar, even when quoted (e.g `'123'` will be parsed as `123` in decimal, `"0123"` will be parsed as `83` in decimal)
+  - You can force a number to be parsed as a string using the `!!str` tag (e.g. `number_as_str: !!str 0123`)
+  - Note that number handling differs from JSON where numbers are always parsed as decimal and quoted numbers are always parsed as strings.
+
 ### Read data from the configuration
 
 Several methods are proposed to access the data in the
