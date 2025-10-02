@@ -327,7 +327,11 @@
               </div>
               
                 <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h3"><a href="#data-source">Data source</a></li>
+<li class="toc-entry toc-h3"><a href="#data-source">Data source</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#a-note-on-yaml">A note on YAML</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h3"><a href="#read-data-from-the-configuration">Read data from the configuration</a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#strict-access">Strict access</a></li>
@@ -390,6 +394,22 @@ examples.</p>
 <span class="c1">// Load from already loaded YAML data</span>
 <span class="k">auto</span> <span class="n">config</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="o">::</span><span class="n">fromYAMLData</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
 </code></pre></div></div>
+
+<h4 id="a-note-on-yaml">A note on YAML</h4>
+
+<p>When reading from YAML configuration, be aware of the following caveats:</p>
+
+<ul>
+  <li>YAML is using indentation to represent structure, make sure your indentation is consistent (e.g. do not mix spaces and tabs, always use the same number of spaces)</li>
+  <li>Numbers are handled in the following way:
+    <ul>
+      <li>A number starting with a trailing zero is assumed to be octal (e.g <code class="language-plaintext highlighter-rouge">0123</code> will be parsed as <code class="language-plaintext highlighter-rouge">83</code> in decimal)</li>
+      <li>A string composed of only numeric characters is parsed as a scalar, even when quoted (e.g <code class="language-plaintext highlighter-rouge">'123'</code> will be parsed as <code class="language-plaintext highlighter-rouge">123</code> in decimal, <code class="language-plaintext highlighter-rouge">"0123"</code> will be parsed as <code class="language-plaintext highlighter-rouge">83</code> in decimal)</li>
+      <li>You can force a number to be parsed as a string using the <code class="language-plaintext highlighter-rouge">!!str</code> tag (e.g. <code class="language-plaintext highlighter-rouge">number_as_str: !!str 0123</code>)</li>
+      <li>Note that number handling differs from JSON where numbers are always parsed as decimal and quoted numbers are always parsed as strings.</li>
+    </ul>
+  </li>
+</ul>
 
 <h3 id="read-data-from-the-configuration">Read data from the configuration</h3>
 

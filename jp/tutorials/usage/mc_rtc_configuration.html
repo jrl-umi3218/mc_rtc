@@ -327,7 +327,11 @@
               </div>
               
                 <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h3"><a href="#データソース">データソース</a></li>
+<li class="toc-entry toc-h3"><a href="#データソース">データソース</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#yamlについての注意">YAMLについての注意</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h3"><a href="#設定からデータを読み取る">設定からデータを読み取る</a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#厳格なアクセス">厳格なアクセス</a></li>
@@ -386,6 +390,22 @@
 <span class="c1">// すでに読み込まれているYAMLデータから読み込む</span>
 <span class="k">auto</span> <span class="n">config</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="o">::</span><span class="n">fromYAMLData</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
 </code></pre></div></div>
+
+<h4 id="yamlについての注意">YAMLについての注意</h4>
+
+<p>YAML設定を読み込む際は、以下の注意点に気をつけてください：</p>
+
+<ul>
+  <li>YAMLはインデントで構造を表現します。インデントが一貫していることを確認してください（例：スペースとタブを混在させない、常に同じ数のスペースを使う）。</li>
+  <li>数値の扱いについて：
+    <ul>
+      <li>先頭がゼロの数値は8進数として解釈されます（例：<code class="language-plaintext highlighter-rouge">0123</code> は10進数で <code class="language-plaintext highlighter-rouge">83</code> として解析されます）。</li>
+      <li>数字のみで構成された文字列は、引用符で囲まれていてもスカラーとして解析されます（例：<code class="language-plaintext highlighter-rouge">'123'</code> は10進数で <code class="language-plaintext highlighter-rouge">123</code>、<code class="language-plaintext highlighter-rouge">"0123"</code> は10進数で <code class="language-plaintext highlighter-rouge">83</code> として解析されます）。</li>
+      <li><code class="language-plaintext highlighter-rouge">!!str</code> タグを使うことで数値を文字列として解析させることができます（例：<code class="language-plaintext highlighter-rouge">number_as_str: !!str 0123</code>）。</li>
+      <li>数値の扱いはJSONとは異なり、JSONでは数値は常に10進数として解析され、引用符付きの数値は常に文字列として解析されます。</li>
+    </ul>
+  </li>
+</ul>
 
 <h3 id="設定からデータを読み取る">設定からデータを読み取る</h3>
 
