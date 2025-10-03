@@ -197,6 +197,12 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
    */
   void write(const Eigen::Matrix3d & m);
 
+  /* Write an Eigen::MatrixXd
+   *
+   * Serialized as an array of arrays
+   */
+  void write(const Eigen::MatrixXd & m);
+
   /** Write an sva::PTransformd
    *
    * Serialized as an array of size 12 (Matrix3d + Vector3d)

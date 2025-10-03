@@ -215,6 +215,12 @@ struct InteractiveSchema
 - `std::variant<T>`の場合は`mc_rtc::Default<T>`です
 - スキーマベースの構造の場合はデフォルト値
 
+`Eigen::MatrixXd` や `Eigen::VectorXd` などの型については、適切なデフォルト値を推測することができないため、明示的に指定する必要があります。これらの要素には `MC_RTC_SCHEMA_MEMBER` を使用してください。
+
+```cpp
+MC_RTC_SCHEMA_MEMBER(MySchema, Eigen::MatrixXd, matrix, "Some matrix", mc_rtc::schema::Required, Eigen::MatrixXd::Identity(12, 4))
+```
+
 ### `NAMES`について
 
 これらの追加パラメータには2つの可能な使用例があります：

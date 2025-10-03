@@ -812,6 +812,8 @@ void MCController::updateContacts()
       auto r2Index = robot(r2).robotIndex();
       contacts.emplace_back(robots(), r1Index, r2Index, c.r1Surface, c.r2Surface, c.friction);
       contacts.back().dof(c.dof);
+      // XXX check if need to update things here, transfer polytopes etc
+
       if(solver().backend() == Backend::Tasks)
       {
         auto cId = contacts.back().contactId(robots());
@@ -915,7 +917,7 @@ void MCController::removeCollisions(const std::string & r1, const std::string & 
   cc->reset();
 }
 
-void MCController::addContact(const Contact & c)
+void MCController::addContact(const Contact & c, bool show)
 {
   { // Ensure that optional robots have a name for correct unique set insertion
     // TODO: it would be better not to store the robots name as optional
@@ -926,28 +928,37 @@ void MCController::addContact(const Contact & c)
   }
 
   auto [it, inserted] = contacts_.insert(c);
+
   contacts_changed_ |= inserted;
   const auto & r1 = c.r1.value();
   const auto & r2 = c.r2.value();
+  // contact already exists, checks if it has changed
   if(!inserted)
   {
+    if(c.feasiblePolytope)
+    {
+      it->feasiblePolytope = c.feasiblePolytope;
+      contacts_changed_ = true;
+    }
+
     if(it->dof != c.dof)
     {
-      mc_rtc::log::info("Changed contact DoF {}::{}/{}::{} to {}", r1, c.r1Surface, r2, c.r2Surface,
+      mc_rtc::log::info(show, "Changed contact DoF {}::{}/{}::{} to {}", r1, c.r1Surface, r2, c.r2Surface,
                         MC_FMT_STREAMED(c.dof.transpose()));
       it->dof = c.dof;
       contacts_changed_ = true;
     }
     if(it->friction != c.friction)
     {
-      mc_rtc::log::info("Changed contact friction {}::{}/{}::{} to {}", r1, c.r1Surface, r2, c.r2Surface, c.friction);
+      mc_rtc::log::info(show, "Changed contact friction {}::{}/{}::{} to {}", r1, c.r1Surface, r2, c.r2Surface,
+                        c.friction);
       it->friction = c.friction;
       contacts_changed_ = true;
     }
   }
   else
   {
-    mc_rtc::log::info("Add contact {}::{}/{}::{} (DoF: {})", r1, c.r1Surface, r2, c.r2Surface,
+    mc_rtc::log::info(show, "Add contact {}::{}/{}::{} (DoF: {})", r1, c.r1Surface, r2, c.r2Surface,
                       MC_FMT_STREAMED(c.dof.transpose()));
   }
 }
