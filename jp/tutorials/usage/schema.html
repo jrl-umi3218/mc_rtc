@@ -585,6 +585,11 @@
   <li>スキーマベースの構造の場合はデフォルト値</li>
 </ul>
 
+<p><code class="language-plaintext highlighter-rouge">Eigen::MatrixXd</code> や <code class="language-plaintext highlighter-rouge">Eigen::VectorXd</code> などの型については、適切なデフォルト値を推測することができないため、明示的に指定する必要があります。これらの要素には <code class="language-plaintext highlighter-rouge">MC_RTC_SCHEMA_MEMBER</code> を使用してください。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MC_RTC_SCHEMA_MEMBER</span><span class="p">(</span><span class="n">MySchema</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="s">"Some matrix"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">schema</span><span class="o">::</span><span class="n">Required</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">::</span><span class="n">Identity</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</code></pre></div></div>
+
 <h3 id="namesについて"><code class="language-plaintext highlighter-rouge">NAMES</code>について</h3>
 
 <p>これらの追加パラメータには2つの可能な使用例があります：</p>

@@ -601,6 +601,11 @@
   <li>Default values for a schema-based structure</li>
 </ul>
 
+<p>Note that for some types such as <code class="language-plaintext highlighter-rouge">Eigen::MatrixXd</code>, <code class="language-plaintext highlighter-rouge">Eigen::VecotrXd</code>, no reasonable default can be guessed and one must be provided explicitly. Use <code class="language-plaintext highlighter-rouge">MC_RTC_SCHEMA_MEMBER</code> for these elements.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MC_RTC_SCHEMA_MEMBER</span><span class="p">(</span><span class="n">MySchema</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="s">"Some matrix"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">schema</span><span class="o">::</span><span class="n">Required</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">::</span><span class="n">Identity</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</code></pre></div></div>
+
 <h3 id="about-names">About <code class="language-plaintext highlighter-rouge">NAMES</code></h3>
 
 <p>These extra parameter has two possible use-case:</p>

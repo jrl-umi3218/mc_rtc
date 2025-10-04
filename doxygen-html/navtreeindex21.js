@@ -1,5 +1,10 @@
 var NAVTREEINDEX21 =
 {
+"structmc__tasks_1_1MetaTask.html#afa7c055d8cef8f4a8bb1e76689445130":[6,0,8,13,18],
+"structmc__tasks_1_1MetaTaskLoader.html":[6,0,8,14],
+"structmc__tasks_1_1MomentumTask.html":[6,0,8,15],
+"structmc__tasks_1_1MomentumTask.html#a288104247dc5c93a7915300458da2f06":[6,0,8,15,5],
+"structmc__tasks_1_1MomentumTask.html#a6ba0b4c9ecf9da4571b8c052b325c5d3":[6,0,8,15,4],
 "structmc__tasks_1_1MomentumTask.html#a722bd3ba35066d38f9d301126f46e8fc":[6,0,8,15,3],
 "structmc__tasks_1_1MomentumTask.html#ab4c83463d464cb179c2f914fccfcd3b2":[6,0,8,15,6],
 "structmc__tasks_1_1MomentumTask.html#ac09760de5c209d12568dac6817e79395":[6,0,8,15,2],
@@ -244,10 +249,5 @@ var NAVTREEINDEX21 =
 "structmc__tasks_1_1TransformTask.html#ade15f0fe552c48b84e75d8f3fd408d40":[6,0,8,24,7],
 "structmc__tasks_1_1TransformTask.html#aed51021240e5eda4c056af715968efb3":[6,0,8,24,24],
 "structmc__tasks_1_1TransformTask.html#aed8a30b4cb0b2efefdfcfb7c5c88e1c7":[6,0,8,24,9],
-"structmc__tasks_1_1TransformTask.html#aefda5e3d07a3c146371b74cfe0f58326":[6,0,8,24,17],
-"structmc__tasks_1_1TransformTask.html#af265a914cd8863a4698f650ca0d55b81":[6,0,8,24,29],
-"structmc__tasks_1_1TransformTask.html#af4eaed1d9f5b6eefc1da74cd7a76d562":[6,0,8,24,11],
-"structmc__tasks_1_1TransformTask.html#af7521819d429bcd89c4e22af6c482479":[6,0,8,24,12],
-"structmc__tasks_1_1TransformTask.html#afe086f1f8b3996726aaa02367142fe51":[6,0,8,24,19],
-"structmc__tasks_1_1VectorOrientationTask.html":[6,0,8,25]
+"structmc__tasks_1_1TransformTask.html#aefda5e3d07a3c146371b74cfe0f58326":[6,0,8,24,17]
 };

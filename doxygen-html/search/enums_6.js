@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['update_6350',['Update',['../structmc__observers_1_1BodySensorObserver.html#ace7a5ef240bc42d89053419e8718eba3',1,'mc_observers::BodySensorObserver']]]
+  ['update_6356',['Update',['../structmc__observers_1_1BodySensorObserver.html#ace7a5ef240bc42d89053419e8718eba3',1,'mc_observers::BodySensorObserver']]]
 ];

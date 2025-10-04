@@ -1,5 +1,6 @@
 var NAVTREEINDEX4 =
 {
+"generic__gripper_8h.html":[7,0,0,0,10],
 "generic__gripper_8h.html#a39b3dee4f4017bab0f389d9bfd7877dc":[7,0,0,0,10,2],
 "generic__gripper_8h.html#a67d3b51822d3e7d0c56d9af675f9eaa1":[7,0,0,0,10,1],
 "generic__gripper_8h_source.html":[7,0,0,0,10],
@@ -248,6 +249,5 @@ var NAVTREEINDEX4 =
 "logging_8h.html#a4493319384c54d938a70d54193ed2dbc":[7,0,0,6,17,17],
 "logging_8h.html#a4be6522543b254e76db5d80f58a4e290":[7,0,0,6,17,16],
 "logging_8h.html#a54ebcc7be85c707e724b30af37292667":[7,0,0,6,17,14],
-"logging_8h.html#a61a4f2b21a3c9e57114e8d852bc125ce":[7,0,0,6,17,9],
-"logging_8h.html#a63a6359b81688166256710bf0ea161df":[7,0,0,6,17,3]
+"logging_8h.html#a61a4f2b21a3c9e57114e8d852bc125ce":[7,0,0,6,17,9]
 };

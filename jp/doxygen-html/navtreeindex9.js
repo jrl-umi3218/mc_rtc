@@ -1,5 +1,7 @@
 var NAVTREEINDEX9 =
 {
+"structmc__control_1_1Gripper.html#adb8b3c24a0acd644827a3a829f5a48e3":[6,0,1,9,15],
+"structmc__control_1_1Gripper.html#adfb9313e52dfae85bf657914fd45b5cc":[6,0,1,9,51],
 "structmc__control_1_1Gripper.html#ae91facfa1c3c3a58e72f6bf75dd42fd8":[6,0,1,9,52],
 "structmc__control_1_1Gripper.html#af8d2812249f9a609ed32cb1a43ac45fc":[6,0,1,9,29],
 "structmc__control_1_1Gripper.html#af91c5965773d7b9f0d70d807c9a78c71":[6,0,1,9,27],
@@ -247,7 +249,5 @@ var NAVTREEINDEX9 =
 "structmc__control_1_1PythonRWCallback.html#a6cdae0b0b750ab031e2abbb122d93aa1":[6,0,1,13,1],
 "structmc__control_1_1SimulationContactPair.html":[6,0,1,18],
 "structmc__control_1_1SimulationContactPair.html#a074d699740f8b69b15c5fdbdde5519c0":[6,0,1,18,0],
-"structmc__control_1_1SimulationContactPair.html#a1b9a7de72470d0d2d433a7c3f9843ad0":[6,0,1,18,4],
-"structmc__control_1_1SimulationContactPair.html#a2b50f1a3fa514431d9c5552bf88f0181":[6,0,1,18,3],
-"structmc__control_1_1SimulationContactPair.html#a4a31ea1a5854da861e8a4f1c827386d8":[6,0,1,18,2]
+"structmc__control_1_1SimulationContactPair.html#a1b9a7de72470d0d2d433a7c3f9843ad0":[6,0,1,18,4]
 };

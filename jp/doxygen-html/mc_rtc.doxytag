@@ -4271,6 +4271,8 @@
     <class kind="struct">mc_rtc::schema::details::is_std_map&lt; std::map&lt; std::string, T &gt; &gt;</class>
     <class kind="struct">mc_rtc::schema::details::is_eigen_vector</class>
     <class kind="struct">mc_rtc::schema::details::is_eigen_vector&lt; Eigen::Matrix&lt; Scalar, Rows, 1, Options, MaxRows, 1 &gt; &gt;</class>
+    <class kind="struct">mc_rtc::schema::details::is_eigen_matrixxd</class>
+    <class kind="struct">mc_rtc::schema::details::is_eigen_matrixxd&lt; Eigen::MatrixXd &gt;</class>
     <class kind="struct">mc_rtc::schema::Operations</class>
     <class kind="struct">mc_rtc::schema::details::EmptySchema</class>
     <class kind="struct">mc_rtc::Default&lt; T, std::enable_if_t&lt; schema::details::is_schema_v&lt; T &gt; &gt; &gt;</class>
@@ -4379,6 +4381,13 @@
       <name>is_eigen_vector_v</name>
       <anchorfile>namespacemc__rtc_1_1schema_1_1details.html</anchorfile>
       <anchor>aadc011a10973f0c84cb88ba2082a54d1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_eigen_matrixxd_v</name>
+      <anchorfile>namespacemc__rtc_1_1schema_1_1details.html</anchorfile>
+      <anchor>a89fab8f81f8ffe1c0f02fb8b00d12fe3</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -22718,6 +22727,15 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::schema::details::is_eigen_matrixxd</name>
+    <filename>structmc__rtc_1_1schema_1_1details_1_1is__eigen__matrixxd.html</filename>
+    <templarg></templarg>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::schema::details::is_eigen_matrixxd&lt; Eigen::MatrixXd &gt;</name>
+    <filename>structmc__rtc_1_1schema_1_1details_1_1is__eigen__matrixxd_3_01Eigen_1_1MatrixXd_01_4.html</filename>
+  </compound>
+  <compound kind="struct">
     <name>mc_rtc::schema::details::is_eigen_vector</name>
     <filename>structmc__rtc_1_1schema_1_1details_1_1is__eigen__vector.html</filename>
     <templarg></templarg>
@@ -27246,6 +27264,13 @@
       <type>void</type>
       <name>write</name>
       <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
+      <anchor>a73fd4bf05ac7e2c957a6c13ac14d9ee7</anchor>
+      <arglist>(const Eigen::MatrixXd &amp;m)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
       <anchor>a5106a9ce75422dc91abac33bd4c4f8e9</anchor>
       <arglist>(const sva::PTransformd &amp;pt)</arglist>
     </member>
@@ -27507,6 +27532,13 @@
       <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
       <anchor>aa9b29c6e647ca8cae9b77d2a9a9cf422</anchor>
       <arglist>(const Eigen::Matrix3d &amp;m)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
+      <anchor>a73fd4bf05ac7e2c957a6c13ac14d9ee7</anchor>
+      <arglist>(const Eigen::MatrixXd &amp;m)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -48233,6 +48265,8 @@
     <class kind="struct">mc_rtc::schema::details::is_std_map&lt; std::map&lt; std::string, T &gt; &gt;</class>
     <class kind="struct">mc_rtc::schema::details::is_eigen_vector</class>
     <class kind="struct">mc_rtc::schema::details::is_eigen_vector&lt; Eigen::Matrix&lt; Scalar, Rows, 1, Options, MaxRows, 1 &gt; &gt;</class>
+    <class kind="struct">mc_rtc::schema::details::is_eigen_matrixxd</class>
+    <class kind="struct">mc_rtc::schema::details::is_eigen_matrixxd&lt; Eigen::MatrixXd &gt;</class>
     <class kind="struct">mc_rtc::schema::details::EmptySchema</class>
     <member kind="function">
       <type>void</type>
@@ -48295,6 +48329,13 @@
       <name>is_eigen_vector_v</name>
       <anchorfile>namespacemc__rtc_1_1schema_1_1details.html</anchorfile>
       <anchor>aadc011a10973f0c84cb88ba2082a54d1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>is_eigen_matrixxd_v</name>
+      <anchorfile>namespacemc__rtc_1_1schema_1_1details.html</anchorfile>
+      <anchor>a89fab8f81f8ffe1c0f02fb8b00d12fe3</anchor>
       <arglist></arglist>
     </member>
   </compound>

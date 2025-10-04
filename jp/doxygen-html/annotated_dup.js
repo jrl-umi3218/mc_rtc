@@ -273,6 +273,8 @@ var annotated_dup =
           [ "is_std_map< std::map< std::string, T > >", "structmc__rtc_1_1schema_1_1details_1_1is__std__map_3_01std_1_1map_3_01std_1_1string_00_01T_01_4_01_4.html", null ],
           [ "is_eigen_vector", "structmc__rtc_1_1schema_1_1details_1_1is__eigen__vector.html", null ],
           [ "is_eigen_vector< Eigen::Matrix< Scalar, Rows, 1, Options, MaxRows, 1 > >", "structmc__rtc_1_1schema_1_1details_1_1is__eigen__vector_3_01Eigen_1_1Matrix_3_01Scalar_00_01Rowsbb9412232b88ba886c0355b931a7aba0.html", null ],
+          [ "is_eigen_matrixxd", "structmc__rtc_1_1schema_1_1details_1_1is__eigen__matrixxd.html", null ],
+          [ "is_eigen_matrixxd< Eigen::MatrixXd >", "structmc__rtc_1_1schema_1_1details_1_1is__eigen__matrixxd_3_01Eigen_1_1MatrixXd_01_4.html", null ],
           [ "EmptySchema", "structmc__rtc_1_1schema_1_1details_1_1EmptySchema.html", null ]
         ] ],
         [ "Operations", "structmc__rtc_1_1schema_1_1Operations.html", "structmc__rtc_1_1schema_1_1Operations" ]
