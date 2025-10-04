@@ -7,23 +7,23 @@
     {
       "properties":
       {
-        "type": { "enum": ["exact_cubic_trajectory"] }
+        "type": { "const": "exact_cubic_trajectory" }
       }
     },
     {
-      "$ref": "/../../common/MetaTask_common.json"
+      "$ref": "../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_frame.json"
+      "$ref": "../common/MetaTask_frame.json"
     },
     {
-      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+      "$ref": "../common/TrajectoryTaskGeneric.json"
     },
     {
-      "$ref": "/../../common/SplineTrajectoryTask_common.json"
+      "$ref": "../common/SplineTrajectoryTask_common.json"
     },
     {
-      "$ref": "/../../common/ExactCubicTrajectoryTask_targets.json"
+      "$ref": "../common/ExactCubicTrajectoryTask_targets.json"
     }
   ],
   "required": ["type", "frame"]

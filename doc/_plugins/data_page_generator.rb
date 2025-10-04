@@ -61,16 +61,34 @@ module Jekyll
         if display_category(category)
           self.data['all_schemas'][category] = {}
           cat_schemas.each { |name, schema|
+
             self.data['all_schemas'][category][name] = {}
-            self.data['all_schemas'][category][name]["schema"] = schema;
+            self.data['all_schemas'][category][name]["schema"] = schema
+
             example_json = {}
             example_json["lang"] = "json"
             example_json["name"] = "JSON"
-            example_json["source"] = File.read(File.join(base, '_examples', 'json', category, name + '.json'))
+            json_path = File.join(base, '_examples', 'json', category, name + '.json')
+            begin
+              example_json["source"] = File.read(json_path)
+            rescue Errno::ENOENT
+              msg = "ERROR: JSON example file not found. Please create: #{json_path}"
+              example_json["source"] = "//#{msg}"
+              puts msg
+            end
+
             example_yaml = {}
             example_yaml["lang"] = "yaml"
             example_yaml["name"] = "YAML"
-            example_yaml["source"] = File.read(File.join(base, '_examples', 'yaml', category, name + '.yaml'))
+            yaml_path = File.join(base, '_examples', 'yaml', category, name + '.yaml')
+            begin
+              example_yaml["source"] = File.read(yaml_path)
+            rescue Errno::ENOENT
+              msg = "ERROR: YAML example file not found. Please create: #{yaml_path}"
+              example_yaml["source"] = "# #{msg}"
+              puts msg
+            end
+
             self.data['all_schemas'][category][name]["example"] = [example_json, example_yaml]
           }
         end
@@ -104,6 +122,11 @@ module Jekyll
       }
     end
 
+
+
+    # FIXME::
+    # - does not resolve oneOf within "array": { "item": { ... } }
+    # - resolve additionalProperties
     def resolveRef(site, schema, parent = nil, key_out = nil, root = nil)
       if root == nil
         root = schema
@@ -120,41 +143,40 @@ module Jekyll
         if key == "$ref"
           category = value.split('/')[-2]
           name = value.split('/')[-1].gsub(".json", "").gsub(".", "")
+          # Recursively resolve the referenced schema
           if category != "definitions"
-            resolveRef(site, site.data["schemas"][category][name])
-          else
-            resolveRef(site, root[category][name], nil, nil, root)
-          end
-          has_desc = false
-          if parent[key_out].key?("description")
-            has_desc = true
-            desc = parent[key_out]["description"].dup()
-          end
-          has_default = false
-          if parent[key_out].key?("default")
-            has_default = true
-            default = parent[key_out]["default"].dup()
-          end
-          if category != "definitions"
-            # Merge with surrounding schema
-            parent[key_out] = site.data["schemas"][category][name].dup()
-            if parent[key_out].has_key?("title")
-              parent[key_out]["REF"] = "#{category}.#{name}"
+            if site.data["schemas"].key?(category) && site.data["schemas"][category].key?(name)
+              resolveRef(site, site.data["schemas"][category][name])
+              referenced = site.data["schemas"][category][name].dup()
+            else
+              puts "[resolveRef] WARNING: Path does not exist: site.data['schemas'][#{category}][#{name}]"
+              referenced = {}
             end
           else
-            parent[key_out] = root[category][name].dup()
+            if root.is_a?(Hash) && root.key?(category) && root[category].is_a?(Hash) && root[category].key?(name)
+              resolveRef(site, root[category][name], nil, nil, root)
+              referenced = root[category][name].dup()
+            else
+              puts "[resolveRef] WARNING: Path does not exist: root['#{category}']['#{name}']"
+              referenced = {}
+            end
           end
-          if has_desc
-            parent[key_out]["DESC"] = desc
-          end
-          if has_default
-            parent[key_out]["default"] = default
-          end
+
+          # Remove $ref from the referencing object before merging
+          referencing = parent[key_out].dup
+          referencing.delete("$ref")
+
+          # Merge referenced schema and referencing object, referencing takes precedence
+          merged = referenced.deep_merge(referencing)
+
+          parent[key_out] = merged
         else
           resolveRef(site, value, schema, key, root)
         end
       }
     end
+
+
 
     # Try to resolve Doxygen link based on the schema's title and the doxytag file
     # Fills schema.api:
@@ -179,9 +201,9 @@ module Jekyll
         end
       }
       # Write generated schemas to a temporary file (for debug purposes)
-      # File.open('/tmp/mc-rtc-doc-json-schemas.json', 'w') { |file| file.write(JSON.pretty_generate(site.data["schemas"])) }
+      File.open('/tmp/mc-rtc-doc-json-schemas.json', 'w') { |file| file.write(JSON.pretty_generate(site.data["schemas"])) }
       # puts "Generated json schema has been saved to /tmp/mc-rtc-doc-json-schemas.json"
-      default_categories = ["mc_control", "mc_rbdyn", "ConstraintSet", "MetaTask", "State", "Observers"]
+      default_categories = ["mc_rtc", "mc_control", "mc_rbdyn", "ConstraintSet", "MetaTask", "State", "Observers"]
       site.pages << AllSchemasPage.new(site, site.source, 'json.html', site.data["schemas"], default_categories, {"All objects" => 'json-full.html'})
       site.pages << AllSchemasPage.new(site, site.source, 'json-full.html', site.data["schemas"], ["Eigen", "SpaceVecAlg", "RBDyn", "Tasks", "GUI"] + default_categories)
     end

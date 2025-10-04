@@ -4,19 +4,19 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/MetaTask_common.json"
+      "$ref": "../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_frame.json"
+      "$ref": "../common/MetaTask_frame.json"
     },
     {
       "properties":
       {
-        "type": { "enum": ["body6d"] },
-        "bodyPoint": { "$ref": "/../../Eigen/Vector3d.json" },
-        "orientation": { "$ref": "/../../Eigen/Matrix3d.json" },
-        "position": { "$ref": "/../../Eigen/Vector3d.json" },
-        "relative": { "$ref": "/../../common/relative.json" },
+        "type": { "const": "body6d" },
+        "bodyPoint": { "$ref": "../Eigen/Vector3d.json" },
+        "orientation": { "$ref": "../Eigen/Matrix3d.json" },
+        "position": { "$ref": "../Eigen/Vector3d.json" },
+        "relative": { "$ref": "../common/relative.json" },
         "orientationStiffness": { "type": "number", "minimum": 0, "default": 2},
         "orientationWeight": { "type": "number", "minimum": 0, "default": 1000},
         "positionStiffness": { "type": "number", "minimum": 0, "default": 2},
@@ -24,12 +24,12 @@
       }
     },
     {
-      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+      "$ref": "../common/TrajectoryTaskGeneric.json"
     },
     {
       "properties":
       {
-        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" }
+        "dimWeight": { "$ref": "../Eigen/Vector6d.json" }
       }
     }
   ],

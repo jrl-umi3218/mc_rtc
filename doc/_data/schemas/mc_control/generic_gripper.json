@@ -40,7 +40,7 @@
     },
     "safety":
     {
-      "$ref": "/../../mc_rbdyn/RobotModule.Gripper.Safety.json"
+      "$ref": "../mc_rbdyn/RobotModule.Gripper.Safety.json"
     }
   }
 }

@@ -2,8 +2,8 @@
   "type": "object",
   "properties":
   {
-    "wrench": {"$ref": "/../../Eigen/Vector6d.json", "description": "True when the measured wrench reaches the desired wrench ([torque, force] in controlled surface frame). If some values are NaN, this direction is ignored"},
-    "copError": {"$ref": "/../../Eigen/Vector2d.json", "description": "True when the difference between the desired and measured CoP is below this threshold"},
-    "force": {"$ref": "/../../Eigen/Vector3d.json", "description": "True when the measured force reaches the desired force (in controlled surface frame). If some values are NaN, this direction is ignored"}
+    "wrench": {"$ref": "../Eigen/Vector6d.json", "description": "True when the measured wrench reaches the desired wrench ([torque, force] in controlled surface frame). If some values are NaN, this direction is ignored"},
+    "copError": {"$ref": "../Eigen/Vector2d.json", "description": "True when the difference between the desired and measured CoP is below this threshold"},
+    "force": {"$ref": "../Eigen/Vector3d.json", "description": "True when the measured force reaches the desired force (in controlled surface frame). If some values are NaN, this direction is ignored"}
   }
 }

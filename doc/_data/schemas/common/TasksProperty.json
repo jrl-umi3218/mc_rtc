@@ -1,0 +1,30 @@
+{
+  "title": "Available Tasks",
+  "oneOf": [
+    { "$ref": "../MetaTask/AddContactTask.json" },
+    { "$ref": "../MetaTask/AdmittanceTask.json" },
+    { "$ref": "../MetaTask/BSplineTrajectoryTask.json" },
+    { "$ref": "../MetaTask/CoMTask.json" },
+    { "$ref": "../MetaTask/CoPTask.json" },
+    { "$ref": "../MetaTask/ComplianceTask.json" },
+    { "$ref": "../MetaTask/EndEffectorTask.json" },
+    { "$ref": "../MetaTask/ExactCubicTrajectoryTask.json" },
+    { "$ref": "../MetaTask/FirstOrderImpedanceTask.json" },
+    { "$ref": "../MetaTask/GazeTask.json" },
+    { "$ref": "../MetaTask/ImpedanceTask.json" },
+    { "$ref": "../MetaTask/LIPMStabilizerTask.json" },
+    { "$ref": "../MetaTask/LookAtFrameTask.json" },
+    { "$ref": "../MetaTask/LookAtTask.json" },
+    { "$ref": "../MetaTask/LookAtTFTask.json" },
+    { "$ref": "../MetaTask/MomentumTask.json" },
+    { "$ref": "../MetaTask/OrientationTask.json" },
+    { "$ref": "../MetaTask/PBVSTask.json" },
+    { "$ref": "../MetaTask/PositionTask.json" },
+    { "$ref": "../MetaTask/PostureTask.json" },
+    { "$ref": "../MetaTask/RelativeEndEffectorTask.json" },
+    { "$ref": "../MetaTask/RemoveContactTask.json" },
+    { "$ref": "../MetaTask/TransformTask.json" },
+    { "$ref": "../MetaTask/VectorOrientationTask.json" }
+  ],
+  "discriminator": { "propertyName": "type" }
+}

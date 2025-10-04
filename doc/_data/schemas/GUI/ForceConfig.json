@@ -2,7 +2,7 @@
   "allOf":
   [
     {
-      "$ref": "/../../GUI/ArrowConfig.json"
+      "$ref": "../GUI/ArrowConfig.json"
     },
     {
       "title": "mc_rtc::gui::ForceConfig",

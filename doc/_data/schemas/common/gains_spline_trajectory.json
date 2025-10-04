@@ -7,7 +7,7 @@
       "type": "number", "description": "time"
     },
     {
-      "$ref": "/../../Eigen/Vector6d.json"
+      "$ref": "../Eigen/Vector6d.json"
     }
   ],
   "minItems": 1

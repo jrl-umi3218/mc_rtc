@@ -4,7 +4,7 @@
     "type": { "enum": ["cylindrical", "gripper", "planar"] },
     "name": { "type": "string" },
     "bodyName": { "type": "string" },
-    "X_b_s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
+    "X_b_s": { "$ref": "../SpaceVecAlg/PTransformd.json" },
     "materialName": { "type": "string" }
   }
 }

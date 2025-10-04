@@ -7,13 +7,14 @@
       "type": "object",
       "properties":
       {
+        "base": { "const": "MetaTasks" },
         "tasks": { "type": "object", "description": "Keys are the name of the tasks and values are MetaTask objects with an optional completion criteria" },
         "outputs": { "type": "array", "items": { "type": "string" }, "description": "List of tasks names from which the completion criteria will be used to generate the state's output.<br /><ul><li>output=\"OK\" if empty</li><li>Otherwise the output will be of the form \"Taks1=citeria1, Task2=criteria2...\" where \"criteria1\" and \"criteria2\" correspond to the output string of the tasks' completion criteria (e.g. \"timeout AND speed\").</li></ul>" }
       },
-      "required": []
+      "required": ["base"]
     },
     {
-      "$ref": "/../../common/State.json"
+      "$ref": "../common/State.json"
     }
   ]
 }
