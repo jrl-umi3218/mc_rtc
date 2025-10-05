@@ -13,16 +13,60 @@ mc_rtcは、[提供されているオプション]({{site.baseurl}}/tutorials/in
 
 外部のツールがロボットの状態をROSにパブリッシュできるように、`mc_rtc::RobotPublisher`クラスが用意されています。
 
-## NodeHandle（ノードハンドル）を取得する
+## NodeHandle の取得
 
-以下のコードを使用すると、mc\_rtcによって作成された`ros::NodeHandle`にアクセスできます。
+以下のコードにより、mc\_rtc によって作成された `ros::NodeHandle` にアクセスできます:
+```cpp
+#include <mc_rtc/ros.h>
+
+std::shared_ptr<ros::NodeHandle> nh = mc_rtc::ROSBridge::get_node_handle();
 ```cpp
 #include <mc_rtc/ros.h>
 
 std::shared_ptr<ros::NodeHandle> nh = mc_rtc::ROSBridge::get_node_handle();
 ```
 
-なお、ROSのサポートなしでmc\_rtcがビルドされている場合や、ROSを初期化できなかった場合（通常、マスターを利用できなかった場合）には、nullポインターが返されます。
+mc\_rtcがROSサポートなしでビルドされた場合、またはROSが初期化できなかった場合（通常はマスターが利用できないため）、返されるポインタはNULLになります。
+
+この機能を使用するには、`mc_rtc::mc_rtc_ros`でリンクしていることを確認してください：
+
+```cmake
+target_link_libraries(${YOUR_LIBRARY} PUBLIC mc_rtc::mc_rtc_ros)
+```
+
+## mc\_rtc の ROS サポート確認方法
+
+`mc_rtc` が ROS サポートを有するか確認する方法は 3 つあります。
+
+1. コンパイル時プリプロセッサチェック
+
+```cpp
+#ifdef MC_RTC_HAS_ROS_SUPPORT
+// mc_rtc は ROS サポート付きでコンパイル済み
+#endif
+```
+
+2. ランタイム定数
+
+```cpp
+#include <mc_rtc/config.h>
+
+if(mc_rtc::MC_RTC_SUPPORT_ROS)
+{
+  // mc_rtc は ROS サポートあり
+}
+```
+
+3. ランタイムノードチェック
+
+```cpp
+#include <mc_rtc/ros.h>
+
+if(auto node = mc_rtc::ROSBridge::get_node_handle())
+{
+  // mc_rtc は ROS サポートあり、かつ ROS マスターが実行中 (ROS1)
+}
+```
 
 ## 推奨事項
 

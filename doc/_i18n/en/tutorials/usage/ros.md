@@ -30,6 +30,46 @@ Note that the returned pointer is null if mc\_rtc was built without ROS support
 or if ROS was unable to initialize (usually because the master is not
 available).
 
+To use this functionality, make sure you link with `mc_rtc::mc_rtc_ros`:
+
+```cmake
+target_link_libraries(${YOUR_LIBRARY} PUBLIC mc_rtc::mc_rtc_ros)
+```
+
+## Checking for ROS support in mc\_rtc
+
+There are three ways to check whether `mc_rtc` has ROS support.
+
+1. Compile-Time Preprocessor Check
+
+```cpp
+#ifdef MC_RTC_HAS_ROS_SUPPORT
+// mc_rtc was compiled with ROS support
+#endif
+```
+
+2. Runtime constant
+
+```cpp
+#include <mc_rtc/config.h>
+
+if(mc_rtc::MC_RTC_SUPPORT_ROS)
+{
+  // mc_rtc has ROS support
+}
+```
+
+3. Runtime Node check
+
+```cpp
+#include <mc_rtc/ros.h>
+
+if(auto node = mc_rtc::ROSBridge::get_node_handle())
+{
+  // mc_rtc has ROS support and ROS master is running (ROS1)
+}
+```
+
 ## Good practices
 
 #### Avoid ROS code in real-time parts
