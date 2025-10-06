@@ -415,9 +415,17 @@ Robot::Robot(NewRobotToken,
     }
   }
 
+  // Add frames for all bodies
   for(const auto & b : mb().bodies())
   {
     frames_[b.name()] = std::make_shared<RobotFrame>(RobotFrame::NewRobotFrameToken{}, b.name(), *this, b.name());
+  }
+
+  // Add frames for all force sensors
+  for(auto & fs : forceSensors())
+  {
+    frames_[fs.name()] = std::make_shared<RobotFrame>(RobotFrame::NewRobotFrameToken{}, fs.name(), frame(fs.parent()),
+                                                      fs.X_p_s(), false);
   }
 
   if(loadFiles)
