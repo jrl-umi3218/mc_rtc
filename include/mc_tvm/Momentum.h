@@ -26,7 +26,7 @@ namespace mc_tvm
 struct MC_TVM_DLLAPI Momentum : public tvm::graph::abstract::Node<Momentum>
 {
   SET_OUTPUTS(Momentum, Momentum, Jacobian, Velocity, NormalAcceleration, JDot)
-  SET_UPDATES(Momentum, Momentum, Jacobian, NormalAcceleration, JDot)
+  SET_UPDATES(Momentum, Momentum, Jacobian, Velocity, NormalAcceleration, JDot)
 
   friend struct Robot;
 
@@ -59,6 +59,9 @@ public:
 
   inline Robot & robot() noexcept { return com_.robot(); }
 
+  /** Access the underlying CentroidalMomentumMatrix object to perform computations */
+  inline const rbd::CentroidalMomentumMatrix & CMM() const noexcept { return mat_; }
+
 private:
   CoM & com_;
   rbd::CentroidalMomentumMatrix mat_;
@@ -67,6 +70,7 @@ private:
   void updateMomentum();
 
   sva::ForceVecd velocity_ = sva::ForceVecd::Zero();
+  void updateVelocity();
 
   sva::ForceVecd normalAcceleration_;
   void updateNormalAcceleration();

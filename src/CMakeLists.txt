@@ -295,6 +295,8 @@ set(mc_tvm_HDR
     ${mc_tvm_HDR_DIR}/ContactFunction.h
     ${mc_tvm_HDR_DIR}/Convex.h
     ${mc_tvm_HDR_DIR}/DynamicFunction.h
+    ${mc_tvm_HDR_DIR}/FeasiblePolytope.h
+    ${mc_tvm_HDR_DIR}/ForceInPolytopeFunction.h
     ${mc_tvm_HDR_DIR}/Frame.h
     ${mc_tvm_HDR_DIR}/FrameVelocity.h
     ${mc_tvm_HDR_DIR}/GazeFunction.h
@@ -320,6 +322,8 @@ set(mc_tvm_SRC
     mc_tvm/ContactFunction.cpp
     mc_tvm/Convex.cpp
     mc_tvm/DynamicFunction.cpp
+    mc_tvm/FeasiblePolytope.cpp
+    mc_tvm/ForceInPolytopeFunction.cpp
     mc_tvm/Frame.cpp
     mc_tvm/FrameVelocity.cpp
     mc_tvm/GazeFunction.cpp

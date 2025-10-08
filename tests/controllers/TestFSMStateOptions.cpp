@@ -58,8 +58,9 @@ public:
     {
       BOOST_REQUIRE(executor_.state() == "TestContactsManipulation2");
       BOOST_REQUIRE(solver().contacts().size() == 2);
-      for(const auto & c : solver().contacts())
+      for(const auto & contacts : solver().contacts())
       {
+        const auto & c = *contacts;
         if(c.r1Surface()->name() == "RightFootCenter") { BOOST_REQUIRE(c.dof() == dof); }
       }
     }

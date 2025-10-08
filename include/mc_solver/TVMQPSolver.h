@@ -28,9 +28,12 @@ struct MC_SOLVER_DLLAPI TVMQPSolver final : public QPSolver
 
   ~TVMQPSolver() final = default;
 
+  void gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui) override;
+
   void setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts) final;
 
   const sva::ForceVecd desiredContactForce(const mc_rbdyn::Contact & id) const final;
+  const sva::ForceVecd desiredContactForce2(const mc_rbdyn::Contact & id) const;
 
   double solveTime() final;
 
@@ -41,6 +44,9 @@ struct MC_SOLVER_DLLAPI TVMQPSolver final : public QPSolver
 
   /** Access the internal problem (const) */
   inline const tvm::LinearizedControlProblem & problem() const noexcept { return problem_; }
+
+  /** Access the dynamics constraints map */
+  inline const std::unordered_map<std::string, DynamicsConstraint *> & dynamics() const noexcept { return dynamics_; };
 
   /** Helper to get a \ref TVMQPSolver from a \ref QPSolver instance
    *
@@ -66,6 +72,22 @@ struct MC_SOLVER_DLLAPI TVMQPSolver final : public QPSolver
     return static_cast<const TVMQPSolver &>(solver);
   }
 
+  /** Save the problem graph to a dot file that can be visualized with graphviz or other related tools
+   *
+   * The generated graph is located in <tmp>/mc_rtc_tvm_graph_<date>.dot
+   *
+   * To generate the graph, use (graphviz needs to be installed):
+   * \code
+   *    dot -Tps /tmp/mc_rtc_tvm_graph-latest.dot -o /tmp/tvm_graph.ps
+   * \endcode
+   *
+   * @return true on success
+   **/
+  bool saveGraphDotFile() const;
+
+  /** Same as saveGraphDotFile but with a custom filename */
+  bool saveGraphDotFile(const std::string & filename) const;
+
 private:
   /** Control problem */
   tvm::LinearizedControlProblem problem_;
@@ -80,10 +102,14 @@ private:
     tvm::VariableVector f1_;
     /** Constraints on f1 */
     std::vector<tvm::TaskWithRequirementsPtr> f1Constraints_;
+    /** Target tasks on f1 */
+    std::vector<tvm::TaskWithRequirementsPtr> f1Targets_;
     /** Force variables on r2 side (if any) */
     tvm::VariableVector f2_;
     /** Constraints on f2 */
     std::vector<tvm::TaskWithRequirementsPtr> f2Constraints_;
+    /** Target tasks on f2 */
+    std::vector<tvm::TaskWithRequirementsPtr> f2Targets_;
   };
   /** Related contact functions */
   std::vector<ContactData> contactsData_;
@@ -141,15 +167,46 @@ private:
 
   size_t getContactIdx(const mc_rbdyn::Contact & contact);
   void addContact(const mc_rbdyn::Contact & contact);
-  using ContactIterator = std::vector<mc_rbdyn::Contact>::iterator;
+  using ContactIterator = std::vector<std::shared_ptr<mc_rbdyn::Contact>>::iterator;
   ContactIterator removeContact(size_t idx);
+
+  /**
+   * @brief Update or create and add an mc_tvm::ContactFunction (geometric constraint) to the problem,
+   * and update solver contacts_ and contactsData_ vectors
+   *
+   * hasWork becomes true if friction or polytope changed, in this case dynamics function must be updated
+   *
+   * dofs changing do not influence the dynamics so does not trigger hasWork
+   *
+   * @param contact the mc_rbdyn::Contact to add or update
+   * @return std::tuple of contact id / hasWork
+   */
   std::tuple<size_t, bool> addVirtualContactImpl(const mc_rbdyn::Contact & contact);
+
+  /**
+   * @brief If the robot has a dynamic constraint, add the contact's influence to it.
+   *
+   * This creates force variables for each contact point and constraints on them (either friction cone
+   * or feasiblePolytope) and adds them to the problem.
+   *
+   * The tvm dependency between the force variables and the DynamicFunction is done here with addContact
+   *
+   * @param robot Robot name
+   * @param frame Contact frame
+   * @param points Contact points in the frame's parent body's frame
+   * @param forces Ref to where the forces tvm variables created by this contact will be stored
+   * @param constraints Ref to where the constraints on these forces will be stored
+   * @param targets Ref to where the target functions for these forces will be stored
+   * @param contact mc_rbydn::Contact object for contact friction or feasiblePolytope
+   * @param dir Contact direction
+   */
   void addContactToDynamics(const std::string & robot,
                             const mc_rbdyn::RobotFrame & frame,
                             const std::vector<sva::PTransformd> & points,
                             tvm::VariableVector & forces,
                             std::vector<tvm::TaskWithRequirementsPtr> & constraints,
-                            const Eigen::MatrixXd & frictionCone,
+                            std::vector<tvm::TaskWithRequirementsPtr> & targets,
+                            mc_rbdyn::Contact & contact,
                             double dir);
 };
 

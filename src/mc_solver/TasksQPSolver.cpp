@@ -51,10 +51,10 @@ void TasksQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Con
   {
     for(const auto & contact : contacts_)
     {
-      const std::string & r1 = robots().robot(contact.r1Index()).name();
-      const std::string & r1S = contact.r1Surface()->name();
-      const std::string & r2 = robots().robot(contact.r2Index()).name();
-      const std::string & r2S = contact.r2Surface()->name();
+      const std::string & r1 = robots().robot(contact->r1Index()).name();
+      const std::string & r1S = contact->r1Surface()->name();
+      const std::string & r2 = robots().robot(contact->r2Index()).name();
+      const std::string & r2S = contact->r2Surface()->name();
       logger_->removeLogEntry("contact_" + r1 + "::" + r1S + "_" + r2 + "::" + r2S);
     }
   }
@@ -62,23 +62,27 @@ void TasksQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Con
   {
     for(const auto & contact : contacts_)
     {
-      const std::string & r1 = robots().robot(contact.r1Index()).name();
-      const std::string & r1S = contact.r1Surface()->name();
-      const std::string & r2 = robots().robot(contact.r2Index()).name();
-      const std::string & r2S = contact.r2Surface()->name();
+      const std::string & r1 = robots().robot(contact->r1Index()).name();
+      const std::string & r1S = contact->r1Surface()->name();
+      const std::string & r2 = robots().robot(contact->r2Index()).name();
+      const std::string & r2S = contact->r2Surface()->name();
       gui_->removeElement({"Contacts", "Forces"}, fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S));
     }
   }
-  contacts_ = contacts;
+
+  contacts_.clear();
+  for(auto & c : contacts) { contacts_.emplace_back(std::make_shared<mc_rbdyn::Contact>(c)); }
+
   for(auto & c : contacts_)
   {
-    const auto & r1 = robots().robot(c.r1Index());
-    if(r1.mb().nrDof() == 0) { c = c.swap(robots()); }
+    const auto & r1 = robots().robot(c->r1Index());
+    if(r1.mb().nrDof() == 0) { *c = c->swap(robots()); }
   }
   if(logger_)
   {
-    for(const auto & contact : contacts_)
+    for(const auto & c : contacts_)
     {
+      const auto & contact = *c;
       const std::string & r1 = robots().robot(contact.r1Index()).name();
       const std::string & r1S = contact.r1Surface()->name();
       const std::string & r2 = robots().robot(contact.r2Index()).name();
@@ -89,8 +93,9 @@ void TasksQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Con
   }
   if(gui_)
   {
-    for(const auto & contact : contacts_)
+    for(const auto & c : contacts_)
     {
+      const auto & contact = *c;
       const std::string & r1 = robots().robot(contact.r1Index()).name();
       const std::string & r1S = contact.r1Surface()->name();
       const std::string & r2 = robots().robot(contact.r2Index()).name();
@@ -105,9 +110,9 @@ void TasksQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Con
   uniContacts_.clear();
   biContacts_.clear();
 
-  for(const mc_rbdyn::Contact & c : contacts_)
+  for(const auto & c : contacts_)
   {
-    QPContactPtr qcptr = c.taskContact(*robots_p);
+    QPContactPtr qcptr = c->taskContact(*robots_p);
     if(qcptr.unilateralContact)
     {
       uniContacts_.push_back(tasks::qp::UnilateralContact(*qcptr.unilateralContact));
