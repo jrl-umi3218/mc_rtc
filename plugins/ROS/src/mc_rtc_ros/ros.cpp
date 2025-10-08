@@ -418,11 +418,11 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
   data.odom.pose.pose.orientation.z = odom_q.z();
   data.odom.pose.covariance.fill(0);
   /* Provide linear and angular velocity */
-  const auto & vel = robot.bodySensor().linearVelocity();
+  const auto & vel = robot.velW().linear();
   data.odom.twist.twist.linear.x = vel.x();
   data.odom.twist.twist.linear.y = vel.y();
   data.odom.twist.twist.linear.z = vel.z();
-  const auto & rate = robot.bodySensor().angularVelocity();
+  const auto & rate = robot.velW().angular();
   data.odom.twist.twist.angular.x = rate.x();
   data.odom.twist.twist.angular.y = rate.y();
   data.odom.twist.twist.angular.z = rate.z();
