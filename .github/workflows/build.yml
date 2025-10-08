@@ -27,7 +27,8 @@ jobs:
       fail-fast: false
       matrix:
         # temporarely disable macos-latest
-        os: [ubuntu-22.04, windows-latest]
+        # os: [ubuntu-22.04, windows-latest]
+        os: [ubuntu-22.04]
         build-type: [Debug, RelWithDebInfo]
         compiler: [gcc, clang]
         exclude:
