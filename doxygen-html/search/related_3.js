@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['qpsolver_6452',['QPSolver',['../structmc__solver_1_1QPSolver_1_1ControllerToken.html#af09e33ccaddf0d3e770491e26fc2f671',1,'mc_solver::QPSolver::ControllerToken']]]
+  ['objectloader_7198',['ObjectLoader',['../structmc__rtc_1_1Loader.html#a0b9f840f1f1352debe8e77115e2454b1',1,'mc_rtc::Loader']]],
+  ['observerpipeline_7199',['ObserverPipeline',['../structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html#a1bf2b5490fc8313b8f9e50a52fbc6b73',1,'mc_observers::ObserverPipeline::PipelineObserver']]]
 ];

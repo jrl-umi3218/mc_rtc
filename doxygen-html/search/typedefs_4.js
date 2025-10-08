@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['exact_5fcubic_5ft_6253',['exact_cubic_t',['../structmc__trajectory_1_1ExactCubic.html#a289fb02c8988a89607844624d0e3d3c2',1,'mc_trajectory::ExactCubic']]],
-  ['externalwrenchconfiguration_6254',['ExternalWrenchConfiguration',['../namespacemc__tasks_1_1lipm__stabilizer.html#a8a1b1cfcd83c685c2836975375af2251',1,'mc_tasks::lipm_stabilizer']]]
+  ['exact_5fcubic3_5ft_6916',['exact_cubic3_t',['/usr/local/share/doc/ndcurves/doxygen-html/namespacendcurves.html#a6627cefbfa2e9ca7d9b0e041e7f5dd8f',1,'ndcurves']]],
+  ['exact_5fcubic_5fconstraint_5fone_5fdim_6917',['exact_cubic_constraint_one_dim',['/usr/local/share/doc/ndcurves/doxygen-html/namespacendcurves_1_1helpers.html#a32532ca85fa350553ce98d6720aeb5a7',1,'ndcurves::helpers']]],
+  ['exact_5fcubic_5fquat_5ft_6918',['exact_cubic_quat_t',['/usr/local/share/doc/ndcurves/doxygen-html/namespacendcurves_1_1helpers.html#a46f3ff2883f6d04c7d3b947b9160e0a3',1,'ndcurves::helpers']]],
+  ['exact_5fcubic_5ft_6919',['exact_cubic_t',['/usr/local/share/doc/ndcurves/doxygen-html/structndcurves_1_1exact__cubic.html#a3e52e634661d6fad43d74166886d426a',1,'ndcurves::exact_cubic::exact_cubic_t()'],['/usr/local/share/doc/ndcurves/doxygen-html/structndcurves_1_1exact__cubic.html#a3e52e634661d6fad43d74166886d426a',1,'exact_cubic&lt; Numeric, Numeric, false, point_one_dim_t &gt;::exact_cubic_t()'],['../structmc__trajectory_1_1ExactCubic.html#a289fb02c8988a89607844624d0e3d3c2',1,'mc_trajectory::ExactCubic::exact_cubic_t()'],['/usr/local/share/doc/ndcurves/doxygen-html/namespacendcurves.html#a911c9352f7abafe5658ea4252e35bfb7',1,'ndcurves::exact_cubic_t()'],['/usr/local/share/doc/ndcurves/doxygen-html/namespacendcurves_1_1helpers.html#a0ef71bd32ab0984b8217d13bf6577672',1,'ndcurves::helpers::exact_cubic_t()']]],
+  ['externalwrenchconfiguration_6920',['ExternalWrenchConfiguration',['../namespacemc__tasks_1_1lipm__stabilizer.html#a8a1b1cfcd83c685c2836975375af2251',1,'mc_tasks::lipm_stabilizer']]]
 ];
