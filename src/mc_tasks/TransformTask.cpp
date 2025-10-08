@@ -128,7 +128,7 @@ void TransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
     mc_rtc::overwriteRotationRPY(config("overwriteRPY"), X_0_t.rotation());
   }
 
-  this->target(X_0_t);
+  TransformTask::target(X_0_t);
 
   TrajectoryBase::load(solver, config);
 }
