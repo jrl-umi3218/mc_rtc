@@ -10,9 +10,21 @@ namespace mc_rtc
 namespace log
 {
 
-void deprecated(const std::string & source, const std::string & old, const std::string & replace)
+void deprecated(const std::string & source,
+                const std::string & old,
+                const std::string & replace,
+                const std::string & details)
 {
-  mc_rtc::log::warning("[MC_RTC_DEPRECATED][{}] Use of \"{}\" is deprecated, use \"{}\" instead", source, old, replace);
+  if(details.empty())
+  {
+    mc_rtc::log::warning("[MC_RTC_DEPRECATED][{}] Use of \"{}\" is deprecated, use \"{}\" instead", source, old,
+                         replace);
+  }
+  else
+  {
+    mc_rtc::log::warning("[MC_RTC_DEPRECATED][{}] Use of \"{}\" is deprecated, use \"{}\" instead: {}", source, old,
+                         replace, details);
+  }
 }
 
 } // namespace log

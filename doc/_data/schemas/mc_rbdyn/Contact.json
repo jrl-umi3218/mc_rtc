@@ -4,16 +4,24 @@
   "type": "object",
   "properties":
   {
-    "r1Surface": { "type": "string" },
-    "r2Surface": { "type": "string" },
     "r1": { "type": "string", "default": "MainRobot", "description": "Name of first robot involved in the contact" },
     "r2": { "type": "string", "default": "First extra robot", "description": "Name of second robot involved in the contact" },
-    "isFixed": { "type": "boolean" },
-    "X_r2s_r1s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
-    "X_b_s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
-    "friction": { "type": "number", "default": "0.7" },
+    "r1Surface": { "type": "string", "description": "Name of a surface on robot r1" },
+    "r2Surface": { "type": "string", "description": "Name of a surface on robot r2" },
+    "isFixed": { "type": "boolean", "default": true, "description": "Whether the contact is fixed" },
+    "X_r2s_r1s":
+    {
+      "$ref": "../SpaceVecAlg/PTransformd.json",
+      "default":
+      {
+        "rotation": [[1,0,0],[0,1,0],[0,0,1]],
+        "translation": [0,0,0]
+      },
+      "description": "Transform from r2's surface frame to r1's surface frame" },
+    "X_b_s": { "$ref": "../SpaceVecAlg/PTransformd.json" },
+    "friction": { "type": "number", "default": "0.7", "description": "Friction coefficient" },
     "ambiguityId": { "type": "integer", "default": "-1" }
   },
-  "required": ["r1Surface", "r2Surface", "isFixed"],
+  "required": ["r1Surface", "r2Surface"],
   "additionalProperties": false
 }

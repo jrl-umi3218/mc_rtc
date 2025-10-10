@@ -59,3 +59,19 @@ layout: tutorials
 ---
 ```
 4. Write your tutorial, for multi-language code snippets look at the existing tutorials
+
+
+Troubleshooting
+==
+
+I get
+
+```
+  Liquid Exception: invalid byte sequence in US-ASCII in tutorials/recipes/com-constraint.md
+```
+
+Do
+
+```bash
+export LC_ALL=en_US.UTF-8
+```

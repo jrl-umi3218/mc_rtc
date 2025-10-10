@@ -4,20 +4,20 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/MetaTask_common.json"
+      "$ref": "../common/MetaTask_common.json"
     },
     {
       "properties":
       {
-        "type": { "enum": ["posture"] },
-        "dimWeight": { "$ref": "/../../Eigen/VectorXd.json", "description": "Ignored by PostureTask" }
+        "type": { "const": "posture" },
+        "dimWeight": { "$ref": "../Eigen/VectorXd.json", "description": "Ignored by PostureTask" }
       }
     },
     {
-      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+      "$ref": "../common/TrajectoryTaskGeneric.json"
     },
     {
-      "$ref": "/../../common/PostureTask_targets_properties.json"
+      "$ref": "../common/PostureTask_targets_properties.json"
     }
   ],
   "required": ["type"]

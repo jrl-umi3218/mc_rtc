@@ -1,5 +1,6 @@
 {% include json_schema.html schema=page.schema id=page.schema.title %}
 {% if page.schema %}
+  <pre>json_schema.html: {{ page.schema | jsonify }}</pre>
   {% capture exampleId %}{{page.schema.title | replace: "::", "_"}}Example{% endcapture %}
   {% capture collapseExampleId %}collapse{{exampleId}}{% endcapture %}
   <div class="card">

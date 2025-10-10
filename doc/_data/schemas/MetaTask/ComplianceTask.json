@@ -4,17 +4,17 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/MetaTask_common.json"
+      "$ref": "../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_body.json"
+      "$ref": "../common/MetaTask_body.json"
     },
     {
       "properties":
       {
-        "type": { "enum": ["compliance"] },
-        "wrench": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" },
-        "dof": { "$ref": "/../../Eigen/Matrix6d.json" },
+        "type": { "const": "compliance" },
+        "wrench": { "$ref": "../SpaceVecAlg/ForceVecd.json" },
+        "dof": { "$ref": "../Eigen/Matrix6d.json" },
         "forceThresh": { "type": "number" },
         "torqueThresh": { "type": "number" },
         "forceGain": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 },
@@ -22,14 +22,14 @@
       }
     },
     {
-      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+      "$ref": "../common/TrajectoryTaskGeneric.json"
     },
     {
       "properties":
       {
         "weight": { "default": 1000 },
         "stiffness": { "default": 5 },
-        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" }
+        "dimWeight": { "$ref": "../Eigen/Vector6d.json" }
       }
     }
   ],

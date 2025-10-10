@@ -1,0 +1,147 @@
+###################################
+# Default configuration of mc_rtc #
+###################################
+# This file contains the default configuration of mc_rtc
+#
+# You may overwrite any of these settings in
+# - Linux/MacOS: $HOME/.config/mc_rtc/mc_rtc.yaml
+# - Windows:     %APPDATA%/mc_rtc/mc_rtc.conf
+#
+# For further details, refer to https://jrl-umi3218.github.io/mc_rtc/tutorials/introduction/configuration.html
+
+# What robot is being controlled
+MainRobot: JVRC1
+# Enabled controllers
+Enabled: [CoM]
+# Controller timestep
+Timestep: 0.005
+# Always include the half-sitting controller
+# IncludeHalfSitController: true
+
+#####################################
+# Initialize floating base attitude #
+#####################################
+# - When true, initialize attitude from the bodysensor specified by InitAttitudeSensor
+# - Otherwise use the robot module halfsitting stance
+InitAttitudeFromSensor: false
+# BodySensor to initialize from (default = first body sensor)
+# - Empty string: use the default body sensor
+# - Otherwise use the provided sensor name
+# Note that the robot model and encoder values are used to transform the sensor measurements to the floating base frame
+InitAttitudeSensor: ""
+
+##############################
+# State observation pipeline #
+##############################
+# For details, please refer to:
+# - The tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html for details
+# - The JSON Schemas: https://jrl-umi3218.github.io/mc_rtc/json.html#Observers/ObserverPipelines
+#
+# Loads and run state observers organized in one or multiple pipelines. Observers within each pipeline are run sequentially
+# and each estimate some properties of the robots, and optionally update the real robots instance from it.
+#
+# Available estimators in mc_rtc are:
+# - Encoder: Estimate encoder position from sensor and velocity by finite differences
+# - BodySensor: Uses a BodySensor to compute the state of the floating base. This estimator will
+# typically be used to obtained groundtruth information (e.g the FloatingBase body sensor contains the groundtruth floating base state when running in choreonoid)
+# - KinematicInertial: Estimates the position and orientation of the floating base from the IMU orientation and assumed contacts. Note that this estimator requires to provide a kinematic anchor point through the datastore.
+#
+# To run the observers, please add an "ObserverPipelines" configuration section in your controller-specific configuration file or in you FSM configuration.
+#
+# Example:
+# ObserverPipelines:
+# - name: "MainPipeline"
+#   observers:
+#     - type: Encoder
+#       update: true
+#       log: true
+#       config:
+#         position: encoderValues
+#         velocity: encoderFiniteDifferences
+#     - type: KinematicInertial
+#       update: true
+#       gui: true
+#       config:
+#         anchorFrameFunction: "Observer::anchorFrame"
+
+###########
+# Logging #
+###########
+# Set to true or false to enable/disable respectively
+Log: true
+
+# LogPolicy dictates whether logging-related disk operations happen in a
+# separate thread ("threaded") or in the same thread as the run() loop
+# ("non-threaded"). This defaults to the non-threaded policy. On real-time
+# systems, the threaded policy is advised
+# LogPolicy: threaded
+
+# LogDirectory dictates where the log files will be stored, defaults to
+# system temp directory
+# LogDirectory: /tmp
+
+# The log file will have the name [LogTemplate]-[ControllerName]-[date].log
+LogTemplate: mc-control
+
+#######
+# GUI #
+#######
+# GUIServer section
+GUIServer:
+  # If true, enable the GUI server, otherwise or if absent, disable this
+  # feature
+  Enable: true
+  # Publication timestep, actual rate is rounded up depending on the controller
+  # timestep, a value of 0 indicates that the GUI timestep should be equal to
+  # the controller timestep
+  Timestep: 0.05
+  # IPC (inter-process communication) section, if the section is absent
+  # this disables the protocol, if the section is empty it is configured
+  # to its default settings.
+  IPC: {}
+    # If the GUI server IPC protocol is enabled, this is used as a base
+    # to create the sockets, the actual sockets name will be formed by
+    # adding _sub.ipc and _rep.ipc to the provided path. The file will
+    # be created if required. This defaults to $SYSTEM_TMP/mc_rtc
+    # Socket: /tmp/mc_rtc
+  # TCP section, the same remarks apply as IPC
+  TCP:
+    # Binding host, * binds to all interfaces
+    Host: "*"
+    # Binding ports, the first is used for PUB socket and the second for
+    # the PULL socket
+    Ports: [4242, 4343]
+  # # WS (websocket) section, the same remarks apply as IPC
+  # WS:
+  #   # Binding host, * binds to all interfaces
+  #   Host: "*"
+  #   # Binding ports, the first is used for PUB socket and the second for
+  #   # the PULL socket
+  #   Ports: [8080, 8081]
+
+############################
+# Loader paths and options #
+############################
+# Many components of the framework are loaded from libraries (Controllers, Plugins, Observers, etc)
+# The default configuration for this section is suitable for loading the components provided and installed along with
+# the framework. You may use the following options to load custom modules specified elsewhere.
+
+# The following option change the verbosity of the controller and robot loader
+VerboseLoader: false
+
+# The following options are used to control the location of the
+# controllers', robots' and observers' modules (libraries)
+# The paths added by this option are added to the default path
+# ControllerModulePaths: [/one/path/to/controller/, /another/path/]
+# RobotModulePaths: [/one/path/to/robot/, /another/path/]
+# ObserverModulePaths: [/one/path/to/observer/, /another/path/]
+# GlobalPluginPaths: [/one/path/to/global/plugin, /another/path/]
+
+# The following options are used to clear the default loading path
+# for controllers, robots and observers respectively
+# This is only useful to run test on a machine where mc_rtc has
+# already been installed
+# ClearControllerModulePath: false
+# ClearRobotModulePath: false
+# ClearObserverModulePath: false
+# ClearGlobalPluginPath: false

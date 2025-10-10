@@ -15,25 +15,44 @@
       "description": "Sequence of observers",
       "items":
       {
-        "type": "object",
-        "title": "Observer",
-        "properties":
-        {
-          "type": {"type": "string", "description": "Name of the observer. This is the name exported by each observer library, for default observers see the entries in \"Observer objects\". The main default observers are:<br /><ul><li><b>Encoder</b>: estimates a robot's joint state (position and velocity)</li><li><b>KinematicInertial</b>: estimates a robot's floating base state based on IMU and a kinematic information</li><li><b>BodySensor</b>: sets the floating base state based on a BodySensor (typically used to obtain groundtruth state from a simulator)</li></ul>"},
-          "name": { "type": "string", "description": "Name of the observer (optional unless there are multiple observers with the same name type in this pipeline)" },
-          "update": {"type": "boolean", "default": true, "description": "When true, update the state of real robots instances (requires the observer's run to have succeeded)"},
-          "log": {"type": "boolean", "default": true, "description": "When true, log estimated values"},
-          "gui": {"type": "boolean", "default": true, "description": "When true, show observer in the gui"},
-          "required": {"type": "boolean", "default": true, "description": "When false, ignore this observer if it could not be loaded"},
-          "successRequired": {"type": "boolean", "default": true, "description": "When true, the whole pipeline is considered to have failed if this observer's run() returns false"},
-          "config":
-          {
             "type": "object",
-            "title": "Observer Configuration",
-            "description": "Configuration options for the observer \"type\" (<a href=\"http://jrl-umi3218.github.io/mc_rtc/json.html#Observers/Encoder\">Encoder</a>, <a href=\"http://jrl-umi3218.github.io/mc_rtc/json.html#Observers/KinematicInertial\">KinematicInertial</a>, <a href=\"http://jrl-umi3218.github.io/mc_rtc/json.html#Observers/BodySensor\">BodySensor</a>, etc)"
-          }
-        },
-        "required": ["type"]
+            "properties":
+            {
+              "type": {"type": "string", "description": "Name of the observer. This is the name exported by each observer library, for default observers see the entries in \"Observer objects\". The main default observers are:<br /><ul><li><b>Encoder</b>: estimates a robot's joint state (position and velocity)</li><li><b>KinematicInertial</b>: estimates a robot's floating base state based on IMU and a kinematic information</li><li><b>BodySensor</b>: sets the floating base state based on a BodySensor (typically used to obtain groundtruth state from a simulator)</li></ul>"},
+              "name": { "type": "string", "description": "Name of the observer (optional unless there are multiple observers with the same name type in this pipeline)" },
+              "update": {"type": "boolean", "default": true, "description": "When true, update the state of real robots instances (requires the observer's run to have succeeded)"},
+              "log": {"type": "boolean", "default": true, "description": "When true, log estimated values"},
+              "gui": {"type": "boolean", "default": true, "description": "When true, show observer in the gui"},
+              "required": {"type": "boolean", "default": true, "description": "When false, ignore this observer if it could not be loaded"},
+              "successRequired": {"type": "boolean", "default": true, "description": "When true, the whole pipeline is considered to have failed if this observer's run() returns false"}
+            },
+            "additionalProperties":
+            {
+              "_expand": true,
+              "oneOf": [
+                {
+                  "$ref": "../Observers/Encoder.json"
+                },
+                {
+                  "$ref": "../Observers/KinematicInertial.json"
+                },
+                {
+                  "$ref": "../Observers/BodySensor.json"
+                },
+                {
+                  "$ref": "../Observers/ObserverConfiguration.json"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "Encoder": "../Observers/Encoder.json",
+                  "KinematicInertial": "../Observers/KinematicInertial.json",
+                  "BodySensor": "../Observers/BodySensor.json"
+                }
+              }
+            },
+            "required": ["type"]
       }
     }
   },

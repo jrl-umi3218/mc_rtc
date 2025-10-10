@@ -149,8 +149,8 @@ CONTROLLER_CONSTRUCTOR("{controller_name}", {controller_class_name})
     os.makedirs(project_dir + "/src/states/data")
     with open(project_dir + "/src/CMakeLists.txt", "a") as fd:
         fd.write("\nadd_subdirectory(states)")
-    with open(project_dir + "/src/states/data/states.json", "w") as fd:
-        fd.write("{\n}")
+    with open(project_dir + "/src/states/data/states.yaml", "w") as fd:
+        fd.write("---\n")
     with open(project_dir + "/src/states/CMakeLists.txt", "w") as fd:
         fd.write(
             """add_fsm_state_simple({controller_name}_Initial)
@@ -217,6 +217,56 @@ EXPORT_SINGLE_STATE("{controller_name}_Initial", {controller_name}_Initial)
                 controller_class_name=controller_class_name,
             )
         )
+
+    # VSCode config
+    vscode_dir = os.path.join(project_dir, ".vscode")
+    os.makedirs(vscode_dir, exist_ok=True)
+    vscode_settings = {
+        "yaml.schemas": {
+            "https://arntanguy.github.io/mc_rtc/schemas/mc_rtc/mc_rtc.json": "**/mc_rtc.yaml",
+            "https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json": "etc/{}.in.yaml".format(
+                controller_name
+            ),
+            "https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMStates.json": "src/states/data/*.yaml",
+        },
+        "yaml.validate": True,
+        "yaml.format.enable": False,
+        "yaml.hover": True,
+        "yaml.completion": True,
+    }
+    with open(os.path.join(vscode_dir, "settings.json"), "w") as f:
+        json.dump(vscode_settings, f, indent=2)
+
+    # Neovim config
+    with open(project_dir + "/.nvim.lua", "w") as fd:
+        fd.write(
+            """-- Project-specific Neovim configuration
+
+-- Set up YAML schema association for this project
+local lspconfig = require('lspconfig')
+
+lspconfig.yamlls.setup{
+  settings = {
+    yaml = {
+      schemas = {
+        ["https://arntanguy.github.io/mc_rtc/schemas/mc_rtc/mc_rtc.json"] = "**/mc_rtc.yaml",
+        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json"] = "etc/{controller_name}.in.yaml",
+        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMStates.json"] = "src/states/data/*.yaml",
+
+      },
+      validate = true,
+      format = {{ enable = false }},
+      hover = true,
+      completion = true,
+    }
+  }
+}
+-- You can add more project-specific Neovim or LSP settings below
+""".format(
+                controller_name=controller_name
+            )
+        )
+
     repo.index.add(
         [
             f.format(controller_name)
@@ -224,10 +274,12 @@ EXPORT_SINGLE_STATE("{controller_name}_Initial", {controller_name}_Initial)
                 "etc/{}.in.yaml",
                 "src/CMakeLists.txt",
                 "src/lib.cpp",
-                "src/states/data/states.json",
+                "src/states/data/states.yaml",
                 "src/states/CMakeLists.txt",
                 "src/states/{}_Initial.h",
                 "src/states/{}_Initial.cpp",
+                ".vscode/",
+                ".nvim.lua",
             ]
         ]
     )

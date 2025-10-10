@@ -5,33 +5,33 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/MetaTask_common.json"
+      "$ref": "../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_frame.json"
+      "$ref": "../common/MetaTask_frame.json"
     },
     {
-      "$ref": "/../../common/SurfaceTransformTask.json"
+      "$ref": "../common/SurfaceTransformTask.json"
     },
     {
-      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+      "$ref": "../common/TrajectoryTaskGeneric.json"
     },
     {
       "properties":
       {
-        "type": { "enum": ["firstOrderImpedance"] },
+        "type": { "const": "firstOrderImpedance" },
         "weight": { "default": 1000},
         "stiffness": { "default": 5 },
-        "target": { "$ref" : "/../../SpaceVecAlg/PTransformd.json" },
-        "wrench": { "$ref": "/../../SpaceVecAlg/ForceVecd.json", "description": "<b>Wrench target</b> (desired force-torque)" },
-        "gains": { "$ref": "/../../common/ImpedanceGains.json", "description": "Impedance gains" },
-        "completion": { "$ref": "/../../common/completion_wrench.json" }
+        "target": { "$ref" : "../SpaceVecAlg/PTransformd.json" },
+        "wrench": { "$ref": "../SpaceVecAlg/ForceVecd.json", "description": "<b>Wrench target</b> (desired force-torque)" },
+        "gains": { "$ref": "../common/ImpedanceGains.json", "description": "Impedance gains" },
+        "completion": { "$ref": "../common/completion_wrench.json" }
       }
     },
     {
       "properties":
       {
-        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" }
+        "dimWeight": { "$ref": "../Eigen/Vector6d.json" }
       }
     }
   ],

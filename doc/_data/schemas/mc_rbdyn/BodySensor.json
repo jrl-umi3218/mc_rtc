@@ -5,7 +5,7 @@
   {
     "name": { "type": "string" },
     "parentBody": { "type": "string" },
-    "X_b_s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" }
+    "X_b_s": { "$ref": "../SpaceVecAlg/PTransformd.json" }
   },
   "required": ["name", "parentBody", "X_b_s"],
   "additionalProperties": false
