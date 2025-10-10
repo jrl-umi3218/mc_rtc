@@ -126,7 +126,10 @@ void RobotVisualizer::addRobot()
                                                   [this, name]()
                                                   {
                                                     if(selected_convexes[name]) { removeConvex(name); }
-                                                    else { addConvex(name); }
+                                                    else
+                                                    {
+                                                      addConvex(name);
+                                                    }
                                                   }));
     if(show_convexes) { addConvex(name); }
   }
@@ -141,7 +144,10 @@ void RobotVisualizer::addRobot()
                                                 [this, name]()
                                                 {
                                                   if(selected_frames[name]) { removeFrame(name); }
-                                                  else { addFrame(name); }
+                                                  else
+                                                  {
+                                                    addFrame(name);
+                                                  }
                                                 }));
   }
   for(const auto & name : robot.availableSurfaces())
@@ -152,7 +158,10 @@ void RobotVisualizer::addRobot()
                                                   [this, name]()
                                                   {
                                                     if(selected_surfaces[name]) { removeSurface(name); }
-                                                    else { addSurface(name); }
+                                                    else
+                                                    {
+                                                      addSurface(name);
+                                                    }
                                                   }));
     if(show_surfaces) { addSurface(name); }
   }

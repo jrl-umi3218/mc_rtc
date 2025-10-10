@@ -271,7 +271,10 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                          "targetPose", [this]() -> const sva::PTransformd & { return this->targetPose(); },
                          [this](const sva::PTransformd & pos) { this->targetPose(pos); }));
     }
-    else { gui.removeElement({"Tasks", name_}, "targetPose"); }
+    else
+    {
+      gui.removeElement({"Tasks", name_}, "targetPose");
+    }
   };
 
   auto showCompliance = [this, &gui]()
@@ -281,7 +284,10 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
       gui.addElement({"Tasks", name_},
                      mc_rtc::gui::Transform("compliancePose", [this]() { return this->compliancePose(); }));
     }
-    else { gui.removeElement({"Tasks", name_}, "compliancePose"); }
+    else
+    {
+      gui.removeElement({"Tasks", name_}, "compliancePose");
+    }
   };
 
   auto showPose = [this, &gui]()
@@ -290,7 +296,10 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
     {
       gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }));
     }
-    else { gui.removeElement({"Tasks", name_}, "pose"); }
+    else
+    {
+      gui.removeElement({"Tasks", name_}, "pose");
+    }
   };
 
   gui.addElement({"Tasks", name_},

@@ -120,7 +120,10 @@ void SplineTrajectoryTask<Derived>::load(mc_solver::QPSolver & solver, const mc_
             Eigen::Vector6d vec = v.second;
             out.push_back(std::make_pair(v.first, vec));
           }
-          else { out.push_back({v.first, Eigen::Vector6d::Constant(static_cast<double>(v.second))}); }
+          else
+          {
+            out.push_back({v.first, Eigen::Vector6d::Constant(static_cast<double>(v.second))});
+          }
         }
         catch(mc_rtc::Configuration::Exception & e)
         {

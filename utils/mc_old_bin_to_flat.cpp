@@ -107,7 +107,10 @@ struct NumericLogLine : public LogLine
   void push(double d) override
   {
     if(std::fabs(d) < std::numeric_limits<double>::min()) { data_.push_back(0); }
-    else { data_.push_back(d); }
+    else
+    {
+      data_.push_back(d);
+    }
   }
 };
 
@@ -164,7 +167,10 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>> readLog(const std::str
     if(ret.count(key) == 0)
     {
       if(is_numeric) { ret[key] = std::make_shared<NumericLogLine>(key, entries); }
-      else { ret[key] = std::make_shared<StringLogLine>(key, entries); }
+      else
+      {
+        ret[key] = std::make_shared<StringLogLine>(key, entries);
+      }
     }
   };
   auto addVectorKey = [&](const std::string & key, size_t size)

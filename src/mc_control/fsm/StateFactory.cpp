@@ -59,7 +59,10 @@ void resolve_pass(StateFactory & factory, std::vector<UDState> & states)
       factory.load(uds.state, uds.base, uds.config);
       it = states.erase(it);
     }
-    else { ++it; }
+    else
+    {
+      ++it;
+    }
   }
 }
 
@@ -99,7 +102,10 @@ void load_ud(StateFactory & factory,
       continue;
     }
     if(factory.hasState(base) || factory.load_with_loader(base)) { factory.load(s.first, base, config); }
-    else { ud_states.push_back({s.first, base, config}); }
+    else
+    {
+      ud_states.push_back({s.first, base, config});
+    }
   }
 }
 
@@ -137,7 +143,10 @@ void StateFactory::load_files(const std::vector<std::string> & files)
     else
     {
       if(bfs::exists(f) && bfs::is_regular_file(f)) { load_file(*this, f, ud_states, verbose); }
-      else { mc_rtc::log::warning("State file {} does not exist", f); }
+      else
+      {
+        mc_rtc::log::warning("State file {} does not exist", f);
+      }
     }
   }
   if(ud_states.size()) { resolve(*this, ud_states); }
@@ -228,7 +237,10 @@ StatePtr StateFactory::create(const std::string & state, const std::string & fin
       ret = create_object(config.base, config.arg);
       ret->name(final_name);
     }
-    else { ret = create(config.base, final_name); }
+    else
+    {
+      ret = create(config.base, final_name);
+    }
     ret->configure_(config.config);
   }
   if(!ret)

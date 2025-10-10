@@ -65,7 +65,10 @@ struct TVMCollisionConstraint
       if constexpr(!Delete) { it->task.reset(); }
     }
     if constexpr(Delete) { return data_.erase(it); }
-    else { return it; }
+    else
+    {
+      return it;
+    }
   }
 
   void deleteCollision(TVMQPSolver & solver, const mc_rbdyn::Collision & col)
@@ -316,9 +319,15 @@ void CollisionsConstraint::__addCollision(mc_solver::QPSolver & solver, const mc
         }
       }
       if(inactive) { return jointsToSelector<false>(robots.robot(rIndex), *joints); }
-      else { return jointsToSelector<true>(robots.robot(rIndex), *joints); }
+      else
+      {
+        return jointsToSelector<true>(robots.robot(rIndex), *joints);
+      }
     }
-    else { return Eigen::VectorXd::Zero(0).eval(); }
+    else
+    {
+      return Eigen::VectorXd::Zero(0).eval();
+    }
   };
 
   auto r1Selector = computeJointsSelector(col.r1Joints, col.r1JointsInactive, r1Index);

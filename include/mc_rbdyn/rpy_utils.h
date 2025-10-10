@@ -110,7 +110,10 @@ template<typename T>
 Eigen::Vector3d rpyFromRotation(const T & value)
 {
   if constexpr(std::is_same_v<T, Eigen::Quaterniond>) { return rpyFromQuat(value); }
-  else { return rpyFromMat(value); }
+  else
+  {
+    return rpyFromMat(value);
+  }
 }
 
 } // namespace mc_rbdyn

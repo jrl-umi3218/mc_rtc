@@ -135,7 +135,10 @@ struct ColoredPolyhedronImpl : public PolyhedronT
         c[2].write(builder);
         builder.finish_array();
       }
-      else { c.write(builder); }
+      else
+      {
+        c.write(builder);
+      }
     }
     builder.finish_array();
   }

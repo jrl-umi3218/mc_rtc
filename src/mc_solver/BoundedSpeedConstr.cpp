@@ -83,7 +83,10 @@ struct TVMBoundedSpeedConstr
         it = data_.erase(it);
         r = true;
       }
-      else { ++it; }
+      else
+      {
+        ++it;
+      }
     }
     return r;
   }
@@ -357,7 +360,10 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
               Eigen::Vector6d v = c_dof;
               dof = v.asDiagonal();
             }
-            else { dof = c_dof; }
+            else
+            {
+              dof = c_dof;
+            }
           }
           Eigen::VectorXd lowerSpeed;
           Eigen::VectorXd upperSpeed = [&]() -> Eigen::VectorXd
@@ -384,7 +390,10 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
             ret->addBoundedSpeed(solver, c("body"), c("bodyPoint", Eigen::Vector3d::Zero().eval()), dof, lowerSpeed,
                                  upperSpeed);
           }
-          else { ret->addBoundedSpeed(solver, robot.frame(c("frame")), dof, lowerSpeed, upperSpeed); }
+          else
+          {
+            ret->addBoundedSpeed(solver, robot.frame(c("frame")), dof, lowerSpeed, upperSpeed);
+          }
         }
       }
       return ret;

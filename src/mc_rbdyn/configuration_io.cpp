@@ -201,7 +201,10 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Collision>::save(const mc_rb
     if(joints)
     {
       if(inactive) { config.add(prefix + "InactiveJoints", *c.r1Joints); }
-      else { config.add(prefix + "ActiveJoints", *c.r1Joints); }
+      else
+      {
+        config.add(prefix + "ActiveJoints", *c.r1Joints);
+      }
     }
   };
   saveActiveJoints("r1", c.r1Joints, c.r1JointsInactive);
@@ -259,7 +262,10 @@ mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::s
     config.add("X_b_motor", gs->X_b_motor());
     config.add("motorMaxTorque", gs->motorMaxTorque());
   }
-  else { mc_rtc::log::error_and_throw("Cannot serialize a surface of type {}", s->type()); }
+  else
+  {
+    mc_rtc::log::error_and_throw("Cannot serialize a surface of type {}", s->type());
+  }
   return config;
 }
 
@@ -986,7 +992,10 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::save(const mc_
     out.add("epsilon1", epsilon1);
     out.add("epsilon2", epsilon2);
   }
-  else { mc_rtc::log::error_and_throw("New sch-core object type is not handled by this save function"); }
+  else
+  {
+    mc_rtc::log::error_and_throw("New sch-core object type is not handled by this save function");
+  }
   return out;
 failed_cast:
   mc_rtc::log::error_and_throw("Failed to cast the object to its deduced type");
@@ -1098,7 +1107,10 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   config("stance", rm._stance);
   rm.expand_stance();
   if(config.has("ref_joint_order")) { rm._ref_joint_order = config("ref_joint_order"); }
-  else { rm.make_default_ref_joint_order(); }
+  else
+  {
+    rm.make_default_ref_joint_order();
+  }
 
   if(config.has("gripperSafety")) { rm._gripperSafety = config("gripperSafety"); }
   if(config.has("grippers"))
@@ -1240,7 +1252,10 @@ tasks::qp::JointGains ConfigurationLoader<tasks::qp::JointGains>::load(const mc_
   {
     return tasks::qp::JointGains(config("jointName"), config("stiffness"), config("damping"));
   }
-  else { return tasks::qp::JointGains(config("jointName"), config("stiffness")); }
+  else
+  {
+    return tasks::qp::JointGains(config("jointName"), config("stiffness"));
+  }
 }
 
 mc_rtc::Configuration ConfigurationLoader<tasks::qp::JointGains>::save(const tasks::qp::JointGains & jg)

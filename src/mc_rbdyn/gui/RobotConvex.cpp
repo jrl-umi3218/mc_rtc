@@ -48,7 +48,10 @@ void addConvexToGUI(mc_rtc::gui::StateBuilder & gui,
       auto cross = (a - b) ^ (a - c);
       auto dot = normal * cross;
       if(dot < 0) { triangles.push_back({t.c, t.b, t.a}); }
-      else { triangles.push_back({t.a, t.b, t.c}); }
+      else
+      {
+        triangles.push_back({t.a, t.b, t.c});
+      }
     }
     publish_object(mc_rtc::gui::Polyhedron(
         publishName.value_or(name), cfg,
@@ -90,7 +93,10 @@ void addConvexToGUI(mc_rtc::gui::StateBuilder & gui,
     publish_object(mc_rtc::gui::Sphere(
         publishName.value_or(name), [sphere]() { return sphere->getRadius(); }, get_pose, mc_rtc::gui::Color::Green));
   }
-  else { mc_rtc::log::warning("{} in {} cannot be displayed", name, robot.name()); }
+  else
+  {
+    mc_rtc::log::warning("{} in {} cannot be displayed", name, robot.name());
+  }
 }
 
 } // namespace mc_rbdyn::gui

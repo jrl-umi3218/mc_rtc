@@ -61,7 +61,10 @@ inline bool loadData(const char * data, RapidJSONDocument & document, const std:
     ss << GetParseError(res.Code()) << std::endl;
     ss << "Position: " << res.Offset();
     if(path.size()) { log::error("Failed to read configuration file: {}", path); }
-    else { log::error("Failed to read raw json data: {}", data); }
+    else
+    {
+      log::error("Failed to read raw json data: {}", data);
+    }
     log::warning(ss.str());
     return false;
   }

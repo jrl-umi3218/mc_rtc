@@ -56,7 +56,10 @@ public:
         BOOST_REQUIRE(plugin_c.has("exclusive_to_TestPluginController_1_2"));
         bool exclusive = plugin_c("exclusive_to_TestPluginController_1_2");
         if(name_ == "TestPluginController_1_2") { BOOST_REQUIRE_EQUAL(exclusive, plugin == "Plugin1"); }
-        else { BOOST_REQUIRE_EQUAL(exclusive, false); }
+        else
+        {
+          BOOST_REQUIRE_EQUAL(exclusive, false);
+        }
       }
     }
     bool ret = MCController::run();

@@ -116,7 +116,10 @@ void CollisionFunction::updateJacobian()
         (sign * normVecDist_).transpose() * jac.block(3, 0, 3, d.jac_.dof());
     d.jac_.fullJacobian(r.mb(), distJac_.block(0, 0, 1, d.jac_.dof()), fullJac_);
     if(d.selector_.size() == 0) { jacobian_[tvm_robot.q().get()] += fullJac_.block(0, 0, 1, r.mb().nrDof()); }
-    else { jacobian_[tvm_robot.q().get()] += fullJac_.block(0, 0, 1, r.mb().nrDof()) * d.selector_.asDiagonal(); }
+    else
+    {
+      jacobian_[tvm_robot.q().get()] += fullJac_.block(0, 0, 1, r.mb().nrDof()) * d.selector_.asDiagonal();
+    }
     sign = -1.0;
     object = std::ref(c2_);
     point = std::ref(p2_);

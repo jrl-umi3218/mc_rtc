@@ -39,7 +39,10 @@ MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
     surfaces_.push_back("RightFoot");
   }
   else if(robot().hasSurface("MobileBase")) { surfaces_.push_back("MobileBase"); }
-  else { mc_rtc::log::error_and_throw("MCCoMController does not support robot {}", robot().name()); }
+  else
+  {
+    mc_rtc::log::error_and_throw("MCCoMController does not support robot {}", robot().name());
+  }
 
   if(surfaces_.size() == 2)
   {

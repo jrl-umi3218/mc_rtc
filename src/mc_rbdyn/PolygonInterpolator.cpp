@@ -127,7 +127,10 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
       tuple_t normal{{p.y - prev.y, -(p.x - prev.x)}};
       double norm = normal[0] * normal[0] + normal[1] * normal[1];
       if(norm > 0) { _res.push_back({{normal[0] / norm, normal[1] / norm}}); }
-      else { _res.push_back({{0., 0.}}); }
+      else
+      {
+        _res.push_back({{0., 0.}});
+      }
     }
     return _res;
   };

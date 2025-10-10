@@ -78,7 +78,10 @@ sva::ForceVecd RobotFrame::wrench() const
     }();
     return X_fsactual_body.dualMul(sensor_->wrenchWithoutGravity(robot_));
   }
-  else { return position_.dualMul(static_cast<RobotFrame *>(parent_.get())->wrench()); }
+  else
+  {
+    return position_.dualMul(static_cast<RobotFrame *>(parent_.get())->wrench());
+  }
 }
 
 Eigen::Vector2d RobotFrame::cop(double min_pressure) const

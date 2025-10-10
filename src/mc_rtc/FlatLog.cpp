@@ -35,7 +35,10 @@ void FlatLog::append(const std::string & f)
 {
   auto fpath = bfs::path(f);
   if(fpath.extension() == ".flat") { appendFlat(f); }
-  else { appendBin(f); }
+  else
+  {
+    appendBin(f);
+  }
 }
 
 void FlatLog::appendBin(const std::string & f)

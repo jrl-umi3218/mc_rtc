@@ -555,7 +555,10 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
         dfAdmittance.setZero();
         dfAdmittance.z() = admittance("dfz");
       }
-      else { admittance("df", dfAdmittance); }
+      else
+      {
+        admittance("df", dfAdmittance);
+      }
       if(admittance.has("dfz_damping"))
       {
         mc_rtc::log::warning("[MC_RTC_DEPRECATED][StabilizerConfiguration] dfz_damping is now dimensional, to "
@@ -563,7 +566,10 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
         dfDamping.setZero();
         dfDamping.z() = admittance("dfz_damping");
       }
-      else { admittance("df_damping", dfDamping); }
+      else
+      {
+        admittance("df_damping", dfDamping);
+      }
     }
     if(config.has("dcm_tracking"))
     {

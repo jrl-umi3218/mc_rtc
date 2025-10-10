@@ -191,7 +191,10 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   }
   enabled_controllers = mc_rtc::fromVectorOrElement<std::string>(config, "Enabled", {});
   if(enabled_controllers.size()) { initial_controller = enabled_controllers[0]; }
-  else { mc_rtc::log::error_and_throw("Enabled entry in mc_rtc must contain at least one controller name"); }
+  else
+  {
+    mc_rtc::log::error_and_throw("Enabled entry in mc_rtc must contain at least one controller name");
+  }
   config("Default", initial_controller);
   config("IncludeHalfSitController", include_halfsit_controller);
 
@@ -232,7 +235,10 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     enable_gui_server = (*gui_config)("Enable", false);
     gui_server_configuration.load(*gui_config);
   }
-  else { enable_gui_server = false; }
+  else
+  {
+    enable_gui_server = false;
+  }
 }
 
 namespace

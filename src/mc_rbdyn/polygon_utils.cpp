@@ -82,7 +82,10 @@ std::vector<Plane> planes_from_polygon(const std::shared_ptr<geos::geom::Geometr
     plane.normal = Eigen::Vector3d(p.y - prev.y, prev.x - p.x, 0);
     double norm = plane.normal.norm();
     if(norm > 0) { plane.normal = plane.normal / norm; }
-    else { plane.normal = Eigen::Vector3d::Zero(); }
+    else
+    {
+      plane.normal = Eigen::Vector3d::Zero();
+    }
     plane.offset = -1 * (plane.normal.x() * p.x + plane.normal.y() * p.y);
     res.push_back(plane);
   }

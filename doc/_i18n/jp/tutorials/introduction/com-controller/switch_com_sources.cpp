@@ -4,6 +4,9 @@ void MyFirstController::switch_com_target()
   // 以下のように取得される:
   // comZero = comTask->com();
   if(comDown) { comTask->com(comZero - Eigen::Vector3d{0, 0, 0.2}); }
-  else { comTask->com(comZero); }
+  else
+  {
+    comTask->com(comZero);
+  }
   comDown = !comDown;
 }

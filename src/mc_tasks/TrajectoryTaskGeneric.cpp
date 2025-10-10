@@ -135,7 +135,10 @@ void TrajectoryTaskGeneric::addToSolver(mc_solver::QPSolver & solver)
           }
         };
         if(selectorT_) { addTask(*tvm_selector(selectorT_)); }
-        else { addTask(*tvm_error(errorT)); }
+        else
+        {
+          addTask(*tvm_error(errorT));
+        }
         break;
       }
       default:
@@ -371,7 +374,10 @@ void TrajectoryTaskGeneric::selectActiveJoints(mc_solver::QPSolver & solver,
     selectActiveJoints(activeJointsName, activeDofs, false);
     addToSolver(solver);
   }
-  else { selectActiveJoints(activeJointsName, activeDofs, false); }
+  else
+  {
+    selectActiveJoints(activeJointsName, activeDofs, false);
+  }
 }
 
 void TrajectoryTaskGeneric::selectUnactiveJoints(
@@ -423,7 +429,10 @@ void TrajectoryTaskGeneric::selectUnactiveJoints(
     selectUnactiveJoints(unactiveJointsName, unactiveDofs, false);
     addToSolver(solver);
   }
-  else { selectUnactiveJoints(unactiveJointsName, unactiveDofs, false); }
+  else
+  {
+    selectUnactiveJoints(unactiveJointsName, unactiveDofs, false);
+  }
 }
 
 void TrajectoryTaskGeneric::resetJointsSelector()
@@ -460,7 +469,10 @@ void TrajectoryTaskGeneric::resetJointsSelector(mc_solver::QPSolver & solver)
     resetJointsSelector();
     addToSolver(solver);
   }
-  else { resetJointsSelector(); }
+  else
+  {
+    resetJointsSelector();
+  }
 }
 
 Eigen::VectorXd TrajectoryTaskGeneric::eval() const
@@ -535,13 +547,19 @@ void TrajectoryTaskGeneric::load(mc_solver::QPSolver & solver, const mc_rtc::Con
       Eigen::VectorXd stiff = s;
       stiffness(stiff);
     }
-    else { stiffness(static_cast<double>(s)); }
+    else
+    {
+      stiffness(static_cast<double>(s));
+    }
   }
   if(config.has("damping"))
   {
     auto d = config("damping");
     if(d.size()) { setGains(dimStiffness(), d); }
-    else { setGains(stiffness(), d); }
+    else
+    {
+      setGains(stiffness(), d);
+    }
   }
   if(config.has("weight")) { weight(config("weight")); }
   if(config.has("refVel")) { refVel(config("refVel")); }

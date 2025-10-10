@@ -64,35 +64,29 @@ struct TaskExamples
   static_assert(sizeof(T) == 0, "This must be specialized before being used");
 };
 
-#define TEST_TASK(TaskT, TaskN)                                         \
-  template<>                                                            \
-  struct TaskExamples<TaskT>                                            \
-  {                                                                     \
-    static const bfs::path json()                                       \
-    {                                                                   \
-      return JSON_EXAMPLES / #TaskN ".json";                            \
-    }                                                                   \
-    static const bfs::path yaml()                                       \
-    {                                                                   \
-      return YAML_EXAMPLES / #TaskN ".yaml";                            \
-    }                                                                   \
-  };                                                                    \
-  BOOST_AUTO_TEST_CASE(TaskN)                                           \
-  {                                                                     \
-    {                                                                   \
-      mc_rtc::Configuration json(TaskExamples<TaskT>::json().string()); \
-      auto task = mc_tasks::MetaTaskLoader::load<TaskT>(solver, json);  \
-      size_t nLogEntriesBefore = solver.logger()->size();               \
-      size_t nGUIEntriesBefore = solver.gui()->size();                  \
-      solver.addTask(task);                                             \
-      solver.removeTask(task);                                          \
-      BOOST_REQUIRE(nLogEntriesBefore == solver.logger()->size());      \
-      BOOST_REQUIRE(nGUIEntriesBefore == solver.gui()->size());         \
-    }                                                                   \
-    {                                                                   \
-      mc_rtc::Configuration yaml(TaskExamples<TaskT>::yaml().string()); \
-      auto task = mc_tasks::MetaTaskLoader::load<TaskT>(solver, yaml);  \
-    }                                                                   \
+#define TEST_TASK(TaskT, TaskN)                                              \
+  template<>                                                                 \
+  struct TaskExamples<TaskT>                                                 \
+  {                                                                          \
+    static const bfs::path json() { return JSON_EXAMPLES / #TaskN ".json"; } \
+    static const bfs::path yaml() { return YAML_EXAMPLES / #TaskN ".yaml"; } \
+  };                                                                         \
+  BOOST_AUTO_TEST_CASE(TaskN)                                                \
+  {                                                                          \
+    {                                                                        \
+      mc_rtc::Configuration json(TaskExamples<TaskT>::json().string());      \
+      auto task = mc_tasks::MetaTaskLoader::load<TaskT>(solver, json);       \
+      size_t nLogEntriesBefore = solver.logger()->size();                    \
+      size_t nGUIEntriesBefore = solver.gui()->size();                       \
+      solver.addTask(task);                                                  \
+      solver.removeTask(task);                                               \
+      BOOST_REQUIRE(nLogEntriesBefore == solver.logger()->size());           \
+      BOOST_REQUIRE(nGUIEntriesBefore == solver.gui()->size());              \
+    }                                                                        \
+    {                                                                        \
+      mc_rtc::Configuration yaml(TaskExamples<TaskT>::yaml().string());      \
+      auto task = mc_tasks::MetaTaskLoader::load<TaskT>(solver, yaml);       \
+    }                                                                        \
   }
 
 TEST_TASK(mc_tasks::AddContactTask, AddContactTask)

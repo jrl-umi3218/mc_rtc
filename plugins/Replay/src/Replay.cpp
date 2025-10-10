@@ -45,7 +45,10 @@ void log_to_robot(const mc_rtc::log::FlatLog & log, mc_rbdyn::Robot & robot, boo
     robot.mbc().q[static_cast<size_t>(mbcIdx)][0] = qOut[i];
   }
   if(robot.mb().joint(0).dof() == 6) { robot.posW(get<sva::PTransformd>(log, "ff", robot.name(), is_main, idx)); }
-  else { robot.forwardKinematics(); }
+  else
+  {
+    robot.forwardKinematics();
+  }
 }
 
 template<typename CppT>

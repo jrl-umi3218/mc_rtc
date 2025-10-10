@@ -207,7 +207,10 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume, d
     boost::system::error_code ec;
     bfs::create_symlink(log_path, log_sym_path, ec);
     if(!ec) { log::info("Updated latest log symlink: {}", log_sym_path.string()); }
-    else { log::info("Failed to create latest log symlink: {}", ec.message()); }
+    else
+    {
+      log::info("Failed to create latest log symlink: {}", ec.message());
+    }
   }
   if(impl_->log_.is_open())
   {
@@ -217,7 +220,10 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume, d
       log_events_.clear();
       for(const auto & e : log_entries_) { log_events_.push_back(KeyAddedEvent{e.type, e.key}); }
     }
-    else { impl_->log_iter_ = start_t; }
+    else
+    {
+      impl_->log_iter_ = start_t;
+    }
     if(find_entry("t") == log_entries_.end())
     {
       addLogEntry("t", this,
@@ -308,14 +314,20 @@ void Logger::log()
         builder.write(meta_.calibs);
         builder.finish_array();
       }
-      else { static_assert(!std::is_same_v<T, T>, "non-exhaustive visitor"); }
+      else
+      {
+        static_assert(!std::is_same_v<T, T>, "non-exhaustive visitor");
+      }
     };
 
     for(auto & e : log_events_) { std::visit(event_visitor, e); }
     builder.finish_array();
     log_events_.resize(0);
   }
-  else { builder.write(); }
+  else
+  {
+    builder.write();
+  }
   builder.start_array(log_entries_.size());
   for(auto & e : log_entries_) { e.log_cb(builder); }
   builder.finish_array();
@@ -343,7 +355,10 @@ void Logger::removeLogEntries(const void * source)
       log_events_.push_back(KeyRemovedEvent{it->key});
       it = log_entries_.erase(it);
     }
-    else { ++it; }
+    else
+    {
+      ++it;
+    }
   }
 }
 
@@ -356,7 +371,10 @@ void Logger::clear(bool record)
       if(record) { log_events_.push_back(KeyRemovedEvent{it->key}); }
       it = log_entries_.erase(it);
     }
-    else { ++it; }
+    else
+    {
+      ++it;
+    }
   }
 }
 

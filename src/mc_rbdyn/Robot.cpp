@@ -171,7 +171,10 @@ void fixSCH(const mc_rbdyn::Robot & robot, mapT & data_, const std::map<std::str
   {
     const auto & pos = robot.bodyPosW(d.second.first);
     if(tfs.count(d.first)) { sch::mc_rbdyn::transform(*d.second.second, tfs.at(d.first) * pos); }
-    else { sch::mc_rbdyn::transform(*d.second.second, pos); }
+    else
+    {
+      sch::mc_rbdyn::transform(*d.second.second, pos);
+    }
   }
 }
 
@@ -257,7 +260,10 @@ Robot::Robot(NewRobotToken,
 : robots_(&robots), robots_idx_(robots_idx), name_(name), load_params_(params)
 {
   if(params.data_) { data_ = params.data_; }
-  else { data_ = std::make_shared<RobotData>(); }
+  else
+  {
+    data_ = std::make_shared<RobotData>();
+  }
   data_->robots.push_back(this);
   const auto & module_ = module();
 
@@ -376,7 +382,10 @@ Robot::Robot(NewRobotToken,
       convexes_[o.first] = {o.second.first, S_ObjectPtr(o.second.second->clone())};
       auto it = module_.collisionTransforms().find(o.first);
       if(it != module_.collisionTransforms().end()) { collisionTransforms_[o.first] = it->second; }
-      else { collisionTransforms_[o.first] = sva::PTransformd::Identity(); }
+      else
+      {
+        collisionTransforms_[o.first] = sva::PTransformd::Identity();
+      }
     }
     for(const auto & b : mb().bodies()) { collisionTransforms_[b.name()] = sva::PTransformd::Identity(); }
     for(const auto & [body, visuals] : module_._visual)
@@ -411,7 +420,10 @@ Robot::Robot(NewRobotToken,
           mc_rtc::log::warning("No calibration file {} found for force sensor {}", calib_file.string(), fs.name());
         }
       }
-      else { fs.loadCalibrator(calib_file.string(), mbc().gravity); }
+      else
+      {
+        fs.loadCalibrator(calib_file.string(), mbc().gravity);
+      }
     }
   }
 
@@ -488,7 +500,10 @@ Robot::Robot(NewRobotToken,
       auto jIndex = mb().jointIndexByName(jN);
       refJointIndexToMBCIndex_[i] = mb().joint(jIndex).dof() != 0 ? jIndex : -1;
     }
-    else { refJointIndexToMBCIndex_[i] = -1; }
+    else
+    {
+      refJointIndexToMBCIndex_[i] = -1;
+    }
   }
 
   springs_ = module_.springs();
@@ -536,7 +551,10 @@ void Robot::addBodySensor(const BodySensor & sensor)
       data_->bodyBodySensors.insert({sensor.parentBody(), data_->bodySensors.size() - 1});
   }
 
-  else { mc_rtc::log::error_and_throw("Body sensor named {} already attached to {}", sensor.name(), this->name()); }
+  else
+  {
+    mc_rtc::log::error_and_throw("Body sensor named {} already attached to {}", sensor.name(), this->name());
+  }
 }
 
 const BodySensor & Robot::bodySensor(const std::string & name) const
@@ -1126,7 +1144,8 @@ void Robot::fixSurface(Surface & surface)
 void Robot::makeFrames(std::vector<mc_rbdyn::RobotModule::FrameDescription> frames)
 {
   size_t added_frames = 0;
-  do {
+  do
+  {
     added_frames = 0;
     for(auto it = frames.begin(); it != frames.end();)
     {
@@ -1138,7 +1157,10 @@ void Robot::makeFrames(std::vector<mc_rbdyn::RobotModule::FrameDescription> fram
         it = frames.erase(it);
         added_frames++;
       }
-      else { ++it; }
+      else
+      {
+        ++it;
+      }
     }
   } while(added_frames != 0);
   if(frames.size())
@@ -1296,7 +1318,10 @@ void Robot::velW(const sva::MotionVecd & vel)
     alpha()[0][5] = vB.linear().z();
     forwardVelocity();
   }
-  else { mc_rtc::log::warning("You cannot set the base velocity on a fixed-base robot"); }
+  else
+  {
+    mc_rtc::log::warning("You cannot set the base velocity on a fixed-base robot");
+  }
 }
 
 const sva::MotionVecd & Robot::velW() const
@@ -1317,7 +1342,10 @@ void Robot::accW(const sva::MotionVecd & acc)
     alphaD()[0][5] = aB.linear().z();
     forwardAcceleration();
   }
-  else { mc_rtc::log::warning("You cannot set the base acceleration on a fixed-base robot"); }
+  else
+  {
+    mc_rtc::log::warning("You cannot set the base acceleration on a fixed-base robot");
+  }
 }
 
 const sva::MotionVecd Robot::accW() const
@@ -1445,7 +1473,10 @@ const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
   {
     const std::string & robotName = config(robotNameKey);
     if(robots.hasRobot(robotName)) { return robots.robot(robotName); }
-    else { mc_rtc::log::error_and_throw("{} No robot named {} in this controller", p, robotName); }
+    else
+    {
+      mc_rtc::log::error_and_throw("{} No robot named {} in this controller", p, robotName);
+    }
   }
   else if(config.has(robotIndexKey))
   {
@@ -1463,7 +1494,10 @@ const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
   else
   {
     if(!required) { return defaultRobotName.size() ? robots.robot(defaultRobotName) : robots.robot(); }
-    else { mc_rtc::log::error_and_throw("{} \"robotName\" is required.", p); }
+    else
+    {
+      mc_rtc::log::error_and_throw("{} \"robotName\" is required.", p);
+    }
   }
 }
 

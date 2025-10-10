@@ -4,6 +4,9 @@ void MyFirstController::switch_com_target()
   // comZero = comTask->com();
   // in the reset function
   if(comDown) { comTask->com(comZero - Eigen::Vector3d{0, 0, 0.2}); }
-  else { comTask->com(comZero); }
+  else
+  {
+    comTask->com(comZero);
+  }
   comDown = !comDown;
 }

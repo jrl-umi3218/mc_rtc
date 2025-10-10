@@ -640,7 +640,10 @@ public:
     else if constexpr(internal::is_like_uint16_t<T>) { return static_cast<T>(this->operator uint16_t()); }
     else if constexpr(internal::is_like_uint32_t<T>) { return static_cast<T>(this->operator uint32_t()); }
     else if constexpr(internal::is_like_uint64_t<T>) { return static_cast<T>(this->operator uint64_t()); }
-    else { static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size"); }
+    else
+    {
+      static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
+    }
   }
 
   /*! \brief User-defined conversions
@@ -655,7 +658,10 @@ public:
   operator T() const
   {
     if constexpr(internal::has_configuration_load_object_v<T>) { return ConfigurationLoader<T>::load(*this); }
-    else { return T::fromConfiguration(*this); }
+    else
+    {
+      return T::fromConfiguration(*this);
+    }
   }
 
   /*! \brief Retrieves an optional<T>
@@ -1385,7 +1391,10 @@ public:
     {
       push(mc_rtc::ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
     }
-    else { push(value.toConfiguration(std::forward<Args>(args)...)); }
+    else
+    {
+      push(value.toConfiguration(std::forward<Args>(args)...));
+    }
   }
 
   /** Integral type conversions
@@ -1403,7 +1412,10 @@ public:
     else if constexpr(internal::is_like_uint16_t<T>) { push(static_cast<uint16_t>(value)); }
     else if constexpr(internal::is_like_uint32_t<T>) { push(static_cast<uint32_t>(value)); }
     else if constexpr(internal::is_like_uint64_t<T>) { push(static_cast<uint64_t>(value)); }
-    else { static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size"); }
+    else
+    {
+      static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
+    }
   }
 
   /*! \brief Add a vector into the JSON document
@@ -1539,7 +1551,10 @@ public:
     else if constexpr(internal::is_like_uint16_t<T>) { add(key, static_cast<uint16_t>(value)); }
     else if constexpr(internal::is_like_uint32_t<T>) { add(key, static_cast<uint32_t>(value)); }
     else if constexpr(internal::is_like_uint64_t<T>) { add(key, static_cast<uint64_t>(value)); }
-    else { static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size"); }
+    else
+    {
+      static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
+    }
   }
 
   /*! \brief User-defined conversion
@@ -1562,7 +1577,10 @@ public:
     {
       add(key, ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
     }
-    else { add(key, value.toConfiguration(std::forward<Args>(args)...)); }
+    else
+    {
+      add(key, value.toConfiguration(std::forward<Args>(args)...));
+    }
   }
 
   /*! \brief Push a vector into the JSON document
@@ -1694,7 +1712,10 @@ private:
   T convert() const
   {
     if constexpr(std::is_same_v<T, Configuration>) { return *this; }
-    else { return this->operator T(); }
+    else
+    {
+      return this->operator T();
+    }
   }
 };
 
@@ -1764,7 +1785,10 @@ std::variant<Args...> to_variant(const Configuration & c, size_t idx)
   else
   {
     if(idx == IDX) { return c.operator std::variant_alternative_t<IDX, std::variant<Args...>>(); }
-    else { return to_variant<IDX + 1, Args...>(c, idx); }
+    else
+    {
+      return to_variant<IDX + 1, Args...>(c, idx);
+    }
   }
 }
 

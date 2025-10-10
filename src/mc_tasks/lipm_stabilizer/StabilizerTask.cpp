@@ -564,7 +564,10 @@ void StabilizerTask::computeLeftFootRatio()
     leftFootRatio_ = clamp(d_proj / t_lankle_rankle.norm(), 0., 1.);
   }
   else if(inContact(ContactState::Left)) { leftFootRatio_ = 0; }
-  else { leftFootRatio_ = 1; }
+  else
+  {
+    leftFootRatio_ = 1;
+  }
 }
 
 sva::PTransformd StabilizerTask::anchorFrame(const mc_rbdyn::Robot & robot) const
@@ -581,7 +584,10 @@ void StabilizerTask::updateZMPFrame()
                                  contacts_.at(ContactState::Right).surfacePose(), 0.5);
   }
   else if(inContact(ContactState::Left)) { zmpFrame_ = contacts_.at(ContactState::Left).surfacePose(); }
-  else { zmpFrame_ = contacts_.at(ContactState::Right).surfacePose(); }
+  else
+  {
+    zmpFrame_ = contacts_.at(ContactState::Right).surfacePose();
+  }
 }
 
 void StabilizerTask::staticTarget(const Eigen::Vector3d & com, double zmpHeight)
@@ -742,7 +748,10 @@ void StabilizerTask::run()
   if(inDoubleSupport())
   {
     if(horizonCoPDistribution_ && horizonZmpRef_.size() != 0) { distributeCoPonHorizon(horizonZmpRef_, horizonDelta_); }
-    else { distributeWrench(desiredWrench_); }
+    else
+    {
+      distributeWrench(desiredWrench_);
+    }
   }
   else
   {
@@ -810,7 +819,10 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
     {
       extWrench.measured = {extWrench.gain.vector().cwiseProduct(wrenchFrame.wrench().vector())};
     }
-    else { extWrench.measured = extWrench.target; }
+    else
+    {
+      extWrench.measured = extWrench.target;
+    }
   }
   computeWrenchOffsetAndCoefficient<&ExternalWrench::target>(robot(), comOffsetTarget_, zmpCoefTarget_);
   computeWrenchOffsetAndCoefficient<&ExternalWrench::measured>(realRobot(), comOffsetMeasured_, zmpCoefMeasured_);
@@ -852,7 +864,10 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
           dcmEstimator_.setInputs(-measuredDCM_.head<2>(), -measuredZMP_.head<2>(), waistOrientation,
                                   -comOffsetMeasured_.head<2>(), 1);
         }
-        else { dcmEstimator_.setInputs(-measuredDCM_.head<2>(), -measuredZMP_.head<2>(), waistOrientation); }
+        else
+        {
+          dcmEstimator_.setInputs(-measuredDCM_.head<2>(), -measuredZMP_.head<2>(), waistOrientation);
+        }
       }
 
       /// run the estimation
@@ -864,7 +879,10 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
           /// the estimators provides a filtered DCM
           dcmError_.head<2>() = dcmEstimator_.getUnbiasedDCM();
         }
-        else { dcmError_.head<2>() -= dcmEstimator_.getBias(); }
+        else
+        {
+          dcmError_.head<2>() -= dcmEstimator_.getBias();
+        }
         /// the bias should also correct the CoM
         comError.head<2>() -= dcmEstimator_.getBias();
         /// the unbiased dcm allows also to get the velocity of the CoM
@@ -924,7 +942,10 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   comOffsetLowPass_.update(comOffsetMeasured_ - comOffsetTarget_);
   comOffsetErr_ = comOffsetLowPass_.eval();
   if(c_.extWrench.modifyCoMErr) { comOffsetLowPassCoM_.update(comOffsetErr_); }
-  else { comOffsetLowPassCoM_.update(Eigen::Vector3d::Zero()); }
+  else
+  {
+    comOffsetLowPassCoM_.update(Eigen::Vector3d::Zero());
+  }
   comOffsetErrCoM_ = comOffsetLowPassCoM_.eval();
   comOffsetErrZMP_ = comOffsetErr_ - comOffsetErrCoM_;
   clampInPlaceAndWarn(comOffsetErrCoM_, Eigen::Vector3d::Constant(-c_.extWrench.comOffsetErrCoMLimit).eval(),

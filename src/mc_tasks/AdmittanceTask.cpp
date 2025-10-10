@@ -132,7 +132,10 @@ void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                            "targetPose", [this]() { return this->targetPose(); },
                                            [this](const sva::PTransformd & pos) { this->targetPose(pos); }));
     }
-    else { gui.removeElement({"Tasks", name_}, "targetPose"); }
+    else
+    {
+      gui.removeElement({"Tasks", name_}, "targetPose");
+    }
   };
 
   auto showPose = [this, &gui]()
@@ -141,7 +144,10 @@ void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
     {
       gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }));
     }
-    else { gui.removeElement({"Tasks", name_}, "pose"); }
+    else
+    {
+      gui.removeElement({"Tasks", name_}, "pose");
+    }
   };
 
   gui.addElement({"Tasks", name_},

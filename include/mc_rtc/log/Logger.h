@@ -217,7 +217,10 @@ public:
         log::error("Already logging an entry named {}", name);
         return;
       }
-      else { log_entries_.erase(it); }
+      else
+      {
+        log_entries_.erase(it);
+      }
     }
     auto log_type = log::callback_is_serializable<CallbackT>::log_type;
     log_events_.push_back(KeyAddedEvent{log_type, name});
@@ -395,14 +398,16 @@ private:
 
 /** Helper to log members or methods with "this" source to the logger variable */
 #define MC_RTC_LOG_HELPER(NAME, MEMBER)                                       \
-  do {                                                                        \
+  do                                                                          \
+  {                                                                           \
     using ThisT = typename std::remove_pointer<decltype(this)>::type;         \
     logger.addLogEntry<decltype(&ThisT::MEMBER), &ThisT::MEMBER>(NAME, this); \
   } while(0)
 
 /** Helper to log ambiguous getter methods */
 #define MC_RTC_LOG_GETTER(NAME, METHOD)                                          \
-  do {                                                                           \
+  do                                                                             \
+  {                                                                              \
     using MethodRetT = decltype(this->METHOD());                                 \
     logger.addLogEntry(NAME, this, [this]() -> MethodRetT { return METHOD(); }); \
   } while(0)

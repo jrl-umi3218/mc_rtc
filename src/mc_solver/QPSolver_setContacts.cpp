@@ -14,7 +14,10 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
     controller_->clearContacts();
     for(const auto & c : contacts) { controller_->addContact(mc_control::Contact::from_mc_rbdyn(*controller_, c)); }
   }
-  else { setContacts(ControllerToken{}, contacts); }
+  else
+  {
+    setContacts(ControllerToken{}, contacts);
+  }
 }
 
 } // namespace mc_solver

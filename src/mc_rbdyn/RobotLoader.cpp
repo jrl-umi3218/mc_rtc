@@ -60,7 +60,10 @@ void RobotLoader::load_aliases(const std::string & fname)
         mc_rtc::log::warning("Aliases {} was already declared, new declaration from {} will prevail", a.first, fname);
       }
       if(a.second.size()) { aliases[a.first] = a.second; }
-      else { aliases[a.first] = {static_cast<std::string>(a.second)}; }
+      else
+      {
+        aliases[a.first] = {static_cast<std::string>(a.second)};
+      }
       if(verbose_) { mc_rtc::log::info("New alias {}: {}", a.first, data(a.first).dump(true, true)); }
     }
   }

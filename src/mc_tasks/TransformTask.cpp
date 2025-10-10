@@ -259,7 +259,10 @@ void TransformTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                            "targetPose", [this]() { return this->target(); },
                                            [this](const sva::PTransformd & pos) { this->target(pos); }));
     }
-    else { gui.removeElement({"Tasks", name_}, "targetPose"); }
+    else
+    {
+      gui.removeElement({"Tasks", name_}, "targetPose");
+    }
   };
 
   auto showPose = [this, &gui]()
@@ -268,7 +271,10 @@ void TransformTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
     {
       gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("pose", [this]() { return frame_->position(); }));
     }
-    else { gui.removeElement({"Tasks", name_}, "pose"); }
+    else
+    {
+      gui.removeElement({"Tasks", name_}, "pose");
+    }
   };
 
   gui.addElement({"Tasks", name_},
@@ -306,7 +312,10 @@ static mc_tasks::MetaTaskPtr loadTransformTask(mc_solver::QPSolver & solver, con
       mc_rtc::log::deprecated("TransformTask", "surface", "frame");
       return robot.frame(config("surface"));
     }
-    else { return robot.frame(config("frame")); }
+    else
+    {
+      return robot.frame(config("frame"));
+    }
   }();
   auto t = std::make_shared<mc_tasks::TransformTask>(frame);
   t->load(solver, config);

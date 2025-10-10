@@ -159,9 +159,7 @@ static inline void do_notify(const std::string & message)
   };
   size_t pos = 0;
   std::string msg = message;
-  do {
-    pos = escape_quote(msg, pos);
-  } while(pos != std::string::npos);
+  do { pos = escape_quote(msg, pos); } while(pos != std::string::npos);
   auto cmd = fmt::format("{} -c [mc_rtc] \"{}\"", MC_RTC_WSL_NOTIFY_SEND, msg);
   int ret = system(cmd.c_str());
   if(ret != 0) { mc_rtc::log::warning("[mc_rtc] Notification failed"); }

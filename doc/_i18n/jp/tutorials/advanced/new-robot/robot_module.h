@@ -24,6 +24,9 @@ extern "C"
   {
     // 現時点ではサポートされているいずれかのロボットの名前を使用する必要がある
     if(name == "MyRobot") { return new MyRobot(false); }
-    else { return new MyRobot(true); }
+    else
+    {
+      return new MyRobot(true);
+    }
   }
 }

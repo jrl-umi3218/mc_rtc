@@ -44,7 +44,10 @@ rbd::parsers::Visual makeVisual(const DataT & data, const mc_rtc::gui::Color & c
     else if constexpr(std::is_same_v<DataT, GeometryT::Sphere>) { return GeometryT::Type::SPHERE; }
     else if constexpr(std::is_same_v<DataT, GeometryT::Mesh>) { return GeometryT::Type::MESH; }
     else if constexpr(std::is_same_v<DataT, GeometryT::Superellipsoid>) { return GeometryT::Type::SUPERELLIPSOID; }
-    else { static_assert(!std::is_same_v<DataT, DataT>); }
+    else
+    {
+      static_assert(!std::is_same_v<DataT, DataT>);
+    }
   }();
   out.geometry.data = data;
   setVisualColor(out, color);
@@ -63,7 +66,10 @@ auto & getVisualGeometry(rbd::parsers::Visual & visual)
   else if constexpr(type == Type::SPHERE) { return boost::get<rbd::parsers::Geometry::Sphere>(data); }
   else if constexpr(type == Type::MESH) { return boost::get<rbd::parsers::Geometry::Mesh>(data); }
   else if constexpr(type == Type::SUPERELLIPSOID) { return boost::get<rbd::parsers::Geometry::Superellipsoid>(data); }
-  else { static_assert(static_cast<int>(type) != static_cast<int>(type)); }
+  else
+  {
+    static_assert(static_cast<int>(type) != static_cast<int>(type));
+  }
 }
 
 } // namespace details

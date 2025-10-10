@@ -90,7 +90,10 @@ void print_string_vector(const std::vector<std::string> & v)
     if(i == 0) { std::cout << "["; }
     std::cout << " " << v[i];
     if(i == v.size() - 1) { std::cout << " ]"; }
-    else { std::cout << ","; }
+    else
+    {
+      std::cout << ",";
+    }
   }
 }
 
@@ -486,7 +489,10 @@ int extract(int argc, char * argv[])
         std::stringstream ss;
         ss << out << "_from_" << from << "_to_";
         if(to == std::numeric_limits<double>::infinity()) { ss << "end"; }
-        else { ss << to; }
+        else
+        {
+          ss << to;
+        }
         ss << ".bin";
         ofs.open(ss.str(), std::ofstream::binary);
         write_magic(ofs);
@@ -546,10 +552,16 @@ int extract(int argc, char * argv[])
       if(!log.has(key))
       {
         if(key.back() == '*') { wildcards.push_back(std::string{key, 0, key.size() - 1}); }
-        else { std::cout << *it << " is not in " << in << "\n"; }
+        else
+        {
+          std::cout << *it << " is not in " << in << "\n";
+        }
         it = extract_keys.erase(it);
       }
-      else { ++it; }
+      else
+      {
+        ++it;
+      }
     }
     for(const auto & key : wildcards)
     {
@@ -609,9 +621,15 @@ int extract(int argc, char * argv[])
     if(!log.meta())
     {
       if(log.size() == 1) { dt = 0.005; }
-      else { dt = *log.getRaw<double>("t", 1) - *log.getRaw<double>("t", 0); }
+      else
+      {
+        dt = *log.getRaw<double>("t", 1) - *log.getRaw<double>("t", 0);
+      }
     }
-    else { dt = log.meta()->timestep; }
+    else
+    {
+      dt = log.meta()->timestep;
+    }
     mc_rtc::Logger logger(mc_rtc::Logger::Policy::NON_THREADED, "", "");
     if(log.meta()) { logger.meta() = *log.meta(); }
     logger.open(out_name(0), dt, 0);
@@ -676,7 +694,10 @@ int convert(int argc, char * argv[])
     {
       mc_rtc::log::warning("Command-line specified format clashes with file extension, trusting the provided format");
     }
-    else { format = ext; }
+    else
+    {
+      format = ext;
+    }
   }
   else if(ext == ".log" || ext == ".csv")
   {
@@ -684,7 +705,10 @@ int convert(int argc, char * argv[])
     {
       mc_rtc::log::warning("Command-line specified format clashes with file extension, trusting the provided format");
     }
-    else { format = ext; }
+    else
+    {
+      format = ext;
+    }
   }
   else if(ext == ".flat")
   {
@@ -692,7 +716,10 @@ int convert(int argc, char * argv[])
     {
       mc_rtc::log::warning("Command-line specified format clashes with file extension, trusting the provided format");
     }
-    else { format = ext; }
+    else
+    {
+      format = ext;
+    }
   }
   else
   {
@@ -726,7 +753,10 @@ int convert(int argc, char * argv[])
       std::string cmd = MC_BIN_TO_ROSBAG.string() + " " + in + " " + out_p.string() + " " + std::to_string(dt);
       if(system(cmd.c_str()) != 0) { mc_rtc::log::error("The following conversion call failed: {}", cmd); }
     }
-    else { mc_rtc::log::error("mc_rtc is not build with ROS support, bag conversion is not available"); }
+    else
+    {
+      mc_rtc::log::error("mc_rtc is not build with ROS support, bag conversion is not available");
+    }
   }
   return 0;
 }

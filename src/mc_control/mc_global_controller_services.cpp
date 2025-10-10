@@ -13,7 +13,10 @@ namespace mc_control
 bool MCGlobalController::GoToHalfSitPose_service()
 {
   if(controller_) { return GoToHalfSitPose(); }
-  else { return false; }
+  else
+  {
+    return false;
+  }
 }
 
 } // namespace mc_control

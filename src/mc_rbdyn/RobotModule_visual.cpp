@@ -250,7 +250,10 @@ RobotModulePtr robotModuleFromVisual(const std::string & name, const mc_rtc::Con
     if(auto spatialMomentum = inertiaC->find("momentum"))
     {
       if(auto inertia_ = inertiaC->find("inertia")) { inertia = sva::RBInertiad(mass, *spatialMomentum, *inertia_); }
-      else { mc_rtc::log::error_and_throw("robotModuleFromVisualConfig: momentum provided but no inertia matrix"); }
+      else
+      {
+        mc_rtc::log::error_and_throw("robotModuleFromVisualConfig: momentum provided but no inertia matrix");
+      }
     }
   }
   else
@@ -262,6 +265,9 @@ RobotModulePtr robotModuleFromVisual(const std::string & name, const mc_rtc::Con
 
   rbd::parsers::Visual visual = config;
   if(inertia) { return robotModuleFromVisual(name, visual, *inertia, config("fixed", false)); }
-  else { return robotModuleFromVisual(name, visual, mass, config("fixed", false)); }
+  else
+  {
+    return robotModuleFromVisual(name, visual, mass, config("fixed", false));
+  }
 }
 } // namespace mc_rbdyn

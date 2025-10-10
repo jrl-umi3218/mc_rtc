@@ -109,7 +109,10 @@ auto XYChunk(std::string_view name,
   {
     return impl::AbscissaOrdinate(name, update_fn, color, style, side);
   }
-  else { return impl::AbscissaOrdinateWithColor(name, update_fn, color, style, side); }
+  else
+  {
+    return impl::AbscissaOrdinateWithColor(name, update_fn, color, style, side);
+  }
 }
 
 /** Helper to create an impl::AbscissaOrdinate|impl::AbscissaOrdinateWithColor */

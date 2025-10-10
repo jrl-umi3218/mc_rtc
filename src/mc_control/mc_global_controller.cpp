@@ -46,7 +46,10 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
     mc_rtc::log::info("GUI server enabled");
     conf.gui_server_configuration.print_serving_information();
   }
-  else { mc_rtc::log::info("GUI server disabled"); }
+  else
+  {
+    mc_rtc::log::info("GUI server disabled");
+  }
   {
     std::string plugin_str;
     for(const auto & p : conf.global_plugins)
@@ -259,7 +262,10 @@ void MCGlobalController::init(const std::map<std::string, std::vector<double>> &
   {
     auto initq_it = initqs.find(robot.name());
     if(initq_it != initqs.end()) { initEncoders(robot, initq_it->second); }
-    else { initEncoders(robot); }
+    else
+    {
+      initEncoders(robot);
+    }
     auto initatt_it = initAttitudes.find(robot.name());
     if(initatt_it != initAttitudes.end()) { robot.posW(initatt_it->second); }
     else
@@ -331,9 +337,15 @@ void MCGlobalController::initEncoders(mc_rbdyn::Robot & robot)
       {
         for(const auto & qi : q) { rinitq.push_back(qi); }
       }
-      else { rinitq.push_back(0.0); }
+      else
+      {
+        rinitq.push_back(0.0);
+      }
     }
-    else { rinitq.push_back(0.0); }
+    else
+    {
+      rinitq.push_back(0.0);
+    }
   }
   for(auto & g : robot.grippers()) { g.get().reset(rinitq); }
 }
@@ -999,7 +1011,10 @@ bool MCGlobalController::EnableController(const std::string & name)
   else
   {
     if(name == current_ctrl) { mc_rtc::log::error("{} controller already enabled.", name); }
-    else { mc_rtc::log::error("{} controller not enabled.", name); }
+    else
+    {
+      mc_rtc::log::error("{} controller not enabled.", name);
+    }
     return false;
   }
 }

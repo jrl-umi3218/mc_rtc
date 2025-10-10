@@ -312,7 +312,10 @@ inline FlatLog::record recordFromNode(mpack_node_t node, bool extract_data, size
     auto data = mpack_node_array_at(node, idx + 1);
     return {type, dataFromNode(type, data)};
   }
-  else { return {type, {nullptr, void_deleter<int>}}; }
+  else
+  {
+    return {type, {nullptr, void_deleter<int>}};
+  }
 }
 
 // For version 1 and up, only data is stored in the node, type is from events
@@ -323,7 +326,10 @@ inline FlatLog::record recordFromNode(LogType type, mpack_node_t node, bool extr
     auto data = mpack_node_array_at(node, idx);
     return {type, dataFromNode(type, data)};
   }
-  else { return {type, {nullptr, void_deleter<int>}}; }
+  else
+  {
+    return {type, {nullptr, void_deleter<int>}};
+  }
 }
 
 struct TypedKey
@@ -357,7 +363,10 @@ struct LogEntry : mpack_tree_t
     {
       log::error("MessagePack stored data does not appear to be an array of size 2");
       if(mpack_node_type(root_) != mpack_type_array) { log::warning("Not an array"); }
-      else { log::warning("Array of size: {}", mpack_node_array_length(root_)); }
+      else
+      {
+        log::warning("Array of size: {}", mpack_node_array_length(root_));
+      }
       valid_ = false;
       return;
     }
@@ -572,7 +581,10 @@ struct LogEntry : mpack_tree_t
     assert(valid_);
     auto values = mpack_node_array_at(root_, 1);
     if(version_ == 0) { return mpack_node_double(mpack_node_array_at(values, 2 * idx + 1)); }
-    else { return mpack_node_double(mpack_node_array_at(values, idx)); }
+    else
+    {
+      return mpack_node_double(mpack_node_array_at(values, idx));
+    }
   }
 
   /** Rebuild this log entry with new keys */

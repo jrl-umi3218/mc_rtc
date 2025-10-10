@@ -120,7 +120,10 @@ void ObserverPipeline::reset()
     observer.reset(ctl_);
 
     if(pipelineObserver.update()) { desc_ += observer.desc(); }
-    else { desc_ += "[" + observer.desc() + "]"; }
+    else
+    {
+      desc_ += "[" + observer.desc() + "]";
+    }
 
     if(i < pipelineObservers_.size() - 1) { desc_ += " -> "; }
   }

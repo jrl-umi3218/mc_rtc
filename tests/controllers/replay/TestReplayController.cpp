@@ -57,7 +57,10 @@ public:
       BOOST_REQUIRE(datastore().has("Replay::Log"));
       BOOST_REQUIRE(!datastore().has("NOT_IN_DATASTORE"));
     }
-    else { BOOST_REQUIRE(!datastore().has("Replay::Log")); }
+    else
+    {
+      BOOST_REQUIRE(!datastore().has("Replay::Log"));
+    }
     bool ret = MCController::run();
     iters_ += 1;
     if constexpr(Play)

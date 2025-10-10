@@ -146,7 +146,10 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
     for(const auto & c : params.load_robot_config_into_)
     {
       if(load_robot_config_into.has(c)) { load_robot_config_into = load_robot_config_into(c); }
-      else { load_robot_config_into = load_robot_config_into.add(c); }
+      else
+      {
+        load_robot_config_into = load_robot_config_into.add(c);
+      }
     }
   }
   auto load_robot_config = [&](const mc_rbdyn::Robot & robot)
@@ -159,7 +162,10 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
       if(!params.overwrite_config_)
       {
         if(load_into.has(r_name)) { load_into = load_into(r_name); }
-        else { load_into = load_into.add(r_name); }
+        else
+        {
+          load_into = load_into.add(r_name);
+        }
       }
       load_into.load(robot_config(r_name));
     }
@@ -172,7 +178,10 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
     if(!params.overwrite_config_)
     {
       if(load_into.has(e)) { load_into = load_into(e); }
-      else { load_into = load_into.add(e); }
+      else
+      {
+        load_into = load_into.add(e);
+      }
     }
     load_into.load(robot_config(e));
   }
@@ -687,7 +696,10 @@ const mc_observers::ObserverPipeline & MCController::observerPipeline(const std:
       std::find_if(observerPipelines_.begin(), observerPipelines_.end(),
                    [&name](const mc_observers::ObserverPipeline & pipeline) { return pipeline.name() == name; });
   if(pipelineIt != observerPipelines_.end()) { return *pipelineIt; }
-  else { mc_rtc::log::error_and_throw("Observer pipeline {} does not exist", name); }
+  else
+  {
+    mc_rtc::log::error_and_throw("Observer pipeline {} does not exist", name);
+  }
 }
 
 mc_observers::ObserverPipeline & MCController::observerPipeline(const std::string & name)

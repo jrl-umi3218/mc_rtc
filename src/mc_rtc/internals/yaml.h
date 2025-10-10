@@ -337,7 +337,10 @@ inline void dumpYAML(const mc_rtc::Configuration & in, YAML::Emitter & out)
       if(dump == "[]") { out << YAML::Flow << YAML::BeginSeq << YAML::EndSeq; }
       else if(dump == "{}") { out << YAML::Flow << YAML::BeginMap << YAML::EndMap; }
       else if(dump[0] == '"' && dump[dump.size() - 1] == '"') { out << dump.substr(1, dump.size() - 2); }
-      else { out << dump; }
+      else
+      {
+        out << dump;
+      }
     }
   }
 }

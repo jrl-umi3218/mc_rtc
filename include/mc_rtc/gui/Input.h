@@ -21,7 +21,10 @@ auto Input(const std::string & name, T & value)
   else if constexpr(std::is_same_v<T, std::string>) { return StringInput(name, value); }
   else if constexpr(std::is_floating_point_v<T>) { return NumberInput(name, value); }
   else if constexpr(mc_rtc::internal::is_integral_v<T>) { return IntegerInput(name, value); }
-  else { return ArrayInput(name, value); }
+  else
+  {
+    return ArrayInput(name, value);
+  }
 }
 
 } // namespace mc_rtc::gui

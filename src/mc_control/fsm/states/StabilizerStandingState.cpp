@@ -81,7 +81,10 @@ void StabilizerStandingState::start(Controller & ctl)
     }
   }
   else if(config_.has("com")) { targetCoM(config_("com")); }
-  else { targetCoM(robot.com()); }
+  else
+  {
+    targetCoM(robot.com());
+  }
 
   // Fixme: the stabilizer needs the observed state immediatly
   if(ctl.datastore().has(anchorFrameFunction_))
@@ -199,7 +202,10 @@ void StabilizerStandingState::targetCoM(const Eigen::Vector3d & com)
   {
     copHeight = stabilizerTask_->contactAnklePose(ContactState::Left).translation().z();
   }
-  else { copHeight = stabilizerTask_->contactAnklePose(ContactState::Right).translation().z(); }
+  else
+  {
+    copHeight = stabilizerTask_->contactAnklePose(ContactState::Right).translation().z();
+  }
 
   comTarget_ = com;
   copTarget_ = Eigen::Vector3d{comTarget_.x(), comTarget_.y(), copHeight};

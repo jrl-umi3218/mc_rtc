@@ -929,7 +929,10 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     else
     {
       if(json2) { config.loadData(sampleConfig2(false, json2)); }
-      else { config.loadYAMLData(sampleConfig2(false, json2)); }
+      else
+      {
+        config.loadYAMLData(sampleConfig2(false, json2));
+      }
     }
     int a = config("int");
     BOOST_CHECK_EQUAL(a, 12);
@@ -997,7 +1000,10 @@ mc_rtc::Configuration makeConfig(bool fromDisk, bool json)
   {
     const auto & data = sampleConfig(fromDisk, json);
     if(json) { return mc_rtc::Configuration::fromData(data); }
-    else { return mc_rtc::Configuration::fromYAMLData(data); }
+    else
+    {
+      return mc_rtc::Configuration::fromYAMLData(data);
+    }
   }
 }
 

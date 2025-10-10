@@ -415,7 +415,10 @@ mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & /*robots*/
                                         impl->r1Surface->bodyName(), impl->r2Surface->bodyName(), impl->ambiguityId,
                                         points, frames, X_b1_b2, nrConeGen, impl->friction, impl->X_b_s);
   }
-  else { mc_rtc::log::error_and_throw("Robot's contact surface is neither planar nor gripper"); }
+  else
+  {
+    mc_rtc::log::error_and_throw("Robot's contact surface is neither planar nor gripper");
+  }
 
   return res;
 }

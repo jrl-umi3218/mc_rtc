@@ -73,7 +73,10 @@ std::vector<std::string> addSurfaceToGUI(mc_rtc::gui::StateBuilder & gui,
           mc_rtc::gui::Arrow(publishName.value_or(name) + "_" + std::to_string(pid++), arrow_cfg, get_start, get_end));
     }
   }
-  else { mc_rtc::log::error("[addSurfaceToGUI] Cannot handle surface type {}", surface.type()); }
+  else
+  {
+    mc_rtc::log::error("[addSurfaceToGUI] Cannot handle surface type {}", surface.type());
+  }
   return out;
 }
 

@@ -41,7 +41,10 @@ RelativeEndEffectorTask::RelativeEndEffectorTask(const mc_rbdyn::RobotFrame & fr
     name_ = fmt::format("body6d_{}_{}_rel_{}_{}", frame.robot().name(), frame.name(), relative_as_robot->robot().name(),
                         relative.name());
   }
-  else { name_ = fmt::format("body6d_{}_{}_rel_{}", frame.robot().name(), frame.name(), relative.name()); }
+  else
+  {
+    name_ = fmt::format("body6d_{}_{}_rel_{}", frame.robot().name(), frame.name(), relative.name());
+  }
 }
 
 void RelativeEndEffectorTask::reset()
@@ -119,7 +122,10 @@ void configure_pos_task(std::shared_ptr<mc_tasks::PositionTask> & t,
       Eigen::Vector3d dimStiffness = config("positionStiffness");
       t->stiffness(dimStiffness);
     }
-    else { t->stiffness(static_cast<double>(config("positionStiffness"))); }
+    else
+    {
+      t->stiffness(static_cast<double>(config("positionStiffness")));
+    }
   }
 }
 
@@ -151,7 +157,10 @@ void configure_ori_task(std::shared_ptr<mc_tasks::OrientationTask> & t,
       Eigen::Vector3d dimStiffness = config("orientationStiffness");
       t->stiffness(dimStiffness);
     }
-    else { t->stiffness(static_cast<double>(config("orientationStiffness"))); }
+    else
+    {
+      t->stiffness(static_cast<double>(config("orientationStiffness")));
+    }
   }
 }
 

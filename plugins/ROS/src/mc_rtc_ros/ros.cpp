@@ -681,7 +681,10 @@ void ROSBridge::remove_extra_robot_publishers(const mc_rbdyn::Robots & robots)
     if(pos != std::string::npos && pos + 1 < topic.size())
     {
       if(!robots.hasRobot(topic.substr(pos + 1))) { it = impl.rpubs.erase(it); }
-      else { ++it; }
+      else
+      {
+        ++it;
+      }
     }
   }
 }
