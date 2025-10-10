@@ -146,10 +146,13 @@ $(document).ready(function(){initNavTree('rpy__utils_8h_source.html',''); initRe
 <div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="namespacemc__rbdyn.html#a12c74da7af6d09dc0dc20742d6de982a">  110</a></span>&#160;Eigen::Vector3d <a class="code" href="namespacemc__rbdyn.html#a12c74da7af6d09dc0dc20742d6de982a">rpyFromRotation</a>(<span class="keyword">const</span> T &amp; value)</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;{</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="keywordflow">if</span> constexpr(std::is_same_v&lt;T, Eigen::Quaterniond&gt;) { <span class="keywordflow">return</span> <a class="code" href="namespacemc__rbdyn.html#a058cd1f189f02e2c4986b6aacffa8195">rpyFromQuat</a>(value); }</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  <span class="keywordflow">else</span> { <span class="keywordflow">return</span> <a class="code" href="namespacemc__rbdyn.html#a0948fb6dc9382e116f65c76261d26ea0">rpyFromMat</a>(value); }</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;} <span class="comment">// namespace mc_rbdyn</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  {</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacemc__rbdyn.html#a0948fb6dc9382e116f65c76261d26ea0">rpyFromMat</a>(value);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;}</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;} <span class="comment">// namespace mc_rbdyn</span></div>
 <div class="ttc" id="anamespacemc__rbdyn_html"><div class="ttname"><a href="namespacemc__rbdyn.html">mc_rbdyn</a></div><div class="ttdef"><b>Definition:</b> generic_gripper.h:15</div></div>
 <div class="ttc" id="anamespacemc__rbdyn_html_a058cd1f189f02e2c4986b6aacffa8195"><div class="ttname"><a href="namespacemc__rbdyn.html#a058cd1f189f02e2c4986b6aacffa8195">mc_rbdyn::rpyFromQuat</a></div><div class="ttdeci">Eigen::Vector3d rpyFromQuat(const Eigen::Quaterniond &amp;quat)</div><div class="ttdef"><b>Definition:</b> rpy_utils.h:103</div></div>
 <div class="ttc" id="anamespacemc__rbdyn_html_a0948fb6dc9382e116f65c76261d26ea0"><div class="ttname"><a href="namespacemc__rbdyn.html#a0948fb6dc9382e116f65c76261d26ea0">mc_rbdyn::rpyFromMat</a></div><div class="ttdeci">Eigen::Vector3d rpyFromMat(const Eigen::Matrix3d &amp;E)</div><div class="ttdef"><b>Definition:</b> rpy_utils.h:83</div></div>

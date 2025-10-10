@@ -314,7 +314,10 @@ Variables</h2></td></tr>
 <div class="line">      {                                                                                                        \</div>
 <div class="line">        return details::FormDataInput&lt;DATAT, ELEMENT&gt;{name, required, value};                                  \</div>
 <div class="line">      }                                                                                                        \</div>
-<div class="line">      else { <span class="keywordflow">return</span> details::FormDataInput&lt;DATAT, ELEMENT&gt;{name, required, DATAT{value}}; }                    \</div>
+<div class="line">      else                                                                                                     \</div>
+<div class="line">      {                                                                                                        \</div>
+<div class="line">        return details::FormDataInput&lt;DATAT, ELEMENT&gt;{name, required, DATAT{value}};                           \</div>
+<div class="line">      }                                                                                                        \</div>
 <div class="line">    }                                                                                                          \</div>
 <div class="line">  }</div>
 </div><!-- fragment -->
@@ -351,27 +354,30 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">inline</span> details::FormInteractiveDataInput&lt;DATAT, ELEMENT&gt; FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required,           \</div>
-<div class="line">                                                                 <span class="keywordtype">bool</span> interactive = <span class="keyword">true</span>)                           \</div>
-<div class="line">  {                                                                                                                 \</div>
-<div class="line">    return {name, required, interactive};                                                                           \</div>
-<div class="line">  }                                                                                                                 \</div>
-<div class="line">                                                                                                                    \</div>
-<div class="line">  template&lt;typename T = DATAT, typename = std::enable_if_t&lt;!std::is_same_v&lt;T, bool&gt;&gt;&gt;                               \</div>
-<div class="line">  inline <span class="keyword">auto</span> FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required, T value, <span class="keywordtype">bool</span> interactive = <span class="keyword">true</span>)                      \</div>
-<div class="line">  {                                                                                                                 \</div>
-<div class="line">    if constexpr(std::is_invocable_v&lt;T&gt;)                                                                            \</div>
-<div class="line">    {                                                                                                               \</div>
-<div class="line">      return details::FormInteractiveDataInput&lt;T, ELEMENT&gt;{name, required, value, interactive};                     \</div>
-<div class="line">    }                                                                                                               \</div>
-<div class="line">    else                                                                                                            \</div>
-<div class="line">    {                                                                                                               \</div>
-<div class="line">      if constexpr(std::is_same_v&lt;std::decay_t&lt;T&gt;, DATAT&gt;)                                                          \</div>
-<div class="line">      {                                                                                                             \</div>
-<div class="line">        return details::FormInteractiveDataInput&lt;DATAT, ELEMENT&gt;{name, required, value, interactive};               \</div>
-<div class="line">      }                                                                                                             \</div>
-<div class="line">      else { <span class="keywordflow">return</span> details::FormInteractiveDataInput&lt;DATAT, ELEMENT&gt;{name, required, DATAT{value}, interactive}; } \</div>
-<div class="line">    }                                                                                                               \</div>
+<b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">inline</span> details::FormInteractiveDataInput&lt;DATAT, ELEMENT&gt; FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required,    \</div>
+<div class="line">                                                                 <span class="keywordtype">bool</span> interactive = <span class="keyword">true</span>)                    \</div>
+<div class="line">  {                                                                                                          \</div>
+<div class="line">    return {name, required, interactive};                                                                    \</div>
+<div class="line">  }                                                                                                          \</div>
+<div class="line">                                                                                                             \</div>
+<div class="line">  template&lt;typename T = DATAT, typename = std::enable_if_t&lt;!std::is_same_v&lt;T, bool&gt;&gt;&gt;                        \</div>
+<div class="line">  inline <span class="keyword">auto</span> FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required, T value, <span class="keywordtype">bool</span> interactive = <span class="keyword">true</span>)               \</div>
+<div class="line">  {                                                                                                          \</div>
+<div class="line">    if constexpr(std::is_invocable_v&lt;T&gt;)                                                                     \</div>
+<div class="line">    {                                                                                                        \</div>
+<div class="line">      return details::FormInteractiveDataInput&lt;T, ELEMENT&gt;{name, required, value, interactive};              \</div>
+<div class="line">    }                                                                                                        \</div>
+<div class="line">    else                                                                                                     \</div>
+<div class="line">    {                                                                                                        \</div>
+<div class="line">      if constexpr(std::is_same_v&lt;std::decay_t&lt;T&gt;, DATAT&gt;)                                                   \</div>
+<div class="line">      {                                                                                                      \</div>
+<div class="line">        return details::FormInteractiveDataInput&lt;DATAT, ELEMENT&gt;{name, required, value, interactive};        \</div>
+<div class="line">      }                                                                                                      \</div>
+<div class="line">      else                                                                                                   \</div>
+<div class="line">      {                                                                                                      \</div>
+<div class="line">        return details::FormInteractiveDataInput&lt;DATAT, ELEMENT&gt;{name, required, DATAT{value}, interactive}; \</div>
+<div class="line">      }                                                                                                      \</div>
+<div class="line">    }                                                                                                        \</div>
 <div class="line">  }</div>
 </div><!-- fragment -->
 </div>

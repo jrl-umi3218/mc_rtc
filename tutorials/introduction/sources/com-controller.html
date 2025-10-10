@@ -460,6 +460,12 @@
 45
 46
 47
+48
+49
+50
+51
+52
+53
 </pre></td><td class="code"><pre><span class="cp">#include</span> <span class="cpf">"MyFirstController.h"</span><span class="cp">
 </span>
 <span class="n">MyFirstController</span><span class="o">::</span><span class="n">MyFirstController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">)</span>
@@ -495,14 +501,20 @@
 <span class="kt">void</span> <span class="n">MyFirstController</span><span class="o">::</span><span class="n">switch_target</span><span class="p">()</span>
 <span class="p">{</span>
   <span class="k">if</span><span class="p">(</span><span class="n">goingLeft</span><span class="p">)</span> <span class="p">{</span> <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">({{</span><span class="s">"NECK_Y"</span><span class="p">,</span> <span class="n">robot</span><span class="p">().</span><span class="n">qu</span><span class="p">()[</span><span class="n">jointIndex</span><span class="p">]}});</span> <span class="p">}</span>
-  <span class="k">else</span> <span class="p">{</span> <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">({{</span><span class="s">"NECK_Y"</span><span class="p">,</span> <span class="n">robot</span><span class="p">().</span><span class="n">ql</span><span class="p">()[</span><span class="n">jointIndex</span><span class="p">]}});</span> <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">({{</span><span class="s">"NECK_Y"</span><span class="p">,</span> <span class="n">robot</span><span class="p">().</span><span class="n">ql</span><span class="p">()[</span><span class="n">jointIndex</span><span class="p">]}});</span>
+  <span class="p">}</span>
   <span class="n">goingLeft</span> <span class="o">=</span> <span class="o">!</span><span class="n">goingLeft</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="n">MyFirstController</span><span class="o">::</span><span class="n">switch_com_target</span><span class="p">()</span>
 <span class="p">{</span>
   <span class="k">if</span><span class="p">(</span><span class="n">comDown</span><span class="p">)</span> <span class="p">{</span> <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comZero</span> <span class="o">-</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">});</span> <span class="p">}</span>
-  <span class="k">else</span> <span class="p">{</span> <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comZero</span><span class="p">);</span> <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comZero</span><span class="p">);</span>
+  <span class="p">}</span>
   <span class="n">comDown</span> <span class="o">=</span> <span class="o">!</span><span class="n">comDown</span><span class="p">;</span>
 <span class="p">}</span>
 

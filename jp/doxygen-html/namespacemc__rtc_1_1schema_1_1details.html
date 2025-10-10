@@ -379,7 +379,10 @@ template&lt;typename T &gt; </div>
 <b>Initial value:</b><div class="fragment"><div class="line">= []()</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">if</span> constexpr(is_std_map_v&lt;T&gt;) { <span class="keywordflow">return</span> is_schema_v&lt;typename T::value_type&gt;; }</div>
-<div class="line">  <span class="keywordflow">else</span> { <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line">  <span class="keywordflow">else</span></div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line">  }</div>
 <div class="line">}()</div>
 </div><!-- fragment --><p>Type-trait to detect an std::map&lt;Key, ValueT&gt; where ValueT is a Schema-based type </p>
 
@@ -433,7 +436,10 @@ template&lt;typename T &gt; </div>
 <b>Initial value:</b><div class="fragment"><div class="line">= []()</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">if</span> constexpr(is_std_vector_v&lt;T&gt;) { <span class="keywordflow">return</span> is_schema_v&lt;typename T::value_type&gt;; }</div>
-<div class="line">  <span class="keywordflow">else</span> { <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line">  <span class="keywordflow">else</span></div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line">  }</div>
 <div class="line">}()</div>
 </div><!-- fragment --><p>Type-trait to detect an std::vector&lt;T&gt; where T is a Schema-based type </p>
 

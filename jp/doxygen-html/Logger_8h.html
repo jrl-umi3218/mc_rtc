@@ -262,7 +262,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">  <span class="keywordflow">do</span> {                                                                           \</div>
+<b>Value:</b><div class="fragment"><div class="line">  <span class="keywordflow">do</span>                                                                             \</div>
+<div class="line">  {                                                                              \</div>
 <div class="line">    using MethodRetT = decltype(this-&gt;METHOD());                                 \</div>
 <div class="line">    logger.addLogEntry(NAME, <span class="keyword">this</span>, [<span class="keyword">this</span>]() -&gt; MethodRetT { <span class="keywordflow">return</span> METHOD(); }); \</div>
 <div class="line">  } <span class="keywordflow">while</span>(0)</div>
@@ -295,7 +296,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">  <span class="keywordflow">do</span> {                                                                        \</div>
+<b>Value:</b><div class="fragment"><div class="line">  <span class="keywordflow">do</span>                                                                          \</div>
+<div class="line">  {                                                                           \</div>
 <div class="line">    using ThisT = <span class="keyword">typename</span> std::remove_pointer&lt;decltype(<span class="keyword">this</span>)&gt;::type;         \</div>
 <div class="line">    logger.addLogEntry&lt;decltype(&amp;<a class="code" href="ForceSensorCalibData_8h.html#a788a32bb637410e2beae3e05e3593c53">ThisT::MEMBER</a>), &amp;<a class="code" href="ForceSensorCalibData_8h.html#a788a32bb637410e2beae3e05e3593c53">ThisT::MEMBER</a>&gt;(NAME, <span class="keyword">this</span>); \</div>
 <div class="line">  } <span class="keywordflow">while</span>(0)</div>
