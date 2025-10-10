@@ -37,7 +37,7 @@ RobotModule::RobotModule(const std::string & name, const rbd::parsers::ParserRes
   init(res);
 }
 
-void RobotModule::init(const rbd::parsers::ParserResult & res)
+void RobotModule::init(const rbd::parsers::ParserResult & res, const YAML::Node & res_yaml)
 {
   mb = res.mb;
   mbc = res.mbc;
@@ -53,6 +53,17 @@ void RobotModule::init(const rbd::parsers::ParserResult & res)
   _collision = res.collision;
   if(_ref_joint_order.size() == 0) { make_default_ref_joint_order(); }
   expand_stance();
+
+  if(res_yaml)
+  {
+    if(res_yaml["name_mot"] && res_yaml["closed_loop"] && res_yaml["type"] && !res_yaml["name_mot"].IsNull()
+       && !res_yaml["closed_loop"].IsNull() && !res_yaml["type"].IsNull())
+    {
+      link_names_ = res_yaml["closed_loop"].as<std::vector<std::vector<std::string>>>();
+      types_ = res_yaml["type"].as<std::vector<std::string>>();
+      motors_ = res_yaml["name_mot"].as<std::vector<std::vector<std::string>>>();
+    }
+  }
 }
 
 RobotModule::Gripper::Gripper(const std::string & name, const std::vector<std::string> & joints, bool reverse_limits)
