@@ -12,6 +12,7 @@ import git
 import os
 import re
 import sys
+import json
 
 
 def new_controller(
@@ -251,29 +252,27 @@ void {controller_class_name}::reset(const mc_control::ControllerResetData & rese
         json.dump(vscode_settings, f, indent=2)
 
     # Neovim config
-    with open(project_dir + "/.nvim.lua", "w") as fd:
+    with open(os.path.join(project_dir, ".nvim.lua"), "w") as fd:
         fd.write(
             """-- Project-specific Neovim configuration
 
 -- Set up YAML schema association for this project
-local lspconfig = require('lspconfig')
-
-lspconfig.yamlls.setup{
-  settings = {
-    yaml = {
-      schemas = {
+vim.lsp.config('yamlls',
+{{
+  settings = {{
+    yaml = {{
+      schemas = {{
         ["https://arntanguy.github.io/mc_rtc/schemas/mc_rtc/mc_rtc.json"] = "**/mc_rtc.yaml",
-        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json"] = "etc/{controller_name}.yaml"
-
-      },
+        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json"] = "etc/{controller_name}.yaml",
+        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMStates.json"] = "src/states/data/*.yaml"
+      }},
       validate = true,
       format = {{ enable = false }},
       hover = true,
       completion = true,
-    }
-  }
-}
--- You can add more project-specific Neovim or LSP settings below
+    }}
+  }}
+}}
 """.format(
                 controller_name=controller_name
             )

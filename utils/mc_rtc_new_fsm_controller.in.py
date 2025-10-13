@@ -8,6 +8,7 @@
 import argparse
 from importlib import util, machinery
 import os
+import json
 
 
 def load_source(modname, filename):
@@ -242,26 +243,22 @@ EXPORT_SINGLE_STATE("{controller_name}_Initial", {controller_name}_Initial)
         fd.write(
             """-- Project-specific Neovim configuration
 
--- Set up YAML schema association for this project
-local lspconfig = require('lspconfig')
-
-lspconfig.yamlls.setup{
-  settings = {
-    yaml = {
-      schemas = {
+vim.lsp.config('yamlls',
+{{
+  settings = {{
+    yaml = {{
+      schemas = {{
         ["https://arntanguy.github.io/mc_rtc/schemas/mc_rtc/mc_rtc.json"] = "**/mc_rtc.yaml",
-        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json"] = "etc/{controller_name}.in.yaml",
-        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMStates.json"] = "src/states/data/*.yaml",
-
-      },
+        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json"] = "etc/{controller_name}.yaml",
+        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMStates.json"] = "src/states/data/*.yaml"
+      }},
       validate = true,
       format = {{ enable = false }},
       hover = true,
       completion = true,
-    }
-  }
-}
--- You can add more project-specific Neovim or LSP settings below
+    }}
+  }}
+}}
 """.format(
                 controller_name=controller_name
             )
