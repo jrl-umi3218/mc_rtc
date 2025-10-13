@@ -18,20 +18,7 @@
           "description": "Position waypoints",
           "items": { "$ref": "../Eigen/Vector3d.json" }
         },
-        "oriWaypoints":
-        {
-          "type": "array",
-          "description": "Orientation waypoints (pairs of time and orientation)",
-          "items":
-          [
-            {
-              "type": "number", "description": "time (<=duration)"
-            },
-            {
-              "$ref": "../Eigen/Matrix3d.json"
-            }
-          ]
-        }
+        "oriWaypoints": { "$ref": "../common/SplineTrajectoryTask_oriWaypoints.json" }
       }
     },
     "target":
@@ -47,17 +34,7 @@
     },
     "oriWaypoints":
     {
-      "type": "array",
-      "description": "Orientation waypoints relative to world (pairs of time and orientation) relative to the world. <i>Ignored if targetFrame is specified</i>",
-      "items":
-      [
-        {
-          "type": "number",  "description": "time (<= duration)"
-        },
-        {
-          "$ref": "../Eigen/Matrix3d.json"
-        }
-      ]
+      "$ref": "../common/SplineTrajectoryTask_oriWaypoints.json"
     }
   }
 }

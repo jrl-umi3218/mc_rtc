@@ -49,5 +49,5 @@
       }
     }
   ],
-  "required": ["type", "body", "relBody"]
+  "required": ["type", "frame", "relativeFrame"]
 }

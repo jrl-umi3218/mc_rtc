@@ -10,6 +10,8 @@
 #include <mc_trajectory/InterpolatedRotation.h>
 
 #include <mc_rtc/deprecated.h>
+#include "mc_rtc/Configuration.h"
+#include "mc_rtc/logging.h"
 
 namespace mc_tasks
 {
@@ -120,15 +122,13 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
           }
         }
 
-        if(c.has("oriWaypoints"))
+        std::vector<std::pair<double, Eigen::Matrix3d>> oriWaypoints =
+            mc_tasks::BSplineTrajectoryTask::loadOriWaypoints(c);
+        for(const auto & wp : oriWaypoints)
         {
-          std::vector<std::pair<double, Eigen::Matrix3d>> oriWaypoints = c("oriWaypoints");
-          for(const auto & wp : oriWaypoints)
-          {
-            const sva::PTransformd offset{wp.second};
-            const sva::PTransformd ori = offset * targetFrame;
-            oriWp.push_back(std::make_pair(wp.first, ori.rotation()));
-          }
+          const sva::PTransformd offset{wp.second};
+          const sva::PTransformd ori = offset * targetFrame;
+          oriWp.push_back(std::make_pair(wp.first, ori.rotation()));
         }
       }
       else
@@ -147,7 +147,7 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
           }
         }
 
-        oriWp = config("oriWaypoints", std::vector<std::pair<double, Eigen::Matrix3d>>{});
+        oriWp = mc_tasks::BSplineTrajectoryTask::loadOriWaypoints(config);
       }
 
       auto t =
