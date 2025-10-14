@@ -251,6 +251,21 @@ void {controller_class_name}::reset(const mc_control::ControllerResetData & rese
     with open(os.path.join(vscode_dir, "settings.json"), "w") as f:
         json.dump(vscode_settings, f, indent=2)
 
+    # VSCode extension recommendations
+    vscode_extensions = {
+        "recommendations": [
+            "redhat.vscode-yaml" "twxs.cmake",
+            "ms-vscode.cmake-tools",
+            "josetr.cmake-language-support-vscode",
+            "ms-vscode.cpptools",
+            "ms-vscode.cpptools-extension-pack",
+            "ms-python.python",
+            "GitHub.vscode-github-actions",
+        ]
+    }
+    with open(os.path.join(vscode_dir, "extensions.json"), "w") as f:
+        json.dump(vscode_extensions, f, indent=2)
+
     # Neovim config
     with open(os.path.join(project_dir, ".nvim.lua"), "w") as fd:
         fd.write(
