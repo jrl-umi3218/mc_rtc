@@ -29,12 +29,6 @@ otherwise only display the top-level
       <span class="text-info"><strong>Note:</strong> Additional properties are allowed (any type).</span>
     </td>
   </tr>
-{%- elsif include.additionalProperties == false -%}
-  <tr>
-    <td colspan="3">
-      <span class="text-warning"><strong>Note:</strong> No additional properties are allowed.</span>
-    </td>
-  </tr>
 {%- elsif include.additionalProperties -%}
   {% if include.additionalProperties._expand %}
     <!-- Render wildcard property for additionalProperties schema -->

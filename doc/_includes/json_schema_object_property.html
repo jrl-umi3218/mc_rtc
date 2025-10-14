@@ -19,7 +19,7 @@
   {% if include.data contains "oneOf" %}
     {% assign oneOf = include.data.oneOf %}
     {% for data in oneOf %}
-      {% capture id %}{{include.id}}{{forloop.index0}}{% endcapture %}
+      {% capture id %}{{include.id}}_oneOf_{{forloop.index0}}{% endcapture %}
       {% if data contains "properties" %}
         {% for propData in data.properties %}
           <!-- XXX: we should use a collapsible element instead -->
@@ -46,6 +46,10 @@
             {% endif %}
           </tr>
         {% endfor %}
+        {% if INCLUDE_AFTER != "" %}
+          {{ INCLUDE_AFTER }}
+        {% endif %}
+        {% capture INCLUDE_AFTER %}{% endcapture %}
       {% else if data contains "description" %}
         <td>
           {% include json_schema_item.html data=data id=id %}
