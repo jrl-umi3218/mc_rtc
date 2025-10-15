@@ -80,23 +80,18 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> SplineTrajectoryT
     double dt,
     const mc_rtc::Configuration & config) const
 {
-
-  if(config.has("timeElapsed"))
+  if(config("timeElapsed", false))
   {
-    bool useDuration = config("timeElapsed");
-    if(useDuration)
+    return [](const mc_tasks::MetaTask & t, std::string & out)
     {
-      return [](const mc_tasks::MetaTask & t, std::string & out)
+      const auto & self = static_cast<const SplineTrajectoryBase &>(t);
+      if(self.timeElapsed())
       {
-        const auto & self = static_cast<const SplineTrajectoryBase &>(t);
-        if(self.timeElapsed())
-        {
-          out += "duration";
-          return true;
-        }
-        return false;
-      };
-    }
+        out += "duration";
+        return true;
+      }
+      return false;
+    };
   }
   if(config.has("wrench"))
   {

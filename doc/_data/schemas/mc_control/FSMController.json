@@ -107,7 +107,7 @@
     }
   },
   "required": [
-    "constraints", "collisions", "contacts", "states", "transitions"
+    "constraints", "contacts", "states", "transitions"
   ],
   "definitions": {
     "Robot": {
