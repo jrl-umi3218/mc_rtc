@@ -3,7 +3,7 @@
   "type": "object",
   "properties":
   {
-    "type": { "enum": ["collision"] },
+    "type": { "const": "collision" },
     "r1": { "type": "string", "default": "MainRobot", "description": "Name of the first robot involved in the collision" },
     "r2": { "type": "string", "default": "MainRobot", "description": "Name of the second robot involved in the collision" },
     "automaticMonitor":
@@ -30,7 +30,7 @@
       "description": "List of collisions in the constraint",
       "items":
       {
-        "$ref": "/../../mc_rbdyn/Collision.json"
+        "$ref": "../mc_rbdyn/Collision.json"
       }
     }
   },

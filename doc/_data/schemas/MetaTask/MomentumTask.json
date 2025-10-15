@@ -4,24 +4,24 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/MetaTask_common.json"
+      "$ref": "../common/MetaTask_common.json"
     },
     {
       "properties":
       {
-        "type": { "enum": ["momentum"] },
+        "type": { "const": "momentum" },
         "weight": { "default": 500 },
         "stiffness": { "default": 2 },
-        "momentum": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" }
+        "momentum": { "$ref": "../SpaceVecAlg/ForceVecd.json" }
       }
     },
     {
-      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+      "$ref": "../common/TrajectoryTaskGeneric.json"
     },
     {
       "properties":
       {
-        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" }
+        "dimWeight": { "$ref": "../Eigen/Vector6d.json" }
       }
     }
   ],

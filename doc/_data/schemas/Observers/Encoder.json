@@ -4,6 +4,7 @@
   "description": "The Encoder Observer updates the state of a robot kinematic properties (body positions and velocities) using joint sensor values. It can use various sources as sensor input: encoder position, encoder velocity, values from another robot, and can also estimate joint velocities from encoder position by finite differences.",
   "properties":
   {
+    "type": { "const": "Encoder" },
     "robot": {"type": "string", "default": "MainRobot", "description": "Name of the robot to observe" },
     "updateRobot": { "type": "string", "default": "&lt;robot&gt;", "description": "Name of the robot to update" },
     "position": { "enum": ["encoderValues", "control", "none"], "default": "encoderValues", "description": "Sensor/method used to observe joint position" },

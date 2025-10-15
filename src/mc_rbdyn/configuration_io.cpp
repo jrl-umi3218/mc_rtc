@@ -1217,8 +1217,8 @@ mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Con
   const auto r1Index = robotIndexFromConfig(config, robots, "contact", false, "r1Index", "r1");
   const auto r2Index = robotIndexFromConfig(config, robots, "contact", false, "r2Index", "r2", robots.robot(1).name());
   sva::PTransformd X_r2s_r1s = sva::PTransformd::Identity();
-  bool isFixed = config("isFixed");
-  if(isFixed) { X_r2s_r1s = config("X_r2s_r1s"); }
+  bool isFixed = config("isFixed", true);
+  if(isFixed) { X_r2s_r1s = config("X_r2s_r1s", sva::PTransformd::Identity()); }
   std::string r1Surface = config("r1Surface");
   sva::PTransformd X_b_s = robots.robot(r1Index).surface(r1Surface).X_b_s();
   config("X_b_s", X_b_s);

@@ -4,7 +4,7 @@
   "type": "object",
   "properties":
   {
-    "size": { "$ref": "/../../Eigen/Vector3d.json", "description": "The size of the box edges (x, y, z) [m]" }
+    "size": { "$ref": "../Eigen/Vector3d.json", "description": "The size of the box edges (x, y, z) [m]" }
   },
   "required": ["size"],
   "additionalProperties": false

@@ -5,35 +5,35 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/MetaTask_common.json"
+      "$ref": "../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_frame.json"
+      "$ref": "../common/MetaTask_frame.json"
     },
     {
       "properties":
       {
-        "type": { "enum": ["cop"] },
-        "admittance": { "$ref": "/../../SpaceVecAlg/ForceVecd.json", "description": "Admittance gains. Non-zero gains will be used to compute which surface velocity to apply in order to move the CoP towards its target" },
-        "cop": { "$ref": "/../../Eigen/Vector2d.json", "description": "Desired CoP in controlled surface frame" },
-        "force": { "$ref": "/../../Eigen/Vector3d.json", "description": "Desired force in controlled surface frame"},
+        "type": { "const": "cop" },
+        "admittance": { "$ref": "../SpaceVecAlg/ForceVecd.json", "description": "Admittance gains. Non-zero gains will be used to compute which surface velocity to apply in order to move the CoP towards its target" },
+        "cop": { "$ref": "../Eigen/Vector2d.json", "description": "Desired CoP in controlled surface frame" },
+        "force": { "$ref": "../Eigen/Vector3d.json", "description": "Desired force in controlled surface frame"},
         "targetPose":
         {
           "description": "Ignored if targetSurface or targetFrame is specified. Provides a reference world pose for the controlled surface",
-          "$ref": "/../../SpaceVecAlg/PTransformd.json"
+          "$ref": "../SpaceVecAlg/PTransformd.json"
         },
         "targetFrame":
         {
-          "$ref" : "/../../common/targetFrame.json"
+          "$ref" : "../common/targetFrame.json"
         },
         "targetSurface":
         {
-          "$ref" : "/../../common/targetSurface.json"
+          "$ref" : "../common/targetSurface.json"
         }
       }
     },
     {
-      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+      "$ref": "../common/TrajectoryTaskGeneric.json"
     },
     {
       "properties":
@@ -41,10 +41,10 @@
         "weight": { "default": 1000 },
         "stiffness": { "default": 5, "description": "Task's stiffness (affects position control)"},
         "damping": { "description": "Task's damping (affects velocity/force control)." },
-        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" },
-        "completion": { "$ref": "/../../common/completion_cop.json" }
+        "dimWeight": { "$ref": "../Eigen/Vector6d.json" },
+        "completion": { "$ref": "../common/completion_cop.json" }
       }
     }
   ],
-  "required": ["type", "surface"]
+  "required": ["type", "frame"]
 }

@@ -4,6 +4,7 @@
   "description": "Kinematic Intertial observer: floating base observation from IMU and kinematics",
   "properties":
   {
+    "type": { "const": "KinematicInertial" },
     "robot": {"type": "string", "default": "Main Robot", "description": "Name of the robot to observe (control)" },
     "updateRobot": {"type": "string", "default": "Main Real Robot", "description": "Name of the robot to observe (real)" },
     "imuBodySensor": { "type": "string", "default": "Main BodySensor", "description": "Name of the body sensor containing IMU measurements (requires orientation)" },
@@ -15,7 +16,7 @@
       "description": "Parameters for the kinematic anchor frame",
       "properties":
       {
-        "datastoreFunction": { "type": "string", "default": "KinematicAnchorFrame::&lt;robot&gt;", "description": "Name of the datastore entry for the anchorFrame function. This datastore entry must exist, and it must return a continuous kinematic anchor frame (typically a point in-between the contacts). Please refer to the <a href=\"{{site.baseurl}}/tutorials/recipes/observers.html\">observers tutorial</a> for more information." },
+        "datastoreFunction": { "type": "string", "default": "KinematicAnchorFrame::robot", "description": "Name of the datastore entry for the anchorFrame function. This datastore entry must exist, and it must return a continuous kinematic anchor frame (typically a point in-between the contacts). Please refer to the <a href=\"{{site.baseurl}}/tutorials/recipes/observers.html\">observers tutorial</a> for more information." },
         "maxAnchorFrameDiscontinuity": { "type": "number", "default": 0.01, "description": "Norm of translation error between the current and new anchor frame computed by \"datastoreFunction\". This is used to detect anchor frame discontinuities, and consequently prevent discontinuities in velocity estimation." }
       }
     },
@@ -27,7 +28,7 @@
       {
         "pose": { "type": "boolean", "default": false, "description": "When true, display the estimated pose" },
         "velocity": { "type": "boolean", "default": true, "description": "When true, display the estimated velocity as an arrow" },
-        "velocityArrow": { "$ref": "/../../GUI/ArrowConfig.json" },
+        "velocityArrow": { "$ref": "../GUI/ArrowConfig.json" },
         "anchorFrame": { "type": "boolean", "default": false, "description": "When true, display the anchor frame (control)" },
         "anchorFrameReal": { "type": "boolean", "default": false, "description": "When true, display the anchor frame (real)" },
         "advanced": { "type": "boolean", "default": false, "description": "Displays an additional GUI tab containing advanced controls. These are NOT intended to be used outside of a debugging context, use with caution." }

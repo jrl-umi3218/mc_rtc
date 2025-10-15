@@ -3,8 +3,8 @@
   "type": "object",
   "properties":
   {
-    "type": { "$ref": "/../../RBDyn/Joint.Type.json" },
-    "axis": { "$ref": "/../../Eigen/Vector3d.json" },
+    "type": { "$ref": "../RBDyn/Joint.Type.json" },
+    "axis": { "$ref": "../Eigen/Vector3d.json" },
     "forward": { "type": "boolean" },
     "name": { "type": "string" },
     "isMimic": { "type": "boolean" },

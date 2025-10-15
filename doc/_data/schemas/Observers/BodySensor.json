@@ -4,6 +4,7 @@
   "description": "BodySensor: updates floating base state from a body sensor. This is typically used to set the floating base state from a simulator ground truth",
   "properties":
   {
+    "type": { "const": "BodySensor" },
     "robot": {"type": "string", "default": "MainRobot", "description": "Name of the robot to observe" },
     "updateRobot": { "type": "string", "default": "&lt;robot&gt;", "description": "Name of the robot to update" },
     "updatePose": { "type": "boolean", "default": true, "description": "When true updates the real robot base pose" },
@@ -30,8 +31,8 @@
         "pose": {"type": "boolean", "default": false, "description": "When true, diplays the estimated floating base pose (frame)" },
         "velocity": {"type": "boolean", "default": true, "description": "When true, log the estimated floating base velocity (arrow)" },
         "acceleration": {"type": "boolean", "default": false, "description": "When true, log the estimated floating base acceleration (arrow)" },
-        "velocityArrow": { "$ref": "/../../GUI/ArrowConfig.json" },
-        "accelerationArrow": { "$ref": "/../../GUI/ArrowConfig.json" },
+        "velocityArrow": { "$ref": "../GUI/ArrowConfig.json" },
+        "accelerationArrow": { "$ref": "../GUI/ArrowConfig.json" },
         "advanced": { "type": "boolean", "default": false, "description": "Displays an additional GUI tab containing advanced controls. These are NOT intended to be used outside of a debugging context, use with caution." }
       }
     }

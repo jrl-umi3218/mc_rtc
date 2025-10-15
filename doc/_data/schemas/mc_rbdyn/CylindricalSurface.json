@@ -2,7 +2,7 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/Surface.json"
+      "$ref": "../common/Surface.json"
     },
     {
       "title": "mc_rbdyn::CylindricalSurface",

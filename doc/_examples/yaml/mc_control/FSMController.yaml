@@ -1,0 +1,243 @@
+# If true, the FSM transitions are managed by an external tool
+Managed: false
+# If true and the FSM is self-managed, transitions should be triggered
+StepByStep: false
+# Change idle behaviour, if true the state is kept until transition,
+# otherwise the FSM holds the last state until transition
+IdleKeepState: false
+# Where to look for state libraries
+StatesLibraries:
+  - "@MC_FSM_STATES_RUNTIME_DESTINATION_PREFIX@"
+# Where to look for state files
+StatesFiles:
+  - "@MC_FSM_STATES_DATA_DESTINATION_PREFIX@"
+# If true, state factory will be more verbose
+VerboseStateFactory: false
+# Additional robots to load
+robots:
+  ground:
+    module: env/ground
+# General constraints, always on
+constraints:
+  - type: contact
+  - type: dynamics
+    damper: [0.1, 0.01, 0.5]
+  - type: compoundJoint
+# Collision constraint
+collisions:
+  - type: collision
+    useMinimal: true
+# Initial set of contacts
+contacts:
+  - r1: jvrc1
+    r2: ground
+    r1Surface: LeftFoot
+    r2Surface: AllGround
+  - r1: jvrc1
+    r2: ground
+    r1Surface: RightFoot
+    r2Surface: AllGround
+# Some options for a specific robot
+jvrc1:
+  posture:
+    stiffness: 1.0
+    weight: 10.0
+  ff:
+    stiffness: 2.0
+    weight: 100.0
+# Test some states
+states:
+  CoM:
+    base: MetaTasks
+    tasks:
+      CoM:
+        type: com
+        stiffness: 10.0
+        weight: 1000
+        completion:
+          OR:
+            - eval: 1e-3
+            - AND:
+                - timeout: 3.0
+                - speed: 1e-2
+  MoveFoot:
+    base: MetaTasks
+    tasks:
+      MoveFoot:
+        type: surfaceTransform
+        stiffness: 5.0
+        weight: 500
+        completion:
+          OR:
+            - eval: 1e-3
+            - AND:
+                - timeout: 5.0
+                - speed: 1e-2
+  GoHalfSitting:
+    base: Parallel
+    states: [HalfSitting, MiddleCoM]
+    configs:
+      HalfSitting:
+        stiffness: 10
+        completion: 0.1
+  PauseHalfSitting:
+    base: GoHalfSitting
+    states: [HalfSitting, MiddleCoM, Pause]
+    configs:
+      Pause:
+        duration: 3
+        completion: 0.5
+  LeftCoM:
+    base: CoM
+    tasks:
+      CoM:
+        above: [LeftFoot]
+  RightCoM:
+    base: LeftCoM
+    tasks:
+      CoM:
+        above: [RightFoot]
+  MiddleCoM:
+    base: CoM
+    tasks:
+      CoM:
+        above: [LeftFoot, RightFoot]
+  AddLeftFoot:
+    base: AddContact
+    useCoM: false
+    contact:
+      r2: jvrc1
+      r1: ground
+      r1Surface: AllGround
+      r2Surface: LeftFoot
+      isFixed: false
+  AddLeftFootCoM:
+    base: Parallel
+    states: [AddLeftFoot, RightCoM]
+  AddRightFoot:
+    base: AddContact
+    useCoM: false
+    contact:
+      r1Surface: RightFoot
+      r2Surface: AllGround
+      isFixed: false
+  AddRightFootCoM:
+    base: Parallel
+    states: [AddRightFoot, LeftCoM]
+  MoveLeftFoot:
+    base: MoveFoot
+    tasks:
+      MoveFoot:
+        surface: LeftFoot
+        moveWorld:
+          translation: [0.0, 0.0, 0.1]
+    RemoveContacts:
+      - r1: jvrc1
+        r2: ground
+        r1Surface: LeftFoot
+        r2Surface: AllGround
+        isFixed: false
+  MoveLeftFootCoM:
+    base: Parallel
+    states: [MoveLeftFoot, RightCoM, HalfSitting]
+    outputs: [MoveLeftFoot, RightCoM]
+  MoveRightFoot:
+    base: MoveFoot
+    tasks:
+      MoveFoot:
+        surface: RightFoot
+        moveWorld:
+          translation: [0.0, 0.0, 0.1]
+    # When this list contains tasks names, these
+    # tasks' completion criteria will be used to generate an output string for the state
+    outputs: [MoveFoot]
+    RemoveContacts:
+      - r1: ground
+        r2: jvrc1
+        r1Surface: AllGround
+        r2Surface: RightFoot
+  MoveRightFootCoM:
+    base: Parallel
+    states: [LeftCoM, HalfSitting, MoveRightFoot]
+  HeadUp:
+    base: MetaTasks
+    tasks:
+      HeadPosture:
+        type: posture
+        stiffness: 5.0
+        activeJoints: [NECK_Y, NECK_P]
+        weight: 50
+        target:
+          NECK_P: [-0.5]
+        completion:
+          OR:
+            - eval: 1e-3
+            - AND:
+                - timeout: 1.0
+                - speed: 5e-3
+  HeadDown:
+    base: HeadUp
+    tasks:
+      HeadPosture:
+        target:
+          NECK_P: [0.5]
+  HeadZero:
+    base: HeadUp
+    tasks:
+      HeadPosture:
+        target:
+          NECK_P: [0.0]
+  MessageMoveRightFootEval:
+    base: Message
+    log: success
+    message: Move Right Foot state completed with eval completion criteria
+  MessageMoveRightFootTimeout:
+    base: Message
+    log: success
+    message: Move Right Foot state completed with timeout completion criteria
+  AddLeftFootCoMWithWarning:
+    base: Parallel
+    states: [Message, AddLeftFootCoM]
+    configs:
+      Message:
+        base: Message
+        gui: []
+        log: warning
+        message: The previous state has completed, but no valid transition pattern matched for state MoveLeftFootCoM, defaulting to state AddLeftFootCoM (this warning was triggered on purpose to demonstrate the defaulting mechanism)
+  WalkTwoSteps:
+    base: Meta
+    Managed: false
+    StepByStep: false
+    transitions:
+      - [PauseHalfSitting, OK, LeftCoM]
+      - [LeftCoM, OK, MoveRightFootCoM]
+      # Demonstrate branching ability based on tasks completion criteria
+      - [MoveRightFootCoM, "MoveFoot=eval", MessageMoveRightFootEval]
+      - [MoveRightFootCoM, "MoveFoot=timeout AND speed", MessageMoveRightFootTimeout]
+      - [MessageMoveRightFootEval, OK, AddRightFootCoM]
+      - [MessageMoveRightFootTimeout, OK, AddRightFootCoM]
+      - [AddRightFootCoM, OK, RightCoM]
+      - [RightCoM, OK, MoveLeftFootCoM]
+      # When using Parallel states, branching based on the output
+      # of multiple states is also possible
+      - [MoveLeftFootCoM, "LeftCoM: (OK) | MoveRightFoot: (MoveFoot=timeout AND speed)", AddLeftFootCoM]
+      - [MoveLeftFootCoM, "LeftCoM: (OK) | MoveRightFoot: (MoveFoot=eval)", AddLeftFootCoM]
+      # You can default to a desired state if no transition pattern has been matched
+      - [MoveLeftFootCoM, DEFAULT, AddLeftFootCoMWithWarning]
+      - [AddLeftFootCoM, OK, PauseHalfSitting]
+      - [AddLeftFootCoMWithWarning, OK, PauseHalfSitting]
+  HeadFSM:
+    base: Meta
+    Managed: false
+    StepByStep: false
+    transitions:
+      - [HeadDown, OK, HeadUp]
+      - [HeadUp, OK, HeadDown]
+  FullFSM:
+    base: Parallel
+    states: [HeadFSM, WalkTwoSteps]
+# Transitions map
+transitions:
+  - [FullFSM, OK, FullFSM, Strict]
+# Initial state
+init: FullFSM

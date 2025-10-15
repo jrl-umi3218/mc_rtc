@@ -4,7 +4,7 @@
   "properties":
   {
     "name": { "type": "string" },
-    "inertia": { "$ref": "/../../SpaceVecAlg/RBInertiad.json" }
+    "inertia": { "$ref": "../SpaceVecAlg/RBInertiad.json" }
   },
   "required": ["name", "inertia"],
   "additionalProperties": false

@@ -16,6 +16,38 @@ namespace mc_tasks
 {
 
 template<typename Derived>
+std::vector<std::pair<double, Eigen::Matrix3d>> SplineTrajectoryTask<Derived>::loadOriWaypoints(
+    const mc_rtc::Configuration & c)
+{
+  std::vector<std::pair<double, Eigen::Matrix3d>> oriWaypoints;
+  if(auto oriWaypointsC = c.find("oriWaypoints"))
+  {
+    try
+    {
+      oriWaypoints = *oriWaypointsC;
+    }
+    catch(mc_rtc::Configuration::Exception & e)
+    {
+      e.silence();
+      for(auto elem : *oriWaypointsC)
+      {
+        if(elem.has("time") && elem.has("orientation"))
+        {
+          Eigen::Matrix3d ori = elem("orientation");
+          oriWaypoints.emplace_back(elem("time"), ori);
+        }
+        else
+        {
+          mc_rtc::log::error_and_throw("[bspline_trajectory] oriWaypoints should be a vector of pairs of (time, "
+                                       "orientation) or a vector of objects with a time and orientation property");
+        }
+      }
+    }
+  }
+  return oriWaypoints;
+};
+
+template<typename Derived>
 SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::RobotFrame & frame,
                                                     double duration,
                                                     double stiffness,

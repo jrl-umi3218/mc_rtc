@@ -4,29 +4,29 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/MetaTask_common.json"
+      "$ref": "../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_frame.json"
+      "$ref": "../common/MetaTask_frame.json"
     },
     {
       "properties":
       {
-        "type": { "enum": ["lookAtTF"] },
-        "frameVector": { "$ref": "/../../Eigen/Vector3d.json" },
+        "type": { "const": "lookAtTF" },
+        "frameVector": { "$ref": "../Eigen/Vector3d.json" },
         "sourceFrame": { "type": "string" },
         "targetFrame": { "type": "string" }
       }
     },
     {
-      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+      "$ref": "../common/TrajectoryTaskGeneric.json"
     },
     {
       "properties":
       {
         "weight": { "default": 200 },
         "stiffness": { "default": 0.5 },
-        "dimWeight": { "$ref": "/../../Eigen/Vector3d.json" }
+        "dimWeight": { "$ref": "../Eigen/Vector3d.json" }
       }
     }
   ],

@@ -1,0 +1,13 @@
+{
+  "title": "Orientation Waypoints",
+  "type": "array",
+  "description": "Orientation waypoints relative to world (pairs of time and orientation) relative to the world. <i>Ignored if targetFrame is specified</i>",
+  "items": {
+    "type": "object",
+    "properties": {
+      "time": { "type": "number", "description": "time (<= duration)" },
+      "orientation": { "$ref": "../Eigen/Matrix3d.json" }
+    },
+    "required": ["time", "orientation"]
+  }
+}

@@ -13,34 +13,42 @@
   {% if include.pattern %}
     {% capture PROP_NAME %}<i>{{PROP_NAME}}</i>&nbsp;&nbsp;<small class="text-secondary">(pattern)</small>{% endcapture %}
   {% endif %}
-  <td>{{PROP_NAME}}</td>
+  {% if include.name != "*" %}
+    <td>{{PROP_NAME}}</td>
+  {% endif %}
   {% if include.data contains "oneOf" %}
     {% assign oneOf = include.data.oneOf %}
     {% for data in oneOf %}
-      {% capture id %}{{include.id}}{{forloop.index0}}{% endcapture %}
+      {% capture id %}{{include.id}}_oneOf_{{forloop.index0}}{% endcapture %}
       {% if data contains "properties" %}
         {% for propData in data.properties %}
-          <!-- PROPERTY data <pre>{{ propData | jsonify }}</pre> -->
-          {% assign propDataItem = propData[1] %}
-          {% assign propName = propData[0] %}
-          {% if data contains "description" or propDataItem contains "description" %}
-            <td>
-              <span class="text-secondary">{{propName}}:&nbsp;</span>
-              {% include json_schema_item.html data=propDataItem id=id %}
-            </td>
-            <td>
-              {% if data contains "description" %}
-                <span class="text-secondary"><small>{{ data.description | liquefy}}</small></span>
-              {% else if propDataItem contains "description" %}
-                <span class="text-secondary"><small>{{ propDataItem.description | liquefy}}</small></span>
-              {% endif %}
-            </td>
-          {% else %}
-            <td colspan="2">
-              <span class="text-secondary">{{propName}}:&nbsp;</span>
-              {% include json_schema_item.html data=propDataItem id=id %}
-            </td>
+          <!-- XXX: we should use a collapsible element instead -->
+          <tr class="sub-object-property">
+            {% assign propDataItem = propData[1] %}
+            {% assign propName = propData[0] %}
+            {% if data contains "description" or propDataItem contains "description" %}
+              <td colspan="2">
+                <span class="text-secondary">{{propName}}:&nbsp;</span>
+                {% include json_schema_item.html propName=propName data=propDataItem id=id %}
+              </td>
+              <td>
+                {% if propDataItem contains "description" %}
+                  <span class="text-secondary"><small>{{ propDataItem.description | liquefy}}</small></span>
+                {% else if data contains "description" %}
+                  <span class="text-secondary"><small></small></span>
+                {% endif %}
+              </td>
+            {% else %}
+              <td colspan="2">
+                <span class="text-secondary">{{propName}}:&nbsp;</span>
+                {% include json_schema_item.html data=propDataItem id=id %}
+              </td>
+            {% endif %}
+          </tr>
+          {% if INCLUDE_AFTER != "" %}
+            {{ INCLUDE_AFTER }}
           {% endif %}
+          {% capture INCLUDE_AFTER %}{% endcapture %}
         {% endfor %}
       {% else if data contains "description" %}
         <td>

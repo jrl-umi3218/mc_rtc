@@ -12,6 +12,8 @@
 #include <mc_rtc/gui/Arrow.h>
 
 #include <mc_rtc/deprecated.h>
+#include "mc_rtc/Configuration.h"
+#include "mc_rtc/logging.h"
 
 namespace mc_tasks
 {
@@ -117,8 +119,49 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "exact_cubic_trajectory");
       Eigen::Vector3d init_vel, end_vel, init_acc, end_acc;
 
+      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
+      {
+        if(config.has("surface"))
+        {
+          mc_rtc::log::deprecated("ExactCubicTrajectoryTask", "surface", "frame");
+          return solver.robots().robot(robotIndex).frame(config("surface"));
+        }
+        return solver.robots().robot(robotIndex).frame(config("frame"));
+      }();
+
       bool has_targetSurface = config.has("targetSurface");
       bool has_targetFrame = config.has("targetFrame");
+
+      auto loadControlPoints = [](const mc_rtc::Configuration & c)
+      {
+        auto controlPoints = std::vector<std::pair<double, Eigen::Vector3d>>{};
+        if(auto controlPointsC = c.find("controlPoints"))
+        {
+          try
+          {
+            controlPoints = *controlPointsC;
+          }
+          catch(mc_rtc::Configuration::Exception & e)
+          {
+            e.silence();
+            for(const auto & elem : *controlPointsC)
+            {
+              if(elem.has("time") && elem.has("position"))
+              {
+                Eigen::Vector3d pos = elem("position");
+                controlPoints.emplace_back(elem("time"), pos);
+              }
+              else
+              {
+                mc_rtc::log::error_and_throw(
+                    "[exact_cubic_trajectory] controlPoints should be a vector of pairs of (time, position) or a "
+                    "vector of objects with a time and position property");
+              }
+            }
+          }
+        }
+        return controlPoints;
+      };
 
       if(has_targetSurface || has_targetFrame)
       { // Target defined from a target surface, with an offset defined
@@ -137,29 +180,23 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
         sva::PTransformd offset(rot, trans);
         finalTarget_ = offset * targetSurface;
 
-        if(c.has("controlPoints"))
+        // Control points offsets defined wrt to the target surface frame
+        auto controlPoints = loadControlPoints(c);
+        waypoints.resize(controlPoints.size());
+        for(unsigned int i = 0; i < controlPoints.size(); ++i)
         {
-          // Control points offsets defined wrt to the target surface frame
-          std::vector<std::pair<double, Eigen::Vector3d>> controlPoints = c("controlPoints");
-          waypoints.resize(controlPoints.size());
-          for(unsigned int i = 0; i < controlPoints.size(); ++i)
-          {
-            const Eigen::Vector3d wp = controlPoints[i].second;
-            sva::PTransformd X_offset(wp);
-            waypoints[i].first = controlPoints[i].first;
-            waypoints[i].second = (X_offset * targetSurface).translation();
-          }
+          const Eigen::Vector3d wp = controlPoints[i].second;
+          sva::PTransformd X_offset(wp);
+          waypoints[i].first = controlPoints[i].first;
+          waypoints[i].second = (X_offset * targetSurface).translation();
         }
 
-        if(c.has("oriWaypoints"))
+        auto oriWaypoints = mc_tasks::ExactCubicTrajectoryTask::loadOriWaypoints(c);
+        for(const auto & wp : oriWaypoints)
         {
-          std::vector<std::pair<double, Eigen::Matrix3d>> oriWaypoints = c("oriWaypoints");
-          for(const auto & wp : oriWaypoints)
-          {
-            const sva::PTransformd offset{wp.second};
-            const sva::PTransformd ori = offset * targetSurface;
-            oriWp.push_back(std::make_pair(wp.first, ori.rotation()));
-          }
+          const sva::PTransformd offset{wp.second};
+          const sva::PTransformd ori = offset * targetSurface;
+          oriWp.push_back(std::make_pair(wp.first, ori.rotation()));
         }
         init_vel = targetSurface.rotation().inverse() * c("init_vel", Eigen::Vector3d::Zero().eval());
         init_acc = targetSurface.rotation().inverse() * c("init_acc", Eigen::Vector3d::Zero().eval());
@@ -168,12 +205,12 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       }
       else
       { // Absolute target pose
-        finalTarget_ = config("target");
+        finalTarget_ = config("target", frame.position());
 
         if(config.has("controlPoints"))
         {
           // Control points defined in world coordinates
-          std::vector<std::pair<double, Eigen::Vector3d>> controlPoints = config("controlPoints");
+          auto controlPoints = loadControlPoints(config);
           waypoints.resize(controlPoints.size());
           for(unsigned int i = 0; i < controlPoints.size(); ++i) { waypoints[i] = controlPoints[i]; }
         }
@@ -184,15 +221,6 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
         oriWp = config("oriWaypoints", std::vector<std::pair<double, Eigen::Matrix3d>>{});
       }
 
-      const auto & frame = [&]() -> const mc_rbdyn::RobotFrame &
-      {
-        if(config.has("surface"))
-        {
-          mc_rtc::log::deprecated("ExactCubicTrajectoryTask", "surface", "frame");
-          return solver.robots().robot(robotIndex).frame(config("surface"));
-        }
-        return solver.robots().robot(robotIndex).frame(config("frame"));
-      }();
       auto t = std::make_shared<mc_tasks::ExactCubicTrajectoryTask>(
           frame, config("duration", 10.0), config("stiffness", 100.0), config("weight", 500.0), finalTarget_, waypoints,
           init_vel, init_acc, end_vel, end_acc, oriWp);

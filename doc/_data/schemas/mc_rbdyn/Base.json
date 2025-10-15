@@ -4,9 +4,9 @@
   "properties":
   {
     "name": { "type": "string" },
-    "X_0_s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
-    "X_b0_s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
-    "type": { "$ref": "/../../RBDyn/Joint.Type.json" }
+    "X_0_s": { "$ref": "../SpaceVecAlg/PTransformd.json" },
+    "X_b0_s": { "$ref": "../SpaceVecAlg/PTransformd.json" },
+    "type": { "$ref": "../RBDyn/Joint.Type.json" }
   },
   "required": ["name", "X_0_s", "X_b0_s", "type"],
   "additionalProperties": false

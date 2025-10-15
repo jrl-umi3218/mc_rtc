@@ -22,6 +22,6 @@ targetFrame:
     [-0.25, -0.35, 0.1],
     [-0.08, -0.13, 0.1]
   ]
-  oriWaypoints: [
-    [13.0, [0.0, -1.57, 0.0]]
-  ]
+  oriWaypoints:
+  - time: 13
+    orientation: [0.0, -1.57, 0.0]

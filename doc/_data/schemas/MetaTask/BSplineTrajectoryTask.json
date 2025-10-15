@@ -7,23 +7,23 @@
     {
       "properties":
       {
-        "type": { "enum": ["bspline_trajectory"] }
+        "type": { "const": "bspline_trajectory" }
       }
     },
     {
-      "$ref": "/../../common/MetaTask_common.json"
+      "$ref": "../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_frame.json"
+      "$ref": "../common/MetaTask_frame.json"
     },
     {
-      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+      "$ref": "../common/TrajectoryTaskGeneric.json"
     },
     {
-      "$ref": "/../../common/SplineTrajectoryTask_common.json"
+      "$ref": "../common/SplineTrajectoryTask_common.json"
     },
     {
-      "$ref": "/../../common/SplineTrajectoryTask_targets.json"
+      "$ref": "../common/SplineTrajectoryTask_targets.json"
     }
   ],
   "required": ["type", "frame"]

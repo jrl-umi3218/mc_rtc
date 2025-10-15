@@ -7,7 +7,7 @@
       "description": "Configuration of {% doxygen mc_tasks::lipm_stabilizer::StabilizerTask %} stabilization parameters (DCM tracking, admittance, tasks weights, etc). A default configuration is provided by each robot's {% doxygen mc_rbdyn::RobotModule %}."
     },
     {
-      "$ref": "/../../common/StabilizerConfiguration.json"
+      "$ref": "../common/StabilizerConfiguration.json"
     }
   ]
 }

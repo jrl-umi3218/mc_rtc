@@ -6,8 +6,8 @@
      "duration": { "type": "number", "minimum": 0, "default": 10, "description": "Task's duration. Note, you may use the \"timeElapsed: true\" completion criteria." },
      "paused": { "type": "boolean", "default": false, "description": "When true, start the task in a paused state (targets the current surface pose until unpaused)" },
      "displaySamples": { "type": "number", "minimum": 1, "default": 20, "description": "Number of points to sample along the trajectory for visual display" },
-     "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" },
-     "completion": { "$ref": "/../../common/completion_spline_trajectory.json" },
+     "dimWeight": { "$ref": "../Eigen/Vector6d.json" },
+     "completion": { "$ref": "../common/completion_spline_trajectory.json" },
      "gainsInterpolation":
      {
        "type": "object",
@@ -15,9 +15,9 @@
        "description": "Linear interpolation parameters for the tasks's gains expressed as pairs of (time, gain). The initial gains are those specified by dimWeight, stiffness and damping unless otherwise specified.",
        "properties":
        {
-        "stiffness": { "$ref": "/../../common/gains_spline_trajectory.json" },
-        "damping": { "$ref": "/../../common/gains_spline_trajectory.json" },
-        "dimWeight": { "$ref": "/../../common/gains_spline_trajectory.json" }
+        "stiffness": { "$ref": "../common/gains_spline_trajectory.json" },
+        "damping": { "$ref": "../common/gains_spline_trajectory.json" },
+        "dimWeight": { "$ref": "../common/gains_spline_trajectory.json" }
        }
      }
    }

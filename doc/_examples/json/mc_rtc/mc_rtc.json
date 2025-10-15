@@ -1,0 +1,19 @@
+{
+  "MainRobot": "JVRC1",
+  "Enabled": ["CoM"],
+  "Timestep": 0.005,
+  "InitAttitudeFromSensor": false,
+  "InitAttitudeSensor": "",
+  "Log": true,
+  "LogTemplate": "mc-control",
+  "GUIServer": {
+    "Enable": true,
+    "Timestep": 0.05,
+    "IPC": {},
+    "TCP": {
+      "Host": "*",
+      "Ports": [4242, 4343]
+    }
+  },
+  "VerboseLoader": false
+}
