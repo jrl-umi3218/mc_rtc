@@ -10,8 +10,14 @@
       {
         "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot on which this frame is defined"},
         "frame" : { "type": "string", "description": "Frame on the robot." },
-        "translation": { "$ref": "../Eigen/Vector3d.json", "description": "Offset in translation wrt to the target robot's frame"  },
-        "rotation": { "$ref": "../Eigen/Matrix3d.json", "description": "Offset in rotation wrt to the target robot's frame"   },
+        "translation": { "$ref": "../Eigen/Vector3d.json", "description": "Offset in translation wrt to the target robot's frame [m]"  },
+        "rotation":
+        {
+          "oneOf": [
+            { "$ref": "../Eigen/Vector3d.json", "description": "Offset in rotation wrt to the target robot's frame. RPY in [rad]" },
+            { "$ref": "../Eigen/Matrix3d.json", "description": "Offset in rotation wrt to the target robot's frame" }
+          ]
+        },
         "controlPoints":
         {
           "type": "array",

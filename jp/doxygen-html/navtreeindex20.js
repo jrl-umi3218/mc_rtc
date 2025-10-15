@@ -1,5 +1,9 @@
 var NAVTREEINDEX20 =
 {
+"structmc__solver_1_1CollisionsConstraint.html#a0dc1390b5fc625595ded740a9e12afd2":[6,0,7,5,16],
+"structmc__solver_1_1CollisionsConstraint.html#a0e5e400e748c70619be1602764431b5f":[6,0,7,5,9],
+"structmc__solver_1_1CollisionsConstraint.html#a0fbd97c53f4fb31297e1abd61fa304b2":[6,0,7,5,15],
+"structmc__solver_1_1CollisionsConstraint.html#a1b4f2373157afc1f88ab43dad20be2b7":[6,0,7,5,10],
 "structmc__solver_1_1CollisionsConstraint.html#a22b0298f79bf26246cf3b1a3fe21777b":[6,0,7,5,4],
 "structmc__solver_1_1CollisionsConstraint.html#a3234964e5bd5e0bd73e62f507f1880c4":[6,0,7,5,11],
 "structmc__solver_1_1CollisionsConstraint.html#a5501ba66e7d20f69eadd7bab17658307":[6,0,7,5,12],
@@ -245,9 +249,5 @@ var NAVTREEINDEX20 =
 "structmc__solver_1_1utils_1_1Update.html#ad172325243564a16279d9392bd86efa5":[6,0,7,1,6,0],
 "structmc__solver_1_1utils_1_1Update.html#adcc1dc8dc0563b2e14f962f26afbfa5f":[6,0,7,1,6,3],
 "structmc__solver_1_1utils_1_1UpdateForce.html":[6,0,7,1,8],
-"structmc__solver_1_1utils_1_1UpdateForce.html#a147dd26742af4a2879ffdead8b3ab93d":[6,0,7,1,8,1],
-"structmc__solver_1_1utils_1_1UpdateForce.html#ac7cfe8520ea50dc9cbf285f433769d11":[6,0,7,1,8,0],
-"structmc__solver_1_1utils_1_1UpdateNrVarsData.html":[6,0,7,1,9],
-"structmc__solver_1_1utils_1_1UpdateNrVarsData.html#a3c4a15ad329aedecdfd932aaffe4ff76":[6,0,7,1,9,1],
-"structmc__solver_1_1utils_1_1UpdateNrVarsData.html#ac7940f913dbc5037ed042609f685bfaa":[6,0,7,1,9,0]
+"structmc__solver_1_1utils_1_1UpdateForce.html#a147dd26742af4a2879ffdead8b3ab93d":[6,0,7,1,8,1]
 };

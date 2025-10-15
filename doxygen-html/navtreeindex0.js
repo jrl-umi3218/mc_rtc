@@ -1,5 +1,9 @@
 var NAVTREEINDEX0 =
 {
+"":[5,0,12],
+"":[5,0,12,0],
+"":[5,0,12,1],
+"":[5,0,12,2],
 "AbscissaOrdinate_8h.html":[7,0,0,6,0,1,1],
 "AbscissaOrdinate_8h.html#a9c15383cee7fc871f5422a919739dfe5":[7,0,0,6,0,1,1,3],
 "AbscissaOrdinate_8h.html#aab9338e80ed043faee85f3233e1d4323":[7,0,0,6,0,1,1,2],
@@ -245,9 +249,5 @@ var NAVTREEINDEX0 =
 "InequalityConstraint_8h.html":[7,0,0,7,13],
 "InequalityConstraint_8h_source.html":[7,0,0,7,13],
 "Input_8h.html":[7,0,0,6,0,16],
-"Input_8h.html#a33c22de96faf2fb284d26f0bbb1dbb27":[7,0,0,6,0,16,0],
-"Input_8h_source.html":[7,0,0,6,0,16],
-"IntegerInput_8h.html":[7,0,0,6,0,17],
-"IntegerInput_8h.html#a202fcb64716aa3818dc46e885f6c77f4":[7,0,0,6,0,17,1],
-"IntegerInput_8h.html#a99831401cdf4f24b3aae858c7609c0a8":[7,0,0,6,0,17,2]
+"Input_8h.html#a33c22de96faf2fb284d26f0bbb1dbb27":[7,0,0,6,0,16,0]
 };
