@@ -3,9 +3,9 @@
   [
   {% for itm in include.items %}
     {% capture id %}{{include.id}}{{forloop.index0}}{% endcapture %}
-    {% include json_schema_item.html data=itm id=id %}{% unless forloop.last %},{% endunless %}
+    {% include json_schema_item.html propName="array" data=itm id=id %}{% unless forloop.last %},{% endunless %}
   {% endfor %}
   ]
 {% else %}
-  {% include json_schema_item.html data=include.items id=include.id %}
+  {% include json_schema_item.html propName="array" data=include.items id=include.id %}
 {% endif %}

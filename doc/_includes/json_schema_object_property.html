@@ -29,7 +29,7 @@
             {% if data contains "description" or propDataItem contains "description" %}
               <td colspan="2">
                 <span class="text-secondary">{{propName}}:&nbsp;</span>
-                {% include json_schema_item.html data=propDataItem id=id %}
+                {% include json_schema_item.html propName=propName data=propDataItem id=id %}
               </td>
               <td>
                 {% if propDataItem contains "description" %}
@@ -45,11 +45,11 @@
               </td>
             {% endif %}
           </tr>
+          {% if INCLUDE_AFTER != "" %}
+            {{ INCLUDE_AFTER }}
+          {% endif %}
+          {% capture INCLUDE_AFTER %}{% endcapture %}
         {% endfor %}
-        {% if INCLUDE_AFTER != "" %}
-          {{ INCLUDE_AFTER }}
-        {% endif %}
-        {% capture INCLUDE_AFTER %}{% endcapture %}
       {% else if data contains "description" %}
         <td>
           {% include json_schema_item.html data=data id=id %}
