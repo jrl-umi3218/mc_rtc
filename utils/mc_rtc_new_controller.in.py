@@ -238,8 +238,8 @@ void {controller_class_name}::reset(const mc_control::ControllerResetData & rese
     os.makedirs(vscode_dir, exist_ok=True)
     vscode_settings = {
         "yaml.schemas": {
-            "https://arntanguy.github.io/mc_rtc/schemas/mc_rtc/mc_rtc.json": "**/mc_rtc.yaml",
-            "https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json": "etc/{}.yaml".format(
+            "https://jrl.cnrs.fr/mc_rtc/schemas/mc_rtc/mc_rtc.json": "**/mc_rtc.yaml",
+            "https://jrl.cnrs.fr/mc_rtc/schemas/mc_control/FSMController.json": "etc/{}.yaml".format(
                 controller_name
             ),
         },
@@ -277,9 +277,9 @@ vim.lsp.config('yamlls',
   settings = {{
     yaml = {{
       schemas = {{
-        ["https://arntanguy.github.io/mc_rtc/schemas/mc_rtc/mc_rtc.json"] = "**/mc_rtc.yaml",
-        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json"] = "etc/{controller_name}.yaml",
-        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMStates.json"] = "src/states/data/*.yaml"
+        ["https://jrl.cnrs.fr/mc_rtc/schemas/mc_rtc/mc_rtc.json"] = "**/mc_rtc.yaml",
+        ["https://jrl.cnrs.fr/mc_rtc/schemas/mc_control/FSMController.json"] = "etc/{controller_name}.yaml",
+        ["https://jrl.cnrs.fr/mc_rtc/schemas/mc_control/FSMStates.json"] = "src/states/data/*.yaml"
       }},
       validate = true,
       format = {{ enable = false }},

@@ -224,11 +224,11 @@ EXPORT_SINGLE_STATE("{controller_name}_Initial", {controller_name}_Initial)
     os.makedirs(vscode_dir, exist_ok=True)
     vscode_settings = {
         "yaml.schemas": {
-            "https://arntanguy.github.io/mc_rtc/schemas/mc_rtc/mc_rtc.json": "**/mc_rtc.yaml",
-            "https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json": "etc/{}.in.yaml".format(
+            "https://jrl.cnrs.fr/mc_rtc/schemas/mc_rtc/mc_rtc.json": "**/mc_rtc.yaml",
+            "https://jrl.cnrs.fr/mc_rtc/schemas/mc_control/FSMController.json": "etc/{}.in.yaml".format(
                 controller_name
             ),
-            "https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMStates.json": "src/states/data/*.yaml",
+            "https://jrl.cnrs.fr/mc_rtc/schemas/mc_control/FSMStates.json": "src/states/data/*.yaml",
         },
         "yaml.validate": True,
         "yaml.format.enable": False,
@@ -263,9 +263,9 @@ vim.lsp.config('yamlls',
   settings = {{
     yaml = {{
       schemas = {{
-        ["https://arntanguy.github.io/mc_rtc/schemas/mc_rtc/mc_rtc.json"] = "**/mc_rtc.yaml",
-        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMController.json"] = "etc/{controller_name}.yaml",
-        ["https://arntanguy.github.io/mc_rtc/schemas/mc_control/FSMStates.json"] = "src/states/data/*.yaml"
+        ["https://jrl.cnrs.fr/mc_rtc/schemas/mc_rtc/mc_rtc.json"] = "**/mc_rtc.yaml",
+        ["https://jrl.cnrs.fr/mc_rtc/schemas/mc_control/FSMController.json"] = "etc/{controller_name}.yaml",
+        ["https://jrl.cnrs.fr/mc_rtc/schemas/mc_control/FSMStates.json"] = "src/states/data/*.yaml"
       }},
       validate = true,
       format = {{ enable = false }},
