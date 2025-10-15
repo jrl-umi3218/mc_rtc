@@ -1,0 +1,31 @@
+{
+  "title": "mc_tasks::GazeTask",
+  "type": "object",
+  "allOf":
+  [
+    {
+      "$ref": "../common/MetaTask_common.json"
+    },
+    {
+      "$ref": "../common/MetaTask_frame.json"
+    },
+    {
+      "properties":
+      {
+        "type": { "const": "gaze" },
+        "weight": { "default": 500 },
+        "stiffness": { "default": 2 }
+      }
+    },
+    {
+      "$ref": "../common/TrajectoryTaskGeneric.json"
+    },
+    {
+      "properties":
+      {
+        "dimWeight": { "$ref": "../Eigen/Vector6d.json" }
+      }
+    }
+  ],
+  "required": ["type", "frame"]
+}

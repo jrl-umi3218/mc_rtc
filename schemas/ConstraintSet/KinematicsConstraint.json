@@ -1,0 +1,16 @@
+{
+  "allOf":
+  [
+    {
+      "$ref": "../common/KinematicsDynamicsConstraint.json"
+    },
+    {
+      "title": "mc_solver::KinematicsConstraint",
+      "type": "object",
+      "properties":
+      {
+        "type": { "const": "kinematics" }
+      }
+    }
+  ]
+}

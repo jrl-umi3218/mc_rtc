@@ -1,0 +1,12 @@
+{
+  "title": "sva::ImpedanceVecd",
+  "type": "object",
+  "description": "Either angular or linear can be ommited if the other is present",
+  "properties":
+  {
+    "angular": { "$ref": "../Eigen/Vector3d.json" },
+    "linear": { "$ref": "../Eigen/Vector3d.json" }
+  },
+  "required": ["angular", "linear"],
+  "additionalProperties": false
+}

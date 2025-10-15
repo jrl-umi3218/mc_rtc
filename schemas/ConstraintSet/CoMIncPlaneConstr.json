@@ -1,0 +1,10 @@
+{
+  "title": "mc_solver::CoMIncPlaneConstr",
+  "type": "object",
+  "properties":
+  {
+    "type": { "const": "CoMIncPlane" },
+    "robot": { "$ref": "../common/ConstraintSet_robot.json" }
+  },
+  "required": ["type"]
+}

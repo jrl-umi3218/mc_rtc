@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "title": "targetSurface",
+  "description": "Target as a robot surface",
+  "properties":
+  {
+    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this surface is attached"},
+    "surface" : { "type": "string" },
+    "offset_translation": { "$ref": "../Eigen/Vector3d.json" },
+    "offset_rotation": { "$ref": "../Eigen/Matrix3d.json" }
+  },
+  "required": ["targetSurface"]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "mc_tasks::LookAtTFTask",
+  "type": "object",
+  "allOf":
+  [
+    {
+      "$ref": "../common/MetaTask_common.json"
+    },
+    {
+      "$ref": "../common/MetaTask_frame.json"
+    },
+    {
+      "properties":
+      {
+        "type": { "const": "lookAtTF" },
+        "frameVector": { "$ref": "../Eigen/Vector3d.json" },
+        "sourceFrame": { "type": "string" },
+        "targetFrame": { "type": "string" }
+      }
+    },
+    {
+      "$ref": "../common/TrajectoryTaskGeneric.json"
+    },
+    {
+      "properties":
+      {
+        "weight": { "default": 200 },
+        "stiffness": { "default": 0.5 },
+        "dimWeight": { "$ref": "../Eigen/Vector3d.json" }
+      }
+    }
+  ],
+  "required": ["type", "frame", "frameVector", "sourceFrame", "targetFrame"]
+}

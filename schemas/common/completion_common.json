@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties":
+  {
+    "timeout": { "type": "number", "minimum": 0, "description": "True when the task has been added to the solver for longer than this threshold"},
+    "eval": { "type": "number", "minimum": 0,  "description": "True when the task's error (norm) is below this threshold" },
+    "speed": { "type": "number", "minimum": 0, "description": "True when the task's velocity (norm) is below this threshold" }
+  }
+}

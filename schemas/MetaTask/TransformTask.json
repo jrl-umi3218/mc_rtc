@@ -1,0 +1,37 @@
+{
+  "title": "mc_tasks::TransformTask",
+  "type": "object",
+  "allOf":
+  [
+    {
+      "$ref": "../common/MetaTask_common.json"
+    },
+    {
+      "$ref": "../common/MetaTask_frame.json"
+    },
+    {
+      "properties":
+      {
+        "type": { "const": "transform" }
+      }
+    },
+    {
+      "$ref": "../common/SurfaceTransformTask.json"
+    },
+    {
+      "$ref": "../common/TrajectoryTaskGeneric.json"
+    },
+    {
+      "properties":
+      {
+        "weight": { "default": 500 },
+        "stiffness": { "default": 2 },
+        "dimWeight": { "$ref": "../Eigen/Vector6d.json" },
+        "refVel": {"$ref": "../Eigen/Vector6d.json", "description": "Trajectory's reference velocity" },
+        "refAccel": {"$ref": "../Eigen/Vector6d.json", "description": "Trajectory's reference acceleration" },
+        "completion": { "$ref": "../common/completion_wrench.json" }
+      }
+    }
+  ],
+  "required": ["type", "frame"]
+}

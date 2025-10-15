@@ -3054,14 +3054,15 @@
     <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rtc/</path>
     <filename>deprecated_8h.html</filename>
     <includes id="logging_8h" name="logging.h" local="no" imported="no">mc_rtc/logging.h</includes>
+    <includes id="utils__api_8h" name="utils_api.h" local="yes" imported="no">mc_rtc/utils_api.h</includes>
     <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::log</namespace>
     <member kind="function">
       <type>MC_RTC_UTILS_DLLAPI void</type>
       <name>deprecated</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a44519212b524404c86c6a6f354d58d2c</anchor>
-      <arglist>(const std::string &amp;source, const std::string &amp;old, const std::string &amp;replace)</arglist>
+      <anchor>af847170ed484855237b58e8b2706fecd</anchor>
+      <arglist>(const std::string &amp;source, const std::string &amp;old, const std::string &amp;replace, const std::string &amp;details=&quot;&quot;)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -38510,6 +38511,13 @@
       <anchor>a4a6908db392416efb30c7926dca9ff6b</anchor>
       <arglist>() const</arglist>
     </member>
+    <member kind="function" static="yes">
+      <type>static std::vector&lt; std::pair&lt; double, Eigen::Matrix3d &gt; &gt;</type>
+      <name>loadOriWaypoints</name>
+      <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
+      <anchor>afa301d4713f8a9a223a5e3704b7ce018</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;c)</arglist>
+    </member>
     <member kind="function" protection="protected">
       <type>void</type>
       <name>refPose</name>
@@ -39095,6 +39103,13 @@
       <anchor>aa826a098c08c1548dcb65bbba28189b8</anchor>
       <arglist>() const noexcept</arglist>
     </member>
+    <member kind="function" static="yes">
+      <type>static std::vector&lt; std::pair&lt; double, Eigen::Matrix3d &gt; &gt;</type>
+      <name>loadOriWaypoints</name>
+      <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
+      <anchor>afa301d4713f8a9a223a5e3704b7ce018</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;c)</arglist>
+    </member>
     <member kind="function" protection="protected">
       <type>void</type>
       <name>refPose</name>
@@ -39673,6 +39688,13 @@
       <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
       <anchor>aa826a098c08c1548dcb65bbba28189b8</anchor>
       <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static std::vector&lt; std::pair&lt; double, Eigen::Matrix3d &gt; &gt;</type>
+      <name>loadOriWaypoints</name>
+      <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
+      <anchor>afa301d4713f8a9a223a5e3704b7ce018</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;c)</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
@@ -47763,8 +47785,8 @@
       <type>MC_RTC_UTILS_DLLAPI void</type>
       <name>deprecated</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a44519212b524404c86c6a6f354d58d2c</anchor>
-      <arglist>(const std::string &amp;source, const std::string &amp;old, const std::string &amp;replace)</arglist>
+      <anchor>af847170ed484855237b58e8b2706fecd</anchor>
+      <arglist>(const std::string &amp;source, const std::string &amp;old, const std::string &amp;replace, const std::string &amp;details=&quot;&quot;)</arglist>
     </member>
     <member kind="function">
       <type>bool MC_RTC_UTILS_DLLAPI</type>

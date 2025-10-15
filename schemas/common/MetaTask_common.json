@@ -1,0 +1,21 @@
+{
+  "properties":
+  {
+    "type": {},
+    "name":
+    {
+      "type": "string",
+      "description": "Name of the task"
+    },
+    "robot":
+    {
+      "type": "string",
+      "default": "MainRobot",
+      "description": "Name of the robot to which this task applies"
+    },
+    "completion": { "$ref": "../common/completion_criteria.json" },
+    "dimWeight": { "$ref": "../Eigen/VectorXd.json" },
+    "activeJoints": { "type": "array", "items": { "type": "string" } },
+    "unactiveJoints": { "type": "array", "items": { "type": "string" } }
+  }
+}

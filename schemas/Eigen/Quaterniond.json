@@ -1,0 +1,11 @@
+{
+  "title": "Eigen::Quaterniond",
+  "description": "The array is normalized when read by configuration.",
+  "type": "array",
+  "items":
+  {
+    "type": "number"
+  },
+  "minItems": 4,
+  "maxItems": 4
+}

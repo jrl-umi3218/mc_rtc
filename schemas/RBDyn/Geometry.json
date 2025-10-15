@@ -1,0 +1,20 @@
+{
+  "title": "rbd::parsers::Geometry",
+  "description": "Only one of the possible entries",
+  "type": "object",
+  "oneOf": [
+    {
+      "properties":
+      {
+        "box":
+        { "$ref": "../RBDyn/Geometry.Box.json" }
+      },
+      "required": ["box"],
+      "additionalProperties": false
+    },
+    { "properties": { "cylinder": { "$ref": "../RBDyn/Geometry.Cylinder.json" } }, "required": ["cylinder"], "additionalProperties": false },
+    { "properties": { "mesh": { "$ref": "../RBDyn/Geometry.Mesh.json" } }, "required": ["mesh"], "additionalProperties": false },
+    { "properties": { "sphere": { "$ref": "../RBDyn/Geometry.Sphere.json" } }, "required": ["sphere"], "additionalProperties": false },
+    { "properties": { "superellipsoid": { "$ref": "../RBDyn/Geometry.Superellipsoid.json" } }, "required": ["superellipsoid"], "additionalProperties": false }
+  ]
+}

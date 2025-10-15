@@ -1,0 +1,13 @@
+{
+  "title": "mc_rbdyn::RobotModule::Gripper::Safety",
+  "type": "object",
+  "description": "Parameters to prevent over-torques on position-controlled grippers",
+  "properties":
+  {
+    "overCommandLimitIterN": { "type": "number", "minimum": 1, "default": 5, "description": "Maximum number of iterations spent above \"threshold\" before the gripper is release by \"release\"" },
+    "actualCommandDiffTrigger": { "type": "number", "minimum": 0, "default": 0.14, "description": "Encoder-command difference [rad] over which the gripper is considered in overtorque" },
+    "releaseSafetyOffset":  { "type": "number", "minimum": 0, "default": 0.034, "description": "Angle [rad] by which the gripper should be released when safety is triggered" },
+    "percentVMax": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.25, "description": "Gripper opening speed as a percentage of the maximum velocity" }
+  },
+  "additionalProperties": false
+}

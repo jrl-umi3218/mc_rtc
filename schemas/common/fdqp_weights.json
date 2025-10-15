@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "title": "mc_rbdyn::lipm_stabilizer::FDQPWeights",
+  "description": "Force distribution QP parameters",
+  "properties":
+  {
+    "net_wrench": { "type": "number", "minimum": 0, "default": 10000 },
+    "ankle_torque": { "type": "number", "minimum": 0, "default": 100 },
+    "pressure": { "type": "number", "minimum": 0, "default": 1 }
+  }
+}

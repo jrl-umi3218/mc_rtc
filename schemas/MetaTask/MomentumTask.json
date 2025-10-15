@@ -1,0 +1,29 @@
+{
+  "title": "mc_tasks::Momentum",
+  "type": "object",
+  "allOf":
+  [
+    {
+      "$ref": "../common/MetaTask_common.json"
+    },
+    {
+      "properties":
+      {
+        "type": { "const": "momentum" },
+        "weight": { "default": 500 },
+        "stiffness": { "default": 2 },
+        "momentum": { "$ref": "../SpaceVecAlg/ForceVecd.json" }
+      }
+    },
+    {
+      "$ref": "../common/TrajectoryTaskGeneric.json"
+    },
+    {
+      "properties":
+      {
+        "dimWeight": { "$ref": "../Eigen/Vector6d.json" }
+      }
+    }
+  ],
+  "required": ["type"]
+}

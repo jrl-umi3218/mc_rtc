@@ -48,7 +48,7 @@ var namespacemc__rtc_1_1log =
       [ "VectorDouble", "namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549a18f1829c8dab599745c7d5bc84585aa2", null ]
     ] ],
     [ "critical", "namespacemc__rtc_1_1log.html#a82d6969aa78c74fbe4716532661ea0d8", null ],
-    [ "deprecated", "namespacemc__rtc_1_1log.html#a44519212b524404c86c6a6f354d58d2c", null ],
+    [ "deprecated", "namespacemc__rtc_1_1log.html#af847170ed484855237b58e8b2706fecd", null ],
     [ "error", "namespacemc__rtc_1_1log.html#aa189b2ec856ad8f96d632d635efc05ce", null ],
     [ "error_and_throw", "namespacemc__rtc_1_1log.html#a2bad497e8a4c7a7f29f7ab908c83274e", null ],
     [ "IMPL_MAPPING", "namespacemc__rtc_1_1log.html#a9aa92bc1668b9218bf395ae4fc92e795", null ],

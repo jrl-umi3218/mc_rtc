@@ -1,0 +1,12 @@
+{
+  "title": "mc_rbdyn::Springs",
+  "type": "object",
+  "properties":
+  {
+    "springsBodies": { "type": "array", "items": { "type": "string" } },
+    "afterSpringsBodies": { "type": "array", "items": { "type": "string" } },
+    "springsJoints": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["springsBodies", "afterSpringsBodies", "springsJoints"],
+  "additionalProperties": false
+}

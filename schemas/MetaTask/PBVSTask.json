@@ -1,0 +1,31 @@
+{
+  "title": "mc_tasks::PositionBasedVisServoTask",
+  "type": "object",
+  "allOf":
+  [
+    {
+      "$ref": "../common/MetaTask_common.json"
+    },
+    {
+      "$ref": "../common/MetaTask_frame.json"
+    },
+    {
+      "properties":
+      {
+        "type": { "const": "pbvs" }
+      }
+    },
+    {
+      "$ref": "../common/TrajectoryTaskGeneric.json"
+    },
+    {
+      "properties":
+      {
+        "weight": { "default": 500 },
+        "stiffness": { "default": 2 },
+        "dimWeight": { "$ref": "../Eigen/Vector3d.json" }
+      }
+    }
+  ],
+  "required": ["type", "frame"]
+}

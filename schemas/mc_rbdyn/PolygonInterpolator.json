@@ -1,0 +1,27 @@
+{
+  "title": "mc_rbdyn::PolygonInterpolator",
+  "type": "object",
+  "properties":
+  {
+    "tuple_pairs": { "type": "array", "items": { "$ref": "#/definitions/tuple_pair_t" } }
+  },
+  "required": ["tuple_pairs"],
+  "additionalProperties": false,
+  "definitions":
+  {
+    "tuple_t":
+    {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "tuple_pair_t":
+    {
+      "type": "array",
+      "items": { "$ref": "#/definitions/tuple_t" },
+      "minItems": 2,
+      "maxItems": 2
+    }
+  }
+}

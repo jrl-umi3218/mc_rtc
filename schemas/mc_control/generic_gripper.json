@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "title": "mc_control::Gripper",
+  "description": "Gripper target and safety configuration",
+  "properties":
+  {
+    "target":
+    {
+      "oneOf":
+      [
+        {
+          "type": "array", "items": { "type": "number" }, "description": "Target for all active joints in the gripper"
+        },
+        {
+          "type": "object",
+          "title": "Per-joint target",
+          "description": "Keys are joint names and values are the corresponding target joint angle",
+          "properties":
+          {
+            "*": { "type": "number", "description": "Joint target [rad]" }
+          }
+        }
+      ]
+    },
+    "opening":
+    {
+      "oneOf":
+      [
+        {"type": "number", "minimum": 0, "maximum": 1, "description": "Target opening percentage of the gripper" },
+        {
+          "type": "object",
+          "title": "Per-joint opening",
+          "description": "Keys are joint names and values are the corresponding target opening percentage",
+          "properties":
+          {
+            "*": { "type": "number", "minimum": 0, "maximum": 1,  "description": "Joint target opening percentage" }
+          }
+        }
+      ]
+    },
+    "safety":
+    {
+      "$ref": "../mc_rbdyn/RobotModule.Gripper.Safety.json"
+    }
+  }
+}

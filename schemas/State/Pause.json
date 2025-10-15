@@ -1,0 +1,19 @@
+{
+  "allOf":
+  [
+    {
+      "title": "mc_control::fsm::PauseState",
+      "description": "Pause for a given duration",
+      "type": "object",
+      "properties":
+      {
+        "base": { "const": "Pause" },
+        "duration": { "type": "number", "minimum": 0, "description": "Pause duration in seconds" }
+      },
+      "required": ["base"]
+    },
+    {
+      "$ref": "../common/State.json"
+    }
+  ]
+}

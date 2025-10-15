@@ -1,0 +1,10 @@
+{
+  "properties":
+  {
+    "surface":
+    {
+      "type": "string",
+      "description": "Name of the surface controlled by this task"
+    }
+  }
+}

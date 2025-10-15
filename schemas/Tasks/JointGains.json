@@ -1,0 +1,12 @@
+{
+  "title": "tasks::qp::JointGains",
+  "type": "object",
+  "properties":
+  {
+    "jointName": { "type": "string" },
+    "stiffness": { "type": "number" },
+    "damping": { "type": "number" }
+  },
+  "required": ["jointName", "stiffness"],
+  "additionalProperties": false
+}

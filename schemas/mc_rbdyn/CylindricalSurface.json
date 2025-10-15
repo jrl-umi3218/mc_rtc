@@ -1,0 +1,19 @@
+{
+  "allOf":
+  [
+    {
+      "$ref": "../common/Surface.json"
+    },
+    {
+      "title": "mc_rbdyn::CylindricalSurface",
+      "type": "object",
+      "properties":
+      {
+        "type": { "enum": ["cylindrical"] },
+        "radius": { "type": "number" },
+        "width": { "type": "number" }
+      },
+      "required": ["type", "name", "bodyName", "X_b_s", "materialName", "radius", "width"]
+    }
+  ]
+}

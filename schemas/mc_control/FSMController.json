@@ -1,0 +1,165 @@
+{
+  "title": "FSM Controller Configuration",
+  "type": "object",
+  "description": "Main FSM Controller's configuration.",
+  "properties": {
+    "Managed": {
+      "type": "boolean",
+      "description": "If true, the FSM transitions are managed by an external tool."
+    },
+    "StepByStep": {
+      "type": "boolean",
+      "description": "If true and the FSM is self-managed, transitions should be triggered step by step."
+    },
+    "IdleKeepState": {
+      "type": "boolean",
+      "description": "If true, the state is kept until transition; otherwise, FSM holds the last state until transition."
+    },
+    "StatesLibraries": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of paths to state libraries."
+    },
+    "StatesFiles": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of paths to state files."
+    },
+    "VerboseStateFactory": {
+      "type": "boolean",
+      "description": "If true, state factory will be more verbose."
+    },
+    "robots": {
+      "type": "object",
+      "title": "Additional Robots",
+      "description": "Additional robots to load. Keys are robot names, values are robot module definitions or visual geometry.",
+      "additionalProperties": {
+        "_expand": true,
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "module": {
+                "type": "string",
+                "description": "Module name: this can be any robot module name, robot alias (such as env/ground or object/box), or any path supported by RobotLoader"
+              },
+              "init_pos": { "$ref": "../SpaceVecAlg/PTransformd.json", "description": "Initial position of the robot in the world frame." }
+            },
+            "required": ["module"]
+          },
+          {
+            "allOf": [
+              { "$ref": "../mc_rbdyn/RobotModuleVisual.json" },
+              {
+                "properties": {
+                "init_pos": { "$ref": "../SpaceVecAlg/PTransformd.json", "description": "Initial position of the robot in the world frame." }
+                }
+              }
+            ],
+            "required": ["name", "origin", "geometry", "inertia"]
+          }
+        ]
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "description": "General constraints, always on. Each item must match one of the allowed constraint schemas.",
+      "items": {
+        "$ref": "../common/ConstraintSetProperty.json"
+      }
+    },
+    "collisions": {
+      "type": "array",
+      "description": "Collision constraints.",
+      "items": {
+        "$ref": "../ConstraintSet/CollisionsConstraint.json"
+      }
+    },
+    "contacts": {
+      "type": "array",
+      "description": "Initial set of contacts.",
+      "items": { "type": "object" }
+    },
+    "<robot_name>": {
+      "$ref": "#/definitions/RobotOptions",
+      "description": "Options for the robot with name <robot_name>."
+    },
+    "states": {
+      "type": "object",
+      "description": "Additional text states. Each state should derive from a 'base' state, which can be one of the following:\n- a C++ or Python state within StatesLibraries\n- a YAML state defined within StatesFiles\n- a state defined within this 'states' property.\n See <a href=\"{{site.baseurl}}/json.html#State\">State objects</a>",
+      "descriptionHtml": "Additional text states. Each state should derive from a 'base' state, which can be one of the following:<ul><li>a C++ or Python state within StatesLibraries</li><li>a YAML state defined within StatesFiles</li><li>a state defined within this 'states' property.</li><li> See <a href=\"{{site.baseurl}}/json.html#State\">State objects</a></li>",
+      "additionalProperties":
+      {
+        "_expand": false,
+        "$ref": "../common/StatesProperty.json"
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "description": "Transitions array. Each item is an array: [from, event, to, type].",
+      "items": {
+        "$ref": "#/definitions/Transition"
+      }
+    },
+    "init": {
+      "type": "string",
+      "description": "Initial state."
+    }
+  },
+  "required": [
+    "constraints", "collisions", "contacts", "states", "transitions"
+  ],
+  "definitions": {
+    "Robot": {
+      "description": "Robot module definition. Specifies the robot module to load.",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "module": {
+              "type": "string",
+              "description": "Module path for the robot."
+            }
+          },
+          "required": []
+        },
+        {
+          "$ref": "../mc_rbdyn/RobotModuleVisual.json"
+        }
+      ]
+    },
+    "RobotOptions": {
+      "type": "object",
+      "description": "Options for a specific robot, such as posture and feedforward task settings.",
+      "properties": {
+        "posture": {
+          "type": "object",
+          "description": "Posture task options.",
+          "properties": {
+            "stiffness": {
+              "type": "number",
+              "description": "Stiffness value for posture task."
+            },
+            "weight": {
+              "type": "number",
+              "description": "Weight value for posture task."
+            }
+          },
+          "required": ["stiffness", "weight"]
+        }
+      }
+    },
+    "Transition": {
+      "type": "array",
+      "description": "A transition definition: [from, event, to, type].",
+      "items": [
+        { "type": "string", "description": "From state." },
+        { "type": "string", "description": "Event name." },
+        { "type": "string", "description": "To state." },
+        { "type": "string", "description": "Transition type." }
+      ],
+      "minItems": 4,
+      "maxItems": 4
+    }
+  }
+}

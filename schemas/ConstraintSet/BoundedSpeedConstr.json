@@ -1,0 +1,28 @@
+{
+  "title": "mc_solver::BoundedSpeedConstr",
+  "type": "object",
+  "properties":
+  {
+    "type": { "const": "boundedSpeed" },
+    "robot": { "$ref": "../common/ConstraintSet_robot.json" },
+    "constraints":
+    {
+      "type": "array",
+      "description": "List of speed constraints in the constraint",
+      "items":
+      {
+        "type": "object",
+        "properties":
+        {
+          "frame": { "type": "string" },
+          "dof": { "$ref": "../Eigen/Vector6d.json", "description": "Defaults to identity" },
+          "speed": { "$ref": "../Eigen/Vector6d.json" },
+          "lowerSpeed": { "$ref": "../Eigen/Vector6d.json", "description": "Ignored if speed is present" },
+          "upperSpeed": { "$ref": "../Eigen/Vector6d.json", "description": "Required if lowerSpeed is present and speed is absent" }
+        },
+        "required": ["frame"]
+      }
+    }
+  },
+  "required": ["type"]
+}

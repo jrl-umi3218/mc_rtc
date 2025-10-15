@@ -1,0 +1,10 @@
+{
+  "properties":
+  {
+    "body":
+    {
+      "type": "string",
+      "description": "Name of the body controlled by this task"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "title": "rbd::parsers::Geometry::Cylinder",
+  "description": "A cylinder geometry. The cylinder is centered at the origin and aligned with the z-axis.",
+  "type": "object",
+  "properties":
+  {
+    "radius": { "type": "number", "description": "The radius of the cylinder [m]" },
+    "length": { "type": "number", "description": "The length of the cylinder [m]" }
+  },
+  "required": ["radius", "length"],
+  "additionalProperties": false
+}

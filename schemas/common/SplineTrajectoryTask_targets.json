@@ -1,0 +1,40 @@
+{
+  "properties":
+  {
+    "targetFrame":
+    {
+      "title": "Relative Target",
+      "description": "Target and waypoints defined in target frame",
+      "type": "object",
+      "properties":
+      {
+        "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot on which this frame is defined"},
+        "frame" : { "type": "string", "description": "Frame on the robot." },
+        "translation": { "$ref": "../Eigen/Vector3d.json", "description": "Offset in translation wrt to the target robot's frame"  },
+        "rotation": { "$ref": "../Eigen/Matrix3d.json", "description": "Offset in rotation wrt to the target robot's frame"   },
+        "controlPoints":
+        {
+          "type": "array",
+          "description": "Position waypoints",
+          "items": { "$ref": "../Eigen/Vector3d.json" }
+        },
+        "oriWaypoints": { "$ref": "../common/SplineTrajectoryTask_oriWaypoints.json" }
+      }
+    },
+    "target":
+    {
+      "$ref": "../SpaceVecAlg/PTransformd.json",
+      "description": "Target relative to world. <i>Ignored if targetFrame is specified, required otherwise</i>"
+    },
+    "controlPoints":
+    {
+      "type": "array",
+      "description": "Control points relative to world. <i>Ignored if targetFrame is specified</i>",
+      "items": { "$ref": "../Eigen/Vector3d.json" }
+    },
+    "oriWaypoints":
+    {
+      "$ref": "../common/SplineTrajectoryTask_oriWaypoints.json"
+    }
+  }
+}

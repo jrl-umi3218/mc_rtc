@@ -1,0 +1,13 @@
+{
+  "title": "mc_rbdyn::Mimic",
+  "type": "object",
+  "properties":
+  {
+    "name": { "type": "string" },
+    "joint": { "type": "string" },
+    "multiplier": { "type": "number", "default": "1" },
+    "offset": { "type": "number", "default": "0" }
+  },
+  "required": ["name", "joint"],
+  "additionalProperties": false
+}

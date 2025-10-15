@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "title": "Contact tasks parameters",
+  "description": "Contact tasks parameters (CoP tasks). These tasks have very high weight to simulate a contact constraint in task space.",
+  "properties":
+  {
+    "constrainCoP":
+    {
+      "type": "boolean",
+      "description": "If true, the contact constraint will ensure that the Center of Pressure remains inside the contact region"
+    },
+    "weight": { "type": "number", "minimum": 0, "default": 100000 },
+    "stiffness":
+    {
+      "type": "object",
+      "title": "sva::MotionVecd",
+      "description": "Dimensional stiffness for the CoP tasks",
+      "properties":
+      {
+        "angular":
+        {
+          "type": "array",
+          "items":
+          [
+            { "type": "number", "minimum": 0, "default": 1 },
+            { "type": "number", "minimum": 0, "default": 1 },
+            { "type": "number", "minimum": 0, "default": 1 }
+          ]
+        },
+        "linear":
+        {
+          "type": "array",
+          "items":
+          [
+            { "type": "number", "minimum": 0, "default": 1 },
+            { "type": "number", "minimum": 0, "default": 1 },
+            { "type": "number", "minimum": 0, "default": 1 }
+          ]
+        }
+      }
+    },
+    "damping":
+    {
+      "type": "object",
+      "title": "sva::MotionVecd",
+      "description": "Dimensional damping for the CoP tasks",
+      "properties":
+      {
+        "angular":
+        {
+          "type": "array",
+          "items":
+          [
+            { "type": "number", "default": 300 },
+            { "type": "number", "default": 300 },
+            { "type": "number", "default": 300 }
+          ]
+        },
+        "linear":
+        {
+          "type": "array",
+          "items":
+          [
+            { "type": "number", "default": 300 },
+            { "type": "number", "default": 300 },
+            { "type": "number", "default": 300 }
+          ]
+        }
+      }
+    }
+  }
+}

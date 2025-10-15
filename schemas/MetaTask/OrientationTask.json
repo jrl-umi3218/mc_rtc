@@ -1,0 +1,45 @@
+{
+  "title": "mc_tasks::OrientationTask",
+  "type": "object",
+  "allOf":
+  [
+    {
+      "$ref": "../common/MetaTask_common.json"
+    },
+    {
+      "$ref": "../common/MetaTask_frame.json"
+    },
+    {
+      "properties":
+      {
+        "type": { "const": "orientation" },
+        "orientation": { "$ref": "../Eigen/Matrix3d.json" },
+        "relative":
+        {
+          "type": "object",
+          "title": "Relative target specification",
+          "description": "The target is specified relatively to the middle point between two surfaces s1 and s2",
+          "properties":
+          {
+            "s1": { "type": "string" },
+            "s2": { "type": "string" },
+            "orientation": { "$ref": "../Eigen/Matrix3d.json" }
+          },
+          "required": ["s1", "s2"]
+        }
+      }
+    },
+    {
+      "$ref": "../common/TrajectoryTaskGeneric.json"
+    },
+    {
+      "properties":
+      {
+        "weight": { "default": 500 },
+        "stiffness": { "default": 2 },
+        "dimWeight": { "$ref": "../Eigen/Vector3d.json" }
+      }
+    }
+  ],
+  "required": ["type", "frame"]
+}

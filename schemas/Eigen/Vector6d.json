@@ -1,0 +1,10 @@
+{
+  "title": "Eigen::Vector6d",
+  "type": "array",
+  "items":
+  {
+    "type": "number"
+  },
+  "minItems": 6,
+  "maxItems": 6
+}

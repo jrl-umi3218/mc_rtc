@@ -1,0 +1,15 @@
+{
+  "title": "mc_solver::ContactConstraint",
+  "type": "object",
+  "properties":
+  {
+    "type": { "const": "contact" },
+    "contactType":
+    {
+      "description": "Defaults to velocity if absent",
+      "type": "string",
+      "enum": ["acceleration", "velocity", "position"]
+    }
+  },
+  "required": ["type"]
+}

@@ -1,0 +1,14 @@
+{
+  "title": "ConstraintSet",
+  "type": "object",
+  "description": "One of the constraints defined in <a href=\"{{site.baseurl}}/json.html#ConstraintSet\">ConstraintSet objects</a>.",
+  "oneOf": [
+    { "$ref": "../ConstraintSet/BoundedSpeedConstr.json" },
+    { "$ref": "../ConstraintSet/CoMIncPlaneConstr.json" },
+    { "$ref": "../ConstraintSet/CollisionsConstraint.json" },
+    { "$ref": "../ConstraintSet/CompoundJointConstraint.json" },
+    { "$ref": "../ConstraintSet/ContactConstraint.json" },
+    { "$ref": "../ConstraintSet/DynamicsConstraint.json" },
+    { "$ref": "../ConstraintSet/KinematicsConstraint.json" }
+  ]
+}

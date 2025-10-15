@@ -1,0 +1,9 @@
+{
+  "title": "Eigen::Matrix6Xd",
+  "description": "Stored in row-major order.<br/>The array length should be a multiple of 6.",
+  "type": "array",
+  "items":
+  {
+    "type": "number"
+  }
+}

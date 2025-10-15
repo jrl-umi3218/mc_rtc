@@ -1,0 +1,17 @@
+{
+  "title": "mc_tasks::AddContactTask",
+  "type": "object",
+  "allOf":
+  [
+    {
+      "properties":
+      {
+        "type": { "const": "addContact" }
+      }
+    },
+    {
+      "$ref": "../common/AddRemoveContactTask_common.json"
+    }
+  ],
+  "required": ["type", "contact"]
+}

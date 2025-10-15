@@ -1,0 +1,38 @@
+{
+  "title": "mc_solver::CollisionsConstraint",
+  "type": "object",
+  "properties":
+  {
+    "type": { "const": "collision" },
+    "r1": { "type": "string", "default": "MainRobot", "description": "Name of the first robot involved in the collision" },
+    "r2": { "type": "string", "default": "MainRobot", "description": "Name of the second robot involved in the collision" },
+    "automaticMonitor":
+    {
+      "type": "boolean",
+      "default": true,
+      "description": "If true automatically display collision monitors as constraints get activated. Otherwise those monitors are managed manually"
+    },
+    "useCommon":
+    {
+      "type": "boolean",
+      "default": false,
+      "description": "If true and r1Index == r2Index, add the common self-collisions set"
+    },
+    "useMinimal":
+    {
+      "type": "boolean",
+      "default": false,
+      "description": "If true and r1Index == r2Index, add the minimal self-collisions set"
+    },
+    "collisions":
+    {
+      "type": "array",
+      "description": "List of collisions in the constraint",
+      "items":
+      {
+        "$ref": "../mc_rbdyn/Collision.json"
+      }
+    }
+  },
+  "required": ["type"]
+}

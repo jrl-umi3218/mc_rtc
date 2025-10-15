@@ -1,0 +1,21 @@
+{
+  "allOf":
+  [
+    {
+      "$ref": "../common/KinematicsDynamicsConstraint.json"
+    },
+    {
+      "title": "mc_solver::DynamicsConstraint",
+      "type": "object",
+      "properties":
+      {
+        "type": { "const": "dynamics" },
+        "infTorque":
+        {
+          "type": "boolean",
+          "default": "false"
+        }
+      }
+    }
+  ]
+}

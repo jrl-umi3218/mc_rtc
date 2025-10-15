@@ -1,0 +1,33 @@
+{
+  "allOf":
+  [
+    {
+      "$ref": "../common/Surface.json"
+    },
+    {
+      "title": "mc_rbdyn::PlanarSurface",
+      "type": "object",
+      "properties":
+      {
+        "type": { "enum": ["planar"] },
+        "planarPoints":
+        {
+          "type": "array",
+          "description": "Array of 2D points in the surface x/y plane",
+          "items": { "$ref": "#/definitions/number_pair" }
+        }
+      },
+      "required": ["type", "name", "bodyName", "X_b_s", "materialName", "planarPoints"]
+    }
+  ],
+  "definitions":
+  {
+    "number_pair":
+    {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 2,
+      "maxItems": 2
+    }
+  }
+}

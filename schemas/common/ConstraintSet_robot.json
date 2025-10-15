@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "default": "MainRobot",
+  "description": "Name of the robot affected by this constraint"
+}

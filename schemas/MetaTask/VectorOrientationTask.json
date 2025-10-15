@@ -1,0 +1,38 @@
+{
+  "title": "mc_tasks::VectorOrientationTask",
+  "type": "object",
+  "allOf":
+  [
+    {
+      "$ref": "../common/MetaTask_common.json"
+    },
+    {
+      "$ref": "../common/MetaTask_frame.json"
+    },
+    {
+      "properties":
+      {
+        "type": { "const": "vectorOrientation" },
+        "frameVector": { "$ref": "../Eigen/Vector3d.json" },
+        "targetVector": { "$ref": "../Eigen/Vector3d.json" },
+        "relativeVector":
+        {
+          "description": "Specify a target vector relative to the current orientation of the robot in the world",
+          "$ref": "../Eigen/Vector3d.json"
+        }
+      }
+    },
+    {
+      "$ref": "../common/TrajectoryTaskGeneric.json"
+    },
+    {
+      "properties":
+      {
+        "weight": { "default": 500 },
+        "stiffness": { "default": 2 },
+        "dimWeight": { "$ref": "../Eigen/Vector3d.json" }
+      }
+    }
+  ],
+  "required": ["type", "frame", "frameVector"]
+}

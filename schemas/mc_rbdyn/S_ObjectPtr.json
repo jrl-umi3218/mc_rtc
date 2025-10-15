@@ -1,0 +1,89 @@
+{
+  "title": "mc_rbdyn::S_ObjectPtr",
+  "type": "object",
+  "properties":
+  {
+    "type":
+    {
+      "enum": ["box", "capsule", "cone", "cylinder", "point", "polyhedron", "sphere", "stp-bv", "stp-bv-p", "superellipsoid"],
+      "description": "Type of sch object"
+    },
+    "width":
+    {
+      "type": "number",
+      "description": "Width of the box (if type == box)"
+    },
+    "height":
+    {
+      "type": "number",
+      "description": "Height of the box (if type == box)<br/>Height of the cone (if type == cone)"
+    },
+    "depth":
+    {
+      "type": "number",
+      "description": "Depth of the box (if type == box)"
+    },
+    "angle":
+    {
+      "type": "number",
+      "description": "Angle of the cone (if type == cone)"
+    },
+    "p1":
+    {
+      "type": "array",
+      "items":
+      {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3,
+      "description": "Starting point of the capsule (if type == capsule)<br/>Starting point of the cylinder (if type == cylinder)"
+    },
+    "p2":
+    {
+      "type": "array",
+      "items":
+      {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3,
+      "description": "End point of the capsule (if type == capsule)<br/>End point of the cylinder (if type == cylinder)"
+    },
+    "radius":
+    {
+      "type": "number",
+      "description": "Radius of the capsule (if type == capsule)<br/>Radius of the cylinder (if type == cylinder)<br/>Radius of the sphere (if type == sphere)"
+    },
+    "filename":
+    {
+      "type": "string",
+      "description": "Path to the file with data for the object (if type == polyhedron or type == stp-bv or type == stp-bv-p"
+    },
+    "a":
+    {
+      "type": "number",
+      "description": "First parameter of the superellipsoid (if type == superellipsoid"
+    },
+    "b":
+    {
+      "type": "number",
+      "description": "Second parameter of the superellipsoid (if type == superellipsoid"
+    },
+    "c":
+    {
+      "type": "number",
+      "description": "Third parameter of the superellipsoid (if type == superellipsoid"
+    },
+    "epsilon1":
+    {
+      "type": "number",
+      "description": "Epsilon 1 parameter of the superellipsoid (if type == superellipsoid"
+    },
+    "epsilon2":
+    {
+      "type": "number",
+      "description": "Epsilon 2 parameter of the superellipsoid (if type == superellipsoid"
+    }
+  }
+}

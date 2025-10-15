@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties":
+  {
+    "contacts":
+    {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 2,
+      "description": "Support contact surfaces (default: [Left, Right])",
+      "items":
+      {
+        "type": "string",
+        "enum": ["Left", "Right"]
+      },
+      "default": ["Left", "Right"]
+    },
+    "Left": { "$ref": "../common/contactTarget.json" },
+    "Right": { "$ref": "../common/contactTarget.json" }
+  }
+}

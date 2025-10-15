@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "title": "Stabilizer Contact Target",
+  "description": "Stabilizer Contact Target (default: current contact surface pose)",
+  "properties":
+  {
+    "rotation": { "$ref": "../Eigen/Vector3d.json" },
+    "translation": { "$ref": "../Eigen/Vector3d.json" },
+    "overwriteRPY": { "$ref": "../common/overwriteRPY.json" },
+    "height": { "type": "number", "minimum": 0 }
+  }
+}

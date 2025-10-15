@@ -1,0 +1,271 @@
+{
+  "title": "mc_rbdyn::RobotModule",
+  "type": "object",
+  "properties":
+  {
+    "path":
+    {
+      "type": "string",
+      "description": "Path to the location of the robot's data files"
+    },
+    "name": { "type": "string" },
+    "urdf_path":
+    {
+      "type": "string",
+      "default": "${path}/urdf/${name}.urdf",
+      "description": "Path to the URDF file, can be relative to \"path\""
+    },
+    "canonicalParameters":
+    {
+      "type": "array",
+      "description": "Parameters passed to RobotLoader to obtain a canonical module for this robot",
+      "items": { "type": "string" }
+    },
+    "mb":
+    {
+      "description": "If mb is provided, mbc, bounds, visuals and collisionTransforms are required. Otherwise, the URDF is loaded when the object is loaded, using the filteredLinks and fixed properties.",
+      "$ref": "../RBDyn/MultiBody.json"
+    },
+    "mbc":
+    {
+      "description": "Required if mb is provided.",
+      "$ref": "../RBDyn/MultiBodyConfig.json"
+    },
+    "bounds":
+    {
+      "description": "Position limits (lower/upper), velocity (lower/upper), torque (lower/upper)",
+      "type": "array",
+      "items":
+      {
+        "$ref": "#/definitions/joint_bound_map"
+      },
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "accelerationBounds":
+    {
+      "description": "Acceleration bounds (lower/upper). Overwrite those specified in bounds if present",
+      "type": "array",
+      "items":
+      {
+        "$ref": "#/definitions/joint_bound_map"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "jerkBounds":
+    {
+      "description": "Jerk bounds (lower/upper). Overwrite those specified in bounds if present",
+      "type": "array",
+      "items":
+      {
+        "$ref": "#/definitions/joint_bound_map"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "torqueDerivativeBounds":
+    {
+      "description": "Torque derivative bounds (lower/upper). Overwrite those specified in bounds if present",
+      "type": "array",
+      "items":
+      {
+        "$ref": "#/definitions/joint_bound_map"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "visuals":
+    {
+      "type": "object",
+      "patternProperties":
+      {
+        "*": { "type": "array", "items": { "$ref" : "../RBDyn/Visual.json" } }
+      }
+    },
+    "collisionTransforms":
+    {
+      "type": "object",
+      "patternProperties":
+      {
+        "*": { "type": "array", "items": { "$ref" : "../SpaceVecAlg/PTransformd.json" } }
+      }
+    },
+    "filteredLinks":
+    {
+      "description": "Don't include the bodies in this list even if they appear in the URDF",
+      "type": "array",
+      "items":
+      {
+        "type": "string"
+      }
+    },
+    "fixed":
+    {
+      "description": "If true, the robot has a fixed base",
+      "type": "boolean"
+    },
+    "convexHulls":
+    {
+      "description": "Each key should be a collision object name, each entry in the vector associated to a key should be the parent's body name and the path to the convex file",
+      "type": "object",
+      "patternProperties":
+      {
+        "*": { "$ref": "#/definitions/string_pair" }
+      }
+    },
+    "collisionObjects":
+    {
+      "description": "Each key should be a collision object name, each entry in the vector associated to a key should be the parent's body name and a definition of the object",
+      "type": "object",
+      "patternProperties":
+      {
+        "*":
+        {
+          "type": "array",
+          "items":
+          [
+            { "type": "string" },
+            { "$ref": "../mc_rbdyn/S_ObjectPtr.json" }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        }
+      }
+    },
+    "stpbvHulls":
+    {
+      "description": "Each key should be a collision object name, each entry in the vector associated to a key should be the parent's body name and the path to the convex file",
+      "type": "object",
+      "patternProperties":
+      {
+        "*": { "$ref": "#/definitions/string_pair" }
+      }
+    },
+    "frames":
+    {
+      "type": "array",
+      "items":
+      {
+        "$ref": "../mc_rbdyn/RobotModule.FrameDescription.json"
+      }
+    },
+    "flexibilities":
+    {
+      "type": "array",
+      "items":
+      {
+        "$ref": "../mc_rbdyn/Flexibility.json"
+      }
+    },
+    "forceSensors":
+    {
+      "type": "array",
+      "items":
+      {
+        "$ref": "../mc_rbdyn/ForceSensor.json"
+      }
+    },
+    "bodySensors":
+    {
+      "type": "array",
+      "items":
+      {
+        "$ref": "../mc_rbdyn/BodySensor.json"
+      }
+    },
+    "springs":
+    {
+      "$ref": "../mc_rbdyn/Springs.json"
+    },
+    "minimalSelfCollisions":
+    {
+      "type": "array",
+      "items":
+      {
+        "$ref": "../mc_rbdyn/Collision.json"
+      }
+    },
+    "commonSelfCollisions":
+    {
+      "type": "array",
+      "items":
+      {
+        "$ref": "../mc_rbdyn/Collision.json"
+      }
+    },
+    "grippers":
+    {
+      "type": "array",
+      "items":
+      {
+        "$ref": "../mc_rbdyn/RobotModule.Gripper.json"
+      }
+    },
+    "default_attitude":
+    {
+      "type": "array",
+      "items":
+      {
+        "type": "number"
+      },
+      "minItems": 7,
+      "maxItems": 7
+    },
+    "stance":
+    {
+      "type": "object",
+      "patternProperties":
+      {
+        "*": { "type": "array", "items": { "type": "number" } }
+      }
+    },
+    "ref_joint_order":
+    {
+      "type": "array", "items": { "type": "string" }
+    },
+    "gripperSafety": { "$ref": "../mc_rbdyn/RobotModule.Gripper.Safety.json" },
+    "lipmStabilizer":
+    {
+      "$ref": "../mc_rbdyn/StabilizerConfiguration.json",
+      "description": "Default configuration for {% doxygen mc_tasks::lipm_stabilizer::StabilizerTask %}"
+    },
+    "compoundJoints":
+    {
+      "description": "List of compound joint constraints this robot must follow",
+      "type": "array",
+      "items":
+      {
+        "$ref": "../mc_rbdyn/CompoundJointConstraintDescription.json"
+      }
+    }
+  },
+  "required": ["path", "name"],
+  "additionalProperties": false,
+  "definitions":
+  {
+    "array_number": {
+      "type": "array",
+      "items":
+      {
+        "type": "number"
+      }
+    },
+    "joint_bound_map": {
+      "type": "object",
+      "patternProperties":
+      {
+        "*": { "type": "array", "items": { "type": "number" } }
+      }
+    },
+    "string_pair": {
+      "type": "array",
+      "items":
+      {
+        "type": "string"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    }
+  }
+}
