@@ -316,9 +316,10 @@ Robot::Robot(NewRobotToken,
 
   if(module_.bounds().size() != 6)
   {
-    mc_rtc::log::error_and_throw<std::invalid_argument>("The (urdf)-bounds of RobotModule \"{}\" have a size of {} "
-                                                        "instead of 6 (ql, qu, vl, vu, tl, tu).",
-                                                        module_.name, module_.bounds().size());
+    mc_rtc::log::error_and_throw<std::invalid_argument>(
+        "The (urdf)-bounds of RobotModule \"{}\" have a size of {} "
+        "instead of 6 (ql, qu, vl, vu, tl, tu).",
+        module_.name, module_.bounds().size());
   }
   std::tie(ql_, qu_, vl_, vu_, tl_, tu_) = bounds(mb(), module_.bounds());
 
@@ -374,9 +375,10 @@ Robot::Robot(NewRobotToken,
     {
       if(convexes_.count(o.first) != 0)
       {
-        mc_rtc::log::warning("While loading {}, another object named {} was already loaded, the object specified in "
-                             "collisionObjects will be ignored",
-                             name_, o.first);
+        mc_rtc::log::warning(
+            "While loading {}, another object named {} was already loaded, the object specified in "
+            "collisionObjects will be ignored",
+            name_, o.first);
         continue;
       }
       convexes_[o.first] = {o.second.first, S_ObjectPtr(o.second.second->clone())};
@@ -1209,9 +1211,10 @@ void Robot::loadRSDFFromDir(const std::string & surfaceDir)
     }
     else
     {
-      mc_rtc::log::warning("Loaded surface {} attached to body {} from RSDF but the robot {} has no such body, discard "
-                           "this surface to avoid future problems...",
-                           sp->name(), sp->bodyName(), name());
+      mc_rtc::log::warning(
+          "Loaded surface {} attached to body {} from RSDF but the robot {} has no such body, discard "
+          "this surface to avoid future problems...",
+          sp->name(), sp->bodyName(), name());
     }
   }
 }
@@ -1480,9 +1483,10 @@ const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
   }
   else if(config.has(robotIndexKey))
   {
-    mc_rtc::log::warning("[MC_RTC_DEPRECATED]{} \"robotIndex\" will be deprecated in future versions, use \"robot: "
-                         "<robot name>\" instead",
-                         p);
+    mc_rtc::log::warning(
+        "[MC_RTC_DEPRECATED]{} \"robotIndex\" will be deprecated in future versions, use \"robot: "
+        "<robot name>\" instead",
+        p);
     const unsigned int robotIndex = config(robotIndexKey);
     if(robotIndex < robots.size()) { return robots.robot(robotIndex); }
     else

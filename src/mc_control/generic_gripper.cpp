@@ -418,9 +418,10 @@ double Gripper::curOpening(const std::string & jointName) const
   auto it = std::find(active_joints.cbegin(), active_joints.cend(), jointName);
   if(it == active_joints.cend())
   {
-    mc_rtc::log::error_and_throw("Attempted to get target opening percentage for the gripper's "
-                                 "joint {} but this joint is not part of the gripper",
-                                 jointName);
+    mc_rtc::log::error_and_throw(
+        "Attempted to get target opening percentage for the gripper's "
+        "joint {} but this joint is not part of the gripper",
+        jointName);
   }
   auto jIdx = static_cast<size_t>(std::distance(active_joints.cbegin(), it));
   return curOpening(jIdx);

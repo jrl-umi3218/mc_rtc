@@ -89,9 +89,10 @@ struct AddRemoveContactStateImpl
       }
       else
       {
-        mc_rtc::log::error("AddRemoveContactState configured with compliant task but surface {} is attached to body {} "
-                           "which does not have a force sensor.",
-                           contact.r1Surface()->name(), body);
+        mc_rtc::log::error(
+            "AddRemoveContactState configured with compliant task but surface {} is attached to body {} "
+            "which does not have a force sensor.",
+            contact.r1Surface()->name(), body);
         mc_rtc::log::warning("Defaulting to simulated contact sensor");
         config_.add("type", "addContact");
         isCompliant = false;

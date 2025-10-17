@@ -248,9 +248,10 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
       {
         if(config.has("init_pos") && rconfig.has("init_pos"))
         {
-          mc_rtc::log::error_and_throw("You have both a global \"init_pos\" entry and a \"robots/{}/init_pos\" entry "
-                                       "in your FSM configuration. Please use \"robots/{}/init_pos\" only.",
-                                       robot().name(), robot().name());
+          mc_rtc::log::error_and_throw(
+              "You have both a global \"init_pos\" entry and a \"robots/{}/init_pos\" entry "
+              "in your FSM configuration. Please use \"robots/{}/init_pos\" only.",
+              robot().name(), robot().name());
         }
         init_robot(rname, rconfig);
       }
@@ -637,9 +638,10 @@ void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
   }
   if(!config.has("ObserverPipelines"))
   {
-    mc_rtc::log::warning("[MCController::{}] No state observation pipeline configured: the state of the real robots "
-                         "will not be estimated",
-                         name_);
+    mc_rtc::log::warning(
+        "[MCController::{}] No state observation pipeline configured: the state of the real robots "
+        "will not be estimated",
+        name_);
     return;
   }
   auto pipelineConfigs = mc_rtc::fromVectorOrElement(config, "ObserverPipelines", std::vector<mc_rtc::Configuration>{});
