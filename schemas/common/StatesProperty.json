@@ -18,9 +18,13 @@
       "description": "Custom user-defined state with arbitrary properties.",
       "required": ["base"],
       "properties": {
-        "base": {
-          "type": "string",
-          "not": {
+        "base": { "type": "string" }
+      },
+      "not": {
+        "type": "object",
+        "required": ["base"],
+        "properties": {
+          "base": {
             "enum": [
               "AddRemoveContact",
               "EnableController",
