@@ -3,42 +3,56 @@
   "type": "object",
   "properties": {
     "MainRobot": {
-      "type": "string",
-      "description": "Name of the main robot being controlled",
-      "examples": [
-        "JVRC1",
-        "HRP2DRC",
-        "HRP2JRP",
-        "HRP4",
-        "HRP4::MuJoCo",
-        "HRP4LIRMM",
-        "HRP4::ImpactGrippers",
-        "HRP4::ImpactGrippers::Choreonoid",
-        "HRP4::ImpactGrippers::MuJoCo",
-        "Pepper",
-        "PandaDefault",
-        "PandaHand",
-        "PandaPump",
-        "PandaFoot",
-        "Panda7LIRMMDefault",
-        "Panda2LIRMMDefault",
-        "Panda6LIRMMDefault",
-        "RHPS1",
-        "RHPS1_lirmm_lirmm",
-        "RHPS1_sake_sake",
-        "RHPS1_plate_plate",
-        "HRP5P"
-      ]
-    },
-    "Enabled": {
-      "oneOf": [
-        { "$ref": "#/definitions/SampleControllerNames", "description": "Name of a single controller to enable" },
+      "oneOf":
+      [
         {
-          "type": "array",
-          "items": { "$ref": "#/definitions/SampleControllerNames"},
-          "description": "Names of multiple controllers to enable"
+          "type": "string",
+          "description": "Name of the main robot being controlled",
+          "examples": [
+            "JVRC1",
+            "HRP2DRC",
+            "HRP2JRP",
+            "HRP4",
+            "HRP4::MuJoCo",
+            "HRP4LIRMM",
+            "HRP4::ImpactGrippers",
+            "HRP4::ImpactGrippers::Choreonoid",
+            "HRP4::ImpactGrippers::MuJoCo",
+            "Pepper",
+            "PandaDefault",
+            "PandaHand",
+            "PandaPump",
+            "PandaFoot",
+            "Panda7LIRMMDefault",
+            "Panda2LIRMMDefault",
+            "Panda6LIRMMDefault",
+            "RHPS1",
+            "RHPS1_lirmm_lirmm",
+            "RHPS1_sake_sake",
+            "RHPS1_plate_plate",
+            "HRP5P"
+          ]
+        },
+        {
+          "type": "object",
+          "properties":
+          {
+            "name": { "type": "string", "description": "Name of the loaded robot in the controller" },
+            "module": { "type": "string", "description": "Name of the robot module from which the robot is loaded" }
+          },
+          "required": ["module"]
         }
       ]
+      },
+      "Enabled": {
+        "oneOf": [
+          { "$ref": "#/definitions/SampleControllerNames", "description": "Name of a single controller to enable" },
+          {
+            "type": "array",
+            "items": { "$ref": "#/definitions/SampleControllerNames"},
+            "description": "Names of multiple controllers to enable"
+          }
+        ]
     },
     "Timestep": {
       "type": "number",
