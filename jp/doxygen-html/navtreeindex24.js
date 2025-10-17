@@ -1,9 +1,5 @@
 var NAVTREEINDEX24 =
 {
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8f0dfeb868178dce27d2ea0553c10c0f":[6,0,8,2,2,108],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a902360523f74d1b286d46e5d3743c7b6":[6,0,8,2,2,96],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a905a2a763617aeaf86a0af3e3973c34e":[6,0,8,2,2,11],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a91cb5583f420f95611496de2bf2e43b1":[6,0,8,2,2,54],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a91e33c4eb45fcea0a744aeb63accb306":[6,0,8,2,2,76],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a94831a7f067fdd5b05e03e83bfc4166b":[6,0,8,2,2,61],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a96d61d89212abbe50d56da7dcc5b71a4":[6,0,8,2,2,97],
@@ -249,5 +245,9 @@ var NAVTREEINDEX24 =
 "structmc__tvm_1_1Convex.html":[6,0,10,6],
 "structmc__tvm_1_1Convex.html#a5bf7a6383246c9a2d0cb84b5b0e9e3f2":[6,0,10,6,5],
 "structmc__tvm_1_1Convex.html#a5f776872a6f2028c83b679bedf2d6bf0":[6,0,10,6,0],
-"structmc__tvm_1_1Convex.html#ad9c26269832f678f42429a3e16ab0cdd":[6,0,10,6,2]
+"structmc__tvm_1_1Convex.html#ad9c26269832f678f42429a3e16ab0cdd":[6,0,10,6,2],
+"structmc__tvm_1_1Convex.html#af19b6a491a5b52fd63a85405ee3301d2":[6,0,10,6,4],
+"structmc__tvm_1_1Convex.html#af8fa5698b3fccd9f59a5be106b725bd2":[6,0,10,6,1],
+"structmc__tvm_1_1Convex.html#afc6e57455d6c24e8ed37588d6425c586":[6,0,10,6,3],
+"structmc__tvm_1_1DynamicFunction.html":[6,0,10,7]
 };

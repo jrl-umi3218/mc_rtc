@@ -1,9 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"Input_8h_source.html":[7,0,0,6,0,16],
-"IntegerInput_8h.html":[7,0,0,6,0,17],
-"IntegerInput_8h.html#a202fcb64716aa3818dc46e885f6c77f4":[7,0,0,6,0,17,1],
-"IntegerInput_8h.html#a99831401cdf4f24b3aae858c7609c0a8":[7,0,0,6,0,17,2],
 "IntegerInput_8h_source.html":[7,0,0,6,0,17],
 "InterpolatedRotation_8h.html":[7,0,0,9,3],
 "InterpolatedRotation_8h_source.html":[7,0,0,9,3],
@@ -249,5 +245,9 @@ var NAVTREEINDEX1 =
 "Schema_8h.html#a97fbba7a5e8df7ff39b592b2a5397bb3":[7,0,0,6,21,31],
 "Schema_8h.html#aadc011a10973f0c84cb88ba2082a54d1":[7,0,0,6,21,26],
 "Schema_8h.html#abd6551364f994bee2fd667359e53f09a":[7,0,0,6,21,18],
-"Schema_8h.html#abd6551364f994bee2fd667359e53f09aa24b9b8c0634a40138e76b2fb86894698":[7,0,0,6,21,18,2]
+"Schema_8h.html#abd6551364f994bee2fd667359e53f09aa24b9b8c0634a40138e76b2fb86894698":[7,0,0,6,21,18,2],
+"Schema_8h.html#abd6551364f994bee2fd667359e53f09aa6adf97f83acf6453d4a6a4b1070f3754":[7,0,0,6,21,18,0],
+"Schema_8h.html#abd6551364f994bee2fd667359e53f09aab1c94ca2fbc3e78fc30069c8d0f01680":[7,0,0,6,21,18,3],
+"Schema_8h.html#abd6551364f994bee2fd667359e53f09aab651efdb98a5d6bd2b3935d0c3f4a5e2":[7,0,0,6,21,18,1],
+"Schema_8h.html#ad0804c36b85f7ed50d1fac59802893ee":[7,0,0,6,21,20]
 };

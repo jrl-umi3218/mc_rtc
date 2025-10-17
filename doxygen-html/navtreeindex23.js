@@ -1,9 +1,5 @@
 var NAVTREEINDEX23 =
 {
-"structmc__tasks_1_1force_1_1CoPTask.html#a675434671210a61d2ae96517010543ba":[6,0,8,1,3,0],
-"structmc__tasks_1_1force_1_1CoPTask.html#a7467766fa42546e99c0d253aac7af98d":[6,0,8,1,3,4],
-"structmc__tasks_1_1force_1_1CoPTask.html#a88921c026455b21462952325fe1a0737":[6,0,8,1,3,3],
-"structmc__tasks_1_1force_1_1CoPTask.html#a9f7344de19e35fda42d0dc3c493b8f11":[6,0,8,1,3,15],
 "structmc__tasks_1_1force_1_1CoPTask.html#aa452d416c7f6df4f3b5ddc511db246a2":[6,0,8,1,3,13],
 "structmc__tasks_1_1force_1_1CoPTask.html#aae9653f9ecdd305a178c895cc4710d81":[6,0,8,1,3,1],
 "structmc__tasks_1_1force_1_1CoPTask.html#ac56ea4b1b75de8e99ed5e51bf919c7fb":[6,0,8,1,3,11],
@@ -249,5 +245,9 @@ var NAVTREEINDEX23 =
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8a8a726b9e64cf46649652479923b3cf":[6,0,8,2,2,84],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8bff42566e54def1e5cf93b03dea48ce":[6,0,8,2,2,181],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8c319bbb0af50167b9628ae561183d5a":[6,0,8,2,2,134],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8d2ec1f0f1f41224897010e86ddccdd7":[6,0,8,2,2,85]
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8d2ec1f0f1f41224897010e86ddccdd7":[6,0,8,2,2,85],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8f0dfeb868178dce27d2ea0553c10c0f":[6,0,8,2,2,108],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a902360523f74d1b286d46e5d3743c7b6":[6,0,8,2,2,96],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a905a2a763617aeaf86a0af3e3973c34e":[6,0,8,2,2,11],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a91cb5583f420f95611496de2bf2e43b1":[6,0,8,2,2,54]
 };

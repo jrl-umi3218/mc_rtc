@@ -1,9 +1,5 @@
 var NAVTREEINDEX21 =
 {
-"structmc__solver_1_1utils_1_1UpdateForce.html#ac7cfe8520ea50dc9cbf285f433769d11":[6,0,7,1,8,0],
-"structmc__solver_1_1utils_1_1UpdateNrVarsData.html":[6,0,7,1,9],
-"structmc__solver_1_1utils_1_1UpdateNrVarsData.html#a3c4a15ad329aedecdfd932aaffe4ff76":[6,0,7,1,9,1],
-"structmc__solver_1_1utils_1_1UpdateNrVarsData.html#ac7940f913dbc5037ed042609f685bfaa":[6,0,7,1,9,0],
 "structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html":[6,0,7,1,11],
 "structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html#a3c7ce960742e1844186550b503af6207":[6,0,7,1,11,1],
 "structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html#a855dd9e41399b5a6271e9b4e02576b23":[6,0,7,1,11,2],
@@ -249,5 +245,9 @@ var NAVTREEINDEX21 =
 "structmc__tasks_1_1PostureTask.html#afda9cd7d8bab32bc0644da110f06a4e3":[6,0,8,19,24],
 "structmc__tasks_1_1RelativeEndEffectorTask.html":[6,0,8,20],
 "structmc__tasks_1_1RelativeEndEffectorTask.html#a0158f37c233bf4855f02a8fdacd90729":[6,0,8,20,1],
-"structmc__tasks_1_1RelativeEndEffectorTask.html#a0566da4a9b213b3beda917e35cfb9ad2":[6,0,8,20,4]
+"structmc__tasks_1_1RelativeEndEffectorTask.html#a0566da4a9b213b3beda917e35cfb9ad2":[6,0,8,20,4],
+"structmc__tasks_1_1RelativeEndEffectorTask.html#a3fc5bfbf363efddcf3f2441b91ff8b0e":[6,0,8,20,6],
+"structmc__tasks_1_1RelativeEndEffectorTask.html#a4d6f1803464ba94a80db138123662075":[6,0,8,20,2],
+"structmc__tasks_1_1RelativeEndEffectorTask.html#a793bf82d0b0f17d0e9c72cfdd131fa67":[6,0,8,20,5],
+"structmc__tasks_1_1RelativeEndEffectorTask.html#a7bf4110ad02234504fb7e89ff8c9301b":[6,0,8,20,3]
 };
