@@ -156,6 +156,8 @@ tutorials:
       title: Joints Stiffness
     com-constraint:
       title: Constraining the accessible region of the CoM
+    threading:
+      title: Real-Time Considerations and Threading
   samples:
     title: Samples
     desc: This section explains the sample controllers

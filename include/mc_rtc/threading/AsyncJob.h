@@ -9,7 +9,7 @@
 #include <future>
 #include <optional>
 
-namespace mc_rtc
+namespace mc_rtc::threading
 {
 
 /**
@@ -47,7 +47,7 @@ namespace mc_rtc
  *
  * @section UsageExample Example Usage
  * @code
- * struct MyAsyncJob : public MakeAsyncJob<MyAsyncJob, MyInput, MyResult>
+ * struct MyAsyncJob : public mc_rtc::MakeAsyncJob<MyAsyncJob, MyInput, MyResult>
  * {
  *   MyResult computeJob()
  *   {
@@ -306,4 +306,4 @@ protected:
 // Helper alias for CRTP inheritance
 template<typename Derived, typename Input, typename Result>
 using MakeAsyncJob = AsyncJob<Derived, Input, Result>;
-} // namespace mc_rtc
+} // namespace mc_rtc::threading
