@@ -36781,6 +36781,13 @@
       <arglist>(double timestep)</arglist>
     </member>
     <member kind="function" static="yes">
+      <type>static double</type>
+      <name>get_publisher_timestep</name>
+      <anchorfile>structmc__rtc_1_1ROSBridge.html</anchorfile>
+      <anchor>a7b3d58a114b29c8fa9061a3513f389f2</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" static="yes">
       <type>static void</type>
       <name>init_robot_publisher</name>
       <anchorfile>structmc__rtc_1_1ROSBridge.html</anchorfile>

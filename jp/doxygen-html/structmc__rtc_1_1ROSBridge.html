@@ -109,6 +109,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a497890eb420eecc16a41d42ec368959a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab852d1ed6a6154d0b6978bb55ca4d9f0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ROSBridge.html#ab852d1ed6a6154d0b6978bb55ca4d9f0">set_publisher_timestep</a> (double timestep)</td></tr>
 <tr class="separator:ab852d1ed6a6154d0b6978bb55ca4d9f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b3d58a114b29c8fa9061a3513f389f2"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ROSBridge.html#a7b3d58a114b29c8fa9061a3513f389f2">get_publisher_timestep</a> ()</td></tr>
+<tr class="separator:a7b3d58a114b29c8fa9061a3513f389f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6642d73c7c180d1a93f1eff5111b50b2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ROSBridge.html#a6642d73c7c180d1a93f1eff5111b50b2">init_robot_publisher</a> (const std::string &amp;publisher, double dt, const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;robot, bool use_real=false)</td></tr>
 <tr class="separator:a6642d73c7c180d1a93f1eff5111b50b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4972e3f6b94d800663017ba05364f172"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ROSBridge.html#a4972e3f6b94d800663017ba05364f172">update_robot_publisher</a> (const std::string &amp;publisher, double dt, const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;robot)</td></tr>
@@ -150,6 +152,33 @@ Static Public Member Functions</h2></td></tr>
 <p>Get a ros::NodeHandle/rclcpp::Node. </p>
 <p>This function will return a nullptr if ROS is not available</p>
 <dl class="section return"><dt>Returns</dt><dd>A shared_ptr to a ros::NodeHandle/rclcpp::Node </dd></dl>
+
+</div>
+</div>
+<a id="a7b3d58a114b29c8fa9061a3513f389f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b3d58a114b29c8fa9061a3513f389f2">&#9670;&nbsp;</a></span>get_publisher_timestep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static double mc_rtc::ROSBridge::get_publisher_timestep </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Gets publisher timestep</p>
+<dl class="section return"><dt>Returns</dt><dd>Update timestep in ms </dd></dl>
 
 </div>
 </div>
@@ -198,7 +227,8 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Update the robot publisher state</p>
+<p>Initialize a robot publisher</p>
+<dl class="section note"><dt>Note</dt><dd>This should only be used on robots owned by the controller. Use <a class="el" href="structmc__rtc_1_1RobotPublisher.html" title="This structure is able to publish a Robot&#39;s state to ROS.">RobotPublisher</a> for external robots</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">publisher</td><td>Name of the publisher</td></tr>
@@ -377,6 +407,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Update the robot publisher state</p>
+<dl class="section note"><dt>Note</dt><dd>This should only be used on robots owned by the controller. Use <a class="el" href="structmc__rtc_1_1RobotPublisher.html" title="This structure is able to publish a Robot&#39;s state to ROS.">RobotPublisher</a> for external robots</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">publisher</td><td>Name of the publisher</td></tr>
