@@ -1,3 +1,33 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structmc__trajectory_1_1LinearInterpolation.html" title=" " alt="" coords="5,5,285,32"/>
+<area shape="rect" id="node1" href="$structmc__tasks_1_1MetaTask.html" title="Represents a generic task." alt="" coords="5,361,160,388"/>
+<area shape="rect" id="node2" href="$structmc__tasks_1_1AddRemoveContactTask.html" title="Add or remove a contact." alt="" coords="208,56,459,83"/>
+<area shape="rect" id="node5" href="$structmc__tasks_1_1EndEffectorTask.html" title="Controls an end&#45;effector." alt="" coords="236,193,431,220"/>
+<area shape="rect" id="node7" href="$structmc__tasks_1_1PostureTask.html" title=" " alt="" coords="248,332,419,359"/>
+<area shape="rect" id="node8" href="$structmc__tasks_1_1TrajectoryTaskGeneric.html" title="Generic wrapper for a trajectory dynamic over an error function." alt="" coords="241,383,426,425"/>
+<area shape="rect" id="node30" href="$structmc__tasks_1_1force_1_1ComplianceTask.html" title="Add a contact in a compliant manner." alt="" coords="214,449,453,476"/>
+<area shape="rect" id="node31" href="$structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html" title=" " alt="" coords="239,501,427,542"/>
+<area shape="rect" id="node3" href="$structmc__tasks_1_1AddContactTask.html" title="Add a contact." alt="" coords="533,5,729,32"/>
+<area shape="rect" id="node4" href="$structmc__tasks_1_1RemoveContactTask.html" title="Remove a contact." alt="" coords="519,56,744,83"/>
+<area shape="rect" id="node6" href="$structmc__tasks_1_1RelativeEndEffectorTask.html" title="Controls an end&#45;effector relatively to another frame." alt="" coords="507,107,756,133"/>
+<area shape="rect" id="node9" href="$structmc__tasks_1_1SplineTrajectoryTask.html" title=" " alt="" coords="508,158,755,199"/>
+<area shape="rect" id="node11" href="$structmc__tasks_1_1SplineTrajectoryTask.html" title=" " alt="" coords="520,223,743,265"/>
+<area shape="rect" id="node13" href="$structmc__tasks_1_1CoMTask.html" title="Control a robot&#39;s CoM." alt="" coords="556,289,707,316"/>
+<area shape="rect" id="node14" href="$structmc__tasks_1_1GazeTask.html" title="Control the Gaze of a body." alt="" coords="554,340,709,367"/>
+<area shape="rect" id="node15" href="$structmc__tasks_1_1MomentumTask.html" title="Control the momentum of a robot." alt="" coords="533,391,729,417"/>
+<area shape="rect" id="node16" href="$structmc__tasks_1_1OrientationTask.html" title="Control the orientation of a frame." alt="" coords="534,441,729,468"/>
+<area shape="rect" id="node17" href="$structmc__tasks_1_1PositionBasedVisServoTask.html" title="Servo an end&#45;effector depending on position error in camera frame." alt="" coords="529,493,733,534"/>
+<area shape="rect" id="node18" href="$structmc__tasks_1_1PositionTask.html" title="Control the position of a frame." alt="" coords="545,559,718,585"/>
+<area shape="rect" id="node19" href="$structmc__tasks_1_1SplineTrajectoryTask.html" title="Generic CRTP implementation for a task tracking a curve in both position and orientation...." alt="" coords="533,610,729,651"/>
+<area shape="rect" id="node20" href="$structmc__tasks_1_1TransformTask.html" title="Control a frame 6D pose." alt="" coords="538,676,725,703"/>
+<area shape="rect" id="node26" href="$structmc__tasks_1_1VectorOrientationTask.html" title="Control the orientation of a vector attached to a frame." alt="" coords="514,731,749,757"/>
+<area shape="rect" id="node10" href="$structmc__tasks_1_1ExactCubicTrajectoryTask.html" title="Track an exact cubic spline, that is a curve passing exactly through waypoints in position,..." alt="" coords="804,165,1061,192"/>
+<area shape="rect" id="node12" href="$structmc__tasks_1_1BSplineTrajectoryTask.html" title="Track a bezier curve with a robot surface." alt="" coords="815,231,1050,257"/>
+<area shape="rect" id="node21" href="$structmc__tasks_1_1force_1_1AdmittanceTask.html" title="Hybrid position&#45;force control on a contacting end&#45;effector." alt="" coords="814,621,1051,648"/>
+<area shape="rect" id="node24" href="$structmc__tasks_1_1force_1_1ImpedanceTask.html" title="Impedance control of the end&#45;effector." alt="" coords="815,676,1050,703"/>
+<area shape="rect" id="node22" href="$structmc__tasks_1_1force_1_1DampingTask.html" title="Hybrid position&#45;force control on a contacting end&#45;effector." alt="" coords="1109,617,1331,644"/>
+<area shape="rect" id="node23" href="$structmc__tasks_1_1force_1_1CoPTask.html" title="Track center&#45;of&#45;pressure (CoP) references at contact." alt="" coords="1379,617,1565,644"/>
+<area shape="rect" id="node25" href="$structmc__tasks_1_1force_1_1FirstOrderImpedanceTask.html" title="Impedance&#45;based damping control of the end&#45;effector." alt="" coords="1121,669,1319,710"/>
+<area shape="rect" id="node27" href="$structmc__tasks_1_1LookAtTask.html" title="Orient a &quot;gaze&quot; vector defined on a body to look towards a world position. This task is a convenience..." alt="" coords="849,735,1016,761"/>
+<area shape="rect" id="node28" href="$structmc__tasks_1_1LookAtFrameTask.html" title="Track a frame position with a &quot;gaze&quot; vector. This task is a convenience wrapper for LookAtTask that t..." alt="" coords="1117,735,1323,761"/>
+<area shape="rect" id="node29" href="$structmc__tasks_1_1LookAtTFTask.html" title="Control the gaze vector of a body to look towards a world position updated at each iteration from a R..." alt="" coords="1129,785,1311,812"/>
 </map>

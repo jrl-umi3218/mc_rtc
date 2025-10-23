@@ -279,6 +279,9 @@ var annotated_dup =
         ] ],
         [ "Operations", "structmc__rtc_1_1schema_1_1Operations.html", "structmc__rtc_1_1schema_1_1Operations" ]
       ] ],
+      [ "threading", "namespacemc__rtc_1_1threading.html", [
+        [ "AsyncJob", "structmc__rtc_1_1threading_1_1AsyncJob.html", "structmc__rtc_1_1threading_1_1AsyncJob" ]
+      ] ],
       [ "ConfigurationLoader< mc_control::Contact >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1Contact_01_4.html", null ],
       [ "ConfigurationLoader< mc_rbdyn::CompoundJointConstraintDescription >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1CompoundJointConstraintDescription_01_4.html", null ],
       [ "ConfigurationLoader< mc_rbdyn::RobotModule >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1RobotModule_01_4.html", null ],

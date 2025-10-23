@@ -22,6 +22,7 @@ var namespacemc__rtc =
     ] ],
     [ "log", "namespacemc__rtc_1_1log.html", "namespacemc__rtc_1_1log" ],
     [ "schema", "namespacemc__rtc_1_1schema.html", "namespacemc__rtc_1_1schema" ],
+    [ "threading", "namespacemc__rtc_1_1threading.html", "namespacemc__rtc_1_1threading" ],
     [ "utils", "namespacemc__rtc_1_1utils.html", [
       [ "heatmap", "namespacemc__rtc_1_1utils.html#a82fe941770f36f355a999699984b5943", null ]
     ] ],
@@ -86,6 +87,9 @@ var namespacemc__rtc =
     [ "NodeHandlePtr", "namespacemc__rtc.html#a34c76f6b1a3b305306e41f6dd4f90c27", null ],
     [ "void_ptr", "namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d", null ],
     [ "debug", "namespacemc__rtc.html#a0bd63387904206fef1971ac84987b3bc", null ],
+    [ "duration_ms_count", "namespacemc__rtc.html#a4b4bfaaf16d51cf81d316efc089b2518", null ],
+    [ "elapsed_ms", "namespacemc__rtc.html#aa662ced81969fc940bbc605f1c3bd7da", null ],
+    [ "elapsed_ms_count", "namespacemc__rtc.html#a9832821caaab564e749e877d715a8fe2", null ],
     [ "fromVectorOrElement", "namespacemc__rtc.html#a9c308b4400fb83031251be1f6ab0adb2", null ],
     [ "fromVectorOrElement", "namespacemc__rtc.html#ac1107b5d5bcf197a41add86ce445c866", null ],
     [ "make_temporary_path", "namespacemc__rtc.html#ac274591c17dbd2c3d4c93f5eba9a228b", null ],

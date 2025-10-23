@@ -116,6 +116,8 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemc__rtc_1_1schema"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1schema.html">schema</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemc__rtc_1_1threading"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1threading.html">threading</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemc__rtc_1_1utils"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1utils.html">utils</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -264,6 +266,12 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a4b4bfaaf16d51cf81d316efc089b2518"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a4b4bfaaf16d51cf81d316efc089b2518">duration_ms_count</a> (std::chrono::time_point&lt; <a class="el" href="namespacemc__rtc.html#a5a9a29b4e1cc43e334c4ca10059ef277">mc_rtc::clock</a> &gt; start, std::chrono::time_point&lt; <a class="el" href="namespacemc__rtc.html#a5a9a29b4e1cc43e334c4ca10059ef277">mc_rtc::clock</a> &gt; end)</td></tr>
+<tr class="separator:a4b4bfaaf16d51cf81d316efc089b2518"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa662ced81969fc940bbc605f1c3bd7da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacemc__rtc.html#afd4119022924596532a073fc5a0c6f46">mc_rtc::duration_ms</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#aa662ced81969fc940bbc605f1c3bd7da">elapsed_ms</a> (std::chrono::time_point&lt; <a class="el" href="namespacemc__rtc.html#a5a9a29b4e1cc43e334c4ca10059ef277">mc_rtc::clock</a> &gt; start)</td></tr>
+<tr class="separator:aa662ced81969fc940bbc605f1c3bd7da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9832821caaab564e749e877d715a8fe2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a9832821caaab564e749e877d715a8fe2">elapsed_ms_count</a> (std::chrono::time_point&lt; <a class="el" href="namespacemc__rtc.html#a5a9a29b4e1cc43e334c4ca10059ef277">mc_rtc::clock</a> &gt; start)</td></tr>
+<tr class="separator:a9832821caaab564e749e877d715a8fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1107b5d5bcf197a41add86ce445c866"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ac1107b5d5bcf197a41add86ce445c866"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#ac1107b5d5bcf197a41add86ce445c866">fromVectorOrElement</a> (const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config, const std::string &amp;key, const std::vector&lt; T &gt; &amp;defaultVec)</td></tr>
 <tr class="separator:ac1107b5d5bcf197a41add86ce445c866"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -448,6 +456,94 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Returns true if <a class="el" href="namespacemc__rtc.html">mc_rtc</a> was compiled in debug mode </p>
+
+</div>
+</div>
+<a id="a4b4bfaaf16d51cf81d316efc089b2518"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b4bfaaf16d51cf81d316efc089b2518">&#9670;&nbsp;</a></span>duration_ms_count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_rtc::duration_ms_count </td>
+          <td>(</td>
+          <td class="paramtype">std::chrono::time_point&lt; <a class="el" href="namespacemc__rtc.html#a5a9a29b4e1cc43e334c4ca10059ef277">mc_rtc::clock</a> &gt;&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::chrono::time_point&lt; <a class="el" href="namespacemc__rtc.html#a5a9a29b4e1cc43e334c4ca10059ef277">mc_rtc::clock</a> &gt;&#160;</td>
+          <td class="paramname"><em>end</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa662ced81969fc940bbc605f1c3bd7da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa662ced81969fc940bbc605f1c3bd7da">&#9670;&nbsp;</a></span>elapsed_ms()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacemc__rtc.html#afd4119022924596532a073fc5a0c6f46">mc_rtc::duration_ms</a> mc_rtc::elapsed_ms </td>
+          <td>(</td>
+          <td class="paramtype">std::chrono::time_point&lt; <a class="el" href="namespacemc__rtc.html#a5a9a29b4e1cc43e334c4ca10059ef277">mc_rtc::clock</a> &gt;&#160;</td>
+          <td class="paramname"><em>start</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9832821caaab564e749e877d715a8fe2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9832821caaab564e749e877d715a8fe2">&#9670;&nbsp;</a></span>elapsed_ms_count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_rtc::elapsed_ms_count </td>
+          <td>(</td>
+          <td class="paramtype">std::chrono::time_point&lt; <a class="el" href="namespacemc__rtc.html#a5a9a29b4e1cc43e334c4ca10059ef277">mc_rtc::clock</a> &gt;&#160;</td>
+          <td class="paramname"><em>start</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

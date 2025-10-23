@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
 <area shape="rect" id="node1" href="$structmc__trajectory_1_1Spline.html" title=" " alt="" coords="5,5,208,76"/>
-<area shape="rect" id="node2" href="$structmc__trajectory_1_1ExactCubic.html" title="Represents an Exact Cubic spline : a curve that passes exactly through waypoints in position,..." alt="" coords="256,27,447,54"/>
+<area shape="rect" id="node2" href="$structmc__trajectory_1_1InterpolatedRotation.html" title="Describes a trajectory with smoothly interpolate rotation between waypoints." alt="" coords="256,20,455,61"/>
 </map>

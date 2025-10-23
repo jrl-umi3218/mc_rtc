@@ -3,6 +3,7 @@ var dir_379a22462e4fb075f5428ea3ff528930 =
     [ "gui", "dir_dda95c61bc807ada3674ae2fc67687f0.html", "dir_dda95c61bc807ada3674ae2fc67687f0" ],
     [ "log", "dir_b6742d8caace21cd527a100fbd03062c.html", "dir_b6742d8caace21cd527a100fbd03062c" ],
     [ "macros", "dir_94166332e573fa70aa6d5c49bcf9e4ef.html", "dir_94166332e573fa70aa6d5c49bcf9e4ef" ],
+    [ "threading", "dir_849705b3897370d2d386be39bb96c29e.html", "dir_849705b3897370d2d386be39bb96c29e" ],
     [ "utils", "dir_336acc40aa9f93d9d7f11e2873ce2166.html", "dir_336acc40aa9f93d9d7f11e2873ce2166" ],
     [ "clock.h", "clock_8h.html", "clock_8h" ],
     [ "Configuration.h", "mc__rtc_2Configuration_8h.html", "mc__rtc_2Configuration_8h" ],

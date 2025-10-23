@@ -1,30 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,373,216,399"/>
-<area shape="rect" id="node2" href="$structmc__solver_1_1utils_1_1Constraint.html" title=" " alt="" coords="264,431,499,472"/>
-<area shape="rect" id="node4" href="$structmc__solver_1_1utils_1_1Constraint.html" title=" " alt="" coords="281,205,481,261"/>
-<area shape="rect" id="node6" href="$structmc__solver_1_1utils_1_1Constraint.html" title=" " alt="" coords="281,285,481,341"/>
-<area shape="rect" id="node8" href="$structmc__solver_1_1details_1_1CompoundJointConstraint.html" title=" " alt="" coords="283,496,479,537"/>
-<area shape="rect" id="node9" href="$structmc__solver_1_1utils_1_1Constraint.html" title=" " alt="" coords="281,365,481,407"/>
-<area shape="rect" id="node3" href="$structmc__solver_1_1utils_1_1EqualityConstraint.html" title=" " alt="" coords="581,724,767,765"/>
-<area shape="rect" id="node5" href="$structmc__solver_1_1utils_1_1InequalityConstraint.html" title=" " alt="" coords="575,5,773,47"/>
-<area shape="rect" id="node7" href="$structmc__solver_1_1utils_1_1GenInequalityConstraint.html" title=" " alt="" coords="562,71,786,112"/>
-<area shape="rect" id="node10" href="$structmc__solver_1_1utils_1_1EqualityConstraint.html" title=" " alt="" coords="555,593,793,635"/>
-<area shape="rect" id="node12" href="$structmc__solver_1_1utils_1_1EqualityConstraint.html" title=" " alt="" coords="554,659,794,700"/>
-<area shape="rect" id="node14" href="$structmc__solver_1_1utils_1_1EqualityConstraint.html" title=" " alt="" coords="547,136,801,177"/>
-<area shape="rect" id="node16" href="$structmc__solver_1_1utils_1_1GenInequalityConstraint.html" title=" " alt="" coords="555,201,793,243"/>
-<area shape="rect" id="node18" href="$structmc__solver_1_1utils_1_1GenInequalityConstraint.html" title=" " alt="" coords="554,267,794,308"/>
-<area shape="rect" id="node20" href="$structmc__solver_1_1utils_1_1GenInequalityConstraint.html" title=" " alt="" coords="547,332,801,373"/>
-<area shape="rect" id="node22" href="$structmc__solver_1_1utils_1_1InequalityConstraint.html" title=" " alt="" coords="555,397,793,439"/>
-<area shape="rect" id="node24" href="$structmc__solver_1_1utils_1_1InequalityConstraint.html" title=" " alt="" coords="554,463,794,504"/>
-<area shape="rect" id="node26" href="$structmc__solver_1_1utils_1_1InequalityConstraint.html" title=" " alt="" coords="547,528,801,569"/>
-<area shape="rect" id="node11" href="$structmc__solver_1_1EqualityConstraintForce.html" title=" " alt="" coords="855,593,1073,635"/>
-<area shape="rect" id="node13" href="$structmc__solver_1_1EqualityConstraintRobot.html" title=" " alt="" coords="855,659,1073,700"/>
-<area shape="rect" id="node15" href="$structmc__solver_1_1EqualityConstraintLambda.html" title=" " alt="" coords="855,136,1073,177"/>
-<area shape="rect" id="node17" href="$structmc__solver_1_1GenInequalityConstraintForce.html" title=" " alt="" coords="870,201,1058,243"/>
-<area shape="rect" id="node19" href="$structmc__solver_1_1GenInequalityConstraintRobot.html" title=" " alt="" coords="870,267,1058,308"/>
-<area shape="rect" id="node21" href="$structmc__solver_1_1GenInequalityConstraintLambda.html" title=" " alt="" coords="870,332,1058,373"/>
-<area shape="rect" id="node23" href="$structmc__solver_1_1InequalityConstraintForce.html" title=" " alt="" coords="849,397,1079,439"/>
-<area shape="rect" id="node25" href="$structmc__solver_1_1InequalityConstraintRobot.html" title=" " alt="" coords="849,463,1079,504"/>
-<area shape="rect" id="node27" href="$structmc__solver_1_1InequalityConstraintLambda.html" title=" " alt="" coords="849,528,1079,569"/>
-<area shape="rect" id="node28" title=" " alt="" coords="72,311,149,338"/>
+<area shape="rect" id="node1" href="$structmc__solver_1_1QPSolver.html" title=" " alt="" coords="5,31,161,57"/>
+<area shape="rect" id="node2" href="$structmc__solver_1_1TVMQPSolver.html" title=" " alt="" coords="213,5,398,32"/>
+<area shape="rect" id="node3" href="$structmc__solver_1_1TasksQPSolver.html" title=" " alt="" coords="209,56,401,83"/>
 </map>

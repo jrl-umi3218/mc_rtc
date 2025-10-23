@@ -1,0 +1,818 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>Tutorials - Real-Time Considerations and Threading - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">Online demonstration</a>
+    </div>
+    
+      
+      
+      
+      EN
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+        <a href="/mc_rtc/jp/tutorials/recipes/threading.html">
+      
+      JP
+      
+        </a>
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>Introduction</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc and its components</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Framework usage</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/global-plugins.html">Using global plugins</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/schema.html">Schema structures integrated to the framework</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Framework tools</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_rtc_ticker-and-replay.html">mc_rtc_ticker and the Replay plugin</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Control recipes</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm-main-states.html">Main FSM states</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/datastore.html">DataStore: Sharing Objects</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/observers.html">State Observation Pipelines</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/lipm-stabilizer.html">Using the LIPM Stabilizer</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+                        
+                      
+                        
+                        <li><strong>Real-Time Considerations and Threading</strong></li>
+                          
+                        
+                      
+                    </ul>
+                    
+                    <li>Samples</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/samples/list-of-samples.html">Available sample controllers</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/samples/sample-admittance.html">Admittance sample controller</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Advanced topics</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-plugin.html">Implement a new plugin for mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/support-mc-rtc-build-static.html">Supporting MC_RTC_BUILD_STATIC in your code</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#a-primer-on-threading">A primer on threading</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#data-synchronization-general-overview">Data synchronization: general overview</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#example-protecting-shared-data-with-a-mutex">Example: Protecting shared data with a mutex</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#data-synchronization-in-mc_rtc">Data synchronization in mc_rtc</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#unsafe-example">Unsafe example</a></li>
+<li class="toc-entry toc-h3"><a href="#safe-example">Safe example</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#deadlocks-with-mutexes">Deadlocks with mutexes</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#mc_rtc-threading-utilities">mc_rtc threading utilities</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#asyncjob">AsyncJob</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#how-to-use-asyncjob">How to use AsyncJob</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>Real-Time Considerations and Threading</h1>
+        
+
+        <p><code class="language-plaintext highlighter-rouge">mc_rtc</code> controllers are typically running within a real-time thread with strict timing requirements, that is <code class="language-plaintext highlighter-rouge">MCGlobalController::run()</code> is expected to consistently provide results faster than the computation <code class="language-plaintext highlighter-rouge">Timestep</code> (typically <code class="language-plaintext highlighter-rouge">2ms</code> or <code class="language-plaintext highlighter-rouge">5ms</code>). We typically refer to computation runs that were slower than this timestep as a <code class="language-plaintext highlighter-rouge">missed iteration</code>, which can have strong implications when running on real robots’ hardware, depending on how the low-level hardware handles it. Common symptoms of missed iterations are: jitter, joint noises, jerky motion, etc. When an iteration is missed, the command sent to the robot remains the same as the one from the previous iteration(s):</p>
+
+<ul>
+  <li><strong>In position control</strong>: this causes the motor to be asked to abruptly stop at the current position, then to abruptly start again once a new command is received (causing jitter and/or actuator damage)</li>
+  <li><strong>In velocity control</strong>: we have two choices: either set the velocity to 0 which amounts to the same as the position control case, or keep the previously computed velocity (in that case the robot keeps moving at the latest known velocity until a new command is received).</li>
+  <li><strong>In torque control</strong>: we obviousy cannot set the torque to zero, and the only reasonable choice is to keep the previous torque.</li>
+</ul>
+
+<p>Furthermore, many algorithms assume that sensor data is received at a constant rate defined solely by the <code class="language-plaintext highlighter-rouge">timestep</code>.</p>
+
+<p>In any case, it is clear than missing iterations, especially multiple ones in a row is a bad idea and should be avoided at all cost. Let’s look at common reasons causing missed iterations:</p>
+<ul>
+  <li><strong>Controller too slow</strong>: it should be obvious that on average your controller should compute much faster than the control <code class="language-plaintext highlighter-rouge">timestep</code>. Aim for an average computation time less than 75% of <code class="language-plaintext highlighter-rouge">timestep</code></li>
+  <li><strong>Memory allocations</strong>: memory allocations cause cause large spikes in computation time. Allocating memory within a controller is not strictly-speaking real-time: one needs to ask the OS to allocate memory for us.
+<em>Recommendation</em>: Avoid it whenever possible, prefer doing large memory allocations ahead of time.</li>
+  <li><strong>I/O operations</strong>: Writing/reading to/from disk (especially without SSD), network operations, writing to the terminal are all non-rt operations.
+<em>Recommendation</em>: Such operations within the real-time control loop should be avoided, or performed by a thread outside of the control loop.</li>
+  <li><strong>QP</strong>: Adding Tasks/Constraints to the QP can be costly and cause a spike in computation times. The cost here is two-fold: the problem matrices need to be recreated to account for the new problem size, and the solver has to find a new solution that accounts for the modified problem, which cannot always be warm-started.
+<em>Recommendation</em>: It is unavoidable to have to add/remove tasks and constraints, so this cost cannot be fully avoided. However prefer adding tasks/constraints at the least critical moments of your control loop. For instance whenever possible avoid adding constraints during high-speed motions.</li>
+  <li><strong>Algorithms that are too slow</strong>: Some algorithms are unforunately too slow to be computed within a fraction of the control timestep (typically: vision, model-predictive control, etc). In which case, they need to be threaded to not slow down the control loop.</li>
+</ul>
+
+<p>As is obvious from the examples above, when writing complex controllers, some form of threading is often unavoidable. Unfortunately this greatly complexifies the code and is an aspect that is often misunderstood and mismanaged, which can easily lead to bugs, oftentimes serious and unpredicatbles (undefined behaviour). In the remainder of this tutorial we will:</p>
+<ul>
+  <li>Provide a quick primer on threading and its pitfalls</li>
+  <li>Examine threading in the context of <code class="language-plaintext highlighter-rouge">mc_rtc</code>: what is safe/unsafe?</li>
+  <li>Describe some helpers provided by <code class="language-plaintext highlighter-rouge">mc_rtc</code> to make your life easier.</li>
+</ul>
+
+<h1 id="a-primer-on-threading">A primer on threading</h1>
+
+<p>A <strong>thread</strong> is a separate flow of execution within your program. In the context of <code class="language-plaintext highlighter-rouge">mc_rtc</code> controllers, threads are often used to offload operations that are too slow or unpredictable for the real-time control loop, such as logging, file I/O, or vision processing. This allows the main control loop to maintain its strict timing requirements while slower tasks run in parallel.</p>
+
+<p>However, using threads introduces <strong>data synchronisation challenges</strong>. If multiple threads need to access or modify shared data (for example, sensor readings or control commands), you must ensure that this access is properly coordinated. Failing to do so can result in race conditions, where the outcome depends on the precise timing of thread execution, potentially leading to inconsistent or corrupted data. Synchronisation primitives like mutexes or locks can help, but they must be used carefully: holding a lock in the real-time thread can cause delays and missed iterations if another thread is holding the lock.</p>
+
+<p>Finally, <strong>creating a thread has a cost</strong>. Starting a new thread requires the operating system to allocate resources and manage scheduling, which can take a significant amount of time compared to the control loop’s timestep. Typically this is in the order of dozen of microseconds, but is somewhat unpredicatble as it relies on the kernel. For this reason, threads should be created ahead of time and reused, rather than created and destroyed within the control loop. A convenient alternative is to use thread pools, which manage a set of pre-created threads that can be reused for multiple tasks.</p>
+
+<h2 id="data-synchronization-general-overview">Data synchronization: general overview</h2>
+
+<p>When multiple threads access shared data, you must ensure that only one thread modifies the data at a time, or that reads and writes do not interfere with each other. This is called <strong>data synchronization</strong>. Without proper synchronization, you risk <strong>race conditions</strong>—subtle bugs where the program’s behavior depends on the unpredictable timing of threads. In real-time control, this can lead to corrupted sensor data, invalid commands, or even unsafe robot behavior.</p>
+
+<p>The most common synchronization tool in C++11 is the <code class="language-plaintext highlighter-rouge">std::mutex</code>. A mutex (mutual exclusion) allows only one thread to access a critical section of code at a time. To use a mutex, you lock it before accessing shared data and unlock it afterward. C++11 provides <code class="language-plaintext highlighter-rouge">std::lock_guard</code> to automatically manage locking and unlocking. <strong>Warning</strong>: mutexes are not magic, they need to be locked on both sides, in the thread that read/writes the data it protects as well as in the thread that read/writes it (controller, plugin, etc).</p>
+
+<h3 id="example-protecting-shared-data-with-a-mutex">Example: Protecting shared data with a mutex</h3>
+
+<p>Suppose you have a shared variable <code class="language-plaintext highlighter-rouge">shared_value</code> that is updated by a background thread and read by the real-time control thread:</p>
+
+<p><strong>1. Using a more complex shared object with a mutex</strong></p>
+
+<p>Suppose the shared data is a struct representing some sensor data:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mutex&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="k">struct</span> <span class="nc">SensorData</span>
+<span class="p">{</span>
+  <span class="kt">double</span> <span class="n">position</span><span class="p">;</span>
+  <span class="kt">double</span> <span class="n">velocity</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">SensorData</span> <span class="n">shared_sensor_data</span><span class="p">{</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">mtx</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="n">background_thread</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="p">{</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">mtx</span><span class="p">);</span>
+      <span class="n">shared_sensor_data</span><span class="p">.</span><span class="n">position</span> <span class="o">+=</span> <span class="mf">1.0</span><span class="p">;</span>
+      <span class="n">shared_sensor_data</span><span class="p">.</span><span class="n">velocity</span> <span class="o">+=</span> <span class="mf">0.5</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">control_thread</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">SensorData</span> <span class="n">local_copy</span><span class="p">;</span>
+    <span class="p">{</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">mtx</span><span class="p">);</span>
+      <span class="n">local_copy</span> <span class="o">=</span> <span class="n">shared_sensor_data</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Position: "</span> <span class="o">&lt;&lt;</span> <span class="n">local_copy</span><span class="p">.</span><span class="n">position</span>
+              <span class="o">&lt;&lt;</span> <span class="s">", Velocity: "</span> <span class="o">&lt;&lt;</span> <span class="n">local_copy</span><span class="p">.</span><span class="n">velocity</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>2. Using atomic types for simple data</strong></p>
+
+<p>For simple types like integers or booleans, you can use <code class="language-plaintext highlighter-rouge">std::atomic</code> for lock-free synchronization:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;atomic&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="n">std</span><span class="o">::</span><span class="n">atomic</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">shared_counter</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+<span class="kt">void</span> <span class="n">background_thread</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="o">++</span><span class="n">shared_counter</span><span class="p">;</span> <span class="c1">// atomic increment</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">control_thread</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="n">shared_counter</span><span class="p">.</span><span class="n">load</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Counter: "</span> <span class="o">&lt;&lt;</span> <span class="n">value</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Note:</strong>
+Atomic types are only suitable for simple data (like integers, booleans, etc). For complex objects, use mutexes or specialized lock-free data structures.</p>
+
+<h2 id="data-synchronization-in-mc_rtc">Data synchronization in mc_rtc</h2>
+
+<p>It is important to note that data structures in <code class="language-plaintext highlighter-rouge">mc_rtc</code> are generally <strong>not thread-safe</strong>. This means that if you access or modify <code class="language-plaintext highlighter-rouge">mc_rtc</code> data (like <code class="language-plaintext highlighter-rouge">MCGlobalController</code>, <code class="language-plaintext highlighter-rouge">Robot</code>, <code class="language-plaintext highlighter-rouge">Task</code>, etc.) from multiple threads, you must ensure proper synchronization to avoid running into undefined behaviour.</p>
+
+<p>Here is an unsafe example where a separate thread reads robot data while the main thread modifies it:</p>
+
+<h3 id="unsafe-example">Unsafe example</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_rbdyn/Robot.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">unsafe_read</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Robot</span> <span class="o">*</span> <span class="n">robot</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// This function reads robot data in a separate thread</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// Potentially unsafe: another thread might modify robot-&gt;posW() at the same time</span>
+    <span class="c1">// The result here is undefined behavior, it might appear to work, crash, or produce garbage values</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Robot position: "</span> <span class="o">&lt;&lt;</span> <span class="n">robot</span><span class="o">-&gt;</span><span class="n">posW</span><span class="p">().</span><span class="n">translation</span><span class="p">().</span><span class="n">transpose</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">unsafe_example</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Robot</span> <span class="o">*</span> <span class="n">robot</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// Start a thread that reads robot data</span>
+  <span class="n">std</span><span class="o">::</span><span class="kr">thread</span> <span class="n">t</span><span class="p">(</span><span class="n">unsafe_read</span><span class="p">,</span> <span class="n">robot</span><span class="p">);</span>
+
+  <span class="c1">// Meanwhile, the main thread modifies the robot data</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// Potentially unsafe: this modifies the robot's position</span>
+    <span class="n">robot</span><span class="o">-&gt;</span><span class="n">posW</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">{</span><span class="n">sva</span><span class="o">::</span><span class="n">RotZ</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">constants</span><span class="o">::</span><span class="n">PI</span><span class="p">),</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="n">i</span><span class="o">/</span><span class="mf">10.</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}});</span>
+  <span class="p">}</span>
+
+  <span class="n">t</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Warning:</strong>
+This example is unsafe because both threads access and modify the same <code class="language-plaintext highlighter-rouge">mc_rbdyn::Robot</code> object without any synchronization (like mutexes). This can cause data races and undefined behavior.</p>
+
+<h3 id="safe-example">Safe example</h3>
+
+<p>Now here’s a <strong>safe version</strong> using a <code class="language-plaintext highlighter-rouge">std::mutex</code> to synchronize access to the <code class="language-plaintext highlighter-rouge">mc_rbdyn::Robot</code> object. This prevents concurrent reads/writes and avoids data races.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_rbdyn/Robot.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mutex&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">robot_mutex</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">safe_read</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Robot</span> <span class="o">*</span> <span class="n">robot</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">robot_mutex</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Robot position: "</span> <span class="o">&lt;&lt;</span> <span class="n">robot</span><span class="o">-&gt;</span><span class="n">posW</span><span class="p">().</span><span class="n">translation</span><span class="p">().</span><span class="n">transpose</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">safe_example</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Robot</span> <span class="o">*</span> <span class="n">robot</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="kr">thread</span> <span class="n">t</span><span class="p">(</span><span class="n">safe_read</span><span class="p">,</span> <span class="n">robot</span><span class="p">);</span>
+
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">robot_mutex</span><span class="p">);</span>
+    <span class="n">robot</span><span class="o">-&gt;</span><span class="n">posW</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">{</span><span class="n">sva</span><span class="o">::</span><span class="n">RotZ</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">constants</span><span class="o">::</span><span class="n">PI</span><span class="p">),</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="n">i</span><span class="o">/</span><span class="mf">10.</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}});</span>
+  <span class="p">}</span>
+
+  <span class="n">t</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now, all accesses to the <code class="language-plaintext highlighter-rouge">robot</code> object are protected by a mutex, ensuring thread safety.</p>
+
+<h2 id="deadlocks-with-mutexes">Deadlocks with mutexes</h2>
+
+<p>A <strong>deadlock</strong> occurs when two or more threads are each waiting for the other to release a resource (such as a mutex), causing all threads involved to wait forever. This typically happens when multiple mutexes are locked in different orders by different threads.</p>
+
+<p>The following example demonstrates how improper use of mutexes can lead to a deadlock:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mutex&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">mutexA</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">mutexB</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">thread1</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lockA</span><span class="p">(</span><span class="n">mutexA</span><span class="p">);</span>
+  <span class="c1">// Simulate work</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lockB</span><span class="p">(</span><span class="n">mutexB</span><span class="p">);</span> <span class="c1">// Waits for mutexB</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Thread 1 acquired both mutexes</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">thread2</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lockB</span><span class="p">(</span><span class="n">mutexB</span><span class="p">);</span>
+  <span class="c1">// Simulate work</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lockA</span><span class="p">(</span><span class="n">mutexA</span><span class="p">);</span> <span class="c1">// Waits for mutexA</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Thread 2 acquired both mutexes</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">deadlock_example</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="kr">thread</span> <span class="n">t1</span><span class="p">(</span><span class="n">thread1</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="kr">thread</span> <span class="n">t2</span><span class="p">(</span><span class="n">thread2</span><span class="p">);</span>
+  <span class="n">t1</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+  <span class="n">t2</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="mc_rtc-threading-utilities">mc_rtc threading utilities</h1>
+
+<p>To help with common cases encountered while working within the framework, <code class="language-plaintext highlighter-rouge">mc_rtc</code> provides some utilities to help you manage threading and data synchronization:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc::threading::AsyncJob</code>: Provides a convenient way to run jobs asynchronously in a separate thread. This creates and manages and <code class="language-plaintext highlighter-rouge">std::async</code> job.</li>
+</ul>
+
+<h2 id="asyncjob">AsyncJob</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">mc_rtc::threading::AsyncJob</code> class provides a convenient way to run jobs asynchronously in a separate thread. It uses <code class="language-plaintext highlighter-rouge">std::async</code> under the hood to manage the thread and provides methods to check if the job is done, retrieve the result, and handle exceptions.</p>
+
+<p><strong>Advantages:</strong></p>
+<ul>
+  <li>Easy to use</li>
+  <li>Clear separation of inputs/outputs</li>
+</ul>
+
+<p><strong>Drawbacks:</strong></p>
+<ul>
+  <li>Creates a separate thread for each job, which can be costly if jobs are frequent and short-lived.</li>
+</ul>
+
+<h3 id="how-to-use-asyncjob">How to use <code class="language-plaintext highlighter-rouge">AsyncJob</code></h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">AsyncJob</code> class is a CRTP (Curiously Recurring Template Pattern) base class for running asynchronous computations in <code class="language-plaintext highlighter-rouge">mc_rtc</code>. It manages job state, result retrieval, and optional integration with logging and GUI.</p>
+
+<p><strong>Steps to use:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Create a MyInput class</strong>
+This should contain a copy of all data needed to run the job.</p>
+  </li>
+  <li>
+    <p><strong>Create a MyResult class</strong>
+This should contain a copy of all data produced by the job.</p>
+  </li>
+  <li>
+    <p><strong>Define your job class</strong>
+Inherit from <code class="language-plaintext highlighter-rouge">mc_rtc::threading::MakeAsyncJob&lt;YourJob, InputType, ResultType&gt;</code>.
+Implement the required <code class="language-plaintext highlighter-rouge">ResultType computeJob()</code> method.</p>
+  </li>
+  <li>
+    <p><strong>(Optional) Add logging and GUI</strong>
+Implement <code class="language-plaintext highlighter-rouge">void addToLoggerImpl()</code> and/or <code class="language-plaintext highlighter-rouge">void addToGUIImpl()</code> for custom log/GUI elements.</p>
+  </li>
+  <li>
+    <p><strong>Create and use your job</strong></p>
+    <ul>
+      <li>Set the input (when not running).</li>
+      <li>Call <code class="language-plaintext highlighter-rouge">startAsync()</code> to launch the computation.</li>
+      <li>Regularly call <code class="language-plaintext highlighter-rouge">checkResult()</code> in your control loop to update state and retrieve results.</li>
+      <li>Access the result via <code class="language-plaintext highlighter-rouge">lastResult()</code>.</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Notes:</strong></p>
+<ul>
+  <li>Only modify the input when the job is not running (<code class="language-plaintext highlighter-rouge">running() == false</code>).</li>
+  <li>Always call <code class="language-plaintext highlighter-rouge">checkResult()</code> in your control loop to handle results and bookkeeping.</li>
+  <li>Logger and GUI entries are automatically removed when the job is destroyed.</li>
+</ul>
+
+<p><strong>Basic Example:</strong></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MyAsyncJob.h</span>
+
+<span class="k">struct</span> <span class="nc">MyInput</span>
+<span class="p">{</span>
+  <span class="kt">double</span> <span class="n">data</span><span class="p">;</span> <span class="c1">// Input value for the job</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">MyResult</span>
+<span class="p">{</span>
+  <span class="kt">double</span> <span class="n">value</span><span class="p">;</span> <span class="c1">// Computed result</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">MyAsyncJob</span> <span class="o">:</span> <span class="k">public</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">threading</span><span class="o">::</span><span class="n">MakeAsyncJob</span><span class="o">&lt;</span><span class="n">MyAsyncJob</span><span class="p">,</span> <span class="n">MyInput</span><span class="p">,</span> <span class="n">MyResult</span><span class="o">&gt;</span>
+<span class="p">{</span>
+  <span class="n">MyResult</span> <span class="n">computeJob</span><span class="p">()</span>
+  <span class="p">{</span>
+    <span class="n">MyResult</span> <span class="n">res</span><span class="p">;</span>
+    <span class="n">res</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">input_</span><span class="p">.</span><span class="n">data</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">addToLoggerImpl</span><span class="p">()</span>
+  <span class="p">{</span>
+    <span class="n">logger_</span><span class="o">-&gt;</span><span class="n">addLogEntry</span><span class="p">(</span><span class="n">loggerPrefix_</span> <span class="o">+</span> <span class="s">"_my_job_value"</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">lastResult_</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span> <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">addToGUIImpl</span><span class="p">()</span>
+  <span class="p">{</span>
+    <span class="n">gui_</span><span class="o">-&gt;</span><span class="n">addElement</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">guiCategory_</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Label</span><span class="p">(</span><span class="s">"Result"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">lastResult_</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span> <span class="p">}));</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p><strong>Example FSM State using MyAsyncJob:</strong></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// SimpleAsyncState.h</span>
+<span class="cp">#include</span> <span class="cpf">&lt;mc_control/fsm/State.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mc_rtc/threading/AsyncJob.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mc_rtc/gui/StateBuilder.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mc_rtc/log/Logger.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">"MyAsyncJob.h"</span><span class="cp">
+</span>
+<span class="c1">// FSM State using the simple AsyncJob, restarting after each result</span>
+<span class="k">struct</span> <span class="nc">SimpleAsyncState</span> <span class="o">:</span> <span class="k">public</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">State</span>
+<span class="p">{</span>
+  <span class="n">MyAsyncJob</span> <span class="n">job_</span><span class="p">;</span> <span class="c1">// Creates the job class (does not start a job)</span>
+  <span class="kt">int</span> <span class="n">counter_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">maxIterations_</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// Stop after 5 results</span>
+
+  <span class="kt">void</span> <span class="n">configure</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="c1">// setup initial input for the async job</span>
+    <span class="n">config</span><span class="p">(</span><span class="s">"input"</span><span class="p">,</span> <span class="n">job_</span><span class="p">.</span><span class="n">input</span><span class="p">().</span><span class="n">data</span><span class="p">);</span>
+    <span class="n">config</span><span class="p">(</span><span class="s">"maxIterations"</span><span class="p">,</span> <span class="n">maxIterations_</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">start</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="c1">// Start the first async job. The result will be available later in run() using job_.checkResult()</span>
+    <span class="n">job_</span><span class="p">.</span><span class="n">startAsync</span><span class="p">();</span>
+    <span class="n">job_</span><span class="p">.</span><span class="n">addToLogger</span><span class="p">(</span><span class="n">ctl</span><span class="p">.</span><span class="n">logger</span><span class="p">(),</span> <span class="n">name</span><span class="p">());</span>
+    <span class="n">job_</span><span class="p">.</span><span class="n">addToGUI</span><span class="p">(</span><span class="n">ctl</span><span class="p">.</span><span class="n">gui</span><span class="p">(),</span> <span class="p">{</span><span class="n">name</span><span class="p">()});</span>
+    <span class="n">counter_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">bool</span> <span class="n">run</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">job_</span><span class="p">.</span><span class="n">checkResult</span><span class="p">())</span>
+    <span class="p">{</span> <span class="c1">// The previous async job completed, we can retrieve the result</span>
+      <span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">result</span> <span class="o">=</span> <span class="o">*</span><span class="n">job_</span><span class="p">.</span><span class="n">lastResult</span><span class="p">();</span>
+      <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">"[{}] Async result {}: {}"</span><span class="p">,</span> <span class="n">name</span><span class="p">(),</span> <span class="n">counter_</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+
+      <span class="n">counter_</span><span class="o">++</span><span class="p">;</span>
+
+      <span class="c1">// The job is no longer running, it is safe to update the input for the next job</span>
+      <span class="n">job_</span><span class="p">.</span><span class="n">input</span><span class="p">().</span><span class="n">data</span> <span class="o">+=</span> <span class="mf">1.0</span><span class="p">;</span>
+
+      <span class="k">if</span><span class="p">(</span><span class="n">counter_</span> <span class="o">&lt;</span> <span class="n">maxIterations_</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">job_</span><span class="p">.</span><span class="n">startAsync</span><span class="p">();</span> <span class="c1">// Restart the async job</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>      <span class="c1">// Continue running</span>
+      <span class="p">}</span>
+      <span class="k">else</span>
+      <span class="p">{</span>
+        <span class="n">output</span><span class="p">(</span><span class="s">"OK"</span><span class="p">);</span>      <span class="c1">// End state after maxIterations_</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">teardown</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="c1">// Cleanup handled by AsyncJob destructor</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/tutorials/samples/list-of-samples.html">Next tutorial: Available sample controllers</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/credits.html">Credits</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

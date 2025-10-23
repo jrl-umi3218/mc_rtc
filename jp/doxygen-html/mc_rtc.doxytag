@@ -2894,6 +2894,27 @@
       <anchor>a5a9a29b4e1cc43e334c4ca10059ef277</anchor>
       <arglist></arglist>
     </member>
+    <member kind="function">
+      <type>double</type>
+      <name>duration_ms_count</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a4b4bfaaf16d51cf81d316efc089b2518</anchor>
+      <arglist>(std::chrono::time_point&lt; mc_rtc::clock &gt; start, std::chrono::time_point&lt; mc_rtc::clock &gt; end)</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_rtc::duration_ms</type>
+      <name>elapsed_ms</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>aa662ced81969fc940bbc605f1c3bd7da</anchor>
+      <arglist>(std::chrono::time_point&lt; mc_rtc::clock &gt; start)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>elapsed_ms_count</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a9832821caaab564e749e877d715a8fe2</anchor>
+      <arglist>(std::chrono::time_point&lt; mc_rtc::clock &gt; start)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>ConfigurationHelpers.h</name>
@@ -5768,6 +5789,25 @@
     <namespace>mc_rtc</namespace>
   </compound>
   <compound kind="file">
+    <name>AsyncJob.h</name>
+    <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rtc/threading/</path>
+    <filename>AsyncJob_8h.html</filename>
+    <includes id="clock_8h" name="clock.h" local="no" imported="no">mc_rtc/clock.h</includes>
+    <includes id="StateBuilder_8h" name="StateBuilder.h" local="no" imported="no">mc_rtc/gui/StateBuilder.h</includes>
+    <includes id="Logger_8h" name="Logger.h" local="no" imported="no">mc_rtc/log/Logger.h</includes>
+    <class kind="struct">mc_rtc::threading::AsyncJob</class>
+    <class kind="struct">mc_rtc::threading::AsyncJob::Timers</class>
+    <namespace>mc_rtc</namespace>
+    <namespace>mc_rtc::threading</namespace>
+    <member kind="typedef">
+      <type>AsyncJob&lt; Derived, Input, Result &gt;</type>
+      <name>MakeAsyncJob</name>
+      <anchorfile>namespacemc__rtc_1_1threading.html</anchorfile>
+      <anchor>a97928cf43df2d6bfc4039060a96d3c6c</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>type_name.h</name>
     <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rtc/</path>
     <filename>type__name_8h.html</filename>
@@ -8294,6 +8334,261 @@
       <anchor>a05d22b6de3dd771472476263f1a4ba3d</anchor>
       <arglist></arglist>
     </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::threading::AsyncJob</name>
+    <filename>structmc__rtc_1_1threading_1_1AsyncJob.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
+    <templarg></templarg>
+    <class kind="struct">mc_rtc::threading::AsyncJob::Timers</class>
+    <member kind="function">
+      <type></type>
+      <name>AsyncJob</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a8137ec0ebc281f53803b09ca13403bb5</anchor>
+      <arglist>()=default</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>AsyncJob</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a45c28a7e6bb3789eb03efcd5e21edfa7</anchor>
+      <arglist>(const AsyncJob &amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type>AsyncJob &amp;</type>
+      <name>operator=</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a359711cddd96f6105012c13c83d6e24d</anchor>
+      <arglist>(const AsyncJob &amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>AsyncJob</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>adddee5e1c2fdbbe71daf3cfe10c30be7</anchor>
+      <arglist>(AsyncJob &amp;&amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type>AsyncJob &amp;</type>
+      <name>operator=</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a7a7e65aad9f11c45008026427546c641</anchor>
+      <arglist>(AsyncJob &amp;&amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>~AsyncJob</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>ac0fa75b5a65ba9f2a5e773bc17a7b9a0</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>Input &amp;</type>
+      <name>input</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>ac8745d59ff65932c5f8de291c9260ee2</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>startAsync</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>abbb0456c301ba3d59caa7014bed0600f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>running</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>ab36dd5957240f53d45eeca999ea39dd7</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>startedOnce</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a5b4ae193870595de85a4fcbe614fd437</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>checkResult</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a66380feca213774e94614a5522cb68c6</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::optional&lt; Result &gt; &amp;</type>
+      <name>lastResult</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>ab0db0d46284969f7916c28eead96416a</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>addToLogger</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a7f16467f1040b99388774752ee31613c</anchor>
+      <arglist>(mc_rtc::Logger &amp;logger, const std::string &amp;prefix)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>addToGUI</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>abead3db167e16ce879dd656c2b0f4592</anchor>
+      <arglist>(mc_rtc::gui::StateBuilder &amp;gui, const std::vector&lt; std::string &gt; &amp;category)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>removeFromLogger</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>aff995a834248e0472977f1ffd327441b</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>removeFromGUI</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>ab9c1f5f6b4f1749726aeb5f90910268d</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>std::string</type>
+      <name>name</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a755202e45b0d45ec134d6552376c05eb</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>addToLoggerImpl</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a869fdf28424068229d57489bdb7f166e</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>addToGUIImpl</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a1f0ba932286ef39658c7148412122c85</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>Derived &amp;</type>
+      <name>derived</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a4dc97260518072287f19ecac0434642e</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>addToLogger_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a76a319706362c44c5a0f015fcf9a4fcd</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>addToGUI_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a2a0e5373f9f623dde82a934bf7de9c0b</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::atomic&lt; bool &gt;</type>
+      <name>running_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a142c4dd0281b4c753572a0a66473e8de</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>inLogger_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a0cdcca47734a4930221a8caf31484dce</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>inGUI_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a166763449014bd6eb96dc06b66eca79b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>startedOnce_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a0bb35b3833f1dc5dae5b59fc6a515443</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::future&lt; Result &gt;</type>
+      <name>futureResult_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a2225e0b5ba67fe070c50544905373424</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>canGetSharedState_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>aefb4b0e8de9556c18581be1f7966bf89</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::optional&lt; Result &gt;</type>
+      <name>lastResult_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>ad71ac2763561db745f1c8cdaea539774</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Timers</type>
+      <name>timers_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a0a44119cd7a7c27df882ab54a6d81e40</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Input</type>
+      <name>input_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>ad97ff33694ed8eef35f0c5bc1e4fd07e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_rtc::Logger *</type>
+      <name>logger_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a13abcf8af8eab2127d3d3987b2b72331</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::string</type>
+      <name>loggerPrefix_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>ac646afe4c6134befd052240432502747</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_rtc::gui::StateBuilder *</type>
+      <name>gui_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>adacc0ec2c0bc3e94c5419d517579bc65</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::vector&lt; std::string &gt;</type>
+      <name>guiCategory_</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob.html</anchorfile>
+      <anchor>a6494acbc4725924677668d87fcc06e91</anchor>
+      <arglist></arglist>
+    </member>
+    <docanchor file="structmc__rtc_1_1threading_1_1AsyncJob.html" title="Required/Optional Child Class Methods">RequiredMethods</docanchor>
+    <docanchor file="structmc__rtc_1_1threading_1_1AsyncJob.html" title="Example Usage">UsageExample</docanchor>
   </compound>
   <compound kind="struct">
     <name>mc_rtc::gui::plot::AxisConfiguration</name>
@@ -43264,6 +43559,45 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::threading::AsyncJob::Timers</name>
+    <filename>structmc__rtc_1_1threading_1_1AsyncJob_1_1Timers.html</filename>
+    <member kind="variable">
+      <type>double</type>
+      <name>dt_startAsync</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob_1_1Timers.html</anchorfile>
+      <anchor>a0884c45791a95a75543c3f278927115a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>dt_checkResult</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob_1_1Timers.html</anchorfile>
+      <anchor>a8891eb836010b6696774672e84f33ff8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>dt_loggerImpl</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob_1_1Timers.html</anchorfile>
+      <anchor>a76f48276827939b7dc494d815c0e7e94</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>dt_guiImpl</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob_1_1Timers.html</anchorfile>
+      <anchor>a7db1cfe30372495914591b77fc2d3066</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::atomic&lt; double &gt;</type>
+      <name>dt_compute</name>
+      <anchorfile>structmc__rtc_1_1threading_1_1AsyncJob_1_1Timers.html</anchorfile>
+      <anchor>a518061757116efc8e0a94421bbcea3fb</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rtc::gui::details::TrajectoryImpl</name>
     <filename>structmc__rtc_1_1gui_1_1details_1_1TrajectoryImpl.html</filename>
     <templarg></templarg>
@@ -46237,6 +46571,7 @@
     <namespace>mc_rtc::io</namespace>
     <namespace>mc_rtc::log</namespace>
     <namespace>mc_rtc::schema</namespace>
+    <namespace>mc_rtc::threading</namespace>
     <namespace>mc_rtc::utils</namespace>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_control::Contact &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::CompoundJointConstraintDescription &gt;</class>
@@ -46333,6 +46668,27 @@
       <anchorfile>namespacemc__rtc.html</anchorfile>
       <anchor>a34c76f6b1a3b305306e41f6dd4f90c27</anchor>
       <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>duration_ms_count</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a4b4bfaaf16d51cf81d316efc089b2518</anchor>
+      <arglist>(std::chrono::time_point&lt; mc_rtc::clock &gt; start, std::chrono::time_point&lt; mc_rtc::clock &gt; end)</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_rtc::duration_ms</type>
+      <name>elapsed_ms</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>aa662ced81969fc940bbc605f1c3bd7da</anchor>
+      <arglist>(std::chrono::time_point&lt; mc_rtc::clock &gt; start)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>elapsed_ms_count</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a9832821caaab564e749e877d715a8fe2</anchor>
+      <arglist>(std::chrono::time_point&lt; mc_rtc::clock &gt; start)</arglist>
     </member>
     <member kind="function">
       <type>std::vector&lt; T &gt;</type>
@@ -48365,6 +48721,18 @@
       <name>is_eigen_matrixxd_v</name>
       <anchorfile>namespacemc__rtc_1_1schema_1_1details.html</anchorfile>
       <anchor>a89fab8f81f8ffe1c0f02fb8b00d12fe3</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="namespace">
+    <name>mc_rtc::threading</name>
+    <filename>namespacemc__rtc_1_1threading.html</filename>
+    <class kind="struct">mc_rtc::threading::AsyncJob</class>
+    <member kind="typedef">
+      <type>AsyncJob&lt; Derived, Input, Result &gt;</type>
+      <name>MakeAsyncJob</name>
+      <anchorfile>namespacemc__rtc_1_1threading.html</anchorfile>
+      <anchor>a97928cf43df2d6bfc4039060a96d3c6c</anchor>
       <arglist></arglist>
     </member>
   </compound>

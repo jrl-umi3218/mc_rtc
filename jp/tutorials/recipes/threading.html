@@ -1,0 +1,818 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>チュートリアル - リアルタイムの考慮事項とスレッド処理 - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/jp/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/interfaces.html">インタフェース</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/robots.html">ロボット</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/jp/tutorials.html">チュートリアル</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/doxygen.html">API ドキュメンテーション</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/jp/json.html">JSON/YAML ドキュメンテーション</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">オンラインデモ</a>
+    </div>
+    
+      
+      
+      
+        <a href="/mc_rtc/tutorials/recipes/threading.html">
+      
+      EN
+      
+        </a>
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+      JP
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>イントロダクション</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/installation-guide.html">インストールガイド</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/configuration.html">設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/running-a-controller.html">コントローラの実行</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/first-controller.html">mc_rtcを用いた最初のコントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/com-controller.html">重心の制御</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/ef-controller.html">エンドエフェクタの制御方法 (及びロードの方法)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>フレームワークの利用法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> 設定</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/logging.html">データのロギング</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/console-logging.html">画面への情報の表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/gui.html">グラフィカルユーザインタフェース (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/live-plotting.html">コントローラからの情報のオンライン表示</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/ros.html">ROS統合</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/global-plugins.html">グローバルプラグインの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/usage/schema.html">フレームワークに統合されたスキーマ構造</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>ツール</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_rtc_ticker-and-replay.html">mc_rtc_tickerとReplayプラグイン"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_utils.html">ログの操作</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_ui.html">ログの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_convex_visualization.html">凸形状の可視化</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>コントローラ実装の方法</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm.html">FSM機能の利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-main-states.html">主なFSMの状態</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/fsm-example.html">FSMコントローラの例</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/derived-fsm.html">FSMコントローラの継承</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/datastore.html">データ共有機能"DataStore"</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/observers.html">ステートオブザベーションパイプライン</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/lipm-stabilizer.html">LIPMスタビライザの利用</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/speed-constraint.html">物体速度の拘束</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/moving-a-contact.html">接触の移動</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/contact-dof.html">接触の拘束自由度の変更</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-select.html">タスクで特定の関節を利用する方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/dim-weight.html">作業空間の座標軸方向に異なる重み付けを行う方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/joint-stiffness.html">関節の重み付け</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/recipes/com-constraint.html">重心位置の存在可能な領域の拘束</a></li>
+                        
+                      
+                        
+                        <li><strong>リアルタイムの考慮事項とスレッド処理</strong></li>
+                          
+                        
+                      
+                    </ul>
+                    
+                    <li>サンプル</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">コントローラのリスト</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/samples/sample-admittance.html">アドミッタンスコントローラ</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>上級者向けのトピック</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-plugin.html">mc_rtc用の新しいプラグインの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-interface.html">新しいmc_rtcインタフェースの実装方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-environment.html">mc_rtcにおける環境データの作成</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">新たなロボットをmc_rtcでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/support-mc-rtc-build-static.html">MC_RTC_BUILD_STATICをプログラムでサポートする方法</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/advanced/debug-lssol-output-6.html">LSSOL output 6のデバッグ</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#スレッドの基礎">スレッドの基礎</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#データ同期一般的な概要">データ同期：一般的な概要</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#例ミューテックスで共有データを保護する">例：ミューテックスで共有データを保護する</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#mc_rtcにおけるデータ同期">mc_rtcにおけるデータ同期</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#危険な例">危険な例</a></li>
+<li class="toc-entry toc-h3"><a href="#安全な例">安全な例</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#ミューテックスによるデッドロック">ミューテックスによるデッドロック</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#mc_rtc-のスレッド化ユーティリティ">mc_rtc のスレッド化ユーティリティ</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#asyncjob">AsyncJob</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#asyncjob-の使い方">AsyncJob の使い方</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>リアルタイムの考慮事項とスレッド処理</h1>
+        
+
+        <p><code class="language-plaintext highlighter-rouge">mc_rtc</code> コントローラは通常、厳格なタイミング要件を持つリアルタイムスレッド内で動作しています。つまり、<code class="language-plaintext highlighter-rouge">MCGlobalController::run()</code> は計算 <code class="language-plaintext highlighter-rouge">Timestep</code>（通常は <code class="language-plaintext highlighter-rouge">2ms</code> または <code class="language-plaintext highlighter-rouge">5ms</code>）よりも一貫して速く結果を提供することが求められます。このタイムステップよりも遅くなった計算実行を「ミスイテレーション（missed iteration）」と呼びます。これは、ロボットのハードウェア上で動作する場合、低レベルハードウェアの扱い方によっては重大な影響を及ぼす可能性があります。ミスイテレーションの一般的な症状は、ジッター、関節のノイズ、ぎこちない動きなどです。イテレーションがミスされると、ロボットに送信されるコマンドは前回のイテレーションのものがそのまま維持されます：</p>
+
+<ul>
+  <li><strong>位置制御の場合</strong>：モータは現在位置で急停止するように指示され、新しいコマンドが届くと再び急始動します（ジッターやアクチュエータの損傷の原因）。</li>
+  <li><strong>速度制御の場合</strong>：速度を0に設定する（位置制御と同じ結果）か、前回計算した速度を維持する（新しいコマンドが届くまでロボットは最新の速度で動き続ける）かの選択肢があります。</li>
+  <li><strong>トルク制御の場合</strong>：トルクを0にすることはできないため、前回のトルクを維持するしかありません。</li>
+</ul>
+
+<p>さらに、多くのアルゴリズムはセンサデータが <code class="language-plaintext highlighter-rouge">timestep</code> で定義された一定のレートで受信されることを前提としています。</p>
+
+<p>いずれにせよ、特に連続して複数回のイテレーションをミスすることは非常に悪いことであり、絶対に避けるべきです。ミスイテレーションの主な原因を見てみましょう：</p>
+
+<ul>
+  <li><strong>コントローラが遅すぎる</strong>：コントローラの平均計算時間は制御 <code class="language-plaintext highlighter-rouge">timestep</code> よりも十分に速い必要があります。平均計算時間は <code class="language-plaintext highlighter-rouge">timestep</code> の75%未満を目指しましょう。</li>
+  <li><strong>メモリアロケーション</strong>：メモリアロケーションは計算時間に大きなスパイクを引き起こします。コントローラ内でのメモリアロケーションはリアルタイムとは言えません。OSにメモリ割り当てを依頼する必要があるためです。
+<em>推奨</em>: 可能な限り避け、事前に大きなメモリを確保しておきましょう。</li>
+  <li><strong>I/O操作</strong>：ディスクへの書き込み/読み込み（特にSSDなしの場合）、ネットワーク操作、ターミナルへの書き込みはすべてリアルタイムではありません。
+<em>推奨</em>: これらの操作はリアルタイム制御ループ内で避けるか、制御ループ外のスレッドで実行しましょう。</li>
+  <li><strong>QP</strong>：タスクや制約をQPに追加することは計算時間のスパイクを引き起こす可能性があります。問題サイズに応じて行列を再生成し、ソルバが新しい解を見つける必要があるためです（ウォームスタートできない場合もあります）。
+<em>推奨</em>: タスクや制約の追加/削除は避けられませんが、制御ループの重要度が低いタイミングで行いましょう。例えば高速動作中の制約追加は避けてください。</li>
+  <li><strong>アルゴリズムが遅すぎる</strong>：一部のアルゴリズム（例：ビジョン、モデル予測制御など）は制御タイムステップの一部で計算するには遅すぎます。この場合、制御ループを遅らせないようにスレッド化が必要です。</li>
+</ul>
+
+<p>上記の例から明らかなように、複雑なコントローラを書く場合、何らかのスレッド化は避けられません。しかし、これはコードを大幅に複雑化させ、誤解や誤管理がバグ（多くは深刻かつ予測不能な未定義動作）につながりやすい側面です。本チュートリアルの残りでは以下を扱います：</p>
+
+<ul>
+  <li>スレッドとその落とし穴の簡単な解説</li>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc</code> におけるスレッド化：安全なこと/危険なこと</li>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc</code> が提供するスレッド化支援ツールの紹介</li>
+</ul>
+
+<h1 id="スレッドの基礎">スレッドの基礎</h1>
+
+<p><strong>スレッド</strong>とは、プログラム内の独立した実行フローです。<code class="language-plaintext highlighter-rouge">mc_rtc</code> コントローラの文脈では、スレッドはログ記録、ファイルI/O、ビジョン処理など、リアルタイム制御ループには遅すぎる/予測できない処理をオフロードするためによく使われます。これにより、メイン制御ループは厳格なタイミング要件を維持しつつ、遅いタスクは並列で実行できます。</p>
+
+<p>しかし、スレッドを使うと<strong>データ同期の課題</strong>が生じます。複数のスレッドが共有データ（例：センサ値や制御コマンド）にアクセス・変更する必要がある場合、そのアクセスを適切に調整しなければなりません。これを怠ると、スレッドの実行タイミングに依存して結果が変わる「競合状態（race condition）」が発生し、データの不整合や破損につながります。ミューテックスやロックなどの同期プリミティブが役立ちますが、注意が必要です：リアルタイムスレッドでロックを保持すると、他のスレッドがロックを保持している間に遅延やミスイテレーションが発生する可能性があります。</p>
+
+<p>また、<strong>スレッドの生成にはコスト</strong>があります。新しいスレッドを作成するにはOSがリソースを割り当て、スケジューリングを管理する必要があり、制御ループのタイムステップと比べてかなりの時間がかかります（通常は数十マイクロ秒程度ですが、カーネル依存で予測不能です）。そのため、スレッドは事前に作成し再利用するべきで、制御ループ内で頻繁に生成・破棄すべきではありません。代替案としてスレッドプールを使うと、複数のタスクで事前生成したスレッドを再利用できます。</p>
+
+<h2 id="データ同期一般的な概要">データ同期：一般的な概要</h2>
+
+<p>複数のスレッドが共有データにアクセスする場合、同時にデータを変更しない、または読み書きが干渉しないようにしなければなりません。これを<strong>データ同期</strong>と呼びます。適切な同期がないと、<strong>競合状態</strong>が発生し、プログラムの動作がスレッドの予測不能なタイミングに依存するバグが生じます。リアルタイム制御では、これがセンサデータの破損、不正なコマンド、さらにはロボットの危険な動作につながることもあります。</p>
+
+<p>C++11で最も一般的な同期ツールは <code class="language-plaintext highlighter-rouge">std::mutex</code> です。ミューテックス（相互排他）は、同時に1つのスレッドだけがクリティカルセクションに入れるようにします。ミューテックスを使うには、共有データにアクセスする前にロックし、アクセス後にアンロックします。C++11の <code class="language-plaintext highlighter-rouge">std::lock_guard</code> を使うとロック/アンロックを自動管理できます。<strong>注意</strong>：ミューテックスは魔法の道具ではありません。保護したいデータを読み書きするすべてのスレッドでロックする必要があります（コントローラ、プラグインなど両方で）。</p>
+
+<h3 id="例ミューテックスで共有データを保護する">例：ミューテックスで共有データを保護する</h3>
+
+<p>例えば、バックグラウンドスレッドが更新し、リアルタイム制御スレッドが読み取る共有変数 <code class="language-plaintext highlighter-rouge">shared_value</code> があるとします。</p>
+
+<p><strong>1. ミューテックスを使った複雑な共有オブジェクト</strong></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mutex&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="k">struct</span> <span class="nc">SensorData</span>
+<span class="p">{</span>
+  <span class="kt">double</span> <span class="n">position</span><span class="p">;</span>
+  <span class="kt">double</span> <span class="n">velocity</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">SensorData</span> <span class="n">shared_sensor_data</span><span class="p">{</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">mtx</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="n">background_thread</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="p">{</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">mtx</span><span class="p">);</span>
+      <span class="n">shared_sensor_data</span><span class="p">.</span><span class="n">position</span> <span class="o">+=</span> <span class="mf">1.0</span><span class="p">;</span>
+      <span class="n">shared_sensor_data</span><span class="p">.</span><span class="n">velocity</span> <span class="o">+=</span> <span class="mf">0.5</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">control_thread</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">SensorData</span> <span class="n">local_copy</span><span class="p">;</span>
+    <span class="p">{</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">mtx</span><span class="p">);</span>
+      <span class="n">local_copy</span> <span class="o">=</span> <span class="n">shared_sensor_data</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Position: "</span> <span class="o">&lt;&lt;</span> <span class="n">local_copy</span><span class="p">.</span><span class="n">position</span>
+              <span class="o">&lt;&lt;</span> <span class="s">", Velocity: "</span> <span class="o">&lt;&lt;</span> <span class="n">local_copy</span><span class="p">.</span><span class="n">velocity</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>2. 単純なデータにはアトミック型を使う</strong></p>
+
+<p>整数やブーリアンなど単純な型には、ロックフリー同期のために <code class="language-plaintext highlighter-rouge">std::atomic</code> を使えます：</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;atomic&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="n">std</span><span class="o">::</span><span class="n">atomic</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">shared_counter</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+<span class="kt">void</span> <span class="n">background_thread</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="o">++</span><span class="n">shared_counter</span><span class="p">;</span> <span class="c1">// アトミックインクリメント</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">control_thread</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="n">shared_counter</span><span class="p">.</span><span class="n">load</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Counter: "</span> <span class="o">&lt;&lt;</span> <span class="n">value</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>注意：</strong>
+アトミック型は整数やブーリアンなど単純なデータにのみ適しています。複雑なオブジェクトにはミューテックスや専用のロックフリー構造体を使いましょう。</p>
+
+<h2 id="mc_rtcにおけるデータ同期">mc_rtcにおけるデータ同期</h2>
+
+<p><code class="language-plaintext highlighter-rouge">mc_rtc</code> のデータ構造は<strong>基本的にスレッドセーフではありません</strong>。つまり、<code class="language-plaintext highlighter-rouge">MCGlobalController</code>、<code class="language-plaintext highlighter-rouge">Robot</code>、<code class="language-plaintext highlighter-rouge">Task</code> などの <code class="language-plaintext highlighter-rouge">mc_rtc</code> データに複数スレッドからアクセス・変更する場合は、未定義動作を避けるために適切な同期が必要です。</p>
+
+<p>以下は、メインスレッドがロボットデータを変更している間に別スレッドがロボットデータを読み取る危険な例です：</p>
+
+<h3 id="危険な例">危険な例</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_rbdyn/Robot.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">unsafe_read</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Robot</span> <span class="o">*</span> <span class="n">robot</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// この関数は別スレッドでロボットデータを読み取る</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// 危険：他のスレッドが同時に robot-&gt;posW() を変更している可能性あり</span>
+    <span class="c1">// 結果は未定義動作。正常に動く場合もあれば、クラッシュやゴミ値になることも</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Robot position: "</span> <span class="o">&lt;&lt;</span> <span class="n">robot</span><span class="o">-&gt;</span><span class="n">posW</span><span class="p">().</span><span class="n">translation</span><span class="p">().</span><span class="n">transpose</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">unsafe_example</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Robot</span> <span class="o">*</span> <span class="n">robot</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// ロボットデータを読み取るスレッドを開始</span>
+  <span class="n">std</span><span class="o">::</span><span class="kr">thread</span> <span class="n">t</span><span class="p">(</span><span class="n">unsafe_read</span><span class="p">,</span> <span class="n">robot</span><span class="p">);</span>
+
+  <span class="c1">// 一方、メインスレッドはロボットデータを変更</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// 危険：ロボットの位置を変更</span>
+    <span class="n">robot</span><span class="o">-&gt;</span><span class="n">posW</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">{</span><span class="n">sva</span><span class="o">::</span><span class="n">RotZ</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">constants</span><span class="o">::</span><span class="n">PI</span><span class="p">),</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="n">i</span><span class="o">/</span><span class="mf">10.</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}});</span>
+  <span class="p">}</span>
+
+  <span class="n">t</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>警告：</strong>
+この例は、両方のスレッドが同期なしで同じ <code class="language-plaintext highlighter-rouge">mc_rbdyn::Robot</code> オブジェクトにアクセス・変更しているため危険です。データ競合や未定義動作の原因となります。</p>
+
+<h3 id="安全な例">安全な例</h3>
+
+<p>今度は、<code class="language-plaintext highlighter-rouge">std::mutex</code> を使って <code class="language-plaintext highlighter-rouge">mc_rbdyn::Robot</code> オブジェクトへのアクセスを同期した<strong>安全なバージョン</strong>です。これにより同時の読み書きを防ぎ、データ競合を回避します。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_rbdyn/Robot.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mutex&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">robot_mutex</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">safe_read</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Robot</span> <span class="o">*</span> <span class="n">robot</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">robot_mutex</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Robot position: "</span> <span class="o">&lt;&lt;</span> <span class="n">robot</span><span class="o">-&gt;</span><span class="n">posW</span><span class="p">().</span><span class="n">translation</span><span class="p">().</span><span class="n">transpose</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">safe_example</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Robot</span> <span class="o">*</span> <span class="n">robot</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="kr">thread</span> <span class="n">t</span><span class="p">(</span><span class="n">safe_read</span><span class="p">,</span> <span class="n">robot</span><span class="p">);</span>
+
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">robot_mutex</span><span class="p">);</span>
+    <span class="n">robot</span><span class="o">-&gt;</span><span class="n">posW</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">{</span><span class="n">sva</span><span class="o">::</span><span class="n">RotZ</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">constants</span><span class="o">::</span><span class="n">PI</span><span class="p">),</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="n">i</span><span class="o">/</span><span class="mf">10.</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}});</span>
+  <span class="p">}</span>
+
+  <span class="n">t</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>これで、<code class="language-plaintext highlighter-rouge">robot</code> オブジェクトへのすべてのアクセスがミューテックスで保護され、スレッドセーフになります。</p>
+
+<h2 id="ミューテックスによるデッドロック">ミューテックスによるデッドロック</h2>
+
+<p><strong>デッドロック</strong>とは、2つ以上のスレッドが互いにリソース（ミューテックスなど）の解放を待ち続け、全スレッドが永久に待機状態になることです。これは、複数のミューテックスを異なる順序でロックする場合によく発生します。</p>
+
+<p>以下の例は、ミューテックスの誤った使い方でデッドロックが発生する様子を示しています：</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mutex&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">mutexA</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">mutexB</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">thread1</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lockA</span><span class="p">(</span><span class="n">mutexA</span><span class="p">);</span>
+  <span class="c1">// 作業のシミュレーション</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lockB</span><span class="p">(</span><span class="n">mutexB</span><span class="p">);</span> <span class="c1">// mutexBを待つ</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Thread 1 acquired both mutexes</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">thread2</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lockB</span><span class="p">(</span><span class="n">mutexB</span><span class="p">);</span>
+  <span class="c1">// 作業のシミュレーション</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lockA</span><span class="p">(</span><span class="n">mutexA</span><span class="p">);</span> <span class="c1">// mutexAを待つ</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Thread 2 acquired both mutexes</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">deadlock_example</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="kr">thread</span> <span class="n">t1</span><span class="p">(</span><span class="n">thread1</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="kr">thread</span> <span class="n">t2</span><span class="p">(</span><span class="n">thread2</span><span class="p">);</span>
+  <span class="n">t1</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+  <span class="n">t2</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="mc_rtc-のスレッド化ユーティリティ">mc_rtc のスレッド化ユーティリティ</h1>
+
+<p>フレームワーク内でよくあるケースに対応するため、<code class="language-plaintext highlighter-rouge">mc_rtc</code> はスレッド化やデータ同期を支援するユーティリティを提供しています：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc::threading::AsyncJob</code>: ジョブを別スレッドで非同期実行する便利な方法を提供します。<code class="language-plaintext highlighter-rouge">std::async</code> ジョブを作成・管理します。</li>
+</ul>
+
+<h2 id="asyncjob">AsyncJob</h2>
+
+<p><code class="language-plaintext highlighter-rouge">mc_rtc::threading::AsyncJob</code> クラスは、ジョブを別スレッドで非同期実行する便利な方法を提供します。内部的には <code class="language-plaintext highlighter-rouge">std::async</code> を使い、ジョブの完了確認、結果取得、例外処理などのメソッドを提供します。</p>
+
+<p><strong>利点:</strong></p>
+<ul>
+  <li>使いやすい</li>
+  <li>入出力の分離が明確</li>
+</ul>
+
+<p><strong>欠点:</strong></p>
+<ul>
+  <li>ジョブごとにスレッドを生成するため、頻繁かつ短時間のジョブにはコストが高い</li>
+</ul>
+
+<h3 id="asyncjob-の使い方">AsyncJob の使い方</h3>
+
+<p><code class="language-plaintext highlighter-rouge">AsyncJob</code> クラスは CRTP（Curiously Recurring Template Pattern）ベースのクラスで、<code class="language-plaintext highlighter-rouge">mc_rtc</code> で非同期計算を実行するために使います。ジョブの状態管理、結果取得、ログやGUIとの統合も可能です。</p>
+
+<p><strong>使い方の手順:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>MyInput クラスを作成</strong>
+ジョブに必要なすべてのデータをコピーで保持します。</p>
+  </li>
+  <li>
+    <p><strong>MyResult クラスを作成</strong>
+ジョブが生成するすべてのデータをコピーで保持します。</p>
+  </li>
+  <li>
+    <p><strong>ジョブクラスを定義</strong>
+<code class="language-plaintext highlighter-rouge">mc_rtc::threading::MakeAsyncJob&lt;YourJob, InputType, ResultType&gt;</code> を継承し、<code class="language-plaintext highlighter-rouge">ResultType computeJob()</code> メソッドを実装します。</p>
+  </li>
+  <li>
+    <p><strong>（オプション）ログやGUIの追加</strong>
+<code class="language-plaintext highlighter-rouge">void addToLoggerImpl()</code> や <code class="language-plaintext highlighter-rouge">void addToGUIImpl()</code> を実装してカスタムログ/GUI要素を追加できます。</p>
+  </li>
+  <li>
+    <p><strong>ジョブの作成と利用</strong></p>
+    <ul>
+      <li>入力をセット（ジョブが実行中でないとき）</li>
+      <li><code class="language-plaintext highlighter-rouge">startAsync()</code> で計算を開始</li>
+      <li>制御ループ内で定期的に <code class="language-plaintext highlighter-rouge">checkResult()</code> を呼び、状態更新と結果取得</li>
+      <li><code class="language-plaintext highlighter-rouge">lastResult()</code> で結果にアクセス</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>注意:</strong></p>
+<ul>
+  <li>入力の変更はジョブが実行中でないときのみ（<code class="language-plaintext highlighter-rouge">running() == false</code>）行うこと</li>
+  <li>制御ループ内で必ず <code class="language-plaintext highlighter-rouge">checkResult()</code> を呼び、結果処理と管理を行うこと</li>
+  <li>ログやGUIエントリはジョブ破棄時に自動削除されます</li>
+</ul>
+
+<p><strong>基本例:</strong></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MyAsyncJob.h</span>
+
+<span class="k">struct</span> <span class="nc">MyInput</span>
+<span class="p">{</span>
+  <span class="kt">double</span> <span class="n">data</span><span class="p">;</span> <span class="c1">// ジョブへの入力値</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">MyResult</span>
+<span class="p">{</span>
+  <span class="kt">double</span> <span class="n">value</span><span class="p">;</span> <span class="c1">// 計算結果</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">MyAsyncJob</span> <span class="o">:</span> <span class="k">public</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">threading</span><span class="o">::</span><span class="n">MakeAsyncJob</span><span class="o">&lt;</span><span class="n">MyAsyncJob</span><span class="p">,</span> <span class="n">MyInput</span><span class="p">,</span> <span class="n">MyResult</span><span class="o">&gt;</span>
+<span class="p">{</span>
+  <span class="n">MyResult</span> <span class="n">computeJob</span><span class="p">()</span>
+  <span class="p">{</span>
+    <span class="n">MyResult</span> <span class="n">res</span><span class="p">;</span>
+    <span class="n">res</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">input_</span><span class="p">.</span><span class="n">data</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">addToLoggerImpl</span><span class="p">()</span>
+  <span class="p">{</span>
+    <span class="n">logger_</span><span class="o">-&gt;</span><span class="n">addLogEntry</span><span class="p">(</span><span class="n">loggerPrefix_</span> <span class="o">+</span> <span class="s">"_my_job_value"</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">lastResult_</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span> <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">addToGUIImpl</span><span class="p">()</span>
+  <span class="p">{</span>
+    <span class="n">gui_</span><span class="o">-&gt;</span><span class="n">addElement</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">guiCategory_</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Label</span><span class="p">(</span><span class="s">"Result"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">lastResult_</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span> <span class="p">}));</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p><strong>MyAsyncJob を使ったFSMステートの例:</strong></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// SimpleAsyncState.h</span>
+<span class="cp">#include</span> <span class="cpf">&lt;mc_control/fsm/State.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mc_rtc/threading/AsyncJob.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mc_rtc/gui/StateBuilder.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mc_rtc/log/Logger.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">"MyAsyncJob.h"</span><span class="cp">
+</span>
+<span class="c1">// シンプルなAsyncJobを使ったFSMステート。各結果ごとに再実行</span>
+<span class="k">struct</span> <span class="nc">SimpleAsyncState</span> <span class="o">:</span> <span class="k">public</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">State</span>
+<span class="p">{</span>
+  <span class="n">MyAsyncJob</span> <span class="n">job_</span><span class="p">;</span> <span class="c1">// ジョブクラスの生成（ジョブはまだ開始しない）</span>
+  <span class="kt">int</span> <span class="n">counter_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">maxIterations_</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// 5回で終了</span>
+
+  <span class="kt">void</span> <span class="n">configure</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="c1">// async jobの初期入力をセット</span>
+    <span class="n">config</span><span class="p">(</span><span class="s">"input"</span><span class="p">,</span> <span class="n">job_</span><span class="p">.</span><span class="n">input</span><span class="p">().</span><span class="n">data</span><span class="p">);</span>
+    <span class="n">config</span><span class="p">(</span><span class="s">"maxIterations"</span><span class="p">,</span> <span class="n">maxIterations_</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">start</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="c1">// 最初のasync jobを開始。結果はrun()内でjob_.checkResult()で取得</span>
+    <span class="n">job_</span><span class="p">.</span><span class="n">startAsync</span><span class="p">();</span>
+    <span class="n">job_</span><span class="p">.</span><span class="n">addToLogger</span><span class="p">(</span><span class="n">ctl</span><span class="p">.</span><span class="n">logger</span><span class="p">(),</span> <span class="n">name</span><span class="p">());</span>
+    <span class="n">job_</span><span class="p">.</span><span class="n">addToGUI</span><span class="p">(</span><span class="n">ctl</span><span class="p">.</span><span class="n">gui</span><span class="p">(),</span> <span class="p">{</span><span class="n">name</span><span class="p">()});</span>
+    <span class="n">counter_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">bool</span> <span class="n">run</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">job_</span><span class="p">.</span><span class="n">checkResult</span><span class="p">())</span>
+    <span class="p">{</span> <span class="c1">// 前回のasync jobが完了したので結果を取得</span>
+      <span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">result</span> <span class="o">=</span> <span class="o">*</span><span class="n">job_</span><span class="p">.</span><span class="n">lastResult</span><span class="p">();</span>
+      <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">"[{}] Async result {}: {}"</span><span class="p">,</span> <span class="n">name</span><span class="p">(),</span> <span class="n">counter_</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+
+      <span class="n">counter_</span><span class="o">++</span><span class="p">;</span>
+
+      <span class="c1">// ジョブが実行中でないので、次の入力を安全に更新できる</span>
+      <span class="n">job_</span><span class="p">.</span><span class="n">input</span><span class="p">().</span><span class="n">data</span> <span class="o">+=</span> <span class="mf">1.0</span><span class="p">;</span>
+
+      <span class="k">if</span><span class="p">(</span><span class="n">counter_</span> <span class="o">&lt;</span> <span class="n">maxIterations_</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">job_</span><span class="p">.</span><span class="n">startAsync</span><span class="p">();</span> <span class="c1">// 次のasync jobを開始</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>      <span class="c1">// 継続</span>
+      <span class="p">}</span>
+      <span class="k">else</span>
+      <span class="p">{</span>
+        <span class="n">output</span><span class="p">(</span><span class="s">"OK"</span><span class="p">);</span>      <span class="c1">// maxIterations_回で終了</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">teardown</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="c1">// AsyncJobのデストラクタでクリーンアップ</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/jp/tutorials/samples/list-of-samples.html">次のチュートリアル: コントローラのリスト</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/jp/credits.html">クレジット</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>

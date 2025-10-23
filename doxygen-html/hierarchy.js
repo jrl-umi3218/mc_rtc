@@ -18,6 +18,7 @@ var hierarchy =
     [ "mc_rtc::gui::ArrowConfig", "structmc__rtc_1_1gui_1_1ArrowConfig.html", [
       [ "mc_rtc::gui::ForceConfig", "structmc__rtc_1_1gui_1_1ForceConfig.html", null ]
     ] ],
+    [ "mc_rtc::threading::AsyncJob< Derived, Input, Result >", "structmc__rtc_1_1threading_1_1AsyncJob.html", null ],
     [ "mc_rtc::gui::plot::AxisConfiguration", "structmc__rtc_1_1gui_1_1plot_1_1AxisConfiguration.html", null ],
     [ "mc_rbdyn::Base", "structmc__rbdyn_1_1Base.html", null ],
     [ "mc_rtc::log::callback_is_serializable< T, typename >", "structmc__rtc_1_1log_1_1callback__is__serializable.html", null ],
@@ -575,6 +576,7 @@ var hierarchy =
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html", null ],
     [ "mc_control::Ticker", "structmc__control_1_1Ticker.html", null ],
+    [ "mc_rtc::threading::AsyncJob< Derived, Input, Result >::Timers", "structmc__rtc_1_1threading_1_1AsyncJob_1_1Timers.html", null ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],
     [ "std::true_type", null, [

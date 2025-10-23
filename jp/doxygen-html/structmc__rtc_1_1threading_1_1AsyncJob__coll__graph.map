@@ -1,0 +1,6 @@
+<map id="mc_rtc::threading::AsyncJob&lt; Derived, Input, Result &gt;" name="mc_rtc::threading::AsyncJob&lt; Derived, Input, Result &gt;">
+<area shape="rect" id="node1" title="Helper base class for asynchronous jobs using CRTP." alt="" coords="299,41,491,97"/>
+<area shape="rect" id="node2" href="$structmc__rtc_1_1Logger.html" title="Logs controller data to disk." alt="" coords="42,5,161,32"/>
+<area shape="rect" id="node3" href="$structmc__rtc_1_1gui_1_1StateBuilder.html" title=" " alt="" coords="10,56,193,83"/>
+<area shape="rect" id="node4" href="$structmc__rtc_1_1threading_1_1AsyncJob_1_1Timers.html" title=" " alt="" coords="5,107,197,163"/>
+</map>
