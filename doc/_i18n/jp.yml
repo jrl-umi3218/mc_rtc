@@ -157,6 +157,8 @@ tutorials:
       title: 関節の重み付け
     com-constraint:
       title: 重心位置の存在可能な領域の拘束
+    threading:
+      title: リアルタイムの考慮事項とスレッド処理
   samples:
     title: サンプル
     desc: コントローラのサンプルを紹介します。

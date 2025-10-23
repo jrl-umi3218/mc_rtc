@@ -80,6 +80,8 @@
       id: joint-stiffness
     -
       id: com-constraint
+    -
+      id: threading
 -
   id: samples
   tutorials:
