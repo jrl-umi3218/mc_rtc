@@ -45,9 +45,10 @@ void MessageState::start(Controller & ctl)
     else if(logType_ == "none") { /* Do not log anything to the terminal */ }
     else
     {
-      mc_rtc::log::error("{} Provided log type {} is invalid, assuming info. Supported types are [info, success, "
-                         "warning, error, none]",
-                         prefix, logType_);
+      mc_rtc::log::error(
+          "{} Provided log type {} is invalid, assuming info. Supported types are [info, success, "
+          "warning, error, none]",
+          prefix, logType_);
       mc_rtc::log::info(message);
     }
   }
