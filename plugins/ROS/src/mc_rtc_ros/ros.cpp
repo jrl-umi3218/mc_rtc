@@ -637,6 +637,12 @@ void ROSBridge::set_publisher_timestep(double timestep)
   }
 }
 
+double ROSBridge::get_publisher_timestep()
+{
+  static const auto & impl = impl_();
+  return impl.publish_rate;
+}
+
 void ROSBridge::init_robot_publisher(const std::string & publisher,
                                      double dt,
                                      const mc_rbdyn::Robot & robot,
