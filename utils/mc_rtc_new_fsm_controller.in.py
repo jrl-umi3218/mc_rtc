@@ -273,7 +273,7 @@ vim.lsp.config('yamlls',
       completion = true,
     }}
   }}
-}}
+}})
 """.format(
                 controller_name=controller_name
             )
