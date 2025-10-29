@@ -225,5 +225,5 @@
       ]
     }
   },
-  "required": ["MainRobot", "Enabled", "Timestep"]
+  "required": ["MainRobot", "Enabled"]
 }
