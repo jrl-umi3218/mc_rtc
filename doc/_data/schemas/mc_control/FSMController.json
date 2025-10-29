@@ -104,11 +104,18 @@
     "init": {
       "type": "string",
       "description": "Initial state."
+    },
+    "ObserverPipelines":
+    {
+      "$ref": "../Observers/ObserverPipelines.json"
+    },
+    "Plugins":
+    {
+      "type": "array",
+      "items": { "type": "string", "descritpion": "List of plugin names" }
     }
   },
-  "required": [
-    "constraints", "contacts", "states", "transitions"
-  ],
+  "required": [],
   "definitions": {
     "Robot": {
       "description": "Robot module definition. Specifies the robot module to load.",

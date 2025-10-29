@@ -82,3 +82,7 @@ repos:
   rev: v0.6.13
   hooks:
   - id: cmake-format
+- repo: https://github.com/JohnnyMorganz/StyLua
+  rev: v2.3.0
+  hooks:
+    - id: stylua # or stylua-system / stylua-github
