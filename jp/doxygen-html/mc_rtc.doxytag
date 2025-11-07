@@ -35552,6 +35552,13 @@
       <anchor>aeb81f4176b5849a5a6569d85db2eed41</anchor>
       <arglist>() const</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>copy</name>
+      <anchorfile>structmc__rbdyn_1_1RobotFrame.html</anchorfile>
+      <anchor>a6d22f42a2298886a7c8f3fe9110ceb67</anchor>
+      <arglist>(mc_rbdyn::Robot &amp;other)</arglist>
+    </member>
     <member kind="function" protection="protected">
       <type>void</type>
       <name>init_tvm_frame</name>

@@ -7,6 +7,7 @@ var structmc__rbdyn_1_1RobotFrame =
     [ "bodyMbcIndex", "structmc__rbdyn_1_1RobotFrame.html#aba706b53116841e1a35c9f06ecd5515a", null ],
     [ "cop", "structmc__rbdyn_1_1RobotFrame.html#a63a175dc055219dde904dcc7e74b77a6", null ],
     [ "copW", "structmc__rbdyn_1_1RobotFrame.html#a94fcfbab883580f440115606b5c9ff9f", null ],
+    [ "copy", "structmc__rbdyn_1_1RobotFrame.html#a6d22f42a2298886a7c8f3fe9110ceb67", null ],
     [ "forceSensor", "structmc__rbdyn_1_1RobotFrame.html#aaf0ae23d628871b879363f9d9c808176", null ],
     [ "hasForceSensor", "structmc__rbdyn_1_1RobotFrame.html#a339b968385764b0d3e7cc93026593e43", null ],
     [ "init_tvm_frame", "structmc__rbdyn_1_1RobotFrame.html#aa8fbc94f2673cae7787cf91bb03cda8f", null ],
