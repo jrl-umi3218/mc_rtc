@@ -1358,7 +1358,7 @@ void Robot::copyLoadedData(Robot & robot) const
 {
   for(const auto & s : surfaces_) { robot.surfaces_[s.first] = s.second->copy(); }
   robot.fixSurfaces();
-  robot.makeFrames(module().frames());
+  for(const auto & [frameName, frame] : frames_) { frame->copy(robot); }
   for(const auto & cH : convexes_)
   {
     robot.convexes_[cH.first] = {cH.second.first, S_ObjectPtr(cH.second.second->clone())};

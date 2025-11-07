@@ -71,7 +71,10 @@ BOOST_AUTO_TEST_CASE(TestRobotsCopy)
   auto & robots = get_robots();
   auto robotsCopyPtr = mc_rbdyn::Robots::make();
   auto & robotsCopy = *robotsCopyPtr;
+  robots.robot().makeFrame("ManualFrame", robots.robot().frame(robots.robot().frames()[0]),
+                           sva::PTransformd::Identity());
   robots.copy(robotsCopy);
+  BOOST_REQUIRE(robotsCopy.robot().hasFrame("ManualFrame"));
   for(const auto & robot : robots.robots())
   {
     BOOST_REQUIRE(robotsCopy.hasRobot(robot.name()));

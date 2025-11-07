@@ -29,6 +29,12 @@ RobotFrame::RobotFrame(NewRobotFrameToken tkn,
 {
 }
 
+void RobotFrame::copy(mc_rbdyn::Robot & other)
+{
+  if(other.hasFrame(name_)) { return; }
+  other.makeFrame(name_, *static_cast<RobotFrame *>(parent_.get()), X_p_f());
+}
+
 void RobotFrame::resetForceSensor() noexcept
 {
   sensor_ = robot_.findBodyForceSensor(body());
