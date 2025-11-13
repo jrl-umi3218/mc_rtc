@@ -11,6 +11,7 @@
 
 #include <Tasks/QPContactConstr.h>
 #include <Tasks/QPMotionConstr.h>
+#include <iostream>
 
 namespace mc_solver
 {
