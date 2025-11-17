@@ -16,7 +16,7 @@
 <p>Run the following command to start RViZ along with mc_rtc dedicated panel and the robot model you need:</p>
 
 {% highlight bash %}
-$ roslaunch mc_rtc_ticker display.launch
+$ ros2 launch mc_rtc_ticker display.launch
 {% endhighlight %}
 
 <p>If your simulation has more than two robots, you should add a new RobotModel to the scene. The description of the robot is published in the parameter <code>/control/env_N</code> where N is the robot index.</p>

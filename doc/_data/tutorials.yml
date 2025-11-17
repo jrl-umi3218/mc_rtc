@@ -44,8 +44,6 @@
     -
       id: mc_log_ui
     -
-      id: mc_log_visualization
-    -
       id: mc_surfaces_visualization
     -
       id: mc_convex_visualization

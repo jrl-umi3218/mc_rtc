@@ -120,8 +120,6 @@ tutorials:
       title: ログの操作
     mc_log_ui:
       title: ログの可視化
-    mc_log_visualization:
-      title: ログの再生
     mc_surfaces_visualization:
       title: サーフェスの可視化
     mc_convex_visualization:
