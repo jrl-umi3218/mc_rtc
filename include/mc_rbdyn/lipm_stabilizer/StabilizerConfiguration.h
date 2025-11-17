@@ -550,8 +550,9 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       admittance("velFilterGain", mc_filter::utils::clamp(copVelFilterGain, 0, 1));
       if(admittance.has("dfz"))
       {
-        mc_rtc::log::warning("[MC_RTC_DEPRECATED][StabilizerConfiguration] dfz is now dimensional, to "
-                             "keep the same behavior use df: [0, 0, dfz]");
+        mc_rtc::log::warning(
+            "[MC_RTC_DEPRECATED][StabilizerConfiguration] dfz is now dimensional, to "
+            "keep the same behavior use df: [0, 0, dfz]");
         dfAdmittance.setZero();
         dfAdmittance.z() = admittance("dfz");
       }
@@ -561,8 +562,9 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       }
       if(admittance.has("dfz_damping"))
       {
-        mc_rtc::log::warning("[MC_RTC_DEPRECATED][StabilizerConfiguration] dfz_damping is now dimensional, to "
-                             "keep the same behavior use df_damping: [0, 0, dfz_damping]");
+        mc_rtc::log::warning(
+            "[MC_RTC_DEPRECATED][StabilizerConfiguration] dfz_damping is now dimensional, to "
+            "keep the same behavior use df_damping: [0, 0, dfz_damping]");
         dfDamping.setZero();
         dfDamping.z() = admittance("dfz_damping");
       }

@@ -573,8 +573,9 @@ void ControllerClient::handle_polygon(const ElementId & id, const mc_rtc::Config
     }
     catch(mc_rtc::Configuration::Exception & exc)
     {
-      mc_rtc::log::error("Could not deserialize polygon, supported data is vector<vector<Eigen::Vector3d>> or "
-                         "vector<Eigen::Vector3d>");
+      mc_rtc::log::error(
+          "Could not deserialize polygon, supported data is vector<vector<Eigen::Vector3d>> or "
+          "vector<Eigen::Vector3d>");
       mc_rtc::log::error(exc.what());
       exc.silence();
     }

@@ -53,9 +53,10 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
   config("updateVel", updateVel_);
   if(ctl.realRobot(updateRobot_).mb().joint(0).type() == rbd::Joint::Type::Fixed)
   {
-    mc_rtc::log::warning("[{}] Requested update of the base velocity for robot {} but this robot has a fixed base, "
-                         "velocity update will be ignored",
-                         name(), updateRobot_);
+    mc_rtc::log::warning(
+        "[{}] Requested update of the base velocity for robot {} but this robot has a fixed base, "
+        "velocity update will be ignored",
+        name(), updateRobot_);
     updateVel_ = false;
   }
 
