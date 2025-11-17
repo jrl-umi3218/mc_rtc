@@ -1,9 +1,5 @@
 var NAVTREEINDEX22 =
 {
-"structmc__tasks_1_1PositionBasedVisServoTask.html#a1c5a2a63cff774edab49e058c63344d6":[6,0,8,17,3],
-"structmc__tasks_1_1PositionBasedVisServoTask.html#a560ab2d140d96dc63db722bcbb9c5bb0":[6,0,8,17,5],
-"structmc__tasks_1_1PositionBasedVisServoTask.html#a9cc81a8586f6a7232fc6cf1f92aaf0dc":[6,0,8,17,0],
-"structmc__tasks_1_1PositionBasedVisServoTask.html#aa2e8c33c6432ee68e91a59ed396fdd2a":[6,0,8,17,4],
 "structmc__tasks_1_1PositionBasedVisServoTask.html#ab210ce2c552242965b7bd04b02d91517":[6,0,8,17,2],
 "structmc__tasks_1_1PositionBasedVisServoTask.html#ae2cab369aedb3678ebd9b4687faa8ba9":[6,0,8,17,1],
 "structmc__tasks_1_1PositionTask.html":[6,0,8,18],
@@ -249,5 +245,9 @@ var NAVTREEINDEX22 =
 "structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html":[6,0,8,0,0],
 "structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a048faf8441384bc7f98b99a2e8e6dffb":[6,0,8,0,0,5],
 "structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a0499745e42b86f92a2142130b73d1f83":[6,0,8,0,0,3],
-"structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a118ddccef4122355946277ea19db6cc4":[6,0,8,0,0,6]
+"structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a118ddccef4122355946277ea19db6cc4":[6,0,8,0,0,6],
+"structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a3be6c87478fbc896cc12f056fdb4101e":[6,0,8,0,0,1],
+"structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a73ee1f6e3f1e8f4aa472964d15c68a4a":[6,0,8,0,0,0],
+"structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a9711a6e882d22bdca82a6a858539ffeb":[6,0,8,0,0,7],
+"structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#aea29b650bf510a48543c2c44cfcf7746":[6,0,8,0,0,4]
 };

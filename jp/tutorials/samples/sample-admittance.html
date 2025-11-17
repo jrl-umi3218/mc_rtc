@@ -211,10 +211,6 @@
                         
                       
                         
-                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_log_visualization.html">ログの再生</a></li>
-                        
-                      
-                        
                         <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
                         
                       
@@ -395,7 +391,7 @@
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="o">(</span>roscore &amp;<span class="o">)</span> <span class="c"># roscoreが走っていることを確認 (rvizを用いた可視化のため)</span>
 <span class="nv">$ </span><span class="nb">cd</span> /usr/local/share/hrpsys/samples/JVRC1
 <span class="nv">$ </span>choreonoid sim_mc_wall.cnoid
-<span class="nv">$ </span>roslaunch mc_rtc_ticker controler_display.launch
+<span class="nv">$ </span>ros2 launch mc_rtc_ticker display.launch
 </code></pre></div></div>
 
 <p>次に、Choreonoidのインターフェイスにある緑の矢印をクリックしてシミュレーションを開始します。出力は以下のようになります。</p>

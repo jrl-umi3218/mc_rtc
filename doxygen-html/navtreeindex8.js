@@ -1,9 +1,5 @@
 var NAVTREEINDEX8 =
 {
-"namespacendcurves.html#ab68e869d5fc16c5975eb45b9a02b310b":[5,0,12,36],
-"namespacendcurves.html#ab77e8e7b74490f336520a803071f2d01":[5,0,12,11],
-"namespacendcurves.html#ab7aeac2a41d183d28095606d455cc502":[5,0,12,81],
-"namespacendcurves.html#abdb31d3d3670a3ddc4918b7f2ab02878":[5,0,12,37],
 "namespacendcurves.html#ac0fdf0b1d7f6525f3534bbb07f513efd":[5,0,12,52],
 "namespacendcurves.html#ac32003fdfabf1278d6e49ffc549578a6":[5,0,12,94],
 "namespacendcurves.html#ac425ff9ddc369a85462132fdd8d68457":[5,0,12,74],
@@ -249,5 +245,9 @@ var NAVTREEINDEX8 =
 "structmc__control_1_1ControllerClient.html#a451e2eedd8665e2455ec6098349c5c88":[6,0,1,5,25],
 "structmc__control_1_1ControllerClient.html#a46a758b9141fdfc9739b999b721150ad":[6,0,1,5,71],
 "structmc__control_1_1ControllerClient.html#a46be1683943027f7ac3411d0f9e42b11":[6,0,1,5,50],
-"structmc__control_1_1ControllerClient.html#a4d5fb2706acf7c44e7aa51f27ac8a47e":[6,0,1,5,72]
+"structmc__control_1_1ControllerClient.html#a4d5fb2706acf7c44e7aa51f27ac8a47e":[6,0,1,5,72],
+"structmc__control_1_1ControllerClient.html#a5391b53615f259cfc5b182486658611d":[6,0,1,5,16],
+"structmc__control_1_1ControllerClient.html#a54324c45dd27937e1964844808f7befd":[6,0,1,5,47],
+"structmc__control_1_1ControllerClient.html#a54a149a6c1469d1450f5ed6603579cd9":[6,0,1,5,77],
+"structmc__control_1_1ControllerClient.html#a55c0ef4b41b4ba4dc57759c387335d60":[6,0,1,5,58]
 };
