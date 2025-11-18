@@ -19,10 +19,11 @@ extensions = ["autoapi.extension"]
 templates_path = ["_templates"]
 exclude_patterns = []
 
+# FIXME: use paths from CMake here
 autoapi_dirs = [
-    "/home/vscode/workspace/python-venv/lib/python3.12/site-packages/mc_rtc",
-    "/home/vscode/workspace/python-venv/lib/python3.12/site-packages/sva",
-    "/home/vscode/workspace/python-venv/lib/python3.12/site-packages/rbdyn",
+    "/home/vscode/workspace/install/mc-rtc-venv/lib/python3.12/site-packages/mc_rtc",
+    "/home/vscode/workspace/install/mc-rtc-venv/lib/python3.12/site-packages/sva",
+    "/home/vscode/workspace/install/mc-rtc-venv/lib/python3.12/site-packages/rbdyn",
 ]
 autoapi_file_patterns = ["*.pyi", "*.py"]
 autoapi_python_class_content = "both"
