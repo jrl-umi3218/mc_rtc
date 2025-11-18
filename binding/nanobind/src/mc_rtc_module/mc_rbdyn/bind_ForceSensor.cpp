@@ -15,41 +15,42 @@ namespace mc_rtc_python
 
 void bind_ForceSensorCalibData(nb::module_ & m)
 {
-  using FD = mc_rbdyn::detail::ForceSensorCalibData;
-  auto fd = nb::class_<mc_rbdyn::detail::ForceSensorCalibData>(m, "ForceSensorCalibData");
-  fd.def(nb::init());
-
-  fd.def("reset", &FD::reset,
-         R"(
-   Restore the calibrator default values such that it always returns zero contribution
-                                  )")
-      .def("loadData", &FD::loadData, "filename"_a, "gravity"_a,
-           R"(
-   Load data from a file, using a gravity vector. The file
-   should contain 13 parameters in that order: mass (1),
-   rpy for X_f_ds (3), position for X_p_vb (3), wrench
-   offset (6).
-
-   If the file does not exist, default calibration parameters that do nothing will be used. If the file exists but its parameters are invalid, an exception will be thrown.
-
-   :throws: if the file is ill-formed.
-   )")
-      .def("wfToSensor", &FD::wfToSensor, "X_0_p"_a, "X_p_f"_a,
-           R"(
-  Return the gravity wrench applied on the force sensor in the sensor
-  frame, i.e. the external force $f_{ext}$ is:
-  $f_{ext} = f_{mes} - wfToSensor$.
-  :param X_0_p: the transform in the world frame of the parent body of the sensor
-  :param X_p_f: the transform from the parent body to the sensor itself
-                                                  )");
-
-  // bind schema parameters
-  // XXX: could we do that automagically?
-  fd.def_rw("mass", &FD::mass, "Mass of the link generating the wrench");
-  fd.def_rw("worldForce", &FD::worldForce, "Constant gravity wrench applied on the force sensor in the world frame");
-  fd.def_rw("X_f_ds", &FD::X_f_ds, "Local rotation between the model force and the real one");
-  fd.def_rw("X_p_vb", &FD::X_p_vb, "Transform from the parent body to the virtual link CoM");
-  fd.def_rw("offset", &FD::offset, "Force/torque offset");
+  // using FD = mc_rbdyn::detail::ForceSensorCalibData;
+  // auto fd = nb::class_<mc_rbdyn::detail::ForceSensorCalibData>(m, "ForceSensorCalibData");
+  // fd.def(nb::init());
+  //
+  // fd.def("reset", &FD::reset,
+  //        R"(
+  //  Restore the calibrator default values such that it always returns zero contribution
+  //                                 )")
+  //     .def("loadData", &FD::loadData, "filename"_a, "gravity"_a,
+  //          R"(
+  //  Load data from a file, using a gravity vector. The file
+  //  should contain 13 parameters in that order: mass (1),
+  //  rpy for X_f_ds (3), position for X_p_vb (3), wrench
+  //  offset (6).
+  //
+  //  If the file does not exist, default calibration parameters that do nothing will be used. If the file exists but
+  //  its parameters are invalid, an exception will be thrown.
+  //
+  //  :throws: if the file is ill-formed.
+  //  )")
+  //     .def("wfToSensor", &FD::wfToSensor, "X_0_p"_a, "X_p_f"_a,
+  //          R"(
+  // Return the gravity wrench applied on the force sensor in the sensor
+  // frame, i.e. the external force $f_{ext}$ is:
+  // $f_{ext} = f_{mes} - wfToSensor$.
+  // :param X_0_p: the transform in the world frame of the parent body of the sensor
+  // :param X_p_f: the transform from the parent body to the sensor itself
+  //                                                 )");
+  //
+  // // bind schema parameters
+  // // XXX: could we do that automagically?
+  // fd.def_rw("mass", &FD::mass, "Mass of the link generating the wrench");
+  // fd.def_rw("worldForce", &FD::worldForce, "Constant gravity wrench applied on the force sensor in the world frame");
+  // fd.def_rw("X_f_ds", &FD::X_f_ds, "Local rotation between the model force and the real one");
+  // fd.def_rw("X_p_vb", &FD::X_p_vb, "Transform from the parent body to the virtual link CoM");
+  // fd.def_rw("offset", &FD::offset, "Force/torque offset");
 }
 
 void bind_ForceSensor(nb::module_ & m)
