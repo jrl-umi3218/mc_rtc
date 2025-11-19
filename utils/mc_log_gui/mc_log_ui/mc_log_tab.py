@@ -632,8 +632,9 @@ class MCLogTab(QtWidgets.QWidget):
                     if cCount == 0:
                         if itm.originalText.isdigit():
                             jIndex = int(itm.originalText)
-                            if jIndex < len(self.rm.ref_joint_order()):
-                                itm.displayText = self.rm.ref_joint_order()[jIndex]
+                            print(rm.ref_joint_order)
+                            if jIndex < len(self.rm.ref_joint_order):
+                                itm.displayText = self.rm.ref_joint_order[jIndex]
                     else:
                         update_child_display([itm.child(i) for i in range(cCount)])
 
@@ -648,11 +649,11 @@ class MCLogTab(QtWidgets.QWidget):
             setQNames(findQList(self.ui.y2Selector))
         if self.data is None:
             return
-        bounds = self.rm.bounds()
+        bounds = self.rm.bounds
         def_bound = [float("nan")]
 
         def setBounds(prefix):
-            for i, jn in enumerate(self.rm.ref_joint_order()):
+            for i, jn in enumerate(self.rm.ref_joint_order):
                 if len(bounds[0].get(jn, def_bound)) == 0:
                     continue
                 if "{}qIn_limits_lower_{}".format(prefix, i) in self.data:
@@ -943,6 +944,7 @@ class MCLogTab(QtWidgets.QWidget):
         tab = MCLogTab(parent, type_)
         tab.x_data = x_data
         tab.setData(parent.data)
+        print("parent rm:", parent.rm.name)
         tab.setRobotModule(parent.rm, parent.jointKeyPrefixes, parent.loaded_files)
         if type_ is PlotType.TIME:
             for y, yl in zip(y1, y1_label):
@@ -1080,7 +1082,7 @@ class MCLogTab(QtWidgets.QWidget):
         y2_label = prefix_to_label(joints, y2_prefix, False)
         y1_diff_label = prefix_to_label(joints, y1_diff_prefix, True)
         y2_diff_label = prefix_to_label(joints, y2_diff_prefix, True)
-        rjo = parent.rm.ref_joint_order()
+        rjo = parent.rm.ref_joint_order
         y_data = [[], []]
         y_data_labels = [[], []]
         y_diff_data = [[], []]

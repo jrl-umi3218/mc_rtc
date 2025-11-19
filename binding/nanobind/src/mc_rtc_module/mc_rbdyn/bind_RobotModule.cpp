@@ -447,7 +447,6 @@ No further action is taken. This constructor is useful to inherit from
 
   See :py:class:`mc_rtc.mc_rbdyn.Gripper.Safety` for details on the safety parameters)");
 
-  // const std::vector<std::string> & ref_joint_order() const { return _ref_joint_order; }
   rm.def_rw("ref_joint_order", &RobotModule::_ref_joint_order,
             R"(
   :return: the reference (native controller) joint order of the robot
