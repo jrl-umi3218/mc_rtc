@@ -12,9 +12,9 @@
 
 #include <mc_rtc/debug.h>
 
-#include <boost/filesystem.hpp>
 #include <boost/range/adaptors.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #ifdef WIN32
 
@@ -131,7 +131,7 @@ void LTDLHandle::close()
 
 std::string LTDLHandle::dir() const
 {
-  return bfs::path(path_).parent_path().string();
+  return fs::path(path_).parent_path().string();
 }
 
 Loader::callback_t Loader::default_cb = [](const std::string &, LTDLHandle &) {};
@@ -203,43 +203,57 @@ void Loader::load_libraries(const std::string & class_name,
 #  endif
   for(const auto & path : paths)
   {
-    if(!bfs::exists(path))
+    if(!fs::exists(path))
     {
       if(verbose) { mc_rtc::log::warning("Tried to load libraries from {} which does not exist", path); }
       continue;
     }
-    bfs::directory_iterator dit(path), endit;
-    std::vector<bfs::path> drange;
+    fs::directory_iterator dit(path), endit;
+    std::vector<fs::path> drange;
     std::copy(dit, endit, std::back_inserter(drange));
     // Sort by newest file
-    std::sort(drange.begin(), drange.end(), [](const bfs::path & p1, const bfs::path & p2)
-              { return bfs::last_write_time(p1) > bfs::last_write_time(p2); });
-    for(const auto & p : drange)
+    std::sort(drange.begin(), drange.end(), [](const fs::path & p1, const fs::path & p2)
+              { return fs::last_write_time(p1) > fs::last_write_time(p2); });
+    for(const auto & path : paths)
     {
-      /* Attempt to load all dynamics libraries in the directory */
-      if((!bfs::is_directory(p)) && bfs::extension(p) == "@CMAKE_SHARED_LIBRARY_SUFFIX@")
+      if(!fs::exists(path))
       {
-        auto handle = std::make_shared<LTDLHandle>(class_name, p.string(), rpath, verbose);
-        for(const auto & cn : handle->classes())
+        if(verbose) { mc_rtc::log::warning("Tried to load libraries from {} which does not exist", path); }
+        continue;
+      }
+      fs::directory_iterator dit(path), endit;
+      std::vector<fs::path> drange;
+      std::copy(dit, endit, std::back_inserter(drange));
+      // Sort by newest file
+      std::sort(drange.begin(), drange.end(), [](const fs::path & p1, const fs::path & p2)
+                { return fs::last_write_time(p1) > fs::last_write_time(p2); });
+      for(const auto & p : drange)
+      {
+        /* Attempt to load all dynamics libraries in the directory */
+        if((!fs::is_directory(p)) && p.extension() == "@CMAKE_SHARED_LIBRARY_SUFFIX@")
         {
-          if(out.count(cn))
+          auto handle = std::make_shared<LTDLHandle>(class_name, p.string(), rpath, verbose);
+          for(const auto & cn : handle->classes())
           {
-            /* We get the first library that declared this class name and only
-             * emit an exception if this is declared in a different file */
-            bfs::path orig_p(out[cn]->path());
-            if(orig_p != p)
+            if(out.count(cn))
             {
-              if(verbose)
+              /* We get the first library that declared this class name and only
+               * emit an exception if this is declared in a different file */
+              fs::path orig_p(out[cn]->path());
+              if(orig_p != p)
               {
-                mc_rtc::log::warning(
-                    "Multiple files export the same name {} (new declaration in {}, previous declaration in {})", cn,
-                    p.string(), out[cn]->path());
+                if(verbose)
+                {
+                  mc_rtc::log::warning(
+                      "Multiple files export the same name {} (new declaration in {}, previous declaration in {})", cn,
+                      p.string(), out[cn]->path());
+                }
+                continue;
               }
-              continue;
             }
+            out[cn] = handle;
+            cb(cn, *handle);
           }
-          out[cn] = handle;
-          cb(cn, *handle);
         }
       }
     }
