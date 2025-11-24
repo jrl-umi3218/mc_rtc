@@ -1,8 +1,8 @@
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/log/iterate_binary_log.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include "internals/LogEntry.h"
 #include <fstream>
@@ -15,8 +15,8 @@ bool iterate_binary_log(const std::string & f,
                         bool extract,
                         const std::string & time)
 {
-  auto fpath = bfs::path(f);
-  if(!bfs::exists(f) || !bfs::is_regular(f))
+  auto fpath = fs::path(f);
+  if(!fs::exists(f) || !fs::is_regular_file(f))
   {
     log::error("Could not open log {}, file does not exist", f);
     return false;

@@ -5,8 +5,8 @@
 #include <mc_control/fsm/StateFactory.h>
 #include <mc_rtc/Configuration.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 namespace mc_control
 {
@@ -118,13 +118,13 @@ void load_file(StateFactory & factory, const std::string & file, std::vector<UDS
 
 void load_dir(StateFactory & factory, const std::string & dir, std::vector<UDState> & ud_states, bool verbose)
 {
-  bfs::directory_iterator dit(dir), endit;
-  std::vector<bfs::path> drange;
+  fs::directory_iterator dit(dir), endit;
+  std::vector<fs::path> drange;
   std::copy(dit, endit, std::back_inserter(drange));
   for(const auto & p : drange)
   {
-    if(bfs::is_regular_file(p)) { load_file(factory, p.string(), ud_states, verbose); }
-    else if(bfs::is_directory(p)) { load_dir(factory, p.string(), ud_states, verbose); }
+    if(fs::is_regular_file(p)) { load_file(factory, p.string(), ud_states, verbose); }
+    else if(fs::is_directory(p)) { load_dir(factory, p.string(), ud_states, verbose); }
   }
 }
 
@@ -135,14 +135,14 @@ void StateFactory::load_files(const std::vector<std::string> & files)
   std::vector<UDState> ud_states;
   for(const auto & f : files)
   {
-    if(bfs::is_directory(f))
+    if(fs::is_directory(f))
     {
       mc_rtc::log::info("Looking for state files in {}", f);
       load_dir(*this, f, ud_states, verbose);
     }
     else
     {
-      if(bfs::exists(f) && bfs::is_regular_file(f)) { load_file(*this, f, ud_states, verbose); }
+      if(fs::exists(f) && fs::is_regular_file(f)) { load_file(*this, f, ud_states, verbose); }
       else
       {
         mc_rtc::log::warning("State file {} does not exist", f);

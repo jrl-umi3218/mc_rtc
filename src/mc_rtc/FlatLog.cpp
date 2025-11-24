@@ -6,8 +6,8 @@
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/log/iterate_binary_log.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include "internals/LogEntry.h"
 #include <fstream>
@@ -33,7 +33,7 @@ void FlatLog::load(const std::string & fpath)
 
 void FlatLog::append(const std::string & f)
 {
-  auto fpath = bfs::path(f);
+  auto fpath = fs::path(f);
   if(fpath.extension() == ".flat") { appendFlat(f); }
   else
   {
@@ -80,8 +80,8 @@ void FlatLog::appendBin(const std::string & f)
 
 void FlatLog::appendFlat(const std::string & f)
 {
-  auto fpath = bfs::path(f);
-  if(!bfs::exists(f) || !bfs::is_regular(f))
+  auto fpath = fs::path(f);
+  if(!fs::exists(f) || !fs::is_regular_file(f))
   {
     log::error("Could not open log {}", f);
     return;
