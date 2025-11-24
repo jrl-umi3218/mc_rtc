@@ -158,7 +158,7 @@ $(document).ready(function(){initNavTree('visual__utils_8h_source.html',''); ini
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordflow">else</span> <span class="keywordflow">if</span> constexpr(type == Type::SUPERELLIPSOID) { <span class="keywordflow">return</span> boost::get&lt;rbd::parsers::Geometry::Superellipsoid&gt;(data); }</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    static_assert(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(type) != <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(type));</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    static_assert([] { <span class="keywordflow">return</span> <span class="keyword">false</span>; }(), <span class="stringliteral">&quot;Unsupported geometry type for getVisualGeometry&quot;</span>);</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  }</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>

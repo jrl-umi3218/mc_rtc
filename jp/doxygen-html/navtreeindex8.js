@@ -1,9 +1,5 @@
 var NAVTREEINDEX8 =
 {
-"namespacendcurves.html#ab68e869d5fc16c5975eb45b9a02b310b":[5,0,12,36],
-"namespacendcurves.html#ab77e8e7b74490f336520a803071f2d01":[5,0,12,11],
-"namespacendcurves.html#ab7aeac2a41d183d28095606d455cc502":[5,0,12,81],
-"namespacendcurves.html#abdb31d3d3670a3ddc4918b7f2ab02878":[5,0,12,37],
 "namespacendcurves.html#ac0fdf0b1d7f6525f3534bbb07f513efd":[5,0,12,52],
 "namespacendcurves.html#ac32003fdfabf1278d6e49ffc549578a6":[5,0,12,94],
 "namespacendcurves.html#ac425ff9ddc369a85462132fdd8d68457":[5,0,12,74],
@@ -201,9 +197,9 @@ var NAVTREEINDEX8 =
 "spline__utils_8h.html#a9fbcf4dd49d2e09b5d33208fae44f11b":[7,0,0,9,7,0],
 "spline__utils_8h_source.html":[7,0,0,9,7],
 "structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html":[6,0,0,0],
-"structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html#a4c98c9eb5c4adf4c8485ef306bc24c77":[6,0,0,0,0],
+"structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html#aa2d4dc5f13d6cea93bca974815edfe1d":[6,0,0,0,0],
 "structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html":[6,0,0,1],
-"structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html#aeb432b9ff899051aee5412ccba9ce8a0":[6,0,0,1,0],
+"structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html#a83d6c4d0b120a989cf5ffc10eb19810a":[6,0,0,1,0],
 "structmc__control_1_1CompletionCriteria.html":[6,0,1,2],
 "structmc__control_1_1CompletionCriteria.html#a2485b806e905c84cd087fb47287f2240":[6,0,1,2,2],
 "structmc__control_1_1CompletionCriteria.html#a6b2c61033f0f8d2d7f45aeb6e8fb028e":[6,0,1,2,0],
@@ -249,5 +245,9 @@ var NAVTREEINDEX8 =
 "structmc__control_1_1ControllerClient.html#a451e2eedd8665e2455ec6098349c5c88":[6,0,1,5,25],
 "structmc__control_1_1ControllerClient.html#a46a758b9141fdfc9739b999b721150ad":[6,0,1,5,71],
 "structmc__control_1_1ControllerClient.html#a46be1683943027f7ac3411d0f9e42b11":[6,0,1,5,50],
-"structmc__control_1_1ControllerClient.html#a4d5fb2706acf7c44e7aa51f27ac8a47e":[6,0,1,5,72]
+"structmc__control_1_1ControllerClient.html#a4d5fb2706acf7c44e7aa51f27ac8a47e":[6,0,1,5,72],
+"structmc__control_1_1ControllerClient.html#a5391b53615f259cfc5b182486658611d":[6,0,1,5,16],
+"structmc__control_1_1ControllerClient.html#a54324c45dd27937e1964844808f7befd":[6,0,1,5,47],
+"structmc__control_1_1ControllerClient.html#a54a149a6c1469d1450f5ed6603579cd9":[6,0,1,5,77],
+"structmc__control_1_1ControllerClient.html#a55c0ef4b41b4ba4dc57759c387335d60":[6,0,1,5,58]
 };

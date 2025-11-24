@@ -18574,8 +18574,8 @@
       <type>auto</type>
       <name>format</name>
       <anchorfile>structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html</anchorfile>
-      <anchor>a4c98c9eb5c4adf4c8485ef306bc24c77</anchor>
-      <arglist>(const mc_rtc::Configuration &amp;c, FormatContext &amp;ctx) -&gt; decltype(ctx.out())</arglist>
+      <anchor>aa2d4dc5f13d6cea93bca974815edfe1d</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;c, FormatContext &amp;ctx) const -&gt; decltype(ctx.out())</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -18585,8 +18585,8 @@
       <type>auto</type>
       <name>format</name>
       <anchorfile>structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html</anchorfile>
-      <anchor>aeb432b9ff899051aee5412ccba9ce8a0</anchor>
-      <arglist>(const mc_solver::QPSolver::Backend &amp;backend, FormatContext &amp;ctx) -&gt; decltype(ctx.out())</arglist>
+      <anchor>a83d6c4d0b120a989cf5ffc10eb19810a</anchor>
+      <arglist>(const mc_solver::QPSolver::Backend &amp;backend, FormatContext &amp;ctx) const -&gt; decltype(ctx.out())</arglist>
     </member>
   </compound>
   <compound kind="struct">

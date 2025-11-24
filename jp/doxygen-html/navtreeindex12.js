@@ -1,9 +1,5 @@
 var NAVTREEINDEX12 =
 {
-"structmc__filter_1_1LowPass.html#a41bcea9e9de194a6816f03cacbd534dd":[6,0,2,2,3],
-"structmc__filter_1_1LowPass.html#a54232494fa4fa74a08d85acf3f95ab7a":[6,0,2,2,8],
-"structmc__filter_1_1LowPass.html#a543781fd1c5ec7b653de6e2189de8fdb":[6,0,2,2,5],
-"structmc__filter_1_1LowPass.html#ac3c92851291e84d2347271125877dc0c":[6,0,2,2,2],
 "structmc__filter_1_1LowPass.html#ac48741a383af10509d4678c5a0673f3a":[6,0,2,2,1],
 "structmc__filter_1_1LowPass.html#ae3cde740d8c36a8e683eeae38bb4bc00":[6,0,2,2,4],
 "structmc__filter_1_1LowPass.html#ae3ddcbbc84aae62aad621a14a91c39bf":[6,0,2,2,0],
@@ -249,5 +245,9 @@ var NAVTREEINDEX12 =
 "structmc__rbdyn_1_1BodySensor.html#abcf42c2151733e3ef80c9594cb37a43a":[6,0,5,4,18],
 "structmc__rbdyn_1_1BodySensor.html#ac39771d679356af14ab9b5e8a738bfbb":[6,0,5,4,16],
 "structmc__rbdyn_1_1BodySensor.html#ad01dc341ccff4cab51488c3cbffe21ee":[6,0,5,4,14],
-"structmc__rbdyn_1_1BodySensor.html#adb95b5d1ba5be5b51912cfc058f2371d":[6,0,5,4,23]
+"structmc__rbdyn_1_1BodySensor.html#adb95b5d1ba5be5b51912cfc058f2371d":[6,0,5,4,23],
+"structmc__rbdyn_1_1BodySensor.html#af860930bcdb938be5d229fa702b4bf0b":[6,0,5,4,13],
+"structmc__rbdyn_1_1Collision.html":[6,0,5,5],
+"structmc__rbdyn_1_1Collision.html#a169addbd06a09743b06287121884f027":[6,0,5,5,5],
+"structmc__rbdyn_1_1Collision.html#a2853ab9ab669747303ccda6b22bb7d77":[6,0,5,5,13]
 };
