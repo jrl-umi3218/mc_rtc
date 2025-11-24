@@ -189,14 +189,26 @@ else()
   set(YAML_CPP_TARGET yaml-cpp)
 endif()
 
-# RapidJSON The code was copied from the 1.1.0 release tarball for RapidJSON
-# https://github.com/miloyip/rapidjson
-add_library(mc_rtc_3rd_party::RapidJSON INTERFACE IMPORTED)
-set_target_properties(
-  mc_rtc_3rd_party::RapidJSON
-  PROPERTIES INTERFACE_INCLUDE_DIRECTORIES
-             ${CMAKE_CURRENT_SOURCE_DIR}/3rd-party/RapidJSON
-)
+find_package(RapidJSON QUIET)
+find_package(RapidJSON QUIET)
+if(RapidJSON_FOUND)
+  message("-- Found RapidJSON package")
+  add_library(mc_rtc_3rd_party::RapidJSON INTERFACE IMPORTED)
+  set_target_properties(
+    mc_rtc_3rd_party::RapidJSON PROPERTIES INTERFACE_INCLUDE_DIRECTORIES
+                                           ${RapidJSON_INCLUDE_DIRS}
+  )
+else()
+  message("-- Using bundled RapidJSON")
+  # RapidJSON The code was copied from the 1.1.0 release tarball for RapidJSON
+  # https://github.com/miloyip/rapidjson
+  add_library(mc_rtc_3rd_party::RapidJSON INTERFACE IMPORTED)
+  set_target_properties(
+    mc_rtc_3rd_party::RapidJSON
+    PROPERTIES INTERFACE_INCLUDE_DIRECTORIES
+               ${CMAKE_CURRENT_SOURCE_DIR}/3rd-party/RapidJSON
+  )
+endif()
 
 # spdlog
 add_project_dependency(spdlog 1.5.0 REQUIRED)
