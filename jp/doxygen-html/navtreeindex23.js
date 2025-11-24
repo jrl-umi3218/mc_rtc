@@ -1,5 +1,9 @@
 var NAVTREEINDEX23 =
 {
+"structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a3be6c87478fbc896cc12f056fdb4101e":[6,0,8,0,0,1],
+"structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a73ee1f6e3f1e8f4aa472964d15c68a4a":[6,0,8,0,0,0],
+"structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#a9711a6e882d22bdca82a6a858539ffeb":[6,0,8,0,0,7],
+"structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#aea29b650bf510a48543c2c44cfcf7746":[6,0,8,0,0,4],
 "structmc__tasks_1_1details_1_1TVMTrajectoryTaskGeneric.html#afc77fd9f5ac84a9a9024994b101da0c8":[6,0,8,0,0,2],
 "structmc__tasks_1_1force_1_1AdmittanceTask.html":[6,0,8,1,1],
 "structmc__tasks_1_1force_1_1AdmittanceTask.html#a052349477335695173c7765bbac00210":[6,0,8,1,1,17],
@@ -245,9 +249,5 @@ var NAVTREEINDEX23 =
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a40e319f4a2cadb78b98f47b7ef930bf9":[6,0,8,2,2,142],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a41a809b5612edf600a57d53917f6fc62":[6,0,8,2,2,75],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a41fed4c5c24646bb999d0ad8048b6c9d":[6,0,8,2,2,60],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a45283d58032327e8f88c6cd7fe893032":[6,0,8,2,2,147],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a45f17fc7c444f8a9ccaebaf287574108":[6,0,8,2,2,39],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a46080b804a13b9c7856cfc629470e51b":[6,0,8,2,2,31],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a47f242d0db7ed96a17dc3aea2726c473":[6,0,8,2,2,69],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a488812c1669547a3b416bc203026832c":[6,0,8,2,2,123]
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a45283d58032327e8f88c6cd7fe893032":[6,0,8,2,2,147]
 };
