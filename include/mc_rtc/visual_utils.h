@@ -68,7 +68,7 @@ auto & getVisualGeometry(rbd::parsers::Visual & visual)
   else if constexpr(type == Type::SUPERELLIPSOID) { return boost::get<rbd::parsers::Geometry::Superellipsoid>(data); }
   else
   {
-    static_assert(static_cast<int>(type) != static_cast<int>(type));
+    static_assert([] { return false; }(), "Unsupported geometry type for getVisualGeometry");
   }
 }
 
