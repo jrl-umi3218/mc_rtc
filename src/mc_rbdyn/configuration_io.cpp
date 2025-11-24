@@ -29,7 +29,7 @@ template<>
 struct formatter<rbd::Joint::Type> : public formatter<string_view>
 {
   template<typename FormatContext>
-  auto format(const rbd::Joint::Type & t, FormatContext & ctx) -> decltype(ctx.out())
+  auto format(const rbd::Joint::Type & t, FormatContext & ctx) const -> decltype(ctx.out())
   {
     switch(t)
     {
