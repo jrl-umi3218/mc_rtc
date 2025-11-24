@@ -438,6 +438,7 @@ set(mc_solver_SRC
     mc_solver/Update.cpp
     mc_solver/UpdateNrVars.cpp
     mc_tasks/MetaTask.cpp
+    mc_solver/CoincidenceConstr.cpp
 )
 
 set(mc_solver_HDR
@@ -465,6 +466,7 @@ set(mc_solver_HDR
     ../include/mc_solver/TasksQPSolver.h
     ../include/mc_solver/TVMQPSolver.h
     ../include/mc_tasks/MetaTask.h
+    ../include/mc_solver/CoincidenceConstr.h
 )
 
 add_library(mc_solver SHARED ${mc_solver_SRC} ${mc_solver_HDR})

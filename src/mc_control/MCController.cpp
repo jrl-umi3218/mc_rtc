@@ -28,6 +28,9 @@
 #include <RBDyn/FV.h>
 
 #include <boost/filesystem.hpp>
+#include "mc_solver/CoincidenceConstr.h"
+#include <cstddef>
+#include <iostream>
 namespace bfs = boost::filesystem;
 
 #include <array>
@@ -337,6 +340,10 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   {
     for(const auto & c : *contacts) { addContact(c); }
   }
+
+  /** Load the yaml file for loop closing */
+  loop_closing(robot());
+
   mc_rtc::log::info("MCController(base) ready");
 }
 
@@ -1036,6 +1043,43 @@ mc_rtc::Configuration MCController::robot_config(const std::string & robot) cons
   load_conf_or_yaml(system_path);
   load_conf_or_yaml(user_path);
   return result;
+}
+
+void MCController::loop_closing(const mc_rbdyn::Robot & robot)
+{
+  try
+  {
+    for(size_t n = 0; n < robot.module().types_.size(); ++n)
+    {
+
+      // creation of the joint selector matrix
+      std::vector<std::string> motors = robot.module().motors_[n];
+      Eigen::VectorXd joints_vec = Eigen::VectorXd::Zero(robot.mb().nrDof());
+      int idx = 5; // we do not considerate the fisrt 6 values of the body pos
+      for(int i = 0; i < std::size(robot.mbc().alphaD); i++)
+      {
+        if(robot.mb().joint(i).dof() >= 1)
+        {
+          auto it = std::find(motors.begin(), motors.end(), robot.mb().joint(i).name());
+          if(it != motors.end()) { joints_vec[idx] = 1.0; }
+          idx++;
+        }
+      }
+
+      auto frame_pair = robot.module().link_names_[n];
+      std::string name1 = frame_pair[0];
+      std::string name2 = frame_pair[1];
+      std::string type = robot.module().types_[n];
+      auto coincidence_constraint =
+          std::make_shared<mc_solver::CoincidenceConstraint>(robots(), name1, name2, type, joints_vec, solver().dt());
+      coincidence_constraints_.push_back(coincidence_constraint);
+      solver().addConstraintSet(*coincidence_constraint);
+    }
+  }
+  catch(const std::exception & e)
+  {
+    mc_rtc::log::error("Failed to load constraints: {}", e.what());
+  }
 }
 
 } // namespace mc_control

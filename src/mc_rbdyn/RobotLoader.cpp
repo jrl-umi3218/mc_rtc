@@ -2,6 +2,8 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
+#include <iostream>
+
 #include <mc_rbdyn/RobotLoader.h>
 
 #include <mc_rtc/Configuration.h>

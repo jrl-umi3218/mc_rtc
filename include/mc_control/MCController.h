@@ -17,6 +17,7 @@
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/unique_ptr.h>
 
+#include <mc_solver/CoincidenceConstr.h>
 #include <mc_solver/CollisionsConstraint.h>
 #include <mc_solver/CompoundJointConstraint.h>
 #include <mc_solver/ContactConstraint.h>
@@ -704,6 +705,8 @@ public:
   mc_rtc::unique_ptr<mc_solver::CompoundJointConstraint> compoundJointConstraint;
   /** Posture task for the main robot */
   std::shared_ptr<mc_tasks::PostureTask> postureTask;
+  /** Coincidence constraints for the main robot */
+  std::vector<std::shared_ptr<mc_solver::CoincidenceConstraint>> coincidence_constraints_;
   /* Controller's name */
   const std::string name_;
   /** Stores the loading location provided by the loader via \ref set_loading_location */
@@ -734,6 +737,8 @@ public:
    * The value is stored in a thread_local variable and is meant to be used in the constructor of MCController
    */
   static void set_name(std::string_view name);
+
+  void loop_closing(const mc_rbdyn::Robot & robot);
 };
 
 namespace details

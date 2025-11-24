@@ -5,6 +5,7 @@
 #include <mc_solver/ConstraintSet.h>
 
 #include <mc_solver/TasksQPSolver.h>
+#include <iostream>
 
 namespace mc_solver
 {

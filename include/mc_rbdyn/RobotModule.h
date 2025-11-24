@@ -26,6 +26,7 @@
 #include <array>
 #include <map>
 #include <vector>
+#include <yaml-cpp/yaml.h>
 
 /* This is an interface designed to provide additionnal information about a robot */
 
@@ -273,7 +274,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * - Create a default joint order
    * - Create a default stance
    */
-  void init(const rbd::parsers::ParserResult & res);
+  void init(const rbd::parsers::ParserResult & res, const YAML::Node & res_yaml = {});
 
   /** Returns the robot's bounds obtained from parsing a urdf
    *
@@ -559,6 +560,8 @@ public:
   std::string name;
   /** Path to the robot's URDF file */
   std::string urdf_path;
+  /** Path to the robot's URDF file */
+  std::string yaml_path;
   /** Path to the robot's RSDF folder */
   std::string rsdf_dir;
   /** Path to the robot's calib folder */
@@ -627,6 +630,11 @@ public:
   DevicePtrVector _devices;
   /** \see frames() */
   std::vector<FrameDescription> _frames;
+
+  // Closed loop variables
+  std::vector<std::vector<std::string>> link_names_;
+  std::vector<std::string> types_;
+  std::vector<std::vector<std::string>> motors_;
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;
