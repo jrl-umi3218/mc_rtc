@@ -7,9 +7,8 @@
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/path.h>
 
-#include <boost/filesystem.hpp>
-#include <boost/range/adaptors.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 std::unique_ptr<mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>> mc_rbdyn::RobotLoader::robot_loader;
 bool mc_rbdyn::RobotLoader::verbose_ = false;
@@ -19,15 +18,15 @@ std::map<std::string, std::vector<std::string>> mc_rbdyn::RobotLoader::aliases{}
 namespace
 {
 
-void handle_aliases_dir(const bfs::path & dir)
+void handle_aliases_dir(const fs::path & dir)
 {
-  if(!bfs::exists(dir) || !bfs::is_directory(dir)) { return; }
-  bfs::directory_iterator dit(dir), endit;
-  std::vector<bfs::path> drange;
+  if(!fs::exists(dir) || !fs::is_directory(dir)) { return; }
+  fs::directory_iterator dit(dir), endit;
+  std::vector<fs::path> drange;
   std::copy(dit, endit, std::back_inserter(drange));
   for(const auto & p : drange)
   {
-    const auto & extension = bfs::extension(p);
+    const auto & extension = p.extension();
     if(extension == ".yml" || extension == ".json" || extension == ".yaml")
     {
       mc_rbdyn::RobotLoader::load_aliases(p.string());
@@ -89,7 +88,7 @@ void RobotLoader::update_robot_module_path(const std::vector<std::string> & path
   std::lock_guard<std::mutex> guard{mtx};
   init();
   robot_loader->load_libraries(paths);
-  for(const auto & p : paths) { handle_aliases_dir(bfs::path(p) / "aliases"); }
+  for(const auto & p : paths) { handle_aliases_dir(fs::path(p) / "aliases"); }
 }
 
 void RobotLoader::init(bool skip_default_path)
@@ -101,7 +100,7 @@ void RobotLoader::init(bool skip_default_path)
       std::vector<std::string> default_path = {};
       if(!skip_default_path) { default_path.push_back(mc_rtc::MC_ROBOTS_INSTALL_PREFIX); }
       robot_loader.reset(new mc_rtc::ObjectLoader<RobotModule>("MC_RTC_ROBOT_MODULE", default_path, verbose_));
-      for(const auto & p : default_path) { handle_aliases_dir(bfs::path(p) / "aliases"); }
+      for(const auto & p : default_path) { handle_aliases_dir(fs::path(p) / "aliases"); }
       if(!skip_default_path) { handle_aliases_dir(mc_rtc::user_config_directory_path("aliases")); }
     }
     catch(const mc_rtc::LoaderException & exc)

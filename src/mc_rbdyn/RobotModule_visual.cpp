@@ -53,7 +53,8 @@ sva::RBInertiad computeInertiaFromVisual(const rbd::parsers::Visual & visual, do
       mc_rtc::log::error_and_throw("computeIntertiaFromVisual: Mesh geometry not supported for inertia computation");
       break;
     default:
-      mc_rtc::log::error_and_throw("computeIntertiaFromVisual: Unsupported geometry type {}", visual.geometry.type);
+      mc_rtc::log::error_and_throw("computeIntertiaFromVisual: Unsupported geometry type {}",
+                                   static_cast<int>(visual.geometry.type));
   }
 }
 

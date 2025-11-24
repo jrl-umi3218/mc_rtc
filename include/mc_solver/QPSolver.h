@@ -344,7 +344,7 @@ template<>
 struct formatter<mc_solver::QPSolver::Backend> : public formatter<string_view>
 {
   template<typename FormatContext>
-  auto format(const mc_solver::QPSolver::Backend & backend, FormatContext & ctx) -> decltype(ctx.out())
+  auto format(const mc_solver::QPSolver::Backend & backend, FormatContext & ctx) const -> decltype(ctx.out())
   {
     using Backend = mc_solver::QPSolver::Backend;
     switch(backend)
