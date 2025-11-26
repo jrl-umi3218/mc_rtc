@@ -17,5 +17,6 @@ constexpr auto MC_CONTROLLER_INSTALL_PREFIX = "${MC_CONTROLLER_RUNTIME_DESTINATI
 constexpr auto MC_PLUGINS_INSTALL_PREFIX = "${MC_PLUGINS_RUNTIME_DESTINATION_PREFIX}";
 constexpr auto DATA_PATH = "${CMAKE_INSTALL_PREFIX}/share/mc_rtc/";
 constexpr auto CONF_PATH = "${CMAKE_INSTALL_PREFIX}/etc/mc_rtc.yaml";
+constexpr auto JSON_SCHEMA_PATH = "${MC_RTC_JSON_SCHEMA_PATH}/";
 
 }

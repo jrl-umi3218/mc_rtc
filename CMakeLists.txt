@@ -297,6 +297,7 @@ message(
 
 set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
 set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
+set(MC_RTC_JSON_SCHEMA_PATH "${CMAKE_INSTALL_DOCDIR}/json/schemas")
 
 configure_file(
   ${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in
