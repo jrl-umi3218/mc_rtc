@@ -297,6 +297,7 @@ message(
 
 set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
 set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
+set(MC_RTC_JSON_SCHEMA_PATH "${CMAKE_INSTALL_DOCDIR}/json/schemas")
 
 find_package(mc_rtc_3rd_party_ros QUIET)
 if(TARGET mc_rtc_3rd_party::ROS)
