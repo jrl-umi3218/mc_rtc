@@ -34,6 +34,15 @@ include(cmake/cython/cython.cmake)
 include(cmake/msvc-specific.cmake)
 include(cmake/version-script.cmake)
 
+# NOTE: Nix passes the CMAKE_INSTALL_LIBDIR and CMAKE_INSTALL_BINDIR as absolute paths
+# to the nix store. However the standard behaviour of GNUInstallDirs is to have them as
+# a relative name (depenent on the platform's naming conventions). This breaks our
+# expectations in mc_rtc's cmake files, thus we force them to be relative here. See:
+# https://github.com/NixOS/nixpkgs/issues/144170
+get_filename_component(CMAKE_INSTALL_LIBDIR "${CMAKE_INSTALL_LIBDIR}" NAME)
+get_filename_component(CMAKE_INSTALL_BINDIR "${CMAKE_INSTALL_BINDIR}" NAME)
+get_filename_component(CMAKE_INSTALL_INCLUDEDIR "${CMAKE_INSTALL_INCLUDEDIR}" NAME)
+
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project(${PROJECT_NAME} C CXX)
@@ -260,6 +269,31 @@ mc_rtc_set_prefix(PLUGINS mc_plugins)
 mc_rtc_set_prefix(ROBOTS mc_robots)
 mc_rtc_set_prefix(OBSERVERS mc_observers)
 mc_rtc_set_prefix(CONTROLLER mc_controller)
+message(
+  STATUS "MC_PLUGINS_RUNTIME_INSTALL_PREFIX: ${MC_PLUGINS_RUNTIME_INSTALL_PREFIX}"
+)
+message(STATUS "MC_ROBOTS_RUNTIME_INSTALL_PREFIX: ${MC_ROBOTS_RUNTIME_INSTALL_PREFIX}")
+message(
+  STATUS "MC_OBSERVERS_RUNTIME_INSTALL_PREFIX: ${MC_OBSERVERS_RUNTIME_INSTALL_PREFIX}"
+)
+message(
+  STATUS "MC_CONTROLLER_RUNTIME_INSTALL_PREFIX: ${MC_CONTROLLER_RUNTIME_INSTALL_PREFIX}"
+)
+message(
+  STATUS
+    "MC_PLUGINS_RUNTIME_DESTINATION_PREFIX: ${MC_PLUGINS_RUNTIME_DESTINATION_PREFIX}"
+)
+message(
+  STATUS "MC_ROBOTS_RUNTIME_DESTINATION_PREFIX: ${MC_ROBOTS_RUNTIME_DESTINATION_PREFIX}"
+)
+message(
+  STATUS
+    "MC_OBSERVERS_RUNTIME_DESTINATION_PREFIX: ${MC_OBSERVERS_RUNTIME_DESTINATION_PREFIX}"
+)
+message(
+  STATUS
+    "MC_CONTROLLERS_RUNTIME_DESTINATION_PREFIX: ${MC_CONTROLLERS_RUNTIME_DESTINATION_PREFIX}"
+)
 
 set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
 set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
