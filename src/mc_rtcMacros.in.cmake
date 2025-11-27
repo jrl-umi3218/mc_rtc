@@ -2,11 +2,6 @@ get_filename_component(
   PACKAGE_PREFIX_DIR "${CMAKE_CURRENT_LIST_DIR}/@mc_rtc_macros_RELATIVE_PATH@" ABSOLUTE
 )
 
-# -- Library install directory --
-set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_BINDIR@")
-set(MC_RTC_DOCDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_DOCDIR@")
-set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@")
-
 # -- Library source directory --
 set(MC_RTC_SRCDIR "@MC_RTC_SOURCE_DIR@")
 
@@ -21,6 +16,32 @@ endif()
 
 if(MC_RTC_HONOR_INSTALL_PREFIX)
   include(GNUInstallDirs)
+endif()
+
+# -- Library install directory --
+if(MC_RTC_HONOR_INSTALL_PREFIX)
+  set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
+  set(MC_RTC_DOCDIR "${CMAKE_INSTALL_FULL_DOCDIR}")
+  set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
+else()
+  # nix sets CMAKE_INSTALL_*DIR to absolute paths
+  if(IS_ABSOLUTE "@CMAKE_INSTALL_BINDIR@")
+    set(MC_RTC_BINDIR "@CMAKE_INSTALL_BINDIR@")
+  else()
+    set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_BINDIR@")
+  endif()
+
+  if(IS_ABSOLUTE "@CMAKE_INSTALL_DOCDIR@")
+    set(MC_RTC_DOCDIR "@CMAKE_INSTALL_DOCDIR@")
+  else()
+    set(MC_RTC_DOCDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_DOCDIR@")
+  endif()
+
+  if(IS_ABSOLUTE "@CMAKE_INSTALL_LIBDIR@")
+    set(MC_RTC_LIBDIR "@CMAKE_INSTALL_LIBDIR@")
+  else()
+    set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@")
+  endif()
 endif()
 
 # -- Helper to set the components install prefix --
@@ -41,6 +62,12 @@ macro(mc_rtc_set_prefix NAME FOLDER)
   endif()
   # For backward compatibility
   set(MC_${NAME}_INSTALL_PREFIX "${MC_${NAME}_LIBRARY_INSTALL_PREFIX}")
+  message(
+    STATUS "MC_${NAME}_LIBRARY_INSTALL_PREFIX to ${MC_${NAME}_LIBRARY_INSTALL_PREFIX}"
+  )
+  message(
+    STATUS "MC_${NAME}_RUNTIME_INSTALL_PREFIX to ${MC_${NAME}_RUNTIME_INSTALL_PREFIX}"
+  )
 endmacro()
 
 # -- Controllers --

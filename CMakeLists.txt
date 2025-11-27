@@ -239,21 +239,41 @@ endmacro()
 find_description_package(mc_env_description)
 find_description_package(mc_int_obj_description)
 
+# -- Helper to set the components install prefix
+#
+# -- NOTE: Nix passes the CMAKE_INSTALL_LIBDIR and CMAKE_INSTALL_BINDIR as absolute
+# paths to the nix store. See: https://github.com/NixOS/nixpkgs/issues/144170
 macro(mc_rtc_set_prefix NAME FOLDER)
   set(MC_${NAME}_LIBRARY_INSTALL_PREFIX ${CMAKE_INSTALL_FULL_LIBDIR}/${FOLDER})
   if(WIN32)
     set(MC_${NAME}_RUNTIME_INSTALL_PREFIX ${CMAKE_INSTALL_FULL_BINDIR}/${FOLDER})
-    set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX
-        ${MC_RTC_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${FOLDER}
-    )
+    if(IS_ABSOLUTE "${CMAKE_INSTALL_BINDIR}")
+      set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX "${CMAKE_INSTALL_BINDIR}/${FOLDER}")
+    else()
+      set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX
+          "${MC_RTC_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${FOLDER}"
+      )
+    endif()
   else()
     set(MC_${NAME}_RUNTIME_INSTALL_PREFIX ${CMAKE_INSTALL_FULL_LIBDIR}/${FOLDER})
-    set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX
-        ${MC_RTC_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${FOLDER}
-    )
+    if(IS_ABSOLUTE "${CMAKE_INSTALL_LIBDIR}")
+      set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX "${CMAKE_INSTALL_LIBDIR}/${FOLDER}")
+    else()
+      set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX
+          "${MC_RTC_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${FOLDER}"
+      )
+    endif()
   endif()
   # For backward compatibility
   set(MC_${NAME}_INSTALL_PREFIX "${MC_${NAME}_LIBRARY_INSTALL_PREFIX}")
+  message(STATUS "MC_${NAME}_INSTALL_PREFIX: ${MC_${NAME}_INSTALL_PREFIX}")
+  message(
+    STATUS "MC_${NAME}_RUNTIME_INSTALL_PREFIX: ${MC_${NAME}_RUNTIME_INSTALL_PREFIX}"
+  )
+  message(
+    STATUS
+      "MC_${NAME}_RUNTIME_DESTINATION_PREFIX: ${MC_${NAME}_RUNTIME_DESTINATION_PREFIX}"
+  )
 endmacro()
 
 mc_rtc_set_prefix(PLUGINS mc_plugins)
@@ -263,6 +283,7 @@ mc_rtc_set_prefix(CONTROLLER mc_controller)
 
 set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
 set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
+set(MC_RTC_JSON_SCHEMA_PATH "${CMAKE_INSTALL_DOCDIR}/json/schemas")
 
 configure_file(
   ${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in
