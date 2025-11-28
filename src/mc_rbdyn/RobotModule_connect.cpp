@@ -40,7 +40,10 @@ template<std::string RobotModule::* member, typename GetDefault>
 void set_or_default(mc_rbdyn::RobotModule & out, const std::string & value, GetDefault && get_default)
 {
   if(value.size() == 0) { out.*member = get_default(); }
-  else { out.*member = value; }
+  else
+  {
+    out.*member = value;
+  }
 }
 
 std::string prefixed_or_mapping(const std::string & ref,
@@ -434,9 +437,15 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
     if(g.safety())
     {
       if(g.mimics()) { out._grippers.emplace_back(name, joints, g.reverse_limits, *g.safety(), *g.mimics()); }
-      else { out._grippers.emplace_back(name, joints, g.reverse_limits, *g.safety()); }
+      else
+      {
+        out._grippers.emplace_back(name, joints, g.reverse_limits, *g.safety());
+      }
     }
-    else { out._grippers.emplace_back(name, joints, g.reverse_limits); }
+    else
+    {
+      out._grippers.emplace_back(name, joints, g.reverse_limits);
+    }
   }
 
   /** Update compound joint description */
