@@ -166,7 +166,10 @@ void EncoderObserver::addToLogger(const mc_control::MCController & ctl,
                            {
                              auto jIdx = ctl.robot(robot_).jointIndexInMBC(i);
                              if(jIdx != -1) { qOut[i] = ctl.robot(robot_).mbc().alpha[static_cast<size_t>(jIdx)][0]; }
-                             else { qOut[i] = 0.0; }
+                             else
+                             {
+                               qOut[i] = 0.0;
+                             }
                            }
                            return qOut;
                          });
@@ -195,7 +198,10 @@ void EncoderObserver::addToLogger(const mc_control::MCController & ctl,
                            {
                              auto jIdx = ctl.robot(robot_).jointIndexInMBC(i);
                              if(jIdx != -1) { alpha[i] = ctl.robot(robot_).mbc().alpha[static_cast<size_t>(jIdx)][0]; }
-                             else { alpha[i] = 0.0; }
+                             else
+                             {
+                               alpha[i] = 0.0;
+                             }
                            }
                            return alpha;
                          });

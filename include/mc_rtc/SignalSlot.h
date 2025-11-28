@@ -52,7 +52,10 @@ struct Signal
   {
     SlotT out{this, next_slot_};
     if(next_slot_ < callbacks_.size()) { callbacks_[next_slot_] = callback; }
-    else { callbacks_.push_back(callback); }
+    else
+    {
+      callbacks_.push_back(callback);
+    }
     next_slot_++;
     while(next_slot_ < callbacks_.size() && callbacks_[next_slot_]) { next_slot_++; }
     return out;
