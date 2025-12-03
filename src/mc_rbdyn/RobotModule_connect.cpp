@@ -138,6 +138,8 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   // Build a new MultiBodyGraph from this and other
   auto & mbg = out.mbg;
   // Add all the bodies from other
+  // TODO: if not merging with the base of the other robot module's tree, this should
+  // only copy useful bodies down the graph
   for(size_t i = 0; i < other.mb.bodies().size(); ++i)
   {
     const auto & body = other.mb.body(static_cast<int>(i));
@@ -519,13 +521,24 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   {
     std::string module_yaml = fmt::format("{}/{}.yaml", out.path, out.name);
     out._parameters = {"json", module_yaml};
+    // FIXME: we should also generate the merged real_urdf,
+    // use the control urdf as a substitute for now
+    out._real_urdf = out.urdf_path;
     // Connected robots do not have a canonical representation
     // The generated "out" module will be used as the canonical module
     out._canonicalParameters.clear();
 
     auto yaml = mc_rtc::ConfigurationLoader<mc_rbdyn::RobotModule>::save(out, false, {}, out.mb.joint(0).dof() == 0);
     yaml.save(module_yaml);
-    mc_rtc::log::info("Connection done, result module in: {}", module_yaml);
+    mc_rtc::log::info(R"(Connection done between "{2}" and "{3}" as "{4}":
+- result module: {0}
+- urdf path: {1}
+- real urdf path: {5}
+Tips:
+- You may: visualize it with mc_robot_visualization json {0}
+- Load it with [json, {0}] as module parameters
+  )",
+                      module_yaml, out.urdf_path, name, other.name, out.name, out._real_urdf);
   }
 
   return out;
