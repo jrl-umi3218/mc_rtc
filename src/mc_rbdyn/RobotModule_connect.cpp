@@ -165,7 +165,14 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
                    jointName(other.mb.joint(static_cast<int>(i)).name()));
   }
   std::string connectJointName = params.jointName_;
-  if(connectJointName.size() == 0) { connectJointName = fmt::format("{}_connect_{}_{}", name, prefix, other.name); }
+  if(connectJointName.size() == 0)
+  {
+    if(prefix.empty()) { connectJointName = fmt::format("{}_connect_{}", name, other.name); }
+    else
+    {
+      connectJointName = fmt::format("{}_connect_{}_{}", name, prefix, other.name);
+    }
+  }
   rbd::Joint connectJoint{params.jointType_, params.jointAxis_, params.jointForward_, connectJointName};
   mbg.addJoint(connectJoint);
   mbg.linkBodies(this_body, params.X_this_connection_, bodyName(other_body), params.X_other_connection_,
@@ -174,7 +181,8 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   /** Create a new MultiBodyGraph which has the same base as this */
   const auto & X_0_b0 = mbc.bodyPosW[0];
   const auto & X_0_j0 = mb.transform(0);
-  auto X_b0_j0 = mbc.jointConfig[0] * X_0_j0 * X_0_b0.inv();
+  sva::PTransformd X_b0_j0 =
+      (mb.joint(0).type() == rbd::Joint::Fixed) ? X_0_j0 : mbc.jointConfig[0] * X_0_j0 * X_0_b0.inv();
   out.mb = mbg.makeMultiBody(mb.body(0).name(), mb.joint(0).type(), axisFromJoint(mb.joint(0)), X_0_j0, X_b0_j0);
   out.mbc = rbd::MultiBodyConfig(out.mb);
   out.mbc.zero(out.mb);
