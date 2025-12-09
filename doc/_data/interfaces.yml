@@ -46,3 +46,9 @@
   pkg:
     name: mc_rtde
     url: https://github.com/isri-aist/mc_rtde
+- name: Kortex
+  url: https://github.com/Kinovarobotics/Kinova-kortex2_Gen3_G3L
+  icon: kortex.png
+  pkg:
+    name: mc_kortex
+    url: https://github.com/mathieu-celerier/mc_kortex
