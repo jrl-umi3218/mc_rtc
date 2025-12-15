@@ -24,13 +24,10 @@ endif
 TMP = $(CURDIR)/debian/tmp
 
 %:
-	dh $@ --parallelN
+	dh $@ --parallel
 
 override_dh_auto_configure:
 	dh_auto_configure -- -DPYTHON_DEB_ROOT=$(TMP) -DMC_LOG_UI_PYTHON_EXECUTABLE=${MC_LOG_UI_PYTHON_EXECUTABLE}
-
-override_dh_auto_test:
-	dh_auto_test --no-parallel
 
 override_dh_auto_install:
 	dh_auto_install
