@@ -122,3 +122,12 @@
     module:
       url: https://github.com/isri-aist/mc_kinova
       name: mc_kinova
+- name: TX2-60
+  icon: tx2-60.png
+  pkg:
+    desc:
+      url: https://github.com/isri-aist/staubli_description
+      name: staubli_description
+    module:
+      url: https://github.com/isri-aist/mc_staubli
+      name: mc_staubli

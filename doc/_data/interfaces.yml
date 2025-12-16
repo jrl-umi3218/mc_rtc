@@ -52,3 +52,9 @@
   pkg:
     name: mc_kortex
     url: https://github.com/mathieu-celerier/mc_kortex
+- name: VAL3
+  url: https://www.staubli.com/global/en/robotics/products/robot-software/val-3-language.html
+  icon: val3.png
+  pkg:
+    name: mc_staubli_val3
+    url: https://github.com/isri-aist/mc_staubli_val3
