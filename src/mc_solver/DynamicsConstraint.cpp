@@ -172,7 +172,10 @@ mc_solver::ConstraintSetPtr load_kin_constr(mc_solver::QPSolver & solver, const 
     return std::make_shared<mc_solver::KinematicsConstraint>(solver.robots(), robotIndex, solver.dt(), config("damper"),
                                                              config("velocityPercent", 0.5));
   }
-  else { return std::make_shared<mc_solver::KinematicsConstraint>(solver.robots(), robotIndex, solver.dt()); }
+  else
+  {
+    return std::make_shared<mc_solver::KinematicsConstraint>(solver.robots(), robotIndex, solver.dt());
+  }
 }
 
 mc_solver::ConstraintSetPtr load_dyn_constr(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)

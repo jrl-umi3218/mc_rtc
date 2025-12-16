@@ -32,7 +32,7 @@ Then to run the sample, use:
 $ (roscore &) # Ensure you have a roscore running (for rviz visualization)
 $ cd /usr/local/share/hrpsys/samples/JVRC1
 $ choreonoid sim_mc_wall.cnoid
-$ roslaunch mc_rtc_ticker controler_display.launch
+$ ros2 launch mc_rtc_ticker display.launch
 ```
 
 Then start the simulation by clicking on the green arrow in Choreonoid's interface. You should see the following output:

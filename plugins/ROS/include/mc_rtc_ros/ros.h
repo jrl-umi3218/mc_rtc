@@ -69,7 +69,16 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
    */
   static void set_publisher_timestep(double timestep);
 
-  /** Update the robot publisher state
+  /** Gets publisher timestep
+   *
+   * \return Update timestep in ms
+   *
+   */
+  static double get_publisher_timestep();
+
+  /** Initialize a robot publisher
+   *
+   * \note This should only be used on robots owned by the controller. Use RobotPublisher for external robots
    *
    * \param publisher Name of the publisher
    *
@@ -86,6 +95,8 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
                                    bool use_real = false);
 
   /** Update the robot publisher state
+   *
+   * \note This should only be used on robots owned by the controller. Use RobotPublisher for external robots
    *
    * \param publisher Name of the publisher
    *

@@ -94,6 +94,66 @@ bool try_add(const YAML::Node & node, Configuration & out, const std::string & k
 inline bool fromYAMLSequence(const YAML::Node & node, Configuration out);
 inline bool fromYAMLMap(const YAML::Node & node, Configuration out);
 
+/**
+ * @brief Handles scalar YAML nodes when converting a YAML sequence to a Configuration.
+ *
+ * This function attempts to push the scalar value to the output Configuration.
+ * If the scalar is explicitly tagged as a string (with key: !!str 12345), it is always treated as a string. Note that
+ * yaml-cpp treats quoted numbers as numbers (that is "12345" is an int, not a string). Also note that numbers starting
+ * with a leading zero are treated as octal numbers (so "0123" is 83 as int, not "0123" as string). Otherwise, it tries
+ * to push as bool, int64_t, uint64_t, double, and finally as string.
+ *
+ * @param node The YAML scalar node to handle.
+ * @param out The output Configuration to push the value into.
+ * @return true if the value was successfully pushed, false otherwise.
+ */
+inline bool handleYAMLScalar(const YAML::Node & node, Configuration out)
+{
+  bool ok = false;
+  if(node.Tag() == "tag:yaml.org,2002:str") { ok = try_push<std::string>(node, out); }
+  else
+  {
+    ok = try_push<bool>(node, out) || try_push<int64_t>(node, out) || try_push<uint64_t>(node, out)
+         || try_push<double>(node, out) || try_push<std::string>(node, out);
+  }
+  if(!ok)
+  {
+    log::error("Could not convert YAML node in a provided Sequence");
+    log::warning("Scalar value: {}", node.Scalar());
+    return false;
+  }
+  return true;
+}
+
+/**
+ * @brief Handles scalar YAML nodes when converting a YAML map to a Configuration.
+ *
+ * \see handleYAMLScalar(const YAML::Node & node, Configuration out)
+ *
+ * @param node The YAML scalar node to handle.
+ * @param out The output Configuration to add the value into.
+ * @param key The key under which to add the value in the Configuration.
+ * @return true if the value was successfully added, false otherwise.
+ *
+ */
+inline bool handleYAMLScalar(const YAML::Node & node, Configuration out, const std::string & key)
+{
+  bool ok = false;
+  if(node.Tag() == "tag:yaml.org,2002:str") { ok = try_add<std::string>(node, out, key); }
+  else
+  {
+    ok = try_add<bool>(node, out, key) || try_add<int64_t>(node, out, key) || try_add<uint64_t>(node, out, key)
+         || try_add<double>(node, out, key) || try_add<std::string>(node, out, key);
+  }
+  if(!ok)
+  {
+    log::error("Could not convert YAML node in a provided Map");
+    log::warning("Key: {}, Scalar value: {}", key, node.Scalar());
+    return false;
+  }
+  return true;
+}
+
 inline bool fromYAMLSequence(const YAML::Node & node, Configuration out)
 {
   for(size_t i = 0; i < node.size(); ++i)
@@ -101,13 +161,7 @@ inline bool fromYAMLSequence(const YAML::Node & node, Configuration out)
     const YAML::Node & ni = node[i];
     if(ni.IsScalar())
     {
-      if(!try_push<bool>(ni, out) && !try_push<int64_t>(ni, out) && !try_push<uint64_t>(ni, out)
-         && !try_push<double>(ni, out) && !try_push<std::string>(ni, out))
-      {
-        log::error("Could not convert YAML node in a provided Sequence");
-        log::warning("Scalar value: {}", ni.Scalar());
-        return false;
-      }
+      if(!handleYAMLScalar(ni, out)) { return false; }
     }
     else if(ni.IsSequence())
     {
@@ -143,13 +197,7 @@ inline bool fromYAMLMap(const YAML::Node & node, Configuration out)
     const YAML::Node & n = it.second;
     if(n.IsScalar())
     {
-      if(!try_add<bool>(n, out, key) && !try_add<int64_t>(n, out, key) && !try_add<uint64_t>(n, out, key)
-         && !try_add<double>(n, out, key) && !try_add<std::string>(n, out, key))
-      {
-        log::error("Could not convert YAML node in a provided Map");
-        log::warning("Key: {}, Scalar value: {}", key, n.Scalar());
-        return false;
-      }
+      if(!handleYAMLScalar(n, out, key)) { return false; }
     }
     else if(n.IsSequence())
     {
@@ -289,7 +337,10 @@ inline void dumpYAML(const mc_rtc::Configuration & in, YAML::Emitter & out)
       if(dump == "[]") { out << YAML::Flow << YAML::BeginSeq << YAML::EndSeq; }
       else if(dump == "{}") { out << YAML::Flow << YAML::BeginMap << YAML::EndMap; }
       else if(dump[0] == '"' && dump[dump.size() - 1] == '"') { out << dump.substr(1, dump.size() - 2); }
-      else { out << dump; }
+      else
+      {
+        out << dump;
+      }
     }
   }
 }

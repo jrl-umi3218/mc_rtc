@@ -38,7 +38,10 @@ bool compare_vector_maps(const std::map<std::string, std::vector<T>> & lhs,
     {
       if(!compare_vectors(el.second, rhs.at(el.first))) { return false; }
     }
-    else { return false; }
+    else
+    {
+      return false;
+    }
   }
   for(const auto & el : rhs)
   {
@@ -142,7 +145,10 @@ std::shared_ptr<mc_rbdyn::Surface> make_ref()
   i++;
   if(i % 3 == 0) { return make_ref<std::shared_ptr<mc_rbdyn::PlanarSurface>>(); }
   else if(i % 3 == 1) { return make_ref<std::shared_ptr<mc_rbdyn::CylindricalSurface>>(); }
-  else { return make_ref<std::shared_ptr<mc_rbdyn::GripperSurface>>(); }
+  else
+  {
+    return make_ref<std::shared_ptr<mc_rbdyn::GripperSurface>>();
+  }
 }
 
 bool operator==(const std::shared_ptr<mc_rbdyn::Surface> & lhs, const std::shared_ptr<mc_rbdyn::Surface> & rhs)

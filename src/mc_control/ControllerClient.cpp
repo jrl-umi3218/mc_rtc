@@ -49,7 +49,10 @@ void init_socket(int & socket, int proto, const std::string & uri, const std::st
   if(socket < 0) { mc_rtc::log::error_and_throw("Failed to initialize {}", name); }
   int ret = nn_connect(socket, uri.c_str());
   if(ret < 0) { mc_rtc::log::error_and_throw("Failed to connect {} to uri: {}", name, uri); }
-  else { mc_rtc::log::info("Connected {} to {}", name, uri); }
+  else
+  {
+    mc_rtc::log::info("Connected {} to {}", name, uri);
+  }
   if(proto == NN_SUB)
   {
     int err = nn_setsockopt(socket, NN_SUB, NN_SUB_SUBSCRIBE, "", 0);
@@ -175,7 +178,10 @@ void ControllerClient::run(std::vector<char> & buff, std::chrono::system_clock::
     memcpy(buff.data(), recv.first, recv.second * sizeof(char));
     run(buff.data(), recv.second);
   }
-  else { handle_gui_state(mc_rtc::Configuration{}); }
+  else
+  {
+    handle_gui_state(mc_rtc::Configuration{});
+  }
 }
 
 void ControllerClient::run(const char * buffer, size_t bufferSize)
@@ -390,7 +396,10 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
           Eigen::Vector3d pos = data[4];
           visual(id, data[3], {pos});
         }
-        else { visual(id, data[3], data[4]); }
+        else
+        {
+          visual(id, data[3], data[4]);
+        }
         break;
       default:
         mc_rtc::log::error("Type {} is not handlded by this ControllerClient", static_cast<int>(type));
@@ -481,7 +490,10 @@ void ControllerClient::handle_point3d(const ElementId & id, const mc_rtc::Config
   mc_rtc::gui::PointConfig config;
   if(data.size() > 5) { config.fromMessagePack(data[5]); }
   if(ro) { array_label(id, {"x", "y", "z"}, pos); }
-  else { array_input(id, {"x", "y", "z"}, pos); }
+  else
+  {
+    array_input(id, {"x", "y", "z"}, pos);
+  }
   point3d({id.category, id.name + "_point3d", id.sid}, id, ro, pos, config);
 }
 
@@ -541,7 +553,10 @@ void ControllerClient::handle_polygon(const ElementId & id, const mc_rtc::Config
       config.color.fromMessagePack(data_[4]);
       config.width = 0.005;
     }
-    else { config.fromMessagePack(data_[4]); }
+    else
+    {
+      config.fromMessagePack(data_[4]);
+    }
   }
   try
   {
@@ -668,7 +683,10 @@ void ControllerClient::handle_force(const ElementId & id, const mc_rtc::Configur
   mc_rtc::gui::ForceConfig forceConfig;
   if(data.size() > 6) { forceConfig.fromMessagePack(data[6]); }
   if(ro) { array_label(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector()); }
-  else { array_input(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector()); }
+  else
+  {
+    array_input(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector());
+  }
   force({id.category, id.name + "_arrow", id.sid}, id, force_, surface, forceConfig, ro);
 }
 
@@ -683,7 +701,10 @@ void ControllerClient::handle_arrow(const ElementId & id, const mc_rtc::Configur
   arrow_data.head<3>() = arrow_start;
   arrow_data.tail<3>() = arrow_end;
   if(ro) { array_label(id, {"tx_0", "ty_0", "tz_0", "tx_1", "ty_1", "tz_1"}, arrow_data); }
-  else { array_input(id, {"tx_0", "ty_0", "tz_0", "tx_1", "ty_1", "tz_1"}, arrow_data); }
+  else
+  {
+    array_input(id, {"tx_0", "ty_0", "tz_0", "tx_1", "ty_1", "tz_1"}, arrow_data);
+  }
   arrow({id.category, id.name + "_arrow", id.sid}, id, arrow_start, arrow_end, arrow_config, ro);
 }
 
@@ -693,7 +714,10 @@ void ControllerClient::handle_rotation(const ElementId & id, const mc_rtc::Confi
   bool ro = data[4];
   Eigen::Quaterniond q{pos.rotation()};
   if(ro) { array_label(id, {"w", "x", "y", "z"}, Eigen::Vector4d{q.w(), q.x(), q.y(), q.z()}); }
-  else { array_input(id, {"w", "x", "y", "z"}, Eigen::Vector4d{q.w(), q.x(), q.y(), q.z()}); }
+  else
+  {
+    array_input(id, {"w", "x", "y", "z"}, Eigen::Vector4d{q.w(), q.x(), q.y(), q.z()});
+  }
   rotation({id.category, id.name + "_rotation", id.sid}, id, ro, pos);
 }
 
@@ -708,7 +732,10 @@ void ControllerClient::handle_transform(const ElementId & id, const mc_rtc::Conf
     Eigen::Matrix<double, 7, 1> vec;
     vec << q.w(), q.x(), q.y(), q.z(), pos.translation();
     if(ro) { array_label(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec); }
-    else { array_input(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec); }
+    else
+    {
+      array_input(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
+    }
     transform({id.category, id.name + "_transform", id.sid}, id, ro, pos);
   };
 
@@ -732,7 +759,10 @@ void ControllerClient::handle_xytheta(const ElementId & id, const mc_rtc::Config
 
   const std::vector<std::string> & label = {"X", "Y", "Theta", "Altitude"};
   if(ro) { array_label(id, label, vec); }
-  else { array_input(id, label, vec); }
+  else
+  {
+    array_input(id, label, vec);
+  }
   xytheta({id.category, id.name + "_xytheta", id.sid}, id, ro, xythetaVec, altitude);
 }
 

@@ -30,7 +30,10 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
   if(!updateConfig.empty())
   {
     if(updateConfig == "sensor") { updateFrom_ = Update::Sensor; }
-    else { updateFrom_ = Update::Control; }
+    else
+    {
+      updateFrom_ = Update::Control;
+    }
   }
 
   if(updateFrom_ == Update::Sensor)
@@ -157,7 +160,10 @@ void BodySensorObserver::addToGUI(const mc_control::MCController & ctl,
     {
       gui.addElement(category, mc_rtc::gui::Transform("Pose", [this]() -> const sva::PTransformd & { return posW_; }));
     }
-    else { gui.removeElement(category, "Pose"); }
+    else
+    {
+      gui.removeElement(category, "Pose");
+    }
   };
   auto showVel = [this, &gui, category]()
   {
@@ -172,7 +178,10 @@ void BodySensorObserver::addToGUI(const mc_control::MCController & ctl,
                            return end;
                          }));
     }
-    else { gui.removeElement(category, "Velocity"); }
+    else
+    {
+      gui.removeElement(category, "Velocity");
+    }
   };
   auto showAcc = [this, &gui, category]()
   {
@@ -187,7 +196,10 @@ void BodySensorObserver::addToGUI(const mc_control::MCController & ctl,
                                      return end;
                                    }));
     }
-    else { gui.removeElement(category, "Acceleration"); }
+    else
+    {
+      gui.removeElement(category, "Acceleration");
+    }
   };
 
   gui.addElement(category,

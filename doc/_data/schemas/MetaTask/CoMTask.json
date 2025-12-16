@@ -5,18 +5,18 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/MetaTask_common.json"
+      "$ref": "../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+      "$ref": "../common/TrajectoryTaskGeneric.json"
     },
     {
-      "$ref": "/../../common/CoMTask.json"
+      "$ref": "../common/CoMTask.json"
     },
     {
       "properties":
       {
-        "type": { "enum": ["com"] },
+        "type": { "const": "com" },
         "stiffness": { "default": 5},
         "weight": { "default": 100}
       }

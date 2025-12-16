@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "title": "Observer Configuration",
+  "description": "Common configuration elements for all Observers. A new Observer should extend this schema",
+  "properties": {
+    "robot": {
+      "type": "string",
+      "description": "Name of the robot to observe"
+    },
+    "updateRobot": {
+      "type": "string",
+      "description": "Name of the robot to update"
+    },
+    "log": {
+      "type": "object",
+      "description": "Logging options for the observer"
+    },
+    "gui": {
+      "type": "object",
+      "description": "GUI display options for the observer"
+    }
+  },
+  "additionalProperties": true,
+  "not": {
+    "properties": {
+      "type": {
+        "enum": ["Encoder", "KinematicInertial", "BodySensor"]
+      }
+    }
+  }
+}

@@ -1,30 +1,41 @@
-<!-- <pre>ITEM: {{ include | jsonify }}</pre> -->
-{% if include.data contains "enum" %}
-  {% capture enum_size %}{{ include.data.enum | size }}{% endcapture %}
-  {% if enum_size == "1" %}
+<!-- <pre>ITEM: {{ include | jsonify }}</pre>  -->
+{% capture COLLAPSE_ID %}collapse_{{include.id}}_{{include.propName}}{% endcapture %}
+{% if include.data contains "enum" or include.data contains "const" %}
+  {% if include.data contains "const" %}
     <span class="text-secondary">constant&nbsp;</span>
+    {% if include.data contains "type" %}
+      <span class="text-{{include.data.type}}">{{include.data.type}}</span>&nbsp;
+    {% endif %}
+    <span class="text-enum">{{include.data["const"]}}</span>&nbsp;
   {% else %}
-    <span class="text-secondary">enum&nbsp;</span>
+    {% capture enum_size %}{{ include.data.enum | size }}{% endcapture %}
+    {% if enum_size == "1" %}
+      <span class="text-secondary">constant&nbsp;</span>
+    {% else %}
+      <span class="text-secondary">enum&nbsp;</span>
+    {% endif %}
+    {% if include.data contains "type" %}
+      <span class="text-{{include.data.type}}">{{include.data.type}}</span>&nbsp;
+    {% endif %}
+    {% for e in include.data.enum %}
+      <span class="text-enum">{{e}}</span>&nbsp;
+    {% endfor %}
   {% endif %}
-  {% if include.data contains "type" %}
-    <span class="text-{{include.data.type}}">{{include.data.type}}</span>&nbsp;
-  {% endif %}
-  {% for e in include.data.enum %}
-    <span class="text-enum">{{e}}</span>&nbsp;
-  {% endfor %}
 {% elsif include.data contains "REF" %}
-  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapse{{include.id}}" aria-expanded="false" aria-controls="collapse{{include.id}}">{{include.data.title}}</a>
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#{{COLLAPSE_ID}}" aria-expanded="false" aria-controls="{{COLLAPSE_ID}}">{{include.data.title}}</a>
   {% if include.data contains "default" %}
     &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-{{type}}">{{include.data.default}}</span>
   {% endif %}
   {% capture INCLUDE_AFTER %}
   {{INCLUDE_AFTER}}
-  <tr class="collapse" id="collapse{{include.id}}">
+  <tr class="collapse" id="{{COLLAPSE_ID}}">
     <td colspan="3">
       {% include json_schema.html schema=include.data id=include.id %}
     </td>
   </tr>
   {% endcapture %}
+{% elsif include.data contains "oneOf" %}
+  {% include json_schema_object_property.html id=include.id name=include.name data=include.data required=include.required has_description=false pattern=false %}
 {% elsif include.data contains "type" %}
   {% assign type = include.data.type %}
   {% if type == "string" or type == "number" or type == "integer" or type == "boolean" %}
@@ -46,7 +57,7 @@
     {% else %}
       {% assign minItems = "" %}
     {% endif %}
-    {% include json_schema_array.html minItems=minItems maxItems=include.data.maxItems items=include.data.items id=include.id %}
+  {% include json_schema_array.html minItems=minItems maxItems=include.data.maxItems items=include.data.items id=COLLAPSE_ID %}
   {% elsif type == "object" %}
     <!-- <pre>OBJECT: {{ include.data | jsonify }}</pre> -->
     {% if include.data.title %}
@@ -54,12 +65,12 @@
     {% else %}
       {% capture TITLE %}object{% endcapture %}
     {% endif %}
-    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapse{{include.id}}" aria-expanded="false" aria-controls="collapse{{include.id}}">{{TITLE}}</a>
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#{{COLLAPSE_ID}}" aria-expanded="false" aria-controls="{{COLLAPSE_ID}}">{{TITLE}}</a>
     {% capture INCLUDE_AFTER %}
     {{INCLUDE_AFTER}}
-    <tr class="collapse" id="collapse{{include.id}}">
+    <tr class="collapse" id="{{COLLAPSE_ID}}">
       <td colspan="3">
-        {% include json_schema.html schema=include.data id=include.id %}
+        {% include json_schema.html schema=include.data id=COLLAPSE_ID %}
       </td>
     </tr>
     {% endcapture %}

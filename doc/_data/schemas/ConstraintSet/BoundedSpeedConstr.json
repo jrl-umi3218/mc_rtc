@@ -3,8 +3,8 @@
   "type": "object",
   "properties":
   {
-    "type": { "enum": ["boundedSpeed"] },
-    "robot": { "$ref": "/../../common/ConstraintSet_robot.json" },
+    "type": { "const": "boundedSpeed" },
+    "robot": { "$ref": "../common/ConstraintSet_robot.json" },
     "constraints":
     {
       "type": "array",
@@ -15,10 +15,10 @@
         "properties":
         {
           "frame": { "type": "string" },
-          "dof": { "$ref": "/../../Eigen/Vector6d.json", "description": "Defaults to identity" },
-          "speed": { "$ref": "/../../Eigen/Vector6d.json" },
-          "lowerSpeed": { "$ref": "/../../Eigen/Vector6d.json", "description": "Ignored if speed is present" },
-          "upperSpeed": { "$ref": "/../../Eigen/Vector6d.json", "description": "Required if lowerSpeed is present and speed is absent" }
+          "dof": { "$ref": "../Eigen/Vector6d.json", "description": "Defaults to identity" },
+          "speed": { "$ref": "../Eigen/Vector6d.json" },
+          "lowerSpeed": { "$ref": "../Eigen/Vector6d.json", "description": "Ignored if speed is present" },
+          "upperSpeed": { "$ref": "../Eigen/Vector6d.json", "description": "Required if lowerSpeed is present and speed is absent" }
         },
         "required": ["frame"]
       }

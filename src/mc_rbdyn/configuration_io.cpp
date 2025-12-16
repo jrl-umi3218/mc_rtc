@@ -29,7 +29,7 @@ template<>
 struct formatter<rbd::Joint::Type> : public formatter<string_view>
 {
   template<typename FormatContext>
-  auto format(const rbd::Joint::Type & t, FormatContext & ctx) -> decltype(ctx.out())
+  auto format(const rbd::Joint::Type & t, FormatContext & ctx) const -> decltype(ctx.out())
   {
     switch(t)
     {
@@ -201,7 +201,10 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Collision>::save(const mc_rb
     if(joints)
     {
       if(inactive) { config.add(prefix + "InactiveJoints", *c.r1Joints); }
-      else { config.add(prefix + "ActiveJoints", *c.r1Joints); }
+      else
+      {
+        config.add(prefix + "ActiveJoints", *c.r1Joints);
+      }
     }
   };
   saveActiveJoints("r1", c.r1Joints, c.r1JointsInactive);
@@ -259,7 +262,10 @@ mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::s
     config.add("X_b_motor", gs->X_b_motor());
     config.add("motorMaxTorque", gs->motorMaxTorque());
   }
-  else { mc_rtc::log::error_and_throw("Cannot serialize a surface of type {}", s->type()); }
+  else
+  {
+    mc_rtc::log::error_and_throw("Cannot serialize a surface of type {}", s->type());
+  }
   return config;
 }
 
@@ -986,7 +992,10 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::save(const mc_
     out.add("epsilon1", epsilon1);
     out.add("epsilon2", epsilon2);
   }
-  else { mc_rtc::log::error_and_throw("New sch-core object type is not handled by this save function"); }
+  else
+  {
+    mc_rtc::log::error_and_throw("New sch-core object type is not handled by this save function");
+  }
   return out;
 failed_cast:
   mc_rtc::log::error_and_throw("Failed to cast the object to its deduced type");
@@ -1098,7 +1107,10 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   config("stance", rm._stance);
   rm.expand_stance();
   if(config.has("ref_joint_order")) { rm._ref_joint_order = config("ref_joint_order"); }
-  else { rm.make_default_ref_joint_order(); }
+  else
+  {
+    rm.make_default_ref_joint_order();
+  }
 
   if(config.has("gripperSafety")) { rm._gripperSafety = config("gripperSafety"); }
   if(config.has("grippers"))
@@ -1205,8 +1217,8 @@ mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Con
   const auto r1Index = robotIndexFromConfig(config, robots, "contact", false, "r1Index", "r1");
   const auto r2Index = robotIndexFromConfig(config, robots, "contact", false, "r2Index", "r2", robots.robot(1).name());
   sva::PTransformd X_r2s_r1s = sva::PTransformd::Identity();
-  bool isFixed = config("isFixed");
-  if(isFixed) { X_r2s_r1s = config("X_r2s_r1s"); }
+  bool isFixed = config("isFixed", true);
+  if(isFixed) { X_r2s_r1s = config("X_r2s_r1s", sva::PTransformd::Identity()); }
   std::string r1Surface = config("r1Surface");
   sva::PTransformd X_b_s = robots.robot(r1Index).surface(r1Surface).X_b_s();
   config("X_b_s", X_b_s);
@@ -1240,7 +1252,10 @@ tasks::qp::JointGains ConfigurationLoader<tasks::qp::JointGains>::load(const mc_
   {
     return tasks::qp::JointGains(config("jointName"), config("stiffness"), config("damping"));
   }
-  else { return tasks::qp::JointGains(config("jointName"), config("stiffness")); }
+  else
+  {
+    return tasks::qp::JointGains(config("jointName"), config("stiffness"));
+  }
 }
 
 mc_rtc::Configuration ConfigurationLoader<tasks::qp::JointGains>::save(const tasks::qp::JointGains & jg)

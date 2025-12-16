@@ -86,7 +86,10 @@ public:
       // RemovePostureTask should have removed the posture task
       BOOST_REQUIRE(!getPostureTask("jvrc1")->inSolver());
     }
-    else { BOOST_REQUIRE(getPostureTask("jvrc1")->inSolver()); }
+    else
+    {
+      BOOST_REQUIRE(getPostureTask("jvrc1")->inSolver());
+    }
     if(iter_ > 3) // TestConstraintsAndTasks
     {
       BOOST_REQUIRE(executor_.state() == "TestConstraintsAndTasks");
@@ -98,7 +101,10 @@ public:
       BOOST_REQUIRE((speed - ref).norm() < 5e-4);
       BOOST_REQUIRE(hasTask<mc_tasks::CoMTask>());
     }
-    else { BOOST_REQUIRE(!hasTask<mc_tasks::CoMTask>()); }
+    else
+    {
+      BOOST_REQUIRE(!hasTask<mc_tasks::CoMTask>());
+    }
     iter_++;
     return ret;
   }

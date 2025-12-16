@@ -64,7 +64,10 @@ template<typename T>
 inline constexpr bool is_std_vector_schema_v = []()
 {
   if constexpr(is_std_vector_v<T>) { return is_schema_v<typename T::value_type>; }
-  else { return false; }
+  else
+  {
+    return false;
+  }
 }();
 
 /** Type-trait to detect an std::map */
@@ -86,7 +89,10 @@ template<typename T>
 inline constexpr bool is_std_map_schema_v = []()
 {
   if constexpr(is_std_map_v<T>) { return is_schema_v<typename T::value_type>; }
-  else { return false; }
+  else
+  {
+    return false;
+  }
 }();
 
 /** Type-trait to detect if something is an Eigen::VectorNd */
@@ -102,6 +108,20 @@ struct is_eigen_vector<Eigen::Matrix<Scalar, Rows, 1, Options, MaxRows, 1>> : pu
 
 template<typename T>
 inline constexpr bool is_eigen_vector_v = is_eigen_vector<T>::value;
+
+/** Type-trait to detect if something is an Eigen::MatrixXd */
+template<typename T>
+struct is_eigen_matrixxd : public std::false_type
+{
+};
+
+template<>
+struct is_eigen_matrixxd<Eigen::MatrixXd> : public std::true_type
+{
+};
+
+template<typename T>
+inline constexpr bool is_eigen_matrixxd_v = is_eigen_matrixxd<T>::value;
 
 template<typename T, bool IsRequired, bool IsInteractive, bool HasChoices = false, bool IsStatic = false>
 void addValueToForm(const T & value,
@@ -121,7 +141,10 @@ void variantToForm(const std::variant<Args...> &,
       if(idx < choices.choices.size()) { return choices.choices[idx]; }
       return std::to_string(idx);
     }
-    else { return std::to_string(idx); }
+    else
+    {
+      return std::to_string(idx);
+    }
   };
   size_t i = 0;
   (addValueToForm<Args, IsRequired, IsInteractive, false, true>(Default<Args>::value, get_choice(i++), {}, form), ...);
@@ -186,7 +209,10 @@ void addValueToForm(const T & value,
       form.addElement(
           mc_rtc::gui::FormComboInput(description, IsRequired, choices.choices, false, static_cast<int>(idx)));
     }
-    else { form.addElement(mc_rtc::gui::FormStringInput(description, IsRequired, get_value)); }
+    else
+    {
+      form.addElement(mc_rtc::gui::FormStringInput(description, IsRequired, get_value));
+    }
   }
   else if constexpr(std::is_same_v<T, Eigen::Vector3d>)
   {
@@ -200,7 +226,14 @@ void addValueToForm(const T & value,
   {
     form.addElement(mc_rtc::gui::FormArrayInput(description, IsRequired, get_value));
   }
-  else { static_assert(!std::is_same_v<T, T>, "addValueToForm must be implemented for this value type"); }
+  else if constexpr(details::is_eigen_matrixxd_v<T>)
+  {
+    // do nothing, we don't support MatrixXd in forms for now but allow MatrixXd in schemas
+  }
+  else
+  {
+    static_assert(!std::is_same_v<T, T>, "addValueToForm must be implemented for this value type");
+  }
 }
 
 } // namespace details
@@ -324,7 +357,7 @@ struct Operations
       load(self, in);
       T & value = static_cast<Schema *>(self)->*ptr;
       if(in.has(name)) { value = in(name).operator T(); }
-      else if constexpr(IsRequired) { mc_rtc::log::error_and_throw("{} is required"); }
+      else if constexpr(IsRequired) { mc_rtc::log::error_and_throw("{} is required", name); }
     };
     formToStd = [formToStd = formToStd, name, description](const Configuration & in, Configuration & out)
     {
@@ -349,7 +382,10 @@ struct Operations
           }
         }
         else if constexpr(details::is_std_map_schema_v<T>) {}
-        else { out.add(name, in(description)); }
+        else
+        {
+          out.add(name, in(description));
+        }
       }
     };
     buildForm = [buildForm = buildForm, description, choices](const void * self, Operations::FormElements & form)

@@ -185,7 +185,10 @@ struct CallbackOrValue
   void write(mc_rtc::MessagePackBuilder & builder)
   {
     if constexpr(is_callback) { builder.write(callback_or_value()); }
-    else { builder.write(callback_or_value); }
+    else
+    {
+      builder.write(callback_or_value);
+    }
   }
 };
 
@@ -290,32 +293,38 @@ private:
       {                                                                                                        \
         return details::FormDataInput<DATAT, ELEMENT>{name, required, value};                                  \
       }                                                                                                        \
-      else { return details::FormDataInput<DATAT, ELEMENT>{name, required, DATAT{value}}; }                    \
+      else                                                                                                     \
+      {                                                                                                        \
+        return details::FormDataInput<DATAT, ELEMENT>{name, required, DATAT{value}};                           \
+      }                                                                                                        \
     }                                                                                                          \
   }
 
-#define MAKE_INTERACTIVE_DATA_INPUT_HELPER(DATAT, ELEMENT, FNAME)                                                   \
-  inline details::FormInteractiveDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required,           \
-                                                                 bool interactive = true)                           \
-  {                                                                                                                 \
-    return {name, required, interactive};                                                                           \
-  }                                                                                                                 \
-                                                                                                                    \
-  template<typename T = DATAT, typename = std::enable_if_t<!std::is_same_v<T, bool>>>                               \
-  inline auto FNAME(const std::string & name, bool required, T value, bool interactive = true)                      \
-  {                                                                                                                 \
-    if constexpr(std::is_invocable_v<T>)                                                                            \
-    {                                                                                                               \
-      return details::FormInteractiveDataInput<T, ELEMENT>{name, required, value, interactive};                     \
-    }                                                                                                               \
-    else                                                                                                            \
-    {                                                                                                               \
-      if constexpr(std::is_same_v<std::decay_t<T>, DATAT>)                                                          \
-      {                                                                                                             \
-        return details::FormInteractiveDataInput<DATAT, ELEMENT>{name, required, value, interactive};               \
-      }                                                                                                             \
-      else { return details::FormInteractiveDataInput<DATAT, ELEMENT>{name, required, DATAT{value}, interactive}; } \
-    }                                                                                                               \
+#define MAKE_INTERACTIVE_DATA_INPUT_HELPER(DATAT, ELEMENT, FNAME)                                            \
+  inline details::FormInteractiveDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required,    \
+                                                                 bool interactive = true)                    \
+  {                                                                                                          \
+    return {name, required, interactive};                                                                    \
+  }                                                                                                          \
+                                                                                                             \
+  template<typename T = DATAT, typename = std::enable_if_t<!std::is_same_v<T, bool>>>                        \
+  inline auto FNAME(const std::string & name, bool required, T value, bool interactive = true)               \
+  {                                                                                                          \
+    if constexpr(std::is_invocable_v<T>)                                                                     \
+    {                                                                                                        \
+      return details::FormInteractiveDataInput<T, ELEMENT>{name, required, value, interactive};              \
+    }                                                                                                        \
+    else                                                                                                     \
+    {                                                                                                        \
+      if constexpr(std::is_same_v<std::decay_t<T>, DATAT>)                                                   \
+      {                                                                                                      \
+        return details::FormInteractiveDataInput<DATAT, ELEMENT>{name, required, value, interactive};        \
+      }                                                                                                      \
+      else                                                                                                   \
+      {                                                                                                      \
+        return details::FormInteractiveDataInput<DATAT, ELEMENT>{name, required, DATAT{value}, interactive}; \
+      }                                                                                                      \
+    }                                                                                                        \
   }
 
 MAKE_DATA_INPUT_HELPER(bool, Elements::Checkbox, FormCheckbox)

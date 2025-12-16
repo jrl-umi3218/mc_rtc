@@ -69,7 +69,10 @@ void State::start_(Controller & ctl)
         std::vector<mc_rbdyn::Collision> collisions = c("collisions");
         ctl.removeCollisions(r1, r2, collisions);
       }
-      else { ctl.removeCollisions(r1, r2); }
+      else
+      {
+        ctl.removeCollisions(r1, r2);
+      }
     }
   }
   if(add_collisions_config_.size())
@@ -164,7 +167,10 @@ void State::teardown_(Controller & ctl)
         std::vector<mc_rbdyn::Collision> collisions = c("collisions");
         ctl.removeCollisions(r1, r2, collisions);
       }
-      else { ctl.removeCollisions(r1, r2); }
+      else
+      {
+        ctl.removeCollisions(r1, r2);
+      }
     }
   }
   if(add_collisions_after_config_.size())

@@ -4,26 +4,26 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/MetaTask_common.json"
+      "$ref": "../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_frame.json"
+      "$ref": "../common/MetaTask_frame.json"
     },
     {
       "properties":
       {
-        "type": { "enum": ["pbvs"] }
+        "type": { "const": "pbvs" }
       }
     },
     {
-      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+      "$ref": "../common/TrajectoryTaskGeneric.json"
     },
     {
       "properties":
       {
         "weight": { "default": 500 },
         "stiffness": { "default": 2 },
-        "dimWeight": { "$ref": "/../../Eigen/Vector3d.json" }
+        "dimWeight": { "$ref": "../Eigen/Vector3d.json" }
       }
     }
   ],

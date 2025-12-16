@@ -5,39 +5,39 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/MetaTask_common.json"
+      "$ref": "../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_frame.json"
+      "$ref": "../common/MetaTask_frame.json"
     },
     {
-      "$ref": "/../../common/SurfaceTransformTask.json"
+      "$ref": "../common/SurfaceTransformTask.json"
     },
     {
-      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+      "$ref": "../common/TrajectoryTaskGeneric.json"
     },
     {
       "properties":
       {
-        "type": { "enum": ["admittance"] },
+        "type": { "const": "admittance" },
         "weight": { "default": 1000},
         "stiffness": { "default": 5 },
-        "targetSurface": { "$ref" : "/../../common/targetSurface.json" },
-        "targetFrame": { "$ref" : "/../../common/targetFrame.json" },
-        "targetPose": { "$ref": "/../../SpaceVecAlg/PTransformd.json", "description": "[deprecated] Same as \"target\"" },
-        "wrench": { "$ref": "/../../SpaceVecAlg/ForceVecd.json", "description": "<b>Wrench target</b> (desired force-torque)" },
-        "refVelB": { "$ref": "/../../SpaceVecAlg/MotionVecd.json", "description": "Feedforward reference body velocity" },
-        "maxVel": { "$ref": "/../../SpaceVecAlg/MotionVecd.json", "description": "Clamp computed target velocity" },
-        "admittance": { "$ref": "/../../SpaceVecAlg/ForceVecd.json", "description": "<b>Admittance coefficients</b> (converts wrench error to velocity)" },
-        "completion": { "$ref": "/../../common/completion_wrench.json" }
+        "targetSurface": { "$ref" : "../common/targetSurface.json" },
+        "targetFrame": { "$ref" : "../common/targetFrame.json" },
+        "targetPose": { "$ref": "../SpaceVecAlg/PTransformd.json", "description": "[deprecated] Same as \"target\"" },
+        "wrench": { "$ref": "../SpaceVecAlg/ForceVecd.json", "description": "<b>Wrench target</b> (desired force-torque)" },
+        "refVelB": { "$ref": "../SpaceVecAlg/MotionVecd.json", "description": "Feedforward reference body velocity" },
+        "maxVel": { "$ref": "../SpaceVecAlg/MotionVecd.json", "description": "Clamp computed target velocity" },
+        "admittance": { "$ref": "../SpaceVecAlg/ForceVecd.json", "description": "<b>Admittance coefficients</b> (converts wrench error to velocity)" },
+        "completion": { "$ref": "../common/completion_wrench.json" }
       }
     },
     {
       "properties":
       {
-        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" }
+        "dimWeight": { "$ref": "../Eigen/Vector6d.json" }
       }
     }
   ],
-  "required": ["type", "surface"]
+  "required": ["type", "frame"]
 }

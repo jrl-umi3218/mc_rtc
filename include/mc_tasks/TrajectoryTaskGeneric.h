@@ -289,7 +289,10 @@ protected:
       if constexpr(details::has_refVel_v<ErrorT>) { refVel_ = error->refVel(); }
       if constexpr(details::has_refAccel_v<ErrorT>) { refAccel_ = error->refAccel(); }
     }
-    else { mc_rtc::log::error_and_throw("[{} task] Not implemented for backend: {}", backend_); }
+    else
+    {
+      mc_rtc::log::error_and_throw("[{} task] Not implemented for backend: {}", backend_);
+    }
   }
 
   void addToGUI(mc_rtc::gui::StateBuilder &) override;

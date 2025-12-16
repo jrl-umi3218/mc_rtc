@@ -1,0 +1,13 @@
+{
+  "type": "array",
+  "description": "Position waypoints",
+  "items":
+  {
+    "type": "object",
+    "properties":
+    {
+      "time": { "type": "number", "description": "Waypoint time (<= duration)" },
+      "position": { "$ref": "../Eigen/Vector3d.json", "description": "Waypoint's position" }
+    }
+  }
+}

@@ -7,6 +7,9 @@ set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_BINDIR@")
 set(MC_RTC_DOCDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_DOCDIR@")
 set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@")
 
+# -- Library source directory --
+set(MC_RTC_SRCDIR "@MC_RTC_SOURCE_DIR@")
+
 # Allow to override mc_rtc debug suffix
 if(NOT DEFINED MC_RTC_LOADER_DEBUG_SUFFIX)
   set(MC_RTC_LOADER_DEBUG_SUFFIX "@MC_RTC_LOADER_DEBUG_SUFFIX@")
@@ -229,29 +232,42 @@ endmacro()
 
 # -- Helper to find a description package --
 
-macro(find_description_package PACKAGE)
-  set(PACKAGE_PATH_VAR "${PACKAGE}_PATH")
+macro(find_description_package)
+  set(options OPTIONAL)
+  cmake_parse_arguments(arg_package "${options}" "" "" ${ARGN})
+
+  list(GET arg_package_UNPARSED_ARGUMENTS 0 _package_name)
+  if(NOT _package_name)
+    message(FATAL_ERROR "PACKAGE must be specified.")
+  endif()
+
+  set(PACKAGE_OPTION REQUIRED)
+  if(arg_package_OPTIONAL)
+    set(PACKAGE_OPTION OPTIONAL)
+  endif()
+
+  set(PACKAGE_PATH_VAR "${_package_name}_PATH")
   string(TOUPPER "${PACKAGE_PATH_VAR}" PACKAGE_PATH_VAR)
-  find_package(${PACKAGE} REQUIRED)
-  if("${${PACKAGE}_INSTALL_PREFIX}" STREQUAL "")
-    if("${${PACKAGE}_SOURCE_PREFIX}" STREQUAL "")
-      if("${${PACKAGE}_DIR}" STREQUAL "")
+  find_package(${_package_name} ${PACKAGE_OPTION})
+  if("${${_package_name}_INSTALL_PREFIX}" STREQUAL "")
+    if("${${_package_name}_SOURCE_PREFIX}" STREQUAL "")
+      if("${${_package_name}_DIR}" STREQUAL "")
         message(
           FATAL_ERROR
-            "Your ${PACKAGE} does not define where to find the data, please update."
+            "Your ${_package_name} does not define where to find the data, please update."
         )
       else()
-        set(${PACKAGE_PATH_VAR} "${${PACKAGE}_DIR}/..")
+        set(${PACKAGE_PATH_VAR} "${${_package_name}_DIR}/..")
       endif()
     else()
-      set(${PACKAGE_PATH_VAR} "${${PACKAGE}_SOURCE_PREFIX}")
+      set(${PACKAGE_PATH_VAR} "${${_package_name}_SOURCE_PREFIX}")
     endif()
   else()
-    set(${PACKAGE_PATH_VAR} "${${PACKAGE}_INSTALL_PREFIX}")
+    set(${PACKAGE_PATH_VAR} "${${_package_name}_INSTALL_PREFIX}")
   endif()
   # Cleanup the path provided by CMake
   get_filename_component(${PACKAGE_PATH_VAR} "${${PACKAGE_PATH_VAR}}" REALPATH)
-  message("-- Found ${PACKAGE}: ${${PACKAGE_PATH_VAR}}")
+  message("-- Found ${_package_name}: ${${PACKAGE_PATH_VAR}}")
 endmacro()
 
 # -- Helper to create a new mc_rtc plugin

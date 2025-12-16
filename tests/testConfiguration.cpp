@@ -89,6 +89,19 @@ mapDoubleV:
   str1: [1.0, 2.3, -100]
   str2: [1.0, -1.5, 2.0, -2.5, 3.0, -3.5]
   str3: [0.71, 0, 0.71, 0]
+scalar_octal_number: 0123
+scalar_octal_quoted_number: '0123'
+scalar_octal_forced_string: !!str 0123
+scalar_decimal_number: 123
+scalar_decimal_quoted_number: '123'
+scalar_decimal_forced_string: !!str 123
+scalar_map:
+  octal_number: 0123
+  octal_quoted_number: '0123'
+  octal_forced_string: !!str 0123
+  decimal_number: 123
+  decimal_quoted_number: '123'
+  decimal_forced_string: !!str 123
 )";
 
 static std::string JSON_DATA = R"(
@@ -152,6 +165,20 @@ static std::string JSON_DATA = R"(
     "str1": [1.0, 2.3, -100],
     "str2": [1.0, -1.5, 2.0, -2.5, 3.0, -3.5],
     "str3": [0.71, 0, 0.71, 0]
+  },
+  "scalar_octal_number": 83,
+  "scalar_octal_quoted_number": 83,
+  "scalar_octal_forced_string": "0123",
+  "scalar_decimal_number": 123,
+  "scalar_decimal_quoted_number": 123,
+  "scalar_decimal_forced_string": "123",
+  "scalar_map": {
+    "octal_number": 83,
+    "octal_quoted_number": 83,
+    "octal_forced_string": "0123",
+    "decimal_number": 123,
+    "decimal_quoted_number": 123,
+    "decimal_forced_string": "123"
   }
 }
 )";
@@ -902,7 +929,10 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     else
     {
       if(json2) { config.loadData(sampleConfig2(false, json2)); }
-      else { config.loadYAMLData(sampleConfig2(false, json2)); }
+      else
+      {
+        config.loadYAMLData(sampleConfig2(false, json2));
+      }
     }
     int a = config("int");
     BOOST_CHECK_EQUAL(a, 12);
@@ -921,6 +951,40 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     std::vector<std::string> c = config("stringV");
     BOOST_CHECK(c == ref2);
   }
+
+  auto check_scalar = [](const mc_rtc::Configuration & cfg, const std::string & key, bool expect_string, int expect_int,
+                         const std::string & expect_str)
+  {
+    if(expect_string)
+    {
+      BOOST_CHECK(cfg(key).isString());
+      BOOST_CHECK_EQUAL((std::string)cfg(key), expect_str);
+    }
+    else
+    {
+      BOOST_CHECK(cfg(key).isInteger());
+      BOOST_CHECK_EQUAL((int)cfg(key), expect_int);
+    }
+  };
+
+  /* YAML octal scalar tests */
+  check_scalar(config, "scalar_octal_number", false, 83, "");
+  check_scalar(config, "scalar_octal_quoted_number", false, 83, "");
+  check_scalar(config, "scalar_octal_forced_string", true, 0, "0123");
+
+  /* YAML decimal scalar tests */
+  check_scalar(config, "scalar_decimal_number", false, 123, "");
+  check_scalar(config, "scalar_decimal_quoted_number", false, 123, "");
+  check_scalar(config, "scalar_decimal_forced_string", true, 0, "123");
+
+  /* YAML scalar map tests */
+  auto scalar_map = config("scalar_map");
+  check_scalar(scalar_map, "octal_number", false, 83, "");
+  check_scalar(scalar_map, "octal_quoted_number", false, 83, "");
+  check_scalar(scalar_map, "octal_forced_string", true, 0, "0123");
+  check_scalar(scalar_map, "decimal_number", false, 123, "");
+  check_scalar(scalar_map, "decimal_quoted_number", false, 123, "");
+  check_scalar(scalar_map, "decimal_forced_string", true, 0, "123");
 }
 
 mc_rtc::Configuration makeConfig(bool fromDisk, bool json)
@@ -936,7 +1000,10 @@ mc_rtc::Configuration makeConfig(bool fromDisk, bool json)
   {
     const auto & data = sampleConfig(fromDisk, json);
     if(json) { return mc_rtc::Configuration::fromData(data); }
-    else { return mc_rtc::Configuration::fromYAMLData(data); }
+    else
+    {
+      return mc_rtc::Configuration::fromYAMLData(data);
+    }
   }
 }
 

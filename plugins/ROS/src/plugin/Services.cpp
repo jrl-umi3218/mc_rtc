@@ -11,7 +11,10 @@ ROSServices::ROSServices(mc_rtc::NodeHandlePtr nh, mc_control::MCGlobalControlle
 : nh_(nh), controller_(controller)
 {
   if(nh) { start_services(); }
-  else { mc_rtc::log::warning("ROS not available, services will not be enabled"); }
+  else
+  {
+    mc_rtc::log::warning("ROS not available, services will not be enabled");
+  }
 }
 
 void ROSServices::start_services()

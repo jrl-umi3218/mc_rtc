@@ -4,34 +4,34 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/MetaTask_common.json"
+      "$ref": "../common/MetaTask_common.json"
     },
     {
-      "$ref": "/../../common/MetaTask_frame.json"
+      "$ref": "../common/MetaTask_frame.json"
     },
     {
       "properties":
       {
-        "type": { "enum": ["lookAt"] },
-        "frameVector": { "$ref": "/../../Eigen/Vector3d.json" },
-        "targetPos": { "$ref": "/../../Eigen/Vector3d.json" },
-        "targetVector": { "$ref": "/../../Eigen/Vector3d.json" },
+        "type": { "const": "lookAt" },
+        "frameVector": { "$ref": "../Eigen/Vector3d.json" },
+        "targetPos": { "$ref": "../Eigen/Vector3d.json" },
+        "targetVector": { "$ref": "../Eigen/Vector3d.json" },
         "relativeVector":
         {
           "description": "Specify a target vector relative to the current orientation of the robot in the world",
-          "$ref": "/../../Eigen/Vector3d.json"
+          "$ref": "../Eigen/Vector3d.json"
         }
       }
     },
     {
-      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+      "$ref": "../common/TrajectoryTaskGeneric.json"
     },
     {
       "properties":
       {
         "weight": { "default": 500 },
         "stiffness": { "default": 2 },
-        "dimWeight": { "$ref": "/../../Eigen/Vector3d.json" }
+        "dimWeight": { "$ref": "../Eigen/Vector3d.json" }
       }
     }
   ],

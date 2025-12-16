@@ -146,7 +146,10 @@ const sva::ForceVecd TasksQPSolver::desiredContactForce(const mc_rbdyn::Contact 
                                    contact.r1Surface()->name());
     }
   }
-  else { mc_rtc::log::error_and_throw("QPSolver - cannot handle cases where qp_contact.first != -1"); }
+  else
+  {
+    mc_rtc::log::error_and_throw("QPSolver - cannot handle cases where qp_contact.first != -1");
+  }
 }
 
 bool TasksQPSolver::run_impl(FeedbackType fType)

@@ -59,7 +59,10 @@ std::unique_ptr<JointsSelectorFunction> JointsSelectorFunction::ActiveJoints(
       start = pos;
       size = jDof;
     }
-    else { size += jDof; }
+    else
+    {
+      size += jDof;
+    }
   }
   if(size != 0) { activeIndex.push_back({start - offset, size}); }
 

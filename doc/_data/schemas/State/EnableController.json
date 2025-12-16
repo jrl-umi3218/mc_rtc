@@ -7,6 +7,7 @@
       "type": "object",
       "properties":
       {
+        "base": { "const": "EnableController" },
         "NextController":
         {
           "type": "string",
@@ -14,10 +15,10 @@
           "description": "Controller to switch to"
         }
       },
-      "required": []
+      "required": ["base"]
     },
     {
-      "$ref": "/../../common/State.json"
+      "$ref": "../common/State.json"
     }
   ]
 }

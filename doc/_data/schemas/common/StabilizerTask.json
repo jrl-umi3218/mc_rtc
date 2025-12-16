@@ -7,7 +7,7 @@
       "description": "Stabilizer Configuration.<br />Note: the values declared in the robot module take precedence above the default values reported here."
     },
     {
-      "$ref": "/../../common/LIPMStabilizerTaskConfiguration.json"
+      "$ref": "../common/LIPMStabilizerTaskConfiguration.json"
     }
   ]
 }

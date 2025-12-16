@@ -24,6 +24,9 @@ extern "C"
   {
     // At this point name must be one of the supported robots
     if(name == "MyRobot") { return new MyRobot(false); }
-    else { return new MyRobot(true); }
+    else
+    {
+      return new MyRobot(true);
+    }
   }
 }

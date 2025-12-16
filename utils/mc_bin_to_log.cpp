@@ -105,7 +105,10 @@ SizedEntries write_header(std::ofstream & ofs,
     }
     // clang-format on
     if(++i != entries.size()) { ofs << ';'; }
-    else { ofs << '\n'; }
+    else
+    {
+      ofs << '\n';
+    }
     out[e.first] = {e.second, s};
   }
   return out;
@@ -298,7 +301,10 @@ void write_data(std::ofstream & ofs, const mc_rtc::log::FlatLog & log, const Siz
         continue;
     }
     if(++i != entries.size()) { ofs << ';'; }
-    else { ofs << '\n'; }
+    else
+    {
+      ofs << '\n';
+    }
   }
 }
 

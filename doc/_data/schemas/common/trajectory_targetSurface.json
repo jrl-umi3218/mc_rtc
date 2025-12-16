@@ -5,25 +5,10 @@
   {
     "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this surface is attached"},
     "surface" : { "type": "string" },
-    "offset_translation": { "$ref": "/../../Eigen/Vector3d.json" },
-    "offset_rotation": { "$ref": "/../../Eigen/Matrix3d.json" },
-    "controlPoints": { "type": "array", "items": { "$ref": "/../../Eigen/Vector3d.json" } },
-    "oriWaypoints":
-    {
-      "type": "array",
-      "description": "List of pair of time point and orientation relative to the surface",
-      "items":
-      [
-        {
-          "type": "number"
-        },
-        {
-          "$ref": "/../../Eigen/Matrix3d.json"
-        }
-      ],
-      "minItems": 2,
-      "maxItems": 2
-    }
+    "offset_translation": { "$ref": "../Eigen/Vector3d.json" },
+    "offset_rotation": { "$ref": "../Eigen/Matrix3d.json" },
+    "controlPoints": { "type": "array", "items": { "$ref": "../Eigen/Vector3d.json" } },
+    "oriWaypoints": { "$ref": "../common/SplineTrajectoryTask_oriWaypoints.json" }
   },
   "required": ["surface"]
 }

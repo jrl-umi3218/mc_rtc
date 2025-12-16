@@ -7,15 +7,16 @@
       "type": "object",
       "properties":
       {
+        "base": { "const": "Parallel" },
         "states": { "type": "array", "items": { "type": "string" }, "description": "List of states run by this state" },
         "delays": { "type": "object", "description": "Delay the start of specified states (in seconds)" },
         "configs": { "type": "object", "description": "Override configuration for the state running inside this FSM" },
         "outputs": { "type": "array", "items": { "type": "string" }, "description": "List of state names for which the transition will be generated from the state output.<br /><ul><li>When omitted or empty the output of the last state in the \"states\" property will be used.</li><li>When state names are provided, the transition output is generated according to the following pattern: \"State1(state1 output), State2(state2 output)\".</li></ul>" }
       },
-      "required": []
+      "required": ["base"]
     },
     {
-      "$ref": "/../../common/State.json"
+      "$ref": "../common/State.json"
     }
   ]
 }

@@ -120,8 +120,6 @@ tutorials:
       title: ログの操作
     mc_log_ui:
       title: ログの可視化
-    mc_log_visualization:
-      title: ログの再生
     mc_surfaces_visualization:
       title: サーフェスの可視化
     mc_convex_visualization:
@@ -157,6 +155,8 @@ tutorials:
       title: 関節の重み付け
     com-constraint:
       title: 重心位置の存在可能な領域の拘束
+    threading:
+      title: リアルタイムの考慮事項とスレッド処理
   samples:
     title: サンプル
     desc: コントローラのサンプルを紹介します。

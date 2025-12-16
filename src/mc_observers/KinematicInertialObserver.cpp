@@ -53,7 +53,10 @@ bool KinematicInertialObserver::run(const mc_control::MCController & ctl)
     velFilter_.update(errVel);
     velW_ = velFilter_.eval();
   }
-  else { mc_rtc::log::warning("[{}] Skipping velocity update (anchor frame jumped)", name()); }
+  else
+  {
+    mc_rtc::log::warning("[{}] Skipping velocity update (anchor frame jumped)", name());
+  }
   posWPrev_ = posW;
   return res;
 }

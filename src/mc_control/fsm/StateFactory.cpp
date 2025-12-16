@@ -5,8 +5,8 @@
 #include <mc_control/fsm/StateFactory.h>
 #include <mc_rtc/Configuration.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 namespace mc_control
 {
@@ -59,7 +59,10 @@ void resolve_pass(StateFactory & factory, std::vector<UDState> & states)
       factory.load(uds.state, uds.base, uds.config);
       it = states.erase(it);
     }
-    else { ++it; }
+    else
+    {
+      ++it;
+    }
   }
 }
 
@@ -99,7 +102,10 @@ void load_ud(StateFactory & factory,
       continue;
     }
     if(factory.hasState(base) || factory.load_with_loader(base)) { factory.load(s.first, base, config); }
-    else { ud_states.push_back({s.first, base, config}); }
+    else
+    {
+      ud_states.push_back({s.first, base, config});
+    }
   }
 }
 
@@ -112,13 +118,13 @@ void load_file(StateFactory & factory, const std::string & file, std::vector<UDS
 
 void load_dir(StateFactory & factory, const std::string & dir, std::vector<UDState> & ud_states, bool verbose)
 {
-  bfs::directory_iterator dit(dir), endit;
-  std::vector<bfs::path> drange;
+  fs::directory_iterator dit(dir), endit;
+  std::vector<fs::path> drange;
   std::copy(dit, endit, std::back_inserter(drange));
   for(const auto & p : drange)
   {
-    if(bfs::is_regular_file(p)) { load_file(factory, p.string(), ud_states, verbose); }
-    else if(bfs::is_directory(p)) { load_dir(factory, p.string(), ud_states, verbose); }
+    if(fs::is_regular_file(p)) { load_file(factory, p.string(), ud_states, verbose); }
+    else if(fs::is_directory(p)) { load_dir(factory, p.string(), ud_states, verbose); }
   }
 }
 
@@ -129,15 +135,18 @@ void StateFactory::load_files(const std::vector<std::string> & files)
   std::vector<UDState> ud_states;
   for(const auto & f : files)
   {
-    if(bfs::is_directory(f))
+    if(fs::is_directory(f))
     {
       mc_rtc::log::info("Looking for state files in {}", f);
       load_dir(*this, f, ud_states, verbose);
     }
     else
     {
-      if(bfs::exists(f) && bfs::is_regular_file(f)) { load_file(*this, f, ud_states, verbose); }
-      else { mc_rtc::log::warning("State file {} does not exist", f); }
+      if(fs::exists(f) && fs::is_regular_file(f)) { load_file(*this, f, ud_states, verbose); }
+      else
+      {
+        mc_rtc::log::warning("State file {} does not exist", f);
+      }
     }
   }
   if(ud_states.size()) { resolve(*this, ud_states); }
@@ -228,7 +237,10 @@ StatePtr StateFactory::create(const std::string & state, const std::string & fin
       ret = create_object(config.base, config.arg);
       ret->name(final_name);
     }
-    else { ret = create(config.base, final_name); }
+    else
+    {
+      ret = create(config.base, final_name);
+    }
     ret->configure_(config.config);
   }
   if(!ret)

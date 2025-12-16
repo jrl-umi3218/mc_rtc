@@ -82,7 +82,8 @@ void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder)
   /*FIXME Avoid freeing the message constantly */
   void * buf = nullptr;
   int recv = 0;
-  do {
+  do
+  {
     recv = nn_recv(pull_socket_, &buf, NN_MSG, NN_DONTWAIT);
     if(recv < 0)
     {

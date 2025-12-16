@@ -24,12 +24,20 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
                              const mc_rbdyn::Robots & robots,
                              unsigned int robotIndex,
                              double stiffness,
-                             double weight)
-: ImpedanceTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight)
+                             double weight,
+                             bool showTarget,
+                             bool showPose,
+                             bool showCompliance)
+: ImpedanceTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight, showTarget, showPose, showCompliance)
 {
 }
 
-ImpedanceTask::ImpedanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+ImpedanceTask::ImpedanceTask(const mc_rbdyn::RobotFrame & frame,
+                             double stiffness,
+                             double weight,
+                             bool showTarget,
+                             bool showPose,
+                             bool showCompliance)
 : TransformTask(frame, stiffness, weight), lowPass_(0.005, cutoffPeriod_)
 {
   const auto & robot = frame.robot();
@@ -40,6 +48,9 @@ ImpedanceTask::ImpedanceTask(const mc_rbdyn::RobotFrame & frame, double stiffnes
   {
     mc_rtc::log::error_and_throw("[{}] Frame {} does not have a force sensor attached", name_, frame.name());
   }
+  showTarget_ = showTarget;
+  showPose_ = showPose;
+  showCompliance_ = showCompliance;
 }
 
 void ImpedanceTask::update(mc_solver::QPSolver & solver)
@@ -251,13 +262,73 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   // Don't add TransformTask because the target of TransformTask should not be set by user
   TrajectoryTaskGeneric::addToGUI(gui);
 
+  auto showTarget = [this, &gui]()
+  {
+    if(showTarget_)
+    {
+      gui.addElement({"Tasks", name_},
+                     mc_rtc::gui::Transform(
+                         "targetPose", [this]() -> const sva::PTransformd & { return this->targetPose(); },
+                         [this](const sva::PTransformd & pos) { this->targetPose(pos); }));
+    }
+    else
+    {
+      gui.removeElement({"Tasks", name_}, "targetPose");
+    }
+  };
+
+  auto showCompliance = [this, &gui]()
+  {
+    if(showCompliance_)
+    {
+      gui.addElement({"Tasks", name_},
+                     mc_rtc::gui::Transform("compliancePose", [this]() { return this->compliancePose(); }));
+    }
+    else
+    {
+      gui.removeElement({"Tasks", name_}, "compliancePose");
+    }
+  };
+
+  auto showPose = [this, &gui]()
+  {
+    if(showPose_)
+    {
+      gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }));
+    }
+    else
+    {
+      gui.removeElement({"Tasks", name_}, "pose");
+    }
+  };
+
   gui.addElement({"Tasks", name_},
-                 // pose
-                 mc_rtc::gui::Transform(
-                     "targetPose", [this]() -> const sva::PTransformd & { return this->targetPose(); },
-                     [this](const sva::PTransformd & pos) { this->targetPose(pos); }),
-                 mc_rtc::gui::Transform("compliancePose", [this]() { return this->compliancePose(); }),
-                 mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }),
+                 mc_rtc::gui::Checkbox(
+                     "Show target frame", [this]() { return showTarget_; },
+                     [this, showTarget]()
+                     {
+                       showTarget_ = !showTarget_;
+                       showTarget();
+                     }),
+                 mc_rtc::gui::Checkbox(
+                     "Show pose frame", [this]() { return showPose_; },
+                     [this, showPose]()
+                     {
+                       showPose_ = !showPose_;
+                       showPose();
+                     }),
+                 mc_rtc::gui::Checkbox(
+                     "Show compliance frame", [this]() { return showCompliance_; },
+                     [this, showCompliance]()
+                     {
+                       showCompliance_ = !showCompliance_;
+                       showCompliance();
+                     }));
+
+  showPose();
+  showTarget();
+  showCompliance();
+  gui.addElement({"Tasks", name_},
                  // wrench
                  mc_rtc::gui::ArrayInput(
                      "targetWrench", {"cx", "cy", "cz", "fx", "fy", "fz"},

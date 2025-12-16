@@ -696,9 +696,15 @@ void Configuration::load(const std::string & path)
         log::warning("Configuration dump until the attempted conversion:\n{}", this->dump(true));
       }
     }
-    else { mc_rtc::internal::loadDocument(path, target); }
+    else
+    {
+      mc_rtc::internal::loadDocument(path, target);
+    }
   }
-  else { load(mc_rtc::Configuration{path}); }
+  else
+  {
+    load(mc_rtc::Configuration{path});
+  }
 }
 
 void Configuration::load(const mc_rtc::Configuration & config)
@@ -753,7 +759,10 @@ void Configuration::loadData(const std::string & data)
 {
   auto & target = *std::static_pointer_cast<internal::RapidJSONDocument>(v.doc_);
   if(target.IsNull()) { mc_rtc::internal::loadData(data.c_str(), target); }
-  else { load(Configuration::fromData(data)); }
+  else
+  {
+    load(Configuration::fromData(data));
+  }
 }
 
 void Configuration::loadYAMLData(const std::string & data)
@@ -764,7 +773,10 @@ void Configuration::loadYAMLData(const std::string & data)
     target.SetObject();
     mc_rtc::internal::loadYAMLData(data.c_str(), *this);
   }
-  else { load(Configuration::fromYAMLData(data)); }
+  else
+  {
+    load(Configuration::fromYAMLData(data));
+  }
 }
 
 void Configuration::save(const std::string & path, bool pretty) const
@@ -833,7 +845,10 @@ void add_impl(const mc_rtc::Configuration & source, const std::string & key, T v
     internal::RapidJSONValue key_(key.c_str(), allocator);
     json.AddMember(key_, value_, allocator);
   }
-  else { member->value = value_; }
+  else
+  {
+    member->value = value_;
+  }
 }
 
 template<typename T>
@@ -862,7 +877,10 @@ void Configuration::add_null(const std::string & key)
     internal::RapidJSONValue key_(key.c_str(), allocator);
     json.AddMember(key_, value_, allocator);
   }
-  else { member->value = value_; }
+  else
+  {
+    member->value = value_;
+  }
 }
 
 void Configuration::push_null()

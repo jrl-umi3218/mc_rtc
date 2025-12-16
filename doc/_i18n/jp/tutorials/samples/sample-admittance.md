@@ -32,7 +32,7 @@ Timestep: 0.005
 $ (roscore &) # roscoreが走っていることを確認 (rvizを用いた可視化のため)
 $ cd /usr/local/share/hrpsys/samples/JVRC1
 $ choreonoid sim_mc_wall.cnoid
-$ roslaunch mc_rtc_ticker controler_display.launch
+$ ros2 launch mc_rtc_ticker display.launch
 ```
 
 次に、Choreonoidのインターフェイスにある緑の矢印をクリックしてシミュレーションを開始します。出力は以下のようになります。

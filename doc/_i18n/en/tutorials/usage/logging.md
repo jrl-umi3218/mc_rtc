@@ -136,4 +136,4 @@ See the following pages for tools that work with the log your controller generat
 
 - {% include link_tutorial.html category="tools" tutorial="mc_log_utils" %}
 - {% include link_tutorial.html category="tools" tutorial="mc_log_ui" %}
-- {% include link_tutorial.html category="tools" tutorial="mc_log_visualization" %}
+- {% include link_tutorial.html category="tools" tutorial="mc_rtc_ticker-and-replay" %}

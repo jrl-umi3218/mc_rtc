@@ -186,9 +186,15 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
     {
       auto jIndex = static_cast<int>(robot.jointIndexByName(name));
       if(robot.mb().joint(jIndex).dof() == 1) { joints_mbc_idx.push_back(jIndex); }
-      else { joints_mbc_idx.push_back(-1); }
+      else
+      {
+        joints_mbc_idx.push_back(-1);
+      }
     }
-    else { joints_mbc_idx.push_back(-1); }
+    else
+    {
+      joints_mbc_idx.push_back(-1);
+    }
   }
 }
 
@@ -428,7 +434,10 @@ double Gripper::curOpening(size_t jointId) const
 double Gripper::targetOpening(size_t jointId) const
 {
   if(targetQ) { return ((*targetQ)[jointId] - closeP[jointId]) / (openP[jointId] - closeP[jointId]); }
-  else { return curOpening(jointId); }
+  else
+  {
+    return curOpening(jointId);
+  }
 }
 
 void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & real)
@@ -463,7 +472,10 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & re
   {
     for(size_t i = 0; i < active_joints_idx.size(); ++i) { actualQ[i] = q[active_joints_idx[i]]; }
   }
-  else { actualQ = currentQ; }
+  else
+  {
+    actualQ = currentQ;
+  }
   for(size_t i = 0; i < active_joints.size(); ++i)
   {
     double alpha = (currentQ[i] - _q[i]) / timeStep;
@@ -499,7 +511,10 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & re
         mc_rtc::log::warning("Gripper safety triggered on {}", names[i]);
         overCommandLimit[i] = true;
         if(reversed_) { actualQ[i] = actualQ[i] + config_.releaseSafetyOffset; }
-        else { actualQ[i] = actualQ[i] - config_.releaseSafetyOffset; }
+        else
+        {
+          actualQ[i] = actualQ[i] - config_.releaseSafetyOffset;
+        }
         setTargetQ_(actualQ);
       }
     }

@@ -7,14 +7,15 @@
       "type": "object",
       "properties":
       {
+        "base": { "const": "HalfSitting" },
         "robot": {"type": "string", "default": "MainRobot", "description": "Name of the robot to put to halfsitting" },
         "stiffness": { "type": "number", "minimum": 0, "default": 1, "description": "Stiffness of the posture task" },
         "eval": { "type": "number", "minimum": 0, "description": "Threshold on posture eval after which the state is considered completed. If absent, the state is always considered completed." }
       },
-      "required": []
+      "required": ["base"]
     },
     {
-      "$ref": "/../../common/State.json"
+      "$ref": "../common/State.json"
     }
   ]
 }

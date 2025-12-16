@@ -86,7 +86,10 @@ auto ArrayInput(const std::string & name, T & value)
   auto read = details::read(value);
   auto write = details::write(value);
   if constexpr(Labels::has_labels) { return ArrayInput(name, Labels::labels, read, write); }
-  else { return ArrayInput(name, read, write); }
+  else
+  {
+    return ArrayInput(name, read, write);
+  }
 }
 
 /** Creates an input for a rotation using RPY angles
@@ -100,7 +103,10 @@ auto RPYInput(const std::string & name, T & value)
                     [&value](const Eigen::Vector3d & rpy)
                     {
                       if constexpr(Degrees) { value = mc_rbdyn::rpyToMat(rpy * mc_rtc::constants::PI / 180.); }
-                      else { value = mc_rbdyn::rpyToMat(rpy); }
+                      else
+                      {
+                        value = mc_rbdyn::rpyToMat(rpy);
+                      }
                     });
 }
 

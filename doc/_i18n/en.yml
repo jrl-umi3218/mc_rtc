@@ -119,8 +119,6 @@ tutorials:
       title: Log manipulation
     mc_log_ui:
       title: Log plotting
-    mc_log_visualization:
-      title: Replay visualization
     mc_surfaces_visualization:
       title: Visualizing surfaces
     mc_convex_visualization:
@@ -156,6 +154,8 @@ tutorials:
       title: Joints Stiffness
     com-constraint:
       title: Constraining the accessible region of the CoM
+    threading:
+      title: Real-Time Considerations and Threading
   samples:
     title: Samples
     desc: This section explains the sample controllers

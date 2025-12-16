@@ -19,10 +19,13 @@ targetFrame:
   rotation: [0.0, -1.57, 0.0]
   # control points in target surface frame
   controlPoints:
-    - [8.0, [-0.25, -0.35, 0.1]]
-    - [12.0, [-0.08, -0.13, 0.1]]
+    - time: 8.0
+      position: [-0.25, -0.35, 0.1]
+    - time: 12.0
+      position: [-0.08, -0.13, 0.1]
   oriWaypoints:
-    - [13.0, [0.0, -1.57, 0.0]]
+    - time: 13.0
+      orientation: [0.0, -1.57, 0.0]
   init_vel : [0.0,0.0,0.0]
   init_acc : [0.0,0.0,0.0]
   end_vel : [0.0,0.0,0.0]

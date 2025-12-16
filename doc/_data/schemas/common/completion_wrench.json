@@ -2,6 +2,6 @@
   "type": "object",
   "properties":
   {
-    "wrench": {"$ref": "/../../Eigen/Vector6d.json", "description": "True when the measured wrench reaches the desired wrench ([torque, force] in controlled surface frame). If some values are NaN, this direction is ignored. Only valid if the controlled surface is attached to a force sensor (throws otherwise)."}
+    "wrench": {"$ref": "../Eigen/Vector6d.json", "description": "True when the measured wrench reaches the desired wrench ([torque, force] in controlled surface frame). If some values are NaN, this direction is ignored. Only valid if the controlled surface is attached to a force sensor (throws otherwise)."}
   }
 }

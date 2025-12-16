@@ -33,14 +33,20 @@ void MyFirstController::reset(const mc_control::ControllerResetData & reset_data
 void MyFirstController::switch_target()
 {
   if(goingLeft) { postureTask->target({{"NECK_Y", robot().qu()[jointIndex]}}); }
-  else { postureTask->target({{"NECK_Y", robot().ql()[jointIndex]}}); }
+  else
+  {
+    postureTask->target({{"NECK_Y", robot().ql()[jointIndex]}});
+  }
   goingLeft = !goingLeft;
 }
 
 void MyFirstController::switch_com_target()
 {
   if(comDown) { comTask->com(comZero - Eigen::Vector3d{0, 0, 0.2}); }
-  else { comTask->com(comZero); }
+  else
+  {
+    comTask->com(comZero);
+  }
   comDown = !comDown;
 }
 

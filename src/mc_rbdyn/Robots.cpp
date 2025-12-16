@@ -53,6 +53,7 @@ void Robots::copy(Robots & out) const
   out.mbgs_ = mbgs_;
   out.robotIndex_ = robotIndex_;
   out.envIndex_ = envIndex_;
+  out.robotNameToIndex_ = robotNameToIndex_;
   for(unsigned int i = 0; i < robots_.size(); ++i)
   {
     const Robot & robot = *robots_[i];

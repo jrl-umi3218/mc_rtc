@@ -556,7 +556,10 @@ void PostureTask::target(const std::map<std::string, std::vector<double>> & join
           }
         }
       }
-      else { mc_rtc::log::error("PostureTask::target dof missmatch for {}", j.first); }
+      else
+      {
+        mc_rtc::log::error("PostureTask::target dof missmatch for {}", j.first);
+      }
     }
   }
   posture(q);

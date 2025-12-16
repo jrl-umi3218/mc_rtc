@@ -66,6 +66,28 @@ void TestRobotLoadingCommon(mc_rbdyn::RobotModulePtr rm, mc_rbdyn::RobotModulePt
   BOOST_REQUIRE(robots_ptr->hasRobot(envrm->name));
 }
 
+BOOST_AUTO_TEST_CASE(TestRobotsCopy)
+{
+  auto & robots = get_robots();
+  auto robotsCopyPtr = mc_rbdyn::Robots::make();
+  auto & robotsCopy = *robotsCopyPtr;
+  robots.robot().makeFrame("ManualFrame", robots.robot().frame(robots.robot().frames()[0]),
+                           sva::PTransformd::Identity());
+  robots.copy(robotsCopy);
+  BOOST_REQUIRE(robotsCopy.robot().hasFrame("ManualFrame"));
+  for(const auto & robot : robots.robots())
+  {
+    BOOST_REQUIRE(robotsCopy.hasRobot(robot.name()));
+    auto & robotCopy = robotsCopy.robot(robot.name());
+    BOOST_REQUIRE_EQUAL(robotCopy.name(), robot.name());
+    BOOST_REQUIRE_EQUAL(robotCopy.mb().nrDof(), robot.mb().nrDof());
+    for(const auto & c : robot.convexes()) { BOOST_REQUIRE(robotCopy.hasConvex(c.first)); }
+    for(const auto & s : robot.surfaces()) { BOOST_REQUIRE(robotCopy.hasSurface(s.first)); }
+    for(const auto & fs : robot.forceSensors()) { BOOST_REQUIRE(robotCopy.hasForceSensor(fs.name())); }
+    for(const auto & bs : robot.bodySensors()) { BOOST_REQUIRE(robotCopy.hasBodySensor(bs.name())); }
+  }
+}
+
 BOOST_AUTO_TEST_CASE(TestRobotLoading)
 {
   configureRobotLoader();

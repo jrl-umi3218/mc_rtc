@@ -146,6 +146,12 @@ public:
     return reinterpret_cast<mc_tvm::RobotFrame &>(Frame::tvm_frame());
   }
 
+  /** Copies a robot frame to another robot
+   *
+   * Does nothing if the frame already exists on the other robot
+   */
+  void copy(mc_rbdyn::Robot & other);
+
 protected:
   /** Robot instance this frame belongs to */
   Robot & robot_;

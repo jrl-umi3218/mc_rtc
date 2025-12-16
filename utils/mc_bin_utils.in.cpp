@@ -16,8 +16,8 @@
 #include <mc_rtc/log/iterate_binary_log.h>
 
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
 
@@ -33,7 +33,7 @@ namespace po = boost::program_options;
 
 namespace
 {
-static bfs::path MC_BIN_TO_ROSBAG = "@CMAKE_INSTALL_PREFIX@/bin/mc_bin_to_rosbag@CMAKE_EXECUTABLE_SUFFIX@";
+static fs::path MC_BIN_TO_ROSBAG = "@CMAKE_INSTALL_PREFIX@/bin/mc_bin_to_rosbag@CMAKE_EXECUTABLE_SUFFIX@";
 
 struct TypedKey
 {
@@ -90,7 +90,10 @@ void print_string_vector(const std::vector<std::string> & v)
     if(i == 0) { std::cout << "["; }
     std::cout << " " << v[i];
     if(i == v.size() - 1) { std::cout << " ]"; }
-    else { std::cout << ","; }
+    else
+    {
+      std::cout << ",";
+    }
   }
 }
 
@@ -274,13 +277,13 @@ int split(int argc, char * argv[])
     std::cerr << "Should split in 2 parts at least\n";
     return 1;
   }
-  bfs::path in_p(in);
-  if(!bfs::exists(in_p) || !bfs::is_regular_file(in_p))
+  fs::path in_p(in);
+  if(!fs::exists(in_p) || !fs::is_regular_file(in_p))
   {
     std::cerr << in << " does not exist or is not a file, aborting...\n";
     return 1;
   }
-  auto size = bfs::file_size(in_p);
+  auto size = fs::file_size(in_p);
   auto part_size = size / parts;
   if(part_size < 10 * 1024 * 1024)
   {
@@ -405,9 +408,9 @@ int extract(int argc, char * argv[])
   {
     if(prev_w == 0)
     {
-      bfs::path old(out + ".bin");
-      bfs::path new_(out + "_1.bin");
-      bfs::rename(old, new_);
+      fs::path old(out + ".bin");
+      fs::path new_(out + "_1.bin");
+      fs::rename(old, new_);
       return;
     }
     size_t upper = static_cast<size_t>(std::pow(10.0, static_cast<double>(prev_w)));
@@ -417,7 +420,7 @@ int extract(int argc, char * argv[])
       ss_old << out << "_" << std::setfill('0') << std::setw(static_cast<int>(prev_w)) << (i + 1) << ".bin";
       std::stringstream ss_new;
       ss_new << out << "_" << std::setfill('0') << std::setw(static_cast<int>(w)) << (i + 1) << ".bin";
-      bfs::rename({ss_old.str()}, {ss_new.str()});
+      fs::rename({ss_old.str()}, {ss_new.str()});
     }
   };
   auto out_name = [&](size_t i)
@@ -486,7 +489,10 @@ int extract(int argc, char * argv[])
         std::stringstream ss;
         ss << out << "_from_" << from << "_to_";
         if(to == std::numeric_limits<double>::infinity()) { ss << "end"; }
-        else { ss << to; }
+        else
+        {
+          ss << to;
+        }
         ss << ".bin";
         ofs.open(ss.str(), std::ofstream::binary);
         write_magic(ofs);
@@ -546,10 +552,16 @@ int extract(int argc, char * argv[])
       if(!log.has(key))
       {
         if(key.back() == '*') { wildcards.push_back(std::string{key, 0, key.size() - 1}); }
-        else { std::cout << *it << " is not in " << in << "\n"; }
+        else
+        {
+          std::cout << *it << " is not in " << in << "\n";
+        }
         it = extract_keys.erase(it);
       }
-      else { ++it; }
+      else
+      {
+        ++it;
+      }
     }
     for(const auto & key : wildcards)
     {
@@ -609,9 +621,15 @@ int extract(int argc, char * argv[])
     if(!log.meta())
     {
       if(log.size() == 1) { dt = 0.005; }
-      else { dt = *log.getRaw<double>("t", 1) - *log.getRaw<double>("t", 0); }
+      else
+      {
+        dt = *log.getRaw<double>("t", 1) - *log.getRaw<double>("t", 0);
+      }
     }
-    else { dt = log.meta()->timestep; }
+    else
+    {
+      dt = log.meta()->timestep;
+    }
     mc_rtc::Logger logger(mc_rtc::Logger::Policy::NON_THREADED, "", "");
     if(log.meta()) { logger.meta() = *log.meta(); }
     logger.open(out_name(0), dt, 0);
@@ -651,13 +669,13 @@ int convert(int argc, char * argv[])
   }
   auto in = vm["in"].as<std::string>();
   auto out = vm["out"].as<std::string>();
-  bfs::path in_p(in);
-  if(!bfs::exists(in_p) || !bfs::is_regular_file(in_p))
+  fs::path in_p(in);
+  if(!fs::exists(in_p) || !fs::is_regular_file(in_p))
   {
     std::cerr << in << " does not exist or is not file, aborting...\n";
     return 1;
   }
-  bfs::path out_p(out);
+  fs::path out_p(out);
   auto ext = out_p.extension().string();
   std::string format = "";
   if(vm.count("format"))
@@ -676,7 +694,10 @@ int convert(int argc, char * argv[])
     {
       mc_rtc::log::warning("Command-line specified format clashes with file extension, trusting the provided format");
     }
-    else { format = ext; }
+    else
+    {
+      format = ext;
+    }
   }
   else if(ext == ".log" || ext == ".csv")
   {
@@ -684,7 +705,10 @@ int convert(int argc, char * argv[])
     {
       mc_rtc::log::warning("Command-line specified format clashes with file extension, trusting the provided format");
     }
-    else { format = ext; }
+    else
+    {
+      format = ext;
+    }
   }
   else if(ext == ".flat")
   {
@@ -692,7 +716,10 @@ int convert(int argc, char * argv[])
     {
       mc_rtc::log::warning("Command-line specified format clashes with file extension, trusting the provided format");
     }
-    else { format = ext; }
+    else
+    {
+      format = ext;
+    }
   }
   else
   {
@@ -714,7 +741,7 @@ int convert(int argc, char * argv[])
   else if(format == ".csv" || format == ".log") { mc_bin_to_log(in, out_p.string(), entries); }
   else if(format == ".bag")
   {
-    if(bfs::exists(MC_BIN_TO_ROSBAG))
+    if(fs::exists(MC_BIN_TO_ROSBAG))
     {
       if(vm.count("dt")) { dt = vm["dt"].as<double>(); }
       if(vm.count("entries"))
@@ -726,7 +753,10 @@ int convert(int argc, char * argv[])
       std::string cmd = MC_BIN_TO_ROSBAG.string() + " " + in + " " + out_p.string() + " " + std::to_string(dt);
       if(system(cmd.c_str()) != 0) { mc_rtc::log::error("The following conversion call failed: {}", cmd); }
     }
-    else { mc_rtc::log::error("mc_rtc is not build with ROS support, bag conversion is not available"); }
+    else
+    {
+      mc_rtc::log::error("mc_rtc is not build with ROS support, bag conversion is not available");
+    }
   }
   return 0;
 }

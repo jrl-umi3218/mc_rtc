@@ -59,7 +59,10 @@ inline double clampAndWarn(double value, double lower, double upper, const std::
     mc_rtc::log::warning("{} clamped to {}", label, lower);
     return lower;
   }
-  else { return value; }
+  else
+  {
+    return value;
+  }
 }
 
 /** Clamp value in-place in a given interval, issuing a warning when bounds are hit.

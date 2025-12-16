@@ -1,0 +1,63 @@
+{
+  "title": "State",
+  "description": "Schema allowing any of the supported state types.",
+  "oneOf": [
+    { "$ref": "../State/AddRemoveContact.json" },
+    { "$ref": "../State/EnableController.json" },
+    { "$ref": "../State/Grippers.json" },
+    { "$ref": "../State/HalfSitting.json" },
+    { "$ref": "../State/Message.json" },
+    { "$ref": "../State/Meta.json" },
+    { "$ref": "../State/MetaTasks.json" },
+    { "$ref": "../State/Parallel.json" },
+    { "$ref": "../State/Pause.json" },
+    { "$ref": "../State/Posture.json" },
+    { "$ref": "../State/StabilizerStandingState.json" },
+    {
+      "type": "object",
+      "description": "Custom user-defined state with arbitrary properties.",
+      "required": ["base"],
+      "properties": {
+        "base": { "type": "string" }
+      },
+      "not": {
+        "type": "object",
+        "required": ["base"],
+        "properties": {
+          "base": {
+            "enum": [
+              "AddRemoveContact",
+              "EnableController",
+              "Grippers",
+              "HalfSitting",
+              "Message",
+              "Meta",
+              "MetaTasks",
+              "Parallel",
+              "Pause",
+              "Posture",
+              "StabilizerStanding"
+            ]
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  ],
+  "discriminator": {
+    "propertyName": "base",
+    "mapping": {
+      "AddRemoveContact": "../State/AddRemoveContact.json",
+      "EnableController": "../State/EnableController.json",
+      "Grippers": "../State/Grippers.json",
+      "HalfSitting": "../State/HalfSitting.json",
+      "Message": "../State/Message.json",
+      "Meta": "../State/Meta.json",
+      "MetaTasks": "../State/MetaTasks.json",
+      "Parallel": "../State/Parallel.json",
+      "Pause": "../State/Pause.json",
+      "Posture": "../State/Posture.json",
+      "StabilizerStanding": "../State/StabilizerStandingState.json"
+    }
+  }
+}

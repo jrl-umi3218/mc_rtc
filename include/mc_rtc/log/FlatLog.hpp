@@ -40,7 +40,10 @@ struct CastLogRecord<Eigen::Matrix<double, N, 1, _Options, _MaxRows, _MaxCols>>
     {
       auto v = static_cast<const Eigen::VectorXd *>(r.data.get());
       if(v->size() == N) { return v; }
-      else { return nullptr; }
+      else
+      {
+        return nullptr;
+      }
     }
   }
 };

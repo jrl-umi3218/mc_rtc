@@ -60,7 +60,10 @@ void Executor::init(Controller & ctl,
   }
   std::string log_entry = "Executor";
   if(name_.size()) { log_entry += "_" + name_; }
-  else { log_entry += "_Main"; }
+  else
+  {
+    log_entry += "_Main";
+  }
   ctl.logger().addLogEntry(log_entry, this, [this]() { return curr_state_; });
   log_entry = "perf_" + log_entry;
   ctl.logger().addLogEntry(log_entry, this, [this]()

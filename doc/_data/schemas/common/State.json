@@ -1,21 +1,21 @@
 {
   "properties":
   {
-    "AddContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
+    "AddContacts": { "type": "array", "items": { "$ref": "../common/fsm_contact.json" },
                      "description": "Add the specified contacts during the state's start"  },
-    "RemoveContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
+    "RemoveContacts": { "type": "array", "items": { "$ref": "../common/fsm_contact.json" },
                         "description": "Remove the specified contacts during the state's start"  },
-    "AddContactsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
+    "AddContactsAfter": { "type": "array", "items": { "$ref": "../common/fsm_contact.json" },
                           "description": "Add the specified contacts during the state's teardown"  },
-    "RemoveContactsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
+    "RemoveContactsAfter": { "type": "array", "items": { "$ref": "../common/fsm_contact.json" },
                              "description": "Remove the specified contacts during the state's teardown"  },
-    "AddCollisions": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
+    "AddCollisions": { "type": "array", "items": { "$ref": "../common/fsm_collision.json" },
                        "description": "Add the specified collisions during the state's start" },
-    "RemoveCollisions": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
+    "RemoveCollisions": { "type": "array", "items": { "$ref": "../common/fsm_collision.json" },
                           "description": "Remove the specified collisions during the state's start" },
-    "AddCollisionsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
+    "AddCollisionsAfter": { "type": "array", "items": { "$ref": "../common/fsm_collision.json" },
                             "description": "Add the specified collisions during the state's teardown" },
-    "RemoveCollisionsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
+    "RemoveCollisionsAfter": { "type": "array", "items": { "$ref": "../common/fsm_collision.json" },
                                "description": "Remove the specified collisions during the state's teardown" },
     "DisablePostureTask":
     {
@@ -24,9 +24,19 @@
         { "type": "array", "items": { "type": "string" }, "description": "Disable the posture tasks for the specified robots during this state execution." }
       ]
     },
-    "constraints": { "type": "object",
-                     "description": "Constraints that will be added when the state starts and removed when the state stops.<br/>Keys are names for the constraints and values are <a href=\"{{site.baseurl}}/json.html#ConstraintSet\">ConstraintSet objects</a>." },
-    "tasks": { "type": "object",
-               "description": "Tasks that will be added when the state starts and removed when the state stops.<br/>Keys are names for the tasks and values are <a href=\"{{site.baseurl}}/json.html#MetaTask\">MetaTask objects</a>." }
+    "constraints": {
+      "type": "object",
+      "description": "Constraints that will be added when the state starts and removed when the state stops.<br/>Keys are names for the constraints and values are <a href=\"{{site.baseurl}}/json.html#ConstraintSet\">ConstraintSet objects</a>.",
+      "additionalProperties": {
+        "$ref": "../common/ConstraintSetProperty.json"
+      }
+    },
+    "tasks": {
+      "type": "object",
+      "description": "Tasks that will be added when the state starts and removed when the state stops.<br/>Keys are names for the tasks and values are <a href=\"{{site.baseurl}}/json.html#MetaTask\">MetaTask objects</a>.",
+      "additionalProperties": {
+        "$ref": "../common/TasksProperty.json"
+      }
+    }
   }
 }

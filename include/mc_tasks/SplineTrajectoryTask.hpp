@@ -16,6 +16,38 @@ namespace mc_tasks
 {
 
 template<typename Derived>
+std::vector<std::pair<double, Eigen::Matrix3d>> SplineTrajectoryTask<Derived>::loadOriWaypoints(
+    const mc_rtc::Configuration & c)
+{
+  std::vector<std::pair<double, Eigen::Matrix3d>> oriWaypoints;
+  if(auto oriWaypointsC = c.find("oriWaypoints"))
+  {
+    try
+    {
+      oriWaypoints = *oriWaypointsC;
+    }
+    catch(mc_rtc::Configuration::Exception & e)
+    {
+      e.silence();
+      for(auto elem : *oriWaypointsC)
+      {
+        if(elem.has("time") && elem.has("orientation"))
+        {
+          Eigen::Matrix3d ori = elem("orientation");
+          oriWaypoints.emplace_back(elem("time"), ori);
+        }
+        else
+        {
+          mc_rtc::log::error_and_throw("[bspline_trajectory] oriWaypoints should be a vector of pairs of (time, "
+                                       "orientation) or a vector of objects with a time and orientation property");
+        }
+      }
+    }
+  }
+  return oriWaypoints;
+};
+
+template<typename Derived>
 SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::RobotFrame & frame,
                                                     double duration,
                                                     double stiffness,
@@ -48,23 +80,18 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> SplineTrajectoryT
     double dt,
     const mc_rtc::Configuration & config) const
 {
-
-  if(config.has("timeElapsed"))
+  if(config("timeElapsed", false))
   {
-    bool useDuration = config("timeElapsed");
-    if(useDuration)
+    return [](const mc_tasks::MetaTask & t, std::string & out)
     {
-      return [](const mc_tasks::MetaTask & t, std::string & out)
+      const auto & self = static_cast<const SplineTrajectoryBase &>(t);
+      if(self.timeElapsed())
       {
-        const auto & self = static_cast<const SplineTrajectoryBase &>(t);
-        if(self.timeElapsed())
-        {
-          out += "duration";
-          return true;
-        }
-        return false;
-      };
-    }
+        out += "duration";
+        return true;
+      }
+      return false;
+    };
   }
   if(config.has("wrench"))
   {
@@ -120,7 +147,10 @@ void SplineTrajectoryTask<Derived>::load(mc_solver::QPSolver & solver, const mc_
             Eigen::Vector6d vec = v.second;
             out.push_back(std::make_pair(v.first, vec));
           }
-          else { out.push_back({v.first, Eigen::Vector6d::Constant(static_cast<double>(v.second))}); }
+          else
+          {
+            out.push_back({v.first, Eigen::Vector6d::Constant(static_cast<double>(v.second))});
+          }
         }
         catch(mc_rtc::Configuration::Exception & e)
         {

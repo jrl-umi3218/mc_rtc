@@ -17,7 +17,8 @@ contacts:
     r1Surface: RightFoot
     r2Surface: AllGround
 collisions:
-  - useMinimal: true
+  - type: collision
+    useMinimal: true
 
 
 RemoveContacts: &default-contacts
@@ -81,7 +82,7 @@ states:
         type: boundedSpeed
         robot: jvrc1
         constraints:
-          - body: l_wrist
+          - frame: l_wrist
             dof: [1, 1, 1, 1, 1, 1]
             speed: [0, 0, 0, 0, 0, 0.01]
     tasks:

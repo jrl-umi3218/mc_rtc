@@ -3,7 +3,7 @@
   "title": "mc_rtc::gui::LineConfig",
   "properties":
   {
-    "color": { "$ref": "/../../GUI/Color.json" },
+    "color": { "$ref": "../GUI/Color.json" },
     "width": {"type": "number"},
     "style": {"enum": ["solid", "dotted"]}
   }

@@ -104,7 +104,10 @@ std::optional<std::vector<double>> get_initial_encoders(const mc_rtc::log::FlatL
       {
         auto mbcIdx = robot.jointIndexInMBC(i);
         if(mbcIdx >= 0 && !q[static_cast<size_t>(mbcIdx)].empty()) { out.push_back(q[static_cast<size_t>(mbcIdx)][0]); }
-        else { out.push_back(0.0); }
+        else
+        {
+          out.push_back(0.0);
+        }
       }
       return out;
     }
@@ -185,7 +188,10 @@ Ticker::Ticker(const Configuration & config) : config_(config), gc_(get_gc_confi
     auto [encoders, attitudes] = get_initial_state(*log_, gc_.robots(), gc_.controller().robot().name());
     gc_.init(encoders, attitudes);
   }
-  else { gc_.init(); }
+  else
+  {
+    gc_.init();
+  }
   gc_.running = true;
   setup_gui();
 }
@@ -209,7 +215,10 @@ bool Ticker::step()
       auto [encoders, attitudes] = get_initial_state(*log_, gc_.robots(), gc_.controller().robot().name());
       gc_.reset(encoders, attitudes);
     }
-    else { gc_.reset(); }
+    else
+    {
+      gc_.reset();
+    }
     gc_.running = true;
     setup_gui();
   }
@@ -290,7 +299,10 @@ void Ticker::run()
         running_ = false;
         mc_rtc::log::success("Log replay finished, exit replay now");
       }
-      else { mc_rtc::log::success("Log replay finished, pausing replay now"); }
+      else
+      {
+        mc_rtc::log::success("Log replay finished, pausing replay now");
+      }
     }
   }
 }

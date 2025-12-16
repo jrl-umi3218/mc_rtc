@@ -29,6 +29,12 @@ RobotFrame::RobotFrame(NewRobotFrameToken tkn,
 {
 }
 
+void RobotFrame::copy(mc_rbdyn::Robot & other)
+{
+  if(other.hasFrame(name_)) { return; }
+  other.makeFrame(name_, *static_cast<RobotFrame *>(parent_.get()), X_p_f());
+}
+
 void RobotFrame::resetForceSensor() noexcept
 {
   sensor_ = robot_.findBodyForceSensor(body());
@@ -78,7 +84,10 @@ sva::ForceVecd RobotFrame::wrench() const
     }();
     return X_fsactual_body.dualMul(sensor_->wrenchWithoutGravity(robot_));
   }
-  else { return position_.dualMul(static_cast<RobotFrame *>(parent_.get())->wrench()); }
+  else
+  {
+    return position_.dualMul(static_cast<RobotFrame *>(parent_.get())->wrench());
+  }
 }
 
 Eigen::Vector2d RobotFrame::cop(double min_pressure) const

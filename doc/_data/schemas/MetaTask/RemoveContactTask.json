@@ -6,11 +6,11 @@
     {
       "properties":
       {
-        "type": { "enum": ["removeContact"] }
+        "type": { "const": "removeContact" }
       }
     },
     {
-      "$ref": "/../../common/AddRemoveContactTask_common.json"
+      "$ref": "../common/AddRemoveContactTask_common.json"
     }
   ],
   "required": ["type", "contact"]

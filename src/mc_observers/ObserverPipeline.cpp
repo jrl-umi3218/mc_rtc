@@ -9,6 +9,7 @@
 #include <mc_control/MCController.h>
 
 #include <boost/filesystem.hpp>
+#include "mc_rtc/deprecated.h"
 namespace bfs = boost::filesystem;
 
 namespace mc_observers
@@ -81,7 +82,19 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
       }
       auto observer = mc_observers::ObserverLoader::get_observer(observerType, dt);
       observer->name(observerName);
-      auto config = observerConf("config", mc_rtc::Configuration{});
+      auto config = mc_rtc::Configuration{};
+      // Load deprecated "config" object first
+      if(observerConf.has("config"))
+      {
+        mc_rtc::log::deprecated(
+            "ObserverPipeline", "config", "",
+            fmt::format("the config object has been removed in favour of inline configuration properties. Move the "
+                        "content of the config object at the same level as the 'type: {}' property",
+                        observerName));
+        config.load(observerConf("config"));
+      }
+      // override deprecated "config" object if provided in the new format
+      config.load(observerConf);
       std::string robot = config("robot", ctl_.robot().name());
       if(ctl_.hasRobot(robot)) { robot = ctl_.robot(robot).module().name; }
       observer->configure(ctl_, get_observer_config(observerType, robot, config));
@@ -120,7 +133,10 @@ void ObserverPipeline::reset()
     observer.reset(ctl_);
 
     if(pipelineObserver.update()) { desc_ += observer.desc(); }
-    else { desc_ += "[" + observer.desc() + "]"; }
+    else
+    {
+      desc_ += "[" + observer.desc() + "]";
+    }
 
     if(i < pipelineObservers_.size() - 1) { desc_ += " -> "; }
   }

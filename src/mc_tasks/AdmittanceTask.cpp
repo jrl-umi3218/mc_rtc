@@ -11,6 +11,7 @@
 
 #include <mc_rtc/gui/ArrayInput.h>
 #include <mc_rtc/gui/ArrayLabel.h>
+#include <mc_rtc/gui/Checkbox.h>
 #include <mc_rtc/gui/NumberInput.h>
 #include <mc_rtc/gui/Transform.h>
 
@@ -28,12 +29,18 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
                                const mc_rbdyn::Robots & robots,
                                unsigned int robotIndex,
                                double stiffness,
-                               double weight)
-: AdmittanceTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight)
+                               double weight,
+                               bool showTarget,
+                               bool showPose)
+: AdmittanceTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight, showTarget, showPose)
 {
 }
 
-AdmittanceTask::AdmittanceTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+AdmittanceTask::AdmittanceTask(const mc_rbdyn::RobotFrame & frame,
+                               double stiffness,
+                               double weight,
+                               bool showTarget,
+                               bool showPose)
 : TransformTask(frame, stiffness, weight)
 {
   if(!frame.hasForceSensor())
@@ -43,6 +50,8 @@ AdmittanceTask::AdmittanceTask(const mc_rbdyn::RobotFrame & frame, double stiffn
   }
   name_ = "admittance_" + frame.robot().name() + "_" + frame.name();
   reset();
+  showTarget_ = showTarget;
+  showPose_ = showPose;
 }
 
 void AdmittanceTask::update(mc_solver::QPSolver &)
@@ -115,12 +124,52 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
 
 void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
+  auto showTarget = [this, &gui]()
+  {
+    if(showTarget_)
+    {
+      gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform(
+                                           "targetPose", [this]() { return this->targetPose(); },
+                                           [this](const sva::PTransformd & pos) { this->targetPose(pos); }));
+    }
+    else
+    {
+      gui.removeElement({"Tasks", name_}, "targetPose");
+    }
+  };
+
+  auto showPose = [this, &gui]()
+  {
+    if(showPose_)
+    {
+      gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }));
+    }
+    else
+    {
+      gui.removeElement({"Tasks", name_}, "pose");
+    }
+  };
+
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::Checkbox(
+                     "Show target frame", [this]() { return showTarget_; },
+                     [this, showTarget]()
+                     {
+                       showTarget_ = !showTarget_;
+                       showTarget();
+                     }),
+                 mc_rtc::gui::Checkbox(
+                     "Show pose frame", [this]() { return showPose_; },
+                     [this, showPose]()
+                     {
+                       showPose_ = !showPose_;
+                       showPose();
+                     }));
+
+  showPose();
+  showTarget();
   gui.addElement(
       {"Tasks", name_},
-      mc_rtc::gui::Transform(
-          "pos_target", [this]() { return this->targetPose(); },
-          [this](const sva::PTransformd & pos) { this->targetPose(pos); }),
-      mc_rtc::gui::Transform("pos", [this]() { return frame_->position(); }),
       mc_rtc::gui::ArrayInput(
           "admittance", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() { return this->admittance().vector(); },
           [this](const Eigen::Vector6d & a) { this->admittance(a); }),

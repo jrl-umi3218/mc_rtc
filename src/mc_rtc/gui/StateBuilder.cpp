@@ -89,7 +89,10 @@ void StateBuilder::removeCategory(const std::vector<std::string> & category)
       depth -= 1;
       cat = getCategory(category, depth);
     }
-    else { cat = nullptr; }
+    else
+    {
+      cat = nullptr;
+    }
   }
 }
 

@@ -6,8 +6,8 @@
   {
     "s1": { "type": "string" },
     "s2": { "type": "string" },
-    "orientation": { "$ref": "/../../Eigen/Matrix3d.json" },
-    "position": { "$ref": "/../../Eigen/Vector3d.json" }
+    "orientation": { "$ref": "../Eigen/Matrix3d.json" },
+    "position": { "$ref": "../Eigen/Vector3d.json" }
   },
   "required": ["s1", "s2"]
 }

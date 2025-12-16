@@ -197,6 +197,12 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
    */
   void write(const Eigen::Matrix3d & m);
 
+  /* Write an Eigen::MatrixXd
+   *
+   * Serialized as an array of arrays
+   */
+  void write(const Eigen::MatrixXd & m);
+
   /** Write an sva::PTransformd
    *
    * Serialized as an array of size 12 (Matrix3d + Vector3d)
@@ -239,7 +245,10 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
     else if constexpr(internal::is_like_uint16_t<T>) { write(static_cast<uint16_t>(number)); }
     else if constexpr(internal::is_like_uint32_t<T>) { write(static_cast<uint32_t>(number)); }
     else if constexpr(internal::is_like_uint64_t<T>) { write(static_cast<uint64_t>(number)); }
-    else { static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size"); }
+    else
+    {
+      static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
+    }
   }
 
   /** Write \tparam T to MessagePack if T implements T::write(MessagePackBuilder &) const */

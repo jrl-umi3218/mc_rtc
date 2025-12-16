@@ -105,7 +105,10 @@ struct FakeZMPGraph
       for(auto & points : feet.back().points()) { points[0] += speed; }
       start_ds = true;
     }
-    else { t0 = t_; }
+    else
+    {
+      t0 = t_;
+    }
   }
   void reset(double t)
   {
@@ -141,7 +144,10 @@ struct FakeZMPGraph
   Color color() const
   {
     if(std::abs(zmp_y) > 0.9) { return Color::Red; }
-    else { return Color::Black; }
+    else
+    {
+      return Color::Black;
+    }
   }
 };
 
@@ -1086,7 +1092,10 @@ void SampleServer::add_demo_plot(const std::string & name,
                                          [has_plot, callback, name, this]() mutable
                                          {
                                            if(has_plot) { builder.removePlot(name); }
-                                           else { callback(name); }
+                                           else
+                                           {
+                                             callback(name);
+                                           }
                                            has_plot = !has_plot;
                                          }),
                      mc_rtc::gui::Button(dynamic_label, [dynamic_callback, name, mod, &n_plots]()

@@ -407,8 +407,8 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
   data.odom.header.seq = data.js.header.seq;
 #endif
   data.odom.header.stamp = data.js.header.stamp;
-  const auto & odom_p = robot.bodySensor().position();
-  Eigen::Quaterniond odom_q = robot.bodySensor().orientation();
+  const auto & odom_p = robot.posW().translation();
+  Eigen::Quaterniond odom_q(robot.posW().rotation());
   data.odom.pose.pose.position.x = odom_p.x();
   data.odom.pose.pose.position.y = odom_p.y();
   data.odom.pose.pose.position.z = odom_p.z();
@@ -418,11 +418,11 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
   data.odom.pose.pose.orientation.z = odom_q.z();
   data.odom.pose.covariance.fill(0);
   /* Provide linear and angular velocity */
-  const auto & vel = robot.bodySensor().linearVelocity();
+  const auto & vel = robot.velW().linear();
   data.odom.twist.twist.linear.x = vel.x();
   data.odom.twist.twist.linear.y = vel.y();
   data.odom.twist.twist.linear.z = vel.z();
-  const auto & rate = robot.bodySensor().angularVelocity();
+  const auto & rate = robot.velW().angular();
   data.odom.twist.twist.angular.x = rate.x();
   data.odom.twist.twist.angular.y = rate.y();
   data.odom.twist.twist.angular.z = rate.z();
@@ -637,6 +637,12 @@ void ROSBridge::set_publisher_timestep(double timestep)
   }
 }
 
+double ROSBridge::get_publisher_timestep()
+{
+  static const auto & impl = impl_();
+  return impl.publish_rate;
+}
+
 void ROSBridge::init_robot_publisher(const std::string & publisher,
                                      double dt,
                                      const mc_rbdyn::Robot & robot,
@@ -681,7 +687,10 @@ void ROSBridge::remove_extra_robot_publishers(const mc_rbdyn::Robots & robots)
     if(pos != std::string::npos && pos + 1 < topic.size())
     {
       if(!robots.hasRobot(topic.substr(pos + 1))) { it = impl.rpubs.erase(it); }
-      else { ++it; }
+      else
+      {
+        ++it;
+      }
     }
   }
 }

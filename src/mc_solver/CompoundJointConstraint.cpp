@@ -206,6 +206,9 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
         return std::make_shared<mc_solver::CompoundJointConstraint>(solver.robots(), rIndex, solver.dt(),
                                                                     config("constraints"));
       }
-      else { return std::make_shared<mc_solver::CompoundJointConstraint>(solver.robots(), rIndex, solver.dt()); }
+      else
+      {
+        return std::make_shared<mc_solver::CompoundJointConstraint>(solver.robots(), rIndex, solver.dt());
+      }
     });
 } // namespace

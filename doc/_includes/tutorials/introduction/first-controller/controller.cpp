@@ -27,7 +27,10 @@ void MyFirstController::reset(const mc_control::ControllerResetData & reset_data
 void MyFirstController::switch_target()
 {
   if(goingLeft) { postureTask->target({{jointName, robot().qu()[jointIndex]}}); }
-  else { postureTask->target({{jointName, robot().ql()[jointIndex]}}); }
+  else
+  {
+    postureTask->target({{jointName, robot().ql()[jointIndex]}});
+  }
   goingLeft = !goingLeft;
 }
 

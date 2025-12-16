@@ -4,8 +4,15 @@
   "description": "Either rotation or translation can be ommited if the other is present",
   "properties":
   {
-    "rotation": { "$ref": "/../../Eigen/Matrix3d.json" },
-    "translation": { "$ref": "/../../Eigen/Vector3d.json" }
+    "rotation":
+    {
+      "oneOf": [
+        { "$ref": "../Eigen/Vector3d.json", "description": "Rotation as roll, pitch, yaw angles in [rad]" },
+        { "$ref": "../Eigen/Quaterniond.json", "description": "Rotation as a quaternion (w, x, y, z)" },
+        { "$ref": "../Eigen/Matrix3d.json", "description": "Rotation as a 3x3 row-major rotation matrix" }
+      ]
+    },
+    "translation": { "$ref": "../Eigen/Vector3d.json" }
   },
   "required": ["rotation", "translation"],
   "additionalProperties": false

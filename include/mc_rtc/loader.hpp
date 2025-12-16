@@ -130,7 +130,10 @@ T * ObjectLoader<T>::create(const std::string & name, Args... args)
                                                   name);
   }
   if(handles_.count(name)) { return create_from_handles(name, std::forward<Args>(args)...); }
-  else { return create_from_callbacks(name, std::forward<Args>(args)...); }
+  else
+  {
+    return create_from_callbacks(name, std::forward<Args>(args)...);
+  }
 }
 
 template<typename T>

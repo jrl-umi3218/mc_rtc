@@ -25,7 +25,10 @@ inline static void Initialize()
     Py_Initialize();
     PyEval_SaveThread();
   }
-  else { PYTHON_INIT_COUNT += 1; }
+  else
+  {
+    PYTHON_INIT_COUNT += 1;
+  }
 }
 
 inline static void Finalize()

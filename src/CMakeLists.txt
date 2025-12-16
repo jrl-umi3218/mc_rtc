@@ -143,6 +143,8 @@ set(mc_rtc_utils_HDR
     ../include/mc_rtc/shared.h
     ../include/mc_rtc/visual_utils.h
     ../include/mc_rtc/utils/heatmap.h
+    ../include/mc_rtc/clock.h
+    ../include/mc_rtc/threading/AsyncJob.h
 )
 
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})

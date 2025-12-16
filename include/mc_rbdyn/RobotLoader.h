@@ -102,7 +102,10 @@ public:
       rm->_parameters.resize(1);
       rm->_parameters[0] = name;
     }
-    else { rm = get_robot_module_from_lib(name, args...); }
+    else
+    {
+      rm = get_robot_module_from_lib(name, args...);
+    }
     setup_canonical(rm);
     return rm;
   }

@@ -66,7 +66,10 @@ void Grippers::teardown(Controller &)
     { // Make the current safety configuration the new default
       g.get().saveConfig();
     }
-    else { g.get().restoreConfig(); }
+    else
+    {
+      g.get().restoreConfig();
+    }
   }
 }
 

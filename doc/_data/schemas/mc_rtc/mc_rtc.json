@@ -1,0 +1,229 @@
+{
+  "title": "mc_control::MCGlobalController",
+  "type": "object",
+  "properties": {
+    "MainRobot": {
+      "oneOf":
+      [
+        {
+          "type": "string",
+          "description": "Name of the main robot being controlled",
+          "examples": [
+            "JVRC1",
+            "HRP2DRC",
+            "HRP2JRP",
+            "HRP4",
+            "HRP4::MuJoCo",
+            "HRP4LIRMM",
+            "HRP4::ImpactGrippers",
+            "HRP4::ImpactGrippers::Choreonoid",
+            "HRP4::ImpactGrippers::MuJoCo",
+            "Pepper",
+            "PandaDefault",
+            "PandaHand",
+            "PandaPump",
+            "PandaFoot",
+            "Panda7LIRMMDefault",
+            "Panda2LIRMMDefault",
+            "Panda6LIRMMDefault",
+            "RHPS1",
+            "RHPS1_lirmm_lirmm",
+            "RHPS1_sake_sake",
+            "RHPS1_plate_plate",
+            "HRP5P"
+          ]
+        },
+        {
+          "type": "object",
+          "properties":
+          {
+            "name": { "type": "string", "description": "Name of the loaded robot in the controller" },
+            "module": { "type": "string", "description": "Name of the robot module from which the robot is loaded" }
+          },
+          "required": ["module"]
+        }
+      ]
+      },
+      "Enabled": {
+        "oneOf": [
+          { "$ref": "#/definitions/SampleControllerNames", "description": "Name of a single controller to enable" },
+          {
+            "type": "array",
+            "items": { "$ref": "#/definitions/SampleControllerNames"},
+            "description": "Names of multiple controllers to enable"
+          }
+        ]
+    },
+    "Timestep": {
+      "type": "number",
+      "examples": [0.005, 0.002],
+      "description": "Controller timestep [ms]"
+    },
+    "InitAttitudeFromSensor": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true: initialize attitude from the body sensor specified in InitAttitudeSensor.\nOtherwise use the robot module halfsitting stance."
+    },
+    "InitAttitudeSensor": {
+      "type": "string",
+      "default": "",
+      "examples": ["", "FloatingBase"],
+      "description": "Empty string: use the default body sensor\nOtherwise use the provided sensor name\nNote that the robot model and encoder values are used to transform the sensor measurements to the floating base frame"
+    },
+    "Log": {
+      "type": "boolean",
+      "default": true,
+      "description": "Enable or disable logging"
+    },
+    "LogPolicy": {
+      "type": "string",
+      "enum": ["threaded", "non-threaded"],
+      "default": "threaded",
+      "description": "Logging policy: threaded or non-threaded"
+    },
+    "LogDirectory": {
+      "type": "string",
+      "default": "/tmp",
+      "description": "Directory where log files are stored"
+    },
+    "LogTemplate": {
+      "type": "string",
+      "default": "mc-control",
+      "description": "Template for log file names"
+    },
+    "GUIServer": {
+      "type": "object",
+      "title": "GUIServer",
+      "properties": {
+        "Enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable the GUI server"
+        },
+        "Timestep": {
+          "type": "number",
+          "default": 0.05,
+          "examples": [0.05, 0.0],
+          "description": "GUI publication timestep. Actual rate is rounded up depending on the controller timestep, a value of 0 indicates that the GUI timestep should be equal to the controller timestep"
+        },
+        "IPC": {
+          "type": "object",
+          "properties": {
+            "Socket": {
+              "type": "string",
+              "description": "Base path for IPC sockets"
+            }
+          },
+          "description": "IPC configuration"
+        },
+        "TCP": {
+          "type": "object",
+          "properties": {
+            "Host": {
+              "type": "string",
+              "default": "*",
+              "description": "TCP binding host, * binds to all interfaces"
+            },
+            "Ports": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "default": [4242, 4343],
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "TCP binding ports: the first is used for PUB socket and the second for the PULL socket"
+            }
+          },
+          "required": ["Host", "Ports"],
+          "description": "TCP configuration"
+        },
+        "WS": {
+          "type": "object",
+          "properties": {
+            "Host": {
+              "type": "string",
+              "default": "*",
+              "description": "WebSocket binding host, * binds to all interfaces"
+            },
+            "Ports": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "default": [4242, 4343],
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "WebSocket binding ports: the first is used for PUB socket and the second for the PULL socket"
+            }
+          },
+          "required": ["Host", "Ports"],
+          "description": "WebSocket configuration"
+        }
+      },
+      "description": "GUI server configuration"
+    },
+    "VerboseLoader": {
+      "type": "boolean",
+      "default": false,
+      "description": "Verbosity of the controller and robot loader"
+    },
+    "ControllerModulePaths": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Additional paths for controller modules"
+    },
+    "RobotModulePaths": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Additional paths for robot modules"
+    },
+    "ObserverModulePaths": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Additional paths for observer modules"
+    },
+    "GlobalPluginPaths": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Additional paths for global plugins"
+    },
+    "ClearControllerModulePath": {
+      "type": "boolean",
+      "default": false,
+      "description": "Clear default controller module path"
+    },
+    "ClearRobotModulePath": {
+      "type": "boolean",
+      "default": false,
+      "description": "Clear default robot module path"
+    },
+    "ClearObserverModulePath": {
+      "type": "boolean",
+      "default": false,
+      "description": "Clear default observer module path"
+    },
+    "ClearGlobalPluginPath": {
+      "type": "boolean",
+      "default": false,
+      "description": "Clear default global plugin path"
+    },
+    "ObserverPipelines": {
+      "$ref": "../Observers/ObserverPipelines.json"
+    }
+  },
+  "definitions": {
+    "SampleControllerNames": {
+      "type": "string",
+      "examples": [
+        "Admittance",
+        "CoM",
+        "Door",
+        "EndEffector",
+        "ExternalForces",
+        "FSM",
+        "Impedance",
+        "LIPMStablizer",
+        "Posture",
+        "Text"
+      ]
+    }
+  },
+  "required": ["MainRobot", "Enabled"]
+}

@@ -15,6 +15,7 @@
 #include <mc_rbdyn/hat.h>
 #include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_rtc/deprecated.h>
+#include <mc_rtc/gui/Checkbox.h>
 #include <mc_rtc/gui/Transform.h>
 
 namespace mc_tasks
@@ -23,7 +24,11 @@ namespace mc_tasks
 static inline mc_rtc::void_ptr_caster<tasks::qp::SurfaceTransformTask> tasks_error{};
 static inline mc_rtc::void_ptr_caster<mc_tvm::TransformFunction> tvm_error{};
 
-TransformTask::TransformTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
+TransformTask::TransformTask(const mc_rbdyn::RobotFrame & frame,
+                             double stiffness,
+                             double weight,
+                             bool showTarget,
+                             bool showPose)
 : TrajectoryTaskGeneric(frame.robot().robots(), frame.robot().robotIndex(), stiffness, weight), frame_(frame)
 {
   switch(backend_)
@@ -41,14 +46,18 @@ TransformTask::TransformTask(const mc_rbdyn::RobotFrame & frame, double stiffnes
 
   type_ = "transform";
   name_ = "transform_" + frame.robot().name() + "_" + frame.name();
+  showTarget_ = showTarget;
+  showPose_ = showPose;
 }
 
 TransformTask::TransformTask(const std::string & surfaceName,
                              const mc_rbdyn::Robots & robots,
                              unsigned int robotIndex,
                              double stiffness,
-                             double weight)
-: TransformTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight)
+                             double weight,
+                             bool showTarget,
+                             bool showPose)
+: TransformTask(robots.robot(robotIndex).frame(surfaceName), stiffness, weight, showTarget, showPose)
 {
 }
 
@@ -128,7 +137,7 @@ void TransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
     mc_rtc::overwriteRotationRPY(config("overwriteRPY"), X_0_t.rotation());
   }
 
-  this->target(X_0_t);
+  TransformTask::target(X_0_t);
 
   TrajectoryBase::load(solver, config);
 }
@@ -242,11 +251,49 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> TransformTask::bu
 void TransformTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryTaskGeneric::addToGUI(gui);
+  auto showTarget = [this, &gui]()
+  {
+    if(showTarget_)
+    {
+      gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform(
+                                           "targetPose", [this]() { return this->target(); },
+                                           [this](const sva::PTransformd & pos) { this->target(pos); }));
+    }
+    else
+    {
+      gui.removeElement({"Tasks", name_}, "targetPose");
+    }
+  };
+
+  auto showPose = [this, &gui]()
+  {
+    if(showPose_)
+    {
+      gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("pose", [this]() { return frame_->position(); }));
+    }
+    else
+    {
+      gui.removeElement({"Tasks", name_}, "pose");
+    }
+  };
+
   gui.addElement({"Tasks", name_},
-                 mc_rtc::gui::Transform(
-                     "pos_target", [this]() { return this->target(); },
-                     [this](const sva::PTransformd & pos) { this->target(pos); }),
-                 mc_rtc::gui::Transform("pos", [this]() { return frame_->position(); }));
+                 mc_rtc::gui::Checkbox(
+                     "Show target", [this]() { return showTarget_; },
+                     [this, showTarget]()
+                     {
+                       showTarget_ = !showTarget_;
+                       showTarget();
+                     }),
+                 mc_rtc::gui::Checkbox(
+                     "Show pose", [this]() { return showPose_; },
+                     [this, showPose]()
+                     {
+                       showPose_ = !showPose_;
+                       showPose();
+                     }));
+  showTarget();
+  showPose();
 }
 
 } // namespace mc_tasks
@@ -265,7 +312,10 @@ static mc_tasks::MetaTaskPtr loadTransformTask(mc_solver::QPSolver & solver, con
       mc_rtc::log::deprecated("TransformTask", "surface", "frame");
       return robot.frame(config("surface"));
     }
-    else { return robot.frame(config("frame")); }
+    else
+    {
+      return robot.frame(config("frame"));
+    }
   }();
   auto t = std::make_shared<mc_tasks::TransformTask>(frame);
   t->load(solver, config);

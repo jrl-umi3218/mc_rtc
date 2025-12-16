@@ -1,8 +1,9 @@
 {
+  "type": "object",
   "properties":
   {
     "type": { "enum": ["kinematics", "dynamics"] },
-    "robot": { "$ref": "/../../common/ConstraintSet_robot.json" },
+    "robot": { "$ref": "../common/ConstraintSet_robot.json" },
     "damper":
     {
       "type": "array",
@@ -11,11 +12,12 @@
         "type": "number",
         "minItems": 3,
         "maxItems": 3
-      }
+      },
+      "description": "Joint Limits Damper parameters [interaction disstance, safety distance, offset]"
     },
     "velocityPercent":
     {
-      "description": "Ignored if damper is absent.",
+      "description": "Percentage of the max joint velocity to use. Ignored if damper is absent.",
       "type": "number",
       "default": "0.5"
     }

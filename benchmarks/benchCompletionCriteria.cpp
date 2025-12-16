@@ -96,7 +96,10 @@ static void BM_DirectEvalAndSpeedOrTimeout(benchmark::State & state)
       b = true;
       o += "timeout";
     }
-    else { b = false; }
+    else
+    {
+      b = false;
+    }
   }
 }
 BENCHMARK(BM_DirectEvalAndSpeedOrTimeout);

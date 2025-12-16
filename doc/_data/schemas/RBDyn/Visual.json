@@ -3,9 +3,9 @@
   "type": "object",
   "properties":
   {
-    "name": { "type": "string" },
-    "origin": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
-    "geometry": { "$ref": "/../../RBDyn/Geometry.json" }
+    "name": { "type": "string", "description": "Name of the visual element" },
+    "origin": { "$ref": "../SpaceVecAlg/PTransformd.json", "description": "Pose of the origin of the visual element" },
+    "geometry": { "$ref": "../RBDyn/Geometry.json", "description": "Geometry of the visual element" }
   },
   "required": ["name", "origin", "geometry"],
   "additionalProperties": false

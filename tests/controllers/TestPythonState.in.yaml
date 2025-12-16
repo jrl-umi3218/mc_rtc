@@ -19,10 +19,11 @@ contacts:
     r1Surface: RightFoot
     r2Surface: AllGround
 collisions:
-  - useMinimal: true
+  - type: collision
+    useMinimal: true
 states:
   TestInitial:
-    base: @PYTHON@#test_python.TestPythonState
+    base: "@PYTHON@#test_python.TestPythonState"
     value: 42
   TestFinal:
     base: TestInitial

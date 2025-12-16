@@ -32,7 +32,10 @@ void MessageState::start(Controller & ctl)
     std::string prefix;
     std::string message;
     if(prefix_.size()) { prefix = "[" + name() + "::" + prefix_ + "] "; }
-    else { prefix = "[" + name() + "] "; }
+    else
+    {
+      prefix = "[" + name() + "] ";
+    }
     message = prefix + message_;
 
     if(logType_ == "info") { mc_rtc::log::info(message); }

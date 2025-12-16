@@ -28,7 +28,10 @@ inline int mkstemp(char * out)
   GetTempPath(MAX_PATH + 1, tmp_dir);
   int ret = GetTempFileName(tmp_dir, "mkstemp", 0, out);
   if(ret == 0) { return -1; }
-  else { return 0; }
+  else
+  {
+    return 0;
+  }
 }
 #endif
 

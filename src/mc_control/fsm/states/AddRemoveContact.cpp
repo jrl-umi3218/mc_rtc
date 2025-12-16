@@ -115,18 +115,27 @@ struct AddRemoveContactStateImpl
         {
           AddRemoveContactStateImplHelper<mc_tasks::force::ComplianceTask>::make_run(*this, ctl, contact, config_);
         }
-        else { AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run(*this, ctl, contact, config_); }
+        else
+        {
+          AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run(*this, ctl, contact, config_);
+        }
       }
       std::string name = contact.r1Surface()->name() + "_" + contact.r2Surface()->name() + "_com";
       if(removeContact) { name = "RemoveContact_" + name; }
-      else { name = "AddContact_" + name; }
+      else
+      {
+        name = "AddContact_" + name;
+      }
       if(useCoM_)
       {
         com_task_->name(name);
         ctl.solver().addTask(com_task_);
       }
     }
-    else { mc_rtc::log::info("AddRemoveContactState has nothing to do here"); }
+    else
+    {
+      mc_rtc::log::info("AddRemoveContactState has nothing to do here");
+    }
   }
 };
 
@@ -202,13 +211,19 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
     auto & env = ctl.robots().robot(envIndex_);
     auto d = sensor_.update(robot, env);
     if(hasForceSensor_ && ctl.robot().forceSensor(forceSensorName_).force().z() > forceThreshold_) { forceIter_++; }
-    else { forceIter_ = 0; }
+    else
+    {
+      forceIter_ = 0;
+    }
     if((!forceOnly_ && d <= 0) || forceIter_ > forceThresholdIter_)
     {
       if(fsm_contact_)
       {
         if(d <= 0) { mc_rtc::log::info("Geometric contact detected"); }
-        else { mc_rtc::log::info("Force contact detected"); }
+        else
+        {
+          mc_rtc::log::info("Force contact detected");
+        }
         ctl.addContact(*fsm_contact_);
         auto t = std::static_pointer_cast<mc_tasks::AddContactTask>(impl.task_);
         t->speed(0.0);

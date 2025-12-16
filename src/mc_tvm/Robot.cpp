@@ -82,7 +82,10 @@ Robot::Robot(NewRobotToken, const mc_rbdyn::Robot & robot)
           params += j.params();
           dof += j.dof();
         }
-        else { break; }
+        else
+        {
+          break;
+        }
       }
       return {params, dof, endIdx};
     };

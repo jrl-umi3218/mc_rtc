@@ -41,6 +41,8 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric
   using SequenceInterpolator6d =
       mc_trajectory::SequenceInterpolator<Eigen::Vector6d, mc_trajectory::LinearInterpolation<Eigen::Vector6d>>;
 
+  static std::vector<std::pair<double, Eigen::Matrix3d>> loadOriWaypoints(const mc_rtc::Configuration & c);
+
   /*! \brief Constructor
    *
    * \param frame Control frame

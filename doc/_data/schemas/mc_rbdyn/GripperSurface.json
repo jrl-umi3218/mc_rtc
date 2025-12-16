@@ -2,7 +2,7 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/Surface.json"
+      "$ref": "../common/Surface.json"
     },
     {
       "title": "mc_rbdyn::GripperSurface",
@@ -10,8 +10,8 @@
       "properties":
       {
         "type": { "enum": ["gripper"] },
-        "pointsFromOrigin": { "type": "array", "items": { "$ref": "/../../SpaceVecAlg/PTransformd.json" } },
-        "X_b_motor": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
+        "pointsFromOrigin": { "type": "array", "items": { "$ref": "../SpaceVecAlg/PTransformd.json" } },
+        "X_b_motor": { "$ref": "../SpaceVecAlg/PTransformd.json" },
         "motorMaxTorque": { "type": "number" }
       },
       "required": ["type", "name", "bodyName", "X_b_s", "materialName", "pointsFromOrigin", "X_b_motor", "motorMaxTorque"]
