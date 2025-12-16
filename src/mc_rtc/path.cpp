@@ -51,7 +51,6 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
     std::string pkg = uri.substr(package.size(), split - package.size());
     auto leaf = fs::path(uri.substr(split + 1));
     fs::path MC_ENV_DESCRIPTION_PATH(mc_rtc::MC_ENV_DESCRIPTION_PATH);
-    
 #ifndef __EMSCRIPTEN__
 #  ifdef MC_RTC_HAS_ROS_SUPPORT
     try
@@ -64,39 +63,24 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
 #    endif
       return pkg / leaf;
     }
-    catch(const ament_index_cpp::PackageNotFoundError&)
-    {
-      // Package not found in ROS 2, fall through to fallback logic
-    }
     catch(...)
     {
-      // ROS 1 package not found or other error, fall through to fallback logic
+      // ROS package not found or other error, fall through to fallback logic
     }
 #  endif
-    
     // Fallback for non-ROS builds or when ROS package is not found
-    if(pkg == "jvrc_description")
-    {
-      pkg = (MC_ENV_DESCRIPTION_PATH / ".." / "jvrc_description").string();
-    }
-    else if(pkg == "mc_env_description")
-    {
-      pkg = MC_ENV_DESCRIPTION_PATH.string();
-    }
+    if(pkg == "jvrc_description") { pkg = (MC_ENV_DESCRIPTION_PATH / ".." / "jvrc_description").string(); }
+    else if(pkg == "mc_env_description") { pkg = MC_ENV_DESCRIPTION_PATH.string(); }
     else if(pkg == "mc_int_obj_description")
     {
       pkg = (MC_ENV_DESCRIPTION_PATH / ".." / "mc_int_obj_description").string();
     }
-    else
-    {
-      pkg = default_dir;
-    }
+    else { pkg = default_dir; }
 #else
     pkg = "/assets/" + pkg;
 #endif
     return pkg / leaf;
   }
-  
   const std::string file = "file://";
   if(uri.size() >= file.size() && uri.find(file) == 0) { return fs::path(uri.substr(file.size())); }
   return uri;
