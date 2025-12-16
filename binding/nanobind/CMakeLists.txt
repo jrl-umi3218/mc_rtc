@@ -72,10 +72,31 @@ nanobind_add_module(
   # mc_rtc.mc_control submodule
   src/mc_rtc_module/mc_control/mc_control_module.cpp
   src/mc_rtc_module/mc_control/bind_Gripper.cpp
+  # mc_rtc.mc_tasks submodule
+  src/mc_rtc_module/mc_tasks/mc_tasks_module.cpp
+  src/mc_rtc_module/mc_tasks/bind_PostureTask.cpp
+  src/mc_rtc_module/mc_tasks/bind_TransformTask.cpp
+  src/mc_rtc_module/mc_tasks/bind_GazeTask.cpp
+  src/mc_rtc_module/mc_tasks/bind_EndEffectorTask.cpp
+  src/mc_rtc_module/mc_tasks/bind_ImpedanceTask.cpp
+  src/mc_rtc_module/mc_tasks/bind_CoMTask.cpp
+  # src/mc_rtc_module/mc_tasks/bind_CoPTask.cpp
+  # src/mc_rtc_module/mc_tasks/bind_ComplianceTask.cpp
+  # src/mc_rtc_module/mc_tasks/bind_BSplineTrajectoryTask.cpp
+  # mc_rtc.mc_solver submodule
+  src/mc_rtc_module/mc_solver/mc_solver_module.cpp
+  src/mc_rtc_module/mc_solver/bind_QPSolver.cpp
+  src/mc_rtc_module/mc_solver/bind_KinematicsConstraint.cpp
+  src/mc_rtc_module/mc_solver/bind_DynamicsConstraint.cpp
+  src/mc_rtc_module/mc_solver/bind_ContactConstraint.cpp
+  src/mc_rtc_module/mc_solver/bind_CompoundJointConstraint.cpp
+  src/mc_rtc_module/mc_solver/bind_CoMIncPlaneConstr.cpp
+  src/mc_rtc_module/mc_solver/bind_CollisionsConstraint.cpp
+  src/mc_rtc_module/mc_solver/bind_BoundedSpeedConstr.cpp
 )
 
 find_package(mc_rtc REQUIRED)
-target_link_libraries(_mc_rtc PUBLIC mc_rtc::mc_rtc_utils mc_rtc::mc_rbdyn)
+target_link_libraries(_mc_rtc PUBLIC mc_rtc::mc_rtc_utils mc_rtc::mc_rbdyn mc_rtc::mc_tasks mc_rtc::mc_solver mc_rtc::mc_control)
 target_include_directories(
   _mc_rtc PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
@@ -101,7 +122,7 @@ nanobind_add_stub(
   INSTALL_TIME
 )
 
-set(MC_RTC_MODULES mc_rtc mc_rbdyn mc_control)
+set(MC_RTC_MODULES mc_rtc mc_rbdyn mc_control mc_tasks mc_solver)
 
 # Generate stub for each submodule
 foreach(MODULE IN LISTS MC_RTC_MODULES)

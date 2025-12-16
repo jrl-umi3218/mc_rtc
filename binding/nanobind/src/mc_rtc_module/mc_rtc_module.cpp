@@ -1,5 +1,7 @@
 #include <mc_rtc_python/mc_control/mc_control_module.h>
 #include <mc_rtc_python/mc_rbdyn/mc_rbdyn_module.h>
+#include <mc_rtc_python/mc_tasks/mc_tasks_module.h> 
+#include <mc_rtc_python/mc_solver/mc_solver_module.h> 
 #include <mc_rtc_python/mc_rtc_module.h>
 #include <nanobind/nanobind.h>
 
@@ -34,4 +36,10 @@ NB_MODULE(_mc_rtc, _unsued_module)
 
   nb::module_ mc_control_submodule = mc_rtc.def_submodule("mc_control", "mc_control submodule of 'mc_rtc'");
   mc_rtc_python::bind_mc_control_module(mc_control_submodule);
+
+  nb::module_ mc_tasks_submodule = mc_rtc.def_submodule("mc_tasks", "mc_tasks submodule of 'mc_rtc'");
+  mc_rtc_python::bind_mc_tasks_module(mc_tasks_submodule);
+
+  nb::module_ mc_solver_submodule = mc_rtc.def_submodule("mc_solver", "mc_solver submodule of 'mc_rtc'");
+  mc_rtc_python::bind_mc_solver_module(mc_solver_submodule);
 }

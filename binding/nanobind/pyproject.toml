@@ -12,6 +12,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 authors = [
     { name = "Arnaud TANGUY", email = "arn.tanguy@gmail.com" },
+    { name = "Thomas DUVINAGE", email = "t.duvinage@outlook.fr" },
 ]
 classifiers = [
     "License :: BSD",
@@ -50,3 +51,6 @@ test-skip="cp38-macosx_*:arm64"
 # Needed for full C++17 support
 [tool.cibuildwheel.macos.environment]
 MACOSX_DEPLOYMENT_TARGET = "10.14"
+
+[tool.scikit-build.cmake]
+build-type = "Release"
