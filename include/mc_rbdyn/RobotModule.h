@@ -23,10 +23,6 @@
 
 #include <sch/S_Object/S_Object.h>
 
-#include <array>
-#include <map>
-#include <vector>
-
 /* This is an interface designed to provide additionnal information about a robot */
 
 namespace mc_rbdyn
@@ -256,8 +252,8 @@ struct MC_RBDYN_DLLAPI RobotModule
    * \param urdf_path Path to the robot URDF
    */
   RobotModule(const std::string & path, const std::string & name, const std::string & urdf_path)
-  : path(path), name(name), urdf_path(urdf_path), rsdf_dir(path + "/rsdf/" + name), calib_dir(path + "/calib/" + name),
-    _real_urdf(urdf_path)
+  : path(path), name(name), urdf_path(urdf_path), convex_dir(""), rsdf_dir(path + "/rsdf/" + name),
+    calib_dir(path + "/calib/" + name), _real_urdf(urdf_path)
   {
   }
 
@@ -272,8 +268,46 @@ struct MC_RBDYN_DLLAPI RobotModule
    * - Initialize _visual
    * - Create a default joint order
    * - Create a default stance
+   * - Generate convex hulls for robot meshes
+   * - Bind generated convex hulls to robot bodies
    */
   void init(const rbd::parsers::ParserResult & res);
+
+  /** Generate convex hulls for mesh collision geometries in the robot model.
+   *
+   * Process all mesh-type collision geometries defined in the robot's
+   * URDF or SRDF and generates convex hulls for them, optionally regenerating them if needed.
+   *
+   * Convex hulls are cached on disk in a per-variant directory under the user's local share path.
+   * If the cache is missing or `regenerate` is true, convex hulls will be rebuilt using the
+   * `mesh_sampling` utilities. Old cache directories for the same robot variant are deleted.
+   *
+   * Mesh file URIs are resolved from:
+   * - `package://` URIs (using ROS or fallback search paths)
+   * - `file://` URIs
+   * - Raw filesystem paths
+   *
+   * \param regenerate If true, forces regeneration of convexes even if cache exists.
+   * \param sampling_point Number of points to use when sampling the mesh for convex generation.
+   *
+   * \throws std::runtime_error If mesh files cannot be resolved or read.
+   * \warning Will erase previous convex cache directories matching the same variant.
+   *
+   * \note The resulting convexes are stored in:
+   * - `%LOCALAPPDATA%/<robot_name>` on Windows
+   * - `$HOME/.local/share/<robot_name>` on Linux/macOS
+   */
+  void generate_convexes(bool regenerate = false, unsigned int sampling_point = 4000);
+
+  /** Bind generated convex hulls to robot bodies.
+   *
+   * Associates convex hull files (generated via generate_convexes) with each body in the robot.
+   *
+   * - For bodies with a single mesh, binds directly using the body name.
+   * - For bodies with multiple meshes, binds using indexed names (e.g., "body_0", "body_1", ...).
+   * - Convex files are expected in @p convex_dir and named as {mesh_name}-ch.txt.
+   */
+  void bind_convexes();
 
   /** Returns the robot's bounds obtained from parsing a urdf
    *
@@ -559,6 +593,8 @@ public:
   std::string name;
   /** Path to the robot's URDF file */
   std::string urdf_path;
+  /** Path to the robot's convex folder */
+  std::string convex_dir;
   /** Path to the robot's RSDF folder */
   std::string rsdf_dir;
   /** Path to the robot's calib folder */

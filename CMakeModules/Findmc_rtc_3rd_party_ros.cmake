@@ -37,6 +37,7 @@ if(NOT TARGET mc_rtc_3rd_party::ROS)
     mc_rtc_ros2_dependency(tf2_ros tf2_ros)
     mc_rtc_ros2_dependency(rosbag2_cpp rosbag2_cpp)
     target_compile_definitions(mc_rtc_3rd_party::ROS INTERFACE MC_RTC_ROS_IS_ROS2)
+    target_compile_definitions(mc_rtc_3rd_party::ROS INTERFACE MC_RTC_HAS_ROS_SUPPORT)
     set(ROSCPP_FOUND True)
     return()
   else()
@@ -73,6 +74,7 @@ if(NOT TARGET mc_rtc_3rd_party::ROS)
     endforeach()
     list(REMOVE_DUPLICATES MC_RTC_ROS_FULL_LIBRARIES)
     add_library(mc_rtc_3rd_party::ROS INTERFACE IMPORTED)
+    target_compile_definitions(mc_rtc_3rd_party::ROS INTERFACE MC_RTC_HAS_ROS_SUPPORT)
     set_target_properties(
       mc_rtc_3rd_party::ROS
       PROPERTIES INTERFACE_LINK_LIBRARIES "${MC_RTC_ROS_FULL_LIBRARIES}"

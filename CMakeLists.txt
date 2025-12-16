@@ -124,6 +124,7 @@ endif()
 add_project_dependency(eigen-quadprog REQUIRED)
 add_project_dependency(state-observation REQUIRED)
 add_project_dependency(ndcurves REQUIRED)
+add_project_dependency(mesh_sampling REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 
@@ -263,6 +264,13 @@ mc_rtc_set_prefix(CONTROLLER mc_controller)
 
 set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
 set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
+
+find_package(mc_rtc_3rd_party_ros QUIET)
+if(TARGET mc_rtc_3rd_party::ROS)
+  set(MC_RTC_HAS_ROS_SUPPORT "true")
+else()
+  set(MC_RTC_HAS_ROS_SUPPORT "false")
+endif()
 
 configure_file(
   ${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in

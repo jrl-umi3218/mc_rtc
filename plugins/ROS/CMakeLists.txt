@@ -25,7 +25,6 @@ else()
 endif()
 set(TARGETS_EXPORT_NAME "mc_rtc_rosTargets")
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 find_package(mc_rtc_3rd_party_ros REQUIRED)
 if(NOT ${ROSCPP_FOUND})
   return()
@@ -72,12 +71,6 @@ install(
   RUNTIME DESTINATION "${MC_RTC_BINDIR}"
   LIBRARY DESTINATION "${MC_RTC_LIBDIR}"
   ARCHIVE DESTINATION "${MC_RTC_LIBDIR}"
-)
-
-install(
-  FILES "${PROJECT_SOURCE_DIR}/CMakeModules/Findmc_rtc_3rd_party_ros.cmake"
-  DESTINATION "${CONFIG_INSTALL_DIR}/plugins/"
-  RENAME "mc_rtc_3rd_party_rosTargets.cmake"
 )
 
 install(

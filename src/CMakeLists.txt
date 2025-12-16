@@ -162,6 +162,9 @@ target_link_libraries(
          ${CMAKE_DL_LIBS}
   PRIVATE $<BUILD_INTERFACE:mc_rtc_3rd_party::RapidJSON>
 )
+if(TARGET mc_rtc_3rd_party::ROS)
+  target_link_libraries(mc_rtc_utils PRIVATE mc_rtc_3rd_party::ROS)
+endif()
 if(TARGET PkgConfig::mc_rtc_3rd_party_libnotify)
   target_link_libraries(mc_rtc_utils PUBLIC PkgConfig::mc_rtc_3rd_party_libnotify)
   target_compile_definitions(mc_rtc_utils PRIVATE MC_RTC_HAS_LIBNOTIFY)
@@ -349,6 +352,7 @@ target_link_libraries(
          mc_filter
          GEOS::geos
          TVM::TVM
+         mesh_sampling::mesh_sampling
 )
 target_compile_definitions(mc_rbdyn PUBLIC -DUSE_UNSTABLE_GEOS_CPP_API)
 # qhull
@@ -360,9 +364,11 @@ if(MC_RTC_BUILD_STATIC)
 else()
   target_link_libraries(mc_rbdyn PRIVATE qhullstatic_r qhullcpp)
 endif()
-target_include_directories(
-  mc_rbdyn SYSTEM PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../3rd-party/qhull/src"
-)
+
+if(TARGET mc_rtc_3rd_party::ROS)
+  target_link_libraries(mc_rbdyn PRIVATE mc_rtc_3rd_party::ROS)
+endif()
+
 install_mc_rtc_lib(mc_rbdyn)
 
 set(mc_rtc_gui_SRC mc_rtc/gui/StateBuilder.cpp mc_rbdyn/gui/RobotConvex.cpp
