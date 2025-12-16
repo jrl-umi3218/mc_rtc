@@ -1,5 +1,11 @@
 var NAVTREEINDEX11 =
 {
+"structmc__control_1_1details_1_1SocketConfiguration.html#a50341895d1f7f544aecf38a1b0a260eb":[6,0,1,0,0,0],
+"structmc__control_1_1details_1_1SocketConfiguration.html#ab2110a933d08e3a262d831131005b430":[6,0,1,0,0,1],
+"structmc__control_1_1details_1_1SocketConfiguration.html#ab28c3e418feae656b74feb3241c90540":[6,0,1,0,0,2],
+"structmc__control_1_1fsm_1_1AddRemoveContactState.html":[6,0,1,1,6],
+"structmc__control_1_1fsm_1_1AddRemoveContactState.html#a2e3305b90c679d3f53a5d1473dd557f3":[6,0,1,1,6,3],
+"structmc__control_1_1fsm_1_1AddRemoveContactState.html#a40c9854b8c479f9a572ef9c1795eb516":[6,0,1,1,6,4],
 "structmc__control_1_1fsm_1_1AddRemoveContactState.html#a42e535cede2f88a26609cb298ae9d62c":[6,0,1,1,6,1],
 "structmc__control_1_1fsm_1_1AddRemoveContactState.html#a88a669bde8f5bcdfb31560b7f4e3d39c":[6,0,1,1,6,2],
 "structmc__control_1_1fsm_1_1AddRemoveContactState.html#a8921148d58f33c039fe655ad12c6fbb2":[6,0,1,1,6,5],
@@ -243,11 +249,5 @@ var NAVTREEINDEX11 =
 "structmc__filter_1_1ExponentialMovingAverage.html#a25e06aceff6cb86deaba24edc060ef8f":[6,0,2,0,5],
 "structmc__filter_1_1ExponentialMovingAverage.html#a4fe8efb515654281aa77b87296449f89":[6,0,2,0,3],
 "structmc__filter_1_1ExponentialMovingAverage.html#a59a37436a454f4caa5d9ba49ab85b2e8":[6,0,2,0,2],
-"structmc__filter_1_1ExponentialMovingAverage.html#a5e116fb401af8c027896173066d8b8ed":[6,0,2,0,6],
-"structmc__filter_1_1ExponentialMovingAverage.html#a6a235570200c501307ebc666fcd81e20":[6,0,2,0,9],
-"structmc__filter_1_1ExponentialMovingAverage.html#aa39c03dbafb64fa46f4be54499b3ed48":[6,0,2,0,10],
-"structmc__filter_1_1ExponentialMovingAverage.html#abc199c7a1935a35f01882c9ce6f355e4":[6,0,2,0,4],
-"structmc__filter_1_1ExponentialMovingAverage.html#accd3db44b24084922b2d1915e378b2fb":[6,0,2,0,7],
-"structmc__filter_1_1ExponentialMovingAverage.html#adaad48a146f8e945da36b18c0e9c4f8a":[6,0,2,0,8],
-"structmc__filter_1_1ExponentialMovingAverage.html#afc5e32731c162cecc484c71b1cd6680f":[6,0,2,0,1]
+"structmc__filter_1_1ExponentialMovingAverage.html#a5e116fb401af8c027896173066d8b8ed":[6,0,2,0,6]
 };

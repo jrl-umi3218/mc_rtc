@@ -1,5 +1,11 @@
 var NAVTREEINDEX15 =
 {
+"structmc__rbdyn_1_1RobotModule.html#a3bbfe1ae62d9e98aa1bbbc1c518623f4":[6,0,5,30,22],
+"structmc__rbdyn_1_1RobotModule.html#a4edb2a975531bfb2935c0d7b25f8f677":[6,0,5,30,11],
+"structmc__rbdyn_1_1RobotModule.html#a540c068db94dc49566ccda2ed3825630":[6,0,5,30,34],
+"structmc__rbdyn_1_1RobotModule.html#a57b63a2f82b40741398b3a167b43592c":[6,0,5,30,48],
+"structmc__rbdyn_1_1RobotModule.html#a581c9d2efa5a52e3850b8858ac0b58c4":[6,0,5,30,64],
+"structmc__rbdyn_1_1RobotModule.html#a58c75925a8766c6148fbb6a1385e61c5":[6,0,5,30,58],
 "structmc__rbdyn_1_1RobotModule.html#a5b8304a1ea905fa0378a31dcf65b1460":[6,0,5,30,3],
 "structmc__rbdyn_1_1RobotModule.html#a5de4bf236d1fa2f107fc27971009e979":[6,0,5,30,79],
 "structmc__rbdyn_1_1RobotModule.html#a5f8b8da35780c72a0455713fca1486a5":[6,0,5,30,15],
@@ -243,11 +249,5 @@ var NAVTREEINDEX15 =
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#aba691140794cf4004229b6b5f2ac50a3":[6,0,5,2,2,12],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#ac1276cfbb01a99a72157dc2d2b68ac3d":[6,0,5,2,2,0],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#ac6c9d0b6634fc1c8e48daaf8e2538ea4":[6,0,5,2,2,6],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#afbeb3c9e613679f1a0e032164e9bb851":[6,0,5,2,2,4],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html":[6,0,5,2,5],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a01de7b3d2c97b489adcb94c882e4e83b":[6,0,5,2,5,1],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a0b4dc848ffc84548ed88a2c6059ff5de":[6,0,5,2,5,45],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a0da9af2794d8c8a37542cb1d40ff6e3d":[6,0,5,2,5,25],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a0ea1c0769143dbeaa622e66c2340c730":[6,0,5,2,5,40],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a1c98bf56a034264da108e725e6256a5b":[6,0,5,2,5,49]
+"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#afbeb3c9e613679f1a0e032164e9bb851":[6,0,5,2,2,4]
 };

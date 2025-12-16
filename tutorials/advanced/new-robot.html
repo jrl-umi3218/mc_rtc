@@ -382,19 +382,19 @@
 
 <ul>
   <li>
-    <strong><code>env</code>/<code>object</code> loader:</strong>
+    <code>env</code>/<code>object</code> loader:
     Best suited for simple robots or static objects and environments.
-    Convex hulls <strong>can still be generated automatically</strong> for collision meshes.
+    Convex hulls can still be generated automatically for collision meshes.
   </li>
   <li>
-    <strong><code>json</code> loader:</strong>
+    <code>json</code> loader:
     Adds structured metadata to the robot (e.g., joints, sensors, grippers).
-    Supports <strong>automatic convex hull generation</strong> from URDF meshes.
+    Supports automatic convex hull generation from URDF meshes.
   </li>
   <li>
-    <strong>C++ <code>RobotModule</code>:</strong>
+    C++ <code>RobotModule</code>:
     Provides full control over loading, configuration, and logic.
-    Fully supports <strong>automatic convex generation and caching</strong>.
+    Fully supports automatic convex generation and caching.
   </li>
 </ul>
 
@@ -549,13 +549,13 @@
 
 <h3>Automatic Convex Hull Generation</h3>
 
-<p>Regardless of how your robot is loaded (C++, JSON, or env/object), <strong>mc_rtc can generate convex hulls automatically</strong> from mesh-type collision geometries in the URDF or SRDF.</p>
+<p>Regardless of how your robot is loaded (C++, JSON, or env/object), mc_rtc can generate convex hulls automatically from mesh-type collision geometries in the URDF or SRDF.</p>
 
 <h4>How It Works</h4>
 
 <ul>
   <li>Meshes in the robot description are sampled to build convex approximations.</li>
-  <li>These convex hulls are <strong>cached</strong> to avoid regeneration unless explicitly requested.</li>
+  <li>These convex hulls are cached to avoid regeneration unless explicitly requested.</li>
   <li>Convex generation can be triggered automatically or manually depending on loader and setup.</li>
 </ul>
 
@@ -564,8 +564,8 @@
 <p>Generated convexes are stored in a user-specific local share directory. The base directory is platform-specific :</p>
 
 <ul>
-  <li><strong>Windows:</strong> <code>%APPDATA%/mc_rtc/&lt;robot_name&gt;/</code></li>
-  <li><strong>Linux/macOS:</strong> <code>$HOME/.local/share/mc_rtc/&lt;robot_name&gt;/</code></li>
+  <li>Windows: <code>%APPDATA%/mc_rtc/&lt;robot_name&gt;/</code></li>
+  <li>Linux/macOS: <code>$HOME/.local/share/mc_rtc/&lt;robot_name&gt;/</code></li>
 </ul>
 
 <h4>Convex File Naming</h4>

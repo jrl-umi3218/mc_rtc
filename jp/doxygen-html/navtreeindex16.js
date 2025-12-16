@@ -1,5 +1,11 @@
 var NAVTREEINDEX16 =
 {
+"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html":[6,0,5,2,5],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a01de7b3d2c97b489adcb94c882e4e83b":[6,0,5,2,5,1],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a0b4dc848ffc84548ed88a2c6059ff5de":[6,0,5,2,5,45],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a0da9af2794d8c8a37542cb1d40ff6e3d":[6,0,5,2,5,25],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a0ea1c0769143dbeaa622e66c2340c730":[6,0,5,2,5,40],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a1c98bf56a034264da108e725e6256a5b":[6,0,5,2,5,49],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a254b96dec351e68787a55ac10130c6d8":[6,0,5,2,5,17],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a2711f393aa208d546265f1ccdaa4f927":[6,0,5,2,5,31],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a2d41b76eb67c53097283f744a746aa01":[6,0,5,2,5,11],
@@ -243,11 +249,5 @@ var NAVTREEINDEX16 =
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html":[6,0,6,56],
 "structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html":[6,0,6,18],
 "structmc__rtc_1_1Configuration_1_1Exception.html":[6,0,6,19,0],
-"structmc__rtc_1_1Configuration_1_1Exception.html#a02a511274c6edbdfcf14ecc723a495c5":[6,0,6,19,0,5],
-"structmc__rtc_1_1Configuration_1_1Exception.html#a036273616d903f906ac28972cc16d902":[6,0,6,19,0,4],
-"structmc__rtc_1_1Configuration_1_1Exception.html#a262aab07d1d6f5b9b121e5af5fddfc11":[6,0,6,19,0,2],
-"structmc__rtc_1_1Configuration_1_1Exception.html#a2a9ce02ed46c689d66f0dd5c2ccc7524":[6,0,6,19,0,3],
-"structmc__rtc_1_1Configuration_1_1Exception.html#a7fb4c7e9f42ab610bc546f16c23e5bd4":[6,0,6,19,0,1],
-"structmc__rtc_1_1Configuration_1_1Exception.html#ae817c10e94b5dac7d6790f39138db9ff":[6,0,6,19,0,0],
-"structmc__rtc_1_1DataStore.html":[6,0,6,22]
+"structmc__rtc_1_1Configuration_1_1Exception.html#a02a511274c6edbdfcf14ecc723a495c5":[6,0,6,19,0,5]
 };
