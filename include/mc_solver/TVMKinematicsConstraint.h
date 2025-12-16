@@ -16,7 +16,7 @@
 namespace mc_solver
 {
 
-struct TVMKinematicsConstraint
+struct MC_SOLVER_DLLAPI TVMKinematicsConstraint
 {
   const mc_rbdyn::Robot & robot_;
   std::array<double, 3> damper_;
@@ -27,7 +27,6 @@ struct TVMKinematicsConstraint
   TVMKinematicsConstraint(const mc_rbdyn::Robot & robot, const std::array<double, 3> & damper, double vp);
 
   void addToSolver(mc_solver::TVMQPSolver & solver);
-
   void removeFromSolver(mc_solver::TVMQPSolver & solver);
 };
 

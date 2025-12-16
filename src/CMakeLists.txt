@@ -457,6 +457,7 @@ set(mc_solver_HDR
     ../include/mc_solver/GenInequalityConstraint.h
     ../include/mc_solver/InequalityConstraint.h
     ../include/mc_solver/KinematicsConstraint.h
+    ../include/mc_solver/TVMKinematicsConstraint.h
     ../include/mc_solver/GenericLoader.h
     ../include/mc_solver/GenericLoader.hpp
     ../include/mc_solver/GenInequalityConstraint.h

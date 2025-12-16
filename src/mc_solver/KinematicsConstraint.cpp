@@ -3,6 +3,7 @@
  */
 
 #include <mc_solver/KinematicsConstraint.h>
+#include <mc_solver/TVMKinematicsConstraint.h>
 
 #include <mc_solver/TasksQPSolver.h>
 
@@ -10,8 +11,6 @@
 #include <Tasks/QPConstr.h>
 
 #include <array>
-
-#include "TVMKinematicsConstraint.h"
 
 namespace mc_solver
 {
