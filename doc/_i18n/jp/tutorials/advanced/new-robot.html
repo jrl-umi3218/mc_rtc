@@ -10,17 +10,17 @@
 
 <ul>
   <li>
-    <strong><code>env</code>/<code>object</code>ローダー:</strong><br>
+    <code>env</code>/<code>object</code>ローダー:<br>
     センサーなどが付いていない、シンプルなロボットや静的オブジェクト・環境向け。<br>
-    <strong>URDFに定義されたメッシュから自動的に凸包を生成することが可能</strong>です。
+    URDFに定義されたメッシュから自動的に凸包を生成することが可能です。
   </li>
   <li>
-    <strong><code>json</code>ローダー:</strong><br>
+    <code>json</code>ローダー:<br>
     関節、センサー、グリッパーなどの構造化されたメタデータを追加できます。<br>
     自動凸包生成をサポートします。
   </li>
   <li>
-    <strong>C++ <code>RobotModule</code>:</strong><br>
+    C++ <code>RobotModule</code>:<br>
     最も柔軟で、構成やロジックを細かく制御可能。<br>
     凸包の自動生成およびキャッシュ機能を完全にサポートします。
   </li>
@@ -50,20 +50,20 @@
   <li>RSDFフォルダーは空であってもよい、または存在しなくてもよい</li>
   <li>すべてのボディに凸包ファイルを用意する必要はない</li>
   <li>対応するボディが見つからない凸包ファイルは無視される</li>
-  <li><strong>凸包ファイルが存在しない場合でも、自動生成がすべてのローダータイプで可能</strong>です</li>
+  <li>凸包ファイルが存在しない場合でも、自動生成がすべてのローダータイプで可能です</li>
 </ul>
 
 <h3>凸包の自動生成について</h3>
 
 <p>
-  mc_rtcでは、<strong>すべてのローダー方式（env、JSON、C++）において</strong>、URDFまたはSRDF内に定義されたメッシュから
-  <strong>衝突用凸包を自動生成</strong>できます。
+  mc_rtcでは、すべてのローダー方式（env、JSON、C++）において、URDFまたはSRDF内に定義されたメッシュから
+  衝突用凸包を自動生成できます。
 </p>
 
 <h4>動作概要</h4>
 <ul>
   <li>ロボットのURDF/SRDFに含まれるメッシュをサンプリングして凸包を構築</li>
-  <li>生成された凸包は<strong>ローカルキャッシュ</strong>され、再利用されます</li>
+  <li>生成された凸包はローカルキャッシュされ、再利用されます</li>
   <li>キャッシュが存在しない場合や、明示的に再生成する場合は再計算されます</li>
 </ul>
 
@@ -73,8 +73,8 @@
 このパスは <code>local_share_directory()</code> 関数により構築され、プラットフォームによって異なります。</p>
 
 <ul>
-  <li><strong>Windows:</strong> <code>%APPDATA%/mc_rtc/&lt;robot_name&gt;/</code></li>
-  <li><strong>Linux/macOS:</strong> <code>$HOME/.local/share/mc_rtc/&lt;robot_name&gt;/</code></li>
+  <li>Windows: <code>%APPDATA%/mc_rtc/&lt;robot_name&gt;/</code></li>
+  <li>Linux/macOS: <code>$HOME/.local/share/mc_rtc/&lt;robot_name&gt;/</code></li>
 </ul>
 
 <h4>ファイル命名規則</h4>
