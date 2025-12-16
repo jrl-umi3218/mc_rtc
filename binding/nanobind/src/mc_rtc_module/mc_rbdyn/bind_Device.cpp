@@ -32,7 +32,6 @@ struct PyDevice : Device
 void bind_Device(nb::module_ & m)
 {
   auto rd = nb::class_<Device, PyDevice>(m, "Device");
-  auto bs = nb::class_<mc_rbdyn::BodySensor, Device>(m, "BodySensor");
 
   rd.doc() = R"(
 This class represents a generic device attached to a robot.
