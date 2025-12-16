@@ -328,7 +328,8 @@
               
                 <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#mc_rtcはrosとどのようなデータをやり取りするか">mc_rtcはROSとどのようなデータをやり取りするか</a></li>
-<li class="toc-entry toc-h2"><a href="#nodehandleノードハンドルを取得する">NodeHandle（ノードハンドル）を取得する</a></li>
+<li class="toc-entry toc-h2"><a href="#nodehandle-の取得">NodeHandle の取得</a></li>
+<li class="toc-entry toc-h2"><a href="#mc_rtc-の-ros-サポート確認方法">mc_rtc の ROS サポート確認方法</a></li>
 <li class="toc-entry toc-h2"><a href="#推奨事項">推奨事項</a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#リアルタイム処理を行う箇所でrosのコードを使用しない">リアルタイム処理を行う箇所でROSのコードを使用しない</a></li>
@@ -362,15 +363,61 @@
 
 <p>外部のツールがロボットの状態をROSにパブリッシュできるように、<code class="language-plaintext highlighter-rouge">mc_rtc::RobotPublisher</code>クラスが用意されています。</p>
 
-<h2 id="nodehandleノードハンドルを取得する">NodeHandle（ノードハンドル）を取得する</h2>
+<h2 id="nodehandle-の取得">NodeHandle の取得</h2>
 
-<p>以下のコードを使用すると、mc_rtcによって作成された<code class="language-plaintext highlighter-rouge">ros::NodeHandle</code>にアクセスできます。</p>
+<p>以下のコードにより、mc_rtc によって作成された <code class="language-plaintext highlighter-rouge">ros::NodeHandle</code> にアクセスできます:</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_rtc/ros.h&gt;</span><span class="cp">
+</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span><span class="o">&gt;</span> <span class="n">nh</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">ROSBridge</span><span class="o">::</span><span class="n">get_node_handle</span><span class="p">();</span>
+<span class="err">```</span><span class="n">cpp</span>
+<span class="cp">#include</span> <span class="cpf">&lt;mc_rtc/ros.h&gt;</span><span class="cp">
 </span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span><span class="o">&gt;</span> <span class="n">nh</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">ROSBridge</span><span class="o">::</span><span class="n">get_node_handle</span><span class="p">();</span>
 </code></pre></div></div>
 
-<p>なお、ROSのサポートなしでmc_rtcがビルドされている場合や、ROSを初期化できなかった場合（通常、マスターを利用できなかった場合）には、nullポインターが返されます。</p>
+<p>mc_rtcがROSサポートなしでビルドされた場合、またはROSが初期化できなかった場合（通常はマスターが利用できないため）、返されるポインタはNULLになります。</p>
+
+<p>この機能を使用するには、<code class="language-plaintext highlighter-rouge">mc_rtc::mc_rtc_ros</code>でリンクしていることを確認してください：</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">target_link_libraries</span><span class="p">(</span><span class="si">${</span><span class="nv">YOUR_LIBRARY</span><span class="si">}</span> PUBLIC mc_rtc::mc_rtc_ros<span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="mc_rtc-の-ros-サポート確認方法">mc_rtc の ROS サポート確認方法</h2>
+
+<p><code class="language-plaintext highlighter-rouge">mc_rtc</code> が ROS サポートを有するか確認する方法は 3 つあります。</p>
+
+<ol>
+  <li>コンパイル時プリプロセッサチェック</li>
+</ol>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifdef MC_RTC_HAS_ROS_SUPPORT
+</span><span class="c1">// mc_rtc は ROS サポート付きでコンパイル済み</span>
+<span class="cp">#endif
+</span></code></pre></div></div>
+
+<ol>
+  <li>ランタイム定数</li>
+</ol>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_rtc/config.h&gt;</span><span class="cp">
+</span>
+<span class="k">if</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">MC_RTC_SUPPORT_ROS</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// mc_rtc は ROS サポートあり</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li>ランタイムノードチェック</li>
+</ol>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_rtc/ros.h&gt;</span><span class="cp">
+</span>
+<span class="k">if</span><span class="p">(</span><span class="k">auto</span> <span class="n">node</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">ROSBridge</span><span class="o">::</span><span class="n">get_node_handle</span><span class="p">())</span>
+<span class="p">{</span>
+  <span class="c1">// mc_rtc は ROS サポートあり、かつ ROS マスターが実行中 (ROS1)</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <h2 id="推奨事項">推奨事項</h2>
 

@@ -329,6 +329,7 @@
                 <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#what-does-mc_rtc-communicates-to-ros">What does mc_rtc communicates to ROS?</a></li>
 <li class="toc-entry toc-h2"><a href="#getting-a-nodehandle">Getting a NodeHandle</a></li>
+<li class="toc-entry toc-h2"><a href="#checking-for-ros-support-in-mc_rtc">Checking for ROS support in mc_rtc</a></li>
 <li class="toc-entry toc-h2"><a href="#good-practices">Good practices</a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#avoid-ros-code-in-real-time-parts">Avoid ROS code in real-time parts</a></li>
@@ -377,6 +378,48 @@ document assumes the reader has some level of familiarity with ROS principles.</
 <p>Note that the returned pointer is null if mc_rtc was built without ROS support
 or if ROS was unable to initialize (usually because the master is not
 available).</p>
+
+<p>To use this functionality, make sure you link with <code class="language-plaintext highlighter-rouge">mc_rtc::mc_rtc_ros</code>:</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">target_link_libraries</span><span class="p">(</span><span class="si">${</span><span class="nv">YOUR_LIBRARY</span><span class="si">}</span> PUBLIC mc_rtc::mc_rtc_ros<span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="checking-for-ros-support-in-mc_rtc">Checking for ROS support in mc_rtc</h2>
+
+<p>There are three ways to check whether <code class="language-plaintext highlighter-rouge">mc_rtc</code> has ROS support.</p>
+
+<ol>
+  <li>Compile-Time Preprocessor Check</li>
+</ol>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifdef MC_RTC_HAS_ROS_SUPPORT
+</span><span class="c1">// mc_rtc was compiled with ROS support</span>
+<span class="cp">#endif
+</span></code></pre></div></div>
+
+<ol>
+  <li>Runtime constant</li>
+</ol>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_rtc/config.h&gt;</span><span class="cp">
+</span>
+<span class="k">if</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">MC_RTC_SUPPORT_ROS</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// mc_rtc has ROS support</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li>Runtime Node check</li>
+</ol>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;mc_rtc/ros.h&gt;</span><span class="cp">
+</span>
+<span class="k">if</span><span class="p">(</span><span class="k">auto</span> <span class="n">node</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">ROSBridge</span><span class="o">::</span><span class="n">get_node_handle</span><span class="p">())</span>
+<span class="p">{</span>
+  <span class="c1">// mc_rtc has ROS support and ROS master is running (ROS1)</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <h2 id="good-practices">Good practices</h2>
 

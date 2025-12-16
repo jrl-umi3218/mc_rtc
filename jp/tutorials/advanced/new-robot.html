@@ -335,9 +335,21 @@
               </div>
               
                 <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#%E3%83%AD%E3%83%BC%E3%83%80%E3%83%BC%E3%81%AE%E6%A6%82%E8%A6%81">ローダーの概要</a></li>
 <li class="toc-entry toc-h2"><a href="#code-env-code-code-object-code-ローダーを使用する">env/objectローダーを使用する</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#ロボット記述パッケージを整理する">ロボット記述パッケージを整理する</a></li>
+<li class="toc-entry toc-h3"><a href="#ロボット記述パッケージを整理する">ロボット記述パッケージを整理する</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#%E8%A3%9C%E8%B6%B3%E4%BA%8B%E9%A0%85">補足事項:</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#%E5%87%B8%E5%8C%85%E3%81%AE%E8%87%AA%E5%8B%95%E7%94%9F%E6%88%90%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">凸包の自動生成について</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#%E5%8B%95%E4%BD%9C%E6%A6%82%E8%A6%81">動作概要</a></li>
+<li class="toc-entry toc-h4"><a href="#%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E4%BF%9D%E5%AD%98%E5%A0%B4%E6%89%80">キャッシュ保存場所</a></li>
+<li class="toc-entry toc-h4"><a href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%91%BD%E5%90%8D%E8%A6%8F%E5%89%87">ファイル命名規則</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#code-json-code-ローダーを使用する">jsonローダーを使用する</a>
@@ -366,11 +378,25 @@
   <li>C++で<code>RobotModule</code>の実装を記述する</li>
 </ol>
 
-<p>最初の方法は、センサーが取り付けられていないシンプルなロボット（名前が示すとおり、単なるオブジェクトと環境）に適しています。そうしたロボットの要件については、以下のセクションで説明します。</p>
+<h2>ローダーの概要</h2>
 
-<p>2番目の方法では、ロボットに関するより多くの情報を与えることができます。</p>
-
-<p>最後の選択肢は最も柔軟性が高い方法です。この方法の主なメリットは、ロボットを極めて簡単に読み込むことができ、最小限の労力でさまざまなバリエーションのロボットを簡単に作成できる点にあります。</p>
+<ul>
+  <li>
+    <strong><code>env</code>/<code>object</code>ローダー:</strong><br>
+    センサーなどが付いていない、シンプルなロボットや静的オブジェクト・環境向け。<br>
+    <strong>URDFに定義されたメッシュから自動的に凸包を生成することが可能</strong>です。
+  </li>
+  <li>
+    <strong><code>json</code>ローダー:</strong><br>
+    関節、センサー、グリッパーなどの構造化されたメタデータを追加できます。<br>
+    自動凸包生成をサポートします。
+  </li>
+  <li>
+    <strong>C++ <code>RobotModule</code>:</strong><br>
+    最も柔軟で、構成やロジックを細かく制御可能。<br>
+    凸包の自動生成およびキャッシュ機能を完全にサポートします。
+  </li>
+</ul>
 
 <h2 id="code-env-code-code-object-code-ローダーを使用する"><code>env</code>/<code>object</code>ローダーを使用する</h2>
 
@@ -507,17 +533,51 @@
 <p>ロボット記述フォルダーが<code>LOCATION</code>にあり、ロボットの名前が<code>NAME</code>であるとき、mc_rtcは、データが以下のように整理されているはずです。</p>
 
 <ul>
-  <li>URDFが<code>$LOCATION/urdf/$NAME.urdf</code>にある</li>
-  <li>RSDFファイルが<code>$LOCATION/rsdf/$NAME/</code>フォルダーにある</li>
-  <li>凸領域ファイルが<code>$LOCATION/convex/$NAME/</code>フォルダーにある。また、BODYで指定されたボディの<code>BODY</code>衝突凸領域が<code>$BODY-ch.txt</code>に記述されている</li>
+  <li>URDFが <code>$LOCATION/urdf/$NAME.urdf</code> にある</li>
+  <li>RSDFファイルが <code>$LOCATION/rsdf/$NAME/</code> フォルダーにある（任意）</li>
+  <li>凸包ファイルが <code>$LOCATION/convex/$NAME/</code> フォルダーにある（任意）</li>
 </ul>
 
-<p>Furthermore:</p>
+<p>たとえば、ボディ名が <code>BODY</code> の場合、対応する凸包ファイル名は:</p>
+<code>BODY-ch.txt</code>
+
+<h4>補足事項:</h4>
+<ul>
+  <li>RSDFフォルダーは空であってもよい、または存在しなくてもよい</li>
+  <li>すべてのボディに凸包ファイルを用意する必要はない</li>
+  <li>対応するボディが見つからない凸包ファイルは無視される</li>
+  <li><strong>凸包ファイルが存在しない場合でも、自動生成がすべてのローダータイプで可能</strong>です</li>
+</ul>
+
+<h3>凸包の自動生成について</h3>
+
+<p>
+  mc_rtcでは、<strong>すべてのローダー方式（env、JSON、C++）において</strong>、URDFまたはSRDF内に定義されたメッシュから
+  <strong>衝突用凸包を自動生成</strong>できます。
+</p>
+
+<h4>動作概要</h4>
+<ul>
+  <li>ロボットのURDF/SRDFに含まれるメッシュをサンプリングして凸包を構築</li>
+  <li>生成された凸包は<strong>ローカルキャッシュ</strong>され、再利用されます</li>
+  <li>キャッシュが存在しない場合や、明示的に再生成する場合は再計算されます</li>
+</ul>
+
+<h4>キャッシュ保存場所</h4>
+
+<p>生成された凸包は、ユーザー環境ごとのローカル共有ディレクトリに保存されます。<br>
+このパスは <code>local_share_directory()</code> 関数により構築され、プラットフォームによって異なります。</p>
 
 <ul>
-  <li>RSDFフォルダーは空であってもよい（または存在しなくてもよい）</li>
-  <li>ボディに凸領域ファイルを必ずしも関連付ける必要はない</li>
-  <li>ボディに関連付けることができない凸領域ファイルは、自動的に無視される</li>
+  <li><strong>Windows:</strong> <code>%APPDATA%/mc_rtc/&lt;robot_name&gt;/</code></li>
+  <li><strong>Linux/macOS:</strong> <code>$HOME/.local/share/mc_rtc/&lt;robot_name&gt;/</code></li>
+</ul>
+
+<h4>ファイル命名規則</h4>
+
+<ul>
+  <li>ボディにメッシュが1つだけある場合: <code>BODY-ch.txt</code></li>
+  <li>複数メッシュがある場合: <code>BODY_0-ch.txt</code>, <code>BODY_1-ch.txt</code> のように番号付きで生成</li>
 </ul>
 
 <h2 id="code-json-code-ローダーを使用する"><code>json</code>ローダーを使用する</h2>

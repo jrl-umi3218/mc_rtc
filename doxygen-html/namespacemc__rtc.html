@@ -284,6 +284,12 @@ Functions</h2></td></tr>
 <tr class="separator:a5616d104c3e121be9cb465d12d18db7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e4bce12cf517283be1a0b784e881dfe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a0e4bce12cf517283be1a0b784e881dfe">user_config_directory_path</a> (const std::string &amp;suffix=&quot;&quot;)</td></tr>
 <tr class="separator:a0e4bce12cf517283be1a0b784e881dfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c625c9913b5b37d779f662f6cfa902e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a9c625c9913b5b37d779f662f6cfa902e">local_share_directory</a> (const std::string &amp;suffix=&quot;&quot;)</td></tr>
+<tr class="separator:a9c625c9913b5b37d779f662f6cfa902e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae76b0208990b3c86bdca3e6dd24beb5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#ae76b0208990b3c86bdca3e6dd24beb5f">filename</a> (const fs::path &amp;path, bool keepExtension=false)</td></tr>
+<tr class="separator:ae76b0208990b3c86bdca3e6dd24beb5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a458422180b759429c183c9fe1e6e5e6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> fs::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a458422180b759429c183c9fe1e6e5e6c">convertURI</a> (const std::string &amp;uri, [[maybe_unused]] std::string_view default_dir=&quot;&quot;)</td></tr>
+<tr class="separator:a458422180b759429c183c9fe1e6e5e6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac274591c17dbd2c3d4c93f5eba9a228b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#ac274591c17dbd2c3d4c93f5eba9a228b">make_temporary_path</a> (const std::string &amp;prefix)</td></tr>
 <tr class="memdesc:ac274591c17dbd2c3d4c93f5eba9a228b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a unique temporary directory path with the given prefix.  <a href="namespacemc__rtc.html#ac274591c17dbd2c3d4c93f5eba9a228b">More...</a><br /></td></tr>
 <tr class="separator:ac274591c17dbd2c3d4c93f5eba9a228b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -342,8 +348,6 @@ Variables</h2></td></tr>
 <p>Helper functions to emit deprecation messages when loading JSON/YAML from old versions</p>
 <p>This header contains the base block of all elements in the GUI system. For the implementation details of specific elements look into their dedicated header</p>
 <p>This file contains classes that are used to configure the visual styles of various elements in the GUI</p>
-<p>This header defines a number of utility functions related to forming path in the environment</p>
-<p>They are thin wrapper around boost::filesystem to be later replaced by std::filesystem after Ubuntu 18.04 support is fully dropped</p>
 <p>This header provides a number of function to help with the creation of rbd::parsers::Visual elements</p>
 <p>Helpers for unique_ptr&lt;void, void (*)(void *)&gt; </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
@@ -433,6 +437,49 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a458422180b759429c183c9fe1e6e5e6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a458422180b759429c183c9fe1e6e5e6c">&#9670;&nbsp;</a></span>convertURI()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> fs::path mc_rtc::convertURI </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>uri</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">[[maybe_unused] ] std::string_view&#160;</td>
+          <td class="paramname"><em>default_dir</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Convert a URI to a filesystem path.</p>
+<p>This function handles URIs with different schemes and converts them to a <code>std::filesystem::path</code> object. It currently supports:</p><ul>
+<li><code>package://</code> URIs: Typically used in ROS or simulation environments.</li>
+<li><code><a href="file://">file://</a></code> URIs: Absolute file paths.</li>
+<li>Plain strings: Treated as direct filesystem paths.</li>
+</ul>
+<p>For <code>package://</code> URIs, the function attempts to resolve the package path using available ROS methods:</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uri</td><td>The URI to be converted. Can be a <code>package://</code>, <code><a href="file://">file://</a></code>, or direct file path. </td></tr>
+    <tr><td class="paramname">default_dir</td><td><a class="el" href="structmc__rtc_1_1Default.html">Default</a> directory used to resolve unknown package names when ROS support is not available.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::filesystem::path A resolved path corresponding to the given URI. </dd></dl>
+
+</div>
+</div>
 <a id="a0bd63387904206fef1971ac84987b3bc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0bd63387904206fef1971ac84987b3bc">&#9670;&nbsp;</a></span>debug()</h2>
 
@@ -547,6 +594,44 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ae76b0208990b3c86bdca3e6dd24beb5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae76b0208990b3c86bdca3e6dd24beb5f">&#9670;&nbsp;</a></span>filename()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string mc_rtc::filename </td>
+          <td>(</td>
+          <td class="paramtype">const fs::path &amp;&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>keepExtension</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Extracts the filename from a given filesystem path.</p>
+<p>This function returns the filename part of the specified <code>path</code>. If <code>keepExtension</code> is true, the returned string includes the file extension. If false, only the filename stem (i.e., without extension) is returned.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The input filesystem path. </td></tr>
+    <tr><td class="paramname">keepExtension</td><td>If true, keep the file extension in the result; otherwise, exclude it. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The filename as a std::string, with or without extension depending on <code>keepExtension</code>. </dd></dl>
+
+</div>
+</div>
 <a id="a9c308b4400fb83031251be1f6ab0adb2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9c308b4400fb83031251be1f6ab0adb2">&#9670;&nbsp;</a></span>fromVectorOrElement() <span class="overload">[1/2]</span></h2>
 
@@ -641,6 +726,36 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Vector containing all elements in the configuration vector or the single item. If it fails, return defaultVec. </dd></dl>
+
+</div>
+</div>
+<a id="a9c625c9913b5b37d779f662f6cfa902e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c625c9913b5b37d779f662f6cfa902e">&#9670;&nbsp;</a></span>local_share_directory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string mc_rtc::local_share_directory </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>suffix</em> = <code>&quot;&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constructs a platform-specific path to the local share directory for <a class="el" href="namespacemc__rtc.html">mc_rtc</a>.</p>
+<p>This function returns a string representing the full path to the local share directory for <code><a class="el" href="namespacemc__rtc.html">mc_rtc</a></code>, appending the provided <code>suffix</code> to the base directory. The base directory varies by platform:</p><ul>
+<li>On Windows: Uses the <code>APPDATA%/mc_rtc</code> directory.</li>
+<li>On Unix-like systems: Uses the <code>$HOME/.local/share/mc_rtc</code> directory.</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">suffix</td><td>The subdirectory or filename to append to the <a class="el" href="namespacemc__rtc.html">mc_rtc</a> local share path. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representing the full path to the local share directory. </dd></dl>
 
 </div>
 </div>

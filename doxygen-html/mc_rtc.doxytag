@@ -5546,6 +5546,27 @@
     </member>
     <member kind="function">
       <type>MC_RTC_UTILS_DLLAPI std::string</type>
+      <name>local_share_directory</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a9c625c9913b5b37d779f662f6cfa902e</anchor>
+      <arglist>(const std::string &amp;suffix=&quot;&quot;)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RTC_UTILS_DLLAPI std::string</type>
+      <name>filename</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ae76b0208990b3c86bdca3e6dd24beb5f</anchor>
+      <arglist>(const fs::path &amp;path, bool keepExtension=false)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RTC_UTILS_DLLAPI fs::path</type>
+      <name>convertURI</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a458422180b759429c183c9fe1e6e5e6c</anchor>
+      <arglist>(const std::string &amp;uri, [[maybe_unused]] std::string_view default_dir=&quot;&quot;)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RTC_UTILS_DLLAPI std::string</type>
       <name>make_temporary_path</name>
       <anchorfile>namespacemc__rtc.html</anchorfile>
       <anchor>ac274591c17dbd2c3d4c93f5eba9a228b</anchor>
@@ -35890,6 +35911,20 @@
       <arglist>(const rbd::parsers::ParserResult &amp;res)</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>generate_convexes</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>afcd0c12559fad408a7514076adf5b060</anchor>
+      <arglist>(bool regenerate=false, unsigned int sampling_point=4000)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>bind_convexes</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>abf6c277f410a26fb488298fd9bf8a0ae</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
       <type>const std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt; &gt; &amp;</type>
       <name>bounds</name>
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
@@ -36132,6 +36167,13 @@
       <name>urdf_path</name>
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
       <anchor>a7ba5a2868d56f57573de6baac60ce05f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>convex_dir</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>a5fe7c8919c0991cc20e8159f9b1c1457</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -46731,6 +46773,27 @@
       <anchorfile>namespacemc__rtc.html</anchorfile>
       <anchor>a0e4bce12cf517283be1a0b784e881dfe</anchor>
       <arglist>(const std::string &amp;suffix=&quot;&quot;)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RTC_UTILS_DLLAPI std::string</type>
+      <name>local_share_directory</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a9c625c9913b5b37d779f662f6cfa902e</anchor>
+      <arglist>(const std::string &amp;suffix=&quot;&quot;)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RTC_UTILS_DLLAPI std::string</type>
+      <name>filename</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ae76b0208990b3c86bdca3e6dd24beb5f</anchor>
+      <arglist>(const fs::path &amp;path, bool keepExtension=false)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_RTC_UTILS_DLLAPI fs::path</type>
+      <name>convertURI</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a458422180b759429c183c9fe1e6e5e6c</anchor>
+      <arglist>(const std::string &amp;uri, [[maybe_unused]] std::string_view default_dir=&quot;&quot;)</arglist>
     </member>
     <member kind="function">
       <type>MC_RTC_UTILS_DLLAPI std::string</type>

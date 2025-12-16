@@ -97,15 +97,17 @@ $(document).ready(function(){initNavTree('path_8h.html',''); initResizable(); })
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="utils__api_8h_source.html">mc_rtc/utils_api.h</a>&gt;</code><br />
+<code>#include &lt;filesystem&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for path.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="path_8h__incl.png" border="0" usemap="#ainclude_2mc__rtc_2path_8h" alt=""/></div>
 <map name="ainclude_2mc__rtc_2path_8h" id="ainclude_2mc__rtc_2path_8h">
-<area shape="rect" title=" " alt="" coords="54,5,217,32"/>
+<area shape="rect" title=" " alt="" coords="131,5,294,32"/>
 <area shape="rect" href="utils__api_8h.html" title=" " alt="" coords="5,80,143,107"/>
-<area shape="rect" title=" " alt="" coords="167,80,226,107"/>
+<area shape="rect" title=" " alt="" coords="167,80,258,107"/>
+<area shape="rect" title=" " alt="" coords="282,80,341,107"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -139,6 +141,12 @@ Functions</h2></td></tr>
 <tr class="separator:a5616d104c3e121be9cb465d12d18db7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e4bce12cf517283be1a0b784e881dfe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a0e4bce12cf517283be1a0b784e881dfe">mc_rtc::user_config_directory_path</a> (const std::string &amp;suffix=&quot;&quot;)</td></tr>
 <tr class="separator:a0e4bce12cf517283be1a0b784e881dfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c625c9913b5b37d779f662f6cfa902e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a9c625c9913b5b37d779f662f6cfa902e">mc_rtc::local_share_directory</a> (const std::string &amp;suffix=&quot;&quot;)</td></tr>
+<tr class="separator:a9c625c9913b5b37d779f662f6cfa902e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae76b0208990b3c86bdca3e6dd24beb5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#ae76b0208990b3c86bdca3e6dd24beb5f">mc_rtc::filename</a> (const fs::path &amp;path, bool keepExtension=false)</td></tr>
+<tr class="separator:ae76b0208990b3c86bdca3e6dd24beb5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a458422180b759429c183c9fe1e6e5e6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> fs::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a458422180b759429c183c9fe1e6e5e6c">mc_rtc::convertURI</a> (const std::string &amp;uri, [[maybe_unused]] std::string_view default_dir=&quot;&quot;)</td></tr>
+<tr class="separator:a458422180b759429c183c9fe1e6e5e6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac274591c17dbd2c3d4c93f5eba9a228b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#ac274591c17dbd2c3d4c93f5eba9a228b">mc_rtc::make_temporary_path</a> (const std::string &amp;prefix)</td></tr>
 <tr class="memdesc:ac274591c17dbd2c3d4c93f5eba9a228b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a unique temporary directory path with the given prefix.  <a href="namespacemc__rtc.html#ac274591c17dbd2c3d4c93f5eba9a228b">More...</a><br /></td></tr>
 <tr class="separator:ac274591c17dbd2c3d4c93f5eba9a228b"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -12,6 +12,18 @@ var namespaces_dup =
     [ "mc_tasks", "namespacemc__tasks.html", "namespacemc__tasks" ],
     [ "mc_trajectory", "namespacemc__trajectory.html", "namespacemc__trajectory" ],
     [ "mc_tvm", "namespacemc__tvm.html", "namespacemc__tvm" ],
+    [ "mesh_sampling", null, [
+      [ "io", null, [
+        [ "saveQhullFile", "/usr/local/share/doc/mesh_sampling/doxygen-html/a00025.html#aad582fd4ce98cc828ab64ad0528bf793", null ]
+      ] ],
+      [ "CloudT", "/usr/local/share/doc/mesh_sampling/doxygen-html/a00024.html#a6abfa16610d59aab65c637ecad7b8118", null ],
+      [ "random_point_in_triangle", "/usr/local/share/doc/mesh_sampling/doxygen-html/a00024.html#ae0075dced324a5c73ef7e96015841f75", null ],
+      [ "triangle_area", "/usr/local/share/doc/mesh_sampling/doxygen-html/a00024.html#aa7dcb5b8b4277ff1c1247dc62534fa18", null ],
+      [ "weighted_random_choice", "/usr/local/share/doc/mesh_sampling/doxygen-html/a00024.html#a8368e720ec4d7de5575875741b8da045", null ],
+      [ "weighted_random_choice_indices", "/usr/local/share/doc/mesh_sampling/doxygen-html/a00024.html#a304c215afc0e2c51d90da03bdc6570cd", null ],
+      [ "supported_cloud_type", "/usr/local/share/doc/mesh_sampling/doxygen-html/a00024.html#a00c2235f0b58c0e25fe69d9098254f3d", null ],
+      [ "supported_extensions", "/usr/local/share/doc/mesh_sampling/doxygen-html/a00024.html#a1f358be7e4794cd7ad3710484de8137c", null ]
+    ] ],
     [ "ndcurves", null, [
       [ "helpers", null, [
         [ "config_t", "/usr/local/share/doc/ndcurves/doxygen-html/namespacendcurves_1_1helpers.html#a36dc22c79c5bd8e1dcb111507d9d66eb", null ],

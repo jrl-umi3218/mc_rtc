@@ -155,6 +155,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a21cf968dd81a9b554ce1001b8a2c6fb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33637f65346a81c078c9c04de9e4be0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a33637f65346a81c078c9c04de9e4be0e">init</a> (const rbd::parsers::ParserResult &amp;res)</td></tr>
 <tr class="separator:a33637f65346a81c078c9c04de9e4be0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcd0c12559fad408a7514076adf5b060"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#afcd0c12559fad408a7514076adf5b060">generate_convexes</a> (bool regenerate=false, unsigned int sampling_point=4000)</td></tr>
+<tr class="separator:afcd0c12559fad408a7514076adf5b060"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf6c277f410a26fb488298fd9bf8a0ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#abf6c277f410a26fb488298fd9bf8a0ae">bind_convexes</a> ()</td></tr>
+<tr class="separator:abf6c277f410a26fb488298fd9bf8a0ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae05a5aab8f1a3edbecad4e4c7b29380d"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#ae05a5aab8f1a3edbecad4e4c7b29380d">bounds</a> () const</td></tr>
 <tr class="separator:ae05a5aab8f1a3edbecad4e4c7b29380d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a2fb5d58157ab88f81a263cdd583d90"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a7a2fb5d58157ab88f81a263cdd583d90">accelerationBounds</a> () const</td></tr>
@@ -228,6 +232,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ad888b6f335ade03b6628633d4a446bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ba5a2868d56f57573de6baac60ce05f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a7ba5a2868d56f57573de6baac60ce05f">urdf_path</a></td></tr>
 <tr class="separator:a7ba5a2868d56f57573de6baac60ce05f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fe7c8919c0991cc20e8159f9b1c1457"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a5fe7c8919c0991cc20e8159f9b1c1457">convex_dir</a></td></tr>
+<tr class="separator:a5fe7c8919c0991cc20e8159f9b1c1457"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a964a0cee9de236a3143a69e384fde6d3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a964a0cee9de236a3143a69e384fde6d3">rsdf_dir</a></td></tr>
 <tr class="separator:a964a0cee9de236a3143a69e384fde6d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ce60a43b6c7fcf4df10d1777e5021bd"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a2ce60a43b6c7fcf4df10d1777e5021bd">calib_dir</a></td></tr>
@@ -539,6 +545,30 @@ Public Attributes</h2></td></tr>
 <p>Each map's keys are joint names and values are joint limits.</p>
 <p>They should be provided in the following order:</p><ul>
 <li>acceleration limits (lower/upper) </li>
+</ul>
+
+</div>
+</div>
+<a id="abf6c277f410a26fb488298fd9bf8a0ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf6c277f410a26fb488298fd9bf8a0ae">&#9670;&nbsp;</a></span>bind_convexes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::RobotModule::bind_convexes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Bind generated convex hulls to robot bodies.</p>
+<p>Associates convex hull files (generated via generate_convexes) with each body in the robot.</p>
+<ul>
+<li>For bodies with a single mesh, binds directly using the body name.</li>
+<li>For bodies with multiple meshes, binds using indexed names (e.g., "body_0", "body_1", ...).</li>
+<li>Convex files are expected in <code>convex_dir</code> and named as {mesh_name}-ch.txt. </li>
 </ul>
 
 </div>
@@ -977,6 +1007,61 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="afcd0c12559fad408a7514076adf5b060"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcd0c12559fad408a7514076adf5b060">&#9670;&nbsp;</a></span>generate_convexes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::RobotModule::generate_convexes </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>regenerate</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>sampling_point</em> = <code>4000</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Generate convex hulls for mesh collision geometries in the robot model.</p>
+<p>Process all mesh-type collision geometries defined in the robot's URDF or SRDF and generates convex hulls for them, optionally regenerating them if needed.</p>
+<p>Convex hulls are cached on disk in a per-variant directory under the user's local share path. If the cache is missing or <code>regenerate</code> is true, convex hulls will be rebuilt using the <code><a class="elRef" href="/usr/local/share/doc/mesh_sampling/doxygen-html/a00024.html">mesh_sampling</a></code> utilities. Old cache directories for the same robot variant are deleted.</p>
+<p>Mesh file URIs are resolved from:</p><ul>
+<li><code>package://</code> URIs (using ROS or fallback search paths)</li>
+<li><code><a href="file://">file://</a></code> URIs</li>
+<li>Raw filesystem paths</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">regenerate</td><td>If true, forces regeneration of convexes even if cache exists. </td></tr>
+    <tr><td class="paramname">sampling_point</td><td>Number of points to use when sampling the mesh for convex generation.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If mesh files cannot be resolved or read. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Will erase previous convex cache directories matching the same variant.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The resulting convexes are stored in:<ul>
+<li><code>LOCALAPPDATA%/&lt;robot_name&gt;</code> on Windows</li>
+<li><code>$HOME/.local/share/&lt;robot_name&gt;</code> on Linux/macOS </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
 <a id="a10f22df2fe618e1d7ee0db3edec87f72"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a10f22df2fe618e1d7ee0db3edec87f72">&#9670;&nbsp;</a></span>grippers()</h2>
 
@@ -1054,7 +1139,9 @@ Public Attributes</h2></td></tr>
 <li>Initialize _collisionTransforms</li>
 <li>Initialize _visual</li>
 <li>Create a default joint order</li>
-<li>Create a default stance </li>
+<li>Create a default stance</li>
+<li>Generate convex hulls for robot meshes</li>
+<li>Bind generated convex hulls to robot bodies </li>
 </ul>
 
 </div>
@@ -1851,6 +1938,21 @@ Public Attributes</h2></td></tr>
 <div class="line">      [](<span class="keyword">const</span> <a class="code" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;, <a class="code" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;) {}</div>
 <div class="ttc" id="astructmc__rbdyn_1_1Robot_html"><div class="ttname"><a href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a></div><div class="ttdef"><b>Definition:</b> Robot.h:63</div></div>
 </div><!-- fragment -->
+</div>
+</div>
+<a id="a5fe7c8919c0991cc20e8159f9b1c1457"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fe7c8919c0991cc20e8159f9b1c1457">&#9670;&nbsp;</a></span>convex_dir</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_rbdyn::RobotModule::convex_dir</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Path to the robot's convex folder </p>
+
 </div>
 </div>
 <a id="ab4acadd6d4c3d607b929be70f3ba94e5"></a>
