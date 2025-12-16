@@ -75,7 +75,10 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
     {
       pkg = (MC_ENV_DESCRIPTION_PATH / ".." / "mc_int_obj_description").string();
     }
-    else { pkg = default_dir; }
+    else
+    {
+      pkg = default_dir;
+    }
 #else
     pkg = "/assets/" + pkg;
 #endif

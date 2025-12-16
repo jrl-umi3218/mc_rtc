@@ -85,7 +85,10 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
 
   auto generate = [&](const fs::path & mesh_file, const fs::path & output_convex_dir)
   {
-    if(!fs::exists(mesh_file)) { mc_rtc::log::error_and_throw("Couldn't find meshes at {} for {}", mesh_file.string(), name); }
+    if(!fs::exists(mesh_file))
+    {
+      mc_rtc::log::error_and_throw("Couldn't find meshes at {} for {}", mesh_file.string(), name);
+    }
 
     mesh_sampling::MeshSampling sampler(mesh_file);
     const auto & meshes = sampler.create_clouds(sampling_point);
@@ -130,7 +133,10 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
       }
     }
   }
-  else { mc_rtc::log::error("[RobotModule] name is empty, cannot generate convexes"); }
+  else
+  {
+    mc_rtc::log::error("[RobotModule] name is empty, cannot generate convexes");
+  }
 }
 
 void RobotModule::bind_convexes()
