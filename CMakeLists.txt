@@ -191,13 +191,12 @@ else()
 endif()
 
 find_package(RapidJSON QUIET)
-find_package(RapidJSON QUIET)
 if(RapidJSON_FOUND)
   message("-- Found RapidJSON package")
   add_library(mc_rtc_3rd_party::RapidJSON INTERFACE IMPORTED)
   set_target_properties(
     mc_rtc_3rd_party::RapidJSON PROPERTIES INTERFACE_INCLUDE_DIRECTORIES
-                                           ${RapidJSON_INCLUDE_DIRS}
+                                           "${RapidJSON_INCLUDE_DIRS}"
   )
 else()
   message("-- Using bundled RapidJSON")
