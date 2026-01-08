@@ -44,13 +44,6 @@ Build-Depends: debhelper (>= 9),
                libyaml-cpp-dev,
                libspdlog-dev,
                libnotify-dev,
-# ros-@ROS_DISTRO@-ros-base,
-# ros-@ROS_DISTRO@-roscpp | ros-@ROS_DISTRO@-rclcpp,
-# ros-@ROS_DISTRO@-sensor-msgs,
-# ros-@ROS_DISTRO@-common-msgs | ros-@ROS_DISTRO@-common-interfaces,
-# ros-@ROS_DISTRO@-tf2-ros,
-# ros-@ROS_DISTRO@-rosbag | ros-@ROS_DISTRO@-rosbag2,
-# ros-@ROS_DISTRO@-mc-rtc-msgs,
                libltdl-dev
 
 Package: libmc-rtc-dev

@@ -1,24 +1,28 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
-
 export ROS_DISTRO:=@ROS_DISTRO@
-export ROS_VERSION:=$(shell . /opt/ros/${ROS_DISTRO}/setup.sh && echo $$ROS_VERSION)
-export ROS_PYTHON_VERSION:=$(shell . /opt/ros/${ROS_DISTRO}/setup.sh && echo $$ROS_PYTHON_VERSION)
-ifeq (${ROS_PYTHON_VERSION}, 3)
-	export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python3/dist-packages:${PYTHONPATH}
-	export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python$(shell python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}');")/site-packages:${PYTHONPATH}
-	export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/local/lib/python$(shell python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}');")/dist-packages:${PYTHONPATH}
-	export MC_LOG_UI_PYTHON_EXECUTABLE:=python3
+
+ifneq (${ROS_DISTRO},)
+  export ROS_VERSION:=$(shell . /opt/ros/${ROS_DISTRO}/setup.sh && echo $$ROS_VERSION)
+  export ROS_PYTHON_VERSION:=$(shell . /opt/ros/${ROS_DISTRO}/setup.sh && echo $$ROS_PYTHON_VERSION)
+  ifeq (${ROS_PYTHON_VERSION}, 3)
+    export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python3/dist-packages:${PYTHONPATH}
+    export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python$(shell python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}');")/site-packages:${PYTHONPATH}
+    export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/local/lib/python$(shell python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}');")/dist-packages:${PYTHONPATH}
+    export MC_LOG_UI_PYTHON_EXECUTABLE:=python3
+  else
+    export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python2.7/dist-packages:${PYTHONPATH}
+    export MC_LOG_UI_PYTHON_EXECUTABLE:=python
+  endif
+  export PKG_CONFIG_PATH:=/opt/ros/${ROS_DISTRO}/lib/pkgconfig:${PKG_CONFIG_PATH}
+  export ROS_MASTER_URI:=http://localhost:11311
+  ifeq (${ROS_VERSION}, 2)
+    export AMENT_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}
+  else
+    export CMAKE_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}:${CMAKE_PREFIX_PATH}
+  endif
 else
-	export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python2.7/dist-packages:${PYTHONPATH}
-	export MC_LOG_UI_PYTHON_EXECUTABLE:=python
-endif
-export PKG_CONFIG_PATH:=/opt/ros/${ROS_DISTRO}/lib/pkgconfig:$PKG_CONFIG_PATH
-export ROS_MASTER_URI:=http://localhost:11311
-ifeq (${ROS_VERSION}, 2)
-	export AMENT_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}
-else
-	export CMAKE_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}:$CMAKE_PREFIX_PATH
+  export MC_LOG_UI_PYTHON_EXECUTABLE:=python3
 endif
 
 TMP = $(CURDIR)/debian/tmp
@@ -27,8 +31,30 @@ TMP = $(CURDIR)/debian/tmp
 	dh $@ --no-parallel
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DPYTHON_DEB_ROOT=$(TMP) -DMC_LOG_UI_PYTHON_EXECUTABLE=${MC_LOG_UI_PYTHON_EXECUTABLE}
+	dh_auto_configure --builddirectory=build-base -- \
+	  -DDISABLE_ROS=ON \
+	  -DPYTHON_DEB_ROOT=$(TMP) \
+	  -DMC_LOG_UI_PYTHON_EXECUTABLE=${MC_LOG_UI_PYTHON_EXECUTABLE}
+
+override_dh_auto_build:
+	dh_auto_build --builddirectory=build-base
+ifneq (${ROS_DISTRO},)
+	# Also build ROS version
+	dh_auto_configure --builddirectory=build-ros -- \
+	  -DDISABLE_ROS=OFF \
+	  -DPYTHON_DEB_ROOT=$(TMP) \
+	  -DMC_LOG_UI_PYTHON_EXECUTABLE=${MC_LOG_UI_PYTHON_EXECUTABLE}
+	dh_auto_build --builddirectory=build-ros
+endif
 
 override_dh_auto_install:
-	dh_auto_install
+	dh_auto_install --builddirectory=build-base --destdir=$(TMP)
+ifneq (${ROS_DISTRO},)
+	# Install ROS build to separate location
+	dh_auto_install --builddirectory=build-ros --destdir=debian/tmp-ros
+endif
+	# Clean up Python cache files
 	cd $(TMP) && rm -f `find . -name '*.pyc'` && rm -rf `find . -type d -name '__pycache__'`
+ifneq (${ROS_DISTRO},)
+	cd debian/tmp-ros && rm -f `find . -name '*.pyc'` && rm -rf `find . -type d -name '__pycache__'`
+endif

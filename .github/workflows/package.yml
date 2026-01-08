@@ -32,12 +32,13 @@ jobs:
     uses: jrl-umi3218/github-actions/.github/workflows/package-project.yml@master
     with:
       deps: '["jrl-umi3218/mc_rtc_ros", "jrl-umi3218/mc_openrtm", "jrl-umi3218/mc_udp", "jrl-umi3218/mc_panda", "jrl-umi3218/mc_state_observation"]'
-      with-ros: true
+      with-ros: ${{ matrix.ros }}
       latest-cmake: true
       matrix: |
           {
             "dist": ["jammy"],
-            "arch": ["amd64"]
+            "arch": ["amd64"],
+            "ros": [false, true]
           }
     secrets:
       CLOUDSMITH_API_KEY: ${{ secrets.CLOUDSMITH_API_KEY }}
