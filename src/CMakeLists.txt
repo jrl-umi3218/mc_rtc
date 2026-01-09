@@ -145,6 +145,7 @@ set(mc_rtc_utils_HDR
     ../include/mc_rtc/utils/heatmap.h
     ../include/mc_rtc/clock.h
     ../include/mc_rtc/threading/AsyncJob.h
+    ../include/mc_rtc/SignalSlot.h
 )
 
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
@@ -237,6 +238,7 @@ set(mc_rbdyn_SRC
     mc_rbdyn/RobotModule.cpp
     mc_rbdyn/RobotModule_visual.cpp
     mc_rbdyn/inertia.cpp
+    mc_rbdyn/RobotModule_connect.cpp
     mc_rbdyn/configuration_io.cpp
     mc_rbdyn/ZMP.cpp
     mc_control/generic_gripper.cpp
