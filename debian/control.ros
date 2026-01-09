@@ -7,8 +7,6 @@ Depends: libmc-rtc-dev (= ${binary:Version}),
          ros-@ROS_DISTRO@-common-msgs | ros-@ROS_DISTRO@-common-interfaces,
          ros-@ROS_DISTRO@-tf2-ros,
          ros-@ROS_DISTRO@-rosbag | ros-@ROS_DISTRO@-rosbag2,
-         ros-@ROS_DISTRO@-mc-rtc-data,
-         ros-@ROS_DISTRO@-mc-rtc-msgs,
          ${misc:Depends}
 Description: mc_rtc - ROS integration development files
  mc_rtc is an interface for simulated and real robotic systems suitable for
@@ -16,7 +14,6 @@ Description: mc_rtc - ROS integration development files
  .
  This package provides ROS integration headers and libraries for developing
  ROS-enabled mc_rtc controllers.
-
 
 Package: ros-@ROS_DISTRO@-mc-rtc-plugin
 Section: libs
@@ -36,4 +33,4 @@ Description: mc_rtc - ROS plugin
  said controllers.
  .
  ROS plugin for mc_rtc. It will enable the publication of the robot's state by
- mc_rtc controllers
+ mc_rtc controllers.
