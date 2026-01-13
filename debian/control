@@ -8,9 +8,13 @@ Vcs-Git: https://github.com/jrl-umi3218/mc_rtc
 Vcs-Browser: https://github.com/jrl-umi3218/mc_rtc
 Build-Depends: debhelper (>= 9),
                cmake,
-               ros-@ROS_DISTRO@-ros-core,
-               ros-@ROS_DISTRO@-tf2-ros,
-               ros-@ROS_DISTRO@-geometry-msgs,
+# ros-@ROS_DISTRO@-ros-base,
+# ros-@ROS_DISTRO@-roscpp | ros-@ROS_DISTRO@-rclcpp,
+# ros-@ROS_DISTRO@-sensor-msgs,
+# ros-@ROS_DISTRO@-common-msgs | ros-@ROS_DISTRO@-common-interfaces,
+# ros-@ROS_DISTRO@-tf2-ros,
+# ros-@ROS_DISTRO@-rosbag | ros-@ROS_DISTRO@-rosbag2,
+# ros-@ROS_DISTRO@-mc-rtc-msgs,
                doxygen,
                graphviz,
                libboost-filesystem-dev,
@@ -146,8 +150,7 @@ Description: mc-rtc - API documentation
 Package: python3-mc-rtc
 Section: python
 Architecture: any
-Depends: libmc-rtc (= ${binary:Version}) | ros-humble-mc-rtc (= ${binary:Version}),
-         ${python3:Depends},
+Depends: ${python3:Depends},
          ${misc:Depends},
          ${shlibs:Depends},
          python3-all,

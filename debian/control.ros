@@ -1,35 +1,30 @@
-Package: ros-@ROS_DISTRO@-mc-rtc
-Section: misc
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, mc-rtc-data
-Description: mc-rtc - ROS @ROS_DISTRO@ integrated version
- This version is compiled with ROS support and installed in /opt/ros/@ROS_DISTRO@.
+# ros-@ROS_DISTRO@Package: ros-@ROS_DISTRO@-mc-rtc
+# ros-@ROS_DISTRO@Section: misc
+# ros-@ROS_DISTRO@Architecture: any
+# ros-@ROS_DISTRO@Depends: ${shlibs:Depends}, ${misc:Depends}, mc-rtc-data
+# ros-@ROS_DISTRO@Description: mc-rtc - ROS @ROS_DISTRO@ integrated version
+# ros-@ROS_DISTRO@ This version is compiled with ROS support and installed in /opt/ros/@ROS_DISTRO@.
 
-Package: ros-@ROS_DISTRO@-mc-rtc-dev
-Section: libdevel
-Architecture: any
-Depends: ros-@ROS_DISTRO@-mc-rtc (= ${binary:Version}),
-         libmc-rtc-dev,
-         ${misc:Depends}
-Description: mc-rtc - ROS @ROS_DISTRO@ development files
- Headers and CMake files for ROS-integrated mc-rtc development.
+# ros-@ROS_DISTRO@Package: ros-@ROS_DISTRO@-mc-rtc-dev
+# ros-@ROS_DISTRO@Section: libdevel
+# ros-@ROS_DISTRO@Architecture: any
+# ros-@ROS_DISTRO@Depends: ros-@ROS_DISTRO@-mc-rtc (= ${binary:Version}),
+# ros-@ROS_DISTRO@         libmc-rtc-dev,
+# ros-@ROS_DISTRO@         ${misc:Depends}
+# ros-@ROS_DISTRO@Description: mc-rtc - ROS @ROS_DISTRO@ development files
+# ros-@ROS_DISTRO@ Headers and CMake files for ROS-integrated mc-rtc development.
 
-Package: ros-@ROS_DISTRO@-mc-rtc-plugin
-Section: libs
-Architecture: any
-Depends: libmc-rtc-dev,
-         ros-@ROS_DISTRO@-roscpp | ros-@ROS_DISTRO@-rclcpp,
-         ros-@ROS_DISTRO@-common-msgs | ros-@ROS_DISTRO@-common-interfaces,
-         ros-@ROS_DISTRO@-tf2-ros,
-         ros-@ROS_DISTRO@-rosbag | ros-@ROS_DISTRO@-rosbag2,
-         ros-@ROS_DISTRO@-mc-rtc-data,
-         ros-@ROS_DISTRO@-mc-rtc-msgs,
-         ${misc:Depends}
-Description: mc_rtc - ROS plugin
- mc_rtc is an interface for simulated and real robotic systems suitable for
- real-time control.  It provides programmers with a simple interface to build
- versatile controllers as well as a set of tools to help with the development of
- said controllers.
- .
- ROS plugin for mc_rtc. It will enable the publication of the robot's state by
- mc_rtc controllers.
+# ros-@ROS_DISTRO@Package: ros-@ROS_DISTRO@-mc-rtc-plugin
+# ros-@ROS_DISTRO@Section: libs
+# ros-@ROS_DISTRO@Architecture: any
+# ros-@ROS_DISTRO@Depends: libmc-rtc-dev,
+# ros-@ROS_DISTRO@         ros-@ROS_DISTRO@-roscpp | ros-@ROS_DISTRO@-rclcpp,
+# ros-@ROS_DISTRO@         ros-@ROS_DISTRO@-common-msgs | ros-@ROS_DISTRO@-common-interfaces,
+# ros-@ROS_DISTRO@         ros-@ROS_DISTRO@-tf2-ros,
+# ros-@ROS_DISTRO@         ros-@ROS_DISTRO@-rosbag | ros-@ROS_DISTRO@-rosbag2,
+# ros-@ROS_DISTRO@         ros-@ROS_DISTRO@-mc-rtc-data,
+# ros-@ROS_DISTRO@         ros-@ROS_DISTRO@-mc-rtc-msgs,
+# ros-@ROS_DISTRO@         ${misc:Depends}
+# ros-@ROS_DISTRO@Description: mc_rtc - ROS plugin
+# ros-@ROS_DISTRO@ ROS plugin for mc_rtc. It will enable the publication of the robot's state by
+# ros-@ROS_DISTRO@ mc_rtc controllers.
