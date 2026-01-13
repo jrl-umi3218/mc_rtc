@@ -312,24 +312,28 @@ $(document).ready(function(){initNavTree('QPSolver_8h_source.html',''); initResi
 <div class="line"><a name="l00344"></a><span class="lineno"><a class="line" href="structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html">  344</a></span>&#160;<span class="keyword">struct </span>formatter&lt;<a class="code" href="namespacemc__solver.html">mc_solver</a>::QPSolver::Backend&gt; : <span class="keyword">public</span> formatter&lt;string_view&gt;</div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;{</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> FormatContext&gt;</div>
-<div class="line"><a name="l00347"></a><span class="lineno"><a class="line" href="structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html#a83d6c4d0b120a989cf5ffc10eb19810a">  347</a></span>&#160;  <span class="keyword">auto</span> <a class="code" href="structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html#a83d6c4d0b120a989cf5ffc10eb19810a">format</a>(<span class="keyword">const</span> <a class="code" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">mc_solver::QPSolver::Backend</a> &amp; backend, FormatContext &amp; ctx) <span class="keyword">const</span> -&gt; decltype(ctx.out())</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  {</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <span class="keyword">using</span> Backend = <a class="code" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">mc_solver::QPSolver::Backend</a>;</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="keywordflow">switch</span>(backend)</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    {</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;      <span class="keywordflow">case</span> Backend::Tasks:</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        <span class="keywordflow">return</span> formatter&lt;string_view&gt;::format(<span class="stringliteral">&quot;Tasks&quot;</span>, ctx);</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;      <span class="keywordflow">case</span> Backend::TVM:</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;        <span class="keywordflow">return</span> formatter&lt;string_view&gt;::format(<span class="stringliteral">&quot;TVM&quot;</span>, ctx);</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;      <span class="keywordflow">case</span> Backend::Unset:</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;        <span class="keywordflow">return</span> formatter&lt;string_view&gt;::format(<span class="stringliteral">&quot;Unset&quot;</span>, ctx);</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;      <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;        <span class="keywordflow">return</span> formatter&lt;string_view&gt;::format(<span class="stringliteral">&quot;UNEXPECTED&quot;</span>, ctx);</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    }</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;  }</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;};</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160; </div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;} <span class="comment">// namespace fmt</span></div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;<span class="preprocessor">  #if FMT_VERSION &lt;= 9 * 10000</span></div>
+<div class="line"><a name="l00348"></a><span class="lineno"><a class="line" href="structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html#a0ad927e0dbcaad95803bf81571483ba3">  348</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html#a0ad927e0dbcaad95803bf81571483ba3">format</a>(<span class="keyword">const</span> <a class="code" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">mc_solver::QPSolver::Backend</a> &amp; backend, FormatContext &amp; ctx)</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  <span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="keyword">auto</span> format(<span class="keyword">const</span> <a class="code" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">mc_solver::QPSolver::Backend</a> &amp; backend, FormatContext &amp; ctx) <span class="keyword">const</span> -&gt; decltype(ctx.out())</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  <span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;  {</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <span class="keyword">using</span> Backend = <a class="code" href="structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e">mc_solver::QPSolver::Backend</a>;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <span class="keywordflow">switch</span>(backend)</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    {</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;      <span class="keywordflow">case</span> Backend::Tasks:</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;        <span class="keywordflow">return</span> formatter&lt;string_view&gt;::format(<span class="stringliteral">&quot;Tasks&quot;</span>, ctx);</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;      <span class="keywordflow">case</span> Backend::TVM:</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;        <span class="keywordflow">return</span> formatter&lt;string_view&gt;::format(<span class="stringliteral">&quot;TVM&quot;</span>, ctx);</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;      <span class="keywordflow">case</span> Backend::Unset:</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;        <span class="keywordflow">return</span> formatter&lt;string_view&gt;::format(<span class="stringliteral">&quot;Unset&quot;</span>, ctx);</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;      <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;        <span class="keywordflow">return</span> formatter&lt;string_view&gt;::format(<span class="stringliteral">&quot;UNEXPECTED&quot;</span>, ctx);</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    }</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;  }</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;};</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160; </div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;} <span class="comment">// namespace fmt</span></div>
 <div class="ttc" id="aRobots_8h_html"><div class="ttname"><a href="Robots_8h.html">Robots.h</a></div></div>
 <div class="ttc" id="ainclude_2mc__control_2api_8h_html"><div class="ttname"><a href="include_2mc__control_2api_8h.html">api.h</a></div></div>
 <div class="ttc" id="ainclude_2mc__solver_2api_8h_html"><div class="ttname"><a href="include_2mc__solver_2api_8h.html">api.h</a></div></div>
@@ -343,7 +347,7 @@ $(document).ready(function(){initNavTree('QPSolver_8h_source.html',''); initResi
 <div class="ttc" id="anamespacemc__solver_html_a619a755cd27458e3c3e0203be40caf76"><div class="ttname"><a href="namespacemc__solver.html#a619a755cd27458e3c3e0203be40caf76">mc_solver::MC_RTC_diagnostic_ignored</a></div><div class="ttdeci">MC_RTC_diagnostic_push MC_RTC_diagnostic_ignored(GCC, &quot;-Wattributes&quot;) enum class MC_SOLVER_DLLAPI FeedbackType</div><div class="ttdef"><b>Definition:</b> QPSolver.h:50</div></div>
 <div class="ttc" id="anamespacemc__tasks_html"><div class="ttname"><a href="namespacemc__tasks.html">mc_tasks</a></div><div class="ttdef"><b>Definition:</b> StabilizerStandingState.h:12</div></div>
 <div class="ttc" id="apragma_8h_html"><div class="ttname"><a href="pragma_8h.html">pragma.h</a></div></div>
-<div class="ttc" id="astructfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4_html_a83d6c4d0b120a989cf5ffc10eb19810a"><div class="ttname"><a href="structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html#a83d6c4d0b120a989cf5ffc10eb19810a">fmt::formatter&lt; mc_solver::QPSolver::Backend &gt;::format</a></div><div class="ttdeci">auto format(const mc_solver::QPSolver::Backend &amp;backend, FormatContext &amp;ctx) const -&gt; decltype(ctx.out())</div><div class="ttdef"><b>Definition:</b> QPSolver.h:347</div></div>
+<div class="ttc" id="astructfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4_html_a0ad927e0dbcaad95803bf81571483ba3"><div class="ttname"><a href="structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html#a0ad927e0dbcaad95803bf81571483ba3">fmt::formatter&lt; mc_solver::QPSolver::Backend &gt;::format</a></div><div class="ttdeci">auto format(const mc_solver::QPSolver::Backend &amp;backend, FormatContext &amp;ctx)</div><div class="ttdef"><b>Definition:</b> QPSolver.h:348</div></div>
 <div class="ttc" id="astructmc__control_1_1MCController_html"><div class="ttname"><a href="structmc__control_1_1MCController.html">mc_control::MCController</a></div><div class="ttdoc">MCController is the base class to implement all controllers. It assumes that at least two robots are ...</div><div class="ttdef"><b>Definition:</b> MCController.h:99</div></div>
 <div class="ttc" id="astructmc__rbdyn_1_1Contact_html"><div class="ttname"><a href="structmc__rbdyn_1_1Contact.html">mc_rbdyn::Contact</a></div><div class="ttdef"><b>Definition:</b> Contact.h:49</div></div>
 <div class="ttc" id="astructmc__rbdyn_1_1Robot_html"><div class="ttname"><a href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a></div><div class="ttdef"><b>Definition:</b> Robot.h:63</div></div>
