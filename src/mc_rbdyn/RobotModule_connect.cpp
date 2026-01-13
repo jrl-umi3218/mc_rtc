@@ -128,6 +128,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   { return prefixed_or_mapping(gripper, params.gripperMapping_, prefix); };
   auto surfaceName = [&](const std::string & surface)
   { return prefixed_or_mapping(surface, params.surfaceMapping_, prefix); };
+  auto frameName = [&](const std::string & frame) { return prefixed_or_mapping(frame, params.frameMapping_, prefix); };
   auto forceSensorName = [&](const std::string & forceSensor)
   { return prefixed_or_mapping(forceSensor, params.forceSensorMapping_, prefix); };
   auto bodySensorName = [&](const std::string & bodySensor)
@@ -514,6 +515,18 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
                     auto p = fs::path(rsdf);
                     fs::rename(p, p.parent_path() / (prefix + p.filename().string()));
                   });
+
+  /** Update frames. **/
+  // TODO: handle disconnect of frames in ::disconnect
+  out._frames = this->_frames;
+  for(const auto & otherFrame : other._frames)
+  { // copy all frames in the other module, renaming them and their parent according to the chosen prefix
+    out._frames.emplace_back(
+        frameName(otherFrame.name),
+        bodyName(otherFrame.parent), // FIXME: frame's parent may be another frame, that itself might have been renamed.
+                                     // We need some more work here to support all use cases
+        otherFrame.X_p_f, otherFrame.baked);
+  }
 
   // Generate a module file so that the generated RobotModule can be re-used
   // XXX: currently devices are not saved so strictly speaking the generated yaml robot

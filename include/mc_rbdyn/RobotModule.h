@@ -371,6 +371,9 @@ struct MC_RBDYN_DLLAPI RobotModule
     /** Remap surface names */
     CONNECTION_PROPERTY(surfaceMapping, mapping_t, {})
 
+    /* Remap frame names */
+    CONNECTION_PROPERTY(frameMapping, mapping_t, {})
+
     /** Remap force sensor names */
     CONNECTION_PROPERTY(forceSensorMapping, mapping_t, {})
 
