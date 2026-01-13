@@ -1807,11 +1807,11 @@ template<>
 struct formatter<mc_rtc::Configuration> : public formatter<string_view>
 {
   template<typename FormatContext>
-  #if FMT_VERSION <= 9 * 10000
-    auto format(const mc_rtc::Configuration & c, FormatContext & ctx)
-  #else
-      auto format(const mc_rtc::Configuration & c, FormatContext & ctx) const -> decltype(ctx.out())
-  #endif
+#if FMT_VERSION <= 9 * 10000
+  auto format(const mc_rtc::Configuration & c, FormatContext & ctx)
+#else
+  auto format(const mc_rtc::Configuration & c, FormatContext & ctx) const -> decltype(ctx.out())
+#endif
   {
     return formatter<string_view>::format(static_cast<std::string>(c), ctx);
   }
