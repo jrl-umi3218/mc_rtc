@@ -1,0 +1,4 @@
+debian/tmp-ros/opt/ros/humble/include/*
+debian/tmp-ros/opt/ros/humble/lib/*/pkgconfig/*
+debian/tmp-ros/opt/ros/humble/lib/*/cmake/mc_rtc/*.cmake
+debian/tmp-ros/opt/ros/humble/lib/*/lib*.so

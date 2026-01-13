@@ -8,6 +8,9 @@ Vcs-Git: https://github.com/jrl-umi3218/mc_rtc
 Vcs-Browser: https://github.com/jrl-umi3218/mc_rtc
 Build-Depends: debhelper (>= 9),
                cmake,
+               ros-@ROS_DISTRO@-ros-core,
+               ros-@ROS_DISTRO@-tf2-ros,
+               ros-@ROS_DISTRO@-geometry-msgs,
                doxygen,
                graphviz,
                libboost-filesystem-dev,
@@ -143,7 +146,12 @@ Description: mc-rtc - API documentation
 Package: python3-mc-rtc
 Section: python
 Architecture: any
-Depends: ${python3:Depends}, ${misc:Depends}, ${shlibs:Depends}, python3-all, python3-tasks
+Depends: libmc-rtc (= ${binary:Version}) | ros-humble-mc-rtc (= ${binary:Version}),
+         ${python3:Depends},
+         ${misc:Depends},
+         ${shlibs:Depends},
+         python3-all,
+         python3-tasks
 Description: mc_rtc - Python bindings
  mc_rtc is an interface for simulated and real robotic systems suitable for
  real-time control.  It provides programmers with a simple interface to build
