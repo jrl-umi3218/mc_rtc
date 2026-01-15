@@ -83,7 +83,7 @@ void State::start_(Controller & ctl)
       std::string r2 = r1;
       if(c.has("r2")) { r2 = static_cast<std::string>(c("r2")); }
       std::vector<mc_rbdyn::Collision> collisions = c("collisions");
-      ctl.addCollisions(r1, r2, collisions);
+      ctl.addCollisions(r1, r2, collisions, c("optional", false));
     }
   }
   if(!remove_posture_task_.empty())
@@ -181,7 +181,7 @@ void State::teardown_(Controller & ctl)
       std::string r2 = r1;
       if(c.has("r2")) { r2 = static_cast<std::string>(c("r2")); }
       std::vector<mc_rbdyn::Collision> collisions = c("collisions");
-      ctl.addCollisions(r1, r2, collisions);
+      ctl.addCollisions(r1, r2, collisions, c("optional", false));
     }
   }
   for(const auto & c : constraints_) { ctl.solver().removeConstraintSet(*c); }
