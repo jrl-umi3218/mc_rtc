@@ -941,16 +941,19 @@ void MCController::updateContacts()
 
 void MCController::addCollisions(const std::string & r1,
                                  const std::string & r2,
-                                 const std::vector<mc_rbdyn::Collision> & collisions)
+                                 const std::vector<mc_rbdyn::Collision> & collisions,
+                                 bool optional)
 {
   if(r1 != r2 && collision_constraints_.count({r2, r1}))
   {
     std::vector<mc_rbdyn::Collision> swapped;
     swapped.reserve(collisions.size());
     for(const auto & c : collisions) { swapped.push_back({c.body2, c.body1, c.iDist, c.sDist, c.damping}); }
-    addCollisions(r2, r1, swapped);
+    addCollisions(r2, r1, swapped, optional);
     return;
   }
+  auto collisionsToAdd = std::vector<mc_rbdyn::Collision>{};
+  auto missingCollisions = std::vector<mc_rbdyn::Collision>{};
   if(!collision_constraints_.count({r1, r2}))
   {
     if(!hasRobot(r1) || !hasRobot(r2))
@@ -958,16 +961,33 @@ void MCController::addCollisions(const std::string & r1,
       mc_rtc::log::error("Try to add collision for robot {} and {} which are not involved in this controller", r1, r2);
       return;
     }
-    auto r1Index = robot(r1).robotIndex();
-    auto r2Index = robot(r2).robotIndex();
+    const auto & r1Robot = robot(r1);
+    auto r1Index = r1Robot.robotIndex();
+    const auto & r2Robot = robot(r2);
+    auto r2Index = r2Robot.robotIndex();
+    // Check if all convexes involved in the collisions exist
+    for(const auto & collision : collisions)
+    {
+      if(!r1Robot.hasConvex(collision.body1) || !r2Robot.hasConvex(collision.body2))
+      {
+        missingCollisions.push_back(collision);
+      }
+      else
+      {
+        collisionsToAdd.push_back(collision);
+      }
+    }
     collision_constraints_[{r1, r2}] =
         std::make_shared<mc_solver::CollisionsConstraint>(robots(), r1Index, r2Index, solver().dt());
     solver().addConstraintSet(*collision_constraints_[{r1, r2}]);
   }
   auto & cc = collision_constraints_[{r1, r2}];
-  mc_rtc::log::info("Add collisions {}/{}", r1, r2);
-  for(const auto & c : collisions) { mc_rtc::log::info("- {}::{}/{}::{}", r1, c.body1, r2, c.body2); }
-  cc->addCollisions(solver(), collisions);
+  mc_rtc::log::info("Add collisions {}/{}:", r1, r2);
+  for(const auto & c : collisionsToAdd) { mc_rtc::log::info("- {}::{}/{}::{}", r1, c.body1, r2, c.body2); }
+  mc_rtc::log::warning("Invalid collisions between {}/{}:", r1, r2);
+  for(const auto & c : missingCollisions) { mc_rtc::log::warning("- {}::{}/{}::{}", r1, c.body1, r2, c.body2); }
+  if(!optional) { mc_rtc::log::error_and_throw("Cannot add collisions as there are invalid collision pairs"); };
+  cc->addCollisions(solver(), collisionsToAdd);
 }
 
 bool MCController::hasCollision(const std::string & r1,
