@@ -63,7 +63,7 @@ void RobotVisualizer::loadRobot(const std::vector<std::string> & params)
   }
   catch(const std::exception & exc)
   {
-    mc_rtc::log::error("Failed to load [{}]\n Exception:\n{}", mc_rtc::io::to_string(params), exc.what());
+    mc_rtc::log::error("Failed to load [{}]\nException: {}", mc_rtc::io::to_string(params), exc.what());
   }
   catch(...)
   {

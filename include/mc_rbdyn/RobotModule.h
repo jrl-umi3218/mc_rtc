@@ -260,6 +260,192 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Construct from a parser result */
   RobotModule(const std::string & name, const rbd::parsers::ParserResult & res);
 
+  /** Gives fine control over the connection operation \see RobotModule::connect */
+  struct ConnectionParameters
+  {
+
+/**
+ * Helper to define a member variables and
+ * methods that allow chaining calls to setters e.g
+ * ConnecionParameters{}.name(...).urdf_path(...)
+ */
+#define CONNECTION_PROPERTY(NAME, TYPE, DEFAULT)              \
+  TYPE NAME##_ = DEFAULT;                                     \
+  inline ConnectionParameters & NAME(const TYPE & b) noexcept \
+  {                                                           \
+    NAME##_ = b;                                              \
+    return *this;                                             \
+  }                                                           \
+  inline auto & NAME() noexcept { return NAME##_; }
+
+    /** @name General parameters
+     *
+     * These parameters affect the general output
+     *
+     * @{
+     */
+
+    /** Where all the temporary assembly files are put, defaults to a randomly generated temporary folder */
+    CONNECTION_PROPERTY(path, std::string, "")
+    /** Name of the resulting robot, defaults to `this.name`_`prefix`_`other.name` */
+    CONNECTION_PROPERTY(name, std::string, "")
+    /** Path to the resulting robot's URDF file, defaults to `outputPath`/urdf/`name`.urdf */
+    CONNECTION_PROPERTY(urdf_path, std::string, "")
+    /** Path to the resulting robot's RSDF files, defaults to `outputPath`/rsdf/`name`/ */
+    CONNECTION_PROPERTY(rsdf_dir, std::string, "")
+    /** Path to the calibration directory, defaults to `outputPath`/calib/ */
+    CONNECTION_PROPERTY(calib_dir, std::string, "")
+    /** Whether the default gripper safety parameters are taken from this (default) or other */
+    CONNECTION_PROPERTY(useGripperSafetyFromThis, bool, true)
+    /** Whether the default LIPM stabilizer configuration is taken from this (default) or other */
+    CONNECTION_PROPERTY(useLIPMStabilizerConfigFromThis, bool, true)
+
+    /** @} */
+    /* End General parameters section */
+
+    /** @name Connection joint
+     *
+     * These parameters let you control how the two RobotModule are connected
+     *
+     * @{
+     */
+
+    /** Type of joint used for connection, defaults to rbd::Joint::Type::Fixed */
+    CONNECTION_PROPERTY(jointType, rbd::Joint::Type, rbd::Joint::Type::Fixed)
+
+    /** Joint axis, defaults to Eigen::Vector3d::UnitZ() */
+    CONNECTION_PROPERTY(jointAxis, Eigen::Vector3d, Eigen::Vector3d::UnitZ())
+    /** Is joint forward, defaults to true */
+    CONNECTION_PROPERTY(jointForward, bool, true)
+    /** Joint name, must be unique in the assembly, defaults to `this.name`_connect_`prefix`_`other.name` */
+    CONNECTION_PROPERTY(jointName, std::string, "")
+    /** Default (half-sitting) configuration for the connection joint */
+    CONNECTION_PROPERTY(jointStance, std::vector<double>, {})
+    /** Joint limits (position, velocity, torque) for the connection joint, \ref RobotModule::connect will throw if the
+     * limits are not compatible with the connection joint */
+    using JointLimits = std::array<std::vector<double>, 6>;
+    CONNECTION_PROPERTY(jointLimits, JointLimits, {})
+    /** Joint acceleration limits for the connection joint, can remain empty regardless of the joint type but throws if
+     * the provided limits are not compatible with the connection joint otherwise */
+    using JointAccelerationLimits = std::array<std::vector<double>, 2>;
+    CONNECTION_PROPERTY(jointAccelerationLimits, JointAccelerationLimits, {})
+    /** Joint jerk limits for the connection joint, can remain empty regardless of the joint type but throws if
+     * the provided limits are not compatible with the connection joint otherwise */
+    using JointJerkLimits = std::array<std::vector<double>, 2>;
+    CONNECTION_PROPERTY(jointJerkLimits, JointJerkLimits, {})
+    /** Joint torque derivative limits for the connection joint, can remain empty regardless of the joint type but
+     * throws if the provided limits are not compatible with the connection joint otherwise */
+    using JointTorqueDerivativeLimits = std::array<std::vector<double>, 2>;
+    CONNECTION_PROPERTY(jointTorqueDerivativeLimits, JointTorqueDerivativeLimits, {})
+    /** Transformation from this_body to the connection joint, defaults to identity */
+    CONNECTION_PROPERTY(X_this_connection, sva::PTransformd, sva::PTransformd::Identity())
+    /** Transformation from other_body to the connection joint, defaults to identity */
+    CONNECTION_PROPERTY(X_other_connection, sva::PTransformd, sva::PTransformd::Identity())
+
+    /** @} */
+    /* End Connection joint section */
+
+    /** @name Name mapping
+     *
+     * These parameters let you define a finer mapping between names in other and the names in the resulting
+     * RobotModule. If a specific mapping is provided, then the provided name is used instead, otherwise the default is
+     * used, i.e. the provided prefix is applied to the name
+     *
+     * @{
+     */
+
+    using mapping_t = std::unordered_map<std::string, std::string>;
+
+    /** Remap body names */
+    CONNECTION_PROPERTY(bodyMapping, mapping_t, {})
+
+    /** Remap joint names */
+    CONNECTION_PROPERTY(jointMapping, mapping_t, {})
+
+    /** Remap convex names (applies to stpbv and collision transformations mapping) */
+    CONNECTION_PROPERTY(convexMapping, mapping_t, {})
+
+    /** Remap gripper names */
+    CONNECTION_PROPERTY(gripperMapping, mapping_t, {})
+
+    /** Remap surface names */
+    CONNECTION_PROPERTY(surfaceMapping, mapping_t, {})
+
+    /* Remap frame names */
+    CONNECTION_PROPERTY(frameMapping, mapping_t, {})
+
+    /** Remap force sensor names */
+    CONNECTION_PROPERTY(forceSensorMapping, mapping_t, {})
+
+    /** Remap body sensor names */
+    CONNECTION_PROPERTY(bodySensorMapping, mapping_t, {})
+
+    /** Remap device names */
+    CONNECTION_PROPERTY(deviceMapping, mapping_t, {})
+
+#undef CONNECTION_PROPERTY
+    /** @} */
+    /* End Name mapping section */
+  };
+
+  /** Create a new RobotModule by connecting this instance with another RobotModule
+   *
+   * \param other The module that will be connected to this instance
+   *
+   * \param this_body Which body in this RobotModule is used to connect the two instances
+   *
+   * \param other_body Which body in the other RobotModule is used to connect the two instances
+   *
+   * \param prefix Prefix applied to every named entities in \p other before they are added to the resulting module
+   *
+   * \param params Parameters that control how \p other is transformed during the connection, \see ConnectionParameters
+   * documentation for details
+   *
+   * \note If \p other is has a floating then this base is eliminated in the process
+   *
+   * \note Devices from both instances are cloned into the new instance as needed
+   *
+   * \note You are responsible for handling force sensor calibration files, by default this function creates an empty
+   * calibration directory that you can populate with appropriate files
+   *
+   * \throws If a name collision occurs and in conditions specified by wrong \p params
+   *
+   */
+  RobotModule connect(const mc_rbdyn::RobotModule & other,
+                      const std::string & this_body,
+                      const std::string & other_body,
+                      const std::string & prefix,
+                      const ConnectionParameters & params) const;
+
+  /** Create a new RobotModule by disconnecting the provided RobotModule from this one
+   *
+   * \param other The module that will be disconnected from this instance
+   *
+   * \param this_body Which body in this RobotModule was used to connect the two instances
+   *
+   * \param other_body Which body in the other RobotModule was used to connect the two instances
+   *
+   * \param prefix Prefix applied to every named entities in \p other before they were added to this module
+   *
+   * \param params Parameters that controlled how \p other was connected to this module, \see ConnectionParameters for
+   * details
+   *
+   * \note If you used connect(other, this_body, other_body, prefix, params) to create this module then using
+   * disconnect(other, this_body, other_body, prefix, params) will reverse the operation except:
+   * - if \p params.name is empty then `prefix`_`other.name` is removed from the name if present, otherwise \p
+   * params.name is used as the output name
+   * - \p params.useGripperSafetyFromThis cannot be reversed if it was false
+   * - \p params.useLIPMStabilizerConfigFromThis cannot be reversed if it was false
+   *
+   * \note You are responsible for handling force sensor calibration files, by default this function creates an empty
+   * calibration directory that you can populate with appropriate files
+   */
+  RobotModule disconnect(const mc_rbdyn::RobotModule & other,
+                         const std::string & this_body,
+                         const std::string & other_body,
+                         const std::string & prefix,
+                         const ConnectionParameters & params) const;
+
   /** Initialize the module from a parser result
    *
    * - Initialize mb, mbc and mbg

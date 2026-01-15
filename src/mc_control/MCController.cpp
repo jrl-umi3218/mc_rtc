@@ -348,26 +348,35 @@ MCController::~MCController()
 
 mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name)
 {
+  assert(rm.get());
+  return loadRobot(*rm, name);
+}
+
+mc_rbdyn::Robot & MCController::loadRobot(const mc_rbdyn::RobotModule & rm, const std::string & name)
+{
   // Load canonical robot model (for output and display)
-  mc_rbdyn::RobotModulePtr canonicalModule = nullptr;
-  const auto & cp = rm->canonicalParameters();
-  if(cp == rm->parameters()) { canonicalModule = rm; }
+  mc_rbdyn::RobotModulePtr canonicalModulePtr = nullptr;
+  const mc_rbdyn::RobotModule * canonicalModule = nullptr;
+  const auto & cp = rm.canonicalParameters();
+  if(cp == rm.parameters() || cp.empty()) { canonicalModule = &rm; }
   else
   {
-    canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp);
-    if(!canonicalModule)
+    canonicalModulePtr = mc_rbdyn::RobotLoader::get_robot_module(cp);
+    if(!canonicalModulePtr)
     {
       mc_rtc::log::critical("Failed to load the canonical module for {}, acting as if canonical was self", name);
-      canonicalModule = rm;
+      canonicalModule = &rm;
     }
     else
     {
-      if(!mc_rbdyn::check_module_compatibility(*rm, *canonicalModule))
+      canonicalModule = canonicalModulePtr.get();
+      if(!mc_rbdyn::check_module_compatibility(rm, *canonicalModule))
       {
         mc_rtc::log::error_and_throw("Incompatibilities between a robot module and its canonical representation");
       }
     }
   }
+  assert(canonicalModule);
   mc_rbdyn::LoadRobotParameters params{};
   auto & robot = loadRobot(rm, name, robots(), params);
   params.warn_on_missing_files(false).data(robot.data());
@@ -389,7 +398,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
                        canonicalModule->name);
     mc_rtc::log::error_and_throw("Failed to initialize grippers");
   };
-  auto & outputRobot = loadRobot(canonicalModule, name, *outputRobots_, params);
+  auto & outputRobot = loadRobot(*canonicalModule, name, *outputRobots_, params);
   for(const auto & gripper : canonicalModule->grippers())
   {
     auto mimics = gripper.mimics();
@@ -406,7 +415,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
     }
     robot.data()->grippersRef.push_back(std::ref(*robot.data()->grippers[gripper.name]));
   }
-  loadRobot(canonicalModule, name, *outputRealRobots_, params);
+  loadRobot(*canonicalModule, name, *outputRealRobots_, params);
   addRobotToLog(robot);
   addRobotToGUI(robot);
   if(solver().backend() == Backend::Tasks) { tasks_solver(solver()).updateNrVars(); }
@@ -414,13 +423,81 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
   return robot;
 }
 
+namespace
+{
+
+inline void addGripperToGUI(mc_control::Gripper * g_ptr,
+                            mc_rtc::gui::StateBuilder & gui,
+                            std::vector<std::string> && category)
+{
+  gui.addElement(category, mc_rtc::gui::Button("Open", [g_ptr]() { g_ptr->setTargetOpening(1); }),
+                 mc_rtc::gui::Button("Close", [g_ptr]() { g_ptr->setTargetOpening(0); }),
+                 mc_rtc::gui::NumberSlider(
+                     "Opening percentage", [g_ptr]() { return g_ptr->opening(); },
+                     [g_ptr](double op) { g_ptr->setTargetOpening(op); }, 0, 1),
+                 mc_rtc::gui::NumberSlider(
+                     "Maximum velocity percentage", [g_ptr]() { return g_ptr->percentVMAX(); },
+                     [g_ptr](double op) { g_ptr->percentVMAX(op); }, 0, 1));
+
+  category.push_back("Targets");
+  for(const auto & joint : g_ptr->activeJoints())
+  {
+    gui.addElement(category,
+                   mc_rtc::gui::NumberSlider(
+                       joint, [joint, g_ptr]() { return g_ptr->curOpening(joint); },
+                       [joint, g_ptr](double targetOpening) { g_ptr->setTargetOpening(joint, targetOpening); }, 0, 1));
+  }
+
+  category.pop_back();
+  category.push_back("Safety");
+  if(g_ptr->is_metric())
+  {
+    gui.addElement(category,
+                   mc_rtc::gui::NumberInput(
+                       "Actual command diff threshold [m]", [g_ptr]() { return g_ptr->actualCommandDiffTrigger(); },
+                       [g_ptr](double m) { g_ptr->actualCommandDiffTrigger(m); }),
+                   mc_rtc::gui::NumberInput(
+                       "Over command limiter iterations",
+                       [g_ptr]() -> double { return g_ptr->overCommandLimitIterN(); },
+                       [g_ptr](double N) { g_ptr->overCommandLimitIterN(static_cast<unsigned int>(N)); }),
+                   mc_rtc::gui::NumberInput(
+                       "Release offset [m]", [g_ptr]() { return g_ptr->releaseSafetyOffset(); },
+                       [g_ptr](double m) { g_ptr->releaseSafetyOffset(m); }));
+  }
+  else
+  {
+    gui.addElement(
+        category,
+        mc_rtc::gui::NumberInput(
+            "Actual command diff threshold [deg]",
+            [g_ptr]() { return mc_rtc::constants::toDeg(g_ptr->actualCommandDiffTrigger()); },
+            [g_ptr](double deg) { g_ptr->actualCommandDiffTrigger(mc_rtc::constants::toRad(deg)); }),
+        mc_rtc::gui::NumberInput(
+            "Over command limiter iterations", [g_ptr]() -> double { return g_ptr->overCommandLimitIterN(); },
+            [g_ptr](double N) { g_ptr->overCommandLimitIterN(static_cast<unsigned int>(N)); }),
+        mc_rtc::gui::NumberInput(
+            "Release offset [deg]", [g_ptr]() { return mc_rtc::constants::toDeg(g_ptr->releaseSafetyOffset()); },
+            [g_ptr](double deg) { g_ptr->releaseSafetyOffset(mc_rtc::constants::toRad(deg)); }));
+  }
+}
+
+} // namespace
+
 mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
                                           const std::string & name,
                                           mc_rbdyn::Robots & robots,
                                           const mc_rbdyn::LoadRobotParameters & params)
 {
-  assert(rm);
-  auto & r = robots.load(name, *rm, params);
+  assert(rm.get());
+  return loadRobot(*rm, name, robots, params);
+}
+
+mc_rbdyn::Robot & MCController::loadRobot(const mc_rbdyn::RobotModule & rm,
+                                          const std::string & name,
+                                          mc_rbdyn::Robots & robots,
+                                          const mc_rbdyn::LoadRobotParameters & params)
+{
+  auto & r = robots.load(name, rm, params);
   r.mbc().gravity = mc_rtc::constants::gravity;
   r.forwardKinematics();
   r.forwardVelocity();
@@ -445,6 +522,10 @@ void MCController::addRobotToGUI(const mc_rbdyn::Robot & r)
   auto name = r.name();
   gui()->addElement({"Robots"}, mc_rtc::gui::Robot(r.name(), [name, this]() -> const mc_rbdyn::Robot &
                                                    { return this->outputRobot(name); }));
+  for(const auto & g : r.grippersByName())
+  {
+    addGripperToGUI(g.second.get(), *gui(), {"Global", "Grippers", r.name(), g.first});
+  }
 }
 
 void MCController::addRobotToLog(const mc_rbdyn::Robot & r)
@@ -608,12 +689,15 @@ void MCController::removeRobot(const std::string & name)
   if(gui_)
   {
     gui_->removeElement({"Robots"}, name);
+    gui_->removeCategory({"Global", "Grippers", name});
     auto data = gui_->data();
     std::vector<std::string> robots = data("robots");
     robots.erase(std::find(robots.begin(), robots.end(), name));
     data.add("robots", robots);
     data("bodies").remove(name);
     data("surfaces").remove(name);
+    data("joints").remove(name);
+    data("frames").remove(name);
   }
   outputRealRobots().removeRobot(name);
   outputRobots().removeRobot(name);
@@ -857,16 +941,19 @@ void MCController::updateContacts()
 
 void MCController::addCollisions(const std::string & r1,
                                  const std::string & r2,
-                                 const std::vector<mc_rbdyn::Collision> & collisions)
+                                 const std::vector<mc_rbdyn::Collision> & collisions,
+                                 bool optional)
 {
   if(r1 != r2 && collision_constraints_.count({r2, r1}))
   {
     std::vector<mc_rbdyn::Collision> swapped;
     swapped.reserve(collisions.size());
     for(const auto & c : collisions) { swapped.push_back({c.body2, c.body1, c.iDist, c.sDist, c.damping}); }
-    addCollisions(r2, r1, swapped);
+    addCollisions(r2, r1, swapped, optional);
     return;
   }
+  auto collisionsToAdd = std::vector<mc_rbdyn::Collision>{};
+  auto missingCollisions = std::vector<mc_rbdyn::Collision>{};
   if(!collision_constraints_.count({r1, r2}))
   {
     if(!hasRobot(r1) || !hasRobot(r2))
@@ -874,16 +961,33 @@ void MCController::addCollisions(const std::string & r1,
       mc_rtc::log::error("Try to add collision for robot {} and {} which are not involved in this controller", r1, r2);
       return;
     }
-    auto r1Index = robot(r1).robotIndex();
-    auto r2Index = robot(r2).robotIndex();
+    const auto & r1Robot = robot(r1);
+    auto r1Index = r1Robot.robotIndex();
+    const auto & r2Robot = robot(r2);
+    auto r2Index = r2Robot.robotIndex();
+    // Check if all convexes involved in the collisions exist
+    for(const auto & collision : collisions)
+    {
+      if(!r1Robot.hasConvex(collision.body1) || !r2Robot.hasConvex(collision.body2))
+      {
+        missingCollisions.push_back(collision);
+      }
+      else
+      {
+        collisionsToAdd.push_back(collision);
+      }
+    }
     collision_constraints_[{r1, r2}] =
         std::make_shared<mc_solver::CollisionsConstraint>(robots(), r1Index, r2Index, solver().dt());
     solver().addConstraintSet(*collision_constraints_[{r1, r2}]);
   }
   auto & cc = collision_constraints_[{r1, r2}];
-  mc_rtc::log::info("Add collisions {}/{}", r1, r2);
-  for(const auto & c : collisions) { mc_rtc::log::info("- {}::{}/{}::{}", r1, c.body1, r2, c.body2); }
-  cc->addCollisions(solver(), collisions);
+  mc_rtc::log::info("Add collisions {}/{}:", r1, r2);
+  for(const auto & c : collisionsToAdd) { mc_rtc::log::info("- {}::{}/{}::{}", r1, c.body1, r2, c.body2); }
+  mc_rtc::log::warning("Invalid collisions between {}/{}:", r1, r2);
+  for(const auto & c : missingCollisions) { mc_rtc::log::warning("- {}::{}/{}::{}", r1, c.body1, r2, c.body2); }
+  if(!optional) { mc_rtc::log::error_and_throw("Cannot add collisions as there are invalid collision pairs"); };
+  cc->addCollisions(solver(), collisionsToAdd);
 }
 
 bool MCController::hasCollision(const std::string & r1,
@@ -1002,7 +1106,10 @@ void MCController::supported_robots(std::vector<std::string> & out) const
   out = {};
 }
 
-void MCController::stop() {}
+void MCController::stop()
+{
+  if(gui_) { gui_->removeCategory({"Global", "Grippers"}); }
+}
 
 Gripper & MCController::gripper(const std::string & robot, const std::string & gripper)
 {
