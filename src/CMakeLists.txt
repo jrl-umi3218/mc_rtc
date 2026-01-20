@@ -74,7 +74,6 @@ macro(install_mc_rtc_lib MC_LIB)
   if(NOT MC_RTC_BUILD_STATIC)
     add_version_script(${MC_LIB} "${VERSION_SCRIPT_LOCATION}")
   endif()
-  add_library(mc_rtc::${MC_LIB} ALIAS ${MC_LIB})
   install(
     TARGETS ${MC_LIB}
     EXPORT "${TARGETS_EXPORT_NAME}"
