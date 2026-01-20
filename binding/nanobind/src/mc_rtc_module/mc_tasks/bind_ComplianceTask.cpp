@@ -3,6 +3,8 @@
 
 #include <nanobind/nanobind.h>
 #include <nanobind/eigen/dense.h>
+#include <nanobind/stl/map.h>
+#include <nanobind/stl/pair.h>
 #include <nanobind/stl/shared_ptr.h>
 
 namespace nb = nanobind;
@@ -131,13 +133,13 @@ force/torque level is reached, using a compliant behavior.)")
     /* --- Dimension weights --------------------------------------------- */
 
     .def("dimWeight",
-         nb::overload_cast<const Eigen::VectorXd &>(&ComplianceTask::dimWeight),
-         "dimW"_a,
-         R"(Set dimension-specific weights.)")
+        [](ComplianceTask & t, const Eigen::VectorXd & dimW) { t.dimWeight(dimW); },
+        "dimW"_a,
+        R"(Set dimension-specific weights.)")
 
     .def("dimWeight",
-         nb::overload_cast<>(&ComplianceTask::dimWeight, nb::const_),
-         R"(Return dimension-specific weights.)")
+        [](const ComplianceTask & t) -> Eigen::VectorXd { return t.dimWeight(); },
+        R"(Return dimension-specific weights.)")
 
     /* --- Joint selection ------------------------------------------------ */
 

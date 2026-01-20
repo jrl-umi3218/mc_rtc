@@ -1,6 +1,6 @@
 [submodule "cmake"]
 	path = cmake
-	url = https://github.com/jrl-umi3218/jrl-cmakemodules
+	url = https://github.com/ahoarau/jrl-cmakemodules.git
 [submodule ".jrl-ci"]
 	path = .jrl-ci
 	url = https://github.com/jrl-umi3218/jrl-travis.git

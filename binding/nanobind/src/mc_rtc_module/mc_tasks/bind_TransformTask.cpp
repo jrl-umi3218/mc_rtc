@@ -1,18 +1,33 @@
 #include <mc_tasks/TransformTask.h>
 #include <mc_rbdyn/RobotFrame.h>
 #include <mc_rbdyn/Robots.h>
+#include <mc_rbdyn/Frame.h>
+#include <SpaceVecAlg/SpaceVecAlg>
 
 #include <nanobind/nanobind.h>
 #include <nanobind/stl/string.h>
 #include <nanobind/stl/vector.h>
 #include <nanobind/stl/shared_ptr.h>
 #include <nanobind/eigen/dense.h>
+#include <nanobind/trampoline.h>
 
 namespace nb = nanobind;
 using namespace nb::literals;
 
 namespace mc_rtc_python
 {
+
+struct PyTransformTask : public mc_tasks::TransformTask {
+    NB_TRAMPOLINE(mc_tasks::TransformTask, 2);
+
+    void target(const mc_rbdyn::Frame & frame, const sva::PTransformd & offset) override {
+        NB_OVERRIDE(target, frame, offset);
+    }
+
+    void targetVel(const sva::MotionVecd & worldVel) override {
+        NB_OVERRIDE(targetVel, worldVel);
+    }
+};
 
 void bind_TransformTask(nb::module_ & m)
 {
@@ -21,7 +36,7 @@ void bind_TransformTask(nb::module_ & m)
     // ------------------------------------------------------------------
     // TransformTask
     // ------------------------------------------------------------------
-    nb::class_<TransformTask>(m, "TransformTask",
+    nb::class_<TransformTask, PyTransformTask>(m, "TransformTask",
         R"(
 Control a frame 6D pose.
 
@@ -81,24 +96,16 @@ weight : float, optional
              "worldPos"_a,
              R"(Set the task's target pose in the world frame.)")
 
-        .def("target", nb::overload_cast<const mc_rbdyn::Frame &, const sva::PTransformd &>(&TransformTask::target),
-             "frame"_a, "offset"_a = sva::PTransformd::Identity(),
-             R"(Set the task's target to a given frame with an optional offset.)")
-
-        .def("targetVel", &TransformTask::targetVel,
-             "worldVel"_a,
-             R"(Set the task's target velocity in the world frame.)")
-
         .def("targetSurface", &TransformTask::targetSurface,
-             "robotIndex"_a, "surfaceName"_a, "offset"_a = sva::PTransformd::Identity(),
+             "robotIndex"_a, "surfaceName"_a, "offset"_a,
              R"(Target a robot surface with an optional offset.)")
 
         .def("targetFrame", &TransformTask::targetFrame,
-             "targetFrame"_a, "offset"_a = sva::PTransformd::Identity(),
+             "targetFrame"_a, "offset"_a,
              R"(Target a given frame with an optional offset.)")
 
         .def("targetFrameVelocity", &TransformTask::targetFrameVelocity,
-             "targetFrame"_a, "offset"_a = sva::PTransformd::Identity(),
+             "targetFrame"_a, "offset"_a,
              R"(Target a given frame velocity with an optional offset.)")
 
         // Properties
@@ -154,4 +161,4 @@ weight : float, optional
              R"(Add the task data to the logger.)");
 }
 
-} // namespace mc_rtc_python
+}

@@ -40,6 +40,55 @@ void bind_Robots(nb::module_ & m)
 {
   auto robots = nb::class_<mc_rbdyn::Robots>(m, "Robots");
 
+  robots.def("__init__",
+             [](mc_rbdyn::Robots * /* self */, nb::args args, nb::kwargs kwargs)
+             {
+               // This is a special pattern in nanobind/pybind11:
+               // We cannot easily modify 'self' in-place for shared_ptr holders in __init__.
+               // Instead, we usually bind a static method like __new__ OR use a factory that returns the instance.
+
+               // HOWEVER, since 'Robots' is held by shared_ptr, binding __init__ directly is tricky
+               // because nanobind has already allocated the shell.
+
+               // The most robust fix for shared_ptr factory classes is usually static factories,
+               // BUT to keep python syntax `Robots()`, we use __new__.
+             });
+
+  robots.def("__new__",
+             [](nb::type_object type, nb::args args, nb::kwargs kwargs)
+             {
+               bool skip_alloc = false;
+               if(kwargs.contains("skip_alloc")) { skip_alloc = nb::cast<bool>(kwargs["skip_alloc"]); }
+
+               // Case 1: No arguments -> Robots()
+               if(args.size() == 0)
+               {
+                 if(skip_alloc)
+                 {
+                   // Return a "null" shared_ptr logic if needed,
+                   // or just an empty container.
+                   // Note: Returning nullptr here might crash Python if it expects an object.
+                   // It is safer to return an empty shell or throw if skip_alloc isn't supported safely.
+                   return std::shared_ptr<mc_rbdyn::Robots>(nullptr);
+                 }
+                 return mc_rbdyn::Robots::make();
+               }
+
+               // Case 2: Copy constructor -> Robots(other)
+               if(args.size() == 1)
+               {
+                 if(nb::isinstance<mc_rbdyn::Robots>(args[0]))
+                 {
+                   auto other = nb::cast<std::shared_ptr<mc_rbdyn::Robots>>(args[0]);
+                   auto new_robots = mc_rbdyn::Robots::make();
+                   if(other) { other->copy(*new_robots); }
+                   return new_robots;
+                 }
+               }
+
+               throw nb::type_error("Robots(): incompatible constructor arguments.");
+             });
+
   // FIXME: symbol not found
   // robots.def("robotModules",
   //                                 &Robots::robotModules,
@@ -71,7 +120,7 @@ void bind_Robots(nb::module_ & m)
       .def("load",
            nb::overload_cast<const std::string &, const mc_rbdyn::RobotModule &, const mc_rbdyn::LoadRobotParameters &>(
                &Robots::load),
-           "name"_a, "module"_a, "params"_a,
+           "name"_a, "module"_a, "params"_a = mc_rbdyn::LoadRobotParameters(), nb::rv_policy::take_ownership, 
            R"(
    Load a single robot from a RobotModule with the provided parameters
 
@@ -85,14 +134,14 @@ void bind_Robots(nb::module_ & m)
 )")
       .def("load",
            nb::overload_cast<const mc_rbdyn::RobotModule &, const mc_rbdyn::LoadRobotParameters &>(&Robots::load),
-           "module"_a, "params"_a,
+           "module"_a, "params"_a = mc_rbdyn::LoadRobotParameters(), nb::rv_policy::take_ownership, 
            R"(
    Load a single robot from a RobotModule
 
   Use the name in the module to load the robot
 )")
       .def("load", nb::overload_cast<const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> &>(&Robots::load),
-           "modules"_a,
+           "modules"_a, nb::rv_policy::take_ownership, 
            R"(
    Load multiple robots from as many RobotModule instances
 

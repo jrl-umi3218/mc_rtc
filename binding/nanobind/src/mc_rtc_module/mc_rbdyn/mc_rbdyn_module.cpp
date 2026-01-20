@@ -1,4 +1,3 @@
-#include <iostream>
 #include <mc_rtc_python/mc_rbdyn/mc_rbdyn_module.h>
 #include <nanobind/nanobind.h>
 
@@ -18,6 +17,7 @@ void bind_mc_rbdyn_module(nb::module_ & m)
   bind_RobotModule(m);
   bind_RobotData(m);
   bind_RobotFrame(m);
+  bind_LoadRobotParameters(m);
   bind_Robot(m);
   bind_Robots(m);
 }
