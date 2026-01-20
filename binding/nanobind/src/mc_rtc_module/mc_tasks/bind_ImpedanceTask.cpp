@@ -1,4 +1,5 @@
 #include <mc_tasks/ImpedanceTask.h>
+#include <mc_rbdyn/RobotFrame.h>
 
 #include <nanobind/nanobind.h>
 #include <nanobind/stl/string.h>

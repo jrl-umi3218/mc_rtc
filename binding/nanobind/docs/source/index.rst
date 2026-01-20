@@ -13,7 +13,14 @@ documentation for details.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: contents:
 
    introduction
-.. API is auto-generated from mc_rtc python module with api-autodoc
+   api
+
+indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

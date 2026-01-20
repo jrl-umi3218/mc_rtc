@@ -13,13 +13,21 @@ release = "2.12.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
-
-extensions = ["autoapi.extension"]
+extensions = [
+    "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",  # For Google/NumPy docstring support
+]
 
 templates_path = ["_templates"]
 exclude_patterns = []
 
-# FIXME: use paths from CMake here
+# autodoc options
+autodoc_typehints = "description"
+autodoc_default_options = {
+    "members": True,
+    "undoc-members": True,
+    "show-inheritance": True,
+}
 autoapi_dirs = [
     "/home/vscode/workspace/install/mc-rtc-venv/lib/python3.12/site-packages/mc_rtc",
     "/home/vscode/workspace/install/mc-rtc-venv/lib/python3.12/site-packages/sva",
@@ -46,5 +54,3 @@ html_logo = "_static/images/mc_rtc_logo.png"
 
 
 html_static_path = ["_static"]
-
-autodoc_typehints = "description"

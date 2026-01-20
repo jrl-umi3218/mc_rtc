@@ -3,12 +3,14 @@
 #include <mc_rbdyn/RobotFrame.h>
 #include <mc_rbdyn/Robots.h>
 #include <mc_trajectory/BSpline.h>
+#include <SpaceVecAlg/SpaceVecAlg>
+
+
 #include <nanobind/nanobind.h>
 #include <nanobind/stl/vector.h>
 #include <nanobind/stl/string.h>
 #include <nanobind/stl/pair.h>
 #include <nanobind/eigen/dense.h>
-#include <SpaceVecAlg/SpaceVecAlg>
 
 namespace nb = nanobind;
 using namespace nb::literals;
@@ -19,7 +21,6 @@ namespace mc_rtc_python
 void bind_BSplineTrajectoryTask(nb::module_ & m)
 {
   using mc_tasks::BSplineTrajectoryTask;
-  using mc_tasks::SplineTrajectoryTask;
   using waypoints_t = mc_trajectory::BSpline::waypoints_t;
   
   // First, ensure the base class is bound (if not already done elsewhere)
@@ -28,7 +29,7 @@ void bind_BSplineTrajectoryTask(nb::module_ & m)
   // ------------------------------------------------------------------
   // BSplineTrajectoryTask
   // ------------------------------------------------------------------
-  nb::class_<BSplineTrajectoryTask, SplineTrajectoryTask<BSplineTrajectoryTask>>(
+  nb::class_<BSplineTrajectoryTask>(
     m, "BSplineTrajectoryTask",
     R"(
 Track a B-spline curve with a robot surface.

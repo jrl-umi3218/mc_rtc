@@ -29,35 +29,11 @@ set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
 
-# Check if the submodule cmake have been initialized
-set(JRL_CMAKE_MODULES "${CMAKE_CURRENT_LIST_DIR}/cmake")
-if(EXISTS "${JRL_CMAKE_MODULES}/base.cmake")
-  message(STATUS "JRL cmakemodules found in 'cmake/' git submodule")
-else()
-  find_package(jrl-cmakemodules QUIET CONFIG)
-  if(jrl-cmakemodules_FOUND)
-    get_property(
-      JRL_CMAKE_MODULES
-      TARGET jrl-cmakemodules::jrl-cmakemodules
-      PROPERTY INTERFACE_INCLUDE_DIRECTORIES
-    )
-    message(STATUS "JRL cmakemodules found on system at ${JRL_CMAKE_MODULES}")
-  else()
-    message(STATUS "JRL cmakemodules not found. Let's fetch it.")
-    include(FetchContent)
-    FetchContent_Declare(
-      "jrl-cmakemodules"
-      GIT_REPOSITORY "https://github.com/jrl-umi3218/jrl-cmakemodules.git"
-    )
-    FetchContent_MakeAvailable("jrl-cmakemodules")
-    FetchContent_GetProperties("jrl-cmakemodules" SOURCE_DIR JRL_CMAKE_MODULES)
-  endif()
-endif()
+find_package(jrl-cmakemodules 0.2.0 CONFIG QUIET)
 
-include(${JRL_CMAKE_MODULES}/base.cmake)
-include(${JRL_CMAKE_MODULES}/cython/cython.cmake)
-include(${JRL_CMAKE_MODULES}/msvc-specific.cmake)
-include(${JRL_CMAKE_MODULES}/version-script.cmake)
+include(cmake/get-jrl-cmakemodules.cmake)
+include(cmake/base.cmake)
+jrl_configure_defaults()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -74,8 +50,6 @@ else()
   set(MC_RTC_LOADER_DEBUG_SUFFIX "")
 endif()
 
-set_default_cmake_build_type(RelWithDebInfo)
-
 # Check for Nix build environment
 if(DEFINED ENV{NIX_BUILD_CORES}
    OR DEFINED ENV{NIX_STORE}
@@ -87,7 +61,7 @@ else()
   set(MC_RTC_BUILD_IN_NIX FALSE)
 endif()
 
-option(GENERATE_COVERAGE "Generate coverage data" FALSE)
+jrl_option(GENERATE_COVERAGE "Generate coverage data" FALSE)
 if("${CMAKE_CXX_FLAGS}" MATCHES "--coverage")
   set(GENERATE_COVERAGE
       TRUE
@@ -100,25 +74,26 @@ if("${CMAKE_CXX_FLAGS}" MATCHES "--coverage")
   )
 endif()
 
-option(TREAT_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
+jrl_option(TREAT_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
 
-option(BUILD_CONTROLLER_SAMPLES "Build sample controllers in the project" ON)
-option(DISABLE_CONTROLLER_TESTS "Disable controller unit tests" OFF)
-option(DISABLE_ROBOT_TESTS "Disable RobotModule unit tests" OFF)
-option(ENABLE_FAST_TESTS "Run controllers tests for a few iterations" OFF)
+jrl_option(BUILD_CONTROLLER_SAMPLES "Build sample controllers in the project" ON)
+jrl_option(DISABLE_CONTROLLER_TESTS "Disable controller unit tests" OFF)
+jrl_option(DISABLE_ROBOT_TESTS "Disable RobotModule unit tests" OFF)
+jrl_option(ENABLE_FAST_TESTS "Run controllers tests for a few iterations" OFF)
+jrl_option(NANOBIND_BINDINGS "Build nanobind Python bindings" ON)
 
-option(BUILD_BENCHMARKS "Build benchmarks" OFF)
+jrl_option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 
-option(MC_RTC_BUILD_STATIC
+jrl_option(MC_RTC_BUILD_STATIC
        "Build a static version of mc_rtc, this has no support for pluggable components"
        OFF
 )
-option(MC_RTC_DISABLE_NETWORK "Build without network support" OFF)
-option(MC_RTC_DEVELOPER_MODE
+jrl_option(MC_RTC_DISABLE_NETWORK "Build without network support" OFF)
+jrl_option(MC_RTC_DEVELOPER_MODE
        "Disable exact version embedding to speed up recompilations" OFF
 )
 
-option(DISABLE_ROS "Build without ROS support (even if ROS was found)" OFF)
+jrl_option(DISABLE_ROS "Build without ROS support (even if ROS was found)" OFF)
 
 option(BUILD_MC_RTC "Build the main mc_rtc library" ON)
 option(BUILD_MC_RTC_CPP_UTILS "Build cpp utilities (e.g mc_bin_utils, etc)" ON)
@@ -170,16 +145,16 @@ if(BOOST_STACKTRACE STREQUAL "")
   )
 endif()
 
-add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer ${BOOST_STACKTRACE})
-add_project_dependency(Tasks REQUIRED)
-add_project_dependency(TVM REQUIRED)
+jrl_find_package(Boost REQUIRED COMPONENTS filesystem timer ${BOOST_STACKTRACE})
+jrl_find_package(Tasks REQUIRED)
+jrl_find_package(TVM REQUIRED)
 if(NOT TARGET RBDyn::Parsers)
   message(FATAL_ERROR "RBDyn must be built with parsers support")
 endif()
-add_project_dependency(eigen-quadprog REQUIRED)
-add_project_dependency(state-observation REQUIRED)
-add_project_dependency(ndcurves REQUIRED)
-add_project_dependency(mesh_sampling REQUIRED)
+jrl_find_package(eigen-quadprog REQUIRED)
+jrl_find_package(state-observation REQUIRED)
+jrl_find_package(ndcurves REQUIRED)
+jrl_find_package(mesh_sampling REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 

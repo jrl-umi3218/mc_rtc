@@ -26,51 +26,37 @@ namespace mc_rtc_python
 void bind_RobotLoader(nanobind::module_ & m)
 {
   auto c = nb::class_<mc_rbdyn::RobotLoader>(m, "RobotLoader");
-  c.doc() = R"(
-        Load RobotModule instances from shared libraries and robot aliases
-    )";
-  c.def_static(
-       "get_robot_module",
-       [](const std::string & robotName) { return mc_rbdyn::RobotLoader::get_robot_module(robotName); }, "robotName"_a,
-       R"(
-  :returns: a RobotModule constructed with the provided Args
+  c.doc() = "Load RobotModule instances from shared libraries and robot aliases";
 
-  :param: name The module name
-        )")
-      .def_static(
-          "get_robot_module",
-          [](const std::vector<std::string> & args) { return mc_rbdyn::RobotLoader::get_robot_module(args); }, "args"_a,
-          R"(
-  :returns: a RobotModule constructed with the provided Args
+  c.def_static("get_robot_module",
+  [](const std::string & name, nb::args args) {
+      std::vector<std::string> v{name};
+      for (auto item : args) {
+        v.push_back(nb::cast<std::string>(item));
+      }
+      return mc_rbdyn::RobotLoader::get_robot_module(v);
+  });
 
-  :param args: Arguments to pass to the robot module creation. This is arbitrarly limited to 3 parameters
-        )");
-  c.def_static("update_robot_module_path", RobotLoader::update_robot_module_path, "paths"_a,
-               R"(
-  Add additional directories to the robot module path
+  c.def_static("get_robot_module", 
+    [](const std::vector<std::string> & args) { 
+        return mc_rbdyn::RobotLoader::get_robot_module(args); 
+    }, "args"_a, "Load a RobotModule using a list of strings.");
 
-  :param paths: Directories to be added to the module path
-                    )");
-  c.def_static("has_robot", &RobotLoader::has_robot, "name"_a,
-               R"(
-  Check if a robot is available
+  c.def_static("update_robot_module_path", &mc_rbdyn::RobotLoader::update_robot_module_path, "paths"_a,
+               "Add additional directories to search for robot modules.");
 
-  :param name: Robot name
-  :returns: True if the robot is available
-                    )");
-  c.def_static("set_verbosity", &RobotLoader::set_verbosity, "verbose"_a);
-  c.def_static("available_robots", &RobotLoader::available_robots,
-               R"(
-          :returns: a list of available robots
-          )");
-  c.def_static("load_aliases", &RobotLoader::load_aliases, "fname"_a,
-               R"(
-  Load aliases
+  c.def_static("has_robot", &mc_rbdyn::RobotLoader::has_robot, "name"_a,
+               "Returns True if the robot is available via library or alias.");
 
-  An aliases file should be a map of alias to param vector
+  c.def_static("set_verbosity", &mc_rbdyn::RobotLoader::set_verbosity, "verbose"_a);
 
-  :param fname: A JSON or YAML containing aliases
-          )");
+  c.def_static("available_robots", &mc_rbdyn::RobotLoader::available_robots,
+               "Returns a list of all discoverable robot names.");
+
+  c.def_static("load_aliases", &mc_rbdyn::RobotLoader::load_aliases, "fname"_a,
+               "Load robot aliases from a JSON or YAML file.");
+
+  c.def_static("clear", &mc_rbdyn::RobotLoader::clear, "Remove all loaded libraries.");
 }
 
 void bind_Mimic(nb::module_ & m)
