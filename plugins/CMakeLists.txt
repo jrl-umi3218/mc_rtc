@@ -4,8 +4,9 @@
 
 macro(add_plugin plugin)
   cmake_parse_arguments(ADD_PLUGIN "AUTOLOAD" "" "" ${ARGN})
-  option(AUTOLOAD_${plugin}_PLUGIN "Automatically load ${plugin} plugin"
-         ${ADD_PLUGIN_AUTOLOAD}
+  jrl_option(
+    AUTOLOAD_${plugin}_PLUGIN "Automatically load ${plugin} plugin"
+    ${ADD_PLUGIN_AUTOLOAD}
   )
   if(MC_RTC_BUILD_STATIC)
     target_sources(mc_control PRIVATE ${ADD_PLUGIN_UNPARSED_ARGUMENTS})
