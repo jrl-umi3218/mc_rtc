@@ -260,8 +260,9 @@ mc_rtc_set_prefix(PLUGINS mc_plugins)
 
 macro(add_plugin plugin)
   cmake_parse_arguments(ADD_PLUGIN "AUTOLOAD" "" "" ${ARGN})
-  option(AUTOLOAD_${plugin}_PLUGIN "Automatically load ${plugin} plugin"
-         ${ADD_PLUGIN_AUTOLOAD}
+  jrl_option(
+    AUTOLOAD_${plugin}_PLUGIN "Automatically load ${plugin} plugin"
+    ${ADD_PLUGIN_AUTOLOAD}
   )
   add_library(${plugin} SHARED ${ADD_PLUGIN_UNPARSED_ARGUMENTS})
   set_target_properties(${plugin} PROPERTIES PREFIX "")
