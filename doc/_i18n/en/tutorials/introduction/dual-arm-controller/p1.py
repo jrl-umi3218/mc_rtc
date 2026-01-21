@@ -10,13 +10,15 @@ def __init__(self, rm, dt):
         "wrist_3_joint",
     ]
     self._ur_joints = [joint.encode("utf-8") for joint in ur_joints]
+
+
 # In the reset callback
 def reset_callback(self, data):
     # ...
-    self._urEndEffectorTask.selectUnactiveJoints(
-        self.qpsolver, self._ur_joints
-    )
+    self._urEndEffectorTask.selectUnactiveJoints(self.qpsolver, self._ur_joints)
     # ...
+
+
 # In the run callback
 def run_callback(self):
     if self._phase == ControllerPhase.IDLE:

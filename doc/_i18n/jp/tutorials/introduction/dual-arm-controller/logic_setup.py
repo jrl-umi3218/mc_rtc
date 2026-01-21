@@ -3,9 +3,13 @@ class ControllerPhase:
     IDLE = 0
     STARTED = 1
     MOVE = 2
+
+
 # コンストラクター内
 def __init__(self, rm, dt):
     self._phase = IDLE
+
+
 # runコールバック関数内
 def run_callback(self):
     if self._phase == ControllerPhase.IDLE and False:  # この条件は後で記述する

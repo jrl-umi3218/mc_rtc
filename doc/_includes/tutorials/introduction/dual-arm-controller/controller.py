@@ -76,12 +76,8 @@ class DualArmController(mc_control.MCPythonController):
         )
         self._urEndEffectorTask.positionTask.stiffness(1)
         self._urEndEffectorTask.orientationTask.stiffness(1)
-        self._urEndEffectorTask.selectUnactiveJoints(
-            self.qpsolver, self._ur_joints
-        )
-        self._kinovaPostureTask = mc_tasks.PostureTask(
-            self.qpsolver, 1, 5.0, 1000.0
-        )
+        self._urEndEffectorTask.selectUnactiveJoints(self.qpsolver, self._ur_joints)
+        self._kinovaPostureTask = mc_tasks.PostureTask(self.qpsolver, 1, 5.0, 1000.0)
         self.qpsolver.addTask(self._urEndEffectorTask)
         self.qpsolver.addTask(self._kinovaPostureTask)
         self.robots().robot(1).posW(
@@ -126,15 +122,15 @@ class DualArmController(mc_control.MCPythonController):
             and self._urEndEffectorTask.positionTask.speed().norm() < 0.05
         ):
             self._ur_state = ControllerState.RETURN
-            self._urEndEffectorTask.add_ef_pose(sva.PTransformd(
-                sva.RotZ(0), eigen.Vector3d(0.0, -0.5, 0.0)
-            ))
+            self._urEndEffectorTask.add_ef_pose(
+                sva.PTransformd(sva.RotZ(0), eigen.Vector3d(0.0, -0.5, 0.0))
+            )
         elif (
             self._ur_state == ControllerState.RETURN
             and self._urEndEffectorTask.positionTask.eval().norm() < 0.05
             and self._urEndEffectorTask.positionTask.speed().norm() < 0.05
         ):
             self._ur_state = ControllerState.GO
-            self._urEndEffectorTask.add_ef_pose(sva.PTransformd(
-                sva.RotZ(0), eigen.Vector3d(0.0, 0.5, 0.0)
-            ))
+            self._urEndEffectorTask.add_ef_pose(
+                sva.PTransformd(sva.RotZ(0), eigen.Vector3d(0.0, 0.5, 0.0))
+            )
