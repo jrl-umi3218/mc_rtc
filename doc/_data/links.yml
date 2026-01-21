@@ -24,6 +24,14 @@ Choreonoid:
   url: https://choreonoid.org/en/
 mc_rtc_data:
   url: https://github.com/jrl-umi3218/mc_rtc_data
+mc_ur5e:
+  url: https://github.com/isri-aist/mc_ur5e
+mc_ur5e_description:
+  url: https://github.com/isri-aist/mc_ur5e_description
+mc_kinova:
+  url: https://github.com/isri-aist/mc_kinova
+mc_rtc_tutorials:
+  url: https://github.com/HACHIX-CORPORATION/mc_rtc_tutorials
 Eigen:
   url: https://eigen.tuxfamily.org
 mc_rtc-magnum:

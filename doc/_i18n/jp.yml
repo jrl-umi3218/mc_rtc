@@ -94,6 +94,8 @@ tutorials:
       title: エンドエフェクタの制御方法 (及びロードの方法)
     multi-robot-controller:
       title: マルチロボットコントローラ
+    dual-arm-controller:
+      title: 双腕コントローラ
   usage:
     title: フレームワークの利用法
     desc: 以下のチュートリアルは、コントローラの実装に特に関連しない、フレームワークに関する幅広いトピックをカバーしています。

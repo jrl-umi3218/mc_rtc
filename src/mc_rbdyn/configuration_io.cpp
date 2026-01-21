@@ -29,11 +29,11 @@ template<>
 struct formatter<rbd::Joint::Type> : public formatter<string_view>
 {
   template<typename FormatContext>
-  #if FMT_VERSION <= 9 * 10000
-    auto format(const rbd::Joint::Type & t, FormatContext & ctx)
-  #else
-    auto format(const rbd::Joint::Type & t, FormatContext & ctx) const -> decltype(ctx.out())
-  #endif
+#if FMT_VERSION <= 9 * 10000
+  auto format(const rbd::Joint::Type & t, FormatContext & ctx)
+#else
+  auto format(const rbd::Joint::Type & t, FormatContext & ctx) const -> decltype(ctx.out())
+#endif
   {
     switch(t)
     {
