@@ -1,0 +1,93 @@
+<p>このセクションの目的は、2本のアームを協調させ、アーム間の衝突制約を設定することで、協調動作を実現することです。</p>
+
+<p><em>注意: 本記事では、ROS を用いてコントローラを実行・可視化できることを前提としています。</em></p>
+
+{% include h3.html title="例" %}
+
+<p>ここでは、UR5e をメインロボット、Kinova を第2ロボットとして読み込むシンプルなコントローラを構築します。これらはそれぞれ `mc_rtc` のロボットモジュール {% link mc_ur5e %}, {% link mc_ur5e_description %} と {% link mc_kinova %} として提供されています。UR5e をメインロボットとして読み込むために、`mc_rtc` の設定ファイルを以下のように変更する必要があります。</p>
+{% highlight yaml %}
+MainRobot: UR5e 
+Enabled: DualArmController
+{% endhighlight %}
+
+<p>次に、双腕ロボットを入力として受け取るコントローラを構築します。</p>
+
+<ul>
+  <li>UR5e</li>
+  <li>Kinova</li>
+</ul>
+
+<p>そのために、コンストラクタを修正します。</p>
+
+{% include show_sources.html sources=page.constructor_sources copy=false id="constructor" %}
+
+{% include h4.html title="ロボットのインデックス" %}
+
+<p>この新しい例では、追加のロボットとして Kinova を読み込んでいます。これは、読み込むロボットモジュールのリストを指定することで実現しています。読み込まれたロボットは、モジュールが指定された順番に従ってインデックスが割り当てられます。つまり、メインロボットである UR5e は引き続きインデックス 0 を持ち、新たに Kinova ロボットがインデックス 1 として追加されます。</p>
+
+{% include h4.html title="Kinova ロボットの初期位置" %}
+
+<p>この時点でコントローラを起動すると、Kinova と UR5e が同じ位置に配置されていることに気付くでしょう。本チュートリアルでは、Kinova の位置を手動で再配置します。</p>
+
+{% include show_sources.html sources=page.reposition_kinova_sources copy=false id="reposition_kinova" %}
+
+{% include h4.html title="タスクと制約" %}
+
+<p>各ロボットに対して、通常どおりタスクと制約を追加します。異なる設定例を示すため、UR5e にはエンドエフェクタタスクを、Kinova には姿勢 (ポスチャ) タスクを追加します。さらに、動作中の衝突を回避するため、2台のロボット間に衝突制約を追加します。まず、UR5e ロボットに対するタスクと制約を追加します。</p>
+
+{% include show_sources.html sources=page.add_ur5e_tasks_sources copy=false id="add_ur5e_tasks" %}
+
+<p>次に、Kinova ロボットに対するタスクを追加します。</p>
+
+{% include show_sources.html sources=page.add_kinova_tasks_sources copy=false id="add_kinova_tasks" %}
+
+<p>最後に、2台のロボット間の衝突制約を追加します。</p>
+
+{% include show_sources.html sources=page.add_collision_constraint_sources copy=false id="add_collision_constraint" %}
+
+{% include h4.html title="コントローラロジックの設定" %}
+
+<p>このパートでは、コントローラのロジックを設定します。目標は以下のとおりです。</p>
+
+<ol>
+  <li>姿勢タスクを用いて UR5e を待機姿勢 (スタンバイポーズ) に移動する</li>
+  <li>UR5e のエンドエフェクタタスクを有効化する</li>
+  <li>両アームの繰り返し動作を開始する</li>
+</ol>
+
+<p>そのため、コードは以下のようになります。</p>
+
+{% include show_sources.html sources=page.logic_setup_sources copy=false id="logic_setup" %}
+
+{% include h4.html title="フェーズ1: UR5e を待機姿勢に移動" %}
+
+<p>このフェーズでは、姿勢タスクを用いてメインロボットである UR5e をあらかじめ定義された待機姿勢に移動させます。エンドエフェクタタスクとの競合を避けるため、このフェーズ中は一時的にエンドエフェクタタスクを無効化し、姿勢タスクが達成された後に再度有効化します。</p>
+
+<p><em>注意: エンドエフェクタタスクを無効化しない場合、2つのタスクが互いに競合し、ロボットは目標姿勢に到達できません。</em></p>
+
+{% include show_sources.html sources=page.p1_sources copy=false id="p1" %}
+
+{% include h4.html title="フェーズ2: UR5e のエンドエフェクタタスクを有効化" %}
+
+<p>このフェーズでは、UR5e の姿勢タスクが達成されたかどうかを確認し、エンドエフェクタタスクの目標をリセットした上で有効化します。</p>
+
+{% include show_sources.html sources=page.p2_sources copy=false id="p2" %}
+
+{% include h4.html title="フェーズ3: 両アームの繰り返し動作を開始" %}
+
+<p>このフェーズはメインフェーズであり、両アームが繰り返し動作を行います。UR5e ではエンドエフェクタを直線軌道で動かし、Kinova では第2関節を前後に振動させます。</p>
+
+{% include show_sources.html sources=page.p3_sources copy=false id="p3" %}
+
+{% include h3.html title="プレイタイム" %}
+
+<p>ここまでで、双腕コントローラの設定を自由に試すことができます。各アームのタスク、制約、目標動作を変更してみてください。例えば、以下のような変更が可能です。</p>
+
+<ul>
+  <li>UR5e のタスクを変更する</li>
+  <li>Kinova のタスクを変更する</li>
+  <li>フェーズ3における UR5e の動作を変更する</li>
+  <li>フェーズ3における Kinova の動作を変更する</li>
+</ul>
+
+<p>このコントローラーの完全なソースは、<a href="sources/dual-arm-controller.html">こちら</a>から入手できます。また、環境設定を含めるソースコードは {% link mc_rtc_tutorials %} リポジトリで確認できます。</p>

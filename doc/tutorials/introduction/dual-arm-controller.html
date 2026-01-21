@@ -1,0 +1,77 @@
+---
+layout: tutorials
+toc: true
+constructor_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      #include <mc_rbdyn/RobotLoader.h>
+
+      DualArmController::DualArmController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config)
+      : mc_control::MCController({rm,
+          mc_rbdyn::RobotLoader::get_robot_module("env", "/usr/local/share/mc_kinova", std::string("kinova_default"))}, dt)
+  - name: Python
+    lang: python
+    source: |
+      @staticmethod
+      def create(robot, dt):
+          kinova = mc_rbdyn.get_robot_module("env", "/usr/local/share/mc_kinova", "kinova_default")
+          return DualArmController([robot, kinova], dt)
+reposition_kinova_sources:
+  - name: C++
+    lang: cpp
+    translate: tutorials/introduction/dual-arm-controller/reposition_kinova.cpp
+  - name: Python
+    lang: python
+    translate: tutorials/introduction/dual-arm-controller/reposition_kinova.py
+add_ur5e_tasks_sources:
+  - name: C++
+    lang: cpp
+    translate: tutorials/introduction/dual-arm-controller/add_ur5e_tasks.cpp
+  - name: Python
+    lang: python
+    translate: tutorials/introduction/dual-arm-controller/add_ur5e_tasks.py
+add_kinova_tasks_sources:
+  - name: C++
+    lang: cpp
+    translate: tutorials/introduction/dual-arm-controller/add_kinova_tasks.cpp
+  - name: Python
+    lang: python
+    translate: tutorials/introduction/dual-arm-controller/add_kinova_tasks.py
+add_collision_constraint_sources:
+  - name: C++
+    lang: cpp
+    translate: tutorials/introduction/dual-arm-controller/add_collision_constraint.cpp
+  - name: Python
+    lang: python
+    translate: tutorials/introduction/dual-arm-controller/add_collision_constraint.py
+logic_setup_sources:
+  - name: C++
+    lang: cpp
+    translate: tutorials/introduction/dual-arm-controller/logic_setup.cpp
+  - name: Python
+    lang: python
+    translate: tutorials/introduction/dual-arm-controller/logic_setup.py
+p1_sources:
+  - name: C++
+    lang: cpp
+    translate: tutorials/introduction/dual-arm-controller/p1.cpp
+  - name: Python
+    lang: python
+    translate: tutorials/introduction/dual-arm-controller/p1.py
+p2_sources:
+  - name: C++
+    lang: cpp
+    translate: tutorials/introduction/dual-arm-controller/p2.cpp
+  - name: Python
+    lang: python
+    translate: tutorials/introduction/dual-arm-controller/p2.py
+p3_sources:
+  - name: C++
+    lang: cpp
+    translate: tutorials/introduction/dual-arm-controller/p3.cpp
+  - name: Python
+    lang: python
+    translate: tutorials/introduction/dual-arm-controller/p3.py
+---
+{% translate_file tutorials/introduction/dual-arm-controller.html %}
