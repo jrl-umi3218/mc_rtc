@@ -344,7 +344,11 @@ template<>
 struct formatter<mc_solver::QPSolver::Backend> : public formatter<string_view>
 {
   template<typename FormatContext>
-  auto format(const mc_solver::QPSolver::Backend & backend, FormatContext & ctx) const -> decltype(ctx.out())
+  #if FMT_VERSION <= 9 * 10000
+    auto format(const mc_solver::QPSolver::Backend & backend, FormatContext & ctx)
+  #else
+    auto format(const mc_solver::QPSolver::Backend & backend, FormatContext & ctx) const -> decltype(ctx.out())
+  #endif
   {
     using Backend = mc_solver::QPSolver::Backend;
     switch(backend)
