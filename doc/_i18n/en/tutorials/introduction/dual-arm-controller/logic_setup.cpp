@@ -6,7 +6,7 @@ enum ControllerPhase
   MOVE
 };
 // A private property of our controller
-ControllerPhase phase = IDLE;
+ControllerPhase phase_ = IDLE;
 // In the run function
 bool DualArmController::run()
 {
