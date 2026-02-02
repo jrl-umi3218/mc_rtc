@@ -30,7 +30,11 @@ Enabled: DualArmController
 
 {% include show_sources.html sources=page.constructor_sources copy=false id="constructor" %}
 
-If you are using {% link mc-rtc-superbuild %}, the function can simply be <code>mc_rbdyn::RobotLoader::get_robot_module("Kinova")</code>.
+<p>
+If you installed `mc_rtc` and `mc_kinova` and build the project using {% link mc-rtc-superbuild %}, 
+the function can simply be <code>mc_rbdyn::RobotLoader::get_robot_module("Kinova")</code>. 
+If you install and build manually, you would need to add just the installation path of `mc_kinova` appropriately.
+</p>
 
 {% include h4.html title="Robot index" %}
 
