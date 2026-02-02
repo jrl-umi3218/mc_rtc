@@ -4,7 +4,16 @@
 
 {% include h3.html title="Example" %}
 
-<p>We will build a simple controller that will load UR5e as the main robot and Kinova as the second robot, which is provided as `mc_rtc` robot module {% link mc_ur5e %}, {% link mc_ur5e_description %} and {% link mc_kinova %} respectively. To load UR5e as the main robot, `mc_rtc` configuration file need to be modified as follows:</p>
+<p>We will build a simple controller that will load UR5e as the main robot and Kinova as the second robot, which is provided as `mc_rtc` robot module {% link mc_ur5e %}, {% link mc_ur5e_description %} and {% link mc_kinova %} respectively. 
+The robot module is the interface software, allowing `mc_rtc` to communicate - sending commands and receiving feedback - with that specific robot type.
+While the robot's description contains lists of joints, links, and other physical attribute of the robots that is necessary to to simulate and control the robot.
+{% link mc_kinova %} contains both module and description of the Kinova robot.</p>
+
+<p>To load UR5e as the main robot, `mc_rtc` configuration file need to be modified as follows:</p>
+<!-- Please add explanation on the role of the robot module, description.
+I think it's important for users to understand the role of each of them before moving along.
+Let me know if you need more details on this point -->
+
 {% highlight yaml %}
 MainRobot: UR5e
 Enabled: DualArmController
