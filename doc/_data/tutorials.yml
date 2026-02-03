@@ -17,6 +17,8 @@
       id: multi-robot-controller
     -
       id: dual-arm-controller
+    -
+      id: mobile-arm-controller
 -
   id: usage
   tutorials:

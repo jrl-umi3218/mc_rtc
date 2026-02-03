@@ -31,6 +31,8 @@ Enabled: DualArmController
 
 {% include show_sources.html sources=page.reposition_kinova_sources copy=false id="reposition_kinova" %}
 
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/dual_arm_initial.png" alt="architecture_overview" class="img-fluid" />
+
 {% include h4.html title="タスクと制約" %}
 
 <p>各ロボットに対して、通常どおりタスクと制約を追加します。異なる設定例を示すため、UR5e にはエンドエフェクタタスクを、Kinova には姿勢 (ポスチャ) タスクを追加します。さらに、動作中の衝突を回避するため、2台のロボット間に衝突制約を追加します。まず、UR5e ロボットに対するタスクと制約を追加します。</p>
@@ -67,6 +69,8 @@ Enabled: DualArmController
 
 {% include show_sources.html sources=page.p1_sources copy=false id="p1" %}
 
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/dual_arm_standby.png" alt="architecture_overview" class="img-fluid" />
+
 {% include h4.html title="フェーズ2: UR5e のエンドエフェクタタスクを有効化" %}
 
 <p>このフェーズでは、UR5e の姿勢タスクが達成されたかどうかを確認し、エンドエフェクタタスクの目標をリセットした上で有効化します。</p>
@@ -78,6 +82,9 @@ Enabled: DualArmController
 <p>このフェーズはメインフェーズであり、両アームが繰り返し動作を行います。UR5e ではエンドエフェクタを直線軌道で動かし、Kinova では第2関節を前後に振動させます。</p>
 
 {% include show_sources.html sources=page.p3_sources copy=false id="p3" %}
+
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/dual_arm_collision_avoidance_1.png" alt="dual_arm_collision_avoidance_1" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/dual_arm_collision_avoidance_2.png" alt="dual_arm_collision_avoidance_2" class="img-fluid" />
 
 {% include h3.html title="プレイタイム" %}
 

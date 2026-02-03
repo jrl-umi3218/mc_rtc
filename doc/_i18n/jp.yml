@@ -96,6 +96,8 @@ tutorials:
       title: マルチロボットコントローラ
     dual-arm-controller:
       title: 双腕コントローラ
+    mobile-arm-controller:
+      title: 移動マニピュレータコントローラ
   usage:
     title: フレームワークの利用法
     desc: 以下のチュートリアルは、コントローラの実装に特に関連しない、フレームワークに関する幅広いトピックをカバーしています。
