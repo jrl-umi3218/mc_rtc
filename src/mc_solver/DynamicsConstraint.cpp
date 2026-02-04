@@ -99,9 +99,10 @@ static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots,
   }
 }
 
-mc_rtc::void_ptr initialize_tvm(const mc_rbdyn::Robot & robot)
+mc_rtc::void_ptr initialize_tvm(const mc_rbdyn::Robot & robot, bool compensateExtTorques)
 {
-  return mc_rtc::make_void_ptr<mc_tvm::DynamicFunctionPtr>(std::make_shared<mc_tvm::DynamicFunction>(robot));
+  return mc_rtc::make_void_ptr<mc_tvm::DynamicFunctionPtr>(
+      std::make_shared<mc_tvm::DynamicFunction>(robot, compensateExtTorques));
 }
 
 static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
@@ -116,7 +117,7 @@ static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
     case QPSolver::Backend::Tasks:
       return initialize_tasks(robots, robotIndex, timeStep, infTorque, compensateExtTorques);
     case QPSolver::Backend::TVM:
-      return initialize_tvm(robots.robot(robotIndex));
+      return initialize_tvm(robots.robot(robotIndex), compensateExtTorques);
     default:
       mc_rtc::log::error_and_throw("[DynamicsConstraint] Not implemented for solver backend: {}", backend);
   }
