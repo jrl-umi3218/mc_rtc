@@ -221,6 +221,15 @@ bool TVMQPSolver::runClosedLoop(bool integrateControlState)
     robot.forwardKinematics();
     robot.forwardVelocity();
     robot.forwardAcceleration();
+
+    // Update robot with realRobot's external/compenstation torques informations
+    robot.setExternalTorques(realRobot.externalTorques());
+    robot.setExternalTorquesAcc(realRobot.externalTorquesAcc());
+    if(realRobot.compensationTorques())
+    {
+      robot.setCompensationTorques(realRobot.compensationTorques().value());
+      robot.setCompensationTorquesAcc(realRobot.compensationTorquesAcc().value());
+    }
   }
 
   // Solve QP and integrate
