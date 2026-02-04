@@ -155,6 +155,21 @@ const sva::ForceVecd TasksQPSolver::desiredContactForce(const mc_rbdyn::Contact 
 bool TasksQPSolver::run_impl(FeedbackType fType)
 {
   bool success = false;
+
+  for(size_t i = 0; i < robots().size(); ++i)
+  {
+    auto & realRobot = realRobots().robot(i);
+    if(realRobot.externalTorques().size() == 0) continue;
+    auto fd = rbd::ForwardDynamics(realRobot.mb());
+    fd.computeH(realRobot.mb(), realRobot.mbc());
+    auto Hinv = fd.H().ldlt();
+    realRobot.setExternalTorquesAcc(Hinv.solve(realRobot.externalTorques()));
+    if(realRobot.compensationTorques() && !realRobot.compensationTorquesAcc())
+    {
+      realRobot.setCompensationTorquesAcc(Hinv.solve(realRobot.compensationTorques().value()));
+    }
+  }
+
   switch(fType)
   {
     case FeedbackType::None:
@@ -315,6 +330,14 @@ bool TasksQPSolver::runClosedLoop(bool integrateControlState)
     robot.forwardKinematics();
     robot.forwardVelocity();
     robot.forwardAcceleration();
+    // Update robot with realRobot's external/compenstation torques informations
+    robot.setExternalTorques(realRobot.externalTorques());
+    robot.setExternalTorquesAcc(realRobot.externalTorquesAcc());
+    if(realRobot.compensationTorques())
+    {
+      robot.setCompensationTorques(realRobot.compensationTorques().value());
+      robot.setCompensationTorquesAcc(realRobot.compensationTorquesAcc().value());
+    }
   }
 
   // Update tasks and constraints from estimated robots
