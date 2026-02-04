@@ -64,8 +64,8 @@ protected:
 
   Eigen::Matrix6d compliant_matrix_;
 
-  mc_tvm::Robot * tvm_robot_;
-  const mc_rbdyn::Robot * robot_;
+  const mc_rbdyn::Robot & robot_;
+  mc_tvm::Robot & tvm_robot_;
 
   unsigned int rIdx_;
 

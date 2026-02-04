@@ -33,6 +33,7 @@ protected:
 
   Eigen::VectorXd gamma_;
 
+  const mc_rbdyn::Robot & robot_;
   mc_tvm::Robot & tvm_robot_;
 
   Eigen::VectorXd refAccel_;

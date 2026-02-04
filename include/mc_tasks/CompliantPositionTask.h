@@ -43,6 +43,7 @@ protected:
 
   Eigen::Matrix3d Gamma_;
 
+  const mc_rbdyn::Robot & robot_;
   mc_tvm::Robot & tvm_robot_;
 
   unsigned int rIdx_;
