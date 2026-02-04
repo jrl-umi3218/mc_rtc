@@ -19,13 +19,20 @@ CompliantEndEffectorTask::CompliantEndEffectorTask(const std::string & bodyName,
                                                    double stiffness,
                                                    double weight)
 : EndEffectorTask(robots.robot(robotIndex).frame(bodyName), stiffness, weight),
-  compliant_matrix_(Eigen::Matrix6d::Zero()), tvm_robot_(nullptr), robot_(&robots.robot(robotIndex)), rIdx_(robotIndex),
-  bodyName_(bodyName), frame_(robots.robot(robotIndex).frame(bodyName)), refAccel_(Eigen::Vector6d::Zero())
+  compliant_matrix_(Eigen::Matrix6d::Zero()), robot_(robots.robot(robotIndex)),
+  tvm_robot_(robots.robot(robotIndex).tvmRobot()), rIdx_(robotIndex), bodyName_(bodyName),
+  frame_(robots.robot(robotIndex).frame(bodyName)), refAccel_(Eigen::Vector6d::Zero())
 {
-  if(backend_ != Backend::Tasks)
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "[mc_tasks] Can't use CompliantEndEffectorTask with {} backend, please use TVM or TVMHierarchical backend",
-        backend_);
+  switch(backend_)
+  {
+    case Backend::Tasks:
+    case Backend::TVM:
+      break;
+    default:
+      mc_rtc::log::error_and_throw<std::runtime_error>(
+          "[mc_tasks] Can't use CompliantEndEffectorTask with {} backend, please use Tasks or TVM backend", backend_);
+      break;
+  }
 
   type_ = "compliant_body6d";
   name_ = "compliant_body6d_" + frame_.robot().name() + "_" + frame_.name();
@@ -64,37 +71,41 @@ Eigen::Vector6d CompliantEndEffectorTask::getComplianceVector(void)
 void CompliantEndEffectorTask::addToSolver(mc_solver::QPSolver & solver)
 {
   EndEffectorTask::addToSolver(solver);
-  tvm_robot_ = &solver.robots().robot(rIdx_).tvmRobot();
-  jac_ = new rbd::Jacobian(tvm_robot_->robot().mb(), frame_.body());
+  jac_ = new rbd::Jacobian(robot_.mb(), frame_.body());
 }
 
 void CompliantEndEffectorTask::update(mc_solver::QPSolver & solver)
 {
   Eigen::MatrixXd J = jac_->jacobian(solver.robot(rIdx_).mb(), solver.robot(rIdx_).mbc());
-  Eigen::Vector6d disturbance;
   Eigen::VectorXd acc;
 
   if(backend_ == Backend::Tasks)
   {
-    if(solver.robot().compensationTorquesAcc()) { acc = solver.robot().compensationTorquesAcc().value(); }
+    if(robot_.compensationTorquesAcc()) { acc = robot_.compensationTorquesAcc().value(); }
     else
     {
-      acc = solver.robot().externalTorquesAcc();
+      acc = robot_.externalTorquesAcc();
     }
-    mc_rtc::log::info("Task sensor acc = {}", acc.transpose());
-    disturbance = J * acc;
   }
   else
   {
-    disturbance.setZero();
+    if(tvm_robot_.alphaDCompensation()) { acc = tvm_robot_.alphaDCompensation().value(); }
+    else
+    {
+      acc = tvm_robot_.alphaDExternal();
+    }
   }
+  Eigen::Vector6d disturbance = J * acc;
+  mc_rtc::log::info("Task sensor acc = {}", acc.transpose());
+  mc_rtc::log::info("Task equivalent acc = {}", disturbance.transpose());
 
   Eigen::Vector6d disturbedAccel = refAccel_ + compliant_matrix_ * disturbance;
+  mc_rtc::log::info("Task disturbed ref acc = {}", disturbedAccel.transpose());
 
   EndEffectorTask::positionTask->refAccel(disturbedAccel.tail(3));
   EndEffectorTask::orientationTask->refAccel(disturbedAccel.head(3));
 
-  EndEffectorTask::update(solver);
+  // EndEffectorTask::update(solver);
 }
 
 void CompliantEndEffectorTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)

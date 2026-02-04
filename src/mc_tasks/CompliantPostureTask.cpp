@@ -14,13 +14,20 @@ CompliantPostureTask::CompliantPostureTask(const mc_solver::QPSolver & solver,
                                            double stiffness,
                                            double weight)
 : PostureTask(solver, rIndex, stiffness, weight),
-  gamma_(Eigen::VectorXd::Zero(solver.robots().robot(rIndex).mb().nrDof())),
+  gamma_(Eigen::VectorXd::Zero(solver.robots().robot(rIndex).mb().nrDof())), robot_(solver.robots().robot(rIndex)),
   tvm_robot_(solver.robots().robot(rIndex).tvmRobot()),
   refAccel_(Eigen::VectorXd::Zero(solver.robots().robot(rIndex).mb().nrDof()))
 {
-  if(backend_ != Backend::Tasks)
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "[mc_tasks] Can't use CompliantEndEffectorTask with {} backend, please use Tasks backend", backend_);
+  switch(backend_)
+  {
+    case Backend::Tasks:
+    case Backend::TVM:
+      break;
+    default:
+      mc_rtc::log::error_and_throw<std::runtime_error>(
+          "[mc_tasks] Can't use CompliantPostureTask with {} backend, please use Tasks or TVM backend", backend_);
+      break;
+  }
   name_ = std::string("compliant_posture_") + solver.robots().robot(rIndex).name();
   type_ = "compliant_posture";
 }
@@ -36,17 +43,21 @@ void CompliantPostureTask::update(mc_solver::QPSolver & solver)
   Eigen::VectorXd acc;
   if(backend_ == Backend::Tasks)
   {
-    if(solver.robot().compensationTorquesAcc()) { acc = solver.robot().compensationTorquesAcc().value(); }
+    if(robot_.compensationTorquesAcc()) { acc = robot_.compensationTorquesAcc().value(); }
     else
     {
-      acc = solver.robot().externalTorquesAcc();
+      acc = robot_.externalTorquesAcc();
     }
-    disturbance = gamma_.asDiagonal() * acc;
   }
   else
   {
-    disturbance.setZero();
+    if(tvm_robot_.alphaDCompensation()) { acc = tvm_robot_.alphaDCompensation().value(); }
+    else
+    {
+      acc = tvm_robot_.alphaDExternal();
+    }
   }
+  disturbance = gamma_.asDiagonal() * acc;
 
   // mc_rtc::log::info("Ref accel from disturbance : {}", disturbance.transpose());
   // mc_rtc::log::info("Ref accel : {}", refAccel_.transpose());
