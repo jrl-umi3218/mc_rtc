@@ -36,3 +36,5 @@ Eigen:
   url: https://eigen.tuxfamily.org
 mc_rtc-magnum:
   url: https://github.com/gergondet/mc_rtc-magnum
+mc-rtc-superbuild:
+  url: https://github.com/mc-rtc/mc-rtc-superbuild
