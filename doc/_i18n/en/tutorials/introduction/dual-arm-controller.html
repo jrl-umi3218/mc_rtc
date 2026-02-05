@@ -4,7 +4,13 @@
 
 {% include h3.html title="Example" %}
 
-<p>We will build a simple controller that will load UR5e as the main robot and Kinova as the second robot, which is provided as `mc_rtc` robot module {% link mc_ur5e %}, {% link mc_ur5e_description %} and {% link mc_kinova %} respectively. To load UR5e as the main robot, `mc_rtc` configuration file need to be modified as follows:</p>
+<p>We will build a simple controller that will load UR5e as the main robot and Kinova as the second robot, which is provided as `mc_rtc` robot module {% link mc_ur5e %}, {% link mc_ur5e_description %} and {% link mc_kinova %} respectively. 
+The robot module is the interface software, allowing `mc_rtc` to communicate - sending commands and receiving feedback - with that specific robot type.
+While the robot's description contains lists of joints, links, and other physical attribute of the robots that is necessary to to simulate and control the robot.
+{% link mc_kinova %} contains both module and description of the Kinova robot.</p>
+
+<p>To load UR5e as the main robot, `mc_rtc` configuration file need to be modified as follows:</p>
+
 {% highlight yaml %}
 MainRobot: UR5e
 Enabled: DualArmController
@@ -21,9 +27,16 @@ Enabled: DualArmController
 
 {% include show_sources.html sources=page.constructor_sources copy=false id="constructor" %}
 
+<p>
+If you installed `mc_rtc` and `mc_kinova` and build the project using {% link mc-rtc-superbuild %}, 
+the function can simply be <code>mc_rbdyn::RobotLoader::get_robot_module("Kinova")</code>. 
+If you install and build manually, you would need to add just the installation path of `mc_kinova` appropriately.
+</p>
+
 {% include h4.html title="Robot index" %}
 
-<p>In this new example, we have loaded an extra robot: kinova. We have done so by proviing a list of robot modules to load. The loaded robots are then indexed according to the order in which the modules were provided. It means that our main robot UR5e still has the index 0, however we now have the Kinova robot at index 1.</p>
+<p>In this new example, we have loaded an extra robot: kinova. We have done so by providing a list of robot modules to load. The loaded robots are then indexed according to the order in which the modules were provided. It means that our main robot UR5e still has the index 0, however we now have the Kinova robot at index 1.</p>
+<p>You can also adding multiple robots by following <a href="https://jrl.cnrs.fr/mc_rtc/tutorials/introduction/multi-robot-controller.html">this tutorial</a>.</p>
 
 {% include h4.html title="Initial position of the Kinova robot" %}
 
@@ -82,6 +95,25 @@ Enabled: DualArmController
 <p>This phase is the main phase where both arms will perform repetitive motions. For UR5e, we will move the end-effector in a straight line, while for Kinova, we will make it's second joints to oscillate back and forth.</p>
 
 {% include show_sources.html sources=page.p3_sources copy=false id="p3" %}
+
+<p>At this point, both arms should be performing repetitive motions.
+If UR5e fails to perform the task, it might be because the <code>PostureTask</code> is overpowering the <code>EndEffectorTask</code>. 
+You can solve this problem by tuning task's gains (weight, stiffness, damping).</p>
+
+<p><code>weight</code> sets the priority of each task. 
+By default, weight of <code>EndEffectorTask</code> is already higher than of <code>PostureTask</code>.</p>
+
+<p>
+On the other hand, <code>stiffness</code> and <code>damping</code> controls the speed and smoothness of the motion. 
+The usual procedure when setting up a controller is to set the weight and then tune to <code>stiffness</code> and <code>damping</code> gains.
+Note that <code>damping = 2*sqrt(stiffness)</code>
+</p>
+
+<p>
+Tuning these gains can be done using the task constructor or available methods, 
+such as <a href="https://jrl.cnrs.fr/mc_rtc/doxygen-html/structmc__tasks_1_1PostureTask.html#aa4725eea7614be3d2bcb54e16aa0f15c">weight ( double w )</a> 
+or <a href="https://jrl.cnrs.fr/mc_rtc/doxygen-html/structmc__tasks_1_1PostureTask.html#abefc10be93897ca14825c9124ec415e9">setGains ( double stiffness, double damping )</a>
+</p>
 
 <img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/dual_arm_collision_avoidance_1.png" alt="dual_arm_collision_avoidance_1" class="img-fluid" />
 <img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/dual_arm_collision_avoidance_2.png" alt="dual_arm_collision_avoidance_2" class="img-fluid" />

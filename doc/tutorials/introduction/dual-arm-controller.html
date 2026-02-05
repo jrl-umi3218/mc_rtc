@@ -41,7 +41,12 @@ add_kinova_tasks_sources:
 add_collision_constraint_sources:
   - name: C++
     lang: cpp
-    translate: tutorials/introduction/dual-arm-controller/add_collision_constraint.cpp
+    source: |
+        // In the constructor or reset function
+        double iDist = 0.1;
+        double sDist = 0.05;
+        double damping = 0.0;
+        addCollisions("ur5e", "kinova_default", {{"*", "*", iDist, sDist, damping}});
   - name: Python
     lang: python
     translate: tutorials/introduction/dual-arm-controller/add_collision_constraint.py
@@ -55,7 +60,27 @@ logic_setup_sources:
 p1_sources:
   - name: C++
     lang: cpp
-    translate: tutorials/introduction/dual-arm-controller/p1.cpp
+    source: |
+      // In the header
+      std::vector<std::string> urJoints_ = {"shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint",
+                                            "wrist_1_joint",      "wrist_2_joint",       "wrist_3_joint"};
+      // In the reset function
+      void DualArmController::reset(const mc_control::ControllerResetData & reset_data)
+      {
+        // ...
+        urEndEffectorTask_->selectUnactiveJoints(solver(), urJoints_);
+        // ...
+      }
+      // In the run function
+      bool DualArmController::run()
+      {
+        if(phase_ == IDLE)
+        {
+          postureTask->target({{"elbow_joint", {-M_PI / 2}}, {"wrist_2_joint", {M_PI / 2}}});
+          phase_ = STARTED;
+        }
+        // ...
+      }
   - name: Python
     lang: python
     translate: tutorials/introduction/dual-arm-controller/p1.py
@@ -69,7 +94,56 @@ p2_sources:
 p3_sources:
   - name: C++
     lang: cpp
-    translate: tutorials/introduction/dual-arm-controller/p3.cpp
+    source: |
+      // In the header
+      enum ControllerState
+      {
+        GO = 0,
+        RETURN
+      };
+      // In private properties
+      ControllerState urState_ = RETURN;
+      ControllerState kinovaState_ = RETURN;
+      // Add two support functions
+      void DualArmController::runUr()
+      {
+        if(urState_ == GO && urEndEffectorTask_->eval().norm() < 0.05 && urEndEffectorTask_->speed().norm() < 0.01)
+        {
+          urState_ = RETURN;
+          urEndEffectorTask_->add_ef_pose({Eigen::Vector3d(0.0, -0.5, 0.0)});
+        }
+        else if(urState_ == RETURN && urEndEffectorTask_->eval().norm() < 0.01 && urEndEffectorTask_->speed().norm() < 0.05)
+        {
+          urState_ = GO;
+          urEndEffectorTask_->add_ef_pose({Eigen::Vector3d(0.0, 0.5, 0.0)});
+        }
+      }
+
+      void DualArmController::runKinova()
+      {
+        if(kinovaState_ == GO && kinovaPostureTask_->eval().norm() < 0.01 && kinovaPostureTask_->speed().norm() < 0.01)
+        {
+          kinovaState_ = RETURN;
+          kinovaPostureTask_->target({{"joint_2", {0.0}}});
+        }
+        else if(kinovaState_ == RETURN && kinovaPostureTask_->eval().norm() < 0.01
+                && kinovaPostureTask_->speed().norm() < 0.01)
+        {
+          kinovaState_ = GO;
+          kinovaPostureTask_->target({{"joint_2", {-M_PI / 4}}});
+        }
+      }
+      // In the run function
+      bool DualArmController::run()
+      {
+        // ...
+        else if(phase_ == MOVE)
+        {
+          runUr();
+          runKinova();
+        }
+        return mc_control::MCController::run();
+      }
   - name: Python
     lang: python
     translate: tutorials/introduction/dual-arm-controller/p3.py
