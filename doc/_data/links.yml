@@ -32,6 +32,8 @@ mc_kinova:
   url: https://github.com/isri-aist/mc_kinova
 mc_rtc_tutorials:
   url: https://github.com/HACHIX-CORPORATION/mc_rtc_tutorials
+mc_dingo:
+  url: https://github.com/HACHIX-CORPORATION/mc_dingo
 Eigen:
   url: https://eigen.tuxfamily.org
 mc_rtc-magnum:

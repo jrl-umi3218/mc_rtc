@@ -95,6 +95,8 @@ tutorials:
       title: Multi-robot controller
     dual-arm-controller:
       title: Dual arm controller
+    mobile-arm-controller:
+      title: Mobile arm controller
   usage:
     title: Framework usage
     desc: The following tutorials cover broad topics concerning the framework that are not specifically related to a controller's implementation

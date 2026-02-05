@@ -44,6 +44,8 @@ If you install and build manually, you would need to add just the installation p
 
 {% include show_sources.html sources=page.reposition_kinova_sources copy=false id="reposition_kinova" %}
 
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/dual_arm_initial.png" alt="architecture_overview" class="img-fluid" />
+
 {% include h4.html title="Tasks and constraints" %}
 
 <p>For each robot, we will add tasks and constraints as usual. To demonstrate different possibilities, we will add end-effector task for UR5e and posture task for Kinova robot. Moreover, we will add collision constraint between two robots to avoid collision during motion. First we will add tasks and constraints for UR5e robot:</p>
@@ -80,6 +82,8 @@ If you install and build manually, you would need to add just the installation p
 
 {% include show_sources.html sources=page.p1_sources copy=false id="p1" %}
 
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/dual_arm_standby.png" alt="architecture_overview" class="img-fluid" />
+
 {% include h4.html title="Phase 2: Enable end-effector task on UR5e" %}
 
 <p>In this phase, we will check if the posture task of UR5e is achieved to reset the target of end-effector task and enable it.</p>
@@ -110,6 +114,9 @@ Tuning these gains can be done using the task constructor or available methods,
 such as <a href="https://jrl.cnrs.fr/mc_rtc/doxygen-html/structmc__tasks_1_1PostureTask.html#aa4725eea7614be3d2bcb54e16aa0f15c">weight ( double w )</a> 
 or <a href="https://jrl.cnrs.fr/mc_rtc/doxygen-html/structmc__tasks_1_1PostureTask.html#abefc10be93897ca14825c9124ec415e9">setGains ( double stiffness, double damping )</a>
 </p>
+
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/dual_arm_collision_avoidance_1.png" alt="dual_arm_collision_avoidance_1" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/dual_arm_collision_avoidance_2.png" alt="dual_arm_collision_avoidance_2" class="img-fluid" />
 
 {% include h3.html title="Play time" %}
 
