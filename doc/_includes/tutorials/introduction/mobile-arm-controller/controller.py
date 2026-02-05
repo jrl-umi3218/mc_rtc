@@ -25,9 +25,7 @@ class MobileArmController(mc_control.MCPythonController):
         dof[5] = 1.0
         friction = mc_rbdyn.Contact.defaultFriction
         self.addContact(
-            mc_control.Contact(
-                "dingo", "ground", "Base", "AllGround", friction, dof
-            )
+            mc_control.Contact("dingo", "ground", "Base", "AllGround", friction, dof)
         )
         iDist, sDist, damping = 0.1, 0.05, 0.0
         self.addCollisions(
@@ -63,9 +61,7 @@ class MobileArmController(mc_control.MCPythonController):
             and self._handTask.eval().norm() < 0.1
             and self._handTask.speed().norm() < 1e-4
         ):
-            self.addContact(
-                mc_control.Contact("ur5e", "door", "Wrist", "Handle")
-            )
+            self.addContact(mc_control.Contact("ur5e", "door", "Wrist", "Handle"))
             self.qpsolver.removeTask(self._handTask)
             self.postureTask.reset()
             self._doorPosture.target(
@@ -89,9 +85,7 @@ class MobileArmController(mc_control.MCPythonController):
             self._phase == ControllerPhase.DONE
             and self._doorPosture.eval().norm() < 0.01
         ):
-            self.removeContact(
-                mc_control.Contact("ur5e", "door", "Wrist", "Handle")
-            )
+            self.removeContact(mc_control.Contact("ur5e", "door", "Wrist", "Handle"))
             self._dingoEndEffectorTask.reset()
             self.qpsolver.addTask(self._dingoEndEffectorTask)
             self.qpsolver.addTask(self.postureTask)

@@ -4,7 +4,7 @@
 
 {% include h3.html title="Example" %}
 
-<p>We will build a simple controller that will load UR5e as the main robot and Kinova as the second robot, which is provided as `mc_rtc` robot module {% link mc_ur5e %}, {% link mc_ur5e_description %} and {% link mc_kinova %} respectively. 
+<p>We will build a simple controller that will load UR5e as the main robot and Kinova as the second robot, which is provided as `mc_rtc` robot module {% link mc_ur5e %}, {% link mc_ur5e_description %} and {% link mc_kinova %} respectively.
 The robot module is the interface software, allowing `mc_rtc` to communicate - sending commands and receiving feedback - with that specific robot type.
 While the robot's description contains lists of joints, links, and other physical attribute of the robots that is necessary to to simulate and control the robot.
 {% link mc_kinova %} contains both module and description of the Kinova robot.</p>
@@ -28,8 +28,8 @@ Enabled: DualArmController
 {% include show_sources.html sources=page.constructor_sources copy=false id="constructor" %}
 
 <p>
-If you installed `mc_rtc` and `mc_kinova` and build the project using {% link mc-rtc-superbuild %}, 
-the function can simply be <code>mc_rbdyn::RobotLoader::get_robot_module("Kinova")</code>. 
+If you installed `mc_rtc` and `mc_kinova` and build the project using {% link mc-rtc-superbuild %},
+the function can simply be <code>mc_rbdyn::RobotLoader::get_robot_module("Kinova")</code>.
 If you install and build manually, you would need to add just the installation path of `mc_kinova` appropriately.
 </p>
 
@@ -97,21 +97,21 @@ If you install and build manually, you would need to add just the installation p
 {% include show_sources.html sources=page.p3_sources copy=false id="p3" %}
 
 <p>At this point, both arms should be performing repetitive motions.
-If UR5e fails to perform the task, it might be because the <code>PostureTask</code> is overpowering the <code>EndEffectorTask</code>. 
+If UR5e fails to perform the task, it might be because the <code>PostureTask</code> is overpowering the <code>EndEffectorTask</code>.
 You can solve this problem by tuning task's gains (weight, stiffness, damping).</p>
 
-<p><code>weight</code> sets the priority of each task. 
+<p><code>weight</code> sets the priority of each task.
 By default, weight of <code>EndEffectorTask</code> is already higher than of <code>PostureTask</code>.</p>
 
 <p>
-On the other hand, <code>stiffness</code> and <code>damping</code> controls the speed and smoothness of the motion. 
+On the other hand, <code>stiffness</code> and <code>damping</code> controls the speed and smoothness of the motion.
 The usual procedure when setting up a controller is to set the weight and then tune to <code>stiffness</code> and <code>damping</code> gains.
 Note that <code>damping = 2*sqrt(stiffness)</code>
 </p>
 
 <p>
-Tuning these gains can be done using the task constructor or available methods, 
-such as <a href="https://jrl.cnrs.fr/mc_rtc/doxygen-html/structmc__tasks_1_1PostureTask.html#aa4725eea7614be3d2bcb54e16aa0f15c">weight ( double w )</a> 
+Tuning these gains can be done using the task constructor or available methods,
+such as <a href="https://jrl.cnrs.fr/mc_rtc/doxygen-html/structmc__tasks_1_1PostureTask.html#aa4725eea7614be3d2bcb54e16aa0f15c">weight ( double w )</a>
 or <a href="https://jrl.cnrs.fr/mc_rtc/doxygen-html/structmc__tasks_1_1PostureTask.html#abefc10be93897ca14825c9124ec415e9">setGains ( double stiffness, double damping )</a>
 </p>
 

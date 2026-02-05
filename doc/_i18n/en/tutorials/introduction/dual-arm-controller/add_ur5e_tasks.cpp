@@ -2,10 +2,10 @@
 #include <mc_tasks/EndEffectorTask.h>
 
 struct DualArmController_DLLAPI DualArmController : public mc_control::MCController
-{   
-    // ...
-    std::shared_ptr<mc_tasks::EndEffectorTask> urEndEffectorTask_;
-    // ...
+{
+  // ...
+  std::shared_ptr<mc_tasks::EndEffectorTask> urEndEffectorTask_;
+  // ...
 }
 
 // In the reset function
