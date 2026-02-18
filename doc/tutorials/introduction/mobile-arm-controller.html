@@ -17,17 +17,13 @@ constructor_sources:
       #include <mc_rbdyn/RobotLoader.h>
 
       MobileArmController::MobileArmController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration &config)
-      : mc_control::MCController({rm,
-          mc_rbdyn::RobotLoader::get_robot_module(
-              "object", "/usr/local/share/mc_dingo", std::string("dingo")),
-          mc_rbdyn::RobotLoader::get_robot_module(
-              "env",
-              std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH) +
-                  "/../mc_int_obj_description",
-              std::string("door")),
-          mc_rbdyn::RobotLoader::get_robot_module(
-              "env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
-              std::string("ground"))}, dt)
+      : mc_control::MCController(
+        {
+          rm,
+          mc_rbdyn::RobotLoader::get_robot_module("dingo"),
+          mc_rbdyn::RobotLoader::get_robot_module("env/door"),
+          mc_rbdyn::RobotLoader::get_robot_module("env/ground")
+        }, dt)
   - name: Python
     lang: python
     source: |
@@ -70,7 +66,7 @@ reposition_sources:
       robots().robot(0).posW(
           sva::PTransformd(sva::RotZ(0.0), Eigen::Vector3d(0.0, 0.0, 0.5)));
       robots().robot(1).posW(
-          sva::PTransformd(sva::RotZ(0.0), Eigen::Vector3d(0.0, 0.0, 0.0)));
+          sva::PTransformd(sva::RotZ(0.0), Eigen::Vector3d(-0.25, 0.0, 0.0)));
       robots().robot(2).posW(
           sva::PTransformd(sva::RotZ(M_PI), Eigen::Vector3d(2.0, 1.0, 0)));
   - name: Python
@@ -91,7 +87,10 @@ add_ur5e_tasks_sources:
     lang: cpp
     source: |
       // In the header
+      #include <mc_tasks/SurfaceTransformTask.h>
+      // ...
       std::shared_ptr<mc_tasks::SurfaceTransformTask> handTask_;
+      
       // In the reset function
       handTask_ =
           std::make_shared<mc_tasks::SurfaceTransformTask>("Wrist", robots(), 0);
@@ -107,7 +106,10 @@ add_dingo_tasks_sources:
     lang: cpp
     source: |
         // In the header
+        #include <mc_tasks/EndEffectorTask.h>
+        // ...
         std::shared_ptr<mc_tasks::EndEffectorTask> dingoEndEffectorTask_;
+        
         // In the reset function
         dingoEndEffectorTask_ =
             std::make_shared<mc_tasks::EndEffectorTask>("base_link", robots(),
@@ -190,7 +192,7 @@ logic_setup_sources:
         DONE
       };
       // A private property of our controller
-      ControllerPhase phase = APPROACH;
+      ControllerPhase phase_ = APPROACH;
       // In the run function
       bool MobileArmController::run()
       {
@@ -205,8 +207,11 @@ logic_setup_sources:
           phase_ = OPEN;
         }
         else if(phase_ == OPEN && 0 /** we write this condition later */) {
-          /** Continue the DONE phase */
+          /** Setup the OPEN phase */
           phase_ = DONE;
+        }
+        else if (phase_ == DONE && 0 /** we write this condition later */) {
+          /** Continue the DONE phase */
         }
         return mc_control::MCController::run();
       }
