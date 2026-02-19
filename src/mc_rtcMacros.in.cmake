@@ -1,6 +1,5 @@
-get_filename_component(
-  PACKAGE_PREFIX_DIR "${CMAKE_CURRENT_LIST_DIR}/@mc_rtc_macros_RELATIVE_PATH@" ABSOLUTE
-)
+# -- Path to mc_rtc install prefix --
+get_filename_component(PACKAGE_PREFIX_DIR "${CMAKE_CURRENT_LIST_DIR}/../../.." ABSOLUTE)
 
 # -- Library source directory --
 set(MC_RTC_SRCDIR "@MC_RTC_SOURCE_DIR@")
@@ -10,53 +9,54 @@ if(NOT DEFINED MC_RTC_LOADER_DEBUG_SUFFIX)
   set(MC_RTC_LOADER_DEBUG_SUFFIX "@MC_RTC_LOADER_DEBUG_SUFFIX@")
 endif()
 
+# The point of MC_RTC_HONOR_INSTALL_PREFIX is to let the user decide whether they want
+# to install the plugins in the same prefix as mc_rtc, or in a dedicated one. This is
+# useful for Nix, where we want to let runtime dependencies install themselves into
+# their own dedicated prefix, instead of being forced to install into the same prefix as
+# mc_rtc.
 if(NOT DEFINED MC_RTC_HONOR_INSTALL_PREFIX)
   set(MC_RTC_HONOR_INSTALL_PREFIX OFF)
 endif()
 
-if(MC_RTC_HONOR_INSTALL_PREFIX)
-  include(GNUInstallDirs)
-endif()
-
 # -- Library install directory --
-if(MC_RTC_HONOR_INSTALL_PREFIX)
-  set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
-  set(MC_RTC_DOCDIR "${CMAKE_INSTALL_FULL_DOCDIR}")
-  set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
-else()
-  # nix sets CMAKE_INSTALL_*DIR to absolute paths
-  if(IS_ABSOLUTE "@CMAKE_INSTALL_BINDIR@")
-    set(MC_RTC_BINDIR "@CMAKE_INSTALL_BINDIR@")
+macro(mc_rtc_set_all_install_paths HONOR_PREFIX)
+  if(HONOR_PREFIX)
+    include(GNUInstallDirs)
+    set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
+    set(MC_RTC_DOCDIR "${CMAKE_INSTALL_FULL_DOCDIR}")
+    set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
   else()
-    set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_BINDIR@")
-  endif()
+    if(IS_ABSOLUTE "@CMAKE_INSTALL_BINDIR@")
+      set(MC_RTC_BINDIR "@CMAKE_INSTALL_BINDIR@")
+    else()
+      set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_BINDIR@")
+    endif()
 
-  if(IS_ABSOLUTE "@CMAKE_INSTALL_DOCDIR@")
-    set(MC_RTC_DOCDIR "@CMAKE_INSTALL_DOCDIR@")
-  else()
-    set(MC_RTC_DOCDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_DOCDIR@")
-  endif()
+    if(IS_ABSOLUTE "@CMAKE_INSTALL_DOCDIR@")
+      set(MC_RTC_DOCDIR "@CMAKE_INSTALL_DOCDIR@")
+    else()
+      set(MC_RTC_DOCDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_DOCDIR@")
+    endif()
 
-  if(IS_ABSOLUTE "@CMAKE_INSTALL_LIBDIR@")
-    set(MC_RTC_LIBDIR "@CMAKE_INSTALL_LIBDIR@")
-  else()
-    set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@")
+    if(IS_ABSOLUTE "@CMAKE_INSTALL_LIBDIR@")
+      set(MC_RTC_LIBDIR "@CMAKE_INSTALL_LIBDIR@")
+    else()
+      set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@")
+    endif()
   endif()
-endif()
+endmacro()
 
 # -- Helper to set the components install prefix --
 macro(mc_rtc_set_prefix NAME FOLDER)
-  if(MC_RTC_HONOR_INSTALL_PREFIX)
-    set(MC_${NAME}_LIBRARY_INSTALL_PREFIX "${CMAKE_INSTALL_FULL_LIBDIR}/${FOLDER}")
+  if(${ARGC} GREATER 2)
+    set(HONOR_PREFIX "${ARGV2}")
   else()
-    set(MC_${NAME}_LIBRARY_INSTALL_PREFIX "${MC_RTC_LIBDIR}/${FOLDER}")
+    set(HONOR_PREFIX "${MC_RTC_HONOR_INSTALL_PREFIX}")
   endif()
+  mc_rtc_set_all_install_paths(${HONOR_PREFIX})
+  set(MC_${NAME}_LIBRARY_INSTALL_PREFIX "${MC_RTC_LIBDIR}/${FOLDER}")
   if(WIN32)
-    if(MC_RTC_HONOR_INSTALL_PREFIX)
-      set(MC_${NAME}_RUNTIME_INSTALL_PREFIX "${CMAKE_INSTALL_FULL_BINDIR}/${FOLDER}")
-    else()
-      set(MC_${NAME}_RUNTIME_INSTALL_PREFIX "${MC_RTC_BINDIR}/${FOLDER}")
-    endif()
+    set(MC_${NAME}_RUNTIME_INSTALL_PREFIX "${MC_RTC_BINDIR}/${FOLDER}")
   else()
     set(MC_${NAME}_RUNTIME_INSTALL_PREFIX "${MC_${NAME}_LIBRARY_INSTALL_PREFIX}")
   endif()
@@ -68,6 +68,7 @@ macro(mc_rtc_set_prefix NAME FOLDER)
   message(
     STATUS "MC_${NAME}_RUNTIME_INSTALL_PREFIX to ${MC_${NAME}_RUNTIME_INSTALL_PREFIX}"
   )
+  mc_rtc_set_all_install_paths(${MC_RTC_HONOR_INSTALL_PREFIX})
 endmacro()
 
 # -- Controllers --
@@ -195,14 +196,11 @@ set_target_properties(
   mc_rtc::mc_observers PROPERTIES INTERFACE_LINK_LIBRARIES mc_rtc::mc_control
 )
 
-# -- States --
-if(MC_RTC_HONOR_INSTALL_PREFIX)
-  set(MC_RTC_HONOR_INSTALL_PREFIX OFF)
-  mc_rtc_set_prefix(STATES_DEFAULT mc_controller/fsm/states)
-  set(MC_RTC_HONOR_INSTALL_PREFIX ON)
-else()
-  mc_rtc_set_prefix(STATES_DEFAULT mc_controller/fsm/states)
-endif()
+# -- States -- Default MC_RTC_HONOR_INSTALL_PREFIX to OFF, so that mc_rtc's path to its
+# default states is available to controllers
+mc_rtc_set_prefix(STATES_DEFAULT mc_controller/fsm/states OFF)
+# Honour MC_RTC_HONOR_INSTALL_PREFIX for the main states prefix, so that users can
+# choose to install their own states in a different prefix if they want to
 mc_rtc_set_prefix(STATES mc_controller/${PROJECT_NAME}/states)
 
 macro(add_fsm_state state_name)
