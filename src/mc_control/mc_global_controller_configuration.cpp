@@ -34,23 +34,36 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       config.load(globalPath);
     }
 
-    // If the env MC_RTC_CONTROLLER_CONFIG is set, load this file as well
+    // If the env MC_RTC_CONTROLLER_CONFIG is set, load these files as well (colon-separated list,// applied from last
+    // to first element - akin to PATH variable on Linux systems)
     const char * env_config = std::getenv("MC_RTC_CONTROLLER_CONFIG");
     if(env_config)
     {
-      bfs::path envConfigPath(env_config);
-      if(bfs::exists(envConfigPath))
+      std::string envConfigStr(env_config);
+      std::vector<std::string> paths;
+      std::stringstream ss(envConfigStr);
+      std::string pathStr;
+      while(std::getline(ss, pathStr, ':'))
       {
-        mc_rtc::log::info(
-            "Loading additional global configuration from MC_RTC_CONTROLLER_CONFIG environment variable {}",
-            envConfigPath.string());
-        config.load(envConfigPath.string());
+        if(!pathStr.empty()) { paths.push_back(pathStr); }
       }
-      else if(envConfigPath.string().size())
+      std::reverse(paths.begin(), paths.end());
+      for(const auto & path : paths)
       {
-        mc_rtc::log::error_and_throw(
-            "MC_RTC_CONTROLLER_CONFIG environment variable is set to \"{}\", but this file does not exist",
-            envConfigPath.string());
+        bfs::path envConfigPath(path);
+        if(bfs::exists(envConfigPath))
+        {
+          mc_rtc::log::info(
+              "Loading additional global configuration from MC_RTC_CONTROLLER_CONFIG environment variable {}",
+              envConfigPath.string());
+          config.load(envConfigPath.string());
+        }
+        else
+        {
+          mc_rtc::log::error_and_throw(
+              "MC_RTC_CONTROLLER_CONFIG environment variable is set to \"{}\", but this file does not exist",
+              envConfigPath.string());
+        }
       }
     }
 
