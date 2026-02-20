@@ -23,7 +23,8 @@ constructor_sources:
           mc_rbdyn::RobotLoader::get_robot_module("dingo"),
           mc_rbdyn::RobotLoader::get_robot_module("env/door"),
           mc_rbdyn::RobotLoader::get_robot_module("env/ground")
-        }, dt)
+        }, 
+        dt) 
   - name: Python
     lang: python
     source: |
@@ -42,7 +43,7 @@ set_contact_sources:
       dof[4] = 0.0;
       double friction = mc_rbdyn::Contact::defaultFriction;
       addContact({"dingo", "ground", "Base", "AllGround", friction, dof});
-      addContact({"dingo", "UR5e", "Base", "Base"});
+      addContact({"dingo", "ur5e", "Base", "Base"});
   - name: Python
     lang: python
     source: |
@@ -112,8 +113,7 @@ add_dingo_tasks_sources:
         
         // In the reset function
         dingoEndEffectorTask_ =
-            std::make_shared<mc_tasks::EndEffectorTask>("base_link", robots(),
-            1);
+          std::make_shared<mc_tasks::EndEffectorTask>("base_link", robots(), 1);
         dingoEndEffectorTask_->positionTask->stiffness(1.0);
         dingoEndEffectorTask_->positionTask->weight(1000.0);
         dingoEndEffectorTask_->orientationTask->stiffness(1.0);
@@ -133,8 +133,8 @@ add_door_tasks_sources:
         std::shared_ptr<mc_solver::KinematicsConstraint> doorKinematics_;
         std::shared_ptr<mc_tasks::PostureTask> doorPostureTask_;
         // In the reset function
-        doorKinematics_ = std::make_shared<mc_solver::KinematicsConstraint>(
-            robots(), 2, solver().dt());
+        doorKinematics_ = 
+          std::make_shared<mc_solver::KinematicsConstraint>(robots(), 2, solver().dt());
         solver().addConstraintSet(*doorKinematics_);
         doorPostureTask_ =
             std::make_shared<mc_tasks::PostureTask>(solver(), 2, 1.0, 1.0);
