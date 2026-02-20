@@ -16,10 +16,10 @@ constructor_sources:
     source: |
       #include <mc_rbdyn/RobotLoader.h>
 
-      MobileArmController::MobileArmController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration &config)
+      MobileArmController::MobileArmController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration &config) 
       : mc_control::MCController(
         {
-          rm,
+          rm, 
           mc_rbdyn::RobotLoader::get_robot_module("dingo"),
           mc_rbdyn::RobotLoader::get_robot_module("env/door"),
           mc_rbdyn::RobotLoader::get_robot_module("env/ground")
@@ -65,11 +65,11 @@ reposition_sources:
     source: |
       // In the reset function
       robots().robot(0).posW(
-          sva::PTransformd(sva::RotZ(0.0), Eigen::Vector3d(0.0, 0.0, 0.5)));
+        sva::PTransformd(sva::RotZ(0.0), Eigen::Vector3d(0.0, 0.0, 0.5)));
       robots().robot(1).posW(
-          sva::PTransformd(sva::RotZ(0.0), Eigen::Vector3d(-0.25, 0.0, 0.0)));
+        sva::PTransformd(sva::RotZ(0.0), Eigen::Vector3d(-0.25, 0.0, 0.0)));
       robots().robot(2).posW(
-          sva::PTransformd(sva::RotZ(M_PI), Eigen::Vector3d(2.0, 1.0, 0)));
+        sva::PTransformd(sva::RotZ(M_PI), Eigen::Vector3d(2.0, 1.0, 0)));
   - name: Python
     lang: python
     source: |
@@ -137,7 +137,7 @@ add_door_tasks_sources:
           std::make_shared<mc_solver::KinematicsConstraint>(robots(), 2, solver().dt());
         solver().addConstraintSet(*doorKinematics_);
         doorPostureTask_ =
-            std::make_shared<mc_tasks::PostureTask>(solver(), 2, 1.0, 1.0);
+          std::make_shared<mc_tasks::PostureTask>(solver(), 2, 1.0, 1.0);
         solver().addTask(doorPostureTask_);
   - name: Python
     lang: python
@@ -346,5 +346,52 @@ p5_sources:
       self._dingoEndEffectorTask.reset()
       self.qpsolver.addTask(self._dingoEndEffectorTask)
       self.qpsolver.addTask(self.postureTask)
+phase_conditions:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the run function
+      if (phase_ == APPROACH && dingoEndEffectorTask_->eval().norm() < 1e-5 && dingoEndEffectorTask_->speed().norm() < 1e-5)
+      {
+        // ...
+      } 
+      else if (phase_ == HANDLE && handTask_->eval().norm() < 0.1 && handTask_->speed().norm() < 1e-4) 
+      {
+        // ...
+      }
+      else if (phase_ == OPEN && doorPostureTask_->eval().norm() < 0.01) 
+      {
+        // ...
+      }
+      else if (phase_ == DONE && doorPostureTask_->eval().norm() < 0.01) 
+      {
+        // ...
+      }
+  - name: Python
+    lang: python
+    source: |
+      # In the run function
+      if (
+            self._phase == ControllerPhase.APPROACH
+            and self._dingoEndEffectorTask.eval().norm() < 1e-5
+            and self._dingoEndEffectorTask.speed().norm() < 1e-5
+        ):
+        # ...
+      elif (
+            self._phase == ControllerPhase.HANDLE
+            and self._handTask.eval().norm() < 0.1
+            and self._handTask.speed().norm() < 1e-4
+        ):
+        # ...
+      elif (
+            self._phase == ControllerPhase.OPEN
+            and self._doorPosture.eval().norm() < 0.01
+        ):
+        # ...
+      elif (
+            self._phase == ControllerPhase.DONE
+            and self._doorPosture.eval().norm() < 0.01
+        ):
+        # ...
 ---
 {% translate_file tutorials/introduction/mobile-arm-controller.html %}

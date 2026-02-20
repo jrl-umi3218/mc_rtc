@@ -126,6 +126,15 @@ Enabled: MobileArmController
 
 <img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/mobile_manipulator_release.png" alt="architecture_overview" class="img-fluid" />
 
+{% include h4.html title="Adding phase conditions" %}
+
+<p>
+  Now it is time to add completion conditions for earch phase of the simulation.
+  Similar to previous tutorials, before moving to the next phase, we want to check if the robots reach steady state at the desired target.
+</p>
+
+{% include show_sources.html sources=page.phase_conditions copy=false id="condition" %}
+
 {% include h3.html title="Play time" %}
 
 <p>At this point you can play around with some of the parameters and see the benefits of the multi-robot approach as you can change the following without changing anything else:</p>
