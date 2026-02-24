@@ -60,8 +60,9 @@ void RobotModule::init(const rbd::parsers::ParserResult & res)
   _collision = res.collision;
   if(_ref_joint_order.size() == 0) { make_default_ref_joint_order(); }
   expand_stance();
-  generate_convexes();
-  bind_convexes();
+  // FIXME
+  // generate_convexes();
+  // bind_convexes();
 }
 
 void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point)
