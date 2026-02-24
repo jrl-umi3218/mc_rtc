@@ -39,8 +39,6 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 project(${PROJECT_NAME} C CXX)
 set(MC_RTC_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
 
-set_default_cmake_build_type(RelWithDebInfo)
-
 if(NOT DEFINED MC_RTC_INSTALL_PREFIX)
   set(MC_RTC_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 endif()
@@ -49,6 +47,19 @@ if(WIN32)
   set(MC_RTC_LOADER_DEBUG_SUFFIX "/debug")
 else()
   set(MC_RTC_LOADER_DEBUG_SUFFIX "")
+endif()
+
+set_default_cmake_build_type(RelWithDebInfo)
+
+# Check for Nix build environment
+if(DEFINED ENV{NIX_BUILD_CORES}
+   OR DEFINED ENV{NIX_STORE}
+   OR DEFINED ENV{IN_NIX_SHELL}
+)
+  set(MC_RTC_BUILD_IN_NIX TRUE)
+  message(STATUS "Detected Nix build environment")
+else()
+  set(MC_RTC_BUILD_IN_NIX FALSE)
 endif()
 
 option(GENERATE_COVERAGE "Generate coverage data" FALSE)
@@ -225,17 +236,18 @@ macro(find_description_package PACKAGE)
             "Your ${PACKAGE} does not define where to find the data, please update."
         )
       else()
-        set(${PACKAGE_PATH_VAR} "${${PACKAGE}_SOURCE_PREFIX}")
+        set("${PACKAGE_PATH_VAR}" "${${PACKAGE}_SOURCE_PREFIX}")
       endif()
     else()
-      set(${PACKAGE_PATH_VAR} "${${PACKAGE}_INSTALL_PREFIX}")
+      set("${PACKAGE_PATH_VAR}" "${${PACKAGE}_INSTALL_PREFIX}")
     endif()
     # Cleanup the path provided by CMake
-    get_filename_component(${PACKAGE_PATH_VAR} "${${PACKAGE_PATH_VAR}}" REALPATH)
+    get_filename_component("${PACKAGE_PATH_VAR}" "${${PACKAGE_PATH_VAR}}" REALPATH)
   endif()
   message("-- Found ${PACKAGE}: ${${PACKAGE_PATH_VAR}}")
 endmacro()
 
+find_description_package(jvrc_description)
 find_description_package(mc_env_description)
 find_description_package(mc_int_obj_description)
 
@@ -293,7 +305,7 @@ else()
 endif()
 
 configure_file(
-  ${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in
+  ${PROJECT_SOURCE_DIR}/include/mc_rtc/config.in.h
   ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h
 )
 
