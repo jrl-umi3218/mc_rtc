@@ -16,15 +16,15 @@ constructor_sources:
     source: |
       #include <mc_rbdyn/RobotLoader.h>
 
-      MobileArmController::MobileArmController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration &config) 
+      MobileArmController::MobileArmController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration &config)
       : mc_control::MCController(
         {
-          rm, 
+          rm,
           mc_rbdyn::RobotLoader::get_robot_module("dingo"),
           mc_rbdyn::RobotLoader::get_robot_module("env/door"),
           mc_rbdyn::RobotLoader::get_robot_module("env/ground")
-        }, 
-        dt) 
+        },
+        dt)
   - name: Python
     lang: python
     source: |
@@ -91,7 +91,7 @@ add_ur5e_tasks_sources:
       #include <mc_tasks/SurfaceTransformTask.h>
       // ...
       std::shared_ptr<mc_tasks::SurfaceTransformTask> handTask_;
-      
+
       // In the reset function
       handTask_ =
           std::make_shared<mc_tasks::SurfaceTransformTask>("Wrist", robots(), 0);
@@ -110,7 +110,7 @@ add_dingo_tasks_sources:
         #include <mc_tasks/EndEffectorTask.h>
         // ...
         std::shared_ptr<mc_tasks::EndEffectorTask> dingoEndEffectorTask_;
-        
+
         // In the reset function
         dingoEndEffectorTask_ =
           std::make_shared<mc_tasks::EndEffectorTask>("base_link", robots(), 1);
@@ -133,7 +133,7 @@ add_door_tasks_sources:
         std::shared_ptr<mc_solver::KinematicsConstraint> doorKinematics_;
         std::shared_ptr<mc_tasks::PostureTask> doorPostureTask_;
         // In the reset function
-        doorKinematics_ = 
+        doorKinematics_ =
           std::make_shared<mc_solver::KinematicsConstraint>(robots(), 2, solver().dt());
         solver().addConstraintSet(*doorKinematics_);
         doorPostureTask_ =
@@ -354,16 +354,16 @@ phase_conditions:
       if (phase_ == APPROACH && dingoEndEffectorTask_->eval().norm() < 1e-5 && dingoEndEffectorTask_->speed().norm() < 1e-5)
       {
         // ...
-      } 
-      else if (phase_ == HANDLE && handTask_->eval().norm() < 0.1 && handTask_->speed().norm() < 1e-4) 
+      }
+      else if (phase_ == HANDLE && handTask_->eval().norm() < 0.1 && handTask_->speed().norm() < 1e-4)
       {
         // ...
       }
-      else if (phase_ == OPEN && doorPostureTask_->eval().norm() < 0.01) 
+      else if (phase_ == OPEN && doorPostureTask_->eval().norm() < 0.01)
       {
         // ...
       }
-      else if (phase_ == DONE && doorPostureTask_->eval().norm() < 0.01) 
+      else if (phase_ == DONE && doorPostureTask_->eval().norm() < 0.01)
       {
         // ...
       }
