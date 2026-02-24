@@ -13,11 +13,18 @@ function(mc_rtc_ros2_dependency PKG TARGET)
   target_link_libraries(mc_rtc_3rd_party::ROS INTERFACE ${PKG}::${TARGET})
 endfunction()
 
+# Set ROS_VERSION to 2 if not provided
+if(NOT DEFINED ENV{ROS_VERSION} OR "$ENV{ROS_VERSION}" STREQUAL "")
+  set(ROS_VERSION "2")
+else()
+  set(ROS_VERSION "$ENV{ROS_VERSION}")
+endif()
+
 if(NOT TARGET mc_rtc_3rd_party::ROS)
   if(NOT COMMAND pkg_check_modules)
     find_package(PkgConfig)
   endif()
-  if(DEFINED ENV{ROS_VERSION} AND "$ENV{ROS_VERSION}" EQUAL "2")
+  if("${ROS_VERSION}" EQUAL "2")
     cmake_minimum_required(VERSION 3.22)
     list(APPEND CMAKE_PREFIX_PATH $ENV{AMENT_PREFIX_PATH})
     set(AMENT_CMAKE_UNINSTALL_TARGET
