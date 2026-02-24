@@ -77,20 +77,9 @@ if(EXISTS "${MC_ENV_DESCRIPTION_PATH}")
   )
 endif()
 
-find_description_package(jvrc_description)
 add_robot(jvrc1)
 if(TARGET jvrc1)
-  set_target_properties(
-    jvrc1
-    PROPERTIES
-      COMPILE_FLAGS
-      "-DMC_ROBOTS_EXPORTS -DJVRC_DESCRIPTION_PATH=\"${JVRC_DESCRIPTION_PATH}\""
-  )
+  set_target_properties(jvrc1 PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS")
 else()
-  set_target_properties(
-    mc_rbdyn
-    PROPERTIES
-      COMPILE_FLAGS
-      "-DMC_ROBOTS_EXPORTS -DJVRC_DESCRIPTION_PATH=\"${JVRC_DESCRIPTION_PATH}\""
-  )
+  set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS")
 endif()
