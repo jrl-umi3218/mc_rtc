@@ -22,4 +22,5 @@ constexpr auto CONF_PATH = "${CMAKE_INSTALL_PREFIX}/etc/mc_rtc.yaml";
 constexpr bool MC_RTC_SUPPORT_ROS = ${MC_RTC_HAS_ROS_SUPPORT};
 constexpr auto JSON_SCHEMA_PATH = "${MC_RTC_JSON_SCHEMA_PATH}/";
 constexpr bool MC_RTC_BUILD_IN_NIX = "${MC_RTC_BUILD_IN_NIX}";
+constexpr auto MC_RTC_JSON_SCHEMA_PATH = "${MC_RTC_JSON_SCHEMA_PATH}";
 } // namespace mc_rtc

@@ -8,6 +8,7 @@
 #  define MC_FMT_STREAMED(X) fmt::streamed(X)
 #  include <boost/filesystem.hpp>
 #  include <Eigen/Core>
+#  include <filesystem>
 #  include <fmt/ostream.h>
 #  include <fmt/ranges.h>
 #  include <type_traits>
@@ -28,6 +29,17 @@ struct fmt::formatter<boost::filesystem::path> : fmt::formatter<std::string>
 {
   template<typename FormatContext>
   auto format(const boost::filesystem::path & p, FormatContext & ctx)
+  {
+    return fmt::formatter<std::string>::format(p.string(), ctx);
+  }
+};
+
+// Formatter for std::filesystem::path
+template<>
+struct fmt::formatter<std::filesystem::path> : fmt::formatter<std::string>
+{
+  template<typename FormatContext>
+  auto format(const std::filesystem::path & p, FormatContext & ctx)
   {
     return fmt::formatter<std::string>::format(p.string(), ctx);
   }
