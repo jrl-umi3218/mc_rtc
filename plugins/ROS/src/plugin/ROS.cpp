@@ -48,10 +48,7 @@ void ROSPlugin::reset(mc_control::MCGlobalController & controller)
 
 void ROSPlugin::after(mc_control::MCGlobalController & controller)
 {
-  // mc_rtc::ROSBridge::update_robot_publisher("control/" + controller.robot().name(), controller.timestep(),
-  // controller.controller().outputRobot());
-
-  auto update_env = [this, &controller](const std::string & prefix, mc_rbdyn::Robots & robots)
+  auto update_robots = [this, &controller](const std::string & prefix, mc_rbdyn::Robots & robots)
   {
     for(auto & r : robots) { mc_rtc::ROSBridge::update_robot_publisher(prefix + r.name(), controller.timestep(), r); }
     published_topics = robots.size() - 1;
@@ -59,10 +56,7 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
   update_robots("control/", controller.controller().robots());
   if(publish_real) { update_robots("real/", controller.controller().realRobots()); }
 
-  if(controller.robots().size() != mc_rtc::ROSBridge::nb_robot_publisher() / (publish_real ? 2 : 1))
-  {
-    mc_rtc::ROSBridge::remove_extra_robot_publishers(controller.robots());
-  }
+  mc_rtc::ROSBridge::remove_extra_robot_publishers(controller.controller().robots());
 }
 
 ROSPlugin::~ROSPlugin()
