@@ -4,6 +4,7 @@ import math
 import mc_tasks
 import sva
 import eigen
+import mc_solver
 
 
 class ControllerPhase:
@@ -36,15 +37,7 @@ class DualArmController(mc_control.MCPythonController):
         self._kinova_state = ControllerState.RETURN
         self._urEndEffectorTask = None
         self._kinovaPostureTask = None
-        ur_joints = [
-            "shoulder_pan_joint",
-            "shoulder_lift_joint",
-            "elbow_joint",
-            "wrist_1_joint",
-            "wrist_2_joint",
-            "wrist_3_joint",
-        ]
-        self._ur_joints = [joint.encode("utf-8") for joint in ur_joints]
+        self._kinovaKinematicsConstraint = None
 
     def run_callback(self):
         if self._phase == ControllerPhase.IDLE:
@@ -61,7 +54,7 @@ class DualArmController(mc_control.MCPythonController):
             and self.postureTask.speed().norm() < 0.01
         ):
             self._phase = ControllerPhase.MOVE
-            self._urEndEffectorTask.selectActiveJoints(self.qpsolver, self._ur_joints)
+            self.qpsolver.addTask(self._urEndEffectorTask)
         elif self._phase == ControllerPhase.STARTED:
             self._urEndEffectorTask.reset()
         elif self._phase == ControllerPhase.MOVE:
@@ -70,25 +63,21 @@ class DualArmController(mc_control.MCPythonController):
         return True
 
     def reset_callback(self, data):
-        self.postureTask.reset()
-        self._urEndEffectorTask = mc_tasks.EndEffectorTask(
-            "wrist_3_link", self.robots(), 0
-        )
-        self._urEndEffectorTask.positionTask.stiffness(1)
-        self._urEndEffectorTask.orientationTask.stiffness(1)
-        self._urEndEffectorTask.selectUnactiveJoints(self.qpsolver, self._ur_joints)
+        self._urEndEffectorTask = mc_tasks.EndEffectorTask("tool0", self.robots(), 0, 1)
+
         self._kinovaPostureTask = mc_tasks.PostureTask(self.qpsolver, 1, 5.0, 1000.0)
-        self.qpsolver.addTask(self._urEndEffectorTask)
+        self._kinovaKinematicsConstraint = mc_solver.KinematicsConstraint(
+            self.robots(), 1, self.qpsolver.timeStep
+        )
         self.qpsolver.addTask(self._kinovaPostureTask)
+        self.qpsolver.addConstraintSet(self._kinovaKinematicsConstraint)
         self.robots().robot(1).posW(
             sva.PTransformd(sva.RotZ(0), eigen.Vector3d(0.7, 0.5, 0))
         )
 
     @staticmethod
     def create(robot, dt):
-        kinova = mc_rbdyn.get_robot_module(
-            "env", "/usr/local/share/mc_kinova", "kinova_default"
-        )
+        kinova = mc_rbdyn.get_robot_module("KinovaDefault")
         return DualArmController([robot, kinova], dt)
 
     def _run_kinova(self):

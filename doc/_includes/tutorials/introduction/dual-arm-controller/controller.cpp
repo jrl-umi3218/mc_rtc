@@ -3,17 +3,18 @@
 #include <mc_rbdyn/RobotLoader.h>
 
 DualArmController::DualArmController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config)
-: mc_control::MCController(
-      {rm, mc_rbdyn::RobotLoader::get_robot_module("env", "/usr/local/share/mc_kinova", std::string("kinova_default"))},
-      dt)
+: mc_control::MCController({rm, mc_rbdyn::RobotLoader::get_robot_module("KinovaDefault")}, dt)
 {
   solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(kinematicsConstraint);
   solver().addConstraintSet(selfCollisionConstraint);
+
   addCollisions("ur5e", "kinova_default", {{"*", "*", iDist, sDist, 0}});
+
   postureTask->stiffness(1);
   postureTask->weight(1);
-  solver().addTask(postureTask.get());
+  solver().addTask(postureTask);
+
   solver().setContacts({{}});
 }
 
@@ -27,7 +28,7 @@ bool DualArmController::run()
   else if(phase_ == STARTED && postureTask->eval().norm() < 0.01 && postureTask->speed().norm() < 0.01)
   {
     phase_ = MOVE;
-    urEndEffectorTask_->selectActiveJoints(solver(), urJoints_);
+    solver().addTask(urEndEffectorTask_);
   }
   else if(phase_ == STARTED) { urEndEffectorTask_->reset(); }
   else if(phase_ == MOVE)
@@ -70,15 +71,16 @@ void DualArmController::runKinova()
 void DualArmController::reset(const mc_control::ControllerResetData & reset_data)
 {
   mc_control::MCController::reset(reset_data);
-  postureTask->reset();
-  std::string urBody = "wrist_3_link";
-  urEndEffectorTask_ = std::make_shared<mc_tasks::EndEffectorTask>(urBody, robots(), 0);
-  urEndEffectorTask_->positionTask->stiffness(1);
-  urEndEffectorTask_->orientationTask->stiffness(1);
-  urEndEffectorTask_->selectUnactiveJoints(solver(), urJoints_);
-  solver().addTask(urEndEffectorTask_);
-  kinovaPostureTask_ = std::make_shared<mc_tasks::PostureTask>(solver(), 1);
+
+  std::string urBody = "tool0";
+  urEndEffectorTask_ = std::make_shared<mc_tasks::EndEffectorTask>(urBody, robots(), 0, 1);
+
+  kinovaPostureTask_ = std::make_shared<mc_tasks::PostureTask>(solver(), 1, 1, 1);
   solver().addTask(kinovaPostureTask_);
+
+  kinovaKinematics_ = std::make_unique<mc_solver::KinematicsConstraint>(robots(), 1, solver().dt());
+  solver().addConstraintSet(kinovaKinematics_);
+
   robots().robot(1).posW(sva::PTransformd(sva::RotZ(0.0), Eigen::Vector3d(0.7, 0.5, 0)));
 }
 

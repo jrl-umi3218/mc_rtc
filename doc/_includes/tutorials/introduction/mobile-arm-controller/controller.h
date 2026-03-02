@@ -1,8 +1,8 @@
 #pragma once
 
 #include <mc_control/mc_controller.h>
-#include <mc_tasks/EndEffectorTask.h>
 #include <mc_tasks/SurfaceTransformTask.h>
+#include <mc_tasks/TransformTask.h>
 
 #include "api.h"
 
@@ -22,10 +22,9 @@ public:
   void reset(const mc_control::ControllerResetData & reset_data) override;
 
 private:
-  int count = 0;
   Phase phase_ = APPROACH;
   std::shared_ptr<mc_tasks::SurfaceTransformTask> handTask_;
-  std::shared_ptr<mc_tasks::EndEffectorTask> dingoEndEffectorTask_;
+  std::shared_ptr<mc_tasks::TransformTask> dingoBaseTask_;
   std::shared_ptr<mc_solver::KinematicsConstraint> doorKinematics_;
   std::shared_ptr<mc_tasks::PostureTask> doorPostureTask_;
 };

@@ -5,11 +5,11 @@ enum ControllerState
   RETURN
 };
 
-// コントローラーのプライベートプロパティ
+// Controller's private properties
 ControllerState urState_ = RETURN;
 ControllerState kinovaState_ = RETURN;
 
-// 2つのサポート関数を追加
+// Two support functions added
 void DualArmController::runUr()
 {
   if(urState_ == GO && urEndEffectorTask_->eval().norm() < 0.05 && urEndEffectorTask_->speed().norm() < 0.01)
@@ -38,8 +38,7 @@ void DualArmController::runKinova()
     kinovaPostureTask_->target({{"joint_2", {-M_PI / 4}}});
   }
 }
-
-// run関数内
+// run function
 bool DualArmController::run()
 {
   // ...

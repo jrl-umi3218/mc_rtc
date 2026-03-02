@@ -6,6 +6,7 @@ class ControllerState:
 def __init__(self, rm, dt):
     self._ur_state = ControllerState.RETURN
     self._kinova_state = ControllerState.RETURN
+    
 # Add helper methods
 def _run_kinova(self):
     if (

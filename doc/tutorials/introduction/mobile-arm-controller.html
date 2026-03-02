@@ -1,15 +1,6 @@
 ---
 layout: tutorials
 toc: true
-mc_ur5e_sources:
-  - name: C++
-    lang: cpp
-    source: |
-      UR5eRobotModule::UR5eRobotModule()
-      : mc_rbdyn::RobotModule(MC_UR5E_DESCRIPTION_PATH, "ur5e"){
-          init(rbd::parsers::from_urdf_file(urdf_path, false));
-          ...
-        }
 constructor_sources:
   - name: C++
     lang: cpp
@@ -30,8 +21,10 @@ constructor_sources:
     source: |
       @staticmethod
       def create(robot, dt):
-          kinova = mc_rbdyn.get_robot_module("env", "/usr/local/share/mc_kinova", "kinova_default")
-          return DualArmController([robot, kinova], dt)
+          dingo = mc_rbdyn.get_robot_module("dingo")
+          door = mc_rbdyn.get_robot_module("env/door")
+          ground = mc_rbdyn.get_robot_module("env/ground")
+          return MobileArmController([robot, dingo, door, ground], dt)
 set_contact_sources:
   - name: C++
     lang: cpp
@@ -58,7 +51,7 @@ set_contact_sources:
               "dingo", "ground", "Base", "AllGround", friction, dof
           )
       )
-      self.addContact(mc_control.Contact("dingo", "UR5e", "Base", "Base"))
+      self.addContact(mc_control.Contact("dingo", "ur5e", "Base", "Base"))
 reposition_sources:
   - name: C++
     lang: cpp
@@ -93,51 +86,44 @@ add_ur5e_tasks_sources:
       std::shared_ptr<mc_tasks::SurfaceTransformTask> handTask_;
 
       // In the reset function
-      handTask_ =
-          std::make_shared<mc_tasks::SurfaceTransformTask>("Wrist", robots(), 0);
+      handTask_ = std::make_shared<mc_tasks::SurfaceTransformTask>("Tool", robots(), 0);
   - name: Python
     lang: python
     source: |
       # In the reset callback
       self._handTask = mc_tasks.SurfaceTransformTask(
-        "Wrist", self.robots(), 0, 5.0, 1000.0
+        "Tool", self.robots(), 0, 5.0, 1000.0
       )
 add_dingo_tasks_sources:
   - name: C++
     lang: cpp
     source: |
         // In the header
-        #include <mc_tasks/EndEffectorTask.h>
+        #include <mc_tasks/TransformTask.h>
         // ...
-        std::shared_ptr<mc_tasks::EndEffectorTask> dingoEndEffectorTask_;
+        std::shared_ptr<mc_tasks::TransformTask> dingoBaseTask_;
 
         // In the reset function
-        dingoEndEffectorTask_ =
-          std::make_shared<mc_tasks::EndEffectorTask>("base_link", robots(), 1);
-        dingoEndEffectorTask_->positionTask->stiffness(1.0);
-        dingoEndEffectorTask_->positionTask->weight(1000.0);
-        dingoEndEffectorTask_->orientationTask->stiffness(1.0);
-        dingoEndEffectorTask_->orientationTask->weight(1000.0);
+        dingoBaseTask_ =
+          std::make_shared<mc_tasks::TransformTask>("base_link", robots(), 1, 2.0, 1000);
   - name: Python
     lang: python
     source: |
         # In the reset callback
-        self._dingoEndEffectorTask = mc_tasks.EndEffectorTask(
-          "base_link", self.robots(), 1, 1.0, 1000.0
+        self._dingoBaseTask = mc_tasks.EndEffectorTask(
+            "base_link", self.robots(), 1, 2.0, 1000.0
         )
 add_door_tasks_sources:
   - name: C++
     lang: cpp
     source: |
         // In the header
-        std::shared_ptr<mc_solver::KinematicsConstraint> doorKinematics_;
+        std::unique_ptr<mc_solver::KinematicsConstraint> doorKinematics_;
         std::shared_ptr<mc_tasks::PostureTask> doorPostureTask_;
         // In the reset function
-        doorKinematics_ =
-          std::make_shared<mc_solver::KinematicsConstraint>(robots(), 2, solver().dt());
-        solver().addConstraintSet(*doorKinematics_);
-        doorPostureTask_ =
-          std::make_shared<mc_tasks::PostureTask>(solver(), 2, 1.0, 1.0);
+        doorKinematics_ = std::make_unique<mc_solver::KinematicsConstraint>(robots(), 2, solver().dt());
+        solver().addConstraintSet(doorKinematics_);
+        doorPostureTask_ = std::make_shared<mc_tasks::PostureTask>(solver(), 2, 1.0, 1.0);
         solver().addTask(doorPostureTask_);
   - name: Python
     lang: python
@@ -248,22 +234,22 @@ p1_sources:
     lang: cpp
     source: |
       // In the reset function
-      solver().addTask(dingoEndEffectorTask_);
+      solver().addTask(dingoBaseTask_);
       solver().addTask(postureTask.get());
       postureTask->target({{"shoulder_lift_joint", {-M_PI / 2}}});
-      dingoEndEffectorTask_->add_ef_pose({Eigen::Vector3d(1.5, 0.0, 0.0)});
+      dingoBaseTask_->target({Eigen::Vector3d(1.5, 0.0, 0.0)});
   - name: Python
     lang: python
     source: |
       # In the reset callback
-      self.qpsolver.addTask(self._dingoEndEffectorTask)
+      self.qpsolver.addTask(self._dingoBaseTask)
       self.qpsolver.addTask(self.postureTask)
       self.postureTask.target(
           {
               "shoulder_lift_joint".encode("utf-8"): [-math.pi / 2],
           }
       )
-      self._dingoEndEffectorTask.add_ef_pose(
+      self._dingoBaseTask.add_ef_pose(
           sva.PTransformd(sva.RotZ(0), eigen.Vector3d(1.5, 0.0, 0.0))
       )
 p2_sources:
@@ -271,11 +257,11 @@ p2_sources:
     lang: cpp
     source: |
       // In the run function, under phase_ == APPROACH
-      solver().removeTask(postureTask.get());
+      solver().removeTask(postureTask);
       handTask_->reset();
       solver().addTask(handTask_);
-      handTask_->target(sva::PTransformd(Eigen::Vector3d(0, 0, -0.05)) *
-                    robots().robot(2).surfacePose("Handle"));
+      handTask_->target(sva::PTransformd(Eigen::Vector3d(0, 0, -0.05)) * robots().robot(2).surfacePose("Handle"));
+      phase_ = HANDLE;
   - name: Python
     lang: python
     source: |
@@ -287,12 +273,13 @@ p2_sources:
           sva.PTransformd(eigen.Vector3d(0.0, 0.0, -0.05))
           * self.robots().robot(2).surfacePose("Handle")
       )
+      self._phase = ControllerPhase.HANDLE
 p3_sources:
   - name: C++
     lang: cpp
     source: |
       // In the run function, under phase_ == HANDLE
-      addContact({"ur5e", "door", "Wrist", "Handle"});
+      addContact({"ur5e", "door", "Tool", "Handle"});
       solver().removeTask(handTask_);
       postureTask->reset();
       doorPostureTask_->target({{"handle", {-1.0}}});
@@ -300,9 +287,7 @@ p3_sources:
     lang: python
     source: |
       # In the run callback, under self._phase == ControllerPhase.HANDLE
-      self.addContact(
-          mc_control.Contact("ur5e", "door", "Wrist", "Handle")
-      )
+      self.addContact(mc_control.Contact("ur5e", "door", "Tool", "Handle"))
       self.qpsolver.removeTask(self._handTask)
       self.postureTask.reset()
       self._doorPosture.target(
@@ -310,48 +295,48 @@ p3_sources:
               "handle".encode("utf-8"): [-1.0],
           }
       )
+      self._phase = ControllerPhase.OPEN
 p4_sources:
   - name: C++
     lang: cpp
     source: |
       // In the run function, under phase_ == OPEN
-      solver().removeTask(dingoEndEffectorTask_);
-      doorPostureTask_->target({{"door", {1.57}}});
+      solver().removeTask(dingoBaseTask_);
+      doorPostureTask_->target({{"door", {M_PI / 2}}});
+      phase_ = DONE;
   - name: Python
     lang: python
     source: |
       # In the run callback, under self._phase == ControllerPhase.OPEN
-      self.qpsolver.removeTask(self._dingoEndEffectorTask)
+      self.qpsolver.removeTask(self._dingoBaseTask)
       self._doorPosture.target(
           {
               "door".encode("utf-8"): [math.pi / 2],
           }
       )
+      self._phase = ControllerPhase.DONE
 p5_sources:
   - name: C++
     lang: cpp
     source: |
       // In the run function, under phase_ == DONE
-      removeContact({"ur5e", "door", "Wrist", "Handle"});
-      dingoEndEffectorTask_->reset();
-      solver().addTask(dingoEndEffectorTask_);
-      solver().addTask(postureTask.get());
+      removeContact({"ur5e", "door", "Tool", "Handle"});
+      solver().addTask(dingoBaseTask_);
+      solver().addTask(postureTask);
   - name: Python
     lang: python
     source: |
       # In the run callback, under self._phase == ControllerPhase.DONE
-      self.removeContact(
-          mc_control.Contact("ur5e", "door", "Wrist", "Handle")
-      )
-      self._dingoEndEffectorTask.reset()
-      self.qpsolver.addTask(self._dingoEndEffectorTask)
+      self.removeContact(mc_control.Contact("ur5e", "door", "Tool", "Handle"))
+      self._dingoBaseTask.reset()
+      self.qpsolver.addTask(self._dingoBaseTask)
       self.qpsolver.addTask(self.postureTask)
 phase_conditions:
   - name: C++
     lang: cpp
     source: |
       // In the run function
-      if (phase_ == APPROACH && dingoEndEffectorTask_->eval().norm() < 1e-5 && dingoEndEffectorTask_->speed().norm() < 1e-5)
+      if (phase_ == APPROACH && dingoBaseTask_->eval().norm() < 1e-2 && dingoBaseTask_->speed().norm() < 1e-5)
       {
         // ...
       }
@@ -373,8 +358,8 @@ phase_conditions:
       # In the run function
       if (
             self._phase == ControllerPhase.APPROACH
-            and self._dingoEndEffectorTask.eval().norm() < 1e-5
-            and self._dingoEndEffectorTask.speed().norm() < 1e-5
+            and self._dingoBaseTask.eval().norm() < 1e-2
+            and self._dingoBaseTask.speed().norm() < 1e-5
         ):
         # ...
       elif (

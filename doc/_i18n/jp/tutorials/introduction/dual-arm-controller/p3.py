@@ -2,10 +2,12 @@
 class ControllerState:
     GO = 0
     RETURN = 1
+
 # コンストラクタ内
 def __init__(self, rm, dt):
     self._ur_state = ControllerState.RETURN
     self._kinova_state = ControllerState.RETURN
+
 # 2つのサポート関数を追加
 def _run_kinova(self):
     if (
@@ -50,6 +52,7 @@ def _run_ur5e(self):
         self._urEndEffectorTask.add_ef_pose(sva.PTransformd(
             sva.RotZ(0), eigen.Vector3d(0.0, 0.5, 0.0)
         ))
+        
 # runコールバック関数内
 def run_callback(self):
     # ...

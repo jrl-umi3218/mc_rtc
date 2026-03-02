@@ -9,8 +9,5 @@ struct DualArmController_DLLAPI DualArmController : public mc_control::MCControl
 }
 
 // In the reset function
-std::string urBody = "wrist_3_link";
-urEndEffectorTask_ = std::make_shared<mc_tasks::EndEffectorTask>(urBody, robots(), 0);
-urEndEffectorTask_->positionTask->stiffness(1);
-urEndEffectorTask_->orientationTask->stiffness(1);
-solver().addTask(urEndEffectorTask_);
+std::string urBody = "tool0";
+urEndEffectorTask_ = std::make_shared<mc_tasks::EndEffectorTask>(urBody, robots(), 0, 1);
