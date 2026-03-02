@@ -202,8 +202,9 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   if(verbose_loader) { mc_rtc::log::info("GlobalPluginPaths: {}", mc_rtc::io::to_string(global_plugin_paths)); }
   if(!config("ClearGlobalPluginPath", false))
   {
-    global_plugin_paths.insert(global_plugin_paths.begin(), mc_rtc::MC_PLUGINS_INSTALL_PREFIX);
+    global_plugin_paths.insert(global_plugin_paths.end(), mc_rtc::MC_PLUGINS_INSTALL_PREFIX);
   }
+  mc_rtc::log::info("GlobalPluginPaths: {}", mc_rtc::io::to_string(global_plugin_paths));
   for(const auto & p : global_plugin_paths)
   {
     auto autoload_path = bfs::path(p) / "autoload";
@@ -247,7 +248,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   if(verbose_loader) { mc_rtc::log::info("ControllerModulePaths: {}", mc_rtc::io::to_string(controller_module_paths)); }
   if(!config("ClearControllerModulePath", false))
   {
-    controller_module_paths.insert(controller_module_paths.begin(), mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
+    controller_module_paths.insert(controller_module_paths.end(), mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
   }
   enabled_controllers = mc_rtc::fromVectorOrElement<std::string>(config, "Enabled", {});
   if(enabled_controllers.size()) { initial_controller = enabled_controllers[0]; }
