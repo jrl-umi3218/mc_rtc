@@ -324,10 +324,14 @@ inline void load_config(const std::string & desc,
                         const std::initializer_list<const char *> & filter = {},
                         const bfs::path & search_path_suffix = bfs::path("etc"))
 {
+  mc_rtc::log::info("Search_path: {}", mc_rtc::io::to_string(search_path));
+  // Reverse search path
+  auto search_path_r = std::vector<std::string>(search_path.rbegin(), search_path.rend());
+  mc_rtc::log::info("Search_path_r: {}", mc_rtc::io::to_string(search_path_r));
   mc_rtc::Configuration c;
   c.load(default_config);
   for(const auto & k : filter) { c.remove(k); }
-  for(const auto & p : search_path)
+  for(const auto & p : search_path_r)
   {
     bfs::path global = conf_or_yaml(bfs::path(p) / search_path_suffix / (name + ".conf"));
     if(bfs::exists(global))
