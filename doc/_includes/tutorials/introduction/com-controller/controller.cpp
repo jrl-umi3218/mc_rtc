@@ -7,8 +7,8 @@ MyFirstController::MyFirstController(mc_rbdyn::RobotModulePtr rm, double dt, con
   solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(dynamicsConstraint);
   solver().addTask(postureTask);
-  addContact(robot().name(), "ground", "LeftFoot", "AllGround");
-  addContact(robot().name(), "ground", "RightFoot", "AllGround");
+  addContact({robot().name(), "ground", "LeftFoot", "AllGround"});
+  addContact({robot().name(), "ground", "RightFoot", "AllGround"});
   comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0, 10.0, 1000.0);
   solver().addTask(comTask);
   postureTask->stiffness(1);
