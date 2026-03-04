@@ -984,9 +984,12 @@ void MCController::addCollisions(const std::string & r1,
   auto & cc = collision_constraints_[{r1, r2}];
   mc_rtc::log::info("Add collisions {}/{}:", r1, r2);
   for(const auto & c : collisionsToAdd) { mc_rtc::log::info("- {}::{}/{}::{}", r1, c.body1, r2, c.body2); }
-  mc_rtc::log::warning("Invalid collisions between {}/{}:", r1, r2);
-  for(const auto & c : missingCollisions) { mc_rtc::log::warning("- {}::{}/{}::{}", r1, c.body1, r2, c.body2); }
-  if(!optional) { mc_rtc::log::error_and_throw("Cannot add collisions as there are invalid collision pairs"); };
+  if(missingCollisions.size())
+  {
+    mc_rtc::log::warning("Invalid collisions between {}/{}:", r1, r2);
+    for(const auto & c : missingCollisions) { mc_rtc::log::warning("- {}::{}/{}::{}", r1, c.body1, r2, c.body2); }
+    if(!optional) { mc_rtc::log::error_and_throw("Cannot add collisions as there are invalid collision pairs"); };
+  }
   cc->addCollisions(solver(), collisionsToAdd);
 }
 
