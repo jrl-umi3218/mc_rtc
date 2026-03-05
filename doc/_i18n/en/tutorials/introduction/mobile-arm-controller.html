@@ -31,6 +31,11 @@ Enabled: MobileArmController
 {% include show_sources.html sources=page.set_contact_sources copy=false id="set_contact" %}
 
 <p>Also, to define Dingo robot as floating base, instead of "env" as for door and ground, we use "object" when loading the robot module in the constructor.</p>
+<p>
+  We need to <code>addContact()</code> after setting up the initial position because a contact itself is a constraint.
+  Moving the robot position using <code>posW()</code>, as shown in the next section, would not move the frame used for <code>addContact()</code>.
+  This is not a problem in this example since ur5e transition with respect to dingo is fixed, but the bug will arise when the initial offset is more complicated.
+</p>
 
 {% include h4.html title="Initial position of robots" %}
 

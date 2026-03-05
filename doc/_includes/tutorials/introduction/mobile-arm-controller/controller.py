@@ -29,7 +29,6 @@ class MobileArmController(mc_control.MCPythonController):
         self.addContact(
             mc_control.Contact("dingo", "ground", "Base", "AllGround", friction, dof)
         )
-        self.addContact(mc_control.Contact("dingo", "ur5e", "Base", "Base"))
 
         iDist, sDist, damping = 0.1, 0.05, 0.0
         self.addCollisions(
@@ -108,6 +107,8 @@ class MobileArmController(mc_control.MCPythonController):
         self.robots().robot(2).posW(
             sva.PTransformd(sva.RotZ(math.pi), eigen.Vector3d(2.0, 1.0, 0))
         )
+        self.addContact(mc_control.Contact("dingo", "ur5e", "Base", "Base"))
+
         self._doorPosture = mc_tasks.PostureTask(self.qpsolver, 2, 1.0, 1.0)
         self.qpsolver.addTask(self._doorPosture)
         self._handTask = mc_tasks.SurfaceTransformTask(
