@@ -95,6 +95,25 @@ option(MC_RTC_DEVELOPER_MODE
 
 option(DISABLE_ROS "Build without ROS support (even if ROS was found)" OFF)
 
+option(BUILD_MC_RTC "Build the main mc_rtc library" ON)
+option(BUILD_MC_RTC_CPP_UTILS "Build cpp utilities (e.g mc_bin_utils, etc)" ON)
+option(BUILD_MC_RTC_PYTHON_UTILS
+       "Build python utilities (e.g mc_log_ui, mc_rtc_new_controller, etc)" ON
+)
+
+if(NOT BUILD_MC_RTC)
+  if(NOT BUILD_MC_RTC_CPP_UTILS AND NOT BUILD_MC_RTC_PYTHON_UTILS)
+    message(STATUS "Nothing to build, exiting.")
+    return()
+  endif()
+
+  message(STATUS "Not building the main mc_rtc library, but building some utilities.")
+  find_package(mc_rtc REQUIRED)
+  add_subdirectory(utils)
+  return()
+endif()
+message(STATES "Building mc_rtc ${PROJECT_VERSION} from ${PROJECT_SOURCE_DIR}")
+
 set(BOOST_STACKTRACE "")
 set(BOOST_USE_STACKTRACE_DEFINE "")
 function(find_best_boost_stacktrace)
