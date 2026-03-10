@@ -63,7 +63,7 @@ void CompliantPostureTask::update(mc_solver::QPSolver & solver)
   // mc_rtc::log::info("Ref accel : {}", refAccel_.transpose());
   Eigen::VectorXd disturbedAccel = refAccel_ + disturbance;
   PostureTask::refAccel(disturbedAccel);
-  PostureTask::update(solver);
+  // PostureTask::update(solver);
 }
 
 void CompliantPostureTask::makeCompliant(bool compliance)

@@ -96,11 +96,8 @@ void CompliantEndEffectorTask::update(mc_solver::QPSolver & solver)
     }
   }
   Eigen::Vector6d disturbance = J * acc;
-  mc_rtc::log::info("Task sensor acc = {}", acc.transpose());
-  mc_rtc::log::info("Task equivalent acc = {}", disturbance.transpose());
 
   Eigen::Vector6d disturbedAccel = refAccel_ + compliant_matrix_ * disturbance;
-  mc_rtc::log::info("Task disturbed ref acc = {}", disturbedAccel.transpose());
 
   EndEffectorTask::positionTask->refAccel(disturbedAccel.tail(3));
   EndEffectorTask::orientationTask->refAccel(disturbedAccel.head(3));
