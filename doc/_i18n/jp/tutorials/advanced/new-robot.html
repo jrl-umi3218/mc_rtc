@@ -104,6 +104,45 @@
 
 <p>指定可能なメンバーについては、{% doxygen mc_rbdyn::RobotModule %}のドキュメントを参照してください。</p>
 
+{% include h2.html title="既存ロボットモジュールの接続／切断" %}
+
+ロボットモジュールがどのように作成されたかに関わらず、フレームワークは既存のロボットモジュール（駆動型かどうかを問わず）を接続／切断することを可能にします。これは、既存のロボットモジュールのバリエーションを提供するのに非常に便利です。例えば：
+
+<ul>
+  <li>既存のロボットにツール（グリッパーなど）を追加する</li>
+  <li>ロボットをサポート（壁、テーブルなど）に取り付ける</li>
+  <li>モジュール型ロボット</li>
+</ul>
+
+いずれの場合も、統合されたロボットは新しいロボットモジュールとなり、フレームワーク内で単一のロボットとしてロード・使用できます。現時点では、コントローラに関与しているロボットを、他のモジュールと接続して作成したバリエーションにシームレスに置き換える方法は提供していません。これは、ツール交換や複数の駆動型モジュールを接続するモジュール型ロボットの場合に非常に有用です。
+
+この機能は今後追加予定ですが、現状で自分で試したいユーザーは以下の手順が必要です：
+<ul>
+  <li>ロボットが関与している全てのタスクや制約をソルバーから削除する</li>
+  <li>ロボットが関与する全てのGUI／ログコールバックを削除する</li>
+  <li>ロボットを削除する</li>
+  <li>モジュールを接続し、接続したバリエーションをロードする</li>
+  <li>全てのタスク／制約／コールバックを再追加する</li>
+</ul>
+
+モジュールを接続するには、{% doxygen mc_rbdyn::RobotModule::connect %} および {% doxygen mc_rbdyn::RobotModule::ConnectionParameters %} を参照してください。主に使用する関数は以下の通りです：
+
+```cpp
+RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
+                                 const std::string & this_body,
+                                 const std::string & other_body,
+                                 const std::string & prefix,
+                                 const ConnectionParameters & params) const
+```
+
+例えば：
+
+{% include show_sources.html sources=page.robot_module_connect_example copy=false id="robot_module_connect_example" %}
+
+実際の例については [mc_panda_lirmm](https://github.com/jrl-umi3218/mc_panda_lirmm) も参照できます。
+
+
+
 {% include h2.html title="さあ始めましょう" %}
 
 <p><a href="https://github.com/mc-rtc/new-robot-module/">mc-rtc/new-robot-module</a>テンプレートプロジェクトを使用すると、すぐに始められます。このテンプレートには、C++またはYAMLの<code>RobotModule</code>用の必要最小限の構造が記述されています。 </p>

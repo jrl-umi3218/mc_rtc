@@ -101,6 +101,44 @@
 
 <p>See {% doxygen mc_rbdyn::RobotModule %} documentation for all members that can be provided.</p>
 
+
+{% include h2.html title="Connecting/Disconnecting existing robot modules" %}
+
+Regardless of how the robot module was created, the framework makes it possible to connect/disconnect exisitng robot modules, actuated or not. This is very useful to provide variants of existing robots modules such as:
+
+<ul>
+  <li>Adding tools (grippers, etc) to an existing robot</li>
+  <li>Mounting a robot on a support (wall, table, etc)</li>
+  <li>Modular robotics</li>
+</ul>
+
+In any case the merged robot is a new robot module that can be loaded and used as a single robot in the framework. For now, we do not provide a way to seamlessly replace a robot involved in the controller with a variant created by connecting it to another module. This would be very useful in case of tool changing or for modular robotics to connect multiple actuated modules together.
+
+This feature is planned, in the meanwhile users interested in trying to do this themselves need to:
+<ul>
+  <li>Remove all tasks and constraints in which the robot is involved from the solver</li>
+  <li>Remove all gui/log callbacks that involve the robot</li>
+  <li>Remove the robot</li>
+  <li>Connect the modules and load the connected variant</li>
+  <li>Re-add all tasks/contraints/callbacks</li>
+</ul>
+
+To connect modules together, see {% doxygen mc_rbdyn::RobotModule::connect %} and {% doxygen mc_rbdyn::RobotModule::ConnectionParameters %}. The main function to use is defined as:
+
+```cpp
+RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
+                                 const std::string & this_body,
+                                 const std::string & other_body,
+                                 const std::string & prefix,
+                                 const ConnectionParameters & params) const
+```
+
+For example:
+
+{% include show_sources.html sources=page.robot_module_connect_example copy=false id="robot_module_connect_example" %}
+
+You can also refer to [mc_panda_lirmm](https://github.com/jrl-umi3218/mc_panda_lirmm) for a real-life example.
+
 {% include h2.html title="Get started" %}
 
 <p>Use the <a href="https://github.com/mc-rtc/new-robot-module/">mc-rtc/new-robot-module</a> template project to get started quickly. This template provides the barebone structure for a C++ <code>RobotModule</code> or a YAML <code>RobotModule</code></p>
