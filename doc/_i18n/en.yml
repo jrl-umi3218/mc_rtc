@@ -3,11 +3,12 @@ langs:
 carousel:
   previous: Previous
   next: Next
-  SYHI2JmJ-lk: Autonomous car driving by a humanoid robot
-  vFCFKAunsYM: HRP-4 climbing up stairs
-  C3Y2Xc6sEY4: "Humanoid in aircraft manufacturing: operating a circuit-breaker"
-  qzEnCGlT93s: "Human-Robot Interaction Applications"
+  fW7lFUToMjc: "COMANOID: Humanoid robots in aircraft manufacturing"
+  SYHI2JmJ-lk: "DARPA Robotics Challenge: Autonomous car driving by a humanoid robot"
   FT2CD1UiExs: "HRP-5P performing bolt fastening with visual servoing"
+  vFCFKAunsYM: "HRP-4 climbing up stairs"
+  qzEnCGlT93s: "Human-Robot Interaction Applications"
+  C3Y2Xc6sEY4: "Humanoid in aircraft manufacturing: operating a circuit-breaker"
 features:
   easy:
     heading: Simple tools for complex problems
