@@ -1,9 +1,9 @@
-#include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn/RobotLoader.h>
+#include <mc_rbdyn/RobotModule.h>
 
 // Define a "robot_support" robot from a "box" visual description
 auto boxYaml =
-  R"(
+    R"(
   name: robot_support
   origin:
     translation: [0, 0, 0]
@@ -32,14 +32,14 @@ auto pandaRm = mc_rbdyn::RobotLoader::get_robot_module("PandaDefault");
 auto box_to_robot = sva::PTransformd(Eigen::Vector3d{0., 0., -1.2});
 
 // Load a new robot module by connecting the existing "PandaDefault" module to our "box" module
-auto pandaOnBoxRm = 
-  supportRm->connect(
-      *pandaRm, // connect to this other robot module (panda)
-      "robot_support", // reference link on our module
-      "world", // to connect to this link on other robot module (panda)
-      "", // optional prefix to add to link names
-      mc_rbdyn::RobotModule::ConnectionParameters{}.name(robot_name).X_other_connection(box_to_robot) // connection parameters
-  );
+auto pandaOnBoxRm = supportRm->connect(*pandaRm, // connect to this other robot module (panda)
+                                       "robot_support", // reference link on our module
+                                       "world", // to connect to this link on other robot module (panda)
+                                       "", // optional prefix to add to link names
+                                       mc_rbdyn::RobotModule::ConnectionParameters{}
+                                           .name(robot_name)
+                                           .X_other_connection(box_to_robot) // connection parameters
+);
 
 // Add robot to the controller, where ctl is an mc_control::MCController
 auto robot = ctl.loadRobot(*pandaOnBoxRm);
