@@ -4,13 +4,15 @@ Testing locally
 Pre-requisites
 --
 
-You must have some dependencies installed on your system:
+- `mc_rtc` must be installed with documentation built. We need doxygen to be generated, and the plugins in `_plugins` to be generated with the paths to the installed doxygen documentation.
+
+- You must have some dependencies installed on your system:
 
 ```bash
 $ sudo apt install ruby-dev ruby-bundler libxml2-dev
 ```
 
-Then install the required packages:
+- Then install the required packages:
 
 ```bash
 $ bundle install
@@ -22,7 +24,8 @@ Serving locally
 Execute the following commands:
 
 ```bash
-$ bundle exec jekyll serve --trace
+$ export MC_RTC_JEKYLL_PLUGINS=<mc_rtc_install_prefix>/share/doc/_plugins
+$ bundle exec jekyll serve --trace --plugins $MC_RTC_JEKYLL_PLUGINS
 ```
 
 Then point your browser to localhost:4000

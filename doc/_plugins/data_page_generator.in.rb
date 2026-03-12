@@ -5,7 +5,7 @@
 
 require 'active_support/core_ext/hash/deep_merge'
 require 'json'
-require_relative 'doxygen'
+require_relative '@CMAKE_INSTALL_PREFIX@/share/doc/_plugins/doxygen.rb'
 
 module Jekyll
 
