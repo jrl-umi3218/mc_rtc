@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
+#pragma once
 #include <mc_rbdyn/rpy_utils.h>
 #include <mc_rtc/constants.h>
 #include <SpaceVecAlg/PTransform.h>
