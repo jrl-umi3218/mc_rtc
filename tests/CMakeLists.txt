@@ -98,6 +98,7 @@ get_filename_component(
   EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../doc/_examples" ABSOLUTE
 )
 mc_rtc_test(testSchemaExamples mc_tasks)
+mc_rtc_test(test_fmt_formatters)
 mc_rtc_test(testLogger mc_rbdyn)
 mc_rtc_test(testLogUtils mc_rbdyn)
 mc_rtc_test(testRobotModule mc_rbdyn)

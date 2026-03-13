@@ -1,0 +1,23 @@
+# Try to find system eigen-fmt first To avoid having to deal with PID dependencies, we
+# manually make the header-only target eigen-fmt::eigen-fmt available and avoid using
+# the project's CMakeLists.txt
+find_package(eigen-fmt CONFIG QUIET)
+
+if(NOT TARGET eigen-fmt::eigen-fmt)
+  include(FetchContent)
+  FetchContent_Declare(
+    eigen-fmt_proj
+    QUIET
+    GIT_REPOSITORY https://gite.lirmm.fr/rpc/utils/eigen-fmt
+    GIT_TAG v1.0.4
+  )
+  FetchContent_Populate(eigen-fmt_proj) # Only fetch, don't build
+
+  # Define interface library for header-only eigen-fmt
+  if(NOT TARGET eigen-fmt::eigen-fmt)
+    add_library(eigen-fmt::eigen-fmt INTERFACE)
+    target_include_directories(
+      eigen-fmt::eigen-fmt INTERFACE ${eigen-fmt_proj_SOURCE_DIR}/include/eigen-fmt
+    )
+  endif()
+endif()
