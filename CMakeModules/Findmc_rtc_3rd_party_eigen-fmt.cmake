@@ -10,9 +10,10 @@ if(NOT TARGET eigen-fmt::eigen-fmt)
     QUIET
     GIT_REPOSITORY https://gite.lirmm.fr/rpc/utils/eigen-fmt
     GIT_TAG v1.0.4
-    # point to a directory that does not exist to avoid building the existing project's CMakeLists.txt
-    # See https://discourse.cmake.org/t/prevent-fetchcontent-makeavailable-to-execute-cmakelists-txt/12704/12
-    SOURCE_SUBDIR skip-cmake-build 
+    # point to a directory that does not exist to avoid building the existing project's
+    # CMakeLists.txt See
+    # https://discourse.cmake.org/t/prevent-fetchcontent-makeavailable-to-execute-cmakelists-txt/12704/12
+    SOURCE_SUBDIR skip-cmake-build
   )
   FetchContent_MakeAvailable(eigen-fmt_proj) # Only fetch, don't build
 
