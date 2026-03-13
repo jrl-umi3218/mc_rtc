@@ -19,9 +19,12 @@ if(NOT TARGET eigen-fmt::eigen-fmt)
 
   # Define interface library for header-only eigen-fmt
   if(NOT TARGET eigen-fmt::eigen-fmt)
-    add_library(eigen-fmt::eigen-fmt INTERFACE)
+    add_library(eigen-fmt INTERFACE IMPORTED)
+
     target_include_directories(
-      eigen-fmt::eigen-fmt INTERFACE ${eigen-fmt_proj_SOURCE_DIR}/include/eigen-fmt
+      eigen-fmt INTERFACE "${eigen-fmt_proj_SOURCE_DIR}/include/eigen-fmt"
     )
+
+    add_library(eigen-fmt::eigen-fmt ALIAS eigen-fmt)
   endif()
 endif()
