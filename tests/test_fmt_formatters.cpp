@@ -1,5 +1,6 @@
 #define BOOST_TEST_MODULE FmtFormattersTest
 #include <mc_rtc/fmt_formatters.h>
+#include <mc_rtc/logging.h>
 #include <SpaceVecAlg/PTransform.h>
 #include <boost/test/unit_test.hpp>
 #include <Eigen/Core>
