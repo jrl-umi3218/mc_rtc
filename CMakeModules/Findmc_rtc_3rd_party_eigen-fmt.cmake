@@ -9,7 +9,8 @@ if(NOT TARGET eigen-fmt::eigen-fmt)
     eigen-fmt_proj
     QUIET
     GIT_REPOSITORY https://gite.lirmm.fr/rpc/utils/eigen-fmt
-    GIT_TAG v1.0.4
+    # upcoming v1.0.5 with fmt range formatter disabled for eigen types
+    GIT_TAG 74010fe68f0337e6bf0726dc958511414bef531f
     # point to a directory that does not exist to avoid building the existing project's
     # CMakeLists.txt See
     # https://discourse.cmake.org/t/prevent-fetchcontent-makeavailable-to-execute-cmakelists-txt/12704/12
