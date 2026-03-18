@@ -10,6 +10,14 @@ on:
       - ".jrl-ci"
       - ".github/workflows/package.yml"
       - "debian/**"
+      - "*.md"
+      - "doc/**/README.md"
+      - "robots/README.md"
+      - "utils/**/README.md"
+      - "observers/**/README.md"
+      - "controllers/**/README.md"
+      - "binding/**/README.md"
+      - "src/mc_rtc/README.md"
     branches:
       - '**'
   pull_request:

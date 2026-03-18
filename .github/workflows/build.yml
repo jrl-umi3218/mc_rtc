@@ -11,6 +11,14 @@ on:
       - ".github/workflows/build-others.yml"
       - ".github/workflows/docker/*"
       - "debian/**"
+      - "*.md"
+      - "doc/**/README.md"
+      - "robots/README.md"
+      - "utils/**/README.md"
+      - "observers/**/README.md"
+      - "controllers/**/README.md"
+      - "binding/**/README.md"
+      - "src/mc_rtc/README.md"
     branches:
       - '**'
   pull_request:

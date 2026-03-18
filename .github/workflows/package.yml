@@ -14,8 +14,15 @@ on:
     - ".jrl-ci"
     - doc/**
     - README.md
+    - "CHANGELOG.md"
     - ".github/workflows/build.yml"
     - ".pre-commit-config.yaml"
+    - "robots/README.md"
+    - "utils/**/README.md"
+    - "observers/**/README.md"
+    - "controllers/**/README.md"
+    - "binding/**/README.md"
+    - "src/mc_rtc/README.md"
     branches:
     - "**"
     tags:
