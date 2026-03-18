@@ -16,12 +16,8 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/_plugins/doxygen.rb
         DESTINATION ${MC_RTC_JEKYLL_PLUGINS_PATH}
 )
 
-file(
-  COPY "${CMAKE_CURRENT_SOURCE_DIR}/_plugins/"
-  DESTINATION "${MC_RTC_JEKYLL_PLUGINS_PATH}"
-  FILES_MATCHING
-  PATTERN "*.rb"
-  PATTERN "*.in.rb" EXCLUDE
+install(FILES _plugins/include_raw.rb _plugins/link.rb _plugins/pretty_json.rb
+        DESTINATION "${MC_RTC_JEKYLL_PLUGINS_PATH}"
 )
 
 install(
