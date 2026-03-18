@@ -24,7 +24,7 @@ Serving locally
 Execute the following commands:
 
 ```bash
-$ export MC_RTC_JEKYLL_PLUGINS=<mc_rtc_install_prefix>/share/doc/_plugins
+$ export MC_RTC_JEKYLL_PLUGINS=<mc_rtc_install_prefix>/share/doc/jekyll/plugins
 $ bundle exec jekyll serve --trace --plugins $MC_RTC_JEKYLL_PLUGINS
 ```
 
