@@ -326,7 +326,14 @@
                 </div>
               </div>
               
-                
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#行列型についての注意">行列型についての注意</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#eigen">Eigen</a></li>
+<li class="toc-entry toc-h3"><a href="#ptransformd">PTransformd</a></li>
+</ul>
+</li>
+</ul>
               
             </div>
           </div>
@@ -360,6 +367,128 @@
 </code></pre></div></div>
 
 <p><a href="https://fmt.dev/dev/syntax.html">{fmt}ライブラリ</a>でサポートされている書式設定構文を使用できます。</p>
+
+<h2 id="行列型についての注意">行列型についての注意</h2>
+
+<p>行列型（<code class="language-plaintext highlighter-rouge">Eigen::Matrix</code>, <code class="language-plaintext highlighter-rouge">Eigen::Vector</code>, <code class="language-plaintext highlighter-rouge">sva::PTransformd</code> など）は、<a href="https://gite.lirmm.fr/rpc/utils/eigen-fmt">{eigen-fmt}</a> ライブラリに基づいたカスタム <code class="language-plaintext highlighter-rouge">{fmt}</code> フォーマッタでフォーマットされます。</p>
+
+<h3 id="eigen">Eigen</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Eigen</code> 型（行列、ベクトルなど）は <code class="language-plaintext highlighter-rouge">{eigen-fmt}</code> フォーマッタを使用してフォーマットされ、表示方法を制御するための修飾子を提供します。詳細は <a href="https://rpc.lirmm.net/rpc-framework/packages/eigen-fmt/index.html">{eigen-fmt} ドキュメント</a> を参照してください。</p>
+
+<p>例：</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="n">m1</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span><span class="o">::</span><span class="n">Random</span><span class="p">();</span>
+
+<span class="c1">// 式の表示方法を制御するために fmt 型の修飾子を使用できます</span>
+<span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">"Matrix m1:</span><span class="se">\n</span><span class="s">{:noal;csep{, };rsep{, };mpre{ &lt;&lt; };msuf{;}}"</span><span class="p">,</span> <span class="n">m1</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>参考までに、<code class="language-plaintext highlighter-rouge">Eigen</code> 型で利用可能な修飾子（<code class="language-plaintext highlighter-rouge">eigen-fmt v1.0.4</code> 時点）は以下の通りです。すべてのパラメータはセミコロンで区切ります。利用可能なパラメータは：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">t</code>: 転置（デフォルト = <code class="language-plaintext highlighter-rouge">false</code>）</li>
+  <li><code class="language-plaintext highlighter-rouge">noal</code>: 列を揃えない（デフォルト = <code class="language-plaintext highlighter-rouge">false</code>）</li>
+  <li><code class="language-plaintext highlighter-rouge">p{int/str}</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">int</code>: 固定精度（デフォルト = <code class="language-plaintext highlighter-rouge">Eigen::StreamPrecision</code>）</li>
+      <li><code class="language-plaintext highlighter-rouge">'f'</code> または <code class="language-plaintext highlighter-rouge">'s'</code>: 完全精度（<code class="language-plaintext highlighter-rouge">Eigen::FullPrecision</code>）またはストリーム精度（<code class="language-plaintext highlighter-rouge">Eigen::StreamPrecision</code>）</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">csep{str}</code>: 要素の区切り文字（デフォルト = <code class="language-plaintext highlighter-rouge">" "</code>）</li>
+  <li><code class="language-plaintext highlighter-rouge">rsep{str}</code>: 行の区切り文字（デフォルト = <code class="language-plaintext highlighter-rouge">"\n"</code>）</li>
+  <li><code class="language-plaintext highlighter-rouge">rpre{str}</code>: 行の接頭辞（デフォルト = <code class="language-plaintext highlighter-rouge">""</code>）</li>
+  <li><code class="language-plaintext highlighter-rouge">rsuf{str}</code>: 行の接尾辞（デフォルト = <code class="language-plaintext highlighter-rouge">""</code>）</li>
+  <li><code class="language-plaintext highlighter-rouge">mpre{str}</code>: 行列の接頭辞（デフォルト = <code class="language-plaintext highlighter-rouge">""</code>）</li>
+  <li><code class="language-plaintext highlighter-rouge">msuf{str}</code>: 行列の接尾辞（デフォルト = <code class="language-plaintext highlighter-rouge">""</code>）</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// より明示的な EigenFmt::FormatSpec 構造体を使用することもできます</span>
+<span class="n">EigenFmt</span><span class="o">::</span><span class="n">FormatSpec</span> <span class="n">clean_format</span><span class="p">;</span>
+<span class="n">clean_format</span><span class="p">.</span><span class="n">precision</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="n">clean_format</span><span class="p">.</span><span class="n">coeff_sep</span> <span class="o">=</span> <span class="s">", "</span><span class="p">;</span>
+<span class="n">clean_format</span><span class="p">.</span><span class="n">row_prefix</span> <span class="o">=</span> <span class="s">"["</span><span class="p">;</span>
+<span class="n">clean_format</span><span class="p">.</span><span class="n">row_suffix</span> <span class="o">=</span> <span class="s">"]"</span><span class="p">;</span>
+
+<span class="c1">// str() 関数は実行時コストがあるため、結果をキャッシュすることを推奨します</span>
+<span class="k">const</span> <span class="k">auto</span> <span class="n">octave_format_str</span> <span class="o">=</span> <span class="n">clean_format</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+<span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">"Matrix m1:</span><span class="se">\n</span><span class="s">{:{}}"</span><span class="p">,</span> <span class="n">m1</span><span class="p">,</span> <span class="n">octave_format_str</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="ptransformd">PTransformd</h3>
+
+<p><code class="language-plaintext highlighter-rouge">sva::PTransformd</code> には、個々のデータフィールドを <code class="language-plaintext highlighter-rouge">{eigen-fmt}</code> フォーマッタで詳細に表示する、やや独自のフォーマッタを提供しています：</p>
+<ul>
+  <li>translation（並進）</li>
+  <li>rotation（回転）:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">sva</code> の慣習（Featherstone、左手系回転行列）による行列</li>
+      <li>標準的な慣習（右手系回転行列）による行列</li>
+      <li>Featherstone/標準の両方で度・ラジアンのRPY</li>
+    </ul>
+  </li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">{eigen-fmt}</code> 修飾子を使って行列やベクトルの表示方法を制御できますが、出力の全体構造は固定されています。ただし、<code class="language-plaintext highlighter-rouge">.matrix()</code>, <code class="language-plaintext highlighter-rouge">.vector()</code>, <code class="language-plaintext highlighter-rouge">.translation()</code>, <code class="language-plaintext highlighter-rouge">.rotation()</code> などの生データフィールドを手動で表示することも可能です（Eigen型なので <code class="language-plaintext highlighter-rouge">{eigen-fmt}</code> の柔軟性を活用できます）。</p>
+
+<p>例：</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span> <span class="nf">T</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">RotZ</span><span class="p">(</span><span class="n">M_PI</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">));</span>
+  <span class="n">fmt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="s">"T:</span><span class="se">\n</span><span class="s">{}"</span><span class="p">,</span> <span class="n">T</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">PTransformd</code> は以下のデフォルトスタイルで表示されます：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>T:
+  translation: [1, 2, 3]
+  rotation:
+    - matrix (Featherstone, left-handed convention):
+      [              0.707,               0.707,                   0]
+      [             -0.707,               0.707,                   0]
+      [                  0,                   0,                   1]
+    - matrix (Standard,     right-handed convention):
+      [              0.707,              -0.707,                   0]
+      [              0.707,               0.707,                   0]
+      [                  0,                   0,                   1]
+    - rpy (Featherstone): [0, -0, 0.785] (rad), [0, -0, 45] (deg)
+    - rpy (standard):     [0, -0, -0.785] (rad), [0, -0, -45] (deg)
+</code></pre></div></div>
+
+<p>また、以下のようにカスタマイズすることもできます：</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">EigenFmt</span><span class="o">::</span><span class="n">FormatSpec</span> <span class="n">clean_format</span><span class="p">;</span>
+  <span class="n">clean_format</span><span class="p">.</span><span class="n">precision</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+  <span class="n">clean_format</span><span class="p">.</span><span class="n">coeff_sep</span> <span class="o">=</span> <span class="s">", "</span><span class="p">;</span>
+  <span class="n">clean_format</span><span class="p">.</span><span class="n">row_prefix</span> <span class="o">=</span> <span class="s">"      "</span><span class="p">;</span>
+  <span class="n">clean_format</span><span class="p">.</span><span class="n">row_suffix</span> <span class="o">=</span> <span class="s">" "</span><span class="p">;</span>
+  <span class="n">clean_format</span><span class="p">.</span><span class="n">mat_prefix</span> <span class="o">=</span> <span class="s">"    ["</span><span class="p">;</span>
+  <span class="n">clean_format</span><span class="p">.</span><span class="n">mat_suffix</span> <span class="o">=</span> <span class="s">"]"</span><span class="p">;</span>
+  <span class="n">clean_format</span><span class="p">.</span><span class="n">dont_align_cols</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="k">const</span> <span class="k">auto</span> <span class="n">eigen_matrix_str</span> <span class="o">=</span> <span class="n">clean_format</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+
+  <span class="n">clean_format</span><span class="p">.</span><span class="n">row_prefix</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+  <span class="n">clean_format</span><span class="p">.</span><span class="n">row_suffix</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+  <span class="n">clean_format</span><span class="p">.</span><span class="n">transpose</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">eigen_vector_str</span> <span class="o">=</span> <span class="n">clean_format</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+  <span class="n">fmt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="s">"T:</span><span class="se">\n</span><span class="s">{:{}{}}"</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">eigen_vector_str</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">eigen_matrix_str</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>出力例：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>T:
+translation:     [1, 2, 3]
+rotation:
+  - matrix (Featherstone, left-handed convention):
+    [      0.7071068, 0.7071068, 0
+      -0.7071068, 0.7071068, 0
+      0, 0, 1 ]
+  - matrix (Standard,     right-handed convention):
+    [      0.7071068, -0.7071068, 0
+      0.7071068, 0.7071068, 0
+      0, 0, 1 ]
+  - rpy (Featherstone):     [0, -0, 0.7853982] (rad),     [0, -0, 45] (deg)
+  - rpy (standard):         [0, -0, -0.7853982] (rad),     [0, -0, -45] (deg)
+</code></pre></div></div>
 
 
 

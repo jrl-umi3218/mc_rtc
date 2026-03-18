@@ -119,9 +119,10 @@ Collaboration diagram for mc_rbdyn::Robots:</div>
 <div class="dyncontent">
 <div class="center"><img src="structmc__rbdyn_1_1Robots__coll__graph.png" border="0" usemap="#amc__rbdyn_1_1Robots_coll__map" alt="Collaboration graph"/></div>
 <map name="amc__rbdyn_1_1Robots_coll__map" id="amc__rbdyn_1_1Robots_coll__map">
-<area shape="rect" title=" " alt="" coords="497,35,636,61"/>
-<area shape="rect" href="structmc__rtc_1_1shared.html" title=" " alt="" coords="256,35,449,61"/>
+<area shape="rect" title=" " alt="" coords="623,69,761,96"/>
+<area shape="rect" href="structmc__rtc_1_1shared.html" title=" " alt="" coords="257,35,451,61"/>
 <area shape="rect" title=" " alt="" coords="5,5,208,91"/>
+<area shape="rect" href="structmc__rtc_1_1Signal.html" title=" " alt="" coords="279,86,429,127"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -261,6 +262,10 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a99733733378b2512684a78597b24bda5"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, unsigned int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robots.html#a99733733378b2512684a78597b24bda5">robotNameToIndex_</a></td></tr>
 <tr class="memdesc:a99733733378b2512684a78597b24bda5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Correspondance between robot name and index.  <a href="structmc__rbdyn_1_1Robots.html#a99733733378b2512684a78597b24bda5">More...</a><br /></td></tr>
 <tr class="separator:a99733733378b2512684a78597b24bda5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bb3a7822b903b279b20784cc3da0eb9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1Robots.html#a9841506d657d6c7cfd71f676c28a8565">onRobotAddedSigT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robots.html#a7bb3a7822b903b279b20784cc3da0eb9">onRobotAdded_</a></td></tr>
+<tr class="separator:a7bb3a7822b903b279b20784cc3da0eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad26e9b72f3147f02787dfd851487cb5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1Robots.html#affa8470ac842dbdc6cf1bc5e5da66722">onRobotRemovedSigT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robots.html#aad26e9b72f3147f02787dfd851487cb5">onRobotRemoved_</a></td></tr>
+<tr class="separator:aad26e9b72f3147f02787dfd851487cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -304,6 +309,22 @@ Friends</h2></td></tr>
 <tr class="separator:a02be61ed3972aeae42d94bbe242a839c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54a0069d6ac9debe385ba1f1f311ee51"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1Robots.html#a2e49b87763cde50e94087e771919844e">const_reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robots.html#a54a0069d6ac9debe385ba1f1f311ee51">crend</a> () const noexcept</td></tr>
 <tr class="separator:a54a0069d6ac9debe385ba1f1f311ee51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader">Signals</h2></td></tr>
+<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrpcadd2b2ad06d8a0caee658e3c05e615a"></a>These functions provide signals to events related to robot adding/removing </p>
+</td></tr>
+<tr class="memitem:a9841506d657d6c7cfd71f676c28a8565"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robots.html#a9841506d657d6c7cfd71f676c28a8565">onRobotAddedSigT</a> = <a class="el" href="structmc__rtc_1_1Signal.html">mc_rtc::Signal</a>&lt; std::string &gt;</td></tr>
+<tr class="separator:a9841506d657d6c7cfd71f676c28a8565"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea6840dd44983b9d77c7fc3969a1990c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robots.html#aea6840dd44983b9d77c7fc3969a1990c">onRobotAddedSlotT</a> = <a class="el" href="structmc__rtc_1_1Signal.html#ad9c42960568a920bac8b62a4501c48b4">onRobotAddedSigT::SlotT</a></td></tr>
+<tr class="separator:aea6840dd44983b9d77c7fc3969a1990c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affa8470ac842dbdc6cf1bc5e5da66722"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robots.html#affa8470ac842dbdc6cf1bc5e5da66722">onRobotRemovedSigT</a> = <a class="el" href="structmc__rtc_1_1Signal.html">mc_rtc::Signal</a>&lt; std::string &gt;</td></tr>
+<tr class="separator:affa8470ac842dbdc6cf1bc5e5da66722"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac79877eb0e0ca8a11a6c30bbf3adf428"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robots.html#ac79877eb0e0ca8a11a6c30bbf3adf428">onRobotRemovedSlotT</a> = <a class="el" href="structmc__rtc_1_1Signal.html#ad9c42960568a920bac8b62a4501c48b4">onRobotRemovedSigT::SlotT</a></td></tr>
+<tr class="separator:ac79877eb0e0ca8a11a6c30bbf3adf428"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa80c7629252f4621a1d277aeba9a7bc"><td class="memItemLeft" align="right" valign="top">onRobotAddedSigT::Proxy&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robots.html#aaa80c7629252f4621a1d277aeba9a7bc">onRobotAdded</a> () const noexcept</td></tr>
+<tr class="separator:aaa80c7629252f4621a1d277aeba9a7bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea4f3182772b69294aadde13120bd1fc"><td class="memItemLeft" align="right" valign="top">onRobotRemovedSigT::Proxy&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robots.html#aea4f3182772b69294aadde13120bd1fc">onRobotRemoved</a> () const noexcept</td></tr>
+<tr class="separator:aea4f3182772b69294aadde13120bd1fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="ad11179b83867ba05cc94e2fd279b0ded"></a>
@@ -345,6 +366,74 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9841506d657d6c7cfd71f676c28a8565"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9841506d657d6c7cfd71f676c28a8565">&#9670;&nbsp;</a></span>onRobotAddedSigT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="structmc__rbdyn_1_1Robots.html#a9841506d657d6c7cfd71f676c28a8565">mc_rbdyn::Robots::onRobotAddedSigT</a> =  <a class="el" href="structmc__rtc_1_1Signal.html">mc_rtc::Signal</a>&lt;std::string&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This signal is emitted after a robot is added</p>
+<p>The payload has the name of the newly added robot.</p>
+<p>It is emitted after the robot has been added, i.e. robots(payload) has the newly added robot </p>
+
+</div>
+</div>
+<a id="aea6840dd44983b9d77c7fc3969a1990c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea6840dd44983b9d77c7fc3969a1990c">&#9670;&nbsp;</a></span>onRobotAddedSlotT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="structmc__rbdyn_1_1Robots.html#aea6840dd44983b9d77c7fc3969a1990c">mc_rbdyn::Robots::onRobotAddedSlotT</a> =  <a class="el" href="structmc__rtc_1_1Signal.html#ad9c42960568a920bac8b62a4501c48b4">onRobotAddedSigT::SlotT</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This signal is emitted after a robot is added</p>
+<p>The payload has the name of the newly added robot.</p>
+<p>It is emitted after the robot has been added, i.e. robots(payload) has the newly added robot </p>
+
+</div>
+</div>
+<a id="affa8470ac842dbdc6cf1bc5e5da66722"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affa8470ac842dbdc6cf1bc5e5da66722">&#9670;&nbsp;</a></span>onRobotRemovedSigT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="structmc__rbdyn_1_1Robots.html#affa8470ac842dbdc6cf1bc5e5da66722">mc_rbdyn::Robots::onRobotRemovedSigT</a> =  <a class="el" href="structmc__rtc_1_1Signal.html">mc_rtc::Signal</a>&lt;std::string&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This signal is emitted after a robot is added</p>
+<p>The payload has the name of the newly added robot.</p>
+<p>It is emitted after the robot has been added, i.e. robots(payload) has the newly added robot </p>
+
+</div>
+</div>
+<a id="ac79877eb0e0ca8a11a6c30bbf3adf428"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac79877eb0e0ca8a11a6c30bbf3adf428">&#9670;&nbsp;</a></span>onRobotRemovedSlotT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="structmc__rbdyn_1_1Robots.html#ac79877eb0e0ca8a11a6c30bbf3adf428">mc_rbdyn::Robots::onRobotRemovedSlotT</a> =  <a class="el" href="structmc__rtc_1_1Signal.html#ad9c42960568a920bac8b62a4501c48b4">onRobotRemovedSigT::SlotT</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This signal is emitted after a robot is added</p>
+<p>The payload has the name of the newly added robot.</p>
+<p>It is emitted after the robot has been added, i.e. robots(payload) has the newly added robot </p>
 
 </div>
 </div>
@@ -1096,6 +1185,62 @@ template&lt;class Deleter &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Give access to the underlying list of rbd::MultiBody objects (const) </p>
+
+</div>
+</div>
+<a id="aaa80c7629252f4621a1d277aeba9a7bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa80c7629252f4621a1d277aeba9a7bc">&#9670;&nbsp;</a></span>onRobotAdded()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">onRobotAddedSigT::Proxy mc_rbdyn::Robots::onRobotAdded </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This signal is emitted after a robot is added</p>
+<p>The payload has the name of the newly added robot.</p>
+<p>It is emitted after the robot has been added, i.e. robots(payload) has the newly added robot </p>
+
+</div>
+</div>
+<a id="aea4f3182772b69294aadde13120bd1fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea4f3182772b69294aadde13120bd1fc">&#9670;&nbsp;</a></span>onRobotRemoved()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">onRobotRemovedSigT::Proxy mc_rbdyn::Robots::onRobotRemoved </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This signal is emitted when a robot is about to be removed</p>
+<p>The payload is the name of the robot that is about to be removed</p>
+<p>It is emitted before the robot is effectively removed, i.e. robots(payload) still has the robot about to be removed </p>
 
 </div>
 </div>
@@ -1864,6 +2009,50 @@ template&lt;class Deleter &gt; </div>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7bb3a7822b903b279b20784cc3da0eb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bb3a7822b903b279b20784cc3da0eb9">&#9670;&nbsp;</a></span>onRobotAdded_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rbdyn_1_1Robots.html#a9841506d657d6c7cfd71f676c28a8565">onRobotAddedSigT</a> mc_rbdyn::Robots::onRobotAdded_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">mutable</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aad26e9b72f3147f02787dfd851487cb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad26e9b72f3147f02787dfd851487cb5">&#9670;&nbsp;</a></span>onRobotRemoved_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rbdyn_1_1Robots.html#affa8470ac842dbdc6cf1bc5e5da66722">onRobotRemovedSigT</a> mc_rbdyn::Robots::onRobotRemoved_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">mutable</span><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

@@ -34,6 +34,8 @@ var structmc__control_1_1MCController =
     [ "hasObserverPipeline", "structmc__control_1_1MCController.html#ac6529a8c099a0c775a7c99514086544b", null ],
     [ "hasObserverPipeline", "structmc__control_1_1MCController.html#af3caf78b3601e0806d9ebf6cfe9b5e5e", null ],
     [ "hasRobot", "structmc__control_1_1MCController.html#afaa78577373a2362772543b2b6c12b40", null ],
+    [ "loadRobot", "structmc__control_1_1MCController.html#a2a61bb4ebe6b2e9b59138efd67c54e2c", null ],
+    [ "loadRobot", "structmc__control_1_1MCController.html#a01305491a3706251bbb1e30bca021dda", null ],
     [ "loadRobot", "structmc__control_1_1MCController.html#a3110512ea26812d8a58d3945e739c751", null ],
     [ "loadRobot", "structmc__control_1_1MCController.html#af5e7664c119aa760e63927f2df193927", null ],
     [ "logger", "structmc__control_1_1MCController.html#ab35bed98f155238c6df771595cc2b939", null ],

@@ -25,6 +25,7 @@ var dir_379a22462e4fb075f5428ea3ff528930 =
       [ "Default< std::variant< T, Others... > >", "structmc__rtc_1_1Default_3_01std_1_1variant_3_01T_00_01Others_8_8_8_01_4_01_4.html", null ]
     ] ],
     [ "deprecated.h", "deprecated_8h.html", "deprecated_8h" ],
+    [ "fmt_formatters.h", "fmt__formatters_8h.html", "fmt__formatters_8h" ],
     [ "gui.h", "gui_8h.html", null ],
     [ "io_utils.h", "io__utils_8h.html", "io__utils_8h" ],
     [ "iterators.h", "iterators_8h.html", [
@@ -41,6 +42,11 @@ var dir_379a22462e4fb075f5428ea3ff528930 =
     [ "SchemaMacros.h", "SchemaMacros_8h.html", "SchemaMacros_8h" ],
     [ "shared.h", "shared_8h.html", [
       [ "shared", "structmc__rtc_1_1shared.html", "structmc__rtc_1_1shared" ]
+    ] ],
+    [ "SignalSlot.h", "SignalSlot_8h.html", [
+      [ "Signal", "structmc__rtc_1_1Signal.html", "structmc__rtc_1_1Signal" ],
+      [ "Proxy", "structmc__rtc_1_1Signal_1_1Proxy.html", "structmc__rtc_1_1Signal_1_1Proxy" ],
+      [ "Slot", "structmc__rtc_1_1Slot.html", "structmc__rtc_1_1Slot" ]
     ] ],
     [ "type_name.h", "type__name_8h.html", "type__name_8h" ],
     [ "unique_ptr.h", "unique__ptr_8h.html", [

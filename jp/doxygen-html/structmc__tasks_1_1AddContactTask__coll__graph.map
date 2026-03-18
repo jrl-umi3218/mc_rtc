@@ -1,8 +1,9 @@
 <map id="mc_tasks::AddContactTask" name="mc_tasks::AddContactTask">
-<area shape="rect" id="node1" title="Add a contact." alt="" coords="1048,31,1244,57"/>
-<area shape="rect" id="node2" href="$structmc__tasks_1_1AddRemoveContactTask.html" title="Add or remove a contact." alt="" coords="748,31,999,57"/>
-<area shape="rect" id="node3" href="$structmc__tasks_1_1MetaTask.html" title="Represents a generic task." alt="" coords="500,5,655,32"/>
-<area shape="rect" id="node4" href="$structmc__rbdyn_1_1Robots.html" title=" " alt="" coords="508,56,647,83"/>
-<area shape="rect" id="node5" href="$structmc__rtc_1_1shared.html" title=" " alt="" coords="257,56,451,83"/>
-<area shape="rect" id="node6" title=" " alt="" coords="5,27,208,112"/>
+<area shape="rect" id="node1" title="Add a contact." alt="" coords="1171,44,1367,71"/>
+<area shape="rect" id="node2" href="$structmc__tasks_1_1AddRemoveContactTask.html" title="Add or remove a contact." alt="" coords="871,44,1121,71"/>
+<area shape="rect" id="node3" href="$structmc__tasks_1_1MetaTask.html" title="Represents a generic task." alt="" coords="623,19,777,45"/>
+<area shape="rect" id="node4" href="$structmc__rbdyn_1_1Robots.html" title=" " alt="" coords="631,69,769,96"/>
+<area shape="rect" id="node5" href="$structmc__rtc_1_1shared.html" title=" " alt="" coords="257,35,451,61"/>
+<area shape="rect" id="node6" title=" " alt="" coords="5,5,208,91"/>
+<area shape="rect" id="node7" href="$structmc__rtc_1_1Signal.html" title=" " alt="" coords="279,86,429,127"/>
 </map>

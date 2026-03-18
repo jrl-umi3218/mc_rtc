@@ -74,6 +74,8 @@ var namespacemc__rtc =
     [ "Default< T, std::enable_if_t< schema::details::is_std_vector_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01std_1_1enable__if__t_3_01schema_1_1details_1_1is__std__vector__v_3_01T_01_4_01_4_01_4.html", null ],
     [ "Default< T, typename std::enable_if_t< schema::details::is_std_map_v< T > > >", "structmc__rtc_1_1Default_3_01T_00_01typename_01std_1_1enable__if__t_3_01schema_1_1details_1_1is_beadeb99586bf01a357ff75f4c89b66e.html", null ],
     [ "shared", "structmc__rtc_1_1shared.html", "structmc__rtc_1_1shared" ],
+    [ "Signal", "structmc__rtc_1_1Signal.html", "structmc__rtc_1_1Signal" ],
+    [ "Slot", "structmc__rtc_1_1Slot.html", "structmc__rtc_1_1Slot" ],
     [ "unique_ptr", "classmc__rtc_1_1unique__ptr.html", "classmc__rtc_1_1unique__ptr" ],
     [ "void_ptr_caster", "structmc__rtc_1_1void__ptr__caster.html", "structmc__rtc_1_1void__ptr__caster" ],
     [ "ConfigurationLoader< mc_tasks::force::ImpedanceGains >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html", null ],

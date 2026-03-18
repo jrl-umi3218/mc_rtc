@@ -358,6 +358,7 @@
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#implementing-your-own-code-robotmodule-code">Implementing your own RobotModule</a></li>
+<li class="toc-entry toc-h2"><a href="#connecting-existing-robot-modules">Connecting existing robot modules</a></li>
 <li class="toc-entry toc-h2"><a href="#get-started">Get started</a></li>
 </ul>
               
@@ -861,6 +862,117 @@
 
 
 <p>See <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1RobotModule" target="blank_"><code>mc_rbdyn::RobotModule</code></a> documentation for all members that can be provided.</p>
+
+
+<h2 id="connecting-existing-robot-modules">Connecting existing robot modules</h2>
+
+
+<p>Regardless of how the robot module was created, the framework makes it possible to connect/disconnect exisitng robot modules, actuated or not. This is very useful to provide variants of existing robots modules such as:</p>
+
+<ul>
+  <li>Adding tools (grippers, etc) to an existing robot</li>
+  <li>Mounting a robot on a support (wall, table, etc)</li>
+  <li>Modular robotics</li>
+</ul>
+
+<p>In any case the merged robot is a new robot module that can be loaded and used as a single robot in the framework. For now, we do not provide a way to seamlessly replace a robot involved in the controller with a variant created by connecting it to another module. This would be very useful in case of tool changing or for modular robotics to connect multiple actuated modules together.</p>
+
+<p>This feature is planned, in the meanwhile users interested in trying to do this themselves need to:</p>
+<ul>
+  <li>Remove all tasks and constraints in which the robot is involved from the solver</li>
+  <li>Remove all gui/log callbacks that involve the robot</li>
+  <li>Remove the robot</li>
+  <li>Connect the modules and load the connected variant</li>
+  <li>Re-add all tasks/contraints/callbacks</li>
+</ul>
+
+To connect modules together, see <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1RobotModule#a4dafbba5f1e2385fc3679c335ab1800a" target="blank_"><code>mc_rbdyn::RobotModule::connect</code></a> and <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters" target="blank_"><code>mc_rbdyn::RobotModule::ConnectionParameters</code></a>. The main function to use is defined as:<br />
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">RobotModule</span> <span class="n">RobotModule</span><span class="o">::</span><span class="n">connect</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span> <span class="o">&amp;</span> <span class="n">other</span><span class="p">,</span>
+                                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">this_body</span><span class="p">,</span>
+                                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">other_body</span><span class="p">,</span>
+                                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">prefix</span><span class="p">,</span>
+                                 <span class="k">const</span> <span class="n">ConnectionParameters</span> <span class="o">&amp;</span> <span class="n">params</span><span class="p">)</span> <span class="k">const</span></code></pre></figure>
+
+For example:
+
+<ul class="nav nav-tabs" id="robot_module_connect_exampleTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="robot-module-connect-examplerobot-module-connect-cppcppTab" data-toggle="tab" href="#robot-module-connect-examplerobot-module-connect-cppcppTabContent" role="tab" aria-controls="robot-module-connect-examplerobot-module-connect-cppcppTabContent" aria-selected="true">robot_module_connect.cpp</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="robot_module_connect_exampleTabContent">
+  
+    
+    
+    
+    
+    <div class="tab-pane show active" id="robot-module-connect-examplerobot-module-connect-cppcppTabContent" role="tabpanel" arial-labelledby="robot-module-connect-examplerobot-module-connect-cppcppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">&lt;mc_rbdyn/RobotLoader.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mc_rbdyn/RobotModule.h&gt;</span><span class="cp">
+</span>
+<span class="c1">// Define a "robot_support" robot from a "box" visual description</span>
+<span class="k">auto</span> <span class="n">boxYaml</span> <span class="o">=</span>
+    <span class="s">R"(
+  name: robot_support
+  origin:
+    translation: [0, 0, 0]
+    rotation: [0, 0, 0]
+  material:
+    color:
+      r: 1.0
+      g: 0.0
+      b: 0.0
+      a: 1.0
+  geometry:
+    box:
+      size: [0.7, 1.2, 1.2]
+  inertia:
+    mass: 50
+  fixed: true
+  )"</span><span class="p">;</span>
+<span class="k">auto</span> <span class="n">boxConfig</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="o">::</span><span class="n">fromYAMLData</span><span class="p">(</span><span class="n">boxYaml</span><span class="p">);</span>
+
+<span class="c1">// Create a "robot_support" robot module from the visual description above</span>
+<span class="k">auto</span> <span class="n">supportRm</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">robotModuleFromVisual</span><span class="p">(</span><span class="s">"robot_support"</span><span class="p">,</span> <span class="n">boxConfig</span><span class="p">);</span>
+<span class="c1">// Load the panda robot module from an existing robot module</span>
+<span class="k">auto</span> <span class="n">pandaRm</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"PandaDefault"</span><span class="p">);</span>
+
+<span class="c1">// Transformation between the base of the "world" link of PandaDefault module and the robot_support link</span>
+<span class="k">auto</span> <span class="n">box_to_robot</span> <span class="o">=</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.2</span><span class="p">});</span>
+
+<span class="c1">// Load a new robot module by connecting the existing "PandaDefault" module to our "box" module</span>
+<span class="k">auto</span> <span class="n">pandaOnBoxRm</span> <span class="o">=</span> <span class="n">supportRm</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="o">*</span><span class="n">pandaRm</span><span class="p">,</span> <span class="c1">// connect to this other robot module (panda)</span>
+                                       <span class="s">"robot_support"</span><span class="p">,</span> <span class="c1">// reference link on our module</span>
+                                       <span class="s">"world"</span><span class="p">,</span> <span class="c1">// to connect to this link on other robot module (panda)</span>
+                                       <span class="s">""</span><span class="p">,</span> <span class="c1">// optional prefix to add to link names</span>
+                                       <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span><span class="o">::</span><span class="n">ConnectionParameters</span><span class="p">{}</span>
+                                           <span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="n">robot_name</span><span class="p">)</span>
+                                           <span class="p">.</span><span class="n">X_other_connection</span><span class="p">(</span><span class="n">box_to_robot</span><span class="p">)</span> <span class="c1">// connection parameters</span>
+<span class="p">);</span>
+
+<span class="c1">// Add robot to the controller, where ctl is an mc_control::MCController</span>
+<span class="k">auto</span> <span class="n">robot</span> <span class="o">=</span> <span class="n">ctl</span><span class="p">.</span><span class="n">loadRobot</span><span class="p">(</span><span class="o">*</span><span class="n">pandaOnBoxRm</span><span class="p">);</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+You can also refer to [mc_panda_lirmm](https://github.com/jrl-umi3218/mc_panda_lirmm) for a real-life example.
 
 <h2 id="get-started">Get started</h2>
 

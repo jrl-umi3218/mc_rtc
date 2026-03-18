@@ -6,6 +6,8 @@ var RobotModule_8h =
     [ "Gripper", "structmc__rbdyn_1_1RobotModule_1_1Gripper.html", "structmc__rbdyn_1_1RobotModule_1_1Gripper" ],
     [ "Safety", "structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety.html", "structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety" ],
     [ "FrameDescription", "structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html", "structmc__rbdyn_1_1RobotModule_1_1FrameDescription" ],
+    [ "ConnectionParameters", "structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html", "structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters" ],
+    [ "CONNECTION_PROPERTY", "RobotModule_8h.html#acccd9f34ed8c1fb78efefdd9fdfbcbeb", null ],
     [ "ROBOT_MODULE_API", "RobotModule_8h.html#a983157fccbdda235351228ec75cbd167", null ],
     [ "RobotModulePtr", "RobotModule_8h.html#af67e459a90b9a864418fca7d55d959a3", null ],
     [ "RobotModuleVector", "RobotModule_8h.html#a95605f5cb57b7c5b39027072bedbbc04", null ],

@@ -63,6 +63,7 @@ var hierarchy =
     [ "mc_rtc::ConfigurationLoader< mc_tasks::force::ImpedanceGains >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_tasks::lipm_stabilizer::ContactState >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< void >", "structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html", null ],
+    [ "mc_rbdyn::RobotModule::ConnectionParameters", "structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html", null ],
     [ "std::vector::const_iterator", null, [
       [ "mc_rtc::SharedPtrVectorConstIterator< T >", "structmc__rtc_1_1SharedPtrVectorConstIterator.html", null ]
     ] ],
@@ -241,6 +242,7 @@ var hierarchy =
       [ "fmt::formatter< mc_rtc::Configuration >", "structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html", null ],
       [ "fmt::formatter< mc_solver::QPSolver::Backend >", "structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html", null ]
     ] ],
+    [ "fmt::formatter< sva::PTransformd >", "structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html", null ],
     [ "mc_rtc::gui::details::FormDataInputBase< T >", "structmc__rtc_1_1gui_1_1details_1_1FormDataInputBase.html", [
       [ "mc_rtc::gui::details::FormDataInput< T, element >", "structmc__rtc_1_1gui_1_1details_1_1FormDataInput.html", null ],
       [ "mc_rtc::gui::details::FormInteractiveDataInput< T, element >", "structmc__rtc_1_1gui_1_1details_1_1FormInteractiveDataInput.html", null ]
@@ -506,6 +508,7 @@ var hierarchy =
     [ "PolyhedronT", null, [
       [ "mc_rtc::gui::details::ColoredPolyhedronImpl< PolyhedronT, GetColorT >", "structmc__rtc_1_1gui_1_1details_1_1ColoredPolyhedronImpl.html", null ]
     ] ],
+    [ "mc_rtc::Signal< ArgsT >::Proxy", "structmc__rtc_1_1Signal_1_1Proxy.html", null ],
     [ "mc_control::PythonRWCallback", "structmc__control_1_1PythonRWCallback.html", null ],
     [ "mc_solver::QPContactPtr", "structmc__solver_1_1QPContactPtr.html", null ],
     [ "mc_solver::QPContactPtrWPoints", "structmc__solver_1_1QPContactPtrWPoints.html", null ],
@@ -535,7 +538,10 @@ var hierarchy =
     [ "mc_rbdyn::lipm_stabilizer::SafetyThresholds", "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html", null ],
     [ "mc_trajectory::SequenceInterpolator< Value, InterpolationFunction >", "structmc__trajectory_1_1SequenceInterpolator.html", null ],
     [ "mc_trajectory::SequenceInterpolator< Eigen::Vector6d, mc_trajectory::LinearInterpolation< Eigen::Vector6d > >", "structmc__trajectory_1_1SequenceInterpolator.html", null ],
+    [ "mc_rtc::Signal< ArgsT >", "structmc__rtc_1_1Signal.html", null ],
+    [ "mc_rtc::Signal< std::string >", "structmc__rtc_1_1Signal.html", null ],
     [ "mc_control::SimulationContactPair", "structmc__control_1_1SimulationContactPair.html", null ],
+    [ "mc_rtc::Slot< ArgsT >", "structmc__rtc_1_1Slot.html", null ],
     [ "mc_tasks::SmoothTask< objT >", "structmc__tasks_1_1SmoothTask.html", null ],
     [ "mc_control::details::SocketConfiguration< default_pub_port, default_pull_port >", "structmc__control_1_1details_1_1SocketConfiguration.html", null ],
     [ "mc_trajectory::Spline< T, WaypointsT >", "structmc__trajectory_1_1Spline.html", null ],

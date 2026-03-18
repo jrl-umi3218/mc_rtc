@@ -1,5 +1,6 @@
 <map id="mc_rbdyn::Robots" name="mc_rbdyn::Robots">
-<area shape="rect" id="node1" title=" " alt="" coords="497,35,636,61"/>
-<area shape="rect" id="node2" href="$structmc__rtc_1_1shared.html" title=" " alt="" coords="256,35,449,61"/>
+<area shape="rect" id="node1" title=" " alt="" coords="623,69,761,96"/>
+<area shape="rect" id="node2" href="$structmc__rtc_1_1shared.html" title=" " alt="" coords="257,35,451,61"/>
 <area shape="rect" id="node3" title=" " alt="" coords="5,5,208,91"/>
+<area shape="rect" id="node4" href="$structmc__rtc_1_1Signal.html" title=" " alt="" coords="279,86,429,127"/>
 </map>

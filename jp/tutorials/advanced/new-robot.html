@@ -358,6 +358,7 @@
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#独自の-code-robotmodule-code-を実装する">独自のRobotModuleを実装する</a></li>
+<li class="toc-entry toc-h2"><a href="#既存のロボットモジュールの接続">既存のロボットモジュールの接続</a></li>
 <li class="toc-entry toc-h2"><a href="#さあ始めましょう">さあ始めましょう</a></li>
 </ul>
               
@@ -866,6 +867,116 @@
 
 
 <p>指定可能なメンバーについては、<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1RobotModule" target="blank_"><code>mc_rbdyn::RobotModule</code></a>のドキュメントを参照してください。</p>
+
+<h2 id="既存のロボットモジュールの接続">既存のロボットモジュールの接続</h2>
+
+
+<p>ロボットモジュールがどのように作成されたかに関わらず、フレームワークは既存のロボットモジュール（アクチュエータ付き・なし）を接続・切断することを可能にします。これは、既存のロボットモジュールのバリエーションを提供する際に非常に有用です。例：</p>
+
+<ul>
+  <li>既存のロボットにツール（グリッパーなど）を追加する</li>
+  <li>ロボットをサポート（壁、テーブルなど）に取り付ける</li>
+  <li>モジュール型ロボット</li>
+</ul>
+
+<p>いずれの場合も、結合されたロボットは新しいロボットモジュールとなり、フレームワーク内で単一のロボットとしてロード・使用できます。現時点では、コントローラに関与しているロボットを、他のモジュールと接続して作成されたバリアントにシームレスに置き換える方法は提供していません。これは、ツールチェンジやモジュール型ロボットで複数のアクチュエータ付きモジュールを接続する場合に非常に有用です。</p>
+
+<p>この機能は今後追加予定ですが、それまでの間、ユーザーが自分で試す場合は以下の手順が必要です：</p>
+<ul>
+  <li>ロボットが関与する全てのタスクと制約をソルバーから削除する</li>
+  <li>ロボットに関わる全てのGUI/ログコールバックを削除する</li>
+  <li>ロボットを削除する</li>
+  <li>モジュールを接続し、接続されたバリアントをロードする</li>
+  <li>全てのタスク／制約／コールバックを再追加する</li>
+</ul>
+
+モジュールを接続する方法については、<a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1RobotModule#a4dafbba5f1e2385fc3679c335ab1800a" target="blank_"><code>mc_rbdyn::RobotModule::connect</code></a> および <a href="/mc_rtc/jp/doxygen.html#structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters" target="blank_"><code>mc_rbdyn::RobotModule::ConnectionParameters</code></a> を参照してください。主に使用する関数は以下の通りです：<br />
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">RobotModule</span> <span class="n">RobotModule</span><span class="o">::</span><span class="n">connect</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span> <span class="o">&amp;</span> <span class="n">other</span><span class="p">,</span>
+                                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">this_body</span><span class="p">,</span>
+                                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">other_body</span><span class="p">,</span>
+                                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">prefix</span><span class="p">,</span>
+                                 <span class="k">const</span> <span class="n">ConnectionParameters</span> <span class="o">&amp;</span> <span class="n">params</span><span class="p">)</span> <span class="k">const</span></code></pre></figure>
+
+例えば：
+
+<ul class="nav nav-tabs" id="robot_module_connect_exampleTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="robot-module-connect-examplerobot-module-connect-cppcppTab" data-toggle="tab" href="#robot-module-connect-examplerobot-module-connect-cppcppTabContent" role="tab" aria-controls="robot-module-connect-examplerobot-module-connect-cppcppTabContent" aria-selected="true">robot_module_connect.cpp</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="robot_module_connect_exampleTabContent">
+  
+    
+    
+    
+    
+    <div class="tab-pane show active" id="robot-module-connect-examplerobot-module-connect-cppcppTabContent" role="tabpanel" arial-labelledby="robot-module-connect-examplerobot-module-connect-cppcppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">&lt;mc_rbdyn/RobotLoader.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;mc_rbdyn/RobotModule.h&gt;</span><span class="cp">
+</span>
+<span class="c1">// 「box」のビジュアル記述から「robot_support」ロボットを定義する</span>
+<span class="k">auto</span> <span class="n">boxYaml</span> <span class="o">=</span>
+    <span class="s">R"(
+  name: robot_support
+  origin:
+    translation: [0, 0, 0]
+    rotation: [0, 0, 0]
+  material:
+    color:
+      r: 1.0
+      g: 0.0
+      b: 0.0
+      a: 1.0
+  geometry:
+    box:
+      size: [0.7, 1.2, 1.2]
+  inertia:
+    mass: 50
+  fixed: true
+  )"</span><span class="p">;</span>
+<span class="k">auto</span> <span class="n">boxConfig</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="o">::</span><span class="n">fromYAMLData</span><span class="p">(</span><span class="n">boxYaml</span><span class="p">);</span>
+
+<span class="c1">// 上記のビジュアル記述から「robot_support」ロボットモジュールを作成する</span>
+<span class="k">auto</span> <span class="n">supportRm</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">robotModuleFromVisual</span><span class="p">(</span><span class="s">"robot_support"</span><span class="p">,</span> <span class="n">boxConfig</span><span class="p">);</span>
+<span class="c1">// 既存のロボットモジュールからパンダロボットモジュールをロードする</span>
+<span class="k">auto</span> <span class="n">pandaRm</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"PandaDefault"</span><span class="p">);</span>
+
+<span class="c1">// PandaDefaultモジュールの「world」リンクのベースとrobot_supportリンクの間の変換</span>
+<span class="k">auto</span> <span class="n">box_to_robot</span> <span class="o">=</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.2</span><span class="p">});</span>
+
+<span class="c1">// 既存の「PandaDefault」モジュールを「box」モジュールに接続して新しいロボットモジュールをロードする</span>
+<span class="k">auto</span> <span class="n">pandaOnBoxRm</span> <span class="o">=</span> <span class="n">supportRm</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span>
+    <span class="o">*</span><span class="n">pandaRm</span><span class="p">,</span> <span class="c1">// この他のロボットモジュール（パンダ）に接続する</span>
+    <span class="s">"robot_support"</span><span class="p">,</span> <span class="c1">// 自分のモジュールの参照リンク</span>
+    <span class="s">"world"</span><span class="p">,</span> <span class="c1">// 他のロボットモジュール（パンダ）のこのリンクに接続する</span>
+    <span class="s">""</span><span class="p">,</span> <span class="c1">// リンク名に追加するオプションのプレフィックス</span>
+    <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span><span class="o">::</span><span class="n">ConnectionParameters</span><span class="p">{}.</span><span class="n">name</span><span class="p">(</span><span class="n">robot_name</span><span class="p">).</span><span class="n">X_other_connection</span><span class="p">(</span><span class="n">box_to_robot</span><span class="p">)</span> <span class="c1">// 接続パラメータ</span>
+<span class="p">);</span>
+
+<span class="c1">// ctlはmc_control::MCControllerであり、ロボットをコントローラに追加する</span>
+<span class="k">auto</span> <span class="n">robot</span> <span class="o">=</span> <span class="n">ctl</span><span class="p">.</span><span class="n">loadRobot</span><span class="p">(</span><span class="o">*</span><span class="n">pandaOnBoxRm</span><span class="p">);</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+実際の例としては [mc_panda_lirmm](https://github.com/jrl-umi3218/mc_panda_lirmm) を参照してください。
+
 
 <h2 id="さあ始めましょう">さあ始めましょう</h2>
 

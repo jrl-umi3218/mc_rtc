@@ -1,8 +1,9 @@
 <map id="mc_tasks::GazeTask" name="mc_tasks::GazeTask">
-<area shape="rect" id="node1" title="Control the Gaze of a body." alt="" coords="983,31,1137,57"/>
-<area shape="rect" id="node2" href="$structmc__tasks_1_1TrajectoryTaskGeneric.html" title="Generic wrapper for a trajectory dynamic over an error function." alt="" coords="748,23,933,65"/>
-<area shape="rect" id="node3" href="$structmc__tasks_1_1MetaTask.html" title="Represents a generic task." alt="" coords="500,5,655,32"/>
-<area shape="rect" id="node4" href="$structmc__rbdyn_1_1Robots.html" title=" " alt="" coords="508,56,647,83"/>
-<area shape="rect" id="node5" href="$structmc__rtc_1_1shared.html" title=" " alt="" coords="257,56,451,83"/>
-<area shape="rect" id="node6" title=" " alt="" coords="5,27,208,112"/>
+<area shape="rect" id="node1" title="Control the Gaze of a body." alt="" coords="1105,44,1260,71"/>
+<area shape="rect" id="node2" href="$structmc__tasks_1_1TrajectoryTaskGeneric.html" title="Generic wrapper for a trajectory dynamic over an error function." alt="" coords="871,37,1056,78"/>
+<area shape="rect" id="node3" href="$structmc__tasks_1_1MetaTask.html" title="Represents a generic task." alt="" coords="623,19,777,45"/>
+<area shape="rect" id="node4" href="$structmc__rbdyn_1_1Robots.html" title=" " alt="" coords="631,69,769,96"/>
+<area shape="rect" id="node5" href="$structmc__rtc_1_1shared.html" title=" " alt="" coords="257,35,451,61"/>
+<area shape="rect" id="node6" title=" " alt="" coords="5,5,208,91"/>
+<area shape="rect" id="node7" href="$structmc__rtc_1_1Signal.html" title=" " alt="" coords="279,86,429,127"/>
 </map>

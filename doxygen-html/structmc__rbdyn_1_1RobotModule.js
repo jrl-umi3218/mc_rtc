@@ -1,5 +1,6 @@
 var structmc__rbdyn_1_1RobotModule =
 [
+    [ "ConnectionParameters", "structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html", "structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters" ],
     [ "FrameDescription", "structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html", "structmc__rbdyn_1_1RobotModule_1_1FrameDescription" ],
     [ "Gripper", "structmc__rbdyn_1_1RobotModule_1_1Gripper.html", "structmc__rbdyn_1_1RobotModule_1_1Gripper" ],
     [ "accelerationBounds_t", "structmc__rbdyn_1_1RobotModule.html#a10b7fc984b3fa946f5c59a4174a366b8", null ],
@@ -19,10 +20,12 @@ var structmc__rbdyn_1_1RobotModule =
     [ "collisionTransforms", "structmc__rbdyn_1_1RobotModule.html#acb767324196546f71a47674f8c23c1fa", null ],
     [ "commonSelfCollisions", "structmc__rbdyn_1_1RobotModule.html#af32bd5d7ffb07565257d75f210467c8f", null ],
     [ "compoundJoints", "structmc__rbdyn_1_1RobotModule.html#a28b00d3621296be062c8545316171a89", null ],
+    [ "connect", "structmc__rbdyn_1_1RobotModule.html#a4dafbba5f1e2385fc3679c335ab1800a", null ],
     [ "convexHull", "structmc__rbdyn_1_1RobotModule.html#aea7c7858c175df032d33990e71ceb7ed", null ],
     [ "default_attitude", "structmc__rbdyn_1_1RobotModule.html#a2b42e01d0245ff4d59a8d3b512f3682e", null ],
     [ "defaultLIPMStabilizerConfiguration", "structmc__rbdyn_1_1RobotModule.html#aeb83ff8a992c97412321d4a5ed135177", null ],
     [ "devices", "structmc__rbdyn_1_1RobotModule.html#a3bbfe1ae62d9e98aa1bbbc1c518623f4", null ],
+    [ "disconnect", "structmc__rbdyn_1_1RobotModule.html#a5be031df404404734d0bf4c7960fadfd", null ],
     [ "expand_stance", "structmc__rbdyn_1_1RobotModule.html#aa6f2c53b2567e6fbd62f8694db311a9d", null ],
     [ "flexibility", "structmc__rbdyn_1_1RobotModule.html#a0f2e303e32aeb00e4928808dc3e0760a", null ],
     [ "forceSensors", "structmc__rbdyn_1_1RobotModule.html#a17aa1885f3db7c16c3e06b2525be82d4", null ],

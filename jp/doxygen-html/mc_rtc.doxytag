@@ -2451,7 +2451,15 @@
     <class kind="struct">mc_rbdyn::RobotModule::Gripper</class>
     <class kind="struct">mc_rbdyn::RobotModule::Gripper::Safety</class>
     <class kind="struct">mc_rbdyn::RobotModule::FrameDescription</class>
+    <class kind="struct">mc_rbdyn::RobotModule::ConnectionParameters</class>
     <namespace>mc_rbdyn</namespace>
+    <member kind="define">
+      <type>#define</type>
+      <name>CONNECTION_PROPERTY</name>
+      <anchorfile>RobotModule_8h.html</anchorfile>
+      <anchor>acccd9f34ed8c1fb78efefdd9fdfbcbeb</anchor>
+      <arglist>(NAME, TYPE, DEFAULT)</arglist>
+    </member>
     <member kind="define">
       <type>#define</type>
       <name>ROBOT_MODULE_API</name>
@@ -2592,6 +2600,7 @@
     <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rbdyn/</path>
     <filename>Robots_8h.html</filename>
     <includes id="mc__rbdyn_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rbdyn/Robot.h</includes>
+    <includes id="SignalSlot_8h" name="SignalSlot.h" local="no" imported="no">mc_rtc/SignalSlot.h</includes>
     <includes id="iterators_8h" name="iterators.h" local="no" imported="no">mc_rtc/iterators.h</includes>
     <includes id="shared_8h" name="shared.h" local="no" imported="no">mc_rtc/shared.h</includes>
     <class kind="struct">mc_rbdyn::Robots</class>
@@ -3084,6 +3093,21 @@
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
       <anchor>af847170ed484855237b58e8b2706fecd</anchor>
       <arglist>(const std::string &amp;source, const std::string &amp;old, const std::string &amp;replace, const std::string &amp;details=&quot;&quot;)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>fmt_formatters.h</name>
+    <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rtc/</path>
+    <filename>fmt__formatters_8h.html</filename>
+    <includes id="rpy__utils_8h" name="rpy_utils.h" local="no" imported="no">mc_rbdyn/rpy_utils.h</includes>
+    <includes id="constants_8h" name="constants.h" local="no" imported="no">mc_rtc/constants.h</includes>
+    <class kind="struct">fmt::formatter&lt; sva::PTransformd &gt;</class>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_FMT_STREAMED</name>
+      <anchorfile>fmt__formatters_8h.html</anchorfile>
+      <anchor>a3f0e2902b9317d3be03056aaf139412d</anchor>
+      <arglist>(X)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -5258,16 +5282,10 @@
     <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rtc/</path>
     <filename>logging_8h.html</filename>
     <includes id="utils__api_8h" name="utils_api.h" local="no" imported="no">mc_rtc/utils_api.h</includes>
+    <includes id="fmt__formatters_8h" name="fmt_formatters.h" local="no" imported="no">mc_rtc/fmt_formatters.h</includes>
     <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::log</namespace>
     <namespace>mc_rtc::log::details</namespace>
-    <member kind="define">
-      <type>#define</type>
-      <name>MC_FMT_STREAMED</name>
-      <anchorfile>logging_8h.html</anchorfile>
-      <anchor>a3f0e2902b9317d3be03056aaf139412d</anchor>
-      <arglist>(X)</arglist>
-    </member>
     <member kind="define">
       <type>#define</type>
       <name>BOOST_STACKTRACE_LINK</name>
@@ -5807,6 +5825,15 @@
     <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rtc/</path>
     <filename>shared_8h.html</filename>
     <class kind="struct">mc_rtc::shared</class>
+    <namespace>mc_rtc</namespace>
+  </compound>
+  <compound kind="file">
+    <name>SignalSlot.h</name>
+    <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rtc/</path>
+    <filename>SignalSlot_8h.html</filename>
+    <class kind="struct">mc_rtc::Signal</class>
+    <class kind="struct">mc_rtc::Signal::Proxy</class>
+    <class kind="struct">mc_rtc::Slot</class>
     <namespace>mc_rtc</namespace>
   </compound>
   <compound kind="file">
@@ -13007,6 +13034,80 @@
       <arglist>()</arglist>
     </member>
   </compound>
+  <compound kind="struct">
+    <name>mc_rbdyn::RobotModule::ConnectionParameters</name>
+    <filename>structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html</filename>
+    <member kind="typedef">
+      <type>std::array&lt; std::vector&lt; double &gt;, 6 &gt;</type>
+      <name>JointLimits</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html</anchorfile>
+      <anchor>a8747eb6e3dad790d6cf0b60baa76498e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::array&lt; std::vector&lt; double &gt;, 2 &gt;</type>
+      <name>JointAccelerationLimits</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html</anchorfile>
+      <anchor>a38b273ed6e222ac8e31d5b98006ddfe9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::array&lt; std::vector&lt; double &gt;, 2 &gt;</type>
+      <name>JointJerkLimits</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html</anchorfile>
+      <anchor>ae5b6225833d28ffb315a20ee2e5da68c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::array&lt; std::vector&lt; double &gt;, 2 &gt;</type>
+      <name>JointTorqueDerivativeLimits</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html</anchorfile>
+      <anchor>aea7de139fe735d07815c668786b34646</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::unordered_map&lt; std::string, std::string &gt;</type>
+      <name>mapping_t</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html</anchorfile>
+      <anchor>aa7366c5e10502f1aaa8e07089e5e7dee</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::array&lt; std::vector&lt; double &gt;, 6 &gt;</type>
+      <name>JointLimits</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html</anchorfile>
+      <anchor>a8747eb6e3dad790d6cf0b60baa76498e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::array&lt; std::vector&lt; double &gt;, 2 &gt;</type>
+      <name>JointAccelerationLimits</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html</anchorfile>
+      <anchor>a38b273ed6e222ac8e31d5b98006ddfe9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::array&lt; std::vector&lt; double &gt;, 2 &gt;</type>
+      <name>JointJerkLimits</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html</anchorfile>
+      <anchor>ae5b6225833d28ffb315a20ee2e5da68c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::array&lt; std::vector&lt; double &gt;, 2 &gt;</type>
+      <name>JointTorqueDerivativeLimits</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html</anchorfile>
+      <anchor>aea7de139fe735d07815c668786b34646</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::unordered_map&lt; std::string, std::string &gt;</type>
+      <name>mapping_t</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html</anchorfile>
+      <anchor>aa7366c5e10502f1aaa8e07089e5e7dee</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
   <compound kind="class">
     <name>mc_solver::utils::Constraint</name>
     <filename>structmc__solver_1_1utils_1_1Constraint.html</filename>
@@ -15902,57 +16003,64 @@
       <type>const std::string &amp;</type>
       <name>name</name>
       <anchorfile>structmc__rbdyn_1_1Device.html</anchorfile>
-      <anchor>ac7f03a01fbf81e9e65c595e06c8db3a7</anchor>
-      <arglist>() const</arglist>
+      <anchor>ab8c11d35d53f4ef99a8e061723ea7fd6</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>name</name>
+      <anchorfile>structmc__rbdyn_1_1Device.html</anchorfile>
+      <anchor>a990e809a07ac235d9e00ce2581642ec4</anchor>
+      <arglist>(const std::string &amp;name) noexcept</arglist>
     </member>
     <member kind="function">
       <type>const std::string &amp;</type>
       <name>type</name>
       <anchorfile>structmc__rbdyn_1_1Device.html</anchorfile>
-      <anchor>a5f2b9cec0aafca49e350696f9fcc2cf5</anchor>
-      <arglist>() const</arglist>
+      <anchor>aa7978411f5f51d4ee808f33675698d01</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const std::string &amp;</type>
       <name>parent</name>
       <anchorfile>structmc__rbdyn_1_1Device.html</anchorfile>
-      <anchor>aa4fa7c2fd9c533abc6e1bd965f128650</anchor>
-      <arglist>() const</arglist>
+      <anchor>a7cc06ff7877a2d8a781a80bf3cd7025a</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>parent</name>
       <anchorfile>structmc__rbdyn_1_1Device.html</anchorfile>
-      <anchor>aa195d74e93e262d231b44efaf6217758</anchor>
-      <arglist>(const std::string &amp;p)</arglist>
+      <anchor>a00aa69328aeb1bef3ec6c21590d4b3ed</anchor>
+      <arglist>(const std::string &amp;p) noexcept</arglist>
     </member>
     <member kind="function">
       <type>const sva::PTransformd &amp;</type>
       <name>X_p_d</name>
       <anchorfile>structmc__rbdyn_1_1Device.html</anchorfile>
-      <anchor>af2b47d128a8964d8fe32f6c9279e816f</anchor>
-      <arglist>() const</arglist>
+      <anchor>a1bee0a57b4bb19970833b0a518aa42b6</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const sva::PTransformd &amp;</type>
       <name>X_p_s</name>
       <anchorfile>structmc__rbdyn_1_1Device.html</anchorfile>
-      <anchor>a018981488a410e62be4605726f953507</anchor>
-      <arglist>() const</arglist>
+      <anchor>a36375e49011e4ff76a5ac543f17e76e8</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>X_p_d</name>
       <anchorfile>structmc__rbdyn_1_1Device.html</anchorfile>
-      <anchor>aa4c6653e8ee6aed277bfbd96e1410b6a</anchor>
-      <arglist>(const sva::PTransformd &amp;pt)</arglist>
+      <anchor>a916da92bb74a4a19ab960e1427ff5eee</anchor>
+      <arglist>(const sva::PTransformd &amp;pt) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>X_p_s</name>
       <anchorfile>structmc__rbdyn_1_1Device.html</anchorfile>
-      <anchor>a9c69d16bdaed36b31375b419cdcddc0b</anchor>
-      <arglist>(const sva::PTransformd &amp;pt)</arglist>
+      <anchor>a52d20e142a8c60cc960e47e60c23bd0e</anchor>
+      <arglist>(const sva::PTransformd &amp;pt) noexcept</arglist>
     </member>
     <member kind="function">
       <type>sva::PTransformd</type>
@@ -18608,6 +18716,52 @@
       <anchorfile>structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html</anchorfile>
       <anchor>a0ad927e0dbcaad95803bf81571483ba3</anchor>
       <arglist>(const mc_solver::QPSolver::Backend &amp;backend, FormatContext &amp;ctx)</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>fmt::formatter&lt; sva::PTransformd &gt;</name>
+    <filename>structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html</filename>
+    <member kind="function">
+      <type>auto</type>
+      <name>parse</name>
+      <anchorfile>structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html</anchorfile>
+      <anchor>a36eeace36d97a28e9c005d4caa2610cf</anchor>
+      <arglist>(format_parse_context &amp;ctx)</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>format</name>
+      <anchorfile>structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html</anchorfile>
+      <anchor>a34cd95722b1c6dad793e10152e983d73</anchor>
+      <arglist>(const sva::PTransformd &amp;pt, FormatContext &amp;ctx) const</arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>arg_id_vec</name>
+      <anchorfile>structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html</anchorfile>
+      <anchor>a46d6ef26d6346b2c55bf9c29139a255a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>arg_id_mat</name>
+      <anchorfile>structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html</anchorfile>
+      <anchor>a514558013381af6acf4258332b088190</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const std::string</type>
+      <name>default_vec_fmt</name>
+      <anchorfile>structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html</anchorfile>
+      <anchor>a79b03f15d1870699975c1cd18328755e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const std::string</type>
+      <name>default_mat_fmt</name>
+      <anchorfile>structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html</anchorfile>
+      <anchor>a569224bae5ab28c4e231f4106bdabc3c</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -25528,6 +25682,13 @@
       <arglist>(mc_rbdyn::RobotModulePtr rm, const std::string &amp;name)</arglist>
     </member>
     <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>loadRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a2a61bb4ebe6b2e9b59138efd67c54e2c</anchor>
+      <arglist>(const mc_rbdyn::RobotModule &amp;rm, const std::string &amp;name)</arglist>
+    </member>
+    <member kind="function">
       <type>void</type>
       <name>removeRobot</name>
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
@@ -25901,6 +26062,13 @@
       <anchorfile>structmc__control_1_1MCController.html</anchorfile>
       <anchor>af5e7664c119aa760e63927f2df193927</anchor>
       <arglist>(mc_rbdyn::RobotModulePtr rm, const std::string &amp;name, mc_rbdyn::Robots &amp;robots, const mc_rbdyn::LoadRobotParameters &amp;params)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>loadRobot</name>
+      <anchorfile>structmc__control_1_1MCController.html</anchorfile>
+      <anchor>a01305491a3706251bbb1e30bca021dda</anchor>
+      <arglist>(const mc_rbdyn::RobotModule &amp;rm, const std::string &amp;name, mc_rbdyn::Robots &amp;robots, const mc_rbdyn::LoadRobotParameters &amp;params)</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
@@ -32020,6 +32188,24 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::Signal::Proxy</name>
+    <filename>structmc__rtc_1_1Signal_1_1Proxy.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>Proxy</name>
+      <anchorfile>structmc__rtc_1_1Signal_1_1Proxy.html</anchorfile>
+      <anchor>ad3ef5a9118557e828995d219eb67069c</anchor>
+      <arglist>(SignalT &amp;self)</arglist>
+    </member>
+    <member kind="function">
+      <type>SlotT</type>
+      <name>connect</name>
+      <anchorfile>structmc__rtc_1_1Signal_1_1Proxy.html</anchorfile>
+      <anchor>a14651ecc894dd12b6d8fbc29f646d866</anchor>
+      <arglist>(Callable &amp;&amp;callback)</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_control::PythonRWCallback</name>
     <filename>structmc__control_1_1PythonRWCallback.html</filename>
     <member kind="variable">
@@ -35852,6 +36038,7 @@
   <compound kind="struct">
     <name>mc_rbdyn::RobotModule</name>
     <filename>structmc__rbdyn_1_1RobotModule.html</filename>
+    <class kind="struct">mc_rbdyn::RobotModule::ConnectionParameters</class>
     <class kind="struct">mc_rbdyn::RobotModule::FrameDescription</class>
     <class kind="struct">mc_rbdyn::RobotModule::Gripper</class>
     <member kind="typedef">
@@ -35902,6 +36089,20 @@
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
       <anchor>a21cf968dd81a9b554ce1001b8a2c6fb8</anchor>
       <arglist>(const std::string &amp;name, const rbd::parsers::ParserResult &amp;res)</arglist>
+    </member>
+    <member kind="function">
+      <type>RobotModule</type>
+      <name>connect</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>a4dafbba5f1e2385fc3679c335ab1800a</anchor>
+      <arglist>(const mc_rbdyn::RobotModule &amp;other, const std::string &amp;this_body, const std::string &amp;other_body, const std::string &amp;prefix, const ConnectionParameters &amp;params) const</arglist>
+    </member>
+    <member kind="function">
+      <type>RobotModule</type>
+      <name>disconnect</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>a5be031df404404734d0bf4c7960fadfd</anchor>
+      <arglist>(const mc_rbdyn::RobotModule &amp;other, const std::string &amp;this_body, const std::string &amp;other_body, const std::string &amp;prefix, const ConnectionParameters &amp;params) const</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -36924,6 +37125,20 @@
       <anchor>a99733733378b2512684a78597b24bda5</anchor>
       <arglist></arglist>
     </member>
+    <member kind="variable" protection="protected">
+      <type>onRobotAddedSigT</type>
+      <name>onRobotAdded_</name>
+      <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
+      <anchor>a7bb3a7822b903b279b20784cc3da0eb9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>onRobotRemovedSigT</type>
+      <name>onRobotRemoved_</name>
+      <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
+      <anchor>aad26e9b72f3147f02787dfd851487cb5</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="friend">
       <type>friend struct</type>
       <name>Robot</name>
@@ -37048,6 +37263,48 @@
       <name>crend</name>
       <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
       <anchor>a54a0069d6ac9debe385ba1f1f311ee51</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="typedef">
+      <type>mc_rtc::Signal&lt; std::string &gt;</type>
+      <name>onRobotAddedSigT</name>
+      <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
+      <anchor>a9841506d657d6c7cfd71f676c28a8565</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>onRobotAddedSigT::SlotT</type>
+      <name>onRobotAddedSlotT</name>
+      <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
+      <anchor>aea6840dd44983b9d77c7fc3969a1990c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>mc_rtc::Signal&lt; std::string &gt;</type>
+      <name>onRobotRemovedSigT</name>
+      <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
+      <anchor>affa8470ac842dbdc6cf1bc5e5da66722</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>onRobotRemovedSigT::SlotT</type>
+      <name>onRobotRemovedSlotT</name>
+      <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
+      <anchor>ac79877eb0e0ca8a11a6c30bbf3adf428</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>onRobotAddedSigT::Proxy</type>
+      <name>onRobotAdded</name>
+      <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
+      <anchor>aaa80c7629252f4621a1d277aeba9a7bc</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>onRobotRemovedSigT::Proxy</type>
+      <name>onRobotRemoved</name>
+      <anchorfile>structmc__rbdyn_1_1Robots.html</anchorfile>
+      <anchor>aea4f3182772b69294aadde13120bd1fc</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
@@ -37874,6 +38131,156 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::Signal</name>
+    <filename>structmc__rtc_1_1Signal.html</filename>
+    <templarg>ArgsT</templarg>
+    <class kind="struct">mc_rtc::Signal::Proxy</class>
+    <member kind="typedef">
+      <type>Signal&lt; ArgsT... &gt;</type>
+      <name>SignalT</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>a11c844cc1efc775b3fdbc3c693be26ae</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>Slot&lt; ArgsT... &gt;</type>
+      <name>SlotT</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>ad9c42960568a920bac8b62a4501c48b4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::function&lt; void(ArgsT...)&gt;</type>
+      <name>CallbackT</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>ac1fb30131e5e751a3791b9848b699698</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Signal</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>ae36143db786f2a4987e12f3aa6029534</anchor>
+      <arglist>()=default</arglist>
+    </member>
+    <member kind="function">
+      <type>SlotT</type>
+      <name>connect</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>abb8ffc880cd919b8e08fb4af17a8080d</anchor>
+      <arglist>(Callable &amp;&amp;callback)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>signal</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>a23c2e3b7286eba225c1003be35490cbb</anchor>
+      <arglist>(ArgsT... args)</arglist>
+    </member>
+    <member kind="variable">
+      <type>friend</type>
+      <name>SlotT</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>a5e484e31bb39c750d310aac169b916d5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>disconnect</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>a56fbaf3030faf8f189097830961ffdf2</anchor>
+      <arglist>(size_t idx)</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::vector&lt; CallbackT &gt;</type>
+      <name>callbacks_</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>ad6f50d4235b2b26758fe5d4ff6b9cbfe</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>size_t</type>
+      <name>next_slot_</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>a8ebb9cdc2491a26b7ecf6d9bf7f53021</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>Signal&lt; std::string &gt;</name>
+    <filename>structmc__rtc_1_1Signal.html</filename>
+    <member kind="typedef">
+      <type>Signal&lt; ArgsT... &gt;</type>
+      <name>SignalT</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>a11c844cc1efc775b3fdbc3c693be26ae</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>Slot&lt; ArgsT... &gt;</type>
+      <name>SlotT</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>ad9c42960568a920bac8b62a4501c48b4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::function&lt; void(ArgsT...)&gt;</type>
+      <name>CallbackT</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>ac1fb30131e5e751a3791b9848b699698</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Signal</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>ae36143db786f2a4987e12f3aa6029534</anchor>
+      <arglist>()=default</arglist>
+    </member>
+    <member kind="function">
+      <type>SlotT</type>
+      <name>connect</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>abb8ffc880cd919b8e08fb4af17a8080d</anchor>
+      <arglist>(Callable &amp;&amp;callback)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>signal</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>a23c2e3b7286eba225c1003be35490cbb</anchor>
+      <arglist>(ArgsT... args)</arglist>
+    </member>
+    <member kind="variable">
+      <type>friend</type>
+      <name>SlotT</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>a5e484e31bb39c750d310aac169b916d5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>disconnect</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>a56fbaf3030faf8f189097830961ffdf2</anchor>
+      <arglist>(size_t idx)</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::vector&lt; CallbackT &gt;</type>
+      <name>callbacks_</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>ad6f50d4235b2b26758fe5d4ff6b9cbfe</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>size_t</type>
+      <name>next_slot_</name>
+      <anchorfile>structmc__rtc_1_1Signal.html</anchorfile>
+      <anchor>a8ebb9cdc2491a26b7ecf6d9bf7f53021</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_control::SimulationContactPair</name>
     <filename>structmc__control_1_1SimulationContactPair.html</filename>
     <member kind="function">
@@ -37924,6 +38331,81 @@
       <anchorfile>structmc__control_1_1SimulationContactPair.html</anchorfile>
       <anchor>a1b9a7de72470d0d2d433a7c3f9843ad0</anchor>
       <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::Slot</name>
+    <filename>structmc__rtc_1_1Slot.html</filename>
+    <templarg>ArgsT</templarg>
+    <member kind="typedef">
+      <type>Signal&lt; ArgsT... &gt;</type>
+      <name>SignalT</name>
+      <anchorfile>structmc__rtc_1_1Slot.html</anchorfile>
+      <anchor>a5447e420b43a1618e9fd14d6e0dcd301</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Slot</name>
+      <anchorfile>structmc__rtc_1_1Slot.html</anchorfile>
+      <anchor>aaa15a46feb9c18eb8e91d0dfed4cd237</anchor>
+      <arglist>()=default</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Slot</name>
+      <anchorfile>structmc__rtc_1_1Slot.html</anchorfile>
+      <anchor>a75e4234f7579a00e967089f1df26dfad</anchor>
+      <arglist>(const Slot &amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Slot</name>
+      <anchorfile>structmc__rtc_1_1Slot.html</anchorfile>
+      <anchor>ab660bcc389421f7fe29d2cf3c9210c5f</anchor>
+      <arglist>(Slot &amp;&amp;rhs)</arglist>
+    </member>
+    <member kind="function">
+      <type>Slot &amp;</type>
+      <name>operator=</name>
+      <anchorfile>structmc__rtc_1_1Slot.html</anchorfile>
+      <anchor>a90606e9438b23c277731841a82d79d60</anchor>
+      <arglist>(const Slot &amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type>Slot &amp;</type>
+      <name>operator=</name>
+      <anchorfile>structmc__rtc_1_1Slot.html</anchorfile>
+      <anchor>a0b0fbb54361e8f8a49f8db29adcdc6c8</anchor>
+      <arglist>(Slot &amp;&amp;rhs)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>~Slot</name>
+      <anchorfile>structmc__rtc_1_1Slot.html</anchorfile>
+      <anchor>a50e0f6a0710cda62a6028804d96e901a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>disconnect</name>
+      <anchorfile>structmc__rtc_1_1Slot.html</anchorfile>
+      <anchor>aa9ad33582622eadbef06694ac80729e3</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable">
+      <type>friend</type>
+      <name>SignalT</name>
+      <anchorfile>structmc__rtc_1_1Slot.html</anchorfile>
+      <anchor>ae43bf1a5fd67266612b1e2c79ce100fa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type></type>
+      <name>Slot</name>
+      <anchorfile>structmc__rtc_1_1Slot.html</anchorfile>
+      <anchor>a01540d16f41e3fbf37919492b3182325</anchor>
+      <arglist>(SignalT *sig, size_t idx)</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -45740,6 +46222,7 @@
     <name>fmt</name>
     <filename>namespacefmt.html</filename>
     <class kind="struct">fmt::formatter&lt; mc_rtc::Configuration &gt;</class>
+    <class kind="struct">fmt::formatter&lt; sva::PTransformd &gt;</class>
     <class kind="struct">fmt::formatter&lt; mc_solver::QPSolver::Backend &gt;</class>
   </compound>
   <compound kind="namespace">
@@ -46670,6 +47153,8 @@
     <class kind="struct">mc_rtc::Default&lt; T, std::enable_if_t&lt; schema::details::is_std_vector_v&lt; T &gt; &gt; &gt;</class>
     <class kind="struct">mc_rtc::Default&lt; T, typename std::enable_if_t&lt; schema::details::is_std_map_v&lt; T &gt; &gt; &gt;</class>
     <class kind="struct">mc_rtc::shared</class>
+    <class kind="struct">mc_rtc::Signal</class>
+    <class kind="struct">mc_rtc::Slot</class>
     <class kind="class">mc_rtc::unique_ptr</class>
     <class kind="struct">mc_rtc::void_ptr_caster</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_tasks::force::ImpedanceGains &gt;</class>

@@ -129,6 +129,8 @@ Collaboration diagram for mc_rbdyn::RobotModule:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html">ConnectionParameters</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html">FrameDescription</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule_1_1Gripper.html">Gripper</a></td></tr>
@@ -153,6 +155,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aeb69ff6b27d5a88ee2271aacf6b5e409"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21cf968dd81a9b554ce1001b8a2c6fb8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a21cf968dd81a9b554ce1001b8a2c6fb8">RobotModule</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1RobotModule.html#ad888b6f335ade03b6628633d4a446bc9">name</a>, const rbd::parsers::ParserResult &amp;res)</td></tr>
 <tr class="separator:a21cf968dd81a9b554ce1001b8a2c6fb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dafbba5f1e2385fc3679c335ab1800a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a4dafbba5f1e2385fc3679c335ab1800a">connect</a> (const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">mc_rbdyn::RobotModule</a> &amp;other, const std::string &amp;this_body, const std::string &amp;other_body, const std::string &amp;prefix, const <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html">ConnectionParameters</a> &amp;params) const</td></tr>
+<tr class="separator:a4dafbba5f1e2385fc3679c335ab1800a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5be031df404404734d0bf4c7960fadfd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a5be031df404404734d0bf4c7960fadfd">disconnect</a> (const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">mc_rbdyn::RobotModule</a> &amp;other, const std::string &amp;this_body, const std::string &amp;other_body, const std::string &amp;prefix, const <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html">ConnectionParameters</a> &amp;params) const</td></tr>
+<tr class="separator:a5be031df404404734d0bf4c7960fadfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33637f65346a81c078c9c04de9e4be0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a33637f65346a81c078c9c04de9e4be0e">init</a> (const rbd::parsers::ParserResult &amp;res)</td></tr>
 <tr class="separator:a33637f65346a81c078c9c04de9e4be0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afcd0c12559fad408a7514076adf5b060"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#afcd0c12559fad408a7514076adf5b060">generate_convexes</a> (bool regenerate=false, unsigned int sampling_point=4000)</td></tr>
@@ -796,6 +802,75 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a4dafbba5f1e2385fc3679c335ab1800a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dafbba5f1e2385fc3679c335ab1800a">&#9670;&nbsp;</a></span>connect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> mc_rbdyn::RobotModule::connect </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">mc_rbdyn::RobotModule</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>this_body</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>other_body</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>prefix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html">ConnectionParameters</a> &amp;&#160;</td>
+          <td class="paramname"><em>params</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create a new <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> by connecting this instance with another <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The module that will be connected to this instance</td></tr>
+    <tr><td class="paramname">this_body</td><td>Which body in this <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> is used to connect the two instances</td></tr>
+    <tr><td class="paramname">other_body</td><td>Which body in the other <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> is used to connect the two instances</td></tr>
+    <tr><td class="paramname">prefix</td><td>Prefix applied to every named entities in <code>other</code> before they are added to the resulting module</td></tr>
+    <tr><td class="paramname">params</td><td>Parameters that control how <code>other</code> is transformed during the connection, </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html">ConnectionParameters</a> documentation for <a class="el" href="namespacemc__rbdyn_1_1details.html">details</a></dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If <code>other</code> is has a floating then this base is eliminated in the process</dd>
+<dd>
+Devices from both instances are cloned into the new instance as needed</dd>
+<dd>
+You are responsible for handling force sensor calibration files, by default this function creates an empty calibration directory that you can populate with appropriate files</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>a name collision occurs and in conditions specified by wrong <code>params</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aea7c7858c175df032d33990e71ceb7ed"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aea7c7858c175df032d33990e71ceb7ed">&#9670;&nbsp;</a></span>convexHull()</h2>
 
@@ -905,6 +980,72 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Returns a list of non standard sensors supported by this module </p>
+
+</div>
+</div>
+<a id="a5be031df404404734d0bf4c7960fadfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5be031df404404734d0bf4c7960fadfd">&#9670;&nbsp;</a></span>disconnect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> mc_rbdyn::RobotModule::disconnect </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotModule.html">mc_rbdyn::RobotModule</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>this_body</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>other_body</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>prefix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html">ConnectionParameters</a> &amp;&#160;</td>
+          <td class="paramname"><em>params</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create a new <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> by disconnecting the provided <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> from this one</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The module that will be disconnected from this instance</td></tr>
+    <tr><td class="paramname">this_body</td><td>Which body in this <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> was used to connect the two instances</td></tr>
+    <tr><td class="paramname">other_body</td><td>Which body in the other <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> was used to connect the two instances</td></tr>
+    <tr><td class="paramname">prefix</td><td>Prefix applied to every named entities in <code>other</code> before they were added to this module</td></tr>
+    <tr><td class="paramname">params</td><td>Parameters that controlled how <code>other</code> was connected to this module, </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structmc__rbdyn_1_1RobotModule_1_1ConnectionParameters.html">ConnectionParameters</a> for <a class="el" href="namespacemc__rbdyn_1_1details.html">details</a></dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If you used connect(other, this_body, other_body, prefix, params) to create this module then using disconnect(other, this_body, other_body, prefix, params) will reverse the operation except:<ul>
+<li>if <code>params.name</code> is empty then <code>prefix</code>_<code>other.name</code> is removed from the name if present, otherwise <code>params.name</code> is used as the output name</li>
+<li><code>params.useGripperSafetyFromThis</code> cannot be reversed if it was false</li>
+<li><code>params.useLIPMStabilizerConfigFromThis</code> cannot be reversed if it was false</li>
+</ul>
+</dd>
+<dd>
+You are responsible for handling force sensor calibration files, by default this function creates an empty calibration directory that you can populate with appropriate files </dd></dl>
 
 </div>
 </div>

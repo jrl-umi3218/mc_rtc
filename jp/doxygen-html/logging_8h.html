@@ -99,7 +99,7 @@ $(document).ready(function(){initNavTree('logging_8h.html',''); initResizable();
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="utils__api_8h_source.html">mc_rtc/utils_api.h</a>&gt;</code><br />
-<code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;<a class="el" href="fmt__formatters_8h_source.html">mc_rtc/fmt_formatters.h</a>&gt;</code><br />
 <code>#include &lt;spdlog/fmt/fmt.h&gt;</code><br />
 <code>#include &lt;spdlog/fmt/ostr.h&gt;</code><br />
 <code>#include &lt;spdlog/logger.h&gt;</code><br />
@@ -109,13 +109,23 @@ Include dependency graph for logging.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="logging_8h__incl.png" border="0" usemap="#ainclude_2mc__rtc_2logging_8h" alt=""/></div>
 <map name="ainclude_2mc__rtc_2logging_8h" id="ainclude_2mc__rtc_2logging_8h">
-<area shape="rect" title=" " alt="" coords="323,5,505,32"/>
-<area shape="rect" href="utils__api_8h.html" title=" " alt="" coords="5,80,143,107"/>
-<area shape="rect" title=" " alt="" coords="167,80,247,107"/>
-<area shape="rect" title=" " alt="" coords="271,80,402,107"/>
-<area shape="rect" title=" " alt="" coords="427,80,559,107"/>
-<area shape="rect" title=" " alt="" coords="583,80,704,107"/>
-<area shape="rect" title=" " alt="" coords="728,80,887,107"/>
+<area shape="rect" title=" " alt="" coords="933,5,1114,32"/>
+<area shape="rect" href="utils__api_8h.html" title=" " alt="" coords="513,80,651,107"/>
+<area shape="rect" href="fmt__formatters_8h.html" title=" " alt="" coords="675,80,857,107"/>
+<area shape="rect" title=" " alt="" coords="881,80,1011,107"/>
+<area shape="rect" title=" " alt="" coords="1036,80,1168,107"/>
+<area shape="rect" title=" " alt="" coords="1192,80,1313,107"/>
+<area shape="rect" title=" " alt="" coords="1337,80,1496,107"/>
+<area shape="rect" href="rpy__utils_8h.html" title=" " alt="" coords="316,155,475,181"/>
+<area shape="rect" href="constants_8h.html" title=" " alt="" coords="499,155,644,181"/>
+<area shape="rect" title=" " alt="" coords="669,155,863,181"/>
+<area shape="rect" title=" " alt="" coords="887,155,1013,181"/>
+<area shape="rect" title=" " alt="" coords="1037,155,1143,181"/>
+<area shape="rect" href="pragma_8h.html" title=" " alt="" coords="148,229,280,256"/>
+<area shape="rect" title=" " alt="" coords="305,229,497,256"/>
+<area shape="rect" title=" " alt="" coords="5,304,212,331"/>
+<area shape="rect" href="pp__id_8h.html" title=" " alt="" coords="236,304,405,331"/>
+<area shape="rect" title=" " alt="" coords="525,229,617,256"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -189,8 +199,6 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a3f0e2902b9317d3be03056aaf139412d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logging_8h.html#a3f0e2902b9317d3be03056aaf139412d">MC_FMT_STREAMED</a>(X)&#160;&#160;&#160;X</td></tr>
-<tr class="separator:a3f0e2902b9317d3be03056aaf139412d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25cda0d096362eae64cebfb4843453ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logging_8h.html#a25cda0d096362eae64cebfb4843453ba">BOOST_STACKTRACE_LINK</a></td></tr>
 <tr class="separator:a25cda0d096362eae64cebfb4843453ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6c926a2075cbaa39c4e9d12a2cac7e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="logging_8h.html#ac6c926a2075cbaa39c4e9d12a2cac7e2">LOG_ERROR</a>(args)</td></tr>
@@ -284,8 +292,8 @@ Variables</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    _Pragma(<span class="stringliteral">&quot;GCC warning \&quot;This macro is deprecated, use mc_rtc::log::error instead\&quot;&quot;</span>); <a class="code" href="namespacemc__rtc_1_1log_1_1details.html#aa8cc2cc8dc25d49fa533f32a67f73c33">\</a></div>
 <div class="line"><a class="code" href="namespacemc__rtc_1_1log_1_1details.html#aa8cc2cc8dc25d49fa533f32a67f73c33">    std::cerr</a> &lt;&lt; <a class="code" href="namespacemc__rtc.html#a9003469324d75c8934d51654d98ef862">mc_rtc::OUT_RED</a> &lt;&lt; args &lt;&lt; <a class="code" href="namespacemc__rtc.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="ttc" id="anamespacemc__rtc_1_1log_1_1details_html_aa8cc2cc8dc25d49fa533f32a67f73c33"><div class="ttname"><a href="namespacemc__rtc_1_1log_1_1details.html#aa8cc2cc8dc25d49fa533f32a67f73c33">mc_rtc::log::details::cerr</a></div><div class="ttdeci">MC_RTC_UTILS_DLLAPI spdlog::logger &amp; cerr()</div></div>
-<div class="ttc" id="anamespacemc__rtc_html_a9003469324d75c8934d51654d98ef862"><div class="ttname"><a href="namespacemc__rtc.html#a9003469324d75c8934d51654d98ef862">mc_rtc::OUT_RED</a></div><div class="ttdeci">constexpr auto OUT_RED</div><div class="ttdef"><b>Definition:</b> logging.h:132</div></div>
-<div class="ttc" id="anamespacemc__rtc_html_ab85e3cb123f11bf1f9290abe17a7d49e"><div class="ttname"><a href="namespacemc__rtc.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a></div><div class="ttdeci">constexpr auto OUT_NONE</div><div class="ttdef"><b>Definition:</b> logging.h:128</div></div>
+<div class="ttc" id="anamespacemc__rtc_html_a9003469324d75c8934d51654d98ef862"><div class="ttname"><a href="namespacemc__rtc.html#a9003469324d75c8934d51654d98ef862">mc_rtc::OUT_RED</a></div><div class="ttdeci">constexpr auto OUT_RED</div><div class="ttdef"><b>Definition:</b> logging.h:98</div></div>
+<div class="ttc" id="anamespacemc__rtc_html_ab85e3cb123f11bf1f9290abe17a7d49e"><div class="ttname"><a href="namespacemc__rtc.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a></div><div class="ttdeci">constexpr auto OUT_NONE</div><div class="ttdef"><b>Definition:</b> logging.h:94</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -341,7 +349,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    _Pragma(<span class="stringliteral">&quot;GCC warning \&quot;This macro is deprecated, use mc_rtc::log::info instead\&quot;&quot;</span>); \</div>
 <div class="line">    std::cout &lt;&lt; <a class="code" href="namespacemc__rtc.html#a15b005678017d9608ff8f599e34e41de">mc_rtc::OUT_BLUE</a> &lt;&lt; args &lt;&lt; <a class="code" href="namespacemc__rtc.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="ttc" id="anamespacemc__rtc_html_a15b005678017d9608ff8f599e34e41de"><div class="ttname"><a href="namespacemc__rtc.html#a15b005678017d9608ff8f599e34e41de">mc_rtc::OUT_BLUE</a></div><div class="ttdeci">constexpr auto OUT_BLUE</div><div class="ttdef"><b>Definition:</b> logging.h:129</div></div>
+<div class="ttc" id="anamespacemc__rtc_html_a15b005678017d9608ff8f599e34e41de"><div class="ttname"><a href="namespacemc__rtc.html#a15b005678017d9608ff8f599e34e41de">mc_rtc::OUT_BLUE</a></div><div class="ttdeci">constexpr auto OUT_BLUE</div><div class="ttdef"><b>Definition:</b> logging.h:95</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -362,7 +370,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    _Pragma(<span class="stringliteral">&quot;GCC warning \&quot;This macro is deprecated, use mc_rtc::log::success instead\&quot;&quot;</span>); \</div>
 <div class="line">    std::cout &lt;&lt; <a class="code" href="namespacemc__rtc.html#a7ab584d4904b2b1695ae2cb04ca984ca">mc_rtc::OUT_GREEN</a> &lt;&lt; args &lt;&lt; <a class="code" href="namespacemc__rtc.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="ttc" id="anamespacemc__rtc_html_a7ab584d4904b2b1695ae2cb04ca984ca"><div class="ttname"><a href="namespacemc__rtc.html#a7ab584d4904b2b1695ae2cb04ca984ca">mc_rtc::OUT_GREEN</a></div><div class="ttdeci">constexpr auto OUT_GREEN</div><div class="ttdef"><b>Definition:</b> logging.h:130</div></div>
+<div class="ttc" id="anamespacemc__rtc_html_a7ab584d4904b2b1695ae2cb04ca984ca"><div class="ttname"><a href="namespacemc__rtc.html#a7ab584d4904b2b1695ae2cb04ca984ca">mc_rtc::OUT_GREEN</a></div><div class="ttdeci">constexpr auto OUT_GREEN</div><div class="ttdef"><b>Definition:</b> logging.h:96</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -383,26 +391,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    _Pragma(<span class="stringliteral">&quot;GCC warning \&quot;This macro is deprecated, use mc_rtc::log::warning instead\&quot;&quot;</span>); <a class="code" href="namespacemc__rtc_1_1log_1_1details.html#aa8cc2cc8dc25d49fa533f32a67f73c33">\</a></div>
 <div class="line"><a class="code" href="namespacemc__rtc_1_1log_1_1details.html#aa8cc2cc8dc25d49fa533f32a67f73c33">    std::cerr</a> &lt;&lt; <a class="code" href="namespacemc__rtc.html#aeb1d99e566cb5c454074579fcfa712f4">mc_rtc::OUT_PURPLE</a> &lt;&lt; args &lt;&lt; <a class="code" href="namespacemc__rtc.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="ttc" id="anamespacemc__rtc_html_aeb1d99e566cb5c454074579fcfa712f4"><div class="ttname"><a href="namespacemc__rtc.html#aeb1d99e566cb5c454074579fcfa712f4">mc_rtc::OUT_PURPLE</a></div><div class="ttdeci">constexpr auto OUT_PURPLE</div><div class="ttdef"><b>Definition:</b> logging.h:131</div></div>
+<div class="ttc" id="anamespacemc__rtc_html_aeb1d99e566cb5c454074579fcfa712f4"><div class="ttname"><a href="namespacemc__rtc.html#aeb1d99e566cb5c454074579fcfa712f4">mc_rtc::OUT_PURPLE</a></div><div class="ttdeci">constexpr auto OUT_PURPLE</div><div class="ttdef"><b>Definition:</b> logging.h:97</div></div>
 </div><!-- fragment -->
-</div>
-</div>
-<a id="a3f0e2902b9317d3be03056aaf139412d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f0e2902b9317d3be03056aaf139412d">&#9670;&nbsp;</a></span>MC_FMT_STREAMED</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MC_FMT_STREAMED</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">X</td><td>)</td>
-          <td>&#160;&#160;&#160;X</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
 </div>
 </div>
 </div><!-- contents -->
