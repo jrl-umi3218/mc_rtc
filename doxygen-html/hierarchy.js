@@ -242,7 +242,6 @@ var hierarchy =
       [ "fmt::formatter< mc_rtc::Configuration >", "structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html", null ],
       [ "fmt::formatter< mc_solver::QPSolver::Backend >", "structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html", null ]
     ] ],
-    [ "fmt::formatter< sva::PTransformd >", "structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html", null ],
     [ "mc_rtc::gui::details::FormDataInputBase< T >", "structmc__rtc_1_1gui_1_1details_1_1FormDataInputBase.html", [
       [ "mc_rtc::gui::details::FormDataInput< T, element >", "structmc__rtc_1_1gui_1_1details_1_1FormDataInput.html", null ],
       [ "mc_rtc::gui::details::FormInteractiveDataInput< T, element >", "structmc__rtc_1_1gui_1_1details_1_1FormInteractiveDataInput.html", null ]

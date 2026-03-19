@@ -3101,7 +3101,6 @@
     <filename>fmt__formatters_8h.html</filename>
     <includes id="rpy__utils_8h" name="rpy_utils.h" local="no" imported="no">mc_rbdyn/rpy_utils.h</includes>
     <includes id="constants_8h" name="constants.h" local="no" imported="no">mc_rtc/constants.h</includes>
-    <class kind="struct">fmt::formatter&lt; sva::PTransformd &gt;</class>
     <member kind="define">
       <type>#define</type>
       <name>MC_FMT_STREAMED</name>
@@ -18716,52 +18715,6 @@
       <anchorfile>structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html</anchorfile>
       <anchor>a0ad927e0dbcaad95803bf81571483ba3</anchor>
       <arglist>(const mc_solver::QPSolver::Backend &amp;backend, FormatContext &amp;ctx)</arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>fmt::formatter&lt; sva::PTransformd &gt;</name>
-    <filename>structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html</filename>
-    <member kind="function">
-      <type>auto</type>
-      <name>parse</name>
-      <anchorfile>structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html</anchorfile>
-      <anchor>a36eeace36d97a28e9c005d4caa2610cf</anchor>
-      <arglist>(format_parse_context &amp;ctx)</arglist>
-    </member>
-    <member kind="function">
-      <type>auto</type>
-      <name>format</name>
-      <anchorfile>structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html</anchorfile>
-      <anchor>a34cd95722b1c6dad793e10152e983d73</anchor>
-      <arglist>(const sva::PTransformd &amp;pt, FormatContext &amp;ctx) const</arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>arg_id_vec</name>
-      <anchorfile>structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html</anchorfile>
-      <anchor>a46d6ef26d6346b2c55bf9c29139a255a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>int</type>
-      <name>arg_id_mat</name>
-      <anchorfile>structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html</anchorfile>
-      <anchor>a514558013381af6acf4258332b088190</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>const std::string</type>
-      <name>default_vec_fmt</name>
-      <anchorfile>structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html</anchorfile>
-      <anchor>a79b03f15d1870699975c1cd18328755e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>const std::string</type>
-      <name>default_mat_fmt</name>
-      <anchorfile>structfmt_1_1formatter_3_01sva_1_1PTransformd_01_4.html</anchorfile>
-      <anchor>a569224bae5ab28c4e231f4106bdabc3c</anchor>
-      <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -46222,7 +46175,6 @@
     <name>fmt</name>
     <filename>namespacefmt.html</filename>
     <class kind="struct">fmt::formatter&lt; mc_rtc::Configuration &gt;</class>
-    <class kind="struct">fmt::formatter&lt; sva::PTransformd &gt;</class>
     <class kind="struct">fmt::formatter&lt; mc_solver::QPSolver::Backend &gt;</class>
   </compound>
   <compound kind="namespace">

@@ -1,52 +1,52 @@
 <map id="include/mc_tasks/DampingTask.h" name="include/mc_tasks/DampingTask.h">
-<area shape="rect" id="node1" title=" " alt="" coords="1578,5,1777,47"/>
-<area shape="rect" id="node2" href="$AdmittanceTask_8h.html" title=" " alt="" coords="1575,95,1779,121"/>
-<area shape="rect" id="node3" href="$clamp_8h.html" title=" " alt="" coords="2142,572,2309,599"/>
-<area shape="rect" id="node20" href="$TransformTask_8h.html" title=" " alt="" coords="1399,169,1593,196"/>
-<area shape="rect" id="node4" href="$logging_8h.html" title=" " alt="" coords="1528,647,1659,673"/>
-<area shape="rect" id="node11" title=" " alt="" coords="1842,945,1934,972"/>
-<area shape="rect" id="node19" title=" " alt="" coords="2328,796,2379,823"/>
-<area shape="rect" id="node5" href="$utils__api_8h.html" title=" " alt="" coords="1829,796,1966,823"/>
-<area shape="rect" id="node6" href="$fmt__formatters_8h.html" title=" " alt="" coords="1184,721,1365,748"/>
-<area shape="rect" id="node15" title=" " alt="" coords="1793,721,1924,748"/>
-<area shape="rect" id="node16" title=" " alt="" coords="1390,721,1522,748"/>
-<area shape="rect" id="node17" title=" " alt="" coords="1546,721,1667,748"/>
-<area shape="rect" id="node18" title=" " alt="" coords="1001,721,1159,748"/>
-<area shape="rect" id="node7" href="$rpy__utils_8h.html" title=" " alt="" coords="1646,796,1805,823"/>
-<area shape="rect" id="node10" href="$constants_8h.html" title=" " alt="" coords="1490,871,1635,897"/>
-<area shape="rect" id="node12" title=" " alt="" coords="1051,796,1245,823"/>
-<area shape="rect" id="node13" title=" " alt="" coords="1269,796,1395,823"/>
-<area shape="rect" id="node14" title=" " alt="" coords="1419,796,1525,823"/>
-<area shape="rect" id="node8" href="$pragma_8h.html" title=" " alt="" coords="1659,871,1791,897"/>
-<area shape="rect" id="node9" title=" " alt="" coords="1825,871,2017,897"/>
-<area shape="rect" id="node21" href="$TrajectoryTaskGeneric_8h.html" title=" " alt="" coords="709,244,952,271"/>
-<area shape="rect" id="node33" href="$mc__rbdyn_2RobotFrame_8h.html" title=" " alt="" coords="693,721,875,748"/>
-<area shape="rect" id="node22" href="$MetaTask_8h.html" title=" " alt="" coords="1287,415,1449,442"/>
-<area shape="rect" id="node31" href="$Robots_8h.html" title=" " alt="" coords="263,572,409,599"/>
-<area shape="rect" id="node43" href="$TVMTrajectoryTaskGeneric_8h.html" title=" " alt="" coords="725,319,936,360"/>
-<area shape="rect" id="node49" href="$void__ptr_8h.html" title=" " alt="" coords="17,326,151,353"/>
-<area shape="rect" id="node50" title=" " alt="" coords="573,326,701,353"/>
-<area shape="rect" id="node23" href="$include_2mc__tasks_2api_8h.html" title=" " alt="" coords="1200,497,1320,524"/>
-<area shape="rect" id="node24" href="$mc__rtc_2Configuration_8h.html" title=" " alt="" coords="1902,647,2071,673"/>
-<area shape="rect" id="node27" href="$StateBuilder_8h.html" title=" " alt="" coords="1615,497,1801,524"/>
-<area shape="rect" id="node28" href="$Logger_8h.html" title=" " alt="" coords="1519,572,1668,599"/>
-<area shape="rect" id="node29" href="$QPSolver_8h.html" title=" " alt="" coords="815,497,977,524"/>
-<area shape="rect" id="node30" href="$include_2mc__solver_2api_8h.html" title=" " alt="" coords="949,572,1075,599"/>
-<area shape="rect" id="node42" title=" " alt="" coords="1395,497,1458,524"/>
-<area shape="rect" id="node25" href="$MessagePackBuilder_8h.html" title=" " alt="" coords="2101,721,2315,748"/>
-<area shape="rect" id="node26" title=" " alt="" coords="520,945,597,972"/>
-<area shape="rect" id="node32" href="$mc__rbdyn_2Robot_8h.html" title=" " alt="" coords="478,647,618,673"/>
-<area shape="rect" id="node39" href="$shared_8h.html" title=" " alt="" coords="422,871,549,897"/>
-<area shape="rect" id="node40" href="$SignalSlot_8h.html" title=" " alt="" coords="43,647,189,673"/>
-<area shape="rect" id="node41" href="$iterators_8h.html" title=" " alt="" coords="214,647,351,673"/>
-<area shape="rect" id="node38" href="$mc__tvm_2fwd_8h.html" title=" " alt="" coords="573,871,688,897"/>
-<area shape="rect" id="node34" href="$mc__rbdyn_2Frame_8h.html" title=" " alt="" coords="753,796,895,823"/>
-<area shape="rect" id="node35" href="$include_2mc__rbdyn_2api_8h.html" title=" " alt="" coords="763,871,885,897"/>
-<area shape="rect" id="node36" href="$mc__rbdyn_2fwd_8h.html" title=" " alt="" coords="909,871,1035,897"/>
-<area shape="rect" id="node37" href="$hat_8h.html" title=" " alt="" coords="1227,871,1349,897"/>
-<area shape="rect" id="node44" href="$tasks__traits_8h.html" title=" " alt="" coords="584,497,760,524"/>
-<area shape="rect" id="node45" href="$TVMQPSolver_8h.html" title=" " alt="" coords="613,415,805,442"/>
-<area shape="rect" id="node46" title=" " alt="" coords="357,497,523,524"/>
-<area shape="rect" id="node47" title=" " alt="" coords="829,415,1075,442"/>
-<area shape="rect" id="node48" title=" " alt="" coords="355,408,589,449"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1393,5,1592,47"/>
+<area shape="rect" id="node2" href="$AdmittanceTask_8h.html" title=" " alt="" coords="1391,95,1595,121"/>
+<area shape="rect" id="node3" href="$clamp_8h.html" title=" " alt="" coords="2117,647,2284,673"/>
+<area shape="rect" id="node19" href="$TransformTask_8h.html" title=" " alt="" coords="835,169,1030,196"/>
+<area shape="rect" id="node4" href="$logging_8h.html" title=" " alt="" coords="2029,721,2159,748"/>
+<area shape="rect" id="node11" title=" " alt="" coords="1684,945,1776,972"/>
+<area shape="rect" id="node18" title=" " alt="" coords="1535,796,1586,823"/>
+<area shape="rect" id="node5" href="$utils__api_8h.html" title=" " alt="" coords="1661,796,1799,823"/>
+<area shape="rect" id="node6" href="$fmt__formatters_8h.html" title=" " alt="" coords="2514,796,2695,823"/>
+<area shape="rect" id="node14" title=" " alt="" coords="1874,796,2005,823"/>
+<area shape="rect" id="node15" title=" " alt="" coords="2212,796,2344,823"/>
+<area shape="rect" id="node16" title=" " alt="" coords="2368,796,2489,823"/>
+<area shape="rect" id="node17" title=" " alt="" coords="2029,796,2188,823"/>
+<area shape="rect" id="node7" href="$rpy__utils_8h.html" title=" " alt="" coords="1200,871,1359,897"/>
+<area shape="rect" id="node10" href="$constants_8h.html" title=" " alt="" coords="2541,871,2687,897"/>
+<area shape="rect" id="node12" title=" " alt="" coords="2193,871,2387,897"/>
+<area shape="rect" id="node13" title=" " alt="" coords="2412,871,2517,897"/>
+<area shape="rect" id="node8" href="$pragma_8h.html" title=" " alt="" coords="1071,945,1203,972"/>
+<area shape="rect" id="node9" title=" " alt="" coords="1251,945,1443,972"/>
+<area shape="rect" id="node20" href="$TrajectoryTaskGeneric_8h.html" title=" " alt="" coords="811,244,1054,271"/>
+<area shape="rect" id="node33" href="$mc__rbdyn_2RobotFrame_8h.html" title=" " alt="" coords="343,721,525,748"/>
+<area shape="rect" id="node21" href="$MetaTask_8h.html" title=" " alt="" coords="1418,415,1581,442"/>
+<area shape="rect" id="node31" href="$Robots_8h.html" title=" " alt="" coords="513,572,659,599"/>
+<area shape="rect" id="node43" href="$TVMTrajectoryTaskGeneric_8h.html" title=" " alt="" coords="923,319,1134,360"/>
+<area shape="rect" id="node49" href="$void__ptr_8h.html" title=" " alt="" coords="324,326,459,353"/>
+<area shape="rect" id="node50" title=" " alt="" coords="771,326,899,353"/>
+<area shape="rect" id="node22" href="$include_2mc__tasks_2api_8h.html" title=" " alt="" coords="1446,497,1566,524"/>
+<area shape="rect" id="node23" href="$mc__rtc_2Configuration_8h.html" title=" " alt="" coords="1343,572,1512,599"/>
+<area shape="rect" id="node27" href="$StateBuilder_8h.html" title=" " alt="" coords="1236,497,1421,524"/>
+<area shape="rect" id="node28" href="$Logger_8h.html" title=" " alt="" coords="1678,497,1827,524"/>
+<area shape="rect" id="node29" href="$QPSolver_8h.html" title=" " alt="" coords="947,497,1110,524"/>
+<area shape="rect" id="node30" href="$include_2mc__solver_2api_8h.html" title=" " alt="" coords="1075,572,1201,599"/>
+<area shape="rect" id="node42" title=" " alt="" coords="1591,497,1653,524"/>
+<area shape="rect" id="node24" href="$MessagePackBuilder_8h.html" title=" " alt="" coords="1320,721,1535,748"/>
+<area shape="rect" id="node25" title=" " alt="" coords="673,945,750,972"/>
+<area shape="rect" id="node26" href="$deprecated_8h.html" title=" " alt="" coords="1762,647,1917,673"/>
+<area shape="rect" id="node32" href="$mc__rbdyn_2Robot_8h.html" title=" " alt="" coords="516,647,656,673"/>
+<area shape="rect" id="node39" href="$shared_8h.html" title=" " alt="" coords="61,871,188,897"/>
+<area shape="rect" id="node40" href="$SignalSlot_8h.html" title=" " alt="" coords="345,647,491,673"/>
+<area shape="rect" id="node41" href="$iterators_8h.html" title=" " alt="" coords="680,721,817,748"/>
+<area shape="rect" id="node38" href="$mc__tvm_2fwd_8h.html" title=" " alt="" coords="509,871,623,897"/>
+<area shape="rect" id="node34" href="$mc__rbdyn_2Frame_8h.html" title=" " alt="" coords="363,796,505,823"/>
+<area shape="rect" id="node35" href="$include_2mc__rbdyn_2api_8h.html" title=" " alt="" coords="362,871,485,897"/>
+<area shape="rect" id="node36" href="$mc__rbdyn_2fwd_8h.html" title=" " alt="" coords="213,871,338,897"/>
+<area shape="rect" id="node37" href="$hat_8h.html" title=" " alt="" coords="850,871,973,897"/>
+<area shape="rect" id="node44" href="$tasks__traits_8h.html" title=" " alt="" coords="1866,572,2042,599"/>
+<area shape="rect" id="node45" href="$TVMQPSolver_8h.html" title=" " alt="" coords="933,415,1125,442"/>
+<area shape="rect" id="node46" title=" " alt="" coords="690,497,855,524"/>
+<area shape="rect" id="node47" title=" " alt="" coords="1149,415,1394,442"/>
+<area shape="rect" id="node48" title=" " alt="" coords="675,408,908,449"/>
 </map>
