@@ -1,3 +1,7 @@
+if(TARGET eigen-fmt::eigen-fmt)
+  return()
+endif()
+
 # Try to find system eigen-fmt first To avoid having to deal with PID dependencies, we
 # manually make the header-only target eigen-fmt::eigen-fmt available and avoid using
 # the project's CMakeLists.txt

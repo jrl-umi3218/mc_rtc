@@ -6,13 +6,13 @@
 #include <mc_rbdyn/rpy_utils.h>
 #include <mc_rtc/constants.h>
 #include <SpaceVecAlg/PTransform.h>
-#include <eigen-fmt/fmt.h>
 #include <fmt/format.h>
 
 // fmt 9.0.0 removed automated operator<< discovery we use fmt::streamed instead when needed through a macro
 #if FMT_VERSION >= 9 * 10000
 #  define MC_FMT_STREAMED(X) fmt::streamed(X)
 #  include <boost/filesystem.hpp>
+#  include <eigen-fmt/fmt.h>
 #  include <filesystem>
 #  include <fmt/ostream.h>
 
@@ -37,10 +37,6 @@ struct fmt::formatter<std::filesystem::path> : fmt::formatter<std::string>
     return fmt::formatter<std::string>::format(p.string(), ctx);
   }
 };
-
-#else
-#  define MC_FMT_STREAMED(X) X
-#endif
 
 /**
  * @brief Custom formatter for sva::PTransformd using fmtlib.
@@ -163,3 +159,7 @@ struct fmt::formatter<sva::PTransformd>
                           rpy_ft_deg, vec_fmt, rpy_std, vec_fmt, rpy_std_deg, vec_fmt);
   }
 };
+
+#else
+#  define MC_FMT_STREAMED(X) X
+#endif
