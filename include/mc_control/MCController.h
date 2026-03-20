@@ -232,10 +232,14 @@ public:
    *
    * If the r1-r2 collision manager does not exist yet, it is created and
    * added to the solver.
+   *
+   * \param optional when true only display a warning if a convex shape does not exist in the involved robots
+   * and ignore its collision
    */
   void addCollisions(const std::string & r1,
                      const std::string & r2,
-                     const std::vector<mc_rbdyn::Collision> & collisions);
+                     const std::vector<mc_rbdyn::Collision> & collisions,
+                     bool optional = false);
 
   /** Returns true if the given collision is active */
   bool hasCollision(const std::string & r1, const std::string & r2, const mc_rbdyn::Collision & col) const noexcept;
@@ -264,15 +268,19 @@ public:
 
   /** Add a contact between two robots
    *
-   * No effect if the contact is already present.
+   * No effect if the contact is already present and hasn't changed.
    *
+   * Appropriate constraints will be updated/recreated as needed if contact properties changed (dof, friction,
+   * feasibility polytopes, etc)
+   *
+   * \param c Contact to add
+   * \param show When true print information
    */
-  void addContact(const Contact & c);
+  void addContact(const Contact & c, bool show = true);
 
   /** Remove a contact between two robots
    *
-   * No effect if the contact is already absent.
-   *
+   * No effect if the contact does not exist
    */
   void removeContact(const Contact & c);
 
