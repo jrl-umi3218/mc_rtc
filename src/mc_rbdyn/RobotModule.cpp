@@ -60,8 +60,13 @@ void RobotModule::init(const rbd::parsers::ParserResult & res)
   _collision = res.collision;
   if(_ref_joint_order.size() == 0) { make_default_ref_joint_order(); }
   expand_stance();
-  generate_convexes();
-  bind_convexes();
+  // FIXME revert this once https://github.com/jrl-umi3218/mesh_sampling/pull/6 has been resolved.
+  const char * disableConvexGen = std::getenv("MC_RTC_DISABLE_CONVEX_GENERATION_PATCH");
+  if(!(disableConvexGen && std::string(disableConvexGen) == "ON"))
+  {
+    generate_convexes();
+    bind_convexes();
+  }
 }
 
 void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point)
