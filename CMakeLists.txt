@@ -382,7 +382,9 @@ configure_file(
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/src/mc_rtcMacros.cmake"
         DESTINATION "${CONFIG_INSTALL_DIR}"
 )
-set(PACKAGE_EXTRA_MACROS "${PACKAGE_EXTRA_MACROS}
+set(PACKAGE_EXTRA_MACROS
+    "${PACKAGE_EXTRA_MACROS}
+set(MC_RTC_INSTALL_PREFIX \"${CMAKE_INSTALL_PREFIX}\")
 include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtcMacros.cmake\")"
 )
 
