@@ -51,25 +51,11 @@ macro(mc_rtc_set_all_install_paths HONOR_PREFIX)
     set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
   else()
     message(DEBUG "Using mc_rtc's install prefix for all runtime install paths")
-    # On Nix, @CMAKE_INSTALL_*DIR variables are absolute, while they are usually
-    # relative. Thus we ensure that we are consistently setting an absolute path here
-    macro(set_mc_rtc_dir VAR INSTALL_DIR)
-      if(IS_ABSOLUTE "${INSTALL_DIR}")
-        set(${VAR}
-            "${INSTALL_DIR}"
-            PARENT_SCOPE
-        )
-      else()
-        set(${VAR}
-            "${PACKAGE_PREFIX_DIR}/${INSTALL_DIR}"
-            PARENT_SCOPE
-        )
-      endif()
-    endmacro()
-
-    set_mc_rtc_dir(MC_RTC_BINDIR "@CMAKE_INSTALL_BINDIR@")
-    set_mc_rtc_dir(MC_RTC_DOCDIR "@CMAKE_INSTALL_DOCDIR@")
-    set_mc_rtc_dir(MC_RTC_LIBDIR "@CMAKE_INSTALL_LIBDIR@")
+    # On Nix all paths obtained from GNUInstallDir are absolute, here we want mc_rtc'
+    # runtime paths include(GNUInstallDirs)
+    set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/bin")
+    set(MC_RTC_DOCDIR "${PACKAGE_PREFIX_DIR}/share/doc/mc_rtc")
+    set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/lib")
   endif()
   message(DEBUG
           "MC_RTC_BINDIR set to ${MC_RTC_BINDIR} because HONOR_PREFIX=${HONOR_PREFIX}"
