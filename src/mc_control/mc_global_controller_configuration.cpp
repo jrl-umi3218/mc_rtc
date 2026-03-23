@@ -94,13 +94,16 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       }
     }
 
-    bfs::path config_path = mc_rtc::user_config_directory_path("mc_rtc.conf");
-    // Load user's local configuration if it exists
-    if(!bfs::exists(config_path)) { config_path.replace_extension(".yaml"); }
-    if(bfs::exists(config_path))
+    if(config("LoadUserConfiguration", true))
     {
-      mc_rtc::log::info("Loading additional global configuration {}", config_path.string());
-      mergeConfig(config_path.string());
+      bfs::path config_path = mc_rtc::user_config_directory_path("mc_rtc.conf");
+      // Load user's local configuration if it exists
+      if(!bfs::exists(config_path)) { config_path.replace_extension(".yaml"); }
+      if(bfs::exists(config_path))
+      {
+        mc_rtc::log::info("Loading additional global configuration {}", config_path.string());
+        mergeConfig(config_path.string());
+      }
     }
   }
   // Load extra configuration

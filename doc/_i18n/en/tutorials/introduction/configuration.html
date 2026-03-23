@@ -8,8 +8,8 @@
 
 <ol>
   <li>{% ihighlight bash %}$INSTALL_PREFIX/etc/mc_rtc.yaml{% endihighlight %}</li>
-  <li>{% ihighlight bash %}An optional path defined in MC_RTC_CONTROLLER_CONFIG environment variable. This is typically used to provide a default setup on docker environments{% endihighlight %}</li>
-  <li><ul><li>Linux/MacOS: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_rtc.yaml{% endihighlight %}</li><li>Windows: {% ihighlight msshell %}%APPDATA%/mc_rtc/mc_rtc.yaml{% endihighlight %}</li></ul></li>
+  <li>{% ihighlight bash %}A colon-separated list of optional paths defined in MC_RTC_CONTROLLER_CONFIG environment variable (loaded from last to first). This is typically used to provide a default setup on docker/nix environments independent of the user's environment{% endihighlight %}</li>
+  <li><ul><li>Linux/MacOS: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_rtc.yaml{% endihighlight %}</li><li>Windows: {% ihighlight msshell %}%APPDATA%/mc_rtc/mc_rtc.yaml{% endihighlight %}</li><li>Ignored if {% ihighlight yaml %}LoadUserConfiguration: false{% endihighlight %}</ul></li>
 </ol>
 
 <p>The interface might load additional configuration file(s). Please refer to the interface documentation to find out about that.</p>
@@ -71,6 +71,8 @@ The following options control the way mc_rtc loads additional modules from libra
     {% include mc_rtc_configuration_row.html entry="GlobalPluginPaths" desc="This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for global plugins." example="GlobalPluginPaths: [\"/one/path/to/global/plugin/\", \"/another/path/\"]" %}
   </tbody>
 </table>
+
+For a list of all available configuration options, please refer to the <a href="{{site.baseurl}}/json.html#mc_rtc/mc_rtc">YAML/Json documentation for MCGlobalControllerConfiguration</a></li>
 
 {% include h2.html title="ROS plugin configuration" %}
 

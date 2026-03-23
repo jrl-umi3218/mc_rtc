@@ -8,8 +8,8 @@
 
 <ol>
   <li>{% ihighlight bash %}$INSTALL_PREFIX/etc/mc_rtc.yaml{% endihighlight %}</li>
-  <li>{% ihighlight bash %}MC_RTC_CONTROLLER_CONFIG 環境変数で定義されたオプションのパス。これは通常、Docker環境でデフォルトのセットアップを提供するために使用されます。{% endihighlight %}</li>
-  <li><ul><li>Linux/MacOS: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_rtc.yaml{% endihighlight %}</li><li>Windows: {% ihighlight msshell %}%APPDATA%/mc_rtc/mc_rtc.yaml{% endihighlight %}</li></ul></li>
+  <li>{% ihighlight bash %}MC_RTC_CONTROLLER_CONFIG 環境変数で定義されたコロン区切りのオプションパスのリスト（最後から最初の順で読み込まれます）。これは通常、ユーザーの環境とは独立して docker/nix 環境でデフォルト設定を提供するために使用されます。{% endihighlight %}</li>
+  <li><ul><li>Linux/MacOS: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_rtc.yaml{% endihighlight %}</li><li>Windows: {% ihighlight msshell %}%APPDATA%/mc_rtc/mc_rtc.yaml{% endihighlight %}</li><li>{% ihighlight yaml %}LoadUserConfiguration: false{% endihighlight %} の場合は無視されます。</li></ul></li>
 </ol>
 
 <p>インターフェイスによっては、追加の設定ファイルが読み込まれる場合があります。詳細については、インターフェイスのドキュメントを参照してください。</p>
@@ -71,6 +71,8 @@ MainRobot:
     {% include mc_rtc_configuration_row.html entry="GlobalPluginPaths" desc="このオプションは、mc_rtcにグローバルプラグインを検索させる<strong>追加の</strong>ディレクトリを指定します。" example="GlobalPluginPaths: [\"/one/path/to/global/plugin/\", \"/another/path/\"]" %}
   </tbody>
 </table>
+
+すべての利用可能な設定オプションの一覧については、<a href="{{site.baseurl}}/json.html#mc_rtc/mc_rtc">MCGlobalControllerConfiguration の YAML/Json ドキュメント</a> を参照してください。
 
 {% include h2.html title="ROSプラグインの設定" %}
 
