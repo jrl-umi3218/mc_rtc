@@ -6,8 +6,6 @@ if(MC_RTC_BUILD_IN_NIX)
   set(PYTHON_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib/python3.13/site-packages")
   set(PYTHON_INSTALL_DIR_FOUND 0)
 else()
-  # message(FATAL_ERROR "MC_RTC_BUILD_IN_NIX is OFF, installing mc_log_ui in
-  # ${PYTHON_SITE_PACKAGES}")
   execute_process(
     COMMAND
       ${MC_LOG_UI_PYTHON_EXECUTABLE} -c

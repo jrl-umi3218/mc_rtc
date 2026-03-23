@@ -61,8 +61,8 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       mergeConfig(globalPath);
     }
 
-    // If the env MC_RTC_CONTROLLER_CONFIG is set, load these files as well (colon-separated list,// applied from last
-    // to first element - akin to PATH variable on Linux systems)
+    // If the env MC_RTC_CONTROLLER_CONFIG is set, load these files as well (colon-separated list, applied from last to
+    // first element - akin to PATH variable on Linux systems)
     const char * env_config = std::getenv("MC_RTC_CONTROLLER_CONFIG");
     if(env_config)
     {
@@ -324,15 +324,14 @@ inline void load_config(const std::string & desc,
                         const std::initializer_list<const char *> & filter = {},
                         const bfs::path & search_path_suffix = bfs::path("etc"))
 {
-  mc_rtc::log::info("Search_path: {}", mc_rtc::io::to_string(search_path));
-  // Reverse search path
-  auto search_path_r = std::vector<std::string>(search_path.rbegin(), search_path.rend());
-  mc_rtc::log::info("Search_path_r: {}", mc_rtc::io::to_string(search_path_r));
   mc_rtc::Configuration c;
   c.load(default_config);
   for(const auto & k : filter) { c.remove(k); }
-  for(const auto & p : search_path_r)
+
+  // Reverse search path
+  for(auto it = search_path.rbegin(); it != search_path.rend(); ++it)
   {
+    const auto & p = *it;
     bfs::path global = conf_or_yaml(bfs::path(p) / search_path_suffix / (name + ".conf"));
     if(bfs::exists(global))
     {
@@ -340,6 +339,8 @@ inline void load_config(const std::string & desc,
       c.load(global.string());
     }
   }
+
+  // FIXME: there should be a way to ignore this user configuration
   bfs::path local = conf_or_yaml(user_path / (name + ".conf"));
   if(bfs::exists(local))
   {

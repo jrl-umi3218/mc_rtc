@@ -50,10 +50,10 @@ macro(mc_rtc_set_all_install_paths HONOR_PREFIX)
     set(MC_RTC_DOCDIR "${CMAKE_INSTALL_FULL_DOCDIR}")
     set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
   else()
+    message(DEBUG "Using mc_rtc's install prefix for all runtime install paths")
     set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_BINDIR@")
     set(MC_RTC_DOCDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_DOCDIR@")
     set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@")
-    message(DEBUG "Using mc_rtc's install prefix for all runtime install paths")
   endif()
   message(DEBUG
           "MC_RTC_BINDIR set to ${MC_RTC_BINDIR} because HONOR_PREFIX=${HONOR_PREFIX}"
@@ -73,6 +73,11 @@ macro(mc_rtc_set_prefix NAME FOLDER)
   else()
     set(HONOR_PREFIX "${MC_RTC_HONOR_INSTALL_PREFIX}")
   endif()
+  # Modify the base install path for runtime dependencies: respect
+  # MC_RTC_HONOR_INSTALL_PREFIX unless overriden by HONOR_PREFIX as a 3rd argument here.
+  # This is necessary as we need to be able to get mc_rtc's install prefix for default
+  # states. TODO: we should be saving default state path in mc_rtc build (config.in.h)
+  # and loading it by default with a mechanism to clear it instead.
   mc_rtc_set_all_install_paths(${HONOR_PREFIX})
   set(MC_${NAME}_LIBRARY_INSTALL_PREFIX "${MC_RTC_LIBDIR}/${FOLDER}")
   if(WIN32)
@@ -88,7 +93,10 @@ macro(mc_rtc_set_prefix NAME FOLDER)
   message(DEBUG
           "MC_${NAME}_RUNTIME_INSTALL_PREFIX=${MC_${NAME}_RUNTIME_INSTALL_PREFIX}"
   )
-  mc_rtc_set_all_install_paths(${MC_RTC_HONOR_INSTALL_PREFIX})
+  if(NOT "${MC_RTC_HONOR_INSTALL_PREFIX}" STREQUAL "${HONOR_PREFIX}")
+    # restore base install path to the user-specified MC_RTC_HONOR_INSTALL_PREFIX
+    mc_rtc_set_all_install_paths(${MC_RTC_HONOR_INSTALL_PREFIX})
+  endif()
 endmacro()
 
 # -- Controllers --
