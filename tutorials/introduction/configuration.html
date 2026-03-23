@@ -371,7 +371,8 @@
 
 <ol>
   <li><code class="highlight language-bash" data-lang="bash"><span class="nv">$INSTALL_PREFIX</span>/etc/mc_rtc.yaml</code></li>
-  <li><ul><li>Linux/MacOS: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_rtc.yaml</code></li><li>Windows: <code class="highlight language-msshell" data-lang="msshell"><span class="o">%</span><span class="n">APPDATA</span><span class="o">%</span><span class="nx">/mc_rtc/mc_rtc.yaml</span></code></li></ul></li>
+  <li><code class="highlight language-bash" data-lang="bash">A colon-separated list of optional paths defined <span class="k">in </span>MC_RTC_CONTROLLER_CONFIG environment variable <span class="o">(</span>loaded from last to first<span class="o">)</span><span class="nb">.</span> This is typically used to provide a default setup on docker/nix environments independent of the user<span class="s1">'s environment</span></code></li>
+  <li><ul><li>Linux/MacOS: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_rtc.yaml</code></li><li>Windows: <code class="highlight language-msshell" data-lang="msshell"><span class="o">%</span><span class="n">APPDATA</span><span class="o">%</span><span class="nx">/mc_rtc/mc_rtc.yaml</span></code></li><li>Ignored if <code class="highlight language-yaml" data-lang="yaml"><span class="na">LoadUserConfiguration</span><span class="pi">:</span> <span class="no">false</span></code></ul></li>
 </ol>
 
 <p>The interface might load additional configuration file(s). Please refer to the interface documentation to find out about that.</p>
@@ -542,6 +543,8 @@ The following options control the way mc_rtc loads additional modules from libra
 
   </tbody>
 </table>
+
+For a list of all available configuration options, please refer to the <a href="/mc_rtc/json.html#mc_rtc/mc_rtc">YAML/Json documentation for MCGlobalControllerConfiguration</a></li>
 
 <h2 id="ros-plugin-configuration">ROS plugin configuration</h2>
 

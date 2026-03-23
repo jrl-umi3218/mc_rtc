@@ -2926,6 +2926,110 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>config.in.h</name>
+    <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rtc/</path>
+    <filename>config_8in_8h.html</filename>
+    <namespace>mc_rtc</namespace>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>JVRC_DESCRIPTION_PATH</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ab1833f51521afb56bee5ac2bc05a0c8e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>MC_ENV_DESCRIPTION_PATH</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a6620ea743f7bc3c0376d0b699cc6cbc8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>MC_INT_OBJ_DESCRIPTION_PATH</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ab6af97fa089b2917420c281971e7597e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>INSTALL_PREFIX</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a30a28568921818d2b8840ff589d4d0e9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>MC_ROBOTS_INSTALL_PREFIX</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>aaadd1ce7e063efa3f9c72e4ed648cb85</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>MC_OBSERVERS_INSTALL_PREFIX</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ac09460b0c69b49789d79fe5f8e2099be</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>MC_CONTROLLER_INSTALL_PREFIX</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ac7609cb4f76c793abe5998835781ec9a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>MC_PLUGINS_INSTALL_PREFIX</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a7863772699cb0577182e265659e942bf</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>DATA_PATH</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a80f6f6670ed4f4843b5af2684307c2b8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>CONF_PATH</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>af3bcdfd81d5fe5835fbc6869350519e2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>MC_RTC_SUPPORT_ROS</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ac69eef98fcf7988294fc4544cc8d785b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>JSON_SCHEMA_PATH</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a9ff1c01294f345ce5184c6ce27d0b4cc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>MC_RTC_BUILD_IN_NIX</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>aa12fba3ddce00723d511b9f3da9f8436</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>MC_RTC_JSON_SCHEMA_PATH</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>af42cd327c9152a53ac484d78b02b2df0</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>ConfigurationHelpers.h</name>
     <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rtc/</path>
     <filename>ConfigurationHelpers_8h.html</filename>
@@ -37363,6 +37467,20 @@
       <arglist>(const std::string &amp;publisher)</arglist>
     </member>
     <member kind="function" static="yes">
+      <type>static size_t</type>
+      <name>nb_robot_publisher</name>
+      <anchorfile>structmc__rtc_1_1ROSBridge.html</anchorfile>
+      <anchor>ae8bd6b4a71f8548369c44a185d3c16dc</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static bool</type>
+      <name>has_publisher</name>
+      <anchorfile>structmc__rtc_1_1ROSBridge.html</anchorfile>
+      <anchor>a898315a440e6abd52cc5d3f89c78fe97</anchor>
+      <arglist>(const std::string &amp;topic)</arglist>
+    </member>
+    <member kind="function" static="yes">
       <type>static void</type>
       <name>remove_extra_robot_publishers</name>
       <anchorfile>structmc__rtc_1_1ROSBridge.html</anchorfile>
@@ -47301,6 +47419,104 @@
       <anchorfile>namespacemc__rtc.html</anchorfile>
       <anchor>a05e165ab46d424a119034202cbc79999</anchor>
       <arglist>(std::unique_ptr&lt; T &gt; ptr)</arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>JVRC_DESCRIPTION_PATH</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ab1833f51521afb56bee5ac2bc05a0c8e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>MC_ENV_DESCRIPTION_PATH</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a6620ea743f7bc3c0376d0b699cc6cbc8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>MC_INT_OBJ_DESCRIPTION_PATH</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ab6af97fa089b2917420c281971e7597e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>INSTALL_PREFIX</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a30a28568921818d2b8840ff589d4d0e9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>MC_ROBOTS_INSTALL_PREFIX</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>aaadd1ce7e063efa3f9c72e4ed648cb85</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>MC_OBSERVERS_INSTALL_PREFIX</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ac09460b0c69b49789d79fe5f8e2099be</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>MC_CONTROLLER_INSTALL_PREFIX</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ac7609cb4f76c793abe5998835781ec9a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>MC_PLUGINS_INSTALL_PREFIX</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a7863772699cb0577182e265659e942bf</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>DATA_PATH</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a80f6f6670ed4f4843b5af2684307c2b8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>CONF_PATH</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>af3bcdfd81d5fe5835fbc6869350519e2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>MC_RTC_SUPPORT_ROS</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>ac69eef98fcf7988294fc4544cc8d785b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>JSON_SCHEMA_PATH</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>a9ff1c01294f345ce5184c6ce27d0b4cc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr bool</type>
+      <name>MC_RTC_BUILD_IN_NIX</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>aa12fba3ddce00723d511b9f3da9f8436</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr auto</type>
+      <name>MC_RTC_JSON_SCHEMA_PATH</name>
+      <anchorfile>namespacemc__rtc.html</anchorfile>
+      <anchor>af42cd327c9152a53ac484d78b02b2df0</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable">
       <type>struct MC_RTC_UTILS_DLLAPI</type>

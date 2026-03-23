@@ -82,9 +82,12 @@ var menudata={children:[
 {text:"Variables",url:"namespacemembers_vars.html",children:[
 {text:"a",url:"namespacemembers_vars.html#index_a"},
 {text:"c",url:"namespacemembers_vars.html#index_c"},
+{text:"d",url:"namespacemembers_vars.html#index_d"},
 {text:"g",url:"namespacemembers_vars.html#index_g"},
 {text:"h",url:"namespacemembers_vars.html#index_h"},
 {text:"i",url:"namespacemembers_vars.html#index_i"},
+{text:"j",url:"namespacemembers_vars.html#index_j"},
+{text:"m",url:"namespacemembers_vars.html#index_m"},
 {text:"o",url:"namespacemembers_vars.html#index_o"},
 {text:"p",url:"namespacemembers_vars.html#index_p"},
 {text:"v",url:"namespacemembers_vars.html#index_v"}]},

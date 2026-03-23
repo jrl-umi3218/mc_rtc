@@ -366,7 +366,8 @@
 
 <ol>
   <li><code class="highlight language-bash" data-lang="bash"><span class="nv">$INSTALL_PREFIX</span>/etc/mc_rtc.yaml</code></li>
-  <li><ul><li>Linux/MacOS: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_rtc.yaml</code></li><li>Windows: <code class="highlight language-msshell" data-lang="msshell"><span class="o">%</span><span class="n">APPDATA</span><span class="o">%</span><span class="nx">/mc_rtc/mc_rtc.yaml</span></code></li></ul></li>
+  <li><code class="highlight language-bash" data-lang="bash">MC_RTC_CONTROLLER_CONFIG 環境変数で定義されたコロン区切りのオプションパスのリスト（最後から最初の順で読み込まれます）。これは通常、ユーザーの環境とは独立して docker/nix 環境でデフォルト設定を提供するために使用されます。</code></li>
+  <li><ul><li>Linux/MacOS: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_rtc.yaml</code></li><li>Windows: <code class="highlight language-msshell" data-lang="msshell"><span class="o">%</span><span class="n">APPDATA</span><span class="o">%</span><span class="nx">/mc_rtc/mc_rtc.yaml</span></code></li><li><code class="highlight language-yaml" data-lang="yaml"><span class="na">LoadUserConfiguration</span><span class="pi">:</span> <span class="no">false</span></code> の場合は無視されます。</li></ul></li>
 </ol>
 
 <p>インターフェイスによっては、追加の設定ファイルが読み込まれる場合があります。詳細については、インターフェイスのドキュメントを参照してください。</p>
@@ -537,6 +538,8 @@
 
   </tbody>
 </table>
+
+すべての利用可能な設定オプションの一覧については、<a href="/mc_rtc/jp/json.html#mc_rtc/mc_rtc">MCGlobalControllerConfiguration の YAML/Json ドキュメント</a> を参照してください。
 
 <h2 id="rosプラグインの設定">ROSプラグインの設定</h2>
 

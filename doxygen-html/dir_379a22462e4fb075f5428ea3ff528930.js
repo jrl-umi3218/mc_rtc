@@ -6,6 +6,7 @@ var dir_379a22462e4fb075f5428ea3ff528930 =
     [ "threading", "dir_849705b3897370d2d386be39bb96c29e.html", "dir_849705b3897370d2d386be39bb96c29e" ],
     [ "utils", "dir_336acc40aa9f93d9d7f11e2873ce2166.html", "dir_336acc40aa9f93d9d7f11e2873ce2166" ],
     [ "clock.h", "clock_8h.html", "clock_8h" ],
+    [ "config.in.h", "config_8in_8h.html", "config_8in_8h" ],
     [ "Configuration.h", "mc__rtc_2Configuration_8h.html", "mc__rtc_2Configuration_8h" ],
     [ "ConfigurationHelpers.h", "ConfigurationHelpers_8h.html", "ConfigurationHelpers_8h" ],
     [ "constants.h", "constants_8h.html", "constants_8h" ],
