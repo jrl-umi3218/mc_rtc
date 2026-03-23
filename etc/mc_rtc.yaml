@@ -146,3 +146,6 @@ VerboseLoader: false
 # ClearRobotModulePath: false
 # ClearObserverModulePath: false
 # ClearGlobalPluginPath: false
+
+# Whether to load the user's configuration from $HOME/.config/mc_rtc/mc_rtc.yaml
+# LoadUserConfiguration: true

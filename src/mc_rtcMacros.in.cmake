@@ -1,11 +1,6 @@
-get_filename_component(
-  PACKAGE_PREFIX_DIR "${CMAKE_CURRENT_LIST_DIR}/@mc_rtc_macros_RELATIVE_PATH@" ABSOLUTE
-)
-
-# -- Library install directory --
-set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_BINDIR@")
-set(MC_RTC_DOCDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_DOCDIR@")
-set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@")
+# -- Path to mc_rtc install prefix
+set(PACKAGE_PREFIX_DIR "@MC_RTC_INSTALL_PREFIX@")
+message(VERBOSE "mc_rtc is installed in: ${PACKAGE_PREFIX_DIR}")
 
 # -- Library source directory --
 set(MC_RTC_SRCDIR "@MC_RTC_SOURCE_DIR@")
@@ -15,32 +10,95 @@ if(NOT DEFINED MC_RTC_LOADER_DEBUG_SUFFIX)
   set(MC_RTC_LOADER_DEBUG_SUFFIX "@MC_RTC_LOADER_DEBUG_SUFFIX@")
 endif()
 
+set(MC_RTC_BUILD_IN_NIX @MC_RTC_BUILD_IN_NIX@)
+
+# The point of MC_RTC_HONOR_INSTALL_PREFIX is to let the user decide whether they want
+# to install the plugins in the same prefix as mc_rtc, or in a dedicated one. This is
+# useful for Nix, where we want to let runtime dependencies install themselves into
+# their own dedicated prefix, instead of being forced to install into the same prefix as
+# mc_rtc.
 if(NOT DEFINED MC_RTC_HONOR_INSTALL_PREFIX)
-  set(MC_RTC_HONOR_INSTALL_PREFIX OFF)
+  if(MC_RTC_BUILD_IN_NIX)
+    message(
+      VERBOSE
+      "Defaulting MC_RTC_HONOR_INSTALL_PREFIX=ON because it isn't set and we detected that we're building in Nix (MC_RTC_BUILD_IN_NIX=ON)"
+    )
+    set(MC_RTC_HONOR_INSTALL_PREFIX ON)
+  else()
+    set(MC_RTC_HONOR_INSTALL_PREFIX OFF)
+  endif()
 endif()
 
 if(MC_RTC_HONOR_INSTALL_PREFIX)
-  include(GNUInstallDirs)
+  message(
+    VERBOSE
+    "Honoring CMAKE_INSTALL_PREFIX for mc_rtc installation because MC_RTC_HONOR_INSTALL_PREFIX=ON. This means that downstream packages using the macros such as add_controller, add_robot (...) defined in ${CMAKE_CURRENT_LIST_DIR}/mc_rtcMacros.cmake will be installed in their own CMAKE_INSTALL_PREFIX as opposed to mc_rtc's ${PACKAGE_PREFIX_DIR}"
+  )
+else()
+  message(
+    VERBOSE
+    "Runtime dependencies installed by macros such as add_controller, add_robot (...) [defined in ${CMAKE_CURRENT_LIST_DIR}/mc_rtcMacros.cmake] will be installed in mc_rtc's install prefix (${PACKAGE_PREFIX_DIR}) because MC_RTC_HONOR_INSTALL_PREFIX=OFF."
+  )
 endif()
+
+# -- Library install directory --
+macro(mc_rtc_set_all_install_paths HONOR_PREFIX)
+  if(HONOR_PREFIX)
+    message(DEBUG "Honoring CMAKE_INSTALL_PREFIX for all runtime install paths")
+    include(GNUInstallDirs)
+    set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
+    set(MC_RTC_DOCDIR "${CMAKE_INSTALL_FULL_DOCDIR}")
+    set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
+  else()
+    message(DEBUG "Using mc_rtc's install prefix for all runtime install paths")
+    # On Nix all paths obtained from GNUInstallDir are absolute, here we want mc_rtc'
+    # runtime paths include(GNUInstallDirs)
+    set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/bin")
+    set(MC_RTC_DOCDIR "${PACKAGE_PREFIX_DIR}/share/doc/mc_rtc")
+    set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/lib")
+  endif()
+  message(DEBUG
+          "MC_RTC_BINDIR set to ${MC_RTC_BINDIR} because HONOR_PREFIX=${HONOR_PREFIX}"
+  )
+  message(DEBUG
+          "MC_RTC_DOCDIR set to ${MC_RTC_DOCDIR} because HONOR_PREFIX=${HONOR_PREFIX}"
+  )
+  message(DEBUG
+          "MC_RTC_LIBDIR set to ${MC_RTC_LIBDIR} because HONOR_PREFIX=${HONOR_PREFIX}"
+  )
+endmacro()
 
 # -- Helper to set the components install prefix --
 macro(mc_rtc_set_prefix NAME FOLDER)
-  if(MC_RTC_HONOR_INSTALL_PREFIX)
-    set(MC_${NAME}_LIBRARY_INSTALL_PREFIX "${CMAKE_INSTALL_FULL_LIBDIR}/${FOLDER}")
+  if(${ARGC} GREATER 2)
+    set(HONOR_PREFIX "${ARGV2}")
   else()
-    set(MC_${NAME}_LIBRARY_INSTALL_PREFIX "${MC_RTC_LIBDIR}/${FOLDER}")
+    set(HONOR_PREFIX "${MC_RTC_HONOR_INSTALL_PREFIX}")
   endif()
+  # Modify the base install path for runtime dependencies: respect
+  # MC_RTC_HONOR_INSTALL_PREFIX unless overriden by HONOR_PREFIX as a 3rd argument here.
+  # This is necessary as we need to be able to get mc_rtc's install prefix for default
+  # states. TODO: we should be saving default state path in mc_rtc build (config.in.h)
+  # and loading it by default with a mechanism to clear it instead.
+  mc_rtc_set_all_install_paths(${HONOR_PREFIX})
+  set(MC_${NAME}_LIBRARY_INSTALL_PREFIX "${MC_RTC_LIBDIR}/${FOLDER}")
   if(WIN32)
-    if(MC_RTC_HONOR_INSTALL_PREFIX)
-      set(MC_${NAME}_RUNTIME_INSTALL_PREFIX "${CMAKE_INSTALL_FULL_BINDIR}/${FOLDER}")
-    else()
-      set(MC_${NAME}_RUNTIME_INSTALL_PREFIX "${MC_RTC_BINDIR}/${FOLDER}")
-    endif()
+    set(MC_${NAME}_RUNTIME_INSTALL_PREFIX "${MC_RTC_BINDIR}/${FOLDER}")
   else()
     set(MC_${NAME}_RUNTIME_INSTALL_PREFIX "${MC_${NAME}_LIBRARY_INSTALL_PREFIX}")
   endif()
   # For backward compatibility
   set(MC_${NAME}_INSTALL_PREFIX "${MC_${NAME}_LIBRARY_INSTALL_PREFIX}")
+  message(DEBUG
+          "MC_${NAME}_LIBRARY_INSTALL_PREFIX=${MC_${NAME}_LIBRARY_INSTALL_PREFIX}"
+  )
+  message(DEBUG
+          "MC_${NAME}_RUNTIME_INSTALL_PREFIX=${MC_${NAME}_RUNTIME_INSTALL_PREFIX}"
+  )
+  if(NOT "${MC_RTC_HONOR_INSTALL_PREFIX}" STREQUAL "${HONOR_PREFIX}")
+    # restore base install path to the user-specified MC_RTC_HONOR_INSTALL_PREFIX
+    mc_rtc_set_all_install_paths(${MC_RTC_HONOR_INSTALL_PREFIX})
+  endif()
 endmacro()
 
 # -- Controllers --
@@ -168,14 +226,11 @@ set_target_properties(
   mc_rtc::mc_observers PROPERTIES INTERFACE_LINK_LIBRARIES mc_rtc::mc_control
 )
 
-# -- States --
-if(MC_RTC_HONOR_INSTALL_PREFIX)
-  set(MC_RTC_HONOR_INSTALL_PREFIX OFF)
-  mc_rtc_set_prefix(STATES_DEFAULT mc_controller/fsm/states)
-  set(MC_RTC_HONOR_INSTALL_PREFIX ON)
-else()
-  mc_rtc_set_prefix(STATES_DEFAULT mc_controller/fsm/states)
-endif()
+# -- States -- Default MC_RTC_HONOR_INSTALL_PREFIX to OFF, so that mc_rtc's path to its
+# default states is available to controllers
+mc_rtc_set_prefix(STATES_DEFAULT mc_controller/fsm/states OFF)
+# Honour MC_RTC_HONOR_INSTALL_PREFIX for the main states prefix, so that users can
+# choose to install their own states in a different prefix if they want to
 mc_rtc_set_prefix(STATES mc_controller/${PROJECT_NAME}/states)
 
 macro(add_fsm_state state_name)

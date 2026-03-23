@@ -39,8 +39,6 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 project(${PROJECT_NAME} C CXX)
 set(MC_RTC_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
 
-set_default_cmake_build_type(RelWithDebInfo)
-
 if(NOT DEFINED MC_RTC_INSTALL_PREFIX)
   set(MC_RTC_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 endif()
@@ -49,6 +47,19 @@ if(WIN32)
   set(MC_RTC_LOADER_DEBUG_SUFFIX "/debug")
 else()
   set(MC_RTC_LOADER_DEBUG_SUFFIX "")
+endif()
+
+set_default_cmake_build_type(RelWithDebInfo)
+
+# Check for Nix build environment
+if(DEFINED ENV{NIX_BUILD_CORES}
+   OR DEFINED ENV{NIX_STORE}
+   OR DEFINED ENV{IN_NIX_SHELL}
+)
+  set(MC_RTC_BUILD_IN_NIX TRUE)
+  message(STATUS "Detected Nix build environment")
+else()
+  set(MC_RTC_BUILD_IN_NIX FALSE)
 endif()
 
 option(GENERATE_COVERAGE "Generate coverage data" FALSE)
@@ -83,6 +94,25 @@ option(MC_RTC_DEVELOPER_MODE
 )
 
 option(DISABLE_ROS "Build without ROS support (even if ROS was found)" OFF)
+
+option(BUILD_MC_RTC "Build the main mc_rtc library" ON)
+option(BUILD_MC_RTC_CPP_UTILS "Build cpp utilities (e.g mc_bin_utils, etc)" ON)
+option(BUILD_MC_RTC_PYTHON_UTILS
+       "Build python utilities (e.g mc_log_ui, mc_rtc_new_controller, etc)" ON
+)
+
+if(NOT BUILD_MC_RTC)
+  if(NOT BUILD_MC_RTC_CPP_UTILS AND NOT BUILD_MC_RTC_PYTHON_UTILS)
+    message(STATUS "Nothing to build, exiting.")
+    return()
+  endif()
+
+  message(STATUS "Not building the main mc_rtc library, but building some utilities.")
+  find_package(mc_rtc REQUIRED)
+  add_subdirectory(utils)
+  return()
+endif()
+message(STATES "Building mc_rtc ${PROJECT_VERSION} from ${PROJECT_SOURCE_DIR}")
 
 set(BOOST_STACKTRACE "")
 set(BOOST_USE_STACKTRACE_DEFINE "")
@@ -227,35 +257,56 @@ macro(find_description_package PACKAGE)
             "Your ${PACKAGE} does not define where to find the data, please update."
         )
       else()
-        set(${PACKAGE_PATH_VAR} "${${PACKAGE}_SOURCE_PREFIX}")
+        set("${PACKAGE_PATH_VAR}" "${${PACKAGE}_SOURCE_PREFIX}")
       endif()
     else()
-      set(${PACKAGE_PATH_VAR} "${${PACKAGE}_INSTALL_PREFIX}")
+      set("${PACKAGE_PATH_VAR}" "${${PACKAGE}_INSTALL_PREFIX}")
     endif()
     # Cleanup the path provided by CMake
-    get_filename_component(${PACKAGE_PATH_VAR} "${${PACKAGE_PATH_VAR}}" REALPATH)
+    get_filename_component("${PACKAGE_PATH_VAR}" "${${PACKAGE_PATH_VAR}}" REALPATH)
   endif()
   message("-- Found ${PACKAGE}: ${${PACKAGE_PATH_VAR}}")
 endmacro()
 
+find_description_package(jvrc_description)
 find_description_package(mc_env_description)
 find_description_package(mc_int_obj_description)
 
+# -- Helper to set the components install prefix
+#
+# -- NOTE: Nix passes the CMAKE_INSTALL_LIBDIR and CMAKE_INSTALL_BINDIR as absolute
+# paths to the nix store. See: https://github.com/NixOS/nixpkgs/issues/144170
 macro(mc_rtc_set_prefix NAME FOLDER)
   set(MC_${NAME}_LIBRARY_INSTALL_PREFIX ${CMAKE_INSTALL_FULL_LIBDIR}/${FOLDER})
   if(WIN32)
     set(MC_${NAME}_RUNTIME_INSTALL_PREFIX ${CMAKE_INSTALL_FULL_BINDIR}/${FOLDER})
-    set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX
-        ${MC_RTC_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${FOLDER}
-    )
+    if(IS_ABSOLUTE "${CMAKE_INSTALL_BINDIR}")
+      set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX "${CMAKE_INSTALL_BINDIR}/${FOLDER}")
+    else()
+      set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX
+          "${MC_RTC_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${FOLDER}"
+      )
+    endif()
   else()
     set(MC_${NAME}_RUNTIME_INSTALL_PREFIX ${CMAKE_INSTALL_FULL_LIBDIR}/${FOLDER})
-    set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX
-        ${MC_RTC_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${FOLDER}
-    )
+    if(IS_ABSOLUTE "${CMAKE_INSTALL_LIBDIR}")
+      set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX "${CMAKE_INSTALL_LIBDIR}/${FOLDER}")
+    else()
+      set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX
+          "${MC_RTC_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${FOLDER}"
+      )
+    endif()
   endif()
   # For backward compatibility
   set(MC_${NAME}_INSTALL_PREFIX "${MC_${NAME}_LIBRARY_INSTALL_PREFIX}")
+  message(STATUS "MC_${NAME}_INSTALL_PREFIX: ${MC_${NAME}_INSTALL_PREFIX}")
+  message(
+    STATUS "MC_${NAME}_RUNTIME_INSTALL_PREFIX: ${MC_${NAME}_RUNTIME_INSTALL_PREFIX}"
+  )
+  message(
+    STATUS
+      "MC_${NAME}_RUNTIME_DESTINATION_PREFIX: ${MC_${NAME}_RUNTIME_DESTINATION_PREFIX}"
+  )
 endmacro()
 
 mc_rtc_set_prefix(PLUGINS mc_plugins)
@@ -265,6 +316,7 @@ mc_rtc_set_prefix(CONTROLLER mc_controller)
 
 set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
 set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
+set(MC_RTC_JSON_SCHEMA_PATH "${CMAKE_INSTALL_DOCDIR}/json/schemas")
 
 find_package(mc_rtc_3rd_party_ros QUIET)
 if(TARGET mc_rtc_3rd_party::ROS)
@@ -274,7 +326,7 @@ else()
 endif()
 
 configure_file(
-  ${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in
+  ${PROJECT_SOURCE_DIR}/include/mc_rtc/config.in.h
   ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h
 )
 
@@ -330,7 +382,9 @@ configure_file(
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/src/mc_rtcMacros.cmake"
         DESTINATION "${CONFIG_INSTALL_DIR}"
 )
-set(PACKAGE_EXTRA_MACROS "${PACKAGE_EXTRA_MACROS}
+set(PACKAGE_EXTRA_MACROS
+    "${PACKAGE_EXTRA_MACROS}
+set(MC_RTC_INSTALL_PREFIX \"${CMAKE_INSTALL_PREFIX}\")
 include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtcMacros.cmake\")"
 )
 

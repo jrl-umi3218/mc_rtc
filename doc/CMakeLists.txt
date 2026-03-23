@@ -1,5 +1,5 @@
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2026 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 set(MC_RTC_JEKYLL_PLUGINS_PATH "${CMAKE_INSTALL_DOCDIR}/jekyll/plugins")
@@ -22,7 +22,7 @@ install(FILES _plugins/include_raw.rb _plugins/link.rb _plugins/pretty_json.rb
 
 install(
   DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/_data/schemas
-  DESTINATION ${CMAKE_INSTALL_DOCDIR}/json
+  DESTINATION ${MC_RTC_JSON_SCHEMA_PATH}
   FILES_MATCHING
   PATTERN "*.json"
 )

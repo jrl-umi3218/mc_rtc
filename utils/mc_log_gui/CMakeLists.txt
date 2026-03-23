@@ -2,16 +2,22 @@
 # Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-execute_process(
-  COMMAND
-    ${MC_LOG_UI_PYTHON_EXECUTABLE} -c
-    "from distutils import sysconfig; print(sysconfig.get_python_lib(prefix = '${CMAKE_INSTALL_PREFIX}', plat_specific = True))"
-  RESULT_VARIABLE PYTHON_INSTALL_DIR_FOUND
-  OUTPUT_VARIABLE PYTHON_INSTALL_DIR
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+if(MC_RTC_BUILD_IN_NIX)
+  set(PYTHON_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib/python3.13/site-packages")
+  set(PYTHON_INSTALL_DIR_FOUND 0)
+else()
+  execute_process(
+    COMMAND
+      ${MC_LOG_UI_PYTHON_EXECUTABLE} -c
+      "from distutils import sysconfig; print(sysconfig.get_python_lib(prefix = '${CMAKE_INSTALL_PREFIX}', plat_specific = True))"
+    RESULT_VARIABLE PYTHON_INSTALL_DIR_FOUND
+    OUTPUT_VARIABLE PYTHON_INSTALL_DIR
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
+endif()
 
 if("${PYTHON_INSTALL_DIR_FOUND}" EQUAL 0)
+  message(STATUS "Installing mc_log_ui in ${PYTHON_INSTALL_DIR}")
   install(
     DIRECTORY mc_log_ui
     DESTINATION "${PYTHON_INSTALL_DIR}"
@@ -49,5 +55,8 @@ if("${PYTHON_INSTALL_DIR_FOUND}" EQUAL 0)
     )
   endif()
 else()
-  message(WARNING "Could not determine where to install Python utilities")
+  message(
+    WARNING
+      "Could not determine where to install Python utilities, mc_log_ui will be unavailable"
+  )
 endif()

@@ -103,11 +103,6 @@ mc_rtc_test(testLogger mc_rbdyn)
 mc_rtc_test(testLogUtils mc_rbdyn)
 mc_rtc_test(testRobotModule mc_rbdyn)
 mc_rtc_test(testRobotModule_visual mc_rbdyn)
-find_description_package(jvrc_description)
-set_target_properties(
-  testRobotModule PROPERTIES COMPILE_FLAGS
-                             "-DJVRC_DESCRIPTION_PATH=\"${JVRC_DESCRIPTION_PATH}\""
-)
 mc_rtc_test(testCanonicalRobot mc_rbdyn)
 mc_rtc_test(testSolverBackend mc_tasks)
 
