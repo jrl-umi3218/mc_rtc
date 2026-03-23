@@ -184,11 +184,11 @@ void Loader::load_libraries(const std::string & class_name,
                             bool verbose,
                             Loader::callback_t cb)
 {
-  std::stringstream summary;
-  summary << fmt::format(
-      "Looked for libraries containing matching symbol \"{}\" in the following paths: [{}]\nDetails:\n", class_name,
-      mc_rtc::io::to_string(pathsIn))
-          << std::endl;
+  if(verbose)
+    mc_rtc::log::info("\n\n-----\n"
+                      "Looking for libraries containing matching symbol \"{}\" in the following paths: [{}]\n"
+                      "-----\n",
+                      class_name, mc_rtc::io::to_string(pathsIn));
 #ifndef MC_RTC_BUILD_STATIC
   std::vector<std::string> debug_paths;
   auto pathsRef = std::cref(pathsIn);
@@ -211,11 +211,10 @@ void Loader::load_libraries(const std::string & class_name,
   // first library with matching symbols will be kept
   for(const auto & path : paths)
   {
-    summary << fmt::format("  - Looking for libraries in {}", mc_rtc::io::to_string(paths)) << std::endl;
+    if(verbose) mc_rtc::log::info("\n-- Looking for libraries in {}", mc_rtc::io::to_string(paths));
     if(!fs::exists(path))
     {
-      summary << fmt::format("    - [WARN] Tried to load libraries from \"{}\" which does not exist", path)
-              << std::endl;
+      if(verbose) mc_rtc::log::warning("Tried to load libraries from \"{}\" which does not exist", path);
       continue;
     }
     fs::directory_iterator dit(path), endit;
@@ -234,13 +233,14 @@ void Loader::load_libraries(const std::string & class_name,
         {
           if(out.count(cn))
           {
-            summary << fmt::format("  - Symbol \"{}\" detected in \"{}\"", cn, p.string()) << std::endl;
+            if(verbose) mc_rtc::log::info("Symbol \"{}\" detected in \"{}\"", cn, p.string());
             /* We get the first library that declared this class name and only
              * emit an exception if this is declared in a different file */
             fs::path orig_p(out[cn]->path());
             if(orig_p != p)
             {
-              summary << fmt::format(" - [WARN] Multiple files export the same symbol \"{}\":\n"
+              if(verbose)
+                mc_rtc::log::warning("Multiple files export the same symbol \"{}\":\n"
                                      "     + Using current declaration in: \"{}\"\n"
                                      "     - Duplicate declaration in:     \"{}\"",
                                      cn, p.string(), out[cn]->path());
@@ -253,7 +253,6 @@ void Loader::load_libraries(const std::string & class_name,
       }
     }
   }
-  if(verbose) mc_rtc::log::info(summary.str());
 #endif
 }
 
