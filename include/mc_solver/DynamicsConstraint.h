@@ -61,6 +61,14 @@ public:
                      bool infTorque = false,
                      bool compensateExtTorques = false);
 
+  /** \brief Update the constraint
+   *
+   * This is called at every iteration of the controller once the constraint has been added to a solver
+   *
+   * \param solver Solver in which the constraint has been inserted
+   */
+  void update(QPSolver & solver) override;
+
   /** Returns the tasks::qp::MotionConstr
    *
    * This assumes the backend was Tasks
