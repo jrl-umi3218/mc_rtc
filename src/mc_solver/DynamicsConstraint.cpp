@@ -147,6 +147,23 @@ DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
 {
 }
 
+void DynamicsConstraint::update(QPSolver & solver)
+{
+  if(backend_ == QPSolver::Backend::Tasks)
+  {
+    auto & robot = solver.robot(robotIndex_);
+    if(robot.compensationTorques())
+    {
+      static_cast<tasks::qp::MotionConstr *>(motion_constr_.get())
+          ->setExternalTorques(robot.compensationTorques().value());
+    }
+    else
+    {
+      static_cast<tasks::qp::MotionConstr *>(motion_constr_.get())->setExternalTorques(robot.externalTorques());
+    }
+  }
+}
+
 void DynamicsConstraint::addToSolverImpl(QPSolver & solver)
 {
   KinematicsConstraint::addToSolverImpl(solver);
