@@ -1,11 +1,5 @@
 var NAVTREEINDEX8 =
 {
-"namespacendcurves.html#a4a719f19a4224bbdb2c39320115a1698":[5,0,13,3],
-"namespacendcurves.html#a53c02affc00b5f08ac36448bfabcec7f":[5,0,13,84],
-"namespacendcurves.html#a53e00cac70b50b8285a2c77ee7f5b926":[5,0,13,47],
-"namespacendcurves.html#a55aaf633af174e677b16717a753e08ec":[5,0,13,42],
-"namespacendcurves.html#a55b3c8f02726f34aad7917698845dcf0":[5,0,13,85],
-"namespacendcurves.html#a569f2ab76bbe30b8826d5bbb835937fc":[5,0,13,16],
 "namespacendcurves.html#a5a602d1fe8d537e4633249fc56a1c81f":[5,0,13,58],
 "namespacendcurves.html#a5b02b161b5039046cac25b72f0c36ea1":[5,0,13,83],
 "namespacendcurves.html#a5b46f48cd20183504067d48f96260daa":[5,0,13,35],
@@ -249,5 +243,11 @@ var NAVTREEINDEX8 =
 "shared_8h.html":[7,0,0,6,26],
 "shared_8h_source.html":[7,0,0,6,26],
 "spline__utils_8h.html":[7,0,0,9,7],
-"spline__utils_8h.html#a9fbcf4dd49d2e09b5d33208fae44f11b":[7,0,0,9,7,0]
+"spline__utils_8h.html#a9fbcf4dd49d2e09b5d33208fae44f11b":[7,0,0,9,7,0],
+"spline__utils_8h_source.html":[7,0,0,9,7],
+"structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html":[6,0,0,0],
+"structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html#aa4a2a0ac74be834b2413d61b6003cdaf":[6,0,0,0,0],
+"structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html":[6,0,0,1],
+"structfmt_1_1formatter_3_01mc__solver_1_1QPSolver_1_1Backend_01_4.html#a0ad927e0dbcaad95803bf81571483ba3":[6,0,0,1,0],
+"structmc__control_1_1CompletionCriteria.html":[6,0,1,2]
 };

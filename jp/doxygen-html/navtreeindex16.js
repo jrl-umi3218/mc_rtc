@@ -1,11 +1,5 @@
 var NAVTREEINDEX16 =
 {
-"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a7b344157591037726e435994165d846c":[6,0,5,2,3,8],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a949d57cc11d53d999682457a22896c34":[6,0,5,2,3,1],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#ab704ebb1e1630afd326b0643c2ebeecb":[6,0,5,2,3,2],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#abbfe11529cd8bed15f419ef28f84c05a":[6,0,5,2,3,7],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#ac67cc4752eab92b73ae51747966b7e8b":[6,0,5,2,3,4],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#ad377affc6265727ec1d5939522ff053a":[6,0,5,2,3,10],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html":[6,0,5,2,4],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a07f7e6178872a0fba9b61975b707b1c4":[6,0,5,2,4,11],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a0c30e8b5d771f6d5ca4e80fc73c785f4":[6,0,5,2,4,3],
@@ -249,5 +243,11 @@ var NAVTREEINDEX16 =
 "structmc__rtc_1_1Configuration.html#ad989ff036acb61548547424bc76f92c8":[6,0,6,19,32],
 "structmc__rtc_1_1Configuration.html#ade042daba56d5d0ec500412077a4e1eb":[6,0,6,19,35],
 "structmc__rtc_1_1Configuration.html#ae01fb3c1d065966a0513c1be92aa7694":[6,0,6,19,94],
-"structmc__rtc_1_1Configuration.html#ae6fdcf19e27dbb961354287ad68cecbe":[6,0,6,19,144]
+"structmc__rtc_1_1Configuration.html#ae6fdcf19e27dbb961354287ad68cecbe":[6,0,6,19,144],
+"structmc__rtc_1_1Configuration.html#ae73a0ee95aa1ea44a146d0befaa25539":[6,0,6,19,22],
+"structmc__rtc_1_1Configuration.html#ae763761b200b9af74836a7d99a9fa169":[6,0,6,19,114],
+"structmc__rtc_1_1Configuration.html#ae9a11fd79001b161cac33cd8e6e08935":[6,0,6,19,44],
+"structmc__rtc_1_1Configuration.html#aec19d5037e1fead68093f2f2edee4592":[6,0,6,19,92],
+"structmc__rtc_1_1Configuration.html#aeee0a378708fce3e3330972f04812801":[6,0,6,19,149],
+"structmc__rtc_1_1Configuration.html#af2bae551aad627ee177f6897c7258eb0":[6,0,6,19,2]
 };

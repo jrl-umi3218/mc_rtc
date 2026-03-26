@@ -1,11 +1,5 @@
 var NAVTREEINDEX21 =
 {
-"structmc__solver_1_1QPSolver.html#a0635ccca0bdc72d911c781525cccc41d":[6,0,7,23,7],
-"structmc__solver_1_1QPSolver.html#a07536ec6c134bd3f335a382a0a87d55e":[6,0,7,23,33],
-"structmc__solver_1_1QPSolver.html#a16aae96dcf217841ba84452ae694421e":[6,0,7,23,50],
-"structmc__solver_1_1QPSolver.html#a194ebdbf5606a516e5b06aac1e6ca6a4":[6,0,7,23,3],
-"structmc__solver_1_1QPSolver.html#a1b146ac9f3abd34003eb2ef6e4033178":[6,0,7,23,55],
-"structmc__solver_1_1QPSolver.html#a239fd4dc8875a2cd0c8650513dae8e58":[6,0,7,23,9],
 "structmc__solver_1_1QPSolver.html#a28e05133ff619c24f30a376e951fde51":[6,0,7,23,30],
 "structmc__solver_1_1QPSolver.html#a2d48a1aa9f88ea1c6873000df4299a1d":[6,0,7,23,28],
 "structmc__solver_1_1QPSolver.html#a37580a89d1a0d1a862dfb6b7240e6dd0":[6,0,7,23,6],
@@ -249,5 +243,11 @@ var NAVTREEINDEX21 =
 "structmc__tasks_1_1EndEffectorTask.html#ac426513e9c556336e75a09cd690ee30a":[6,0,8,8,25],
 "structmc__tasks_1_1EndEffectorTask.html#ad54a271a90a4ac60b338e5f50d24b743":[6,0,8,8,11],
 "structmc__tasks_1_1EndEffectorTask.html#ad666274c6712c5362271417f8b030ec4":[6,0,8,8,14],
-"structmc__tasks_1_1EndEffectorTask.html#af4fae4001f175768e25f77903af44ecc":[6,0,8,8,23]
+"structmc__tasks_1_1EndEffectorTask.html#af4fae4001f175768e25f77903af44ecc":[6,0,8,8,23],
+"structmc__tasks_1_1EndEffectorTask.html#afd9eb745f23f22752530d3b86329ac61":[6,0,8,8,8],
+"structmc__tasks_1_1ExactCubicTrajectoryTask.html":[6,0,8,9],
+"structmc__tasks_1_1ExactCubicTrajectoryTask.html#a14e12359f28675ec224ec009ae75b174":[6,0,8,9,3],
+"structmc__tasks_1_1ExactCubicTrajectoryTask.html#a1aa0b41fae9369d28c6d1b7240a5df6f":[6,0,8,9,5],
+"structmc__tasks_1_1ExactCubicTrajectoryTask.html#a1f68add7b8b70b9b6878bb0d72c0c6e7":[6,0,8,9,2],
+"structmc__tasks_1_1ExactCubicTrajectoryTask.html#a5baa4e6ec467049164423b9a249fe265":[6,0,8,9,0]
 };

@@ -1,11 +1,5 @@
 var NAVTREEINDEX15 =
 {
-"structmc__rbdyn_1_1RobotFrame.html#a94fcfbab883580f440115606b5c9ff9f":[6,0,5,26,6],
-"structmc__rbdyn_1_1RobotFrame.html#aa8fbc94f2673cae7787cf91bb03cda8f":[6,0,5,26,10],
-"structmc__rbdyn_1_1RobotFrame.html#aac5421aa30cbf365c703a6767d5164ea":[6,0,5,26,24],
-"structmc__rbdyn_1_1RobotFrame.html#aaf0ae23d628871b879363f9d9c808176":[6,0,5,26,8],
-"structmc__rbdyn_1_1RobotFrame.html#ab53961e7a816cf79ae1f62b8dc470134":[6,0,5,26,18],
-"structmc__rbdyn_1_1RobotFrame.html#ab9793bcf045471b5a5779a94e07e5c25":[6,0,5,26,3],
 "structmc__rbdyn_1_1RobotFrame.html#aba706b53116841e1a35c9f06ecd5515a":[6,0,5,26,4],
 "structmc__rbdyn_1_1RobotFrame.html#ad03b49f51df2ba1d492ced03d923fdd0":[6,0,5,26,22],
 "structmc__rbdyn_1_1RobotFrame.html#adee19234fa1267ab00958cbb30b4bd1f":[6,0,5,26,23],
@@ -249,5 +243,11 @@ var NAVTREEINDEX15 =
 "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a2fe120580865bc366febaa3cf7ca16db":[6,0,5,2,3,6],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a35f46c04420cf9d3936ebeb71a2ad0de":[6,0,5,2,3,3],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a41a4ad61ac746f632ece2ef93aa59b09":[6,0,5,2,3,9],
-"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a447ab7af04c97c1b2ee54db7ec0b3835":[6,0,5,2,3,5]
+"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a447ab7af04c97c1b2ee54db7ec0b3835":[6,0,5,2,3,5],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a7b344157591037726e435994165d846c":[6,0,5,2,3,8],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a949d57cc11d53d999682457a22896c34":[6,0,5,2,3,1],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#ab704ebb1e1630afd326b0643c2ebeecb":[6,0,5,2,3,2],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#abbfe11529cd8bed15f419ef28f84c05a":[6,0,5,2,3,7],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#ac67cc4752eab92b73ae51747966b7e8b":[6,0,5,2,3,4],
+"structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#ad377affc6265727ec1d5939522ff053a":[6,0,5,2,3,10]
 };
