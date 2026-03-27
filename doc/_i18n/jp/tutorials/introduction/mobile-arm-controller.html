@@ -1,0 +1,138 @@
+<p>このセクションのでは、mc_rtc のマルチロボットフレームワークを用いて、移動マニピュレータコントローラを実装する方法を紹介します。本例は「マルチロボットコントローラ」チュートリアルで紹介した考え方を踏襲しつつ、接触や関節を持つオブジェクトを含む移動マニピュレータへと拡張したものです。</p>
+
+<p><em>注: 本記事では、読者が ROS を使用してコントローラを実行・可視化できることを前提としています。</em></p>
+
+{% include h3.html title="例" %}
+
+<p>ここでは、UR5e をメインロボット、Dingo を第2ロボット、ドアを第3ロボットとして読み込むシンプルなコントローラを構築します。これらはそれぞれ、<code>mc_rtc</code> のロボットモジュール {% link mc_ur5e %}、{% link mc_ur5e_description %}、{% link mc_dingo %} として提供されています。ドアは、すでにインストールされている {% link mc_rtc_data %} パッケージに含まれています。UR5e をメインロボットとして読み込むために、<code>mc_rtc</code> の設定ファイルを以下のように変更します。</p>
+
+{% highlight yaml %}
+MainRobot: UR5eFloatingBase
+Enabled: MobileArmController
+{% endhighlight %}
+
+<p>それでは、移動マニピュレータを入力として受け取るコントローラを構築しましょう。</p>
+
+<ul>
+  <li>UR5e (フローティング)</li>
+  <li>Dingo</li>
+  <li>ドア</li>
+  <li>地面</li>
+</ul>
+
+
+{% include h4.html title="コンストラクタ" %}
+
+{% include show_sources.html sources=page.constructor_sources copy=false id="constructor" %}
+
+{% include h4.html title="ロボットのインデックス" %}
+
+<p>この新しい例では、Dingo とドアという 2 台の追加ロボットを読み込んでいます。これは、読み込むロボットモジュールのリストを指定することで実現しています。読み込まれたロボットには、指定した順にインデックスが割り当てられます。そのため、メインロボットである UR5e はインデックス 0、Dingo はインデックス 1、ドアはインデックス 2 となります。UR5e は Dingo と接触しており、Dingo は地面上を平面的に移動する必要があります。したがって、接触設定は以下のように更新する必要があります。</p>
+
+{% include show_sources.html sources=page.set_contact_sources copy=false id="set_contact" %}
+
+<p>また、ドアや地面では「env」を使用しているのに対し、Dingo をフローティングベースロボットとして定義するため、コンストラクタでロボットモジュールを読み込む際には「object」を使用します。</p>
+
+{% include h4.html title="ロボットの初期位置" %}
+
+<p>この時点でコントローラを起動すると、すべてのロボットが同じ位置に配置されていることが分かります。本チュートリアルでは、UR5e、Dingo、およびドアの位置を手動で再配置します。</p>
+
+{% include show_sources.html sources=page.reposition_sources copy=false id="reposition" %}
+
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/mobile_manipulator_initial.png" alt="architecture_overview" class="img-fluid" />
+
+{% include h4.html title="タスクと制約条件" %}
+
+<p>各ロボットに対して、通常どおりタスクと制約条件を追加します。まず、UR5e ロボットに対するタスクと制約条件を追加します。</p>
+
+{% include show_sources.html sources=page.add_ur5e_tasks_sources copy=false id="add_ur5e_tasks" %}
+
+<p>次に、Dingo ロボットに対するタスクを追加します。</p>
+
+{% include show_sources.html sources=page.add_dingo_tasks_sources copy=false id="add_dingo_tasks" %}
+
+<p>続いて、新たに追加した関節を持つロボットであるドアに対して、タスクと制約条件を追加します。</p>
+
+{% include show_sources.html sources=page.add_door_tasks_sources copy=false id="add_door_tasks" %}
+
+<p>最後に、衝突制約を追加します。</p>
+
+{% include show_sources.html sources=page.add_collision_constraint_sources copy=false id="add_collision_constraint" %}
+
+<p><em>注: ドアは固定されたベースを持つため、この段階ではドアに接触制約を追加していません。ただし、接触制約はコントローラに読み込まれているすべてのロボットに対して直接使用可能です。</em></p>
+
+{% include h4.html title="コントローラロジックの設定" %}
+
+<p>このパートでは、コントローラのロジックを設定します。目標は以下のとおりです。</p>
+
+<ol>
+  <li>UR5e を待機姿勢に移動し、Dingo をドアの近くまで移動させる</li>
+  <li>ロボットの手でドアのハンドルに到達する</li>
+  <li>ドアのハンドルを回転させる</li>
+  <li>ドアを開く</li>
+  <li>ドアのハンドルを離し、待機姿勢に戻る</li>
+</ol>
+
+<p>これらを反映したコードは以下のとおりです。</p>
+
+{% include show_sources.html sources=page.logic_setup_sources copy=false id="logic_setup" %}
+
+{% include h4.html title="フェーズ1: UR5e を待機姿勢に移動し、Dingo をドアの近くへ移動" %}
+
+<p>このフェーズでは、姿勢タスクを用いてメインロボットである UR5e をあらかじめ定義された待機姿勢に移動させます。SurfaceTransformTask との競合を避けるため、このフェーズでは SurfaceTransformTask は追加しません。</p>
+
+{% include show_sources.html sources=page.p1_sources copy=false id="p1" %}
+
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/mobile_manipulator_standby.png" alt="architecture_overview" class="img-fluid" />
+
+{% include h4.html title="フェーズ2: ロボットの手でドアのハンドルに到達" %}
+
+<p>このフェーズでは、<code>SurfaceTransformTask</code> を導入します。これは、以前使用した <code>EndEffectorTask</code> と非常によく似ていますが、エンドエフェクタではなくロボットの表面を制御するタスクです。これにより、目標をより簡単に表現できます。さらに、ドアの位置を変更したり使用する手を切り替えたりしてもコードを修正する必要がないよう、ドアのハンドル位置を用いて目標を定義します。また、タスク間の競合を避けるため、UR5e の姿勢タスクは削除します。</p>
+
+{% include show_sources.html sources=page.p2_sources copy=false id="p2" %}
+
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/mobile_manipulator_approach.png" alt="architecture_overview" class="img-fluid" />
+
+{% include h4.html title="フェーズ3: ドアのハンドルを回転" %}
+
+<p>このフェーズでは、以下の 2 点を設定する必要があります。</p>
+
+<ol>
+  <li>フェーズ3をいつトリガーするか</li>
+  <li>何を実行するか</li>
+</ol>
+
+<p>1 点目については、<code>SurfaceTransformTask</code> の実行状況を監視します。2 点目については、ドアとロボットのグリッパーとの間に接触を追加し、グリッパーに対するタスクを削除します（以降は接触によって処理されます）。また、ハンドル位置に関する目標を変更します。</p>
+
+{% include show_sources.html sources=page.p3_sources copy=false id="p3" %}
+
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/mobile_manipulator_handle.png" alt="architecture_overview" class="img-fluid" />
+
+{% include h4.html title="フェーズ4: ドアを開く" %}
+
+<p>このフェーズは前のフェーズと非常によく似ています。到達したハンドル位置を確認して遷移をトリガーし、その後、Dingo ロボットのエンドエフェクタタスクを削除します（以降は接触によって処理されます）。最後に、ドアを開くための目標を設定します。</p>
+
+{% include show_sources.html sources=page.p4_sources copy=false id="p4" %}
+
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/mobile_manipulator_open.png" alt="architecture_overview" class="img-fluid" />
+
+{% include h4.html title="フェーズ5: ドアのハンドルを離し、待機姿勢に戻る" %}
+
+<p>最後のフェーズでは、UR5e とドアとの接触を削除してハンドルを離し、姿勢タスクを用いて待機姿勢に戻ります。また、Dingo ロボットが動かないように、エンドエフェクタタスクを再度追加します。</p>
+
+{% include show_sources.html sources=page.p5_sources copy=false id="p5" %}
+
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/mobile_manipulator_release.png" alt="architecture_overview" class="img-fluid" />
+
+{% include h3.html title="いろいろ試してみよう" %}
+
+<p>ここまでで、いくつかのパラメータを変更しながらマルチロボットアプローチの利点を確認できます。他の設定を変更することなく、以下の項目を試してみてください。</p>
+
+<ul>
+  <li>ドアの位置を変更する</li>
+  <li>ハンドルの回転角度を変更する</li>
+  <li>ドアの開く角度を変更する</li>
+  <li>ドアを開くのに使用するロボットの手を変更する</li>
+</ul>
+
+<p>このコントローラの完全なソースコードは <a href="sources/mobile-arm-controller.html">こちら</a> から参照できます。また、環境設定を含むソースコード一式は {% link mc_rtc_tutorials %} リポジトリに含まれています。</p>

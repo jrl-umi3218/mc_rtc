@@ -9,15 +9,15 @@ constructor_sources:
 
       MyFirstController::MyFirstController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config)
       : mc_control::MCController({rm,
-          mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH) + "/../mc_int_obj_description", std::string("door")),
-          mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"))}, dt)
+          mc_rbdyn::RobotLoader::get_robot_module("env/door"),
+          mc_rbdyn::RobotLoader::get_robot_module("env/ground")}, dt)
   - name: Python
     lang: python
     source: |
       @staticmethod
       def create(robot, dt):
-          door = mc_rbdyn.get_robot_module("env", mc_rtc.MC_ENV_DESCRIPTION_PATH + "/../mc_int_obj_description", "door")
-          ground = mc_rbdyn.get_robot_module("env", mc_rtc.MC_ENV_DESCRIPTION_PATH, "ground")
+          door = mc_rbdyn.get_robot_module("env/door")
+          ground = mc_rbdyn.get_robot_module("env/ground")
           return MyFirstController([robot, door, ground], dt)
 set_contact_sources:
   - name: C++
