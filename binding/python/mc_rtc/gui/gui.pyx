@@ -393,11 +393,11 @@ cdef class StateBuilder(object):
     elif t is NumberSlider:
       self.impl.get().addElement[c_gui.NumberSliderImpl[c_gui.get_fn, c_gui.set_fn]](py2cpp(category), (<NumberSlider>element).impl)
     elif t is ArrayInput:
-      self.impl.get().addElement[c_gui.ArrayInputImpl[c_gui.get_fn, c_gui.set_fn]](py2cpp(category), (<ArrayInput>element).impl)
+      self.impl.get().addElement[c_gui.ArrayInputImpl[c_gui.get_fn, c_gui.set_fn, vector[string]]](py2cpp(category), (<ArrayInput>element).impl)
     elif t is ComboInput:
-      self.impl.get().addElement[c_gui.ComboInputImpl[c_gui.get_fn, c_gui.set_fn]](py2cpp(category), (<ComboInput>element).impl)
+      self.impl.get().addElement[c_gui.ComboInputImpl[c_gui.get_fn, c_gui.set_fn, vector[string]]](py2cpp(category), (<ComboInput>element).impl)
     elif t is DataComboInput:
-      self.impl.get().addElement[c_gui.DataComboInputImpl[c_gui.get_fn, c_gui.set_fn]](py2cpp(category), (<DataComboInput>element).impl)
+      self.impl.get().addElement[c_gui.DataComboInputImpl[c_gui.get_fn, c_gui.set_fn, vector[string]]](py2cpp(category), (<DataComboInput>element).impl)
     elif t is Point3D:
       is_ro = (<Point3D>element).is_ro
       if is_ro:

@@ -89,12 +89,12 @@ cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
 
   cdef NumberSliderImpl[GetT, SetT] NumberSlider[GetT, SetT](const string&, GetT, SetT, double, double)
 
-  cdef ArrayInputImpl[GetT, SetT] ArrayInput[GetT, SetT](const string&, GetT, SetT)
-  cdef ArrayInputImpl[GetT, SetT] ArrayInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
+  cdef ArrayInputImpl[GetT, SetT, LabelsContainerT] ArrayInput[GetT, SetT, LabelsContainerT](const string&, GetT, SetT)
+  cdef ArrayInputImpl[GetT, SetT, LabelsContainerT] ArrayInput[GetT, SetT, LabelsContainerT](const string&, const LabelsContainerT&, GetT, SetT)
 
-  cdef ComboInputImpl[GetT, SetT] ComboInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
+  cdef ComboInputImpl[GetT, SetT, LabelsContainerT] ComboInput[GetT, SetT, LabelsContainerT](const string&, const LabelsContainerT&, GetT, SetT)
 
-  cdef DataComboInputImpl[GetT, SetT] DataComboInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
+  cdef DataComboInputImpl[GetT, SetT, RefContainerT] DataComboInput[GetT, SetT, RefContainerT](const string&, const RefContainerT&, GetT, SetT)
 
   cdef Point3DImpl[GetT, nullptr_t] Point3DRO"mc_rtc::gui::Point3D"[GetT, nullptr_t](const string&, GetT, void *)
   cdef Point3DImpl[GetT,SetT] Point3D[GetT,SetT](const string&, GetT, SetT)
