@@ -49,13 +49,13 @@ cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui::details":
   cdef cppclass StringInputImpl[GetT, SetT](Element):
     pass
 
-  cdef cppclass ArrayInputImpl[GetT, SetT](Element):
+  cdef cppclass ArrayInputImpl[GetT, SetT, LabelsContainerT](Element):
     pass
 
-  cdef cppclass ComboInputImpl[GetT, SetT](Element):
+  cdef cppclass ComboInputImpl[GetT, SetT, LabelsContainerT](Element):
     pass
 
-  cdef cppclass DataComboInputImpl[GetT, SetT](Element):
+  cdef cppclass DataComboInputImpl[GetT, SetT, RefsContainerT](Element):
     pass
 
   cdef cppclass Point3DImpl[GetT, SetT](Element):
@@ -105,13 +105,13 @@ cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
   cdef TransformImpl[GetT, nullptr_t] TransformRO"mc_rtc::gui::Transform"[GetT, nullptr_t](const string&, GetT)
   cdef TransformImpl[GetT,SetT] Transform[GetT,SetT](const string&, GetT, SetT)
 
-  cdef cppclass FormComboInput:
+  cdef cppclass FormComboInput[LabelsContainerT=*]:
     FormComboInput()
-    FormComboInput(const string&, cppbool, const vector[string]&, cppbool)
+    FormComboInput(const string&, cppbool, const LabelsContainerT&, cppbool)
 
-  cdef cppclass FormDataComboInput:
+  cdef cppclass FormDataComboInput[RefContainerT]:
     FormDataComboInput()
-    FormDataComboInput(const string&, cppbool, const vector[string]&, cppbool)
+    FormDataComboInput(const string&, cppbool, const RefContainerT&, cppbool)
 
   cdef FormImpl[Callback] Form[Callback](const string&, Callback)
 

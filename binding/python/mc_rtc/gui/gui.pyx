@@ -130,7 +130,7 @@ cdef class NumberSlider(Element):
     self.base = &self.impl
 
 cdef class ArrayInput(Element):
-  cdef c_gui.ArrayInputImpl[c_gui.get_fn, c_gui.set_fn] impl
+  cdef c_gui.ArrayInputImpl[c_gui.get_fn, c_gui.set_fn, vector[string]] impl
   cdef _get_fn
   cdef _set_fn
   cdef _cb_ret_type
@@ -140,11 +140,11 @@ cdef class ArrayInput(Element):
     self._get_fn = get_fn
     self._set_fn = set_fn
     self._cb_ret_type = [float]
-    self.impl = c_gui.ArrayInput[c_gui.get_fn, c_gui.set_fn](name, py2cpp(labels), c_gui.make_getter(python_to_conf, get_fn), c_gui.make_setter(conf_to_python_list, set_fn, self._cb_ret_type))
+    self.impl = c_gui.ArrayInput[c_gui.get_fn, c_gui.set_fn, vector[string]](name, py2cpp(labels), c_gui.make_getter(python_to_conf, get_fn), c_gui.make_setter(conf_to_python_list, set_fn, self._cb_ret_type))
     self.base = &self.impl
 
 cdef class ComboInput(Element):
-  cdef c_gui.ComboInputImpl[c_gui.get_fn, c_gui.set_fn] impl
+  cdef c_gui.ComboInputImpl[c_gui.get_fn, c_gui.set_fn, vector[string]] impl
   cdef _get_fn
   cdef _set_fn
   def __cinit__(self, name, values, get_fn, set_fn):
@@ -152,11 +152,11 @@ cdef class ComboInput(Element):
       name = name.encode(u'ascii')
     self._get_fn = get_fn
     self._set_fn = set_fn
-    self.impl = c_gui.ComboInput[c_gui.get_fn, c_gui.set_fn](name, py2cpp(values), c_gui.make_getter(python_to_conf, get_fn), c_gui.make_setter(conf_to_python, set_fn, str))
+    self.impl = c_gui.ComboInput[c_gui.get_fn, c_gui.set_fn, vector[string]](name, py2cpp(values), c_gui.make_getter(python_to_conf, get_fn), c_gui.make_setter(conf_to_python, set_fn, str))
     self.base = &self.impl
 
 cdef class DataComboInput(Element):
-  cdef c_gui.DataComboInputImpl[c_gui.get_fn, c_gui.set_fn] impl
+  cdef c_gui.DataComboInputImpl[c_gui.get_fn, c_gui.set_fn, vector[string]] impl
   cdef _get_fn
   cdef _set_fn
   def __cinit__(self, name, ref, get_fn, set_fn):
@@ -164,7 +164,7 @@ cdef class DataComboInput(Element):
       name = name.encode(u'ascii')
     self._get_fn = get_fn
     self._set_fn = set_fn
-    self.impl = c_gui.DataComboInput[c_gui.get_fn, c_gui.set_fn](name, py2cpp(ref), c_gui.make_getter(python_to_conf, get_fn), c_gui.make_setter(conf_to_python, set_fn, str))
+    self.impl = c_gui.DataComboInput[c_gui.get_fn, c_gui.set_fn, vector[string]](name, py2cpp(ref), c_gui.make_getter(python_to_conf, get_fn), c_gui.make_setter(conf_to_python, set_fn, str))
     self.base = &self.impl
 
 cdef class Point3D(Element):
@@ -322,18 +322,18 @@ class FormStringArrayInput(object):
         c_gui.add_form_string_array(form.impl, self.name, self.required, self.default, self.fixed_size)
 
 cdef class FormComboInput(object):
-  cdef c_gui.FormComboInput impl
+  cdef c_gui.FormComboInput[vector[string]] impl
   def __cinit__(self, name, required, values, send_index = False):
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
-    self.impl = c_gui.FormComboInput(name, required, py2cpp(values), send_index)
+    self.impl = c_gui.FormComboInput[vector[string]](name, required, py2cpp(values), send_index)
 
 cdef class FormDataComboInput(object):
-  cdef c_gui.FormDataComboInput impl
+  cdef c_gui.FormDataComboInput[vector[string]] impl
   def __cinit__(self, name, required, values, send_index = False):
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
-    self.impl = c_gui.FormDataComboInput(name, required, py2cpp(values), send_index)
+    self.impl = c_gui.FormDataComboInput[vector[string]](name, required, py2cpp(values), send_index)
 
 cdef class Form(Element):
   cdef c_gui.FormImpl[c_gui.set_fn] impl
