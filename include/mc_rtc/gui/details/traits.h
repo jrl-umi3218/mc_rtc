@@ -257,4 +257,55 @@ struct is_variant<std::variant<Args...>> : public std::true_type
 template<typename T>
 inline constexpr bool is_variant_v = is_variant<T>::value;
 
+/**
+  These helpers convert containers of string-like elements into an std::vector<std::string>
+  In the context of ComboInput/ArrayInput, etc, this is used to accept containers of arbitrary strings, includinging
+  string-litterals and string_view. In the current gui implementation there is no speed benefit as it gets converted to
+  std::vector anyways, so this is just for convenience on the user side.
+*/
+
+// Trait to detect .size() member function (C++17)
+template<typename T>
+auto has_size_impl(int) -> decltype(std::declval<const T &>().size(), std::true_type{});
+template<typename>
+auto has_size_impl(...) -> std::false_type;
+
+template<typename T>
+struct has_size : decltype(has_size_impl<T>(0))
+{
+};
+
+// passthrough for lvalue
+inline const std::vector<std::string> & to_string_vector(const std::vector<std::string> & v)
+{
+  return v;
+}
+// passthrough for rvalue
+inline std::vector<std::string> to_string_vector(std::vector<std::string> && v)
+{
+  return std::move(v);
+}
+
+// Helper for containers with begin()/end()
+template<typename Container>
+auto to_string_vector(const Container & c) -> std::vector<std::string>
+{
+  using std::begin;
+  using std::end;
+  std::vector<std::string> result;
+  if(has_size<Container>::value) { result.reserve(c.size()); }
+  for(const auto & v : c) { result.emplace_back(v); }
+  return result;
+}
+
+// Overload for C-style arrays of string literals
+template<size_t N>
+auto to_string_vector(const char * const (&arr)[N]) -> std::vector<std::string>
+{
+  std::vector<std::string> result;
+  result.reserve(N);
+  for(size_t i = 0; i < N; ++i) { result.emplace_back(arr[i]); }
+  return result;
+}
+
 } // namespace mc_rtc::gui::details

@@ -87,16 +87,16 @@ private:
  * \tparam GetData should return data that can be converted to a JSON array of
  * array (e.g. vector<vector<T>> or vector<tuple<...>>)
  */
-template<typename GetData>
+template<typename GetData,
+         typename HeaderContainerT = std::vector<std::string>,
+         typename FormatContainerT = std::vector<std::string>>
 struct StaticTableImpl : public Element
 {
   static constexpr auto type = Elements::Table;
 
-  StaticTableImpl(const std::string & name,
-                  std::vector<std::string> header,
-                  std::vector<std::string> format,
-                  GetData get_data_fn)
-  : Element(name), header_(std::move(header)), format_(std::move(format)), get_data_fn_(get_data_fn)
+  StaticTableImpl(const std::string & name, HeaderContainerT header, FormatContainerT format, GetData get_data_fn)
+  : Element(name), header_(std::move(details::to_string_vector(header))),
+    format_(std::move(details::to_string_vector(format))), get_data_fn_(get_data_fn)
   {
   }
 
@@ -119,21 +119,22 @@ private:
 } // namespace details
 
 /** Helper function to a get a StaticTableImpl */
-template<typename GetData>
-auto Table(const std::string & name, std::vector<std::string> header, GetData get_data_fn)
+template<typename GetData, typename HeaderContainerT = std::vector<std::string>>
+auto Table(const std::string & name, HeaderContainerT header, GetData get_data_fn)
 {
-  return details::StaticTableImpl(name, std::move(header), std::vector<std::string>(header.size(), "{}"), get_data_fn);
+  return details::StaticTableImpl(name, details::to_string_vector(std::move(header)),
+                                  std::vector<std::string>(header.size(), "{}"), get_data_fn);
 }
 
 /** Helper function to a get a StaticTableImpl with format */
-template<typename GetData>
-auto Table(const std::string & name,
-           std::vector<std::string> header,
-           std::vector<std::string> format,
-           GetData get_data_fn)
+template<typename GetData,
+         typename HeaderContainerT = std::vector<std::string>,
+         typename FormatContainerT = std::vector<std::string>>
+auto Table(const std::string & name, HeaderContainerT header, FormatContainerT format, GetData get_data_fn)
 {
   while(format.size() < header.size()) { format.push_back("{}"); }
-  return details::StaticTableImpl(name, std::move(header), std::move(format), get_data_fn);
+  return details::StaticTableImpl(name, details::to_string_vector(std::move(header)),
+                                  details::to_string_vector(std::move(format)), get_data_fn);
 }
 
 /** Helper function to get a TableImpl */

@@ -8,6 +8,7 @@
 #include <mc_rtc/gui/elements.h>
 
 #include <mc_rtc/logging.h>
+#include "mc_rtc/gui/Label.h"
 
 namespace mc_rtc::gui
 {
@@ -341,24 +342,21 @@ MAKE_INTERACTIVE_DATA_INPUT_HELPER(sva::PTransformd, Elements::Transform, FormTr
 namespace details
 {
 
-template<typename T>
-struct FormArrayInput : public FormElement<FormArrayInput<T>, Elements::ArrayInput>
+template<typename T, typename LabelsContainerT = std::vector<std::string>>
+struct FormArrayInput : public FormElement<FormArrayInput<T, LabelsContainerT>, Elements::ArrayInput>
 {
   FormArrayInput(const std::string & name,
                  bool required,
-                 const std::vector<std::string> & labels,
+                 const LabelsContainerT & labels,
                  const T & def,
                  bool fixed_size = true)
-  : FormElement<FormArrayInput<T>, Elements::ArrayInput>(name, required), def_{def}, fixed_size_(fixed_size),
-    has_def_(true), labels_(labels)
+  : FormElement<FormArrayInput<T, LabelsContainerT>, Elements::ArrayInput>(name, required), def_{def},
+    fixed_size_(fixed_size), has_def_(true), labels_(details::to_string_vector(labels))
   {
   }
 
-  FormArrayInput(const std::string & name,
-                 bool required,
-                 const std::vector<std::string> & labels = {},
-                 bool fixed_size = false)
-  : FormArrayInput<T>(name, required, labels, {}, fixed_size)
+  FormArrayInput(const std::string & name, bool required, const LabelsContainerT & labels = {}, bool fixed_size = false)
+  : FormArrayInput<T>(name, required, details::to_string_vector(labels), {}, fixed_size)
   {
     has_def_ = false;
   }
@@ -408,15 +406,16 @@ auto FormArrayInput(const std::string & name, bool required, T && value, bool fi
   }
 }
 
-struct FormComboInput : public FormElement<FormComboInput, Elements::ComboInput>
+template<typename LabelsContainerT = std::vector<std::string>>
+struct FormComboInput : public FormElement<FormComboInput<LabelsContainerT>, Elements::ComboInput>
 {
   inline FormComboInput(const std::string & name,
                         bool required,
-                        const std::vector<std::string> & values,
+                        const LabelsContainerT & values,
                         bool send_index = false,
                         int def = -1)
-  : FormElement<FormComboInput, Elements::ComboInput>(name, required), values_(values), send_index_(send_index),
-    def_(def)
+  : FormElement<FormComboInput<LabelsContainerT>, Elements::ComboInput>(name, required),
+    values_(details::to_string_vector(values)), send_index_(send_index), def_(def)
   {
   }
 
@@ -438,13 +437,12 @@ private:
   int def_;
 };
 
-struct FormDataComboInput : public FormElement<FormDataComboInput, Elements::DataComboInput>
+template<typename RefContainerT = std::vector<std::string>>
+struct FormDataComboInput : public FormElement<FormDataComboInput<RefContainerT>, Elements::DataComboInput>
 {
-  inline FormDataComboInput(const std::string & name,
-                            bool required,
-                            const std::vector<std::string> & ref,
-                            bool send_index = false)
-  : FormElement<FormDataComboInput, Elements::DataComboInput>(name, required), ref_(ref), send_index_(send_index)
+  inline FormDataComboInput(const std::string & name, bool required, const RefContainerT & ref, bool send_index = false)
+  : FormElement<FormDataComboInput<RefContainerT>, Elements::DataComboInput>(name, required),
+    ref_(details::to_string_vector(ref)), send_index_(send_index)
   {
   }
 

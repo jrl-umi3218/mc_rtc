@@ -23,7 +23,7 @@ namespace details
  * the array
  *
  */
-template<typename GetT, typename SetT>
+template<typename GetT, typename SetT, typename LabelsContainerT = std::vector<std::string>>
 struct ArrayInputImpl : public CommonInputImpl<GetT, SetT>
 {
   static constexpr auto type = Elements::ArrayInput;
@@ -32,8 +32,8 @@ struct ArrayInputImpl : public CommonInputImpl<GetT, SetT>
   ArrayInputImpl(const std::string & name, GetT get_fn, SetT set_fn) : ArrayInputImpl(name, {}, get_fn, set_fn) {}
 
   /** Constructor with labels per-dimension */
-  ArrayInputImpl(const std::string & name, const std::vector<std::string> & labels, GetT get_fn, SetT set_fn)
-  : CommonInputImpl<GetT, SetT>::CommonInputImpl(name, get_fn, set_fn), labels_(labels)
+  ArrayInputImpl(const std::string & name, const LabelsContainerT & labels, GetT get_fn, SetT set_fn)
+  : CommonInputImpl<GetT, SetT>::CommonInputImpl(name, get_fn, set_fn), labels_(details::to_string_vector(labels))
   {
   }
 
@@ -62,15 +62,15 @@ auto ArrayInput(const std::string & name, GetT get_fn, SetT set_fn)
 }
 
 /** Helper function to create an ArrayInput element (with labels) */
-template<typename GetT, typename SetT>
-auto ArrayInput(const std::string & name, const std::vector<std::string> & labels, GetT get_fn, SetT set_fn)
+template<typename GetT, typename SetT, typename LabelsContainer = std::vector<std::string>>
+auto ArrayInput(const std::string & name, const LabelsContainer & labels, GetT get_fn, SetT set_fn)
 {
   return details::ArrayInputImpl(name, labels, get_fn, set_fn);
 }
 
 /** Helper function to build an ArrayInput from a variable */
-template<typename T>
-auto ArrayInput(const std::string & name, const std::vector<std::string> & labels, T & value)
+template<typename T, typename LabelsContainer = std::vector<std::string>>
+auto ArrayInput(const std::string & name, const LabelsContainer & labels, T & value)
 {
   return details::ArrayInputImpl(name, labels, details::read(value), details::write(value));
 }

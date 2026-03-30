@@ -19,13 +19,13 @@ namespace details
  *
  * \tparam SetT Should accept the choice made by the user
  */
-template<typename GetT, typename SetT>
+template<typename GetT, typename SetT, typename LabelsContainerT = std::vector<std::string>>
 struct DataComboInputImpl : public CommonInputImpl<GetT, SetT>
 {
   static constexpr auto type = Elements::DataComboInput;
 
-  DataComboInputImpl(const std::string & name, const std::vector<std::string> & data_ref, GetT get_fn, SetT set_fn)
-  : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn), data_ref_(data_ref)
+  DataComboInputImpl(const std::string & name, const LabelsContainerT & data_ref, GetT get_fn, SetT set_fn)
+  : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn), data_ref_(details::to_string_vector(data_ref))
   {
   }
 
@@ -47,14 +47,15 @@ private:
 } // namespace details
 
 /** Helper function to build a DataComboInputImpl */
-template<typename GetT, typename SetT>
-auto DataComboInput(const std::string & name, const std::vector<std::string> & values, GetT get_fn, SetT set_fn)
+template<typename GetT, typename SetT, typename LabelsContainerT = std::vector<std::string>>
+auto DataComboInput(const std::string & name, const LabelsContainerT & values, GetT get_fn, SetT set_fn)
 {
   return details::DataComboInputImpl(name, values, get_fn, set_fn);
 }
 
 /** Helper function to build a DataComboInputImpl from a variable */
-inline auto DataComboInput(const std::string & name, const std::vector<std::string> & values, std::string & value)
+template<typename LabelsContainerT = std::vector<std::string>>
+inline auto DataComboInput(const std::string & name, const LabelsContainerT & values, std::string & value)
 {
   return DataComboInput(name, values, details::read(value), details::write(value));
 }

@@ -18,13 +18,13 @@ namespace details
  *
  * \tparam SetT Should accept the choice made by the user
  */
-template<typename GetT, typename SetT>
+template<typename GetT, typename SetT, typename LabelsContainerT = std::vector<std::string>>
 struct ComboInputImpl : public CommonInputImpl<GetT, SetT>
 {
   static constexpr auto type = Elements::ComboInput;
 
-  ComboInputImpl(const std::string & name, const std::vector<std::string> & values, GetT get_fn, SetT set_fn)
-  : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn), values_(values)
+  ComboInputImpl(const std::string & name, const LabelsContainerT & values, GetT get_fn, SetT set_fn)
+  : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn), values_(details::to_string_vector(values))
   {
     static_assert(details::CheckReturnType<GetT, std::string>::value,
                   "ComboInput element getter callback should return an std::string");
@@ -48,14 +48,15 @@ private:
 } // namespace details
 
 /** Helper function to create a ComboInputImpl */
-template<typename GetT, typename SetT>
-auto ComboInput(const std::string & name, const std::vector<std::string> & values, GetT get_fn, SetT set_fn)
+template<typename GetT, typename SetT, typename ContainerT = std::vector<std::string>>
+auto ComboInput(const std::string & name, const ContainerT & values, GetT get_fn, SetT set_fn)
 {
   return details::ComboInputImpl(name, values, get_fn, set_fn);
 }
 
 /** Helper function to create a ComboInputImpl from a variable */
-inline auto ComboInput(const std::string & name, const std::vector<std::string> & values, std::string & value)
+template<typename Container = std::vector<std::string>>
+inline auto ComboInput(const std::string & name, const Container & values, std::string & value)
 {
   return ComboInput(name, values, details::read(value), details::write(value));
 }

@@ -10,6 +10,9 @@
 #include "gui_TestServer.h"
 #include "utils.h"
 
+#include <string_view>
+using namespace std::string_view_literals;
+
 sva::PTransformd lookAt(const Eigen::Vector3d & position, const Eigen::Vector3d & target, const Eigen::Vector3d & up)
 {
   Eigen::Matrix3d R;
@@ -330,6 +333,7 @@ SampleServer::SampleServer() : xythetaz_(4)
   builder.addElement({"Checkbox"},
                      mc_rtc::gui::Checkbox("Checkbox", [this]() { return check_; }, [this]() { check_ = !check_; }));
   builder.addElement({"Checkbox", "Simple syntax"}, mc_rtc::gui::Checkbox("Checkbox", check_));
+  constexpr std::array ComboInputStringLitterals = {"a"sv, "b"sv, "c"sv, "d"sv};
   builder.addElement({"Inputs"},
                      mc_rtc::gui::StringInput(
                          "StringInput", [this]() { return string_; },
@@ -376,6 +380,13 @@ SampleServer::SampleServer() : xythetaz_(4)
                          }),
                      mc_rtc::gui::ComboInput(
                          "ComboInput", {"a", "b", "c", "d"}, [this]() { return combo_; },
+                         [this](const std::string & s)
+                         {
+                           combo_ = s;
+                           std::cout << "combo_ changed to " << combo_ << std::endl;
+                         }),
+                     mc_rtc::gui::ComboInput(
+                         "ComboInput (string litterals)", ComboInputStringLitterals, [this]() { return combo_; },
                          [this](const std::string & s)
                          {
                            combo_ = s;
