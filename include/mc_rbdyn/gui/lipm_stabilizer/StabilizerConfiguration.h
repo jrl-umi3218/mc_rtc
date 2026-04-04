@@ -14,10 +14,9 @@ namespace mc_rbdyn::gui::lipm_stabilizer
 /**
  * @brief Helper function to add LIMP
  *
- * @param gui
- * @param category
- * @param config
- * @return MC_RBDYN_DLLAPI
+ * @param gui State builder where the object is added (typically controller.gui())
+ * @param category Category where the object is added (Main Category will be added to the given category)
+ * @param config LIPM Stabilizer configuration
  */
 MC_RBDYN_DLLAPI void addStabilizerToGUI(mc_rtc::gui::StateBuilder & gui,
                                         const std::vector<std::string> & category,
