@@ -242,6 +242,7 @@ set(mc_rbdyn_SRC
     mc_rbdyn/inertia.cpp
     mc_rbdyn/RobotModule_connect.cpp
     mc_rbdyn/configuration_io.cpp
+    mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.cpp
     mc_rbdyn/ZMP.cpp
     mc_control/generic_gripper.cpp
     mc_rbdyn/Device.cpp
@@ -375,8 +376,10 @@ endif()
 
 install_mc_rtc_lib(mc_rbdyn)
 
-set(mc_rtc_gui_SRC mc_rtc/gui/StateBuilder.cpp mc_rbdyn/gui/RobotConvex.cpp
-                   mc_rbdyn/gui/RobotSurface.cpp
+set(mc_rtc_gui_SRC
+    mc_rtc/gui/StateBuilder.cpp mc_rbdyn/gui/RobotConvex.cpp
+    mc_rbdyn/gui/RobotSurface.cpp
+    mc_rbdyn/gui/lipm_stabilizer/StabilizerConfiguration.cpp
 )
 
 set(mc_rtc_gui_HDR
@@ -422,6 +425,7 @@ set(mc_rtc_gui_HDR
     ../include/mc_rtc/gui/plot/Polygons.h
     ../include/mc_rbdyn/gui/RobotConvex.h
     ../include/mc_rbdyn/gui/RobotSurface.h
+    ../include/mc_rbdyn/gui/lipm_stabilizer/StabilizerConfiguration.h
 )
 
 add_library(mc_rtc_gui SHARED ${mc_rtc_gui_SRC} ${mc_rtc_gui_HDR})
