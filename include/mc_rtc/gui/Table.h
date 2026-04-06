@@ -139,15 +139,11 @@ auto Table(const std::string & name,
 /** Helper function to get a TableImpl */
 template<typename GetHeader, typename GetData>
 auto Table(const std::string & name, GetHeader get_header_fn, GetData get_data_fn)
-{
-  return details::TableImpl(name, get_header_fn, get_data_fn);
-}
+{ return details::TableImpl(name, get_header_fn, get_data_fn); }
 
 /** Helper function to get a FormattedTableImpl */
 template<typename GetHeader, typename GetFormat, typename GetData>
 auto Table(const std::string & name, GetHeader get_header_fn, GetFormat get_format_fn, GetData get_data_fn)
-{
-  return details::FormattedTableImpl(name, get_header_fn, get_format_fn, get_data_fn);
-}
+{ return details::FormattedTableImpl(name, get_header_fn, get_format_fn, get_data_fn); }
 
 } // namespace mc_rtc::gui

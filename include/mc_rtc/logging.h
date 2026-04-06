@@ -48,39 +48,27 @@ void error_and_throw [[noreturn]] (Args &&... args)
 
 template<typename... Args>
 void critical(Args &&... args)
-{
-  details::cerr().critical(std::forward<Args>(args)...);
-}
+{ details::cerr().critical(std::forward<Args>(args)...); }
 
 template<typename... Args>
 void error(Args &&... args)
-{
-  details::cerr().error(std::forward<Args>(args)...);
-}
+{ details::cerr().error(std::forward<Args>(args)...); }
 
 template<typename... Args>
 void warning(Args &&... args)
-{
-  details::cerr().warn(std::forward<Args>(args)...);
-}
+{ details::cerr().warn(std::forward<Args>(args)...); }
 
 template<typename... Args>
 void info(Args &&... args)
-{
-  details::info().info(std::forward<Args>(args)...);
-}
+{ details::info().info(std::forward<Args>(args)...); }
 
 template<typename... Args>
 void success(Args &&... args)
-{
-  details::success().info(std::forward<Args>(args)...);
-}
+{ details::success().info(std::forward<Args>(args)...); }
 
 template<typename... Args>
 void notify(Args &&... args)
-{
-  details::notify(fmt::format(std::forward<Args>(args)...));
-}
+{ details::notify(fmt::format(std::forward<Args>(args)...)); }
 
 } // namespace log
 

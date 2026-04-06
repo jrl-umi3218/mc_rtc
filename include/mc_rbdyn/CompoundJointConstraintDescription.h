@@ -40,9 +40,7 @@ template<>
 struct ConfigurationLoader<mc_rbdyn::CompoundJointConstraintDescription>
 {
   static mc_rbdyn::CompoundJointConstraintDescription load(const mc_rtc::Configuration & config)
-  {
-    return mc_rbdyn::CompoundJointConstraintDescription{config("j1"), config("j2"), config("p1"), config("p2")};
-  }
+  { return mc_rbdyn::CompoundJointConstraintDescription{config("j1"), config("j2"), config("p1"), config("p2")}; }
   static mc_rtc::Configuration save(const mc_rbdyn::CompoundJointConstraintDescription & desc)
   {
     mc_rtc::Configuration config;

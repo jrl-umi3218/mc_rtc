@@ -41,14 +41,10 @@ void OrientationFunction::reset()
 }
 
 void OrientationFunction::updateValue()
-{
-  value_ = sva::rotationError(ori_, frame_.position().rotation());
-}
+{ value_ = sva::rotationError(ori_, frame_.position().rotation()); }
 
 void OrientationFunction::updateVelocity()
-{
-  velocity_ = frame_.velocity().angular() - refVel_;
-}
+{ velocity_ = frame_.velocity().angular() - refVel_; }
 
 void OrientationFunction::updateJacobian()
 {
@@ -57,8 +53,6 @@ void OrientationFunction::updateJacobian()
 }
 
 void OrientationFunction::updateNormalAcceleration()
-{
-  normalAcceleration_ = frame_.normalAcceleration().angular() - refAccel_;
-}
+{ normalAcceleration_ = frame_.normalAcceleration().angular() - refAccel_; }
 
 } // namespace mc_tvm

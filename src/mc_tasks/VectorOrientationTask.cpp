@@ -26,9 +26,7 @@ VectorOrientationTask::VectorOrientationTask(const std::string & bodyName,
                                              double stiffness,
                                              double weight)
 : VectorOrientationTask(robots.robot(robotIndex).frame(bodyName), bodyVector, stiffness, weight)
-{
-  this->targetVector(targetVector);
-}
+{ this->targetVector(targetVector); }
 
 VectorOrientationTask::VectorOrientationTask(const mc_rbdyn::RobotFrame & frame,
                                              const Eigen::Vector3d & frameVector,

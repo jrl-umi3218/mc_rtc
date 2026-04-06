@@ -17,9 +17,7 @@ BSpline::BSpline(double duration,
                  const Eigen::Vector3d & target,
                  const std::vector<Eigen::Vector3d> & waypoints)
 : Spline<Eigen::Vector3d, std::vector<Eigen::Vector3d>>(duration, start, target, waypoints)
-{
-  update();
-}
+{ update(); }
 
 void BSpline::update()
 {

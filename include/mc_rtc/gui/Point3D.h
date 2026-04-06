@@ -42,9 +42,7 @@ struct Point3DImpl : public CommonInputImpl<GetT, SetT>
   Point3DImpl() {}
 
   static constexpr size_t write_size()
-  {
-    return CommonInputImpl<GetT, SetT>::write_size() + 1 + PointConfig::write_size();
-  }
+  { return CommonInputImpl<GetT, SetT>::write_size() + 1 + PointConfig::write_size(); }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
@@ -63,57 +61,41 @@ private:
 /** Helper function to create a read-only Point3DImpl */
 template<typename GetT, std::enable_if_t<std::is_invocable_v<GetT>, int> = 0>
 auto Point3D(const std::string & name, GetT get_fn)
-{
-  return details::Point3DImpl(name, {}, get_fn);
-}
+{ return details::Point3DImpl(name, {}, get_fn); }
 
 /** Helper function to create a Point3DImpl */
 template<typename GetT, typename SetT>
 auto Point3D(const std::string & name, GetT get_fn, SetT set_fn)
-{
-  return details::Point3DImpl(name, {}, get_fn, set_fn);
-}
+{ return details::Point3DImpl(name, {}, get_fn, set_fn); }
 
 /** Helper function to create a read-only Point3DImpl with configuration */
 template<typename GetT, std::enable_if_t<std::is_invocable_v<GetT>, int> = 0>
 auto Point3D(const std::string & name, const PointConfig & config, GetT get_fn)
-{
-  return details::Point3DImpl(name, config, get_fn);
-}
+{ return details::Point3DImpl(name, config, get_fn); }
 
 /** Helper function to create a Point3DImpl with configuration */
 template<typename GetT, typename SetT>
 auto Point3D(const std::string & name, const PointConfig & config, GetT get_fn, SetT set_fn)
-{
-  return details::Point3DImpl(name, config, get_fn, set_fn);
-}
+{ return details::Point3DImpl(name, config, get_fn, set_fn); }
 
 /** Helper function to build a Point3D from a variable */
 template<typename T>
 auto Point3DRO(const std::string & name, T && value)
-{
-  return Point3D(name, details::read(std::forward<T>(value)));
-}
+{ return Point3D(name, details::read(std::forward<T>(value))); }
 
 /** Helper function to build a Point3D from a variable */
 template<typename T>
 auto Point3DRO(const std::string & name, const PointConfig & config, T && value)
-{
-  return Point3D(name, config, details::read(std::forward<T>(value)));
-}
+{ return Point3D(name, config, details::read(std::forward<T>(value))); }
 
 /** Helper function to build a Point3D from a variable */
 template<typename T, std::enable_if_t<!std::is_invocable_v<T>, int> = 0>
 auto Point3D(const std::string & name, T & value)
-{
-  return Point3D(name, details::read(value), details::write(value));
-}
+{ return Point3D(name, details::read(value), details::write(value)); }
 
 /** Helper function to build a Point3D from a variable */
 template<typename T, std::enable_if_t<!std::is_invocable_v<T>, int> = 0>
 auto Point3D(const std::string & name, const PointConfig & config, T & value)
-{
-  return Point3D(name, config, details::read(value), details::write(value));
-}
+{ return Point3D(name, config, details::read(value), details::write(value)); }
 
 } // namespace mc_rtc::gui

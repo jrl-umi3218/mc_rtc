@@ -89,9 +89,7 @@ void TransitionMap::init(const StateFactory & factory, const mc_rtc::Configurati
 }
 
 const std::string & TransitionMap::initState() const
-{
-  return init_state_;
-}
+{ return init_state_; }
 
 std::ostream & TransitionMap::print(std::ostream & os) const
 {

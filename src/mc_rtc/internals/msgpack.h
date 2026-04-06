@@ -17,9 +17,7 @@ void fromMessagePackArray(mc_rtc::Configuration config, mpack_node_t node);
 void fromMessagePackMap(mc_rtc::Configuration config, mpack_node_t node);
 
 inline std::string toString(mpack_node_t node)
-{
-  return {mpack_node_str(node), mpack_node_strlen(node)};
-}
+{ return {mpack_node_str(node), mpack_node_strlen(node)}; }
 
 /** Add data into a map */
 inline void fromMessagePack(mc_rtc::Configuration config, const std::string & key, mpack_node_t node)

@@ -376,9 +376,7 @@ void MCGlobalController::GlobalConfiguration::load_controllers_configs()
 }
 
 void MCGlobalController::GlobalConfiguration::load_plugin_configs()
-{
-  load_controller_plugin_configs("", global_plugins);
-}
+{ load_controller_plugin_configs("", global_plugins); }
 
 void MCGlobalController::GlobalConfiguration::load_controller_plugin_configs(const std::string & controller,
                                                                              const std::vector<std::string> & plugins)
@@ -401,8 +399,6 @@ void MCGlobalController::GlobalConfiguration::load_controller_plugin_configs(con
 }
 
 bool MCGlobalController::GlobalConfiguration::enabled(const std::string & ctrl)
-{
-  return std::find(enabled_controllers.begin(), enabled_controllers.end(), ctrl) != enabled_controllers.end();
-}
+{ return std::find(enabled_controllers.begin(), enabled_controllers.end(), ctrl) != enabled_controllers.end(); }
 
 } // namespace mc_control

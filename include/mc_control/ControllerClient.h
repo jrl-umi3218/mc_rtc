@@ -198,9 +198,7 @@ protected:
    * \p data Data to display
    */
   inline virtual void array_label(const ElementId & id, const std::vector<std::string> &, const Eigen::VectorXd &)
-  {
-    default_impl("ArrayLabel", id);
-  }
+  { default_impl("ArrayLabel", id); }
 
   /** Should be implemented to create a button */
   virtual void button(const ElementId & id) { default_impl("Button", id); }
@@ -218,34 +216,26 @@ protected:
   virtual void number_input(const ElementId & id, double /*data*/) { default_impl("NumberInput", id); }
 
   virtual void number_slider(const ElementId & id, double /*data*/, double /*min*/, double /*max*/)
-  {
-    default_impl("NumberSlider", id);
-  }
+  { default_impl("NumberSlider", id); }
 
   /** Should be implemented to create a widget able to input array of numbers */
   virtual void array_input(const ElementId & id,
                            const std::vector<std::string> & /*labels*/,
                            const Eigen::VectorXd & /*data*/)
-  {
-    default_impl("ArrayInput", id);
-  }
+  { default_impl("ArrayInput", id); }
 
   /** Should be implemented to create a widget able to select one string among many */
   virtual void combo_input(const ElementId & id,
                            const std::vector<std::string> & /*values*/,
                            const std::string & /*data*/)
-  {
-    default_impl("ComboInput", id);
-  }
+  { default_impl("ComboInput", id); }
 
   /** Should be implemented to create a widget able to select one string
    * among entries available in the data part of the GUI message */
   virtual void data_combo_input(const ElementId & id,
                                 const std::vector<std::string> & /*data_ref*/,
                                 const std::string & /*data*/)
-  {
-    default_impl("DataComboInput", id);
-  }
+  { default_impl("DataComboInput", id); }
 
   /** Should display an interactive point in 3D environment
    *
@@ -258,9 +248,7 @@ protected:
                        bool /*ro */,
                        const Eigen::Vector3d & /*pos*/,
                        const mc_rtc::gui::PointConfig & /* config */)
-  {
-    default_impl("Point3D", id);
-  }
+  { default_impl("Point3D", id); }
 
   /** Should display a trajectory of 3d points in 3D environment
    *
@@ -269,9 +257,7 @@ protected:
   virtual void trajectory(const ElementId & id,
                           const std::vector<Eigen::Vector3d> & /* points */,
                           const mc_rtc::gui::LineConfig & /* config */)
-  {
-    default_impl("Point3DTrajectory", id);
-  }
+  { default_impl("Point3DTrajectory", id); }
 
   /** Should display a trajectory of transforms in 3D environment
    *
@@ -280,9 +266,7 @@ protected:
   virtual void trajectory(const ElementId & id,
                           const std::vector<sva::PTransformd> & /* points */,
                           const mc_rtc::gui::LineConfig & /* config */)
-  {
-    default_impl("PoseTrajectory", id);
-  }
+  { default_impl("PoseTrajectory", id); }
 
   /** Should display a trajectory of points, points are added one by one by the server
    *
@@ -291,9 +275,7 @@ protected:
   virtual void trajectory(const ElementId & id,
                           const Eigen::Vector3d & /* point */,
                           const mc_rtc::gui::LineConfig & /* config */)
-  {
-    default_impl("Point3DRealTimeTrajectory", id);
-  }
+  { default_impl("Point3DRealTimeTrajectory", id); }
 
   /** Should display a trajectory of points, points are added one by one by the server
    *
@@ -302,9 +284,7 @@ protected:
   virtual void trajectory(const ElementId & id,
                           const sva::PTransformd & /* point */,
                           const mc_rtc::gui::LineConfig & /* config */)
-  {
-    default_impl("PoseRealTimeTrajectory", id);
-  }
+  { default_impl("PoseRealTimeTrajectory", id); }
 
   /** Should display a list of polygons of 3d points in 3D environment
    *
@@ -320,9 +300,7 @@ protected:
   virtual void polygon(const ElementId & id,
                        const std::vector<std::vector<Eigen::Vector3d>> & /* points */,
                        const mc_rtc::gui::Color & /* color */)
-  {
-    default_impl("PolygonArray", id);
-  }
+  { default_impl("PolygonArray", id); }
 
   /** Should display a list of polygons of 3D points in 3D environment
    *
@@ -337,9 +315,7 @@ protected:
   virtual void polygon(const ElementId & id,
                        const std::vector<std::vector<Eigen::Vector3d>> & points,
                        const mc_rtc::gui::LineConfig & config)
-  {
-    polygon(id, points, config.color);
-  }
+  { polygon(id, points, config.color); }
 
   /** Should display a polyhedron
    *
@@ -380,9 +356,7 @@ protected:
                      const sva::PTransformd & /* application point for the force */,
                      const mc_rtc::gui::ForceConfig & /* forceConfig */,
                      bool /* ro */)
-  {
-    default_impl("Force", id);
-  }
+  { default_impl("Force", id); }
 
   /** Should display an arrow in 3D environment
    */
@@ -392,9 +366,7 @@ protected:
                      const Eigen::Vector3d & /* end */,
                      const mc_rtc::gui::ArrowConfig & /* config */,
                      bool /* ro */)
-  {
-    default_impl("Arrow", id);
-  }
+  { default_impl("Arrow", id); }
 
   /** Should display a rotation in 3D environment
    *
@@ -406,9 +378,7 @@ protected:
                         const ElementId & /*requestId*/,
                         bool /*ro */,
                         const sva::PTransformd & /*pos*/)
-  {
-    default_impl("Rotation", id);
-  }
+  { default_impl("Rotation", id); }
 
   /** Should display a PTransform in 3D environment
    *
@@ -420,9 +390,7 @@ protected:
                          const ElementId & /*requestId*/,
                          bool /*ro */,
                          const sva::PTransformd & /*pos*/)
-  {
-    default_impl("Transform", id);
-  }
+  { default_impl("Transform", id); }
 
   /** Should display X,Y,theta in a 3D environment
    *
@@ -435,15 +403,11 @@ protected:
                        bool /*ro */,
                        const Eigen::Vector3d & /*xytheta*/,
                        double /* altitude */)
-  {
-    default_impl("XYTheta", id);
-  }
+  { default_impl("XYTheta", id); }
 
   /** Called when a table starts */
   virtual void table_start(const ElementId & id, const std::vector<std::string> & /*header*/)
-  {
-    default_impl("Table", id);
-  }
+  { default_impl("Table", id); }
 
   /** Called for each element appearing in the table identified by \p id */
   virtual void table_row(const ElementId & /*id*/, const std::vector<std::string> & /*data*/) {}
@@ -457,22 +421,16 @@ protected:
                      const std::vector<std::string> & /*parameters*/,
                      const std::vector<std::vector<double>> & /*q*/,
                      const sva::PTransformd & /*posW*/)
-  {
-    default_impl("Robot", id);
-  }
+  { default_impl("Robot", id); }
 
   virtual void robot_msg(const ElementId & id, const mc_rtc::gui::RobotMsgData & /*msg*/)
-  {
-    default_impl("RobotMsg", id);
-  }
+  { default_impl("RobotMsg", id); }
 
   /** Should display the visual element \p visual at the position \p pose */
   virtual void visual(const ElementId & id,
                       [[maybe_unused]] const rbd::parsers::Visual & visual,
                       [[maybe_unused]] const sva::PTransformd & pose)
-  {
-    default_impl("Visual", id);
-  }
+  { default_impl("Visual", id); }
 
   /** Should display a form to send schema-based request to the server
    *
@@ -500,9 +458,7 @@ protected:
                              bool required,
                              bool default_,
                              bool /*default_from_user*/)
-  {
-    form_checkbox(formId, name, required, default_);
-  }
+  { form_checkbox(formId, name, required, default_); }
 
   /** An integer input within a form
    *
@@ -521,9 +477,7 @@ protected:
                                   bool required,
                                   int default_,
                                   bool /*default_from_user*/)
-  {
-    form_integer_input(formId, name, required, default_);
-  }
+  { form_integer_input(formId, name, required, default_); }
 
   /** A number input within a form
    *
@@ -542,9 +496,7 @@ protected:
                                  bool required,
                                  double default_,
                                  bool /*default_from_user*/)
-  {
-    form_number_input(formId, name, required, default_);
-  }
+  { form_number_input(formId, name, required, default_); }
 
   /** A string input within a form
    *
@@ -563,9 +515,7 @@ protected:
                                  bool required,
                                  const std::string & default_,
                                  bool /*default_from_user*/)
-  {
-    form_string_input(formId, name, required, default_);
-  }
+  { form_string_input(formId, name, required, default_); }
 
   /** An array input within a form
    *
@@ -589,9 +539,7 @@ protected:
                                 const Eigen::VectorXd & default_,
                                 bool fixed_size,
                                 bool /*default_from_user*/)
-  {
-    form_array_input(formId, name, required, default_, fixed_size);
-  }
+  { form_array_input(formId, name, required, default_, fixed_size); }
 
   /** An array input within a form */
   virtual void form_array_input(const ElementId & formId,
@@ -601,9 +549,7 @@ protected:
                                 const Eigen::VectorXd & default_,
                                 bool fixed_size,
                                 bool default_from_user)
-  {
-    form_array_input(formId, name, required, default_, fixed_size, default_from_user);
-  }
+  { form_array_input(formId, name, required, default_, fixed_size, default_from_user); }
 
   /** A combo input within a form
    *
@@ -636,9 +582,7 @@ protected:
                                 const std::vector<std::string> & values,
                                 bool send_index,
                                 int /*def*/)
-  {
-    form_combo_input(formId, name, required, values, send_index);
-  }
+  { form_combo_input(formId, name, required, values, send_index); }
 
   /** A data combo input within a form
    *

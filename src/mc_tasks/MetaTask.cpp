@@ -47,14 +47,10 @@ void MetaTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 }
 
 void MetaTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
-{
-  gui.removeCategory({"Tasks", name_});
-}
+{ gui.removeCategory({"Tasks", name_}); }
 
 void MetaTask::removeFromLogger(mc_rtc::Logger & logger)
-{
-  logger.removeLogEntries(this);
-}
+{ logger.removeLogEntries(this); }
 
 std::function<bool(const mc_tasks::MetaTask & task, std::string &)> MetaTask::buildCompletionCriteria(
     double,

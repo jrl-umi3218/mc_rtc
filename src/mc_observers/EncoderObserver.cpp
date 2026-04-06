@@ -62,9 +62,7 @@ void EncoderObserver::configure(const mc_control::MCController & ctl, const mc_r
 }
 
 void EncoderObserver::reset(const mc_control::MCController &)
-{
-  initialized_ = false;
-}
+{ initialized_ = false; }
 
 bool EncoderObserver::run(const mc_control::MCController & ctl)
 {

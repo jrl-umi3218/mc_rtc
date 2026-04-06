@@ -10,9 +10,7 @@ namespace bfs = boost::filesystem;
 #include "mc_bin_to_flat.h"
 
 void usage(const char * bin)
-{
-  mc_rtc::log::error("Usage: {} [bin] ([flat])", bin);
-}
+{ mc_rtc::log::error("Usage: {} [bin] ([flat])", bin); }
 
 int main(int argc, char * argv[])
 {

@@ -152,9 +152,7 @@ public:
    */
   template<typename T>
   inline void addConstraintSet(const std::unique_ptr<T> & ptr)
-  {
-    addConstraintSet(*ptr);
-  }
+  { addConstraintSet(*ptr); }
 
   /** Remove a constraint set
    * \param cs Constrain set removed from the solver
@@ -167,9 +165,7 @@ public:
    */
   template<typename T>
   inline void removeConstraintSet(const std::unique_ptr<T> & ptr)
-  {
-    removeConstraintSet(*ptr);
-  }
+  { removeConstraintSet(*ptr); }
 
   /** Add a task to the solver
    *

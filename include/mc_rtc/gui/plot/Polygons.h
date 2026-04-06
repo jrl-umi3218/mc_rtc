@@ -63,9 +63,7 @@ private:
 /** Helper function to create an impl::Polygon */
 template<typename GetT>
 impl::Polygons<GetT> Polygons(const std::string & name, GetT get_fn, Side side = Side::Left)
-{
-  return impl::Polygons<GetT>(name, get_fn, side);
-}
+{ return impl::Polygons<GetT>(name, get_fn, side); }
 
 } // namespace plot
 

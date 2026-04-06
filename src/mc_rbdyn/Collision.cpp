@@ -10,14 +10,10 @@ namespace mc_rbdyn
 {
 
 bool Collision::operator==(const Collision & rhs) const
-{
-  return body1 == rhs.body1 && body2 == rhs.body2;
-}
+{ return body1 == rhs.body1 && body2 == rhs.body2; }
 
 bool Collision::operator!=(const Collision & rhs) const
-{
-  return !(*this == rhs);
-}
+{ return !(*this == rhs); }
 
 std::ostream & operator<<(std::ostream & os, const Collision & col)
 {

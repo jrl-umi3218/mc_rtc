@@ -44,9 +44,7 @@ namespace mc_rtc
 std::mutex LTDLMutex::MTX;
 
 LTDLHandle::~LTDLHandle()
-{
-  close();
-}
+{ close(); }
 
 LTDLHandle::LTDLHandle(const std::string & class_name,
                        const std::string & path,
@@ -131,9 +129,7 @@ void LTDLHandle::close()
 }
 
 std::string LTDLHandle::dir() const
-{
-  return fs::path(path_).parent_path().string();
-}
+{ return fs::path(path_).parent_path().string(); }
 
 Loader::callback_t Loader::default_cb = [](const std::string &, LTDLHandle &) {};
 

@@ -11,9 +11,7 @@ namespace bfs = boost::filesystem;
 #include <sstream>
 
 void usage(char * p)
-{
-  mc_rtc::log::error("Usage: {} [bin] ([bag]) (dt=0.005)", p);
-}
+{ mc_rtc::log::error("Usage: {} [bin] ([bag]) (dt=0.005)", p); }
 
 int main(int argc, char * argv[])
 {

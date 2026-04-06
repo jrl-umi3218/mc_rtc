@@ -254,9 +254,7 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
   /** Write \tparam T to MessagePack if T implements T::write(MessagePackBuilder &) const */
   template<typename T, typename = std::enable_if_t<internal::has_write_builder_v<T>>>
   void write(const T & value)
-  {
-    value.write(*this);
-  }
+  { value.write(*this); }
 
   /** @} */
   /* End Add data to the MessagePack section (advanced) */

@@ -25,9 +25,7 @@ using Vector8d = Eigen::Matrix<double, 8, 1>;
 } // namespace Eigen
 
 bool operator==(const Eigen::Quaterniond & lhs, const Eigen::Quaterniond & rhs)
-{
-  return lhs.vec() == rhs.vec();
-}
+{ return lhs.vec() == rhs.vec(); }
 
 /** Check one iteration of the logger */
 template<bool malloc_allowed = false, typename Callback>

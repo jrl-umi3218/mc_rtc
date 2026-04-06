@@ -96,9 +96,7 @@ void CollisionFunction::updateValue()
 }
 
 void CollisionFunction::tick()
-{
-  iter_++;
-}
+{ iter_++; }
 
 void CollisionFunction::updateJacobian()
 {

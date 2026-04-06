@@ -119,9 +119,7 @@ inline rbd::parsers::Visual makeVisualMesh(const std::string & path, Eigen::Vect
 
 /** Returns a new Visual that holds a Mesh object */
 inline rbd::parsers::Visual makeVisualMesh(const std::string & path, double scale)
-{
-  return makeVisualMesh(path, Eigen::Vector3d(scale, scale, scale));
-}
+{ return makeVisualMesh(path, Eigen::Vector3d(scale, scale, scale)); }
 
 /** Get the mesh data if the visual is a mesh, throws otherwise */
 inline constexpr auto getVisualMesh = details::getVisualGeometry<rbd::parsers::Geometry::Type::MESH>;

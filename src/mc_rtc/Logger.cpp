@@ -150,9 +150,7 @@ struct LoggerThreadedPolicyImpl : public LoggerImpl
 } // namespace
 
 Logger::Logger(const Policy & policy, const std::string & directory, const std::string & tmpl)
-{
-  setup(policy, directory, tmpl);
-}
+{ setup(policy, directory, tmpl); }
 
 Logger::~Logger() {}
 
@@ -379,18 +377,12 @@ void Logger::clear(bool record)
 }
 
 double Logger::t() const
-{
-  return impl_->log_iter_;
-}
+{ return impl_->log_iter_; }
 
 const std::string & Logger::path() const
-{
-  return impl_->path_;
-}
+{ return impl_->path_; }
 
 void Logger::flush()
-{
-  impl_->flush();
-}
+{ impl_->flush(); }
 
 } // namespace mc_rtc

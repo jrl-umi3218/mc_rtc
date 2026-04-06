@@ -22,9 +22,7 @@ struct fmt::formatter<boost::filesystem::path> : fmt::formatter<std::string>
 {
   template<typename FormatContext>
   auto format(const boost::filesystem::path & p, FormatContext & ctx)
-  {
-    return fmt::formatter<std::string>::format(p.string(), ctx);
-  }
+  { return fmt::formatter<std::string>::format(p.string(), ctx); }
 };
 
 // Formatter for std::filesystem::path
@@ -33,9 +31,7 @@ struct fmt::formatter<std::filesystem::path> : fmt::formatter<std::string>
 {
   template<typename FormatContext>
   auto format(const std::filesystem::path & p, FormatContext & ctx)
-  {
-    return fmt::formatter<std::string>::format(p.string(), ctx);
-  }
+  { return fmt::formatter<std::string>::format(p.string(), ctx); }
 };
 
 /**

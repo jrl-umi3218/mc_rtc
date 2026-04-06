@@ -71,9 +71,7 @@ def new_controller(
         configure_config = """set(AROBASE "@")
 configure_file(etc/{controller_name}.in.yaml "${{CMAKE_CURRENT_BINARY_DIR}}/etc/{controller_name}.yaml")
 install(FILES "${{CMAKE_CURRENT_BINARY_DIR}}/etc/{controller_name}.yaml" DESTINATION "${{MC_CONTROLLER_RUNTIME_INSTALL_PREFIX}}/etc")
-""".format(
-            controller_name=controller_name
-        )
+""".format(controller_name=controller_name)
         fd.write(
             """cmake_minimum_required(VERSION 3.10)
 
@@ -101,8 +99,7 @@ add_subdirectory(src)
             )
         )
     with open(project_dir + "/src/CMakeLists.txt", "w") as fd:
-        fd.write(
-            """set(controller_SRC
+        fd.write("""set(controller_SRC
   {controller_class_name}.cpp
 )
 
@@ -113,10 +110,7 @@ set(controller_HDR
 add_controller(${{PROJECT_NAME}} ${{controller_SRC}} ${{controller_HDR}})
 set_target_properties(${{PROJECT_NAME}} PROPERTIES COMPILE_FLAGS "-D{controller_class_name}_EXPORTS")
 {extra_libs}
-""".format(
-                controller_class_name=controller_class_name, extra_libs=extra_libs
-            )
-        )
+""".format(controller_class_name=controller_class_name, extra_libs=extra_libs))
     with open(project_dir + "/src/" + "api.h", "w") as fd:
         fd.write(
             """#pragma once
@@ -268,8 +262,7 @@ void {controller_class_name}::reset(const mc_control::ControllerResetData & rese
 
     # Neovim config
     with open(os.path.join(project_dir, ".nvim.lua"), "w") as fd:
-        fd.write(
-            """-- Project-specific Neovim configuration
+        fd.write("""-- Project-specific Neovim configuration
 
 -- Set up YAML schema association for this project
 vim.lsp.config('yamlls',
@@ -288,10 +281,7 @@ vim.lsp.config('yamlls',
     }}
   }}
 }})
-""".format(
-                controller_name=controller_name
-            )
-        )
+""".format(controller_name=controller_name))
     repo.index.add(
         [
             s.format(controller_class_name)

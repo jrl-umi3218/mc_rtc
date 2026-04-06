@@ -225,14 +225,10 @@ bool Executor::resume(const std::string & state)
 }
 
 bool Executor::read_msg(std::string & msg)
-{
-  return state_ && state_->read_msg(msg);
-}
+{ return state_ && state_->read_msg(msg); }
 
 bool Executor::read_write_msg(std::string & msg, std::string & out)
-{
-  return state_ && state_->read_write_msg(msg, out);
-}
+{ return state_ && state_->read_write_msg(msg, out); }
 
 } // namespace fsm
 

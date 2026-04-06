@@ -199,19 +199,13 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
 }
 
 void Gripper::resetDefaults()
-{
-  config_ = defaultConfig_;
-}
+{ config_ = defaultConfig_; }
 
 void Gripper::saveConfig()
-{
-  savedConfig_ = config_;
-}
+{ savedConfig_ = config_; }
 
 void Gripper::restoreConfig()
-{
-  config_ = savedConfig_;
-}
+{ config_ = savedConfig_; }
 
 void Gripper::configure(const mc_rtc::Configuration & config)
 {
@@ -273,9 +267,7 @@ void Gripper::reset(const std::vector<double> & currentQ)
 }
 
 void Gripper::reset(const Gripper & gripper)
-{
-  this->percentOpen = gripper.percentOpen;
-}
+{ this->percentOpen = gripper.percentOpen; }
 
 double Gripper::clampQ(size_t activeJointId, double q)
 {
@@ -313,9 +305,7 @@ void Gripper::setTargetQ(const std::string & jointName, double targetQ)
 }
 
 void Gripper::setTargetQ(size_t activeJointId, double targetQ)
-{
-  setTargetQ_(activeJointId, clampQ(activeJointId, targetQ));
-}
+{ setTargetQ_(activeJointId, clampQ(activeJointId, targetQ)); }
 
 void Gripper::setTargetQ_(size_t activeJointId, double targetQ)
 {
@@ -362,14 +352,10 @@ double Gripper::getTargetQ(const std::string & jointName) const
 }
 
 double Gripper::getTargetQ(size_t jointId) const
-{
-  return this->targetQ ? (*targetQ)[jointId] : curPosition()[jointId];
-}
+{ return this->targetQ ? (*targetQ)[jointId] : curPosition()[jointId]; }
 
 std::vector<double> Gripper::getTargetQ() const
-{
-  return targetQ ? *targetQ : curPosition();
-}
+{ return targetQ ? *targetQ : curPosition(); }
 
 double Gripper::getTargetOpening(const std::string & jointName) const
 {
@@ -385,14 +371,10 @@ double Gripper::getTargetOpening(const std::string & jointName) const
 }
 
 void Gripper::percentVMAX(double percent)
-{
-  config_.percentVMax = mc_filter::utils::clamp(percent, 0, 1);
-}
+{ config_.percentVMax = mc_filter::utils::clamp(percent, 0, 1); }
 
 double Gripper::percentVMAX() const
-{
-  return config_.percentVMax;
-}
+{ return config_.percentVMax; }
 
 std::vector<double> Gripper::curPosition() const
 {
@@ -402,9 +384,7 @@ std::vector<double> Gripper::curPosition() const
 }
 
 double Gripper::curPosition(size_t jointId) const
-{
-  return closeP[jointId] + (openP[jointId] - closeP[jointId]) * percentOpen[jointId];
-}
+{ return closeP[jointId] + (openP[jointId] - closeP[jointId]) * percentOpen[jointId]; }
 
 std::vector<double> Gripper::curOpening() const
 {
@@ -427,9 +407,7 @@ double Gripper::curOpening(const std::string & jointName) const
 }
 
 double Gripper::curOpening(size_t jointId) const
-{
-  return percentOpen[jointId];
-}
+{ return percentOpen[jointId]; }
 
 double Gripper::targetOpening(size_t jointId) const
 {
@@ -527,13 +505,9 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & re
 }
 
 double Gripper::opening() const
-{
-  return std::accumulate(percentOpen.begin(), percentOpen.end(), 0.0) / static_cast<double>(percentOpen.size());
-}
+{ return std::accumulate(percentOpen.begin(), percentOpen.end(), 0.0) / static_cast<double>(percentOpen.size()); }
 
 bool Gripper::complete() const
-{
-  return targetQ == nullptr;
-}
+{ return targetQ == nullptr; }
 
 } // namespace mc_control

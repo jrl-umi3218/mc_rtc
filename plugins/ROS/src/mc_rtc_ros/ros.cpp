@@ -39,9 +39,7 @@ namespace ros
 {
 
 static inline bool ok()
-{
-  return rclcpp::ok();
-}
+{ return rclcpp::ok(); }
 
 } // namespace ros
 

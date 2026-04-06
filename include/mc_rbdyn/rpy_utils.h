@@ -38,9 +38,7 @@ inline Eigen::Matrix3d rpyToMat(const double & r, const double & p, const double
  *
  */
 inline Eigen::Matrix3d rpyToMat(const Eigen::Vector3d & rpy)
-{
-  return rpyToMat(rpy(0), rpy(1), rpy(2));
-}
+{ return rpyToMat(rpy(0), rpy(1), rpy(2)); }
 
 /** Plucker transfrom from roll-pitch-yaw angles.
  *
@@ -50,9 +48,7 @@ inline Eigen::Matrix3d rpyToMat(const Eigen::Vector3d & rpy)
  *
  */
 inline sva::PTransformd rpyToPT(const Eigen::Vector3d & rpy)
-{
-  return sva::PTransformd(rpyToMat(rpy(0), rpy(1), rpy(2)));
-}
+{ return sva::PTransformd(rpyToMat(rpy(0), rpy(1), rpy(2))); }
 
 /** Plucker transfrom from roll-pitch-yaw angles.
  *
@@ -66,9 +62,7 @@ inline sva::PTransformd rpyToPT(const Eigen::Vector3d & rpy)
  *
  */
 inline sva::PTransformd rpyToPT(const double & r, const double & p, const double & y)
-{
-  return sva::PTransformd(rpyToMat(r, p, y));
-}
+{ return sva::PTransformd(rpyToMat(r, p, y)); }
 
 /** Roll-pitch-yaw from rotation matrix.
  *
@@ -101,9 +95,7 @@ inline Eigen::Vector3d rpyFromMat(const Eigen::Matrix3d & E)
  *
  */
 inline Eigen::Vector3d rpyFromQuat(const Eigen::Quaterniond & quat)
-{
-  return rpyFromMat(quat.toRotationMatrix());
-}
+{ return rpyFromMat(quat.toRotationMatrix()); }
 
 /** Generic version that can handle a Quaternion or Matrix and returns the RPY angles */
 template<typename T>

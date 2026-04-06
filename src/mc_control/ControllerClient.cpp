@@ -71,9 +71,7 @@ ControllerClient::ControllerClient() = default;
 
 ControllerClient::ControllerClient(const std::string & sub_conn_uri, const std::string & push_conn_uri, double timeout)
 : timeout_(timeout)
-{
-  connect(sub_conn_uri, push_conn_uri);
-}
+{ connect(sub_conn_uri, push_conn_uri); }
 
 void ControllerClient::connect(const std::string & sub_conn_uri, const std::string & push_conn_uri)
 {
@@ -85,9 +83,7 @@ void ControllerClient::connect(const std::string & sub_conn_uri, const std::stri
 }
 
 ControllerClient::ControllerClient(ControllerServer & server, mc_rtc::gui::StateBuilder & gui)
-{
-  connect(server, gui);
-}
+{ connect(server, gui); }
 
 void ControllerClient::connect(ControllerServer & server, mc_rtc::gui::StateBuilder & gui)
 {
@@ -97,9 +93,7 @@ void ControllerClient::connect(ControllerServer & server, mc_rtc::gui::StateBuil
 }
 
 ControllerClient::~ControllerClient()
-{
-  stop();
-}
+{ stop(); }
 
 void ControllerClient::stop()
 {
@@ -218,9 +212,7 @@ void ControllerClient::send_request(const ElementId & id, const mc_rtc::Configur
 }
 
 void ControllerClient::send_request(const ElementId & id)
-{
-  send_request(id, mc_rtc::Configuration{});
-}
+{ send_request(id, mc_rtc::Configuration{}); }
 
 void ControllerClient::raw_request(const ElementId & id, const mc_rtc::Configuration & data, std::string & out)
 {
@@ -232,19 +224,13 @@ void ControllerClient::raw_request(const ElementId & id, const mc_rtc::Configura
 }
 
 void ControllerClient::raw_request(const ElementId & id, std::string & out)
-{
-  raw_request(id, mc_rtc::Configuration{}, out);
-}
+{ raw_request(id, mc_rtc::Configuration{}, out); }
 
 void ControllerClient::timeout(double t)
-{
-  timeout_ = t;
-}
+{ timeout_ = t; }
 
 double ControllerClient::timeout()
-{
-  return timeout_;
-}
+{ return timeout_; }
 
 void ControllerClient::handle_gui_state(mc_rtc::Configuration state)
 {

@@ -24,9 +24,7 @@ PlanarSurface::PlanarSurface(const std::string & name,
                              const std::string & materialName,
                              const std::vector<std::pair<double, double>> & planarPoints)
 : Surface(name, bodyName, X_b_s, materialName), impl(new PlanarSurfaceImpl({planarPoints}))
-{
-  computePoints();
-}
+{ computePoints(); }
 
 PlanarSurface::~PlanarSurface() {}
 
@@ -55,9 +53,7 @@ void PlanarSurface::planarTransform(const double & T, const double & B, const do
 }
 
 const std::vector<std::pair<double, double>> & PlanarSurface::planarPoints() const
-{
-  return impl->planarPoints;
-}
+{ return impl->planarPoints; }
 
 void PlanarSurface::planarPoints(const std::vector<std::pair<double, double>> & planarPoints)
 {
@@ -66,14 +62,10 @@ void PlanarSurface::planarPoints(const std::vector<std::pair<double, double>> & 
 }
 
 std::shared_ptr<Surface> PlanarSurface::copy() const
-{
-  return std::shared_ptr<Surface>(new PlanarSurface(name(), bodyName(), X_b_s(), materialName(), impl->planarPoints));
-}
+{ return std::shared_ptr<Surface>(new PlanarSurface(name(), bodyName(), X_b_s(), materialName(), impl->planarPoints)); }
 
 std::string PlanarSurface::type() const
-{
-  return "planar";
-}
+{ return "planar"; }
 
 std::unique_ptr<PlanarSurface> PlanarSurface::fromXML(const tinyxml2::XMLElement & elem)
 {

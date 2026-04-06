@@ -51,9 +51,7 @@ public:
    * \param name Name of the frame
    */
   inline static FramePtr make(const std::string & name) noexcept
-  {
-    return std::make_shared<Frame>(NewFrameToken{}, name);
-  }
+  { return std::make_shared<Frame>(NewFrameToken{}, name); }
 
   /** Creates a new frame with a parent. The frame is fixed relative to its parent
    *
@@ -78,9 +76,7 @@ public:
 
   /** Compute the current (6D) frame's position in inertial frame */
   virtual inline sva::PTransformd position() const noexcept
-  {
-    return parent_ ? position_ * parent_->position() : position_;
-  }
+  { return parent_ ? position_ * parent_->position() : position_; }
 
   /** Compute the current frame's velocity in inertial frame */
   virtual inline sva::MotionVecd velocity() const noexcept

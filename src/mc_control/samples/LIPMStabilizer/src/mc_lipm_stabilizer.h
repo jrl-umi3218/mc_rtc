@@ -16,7 +16,5 @@ struct MC_CONTROL_DLLAPI LIPMStabilizerController : public mc_control::fsm::Cont
                            Backend backend);
 
   void supported_robots(std::vector<std::string> & out) const override
-  {
-    out = {"jvrc1", "hrp2_drc", "hrp4", "hrp5_p"};
-  }
+  { out = {"jvrc1", "hrp2_drc", "hrp4", "hrp5_p"}; }
 };

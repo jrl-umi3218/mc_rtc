@@ -84,9 +84,7 @@ struct Signal
 
     template<typename Callable>
     SlotT connect(Callable && callback)
-    {
-      return self_.connect(std::forward<Callable>(callback));
-    }
+    { return self_.connect(std::forward<Callable>(callback)); }
 
   private:
     SignalT & self_;

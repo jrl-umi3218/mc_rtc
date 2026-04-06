@@ -373,9 +373,7 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::SafetyThresholds>
   }
 
   static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::SafetyThresholds & safety)
-  {
-    return safety.save();
-  }
+  { return safety.save(); }
 };
 
 /**
@@ -392,9 +390,7 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfigurat
   }
 
   static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration & bias)
-  {
-    return bias.save();
-  }
+  { return bias.save(); }
 };
 
 /**
@@ -411,9 +407,7 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguratio
   }
 
   static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration & extWrench)
-  {
-    return extWrench.save();
-  }
+  { return extWrench.save(); }
 };
 } // namespace mc_rtc
 
@@ -747,8 +741,6 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::StabilizerConfiguration>
   }
 
   static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & stabiConf)
-  {
-    return stabiConf.save();
-  }
+  { return stabiConf.save(); }
 };
 } // namespace mc_rtc

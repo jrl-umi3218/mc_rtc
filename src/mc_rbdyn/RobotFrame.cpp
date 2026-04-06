@@ -36,14 +36,10 @@ void RobotFrame::copy(mc_rbdyn::Robot & other)
 }
 
 void RobotFrame::resetForceSensor() noexcept
-{
-  sensor_ = robot_.findBodyForceSensor(body());
-}
+{ sensor_ = robot_.findBodyForceSensor(body()); }
 
 const std::string & RobotFrame::body() const noexcept
-{
-  return robot_.mb().body(static_cast<int>(bodyMbcIdx_)).name();
-}
+{ return robot_.mb().body(static_cast<int>(bodyMbcIdx_)).name(); }
 
 sva::PTransformd RobotFrame::position() const noexcept
 {
@@ -110,9 +106,7 @@ Eigen::Vector3d RobotFrame::copW(double min_pressure) const
 }
 
 RobotFramePtr RobotFrame::makeFrame(const std::string & name, const sva::PTransformd & X_p_f, bool baked)
-{
-  return robot_.makeFrame(name, *this, X_p_f, baked);
-}
+{ return robot_.makeFrame(name, *this, X_p_f, baked); }
 
 sva::PTransformd RobotFrame::X_b_f() const noexcept
 {
@@ -121,8 +115,6 @@ sva::PTransformd RobotFrame::X_b_f() const noexcept
 }
 
 void RobotFrame::init_tvm_frame() const
-{
-  tvm_frame_.reset(new mc_tvm::RobotFrame(mc_tvm::RobotFrame::NewRobotFrameToken{}, *this));
-}
+{ tvm_frame_.reset(new mc_tvm::RobotFrame(mc_tvm::RobotFrame::NewRobotFrameToken{}, *this)); }
 
 } // namespace mc_rbdyn

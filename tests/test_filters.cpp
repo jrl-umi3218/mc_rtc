@@ -13,9 +13,7 @@ bool allclose(
     const Eigen::DenseBase<DerivedB> & b,
     const typename DerivedA::RealScalar & rtol = Eigen::NumTraits<typename DerivedA::RealScalar>::dummy_precision(),
     const typename DerivedA::RealScalar & atol = Eigen::NumTraits<typename DerivedA::RealScalar>::epsilon())
-{
-  return ((a.derived() - b.derived()).array().abs() <= (atol + rtol * b.derived().array().abs())).all();
-}
+{ return ((a.derived() - b.derived()).array().abs() <= (atol + rtol * b.derived().array().abs())).all(); }
 
 BOOST_AUTO_TEST_CASE(TestExponentialMovingAverage)
 {

@@ -7,9 +7,7 @@ namespace bfs = boost::filesystem;
 #include <iostream>
 
 void usage(const char * prog)
-{
-  std::cerr << prog << " [json] ([yaml])\n";
-}
+{ std::cerr << prog << " [json] ([yaml])\n"; }
 
 int main(int argc, char * argv[])
 {

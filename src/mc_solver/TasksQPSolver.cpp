@@ -14,9 +14,7 @@ namespace mc_solver
 {
 
 void TasksQPSolver::addTask(tasks::qp::Task * task)
-{
-  solver_.addTask(robots().mbs(), task);
-}
+{ solver_.addTask(robots().mbs(), task); }
 
 void TasksQPSolver::removeTask(tasks::qp::Task * task)
 {
@@ -41,9 +39,7 @@ std::pair<int, const tasks::qp::BilateralContact &> TasksQPSolver::contactById(c
 }
 
 Eigen::VectorXd TasksQPSolver::lambdaVec(int cIndex) const
-{
-  return solver_.lambdaVec(cIndex);
-}
+{ return solver_.lambdaVec(cIndex); }
 
 void TasksQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts)
 {
@@ -342,42 +338,28 @@ bool TasksQPSolver::runClosedLoop(bool integrateControlState)
 }
 
 void TasksQPSolver::updateConstrSize()
-{
-  solver_.updateConstrSize();
-}
+{ solver_.updateConstrSize(); }
 
 void TasksQPSolver::updateNrVars()
-{
-  solver_.nrVars(robots_p->mbs(), uniContacts_, biContacts_);
-}
+{ solver_.nrVars(robots_p->mbs(), uniContacts_, biContacts_); }
 
 void TasksQPSolver::updateNrVars(const mc_rbdyn::Robots & robots)
-{
-  solver_.updateNrVars(robots.mbs());
-}
+{ solver_.updateNrVars(robots.mbs()); }
 
 using boost_ms = boost::chrono::duration<double, boost::milli>;
 using boost_ns = boost::chrono::duration<double, boost::nano>;
 
 double TasksQPSolver::solveTime()
-{
-  return boost_ms(boost_ns(solver_.solveTime().wall)).count();
-}
+{ return boost_ms(boost_ns(solver_.solveTime().wall)).count(); }
 
 double TasksQPSolver::solveAndBuildTime()
-{
-  return boost_ms(boost_ns(solver_.solveAndBuildTime().wall)).count();
-}
+{ return boost_ms(boost_ns(solver_.solveAndBuildTime().wall)).count(); }
 
 const Eigen::VectorXd & TasksQPSolver::result() const
-{
-  return solver_.result();
-}
+{ return solver_.result(); }
 
 void TasksQPSolver::addDynamicsConstraint(mc_solver::DynamicsConstraint * dynamics)
-{
-  dynamicsConstraints_.push_back(dynamics);
-}
+{ dynamicsConstraints_.push_back(dynamics); }
 
 void TasksQPSolver::removeDynamicsConstraint(mc_solver::ConstraintSet * cs)
 {
