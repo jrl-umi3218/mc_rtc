@@ -56,21 +56,29 @@ struct TransformImpl : public CommonInputImpl<GetT, SetT>
 /** Helper function to create a Transform element (read-only) */
 template<typename GetT, std::enable_if_t<std::is_invocable_v<GetT>, int> = 0>
 auto Transform(const std::string & name, GetT get_fn)
-{ return details::TransformImpl(name, get_fn); }
+{
+  return details::TransformImpl(name, get_fn);
+}
 
 /** Helper function to create a Transform element (editable) */
 template<typename GetT, typename SetT>
 auto Transform(const std::string & name, GetT get_fn, SetT set_fn)
-{ return details::TransformImpl(name, get_fn, set_fn); }
+{
+  return details::TransformImpl(name, get_fn, set_fn);
+}
 
 /** Helper function to create a read-only transform display from a variable */
 template<typename T>
 auto TransformRO(const std::string & name, T && value)
-{ return Transform(name, details::read(std::forward<T>(value))); }
+{
+  return Transform(name, details::read(std::forward<T>(value)));
+}
 
 /** Helper function to create a writable transform element from a variable */
 template<typename T, std::enable_if_t<!std::is_invocable_v<T>, int> = 0>
 auto Transform(const std::string & name, T & value)
-{ return Transform(name, details::read(value), details::write(value)); }
+{
+  return Transform(name, details::read(value), details::write(value));
+}
 
 } // namespace mc_rtc::gui

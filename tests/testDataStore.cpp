@@ -279,7 +279,10 @@ BOOST_AUTO_TEST_CASE(LambdaSugar)
                   [](const std::string & in, std::string & out, size_t nRepeats)
                   {
                     out = "";
-                    for(size_t i = 0; i < nRepeats; ++i) { out.append(in); }
+                    for(size_t i = 0; i < nRepeats; ++i)
+                    {
+                      out.append(in);
+                    }
                   });
   std::string out;
   store.call<void, const std::string &, std::string &, size_t>("conversion", "abc#", out, size_t{3});

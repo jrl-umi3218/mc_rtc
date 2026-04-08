@@ -11,7 +11,9 @@ namespace fsm
 {
 
 void PythonState::update_python_failed()
-{ python_failed_ = handle_python_error(); }
+{
+  python_failed_ = handle_python_error();
+}
 
 void PythonState::configure(const mc_rtc::Configuration & config)
 {
@@ -37,7 +39,10 @@ bool PythonState::run(Controller & ctl)
   {
     bool ret = run_(ctl);
     update_python_failed();
-    if(python_failed_) { return false; }
+    if(python_failed_)
+    {
+      return false;
+    }
     return ret;
   }
   return false;

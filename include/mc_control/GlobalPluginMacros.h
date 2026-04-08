@@ -36,10 +36,14 @@
       }                                                                             \
                                                                                     \
       GLOBAL_PLUGIN_API void destroy(mc_control::GlobalPlugin * ptr)                \
-      { delete ptr; }                                                               \
+      {                                                                             \
+        delete ptr;                                                                 \
+      }                                                                             \
                                                                                     \
       GLOBAL_PLUGIN_API mc_control::GlobalPlugin * create(const std::string &)      \
-      { return new TYPE(); }                                                        \
+      {                                                                             \
+        return new TYPE();                                                          \
+      }                                                                             \
     }
 
 #else

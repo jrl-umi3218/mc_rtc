@@ -56,7 +56,10 @@ struct ConstraintTester<mc_solver::BoundedSpeedConstr>
   {
     for(int i = 0; i < 3; ++i)
     {
-      if(lS(i) > 0) { lS(i) = -lS(i); }
+      if(lS(i) > 0)
+      {
+        lS(i) = -lS(i);
+      }
       uS(i) = -lS(i);
     }
   }
@@ -129,7 +132,10 @@ struct ConstraintTester<mc_solver::CollisionsConstraint>
     config.add("r1Index", 0);
     config.add("r2Index", 0);
     auto cv = config.array("collisions");
-    for(const auto & c : rm->commonSelfCollisions()) { cv.push(c); }
+    for(const auto & c : rm->commonSelfCollisions())
+    {
+      cv.push(c);
+    }
     auto ret = getTmpFile();
     config.save(ret);
     return ret;
@@ -153,7 +159,9 @@ template<>
 struct ConstraintTester<mc_solver::CoMIncPlaneConstr>
 {
   mc_solver::ConstraintSetPtr make_ref(mc_solver::QPSolver & solver)
-  { return std::make_shared<mc_solver::CoMIncPlaneConstr>(*robots, 0, solver.dt()); }
+  {
+    return std::make_shared<mc_solver::CoMIncPlaneConstr>(*robots, 0, solver.dt());
+  }
 
   std::string json()
   {
@@ -210,7 +218,9 @@ template<>
 struct ConstraintTester<mc_solver::KinematicsConstraint>
 {
   mc_solver::ConstraintSetPtr make_ref(mc_solver::QPSolver & solver)
-  { return std::make_shared<mc_solver::KinematicsConstraint>(*robots, 0, solver.dt()); }
+  {
+    return std::make_shared<mc_solver::KinematicsConstraint>(*robots, 0, solver.dt());
+  }
 
   std::string json()
   {
@@ -239,7 +249,9 @@ template<>
 struct ConstraintTester<mc_solver::DynamicsConstraint>
 {
   mc_solver::ConstraintSetPtr make_ref(mc_solver::QPSolver & solver)
-  { return std::make_shared<mc_solver::DynamicsConstraint>(*robots, 0, solver.dt()); }
+  {
+    return std::make_shared<mc_solver::DynamicsConstraint>(*robots, 0, solver.dt());
+  }
 
   std::string json()
   {

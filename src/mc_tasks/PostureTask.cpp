@@ -121,17 +121,37 @@ PostureTask::PostureTask(const mc_solver::QPSolver & solver, unsigned int rIndex
 }
 
 void PostureTask::reset()
-{ posture(robots_.robot(rIndex_).mbc().q); }
+{
+  posture(robots_.robot(rIndex_).mbc().q);
+}
 
 void PostureTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   MetaTask::load(solver, config);
-  if(config.has("posture")) { this->posture(config("posture")); }
-  if(config.has("jointGains")) { this->jointGains(solver, config("jointGains")); }
-  if(config.has("target")) { this->target(config("target")); }
-  if(config.has("stiffness")) { this->stiffness(config("stiffness")); }
-  if(config.has("weight")) { this->weight(config("weight")); }
-  if(config.has("jointWeights")) { this->jointWeights(config("jointWeights")); }
+  if(config.has("posture"))
+  {
+    this->posture(config("posture"));
+  }
+  if(config.has("jointGains"))
+  {
+    this->jointGains(solver, config("jointGains"));
+  }
+  if(config.has("target"))
+  {
+    this->target(config("target"));
+  }
+  if(config.has("stiffness"))
+  {
+    this->stiffness(config("stiffness"));
+  }
+  if(config.has("weight"))
+  {
+    this->weight(config("weight"));
+  }
+  if(config.has("jointWeights"))
+  {
+    this->jointWeights(config("jointWeights"));
+  }
 }
 
 void PostureTask::dimWeight(const Eigen::VectorXd & dimW)
@@ -202,7 +222,10 @@ void PostureTask::selectUnactiveJoints(mc_solver::QPSolver &,
   {
     auto jIndex = static_cast<int>(robot.jointIndexByName(j));
     const auto & joint = robot.mb().joint(jIndex);
-    if(joint.dof() == 6) { continue; }
+    if(joint.dof() == 6)
+    {
+      continue;
+    }
     auto dofIndex = robot.mb().jointPosInDof(jIndex) - dofOffset;
     dimW.segment(dofIndex, joint.dof()).setZero();
   }
@@ -210,7 +233,9 @@ void PostureTask::selectUnactiveJoints(mc_solver::QPSolver &,
 }
 
 void PostureTask::resetJointsSelector(mc_solver::QPSolver & solver)
-{ selectUnactiveJoints(solver, {}); }
+{
+  selectUnactiveJoints(solver, {});
+}
 
 Eigen::VectorXd PostureTask::eval() const
 {
@@ -229,7 +254,9 @@ Eigen::VectorXd PostureTask::eval() const
 }
 
 Eigen::VectorXd PostureTask::speed() const
-{ return speed_; }
+{
+  return speed_;
+}
 
 void PostureTask::refVel(const Eigen::VectorXd & refVel) noexcept
 {
@@ -291,7 +318,10 @@ const Eigen::VectorXd & PostureTask::refAccel() const noexcept
 
 void PostureTask::addToSolver(mc_solver::QPSolver & solver)
 {
-  if(inSolver_) { return; }
+  if(inSolver_)
+  {
+    return;
+  }
   inSolver_ = true;
   switch(backend_)
   {
@@ -308,7 +338,10 @@ void PostureTask::addToSolver(mc_solver::QPSolver & solver)
 
 void PostureTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
-  if(!inSolver_) { return; }
+  if(!inSolver_)
+  {
+    return;
+  }
   inSolver_ = false;
   switch(backend_)
   {
@@ -364,7 +397,9 @@ void PostureTask::posture(const std::vector<std::vector<double>> & p)
 }
 
 std::vector<std::vector<double>> PostureTask::posture() const
-{ return posture_; }
+{
+  return posture_;
+}
 
 void PostureTask::stiffness(double s)
 {
@@ -465,7 +500,9 @@ double PostureTask::weight() const
 }
 
 bool PostureTask::inSolver() const
-{ return inSolver_; }
+{
+  return inSolver_;
+}
 
 void PostureTask::jointGains(const mc_solver::QPSolver & solver, const std::vector<tasks::qp::JointGains> & jgs)
 {
@@ -507,7 +544,10 @@ void PostureTask::jointWeights(const std::map<std::string, double> & jws)
     if(robot.hasJoint(jw.first))
     {
       auto jIndex = mb.jointIndexByName(jw.first);
-      if(mb.joint(jIndex).dof() > 0) { dimW[mb.jointPosInDof(jIndex)] = jw.second; }
+      if(mb.joint(jIndex).dof() > 0)
+      {
+        dimW[mb.jointPosInDof(jIndex)] = jw.second;
+      }
       // No warning, it's probably over specified
     }
     else
@@ -581,13 +621,19 @@ void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   std::vector<std::string> active_gripper_joints;
   for(const auto & g : robots_.robot(rIndex_).grippers())
   {
-    for(const auto & n : g.get().activeJoints()) { active_gripper_joints.push_back(n); }
+    for(const auto & n : g.get().activeJoints())
+    {
+      active_gripper_joints.push_back(n);
+    }
   }
   auto isActiveGripperJoint = [&](const std::string & j)
   { return std::find(active_gripper_joints.begin(), active_gripper_joints.end(), j) != active_gripper_joints.end(); };
   for(const auto & j : robots_.robot(rIndex_).mb().joints())
   {
-    if(j.dof() != 1 || j.isMimic() || isActiveGripperJoint(j.name())) { continue; }
+    if(j.dof() != 1 || j.isMimic() || isActiveGripperJoint(j.name()))
+    {
+      continue;
+    }
     auto jIndex = robots_.robot(rIndex_).jointIndexByName(j.name());
     bool isContinuous = robots_.robot(rIndex_).ql()[jIndex][0] == -std::numeric_limits<double>::infinity();
     auto updatePosture = [this](unsigned int jIndex, double v)

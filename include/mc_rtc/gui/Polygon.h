@@ -56,16 +56,22 @@ private:
 /** Helper function to build a PolygonImpl */
 template<typename GetT>
 auto Polygon(const std::string & name, GetT get_fn)
-{ return details::PolygonImpl(name, {}, get_fn); }
+{
+  return details::PolygonImpl(name, {}, get_fn);
+}
 
 /** Helper function to build a PolygonImpl */
 template<typename GetT>
 auto Polygon(const std::string & name, const Color & color, GetT get_fn)
-{ return details::PolygonImpl(name, color, get_fn); }
+{
+  return details::PolygonImpl(name, color, get_fn);
+}
 
 /** Helper function to build a PolygonImpl */
 template<typename GetT>
 auto Polygon(const std::string & name, const LineConfig & config, GetT get_fn)
-{ return details::PolygonImpl(name, config, get_fn); }
+{
+  return details::PolygonImpl(name, config, get_fn);
+}
 
 } // namespace mc_rtc::gui

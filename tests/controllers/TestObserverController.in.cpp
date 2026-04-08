@@ -49,7 +49,10 @@ public:
   virtual bool run() override
   {
     // Check whether all pipelines succeeded
-    for(const auto & pipeline : observerPipelines()) { BOOST_REQUIRE(pipeline.success()); }
+    for(const auto & pipeline : observerPipelines())
+    {
+      BOOST_REQUIRE(pipeline.success());
+    }
 
     auto checkPose = [](const std::string & prefix, const sva::PTransformd & expected, const sva::PTransformd & actual)
     {
@@ -80,7 +83,10 @@ public:
 
     for(const auto & joint : robot().refJointOrder())
     {
-      if(!robot().hasJoint(joint)) { continue; }
+      if(!robot().hasJoint(joint))
+      {
+        continue;
+      }
       auto j = robot().jointIndexByName(joint);
       BOOST_CHECK_CLOSE(robot().mbc().q[j][0], realRobot().mbc().q[j][0], 1e-6);
       BOOST_CHECK_CLOSE(robot().mbc().alpha[j][0], realRobot().mbc().alpha[j][0], 1e-6);

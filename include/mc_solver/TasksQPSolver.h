@@ -19,10 +19,14 @@ namespace mc_solver
 struct MC_SOLVER_DLLAPI TasksQPSolver final : public QPSolver
 {
   TasksQPSolver(mc_rbdyn::RobotsPtr robots, double timeStep) : QPSolver(robots, timeStep, QPSolver::Backend::Tasks)
-  { positive_lambda_constraint_.addToSolver(this->robots().mbs(), solver_); }
+  {
+    positive_lambda_constraint_.addToSolver(this->robots().mbs(), solver_);
+  }
 
   TasksQPSolver(double timeStep) : QPSolver(timeStep, QPSolver::Backend::Tasks)
-  { positive_lambda_constraint_.addToSolver(robots().mbs(), solver_); }
+  {
+    positive_lambda_constraint_.addToSolver(robots().mbs(), solver_);
+  }
 
   ~TasksQPSolver() final = default;
 
@@ -209,10 +213,14 @@ private:
  * In debug the program will abort otherwise, in release UB abounds
  */
 inline TasksQPSolver & tasks_solver(QPSolver & solver) noexcept
-{ return TasksQPSolver::from_solver(solver); }
+{
+  return TasksQPSolver::from_solver(solver);
+}
 
 /* const version */
 inline const TasksQPSolver & tasks_solver(const QPSolver & solver) noexcept
-{ return TasksQPSolver::from_solver(solver); }
+{
+  return TasksQPSolver::from_solver(solver);
+}
 
 } // namespace mc_solver

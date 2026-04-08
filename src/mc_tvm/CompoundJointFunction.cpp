@@ -19,7 +19,10 @@ CompoundJointFunction::CompoundJointFunction(const mc_rbdyn::Robot & robot,
   addInputDependency<CompoundJointFunction>(Update::B, tvm_robot, Robot::Output::FK);
   auto checkJoint = [&](const std::string & jName)
   {
-    if(!robot_.hasJoint(jName)) { mc_rtc::log::error_and_throw("No joint named {} in {}", jName, robot.name()); }
+    if(!robot_.hasJoint(jName))
+    {
+      mc_rtc::log::error_and_throw("No joint named {} in {}", jName, robot.name());
+    }
     auto qIdx = robot_.jointIndexByName(jName);
     if(robot_.mb().joint(static_cast<int>(qIdx)).dof() != 1)
     {

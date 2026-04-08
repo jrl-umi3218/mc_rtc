@@ -11,13 +11,19 @@ namespace mc_rbdyn
 /* Does not implement signum to mimic numpy copysign function */
 template<typename T>
 inline T sgn(const T & lhs)
-{ return lhs < 0 ? -1 : 1; }
+{
+  return lhs < 0 ? -1 : 1;
+}
 
 sva::PTransformd planar(const double & T, const double & B, const double & N_rot)
-{ return sva::PTransformd(sva::RotZ(N_rot), Eigen::Vector3d(T, B, 0)); }
+{
+  return sva::PTransformd(sva::RotZ(N_rot), Eigen::Vector3d(T, B, 0));
+}
 
 sva::PTransformd cylindrical(const double & T, const double & T_rot)
-{ return sva::PTransformd(sva::RotX(T_rot), Eigen::Vector3d(T, 0, 0)); }
+{
+  return sva::PTransformd(sva::RotX(T_rot), Eigen::Vector3d(T, 0, 0));
+}
 
 void planarParam(const sva::PTransformd & X_es_rs, double & T, double & B, double & N_rot)
 {

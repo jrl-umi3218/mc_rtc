@@ -30,7 +30,10 @@ template<typename Container,
          typename std::enable_if<!std::is_arithmetic<typename Container::value_type>::value, int>::type = 0>
 std::string to_string(const Container & c, const std::string & delimiter = ", ")
 {
-  if(c.cbegin() == c.cend()) { return ""; }
+  if(c.cbegin() == c.cend())
+  {
+    return "";
+  }
   std::string out = *c.cbegin();
   for(auto it = std::next(c.cbegin()); it != c.cend(); ++it)
   {
@@ -52,7 +55,10 @@ std::string to_string(const Container & c,
                       const std::string & delimiter = ", ",
                       const unsigned precision = std::numeric_limits<typename Container::value_type>::digits10)
 {
-  if(c.cbegin() == c.cend()) { return ""; }
+  if(c.cbegin() == c.cend())
+  {
+    return "";
+  }
   std::ostringstream out;
   out.precision(precision);
   out << std::fixed << *c.cbegin();
@@ -86,7 +92,10 @@ template<typename Container,
          typename std::enable_if<!std::is_convertible<Callback, std::string>::value, int>::type = 0>
 std::string to_string(const Container & c, Callback && get_value, const std::string & delimiter = ", ")
 {
-  if(c.cbegin() == c.cend()) { return ""; }
+  if(c.cbegin() == c.cend())
+  {
+    return "";
+  }
   std::string out = get_value(*c.cbegin());
   for(auto it = std::next(c.cbegin()); it != c.cend(); ++it)
   {

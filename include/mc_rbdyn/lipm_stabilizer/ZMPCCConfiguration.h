@@ -53,6 +53,8 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration>
   }
 
   static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration & zmpcc)
-  { return zmpcc.save(); }
+  {
+    return zmpcc.save();
+  }
 };
 } // namespace mc_rtc

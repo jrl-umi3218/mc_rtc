@@ -211,8 +211,14 @@ struct ConfigurationLoader<mc_tasks::lipm_stabilizer::ContactState>
   {
     using ContactState = mc_tasks::lipm_stabilizer::ContactState;
     const std::string & s = config;
-    if(s == "Left") { return ContactState::Left; }
-    else if(s == "Right") { return ContactState::Right; }
+    if(s == "Left")
+    {
+      return ContactState::Left;
+    }
+    else if(s == "Right")
+    {
+      return ContactState::Right;
+    }
     else
     {
       mc_rtc::log::error_and_throw("ContactState should be one of [Left, Right], {} requested.", s);

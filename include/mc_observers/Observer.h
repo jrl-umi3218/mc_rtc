@@ -104,11 +104,15 @@ struct MC_OBSERVERS_DLLAPI Observer
 
   /*! \brief Add observer entries to the logger under the categrory "category + name()". */
   void addToLogger_(const mc_control::MCController & ctl, mc_rtc::Logger & logger, const std::string & category = "")
-  { addToLogger(ctl, logger, category + "_" + name_); }
+  {
+    addToLogger(ctl, logger, category + "_" + name_);
+  }
 
   /*! \brief Remove observer from logger. */
   void removeFromLogger_(mc_rtc::Logger & logger, const std::string & category = "")
-  { removeFromLogger(logger, category + "_" + name_); }
+  {
+    removeFromLogger(logger, category + "_" + name_);
+  }
 
   /*! \brief Add observer to the gui under category {category, name()} */
   void addToGUI_(const mc_control::MCController & ctl,

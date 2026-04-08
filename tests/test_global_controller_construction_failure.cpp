@@ -12,4 +12,6 @@
 static bool initialized = configureRobotLoader();
 
 BOOST_AUTO_TEST_CASE(CONSTRUCTION_FAILURE)
-{ BOOST_REQUIRE_THROW(mc_control::MCGlobalController{get_config_file()}, std::exception); }
+{
+  BOOST_REQUIRE_THROW(mc_control::MCGlobalController{get_config_file()}, std::exception);
+}

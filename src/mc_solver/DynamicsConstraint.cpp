@@ -30,19 +30,31 @@ static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots,
   {
     for(auto & ti : tl)
     {
-      for(auto & t : ti) { t = -INFINITY; }
+      for(auto & t : ti)
+      {
+        t = -INFINITY;
+      }
     }
     for(auto & ti : tu)
     {
-      for(auto & t : ti) { t = INFINITY; }
+      for(auto & t : ti)
+      {
+        t = INFINITY;
+      }
     }
     for(auto & tdi : tdl)
     {
-      for(auto & td : tdi) { td = -INFINITY; }
+      for(auto & td : tdi)
+      {
+        td = -INFINITY;
+      }
     }
     for(auto & tdi : tdu)
     {
-      for(auto & td : tdi) { td = INFINITY; }
+      for(auto & td : tdi)
+      {
+        td = INFINITY;
+      }
     }
   }
   tasks::TorqueBound tBound(tl, tu);
@@ -65,7 +77,9 @@ static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots,
 }
 
 mc_rtc::void_ptr initialize_tvm(const mc_rbdyn::Robot & robot)
-{ return mc_rtc::make_void_ptr<mc_tvm::DynamicFunctionPtr>(std::make_shared<mc_tvm::DynamicFunction>(robot)); }
+{
+  return mc_rtc::make_void_ptr<mc_tvm::DynamicFunctionPtr>(std::make_shared<mc_tvm::DynamicFunction>(robot));
+}
 
 static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
                                    const mc_rbdyn::Robots & robots,

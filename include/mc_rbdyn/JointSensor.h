@@ -77,6 +77,8 @@ private:
 };
 
 inline bool operator==(const JointSensor & lhs, const JointSensor & rhs)
-{ return lhs.joint() == rhs.joint(); }
+{
+  return lhs.joint() == rhs.joint();
+}
 
 } // namespace mc_rbdyn

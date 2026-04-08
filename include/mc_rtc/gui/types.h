@@ -57,7 +57,10 @@ struct MC_RTC_GUI_DLLAPI Color
       try
       {
         std::string color = config;
-        if(ColorMap.count(color)) { *this = ColorMap.at(color); }
+        if(ColorMap.count(color))
+        {
+          *this = ColorMap.at(color);
+        }
         else
         {
           auto msg = fmt::format("No color named {} ", color);
@@ -160,8 +163,14 @@ struct MC_RTC_GUI_DLLAPI LineConfig
     if(config.has("style"))
     {
       auto s = config("style");
-      if(s == "solid") { style = LineStyle::Solid; }
-      else if(s == "dotted") { style = LineStyle::Dotted; }
+      if(s == "solid")
+      {
+        style = LineStyle::Solid;
+      }
+      else if(s == "dotted")
+      {
+        style = LineStyle::Dotted;
+      }
     }
   }
 
@@ -170,8 +179,14 @@ struct MC_RTC_GUI_DLLAPI LineConfig
     mc_rtc::Configuration config;
     config.add("color", color);
     config.add("width", width);
-    if(style == LineStyle::Solid) { config.add("style", "solid"); }
-    else if(style == LineStyle::Dotted) { config.add("style", "dotted"); }
+    if(style == LineStyle::Solid)
+    {
+      config.add("style", "solid");
+    }
+    else if(style == LineStyle::Dotted)
+    {
+      config.add("style", "dotted");
+    }
     return config;
   }
 
@@ -515,7 +530,9 @@ struct ConfigurationLoader<mc_rtc::gui::PolyhedronConfig>
   }
 
   static mc_rtc::Configuration save(const mc_rtc::gui::PolyhedronConfig & polyhedron)
-  { return polyhedron.saveConfig(); }
+  {
+    return polyhedron.saveConfig();
+  }
 };
 
 } // namespace mc_rtc

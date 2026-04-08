@@ -579,7 +579,10 @@ void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
   MetaTask::removeFromLogger(*comTask, logger);
   MetaTask::removeFromLogger(*pelvisTask, logger);
   MetaTask::removeFromLogger(*torsoTask, logger);
-  for(const auto & footT : contactTasks) { MetaTask::removeFromLogger(*footT, logger); }
+  for(const auto & footT : contactTasks)
+  {
+    MetaTask::removeFromLogger(*footT, logger);
+  }
 }
 
 } // namespace lipm_stabilizer

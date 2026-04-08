@@ -23,19 +23,27 @@ namespace internal
 {
 template<typename T>
 bool is_valid_hash(std::size_t h)
-{ return h == typeid(T).hash_code(); }
+{
+  return h == typeid(T).hash_code();
+}
 
 template<typename T, typename U, typename... Args>
 bool is_valid_hash(std::size_t h)
-{ return is_valid_hash<T>(h) || is_valid_hash<U, Args...>(h); }
+{
+  return is_valid_hash<T>(h) || is_valid_hash<U, Args...>(h);
+}
 
 template<typename T>
 bool is_valid_name(const std::string & name)
-{ return name == type_name<T>(); }
+{
+  return name == type_name<T>();
+}
 
 template<typename T, typename U, typename... Args>
 bool is_valid_name(const std::string & name)
-{ return is_valid_name<T>(name) || is_valid_name<U, Args...>(name); }
+{
+  return is_valid_name<T>(name) || is_valid_name<U, Args...>(name);
+}
 
 /** Extract return type and argument types from a lambda by accessing ::operator() */
 template<typename T>
@@ -145,7 +153,10 @@ struct DataStore
   {
     std::vector<std::string> out;
     out.reserve(datas_.size());
-    for(const auto & d : datas_) { out.push_back(d.first); }
+    for(const auto & d : datas_)
+    {
+      out.push_back(d.first);
+    }
     return out;
   }
 
@@ -161,12 +172,16 @@ struct DataStore
    */
   template<typename T>
   T & get(const std::string & name)
-  { return const_cast<T &>(get_<T>(name)); }
+  {
+    return const_cast<T &>(get_<T>(name));
+  }
 
   /** @brief const variant of \ref get */
   template<typename T>
   const T & get(const std::string & name) const
-  { return get_<T>(name); }
+  {
+    return get_<T>(name);
+  }
 
   /**
    * @brief Assign value from the datastore if it exists, leave value unchanged
@@ -179,7 +194,10 @@ struct DataStore
   void get(const std::string & name, T & data)
   {
     auto it = datas_.find(name);
-    if(it != datas_.end()) { data = safe_cast<T>(it->second, name); }
+    if(it != datas_.end())
+    {
+      data = safe_cast<T>(it->second, name);
+    }
   }
 
   /**
@@ -195,7 +213,10 @@ struct DataStore
   const T & get(const std::string & name, const T & defaultValue) const
   {
     auto it = datas_.find(name);
-    if(it != datas_.end()) { return safe_cast<T>(it->second, name); }
+    if(it != datas_.end())
+    {
+      return safe_cast<T>(it->second, name);
+    }
     return defaultValue;
   }
 
@@ -209,7 +230,9 @@ struct DataStore
    */
   template<typename T>
   void assign(const std::string & name, const T & data)
-  { get<T>(name) = data; }
+  {
+    get<T>(name) = data;
+  }
 
   /**
    * @brief Creates an object on the datastore and returns a reference to it
@@ -228,7 +251,10 @@ struct DataStore
   T & make(const std::string & name, Args &&... args)
   {
     auto & data = datas_[name];
-    if(data.buffer) { log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name); }
+    if(data.buffer)
+    {
+      log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name);
+    }
     data.allocate<T>(name_, name);
     new(data.buffer.get()) T(std::forward<Args>(args)...);
     return data.setup<T, ArgsT...>();
@@ -263,7 +289,10 @@ struct DataStore
   T & make_initializer(const std::string & name, Args &&... args)
   {
     auto & data = datas_[name];
-    if(data.buffer) { log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name); }
+    if(data.buffer)
+    {
+      log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name);
+    }
     data.allocate<T>(name_, name);
     new(data.buffer.get()) T{std::forward<Args>(args)...};
     return data.setup<T, ArgsT...>();
@@ -293,7 +322,9 @@ struct DataStore
                                        && !std::is_same<std::tuple<FuncArgsT...>, std::tuple<ArgsT...>>::value,
                                    int>::type = 0>
   RetT call(const std::string & name, ArgsT &&... args) const
-  { return safe_call<RetT, FuncArgsT...>(name, std::forward<ArgsT>(args)...); }
+  {
+    return safe_call<RetT, FuncArgsT...>(name, std::forward<ArgsT>(args)...);
+  }
 
   /** @brief Calls a function that was registered in the datastore and returns
    * this call result
@@ -315,7 +346,9 @@ struct DataStore
    */
   template<typename RetT = void, typename... ArgsT>
   RetT call(const std::string & name, ArgsT &&... args) const
-  { return safe_call<RetT, typename internal::args_t<ArgsT>::type...>(name, std::forward<ArgsT>(args)...); }
+  {
+    return safe_call<RetT, typename internal::args_t<ArgsT>::type...>(name, std::forward<ArgsT>(args)...);
+  }
 
   /**
    * @brief Removes an object from the datastore
@@ -371,13 +404,19 @@ private:
     /** Destructor */
     ~Data()
     {
-      if(buffer) { destroy(*this); }
+      if(buffer)
+      {
+        destroy(*this);
+      }
     }
 
     template<typename T>
     void allocate(const std::string & name_, const std::string & name)
     {
-      if(buffer) { log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name); }
+      if(buffer)
+      {
+        log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name);
+      }
       buffer.reset(reinterpret_cast<uint8_t *>(internal::Allocator<T>().allocate(1)));
     }
 
@@ -426,12 +465,17 @@ private:
 
   template<typename T>
   const T & get_(const std::string & name) const
-  { return safe_cast<T>(get_data(name), name); }
+  {
+    return safe_cast<T>(get_data(name), name);
+  }
 
   inline const Data & get_data(const std::string & name) const
   {
     const auto it = datas_.find(name);
-    if(it == datas_.end()) { log::error_and_throw("[{}] No key \"{}\"", name_, name); }
+    if(it == datas_.end())
+    {
+      log::error_and_throw("[{}] No key \"{}\"", name_, name);
+    }
     return it->second;
   }
 

@@ -49,10 +49,14 @@ private:
 /** Helper function to build a DataComboInputImpl */
 template<typename GetT, typename SetT>
 auto DataComboInput(const std::string & name, const std::vector<std::string> & values, GetT get_fn, SetT set_fn)
-{ return details::DataComboInputImpl(name, values, get_fn, set_fn); }
+{
+  return details::DataComboInputImpl(name, values, get_fn, set_fn);
+}
 
 /** Helper function to build a DataComboInputImpl from a variable */
 inline auto DataComboInput(const std::string & name, const std::vector<std::string> & values, std::string & value)
-{ return DataComboInput(name, values, details::read(value), details::write(value)); }
+{
+  return DataComboInput(name, values, details::read(value), details::write(value));
+}
 
 } // namespace mc_rtc::gui

@@ -57,11 +57,15 @@ private:
 /** Function helper to get a TrajectoryImpl */
 template<typename GetT>
 auto Trajectory(const std::string & name, GetT get_fn)
-{ return details::TrajectoryImpl(name, {}, get_fn); }
+{
+  return details::TrajectoryImpl(name, {}, get_fn);
+}
 
 /** Function helper to get a TrajectoryImpl */
 template<typename GetT>
 auto Trajectory(const std::string & name, const LineConfig & config, GetT get_fn)
-{ return details::TrajectoryImpl(name, config, get_fn); }
+{
+  return details::TrajectoryImpl(name, config, get_fn);
+}
 
 } // namespace mc_rtc::gui

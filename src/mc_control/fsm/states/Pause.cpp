@@ -12,7 +12,9 @@ namespace fsm
 {
 
 void PauseState::configure(const mc_rtc::Configuration & config)
-{ config("duration", duration_); }
+{
+  config("duration", duration_);
+}
 
 void PauseState::start(Controller & ctl)
 {

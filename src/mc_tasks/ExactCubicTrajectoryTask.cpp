@@ -66,19 +66,27 @@ ExactCubicTrajectoryTask::ExactCubicTrajectoryTask(const mc_rbdyn::RobotFrame & 
 }
 
 void ExactCubicTrajectoryTask::posWaypoints(const std::vector<std::pair<double, Eigen::Vector3d>> & posWp)
-{ bspline.waypoints(posWp); }
+{
+  bspline.waypoints(posWp);
+}
 
 void ExactCubicTrajectoryTask::constraints(const Eigen::Vector3d & init_vel,
                                            const Eigen::Vector3d & init_acc,
                                            const Eigen::Vector3d & end_vel,
                                            const Eigen::Vector3d & end_acc)
-{ bspline.constraints(init_vel, init_acc, end_vel, end_acc); }
+{
+  bspline.constraints(init_vel, init_acc, end_vel, end_acc);
+}
 
 void ExactCubicTrajectoryTask::targetPos(const Eigen::Vector3d & target)
-{ bspline.target(target); }
+{
+  bspline.target(target);
+}
 
 const Eigen::Vector3d & ExactCubicTrajectoryTask::targetPos() const
-{ return bspline.target(); }
+{
+  return bspline.target();
+}
 
 void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
@@ -204,7 +212,10 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
           // Control points defined in world coordinates
           auto controlPoints = loadControlPoints(config);
           waypoints.resize(controlPoints.size());
-          for(unsigned int i = 0; i < controlPoints.size(); ++i) { waypoints[i] = controlPoints[i]; }
+          for(unsigned int i = 0; i < controlPoints.size(); ++i)
+          {
+            waypoints[i] = controlPoints[i];
+          }
         }
         init_vel = config("init_vel", Eigen::Vector3d::Zero().eval());
         init_acc = config("init_acc", Eigen::Vector3d::Zero().eval());

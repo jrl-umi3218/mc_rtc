@@ -41,39 +41,57 @@ using Form = mc_rtc::gui::details::FormImpl<Callback>;
 
 template<typename Callback>
 void add_form_checkbox(Form<Callback> & form, const std::string & name, bool required)
-{ form.addElement(mc_rtc::gui::FormCheckbox(name, required)); }
+{
+  form.addElement(mc_rtc::gui::FormCheckbox(name, required));
+}
 
 template<typename Callback>
 void add_form_checkbox(Form<Callback> & form, const std::string & name, bool required, bool value)
-{ form.addElement(mc_rtc::gui::FormCheckbox(name, required, value)); }
+{
+  form.addElement(mc_rtc::gui::FormCheckbox(name, required, value));
+}
 
 template<typename Callback>
 void add_form_integer(Form<Callback> & form, const std::string & name, bool required)
-{ form.addElement(mc_rtc::gui::FormIntegerInput(name, required)); }
+{
+  form.addElement(mc_rtc::gui::FormIntegerInput(name, required));
+}
 
 template<typename Callback>
 void add_form_integer(Form<Callback> & form, const std::string & name, bool required, int value)
-{ form.addElement(mc_rtc::gui::FormIntegerInput(name, required, value)); }
+{
+  form.addElement(mc_rtc::gui::FormIntegerInput(name, required, value));
+}
 
 template<typename Callback>
 void add_form_number(Form<Callback> & form, const std::string & name, bool required)
-{ form.addElement(mc_rtc::gui::FormNumberInput(name, required)); }
+{
+  form.addElement(mc_rtc::gui::FormNumberInput(name, required));
+}
 
 template<typename Callback>
 void add_form_number(Form<Callback> & form, const std::string & name, bool required, double value)
-{ form.addElement(mc_rtc::gui::FormNumberInput(name, required, value)); }
+{
+  form.addElement(mc_rtc::gui::FormNumberInput(name, required, value));
+}
 
 template<typename Callback>
 void add_form_string(Form<Callback> & form, const std::string & name, bool required)
-{ form.addElement(mc_rtc::gui::FormStringInput(name, required)); }
+{
+  form.addElement(mc_rtc::gui::FormStringInput(name, required));
+}
 
 template<typename Callback>
 void add_form_string(Form<Callback> & form, const std::string & name, bool required, const std::string & value)
-{ form.addElement(mc_rtc::gui::FormStringInput(name, required, value)); }
+{
+  form.addElement(mc_rtc::gui::FormStringInput(name, required, value));
+}
 
 template<typename Callback>
 void add_form_number_array(Form<Callback> & form, const std::string & name, bool required, bool fixed_size)
-{ form.addElement(mc_rtc::gui::FormArrayInput<std::vector<double>>(name, required, fixed_size)); }
+{
+  form.addElement(mc_rtc::gui::FormArrayInput<std::vector<double>>(name, required, fixed_size));
+}
 
 template<typename Callback>
 void add_form_number_array(Form<Callback> & form,
@@ -81,11 +99,15 @@ void add_form_number_array(Form<Callback> & form,
                            bool required,
                            const std::vector<double> & value,
                            bool fixed_size)
-{ form.addElement(mc_rtc::gui::FormArrayInput(name, required, value, fixed_size)); }
+{
+  form.addElement(mc_rtc::gui::FormArrayInput(name, required, value, fixed_size));
+}
 
 template<typename Callback>
 void add_form_string_array(Form<Callback> & form, const std::string & name, bool required, bool fixed_size)
-{ form.addElement(mc_rtc::gui::FormArrayInput<std::vector<std::string>>(name, required, fixed_size)); }
+{
+  form.addElement(mc_rtc::gui::FormArrayInput<std::vector<std::string>>(name, required, fixed_size));
+}
 
 template<typename Callback>
 void add_form_string_array(Form<Callback> & form,
@@ -93,4 +115,6 @@ void add_form_string_array(Form<Callback> & form,
                            bool required,
                            const std::vector<std::string> & value,
                            bool fixed_size)
-{ form.addElement(mc_rtc::gui::FormArrayInput(name, required, value, fixed_size)); }
+{
+  form.addElement(mc_rtc::gui::FormArrayInput(name, required, value, fixed_size));
+}

@@ -52,12 +52,16 @@ private:
 /** Helper function to build an ArrayLabelImpl (no labels) */
 template<typename GetT, std::enable_if_t<std::is_invocable_v<GetT>, int> = 0>
 auto ArrayLabel(const std::string & name, GetT get_fn)
-{ return details::ArrayLabelImpl(name, get_fn); }
+{
+  return details::ArrayLabelImpl(name, get_fn);
+}
 
 /** Helper function to build an ArrayLabelImpl (with labels) */
 template<typename GetT, std::enable_if_t<std::is_invocable_v<GetT>, int> = 0>
 auto ArrayLabel(const std::string & name, const std::vector<std::string> & labels, GetT get_fn)
-{ return details::ArrayLabelImpl(name, labels, get_fn); }
+{
+  return details::ArrayLabelImpl(name, labels, get_fn);
+}
 
 /** Helper function to build an ArrayLabelImpl from a variable.
  *
@@ -65,7 +69,9 @@ auto ArrayLabel(const std::string & name, const std::vector<std::string> & label
  */
 template<typename T, std::enable_if_t<!std::is_invocable_v<T>, int> = 0>
 auto ArrayLabel(const std::string & name, const std::vector<std::string> & labels, T && value)
-{ return ArrayLabel(name, labels, details::read(std::forward<T>(value))); }
+{
+  return ArrayLabel(name, labels, details::read(std::forward<T>(value)));
+}
 
 /** Helper function to build an ArrayLabelImpl from a variable.
  *
@@ -76,7 +82,10 @@ auto ArrayLabel(const std::string & name, T && value)
 {
   using Labels = details::Labels<std::decay_t<T>>;
   auto callback = details::read(std::forward<T>(value));
-  if constexpr(Labels::has_labels) { return ArrayLabel(name, Labels::labels, callback); }
+  if constexpr(Labels::has_labels)
+  {
+    return ArrayLabel(name, Labels::labels, callback);
+  }
   else
   {
     return details::ArrayLabelImpl(name, callback);
@@ -89,6 +98,8 @@ auto ArrayLabel(const std::string & name, T && value)
  */
 template<bool Degrees = true, typename T>
 auto RPYLabel(const std::string & name, T && value)
-{ return ArrayLabel(name, details::RPYLabels<Degrees>::labels, details::read_rpy<Degrees>(std::forward<T>(value))); }
+{
+  return ArrayLabel(name, details::RPYLabels<Degrees>::labels, details::read_rpy<Degrees>(std::forward<T>(value)));
+}
 
 } // namespace mc_rtc::gui

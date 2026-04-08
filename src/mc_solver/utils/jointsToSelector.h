@@ -32,7 +32,10 @@ static inline Eigen::VectorXd jointsToSelector(const mc_rbdyn::Robot & robot, co
   }
   Eigen::VectorXd ret = [&robot]()
   {
-    if constexpr(Select) { return Eigen::VectorXd::Zero(robot.mb().nrDof()); }
+    if constexpr(Select)
+    {
+      return Eigen::VectorXd::Zero(robot.mb().nrDof());
+    }
     else
     {
       return Eigen::VectorXd::Ones(robot.mb().nrDof());
@@ -43,7 +46,10 @@ static inline Eigen::VectorXd jointsToSelector(const mc_rbdyn::Robot & robot, co
     auto mbcIndex = robot.jointIndexByName(j);
     auto dofIndex = robot.mb().jointPosInDof(static_cast<int>(mbcIndex));
     const auto & joint = robot.mb().joint(static_cast<int>(mbcIndex));
-    if constexpr(Select) { ret.segment(dofIndex, joint.dof()).setOnes(); }
+    if constexpr(Select)
+    {
+      ret.segment(dofIndex, joint.dof()).setOnes();
+    }
     else
     {
       ret.segment(dofIndex, joint.dof()).setZero();

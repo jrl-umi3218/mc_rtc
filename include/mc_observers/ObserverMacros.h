@@ -36,11 +36,17 @@
         names = {NAME};                                                                                \
       }                                                                                                \
       OBSERVER_MODULE_API void destroy(mc_observers::Observer * ptr)                                   \
-      { delete ptr; }                                                                                  \
+      {                                                                                                \
+        delete ptr;                                                                                    \
+      }                                                                                                \
       OBSERVER_MODULE_API unsigned int create_args_required()                                          \
-      { return 2; }                                                                                    \
+      {                                                                                                \
+        return 2;                                                                                      \
+      }                                                                                                \
       OBSERVER_MODULE_API mc_observers::Observer * create(const std::string & type, const double & dt) \
-      { return new TYPE{type, dt}; }                                                                   \
+      {                                                                                                \
+        return new TYPE{type, dt};                                                                     \
+      }                                                                                                \
     }
 
 #else

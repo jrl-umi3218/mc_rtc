@@ -8,7 +8,9 @@
 #include "../mc_external_forces_controller.h"
 
 void UpdateForces::configure(const mc_rtc::Configuration & config)
-{ config_.load(config); }
+{
+  config_.load(config);
+}
 
 void UpdateForces::start(mc_control::fsm::Controller & _ctl)
 {

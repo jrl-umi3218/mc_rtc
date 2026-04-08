@@ -24,7 +24,10 @@ void MCPythonController::reset(const ControllerResetData & reset_data)
 
 bool MCPythonController::run()
 {
-  if(python_failed_) { return false; }
+  if(python_failed_)
+  {
+    return false;
+  }
   bool ret = MCController::run();
   if(ret && run_callback)
   {

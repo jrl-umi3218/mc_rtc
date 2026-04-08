@@ -13,7 +13,9 @@ namespace mc_rtc
 {
 
 std::string temp_directory_path(const std::string & suffix)
-{ return (fs::temp_directory_path() / suffix).string(); }
+{
+  return (fs::temp_directory_path() / suffix).string();
+}
 
 std::string user_config_directory_path(const std::string & suffix)
 {
@@ -58,7 +60,10 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
       pkg = ament_index_cpp::get_package_share_directory(pkg);
 #    else
       pkg = ros::package::getPath(pkg);
-      if(pkg.empty()) { throw std::runtime_error("Package not found"); }
+      if(pkg.empty())
+      {
+        throw std::runtime_error("Package not found");
+      }
 #    endif
       return pkg / leaf;
     }
@@ -68,9 +73,18 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
     }
 #  endif
     // Fallback for non-ROS builds or when ROS package is not found
-    if(pkg == "jvrc_description") { pkg = mc_rtc::JVRC_DESCRIPTION_PATH; }
-    else if(pkg == "mc_env_description") { pkg = mc_rtc::MC_ENV_DESCRIPTION_PATH; }
-    else if(pkg == "mc_int_obj_description") { pkg = mc_rtc::MC_INT_OBJ_DESCRIPTION_PATH; }
+    if(pkg == "jvrc_description")
+    {
+      pkg = mc_rtc::JVRC_DESCRIPTION_PATH;
+    }
+    else if(pkg == "mc_env_description")
+    {
+      pkg = mc_rtc::MC_ENV_DESCRIPTION_PATH;
+    }
+    else if(pkg == "mc_int_obj_description")
+    {
+      pkg = mc_rtc::MC_INT_OBJ_DESCRIPTION_PATH;
+    }
     else
     { // could not resolve path using ament index, check for default_dir
       if(default_dir.empty())
@@ -98,7 +112,10 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
     return pkg / leaf;
   }
   const std::string file = "file://";
-  if(uri.size() >= file.size() && uri.find(file) == 0) { return fs::path(uri.substr(file.size())); }
+  if(uri.size() >= file.size() && uri.find(file) == 0)
+  {
+    return fs::path(uri.substr(file.size()));
+  }
   return uri;
 }
 

@@ -41,7 +41,9 @@ public:
                               const Eigen::Vector3d & bodyPoint,
                               const Eigen::MatrixXd & dof,
                               const Eigen::VectorXd & speed)
-  { addBoundedSpeed(solver, bodyName, bodyPoint, dof, speed, speed); }
+  {
+    addBoundedSpeed(solver, bodyName, bodyPoint, dof, speed, speed);
+  }
 
   /** Add a bounded speed constraint on the given body
    *
@@ -78,7 +80,9 @@ public:
                               const mc_rbdyn::RobotFrame & frame,
                               const Eigen::MatrixXd & dof,
                               const Eigen::VectorXd & speed)
-  { addBoundedSpeed(solver, frame, dof, speed, speed); }
+  {
+    addBoundedSpeed(solver, frame, dof, speed, speed);
+  }
 
   /** Add a fixed speed constraint on the given frame
    *

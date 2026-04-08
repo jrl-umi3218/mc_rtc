@@ -27,14 +27,18 @@ namespace utils
  * \returns clamped value
  */
 inline double clamp(double value, double lower, double upper)
-{ return std::max(lower, std::min(value, upper)); }
+{
+  return std::max(lower, std::min(value, upper));
+}
 
 /** Clamp a value in-place in a given interval.
  *
  * \see clamp(double value, double lower, double upper)
  */
 inline void clampInPlace(double & value, double lower, double upper)
-{ value = clamp(value, lower, upper); }
+{
+  value = clamp(value, lower, upper);
+}
 
 /** Clamp a value in a given interval, issuing a warning when bounds are hit.
  *
@@ -66,7 +70,9 @@ inline double clampAndWarn(double value, double lower, double upper, const std::
  * \see clampAndWarn(double value, double lower, double upper, const std::string & label)
  */
 inline void clampInPlaceAndWarn(double & value, double lower, double upper, const std::string & label)
-{ value = clampAndWarn(value, lower, upper, label); }
+{
+  value = clampAndWarn(value, lower, upper, label);
+}
 
 /**
  * @brief Clamps each component of a vector in a given interval. The same lower
@@ -86,7 +92,10 @@ template<typename VectorT>
 inline VectorT clamp(const VectorT & v, double lower, double upper)
 {
   VectorT result(v.size());
-  for(unsigned i = 0; i < v.size(); i++) { result(i) = clamp(v(i), lower, upper); }
+  for(unsigned i = 0; i < v.size(); i++)
+  {
+    result(i) = clamp(v(i), lower, upper);
+  }
   return result;
 }
 
@@ -100,7 +109,10 @@ template<typename VectorT>
 inline VectorT clamp(const VectorT & v, const VectorT & lower, const VectorT & upper)
 {
   VectorT result(v.size());
-  for(unsigned i = 0; i < v.size(); i++) { result(i) = clamp(v(i), lower(i), upper(i)); }
+  for(unsigned i = 0; i < v.size(); i++)
+  {
+    result(i) = clamp(v(i), lower(i), upper(i));
+  }
   return result;
 }
 
@@ -129,7 +141,10 @@ inline VectorT clampAndWarn(const VectorT & v, const VectorT & lower, const Vect
 template<typename VectorT>
 inline void clampInPlace(VectorT & v, const VectorT & lower, const VectorT & upper)
 {
-  for(unsigned i = 0; i < v.size(); i++) { v(i) = clamp(v(i), lower(i), upper(i)); }
+  for(unsigned i = 0; i < v.size(); i++)
+  {
+    v(i) = clamp(v(i), lower(i), upper(i));
+  }
 }
 
 /**
@@ -140,7 +155,10 @@ inline void clampInPlace(VectorT & v, const VectorT & lower, const VectorT & upp
 template<typename VectorT>
 inline void clampInPlace(VectorT & v, double lower, double upper)
 {
-  for(unsigned i = 0; i < v.size(); i++) { v(i) = clamp(v(i), lower, upper); }
+  for(unsigned i = 0; i < v.size(); i++)
+  {
+    v(i) = clamp(v(i), lower, upper);
+  }
 }
 
 /**

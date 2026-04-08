@@ -32,10 +32,14 @@ struct StringInputImpl : public CommonInputImpl<GetT, SetT>
 /** Helper function to create a StringInputImpl */
 template<typename GetT, typename SetT>
 auto StringInput(const std::string & name, GetT get_fn, SetT set_fn)
-{ return details::StringInputImpl(name, get_fn, set_fn); }
+{
+  return details::StringInputImpl(name, get_fn, set_fn);
+}
 
 /** Helper function to create a StringInputImpl from a variable */
 inline auto StringInput(const std::string & name, std::string & value)
-{ return details::StringInputImpl(name, details::read(value), details::write(value)); }
+{
+  return details::StringInputImpl(name, details::read(value), details::write(value));
+}
 
 } // namespace mc_rtc::gui

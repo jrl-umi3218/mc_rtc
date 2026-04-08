@@ -15,7 +15,10 @@ namespace mc_control
 template<typename StrT>
 std::string log_entry(const StrT & entry, const std::string & robot, bool is_main)
 {
-  if(is_main) { return entry; }
+  if(is_main)
+  {
+    return entry;
+  }
   return fmt::format("{}_{}", robot, entry);
 }
 
@@ -27,11 +30,15 @@ GetT get(const mc_rtc::log::FlatLog & log,
          bool is_main,
          size_t idx,
          const GetT & def = {})
-{ return log.get<GetT>(log_entry(entry, robot, is_main), idx, def); }
+{
+  return log.get<GetT>(log_entry(entry, robot, is_main), idx, def);
+}
 
 /** Get the encoders of a robot from the given log at the given time */
 std::vector<double> get_encoders(const mc_rtc::log::FlatLog & log, const std::string & robot, bool is_main, size_t idx)
-{ return get(log, "qIn", robot, is_main, idx); }
+{
+  return get(log, "qIn", robot, is_main, idx);
+}
 
 /** Get the encoders of a robot from the robot's configuration */
 std::vector<double> get_encoders(const mc_rbdyn::Robot & robot)
@@ -46,7 +53,10 @@ std::vector<double> get_encoders(const mc_rbdyn::Robot & robot)
       q.push_back(0.0);
       continue;
     }
-    for(const auto & qi : robot.mbc().q[static_cast<size_t>(mbcIdx)]) { q.push_back(qi); }
+    for(const auto & qi : robot.mbc().q[static_cast<size_t>(mbcIdx)])
+    {
+      q.push_back(qi);
+    }
   }
   return q;
 }
@@ -64,7 +74,10 @@ std::vector<double> get_encoders_velocities(const mc_rbdyn::Robot & robot)
       alpha.push_back(0.0);
       continue;
     }
-    for(const auto & qi : robot.mbc().alpha[static_cast<size_t>(mbcIdx)]) { alpha.push_back(qi); }
+    for(const auto & qi : robot.mbc().alpha[static_cast<size_t>(mbcIdx)])
+    {
+      alpha.push_back(qi);
+    }
   }
   return alpha;
 }
@@ -78,10 +91,16 @@ std::optional<sva::PTransformd> get_posW(const mc_rtc::log::FlatLog & log,
   if(log.meta())
   {
     auto it = log.meta()->init.find(robot);
-    if(it != log.meta()->init.end()) { return it->second; }
+    if(it != log.meta()->init.end())
+    {
+      return it->second;
+    }
   }
   auto entry = log_entry("ff", robot, is_main);
-  if(!log.has(entry)) { return std::nullopt; }
+  if(!log.has(entry))
+  {
+    return std::nullopt;
+  }
   return log.get(entry, idx, sva::PTransformd::Identity());
 }
 
@@ -99,7 +118,10 @@ std::optional<std::vector<double>> get_initial_encoders(const mc_rtc::log::FlatL
       for(size_t i = 0; i < robot.refJointOrder().size(); ++i)
       {
         auto mbcIdx = robot.jointIndexInMBC(i);
-        if(mbcIdx >= 0 && !q[static_cast<size_t>(mbcIdx)].empty()) { out.push_back(q[static_cast<size_t>(mbcIdx)][0]); }
+        if(mbcIdx >= 0 && !q[static_cast<size_t>(mbcIdx)].empty())
+        {
+          out.push_back(q[static_cast<size_t>(mbcIdx)][0]);
+        }
         else
         {
           out.push_back(0.0);
@@ -108,7 +130,10 @@ std::optional<std::vector<double>> get_initial_encoders(const mc_rtc::log::FlatL
       return out;
     }
   }
-  if(log.has(log_entry("qIn", robot.name(), is_main))) { return get_encoders(log, robot.name(), is_main, 0); }
+  if(log.has(log_entry("qIn", robot.name(), is_main)))
+  {
+    return get_encoders(log, robot.name(), is_main, 0);
+  }
   return std::nullopt;
 }
 
@@ -122,9 +147,15 @@ auto get_initial_state(const mc_rtc::log::FlatLog & log, const mc_rbdyn::Robots 
   {
     bool is_main = r.name() == main;
     auto r_encoders = get_initial_encoders(log, r, is_main);
-    if(r_encoders) { encoders[r.name()] = *r_encoders; }
+    if(r_encoders)
+    {
+      encoders[r.name()] = *r_encoders;
+    }
     auto posW = get_posW(log, r.name(), is_main, 0);
-    if(posW) { bases[r.name()] = *posW; }
+    if(posW)
+    {
+      bases[r.name()] = *posW;
+    }
   }
   return out;
 }
@@ -135,7 +166,10 @@ auto get_gc_configuration = [](const Ticker::Configuration & config)
   if(config.replay_configuration.log.size())
   {
     auto it = std::find(out.global_plugins.begin(), out.global_plugins.end(), "Replay");
-    if(it != out.global_plugins.end()) { out.global_plugins.erase(it); }
+    if(it != out.global_plugins.end())
+    {
+      out.global_plugins.erase(it);
+    }
     out.global_plugins.insert(out.global_plugins.begin(), "Replay");
     auto replay_c = out.config.add("Replay");
     replay_c.add("with-inputs", config.replay_configuration.with_inputs);
@@ -268,7 +302,10 @@ void Ticker::run()
       sim_real_ratio_ = sim_elapsed_t / real_elapsed_t;
       if(!config_.no_sync)
       {
-        if(was_no_sync) { reset_sync(); }
+        if(was_no_sync)
+        {
+          reset_sync();
+        }
         // sim_elased_t / (real_elapsed_t + delay) = target_ratio
         // delay = sim / ratio - real;
         double delay = sim_elapsed_t / target_ratio - real_elapsed_t;
@@ -318,7 +355,10 @@ void Ticker::setup_gui()
                      "Target ratio", [this]() { return config_.sync_ratio; },
                      [this](double r)
                      {
-                       if(r <= 0.0) { r = 1.0 / 1024.0; }
+                       if(r <= 0.0)
+                       {
+                         r = 1.0 / 1024.0;
+                       }
                        config_.sync_ratio = r;
                      }),
                  mc_rtc::gui::Button("x2", [this]() { config_.sync_ratio *= 2.0; }),
@@ -335,7 +375,10 @@ void Ticker::setup_gui()
     return mc_rtc::gui::Button(text(n),
                                [this, n]()
                                {
-                                 if(rem_steps_ < 0) { rem_steps_ = 0; }
+                                 if(rem_steps_ < 0)
+                                 {
+                                   rem_steps_ = 0;
+                                 }
                                  rem_steps_ += n;
                                });
   };

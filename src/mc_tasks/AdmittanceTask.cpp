@@ -95,14 +95,23 @@ void AdmittanceTask::reset()
 /*! \brief Load parameters from a Configuration object */
 void AdmittanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
-  if(config.has("admittance")) { admittance(config("admittance")); }
+  if(config.has("admittance"))
+  {
+    admittance(config("admittance"));
+  }
   else if(config.has("targetPose"))
   {
     mc_rtc::log::warning("[{}] property \"targetPose\" is deprecated, use \"target\" instead", name());
     targetPose(config("targetPose"));
   }
-  if(config.has("wrench")) { targetWrench(config("wrench")); }
-  if(config.has("refVelB")) { refVelB(config("refVelB")); }
+  if(config.has("wrench"))
+  {
+    targetWrench(config("wrench"));
+  }
+  if(config.has("refVelB"))
+  {
+    refVelB(config("refVelB"));
+  }
   if(config.has("maxVel"))
   {
     sva::MotionVecd maxVel = config("maxVel");

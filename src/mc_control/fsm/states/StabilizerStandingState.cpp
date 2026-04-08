@@ -26,7 +26,10 @@ void StabilizerStandingState::configure(const mc_rtc::Configuration & config)
 
 void StabilizerStandingState::start(Controller & ctl)
 {
-  if(!config_.has("StabilizerConfig")) { config_.add("StabilizerConfig"); }
+  if(!config_.has("StabilizerConfig"))
+  {
+    config_.add("StabilizerConfig");
+  }
   config_("StabilizerConfig").add("type", "lipm_stabilizer");
 
   config_("stiffness", K_);
@@ -48,8 +51,14 @@ void StabilizerStandingState::start(Controller & ctl)
   if(config_.has("above"))
   {
     const std::string above = config_("above");
-    if(above == "LeftAnkle") { targetCoP(stabilizerTask_->contactAnklePose(ContactState::Left).translation()); }
-    else if(above == "RightAnkle") { targetCoP(stabilizerTask_->contactAnklePose(ContactState::Right).translation()); }
+    if(above == "LeftAnkle")
+    {
+      targetCoP(stabilizerTask_->contactAnklePose(ContactState::Left).translation());
+    }
+    else if(above == "RightAnkle")
+    {
+      targetCoP(stabilizerTask_->contactAnklePose(ContactState::Right).translation());
+    }
     else if(above == "CenterAnkles")
     {
       targetCoP(sva::interpolate(stabilizerTask_->contactAnklePose(ContactState::Left),
@@ -70,7 +79,10 @@ void StabilizerStandingState::start(Controller & ctl)
                                  ctl.robot().surfacePose(stabilizerTask_->footSurface(ContactState::Right)), 0.5)
                     .translation());
     }
-    else if(robot.hasSurface(above)) { targetCoP(robot.surfacePose(above).translation()); }
+    else if(robot.hasSurface(above))
+    {
+      targetCoP(robot.surfacePose(above).translation());
+    }
     else
     {
       mc_rtc::log::error_and_throw(
@@ -80,7 +92,10 @@ void StabilizerStandingState::start(Controller & ctl)
           above);
     }
   }
-  else if(config_.has("com")) { targetCoM(config_("com")); }
+  else if(config_.has("com"))
+  {
+    targetCoM(config_("com"));
+  }
   else
   {
     targetCoM(robot.com());
@@ -263,7 +278,10 @@ void StabilizerStandingState::teardown(Controller & ctl)
   ctl.datastore().remove("StabilizerStandingState::setExternalWrenches");
   ctl.datastore().remove("StabilizerStandingState::getCoPAdmittance");
   ctl.datastore().remove("StabilizerStandingState::setCoPAdmittance");
-  if(ownsAnchorFrameCallback_) { ctl.datastore().remove(anchorFrameFunction_); }
+  if(ownsAnchorFrameCallback_)
+  {
+    ctl.datastore().remove(anchorFrameFunction_);
+  }
 }
 
 } // namespace fsm

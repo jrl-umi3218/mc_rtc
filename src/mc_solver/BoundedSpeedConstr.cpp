@@ -68,7 +68,10 @@ struct TVMBoundedSpeedConstr
     else
     {
       data_.push_back({std::make_shared<mc_tvm::FrameVelocity>(frame, dof), lowerSpeed, upperSpeed});
-      if(solver) { addBoundedSpeed(*solver, data_.back()); }
+      if(solver)
+      {
+        addBoundedSpeed(*solver, data_.back());
+      }
     }
   }
 
@@ -79,7 +82,10 @@ struct TVMBoundedSpeedConstr
     {
       if(it->fn->frame().name() == frame)
       {
-        if(solver) { removeBoundedSpeed(*solver, *it); }
+        if(solver)
+        {
+          removeBoundedSpeed(*solver, *it);
+        }
         it = data_.erase(it);
         r = true;
       }
@@ -93,17 +99,26 @@ struct TVMBoundedSpeedConstr
 
   void addToSolver(TVMQPSolver & solver)
   {
-    for(auto & d : data_) { addBoundedSpeed(solver, d); }
+    for(auto & d : data_)
+    {
+      addBoundedSpeed(solver, d);
+    }
   }
 
   void removeFromSolver(TVMQPSolver & solver)
   {
-    for(auto & d : data_) { removeBoundedSpeed(solver, d); }
+    for(auto & d : data_)
+    {
+      removeBoundedSpeed(solver, d);
+    }
   }
 
   void reset(TVMQPSolver * solver)
   {
-    if(solver) { removeFromSolver(*solver); }
+    if(solver)
+    {
+      removeFromSolver(*solver);
+    }
     data_.clear();
   }
 

@@ -73,12 +73,16 @@ private:
 /** Helper to create an impl::Abscissa */
 template<typename GetT>
 impl::Abscissa<GetT> X(AxisConfiguration config, GetT get_fn)
-{ return impl::Abscissa<GetT>(config, get_fn); }
+{
+  return impl::Abscissa<GetT>(config, get_fn);
+}
 
 /** Helper to create an impl::Abscissa without limits */
 template<typename GetT>
 impl::Abscissa<GetT> X(std::string_view legend, GetT get_fn)
-{ return impl::Abscissa<GetT>(AxisConfiguration(legend), get_fn); }
+{
+  return impl::Abscissa<GetT>(AxisConfiguration(legend), get_fn);
+}
 
 } // namespace plot
 

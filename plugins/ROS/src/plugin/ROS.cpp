@@ -43,18 +43,27 @@ void ROSPlugin::reset(mc_control::MCGlobalController & controller)
 
   publish_robots("control/", controller.controller().robots(), false);
 
-  if(publish_real) { publish_robots("real/", controller.controller().realRobots(), true); }
+  if(publish_real)
+  {
+    publish_robots("real/", controller.controller().realRobots(), true);
+  }
 }
 
 void ROSPlugin::after(mc_control::MCGlobalController & controller)
 {
   auto update_robots = [this, &controller](const std::string & prefix, mc_rbdyn::Robots & robots)
   {
-    for(auto & r : robots) { mc_rtc::ROSBridge::update_robot_publisher(prefix + r.name(), controller.timestep(), r); }
+    for(auto & r : robots)
+    {
+      mc_rtc::ROSBridge::update_robot_publisher(prefix + r.name(), controller.timestep(), r);
+    }
     published_topics = robots.size() - 1;
   };
   update_robots("control/", controller.controller().robots());
-  if(publish_real) { update_robots("real/", controller.controller().realRobots()); }
+  if(publish_real)
+  {
+    update_robots("real/", controller.controller().realRobots());
+  }
 
   mc_rtc::ROSBridge::remove_extra_robot_publishers(controller.controller().robots());
 }

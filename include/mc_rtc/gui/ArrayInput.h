@@ -57,17 +57,23 @@ private:
 /** Helper function to create an ArrayInput element (no labels) */
 template<typename GetT, typename SetT>
 auto ArrayInput(const std::string & name, GetT get_fn, SetT set_fn)
-{ return details::ArrayInputImpl(name, get_fn, set_fn); }
+{
+  return details::ArrayInputImpl(name, get_fn, set_fn);
+}
 
 /** Helper function to create an ArrayInput element (with labels) */
 template<typename GetT, typename SetT>
 auto ArrayInput(const std::string & name, const std::vector<std::string> & labels, GetT get_fn, SetT set_fn)
-{ return details::ArrayInputImpl(name, labels, get_fn, set_fn); }
+{
+  return details::ArrayInputImpl(name, labels, get_fn, set_fn);
+}
 
 /** Helper function to build an ArrayInput from a variable */
 template<typename T>
 auto ArrayInput(const std::string & name, const std::vector<std::string> & labels, T & value)
-{ return details::ArrayInputImpl(name, labels, details::read(value), details::write(value)); }
+{
+  return details::ArrayInputImpl(name, labels, details::read(value), details::write(value));
+}
 
 /** Helper function to build an ArrayInput from a variable
  *
@@ -79,7 +85,10 @@ auto ArrayInput(const std::string & name, T & value)
   using Labels = details::Labels<std::decay_t<T>>;
   auto read = details::read(value);
   auto write = details::write(value);
-  if constexpr(Labels::has_labels) { return ArrayInput(name, Labels::labels, read, write); }
+  if constexpr(Labels::has_labels)
+  {
+    return ArrayInput(name, Labels::labels, read, write);
+  }
   else
   {
     return ArrayInput(name, read, write);
@@ -96,7 +105,10 @@ auto RPYInput(const std::string & name, T & value)
   return ArrayInput(name, details::RPYLabels<Degrees>::labels, details::read_rpy<Degrees>(value),
                     [&value](const Eigen::Vector3d & rpy)
                     {
-                      if constexpr(Degrees) { value = mc_rbdyn::rpyToMat(rpy * mc_rtc::constants::PI / 180.); }
+                      if constexpr(Degrees)
+                      {
+                        value = mc_rbdyn::rpyToMat(rpy * mc_rtc::constants::PI / 180.);
+                      }
                       else
                       {
                         value = mc_rbdyn::rpyToMat(rpy);

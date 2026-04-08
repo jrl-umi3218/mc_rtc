@@ -51,13 +51,19 @@ struct Signal
   SlotT connect(Callable && callback)
   {
     SlotT out{this, next_slot_};
-    if(next_slot_ < callbacks_.size()) { callbacks_[next_slot_] = callback; }
+    if(next_slot_ < callbacks_.size())
+    {
+      callbacks_[next_slot_] = callback;
+    }
     else
     {
       callbacks_.push_back(callback);
     }
     next_slot_++;
-    while(next_slot_ < callbacks_.size() && callbacks_[next_slot_]) { next_slot_++; }
+    while(next_slot_ < callbacks_.size() && callbacks_[next_slot_])
+    {
+      next_slot_++;
+    }
     return out;
   }
 
@@ -70,7 +76,10 @@ struct Signal
   {
     for(auto & c : callbacks_)
     {
-      if(c) { c(args...); }
+      if(c)
+      {
+        c(args...);
+      }
     }
   }
 
@@ -84,7 +93,9 @@ struct Signal
 
     template<typename Callable>
     SlotT connect(Callable && callback)
-    { return self_.connect(std::forward<Callable>(callback)); }
+    {
+      return self_.connect(std::forward<Callable>(callback));
+    }
 
   private:
     SignalT & self_;
@@ -123,7 +134,10 @@ struct Slot
   Slot & operator=(const Slot &) = delete;
   Slot & operator=(Slot && rhs)
   {
-    if(&rhs == this) { return *this; }
+    if(&rhs == this)
+    {
+      return *this;
+    }
     signal_ = rhs.signal_;
     idx_ = rhs.idx_;
     rhs.signal_ = nullptr;

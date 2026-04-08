@@ -21,7 +21,10 @@ BOOST_AUTO_TEST_CASE(RUN)
     for(size_t i = 0; i < nrIter(); ++i)
     {
       bool r = ticker.step();
-      if(!r) { mc_rtc::log::critical("Failed at iter {}", i); }
+      if(!r)
+      {
+        mc_rtc::log::critical("Failed at iter {}", i);
+      }
       BOOST_REQUIRE(r);
     }
   };

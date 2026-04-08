@@ -43,11 +43,17 @@ void Executor::init(Controller & ctl,
   auto gui = ctl.gui();
   if(gui)
   {
-    if(category.size()) { category_ = category; }
+    if(category.size())
+    {
+      category_ = category;
+    }
     else
     {
       category_ = {"FSM"};
-      if(name.size()) { category_.push_back(name); }
+      if(name.size())
+      {
+        category_.push_back(name);
+      }
     }
     gui->addElement(category_, mc_rtc::gui::Button("Interrupt", [this]() { interrupt(); }),
                     mc_rtc::gui::Label("Current state", [this]() { return state(); }),
@@ -59,7 +65,10 @@ void Executor::init(Controller & ctl,
                         mc_rtc::gui::FormDataComboInput("State", true, {"states"})));
   }
   std::string log_entry = "Executor";
-  if(name_.size()) { log_entry += "_" + name_; }
+  if(name_.size())
+  {
+    log_entry += "_" + name_;
+  }
   else
   {
     log_entry += "_Main";
@@ -127,13 +136,19 @@ bool Executor::run(Controller & ctl, bool keep_state)
     }
     return complete(ctl, keep_state);
   }
-  else if(transition_triggered_) { next(ctl); }
+  else if(transition_triggered_)
+  {
+    next(ctl);
+  }
   return ready_;
 }
 
 void Executor::stop(Controller & ctl)
 {
-  if(state_) { state_->stop(ctl); }
+  if(state_)
+  {
+    state_->stop(ctl);
+  }
 }
 
 void Executor::teardown(Controller & ctl)
@@ -143,7 +158,10 @@ void Executor::teardown(Controller & ctl)
     state_->teardown_(ctl);
     state_ = nullptr;
   }
-  if(ctl.gui()) { ctl.gui()->removeCategory(category_); }
+  if(ctl.gui())
+  {
+    ctl.gui()->removeCategory(category_);
+  }
   ctl.logger().removeLogEntries(this);
 }
 
@@ -172,14 +190,20 @@ bool Executor::next()
 
 void Executor::next(Controller & ctl)
 {
-  if(!ready_ || next_state_.empty()) { return; }
+  if(!ready_ || next_state_.empty())
+  {
+    return;
+  }
   ready_ = false;
   transition_triggered_ = false;
   if(state_)
   {
     auto state_teardown_start = clock::now();
     state_->teardown_(ctl);
-    if(reset_postures_) { ctl.resetPostures(); }
+    if(reset_postures_)
+    {
+      ctl.resetPostures();
+    }
     state_teardown_dt_ = clock::now() - state_teardown_start;
   }
   mc_rtc::log::success("Starting state {}", next_state_);
@@ -225,10 +249,14 @@ bool Executor::resume(const std::string & state)
 }
 
 bool Executor::read_msg(std::string & msg)
-{ return state_ && state_->read_msg(msg); }
+{
+  return state_ && state_->read_msg(msg);
+}
 
 bool Executor::read_write_msg(std::string & msg, std::string & out)
-{ return state_ && state_->read_write_msg(msg, out); }
+{
+  return state_ && state_->read_write_msg(msg, out);
+}
 
 } // namespace fsm
 

@@ -4,7 +4,9 @@
 #include "./TestMetaContinuity.h"
 
 void TestMetaContinuity::start(mc_control::fsm::Controller & ctl)
-{ run(ctl); }
+{
+  run(ctl);
+}
 
 bool TestMetaContinuity::run(mc_control::fsm::Controller & ctl)
 {

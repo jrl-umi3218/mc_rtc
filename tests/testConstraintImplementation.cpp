@@ -11,37 +11,59 @@
 
 #define COMMON_OVERRIDE                      \
   const Eigen::MatrixXd & A() const override \
-  { return A_; }                             \
+  {                                          \
+    return A_;                               \
+  }                                          \
   void compute() override {}                 \
   Eigen::MatrixXd A_;
 
 #define EQ_OVERRIDE(NAME)                      \
   int maxEq() const override                   \
-  { return 1; }                                \
+  {                                            \
+    return 1;                                  \
+  }                                            \
   std::string nameEq() const override          \
-  { return #NAME; }                            \
+  {                                            \
+    return #NAME;                              \
+  }                                            \
   const Eigen::VectorXd & bEq() const override \
-  { return b_; }                               \
+  {                                            \
+    return b_;                                 \
+  }                                            \
   Eigen::VectorXd b_;
 
 #define INEQ_OVERRIDE(NAME)                      \
   int maxInEq() const override                   \
-  { return 1; }                                  \
+  {                                              \
+    return 1;                                    \
+  }                                              \
   std::string nameInEq() const override          \
-  { return #NAME; }                              \
+  {                                              \
+    return #NAME;                                \
+  }                                              \
   const Eigen::VectorXd & bInEq() const override \
-  { return b_; }                                 \
+  {                                              \
+    return b_;                                   \
+  }                                              \
   Eigen::VectorXd b_;
 
 #define GENINEQ_OVERRIDE(NAME)                          \
   int maxGenInEq() const override                       \
-  { return 1; }                                         \
+  {                                                     \
+    return 1;                                           \
+  }                                                     \
   std::string nameGenInEq() const override              \
-  { return #NAME; }                                     \
+  {                                                     \
+    return #NAME;                                       \
+  }                                                     \
   const Eigen::VectorXd & LowerGenInEq() const override \
-  { return L_; }                                        \
+  {                                                     \
+    return L_;                                          \
+  }                                                     \
   const Eigen::VectorXd & UpperGenInEq() const override \
-  { return U_; }                                        \
+  {                                                     \
+    return U_;                                          \
+  }                                                     \
   Eigen::VectorXd L_;                                   \
   Eigen::VectorXd U_;
 

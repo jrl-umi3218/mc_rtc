@@ -39,6 +39,8 @@ struct ButtonImpl : public VoidCallbackElement<Element, Callback>
 /** Helper function to create a ButtonImpl */
 template<typename Callback>
 auto Button(const std::string & name, Callback cb)
-{ return details::ButtonImpl(name, cb); }
+{
+  return details::ButtonImpl(name, cb);
+}
 
 } // namespace mc_rtc::gui

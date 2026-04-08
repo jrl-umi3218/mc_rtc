@@ -13,7 +13,9 @@ bool allclose(
     const Eigen::DenseBase<DerivedB> & b,
     const typename DerivedA::RealScalar & rtol = Eigen::NumTraits<typename DerivedA::RealScalar>::dummy_precision(),
     const typename DerivedA::RealScalar & atol = Eigen::NumTraits<typename DerivedA::RealScalar>::epsilon())
-{ return ((a.derived() - b.derived()).array().abs() <= (atol + rtol * b.derived().array().abs())).all(); }
+{
+  return ((a.derived() - b.derived()).array().abs() <= (atol + rtol * b.derived().array().abs())).all();
+}
 
 BOOST_AUTO_TEST_CASE(TestExponentialMovingAverage)
 {
@@ -26,7 +28,10 @@ BOOST_AUTO_TEST_CASE(TestExponentialMovingAverage)
   {
     const Eigen::Vector3d constant{C, C, C};
     ExponentialMovingAverage<Eigen::Vector3d> average(dt, T);
-    for(size_t i = 0; i < iter; ++i) { average.append(constant); }
+    for(size_t i = 0; i < iter; ++i)
+    {
+      average.append(constant);
+    }
 
     // Check that averaging a constant for the characteristic time T gives the
     // expected theoratical value 1-1/e
@@ -38,7 +43,10 @@ BOOST_AUTO_TEST_CASE(TestExponentialMovingAverage)
     using Vector6d = Eigen::Matrix<double, 6, 1>;
     const Vector6d constant = C * Vector6d::Ones();
     ExponentialMovingAverage<Vector6d> average(dt, T);
-    for(size_t i = 0; i < iter; ++i) { average.append(constant); }
+    for(size_t i = 0; i < iter; ++i)
+    {
+      average.append(constant);
+    }
 
     // Check that averaging a constant for the characteristic time T gives the
     // expected theoratical value 1-1/e

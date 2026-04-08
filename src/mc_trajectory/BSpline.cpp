@@ -17,7 +17,9 @@ BSpline::BSpline(double duration,
                  const Eigen::Vector3d & target,
                  const std::vector<Eigen::Vector3d> & waypoints)
 : Spline<Eigen::Vector3d, std::vector<Eigen::Vector3d>>(duration, start, target, waypoints)
-{ update(); }
+{
+  update();
+}
 
 void BSpline::update()
 {
@@ -27,7 +29,10 @@ void BSpline::update()
     std::vector<Eigen::Vector3d> waypoints;
     waypoints.reserve(waypoints_.size() + 2);
     waypoints.push_back(start_);
-    for(const auto & wp : waypoints_) { waypoints.push_back(wp); }
+    for(const auto & wp : waypoints_)
+    {
+      waypoints.push_back(wp);
+    }
     waypoints.push_back(target_);
     spline.reset(new BSpline::bezier_curve_t(waypoints.begin(), waypoints.end(), 0.0, duration_));
     samples_ = this->sampleTrajectory();
@@ -37,10 +42,16 @@ void BSpline::update()
 
 std::vector<Eigen::Vector3d> BSpline::splev(double t, unsigned int der)
 {
-  if(spline == nullptr) { mc_rtc::log::error_and_throw("Invalide BSpline: there should be at least two waypoints"); }
+  if(spline == nullptr)
+  {
+    mc_rtc::log::error_and_throw("Invalide BSpline: there should be at least two waypoints");
+  }
   std::vector<Eigen::Vector3d> pts;
   pts.reserve(der + 1);
-  for(std::size_t order = 0; order <= der; ++order) { pts.push_back(spline->derivate(t, order)); }
+  for(std::size_t order = 0; order <= der; ++order)
+  {
+    pts.push_back(spline->derivate(t, order));
+  }
   return pts;
 }
 

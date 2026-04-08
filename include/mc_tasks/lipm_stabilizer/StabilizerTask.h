@@ -404,13 +404,19 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 
   inline const Eigen::Vector2d biasDCM() noexcept
   {
-    if(c_.dcmBias.withDCMBias) { return dcmEstimator_.getBias(); }
+    if(c_.dcmBias.withDCMBias)
+    {
+      return dcmEstimator_.getBias();
+    }
     return Eigen::Vector2d::Zero();
   }
 
   inline Eigen::Vector2d filteredDCM() const noexcept
   {
-    if(c_.dcmBias.withDCMBias) { return dcmEstimator_.getUnbiasedDCM(); }
+    if(c_.dcmBias.withDCMBias)
+    {
+      return dcmEstimator_.getUnbiasedDCM();
+    }
     return measuredDCM_.segment(0, 2);
   }
 
@@ -479,7 +485,9 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   }
 
   inline void dcmGains(double p, double i, double d) noexcept
-  { dcmGains(Eigen::Vector2d::Constant(p), Eigen::Vector2d::Constant(i), Eigen::Vector2d::Constant(d)); }
+  {
+    dcmGains(Eigen::Vector2d::Constant(p), Eigen::Vector2d::Constant(i), Eigen::Vector2d::Constant(d));
+  }
 
   inline void dcmGains(const Eigen::Vector2d & p, const Eigen::Vector2d & i, const Eigen::Vector2d & d) noexcept
   {
@@ -541,25 +549,37 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   inline void contactWeight(double weight) noexcept
   {
     c_.contactWeight = weight;
-    for(auto footT : contactTasks) { footT->weight(c_.contactWeight); }
+    for(auto footT : contactTasks)
+    {
+      footT->weight(c_.contactWeight);
+    }
   }
 
   inline void contactStiffness(const sva::MotionVecd & stiffness) noexcept
   {
     c_.contactStiffness = stiffness;
-    for(auto contactT : contactTasks) { contactT->stiffness(stiffness); }
+    for(auto contactT : contactTasks)
+    {
+      contactT->stiffness(stiffness);
+    }
   }
 
   inline void contactDamping(const sva::MotionVecd & damping) noexcept
   {
     c_.contactDamping = damping;
-    for(auto contactT : contactTasks) { contactT->damping(damping); }
+    for(auto contactT : contactTasks)
+    {
+      contactT->damping(damping);
+    }
   }
 
   inline void copAdmittance(const Eigen::Vector2d & copAdmittance) noexcept
   {
     c_.copAdmittance = clamp(copAdmittance, 0., c_.safetyThresholds.MAX_COP_ADMITTANCE);
-    for(auto contactT : contactTasks) { contactT->admittance(contactAdmittance()); }
+    for(auto contactT : contactTasks)
+    {
+      contactT->admittance(contactAdmittance());
+    }
   }
 
   inline void copMaxVel(const sva::MotionVecd & copMaxVel) noexcept
@@ -576,7 +596,10 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   inline void copVelFilterGain(double gain) noexcept
   {
     c_.copVelFilterGain = mc_filter::utils::clamp(gain, 0, 1);
-    for(auto & ft : footTasks) { ft.second->velFilterGain(gain); }
+    for(auto & ft : footTasks)
+    {
+      ft.second->velFilterGain(gain);
+    }
   }
 
   /* Get the gain of the low-pass velocity filter of the cop tasks */
@@ -587,10 +610,14 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   inline void vdcStiffness(double stiffness) noexcept { c_.vdcStiffness = clamp(stiffness, 0., 1e4); }
 
   inline void dfAdmittance(Eigen::Vector3d dfAdmittance) noexcept
-  { c_.dfAdmittance = clamp(dfAdmittance, 0., c_.safetyThresholds.MAX_DF_ADMITTANCE); }
+  {
+    c_.dfAdmittance = clamp(dfAdmittance, 0., c_.safetyThresholds.MAX_DF_ADMITTANCE);
+  }
 
   inline void dfDamping(Eigen::Vector3d dfDamping) noexcept
-  { c_.dfDamping = clamp(dfDamping, 0., c_.safetyThresholds.MAX_DF_DAMPING); }
+  {
+    c_.dfDamping = clamp(dfDamping, 0., c_.safetyThresholds.MAX_DF_DAMPING);
+  }
 
   inline void fdqpWeights(const FDQPWeights & fdqp) noexcept { c_.fdqpWeights = fdqp; }
 
@@ -758,7 +785,9 @@ private:
 
   /** Get 6D contact admittance vector from 2D CoP admittance. */
   inline sva::ForceVecd contactAdmittance() const noexcept
-  { return {{c_.copAdmittance.y(), c_.copAdmittance.x(), 0.}, {0., 0., 0.}}; }
+  {
+    return {{c_.copAdmittance.y(), c_.copAdmittance.x(), 0.}, {0., 0., 0.}};
+  }
 
   inline void zmpcc(const ZMPCCConfiguration & zmpccConfig) noexcept
   {
@@ -843,7 +872,9 @@ protected:
   {
     template<typename T>
     std::size_t operator()(T t) const
-    { return static_cast<std::size_t>(t); }
+    {
+      return static_cast<std::size_t>(t);
+    }
   };
   std::unordered_map<ContactState,
                      internal::Contact,

@@ -205,7 +205,9 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric
    */
   void dimWeightInterpolation(const std::vector<std::pair<double, Eigen::Vector6d>> & dimWeights);
   inline const std::vector<std::pair<double, Eigen::Vector6d>> & dimWeightInterpolation() const noexcept
-  { return dimWeightInterpolator_.values(); }
+  {
+    return dimWeightInterpolator_.values();
+  }
 
   /**
    * \anchor stiffnessInterpolation
@@ -223,7 +225,9 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric
    */
   void stiffnessInterpolation(const std::vector<std::pair<double, Eigen::Vector6d>> & stiffnessGains);
   inline const std::vector<std::pair<double, Eigen::Vector6d>> & stiffnessInterpolation() const noexcept
-  { return stiffnessInterpolator_.values(); }
+  {
+    return stiffnessInterpolator_.values();
+  }
 
   /**
    * \anchor dampingInterpolation
@@ -240,7 +244,9 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric
    */
   void dampingInterpolation(const std::vector<std::pair<double, Eigen::Vector6d>> & dampingGains);
   inline const std::vector<std::pair<double, Eigen::Vector6d>> & dampingInterpolation() const noexcept
-  { return dampingInterpolator_.values(); }
+  {
+    return dampingInterpolator_.values();
+  }
 
   /** @} */
 

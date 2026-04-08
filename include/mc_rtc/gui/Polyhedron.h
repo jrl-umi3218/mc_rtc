@@ -152,12 +152,16 @@ protected:
 /** Helper function to build a PolyhedronTriangleListImpl */
 template<typename GetTrianglesT>
 auto Polyhedron(const std::string & name, GetTrianglesT get_triangles_fn)
-{ return details::PolyhedronTrianglesListImpl<GetTrianglesT>(name, {}, get_triangles_fn); }
+{
+  return details::PolyhedronTrianglesListImpl<GetTrianglesT>(name, {}, get_triangles_fn);
+}
 
 /** Helper function to build a PolyhedronTriangleListImpl */
 template<typename GetTrianglesT>
 auto Polyhedron(const std::string & name, const PolyhedronConfig & config, GetTrianglesT get_triangles_fn)
-{ return details::PolyhedronTrianglesListImpl<GetTrianglesT>(name, config, get_triangles_fn); }
+{
+  return details::PolyhedronTrianglesListImpl<GetTrianglesT>(name, config, get_triangles_fn);
+}
 
 /** Helper function to build a PolyhedronVerticesTrianglesImpl */
 template<typename GetVerticesOrTrianglesT, typename GetTrianglesOrColorsT>

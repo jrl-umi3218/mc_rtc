@@ -29,7 +29,10 @@ CompoundJointConstraint::CompoundJointConstraint(const mc_rbdyn::Robots & robots
                                                  const CompoundJointConstraintDescriptionVector & desc)
 : rIndex_(rIndex), name_("CompoundJointConstraint_" + robots.robot(rIndex).name()), dt_(dt)
 {
-  for(const auto & d : desc) { addConstraint(robots, rIndex, d); }
+  for(const auto & d : desc)
+  {
+    addConstraint(robots, rIndex, d);
+  }
 }
 
 CompoundJointConstraint::~CompoundJointConstraint() {}
@@ -39,10 +42,16 @@ void CompoundJointConstraint::addConstraint(const mc_rbdyn::Robots & robots,
                                             const CompoundJointConstraintDescription & desc)
 {
   const auto & robot = robots.robot(rIndex);
-  if(rIndex != rIndex_) { mc_rtc::log::error_and_throw("You must create one CompoundJointConstraint per robot"); }
+  if(rIndex != rIndex_)
+  {
+    mc_rtc::log::error_and_throw("You must create one CompoundJointConstraint per robot");
+  }
   auto check_joint = [&](const std::string & jname)
   {
-    if(!robot.hasJoint(jname)) { mc_rtc::log::error_and_throw("No joint named {} in {}", jname, robot.name()); }
+    if(!robot.hasJoint(jname))
+    {
+      mc_rtc::log::error_and_throw("No joint named {} in {}", jname, robot.name());
+    }
     auto qIdx = robot.jointIndexByName(jname);
     if(robot.mb().joint(static_cast<int>(qIdx)).dof() != 1)
     {
@@ -113,12 +122,18 @@ struct TVMCompoundJointConstraint
 
   void addToSolver(mc_solver::TVMQPSolver & solver)
   {
-    for(const auto & f : functions_) { constraints_.push_back(solver.problem().add(f <= 0.)); }
+    for(const auto & f : functions_)
+    {
+      constraints_.push_back(solver.problem().add(f <= 0.));
+    }
   }
 
   void removeFromSolver(mc_solver::TVMQPSolver & solver)
   {
-    for(const auto & c : constraints_) { solver.problem().remove(*c); }
+    for(const auto & c : constraints_)
+    {
+      solver.problem().remove(*c);
+    }
     constraints_.clear();
   }
 };

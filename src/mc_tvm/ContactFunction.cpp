@@ -73,8 +73,14 @@ void ContactFunction::updateValue()
       auto offset = sva::PTransformd(sva::RotX(error(0)) * sva::RotY(error(1)) * sva::RotZ(error(2)), error.tail<3>());
       X_cf_f_init = offset * X_cf_f;
     };
-    if(use_f1_) { updateX_cf_f(*static_cast<const RobotFrame *>(f1_), X_cf_f1_); }
-    if(use_f2_) { updateX_cf_f(*static_cast<const RobotFrame *>(f2_), X_cf_f2_); }
+    if(use_f1_)
+    {
+      updateX_cf_f(*static_cast<const RobotFrame *>(f1_), X_cf_f1_);
+    }
+    if(use_f2_)
+    {
+      updateX_cf_f(*static_cast<const RobotFrame *>(f2_), X_cf_f2_);
+    }
   }
   const auto & X_0_f1cf = X_cf_f1_.inv() * f1_->position();
   const auto & X_0_f2cf = X_cf_f2_.inv() * f2_->position();
@@ -88,7 +94,10 @@ void ContactFunction::updateDerivatives()
 {
   velocity_.setZero();
   normalAcceleration_.setZero();
-  for(const auto & var : variables()) { jacobian_[var.get()].setZero(); }
+  for(const auto & var : variables())
+  {
+    jacobian_[var.get()].setZero();
+  }
   auto updateDerivatives =
       [this](const mc_tvm::RobotFrame & frame, rbd::Jacobian & jac, double sign, const sva::PTransformd & X_f_cf)
   {
@@ -110,8 +119,14 @@ void ContactFunction::updateDerivatives()
 
     velocity_ += sign * dof_.asDiagonal() * jac.velocity(mb, mbc, X_f_cf * frame.frame().X_b_f()).vector();
   };
-  if(use_f1_) { updateDerivatives(*static_cast<const mc_tvm::RobotFrame *>(f1_), f1Jacobian_, 1.0, X_cf_f1_.inv()); }
-  if(use_f2_) { updateDerivatives(*static_cast<const mc_tvm::RobotFrame *>(f2_), f2Jacobian_, -1.0, X_cf_f2_.inv()); }
+  if(use_f1_)
+  {
+    updateDerivatives(*static_cast<const mc_tvm::RobotFrame *>(f1_), f1Jacobian_, 1.0, X_cf_f1_.inv());
+  }
+  if(use_f2_)
+  {
+    updateDerivatives(*static_cast<const mc_tvm::RobotFrame *>(f2_), f2Jacobian_, -1.0, X_cf_f2_.inv());
+  }
 }
 
 } // namespace mc_tvm

@@ -41,15 +41,23 @@ void PositionFunction::reset()
 }
 
 void PositionFunction::updateValue()
-{ value_ = frame_.position().translation() - pos_; }
+{
+  value_ = frame_.position().translation() - pos_;
+}
 
 void PositionFunction::updateVelocity()
-{ velocity_ = frame_.velocity().linear() - refVel_; }
+{
+  velocity_ = frame_.velocity().linear() - refVel_;
+}
 
 void PositionFunction::updateJacobian()
-{ splitJacobian(frame_.jacobian().bottomRows<3>(), robot_frame_->robot().tvmRobot().q()); }
+{
+  splitJacobian(frame_.jacobian().bottomRows<3>(), robot_frame_->robot().tvmRobot().q());
+}
 
 void PositionFunction::updateNormalAcceleration()
-{ normalAcceleration_ = frame_.normalAcceleration().linear() - refAccel_; }
+{
+  normalAcceleration_ = frame_.normalAcceleration().linear() - refAccel_;
+}
 
 } // namespace mc_tvm

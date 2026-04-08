@@ -18,7 +18,10 @@ std::string cat2str(const std::vector<std::string> & cat)
   for(size_t i = 0; i < cat.size(); ++i)
   {
     ret += cat[i];
-    if(i != cat.size() - 1) { ret += "/"; }
+    if(i != cat.size() - 1)
+    {
+      ret += "/";
+    }
   }
   return ret;
 }
@@ -36,16 +39,23 @@ struct SampleControllerClient : public mc_control::ControllerClient
 
 SampleControllerClient::SampleControllerClient()
 : mc_control::ControllerClient("ipc:///tmp/mc_rtc_pub.ipc", "ipc:///tmp/mc_rtc_rep.ipc")
-{ start(); }
+{
+  start();
+}
 
 void SampleControllerClient::join()
 {
-  while(run_) { std::this_thread::sleep_for(std::chrono::seconds(1)); }
+  while(run_)
+  {
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+  }
   stop();
 }
 
 void SampleControllerClient::category(const std::vector<std::string> & category, const std::string & name)
-{ mc_rtc::log::info("Create new category {} in {}", name, cat2str(category)); }
+{
+  mc_rtc::log::info("Create new category {} in {}", name, cat2str(category));
+}
 
 int main()
 {

@@ -33,7 +33,9 @@ struct StationaryOffset
    */
   StationaryOffset(double dt, double timeConstant, const VectorT & initValue = VectorT::Zero())
   : average_(dt, timeConstant, initValue)
-  { this->reset(initValue); }
+  {
+    this->reset(initValue);
+  }
 
   /** Update input signal value.
    *
@@ -44,7 +46,10 @@ struct StationaryOffset
   {
     average_.append(value);
     filteredValue_ = value - average_.eval();
-    if(saturation_ > 0.) { utils::clampInPlace(filteredValue_, -saturation_, saturation_); }
+    if(saturation_ > 0.)
+    {
+      utils::clampInPlace(filteredValue_, -saturation_, saturation_);
+    }
   }
 
   /** Get output value where the stationary offset has been filtered.

@@ -81,7 +81,10 @@ std::vector<Plane> planes_from_polygon(const std::shared_ptr<geos::geom::Geometr
     const geos::geom::Coordinate & prev = seq->getAt(i == 0 ? seq->size() - 1 : i - 1);
     plane.normal = Eigen::Vector3d(p.y - prev.y, prev.x - p.x, 0);
     double norm = plane.normal.norm();
-    if(norm > 0) { plane.normal = plane.normal / norm; }
+    if(norm > 0)
+    {
+      plane.normal = plane.normal / norm;
+    }
     else
     {
       plane.normal = Eigen::Vector3d::Zero();

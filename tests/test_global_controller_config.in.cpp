@@ -1,7 +1,9 @@
 #include <string>
 
 std::string get_config_file()
-{ return "@CONFIGURATION_FILE@"; }
+{
+  return "@CONFIGURATION_FILE@";
+}
 
 unsigned int nrIter()
 {
@@ -11,4 +13,6 @@ unsigned int nrIter()
 }
 
 std::string next_controller()
-{ return "@NEXT_CONTROLLER@"; }
+{
+  return "@NEXT_CONTROLLER@";
+}

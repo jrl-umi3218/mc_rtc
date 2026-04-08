@@ -11,7 +11,9 @@ Pendulum::Pendulum(double lambda,
                    const Eigen::Vector3d & com,
                    const Eigen::Vector3d & comd,
                    const Eigen::Vector3d & comdd)
-{ reset(lambda, com, comd, comdd); }
+{
+  reset(lambda, com, comd, comdd);
+}
 
 void Pendulum::reset(double lambda,
                      const Eigen::Vector3d & com,

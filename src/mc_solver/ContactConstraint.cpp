@@ -99,8 +99,14 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
     {
       std::string cTypeStr = config("contactType", std::string{"velocity"});
       auto cType = mc_solver::ContactConstraint::ContactType::Velocity;
-      if(cTypeStr == "acceleration") { cType = mc_solver::ContactConstraint::ContactType::Acceleration; }
-      else if(cTypeStr == "position") { cType = mc_solver::ContactConstraint::ContactType::Position; }
+      if(cTypeStr == "acceleration")
+      {
+        cType = mc_solver::ContactConstraint::ContactType::Acceleration;
+      }
+      else if(cTypeStr == "position")
+      {
+        cType = mc_solver::ContactConstraint::ContactType::Position;
+      }
       else if(cTypeStr != "velocity")
       {
         mc_rtc::log::error("Stored contact type for contact constraint not recognized, default to velocity");

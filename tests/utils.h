@@ -27,7 +27,9 @@ bool allclose(
     const Eigen::DenseBase<DerivedB> & b,
     const typename DerivedA::RealScalar & rtol = Eigen::NumTraits<typename DerivedA::RealScalar>::dummy_precision(),
     const typename DerivedA::RealScalar & atol = Eigen::NumTraits<typename DerivedA::RealScalar>::epsilon())
-{ return ((a.derived() - b.derived()).array().abs() <= (atol + rtol * b.derived().array().abs())).all(); }
+{
+  return ((a.derived() - b.derived()).array().abs() <= (atol + rtol * b.derived().array().abs())).all();
+}
 
 bool configureRobotLoader()
 {
@@ -75,10 +77,14 @@ sva::PTransformd random_pt()
 }
 
 sva::ForceVecd random_fv()
-{ return {Eigen::Vector3d::Random(), Eigen::Vector3d::Random()}; }
+{
+  return {Eigen::Vector3d::Random(), Eigen::Vector3d::Random()};
+}
 
 sva::MotionVecd random_mv()
-{ return {Eigen::Vector3d::Random(), Eigen::Vector3d::Random()}; }
+{
+  return {Eigen::Vector3d::Random(), Eigen::Vector3d::Random()};
+}
 
 double rnd()
 {
@@ -99,7 +105,10 @@ size_t random_size()
 size_t random_size_except(size_t s)
 {
   auto out = random_size();
-  while(out == s) { out = random_size(); }
+  while(out == s)
+  {
+    out = random_size();
+  }
   return out;
 }
 
@@ -114,7 +123,10 @@ bool random_bool()
 std::vector<double> random_vector()
 {
   std::vector<double> v(random_size());
-  for(size_t i = 0; i < v.size(); ++i) { v[i] = rnd(); }
+  for(size_t i = 0; i < v.size(); ++i)
+  {
+    v[i] = rnd();
+  }
   return v;
 }
 

@@ -518,7 +518,9 @@ struct MC_RBDYN_DLLAPI RobotModule
    * - acceleration limits (lower/upper)
    */
   const std::vector<std::map<std::string, std::vector<double>>> & accelerationBounds() const
-  { return _accelerationBounds; }
+  {
+    return _accelerationBounds;
+  }
 
   /** Returns the robot's jerk bounds
    *
@@ -541,7 +543,9 @@ struct MC_RBDYN_DLLAPI RobotModule
    * - torque-derivative limits (lower/upper)
    */
   const std::vector<std::map<std::string, std::vector<double>>> & torqueDerivativeBounds() const
-  { return _torqueDerivativeBounds; }
+  {
+    return _torqueDerivativeBounds;
+  }
 
   /** Returns a default configuration for the robot
    *
@@ -584,7 +588,9 @@ struct MC_RBDYN_DLLAPI RobotModule
    * provided in a separate map see \ref collisionTransforms()
    */
   const std::map<std::string, std::pair<std::string, S_ObjectPtr>> & collisionObjects() const
-  { return _collisionObjects; }
+  {
+    return _collisionObjects;
+  }
 
   /** Returns a map describing the STPBV hulls for the robot
    *
@@ -685,7 +691,9 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   /** Return default configuration for the lipm stabilizer */
   const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & defaultLIPMStabilizerConfiguration() const
-  { return _lipmStabilizerConfig; }
+  {
+    return _lipmStabilizerConfig;
+  }
 
   /** Generate correct bounds from URDF bounds
    *
@@ -881,16 +889,28 @@ inline bool operator==(const RobotModule::Gripper & lhs, const RobotModule::Grip
   {
     auto lmimics = lhs.mimics();
     auto rmimics = rhs.mimics();
-    if(lmimics == nullptr && rmimics == nullptr) { return true; }
-    if(lmimics == nullptr || rmimics == nullptr) { return false; }
+    if(lmimics == nullptr && rmimics == nullptr)
+    {
+      return true;
+    }
+    if(lmimics == nullptr || rmimics == nullptr)
+    {
+      return false;
+    }
     return *lmimics == *rmimics;
   };
   auto compareSafety = [&]()
   {
     auto lsafety = lhs.safety();
     auto rsafety = rhs.safety();
-    if(lsafety == nullptr && rsafety == nullptr) { return true; }
-    if(lsafety == nullptr || rsafety == nullptr) { return false; }
+    if(lsafety == nullptr && rsafety == nullptr)
+    {
+      return true;
+    }
+    if(lsafety == nullptr || rsafety == nullptr)
+    {
+      return false;
+    }
     return *lsafety == *rsafety;
   };
   return lhs.name == rhs.name && lhs.joints == rhs.joints && lhs.reverse_limits == rhs.reverse_limits && compareSafety()

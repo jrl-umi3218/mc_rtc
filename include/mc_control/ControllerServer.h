@@ -70,7 +70,10 @@ struct MC_CONTROL_DLLAPI ControllerServer
   /** Set requests to handle on the next iteration */
   inline void push_requests(const std::vector<mc_rtc::Logger::GUIEvent> & requests)
   {
-    for(const auto & r : requests) { requests_.push_back(r); }
+    for(const auto & r : requests)
+    {
+      requests_.push_back(r);
+    }
   }
 
   /** Update the rate of the server */

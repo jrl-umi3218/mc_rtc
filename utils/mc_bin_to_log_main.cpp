@@ -10,7 +10,9 @@ namespace fs = std::filesystem;
 #include "mc_bin_to_log.h"
 
 void usage(const char * bin)
-{ mc_rtc::log::error("Usage: {} [bin] ([log])", bin); }
+{
+  mc_rtc::log::error("Usage: {} [bin] ([log])", bin);
+}
 
 int main(int argc, char * argv[])
 {
@@ -21,7 +23,10 @@ int main(int argc, char * argv[])
   }
   std::string in = argv[1];
   std::string out = "";
-  if(argc == 3) { out = argv[2]; }
+  if(argc == 3)
+  {
+    out = argv[2];
+  }
   else
   {
     out = fs::path(argv[1]).filename().replace_extension(".csv").string();

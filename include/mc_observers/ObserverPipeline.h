@@ -83,7 +83,9 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
 
     template<typename T>
     T & observer()
-    { return const_cast<T &>(static_cast<const PipelineObserver *>(this)->observer<T>()); }
+    {
+      return const_cast<T &>(static_cast<const PipelineObserver *>(this)->observer<T>());
+    }
 
     bool update() const noexcept { return update_; }
 
@@ -178,7 +180,9 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
 
   /* Non-const variant */
   PipelineObserver & observer(const std::string & name)
-  { return const_cast<PipelineObserver &>(static_cast<const ObserverPipeline *>(this)->observer(name)); }
+  {
+    return const_cast<PipelineObserver &>(static_cast<const ObserverPipeline *>(this)->observer(name));
+  }
 
   const std::vector<PipelineObserver> & observers() const { return pipelineObservers_; }
 

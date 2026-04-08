@@ -18,11 +18,23 @@ struct TestObserver : public mc_observers::Observer
   void configure(const mc_control::MCController &, const mc_rtc::Configuration & config) override
   {
     BOOST_REQUIRE(config.has("fromObserverConfig"));
-    if(!config.has("robot")) { BOOST_REQUIRE(config.has("fromRobotConfig")); }
-    if(name() == "FullConfiguration") { BOOST_REQUIRE(config.has("fromControllerConfig")); }
+    if(!config.has("robot"))
+    {
+      BOOST_REQUIRE(config.has("fromRobotConfig"));
+    }
+    if(name() == "FullConfiguration")
+    {
+      BOOST_REQUIRE(config.has("fromControllerConfig"));
+    }
     BOOST_REQUIRE(config.has("finalValue"));
-    if(name() == "FullConfiguration") { BOOST_REQUIRE(config("finalValue").operator int() == 3); }
-    else if(name() == "NoControllerConfiguration") { BOOST_REQUIRE(config("finalValue").operator int() == 2); }
+    if(name() == "FullConfiguration")
+    {
+      BOOST_REQUIRE(config("finalValue").operator int() == 3);
+    }
+    else if(name() == "NoControllerConfiguration")
+    {
+      BOOST_REQUIRE(config("finalValue").operator int() == 2);
+    }
     else
     {
       BOOST_REQUIRE(name() == "NoControllerOrRobotConfiguration");

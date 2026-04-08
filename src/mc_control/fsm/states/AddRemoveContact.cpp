@@ -36,7 +36,9 @@ struct AddRemoveContactStateImplHelper
                        mc_rtc::Configuration & config);
 
   static void make_run_impl(AddRemoveContactStateImpl &, Controller &, mc_rbdyn::Contact &, mc_rtc::Configuration &)
-  { static_assert(always_false<T>::value, "AddRemoveContactStateImplHelper not implemented for this type"); }
+  {
+    static_assert(always_false<T>::value, "AddRemoveContactStateImplHelper not implemented for this type");
+  }
 };
 
 template<>
@@ -72,7 +74,10 @@ struct AddRemoveContactStateImpl
     {
       com_task_ = std::make_shared<mc_tasks::CoMTask>(ctl.robots(), contact.r1Index());
       com_task_->reset();
-      if(config_.has("com")) { com_task_->load(ctl.solver(), config_("com")); }
+      if(config_.has("com"))
+      {
+        com_task_->load(ctl.solver(), config_("com"));
+      }
     }
     std::string type = config_("type");
     bool removeContact = (type == "removeContact");
@@ -93,9 +98,18 @@ struct AddRemoveContactStateImpl
         mc_rtc::log::warning("Defaulting to simulated contact sensor");
         config_.add("type", "addContact");
         isCompliant = false;
-        if(!config_.has("stiffness")) { config_.add("stiffness", 2.0); }
-        if(!config_.has("weight")) { config_.add("weight", 1000.0); }
-        if(!config_.has("speed")) { config_.add("speed", 0.01); }
+        if(!config_.has("stiffness"))
+        {
+          config_.add("stiffness", 2.0);
+        }
+        if(!config_.has("weight"))
+        {
+          config_.add("weight", 1000.0);
+        }
+        if(!config_.has("speed"))
+        {
+          config_.add("speed", 0.01);
+        }
       }
     }
     bool hasContact =
@@ -119,7 +133,10 @@ struct AddRemoveContactStateImpl
         }
       }
       std::string name = contact.r1Surface()->name() + "_" + contact.r2Surface()->name() + "_com";
-      if(removeContact) { name = "RemoveContact_" + name; }
+      if(removeContact)
+      {
+        name = "RemoveContact_" + name;
+      }
       else
       {
         name = "AddContact_" + name;
@@ -204,11 +221,17 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
   impl.run_ = [fsm_contact_, sensor_, robotIndex_, envIndex_, hasForceSensor_, forceThreshold_, forceSensorName_,
                forceOnly_, forceThresholdIter_, forceIter_](AddRemoveContactStateImpl & impl, Controller & ctl) mutable
   {
-    if(!fsm_contact_) { return true; }
+    if(!fsm_contact_)
+    {
+      return true;
+    }
     auto & robot = ctl.robots().robot(robotIndex_);
     auto & env = ctl.robots().robot(envIndex_);
     auto d = sensor_.update(robot, env);
-    if(hasForceSensor_ && ctl.robot().forceSensor(forceSensorName_).force().z() > forceThreshold_) { forceIter_++; }
+    if(hasForceSensor_ && ctl.robot().forceSensor(forceSensorName_).force().z() > forceThreshold_)
+    {
+      forceIter_++;
+    }
     else
     {
       forceIter_ = 0;
@@ -217,7 +240,10 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
     {
       if(fsm_contact_)
       {
-        if(d <= 0) { mc_rtc::log::info("Geometric contact detected"); }
+        if(d <= 0)
+        {
+          mc_rtc::log::info("Geometric contact detected");
+        }
         else
         {
           mc_rtc::log::info("Force contact detected");
@@ -261,7 +287,9 @@ AddRemoveContactState::AddRemoveContactState() : impl_(new AddRemoveContactState
 AddRemoveContactState::~AddRemoveContactState() {}
 
 void AddRemoveContactState::start(Controller & ctl)
-{ impl_->start(ctl, config_); }
+{
+  impl_->start(ctl, config_);
+}
 
 bool AddRemoveContactState::run(Controller & ctl)
 {
@@ -278,7 +306,10 @@ void AddRemoveContactState::teardown(Controller & ctl)
   if(impl_->task_)
   {
     ctl.solver().removeTask(impl_->task_);
-    if(impl_->useCoM_) { ctl.solver().removeTask(impl_->com_task_); }
+    if(impl_->useCoM_)
+    {
+      ctl.solver().removeTask(impl_->com_task_);
+    }
   }
 }
 

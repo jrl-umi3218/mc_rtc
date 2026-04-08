@@ -54,11 +54,15 @@ struct RotationImpl : public CommonInputImpl<GetT, SetT>
 /** Helper function to create a Rotation element (read-only) */
 template<typename GetT>
 auto Rotation(const std::string & name, GetT get_fn)
-{ return details::RotationImpl(name, get_fn); }
+{
+  return details::RotationImpl(name, get_fn);
+}
 
 /** Helper function to create a Rotation element (writable) */
 template<typename GetT, typename SetT>
 auto Rotation(const std::string & name, GetT get_fn, SetT set_fn)
-{ return details::RotationImpl(name, get_fn, set_fn); }
+{
+  return details::RotationImpl(name, get_fn, set_fn);
+}
 
 } // namespace mc_rtc::gui

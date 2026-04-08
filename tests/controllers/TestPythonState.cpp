@@ -35,7 +35,10 @@ public:
   {
     bool ret = fsm::Controller::run();
     BOOST_REQUIRE(ret);
-    if(iter_ == 0) { BOOST_REQUIRE(executor_.state() == "TestInitial"); }
+    if(iter_ == 0)
+    {
+      BOOST_REQUIRE(executor_.state() == "TestInitial");
+    }
     else if(iter_ == 1)
     {
       BOOST_REQUIRE(executor_.next_state() == "TestFinal");
@@ -75,7 +78,10 @@ public:
                   const Eigen::Vector6d & dof = Eigen::Vector6d::Ones())
   {
     fsm::Contact c("jvrc1", "ground", s, "AllGround", friction, dof);
-    if(!hasContact(c)) { return false; }
+    if(!hasContact(c))
+    {
+      return false;
+    }
     const auto & ref = contact(c);
     return ref.friction == c.friction && ref.dof == c.dof;
   }

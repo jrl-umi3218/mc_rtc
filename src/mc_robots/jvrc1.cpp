@@ -86,7 +86,10 @@ JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics) : RobotModule
                                    0.,    0.,    0., 0.,   0.,    -0.052, 0.17,  0.,   -0.52, 0.,   0.,    0.,    0.,
                                    0.,    0.,    0., 0.,   0.,    0.,     0.,    0.,   0.,    0.,   0.};
   const auto & rjo = ref_joint_order();
-  for(size_t i = 0; i < rjo.size(); ++i) { _stance[rjo[i]] = {default_q[i]}; }
+  for(size_t i = 0; i < rjo.size(); ++i)
+  {
+    _stance[rjo[i]] = {default_q[i]};
+  }
   _default_attitude = {{1., 0., 0., 0., 0., 0., 0.8275}};
   _forceSensors.push_back(mc_rbdyn::ForceSensor("RightFootForceSensor", "R_ANKLE_P_S", sva::PTransformd::Identity()));
   _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftFootForceSensor", "L_ANKLE_P_S", sva::PTransformd::Identity()));
@@ -96,7 +99,10 @@ JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics) : RobotModule
   _bodySensors.emplace_back("Accelerometer", "PELVIS_S", sva::PTransformd(Eigen::Vector3d(-0.0325, 0, 0.1095)));
   _bodySensors.emplace_back("FloatingBase", "PELVIS_S", sva::PTransformd::Identity());
 
-  for(size_t i = 0; i < rjo.size(); ++i) { _jointSensors.push_back(mc_rbdyn::JointSensor(rjo[i])); }
+  for(size_t i = 0; i < rjo.size(); ++i)
+  {
+    _jointSensors.push_back(mc_rbdyn::JointSensor(rjo[i]));
+  }
 
   _minimalSelfCollisions = {
       {"WAIST_R_S", "L_SHOULDER_Y_S", 0.02, 0.001, 0.}, {"WAIST_R_S", "R_SHOULDER_Y_S", 0.02, 0.001, 0.},
@@ -131,15 +137,31 @@ JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics) : RobotModule
 extern "C"
 {
   ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names)
-  { names = {"JVRC1", "JVRC1Fixed", "JVRC1NoHands", "JVRC1NoHandsFixed"}; }
+  {
+    names = {"JVRC1", "JVRC1Fixed", "JVRC1NoHands", "JVRC1NoHandsFixed"};
+  }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
-  { delete ptr; }
+  {
+    delete ptr;
+  }
   ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & name)
   {
-    if(name == "JVRC1") { return new mc_robots::JVRC1RobotModule(false); }
-    else if(name == "JVRC1Fixed") { return new mc_robots::JVRC1RobotModule(true); }
-    if(name == "JVRC1NoHands") { return new mc_robots::JVRC1RobotModule(false, true); }
-    else if(name == "JVRC1NoHandsFixed") { return new mc_robots::JVRC1RobotModule(true, true); }
+    if(name == "JVRC1")
+    {
+      return new mc_robots::JVRC1RobotModule(false);
+    }
+    else if(name == "JVRC1Fixed")
+    {
+      return new mc_robots::JVRC1RobotModule(true);
+    }
+    if(name == "JVRC1NoHands")
+    {
+      return new mc_robots::JVRC1RobotModule(false, true);
+    }
+    else if(name == "JVRC1NoHandsFixed")
+    {
+      return new mc_robots::JVRC1RobotModule(true, true);
+    }
     else
     {
       mc_rtc::log::error("JVRC1 module Cannot create an object of type {}", name);

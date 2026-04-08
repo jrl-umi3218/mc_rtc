@@ -17,7 +17,9 @@ struct MC_CONTROL_DLLAPI TestCanonicalRobotController : public mc_control::Globa
   void init(mc_control::MCGlobalController & gc, const mc_rtc::Configuration &) override { reset(gc); }
 
   void reset(mc_control::MCGlobalController & gc) override
-  { gc.controller().datastore().make<bool>("HasTestCanonicalRobotControllerPlugin", true); }
+  {
+    gc.controller().datastore().make<bool>("HasTestCanonicalRobotControllerPlugin", true);
+  }
 
   void before(mc_control::MCGlobalController &) override {}
 
@@ -74,11 +76,17 @@ extern "C"
 {
 
   GLOBAL_PLUGIN_API void MC_RTC_GLOBAL_PLUGIN(std::vector<std::string> & names)
-  { names = {"TestCanonicalRobotController"}; }
+  {
+    names = {"TestCanonicalRobotController"};
+  }
 
   GLOBAL_PLUGIN_API void destroy(mc_control::GlobalPlugin * ptr)
-  { delete ptr; }
+  {
+    delete ptr;
+  }
 
   GLOBAL_PLUGIN_API mc_control::GlobalPlugin * create(const std::string &)
-  { return new mc_plugin::TestCanonicalRobotController(); }
+  {
+    return new mc_plugin::TestCanonicalRobotController();
+  }
 }

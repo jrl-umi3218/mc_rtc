@@ -38,7 +38,9 @@
       names = {NAME};                                                           \
     }                                                                           \
     ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)                  \
-    { delete ptr; }
+    {                                                                           \
+      delete ptr;                                                               \
+    }
 
 /*! ROBOT_MODULE_DEFAULT_CONSTRUCTOR
  * Declare an external symbol for creation using a default constructor
@@ -50,9 +52,13 @@
     {                                                                      \
       ROBOT_MODULE_COMMON(NAME)                                            \
       ROBOT_MODULE_API unsigned int create_args_required()                 \
-      { return 1; }                                                        \
+      {                                                                    \
+        return 1;                                                          \
+      }                                                                    \
       ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string &) \
-      { return new TYPE(); }                                               \
+      {                                                                    \
+        return new TYPE();                                                 \
+      }                                                                    \
     }
 
 /*! ROBOT_MODULE_CANONIC_CONSTRUCTOR
@@ -64,11 +70,15 @@
     {                                                                           \
       ROBOT_MODULE_COMMON(NAME)                                                 \
       ROBOT_MODULE_API unsigned int create_args_required()                      \
-      { return 3; }                                                             \
+      {                                                                         \
+        return 3;                                                               \
+      }                                                                         \
       ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string &,      \
                                                       const std::string & path, \
                                                       const std::string & name) \
-      { return new TYPE(path, name); }                                          \
+      {                                                                         \
+        return new TYPE(path, name);                                            \
+      }                                                                         \
     }
 
 #else

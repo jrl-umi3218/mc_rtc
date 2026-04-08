@@ -68,10 +68,16 @@ struct FakeZMPGraph
         start_ss = false;
         feet.push_back(makeFoot(lfoot_x, 0.5, Color(0.5, 0.5, 0.5)));
         feet[feet.size() - 2].outline(Color::Red).fill(Color::Blue);
-        if(start_walk) { speed = speed / 2; }
+        if(start_walk)
+        {
+          speed = speed / 2;
+        }
       }
       lfoot_x += speed;
-      for(auto & points : feet.back().points()) { points[0] += speed; }
+      for(auto & points : feet.back().points())
+      {
+        points[0] += speed;
+      }
       start_ds = true;
     }
     else if(t < 1.2)
@@ -102,7 +108,10 @@ struct FakeZMPGraph
         feet[feet.size() - 2].outline(Color::Red).fill(Color::Blue);
       }
       rfoot_x += speed;
-      for(auto & points : feet.back().points()) { points[0] += speed; }
+      for(auto & points : feet.back().points())
+      {
+        points[0] += speed;
+      }
       start_ds = true;
     }
     else
@@ -143,7 +152,10 @@ struct FakeZMPGraph
 
   Color color() const
   {
-    if(std::abs(zmp_y) > 0.9) { return Color::Red; }
+    if(std::abs(zmp_y) > 0.9)
+    {
+      return Color::Red;
+    }
     else
     {
       return Color::Black;
@@ -831,7 +843,10 @@ SampleServer::SampleServer() : xythetaz_(4)
                                             "Data",
                                             [this](std::vector<std::array<double, 2>> & points)
                                             {
-                                              if(!chunky_xy_data_.add_data) { return; }
+                                              if(!chunky_xy_data_.add_data)
+                                              {
+                                                return;
+                                              }
                                               double t0 = chunky_xy_data_.t;
                                               double tF = 0.1;
                                               for(double t = t0; t < t0 + 1.0; t += 0.01)
@@ -924,7 +939,10 @@ void SampleServer::switch_visual(const std::string & choice)
     choices.reserve(robot.mb().bodies().size());
     for(const auto & b : robot.mb().bodies())
     {
-      if(robot.module()._visual.count(b.name())) { choices.push_back(b.name()); }
+      if(robot.module()._visual.count(b.name()))
+      {
+        choices.push_back(b.name());
+      }
     }
     builder.addElement({"Visual"}, mc_rtc::gui::ComboInput(
                                        "body", choices, [this]() { return robotVisual_; },
@@ -938,7 +956,10 @@ void SampleServer::switch_visual(const std::string & choice)
                      mc_rtc::gui::Transform(
                          "position", [this]() -> const sva::PTransformd & { return visualPos_; },
                          [this](const sva::PTransformd & p) { visualPos_ = p; }));
-  if(choice == "mesh") { return; }
+  if(choice == "mesh")
+  {
+    return;
+  }
   builder.addElement({"Visual"}, mc_rtc::gui::Visual(
                                      choice, [this]() -> const rbd::parsers::Visual & { return visual_; },
                                      [this]() -> const sva::PTransformd & { return visualPos_; }));
@@ -1091,7 +1112,10 @@ void SampleServer::add_demo_plot(const std::string & name,
                      mc_rtc::gui::Button("Add " + name + " plot",
                                          [has_plot, callback, name, this]() mutable
                                          {
-                                           if(has_plot) { builder.removePlot(name); }
+                                           if(has_plot)
+                                           {
+                                             builder.removePlot(name);
+                                           }
                                            else
                                            {
                                              callback(name);
@@ -1123,7 +1147,10 @@ void SampleServer::make_table(size_t s)
   {
     data.emplace_back();
     auto & vec = data.back();
-    for(size_t j = 1; j <= s; ++j) { vec.push_back(std::pow(d, j)); }
+    for(size_t j = 1; j <= s; ++j)
+    {
+      vec.push_back(std::pow(d, j));
+    }
     d += 1.1;
   }
   table_header = std::move(header);

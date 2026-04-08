@@ -26,7 +26,9 @@ VectorOrientationTask::VectorOrientationTask(const std::string & bodyName,
                                              double stiffness,
                                              double weight)
 : VectorOrientationTask(robots.robot(robotIndex).frame(bodyName), bodyVector, stiffness, weight)
-{ this->targetVector(targetVector); }
+{
+  this->targetVector(targetVector);
+}
 
 VectorOrientationTask::VectorOrientationTask(const mc_rbdyn::RobotFrame & frame,
                                              const Eigen::Vector3d & frameVector,
@@ -167,7 +169,10 @@ void VectorOrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 void VectorOrientationTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   TrajectoryBase::load(solver, config);
-  if(config.has("targetVector")) { targetVector(config("targetVector")); }
+  if(config.has("targetVector"))
+  {
+    targetVector(config("targetVector"));
+  }
   if(config.has("relativeVector"))
   {
     Eigen::Matrix3d E_0_r = frame_->robot().posW().rotation().transpose();

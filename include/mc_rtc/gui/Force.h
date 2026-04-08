@@ -87,17 +87,23 @@ private:
 /** Helper function to get a ForceImpl */
 template<typename GetForce, typename GetSurface>
 auto Force(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn)
-{ return details::ForceROImpl(name, {}, get_force_fn, get_surface_fn); }
+{
+  return details::ForceROImpl(name, {}, get_force_fn, get_surface_fn);
+}
 
 /** Helper function to get a ForceImpl */
 template<typename GetForce, typename GetSurface>
 auto Force(const std::string & name, const ForceConfig & config, GetForce get_force_fn, GetSurface get_surface_fn)
-{ return details::ForceROImpl(name, config, get_force_fn, get_surface_fn); }
+{
+  return details::ForceROImpl(name, config, get_force_fn, get_surface_fn);
+}
 
 /** Helper function to get a ForceImpl */
 template<typename GetForce, typename GetSurface, typename SetForce>
 auto Force(const std::string & name, GetForce get_force_fn, SetForce set_force_fn, GetSurface get_surface_fn)
-{ return details::ForceImpl(name, ForceConfig{}, get_force_fn, set_force_fn, get_surface_fn); }
+{
+  return details::ForceImpl(name, ForceConfig{}, get_force_fn, set_force_fn, get_surface_fn);
+}
 
 /** Helper function to get a ForceImpl */
 template<typename GetForce, typename GetSurface, typename SetForce>
@@ -106,6 +112,8 @@ auto Force(const std::string & name,
            GetForce get_force_fn,
            SetForce set_force_fn,
            GetSurface get_surface_fn)
-{ return details::ForceImpl(name, config, get_force_fn, set_force_fn, get_surface_fn); }
+{
+  return details::ForceImpl(name, config, get_force_fn, set_force_fn, get_surface_fn);
+}
 
 } // namespace mc_rtc::gui

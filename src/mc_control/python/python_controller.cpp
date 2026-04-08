@@ -14,7 +14,9 @@
 extern "C"
 {
   void MC_RTC_CONTROLLER(std::vector<std::string> & names)
-  { names = {"@PYTHON_NAME@"}; }
+  {
+    names = {"@PYTHON_NAME@"};
+  }
   void destroy(mc_control::MCController * ptr)
   {
     // The Python object should be garbage collected, so we only take care of

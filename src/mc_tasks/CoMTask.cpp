@@ -46,18 +46,27 @@ void CoMTask::reset()
 void CoMTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   TrajectoryBase::load(solver, config);
-  if(config.has("com")) { this->com(config("com")); }
+  if(config.has("com"))
+  {
+    this->com(config("com"));
+  }
   if(config.has("above"))
   {
     auto surfaces = mc_rtc::fromVectorOrElement<std::string>(config, "above");
     auto com = this->com();
     Eigen::Vector3d target = Eigen::Vector3d::Zero();
     auto & robot = robotFromConfig(config, solver.robots(), name());
-    for(const auto & s : surfaces) { target += robot.surface(s).X_0_s(robot).translation(); }
+    for(const auto & s : surfaces)
+    {
+      target += robot.surface(s).X_0_s(robot).translation();
+    }
     target /= static_cast<double>(surfaces.size());
     this->com({target.x(), target.y(), com.z()});
   }
-  if(config.has("move_com")) { this->move_com(config("move_com")); }
+  if(config.has("move_com"))
+  {
+    this->move_com(config("move_com"));
+  }
   if(config.has("offset"))
   {
     mc_rtc::log::warning("[MC_RTC_DEPRECATED][" + name()
@@ -68,7 +77,9 @@ void CoMTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & c
 }
 
 void CoMTask::move_com(const Eigen::Vector3d & move)
-{ com(com() + move); }
+{
+  com(com() + move);
+}
 
 void CoMTask::com(const Eigen::Vector3d & com)
 {

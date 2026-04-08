@@ -32,7 +32,10 @@ struct FormElements
   {
     count_ += 1;
     using ElementT = typename std::decay<T>::type;
-    if(ElementT::is_dynamic()) { addDynamicElement(std::forward<T>(element)); }
+    if(ElementT::is_dynamic())
+    {
+      addDynamicElement(std::forward<T>(element));
+    }
     else
     {
       std::vector<char> data = data_;
@@ -48,9 +51,15 @@ struct FormElements
   void write_impl(mc_rtc::MessagePackBuilder & builder)
   {
     builder.start_array(count_);
-    for(const auto & el : dynamic_elements_) { el(builder); }
+    for(const auto & el : dynamic_elements_)
+    {
+      el(builder);
+    }
     builder.write_object(data_.data(), data_size_);
-    for(size_t i = dynamic_elements_.size() + 1; i < count_; ++i) { builder.write_object(nullptr, 0); }
+    for(size_t i = dynamic_elements_.size() + 1; i < count_; ++i)
+    {
+      builder.write_object(nullptr, 0);
+    }
     builder.finish_array();
   }
 
@@ -64,7 +73,10 @@ protected:
   void write_elements(mc_rtc::MessagePackBuilder & builder, Arg && element, Args &&... args)
   {
     using ElementT = typename std::decay<Arg>::type;
-    if(ElementT::is_dynamic()) { addDynamicElement(std::forward<Arg>(element)); }
+    if(ElementT::is_dynamic())
+    {
+      addDynamicElement(std::forward<Arg>(element));
+    }
     else
     {
       builder.start_array(element.write_size());
@@ -184,7 +196,10 @@ struct CallbackOrValue
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
-    if constexpr(is_callback) { builder.write(callback_or_value()); }
+    if constexpr(is_callback)
+    {
+      builder.write(callback_or_value());
+    }
     else
     {
       builder.write(callback_or_value);
@@ -277,31 +292,38 @@ private:
 
 } // namespace details
 
-#define MAKE_DATA_INPUT_HELPER(DATAT, ELEMENT, FNAME)                                                          \
-  inline details::FormDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required)                 \
-  { return {name, required}; }                                                                                 \
-                                                                                                               \
-  template<typename T = DATAT>                                                                                 \
-  inline auto FNAME(const std::string & name, bool required, T value)                                          \
-  {                                                                                                            \
-    if constexpr(std::is_invocable_v<T>) { return details::FormDataInput<T, ELEMENT>{name, required, value}; } \
-    else                                                                                                       \
-    {                                                                                                          \
-      if constexpr(std::is_same_v<std::decay_t<T>, DATAT>)                                                     \
-      {                                                                                                        \
-        return details::FormDataInput<DATAT, ELEMENT>{name, required, value};                                  \
-      }                                                                                                        \
-      else                                                                                                     \
-      {                                                                                                        \
-        return details::FormDataInput<DATAT, ELEMENT>{name, required, DATAT{value}};                           \
-      }                                                                                                        \
-    }                                                                                                          \
+#define MAKE_DATA_INPUT_HELPER(DATAT, ELEMENT, FNAME)                                          \
+  inline details::FormDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required) \
+  {                                                                                            \
+    return {name, required};                                                                   \
+  }                                                                                            \
+                                                                                               \
+  template<typename T = DATAT>                                                                 \
+  inline auto FNAME(const std::string & name, bool required, T value)                          \
+  {                                                                                            \
+    if constexpr(std::is_invocable_v<T>)                                                       \
+    {                                                                                          \
+      return details::FormDataInput<T, ELEMENT>{name, required, value};                        \
+    }                                                                                          \
+    else                                                                                       \
+    {                                                                                          \
+      if constexpr(std::is_same_v<std::decay_t<T>, DATAT>)                                     \
+      {                                                                                        \
+        return details::FormDataInput<DATAT, ELEMENT>{name, required, value};                  \
+      }                                                                                        \
+      else                                                                                     \
+      {                                                                                        \
+        return details::FormDataInput<DATAT, ELEMENT>{name, required, DATAT{value}};           \
+      }                                                                                        \
+    }                                                                                          \
   }
 
 #define MAKE_INTERACTIVE_DATA_INPUT_HELPER(DATAT, ELEMENT, FNAME)                                            \
   inline details::FormInteractiveDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required,    \
                                                                  bool interactive = true)                    \
-  { return {name, required, interactive}; }                                                                  \
+  {                                                                                                          \
+    return {name, required, interactive};                                                                    \
+  }                                                                                                          \
                                                                                                              \
   template<typename T = DATAT, typename = std::enable_if_t<!std::is_same_v<T, bool>>>                        \
   inline auto FNAME(const std::string & name, bool required, T value, bool interactive = true)               \
@@ -355,7 +377,9 @@ struct FormArrayInput : public FormElement<FormArrayInput<T>, Elements::ArrayInp
                  const std::vector<std::string> & labels = {},
                  bool fixed_size = false)
   : FormArrayInput<T>(name, required, labels, {}, fixed_size)
-  { has_def_ = false; }
+  {
+    has_def_ = false;
+  }
 
   static constexpr size_t write_size_() { return 4; }
 
@@ -512,7 +536,10 @@ struct FormGenericArrayInput : public FormElement<FormGenericArrayInput<T>, Elem
 
   void write_(mc_rtc::MessagePackBuilder & builder)
   {
-    if(count_ != 1) { mc_rtc::log::error_and_throw("FormGenericArrayInput must have exactly one element"); }
+    if(count_ != 1)
+    {
+      mc_rtc::log::error_and_throw("FormGenericArrayInput must have exactly one element");
+    }
     FormElements::write_impl(builder);
     data_.write(builder);
   }
@@ -571,6 +598,8 @@ private:
 /** Helper to create a Form element */
 template<typename Callback, typename... Args>
 auto Form(const std::string & name, Callback cb, Args &&... args)
-{ return details::FormImpl(name, cb, std::forward<Args>(args)...); }
+{
+  return details::FormImpl(name, cb, std::forward<Args>(args)...);
+}
 
 } // namespace mc_rtc::gui

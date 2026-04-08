@@ -22,7 +22,9 @@ struct fmt::formatter<boost::filesystem::path> : fmt::formatter<std::string>
 {
   template<typename FormatContext>
   auto format(const boost::filesystem::path & p, FormatContext & ctx)
-  { return fmt::formatter<std::string>::format(p.string(), ctx); }
+  {
+    return fmt::formatter<std::string>::format(p.string(), ctx);
+  }
 };
 
 // Formatter for std::filesystem::path
@@ -31,7 +33,9 @@ struct fmt::formatter<std::filesystem::path> : fmt::formatter<std::string>
 {
   template<typename FormatContext>
   auto format(const std::filesystem::path & p, FormatContext & ctx)
-  { return fmt::formatter<std::string>::format(p.string(), ctx); }
+  {
+    return fmt::formatter<std::string>::format(p.string(), ctx);
+  }
 };
 
 /**
@@ -91,7 +95,10 @@ struct fmt::formatter<sva::PTransformd>
         {
           ++it;
           arg_id_mat = ctx.next_arg_id();
-          if(it != end && *it == '}') { ++it; }
+          if(it != end && *it == '}')
+          {
+            ++it;
+          }
         }
       }
       return it;
@@ -111,7 +118,10 @@ struct fmt::formatter<sva::PTransformd>
       vec_fmt = fmt::visit_format_arg(
           [](auto val) -> std::string
           {
-            if constexpr(std::is_same_v<std::decay_t<decltype(val)>, const char *>) { return std::string(val); }
+            if constexpr(std::is_same_v<std::decay_t<decltype(val)>, const char *>)
+            {
+              return std::string(val);
+            }
             else
             {
               return "";
@@ -125,7 +135,10 @@ struct fmt::formatter<sva::PTransformd>
       mat_fmt = fmt::visit_format_arg(
           [](auto && val) -> std::string
           {
-            if constexpr(std::is_same_v<std::decay_t<decltype(val)>, const char *>) { return std::string(val); }
+            if constexpr(std::is_same_v<std::decay_t<decltype(val)>, const char *>)
+            {
+              return std::string(val);
+            }
             else
             {
               return "";

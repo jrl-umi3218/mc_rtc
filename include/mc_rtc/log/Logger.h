@@ -295,7 +295,9 @@ public:
    */
   template<typename T, typename std::enable_if<mc_rtc::log::callback_is_serializable<T>::value, int>::type = 0>
   void addLogEntry(const std::string & name, T && get_fn, bool overwrite = false)
-  { addLogEntry(name, static_cast<const void *>(nullptr), std::forward<T>(get_fn), overwrite); }
+  {
+    addLogEntry(name, static_cast<const void *>(nullptr), std::forward<T>(get_fn), overwrite);
+  }
 
   /** Add multiple entries at once with the same entry
    *

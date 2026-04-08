@@ -25,7 +25,9 @@ using Vector8d = Eigen::Matrix<double, 8, 1>;
 } // namespace Eigen
 
 bool operator==(const Eigen::Quaterniond & lhs, const Eigen::Quaterniond & rhs)
-{ return lhs.vec() == rhs.vec(); }
+{
+  return lhs.vec() == rhs.vec();
+}
 
 /** Check one iteration of the logger */
 template<bool malloc_allowed = false, typename Callback>
@@ -534,8 +536,14 @@ BOOST_AUTO_TEST_CASE(TestLogger)
     path = logger.path();
   }
   auto latest = bfs::temp_directory_path() / "mc-rtc-test-logger-latest.bin";
-  if(bfs::exists(latest)) { bfs::remove(latest); }
-  if(bfs::exists(path)) { bfs::remove(path); }
+  if(bfs::exists(latest))
+  {
+    bfs::remove(latest);
+  }
+  if(bfs::exists(path))
+  {
+    bfs::remove(path);
+  }
 }
 
 BOOST_AUTO_TEST_CASE(TestResume)
@@ -567,7 +575,10 @@ BOOST_AUTO_TEST_CASE(TestResume)
     }
   }
   auto latest = bfs::temp_directory_path() / "mc-rtc-test-logger-latest.bin";
-  if(bfs::exists(latest)) { bfs::remove(latest); }
+  if(bfs::exists(latest))
+  {
+    bfs::remove(latest);
+  }
   {
     BOOST_REQUIRE(bfs::exists(path_1));
     BOOST_REQUIRE(bfs::exists(path_2));

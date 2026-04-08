@@ -181,7 +181,10 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
   {
     static_assert(N != -1 && N != 2 && N != 3 && N != 6, "Should have gone to specialized function");
     start_array(static_cast<size_t>(N));
-    for(Eigen::Index i = 0; i < N; ++i) { write(v(i)); }
+    for(Eigen::Index i = 0; i < N; ++i)
+    {
+      write(v(i));
+    }
     finish_array();
   }
 
@@ -237,14 +240,38 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
   template<typename T, typename std::enable_if_t<internal::is_integral_v<T>, int> = 0>
   void write(const T & number)
   {
-    if constexpr(internal::is_like_int8_t<T>) { write(static_cast<int8_t>(number)); }
-    else if constexpr(internal::is_like_int16_t<T>) { write(static_cast<int16_t>(number)); }
-    else if constexpr(internal::is_like_int32_t<T>) { write(static_cast<int32_t>(number)); }
-    else if constexpr(internal::is_like_int64_t<T>) { write(static_cast<int64_t>(number)); }
-    else if constexpr(internal::is_like_uint8_t<T>) { write(static_cast<uint8_t>(number)); }
-    else if constexpr(internal::is_like_uint16_t<T>) { write(static_cast<uint16_t>(number)); }
-    else if constexpr(internal::is_like_uint32_t<T>) { write(static_cast<uint32_t>(number)); }
-    else if constexpr(internal::is_like_uint64_t<T>) { write(static_cast<uint64_t>(number)); }
+    if constexpr(internal::is_like_int8_t<T>)
+    {
+      write(static_cast<int8_t>(number));
+    }
+    else if constexpr(internal::is_like_int16_t<T>)
+    {
+      write(static_cast<int16_t>(number));
+    }
+    else if constexpr(internal::is_like_int32_t<T>)
+    {
+      write(static_cast<int32_t>(number));
+    }
+    else if constexpr(internal::is_like_int64_t<T>)
+    {
+      write(static_cast<int64_t>(number));
+    }
+    else if constexpr(internal::is_like_uint8_t<T>)
+    {
+      write(static_cast<uint8_t>(number));
+    }
+    else if constexpr(internal::is_like_uint16_t<T>)
+    {
+      write(static_cast<uint16_t>(number));
+    }
+    else if constexpr(internal::is_like_uint32_t<T>)
+    {
+      write(static_cast<uint32_t>(number));
+    }
+    else if constexpr(internal::is_like_uint64_t<T>)
+    {
+      write(static_cast<uint64_t>(number));
+    }
     else
     {
       static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
@@ -254,7 +281,9 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
   /** Write \tparam T to MessagePack if T implements T::write(MessagePackBuilder &) const */
   template<typename T, typename = std::enable_if_t<internal::has_write_builder_v<T>>>
   void write(const T & value)
-  { value.write(*this); }
+  {
+    value.write(*this);
+  }
 
   /** @} */
   /* End Add data to the MessagePack section (advanced) */
@@ -272,7 +301,10 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
   void write(const std::vector<T, A> & v)
   {
     start_array(v.size());
-    for(const auto & value : v) { write(value); }
+    for(const auto & value : v)
+    {
+      write(value);
+    }
     finish_array();
   }
 
@@ -281,7 +313,10 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
   void write(const std::array<T, N> & a)
   {
     start_array(N);
-    for(const auto & value : a) { write(value); }
+    for(const auto & value : a)
+    {
+      write(value);
+    }
     finish_array();
   }
 
@@ -313,7 +348,10 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
   void write(const std::set<T, C, A> & s)
   {
     start_array(s.size());
-    for(const auto & value : s) { write(value); }
+    for(const auto & value : s)
+    {
+      write(value);
+    }
     finish_array();
   }
 
@@ -346,7 +384,10 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
     using Index = Eigen::Index;
 #endif
     start_array(v.size());
-    for(Index i = 0; i < v.size(); ++i) { write(v(i)); }
+    for(Index i = 0; i < v.size(); ++i)
+    {
+      write(v(i));
+    }
     finish_array();
   }
 

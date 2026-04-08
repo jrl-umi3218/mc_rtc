@@ -37,14 +37,20 @@
         names = {NAME};                                                                               \
       }                                                                                               \
       CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr)                              \
-      { delete ptr; }                                                                                 \
+      {                                                                                               \
+        delete ptr;                                                                                   \
+      }                                                                                               \
       CONTROLLER_MODULE_API unsigned int create_args_required()                                       \
-      { return 4; }                                                                                   \
+      {                                                                                               \
+        return 4;                                                                                     \
+      }                                                                                               \
       CONTROLLER_MODULE_API mc_control::MCController * create(const std::string &,                    \
                                                               const mc_rbdyn::RobotModulePtr & robot, \
                                                               const double & dt,                      \
                                                               const mc_control::Configuration & conf) \
-      { return new TYPE(robot, dt, conf); }                                                           \
+      {                                                                                               \
+        return new TYPE(robot, dt, conf);                                                             \
+      }                                                                                               \
     }
 
 /** Provides all functions except create */
@@ -58,16 +64,23 @@
       }                                                                              \
                                                                                      \
       CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr)             \
-      { delete ptr; }                                                                \
+      {                                                                              \
+        delete ptr;                                                                  \
+      }                                                                              \
       CONTROLLER_MODULE_API unsigned int create_args_required()                      \
-      { return 4; }                                                                  \
+      {                                                                              \
+        return 4;                                                                    \
+      }                                                                              \
       CONTROLLER_MODULE_API mc_control::MCController * create(                       \
           const std::string & name,                                                  \
           const mc_rbdyn::RobotModulePtr & rm,                                       \
           const double & dt,                                                         \
           [[maybe_unused]] const mc_control::Configuration & config)                 \
       {                                                                              \
-        if(name == NAME0) { return new NEWCTL0; }                                    \
+        if(name == NAME0)                                                            \
+        {                                                                            \
+          return new NEWCTL0;                                                        \
+        }                                                                            \
         return new NEWCTL1;                                                          \
       }                                                                              \
     }
@@ -82,14 +95,20 @@
         names = {NAME};                                                                               \
       }                                                                                               \
       CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr)                              \
-      { delete ptr; }                                                                                 \
+      {                                                                                               \
+        delete ptr;                                                                                   \
+      }                                                                                               \
       CONTROLLER_MODULE_API unsigned int create_args_required()                                       \
-      { return 4; }                                                                                   \
+      {                                                                                               \
+        return 4;                                                                                     \
+      }                                                                                               \
       CONTROLLER_MODULE_API mc_control::MCController * create(const std::string &,                    \
                                                               const mc_rbdyn::RobotModulePtr & robot, \
                                                               const double & dt,                      \
                                                               const mc_control::Configuration &)      \
-      { return new TYPE(robot, dt); }                                                                 \
+      {                                                                                               \
+        return new TYPE(robot, dt);                                                                   \
+      }                                                                                               \
     }
 
 #else

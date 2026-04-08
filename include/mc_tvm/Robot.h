@@ -166,7 +166,9 @@ public:
    *
    */
   inline Eigen::DenseIndex refJointIndexToQIndex(size_t jointIndex) const
-  { return refJointIndexToQIndex_.at(jointIndex); }
+  {
+    return refJointIndexToQIndex_.at(jointIndex);
+  }
 
   /** Given a joint index in the reference joint order, returns the corresponding joint index in the q derivatives
    * variable
@@ -180,7 +182,9 @@ public:
    *
    */
   inline Eigen::DenseIndex refJointIndexToQDotIndex(size_t jointIndex) const
-  { return refJointIndexToQDotIndex_.at(jointIndex); }
+  {
+    return refJointIndexToQDotIndex_.at(jointIndex);
+  }
 
 private:
   /** Parent instance */

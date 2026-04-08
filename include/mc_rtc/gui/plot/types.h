@@ -43,23 +43,33 @@ enum class Type
 
 template<typename T>
 constexpr bool is_Abscissa()
-{ return T::type == Type::Abscissa; }
+{
+  return T::type == Type::Abscissa;
+}
 
 template<bool = true>
 constexpr bool is_not_Abscissa()
-{ return true; }
+{
+  return true;
+}
 
 template<typename T, typename... Args>
 constexpr bool is_not_Abscissa()
-{ return (T::type != Type::Abscissa) && is_not_Abscissa<Args...>(); }
+{
+  return (T::type != Type::Abscissa) && is_not_Abscissa<Args...>();
+}
 
 template<bool = true>
 constexpr bool is_2d()
-{ return true; }
+{
+  return true;
+}
 
 template<typename T, typename... Args>
 constexpr bool is_2d()
-{ return T::type != Type::Abscissa && T::type != Type::Ordinate && is_2d<Args...>(); }
+{
+  return T::type != Type::Abscissa && T::type != Type::Ordinate && is_2d<Args...>();
+}
 
 /** Range for abscissa or ordinate display
  *

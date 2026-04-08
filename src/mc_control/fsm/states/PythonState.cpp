@@ -14,7 +14,9 @@ extern "C"
 #include <stddef.h> // offsetof
 
   FSM_STATE_API void MC_RTC_FSM_STATE(std::vector<std::string> & names)
-  { names = {"@PYTHON_NAME@"}; }
+  {
+    names = {"@PYTHON_NAME@"};
+  }
 
   FSM_STATE_API void destroy(mc_control::fsm::State * ptr)
   {

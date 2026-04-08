@@ -100,16 +100,23 @@ void TVMKinematicsConstraint::removeFromSolver(mc_solver::TVMQPSolver & solver)
     solver.problem().removeSubstitutionFor(*solver.problem().constraint(*c));
     solver.problem().remove(*c);
   }
-  for(auto & c : constraints_) { solver.problem().remove(*c); }
+  for(auto & c : constraints_)
+  {
+    solver.problem().remove(*c);
+  }
   constraints_.clear();
   mimics_constraints_.clear();
 }
 
 static mc_rtc::void_ptr initialize_tvm(const mc_rbdyn::Robot & robot, const std::array<double, 3> & damper, double vp)
-{ return mc_rtc::make_void_ptr<TVMKinematicsConstraint>(robot, damper, vp); }
+{
+  return mc_rtc::make_void_ptr<TVMKinematicsConstraint>(robot, damper, vp);
+}
 
 static mc_rtc::void_ptr initialize_tvm(const mc_rbdyn::Robot & robot)
-{ return initialize_tvm(robot, {0.1, 0.01, 0.5}, 0.5); }
+{
+  return initialize_tvm(robot, {0.1, 0.01, 0.5}, 0.5);
+}
 
 static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
                                    const mc_rbdyn::Robots & robots,
@@ -152,11 +159,17 @@ static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots,
   std::vector<std::vector<double>> ju = robot.ju();
   for(auto & vi : vl)
   {
-    for(auto & v : vi) { v = v * velocityPercent; }
+    for(auto & v : vi)
+    {
+      v = v * velocityPercent;
+    }
   }
   for(auto & vi : vu)
   {
-    for(auto & v : vi) { v = v * velocityPercent; }
+    for(auto & v : vi)
+    {
+      v = v * velocityPercent;
+    }
   }
   tasks::AlphaBound alphaBound(vl, vu);
   tasks::AlphaDBound alphaDBound(al, au);

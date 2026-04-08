@@ -28,8 +28,14 @@ MCTextController::MCTextController(std::shared_ptr<mc_rbdyn::RobotModule> robot,
 void MCTextController::reset(const mc_control::ControllerResetData & data)
 {
   mc_control::MCController::reset(data);
-  if(!config_.has("constraints")) { mc_rtc::log::error_and_throw("No constraints in the provided text file"); }
-  if(!config_.has("tasks")) { mc_rtc::log::error_and_throw("No tasks in the provided text file"); }
+  if(!config_.has("constraints"))
+  {
+    mc_rtc::log::error_and_throw("No constraints in the provided text file");
+  }
+  if(!config_.has("tasks"))
+  {
+    mc_rtc::log::error_and_throw("No tasks in the provided text file");
+  }
   for(const auto & c : config_("constraints"))
   {
     constraints_.push_back(mc_solver::ConstraintSetLoader::load(solver(), c));
@@ -44,8 +50,14 @@ void MCTextController::reset(const mc_control::ControllerResetData & data)
     solver().addTask(tasks_.back());
   }
   std::vector<mc_rbdyn::Contact> contacts = {};
-  if(config_.has("contacts")) { contacts = mc_rbdyn::Contact::loadVector(robots(), config_("contacts")); }
-  for(const auto & c : contacts) { addContact(Contact::from_mc_rbdyn(*this, c)); }
+  if(config_.has("contacts"))
+  {
+    contacts = mc_rbdyn::Contact::loadVector(robots(), config_("contacts"));
+  }
+  for(const auto & c : contacts)
+  {
+    addContact(Contact::from_mc_rbdyn(*this, c));
+  }
 }
 
 } // namespace mc_control

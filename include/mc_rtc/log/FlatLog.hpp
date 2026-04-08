@@ -39,7 +39,10 @@ struct CastLogRecord<Eigen::Matrix<double, N, 1, _Options, _MaxRows, _MaxCols>>
     else
     {
       auto v = static_cast<const Eigen::VectorXd *>(r.data.get());
-      if(v->size() == N) { return v; }
+      if(v->size() == N)
+      {
+        return v;
+      }
       else
       {
         return nullptr;
@@ -51,7 +54,10 @@ struct CastLogRecord<Eigen::Matrix<double, N, 1, _Options, _MaxRows, _MaxCols>>
 template<typename T>
 const FlatLog::get_raw_return_t<T> * record_cast(const FlatLog::record & r)
 {
-  if(CheckLogType<T>::check(r.type)) { return CastLogRecord<T>::cast(r); }
+  if(CheckLogType<T>::check(r.type))
+  {
+    return CastLogRecord<T>::cast(r);
+  }
   return nullptr;
 }
 
@@ -59,7 +65,10 @@ template<typename T>
 bool convert(const FlatLog::record & r, T & out)
 {
   auto ptr = record_cast<T>(r);
-  if(ptr) { out = *ptr; }
+  if(ptr)
+  {
+    out = *ptr;
+  }
   return ptr;
 }
 
@@ -76,7 +85,10 @@ auto FlatLog::getRaw(const std::string & entry) const -> std::vector<const get_r
   std::vector<const T *> ret;
   const auto & data = at(entry);
   ret.reserve(data.size());
-  for(const auto & r : data) { ret.push_back(details::record_cast<T>(r)); }
+  for(const auto & r : data)
+  {
+    ret.push_back(details::record_cast<T>(r));
+  }
   return ret;
 }
 
@@ -90,7 +102,10 @@ auto FlatLog::get(const std::string & entry, const T & def) const -> std::vector
   }
   const auto & data = at(entry);
   std::vector<T> ret(data.size(), def);
-  for(size_t i = 0; i < data.size(); ++i) { details::convert<T>(data[i], ret[i]); }
+  for(size_t i = 0; i < data.size(); ++i)
+  {
+    details::convert<T>(data[i], ret[i]);
+  }
   return ret;
 }
 
@@ -107,7 +122,10 @@ inline std::vector<bool> FlatLog::get(const std::string & entry, const bool & de
   for(size_t i = 0; i < data.size(); ++i)
   {
     const bool * ptr = details::record_cast<bool>(data[i]);
-    if(ptr) { ret[i] = *ptr; }
+    if(ptr)
+    {
+      ret[i] = *ptr;
+    }
   }
   return ret;
 }
@@ -127,7 +145,10 @@ auto FlatLog::get(const std::string & entry) const -> std::vector<get_raw_return
   while(start_i < data.size())
   {
     const auto & r = data[start_i];
-    if(details::convert<T>(r, def)) { break; }
+    if(details::convert<T>(r, def))
+    {
+      break;
+    }
     start_i++;
   }
   if(start_i == data.size())
@@ -149,7 +170,10 @@ template<typename T>
 auto FlatLog::get(const std::string & entry, size_t i, const T & def) const -> get_raw_return_t<T>
 {
   const T * data = getRaw<T>(entry, i);
-  if(data) { return *data; }
+  if(data)
+  {
+    return *data;
+  }
   return def;
 }
 

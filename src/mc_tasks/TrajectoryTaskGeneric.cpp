@@ -21,9 +21,13 @@ static inline mc_rtc::void_ptr_caster<tasks::qp::HighLevelTask> tasks_error{};
 static inline mc_rtc::void_ptr_caster<tasks::qp::JointsSelector> tasks_selector{};
 
 static inline details::TVMTrajectoryTaskGeneric * tvm_trajectory(mc_rtc::void_ptr & ptr)
-{ return static_cast<details::TVMTrajectoryTaskGenericPtr *>(ptr.get())->get(); }
+{
+  return static_cast<details::TVMTrajectoryTaskGenericPtr *>(ptr.get())->get();
+}
 static inline const details::TVMTrajectoryTaskGeneric * tvm_trajectory(const mc_rtc::void_ptr & ptr)
-{ return static_cast<const details::TVMTrajectoryTaskGenericPtr *>(ptr.get())->get(); }
+{
+  return static_cast<const details::TVMTrajectoryTaskGenericPtr *>(ptr.get())->get();
+}
 static inline mc_rtc::void_ptr_caster<tvm::function::abstract::Function> tvm_error{};
 static inline mc_rtc::void_ptr_caster<mc_tvm::JointsSelectorFunction> tvm_selector{};
 
@@ -130,7 +134,10 @@ void TrajectoryTaskGeneric::addToSolver(mc_solver::QPSolver & solver)
                 tvm_solver(solver).problem().add(error_ptr == 0., tvm::task_dynamics::P(stiffness_), reqs);
           }
         };
-        if(selectorT_) { addTask(*tvm_selector(selectorT_)); }
+        if(selectorT_)
+        {
+          addTask(*tvm_selector(selectorT_));
+        }
         else
         {
           addTask(*tvm_error(errorT));
@@ -173,7 +180,10 @@ void TrajectoryTaskGeneric::refVel(const Eigen::VectorXd & vel)
     case Backend::TVM:
     {
       auto trajectory = tvm_trajectory(trajectoryT_);
-      if(trajectory->setRefVel) { trajectory->setRefVel(errorT.get(), vel); }
+      if(trajectory->setRefVel)
+      {
+        trajectory->setRefVel(errorT.get(), vel);
+      }
       break;
     }
     default:
@@ -183,7 +193,9 @@ void TrajectoryTaskGeneric::refVel(const Eigen::VectorXd & vel)
 }
 
 const Eigen::VectorXd & TrajectoryTaskGeneric::refVel() const
-{ return refVel_; }
+{
+  return refVel_;
+}
 
 void TrajectoryTaskGeneric::refAccel(const Eigen::VectorXd & accel)
 {
@@ -195,7 +207,10 @@ void TrajectoryTaskGeneric::refAccel(const Eigen::VectorXd & accel)
     case Backend::TVM:
     {
       auto trajectory = tvm_trajectory(trajectoryT_);
-      if(trajectory->setRefAccel) { trajectory->setRefAccel(errorT.get(), accel); }
+      if(trajectory->setRefAccel)
+      {
+        trajectory->setRefAccel(errorT.get(), accel);
+      }
       break;
     }
     default:
@@ -205,13 +220,19 @@ void TrajectoryTaskGeneric::refAccel(const Eigen::VectorXd & accel)
 }
 
 const Eigen::VectorXd & TrajectoryTaskGeneric::refAccel() const
-{ return refAccel_; }
+{
+  return refAccel_;
+}
 
 void TrajectoryTaskGeneric::stiffness(double s)
-{ setGains(s, 2 * std::sqrt(s)); }
+{
+  setGains(s, 2 * std::sqrt(s));
+}
 
 void TrajectoryTaskGeneric::stiffness(const Eigen::VectorXd & stiffness)
-{ setGains(stiffness, 2 * stiffness.cwiseSqrt()); }
+{
+  setGains(stiffness, 2 * stiffness.cwiseSqrt());
+}
 
 void TrajectoryTaskGeneric::damping(double d)
 {
@@ -240,16 +261,24 @@ void TrajectoryTaskGeneric::setGains(const Eigen::VectorXd & stiffness, const Ei
 }
 
 double TrajectoryTaskGeneric::stiffness() const
-{ return stiffness_(0); }
+{
+  return stiffness_(0);
+}
 
 double TrajectoryTaskGeneric::damping() const
-{ return damping_(0); }
+{
+  return damping_(0);
+}
 
 const Eigen::VectorXd & TrajectoryTaskGeneric::dimStiffness() const
-{ return stiffness_; }
+{
+  return stiffness_;
+}
 
 const Eigen::VectorXd & TrajectoryTaskGeneric::dimDamping() const
-{ return damping_; }
+{
+  return damping_;
+}
 
 void TrajectoryTaskGeneric::weight(double w)
 {
@@ -262,7 +291,10 @@ void TrajectoryTaskGeneric::weight(double w)
     case Backend::TVM:
     {
       auto trajectory = tvm_trajectory(trajectoryT_);
-      if(trajectory->task_) { trajectory->task_->requirements.weight() = weight_; }
+      if(trajectory->task_)
+      {
+        trajectory->task_->requirements.weight() = weight_;
+      }
       break;
     }
     default:
@@ -271,7 +303,9 @@ void TrajectoryTaskGeneric::weight(double w)
 }
 
 double TrajectoryTaskGeneric::weight() const
-{ return weight_; }
+{
+  return weight_;
+}
 
 void TrajectoryTaskGeneric::dimWeight(const Eigen::VectorXd & w)
 {
@@ -289,7 +323,10 @@ void TrajectoryTaskGeneric::dimWeight(const Eigen::VectorXd & w)
                                      traj->dimWeight_.size(), w.size());
       }
       traj->dimWeight_ = w;
-      if(traj->task_) { traj->task_->requirements.anisotropicWeight() = w; }
+      if(traj->task_)
+      {
+        traj->task_->requirements.anisotropicWeight() = w;
+      }
       break;
     }
     default:
@@ -320,7 +357,10 @@ void TrajectoryTaskGeneric::selectActiveJoints(const std::vector<std::string> & 
                          "added to the solver");
     return;
   }
-  if(checkJoints) { ensureHasJoints(robots.robot(rIndex), activeJointsName, "[" + name() + "::selectActiveJoints]"); }
+  if(checkJoints)
+  {
+    ensureHasJoints(robots.robot(rIndex), activeJointsName, "[" + name() + "::selectActiveJoints]");
+  }
   switch(backend_)
   {
     case Backend::Tasks:
@@ -460,13 +500,19 @@ Eigen::VectorXd TrajectoryTaskGeneric::eval() const
     case Backend::Tasks:
     {
       const auto & dimWeight = tasks_trajectory(trajectoryT_)->dimWeight();
-      if(selectorT_) { return tasks_selector(selectorT_)->eval().cwiseProduct(dimWeight); }
+      if(selectorT_)
+      {
+        return tasks_selector(selectorT_)->eval().cwiseProduct(dimWeight);
+      }
       return tasks_error(errorT)->eval().cwiseProduct(dimWeight);
     }
     case Backend::TVM:
     {
       const auto & dimWeight = tvm_trajectory(trajectoryT_)->dimWeight_;
-      if(selectorT_) { return tvm_selector(selectorT_)->value().cwiseProduct(dimWeight); }
+      if(selectorT_)
+      {
+        return tvm_selector(selectorT_)->value().cwiseProduct(dimWeight);
+      }
       return tvm_error(errorT)->value().cwiseProduct(dimWeight);
     }
     default:
@@ -481,13 +527,19 @@ Eigen::VectorXd TrajectoryTaskGeneric::speed() const
     case Backend::Tasks:
     {
       const auto & dimWeight = tasks_trajectory(trajectoryT_)->dimWeight();
-      if(selectorT_) { return tasks_selector(selectorT_)->speed().cwiseProduct(dimWeight); }
+      if(selectorT_)
+      {
+        return tasks_selector(selectorT_)->speed().cwiseProduct(dimWeight);
+      }
       return tasks_error(errorT)->speed().cwiseProduct(dimWeight);
     }
     case Backend::TVM:
     {
       const auto & dimWeight = tvm_trajectory(trajectoryT_)->dimWeight_;
-      if(selectorT_) { return tvm_selector(selectorT_)->velocity().cwiseProduct(dimWeight); }
+      if(selectorT_)
+      {
+        return tvm_selector(selectorT_)->velocity().cwiseProduct(dimWeight);
+      }
       return tvm_error(errorT)->velocity().cwiseProduct(dimWeight);
     }
     default:
@@ -501,12 +553,18 @@ const Eigen::VectorXd & TrajectoryTaskGeneric::normalAcc() const
   {
     case Backend::Tasks:
     {
-      if(selectorT_) { return tasks_selector(selectorT_)->normalAcc(); }
+      if(selectorT_)
+      {
+        return tasks_selector(selectorT_)->normalAcc();
+      }
       return tasks_error(errorT)->normalAcc();
     }
     case Backend::TVM:
     {
-      if(selectorT_) { return tvm_selector(selectorT_)->normalAcceleration(); }
+      if(selectorT_)
+      {
+        return tvm_selector(selectorT_)->normalAcceleration();
+      }
       return tvm_error(errorT)->normalAcceleration();
     }
     default:
@@ -533,15 +591,27 @@ void TrajectoryTaskGeneric::load(mc_solver::QPSolver & solver, const mc_rtc::Con
   if(config.has("damping"))
   {
     auto d = config("damping");
-    if(d.size()) { setGains(dimStiffness(), d); }
+    if(d.size())
+    {
+      setGains(dimStiffness(), d);
+    }
     else
     {
       setGains(stiffness(), d);
     }
   }
-  if(config.has("weight")) { weight(config("weight")); }
-  if(config.has("refVel")) { refVel(config("refVel")); }
-  if(config.has("refAccel")) { refAccel(config("refAccel")); }
+  if(config.has("weight"))
+  {
+    weight(config("weight"));
+  }
+  if(config.has("refVel"))
+  {
+    refVel(config("refVel"));
+  }
+  if(config.has("refAccel"))
+  {
+    refAccel(config("refAccel"));
+  }
 }
 
 void TrajectoryTaskGeneric::addToGUI(mc_rtc::gui::StateBuilder & gui)
@@ -595,6 +665,8 @@ void TrajectoryTaskGeneric::addToLogger(mc_rtc::Logger & logger)
 std::function<bool(const mc_tasks::MetaTask & task, std::string &)> TrajectoryTaskGeneric::buildCompletionCriteria(
     double dt,
     const mc_rtc::Configuration & config) const
-{ return MetaTask::buildCompletionCriteria(dt, config); }
+{
+  return MetaTask::buildCompletionCriteria(dt, config);
+}
 
 } // namespace mc_tasks

@@ -26,9 +26,18 @@ void MetaTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & 
     }
     dimWeight(dimW);
   }
-  if(config.has("activeJoints")) { selectActiveJoints(solver, config("activeJoints")); }
-  else if(config.has("unactiveJoints")) { selectUnactiveJoints(solver, config("unactiveJoints")); }
-  if(config.has("name")) { name(config("name")); }
+  if(config.has("activeJoints"))
+  {
+    selectActiveJoints(solver, config("activeJoints"));
+  }
+  else if(config.has("unactiveJoints"))
+  {
+    selectUnactiveJoints(solver, config("unactiveJoints"));
+  }
+  if(config.has("name"))
+  {
+    name(config("name"));
+  }
 }
 
 void MetaTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
@@ -47,10 +56,14 @@ void MetaTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 }
 
 void MetaTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
-{ gui.removeCategory({"Tasks", name_}); }
+{
+  gui.removeCategory({"Tasks", name_});
+}
 
 void MetaTask::removeFromLogger(mc_rtc::Logger & logger)
-{ logger.removeLogEntries(this); }
+{
+  logger.removeLogEntries(this);
+}
 
 std::function<bool(const mc_tasks::MetaTask & task, std::string &)> MetaTask::buildCompletionCriteria(
     double,

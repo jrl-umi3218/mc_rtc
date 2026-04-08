@@ -410,7 +410,10 @@ private:
     inline size_t size() const
     {
       size_t s = 0;
-      for(const auto & c : sub) { s += c.size(); }
+      for(const auto & c : sub)
+      {
+        s += c.size();
+      }
       return s + elements.size();
     }
   };

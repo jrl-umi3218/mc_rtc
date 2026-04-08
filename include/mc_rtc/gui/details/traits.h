@@ -34,7 +34,9 @@ constexpr bool is_getter_impl(void_t<decltype(std::declval<GetT>()())> *)
 
 template<typename GetT>
 constexpr bool is_getter_impl(...)
-{ return false; }
+{
+  return false;
+}
 
 /** This traits is true if:
  *
@@ -43,7 +45,9 @@ constexpr bool is_getter_impl(...)
  */
 template<typename GetT>
 constexpr bool is_getter()
-{ return is_getter_impl<GetT>(nullptr); }
+{
+  return is_getter_impl<GetT>(nullptr);
+}
 
 /** Tag type for non-getter */
 struct NotAGetter
@@ -192,7 +196,10 @@ auto read_rpy(const T && value)
 {
   return [value]() -> Eigen::Vector3d
   {
-    if constexpr(Degrees) { return mc_rbdyn::rpyFromRotation(value) * 180. / mc_rtc::constants::PI; }
+    if constexpr(Degrees)
+    {
+      return mc_rbdyn::rpyFromRotation(value) * 180. / mc_rtc::constants::PI;
+    }
     else
     {
       return mc_rbdyn::rpyFromRotation(value);
@@ -213,7 +220,10 @@ auto read_rpy(const T & value)
 {
   return [&value]() -> Eigen::Vector3d
   {
-    if constexpr(Degrees) { return mc_rbdyn::rpyFromRotation(value) * 180. / mc_rtc::constants::PI; }
+    if constexpr(Degrees)
+    {
+      return mc_rbdyn::rpyFromRotation(value) * 180. / mc_rtc::constants::PI;
+    }
     else
     {
       return mc_rbdyn::rpyFromRotation(value);
@@ -232,7 +242,10 @@ auto write(T & value)
 template<typename T>
 auto GetValueOrCallbackValue(const T & value_or_cb)
 {
-  if constexpr(std::is_invocable_v<T>) { return value_or_cb(); }
+  if constexpr(std::is_invocable_v<T>)
+  {
+    return value_or_cb();
+  }
   else
   {
     return value_or_cb;

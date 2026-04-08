@@ -17,7 +17,10 @@ ControllerServerConfiguration ControllerServerConfiguration::fromConfiguration(c
 void ControllerServerConfiguration::load(const mc_rtc::Configuration & config)
 {
   config("Timestep", timestep);
-  if(auto ipc = config.find("IPC")) { (*ipc)("Socket", ipc_socket); }
+  if(auto ipc = config.find("IPC"))
+  {
+    (*ipc)("Socket", ipc_socket);
+  }
   else
   {
     ipc_socket = std::nullopt;
@@ -48,10 +51,16 @@ void ControllerServerConfiguration::load(const mc_rtc::Configuration & config)
 std::vector<std::string> ControllerServerConfiguration::pub_uris() const noexcept
 {
   std::vector<std::string> uris;
-  if(ipc_socket) { uris.push_back("ipc://" + *ipc_socket + "_pub.ipc"); }
+  if(ipc_socket)
+  {
+    uris.push_back("ipc://" + *ipc_socket + "_pub.ipc");
+  }
   auto handle_socket = [&](const std::string & protocol, const auto & cfg)
   {
-    if(!cfg) { return; }
+    if(!cfg)
+    {
+      return;
+    }
     uris.push_back(protocol + cfg->host + ":" + std::to_string(cfg->pub_port));
   };
   handle_socket("tcp://", tcp_config);
@@ -62,10 +71,16 @@ std::vector<std::string> ControllerServerConfiguration::pub_uris() const noexcep
 std::vector<std::string> ControllerServerConfiguration::pull_uris() const noexcept
 {
   std::vector<std::string> uris;
-  if(ipc_socket) { uris.push_back("ipc://" + *ipc_socket + "_rep.ipc"); }
+  if(ipc_socket)
+  {
+    uris.push_back("ipc://" + *ipc_socket + "_rep.ipc");
+  }
   auto handle_socket = [&](const std::string & protocol, const auto & cfg)
   {
-    if(!cfg) { return; }
+    if(!cfg)
+    {
+      return;
+    }
     uris.push_back(protocol + cfg->host + ":" + std::to_string(cfg->pull_port));
   };
   handle_socket("tcp://", tcp_config);
@@ -76,9 +91,15 @@ std::vector<std::string> ControllerServerConfiguration::pull_uris() const noexce
 void ControllerServerConfiguration::print_serving_information() const noexcept
 {
   mc_rtc::log::info("Publishing data on:");
-  for(const auto & pub_uri : pub_uris()) { mc_rtc::log::info("- {}", pub_uri); }
+  for(const auto & pub_uri : pub_uris())
+  {
+    mc_rtc::log::info("- {}", pub_uri);
+  }
   mc_rtc::log::info("Handling requests on:");
-  for(const auto & pull_uri : pull_uris()) { mc_rtc::log::info("- {}", pull_uri); }
+  for(const auto & pull_uri : pull_uris())
+  {
+    mc_rtc::log::info("- {}", pull_uri);
+  }
 }
 
 } // namespace mc_control

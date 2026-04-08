@@ -31,7 +31,9 @@ struct shared : public std::conditional<std::is_same<BaseT, void>::value, std::e
   operator std::shared_ptr<T>() { return std::static_pointer_cast<T>(static_cast<T *>(this)->shared_from_this()); }
 
   operator std::shared_ptr<const T>() const
-  { return std::static_pointer_cast<const T>(static_cast<const T *>(this)->shared_from_this()); }
+  {
+    return std::static_pointer_cast<const T>(static_cast<const T *>(this)->shared_from_this());
+  }
 
   /** Inherit constructors from the base */
   using ActualBase =

@@ -43,7 +43,10 @@ GazeFunction::GazeFunction(const mc_rbdyn::RobotFrame & frame)
 void GazeFunction::estimate(const Eigen::Vector2d & point, std::optional<double> depth)
 {
   point_ = point;
-  if(depth) { setDepthEstimate(depth.value()); }
+  if(depth)
+  {
+    setDepthEstimate(depth.value());
+  }
 }
 
 void GazeFunction::estimate(const Eigen::Vector3d & point)
@@ -62,7 +65,9 @@ void GazeFunction::setDepthEstimate(double d)
 }
 
 void GazeFunction::updateValue()
-{ value_ = point_ - pointRef_; }
+{
+  value_ = point_ - pointRef_;
+}
 
 void GazeFunction::updateVelocity()
 {

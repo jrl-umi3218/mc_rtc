@@ -47,7 +47,9 @@ public:
                                            double sDist = 0.01,
                                            double damping = 0.1,
                                            double dampingOff = 0.)
-  { setPlanes(solver, planes, speeds, normalsDots, iDist, sDist, damping, dampingOff); }
+  {
+    setPlanes(solver, planes, speeds, normalsDots, iDist, sDist, damping, dampingOff);
+  }
 
   void setPlanes(QPSolver & solver,
                  const std::vector<mc_rbdyn::Plane> & planes,

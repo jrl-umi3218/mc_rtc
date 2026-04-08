@@ -84,7 +84,9 @@ bool MCImpedanceController::run()
 }
 
 Eigen::Vector3d MCImpedanceController::circleTrajectory(double angle)
-{ return center_ + Eigen::Vector3d(radius_ * std::cos(angle), radius_ * std::sin(angle), 0); }
+{
+  return center_ + Eigen::Vector3d(radius_ * std::cos(angle), radius_ * std::sin(angle), 0);
+}
 
 void MCImpedanceController::addGUI()
 {
@@ -102,7 +104,9 @@ void MCImpedanceController::addGUI()
 }
 
 void MCImpedanceController::stop()
-{ gui()->removeCategory({"Impedance"}); }
+{
+  gui()->removeCategory({"Impedance"});
+}
 
 } // namespace mc_control
 

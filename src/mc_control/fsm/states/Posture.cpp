@@ -15,8 +15,14 @@ namespace fsm
 
 void PostureState::configure(const mc_rtc::Configuration & config)
 {
-  if(config.has("postureTask")) { config_.load(config("postureTask")); }
-  if(config.has("robot")) { robot_ = static_cast<std::string>(config("robot")); }
+  if(config.has("postureTask"))
+  {
+    config_.load(config("postureTask"));
+  }
+  if(config.has("robot"))
+  {
+    robot_ = static_cast<std::string>(config("robot"));
+  }
   if(config.has("completion"))
   {
     hasCompletion_ = true;
@@ -26,7 +32,10 @@ void PostureState::configure(const mc_rtc::Configuration & config)
 
 void PostureState::start(Controller & ctl)
 {
-  if(robot_.empty()) { robot_ = ctl.robot().name(); }
+  if(robot_.empty())
+  {
+    robot_ = ctl.robot().name();
+  }
   else if(!ctl.hasRobot(robot_))
   {
     mc_rtc::log::error_and_throw("[{}] Requested robot {} but this robot is not available", name(), robot_);

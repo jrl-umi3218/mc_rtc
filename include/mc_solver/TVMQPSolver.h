@@ -160,10 +160,14 @@ private:
  * In debug the program will abort otherwise, in release UB abounds
  */
 inline TVMQPSolver & tvm_solver(QPSolver & solver) noexcept
-{ return TVMQPSolver::from_solver(solver); }
+{
+  return TVMQPSolver::from_solver(solver);
+}
 
 /* const version */
 inline const TVMQPSolver & tvm_solver(const QPSolver & solver) noexcept
-{ return TVMQPSolver::from_solver(solver); }
+{
+  return TVMQPSolver::from_solver(solver);
+}
 
 } // namespace mc_solver

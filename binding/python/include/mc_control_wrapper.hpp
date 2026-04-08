@@ -17,16 +17,22 @@ namespace mc_control
 {
 
 ControllerResetData & const_cast_crd(const ControllerResetData & in)
-{ return const_cast<ControllerResetData &>(in); }
+{
+  return const_cast<ControllerResetData &>(in);
+}
 
 typedef bool (*run_callback_t)(void *);
 typedef void (*reset_callback_t)(const ControllerResetData &, void *);
 
 void set_run_callback(MCPythonController & ctl, run_callback_t fn, void * data)
-{ ctl.run_callback = std::bind(fn, data); }
+{
+  ctl.run_callback = std::bind(fn, data);
+}
 
 void set_reset_callback(MCPythonController & ctl, reset_callback_t fn, void * data)
-{ ctl.reset_callback = std::bind(fn, std::placeholders::_1, data); }
+{
+  ctl.reset_callback = std::bind(fn, std::placeholders::_1, data);
+}
 
 template<typename Helper, typename Callback>
 void add_anchor_frame_callback(MCPythonController & ctl, const std::string & name, Helper help, Callback cb)
@@ -35,6 +41,8 @@ void add_anchor_frame_callback(MCPythonController & ctl, const std::string & nam
 }
 
 void remove_anchor_frame_callback(MCPythonController & ctl, const std::string & name)
-{ ctl.datastore().remove(name); }
+{
+  ctl.datastore().remove(name);
+}
 
 } // namespace mc_control

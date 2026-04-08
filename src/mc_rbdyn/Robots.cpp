@@ -30,7 +30,10 @@ void applyTransformToSchById(const rbd::MultiBody & mb,
 template<typename X, typename Y>
 inline void update(std::map<X, Y> & oldData, const std::map<X, Y> & nData)
 {
-  for(const auto & p : nData) { oldData[p.first] = p.second; }
+  for(const auto & p : nData)
+  {
+    oldData[p.first] = p.second;
+  }
 }
 
 } // namespace
@@ -45,8 +48,14 @@ Robots::Robots(NewRobotsToken) : robots_(), mbs_(), mbcs_(), robotIndex_(0), env
 
 void Robots::copy(Robots & out) const
 {
-  if(&out == this) { return; }
-  for(const auto & r : out.robots_) { out.onRobotRemoved_.signal(r->name()); }
+  if(&out == this)
+  {
+    return;
+  }
+  for(const auto & r : out.robots_)
+  {
+    out.onRobotRemoved_.signal(r->name());
+  }
   out.robots_.clear();
   out.robot_modules_ = robot_modules_;
   out.mbs_ = mbs_;
@@ -65,42 +74,69 @@ void Robots::copy(Robots & out) const
 }
 
 std::vector<rbd::MultiBody> & Robots::mbs()
-{ return mbs_; }
+{
+  return mbs_;
+}
 const std::vector<rbd::MultiBody> & Robots::mbs() const
-{ return mbs_; }
+{
+  return mbs_;
+}
 
 std::vector<rbd::MultiBodyConfig> & Robots::mbcs()
-{ return mbcs_; }
+{
+  return mbcs_;
+}
 const std::vector<rbd::MultiBodyConfig> & Robots::mbcs() const
-{ return mbcs_; }
+{
+  return mbcs_;
+}
 
 unsigned int Robots::robotIndex() const
-{ return robotIndex_; }
+{
+  return robotIndex_;
+}
 unsigned int Robots::envIndex() const
-{ return envIndex_; }
+{
+  return envIndex_;
+}
 
 unsigned int Robots::robotIndex(const std::string & name) const
 {
   auto key = robotNameToIndex_.find(name);
-  if(key == robotNameToIndex_.end()) { mc_rtc::log::error_and_throw("No robot named {}", name); }
+  if(key == robotNameToIndex_.end())
+  {
+    mc_rtc::log::error_and_throw("No robot named {}", name);
+  }
   return key->second;
 }
 
 Robot & Robots::robot()
-{ return *robots_[robotIndex_]; }
+{
+  return *robots_[robotIndex_];
+}
 const Robot & Robots::robot() const
-{ return *robots_[robotIndex_]; }
+{
+  return *robots_[robotIndex_];
+}
 
 Robot & Robots::env()
-{ return *robots_[envIndex_]; }
+{
+  return *robots_[envIndex_];
+}
 const Robot & Robots::env() const
-{ return *robots_[envIndex_]; }
+{
+  return *robots_[envIndex_];
+}
 
 bool Robots::hasRobot(const std::string & name) const
-{ return robotNameToIndex_.count(name); }
+{
+  return robotNameToIndex_.count(name);
+}
 
 Robot & Robots::robot(size_t idx)
-{ return const_cast<Robot &>(static_cast<const Robots *>(this)->robot(idx)); }
+{
+  return const_cast<Robot &>(static_cast<const Robots *>(this)->robot(idx));
+}
 const Robot & Robots::robot(size_t idx) const
 {
   if(idx >= robots_.size())
@@ -111,12 +147,17 @@ const Robot & Robots::robot(size_t idx) const
 }
 
 Robot & Robots::robot(const std::string & name)
-{ return const_cast<Robot &>(static_cast<const Robots *>(this)->robot(name)); }
+{
+  return const_cast<Robot &>(static_cast<const Robots *>(this)->robot(name));
+}
 
 const Robot & Robots::robot(const std::string & name) const
 {
   auto key = robotNameToIndex_.find(name);
-  if(key == robotNameToIndex_.end()) { mc_rtc::log::error_and_throw("No robot named {}", name); }
+  if(key == robotNameToIndex_.end())
+  {
+    mc_rtc::log::error_and_throw("No robot named {}", name);
+  }
   return *robots_[key->second];
 }
 
@@ -194,7 +235,9 @@ Robot & Robots::load(const std::string & name, const RobotModule & module, const
 }
 
 RobotsPtr loadRobot(const RobotModule & module, const LoadRobotParameters & params)
-{ return loadRobot(module.name, module, params); }
+{
+  return loadRobot(module.name, module, params);
+}
 
 RobotsPtr loadRobot(const std::string & name, const RobotModule & module, const LoadRobotParameters & params)
 {
@@ -213,7 +256,10 @@ RobotsPtr loadRobotAndEnv(const RobotModule & module, const RobotModule & envMod
 
 void Robots::load(const std::vector<std::shared_ptr<RobotModule>> & modules)
 {
-  for(size_t i = 0; i < modules.size(); ++i) { load(*modules[i]); }
+  for(size_t i = 0; i < modules.size(); ++i)
+  {
+    load(*modules[i]);
+  }
 }
 
 RobotsPtr loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules)
@@ -245,7 +291,10 @@ RobotsPtr loadRobotFromUrdf(const std::string & name,
 
 void Robots::rename(const std::string & oldName, const std::string & newName)
 {
-  if(!hasRobot(oldName)) { mc_rtc::log::error_and_throw("Cannot rename robot: no robot named {}", oldName); }
+  if(!hasRobot(oldName))
+  {
+    mc_rtc::log::error_and_throw("Cannot rename robot: no robot named {}", oldName);
+  }
   if(robotNameToIndex_.count(newName))
   {
     mc_rtc::log::error_and_throw("Cannot rename robot: a robot named {} already exist", newName);
@@ -280,40 +329,64 @@ void Robots::updateIndexes()
 }
 
 Robots::iterator Robots::begin() noexcept
-{ return robots_.begin(); }
+{
+  return robots_.begin();
+}
 
 Robots::const_iterator Robots::begin() const noexcept
-{ return robots_.begin(); }
+{
+  return robots_.begin();
+}
 
 Robots::const_iterator Robots::cbegin() const noexcept
-{ return robots_.cbegin(); }
+{
+  return robots_.cbegin();
+}
 
 Robots::iterator Robots::end() noexcept
-{ return robots_.end(); }
+{
+  return robots_.end();
+}
 
 Robots::const_iterator Robots::end() const noexcept
-{ return robots_.end(); }
+{
+  return robots_.end();
+}
 
 Robots::const_iterator Robots::cend() const noexcept
-{ return robots_.cend(); }
+{
+  return robots_.cend();
+}
 
 Robots::reverse_iterator Robots::rbegin() noexcept
-{ return robots_.rbegin(); }
+{
+  return robots_.rbegin();
+}
 
 Robots::const_reverse_iterator Robots::rbegin() const noexcept
-{ return robots_.rbegin(); }
+{
+  return robots_.rbegin();
+}
 
 Robots::const_reverse_iterator Robots::crbegin() const noexcept
-{ return robots_.crbegin(); }
+{
+  return robots_.crbegin();
+}
 
 Robots::reverse_iterator Robots::rend() noexcept
-{ return robots_.rend(); }
+{
+  return robots_.rend();
+}
 
 Robots::const_reverse_iterator Robots::rend() const noexcept
-{ return robots_.rend(); }
+{
+  return robots_.rend();
+}
 
 Robots::const_reverse_iterator Robots::crend() const noexcept
-{ return robots_.crend(); }
+{
+  return robots_.crend();
+}
 
 void mc_rbdyn::Robots::reserve(mc_rbdyn::Robots::size_type new_cap)
 {
@@ -325,10 +398,14 @@ void mc_rbdyn::Robots::reserve(mc_rbdyn::Robots::size_type new_cap)
 }
 
 mc_rbdyn::Robots::size_type mc_rbdyn::Robots::size() const noexcept
-{ return robots_.size(); }
+{
+  return robots_.size();
+}
 
 const RobotModule & Robots::robotModule(size_t idx) const
-{ return robot_modules_[idx]; }
+{
+  return robot_modules_[idx];
+}
 
 MC_RTC_diagnostic_pop
 

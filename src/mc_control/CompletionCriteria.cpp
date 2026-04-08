@@ -14,10 +14,14 @@ bool CompletionCriteria::completed(const mc_tasks::MetaTask & task)
 }
 
 void CompletionCriteria::configure(const mc_tasks::MetaTask & task, double dt, const mc_rtc::Configuration & config)
-{ fn_ = build(task, dt, config); }
+{
+  fn_ = build(task, dt, config);
+}
 
 const std::string & CompletionCriteria::output() const
-{ return output_; }
+{
+  return output_;
+}
 
 std::function<bool(const mc_tasks::MetaTask &, std::string &)> CompletionCriteria::build(
     const mc_tasks::MetaTask & task,
@@ -75,8 +79,14 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CompletionCriteri
     auto rhs = build(task, dt, conds[1]);
     return [lhs, rhs](const mc_tasks::MetaTask & t, std::string & out)
     {
-      if(lhs(t, out)) { return true; }
-      else if(rhs(t, out)) { return true; }
+      if(lhs(t, out))
+      {
+        return true;
+      }
+      else if(rhs(t, out))
+      {
+        return true;
+      }
       return false;
     };
   }

@@ -73,7 +73,9 @@ void EndEffectorTask::set_ef_pose(const sva::PTransformd & tf)
 }
 
 sva::PTransformd EndEffectorTask::get_ef_pose()
-{ return sva::PTransformd(orientationTask->orientation(), positionTask->position()); }
+{
+  return sva::PTransformd(orientationTask->orientation(), positionTask->position());
+}
 
 void EndEffectorTask::dimWeight(const Eigen::VectorXd & dimW)
 {

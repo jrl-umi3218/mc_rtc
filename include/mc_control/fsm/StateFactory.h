@@ -128,7 +128,9 @@ struct MC_CONTROL_FSM_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
 
   /** Returns the configuration of a specific state */
   inline const StateConfiguration & configuration(const std::string & state) const
-  { return states_configurations_.at(state); }
+  {
+    return states_configurations_.at(state);
+  }
 
 private:
   /** Create a state from libraries or factory */

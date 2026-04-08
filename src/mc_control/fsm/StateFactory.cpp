@@ -77,13 +77,19 @@ void resolve(StateFactory & factory, std::vector<UDState> & states)
   while(states.size() != 0)
   {
     resolve_pass(factory, states);
-    if(states.size() == prev_size) { break; }
+    if(states.size() == prev_size)
+    {
+      break;
+    }
     prev_size = states.size();
   }
   if(states.size() != 0)
   {
     mc_rtc::log::error("Some states could not be loaded as their base is not available, check for typos or cycles");
-    for(const auto & s : states) { mc_rtc::log::warning("- {} (base: {})", s.state, s.base); }
+    for(const auto & s : states)
+    {
+      mc_rtc::log::warning("- {} (base: {})", s.state, s.base);
+    }
   }
 }
 
@@ -101,7 +107,10 @@ void load_ud(StateFactory & factory,
       mc_rtc::log::error("Attempted to load state {} but no base is specified in the configuration", s.first);
       continue;
     }
-    if(factory.hasState(base) || factory.load_with_loader(base)) { factory.load(s.first, base, config); }
+    if(factory.hasState(base) || factory.load_with_loader(base))
+    {
+      factory.load(s.first, base, config);
+    }
     else
     {
       ud_states.push_back({s.first, base, config});
@@ -111,7 +120,10 @@ void load_ud(StateFactory & factory,
 
 void load_file(StateFactory & factory, const std::string & file, std::vector<UDState> & ud_states, bool verbose)
 {
-  if(verbose) { mc_rtc::log::info("Load {}", file); }
+  if(verbose)
+  {
+    mc_rtc::log::info("Load {}", file);
+  }
   std::map<std::string, mc_rtc::Configuration> states = mc_rtc::Configuration(file);
   load_ud(factory, states, ud_states);
 }
@@ -123,8 +135,14 @@ void load_dir(StateFactory & factory, const std::string & dir, std::vector<UDSta
   std::copy(dit, endit, std::back_inserter(drange));
   for(const auto & p : drange)
   {
-    if(fs::is_regular_file(p)) { load_file(factory, p.string(), ud_states, verbose); }
-    else if(fs::is_directory(p)) { load_dir(factory, p.string(), ud_states, verbose); }
+    if(fs::is_regular_file(p))
+    {
+      load_file(factory, p.string(), ud_states, verbose);
+    }
+    else if(fs::is_directory(p))
+    {
+      load_dir(factory, p.string(), ud_states, verbose);
+    }
   }
 }
 
@@ -142,21 +160,30 @@ void StateFactory::load_files(const std::vector<std::string> & files)
     }
     else
     {
-      if(fs::exists(f) && fs::is_regular_file(f)) { load_file(*this, f, ud_states, verbose); }
+      if(fs::exists(f) && fs::is_regular_file(f))
+      {
+        load_file(*this, f, ud_states, verbose);
+      }
       else
       {
         mc_rtc::log::warning("State file {} does not exist", f);
       }
     }
   }
-  if(ud_states.size()) { resolve(*this, ud_states); }
+  if(ud_states.size())
+  {
+    resolve(*this, ud_states);
+  }
 }
 
 void StateFactory::load(const std::map<std::string, mc_rtc::Configuration> & states)
 {
   std::vector<UDState> ud_states;
   load_ud(*this, states, ud_states);
-  if(ud_states.size()) { resolve(*this, ud_states); }
+  if(ud_states.size())
+  {
+    resolve(*this, ud_states);
+  }
 }
 
 void StateFactory::load(const std::string & name, const std::string & base, const mc_rtc::Configuration & config)
@@ -173,16 +200,23 @@ void StateFactory::load(const std::string & name, const std::string & base, cons
     states_.erase(std::find(states_.begin(), states_.end(), name));
 #endif
   }
-  if(verbose) { mc_rtc::log::info("New state from file: {} (base: {})", name, base); }
+  if(verbose)
+  {
+    mc_rtc::log::info("New state from file: {} (base: {})", name, base);
+  }
   states_.push_back(name);
   states_configurations_[name] = {base, "", config};
 }
 
 StatePtr StateFactory::create(const std::string & state, Controller & ctl, const mc_rtc::Configuration & config)
-{ return create(state, ctl, true, config); }
+{
+  return create(state, ctl, true, config);
+}
 
 StatePtr StateFactory::create(const std::string & state, Controller & ctl)
-{ return create(state, ctl, false); }
+{
+  return create(state, ctl, false);
+}
 
 StatePtr StateFactory::create(const std::string & state,
                               Controller & ctl,
@@ -195,7 +229,10 @@ StatePtr StateFactory::create(const std::string & state,
     mc_rtc::log::error("Creation of {} state failed", state);
     return nullptr;
   }
-  if(configure) { ret->configure_(config); }
+  if(configure)
+  {
+    ret->configure_(config);
+  }
   ret->start_(ctl);
   return ret;
 }
@@ -208,7 +245,9 @@ StatePtr StateFactory::create(const std::string & state, const mc_rtc::Configura
 }
 
 StatePtr StateFactory::create(const std::string & state)
-{ return create(state, state); }
+{
+  return create(state, state);
+}
 
 StatePtr StateFactory::create(const std::string & state, const std::string & final_name)
 {
@@ -246,12 +285,17 @@ StatePtr StateFactory::create(const std::string & state, const std::string & fin
 }
 
 bool StateFactory::hasState(const std::string & state) const
-{ return std::find(states_.begin(), states_.end(), state) != states_.end(); }
+{
+  return std::find(states_.begin(), states_.end(), state) != states_.end();
+}
 
 bool StateFactory::load_with_loader(const std::string & state)
 {
   auto sharp = state.find('#');
-  if(sharp == std::string::npos || sharp == state.size() - 1) { return false; }
+  if(sharp == std::string::npos || sharp == state.size() - 1)
+  {
+    return false;
+  }
   std::string loader = state.substr(0, sharp);
   std::string arg = state.substr(sharp + 1);
   if(!has_object(loader))
@@ -259,18 +303,26 @@ bool StateFactory::load_with_loader(const std::string & state)
     mc_rtc::log::error("Cannot create state {}, loader {} has not been loaded", state, loader);
     return false;
   }
-  if(verbose) { mc_rtc::log::info("New state: {} provided by loader: {}", state, loader); }
+  if(verbose)
+  {
+    mc_rtc::log::info("New state: {} provided by loader: {}", state, loader);
+  }
   states_.push_back(state);
   states_configurations_[state] = {loader, arg, {}};
   return true;
 }
 
 const std::vector<std::string> & StateFactory::states() const
-{ return states_; }
+{
+  return states_;
+}
 
 void StateFactory::update(const std::string & cn)
 {
-  if(verbose) { mc_rtc::log::info("New state from library: {}", cn); }
+  if(verbose)
+  {
+    mc_rtc::log::info("New state from library: {}", cn);
+  }
   states_.push_back(cn);
 }
 

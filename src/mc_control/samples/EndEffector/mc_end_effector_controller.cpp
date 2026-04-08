@@ -38,8 +38,14 @@ MCEndEffectorController::MCEndEffectorController(std::shared_ptr<mc_rbdyn::Robot
   }
 
   std::string body = robot().mb().bodies().back().name();
-  if(robot().hasBody("RARM_LINK7")) { body = "RARM_LINK7"; }
-  else if(robot().hasBody("r_wrist")) { body = "r_wrist"; }
+  if(robot().hasBody("RARM_LINK7"))
+  {
+    body = "RARM_LINK7";
+  }
+  else if(robot().hasBody("r_wrist"))
+  {
+    body = "r_wrist";
+  }
   efTask_ = std::make_shared<mc_tasks::EndEffectorTask>(body, robots(), robots().robotIndex(), 5.0, 200.0);
   solver().addTask(efTask_);
   if(robot().mb().joint(0).dof() != 0)
@@ -63,8 +69,14 @@ void MCEndEffectorController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
   efTask_->reset();
-  if(comTask_) { comTask_->reset(); }
-  for(auto & t : tasks_) { t->reset(); }
+  if(comTask_)
+  {
+    comTask_->reset();
+  }
+  for(auto & t : tasks_)
+  {
+    t->reset();
+  }
 }
 
 } // namespace mc_control

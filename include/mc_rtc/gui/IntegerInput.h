@@ -32,11 +32,15 @@ struct IntegerInputImpl : public CommonInputImpl<GetT, SetT>
 /** Helper function to create a IntegerInputImpl */
 template<typename GetT, typename SetT>
 auto IntegerInput(const std::string & name, GetT get_fn, SetT set_fn)
-{ return details::IntegerInputImpl(name, get_fn, set_fn); }
+{
+  return details::IntegerInputImpl(name, get_fn, set_fn);
+}
 
 /** Helper function to create an IntegerInputImpl from a reference */
 template<typename T>
 auto IntegerInput(const std::string & name, T & value)
-{ return details::IntegerInputImpl(name, details::read(value), details::write(value)); }
+{
+  return details::IntegerInputImpl(name, details::read(value), details::write(value));
+}
 
 } // namespace mc_rtc::gui

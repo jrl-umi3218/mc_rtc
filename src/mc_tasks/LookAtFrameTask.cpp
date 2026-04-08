@@ -39,12 +39,17 @@ LookAtFrameTask::LookAtFrameTask(const mc_rbdyn::RobotFrame & frame,
 }
 
 void LookAtFrameTask::update(mc_solver::QPSolver &)
-{ LookAtTask::target((offset_ * target_->position()).translation()); }
+{
+  LookAtTask::target((offset_ * target_->position()).translation());
+}
 
 void LookAtFrameTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   LookAtTask::load(solver, config);
-  if(config.has("offset")) { offset_ = config("offset"); }
+  if(config.has("offset"))
+  {
+    offset_ = config("offset");
+  }
 }
 
 } // namespace mc_tasks

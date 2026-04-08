@@ -8,6 +8,8 @@ namespace mc_rtc
 {
 
 std::string version()
-{ return MC_RTC_VERSION; }
+{
+  return MC_RTC_VERSION;
+}
 
 } // namespace mc_rtc

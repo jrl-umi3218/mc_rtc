@@ -190,10 +190,16 @@ RobotModulePtr robotModuleFromVisual(const std::string & name,
 
     auto urdf_path = (fs::path(path) / "urdf" / (name + ".urdf")).string();
     auto urdf_dir = fs::path(urdf_path).parent_path();
-    if(!fs::exists(urdf_dir)) { fs::create_directories(urdf_dir); }
+    if(!fs::exists(urdf_dir))
+    {
+      fs::create_directories(urdf_dir);
+    }
 
     auto rsdf_dir = fs::path(path) / "rsdf";
-    if(!fs::exists(rsdf_dir)) { fs::create_directories(rsdf_dir); }
+    if(!fs::exists(rsdf_dir))
+    {
+      fs::create_directories(rsdf_dir);
+    }
 
     auto doc = tinyxml2::XMLDocument{};
     surfacesToXML(doc, name, surfaces);
@@ -228,7 +234,9 @@ RobotModulePtr robotModuleFromVisual(const std::string & name,
                                      const rbd::parsers::Visual & visual,
                                      double mass,
                                      bool isFixed)
-{ return robotModuleFromVisual(name, visual, computeInertiaFromVisual(visual, mass), isFixed); }
+{
+  return robotModuleFromVisual(name, visual, computeInertiaFromVisual(visual, mass), isFixed);
+}
 
 RobotModulePtr robotModuleFromVisual(const std::string & name, const mc_rtc::Configuration & config)
 {
@@ -236,7 +244,10 @@ RobotModulePtr robotModuleFromVisual(const std::string & name, const mc_rtc::Con
   std::optional<sva::RBInertiad> inertia = std::nullopt;
   if(auto inertiaC = config.find("inertia"))
   {
-    if(auto mass_ = inertiaC->find("mass")) { mass = *mass_; }
+    if(auto mass_ = inertiaC->find("mass"))
+    {
+      mass = *mass_;
+    }
     else
     {
       mc_rtc::log::error_and_throw("robotModuleFromVisualConfig for visual {}: inertia provided but no mass. You may "
@@ -248,7 +259,10 @@ RobotModulePtr robotModuleFromVisual(const std::string & name, const mc_rtc::Con
     // explicit inertia is provided
     if(auto spatialMomentum = inertiaC->find("momentum"))
     {
-      if(auto inertia_ = inertiaC->find("inertia")) { inertia = sva::RBInertiad(mass, *spatialMomentum, *inertia_); }
+      if(auto inertia_ = inertiaC->find("inertia"))
+      {
+        inertia = sva::RBInertiad(mass, *spatialMomentum, *inertia_);
+      }
       else
       {
         mc_rtc::log::error_and_throw("robotModuleFromVisualConfig: momentum provided but no inertia matrix");
@@ -263,7 +277,10 @@ RobotModulePtr robotModuleFromVisual(const std::string & name, const mc_rtc::Con
   }
 
   rbd::parsers::Visual visual = config;
-  if(inertia) { return robotModuleFromVisual(name, visual, *inertia, config("fixed", false)); }
+  if(inertia)
+  {
+    return robotModuleFromVisual(name, visual, *inertia, config("fixed", false));
+  }
   else
   {
     return robotModuleFromVisual(name, visual, mass, config("fixed", false));
