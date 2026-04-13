@@ -14,7 +14,11 @@
     inputs.flake-parts.lib.mkFlake { inherit inputs; } (
       { lib, ... }:
       {
-        systems = import inputs.systems;
+        # systems = import inputs.systems;
+        systems = [
+          "x86_64-linux"
+          "aarch64-darwin"
+        ];
         imports = [
           inputs.mc-rtc-nix.flakeModule
           {
