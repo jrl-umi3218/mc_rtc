@@ -9,7 +9,8 @@ jobs:
     runs-on: "${{ matrix.os }}-latest"
     strategy:
       matrix:
-        os: [ubuntu, macos]
+        os: [ubuntu]
+        #os: [ubuntu, macos]
         #extends: ["", "pkgs-eigen5", "pkgs-full", "pkgs-nanobind"]
         extends: [""]
     steps:
