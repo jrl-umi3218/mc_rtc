@@ -26,7 +26,10 @@ void FeasiblePolytope::updatePolytope()
   bool isR1 = contact_.r1Index() == rIndex_;
   std::optional<mc_rbdyn::FeasiblePolytope> feasiblePolytope;
   if(isR1) { feasiblePolytope = contact_.feasiblePolytopeR1(); }
-  else { feasiblePolytope = contact_.feasiblePolytopeR2(); }
+  else
+  {
+    feasiblePolytope = contact_.feasiblePolytopeR2();
+  }
 
   if(feasiblePolytope)
   {

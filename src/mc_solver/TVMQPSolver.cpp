@@ -672,7 +672,10 @@ bool TVMQPSolver::saveGraphDotFile() const
       std::error_code ec;
       fs::create_symlink(log_path, log_sym_path);
       if(!ec) { mc_rtc::log::info("Updated latest graph symlink: {}", log_sym_path.string()); }
-      else { mc_rtc::log::warning("Failed to create latest graph symlink: {}", ec.message()); }
+      else
+      {
+        mc_rtc::log::warning("Failed to create latest graph symlink: {}", ec.message());
+      }
     }
   }
   return ret;
