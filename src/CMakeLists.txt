@@ -44,7 +44,6 @@ macro(install_mc_rtc_lib_common MC_LIB KWD)
   if(MC_RTC_BUILD_STATIC)
     target_compile_definitions(${MC_LIB} ${KWD} MC_RTC_BUILD_STATIC)
   endif()
-  add_library(mc_rtc::${MC_LIB} ALIAS ${MC_LIB})
 endmacro()
 
 macro(install_mc_rtc_header_lib MC_LIB)
