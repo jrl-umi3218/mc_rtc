@@ -126,7 +126,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><h3>template&lt;int N&gt;<br />
 struct mc_rbdyn::Gains&lt; N &gt;</h3>
 
-<p>Wrapper around fixed-sized Eigen vectors that are used for gains in the framework</p>
+<p>Wrapper around fixed-sized <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html">Eigen</a> vectors that are used for gains in the framework</p>
 <p>Their purpose is to allow code such as: </p><div class="fragment"><div class="line">my_task.gain = 3.0;</div>
 </div><!-- fragment --><p> Where <code>my_task.gain</code> is a fixed vector of size 2, to mean the same as: </p><div class="fragment"><div class="line">my_task.gain = Eigen::Vector2d::Constant(3.0);</div>
 </div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['helpers_20to_20obtain_20robot_20index_2fname_20from_20configuration_7624',['Helpers to obtain robot index/name from configuration',['../group__robotFromConfig.html',1,'']]]
+  ['convert_20to_20and_20from_20sva_20types_7841',['Convert to and from sva types',['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/group__Conversions.html',1,'']]]
 ];

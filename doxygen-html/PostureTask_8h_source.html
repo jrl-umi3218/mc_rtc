@@ -141,9 +141,9 @@ $(document).ready(function(){initNavTree('PostureTask_8h_source.html',''); initR
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
 <div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="structmc__tasks_1_1PostureTask.html#afd5d9cc2500a4a70e7e7674a1ba95a9f">   78</a></span>&#160;  <span class="keyword">const</span> Eigen::VectorXd &amp; <a class="code" href="structmc__tasks_1_1PostureTask.html#afd5d9cc2500a4a70e7e7674a1ba95a9f">refVel</a>() const noexcept;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="structmc__tasks_1_1PostureTask.html#a3c239b3603638379a2bb5457a226e0a9">   84</a></span>&#160;  <span class="keywordtype">void</span> refAccel(const Eigen::VectorXd &amp; refAccel) noexcept;</div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="structmc__tasks_1_1PostureTask.html#a3c239b3603638379a2bb5457a226e0a9">   84</a></span>&#160;  <span class="keywordtype">void</span> refAccel(const <a class="codeRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html">Eigen</a>::VectorXd &amp; refAccel) noexcept;</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="structmc__tasks_1_1PostureTask.html#ae2c51b7404320b8b41cff466ef24e0b4">   87</a></span>&#160;  const Eigen::VectorXd &amp; refAccel() const noexcept;</div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="structmc__tasks_1_1PostureTask.html#ae2c51b7404320b8b41cff466ef24e0b4">   87</a></span>&#160;  const <a class="codeRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html">Eigen</a>::VectorXd &amp; refAccel() const noexcept;</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
 <div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="structmc__tasks_1_1PostureTask.html#ad3d36333bd6d95d5bc742ad1de920ab7">   90</a></span>&#160;  <a class="code" href="namespacestd.html">std</a>::vector&lt;<a class="code" href="namespacestd.html">std</a>::vector&lt;<span class="keywordtype">double</span>&gt;&gt; posture() const;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
@@ -190,8 +190,8 @@ $(document).ready(function(){initNavTree('PostureTask_8h_source.html',''); initR
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  <span class="keywordtype">double</span> dt_;</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <a class="code" href="namespacestd.html">std</a>::vector&lt;<a class="code" href="namespacestd.html">std</a>::vector&lt;<span class="keywordtype">double</span>&gt;&gt; posture_;</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  <a class="code" href="namespacestd.html">std</a>::unordered_map&lt;<a class="code" href="namespacestd.html">std</a>::<span class="keywordtype">string</span>, <a class="code" href="namespacestd.html">std</a>::vector&lt;<span class="keywordtype">int</span>&gt;&gt; mimics_;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  Eigen::VectorXd eval_;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  Eigen::VectorXd speed_;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html">Eigen</a>::VectorXd eval_;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html">Eigen</a>::VectorXd speed_;</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;};</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
 <div class="line"><a name="l00186"></a><span class="lineno"><a class="line" href="namespacemc__tasks.html#a20b4cf1d7ce78ab29822e5d5d6616489">  186</a></span>&#160;using <a class="code" href="namespacemc__tasks.html#a20b4cf1d7ce78ab29822e5d5d6616489">PostureTaskPtr</a> = <a class="code" href="namespacestd.html">std</a>::shared_ptr&lt;<a class="code" href="structmc__tasks_1_1PostureTask.html">PostureTask</a>&gt;;</div>
@@ -199,6 +199,7 @@ $(document).ready(function(){initNavTree('PostureTask_8h_source.html',''); initR
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;} <span class="comment">// namespace mc_tasks</span></div>
 <div class="ttc" id="aMetaTask_8h_html"><div class="ttname"><a href="MetaTask_8h.html">MetaTask.h</a></div></div>
 <div class="ttc" id="ainclude_2mc__tasks_2api_8h_html_a54b6b62a72f51c6877ce5f6855eae009"><div class="ttname"><a href="include_2mc__tasks_2api_8h.html#a54b6b62a72f51c6877ce5f6855eae009">MC_TASKS_DLLAPI</a></div><div class="ttdeci">#define MC_TASKS_DLLAPI</div><div class="ttdef"><b>Definition:</b> api.h:50</div></div>
+<div class="ttc" id="anamespaceEigen_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html">Eigen</a></div></div>
 <div class="ttc" id="anamespacemc__rbdyn_html"><div class="ttname"><a href="namespacemc__rbdyn.html">mc_rbdyn</a></div><div class="ttdef"><b>Definition:</b> generic_gripper.h:15</div></div>
 <div class="ttc" id="anamespacemc__rtc_html"><div class="ttname"><a href="namespacemc__rtc.html">mc_rtc</a></div><div class="ttdef"><b>Definition:</b> Contact.h:88</div></div>
 <div class="ttc" id="anamespacemc__rtc_html_a180392c9544bd202410478d8a4fb623d"><div class="ttname"><a href="namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d">mc_rtc::void_ptr</a></div><div class="ttdeci">std::unique_ptr&lt; void, void(*)(void *)&gt; void_ptr</div><div class="ttdef"><b>Definition:</b> void_ptr.h:14</div></div>

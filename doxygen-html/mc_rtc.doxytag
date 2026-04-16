@@ -5328,13 +5328,6 @@
       <type></type>
       <name>IMPL_MAPPING</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>ae04e0fcaf17c7eaff04302c9177bbffe</anchor>
-      <arglist>(Vector6d, Eigen::Vector6d)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>IMPL_MAPPING</name>
-      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
       <anchor>a2155b830cb24a83a16d9cf3587081c22</anchor>
       <arglist>(VectorXd, Eigen::VectorXd)</arglist>
     </member>
@@ -25044,7 +25037,7 @@
     </member>
   </compound>
   <compound kind="class">
-    <name>LowPass&lt; sva::ForceVecd &gt;</name>
+    <name>LowPass&lt; sva::ForceVec &gt;</name>
     <filename>structmc__filter_1_1LowPass.html</filename>
     <member kind="function">
       <type></type>
@@ -25072,17 +25065,17 @@
       <name>reset</name>
       <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
       <anchor>af9ccdd55e5d7f3beabcf4c26bcea9620</anchor>
-      <arglist>(const sva::ForceVecd &amp;value)</arglist>
+      <arglist>(const sva::ForceVec &amp;value)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>update</name>
       <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
       <anchor>a03ab891a2b1f5cd2fd2398b7016ba633</anchor>
-      <arglist>(const sva::ForceVecd &amp;newValue)</arglist>
+      <arglist>(const sva::ForceVec &amp;newValue)</arglist>
     </member>
     <member kind="function">
-      <type>const sva::ForceVecd &amp;</type>
+      <type>const sva::ForceVec &amp;</type>
       <name>eval</name>
       <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
       <anchor>a543781fd1c5ec7b653de6e2189de8fdb</anchor>
@@ -25111,7 +25104,7 @@
     </member>
   </compound>
   <compound kind="class">
-    <name>LowPass&lt; sva::MotionVecd &gt;</name>
+    <name>LowPass&lt; sva::MotionVec &gt;</name>
     <filename>structmc__filter_1_1LowPass.html</filename>
     <member kind="function">
       <type></type>
@@ -25139,17 +25132,17 @@
       <name>reset</name>
       <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
       <anchor>af9ccdd55e5d7f3beabcf4c26bcea9620</anchor>
-      <arglist>(const sva::MotionVecd &amp;value)</arglist>
+      <arglist>(const sva::MotionVec &amp;value)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>update</name>
       <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
       <anchor>a03ab891a2b1f5cd2fd2398b7016ba633</anchor>
-      <arglist>(const sva::MotionVecd &amp;newValue)</arglist>
+      <arglist>(const sva::MotionVec &amp;newValue)</arglist>
     </member>
     <member kind="function">
-      <type>const sva::MotionVecd &amp;</type>
+      <type>const sva::MotionVec &amp;</type>
       <name>eval</name>
       <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
       <anchor>a543781fd1c5ec7b653de6e2189de8fdb</anchor>
@@ -49179,13 +49172,6 @@
       <type></type>
       <name>IMPL_MAPPING</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>ae04e0fcaf17c7eaff04302c9177bbffe</anchor>
-      <arglist>(Vector6d, Eigen::Vector6d)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>IMPL_MAPPING</name>
-      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
       <anchor>a2155b830cb24a83a16d9cf3587081c22</anchor>
       <arglist>(VectorXd, Eigen::VectorXd)</arglist>
     </member>
@@ -50043,6 +50029,5 @@
     <name>index</name>
     <title>mc_rtc</title>
     <filename>index.html</filename>
-    <docanchor file="index.html">md_README</docanchor>
   </compound>
 </tagfile>

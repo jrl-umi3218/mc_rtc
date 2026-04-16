@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['ros_4161',['ros',['../namespaceros.html',1,'']]]
+  ['helpers_4271',['helpers',['/usr/local/share/doc/ndcurves/doxygen-html/namespacendcurves_1_1helpers.html',1,'ndcurves']]],
+  ['ndcurves_4272',['ndcurves',['/usr/local/share/doc/ndcurves/doxygen-html/namespacendcurves.html',1,'']]],
+  ['optimization_4273',['optimization',['/usr/local/share/doc/ndcurves/doxygen-html/namespacendcurves_1_1optimization.html',1,'ndcurves']]],
+  ['serialization_4274',['serialization',['/usr/local/share/doc/ndcurves/doxygen-html/namespacendcurves_1_1serialization.html',1,'ndcurves']]]
 ];

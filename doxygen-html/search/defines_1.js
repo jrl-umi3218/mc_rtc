@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['boost_5fstacktrace_5flink_7448',['BOOST_STACKTRACE_LINK',['../logging_8h.html#a25cda0d096362eae64cebfb4843453ba',1,'logging.h']]]
+  ['boost_5fstacktrace_5flink_7665',['BOOST_STACKTRACE_LINK',['../logging_8h.html#a25cda0d096362eae64cebfb4843453ba',1,'logging.h']]]
 ];

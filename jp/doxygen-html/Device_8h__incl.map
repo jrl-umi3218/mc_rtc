@@ -1,7 +1,9 @@
 <map id="include/mc_rbdyn/Device.h" name="include/mc_rbdyn/Device.h">
-<area shape="rect" id="node1" title=" " alt="" coords="227,5,426,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="215,5,414,32"/>
 <area shape="rect" id="node2" href="$include_2mc__rbdyn_2api_8h.html" title=" " alt="" coords="5,80,128,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="152,80,344,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="368,80,445,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="469,80,528,107"/>
+<area shape="rect" id="node3" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag$SpaceVecAlg.html.html" title=" " alt="" coords="152,80,344,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="276,229,353,256"/>
+<area shape="rect" id="node7" title=" " alt="" coords="419,80,477,107"/>
+<area shape="rect" id="node4" href="$mc__rbdyn_2fwd_8h.html" title=" " alt="" coords="205,155,262,181"/>
+<area shape="rect" id="node6" href="$mc__tvm_2fwd_8h.html" title=" " alt="" coords="286,155,343,181"/>
 </map>

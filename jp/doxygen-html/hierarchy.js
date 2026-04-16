@@ -377,8 +377,8 @@ var hierarchy =
       [ "mc_filter::LowPassFiniteDifferences< T >", "structmc__filter_1_1LowPassFiniteDifferences.html", null ]
     ] ],
     [ "mc_filter::LowPass< Eigen::Vector3d >", "structmc__filter_1_1LowPass.html", null ],
-    [ "mc_filter::LowPass< sva::ForceVecd >", "structmc__filter_1_1LowPass.html", null ],
-    [ "mc_filter::LowPass< sva::MotionVecd >", "structmc__filter_1_1LowPass.html", null ],
+    [ "mc_filter::LowPass< sva::ForceVec >", "structmc__filter_1_1LowPass.html", null ],
+    [ "mc_filter::LowPass< sva::MotionVec >", "structmc__filter_1_1LowPass.html", null ],
     [ "mc_filter::LowPassCompose< T >", "structmc__filter_1_1LowPassCompose.html", null ],
     [ "mc_filter::LowPassCompose< Eigen::Vector3d >", "structmc__filter_1_1LowPassCompose.html", null ],
     [ "mc_rtc::LTDLHandle", "structmc__rtc_1_1LTDLHandle.html", null ],

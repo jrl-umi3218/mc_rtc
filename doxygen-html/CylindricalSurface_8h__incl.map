@@ -1,11 +1,13 @@
 <map id="include/mc_rbdyn/CylindricalSurface.h" name="include/mc_rbdyn/CylindricalSurface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="515,5,725,47"/>
-<area shape="rect" id="node2" href="$Surface_8h.html" title=" " alt="" coords="545,95,695,121"/>
+<area shape="rect" id="node1" title=" " alt="" coords="489,5,700,47"/>
+<area shape="rect" id="node2" href="$Surface_8h.html" title=" " alt="" coords="519,95,670,121"/>
 <area shape="rect" id="node3" href="$include_2mc__rbdyn_2api_8h.html" title=" " alt="" coords="5,169,128,196"/>
 <area shape="rect" id="node4" title=" " alt="" coords="152,169,341,196"/>
-<area shape="rect" id="node5" title=" " alt="" coords="365,169,557,196"/>
-<area shape="rect" id="node6" title=" " alt="" coords="581,169,659,196"/>
-<area shape="rect" id="node7" title=" " alt="" coords="683,169,741,196"/>
-<area shape="rect" id="node8" title=" " alt="" coords="766,169,858,196"/>
-<area shape="rect" id="node9" title=" " alt="" coords="882,169,945,196"/>
+<area shape="rect" id="node5" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag$SpaceVecAlg.html.html" title=" " alt="" coords="365,169,557,196"/>
+<area shape="rect" id="node7" title=" " alt="" coords="489,319,567,345"/>
+<area shape="rect" id="node9" title=" " alt="" coords="632,169,691,196"/>
+<area shape="rect" id="node10" title=" " alt="" coords="715,169,807,196"/>
+<area shape="rect" id="node11" title=" " alt="" coords="831,169,894,196"/>
+<area shape="rect" id="node6" href="$mc__rbdyn_2fwd_8h.html" title=" " alt="" coords="418,244,475,271"/>
+<area shape="rect" id="node8" href="$mc__tvm_2fwd_8h.html" title=" " alt="" coords="499,244,557,271"/>
 </map>

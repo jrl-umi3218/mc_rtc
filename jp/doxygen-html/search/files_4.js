@@ -1,17 +1,19 @@
 var searchData=
 [
-  ['effector_5fspline_2eh_4245',['effector_spline.h',['/usr/local/share/doc/ndcurves/doxygen-html/effector__spline_8h.html',1,'']]],
-  ['effector_5fspline_5frotation_2eh_4246',['effector_spline_rotation.h',['/usr/local/share/doc/ndcurves/doxygen-html/effector__spline__rotation_8h.html',1,'']]],
-  ['eigen_2dmatrix_2ehpp_4247',['eigen-matrix.hpp',['/usr/local/share/doc/ndcurves/doxygen-html/eigen-matrix_8hpp.html',1,'']]],
-  ['elements_2eh_4248',['elements.h',['../elements_8h.html',1,'']]],
-  ['ellipsoid_2eh_4249',['Ellipsoid.h',['../Ellipsoid_8h.html',1,'']]],
-  ['enablecontroller_2eh_4250',['EnableController.h',['../EnableController_8h.html',1,'']]],
-  ['encoderobserver_2eh_4251',['EncoderObserver.h',['../EncoderObserver_8h.html',1,'']]],
-  ['endeffectortask_2eh_4252',['EndEffectorTask.h',['../EndEffectorTask_8h.html',1,'']]],
-  ['equalityconstraint_2eh_4253',['EqualityConstraint.h',['../EqualityConstraint_8h.html',1,'']]],
-  ['exact_5fcubic_2eh_4254',['exact_cubic.h',['/usr/local/share/doc/ndcurves/doxygen-html/exact__cubic_8h.html',1,'']]],
-  ['exactcubic_2eh_4255',['ExactCubic.h',['../ExactCubic_8h.html',1,'']]],
-  ['exactcubictrajectorytask_2eh_4256',['ExactCubicTrajectoryTask.h',['../ExactCubicTrajectoryTask_8h.html',1,'']]],
-  ['executor_2eh_4257',['Executor.h',['../Executor_8h.html',1,'']]],
-  ['exponentialmovingaverage_2eh_4258',['ExponentialMovingAverage.h',['../ExponentialMovingAverage_8h.html',1,'']]]
+  ['effector_5fspline_2eh_4366',['effector_spline.h',['/usr/local/share/doc/ndcurves/doxygen-html/effector__spline_8h.html',1,'']]],
+  ['effector_5fspline_5frotation_2eh_4367',['effector_spline_rotation.h',['/usr/local/share/doc/ndcurves/doxygen-html/effector__spline__rotation_8h.html',1,'']]],
+  ['eigen_2dmatrix_2ehpp_4368',['eigen-matrix.hpp',['/usr/local/share/doc/ndcurves/doxygen-html/eigen-matrix_8hpp.html',1,'']]],
+  ['eigentypedef_2eh_4369',['EigenTypedef.h',['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/EigenTypedef_8h.html',1,'']]],
+  ['eigenutility_2eh_4370',['EigenUtility.h',['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/EigenUtility_8h.html',1,'']]],
+  ['elements_2eh_4371',['elements.h',['../elements_8h.html',1,'']]],
+  ['ellipsoid_2eh_4372',['Ellipsoid.h',['../Ellipsoid_8h.html',1,'']]],
+  ['enablecontroller_2eh_4373',['EnableController.h',['../EnableController_8h.html',1,'']]],
+  ['encoderobserver_2eh_4374',['EncoderObserver.h',['../EncoderObserver_8h.html',1,'']]],
+  ['endeffectortask_2eh_4375',['EndEffectorTask.h',['../EndEffectorTask_8h.html',1,'']]],
+  ['equalityconstraint_2eh_4376',['EqualityConstraint.h',['../EqualityConstraint_8h.html',1,'']]],
+  ['exact_5fcubic_2eh_4377',['exact_cubic.h',['/usr/local/share/doc/ndcurves/doxygen-html/exact__cubic_8h.html',1,'']]],
+  ['exactcubic_2eh_4378',['ExactCubic.h',['../ExactCubic_8h.html',1,'']]],
+  ['exactcubictrajectorytask_2eh_4379',['ExactCubicTrajectoryTask.h',['../ExactCubicTrajectoryTask_8h.html',1,'']]],
+  ['executor_2eh_4380',['Executor.h',['../Executor_8h.html',1,'']]],
+  ['exponentialmovingaverage_2eh_4381',['ExponentialMovingAverage.h',['../ExponentialMovingAverage_8h.html',1,'']]]
 ];

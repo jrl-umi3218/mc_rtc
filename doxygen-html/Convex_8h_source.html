@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('Convex_8h_source.html',''); initResiza
 <div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="structmc__tvm_1_1Convex.html#a5f776872a6f2028c83b679bedf2d6bf0">   44</a></span>&#160;  <a class="code" href="structmc__tvm_1_1Convex.html">Convex</a>(NewConvexToken,</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;         <a class="code" href="namespacemc__rbdyn.html">mc_rbdyn</a>::<a class="code" href="namespacemc__rbdyn.html#ac3517607389b845ee6ffdee65cbc8a63">S_ObjectPtr</a> <span class="keywordtype">object</span>,</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;         const <a class="code" href="namespacemc__rbdyn.html">mc_rbdyn</a>::<a class="code" href="structmc__tvm_1_1RobotFrame.html">RobotFrame</a> &amp; frame,</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;         const sva::PTransformd &amp; X_f_c);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;         const <a class="codeRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html">sva</a>::<a class="codeRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html#a259dde998fab6de957995eedfdb4d179">PTransformd</a> &amp; X_f_c);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
 <div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="structmc__tvm_1_1Convex.html#af8fa5698b3fccd9f59a5be106b725bd2">   49</a></span>&#160;  <a class="code" href="structmc__tvm_1_1Convex.html">Convex</a>(const <a class="code" href="structmc__tvm_1_1Convex.html">Convex</a> &amp;) = delete;</div>
 <div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="structmc__tvm_1_1Convex.html#af19b6a491a5b52fd63a85405ee3301d2">   50</a></span>&#160;  <a class="code" href="structmc__tvm_1_1Convex.html">Convex</a> &amp; operator=(const <a class="code" href="structmc__tvm_1_1Convex.html">Convex</a> &amp;) = delete;</div>
@@ -139,13 +139,14 @@ $(document).ready(function(){initNavTree('Convex_8h_source.html',''); initResiza
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <a class="code" href="namespacemc__rbdyn.html#ac3517607389b845ee6ffdee65cbc8a63">mc_rbdyn::S_ObjectPtr</a> object_;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <a class="code" href="namespacemc__rbdyn.html#a1d750a36f101823e43d108ec5c8231cc">mc_rbdyn::ConstRobotFramePtr</a> frame_;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  sva::PTransformd X_f_c_;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/classsva_1_1PTransform.html">sva::PTransformd</a> X_f_c_;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordtype">void</span> updatePosition();</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;};</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;} <span class="comment">// namespace mc_tvm</span></div>
 <div class="ttc" id="aRobotModule_8h_html"><div class="ttname"><a href="RobotModule_8h.html">RobotModule.h</a></div></div>
+<div class="ttc" id="aclasssva_1_1PTransform_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/classsva_1_1PTransform.html">sva::PTransform</a></div></div>
 <div class="ttc" id="ainclude_2mc__tvm_2api_8h_html"><div class="ttname"><a href="include_2mc__tvm_2api_8h.html">api.h</a></div></div>
 <div class="ttc" id="ainclude_2mc__tvm_2api_8h_html_abbd61a50e2e306b709065c31949a254e"><div class="ttname"><a href="include_2mc__tvm_2api_8h.html#abbd61a50e2e306b709065c31949a254e">MC_TVM_DLLAPI</a></div><div class="ttdeci">#define MC_TVM_DLLAPI</div><div class="ttdef"><b>Definition:</b> api.h:47</div></div>
 <div class="ttc" id="amc__rbdyn_2fwd_8h_html"><div class="ttname"><a href="mc__rbdyn_2fwd_8h.html">fwd.h</a></div></div>
@@ -154,6 +155,8 @@ $(document).ready(function(){initNavTree('Convex_8h_source.html',''); initResiza
 <div class="ttc" id="anamespacemc__rbdyn_html_a1d750a36f101823e43d108ec5c8231cc"><div class="ttname"><a href="namespacemc__rbdyn.html#a1d750a36f101823e43d108ec5c8231cc">mc_rbdyn::ConstRobotFramePtr</a></div><div class="ttdeci">std::shared_ptr&lt; const RobotFrame &gt; ConstRobotFramePtr</div><div class="ttdef"><b>Definition:</b> fwd.h:25</div></div>
 <div class="ttc" id="anamespacemc__rbdyn_html_ac3517607389b845ee6ffdee65cbc8a63"><div class="ttname"><a href="namespacemc__rbdyn.html#ac3517607389b845ee6ffdee65cbc8a63">mc_rbdyn::S_ObjectPtr</a></div><div class="ttdeci">std::shared_ptr&lt; sch::S_Object &gt; S_ObjectPtr</div><div class="ttdef"><b>Definition:</b> RobotModule.h:31</div></div>
 <div class="ttc" id="anamespacemc__tvm_html"><div class="ttname"><a href="namespacemc__tvm.html">mc_tvm</a></div><div class="ttdef"><b>Definition:</b> CollisionFunction.h:16</div></div>
+<div class="ttc" id="anamespacesva_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html">sva</a></div></div>
+<div class="ttc" id="anamespacesva_html_a259dde998fab6de957995eedfdb4d179"><div class="ttname"><a href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html#a259dde998fab6de957995eedfdb4d179">PTransformd</a></div><div class="ttdeci">PTransform&lt; double &gt; PTransformd</div></div>
 <div class="ttc" id="astructmc__rbdyn_1_1RobotFrame_html"><div class="ttname"><a href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a></div><div class="ttdef"><b>Definition:</b> RobotFrame.h:22</div></div>
 <div class="ttc" id="astructmc__rbdyn_1_1Robot_html"><div class="ttname"><a href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a></div><div class="ttdef"><b>Definition:</b> Robot.h:63</div></div>
 <div class="ttc" id="astructmc__tvm_1_1Convex_html"><div class="ttname"><a href="structmc__tvm_1_1Convex.html">mc_tvm::Convex</a></div><div class="ttdef"><b>Definition:</b> Convex.h:24</div></div>

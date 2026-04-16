@@ -100,7 +100,7 @@ $(document).ready(function(){initNavTree('ZMPCC_8h_source.html',''); initResizab
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="LeakyIntegrator_8h.html">mc_filter/LeakyIntegrator.h</a>&gt;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="ZMPCCConfiguration_8h.html">mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h</a>&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;<a class="codeRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.html">SpaceVecAlg/SpaceVecAlg</a>&gt;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemc__rtc.html">mc_rtc</a></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('ZMPCC_8h_source.html',''); initResizab
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
 <div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#a616fc85f14d61c0e6294489bad2e8e0a">   76</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#a616fc85f14d61c0e6294489bad2e8e0a">update</a>(<span class="keyword">const</span> Eigen::Vector3d &amp; distribZMP,</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;              <span class="keyword">const</span> Eigen::Vector3d &amp; measuredZMP,</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;              <span class="keyword">const</span> sva::PTransformd &amp; zmpFrame,</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;              <span class="keyword">const</span> <a class="codeRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/classsva_1_1PTransform.html">sva::PTransformd</a> &amp; zmpFrame,</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;              <span class="keywordtype">double</span> dt);</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
 <div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#aada037584c879e69d66e658653912815">   88</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#aada037584c879e69d66e658653912815">apply</a>(Eigen::Vector3d &amp; com, Eigen::Vector3d &amp; comd, Eigen::Vector3d &amp; comdd);</div>
@@ -161,7 +161,9 @@ $(document).ready(function(){initNavTree('ZMPCC_8h_source.html',''); initResizab
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;} <span class="comment">// namespace lipm_stabilizer</span></div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;} <span class="comment">// namespace mc_tasks</span></div>
 <div class="ttc" id="aLeakyIntegrator_8h_html"><div class="ttname"><a href="LeakyIntegrator_8h.html">LeakyIntegrator.h</a></div></div>
+<div class="ttc" id="aSpaceVecAlg.html_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.html">SpaceVecAlg</a></div></div>
 <div class="ttc" id="aZMPCCConfiguration_8h_html"><div class="ttname"><a href="ZMPCCConfiguration_8h.html">ZMPCCConfiguration.h</a></div></div>
+<div class="ttc" id="aclasssva_1_1PTransform_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/classsva_1_1PTransform.html">sva::PTransform</a></div></div>
 <div class="ttc" id="anamespacemc__filter_1_1utils_html_ac413b7125d296374adc252995e63570d"><div class="ttname"><a href="namespacemc__filter_1_1utils.html#ac413b7125d296374adc252995e63570d">mc_filter::utils::clampInPlaceAndWarn</a></div><div class="ttdeci">void clampInPlaceAndWarn(double &amp;value, double lower, double upper, const std::string &amp;label)</div><div class="ttdef"><b>Definition:</b> clamp.h:72</div></div>
 <div class="ttc" id="anamespacemc__rtc_html"><div class="ttname"><a href="namespacemc__rtc.html">mc_rtc</a></div><div class="ttdef"><b>Definition:</b> Contact.h:88</div></div>
 <div class="ttc" id="anamespacemc__tasks_1_1lipm__stabilizer_html_a61ba26bc4aeec5031be001df091b4b1a"><div class="ttname"><a href="namespacemc__tasks_1_1lipm__stabilizer.html#a61ba26bc4aeec5031be001df091b4b1a">mc_tasks::lipm_stabilizer::ZMPCCConfiguration</a></div><div class="ttdeci">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration ZMPCCConfiguration</div><div class="ttdef"><b>Definition:</b> StabilizerTask.h:36</div></div>

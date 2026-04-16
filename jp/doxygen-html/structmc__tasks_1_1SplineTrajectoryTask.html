@@ -139,7 +139,7 @@ Public Types</h2></td></tr>
 <tr class="separator:a649052a5fbf326990d2b3d20ec66ab19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8a4647ef51a16ccf960c519e13c0ccf"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#af8a4647ef51a16ccf960c519e13c0ccf">TrajectoryTask</a> = <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html">TrajectoryTaskGeneric</a></td></tr>
 <tr class="separator:af8a4647ef51a16ccf960c519e13c0ccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d2ac7fd3779da3324969baf637212bf"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a8d2ac7fd3779da3324969baf637212bf">SequenceInterpolator6d</a> = <a class="el" href="structmc__trajectory_1_1SequenceInterpolator.html">mc_trajectory::SequenceInterpolator</a>&lt; Eigen::Vector6d, <a class="el" href="structmc__trajectory_1_1LinearInterpolation.html">mc_trajectory::LinearInterpolation</a>&lt; Eigen::Vector6d &gt; &gt;</td></tr>
+<tr class="memitem:a8d2ac7fd3779da3324969baf637212bf"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a8d2ac7fd3779da3324969baf637212bf">SequenceInterpolator6d</a> = <a class="el" href="structmc__trajectory_1_1SequenceInterpolator.html">mc_trajectory::SequenceInterpolator</a>&lt; <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a>, <a class="el" href="structmc__trajectory_1_1LinearInterpolation.html">mc_trajectory::LinearInterpolation</a>&lt; <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> &gt; &gt;</td></tr>
 <tr class="separator:a8d2ac7fd3779da3324969baf637212bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_types_structmc__tasks_1_1TrajectoryTaskGeneric"><td colspan="2" onclick="javascript:toggleInherit('pub_types_structmc__tasks_1_1TrajectoryTaskGeneric')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html">mc_tasks::TrajectoryTaskGeneric</a></td></tr>
 <tr class="memitem:afcf5b9d58fb4102e5e5ef4deb6b91443 inherit pub_types_structmc__tasks_1_1TrajectoryTaskGeneric"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html#afcf5b9d58fb4102e5e5ef4deb6b91443">TrajectoryBase</a> = <a class="el" href="structmc__tasks_1_1TrajectoryTaskGeneric.html">TrajectoryTaskGeneric</a></td></tr>
@@ -170,10 +170,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae456950d2eafdbc888d0a92b0d87f66a"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#ae456950d2eafdbc888d0a92b0d87f66a">evalTracking</a> () const</td></tr>
 <tr class="memdesc:ae456950d2eafdbc888d0a92b0d87f66a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the trajectory tracking error: transformError between the current robot surface pose and its next desired pose along the trajectory error.  <a href="structmc__tasks_1_1SplineTrajectoryTask.html#ae456950d2eafdbc888d0a92b0d87f66a">More...</a><br /></td></tr>
 <tr class="separator:ae456950d2eafdbc888d0a92b0d87f66a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f94ae2cfc7521582ffd1b5720bda580"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a2f94ae2cfc7521582ffd1b5720bda580">target</a> (const sva::PTransformd &amp;target)</td></tr>
+<tr class="memitem:a2f94ae2cfc7521582ffd1b5720bda580"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a2f94ae2cfc7521582ffd1b5720bda580">target</a> (const <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;target)</td></tr>
 <tr class="memdesc:a2f94ae2cfc7521582ffd1b5720bda580"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the curve target pose. Translation target will be handled by the Derived curve, while orientation target is interpolated here.  <a href="structmc__tasks_1_1SplineTrajectoryTask.html#a2f94ae2cfc7521582ffd1b5720bda580">More...</a><br /></td></tr>
 <tr class="separator:a2f94ae2cfc7521582ffd1b5720bda580"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a915671172878e474be2514db659fb1"><td class="memItemLeft" align="right" valign="top">const sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a8a915671172878e474be2514db659fb1">target</a> () const</td></tr>
+<tr class="memitem:a8a915671172878e474be2514db659fb1"><td class="memItemLeft" align="right" valign="top">const <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a8a915671172878e474be2514db659fb1">target</a> () const</td></tr>
 <tr class="memdesc:a8a915671172878e474be2514db659fb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the target pose (position/orientation)  <a href="structmc__tasks_1_1SplineTrajectoryTask.html#a8a915671172878e474be2514db659fb1">More...</a><br /></td></tr>
 <tr class="separator:a8a915671172878e474be2514db659fb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49b467df085bf4289a5c90276be9e9d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a49b467df085bf4289a5c90276be9e9d9">displaySamples</a> (unsigned s)</td></tr>
@@ -223,19 +223,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa477ee50908bbb25fa0a9bb80e81ae5b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#aa477ee50908bbb25fa0a9bb80e81ae5b">setGains</a> (const Eigen::VectorXd &amp;<a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a3754c421be82d0d654b1e3c6d6e269fe">stiffness</a>, const Eigen::VectorXd &amp;<a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#ac7b0abca4d4b4b3d00a49a66a366db6d">damping</a>)</td></tr>
 <tr class="memdesc:aa477ee50908bbb25fa0a9bb80e81ae5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set dimensional stiffness and damping.  <a href="structmc__tasks_1_1SplineTrajectoryTask.html#aa477ee50908bbb25fa0a9bb80e81ae5b">More...</a><br /></td></tr>
 <tr class="separator:aa477ee50908bbb25fa0a9bb80e81ae5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2826d57d439ecdf1361731268f2b1606"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a2826d57d439ecdf1361731268f2b1606">dimWeightInterpolation</a> (const std::vector&lt; std::pair&lt; double, Eigen::Vector6d &gt;&gt; &amp;dimWeights)</td></tr>
+<tr class="memitem:a2826d57d439ecdf1361731268f2b1606"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a2826d57d439ecdf1361731268f2b1606">dimWeightInterpolation</a> (const std::vector&lt; std::pair&lt; double, <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> &gt;&gt; &amp;dimWeights)</td></tr>
 <tr class="separator:a2826d57d439ecdf1361731268f2b1606"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c340cd68671108b95e7b4f287983e85"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::pair&lt; double, Eigen::Vector6d &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a0c340cd68671108b95e7b4f287983e85">dimWeightInterpolation</a> () const noexcept</td></tr>
+<tr class="memitem:a0c340cd68671108b95e7b4f287983e85"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::pair&lt; double, <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a0c340cd68671108b95e7b4f287983e85">dimWeightInterpolation</a> () const noexcept</td></tr>
 <tr class="memdesc:a0c340cd68671108b95e7b4f287983e85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the dimensional weights (controls the importance of orientation/translation).  <a href="structmc__tasks_1_1SplineTrajectoryTask.html#a0c340cd68671108b95e7b4f287983e85">More...</a><br /></td></tr>
 <tr class="separator:a0c340cd68671108b95e7b4f287983e85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a114c7cde6ceb53c5b33d0551d6b0c286"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a114c7cde6ceb53c5b33d0551d6b0c286">stiffnessInterpolation</a> (const std::vector&lt; std::pair&lt; double, Eigen::Vector6d &gt;&gt; &amp;stiffnessGains)</td></tr>
+<tr class="memitem:a114c7cde6ceb53c5b33d0551d6b0c286"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a114c7cde6ceb53c5b33d0551d6b0c286">stiffnessInterpolation</a> (const std::vector&lt; std::pair&lt; double, <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> &gt;&gt; &amp;stiffnessGains)</td></tr>
 <tr class="separator:a114c7cde6ceb53c5b33d0551d6b0c286"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9821caed3391acbcb3162ef2432a92fc"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::pair&lt; double, Eigen::Vector6d &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a9821caed3391acbcb3162ef2432a92fc">stiffnessInterpolation</a> () const noexcept</td></tr>
+<tr class="memitem:a9821caed3391acbcb3162ef2432a92fc"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::pair&lt; double, <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a9821caed3391acbcb3162ef2432a92fc">stiffnessInterpolation</a> () const noexcept</td></tr>
 <tr class="memdesc:a9821caed3391acbcb3162ef2432a92fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the dimensional weights (controls the importance of orientation/translation).  <a href="structmc__tasks_1_1SplineTrajectoryTask.html#a9821caed3391acbcb3162ef2432a92fc">More...</a><br /></td></tr>
 <tr class="separator:a9821caed3391acbcb3162ef2432a92fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6c30a17fce0428f8a8d4d238efa302d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#aa6c30a17fce0428f8a8d4d238efa302d">dampingInterpolation</a> (const std::vector&lt; std::pair&lt; double, Eigen::Vector6d &gt;&gt; &amp;dampingGains)</td></tr>
+<tr class="memitem:aa6c30a17fce0428f8a8d4d238efa302d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#aa6c30a17fce0428f8a8d4d238efa302d">dampingInterpolation</a> (const std::vector&lt; std::pair&lt; double, <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> &gt;&gt; &amp;dampingGains)</td></tr>
 <tr class="separator:aa6c30a17fce0428f8a8d4d238efa302d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa826a098c08c1548dcb65bbba28189b8"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::pair&lt; double, Eigen::Vector6d &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#aa826a098c08c1548dcb65bbba28189b8">dampingInterpolation</a> () const noexcept</td></tr>
+<tr class="memitem:aa826a098c08c1548dcb65bbba28189b8"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::pair&lt; double, <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#aa826a098c08c1548dcb65bbba28189b8">dampingInterpolation</a> () const noexcept</td></tr>
 <tr class="memdesc:aa826a098c08c1548dcb65bbba28189b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the dimensional weights (controls the importance of orientation/translation).  <a href="structmc__tasks_1_1SplineTrajectoryTask.html#aa826a098c08c1548dcb65bbba28189b8">More...</a><br /></td></tr>
 <tr class="separator:aa826a098c08c1548dcb65bbba28189b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ccc1e5129d5d2fde32faf623099dfb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a0ccc1e5129d5d2fde32faf623099dfb8">damping</a> (double damping)</td></tr>
@@ -386,10 +386,10 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a6d3a61eea75bf5fa5125564e9d5752e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a6d3a61eea75bf5fa5125564e9d5752e2">refPose</a> (const sva::PTransformd &amp;pose)</td></tr>
+<tr class="memitem:a6d3a61eea75bf5fa5125564e9d5752e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a6d3a61eea75bf5fa5125564e9d5752e2">refPose</a> (const <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;pose)</td></tr>
 <tr class="memdesc:a6d3a61eea75bf5fa5125564e9d5752e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tracks a reference world pose.  <a href="structmc__tasks_1_1SplineTrajectoryTask.html#a6d3a61eea75bf5fa5125564e9d5752e2">More...</a><br /></td></tr>
 <tr class="separator:a6d3a61eea75bf5fa5125564e9d5752e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b6ce55a9a60ddf211b8221be9507603"><td class="memItemLeft" align="right" valign="top">const sva::PTransformd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a3b6ce55a9a60ddf211b8221be9507603">refPose</a> () const</td></tr>
+<tr class="memitem:a3b6ce55a9a60ddf211b8221be9507603"><td class="memItemLeft" align="right" valign="top">const <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a3b6ce55a9a60ddf211b8221be9507603">refPose</a> () const</td></tr>
 <tr class="memdesc:a3b6ce55a9a60ddf211b8221be9507603"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the trajectory reference world pose.  <a href="structmc__tasks_1_1SplineTrajectoryTask.html#a3b6ce55a9a60ddf211b8221be9507603">More...</a><br /></td></tr>
 <tr class="separator:a3b6ce55a9a60ddf211b8221be9507603"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa99dd9c136ee9039a844a4ffb814640"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#afa99dd9c136ee9039a844a4ffb814640">addToGUI</a> (<a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">mc_rtc::gui::StateBuilder</a> &amp;gui) override</td></tr>
@@ -543,7 +543,7 @@ struct mc_tasks::SplineTrajectoryTask&lt; Derived &gt;</h3>
 template&lt;typename Derived &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::<a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a8d2ac7fd3779da3324969baf637212bf">SequenceInterpolator6d</a> =  <a class="el" href="structmc__trajectory_1_1SequenceInterpolator.html">mc_trajectory::SequenceInterpolator</a>&lt;Eigen::Vector6d, <a class="el" href="structmc__trajectory_1_1LinearInterpolation.html">mc_trajectory::LinearInterpolation</a>&lt;Eigen::Vector6d&gt; &gt;</td>
+          <td class="memname">using <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::<a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html#a8d2ac7fd3779da3324969baf637212bf">SequenceInterpolator6d</a> =  <a class="el" href="structmc__trajectory_1_1SequenceInterpolator.html">mc_trajectory::SequenceInterpolator</a>&lt;<a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a>, <a class="el" href="structmc__trajectory_1_1LinearInterpolation.html">mc_trajectory::LinearInterpolation</a>&lt;<a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a>&gt; &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -939,7 +939,7 @@ template&lt;typename Derived &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::vector&lt;std::pair&lt;double, Eigen::Vector6d&gt; &gt;&amp; <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::dampingInterpolation </td>
+          <td class="memname">const std::vector&lt;std::pair&lt;double, <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a>&gt; &gt;&amp; <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::dampingInterpolation </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -980,7 +980,7 @@ template&lt;typename Derived &gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::dampingInterpolation </td>
           <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::pair&lt; double, Eigen::Vector6d &gt;&gt; &amp;&#160;</td>
+          <td class="paramtype">const std::vector&lt; std::pair&lt; double, <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> &gt;&gt; &amp;&#160;</td>
           <td class="paramname"><em>dampingGains</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1172,7 +1172,7 @@ template&lt;typename Derived &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::vector&lt;std::pair&lt;double, Eigen::Vector6d&gt; &gt;&amp; <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::dimWeightInterpolation </td>
+          <td class="memname">const std::vector&lt;std::pair&lt;double, <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a>&gt; &gt;&amp; <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::dimWeightInterpolation </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -1213,7 +1213,7 @@ template&lt;typename Derived &gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::dimWeightInterpolation </td>
           <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::pair&lt; double, Eigen::Vector6d &gt;&gt; &amp;&#160;</td>
+          <td class="paramtype">const std::vector&lt; std::pair&lt; double, <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> &gt;&gt; &amp;&#160;</td>
           <td class="paramname"><em>dimWeights</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1641,7 +1641,7 @@ template&lt;typename Derived &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const sva::PTransformd&amp; <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::refPose </td>
+          <td class="memname">const <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&amp; <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::refPose </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -1673,7 +1673,7 @@ template&lt;typename Derived &gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::refPose </td>
           <td>(</td>
-          <td class="paramtype">const sva::PTransformd &amp;&#160;</td>
+          <td class="paramtype">const <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td>
           <td class="paramname"><em>pose</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1983,7 +1983,7 @@ template&lt;typename Derived &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::vector&lt;std::pair&lt;double, Eigen::Vector6d&gt; &gt;&amp; <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::stiffnessInterpolation </td>
+          <td class="memname">const std::vector&lt;std::pair&lt;double, <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a>&gt; &gt;&amp; <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::stiffnessInterpolation </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -2024,7 +2024,7 @@ template&lt;typename Derived &gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::stiffnessInterpolation </td>
           <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::pair&lt; double, Eigen::Vector6d &gt;&gt; &amp;&#160;</td>
+          <td class="paramtype">const std::vector&lt; std::pair&lt; double, <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> &gt;&gt; &amp;&#160;</td>
           <td class="paramname"><em>stiffnessGains</em></td><td>)</td>
           <td></td>
         </tr>
@@ -2060,7 +2060,7 @@ If you call this function after the task is started, and wish to keep the gains 
 template&lt;typename Derived &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const sva::PTransformd <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::target </td>
+          <td class="memname">const <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::target </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -2084,7 +2084,7 @@ template&lt;typename Derived &gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="structmc__tasks_1_1SplineTrajectoryTask.html">mc_tasks::SplineTrajectoryTask</a>&lt; Derived &gt;::target </td>
           <td>(</td>
-          <td class="paramtype">const sva::PTransformd &amp;&#160;</td>
+          <td class="paramtype">const <a class="elRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td>
           <td class="paramname"><em>target</em></td><td>)</td>
           <td></td>
         </tr>
