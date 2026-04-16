@@ -61,6 +61,7 @@
           {
             # define a devShell called local-superbuild with the superbuild configuration above
             # you can also override attributes to add additional shell functionality
+            packages.default = pkgs.mc-rtc-superbuild;
             devShells.default =
               (pkgs.callPackage "${inputs.mc-rtc-nix}/shell.nix" {
                 inherit (pkgs) mc-rtc-superbuild;
