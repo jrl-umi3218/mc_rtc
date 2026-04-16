@@ -2,6 +2,8 @@ pull_request_rules:
   - name: merge [bot] PRs when CI pass
     conditions:
       - check-success = "check-macos-linux-nix"
+      - check-success = "check-build"
+      - check-success = "check-package"
       - check-success = "pre-commit.ci - pr"
       - or:
           - author = dependabot[bot]
