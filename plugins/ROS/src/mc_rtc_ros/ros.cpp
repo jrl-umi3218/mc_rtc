@@ -246,12 +246,18 @@ RobotPublisherImpl::~RobotPublisherImpl()
 
 void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
 {
-  if(&robot == previous_robot) { return; }
+  if(&robot == previous_robot)
+  {
+    return;
+  }
   auto name = robot.name();
   onRobotRemoved_ = robot.robots().onRobotRemoved().connect(
       [this, name](const std::string & n)
       {
-        if(n == name) { previous_robot = nullptr; }
+        if(n == name)
+        {
+          previous_robot = nullptr;
+        }
       });
   this->use_real = use_real;
   previous_robot = &robot;
@@ -301,7 +307,10 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
     data.tfs.push_back(PT2TF(id, tm, prefix + predName, prefix + succName, 0));
   }
 
-  for(const auto & fs : robot.forceSensors()) { add_force_sensor(robot, fs); }
+  for(const auto & fs : robot.forceSensors())
+  {
+    add_force_sensor(robot, fs);
+  }
 
   for(const auto & s : robot.surfaces())
   {
@@ -317,7 +326,10 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
     for(size_t i = 0; i < params.size(); ++i)
     {
       msg.data += params[i];
-      if(i + 1 < params.size()) { msg.data += "#"; }
+      if(i + 1 < params.size())
+      {
+        msg.data += "#";
+      }
     }
     paramsTopic->publish(msg);
   }
@@ -346,9 +358,15 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
 
 void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
 {
-  if(&robot != previous_robot) { init(robot, use_real); }
+  if(&robot != previous_robot)
+  {
+    init(robot, use_real);
+  }
 
-  if(++seq % skip) { return; }
+  if(++seq % skip)
+  {
+    return;
+  }
 
 #ifdef MC_RTC_ROS_IS_ROS2
   auto tm = nh.now();
@@ -440,7 +458,10 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
     size_t wrench_i = 0;
     for(const auto & fs : robot.forceSensors())
     {
-      if(wrench_i >= data.wrenches.size()) { add_force_sensor(robot, fs); }
+      if(wrench_i >= data.wrenches.size())
+      {
+        add_force_sensor(robot, fs);
+      }
       auto & msg = data.wrenches[wrench_i];
       const sva::ForceVecd & wrench_sva = fs.wrench();
       msg.header.stamp = data.js.header.stamp;
@@ -491,30 +512,45 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
 #endif
   }
 
-  if(!msgs.push(data)) { mc_rtc::log::error("Full ROS message publishing queue"); }
+  if(!msgs.push(data))
+  {
+    mc_rtc::log::error("Full ROS message publishing queue");
+  }
 }
 
 RobotPublisher::RobotPublisher(const std::string & prefix, double rate, double dt) : impl(nullptr)
 {
   auto nh = ROSBridge::get_node_handle();
-  if(nh) { impl.reset(new RobotPublisherImpl(*nh, prefix, rate, dt)); }
+  if(nh)
+  {
+    impl.reset(new RobotPublisherImpl(*nh, prefix, rate, dt));
+  }
 }
 
 RobotPublisher::~RobotPublisher() {}
 
 void RobotPublisher::init(const mc_rbdyn::Robot & robot, bool use_real)
 {
-  if(impl) { impl->init(robot, use_real); }
+  if(impl)
+  {
+    impl->init(robot, use_real);
+  }
 }
 
 void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot)
 {
-  if(impl) { impl->update(dt, robot); }
+  if(impl)
+  {
+    impl->update(dt, robot);
+  }
 }
 
 void RobotPublisher::set_rate(double rate)
 {
-  if(impl) { impl->set_rate(rate); }
+  if(impl)
+  {
+    impl->set_rate(rate);
+  }
 }
 
 void RobotPublisherImpl::publishThread()
@@ -590,7 +626,10 @@ void RobotPublisherImpl::set_rate(double rateIn)
 
 inline bool ros_init([[maybe_unused]] const std::string & name)
 {
-  if(ros::ok()) { return true; }
+  if(ros::ok())
+  {
+    return true;
+  }
   int argc = 0;
 #ifdef MC_RTC_ROS_IS_ROS2
   rclcpp::init(argc, nullptr, rclcpp::InitOptions(), rclcpp::SignalHandlerOptions::SigTerm);
@@ -679,7 +718,10 @@ void ROSBridge::stop_robot_publisher(const std::string & publisher)
 {
   static auto & impl = impl_();
   auto it = impl.rpubs.find(publisher);
-  if(it == impl.rpubs.end()) { return; }
+  if(it == impl.rpubs.end())
+  {
+    return;
+  }
   impl.rpubs.erase(it);
 }
 
@@ -700,7 +742,10 @@ void ROSBridge::remove_extra_robot_publishers(const mc_rbdyn::Robots & robots)
     size_t pos = topic.find('/');
     if(pos != std::string::npos && pos + 1 < topic.size())
     {
-      if(!robots.hasRobot(topic.substr(pos + 1))) { it = impl.rpubs.erase(it); }
+      if(!robots.hasRobot(topic.substr(pos + 1)))
+      {
+        it = impl.rpubs.erase(it);
+      }
       else
       {
         ++it;

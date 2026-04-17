@@ -75,12 +75,18 @@ bool MetaTasksState::run(Controller &)
         const auto & t = *tasks_[tCrit.idx].first;
         if(tCrit.use_output)
         {
-          if(out.size()) { out += ", "; }
+          if(out.size())
+          {
+            out += ", ";
+          }
           out += t.name() + "=" + crit.output();
         }
         mc_rtc::log::info("Completed {} ({})", t.name(), crit.output());
       }
-      if(out.empty()) { out = "OK"; }
+      if(out.empty())
+      {
+        out = "OK";
+      }
       output(out);
     }
     return true;

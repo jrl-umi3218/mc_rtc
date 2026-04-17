@@ -79,8 +79,14 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CompletionCriteri
     auto rhs = build(task, dt, conds[1]);
     return [lhs, rhs](const mc_tasks::MetaTask & t, std::string & out)
     {
-      if(lhs(t, out)) { return true; }
-      else if(rhs(t, out)) { return true; }
+      if(lhs(t, out))
+      {
+        return true;
+      }
+      else if(rhs(t, out))
+      {
+        return true;
+      }
       return false;
     };
   }

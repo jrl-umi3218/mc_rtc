@@ -497,7 +497,10 @@ public:
     if(v.isArray())
     {
       std::vector<T, A> ret;
-      for(size_t i = 0; i < v.size(); ++i) { ret.push_back(Configuration(v[i])); }
+      for(size_t i = 0; i < v.size(); ++i)
+      {
+        ret.push_back(Configuration(v[i]));
+      }
       return ret;
     }
     throw Configuration::Exception("Stored Json value is not a vector", v);
@@ -515,7 +518,10 @@ public:
     if(v.isArray() && v.size() == N)
     {
       std::array<T, N> ret;
-      for(size_t i = 0; i < N; ++i) { ret[i] = Configuration(v[i]); }
+      for(size_t i = 0; i < N; ++i)
+      {
+        ret[i] = Configuration(v[i]);
+      }
       return ret;
     }
     throw Configuration::Exception("Stored Json value is not an array or its size is incorrect", v);
@@ -529,7 +535,10 @@ public:
   template<class T1, class T2>
   operator std::pair<T1, T2>() const
   {
-    if(v.isArray() && v.size() == 2) { return std::make_pair<T1, T2>(Configuration(v[0]), Configuration(v[1])); }
+    if(v.isArray() && v.size() == 2)
+    {
+      return std::make_pair<T1, T2>(Configuration(v[0]), Configuration(v[1]));
+    }
     throw Configuration::Exception("Stored Json value is not an array of size 2", v);
   }
 
@@ -571,7 +580,10 @@ public:
       for(size_t i = 0; i < v.size(); ++i)
       {
         auto ins = ret.insert(Configuration(v[i]));
-        if(!ins.second) { throw Configuration::Exception("Stored Json set does not hold unique values", v); }
+        if(!ins.second)
+        {
+          throw Configuration::Exception("Stored Json set does not hold unique values", v);
+        }
       }
       return ret;
     }
@@ -593,7 +605,10 @@ public:
       for(size_t i = 0; i < v.size(); ++i)
       {
         auto ins = ret.insert(Configuration(v[i]));
-        if(!ins.second) { throw Configuration::Exception("Stored Json set does not hold unique values", v); }
+        if(!ins.second)
+        {
+          throw Configuration::Exception("Stored Json set does not hold unique values", v);
+        }
       }
       return ret;
     }
@@ -612,10 +627,19 @@ public:
   template<typename... Args>
   operator std::variant<Args...>() const
   {
-    if(!v.isArray()) { throw Configuration::Exception("Stored Json value is not an array", v); }
-    if(v.size() != 2) { throw Configuration::Exception("Stored Json value is not of size 2", v); }
+    if(!v.isArray())
+    {
+      throw Configuration::Exception("Stored Json value is not an array", v);
+    }
+    if(v.size() != 2)
+    {
+      throw Configuration::Exception("Stored Json value is not of size 2", v);
+    }
     size_t idx = Configuration(v[0]);
-    if(idx >= sizeof...(Args)) { throw Configuration::Exception("Variant index out of type index bound", v); }
+    if(idx >= sizeof...(Args))
+    {
+      throw Configuration::Exception("Variant index out of type index bound", v);
+    }
 #if MC_RTC_USE_VARIANT_WORKAROUND
     return internal::to_variant<0, Args...>(v[1], idx);
 #else
@@ -632,14 +656,38 @@ public:
   template<typename T, typename std::enable_if<internal::is_integral_v<T>, int>::type = 0>
   operator T() const
   {
-    if constexpr(internal::is_like_int8_t<T>) { return static_cast<T>(this->operator int8_t()); }
-    else if constexpr(internal::is_like_int16_t<T>) { return static_cast<T>(this->operator int16_t()); }
-    else if constexpr(internal::is_like_int32_t<T>) { return static_cast<T>(this->operator int32_t()); }
-    else if constexpr(internal::is_like_int64_t<T>) { return static_cast<T>(this->operator int64_t()); }
-    else if constexpr(internal::is_like_uint8_t<T>) { return static_cast<T>(this->operator uint8_t()); }
-    else if constexpr(internal::is_like_uint16_t<T>) { return static_cast<T>(this->operator uint16_t()); }
-    else if constexpr(internal::is_like_uint32_t<T>) { return static_cast<T>(this->operator uint32_t()); }
-    else if constexpr(internal::is_like_uint64_t<T>) { return static_cast<T>(this->operator uint64_t()); }
+    if constexpr(internal::is_like_int8_t<T>)
+    {
+      return static_cast<T>(this->operator int8_t());
+    }
+    else if constexpr(internal::is_like_int16_t<T>)
+    {
+      return static_cast<T>(this->operator int16_t());
+    }
+    else if constexpr(internal::is_like_int32_t<T>)
+    {
+      return static_cast<T>(this->operator int32_t());
+    }
+    else if constexpr(internal::is_like_int64_t<T>)
+    {
+      return static_cast<T>(this->operator int64_t());
+    }
+    else if constexpr(internal::is_like_uint8_t<T>)
+    {
+      return static_cast<T>(this->operator uint8_t());
+    }
+    else if constexpr(internal::is_like_uint16_t<T>)
+    {
+      return static_cast<T>(this->operator uint16_t());
+    }
+    else if constexpr(internal::is_like_uint32_t<T>)
+    {
+      return static_cast<T>(this->operator uint32_t());
+    }
+    else if constexpr(internal::is_like_uint64_t<T>)
+    {
+      return static_cast<T>(this->operator uint64_t());
+    }
     else
     {
       static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
@@ -657,7 +705,10 @@ public:
                                    int>::type = 0>
   operator T() const
   {
-    if constexpr(internal::has_configuration_load_object_v<T>) { return ConfigurationLoader<T>::load(*this); }
+    if constexpr(internal::has_configuration_load_object_v<T>)
+    {
+      return ConfigurationLoader<T>::load(*this);
+    }
     else
     {
       return T::fromConfiguration(*this);
@@ -873,7 +924,10 @@ public:
   std::optional<T> find(const std::string & key, Args &&... others) const
   {
     auto maybe_cfg = find(key, std::forward<Args>(others)...);
-    if(maybe_cfg) { return maybe_cfg->operator T(); }
+    if(maybe_cfg)
+    {
+      return maybe_cfg->operator T();
+    }
     return std::nullopt;
   }
 
@@ -1404,14 +1458,38 @@ public:
   template<typename T, typename std::enable_if<internal::is_integral_v<T>, int>::type = 0>
   void push(const T & value)
   {
-    if constexpr(internal::is_like_int8_t<T>) { push(static_cast<int8_t>(value)); }
-    else if constexpr(internal::is_like_int16_t<T>) { push(static_cast<int16_t>(value)); }
-    else if constexpr(internal::is_like_int32_t<T>) { push(static_cast<int32_t>(value)); }
-    else if constexpr(internal::is_like_int64_t<T>) { push(static_cast<int64_t>(value)); }
-    else if constexpr(internal::is_like_uint8_t<T>) { push(static_cast<uint8_t>(value)); }
-    else if constexpr(internal::is_like_uint16_t<T>) { push(static_cast<uint16_t>(value)); }
-    else if constexpr(internal::is_like_uint32_t<T>) { push(static_cast<uint32_t>(value)); }
-    else if constexpr(internal::is_like_uint64_t<T>) { push(static_cast<uint64_t>(value)); }
+    if constexpr(internal::is_like_int8_t<T>)
+    {
+      push(static_cast<int8_t>(value));
+    }
+    else if constexpr(internal::is_like_int16_t<T>)
+    {
+      push(static_cast<int16_t>(value));
+    }
+    else if constexpr(internal::is_like_int32_t<T>)
+    {
+      push(static_cast<int32_t>(value));
+    }
+    else if constexpr(internal::is_like_int64_t<T>)
+    {
+      push(static_cast<int64_t>(value));
+    }
+    else if constexpr(internal::is_like_uint8_t<T>)
+    {
+      push(static_cast<uint8_t>(value));
+    }
+    else if constexpr(internal::is_like_uint16_t<T>)
+    {
+      push(static_cast<uint16_t>(value));
+    }
+    else if constexpr(internal::is_like_uint32_t<T>)
+    {
+      push(static_cast<uint32_t>(value));
+    }
+    else if constexpr(internal::is_like_uint64_t<T>)
+    {
+      push(static_cast<uint64_t>(value));
+    }
     else
     {
       static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
@@ -1430,7 +1508,10 @@ public:
   void add(const std::string & key, const std::vector<T, A> & value, Args &&... args)
   {
     Configuration v = array(key, value.size());
-    for(const auto & vi : value) { v.push(vi, std::forward<Args>(args)...); }
+    for(const auto & vi : value)
+    {
+      v.push(vi, std::forward<Args>(args)...);
+    }
   }
 
   /*! \brief Add an array into the JSON document
@@ -1445,7 +1526,10 @@ public:
   void add(const std::string & key, const std::array<T, N> & value, Args &&... args)
   {
     Configuration v = array(key, N);
-    for(const auto & vi : value) { v.push(vi, std::forward<Args>(args)...); }
+    for(const auto & vi : value)
+    {
+      v.push(vi, std::forward<Args>(args)...);
+    }
   }
 
   /*! \brief Add a pair into the JSON document
@@ -1479,7 +1563,10 @@ public:
   void add(const std::string & key, const std::map<std::string, T, C, A> & value, Args &&... args)
   {
     Configuration v = add(key);
-    for(const auto & el : value) { v.add(el.first, el.second, std::forward<Args>(args)...); }
+    for(const auto & el : value)
+    {
+      v.add(el.first, el.second, std::forward<Args>(args)...);
+    }
   }
 
   /*! \brief Add a set into the JSON document
@@ -1494,7 +1581,10 @@ public:
   void add(const std::string & key, const std::set<T, C, A> & value, Args &&... args)
   {
     Configuration v = array(key, value.size());
-    for(const auto & v : value) { v.push(*v, std::forward<Args>(args)...); }
+    for(const auto & v : value)
+    {
+      v.push(*v, std::forward<Args>(args)...);
+    }
   }
 
   /*! \brief Add an unordered set into the JSON document
@@ -1513,7 +1603,10 @@ public:
   void add(const std::string & key, const std::unordered_set<T, H, E, A> & value, Args &&... args)
   {
     Configuration v = array(key, value.size());
-    for(const auto & v : value) { v.push(*v, std::forward<Args>(args)...); }
+    for(const auto & v : value)
+    {
+      v.push(*v, std::forward<Args>(args)...);
+    }
   }
 
   /*! \brief Add a variant object into the JSON document
@@ -1543,14 +1636,38 @@ public:
   template<typename T, typename std::enable_if<internal::is_integral_v<T>, int>::type = 0>
   void add(const std::string & key, const T & value)
   {
-    if constexpr(internal::is_like_int8_t<T>) { add(key, static_cast<int8_t>(value)); }
-    else if constexpr(internal::is_like_int16_t<T>) { add(key, static_cast<int16_t>(value)); }
-    else if constexpr(internal::is_like_int32_t<T>) { add(key, static_cast<int32_t>(value)); }
-    else if constexpr(internal::is_like_int64_t<T>) { add(key, static_cast<int64_t>(value)); }
-    else if constexpr(internal::is_like_uint8_t<T>) { add(key, static_cast<uint8_t>(value)); }
-    else if constexpr(internal::is_like_uint16_t<T>) { add(key, static_cast<uint16_t>(value)); }
-    else if constexpr(internal::is_like_uint32_t<T>) { add(key, static_cast<uint32_t>(value)); }
-    else if constexpr(internal::is_like_uint64_t<T>) { add(key, static_cast<uint64_t>(value)); }
+    if constexpr(internal::is_like_int8_t<T>)
+    {
+      add(key, static_cast<int8_t>(value));
+    }
+    else if constexpr(internal::is_like_int16_t<T>)
+    {
+      add(key, static_cast<int16_t>(value));
+    }
+    else if constexpr(internal::is_like_int32_t<T>)
+    {
+      add(key, static_cast<int32_t>(value));
+    }
+    else if constexpr(internal::is_like_int64_t<T>)
+    {
+      add(key, static_cast<int64_t>(value));
+    }
+    else if constexpr(internal::is_like_uint8_t<T>)
+    {
+      add(key, static_cast<uint8_t>(value));
+    }
+    else if constexpr(internal::is_like_uint16_t<T>)
+    {
+      add(key, static_cast<uint16_t>(value));
+    }
+    else if constexpr(internal::is_like_uint32_t<T>)
+    {
+      add(key, static_cast<uint32_t>(value));
+    }
+    else if constexpr(internal::is_like_uint64_t<T>)
+    {
+      add(key, static_cast<uint64_t>(value));
+    }
     else
     {
       static_assert(!std::is_same_v<T, T>, "T is integral but has an unsupported size");
@@ -1591,7 +1708,10 @@ public:
   void push(const std::vector<T, A> & value, Args &&... args)
   {
     Configuration v = array(value.size());
-    for(const auto & vi : value) { v.push(vi, std::forward<Args>(args)...); }
+    for(const auto & vi : value)
+    {
+      v.push(vi, std::forward<Args>(args)...);
+    }
   }
 
   /*! \brief Push an array into the JSON document
@@ -1602,7 +1722,10 @@ public:
   void push(const std::array<T, N> & value, Args &&... args)
   {
     Configuration v = array(N);
-    for(const auto & vi : value) { v.push(vi, std::forward<Args>(args)...); }
+    for(const auto & vi : value)
+    {
+      v.push(vi, std::forward<Args>(args)...);
+    }
   }
 
   /*! \brief Push a pair into the JSON document
@@ -1628,7 +1751,10 @@ public:
   void push(const std::map<std::string, T, C, A> & value, Args &&... args)
   {
     Configuration v = object();
-    for(const auto & el : value) { v.add(el.first, el.second, std::forward<Args>(args)...); }
+    for(const auto & el : value)
+    {
+      v.add(el.first, el.second, std::forward<Args>(args)...);
+    }
   }
 
   /*! \brief Push a set into the JSON document
@@ -1643,7 +1769,10 @@ public:
   void push(const std::set<T, C, A> & value, Args &&... args)
   {
     Configuration v = array(value.size());
-    for(const auto & v : value) { v.push(*v, std::forward<Args>(args)...); }
+    for(const auto & v : value)
+    {
+      v.push(*v, std::forward<Args>(args)...);
+    }
   }
 
   /*! \brief Push an unordered set into the JSON document
@@ -1662,7 +1791,10 @@ public:
   void push(const std::unordered_set<T, H, E, A> & value, Args &&... args)
   {
     Configuration v = array(value.size());
-    for(const auto & v : value) { v.push(*v, std::forward<Args>(args)...); }
+    for(const auto & v : value)
+    {
+      v.push(*v, std::forward<Args>(args)...);
+    }
   }
 
   /*! \brief Push a variant object into the JSON document
@@ -1711,7 +1843,10 @@ private:
   template<typename T>
   T convert() const
   {
-    if constexpr(std::is_same_v<T, Configuration>) { return *this; }
+    if constexpr(std::is_same_v<T, Configuration>)
+    {
+      return *this;
+    }
     else
     {
       return this->operator T();
@@ -1781,10 +1916,16 @@ template<size_t IDX, typename... Args>
 std::variant<Args...> to_variant(const Configuration & c, size_t idx)
 {
   // Note: this never happens because we always pass idx < sizeof...(Args)
-  if constexpr(IDX >= sizeof...(Args)) { mc_rtc::log::error_and_throw("Invalid runtime index for variant"); }
+  if constexpr(IDX >= sizeof...(Args))
+  {
+    mc_rtc::log::error_and_throw("Invalid runtime index for variant");
+  }
   else
   {
-    if(idx == IDX) { return c.operator std::variant_alternative_t<IDX, std::variant<Args...>>(); }
+    if(idx == IDX)
+    {
+      return c.operator std::variant_alternative_t<IDX, std::variant<Args...>>();
+    }
     else
     {
       return to_variant<IDX + 1, Args...>(c, idx);

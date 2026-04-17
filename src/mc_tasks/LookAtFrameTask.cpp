@@ -46,7 +46,10 @@ void LookAtFrameTask::update(mc_solver::QPSolver &)
 void LookAtFrameTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   LookAtTask::load(solver, config);
-  if(config.has("offset")) { offset_ = config("offset"); }
+  if(config.has("offset"))
+  {
+    offset_ = config("offset");
+  }
 }
 
 } // namespace mc_tasks

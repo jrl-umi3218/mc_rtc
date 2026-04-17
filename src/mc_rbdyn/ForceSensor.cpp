@@ -101,7 +101,10 @@ ForceSensor::ForceSensor(const ForceSensor & fs) : ForceSensor(fs.name_, fs.pare
 
 ForceSensor & ForceSensor::operator=(const ForceSensor & fs)
 {
-  if(&fs == this) { return *this; }
+  if(&fs == this)
+  {
+    return *this;
+  }
   name_ = fs.name_;
   parent_ = fs.parent_;
   X_p_s_ = fs.X_p_s_;

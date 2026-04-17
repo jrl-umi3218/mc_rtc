@@ -40,7 +40,10 @@ auto Cylinder(const std::string & name,
       cylinder.radius = params.radius;
       cylinder.length = params.length;
     }
-    if constexpr(std::is_invocable_v<GetColor>) { mc_rtc::details::setVisualColor(visual, color_fn()); }
+    if constexpr(std::is_invocable_v<GetColor>)
+    {
+      mc_rtc::details::setVisualColor(visual, color_fn());
+    }
     return visual;
   };
   return Visual(name, get_visual_fn, get_pos_fn);

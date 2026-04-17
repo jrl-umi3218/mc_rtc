@@ -33,7 +33,10 @@ DynamicFunction::ForceContact::ForceContact(const mc_rbdyn::RobotFrame & frame,
 : frame_(frame), points_(std::move(points)), dir_(dir), jac_(frame.tvm_frame().rbdJacobian()),
   blocks_(jac_.compactPath(frame.robot().mb())), force_jac_(6, jac_.dof()), full_jac_(6, frame.robot().mb().nrDof())
 {
-  for(size_t i = 0; i < points_.size(); ++i) { forces_.add(tvm::Space(3).createVariable("force" + std::to_string(i))); }
+  for(size_t i = 0; i < points_.size(); ++i)
+  {
+    forces_.add(tvm::Space(3).createVariable("force" + std::to_string(i)));
+  }
   forces_.setZero();
 }
 
@@ -74,7 +77,10 @@ const tvm::VariableVector & DynamicFunction::addContact(const mc_rbdyn::RobotFra
         "Attempted to add a contact for {} to dynamic function belonging to {}", frame.robot().name(), robot_.name());
   }
   auto & fc = contacts_.emplace_back(frame, std::move(points), dir);
-  for(const auto & var : fc.forces_) { addVariable(var, true); }
+  for(const auto & var : fc.forces_)
+  {
+    addVariable(var, true);
+  }
   addInputDependency<DynamicFunction>(Update::Jacobian, frame.tvm_frame(), mc_tvm::RobotFrame::Output::Jacobian);
   return fc.forces_;
 }
@@ -84,7 +90,10 @@ void DynamicFunction::removeContact(const mc_rbdyn::RobotFrame & frame)
   auto it = findContact(frame);
   if(it != contacts_.end())
   {
-    for(const auto & var : it->forces_) { removeVariable(var); }
+    for(const auto & var : it->forces_)
+    {
+      removeVariable(var);
+    }
     contacts_.erase(it);
   }
 }
@@ -92,7 +101,10 @@ void DynamicFunction::removeContact(const mc_rbdyn::RobotFrame & frame)
 sva::ForceVecd DynamicFunction::contactForce(const mc_rbdyn::RobotFrame & frame) const
 {
   auto it = findContact(frame);
-  if(it != contacts_.end()) { return (*it).force(); }
+  if(it != contacts_.end())
+  {
+    return (*it).force();
+  }
   else
   {
     mc_rtc::log::error("No contact at frame {} in dynamic function for {}", frame.name(), robot_.name());
@@ -109,7 +121,10 @@ void DynamicFunction::updateJacobian()
 {
   const auto & robot = robot_.tvmRobot();
   splitJacobian(robot.H(), robot.alphaD());
-  for(auto & c : contacts_) { c.updateJacobians(*this); }
+  for(auto & c : contacts_)
+  {
+    c.updateJacobians(*this);
+  }
 }
 
 auto DynamicFunction::findContact(const mc_rbdyn::RobotFrame & frame) const -> std::vector<ForceContact>::const_iterator

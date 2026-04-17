@@ -53,8 +53,14 @@ void TasksQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Con
     const std::string & r1S = contact.r1Surface()->name();
     const std::string & r2 = robots().robot(contact.r2Index()).name();
     const std::string & r2S = contact.r2Surface()->name();
-    if(logger_) { logger_->removeLogEntry("contact_" + r1 + "::" + r1S + "_" + r2 + "::" + r2S); }
-    if(gui_) { gui_->removeElement({"Contacts", "Forces"}, fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S)); }
+    if(logger_)
+    {
+      logger_->removeLogEntry("contact_" + r1 + "::" + r1S + "_" + r2 + "::" + r2S);
+    }
+    if(gui_)
+    {
+      gui_->removeElement({"Contacts", "Forces"}, fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S));
+    }
   }
   contacts_ = contacts;
   for(auto it = contacts_.begin(); it != contacts_.end();)
@@ -64,7 +70,10 @@ void TasksQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Con
     const auto & r2 = robots().robot(c.r2Index());
     if(r1.mb().nrDof() == 0)
     {
-      if(r2.mb().nrDof() != 0) { c = c.swap(robots()); }
+      if(r2.mb().nrDof() != 0)
+      {
+        c = c.swap(robots());
+      }
       else
       {
         it = contacts_.erase(it);
@@ -183,7 +192,10 @@ bool TasksQPSolver::run_impl(FeedbackType fType)
 
 bool TasksQPSolver::runOpenLoop()
 {
-  for(auto & c : constraints_) { c->update(*this); }
+  for(auto & c : constraints_)
+  {
+    c->update(*this);
+  }
   for(auto & t : metaTasks_)
   {
     t->update(*this);
@@ -243,17 +255,26 @@ bool TasksQPSolver::runJointsFeedback(bool wVelocity)
       for(size_t j = 0; j < robot.refJointOrder().size(); ++j)
       {
         const auto & jN = robot.refJointOrder()[j];
-        if(!robot.hasJoint(jN)) { continue; }
+        if(!robot.hasJoint(jN))
+        {
+          continue;
+        }
         auto jI = robot.jointIndexByName(jN);
         robot.mbc().q[jI][0] = encoders[j];
-        if(wVelocity) { robot.mbc().alpha[jI][0] = encoders_alpha_[i][j]; }
+        if(wVelocity)
+        {
+          robot.mbc().alpha[jI][0] = encoders_alpha_[i][j];
+        }
       }
       robot.forwardKinematics();
       robot.forwardVelocity();
       robot.forwardAcceleration();
     }
   }
-  for(auto & c : constraints_) { c->update(*this); }
+  for(auto & c : constraints_)
+  {
+    c->update(*this);
+  }
   for(auto & t : metaTasks_)
   {
     t->update(*this);
@@ -309,7 +330,10 @@ bool TasksQPSolver::runClosedLoop(bool integrateControlState)
   }
 
   // Update tasks and constraints from estimated robots
-  for(auto & c : constraints_) { c->update(*this); }
+  for(auto & c : constraints_)
+  {
+    c->update(*this);
+  }
   for(auto & t : metaTasks_)
   {
     t->update(*this);
@@ -383,7 +407,10 @@ void TasksQPSolver::removeDynamicsConstraint(mc_solver::ConstraintSet * cs)
 {
   auto it = std::find_if(dynamicsConstraints_.begin(), dynamicsConstraints_.end(),
                          [&cs](DynamicsConstraint * dyn) { return static_cast<ConstraintSet *>(dyn) == cs; });
-  if(it != dynamicsConstraints_.end()) { dynamicsConstraints_.erase(it); }
+  if(it != dynamicsConstraints_.end())
+  {
+    dynamicsConstraints_.erase(it);
+  }
 }
 
 } // namespace mc_solver

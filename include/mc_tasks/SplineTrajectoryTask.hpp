@@ -105,7 +105,10 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> SplineTrajectoryT
         dof(i) = 0.;
         target(i) = 0.;
       }
-      else if(target(i) < 0) { dof(i) = -1.; }
+      else if(target(i) < 0)
+      {
+        dof(i) = -1.;
+      }
     }
     return [dof, target](const mc_tasks::MetaTask & t, std::string & out)
     {
@@ -113,7 +116,10 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> SplineTrajectoryT
       Eigen::Vector6d w = self.frame_->wrench().vector();
       for(int i = 0; i < 6; ++i)
       {
-        if(dof(i) * fabs(w(i)) < target(i)) { return false; }
+        if(dof(i) * fabs(w(i)) < target(i))
+        {
+          return false;
+        }
       }
       out += "wrench";
       return true;
@@ -161,17 +167,32 @@ void SplineTrajectoryTask<Derived>::load(mc_solver::QPSolver & solver, const mc_
         }
       }
       // Add initial gain if missing from configuration
-      if(out.empty()) { out.push_back({0., startGains}); }
-      else if(!out.empty() && out.front().first > 0.) { out.insert(out.begin(), {0, startGains}); }
+      if(out.empty())
+      {
+        out.push_back({0., startGains});
+      }
+      else if(!out.empty() && out.front().first > 0.)
+      {
+        out.insert(out.begin(), {0, startGains});
+      }
       return out;
     };
 
     auto gconfig = config("gainsInterpolation");
-    if(gconfig.has("stiffness")) { stiffnessInterpolation(genValues(gconfig, "stiffness", this->dimStiffness())); }
+    if(gconfig.has("stiffness"))
+    {
+      stiffnessInterpolation(genValues(gconfig, "stiffness", this->dimStiffness()));
+    }
 
-    if(gconfig.has("damping")) { dampingInterpolation(genValues(gconfig, "damping", this->dimDamping())); }
+    if(gconfig.has("damping"))
+    {
+      dampingInterpolation(genValues(gconfig, "damping", this->dimDamping()));
+    }
 
-    if(gconfig.has("dimWeight")) { dimWeightInterpolation(genValues(gconfig, "dimWeight", this->dimWeight())); }
+    if(gconfig.has("dimWeight"))
+    {
+      dimWeightInterpolation(genValues(gconfig, "dimWeight", this->dimWeight()));
+    }
   }
 }
 
@@ -219,7 +240,10 @@ void SplineTrajectoryTask<Derived>::update(mc_solver::QPSolver & solver)
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::interpolateGains()
 {
-  if(dimWeightInterpolator_.hasValues()) { TrajectoryBase::dimWeight(dimWeightInterpolator_.compute(currTime_)); }
+  if(dimWeightInterpolator_.hasValues())
+  {
+    TrajectoryBase::dimWeight(dimWeightInterpolator_.compute(currTime_));
+  }
 
   if(stiffnessInterpolator_.hasValues())
   { // Interpolate gains
@@ -248,7 +272,10 @@ void SplineTrajectoryTask<Derived>::oriWaypoints(const std::vector<std::pair<dou
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::dimWeight(const Eigen::VectorXd & dimW)
 {
-  if(dimW.size() != 6) { mc_rtc::log::error_and_throw("SplineTrajectoryTask dimWeight must be a Vector6d!"); }
+  if(dimW.size() != 6)
+  {
+    mc_rtc::log::error_and_throw("SplineTrajectoryTask dimWeight must be a Vector6d!");
+  }
 
   dimWeightInterpolator_.clear();
   TrajectoryBase::dimWeight(dimW);
@@ -301,7 +328,10 @@ void SplineTrajectoryTask<Derived>::damping(double damping)
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::damping(const Eigen::VectorXd & damping)
 {
-  if(damping.size() != 6) { mc_rtc::log::error_and_throw("[{}] dimensional damping must be a Vector6d!", name()); }
+  if(damping.size() != 6)
+  {
+    mc_rtc::log::error_and_throw("[{}] dimensional damping must be a Vector6d!", name());
+  }
 
   dampingInterpolator_.clear();
   TrajectoryBase::damping(damping);
@@ -316,8 +346,14 @@ void SplineTrajectoryTask<Derived>::setGains(double stiffness, double damping)
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::setGains(const Eigen::VectorXd & stiffness, const Eigen::VectorXd & damping)
 {
-  if(stiffness.size() != 6) { mc_rtc::log::error_and_throw("[{}] dimensional stiffness must be a Vector6d!", name()); }
-  else if(damping.size() != 6) { mc_rtc::log::error_and_throw("[{}] dimensional damping must be a Vector6d!", name()); }
+  if(stiffness.size() != 6)
+  {
+    mc_rtc::log::error_and_throw("[{}] dimensional stiffness must be a Vector6d!", name());
+  }
+  else if(damping.size() != 6)
+  {
+    mc_rtc::log::error_and_throw("[{}] dimensional damping must be a Vector6d!", name());
+  }
   stiffnessInterpolator_.clear();
   dampingInterpolator_.clear();
   TrajectoryBase::setGains(stiffness, damping);

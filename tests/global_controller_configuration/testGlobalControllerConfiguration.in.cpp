@@ -16,7 +16,10 @@ struct TestGlobalControllerConfigurationFixture
     mc_rtc::Loader::debug_suffix = "";
     mc_rbdyn::RobotLoader::clear();
     std::cout << "AVAILABLE ROBOTS:\n";
-    for(const auto & r : mc_rbdyn::RobotLoader::available_robots()) { std::cout << "- " << r << "\n"; }
+    for(const auto & r : mc_rbdyn::RobotLoader::available_robots())
+    {
+      std::cout << "- " << r << "\n";
+    }
     BOOST_REQUIRE(mc_rbdyn::RobotLoader::available_robots().empty());
   }
 };

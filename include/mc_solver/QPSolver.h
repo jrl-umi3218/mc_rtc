@@ -205,7 +205,10 @@ public:
   /** Remove a task from the solver which was shared with the solver */
   inline void removeTask(std::shared_ptr<mc_tasks::MetaTask> task)
   {
-    if(task) { removeTask(task.get()); }
+    if(task)
+    {
+      removeTask(task.get());
+    }
   }
 
   /** Reset all contacts in the solver and use the new set of contacts provided

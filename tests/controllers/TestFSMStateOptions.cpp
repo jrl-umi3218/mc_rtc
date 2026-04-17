@@ -60,7 +60,10 @@ public:
       BOOST_REQUIRE(solver().contacts().size() == 2);
       for(const auto & c : solver().contacts())
       {
-        if(c.r1Surface()->name() == "RightFootCenter") { BOOST_REQUIRE(c.dof() == dof); }
+        if(c.r1Surface()->name() == "RightFootCenter")
+        {
+          BOOST_REQUIRE(c.dof() == dof);
+        }
       }
     }
     else if(iter_ == 2)
@@ -129,7 +132,10 @@ public:
                   const Eigen::Vector6d & dof = Eigen::Vector6d::Ones())
   {
     fsm::Contact c("jvrc1", "ground", s, "AllGround", friction, dof);
-    if(!hasContact(c)) { return false; }
+    if(!hasContact(c))
+    {
+      return false;
+    }
     fsm::Contact empty_r1_robot_c("", "ground", s, "AllGround", friction, dof);
     if(hasContact(empty_r1_robot_c))
     {
@@ -151,7 +157,10 @@ public:
 
   bool hasCollision(const std::string & r1, const std::string & r2, const mc_rbdyn::Collision & col)
   {
-    if(!collision_constraints_.count({r1, r2})) { return false; }
+    if(!collision_constraints_.count({r1, r2}))
+    {
+      return false;
+    }
     const auto & cols = collision_constraints_.at({r1, r2})->cols;
     return std::find(cols.begin(), cols.end(), col) != cols.end();
   }
@@ -161,7 +170,10 @@ public:
   {
     for(const auto & t : solver().tasks())
     {
-      if(dynamic_cast<const T *>(t) != nullptr) { return true; }
+      if(dynamic_cast<const T *>(t) != nullptr)
+      {
+        return true;
+      }
     }
     return false;
   }

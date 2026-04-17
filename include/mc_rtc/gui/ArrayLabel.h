@@ -82,7 +82,10 @@ auto ArrayLabel(const std::string & name, T && value)
 {
   using Labels = details::Labels<std::decay_t<T>>;
   auto callback = details::read(std::forward<T>(value));
-  if constexpr(Labels::has_labels) { return ArrayLabel(name, Labels::labels, callback); }
+  if constexpr(Labels::has_labels)
+  {
+    return ArrayLabel(name, Labels::labels, callback);
+  }
   else
   {
     return details::ArrayLabelImpl(name, callback);

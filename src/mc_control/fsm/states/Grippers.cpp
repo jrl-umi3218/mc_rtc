@@ -40,7 +40,10 @@ void Grippers::start(Controller & ctl)
         continue;
       }
       auto & gripper = ctl_grippers.at(g);
-      if(!keepSafetyConfig_) { gripper->saveConfig(); }
+      if(!keepSafetyConfig_)
+      {
+        gripper->saveConfig();
+      }
       gripper->configure(grippers(g));
       grippers_.push_back(std::ref(*gripper));
     }

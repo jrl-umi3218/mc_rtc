@@ -10,7 +10,10 @@ namespace mc_plugin
 ROSServices::ROSServices(mc_rtc::NodeHandlePtr nh, mc_control::MCGlobalController & controller)
 : nh_(nh), controller_(controller)
 {
-  if(nh) { start_services(); }
+  if(nh)
+  {
+    start_services();
+  }
   else
   {
     mc_rtc::log::warning("ROS not available, services will not be enabled");

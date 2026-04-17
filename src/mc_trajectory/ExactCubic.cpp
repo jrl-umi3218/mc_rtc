@@ -37,7 +37,10 @@ void ExactCubic::update()
     std::vector<waypoint_t> waypoints;
     waypoints.reserve(waypoints_.size() + 2);
     waypoints.push_back(std::make_pair(0., start_));
-    for(const auto & wp : waypoints_) { waypoints.push_back(wp); }
+    for(const auto & wp : waypoints_)
+    {
+      waypoints.push_back(wp);
+    }
     waypoints.push_back(std::make_pair(duration_, target_));
     spline_.reset(new exact_cubic_t(waypoints.begin(), waypoints.end(), constraints_));
     samples_ = this->sampleTrajectory();
@@ -47,27 +50,39 @@ void ExactCubic::update()
 
 void ExactCubic::waypoint(size_t idx, const point_t & waypoint)
 {
-  if(idx >= waypoints_.size()) { mc_rtc::log::error_and_throw("Cannot modify waypoint with index {}", idx); }
+  if(idx >= waypoints_.size())
+  {
+    mc_rtc::log::error_and_throw("Cannot modify waypoint with index {}", idx);
+  }
   waypoints_[idx].second = waypoint;
   needsUpdate_ = true;
 }
 
 void ExactCubic::waypoint(size_t idx, double t)
 {
-  if(idx >= waypoints_.size()) { mc_rtc::log::error_and_throw("Cannot modify waypoint with index {}", idx); }
+  if(idx >= waypoints_.size())
+  {
+    mc_rtc::log::error_and_throw("Cannot modify waypoint with index {}", idx);
+  }
   waypoints_[idx].first = t;
   needsUpdate_ = true;
 }
 
 double ExactCubic::waypointTime(size_t idx) const
 {
-  if(idx >= waypoints_.size()) { mc_rtc::log::error_and_throw("No waypoint with index {}", idx); }
+  if(idx >= waypoints_.size())
+  {
+    mc_rtc::log::error_and_throw("No waypoint with index {}", idx);
+  }
   return waypoints_[idx].first;
 }
 
 const waypoint_t & ExactCubic::waypoint(size_t idx) const
 {
-  if(idx >= waypoints_.size()) { mc_rtc::log::error_and_throw("No waypoint with index {}", idx); }
+  if(idx >= waypoints_.size())
+  {
+    mc_rtc::log::error_and_throw("No waypoint with index {}", idx);
+  }
   return waypoints_[idx];
 }
 
@@ -104,7 +119,10 @@ std::vector<point_t> ExactCubic::splev(double t, unsigned int der)
 {
   std::vector<Eigen::Vector3d> pts;
   pts.reserve(der + 1);
-  for(std::size_t order = 0; order <= der; ++order) { pts.push_back(spline_->derivate(t, order)); }
+  for(std::size_t order = 0; order <= der; ++order)
+  {
+    pts.push_back(spline_->derivate(t, order));
+  }
   return pts;
 }
 

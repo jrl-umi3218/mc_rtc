@@ -95,7 +95,10 @@ struct fmt::formatter<sva::PTransformd>
         {
           ++it;
           arg_id_mat = ctx.next_arg_id();
-          if(it != end && *it == '}') { ++it; }
+          if(it != end && *it == '}')
+          {
+            ++it;
+          }
         }
       }
       return it;
@@ -115,7 +118,10 @@ struct fmt::formatter<sva::PTransformd>
       vec_fmt = fmt::visit_format_arg(
           [](auto val) -> std::string
           {
-            if constexpr(std::is_same_v<std::decay_t<decltype(val)>, const char *>) { return std::string(val); }
+            if constexpr(std::is_same_v<std::decay_t<decltype(val)>, const char *>)
+            {
+              return std::string(val);
+            }
             else
             {
               return "";
@@ -129,7 +135,10 @@ struct fmt::formatter<sva::PTransformd>
       mat_fmt = fmt::visit_format_arg(
           [](auto && val) -> std::string
           {
-            if constexpr(std::is_same_v<std::decay_t<decltype(val)>, const char *>) { return std::string(val); }
+            if constexpr(std::is_same_v<std::decay_t<decltype(val)>, const char *>)
+            {
+              return std::string(val);
+            }
             else
             {
               return "";

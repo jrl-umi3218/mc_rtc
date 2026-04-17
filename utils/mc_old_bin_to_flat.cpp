@@ -106,7 +106,10 @@ struct NumericLogLine : public LogLine
 
   void push(double d) override
   {
-    if(std::fabs(d) < std::numeric_limits<double>::min()) { data_.push_back(0); }
+    if(std::fabs(d) < std::numeric_limits<double>::min())
+    {
+      data_.push_back(0);
+    }
     else
     {
       data_.push_back(d);
@@ -156,7 +159,10 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>> readLog(const std::str
 {
   std::unordered_map<std::string, std::shared_ptr<LogLine>> ret;
   std::ifstream ifs(file, std::ifstream::binary);
-  if(!ifs.is_open()) { mc_rtc::log::error_and_throw("{} could not be opened!", file); }
+  if(!ifs.is_open())
+  {
+    mc_rtc::log::error_and_throw("{} could not be opened!", file);
+  }
   std::vector<std::string> current_keys;
   std::vector<std::string> empty_keys;
   std::vector<size_t> data_size;
@@ -166,7 +172,10 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>> readLog(const std::str
     current_keys.push_back(key);
     if(ret.count(key) == 0)
     {
-      if(is_numeric) { ret[key] = std::make_shared<NumericLogLine>(key, entries); }
+      if(is_numeric)
+      {
+        ret[key] = std::make_shared<NumericLogLine>(key, entries);
+      }
       else
       {
         ret[key] = std::make_shared<StringLogLine>(key, entries);
@@ -175,7 +184,10 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>> readLog(const std::str
   };
   auto addVectorKey = [&](const std::string & key, size_t size)
   {
-    for(size_t i = 0; i < size; ++i) { addKey(key + "_" + std::to_string(i), true); }
+    for(size_t i = 0; i < size; ++i)
+    {
+      addKey(key + "_" + std::to_string(i), true);
+    }
     return size;
   };
   auto pushVector = [&](size_t s, size_t j, const mc_rtc::log::DoubleVector * v)
@@ -189,7 +201,10 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>> readLog(const std::str
   {
     int size = 0;
     ifs.read((char *)&size, sizeof(int));
-    if(!ifs) { break; }
+    if(!ifs)
+    {
+      break;
+    }
     char * data = new char[size];
     ifs.read(data, size);
     auto * log = mc_rtc::log::GetLog(data);
@@ -343,7 +358,10 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>> readLog(const std::str
       };
       j += data_size[i];
     }
-    for(auto & e : empty_keys) { ret[e]->push(); }
+    for(auto & e : empty_keys)
+    {
+      ret[e]->push();
+    }
     entries++;
     delete[] data;
   }
@@ -355,7 +373,10 @@ void writeFlatLog(const std::unordered_map<std::string, std::shared_ptr<LogLine>
   std::ofstream ofs(file, std::ofstream::binary);
   uint64_t s = data.size();
   ofs.write((char *)&s, sizeof(uint64_t));
-  for(const auto & d : data) { d.second->write(ofs); }
+  for(const auto & d : data)
+  {
+    d.second->write(ofs);
+  }
 }
 
 void usage(const char * bin)
@@ -372,7 +393,10 @@ int main(int argc, char * argv[])
   }
   std::string in = argv[1];
   std::string out = "";
-  if(argc == 3) { out = argv[2]; }
+  if(argc == 3)
+  {
+    out = argv[2];
+  }
   else
   {
     out = bfs::path(argv[1]).filename().replace_extension(".flat").string();

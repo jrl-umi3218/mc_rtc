@@ -56,7 +56,10 @@ struct ConstraintTester<mc_solver::BoundedSpeedConstr>
   {
     for(int i = 0; i < 3; ++i)
     {
-      if(lS(i) > 0) { lS(i) = -lS(i); }
+      if(lS(i) > 0)
+      {
+        lS(i) = -lS(i);
+      }
       uS(i) = -lS(i);
     }
   }
@@ -129,7 +132,10 @@ struct ConstraintTester<mc_solver::CollisionsConstraint>
     config.add("r1Index", 0);
     config.add("r2Index", 0);
     auto cv = config.array("collisions");
-    for(const auto & c : rm->commonSelfCollisions()) { cv.push(c); }
+    for(const auto & c : rm->commonSelfCollisions())
+    {
+      cv.push(c);
+    }
     auto ret = getTmpFile();
     config.save(ret);
     return ret;

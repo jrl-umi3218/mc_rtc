@@ -82,13 +82,19 @@ std::string make_log_ref()
   /** Log for 10 more seconds */
   log_s(10);
   auto latest = bfs::temp_directory_path() / "mc-rtc-test-log-utils-latest.bin";
-  if(bfs::exists(latest)) { bfs::remove(latest); }
+  if(bfs::exists(latest))
+  {
+    bfs::remove(latest);
+  }
   return logger.path();
 }
 
 void do_cleanup(const std::string & path)
 {
-  if(bfs::exists(path)) { bfs::remove(path); }
+  if(bfs::exists(path))
+  {
+    bfs::remove(path);
+  }
 }
 
 bool check_split(const std::string & path)
@@ -224,7 +230,10 @@ bool check_extract_keys(const std::string & path)
   auto out = fmt::format("{}/mc-rtc-test-log-utils-extract-keys", bfs::temp_directory_path().string());
   auto extract_cmd = fmt::format("{} extract {} {} --keys Eigen::*", MC_BIN_UTILS, path, out);
   int err = system(extract_cmd.c_str());
-  if(err != 0) { mc_rtc::log::critical("Execution failed: {}", extract_cmd); }
+  if(err != 0)
+  {
+    mc_rtc::log::critical("Execution failed: {}", extract_cmd);
+  }
   auto path_out = out + ".bin";
   if(!bfs::exists(path_out))
   {
@@ -247,7 +256,10 @@ bool check_extract_keys(const std::string & path)
       size_t i = 0;
       for(const auto & e : entries)
       {
-        if(i++ != 0) { out = fmt::format("{}, ", out); }
+        if(i++ != 0)
+        {
+          out = fmt::format("{}, ", out);
+        }
         out = fmt::format("{}{}", out, e);
       }
       out += "}";
@@ -271,7 +283,10 @@ bool check_extract_events(const std::string & path)
     return false;
   }
   auto path_out = out + ".bin";
-  if(!bfs::exists(path_out)) { mc_rtc::log::critical("No output file after command: {}", extract_cmd); }
+  if(!bfs::exists(path_out))
+  {
+    mc_rtc::log::critical("No output file after command: {}", extract_cmd);
+  }
   bool ret = false;
   auto flat_in = mc_rtc::log::FlatLog(path);
   auto flat_out = mc_rtc::log::FlatLog(path_out);

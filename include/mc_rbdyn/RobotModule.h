@@ -889,16 +889,28 @@ inline bool operator==(const RobotModule::Gripper & lhs, const RobotModule::Grip
   {
     auto lmimics = lhs.mimics();
     auto rmimics = rhs.mimics();
-    if(lmimics == nullptr && rmimics == nullptr) { return true; }
-    if(lmimics == nullptr || rmimics == nullptr) { return false; }
+    if(lmimics == nullptr && rmimics == nullptr)
+    {
+      return true;
+    }
+    if(lmimics == nullptr || rmimics == nullptr)
+    {
+      return false;
+    }
     return *lmimics == *rmimics;
   };
   auto compareSafety = [&]()
   {
     auto lsafety = lhs.safety();
     auto rsafety = rhs.safety();
-    if(lsafety == nullptr && rsafety == nullptr) { return true; }
-    if(lsafety == nullptr || rsafety == nullptr) { return false; }
+    if(lsafety == nullptr && rsafety == nullptr)
+    {
+      return true;
+    }
+    if(lsafety == nullptr || rsafety == nullptr)
+    {
+      return false;
+    }
     return *lsafety == *rsafety;
   };
   return lhs.name == rhs.name && lhs.joints == rhs.joints && lhs.reverse_limits == rhs.reverse_limits && compareSafety()

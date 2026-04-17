@@ -45,7 +45,10 @@ struct LeakyIntegrator
   inline void add(const VectorT & value, double dt)
   {
     integral_ = (1. - rate_ * dt) * integral_ + dt * value;
-    if(saturation_ > 0.) { utils::clampInPlace(integral_, -saturation_, saturation_); }
+    if(saturation_ > 0.)
+    {
+      utils::clampInPlace(integral_, -saturation_, saturation_);
+    }
   }
 
   /** Evaluate the output of the integrator.

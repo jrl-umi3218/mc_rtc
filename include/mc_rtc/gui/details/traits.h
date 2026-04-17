@@ -196,7 +196,10 @@ auto read_rpy(const T && value)
 {
   return [value]() -> Eigen::Vector3d
   {
-    if constexpr(Degrees) { return mc_rbdyn::rpyFromRotation(value) * 180. / mc_rtc::constants::PI; }
+    if constexpr(Degrees)
+    {
+      return mc_rbdyn::rpyFromRotation(value) * 180. / mc_rtc::constants::PI;
+    }
     else
     {
       return mc_rbdyn::rpyFromRotation(value);
@@ -217,7 +220,10 @@ auto read_rpy(const T & value)
 {
   return [&value]() -> Eigen::Vector3d
   {
-    if constexpr(Degrees) { return mc_rbdyn::rpyFromRotation(value) * 180. / mc_rtc::constants::PI; }
+    if constexpr(Degrees)
+    {
+      return mc_rbdyn::rpyFromRotation(value) * 180. / mc_rtc::constants::PI;
+    }
     else
     {
       return mc_rbdyn::rpyFromRotation(value);
@@ -236,7 +242,10 @@ auto write(T & value)
 template<typename T>
 auto GetValueOrCallbackValue(const T & value_or_cb)
 {
-  if constexpr(std::is_invocable_v<T>) { return value_or_cb(); }
+  if constexpr(std::is_invocable_v<T>)
+  {
+    return value_or_cb();
+  }
   else
   {
     return value_or_cb;

@@ -31,7 +31,10 @@ RobotFrame::RobotFrame(NewRobotFrameToken tkn,
 
 void RobotFrame::copy(mc_rbdyn::Robot & other)
 {
-  if(other.hasFrame(name_)) { return; }
+  if(other.hasFrame(name_))
+  {
+    return;
+  }
   other.makeFrame(name_, *static_cast<RobotFrame *>(parent_.get()), X_p_f());
 }
 
@@ -47,7 +50,10 @@ const std::string & RobotFrame::body() const noexcept
 
 sva::PTransformd RobotFrame::position() const noexcept
 {
-  if(!parent_) { return position_ * robot_.mbc().bodyPosW[bodyMbcIdx_]; }
+  if(!parent_)
+  {
+    return position_ * robot_.mbc().bodyPosW[bodyMbcIdx_];
+  }
   return position_ * static_cast<RobotFrame *>(parent_.get())->position();
 }
 
@@ -61,19 +67,28 @@ sva::MotionVecd RobotFrame::velocity() const noexcept
 
 const ForceSensor & RobotFrame::forceSensor() const
 {
-  if(!sensor_) { mc_rtc::log::error_and_throw("No force sensor attached to {} in {}", name_, robot_.name()); }
+  if(!sensor_)
+  {
+    mc_rtc::log::error_and_throw("No force sensor attached to {} in {}", name_, robot_.name());
+  }
   return *sensor_;
 }
 
 sva::ForceVecd RobotFrame::wrench() const
 {
-  if(!sensor_) { mc_rtc::log::error_and_throw("No force sensor attached to {} in {}", name_, robot_.name()); }
+  if(!sensor_)
+  {
+    mc_rtc::log::error_and_throw("No force sensor attached to {} in {}", name_, robot_.name());
+  }
   if(!parent_)
   {
     // Find the transformation from the sensor to the frame
     auto X_fsactual_body = [this]()
     {
-      if(sensor_->parent() == body()) { return position_ * sensor_->X_fsactual_parent(); }
+      if(sensor_->parent() == body())
+      {
+        return position_ * sensor_->X_fsactual_parent();
+      }
       else
       {
         const auto & X_0_body = this->position();
@@ -96,7 +111,10 @@ Eigen::Vector2d RobotFrame::cop(double min_pressure) const
   // the rest of the story
   const sva::ForceVecd w_surf = wrench();
   const double pressure = w_surf.force()(2);
-  if(pressure < min_pressure) { return Eigen::Vector2d::Zero(); }
+  if(pressure < min_pressure)
+  {
+    return Eigen::Vector2d::Zero();
+  }
   const Eigen::Vector3d & tau_surf = w_surf.couple();
   return Eigen::Vector2d(-tau_surf(1) / pressure, +tau_surf(0) / pressure);
 }
@@ -116,7 +134,10 @@ RobotFramePtr RobotFrame::makeFrame(const std::string & name, const sva::PTransf
 
 sva::PTransformd RobotFrame::X_b_f() const noexcept
 {
-  if(parent_) { return position_ * static_cast<RobotFrame *>(parent_.get())->X_b_f(); }
+  if(parent_)
+  {
+    return position_ * static_cast<RobotFrame *>(parent_.get())->X_b_f();
+  }
   return position_;
 }
 

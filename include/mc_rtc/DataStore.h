@@ -153,7 +153,10 @@ struct DataStore
   {
     std::vector<std::string> out;
     out.reserve(datas_.size());
-    for(const auto & d : datas_) { out.push_back(d.first); }
+    for(const auto & d : datas_)
+    {
+      out.push_back(d.first);
+    }
     return out;
   }
 
@@ -191,7 +194,10 @@ struct DataStore
   void get(const std::string & name, T & data)
   {
     auto it = datas_.find(name);
-    if(it != datas_.end()) { data = safe_cast<T>(it->second, name); }
+    if(it != datas_.end())
+    {
+      data = safe_cast<T>(it->second, name);
+    }
   }
 
   /**
@@ -207,7 +213,10 @@ struct DataStore
   const T & get(const std::string & name, const T & defaultValue) const
   {
     auto it = datas_.find(name);
-    if(it != datas_.end()) { return safe_cast<T>(it->second, name); }
+    if(it != datas_.end())
+    {
+      return safe_cast<T>(it->second, name);
+    }
     return defaultValue;
   }
 
@@ -242,7 +251,10 @@ struct DataStore
   T & make(const std::string & name, Args &&... args)
   {
     auto & data = datas_[name];
-    if(data.buffer) { log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name); }
+    if(data.buffer)
+    {
+      log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name);
+    }
     data.allocate<T>(name_, name);
     new(data.buffer.get()) T(std::forward<Args>(args)...);
     return data.setup<T, ArgsT...>();
@@ -277,7 +289,10 @@ struct DataStore
   T & make_initializer(const std::string & name, Args &&... args)
   {
     auto & data = datas_[name];
-    if(data.buffer) { log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name); }
+    if(data.buffer)
+    {
+      log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name);
+    }
     data.allocate<T>(name_, name);
     new(data.buffer.get()) T{std::forward<Args>(args)...};
     return data.setup<T, ArgsT...>();
@@ -389,13 +404,19 @@ private:
     /** Destructor */
     ~Data()
     {
-      if(buffer) { destroy(*this); }
+      if(buffer)
+      {
+        destroy(*this);
+      }
     }
 
     template<typename T>
     void allocate(const std::string & name_, const std::string & name)
     {
-      if(buffer) { log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name); }
+      if(buffer)
+      {
+        log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name);
+      }
       buffer.reset(reinterpret_cast<uint8_t *>(internal::Allocator<T>().allocate(1)));
     }
 
@@ -451,7 +472,10 @@ private:
   inline const Data & get_data(const std::string & name) const
   {
     const auto it = datas_.find(name);
-    if(it == datas_.end()) { log::error_and_throw("[{}] No key \"{}\"", name_, name); }
+    if(it == datas_.end())
+    {
+      log::error_and_throw("[{}] No key \"{}\"", name_, name);
+    }
     return it->second;
   }
 

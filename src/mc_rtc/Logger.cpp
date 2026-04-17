@@ -69,18 +69,27 @@ struct LoggerNonThreadedPolicyImpl : public LoggerImpl
 
   void initialize(const bfs::path & path) final
   {
-    if(log_.is_open()) { log_.close(); }
+    if(log_.is_open())
+    {
+      log_.close();
+    }
     open(path.string());
   }
 
   void write(char * data, size_t size) final
   {
-    if(valid_) { fwrite(data, size); }
+    if(valid_)
+    {
+      fwrite(data, size);
+    }
   }
 
   void flush() final
   {
-    if(valid_) { log_.flush(); }
+    if(valid_)
+    {
+      log_.flush();
+    }
   }
 };
 
@@ -93,17 +102,24 @@ struct LoggerThreadedPolicyImpl : public LoggerImpl
         {
           while(log_sync_th_run_ && valid_)
           {
-            while(!write_data()) {}
+            while(!write_data())
+            {
+            }
             std::this_thread::sleep_for(std::chrono::microseconds(500));
           }
-          while(!write_data()) {}
+          while(!write_data())
+          {
+          }
         });
   }
 
   ~LoggerThreadedPolicyImpl()
   {
     log_sync_th_run_ = false;
-    if(log_sync_th_.joinable()) { log_sync_th_.join(); }
+    if(log_sync_th_.joinable())
+    {
+      log_sync_th_.join();
+    }
   }
 
   // Returns true when all data has been consumed
@@ -125,7 +141,10 @@ struct LoggerThreadedPolicyImpl : public LoggerImpl
     if(log_.is_open())
     {
       /* Wait until the previous log is flushed */
-      while(!data_.empty()) { std::this_thread::sleep_for(std::chrono::microseconds(500)); }
+      while(!data_.empty())
+      {
+        std::this_thread::sleep_for(std::chrono::microseconds(500));
+      }
       log_.close();
     }
     open(path.string());
@@ -201,12 +220,18 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume, d
   std::stringstream ss_sym;
   ss_sym << impl_->tmpl << "-" << ctl_name << "-latest.bin";
   bfs::path log_sym_path = impl_->directory / bfs::path(ss_sym.str().c_str());
-  if(bfs::is_symlink(log_sym_path)) { bfs::remove(log_sym_path); }
+  if(bfs::is_symlink(log_sym_path))
+  {
+    bfs::remove(log_sym_path);
+  }
   if(!bfs::exists(log_sym_path))
   {
     boost::system::error_code ec;
     bfs::create_symlink(log_path, log_sym_path, ec);
-    if(!ec) { log::info("Updated latest log symlink: {}", log_sym_path.string()); }
+    if(!ec)
+    {
+      log::info("Updated latest log symlink: {}", log_sym_path.string());
+    }
     else
     {
       log::info("Failed to create latest log symlink: {}", ec.message());
@@ -218,7 +243,10 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume, d
     {
       // Re-create key events based on the current set of entries
       log_events_.clear();
-      for(const auto & e : log_entries_) { log_events_.push_back(KeyAddedEvent{e.type, e.key}); }
+      for(const auto & e : log_entries_)
+      {
+        log_events_.push_back(KeyAddedEvent{e.type, e.key});
+      }
     }
     else
     {
@@ -320,7 +348,10 @@ void Logger::log()
       }
     };
 
-    for(auto & e : log_events_) { std::visit(event_visitor, e); }
+    for(auto & e : log_events_)
+    {
+      std::visit(event_visitor, e);
+    }
     builder.finish_array();
     log_events_.resize(0);
   }
@@ -329,7 +360,10 @@ void Logger::log()
     builder.write();
   }
   builder.start_array(log_entries_.size());
-  for(auto & e : log_entries_) { e.log_cb(builder); }
+  for(auto & e : log_entries_)
+  {
+    e.log_cb(builder);
+  }
   builder.finish_array();
   builder.finish_array();
   size_t s = builder.finish();
@@ -368,7 +402,10 @@ void Logger::clear(bool record)
   {
     if(it->key != "t")
     {
-      if(record) { log_events_.push_back(KeyRemovedEvent{it->key}); }
+      if(record)
+      {
+        log_events_.push_back(KeyRemovedEvent{it->key});
+      }
       it = log_entries_.erase(it);
     }
     else

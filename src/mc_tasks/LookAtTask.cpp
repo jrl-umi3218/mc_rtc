@@ -79,7 +79,10 @@ void LookAtTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 void LookAtTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   VectorOrientationTask::load(solver, config);
-  if(config.has("targetPos")) { target(config("targetPos")); }
+  if(config.has("targetPos"))
+  {
+    target(config("targetPos"));
+  }
 }
 
 } // namespace mc_tasks

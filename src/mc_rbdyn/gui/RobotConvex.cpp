@@ -47,7 +47,10 @@ void addConvexToGUI(mc_rtc::gui::StateBuilder & gui,
       const auto normal = t.normal;
       auto cross = (a - b) ^ (a - c);
       auto dot = normal * cross;
-      if(dot < 0) { triangles.push_back({t.c, t.b, t.a}); }
+      if(dot < 0)
+      {
+        triangles.push_back({t.c, t.b, t.a});
+      }
       else
       {
         triangles.push_back({t.a, t.b, t.c});

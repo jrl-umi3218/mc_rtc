@@ -23,8 +23,14 @@ namespace utils
 template<typename T>
 T heatmap(double minimum, double maximum, double value)
 {
-  if(value > maximum) { return {1, 0, 0}; }
-  if(value < minimum) { return {0, 0, 1}; }
+  if(value > maximum)
+  {
+    return {1, 0, 0};
+  }
+  if(value < minimum)
+  {
+    return {0, 0, 1};
+  }
 
   const auto ratio = 2 * (value - minimum) / (maximum - minimum);
   const auto b = std::max(0., (1 - ratio));

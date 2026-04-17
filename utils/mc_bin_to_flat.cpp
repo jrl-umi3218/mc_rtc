@@ -13,7 +13,10 @@ namespace utils
 size_t nEntries(const mc_rtc::log::FlatLog & log, const std::map<std::string, mc_rtc::log::LogType> & entries)
 {
   size_t s = 0;
-  for(const auto & e : entries) { s += entrySize(log, e.first, e.second); }
+  for(const auto & e : entries)
+  {
+    s += entrySize(log, e.first, e.second);
+  }
   return s;
 }
 
@@ -56,7 +59,10 @@ template<typename T>
 void write(const std::string & entry, const std::vector<T> & data, std::ostream & os)
 {
   std::vector<double> out(data.size());
-  for(size_t i = 0; i < data.size(); ++i) { out[i] = static_cast<double>(data[i]); }
+  for(size_t i = 0; i < data.size(); ++i)
+  {
+    out[i] = static_cast<double>(data[i]);
+  }
   write(entry, out, os);
 }
 
@@ -280,7 +286,10 @@ void write<std::vector<double>>(const mc_rtc::log::FlatLog & log, const std::str
   for(size_t i = 0; i < data.size(); ++i)
   {
     auto * v = data[i];
-    if(v) { maxS = std::max<size_t>(maxS, v->size()); }
+    if(v)
+    {
+      maxS = std::max<size_t>(maxS, v->size());
+    }
   }
   vec.resize(maxS * data.size());
   for(size_t i = 0; i < data.size(); ++i)
@@ -291,11 +300,20 @@ void write<std::vector<double>>(const mc_rtc::log::FlatLog & log, const std::str
     {
       vSize = v->size();
       const double * vData = v->data();
-      for(size_t j = 0; j < vSize; ++j) { vec[j * data.size() + i] = vData[j]; }
+      for(size_t j = 0; j < vSize; ++j)
+      {
+        vec[j * data.size() + i] = vData[j];
+      }
     }
-    for(size_t j = vSize; j < maxS; ++j) { vec[j * data.size() + i] = nan; }
+    for(size_t j = vSize; j < maxS; ++j)
+    {
+      vec[j * data.size() + i] = nan;
+    }
   }
-  for(size_t i = 0; i < maxS; ++i) { write(entry + "_" + std::to_string(i), &vec[i * data.size()], data.size(), os); }
+  for(size_t i = 0; i < maxS; ++i)
+  {
+    write(entry + "_" + std::to_string(i), &vec[i * data.size()], data.size(), os);
+  }
 }
 
 template<>
@@ -307,7 +325,10 @@ void write<Eigen::VectorXd>(const mc_rtc::log::FlatLog & log, const std::string 
   for(size_t i = 0; i < data.size(); ++i)
   {
     auto * v = data[i];
-    if(v) { maxS = std::max<size_t>(maxS, static_cast<size_t>(v->size())); }
+    if(v)
+    {
+      maxS = std::max<size_t>(maxS, static_cast<size_t>(v->size()));
+    }
   }
   vec.resize(maxS * data.size());
   for(size_t i = 0; i < data.size(); ++i)
@@ -318,11 +339,20 @@ void write<Eigen::VectorXd>(const mc_rtc::log::FlatLog & log, const std::string 
     {
       vSize = static_cast<size_t>(v->size());
       const double * vData = v->data();
-      for(size_t j = 0; j < vSize; ++j) { vec[j * data.size() + i] = vData[j]; }
+      for(size_t j = 0; j < vSize; ++j)
+      {
+        vec[j * data.size() + i] = vData[j];
+      }
     }
-    for(size_t j = vSize; j < maxS; ++j) { vec[j * data.size() + i] = nan; }
+    for(size_t j = vSize; j < maxS; ++j)
+    {
+      vec[j * data.size() + i] = nan;
+    }
   }
-  for(size_t i = 0; i < maxS; ++i) { write(entry + "_" + std::to_string(i), &vec[i * data.size()], data.size(), os); }
+  for(size_t i = 0; i < maxS; ++i)
+  {
+    write(entry + "_" + std::to_string(i), &vec[i * data.size()], data.size(), os);
+  }
 }
 
 } // namespace utils

@@ -142,7 +142,10 @@ void KinematicInertialPoseObserver::addToLogger(const mc_control::MCController &
                                                 mc_rtc::Logger & logger,
                                                 const std::string & category)
 {
-  if(logPose_) { MC_RTC_LOG_HELPER(category + "_posW", pose_); }
+  if(logPose_)
+  {
+    MC_RTC_LOG_HELPER(category + "_posW", pose_);
+  }
   if(logAnchorFrame_)
   {
     MC_RTC_LOG_HELPER(category + "_anchorFrame", X_0_anchorFrame_);

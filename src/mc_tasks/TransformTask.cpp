@@ -99,7 +99,10 @@ void TransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
     const auto robotIndex = robotIndexFromConfig(c, solver.robots(), name());
     X_0_t = c("offset", sva::PTransformd::Identity()) * robots.robot(robotIndex).frame(c("frame")).position();
   }
-  else if(config.has("target")) { X_0_t = config("target"); }
+  else if(config.has("target"))
+  {
+    X_0_t = config("target");
+  }
   else if(config.has("relative"))
   {
     const auto & robot = robotFromConfig(config("relative"), solver.robots(), name());
@@ -115,8 +118,14 @@ void TransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
   }
   else
   {
-    if(config.has("targetPosition")) { X_0_t.translation() = config("targetPosition"); }
-    if(config.has("targetRotation")) { X_0_t.rotation() = config("targetRotation"); }
+    if(config.has("targetPosition"))
+    {
+      X_0_t.translation() = config("targetPosition");
+    }
+    if(config.has("targetRotation"))
+    {
+      X_0_t.rotation() = config("targetRotation");
+    }
   }
 
   if(config.has("moveWorld"))
@@ -231,7 +240,10 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> TransformTask::bu
         dof(i) = 0.;
         target(i) = 0.;
       }
-      else if(target(i) < 0) { dof(i) = -1.; }
+      else if(target(i) < 0)
+      {
+        dof(i) = -1.;
+      }
     }
     return [dof, target](const mc_tasks::MetaTask & t, std::string & out)
     {
@@ -239,7 +251,10 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> TransformTask::bu
       Eigen::Vector6d w = self.robots.robot(self.rIndex).surfaceWrench(self.surface()).vector();
       for(int i = 0; i < 6; ++i)
       {
-        if(dof(i) * fabs(w(i)) < target(i)) { return false; }
+        if(dof(i) * fabs(w(i)) < target(i))
+        {
+          return false;
+        }
       }
       out += "wrench";
       return true;

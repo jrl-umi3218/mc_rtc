@@ -21,5 +21,8 @@ int main()
     vec.push_back(std::make_pair(speed, pos));
   }
 
-  for(auto it = vec.begin(); it != vec.end(); ++it) { std::cout << it->first << " " << it->second << std::endl; }
+  for(auto it = vec.begin(); it != vec.end(); ++it)
+  {
+    std::cout << it->first << " " << it->second << std::endl;
+  }
 }

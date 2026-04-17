@@ -123,11 +123,20 @@ struct SequenceInterpolator
    */
   Value compute(double currTime)
   {
-    if(values_.empty()) { mc_rtc::log::error_and_throw("SequenceInterpolator requires at least one value"); }
+    if(values_.empty())
+    {
+      mc_rtc::log::error_and_throw("SequenceInterpolator requires at least one value");
+    }
 
     // Check for out-of-bound access
-    if(currTime >= values_.back().first) { return values_.back().second; }
-    else if(currTime <= values_.front().first) { return values_.front().second; }
+    if(currTime >= values_.back().first)
+    {
+      return values_.back().second;
+    }
+    else if(currTime <= values_.front().first)
+    {
+      return values_.front().second;
+    }
 
     /*
      * Efficiently update interval index and associated cached values:
@@ -139,7 +148,10 @@ struct SequenceInterpolator
      */
     auto updateIndex = [this, currTime]()
     {
-      if(values_[prevIndex_].first < currTime && values_[nextIndex_].first >= currTime) { return; }
+      if(values_[prevIndex_].first < currTime && values_[nextIndex_].first >= currTime)
+      {
+        return;
+      }
       else if(values_[nextIndex_].first < currTime && values_[nextIndex_ + 1].first >= currTime)
       {
         ++prevIndex_;

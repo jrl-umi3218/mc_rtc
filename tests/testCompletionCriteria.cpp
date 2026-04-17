@@ -19,7 +19,10 @@ const double dt = 0.005;
 mc_rbdyn::Robots & get_robots()
 {
   static mc_rbdyn::RobotsPtr robots_ptr = nullptr;
-  if(robots_ptr) { return *robots_ptr; }
+  if(robots_ptr)
+  {
+    return *robots_ptr;
+  }
   configureRobotLoader();
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   robots_ptr = mc_rbdyn::loadRobot(*rm);

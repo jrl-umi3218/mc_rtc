@@ -15,7 +15,10 @@ static bool initialized = configureRobotLoader();
 mc_control::fsm::Controller & get_default_controller()
 {
   static std::shared_ptr<mc_control::fsm::Controller> ctl_ptr = nullptr;
-  if(ctl_ptr) { return *ctl_ptr; }
+  if(ctl_ptr)
+  {
+    return *ctl_ptr;
+  }
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   mc_rtc::Configuration config;
   config.add("Managed", true);
@@ -31,7 +34,10 @@ void check_state(mc_control::fsm::StateFactory & factory, const std::string & st
 void check_states(mc_control::fsm::StateFactory & factory, const std::vector<std::string> & states)
 {
   BOOST_REQUIRE(factory.states().size() == states.size());
-  for(const auto & s : states) { check_state(factory, s); }
+  for(const auto & s : states)
+  {
+    check_state(factory, s);
+  }
 }
 
 BOOST_AUTO_TEST_CASE(TestSingleStateLoading)

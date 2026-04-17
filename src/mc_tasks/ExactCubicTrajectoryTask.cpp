@@ -212,7 +212,10 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
           // Control points defined in world coordinates
           auto controlPoints = loadControlPoints(config);
           waypoints.resize(controlPoints.size());
-          for(unsigned int i = 0; i < controlPoints.size(); ++i) { waypoints[i] = controlPoints[i]; }
+          for(unsigned int i = 0; i < controlPoints.size(); ++i)
+          {
+            waypoints[i] = controlPoints[i];
+          }
         }
         init_vel = config("init_vel", Eigen::Vector3d::Zero().eval());
         init_acc = config("init_acc", Eigen::Vector3d::Zero().eval());

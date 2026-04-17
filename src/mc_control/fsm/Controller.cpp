@@ -81,7 +81,10 @@ Controller::Controller(mc_rbdyn::RobotModulePtr rm,
     }
   }
   /** Load more states if they are provided in the configuration */
-  if(config.has("states")) { factory_.load(config("states")); }
+  if(config.has("states"))
+  {
+    factory_.load(config("states"));
+  }
   /** Setup executor */
   executor_.init(*this, config_);
 }
@@ -138,7 +141,10 @@ void Controller::reset(const ControllerResetData & data)
 
 void Controller::resetPostures()
 {
-  for(auto & pt : posture_tasks_) { pt.second->reset(); }
+  for(auto & pt : posture_tasks_)
+  {
+    pt.second->reset();
+  }
 }
 
 void Controller::startIdleState()
@@ -162,14 +168,23 @@ void Controller::startIdleState()
 void Controller::teardownIdleState()
 {
   // Reset default posture weights
-  for(auto & pt : posture_tasks_) { pt.second->weight(saved_posture_weights_[pt.first]); }
+  for(auto & pt : posture_tasks_)
+  {
+    pt.second->weight(saved_posture_weights_[pt.first]);
+  }
 
-  for(auto & fft : ff_tasks_) { solver().removeTask(fft.second); }
+  for(auto & fft : ff_tasks_)
+  {
+    solver().removeTask(fft.second);
+  }
 }
 
 std::shared_ptr<mc_tasks::PostureTask> Controller::getPostureTask(const std::string & robot)
 {
-  if(posture_tasks_.count(robot)) { return posture_tasks_.at(robot); }
+  if(posture_tasks_.count(robot))
+  {
+    return posture_tasks_.at(robot);
+  }
   return nullptr;
 }
 

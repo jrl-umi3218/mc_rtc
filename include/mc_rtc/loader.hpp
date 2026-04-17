@@ -44,13 +44,19 @@ template<typename SymT>
 SymT LTDLHandle::get_symbol(const std::string & name)
 {
 #ifndef MC_RTC_BUILD_STATIC
-  if(!open()) { return nullptr; }
+  if(!open())
+  {
+    return nullptr;
+  }
   std::unique_lock<std::mutex> lock(LTDLMutex::MTX);
   SymT ret = (SymT)(lt_dlsym(handle_, name.c_str()));
   if(ret == nullptr)
   {
     const char * error = lt_dlerror();
-    if(verbose_) { mc_rtc::log::info("Could not get symbol {} in library {}\n{}", name, path_, error); }
+    if(verbose_)
+    {
+      mc_rtc::log::info("Could not get symbol {} in library {}\n{}", name, path_, error);
+    }
   }
   return ret;
 #else
@@ -66,7 +72,10 @@ ObjectLoader<T>::ObjectDeleter::ObjectDeleter(void (*fn)(T *)) : delete_fn_(fn)
 template<typename T>
 void ObjectLoader<T>::ObjectDeleter::operator()(T * ptr)
 {
-  if(delete_fn_) { delete_fn_(ptr); }
+  if(delete_fn_)
+  {
+    delete_fn_(ptr);
+  }
 }
 
 template<typename T>
@@ -96,7 +105,10 @@ template<typename T>
 std::vector<std::string> ObjectLoader<T>::objects() const
 {
   std::vector<std::string> res = callbacks_.keys();
-  for(const auto & h : handles_) { res.push_back(h.first); }
+  for(const auto & h : handles_)
+  {
+    res.push_back(h.first);
+  }
   return res;
 }
 
@@ -129,7 +141,10 @@ T * ObjectLoader<T>::create(const std::string & name, Args... args)
     mc_rtc::log::error_and_throw<LoaderException>("Requested creation of object named {} which has not been loaded",
                                                   name);
   }
-  if(handles_.count(name)) { return create_from_handles(name, std::forward<Args>(args)...); }
+  if(handles_.count(name))
+  {
+    return create_from_handles(name, std::forward<Args>(args)...);
+  }
   else
   {
     return create_from_callbacks(name, std::forward<Args>(args)...);
@@ -140,7 +155,10 @@ template<typename T>
 std::string ObjectLoader<T>::get_object_runtime_directory(const std::string & name) const noexcept
 {
   auto it = handles_.find(name);
-  if(it == handles_.end()) { return ""; }
+  if(it == handles_.end())
+  {
+    return "";
+  }
   return it->second->dir();
 }
 
@@ -151,7 +169,10 @@ T * ObjectLoader<T>::create_from_handles(const std::string & name, Args... args)
   unsigned int args_passed = 1 + sizeof...(Args);
   unsigned int args_required = args_passed;
   auto create_args_required = handles_[name]->template get_symbol<unsigned int (*)()>("create_args_required");
-  if(create_args_required != nullptr) { args_required = create_args_required(); }
+  if(create_args_required != nullptr)
+  {
+    args_required = create_args_required();
+  }
   if(args_passed != args_required)
   {
     mc_rtc::log::error_and_throw<LoaderException>("{} arguments passed to create function of {} which excepts {}",
@@ -164,10 +185,19 @@ T * ObjectLoader<T>::create_from_handles(const std::string & name, Args... args)
   {
     mc_rtc::log::error_and_throw<LoaderException>("Failed to resolve create symbol in {}", handles_[name]->path());
   }
-  if constexpr(details::has_set_loading_location_v<T>) { T::set_loading_location(handles_[name]->dir()); }
-  if constexpr(details::has_set_name_v<T>) { T::set_name(name); }
+  if constexpr(details::has_set_loading_location_v<T>)
+  {
+    T::set_loading_location(handles_[name]->dir());
+  }
+  if constexpr(details::has_set_name_v<T>)
+  {
+    T::set_name(name);
+  }
   T * ptr = create_fn(name, args...);
-  if(ptr == nullptr) { mc_rtc::log::error_and_throw<LoaderException>("Call to create for object {} failed", name); }
+  if(ptr == nullptr)
+  {
+    mc_rtc::log::error_and_throw<LoaderException>("Call to create for object {} failed", name);
+  }
   if(!deleters_.count(name))
   {
     auto delete_fn = handles_[name]->template get_symbol<void (*)(T *)>("destroy");
@@ -191,7 +221,10 @@ template<typename T>
 template<typename RetT, typename... Args>
 void ObjectLoader<T>::register_object(const std::string & name, std::function<RetT *(const Args &...)> callback)
 {
-  if(has_object(name)) { throw LoaderException(fmt::format("{} is already registered with this loader", name)); }
+  if(has_object(name))
+  {
+    throw LoaderException(fmt::format("{} is already registered with this loader", name));
+  }
   static_assert(std::is_base_of<T, RetT>::value,
                 "This object cannot be registered as it does not derive from the loader base-class");
   callbacks_.make_call(name, [callback](const Args &... args) -> T * { return callback(args...); });

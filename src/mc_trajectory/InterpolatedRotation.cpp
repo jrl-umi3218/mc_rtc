@@ -21,14 +21,20 @@ void InterpolatedRotation::update() {}
 
 void InterpolatedRotation::waypoint(size_t idx, const Eigen::Matrix3d & ori)
 {
-  if(idx >= waypoints_.size()) { mc_rtc::log::error_and_throw("No waypoint with index {}", idx); }
+  if(idx >= waypoints_.size())
+  {
+    mc_rtc::log::error_and_throw("No waypoint with index {}", idx);
+  }
   waypoints_[idx].second = ori;
   needsUpdate_ = true;
 }
 
 const waypoint_t & InterpolatedRotation::waypoint(size_t idx) const
 {
-  if(idx >= waypoints_.size()) { mc_rtc::log::error_and_throw("No waypoint with index {}", idx); }
+  if(idx >= waypoints_.size())
+  {
+    mc_rtc::log::error_and_throw("No waypoint with index {}", idx);
+  }
   return waypoints_[idx];
 }
 
@@ -39,7 +45,10 @@ Eigen::Matrix3d InterpolatedRotation::eval(double t)
     all_waypoints_.clear();
     all_waypoints_.reserve(waypoints_.size() + 2);
     all_waypoints_.push_back(std::make_pair(0, start_));
-    for(const auto & wp : waypoints_) { all_waypoints_.push_back(wp); }
+    for(const auto & wp : waypoints_)
+    {
+      all_waypoints_.push_back(wp);
+    }
     all_waypoints_.push_back(std::make_pair(duration_, target_));
     needsUpdate_ = false;
   }

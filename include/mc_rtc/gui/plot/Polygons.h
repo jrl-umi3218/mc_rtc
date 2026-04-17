@@ -38,7 +38,10 @@ struct Polygons
     builder.write(name_);
     const auto & polygons = get_fn_();
     builder.start_array(polygons.size());
-    for(const auto & poly : polygons) { poly.write(builder); }
+    for(const auto & poly : polygons)
+    {
+      poly.write(builder);
+    }
     builder.finish_array();
     builder.write(static_cast<uint64_t>(side_));
     builder.finish_array();

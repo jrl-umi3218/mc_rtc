@@ -24,6 +24,9 @@ int main(int argc, char * argv[])
   for(unsigned long i = 0; i < nRuns; ++i)
   {
     mc_control::MCGlobalController gc(config);
-    for(size_t j = 0; j < 100; ++j) { gc.run(); }
+    for(size_t j = 0; j < 100; ++j)
+    {
+      gc.run();
+    }
   }
 }

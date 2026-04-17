@@ -60,7 +60,10 @@ struct ExponentialMovingAverage
   void append(const VectorT & value)
   {
     average_ += alpha_ * (value - average_);
-    if(saturation_ > 0.) { utils::clampInPlace(average_, -saturation_, saturation_); }
+    if(saturation_ > 0.)
+    {
+      utils::clampInPlace(average_, -saturation_, saturation_);
+    }
   }
 
   /** Evaluate the smoothed statistic.

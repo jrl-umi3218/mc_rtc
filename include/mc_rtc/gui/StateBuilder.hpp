@@ -58,7 +58,10 @@ void StateBuilder::addElementImpl(void * source,
     return;
   }
   cat.elements.emplace_back(element, cat, stacking, source);
-  if(rem == 0) { cat.id += 1; }
+  if(rem == 0)
+  {
+    cat.id += 1;
+  }
 }
 
 template<typename T, typename... Args>
@@ -175,7 +178,10 @@ void StateBuilder::addXYPlot(const std::string & name,
   plot_callback_function_t cb = [id, sz, xConfig, yLeftConfig, yRightConfig](mc_rtc::MessagePackBuilder & builder,
                                                                              const std::string & name, bool update)
   {
-    if(update) { return; }
+    if(update)
+    {
+      return;
+    }
     builder.write(static_cast<uint64_t>(plot::Plot::XY));
     builder.write(id);
     builder.write(name);
@@ -246,7 +252,10 @@ void StateBuilder::addPlotData(PlotCallback & callback, T plot, Args... args)
   {
     prev_callback(builder, name, update);
     plot.update();
-    if(update) { return; }
+    if(update)
+    {
+      return;
+    }
     plot.write(builder);
   };
   addPlotData(callback, args...);

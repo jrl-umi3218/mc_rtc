@@ -74,14 +74,20 @@ public:
   template<typename... Args>
   static mc_rbdyn::RobotModulePtr get_robot_module(const std::string & name, const Args &... args)
   {
-    if(!details::are_strings<Args...>::value) { return get_robot_module(name, details::to_string(args)...); }
+    if(!details::are_strings<Args...>::value)
+    {
+      return get_robot_module(name, details::to_string(args)...);
+    }
     std::unique_lock<std::recursive_mutex> guard{mtx};
     init();
     mc_rbdyn::RobotModulePtr rm = nullptr;
     auto setup_canonical = [](mc_rbdyn::RobotModulePtr rm)
     {
       assert(rm);
-      if(rm->_canonicalParameters.empty()) { rm->_canonicalParameters = rm->_parameters; }
+      if(rm->_canonicalParameters.empty())
+      {
+        rm->_canonicalParameters = rm->_parameters;
+      }
       if(!rm->controlToCanonicalPostProcess)
       {
         rm->controlToCanonicalPostProcess = [](const mc_rbdyn::Robot &, mc_rbdyn::Robot &) {};
@@ -90,9 +96,18 @@ public:
     if(aliases.count(name))
     {
       const auto & params = aliases[name];
-      if(params.size() == 1) { rm = get_robot_module_from_lib(params[0]); }
-      else if(params.size() == 2) { rm = get_robot_module_from_lib(params[0], params[1]); }
-      else if(params.size() == 3) { rm = get_robot_module_from_lib(params[0], params[1], params[2]); }
+      if(params.size() == 1)
+      {
+        rm = get_robot_module_from_lib(params[0]);
+      }
+      else if(params.size() == 2)
+      {
+        rm = get_robot_module_from_lib(params[0], params[1]);
+      }
+      else if(params.size() == 3)
+      {
+        rm = get_robot_module_from_lib(params[0], params[1], params[2]);
+      }
       else
       {
         mc_rtc::log::error_and_throw<mc_rtc::LoaderException>(
@@ -152,7 +167,10 @@ public:
   {
     std::lock_guard<std::recursive_mutex> guard{mtx};
     verbose_ = verbose;
-    if(robot_loader) { robot_loader->set_verbosity(verbose); }
+    if(robot_loader)
+    {
+      robot_loader->set_verbosity(verbose);
+    }
   }
 
   /** Returns a list of available robots */
@@ -188,11 +206,17 @@ private:
                          name);
       mc_rtc::log::info("Available robots:");
       mtx.unlock();
-      for(const auto & r : available_robots()) { mc_rtc::log::info("- {}", r); }
+      for(const auto & r : available_robots())
+      {
+        mc_rtc::log::info("- {}", r);
+      }
       mc_rtc::log::error_and_throw<mc_rtc::LoaderException>("Cannot load the requested robot: {}", name);
     }
     mc_rbdyn::RobotModulePtr rm = robot_loader->create_object(name, args...);
-    if(!rm) { mc_rtc::log::error_and_throw("Failed to load {}", name); }
+    if(!rm)
+    {
+      mc_rtc::log::error_and_throw("Failed to load {}", name);
+    }
     rm->_parameters = {name};
     fill_rm_parameters(rm, args...);
     return rm;

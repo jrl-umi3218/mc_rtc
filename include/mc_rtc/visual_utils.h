@@ -39,11 +39,26 @@ rbd::parsers::Visual makeVisual(const DataT & data, const mc_rtc::gui::Color & c
   out.origin = sva::PTransformd::Identity();
   out.geometry.type = []()
   {
-    if constexpr(std::is_same_v<DataT, GeometryT::Box>) { return GeometryT::Type::BOX; }
-    else if constexpr(std::is_same_v<DataT, GeometryT::Cylinder>) { return GeometryT::Type::CYLINDER; }
-    else if constexpr(std::is_same_v<DataT, GeometryT::Sphere>) { return GeometryT::Type::SPHERE; }
-    else if constexpr(std::is_same_v<DataT, GeometryT::Mesh>) { return GeometryT::Type::MESH; }
-    else if constexpr(std::is_same_v<DataT, GeometryT::Superellipsoid>) { return GeometryT::Type::SUPERELLIPSOID; }
+    if constexpr(std::is_same_v<DataT, GeometryT::Box>)
+    {
+      return GeometryT::Type::BOX;
+    }
+    else if constexpr(std::is_same_v<DataT, GeometryT::Cylinder>)
+    {
+      return GeometryT::Type::CYLINDER;
+    }
+    else if constexpr(std::is_same_v<DataT, GeometryT::Sphere>)
+    {
+      return GeometryT::Type::SPHERE;
+    }
+    else if constexpr(std::is_same_v<DataT, GeometryT::Mesh>)
+    {
+      return GeometryT::Type::MESH;
+    }
+    else if constexpr(std::is_same_v<DataT, GeometryT::Superellipsoid>)
+    {
+      return GeometryT::Type::SUPERELLIPSOID;
+    }
     else
     {
       static_assert(!std::is_same_v<DataT, DataT>);
@@ -58,14 +73,32 @@ rbd::parsers::Visual makeVisual(const DataT & data, const mc_rtc::gui::Color & c
 template<rbd::parsers::Geometry::Type type>
 auto & getVisualGeometry(rbd::parsers::Visual & visual)
 {
-  if(visual.geometry.type != type) { mc_rtc::log::error_and_throw("Visual type not matching the expected type"); }
+  if(visual.geometry.type != type)
+  {
+    mc_rtc::log::error_and_throw("Visual type not matching the expected type");
+  }
   using Type = rbd::parsers::Geometry::Type;
   auto & data = visual.geometry.data;
-  if constexpr(type == Type::BOX) { return boost::get<rbd::parsers::Geometry::Box>(data); }
-  else if constexpr(type == Type::CYLINDER) { return boost::get<rbd::parsers::Geometry::Cylinder>(data); }
-  else if constexpr(type == Type::SPHERE) { return boost::get<rbd::parsers::Geometry::Sphere>(data); }
-  else if constexpr(type == Type::MESH) { return boost::get<rbd::parsers::Geometry::Mesh>(data); }
-  else if constexpr(type == Type::SUPERELLIPSOID) { return boost::get<rbd::parsers::Geometry::Superellipsoid>(data); }
+  if constexpr(type == Type::BOX)
+  {
+    return boost::get<rbd::parsers::Geometry::Box>(data);
+  }
+  else if constexpr(type == Type::CYLINDER)
+  {
+    return boost::get<rbd::parsers::Geometry::Cylinder>(data);
+  }
+  else if constexpr(type == Type::SPHERE)
+  {
+    return boost::get<rbd::parsers::Geometry::Sphere>(data);
+  }
+  else if constexpr(type == Type::MESH)
+  {
+    return boost::get<rbd::parsers::Geometry::Mesh>(data);
+  }
+  else if constexpr(type == Type::SUPERELLIPSOID)
+  {
+    return boost::get<rbd::parsers::Geometry::Superellipsoid>(data);
+  }
   else
   {
     static_assert([] { return false; }(), "Unsupported geometry type for getVisualGeometry");

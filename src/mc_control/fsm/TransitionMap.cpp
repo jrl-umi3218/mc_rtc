@@ -12,8 +12,14 @@ namespace fsm
 
 std::pair<bool, Transition> TransitionMap::transition(const std::string & state, const std::string & output) const
 {
-  if(map_.count({state, output})) { return {true, map_.at({state, output})}; }
-  else if(map_.count({state, "DEFAULT"})) { return {true, map_.at({state, "DEFAULT"})}; }
+  if(map_.count({state, output}))
+  {
+    return {true, map_.at({state, output})};
+  }
+  else if(map_.count({state, "DEFAULT"}))
+  {
+    return {true, map_.at({state, "DEFAULT"})};
+  }
   return {false, {}};
 }
 
@@ -22,7 +28,10 @@ std::unordered_set<std::string> TransitionMap::transitions(const std::string & s
   std::unordered_set<std::string> ret;
   for(const auto & t : map_)
   {
-    if(t.first.first == state) { ret.insert(t.second.state); }
+    if(t.first.first == state)
+    {
+      ret.insert(t.second.state);
+    }
   }
   return ret;
 }
@@ -40,12 +49,24 @@ void TransitionMap::init(const StateFactory & factory, const mc_rtc::Configurati
   std::string first_valid_state = "";
   for(const auto & t : transitions)
   {
-    if(t.size() < 3 || t.size() > 4) { mc_rtc::log::error_and_throw("One of the transition entry is not valid"); }
+    if(t.size() < 3 || t.size() > 4)
+    {
+      mc_rtc::log::error_and_throw("One of the transition entry is not valid");
+    }
     auto str2type = [](const std::string & in)
     {
-      if(in == "StepByStep") { return Transition::Type::StepByStep; }
-      else if(in == "Auto") { return Transition::Type::Auto; }
-      else if(in == "Strict") { return Transition::Type::Strict; }
+      if(in == "StepByStep")
+      {
+        return Transition::Type::StepByStep;
+      }
+      else if(in == "Auto")
+      {
+        return Transition::Type::Auto;
+      }
+      else if(in == "Strict")
+      {
+        return Transition::Type::Strict;
+      }
       else
       {
         mc_rtc::log::warning("Transition type ({}) is not valid, defaulting to StepByStep", in);
@@ -59,16 +80,28 @@ void TransitionMap::init(const StateFactory & factory, const mc_rtc::Configurati
     if(!(factory.hasState(from) && factory.hasState(to)))
     {
       mc_rtc::log::error("Invalid transition:");
-      if(!factory.hasState(from)) { mc_rtc::log::error("- origin state ({}) is not loaded", from); }
-      if(!factory.hasState(to)) { mc_rtc::log::error("- destination state ({}) is not loaded", to); }
+      if(!factory.hasState(from))
+      {
+        mc_rtc::log::error("- origin state ({}) is not loaded", from);
+      }
+      if(!factory.hasState(to))
+      {
+        mc_rtc::log::error("- destination state ({}) is not loaded", to);
+      }
       continue;
     }
     if(map_.count({from, by}))
     {
       mc_rtc::log::warning("Transition for ({}, {}) is specified more than once", from, by);
     }
-    if(init_state_ == from) { valid_init_state = true; }
-    if(first_valid_state.size() == 0) { first_valid_state = from; }
+    if(init_state_ == from)
+    {
+      valid_init_state = true;
+    }
+    if(first_valid_state.size() == 0)
+    {
+      first_valid_state = from;
+    }
     map_[{from, by}] = {to, type};
   }
   if(map_.size() == 0)

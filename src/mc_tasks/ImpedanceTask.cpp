@@ -185,9 +185,18 @@ void ImpedanceTask::reset()
 
 void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
-  if(config.has("gains")) { gains_ = config("gains"); }
-  if(config.has("wrench")) { targetWrench(config("wrench")); }
-  if(config.has("cutoffPeriod")) { cutoffPeriod(config("cutoffPeriod")); }
+  if(config.has("gains"))
+  {
+    gains_ = config("gains");
+  }
+  if(config.has("wrench"))
+  {
+    targetWrench(config("wrench"));
+  }
+  if(config.has("cutoffPeriod"))
+  {
+    cutoffPeriod(config("cutoffPeriod"));
+  }
   if(auto deltaCompPoseLinLimit = config.find("deltaCompPoseLinLimit"))
   {
     deltaCompPoseLinLimit_ = std::max<double>(*deltaCompPoseLinLimit, 0.0);

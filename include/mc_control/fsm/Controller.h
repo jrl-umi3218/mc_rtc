@@ -109,7 +109,10 @@ struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
 #else
   static StateFactory & factory()
   {
-    if(!factory_ptr_) { factory_ptr_.reset(new StateFactory({}, {}, false)); }
+    if(!factory_ptr_)
+    {
+      factory_ptr_.reset(new StateFactory({}, {}, false));
+    }
     return *factory_ptr_;
   }
 #endif

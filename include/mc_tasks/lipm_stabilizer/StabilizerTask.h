@@ -404,13 +404,19 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 
   inline const Eigen::Vector2d biasDCM() noexcept
   {
-    if(c_.dcmBias.withDCMBias) { return dcmEstimator_.getBias(); }
+    if(c_.dcmBias.withDCMBias)
+    {
+      return dcmEstimator_.getBias();
+    }
     return Eigen::Vector2d::Zero();
   }
 
   inline Eigen::Vector2d filteredDCM() const noexcept
   {
-    if(c_.dcmBias.withDCMBias) { return dcmEstimator_.getUnbiasedDCM(); }
+    if(c_.dcmBias.withDCMBias)
+    {
+      return dcmEstimator_.getUnbiasedDCM();
+    }
     return measuredDCM_.segment(0, 2);
   }
 
@@ -543,25 +549,37 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   inline void contactWeight(double weight) noexcept
   {
     c_.contactWeight = weight;
-    for(auto footT : contactTasks) { footT->weight(c_.contactWeight); }
+    for(auto footT : contactTasks)
+    {
+      footT->weight(c_.contactWeight);
+    }
   }
 
   inline void contactStiffness(const sva::MotionVecd & stiffness) noexcept
   {
     c_.contactStiffness = stiffness;
-    for(auto contactT : contactTasks) { contactT->stiffness(stiffness); }
+    for(auto contactT : contactTasks)
+    {
+      contactT->stiffness(stiffness);
+    }
   }
 
   inline void contactDamping(const sva::MotionVecd & damping) noexcept
   {
     c_.contactDamping = damping;
-    for(auto contactT : contactTasks) { contactT->damping(damping); }
+    for(auto contactT : contactTasks)
+    {
+      contactT->damping(damping);
+    }
   }
 
   inline void copAdmittance(const Eigen::Vector2d & copAdmittance) noexcept
   {
     c_.copAdmittance = clamp(copAdmittance, 0., c_.safetyThresholds.MAX_COP_ADMITTANCE);
-    for(auto contactT : contactTasks) { contactT->admittance(contactAdmittance()); }
+    for(auto contactT : contactTasks)
+    {
+      contactT->admittance(contactAdmittance());
+    }
   }
 
   inline void copMaxVel(const sva::MotionVecd & copMaxVel) noexcept
@@ -578,7 +596,10 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   inline void copVelFilterGain(double gain) noexcept
   {
     c_.copVelFilterGain = mc_filter::utils::clamp(gain, 0, 1);
-    for(auto & ft : footTasks) { ft.second->velFilterGain(gain); }
+    for(auto & ft : footTasks)
+    {
+      ft.second->velFilterGain(gain);
+    }
   }
 
   /* Get the gain of the low-pass velocity filter of the cop tasks */

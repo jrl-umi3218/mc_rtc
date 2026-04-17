@@ -34,7 +34,10 @@ void FlatLog::load(const std::string & fpath)
 void FlatLog::append(const std::string & f)
 {
   auto fpath = fs::path(f);
-  if(fpath.extension() == ".flat") { appendFlat(f); }
+  if(fpath.extension() == ".flat")
+  {
+    appendFlat(f);
+  }
   else
   {
     appendBin(f);
@@ -48,14 +51,23 @@ void FlatLog::appendBin(const std::string & f)
   size_t size = data_.size() ? data_[0].records.size() : 0;
   mc_rtc::log::iterate_binary_log_callback callback = [&](IterateBinaryLogData data)
   {
-    if(!meta_ && data.meta) { meta_ = data.meta; }
+    if(!meta_ && data.meta)
+    {
+      meta_ = data.meta;
+    }
     const auto & ks = data.keys;
     auto & records = data.records;
     if(ks.size())
     {
-      for(const auto & k : missingIndexes) { data_[k].records.resize(size); }
+      for(const auto & k : missingIndexes)
+      {
+        data_[k].records.resize(size);
+      }
       currentIndexes.clear();
-      for(const auto & k : ks) { currentIndexes.push_back(index(k, size)); }
+      for(const auto & k : ks)
+      {
+        currentIndexes.push_back(index(k, size));
+      }
       missingIndexes.clear();
       for(size_t i = 0; i < data_.size(); ++i)
       {
@@ -75,7 +87,10 @@ void FlatLog::appendBin(const std::string & f)
     return true;
   };
   iterate_binary_log(f, callback, true, "");
-  for(const auto & k : missingIndexes) { data_[k].records.resize(size); }
+  for(const auto & k : missingIndexes)
+  {
+    data_[k].records.resize(size);
+  }
 }
 
 void FlatLog::appendFlat(const std::string & f)
@@ -93,7 +108,10 @@ void FlatLog::appendFlat(const std::string & f)
     return;
   }
   size_t size = 0;
-  if(data_.size()) { size = data_[0].records.size(); }
+  if(data_.size())
+  {
+    size = data_[0].records.size();
+  }
   uint64_t nEntries = 0;
   ifs.read((char *)&nEntries, sizeof(uint64_t));
   size_t nsize = 0;
@@ -142,7 +160,10 @@ void FlatLog::appendFlat(const std::string & f)
     }
     nsize = entries.size();
   }
-  for(auto & e : data_) { e.records.resize(nsize); }
+  for(auto & e : data_)
+  {
+    e.records.resize(nsize);
+  }
 }
 
 size_t FlatLog::size() const
@@ -153,7 +174,10 @@ size_t FlatLog::size() const
 std::set<std::string> FlatLog::entries() const
 {
   std::set<std::string> ret;
-  for(const auto & e : data_) { ret.insert(e.name); }
+  for(const auto & e : data_)
+  {
+    ret.insert(e.name);
+  }
   return ret;
 }
 
@@ -171,7 +195,10 @@ std::set<LogType> FlatLog::types(const std::string & entry) const
     return {};
   }
   std::set<LogType> ret;
-  for(const auto & r : at(entry)) { ret.insert(r.type); }
+  for(const auto & r : at(entry))
+  {
+    ret.insert(r.type);
+  }
   ret.erase(mc_rtc::log::LogType::None);
   return ret;
 }
@@ -185,7 +212,10 @@ LogType FlatLog::type(const std::string & entry) const
   }
   for(const auto & r : at(entry))
   {
-    if(r.type != mc_rtc::log::LogType::None) { return r.type; }
+    if(r.type != mc_rtc::log::LogType::None)
+    {
+      return r.type;
+    }
   }
   return mc_rtc::log::LogType::None;
 }
@@ -210,7 +240,10 @@ const std::vector<FlatLog::record> & FlatLog::at(const std::string & entry) cons
 {
   for(const auto & d : data_)
   {
-    if(d.name == entry) { return d.records; }
+    if(d.name == entry)
+    {
+      return d.records;
+    }
   }
   throw(std::runtime_error("No such entry"));
 }

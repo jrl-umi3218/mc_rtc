@@ -134,7 +134,10 @@ void TrajectoryTaskGeneric::addToSolver(mc_solver::QPSolver & solver)
                 tvm_solver(solver).problem().add(error_ptr == 0., tvm::task_dynamics::P(stiffness_), reqs);
           }
         };
-        if(selectorT_) { addTask(*tvm_selector(selectorT_)); }
+        if(selectorT_)
+        {
+          addTask(*tvm_selector(selectorT_));
+        }
         else
         {
           addTask(*tvm_error(errorT));
@@ -177,7 +180,10 @@ void TrajectoryTaskGeneric::refVel(const Eigen::VectorXd & vel)
     case Backend::TVM:
     {
       auto trajectory = tvm_trajectory(trajectoryT_);
-      if(trajectory->setRefVel) { trajectory->setRefVel(errorT.get(), vel); }
+      if(trajectory->setRefVel)
+      {
+        trajectory->setRefVel(errorT.get(), vel);
+      }
       break;
     }
     default:
@@ -201,7 +207,10 @@ void TrajectoryTaskGeneric::refAccel(const Eigen::VectorXd & accel)
     case Backend::TVM:
     {
       auto trajectory = tvm_trajectory(trajectoryT_);
-      if(trajectory->setRefAccel) { trajectory->setRefAccel(errorT.get(), accel); }
+      if(trajectory->setRefAccel)
+      {
+        trajectory->setRefAccel(errorT.get(), accel);
+      }
       break;
     }
     default:
@@ -282,7 +291,10 @@ void TrajectoryTaskGeneric::weight(double w)
     case Backend::TVM:
     {
       auto trajectory = tvm_trajectory(trajectoryT_);
-      if(trajectory->task_) { trajectory->task_->requirements.weight() = weight_; }
+      if(trajectory->task_)
+      {
+        trajectory->task_->requirements.weight() = weight_;
+      }
       break;
     }
     default:
@@ -311,7 +323,10 @@ void TrajectoryTaskGeneric::dimWeight(const Eigen::VectorXd & w)
                                      traj->dimWeight_.size(), w.size());
       }
       traj->dimWeight_ = w;
-      if(traj->task_) { traj->task_->requirements.anisotropicWeight() = w; }
+      if(traj->task_)
+      {
+        traj->task_->requirements.anisotropicWeight() = w;
+      }
       break;
     }
     default:
@@ -342,7 +357,10 @@ void TrajectoryTaskGeneric::selectActiveJoints(const std::vector<std::string> & 
                          "added to the solver");
     return;
   }
-  if(checkJoints) { ensureHasJoints(robots.robot(rIndex), activeJointsName, "[" + name() + "::selectActiveJoints]"); }
+  if(checkJoints)
+  {
+    ensureHasJoints(robots.robot(rIndex), activeJointsName, "[" + name() + "::selectActiveJoints]");
+  }
   switch(backend_)
   {
     case Backend::Tasks:
@@ -482,13 +500,19 @@ Eigen::VectorXd TrajectoryTaskGeneric::eval() const
     case Backend::Tasks:
     {
       const auto & dimWeight = tasks_trajectory(trajectoryT_)->dimWeight();
-      if(selectorT_) { return tasks_selector(selectorT_)->eval().cwiseProduct(dimWeight); }
+      if(selectorT_)
+      {
+        return tasks_selector(selectorT_)->eval().cwiseProduct(dimWeight);
+      }
       return tasks_error(errorT)->eval().cwiseProduct(dimWeight);
     }
     case Backend::TVM:
     {
       const auto & dimWeight = tvm_trajectory(trajectoryT_)->dimWeight_;
-      if(selectorT_) { return tvm_selector(selectorT_)->value().cwiseProduct(dimWeight); }
+      if(selectorT_)
+      {
+        return tvm_selector(selectorT_)->value().cwiseProduct(dimWeight);
+      }
       return tvm_error(errorT)->value().cwiseProduct(dimWeight);
     }
     default:
@@ -503,13 +527,19 @@ Eigen::VectorXd TrajectoryTaskGeneric::speed() const
     case Backend::Tasks:
     {
       const auto & dimWeight = tasks_trajectory(trajectoryT_)->dimWeight();
-      if(selectorT_) { return tasks_selector(selectorT_)->speed().cwiseProduct(dimWeight); }
+      if(selectorT_)
+      {
+        return tasks_selector(selectorT_)->speed().cwiseProduct(dimWeight);
+      }
       return tasks_error(errorT)->speed().cwiseProduct(dimWeight);
     }
     case Backend::TVM:
     {
       const auto & dimWeight = tvm_trajectory(trajectoryT_)->dimWeight_;
-      if(selectorT_) { return tvm_selector(selectorT_)->velocity().cwiseProduct(dimWeight); }
+      if(selectorT_)
+      {
+        return tvm_selector(selectorT_)->velocity().cwiseProduct(dimWeight);
+      }
       return tvm_error(errorT)->velocity().cwiseProduct(dimWeight);
     }
     default:
@@ -523,12 +553,18 @@ const Eigen::VectorXd & TrajectoryTaskGeneric::normalAcc() const
   {
     case Backend::Tasks:
     {
-      if(selectorT_) { return tasks_selector(selectorT_)->normalAcc(); }
+      if(selectorT_)
+      {
+        return tasks_selector(selectorT_)->normalAcc();
+      }
       return tasks_error(errorT)->normalAcc();
     }
     case Backend::TVM:
     {
-      if(selectorT_) { return tvm_selector(selectorT_)->normalAcceleration(); }
+      if(selectorT_)
+      {
+        return tvm_selector(selectorT_)->normalAcceleration();
+      }
       return tvm_error(errorT)->normalAcceleration();
     }
     default:
@@ -555,15 +591,27 @@ void TrajectoryTaskGeneric::load(mc_solver::QPSolver & solver, const mc_rtc::Con
   if(config.has("damping"))
   {
     auto d = config("damping");
-    if(d.size()) { setGains(dimStiffness(), d); }
+    if(d.size())
+    {
+      setGains(dimStiffness(), d);
+    }
     else
     {
       setGains(stiffness(), d);
     }
   }
-  if(config.has("weight")) { weight(config("weight")); }
-  if(config.has("refVel")) { refVel(config("refVel")); }
-  if(config.has("refAccel")) { refAccel(config("refAccel")); }
+  if(config.has("weight"))
+  {
+    weight(config("weight"));
+  }
+  if(config.has("refVel"))
+  {
+    refVel(config("refVel"));
+  }
+  if(config.has("refAccel"))
+  {
+    refAccel(config("refAccel"));
+  }
 }
 
 void TrajectoryTaskGeneric::addToGUI(mc_rtc::gui::StateBuilder & gui)

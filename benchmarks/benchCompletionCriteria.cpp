@@ -24,7 +24,10 @@ mc_rbdyn::Robots & get_robots()
   spdlog::set_level(spdlog::level::err);
   mc_solver::QPSolver::context_backend(mc_solver::QPSolver::Backend::Tasks);
   static mc_rbdyn::RobotsPtr robots_ptr = nullptr;
-  if(robots_ptr) { return *robots_ptr; }
+  if(robots_ptr)
+  {
+    return *robots_ptr;
+  }
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   robots_ptr = mc_rbdyn::loadRobot(*rm);
   return *robots_ptr;
@@ -70,7 +73,10 @@ static void BM_Timeout(benchmark::State & state)
   mc_control::CompletionCriteria criteria;
   criteria.configure(task, dt, config);
   bool b;
-  while(state.KeepRunning()) { b = criteria.completed(task); }
+  while(state.KeepRunning())
+  {
+    b = criteria.completed(task);
+  }
 }
 BENCHMARK(BM_Timeout);
 
@@ -142,7 +148,10 @@ static void BM_EvalAndSpeedOrTimeout(benchmark::State & state)
       }());
   mc_control::CompletionCriteria criteria;
   criteria.configure(task, dt, config);
-  while(state.KeepRunning()) { b = criteria.completed(task); }
+  while(state.KeepRunning())
+  {
+    b = criteria.completed(task);
+  }
 }
 BENCHMARK(BM_EvalAndSpeedOrTimeout);
 
@@ -153,7 +162,10 @@ static void BM_TimeoutConfigure(benchmark::State & state)
   mc_rtc::Configuration config;
   config.add("timeout", timeout);
   mc_control::CompletionCriteria criteria;
-  while(state.KeepRunning()) { criteria.configure(task, dt, config); }
+  while(state.KeepRunning())
+  {
+    criteria.configure(task, dt, config);
+  }
 }
 BENCHMARK(BM_TimeoutConfigure);
 
@@ -193,7 +205,10 @@ static void BM_EvalAndSpeedOrTimeoutConfigure(benchmark::State & state)
         return c;
       }());
   mc_control::CompletionCriteria criteria;
-  while(state.KeepRunning()) { criteria.configure(task, dt, config); }
+  while(state.KeepRunning())
+  {
+    criteria.configure(task, dt, config);
+  }
 }
 BENCHMARK(BM_EvalAndSpeedOrTimeoutConfigure);
 

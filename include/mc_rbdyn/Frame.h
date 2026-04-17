@@ -85,7 +85,10 @@ public:
   /** Compute the current frame's velocity in inertial frame */
   virtual inline sva::MotionVecd velocity() const noexcept
   {
-    if(!parent_) { return velocity_; }
+    if(!parent_)
+    {
+      return velocity_;
+    }
     auto vel = parent_->velocity();
     auto X_0_p = parent_->position();
     vel.linear() += -hat(X_0_p.rotation().transpose() * position_.translation()) * vel.angular();
@@ -125,7 +128,10 @@ public:
    */
   inline mc_tvm::Frame & tvm_frame() const
   {
-    if(!tvm_frame_) { init_tvm_frame(); }
+    if(!tvm_frame_)
+    {
+      init_tvm_frame();
+    }
     return *tvm_frame_;
   }
 

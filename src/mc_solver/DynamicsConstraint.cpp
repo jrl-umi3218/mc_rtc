@@ -30,19 +30,31 @@ static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots,
   {
     for(auto & ti : tl)
     {
-      for(auto & t : ti) { t = -INFINITY; }
+      for(auto & t : ti)
+      {
+        t = -INFINITY;
+      }
     }
     for(auto & ti : tu)
     {
-      for(auto & t : ti) { t = INFINITY; }
+      for(auto & t : ti)
+      {
+        t = INFINITY;
+      }
     }
     for(auto & tdi : tdl)
     {
-      for(auto & td : tdi) { td = -INFINITY; }
+      for(auto & td : tdi)
+      {
+        td = -INFINITY;
+      }
     }
     for(auto & tdi : tdu)
     {
-      for(auto & td : tdi) { td = INFINITY; }
+      for(auto & td : tdi)
+      {
+        td = INFINITY;
+      }
     }
   }
   tasks::TorqueBound tBound(tl, tu);

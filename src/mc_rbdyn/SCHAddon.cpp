@@ -18,7 +18,10 @@ void transform(S_Object & obj, const sva::PTransformd & t)
 
   for(unsigned int i = 0; i < 3; ++i)
   {
-    for(unsigned int j = 0; j < 3; ++j) { m(i, j) = rot(j, i); }
+    for(unsigned int j = 0; j < 3; ++j)
+    {
+      m(i, j) = rot(j, i);
+    }
   }
 
   m(0, 3) = tran(0);

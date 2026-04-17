@@ -114,8 +114,7 @@ init: {controller_name}_Initial
             )
         )
     with open(project_dir + "/src/CMakeLists.txt", "w") as fd:
-        fd.write(
-            """set(controller_SRC
+        fd.write("""set(controller_SRC
   {controller_class_name}.cpp
 )
 
@@ -133,10 +132,7 @@ install(TARGETS ${{PROJECT_NAME}}
 
 add_controller(${{PROJECT_NAME}}_controller lib.cpp "")
 target_link_libraries(${{PROJECT_NAME}}_controller PUBLIC ${{PROJECT_NAME}})
-""".format(
-                controller_class_name=controller_class_name
-            )
-        )
+""".format(controller_class_name=controller_class_name))
     with open(project_dir + "/src/lib.cpp", "w") as fd:
         fd.write(
             """#include "{controller_class_name}.h"
@@ -153,19 +149,14 @@ CONTROLLER_CONSTRUCTOR("{controller_name}", {controller_class_name})
     with open(project_dir + "/src/states/data/states.yaml", "w") as fd:
         fd.write("---\n")
     with open(project_dir + "/src/states/CMakeLists.txt", "w") as fd:
-        fd.write(
-            """add_fsm_state_simple({controller_name}_Initial)
+        fd.write("""add_fsm_state_simple({controller_name}_Initial)
 
 add_fsm_data_directory(data)
-""".format(
-                controller_name=controller_name
-            )
-        )
+""".format(controller_name=controller_name))
     with open(
         project_dir + "/src/states/{}_Initial.h".format(controller_name), "w"
     ) as fd:
-        fd.write(
-            """#pragma once
+        fd.write("""#pragma once
 
 #include <mc_control/fsm/State.h>
 
@@ -179,10 +170,7 @@ struct {controller_name}_Initial : mc_control::fsm::State
 
   void teardown(mc_control::fsm::Controller & ctl) override;
 }};
-""".format(
-                controller_name=controller_name
-            )
-        )
+""".format(controller_name=controller_name))
     with open(
         project_dir + "/src/states/{}_Initial.cpp".format(controller_name), "w"
     ) as fd:
@@ -255,8 +243,7 @@ EXPORT_SINGLE_STATE("{controller_name}_Initial", {controller_name}_Initial)
 
     # Neovim config
     with open(project_dir + "/.nvim.lua", "w") as fd:
-        fd.write(
-            """-- Project-specific Neovim configuration
+        fd.write("""-- Project-specific Neovim configuration
 
 vim.lsp.config('yamlls',
 {{
@@ -274,10 +261,7 @@ vim.lsp.config('yamlls',
     }}
   }}
 }})
-""".format(
-                controller_name=controller_name
-            )
-        )
+""".format(controller_name=controller_name))
 
     repo.index.add(
         [

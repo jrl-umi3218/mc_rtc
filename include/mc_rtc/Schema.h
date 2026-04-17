@@ -63,7 +63,10 @@ inline constexpr bool is_std_vector_v = is_std_vector<T>::value;
 template<typename T>
 inline constexpr bool is_std_vector_schema_v = []()
 {
-  if constexpr(is_std_vector_v<T>) { return is_schema_v<typename T::value_type>; }
+  if constexpr(is_std_vector_v<T>)
+  {
+    return is_schema_v<typename T::value_type>;
+  }
   else
   {
     return false;
@@ -88,7 +91,10 @@ inline constexpr bool is_std_map_v = is_std_map<T>::value;
 template<typename T>
 inline constexpr bool is_std_map_schema_v = []()
 {
-  if constexpr(is_std_map_v<T>) { return is_schema_v<typename T::value_type>; }
+  if constexpr(is_std_map_v<T>)
+  {
+    return is_schema_v<typename T::value_type>;
+  }
   else
   {
     return false;
@@ -138,7 +144,10 @@ void variantToForm(const std::variant<Args...> &,
   {
     if constexpr(HasChoices)
     {
-      if(idx < choices.choices.size()) { return choices.choices[idx]; }
+      if(idx < choices.choices.size())
+      {
+        return choices.choices[idx];
+      }
       return std::to_string(idx);
     }
     else
@@ -158,7 +167,10 @@ void addValueToForm(const T & value,
 {
   const auto & get_value = [&value]() -> decltype(auto)
   {
-    if constexpr(IsStatic) { return value; }
+    if constexpr(IsStatic)
+    {
+      return value;
+    }
     else
     {
       return [&value]() -> const T & { return value; };
@@ -356,8 +368,14 @@ struct Operations
       constexpr bool IsRequired = HasFeature(Flags, ValueFlag::Required);
       load(self, in);
       T & value = static_cast<Schema *>(self)->*ptr;
-      if(in.has(name)) { value = in(name).operator T(); }
-      else if constexpr(IsRequired) { mc_rtc::log::error_and_throw("{} is required", name); }
+      if(in.has(name))
+      {
+        value = in(name).operator T();
+      }
+      else if constexpr(IsRequired)
+      {
+        mc_rtc::log::error_and_throw("{} is required", name);
+      }
     };
     formToStd = [formToStd = formToStd, name, description](const Configuration & in, Configuration & out)
     {
@@ -381,7 +399,9 @@ struct Operations
             SchemaT::formToStd(in_[i], out_i);
           }
         }
-        else if constexpr(details::is_std_map_schema_v<T>) {}
+        else if constexpr(details::is_std_map_schema_v<T>)
+        {
+        }
         else
         {
           out.add(name, in(description));
@@ -421,7 +441,10 @@ const T & get_default(const T & default_,
   constexpr bool IsRequired = HasFeature(Flags, ValueFlag::Required);
   if constexpr(IsRequired && HasChoices && std::is_same_v<T, std::string>)
   {
-    if(choices.choices.size()) { return choices.choices[0]; }
+    if(choices.choices.size())
+    {
+      return choices.choices[0];
+    }
   }
   return default_;
 }

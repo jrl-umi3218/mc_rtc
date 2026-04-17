@@ -99,8 +99,14 @@ void configure_pos_task(std::shared_ptr<mc_tasks::PositionTask> & t,
                         const mc_rtc::Configuration & config,
                         bool load_meta)
 {
-  if(load_meta) { t->load(solver, config); }
-  if(config.has("position")) { t->position(config("position")); }
+  if(load_meta)
+  {
+    t->load(solver, config);
+  }
+  if(config.has("position"))
+  {
+    t->position(config("position"));
+  }
   if(config.has("relative") && config("relative").has("position"))
   {
     const auto & robot = robotFromConfig(config, solver.robots(), t->name());
@@ -114,7 +120,10 @@ void configure_pos_task(std::shared_ptr<mc_tasks::PositionTask> & t,
     auto X_0_relative = X_s1_s2 * X_0_s1;
     t->position((sva::PTransformd(position) * X_0_relative).translation());
   }
-  if(config.has("positionWeight")) { t->weight(config("positionWeight")); }
+  if(config.has("positionWeight"))
+  {
+    t->weight(config("positionWeight"));
+  }
   if(config.has("positionStiffness"))
   {
     if(config("positionStiffness").size())
@@ -134,8 +143,14 @@ void configure_ori_task(std::shared_ptr<mc_tasks::OrientationTask> & t,
                         const mc_rtc::Configuration & config,
                         bool load_meta)
 {
-  if(load_meta) { t->load(solver, config); }
-  if(config.has("orientation")) { t->orientation(config("orientation")); }
+  if(load_meta)
+  {
+    t->load(solver, config);
+  }
+  if(config.has("orientation"))
+  {
+    t->orientation(config("orientation"));
+  }
   if(config.has("relative") && config("relative").has("orientation"))
   {
     const auto & robot = robotFromConfig(config, solver.robots(), "orientation");
@@ -149,7 +164,10 @@ void configure_ori_task(std::shared_ptr<mc_tasks::OrientationTask> & t,
     auto X_0_relative = X_s1_s2 * X_0_s1;
     t->orientation((sva::PTransformd(orientation) * X_0_relative).rotation());
   }
-  if(config.has("orientationWeight")) { t->weight(config("orientationWeight")); }
+  if(config.has("orientationWeight"))
+  {
+    t->weight(config("orientationWeight"));
+  }
   if(config.has("orientationStiffness"))
   {
     if(config("orientationStiffness").size())

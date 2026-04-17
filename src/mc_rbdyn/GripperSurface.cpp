@@ -36,12 +36,18 @@ GripperSurface::~GripperSurface() {}
 void GripperSurface::computePoints()
 {
   points().clear();
-  for(sva::PTransformd & p : impl->pointsFromOrigin) { points().push_back(p * X_b_s()); }
+  for(sva::PTransformd & p : impl->pointsFromOrigin)
+  {
+    points().push_back(p * X_b_s());
+  }
 }
 
 void GripperSurface::originTransform(const sva::PTransformd & X_s_sp)
 {
-  for(sva::PTransformd & p : impl->pointsFromOrigin) { p = p * X_s_sp.inv(); }
+  for(sva::PTransformd & p : impl->pointsFromOrigin)
+  {
+    p = p * X_s_sp.inv();
+  }
   X_b_s(X_s_sp * X_b_s());
 }
 
@@ -129,7 +135,10 @@ tinyxml2::XMLElement * GripperSurface::toXML(tinyxml2::XMLDocument & doc) const
 
   // Points
   auto * pointsElem = doc.NewElement("points");
-  for(const auto & p : impl->pointsFromOrigin) { pointsElem->InsertEndChild(tfToOriginDom(doc, p, "origin")); }
+  for(const auto & p : impl->pointsFromOrigin)
+  {
+    pointsElem->InsertEndChild(tfToOriginDom(doc, p, "origin"));
+  }
   gripElem->InsertEndChild(pointsElem);
 
   return gripElem;

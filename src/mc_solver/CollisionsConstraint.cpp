@@ -58,13 +58,22 @@ struct TVMCollisionConstraint
   std::vector<CollisionData>::iterator removeOrDeleteCollision(TVMQPSolver & solver,
                                                                std::vector<CollisionData>::iterator it)
   {
-    if(it == data_.end()) { return data_.end(); }
+    if(it == data_.end())
+    {
+      return data_.end();
+    }
     if(it->task)
     {
       solver.problem().remove(*it->task);
-      if constexpr(!Delete) { it->task.reset(); }
+      if constexpr(!Delete)
+      {
+        it->task.reset();
+      }
     }
-    if constexpr(Delete) { return data_.erase(it); }
+    if constexpr(Delete)
+    {
+      return data_.erase(it);
+    }
     else
     {
       return it;
@@ -80,7 +89,10 @@ struct TVMCollisionConstraint
 
   void removeCollisions(mc_solver::TVMQPSolver & solver)
   {
-    for(auto it = data_.begin(); it != data_.end(); ++it) { removeOrDeleteCollision<false>(solver, it); }
+    for(auto it = data_.begin(); it != data_.end(); ++it)
+    {
+      removeOrDeleteCollision<false>(solver, it);
+    }
   }
 
   void clear()
@@ -91,7 +103,10 @@ struct TVMCollisionConstraint
       return;
     }
     auto it = data_.begin();
-    while(it != data_.end()) { it = removeOrDeleteCollision<true>(*solver, it); }
+    while(it != data_.end())
+    {
+      it = removeOrDeleteCollision<true>(*solver, it);
+    }
   }
 
   CollisionData & createCollision(TVMQPSolver & solver,
@@ -137,20 +152,29 @@ static inline mc_rtc::void_ptr_caster<details::TVMCollisionConstraint> tvm_const
 template<typename Callback>
 bool handle_wildcard(const mc_rbdyn::Robot & robot, const std::string & body, Callback cb)
 {
-  if(body.back() != '*') { return false; }
+  if(body.back() != '*')
+  {
+    return false;
+  }
   std::string search = body.substr(0, body.size() - 1);
   bool match = false;
   for(const auto & convex : robot.convexes())
   {
     const auto & cName = convex.first;
-    if(cName.size() < search.size()) { continue; }
+    if(cName.size() < search.size())
+    {
+      continue;
+    }
     if(cName.substr(0, search.size()) == search)
     {
       match = true;
       cb(cName);
     }
   }
-  if(!match) { mc_rtc::log::error_and_throw("No match found for collision wildcard {} in {}", body, robot.name()); }
+  if(!match)
+  {
+    mc_rtc::log::error_and_throw("No match found for collision wildcard {} in {}", body, robot.name());
+  }
   return true;
 }
 
@@ -182,11 +206,17 @@ bool CollisionsConstraint::removeCollision(QPSolver & solver, const std::string 
   const mc_rbdyn::Robot & r2 = robots.robot(r2Index);
   auto on_b1_wildcard = [&](const std::string & nb1) { removeCollision(solver, nb1, b2Name); };
   auto on_b2_wildcard = [&](const std::string & nb2) { removeCollision(solver, b1Name, nb2); };
-  if(handle_wildcard(r1, b1Name, on_b1_wildcard) || handle_wildcard(r2, b2Name, on_b2_wildcard)) { return true; }
+  if(handle_wildcard(r1, b1Name, on_b1_wildcard) || handle_wildcard(r2, b2Name, on_b2_wildcard))
+  {
+    return true;
+  }
   auto p = __popCollId(b1Name, b2Name);
   if(!p.second.isNone())
   {
-    if(monitored_.count(p.first)) { toggleCollisionMonitor(p.first, &p.second); }
+    if(monitored_.count(p.first))
+    {
+      toggleCollisionMonitor(p.first, &p.second);
+    }
     category_.push_back("Monitors");
     std::string name = "Monitor " + p.second.body1 + "/" + p.second.body2;
     gui_->removeElement(category_, name);
@@ -218,7 +248,10 @@ bool CollisionsConstraint::removeCollision(QPSolver & solver, const std::string 
 
 void CollisionsConstraint::removeCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols)
 {
-  for(const auto & c : cols) { removeCollision(solver, c.body1, c.body2); }
+  for(const auto & c : cols)
+  {
+    removeCollision(solver, c.body1, c.body2);
+  }
 }
 
 bool CollisionsConstraint::removeCollisionByBody(QPSolver & solver,
@@ -248,14 +281,20 @@ bool CollisionsConstraint::removeCollisionByBody(QPSolver & solver,
         default:
           break;
       }
-      if(monitored_.count(out.first)) { toggleCollisionMonitor(out.first, &out.second); }
+      if(monitored_.count(out.first))
+      {
+        toggleCollisionMonitor(out.first, &out.second);
+      }
       category_.push_back("Monitors");
       std::string name = "Monitor " + out.second.body1 + "/" + out.second.body2;
       gui_->removeElement(category_, name);
       category_.pop_back();
     }
   }
-  for(const auto & it : toRm) { cols.erase(std::find(cols.begin(), cols.end(), it)); }
+  for(const auto & it : toRm)
+  {
+    cols.erase(std::find(cols.begin(), cols.end(), it));
+  }
   if(toRm.size())
   {
     switch(backend_)
@@ -299,9 +338,15 @@ void CollisionsConstraint::__addCollision(mc_solver::QPSolver & solver, const mc
     nCol.body2 = nb2;
     __addCollision(solver, nCol);
   };
-  if(handle_wildcard(r1, col.body1, on_b1_wildcard) || handle_wildcard(r2, col.body2, on_b2_wildcard)) { return; }
+  if(handle_wildcard(r1, col.body1, on_b1_wildcard) || handle_wildcard(r2, col.body2, on_b2_wildcard))
+  {
+    return;
+  }
   int collId = __createCollId(col);
-  if(collId < 0) { return; }
+  if(collId < 0)
+  {
+    return;
+  }
   cols.push_back(col);
 
   auto computeJointsSelector =
@@ -318,7 +363,10 @@ void CollisionsConstraint::__addCollision(mc_solver::QPSolver & solver, const mc
                                        robots.robot(rIndex).name());
         }
       }
-      if(inactive) { return jointsToSelector<false>(robots.robot(rIndex), *joints); }
+      if(inactive)
+      {
+        return jointsToSelector<false>(robots.robot(rIndex), *joints);
+      }
       else
       {
         return jointsToSelector<true>(robots.robot(rIndex), *joints);
@@ -361,7 +409,10 @@ void CollisionsConstraint::__addCollision(mc_solver::QPSolver & solver, const mc
     {
       auto & data =
           tvm_constraint(constraint_)->createCollision(tvm_solver(solver), r1, r2, col, collId, r1Selector, r2Selector);
-      if(inSolver_) { tvm_constraint(constraint_)->addCollision(tvm_solver(solver), data); }
+      if(inSolver_)
+      {
+        tvm_constraint(constraint_)->addCollision(tvm_solver(solver), data);
+      }
       break;
     }
     default:
@@ -388,7 +439,10 @@ void CollisionsConstraint::toggleCollisionMonitor(int collId, const mc_rbdyn::Co
 {
   auto findCollisionById = [this, collId, &col_p]()
   {
-    if(col_p) { return; }
+    if(col_p)
+    {
+      return;
+    }
     for(const auto & c : collIdDict)
     {
       if(c.second.first == collId)
@@ -456,7 +510,10 @@ void CollisionsConstraint::addCollision(QPSolver & solver, const mc_rbdyn::Colli
 
 void CollisionsConstraint::addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols)
 {
-  for(const auto & c : cols) { __addCollision(solver, c); }
+  for(const auto & c : cols)
+  {
+    __addCollision(solver, c);
+  }
   switch(backend_)
   {
     case QPSolver::Backend::Tasks:
@@ -493,19 +550,28 @@ void CollisionsConstraint::addToSolverImpl(QPSolver & solver)
     case QPSolver::Backend::TVM:
     {
       auto cstr = tvm_constraint(constraint_);
-      for(auto & c : cstr->data_) { tvm_constraint(constraint_)->addCollision(tvm_solver(solver), c); }
+      for(auto & c : cstr->data_)
+      {
+        tvm_constraint(constraint_)->addCollision(tvm_solver(solver), c);
+      }
       tvm_constraint(constraint_)->solver = &tvm_solver(solver);
       break;
     }
     default:
       break;
   }
-  for(const auto & cols : collIdDict) { addMonitorButton(cols.second.first, cols.second.second); }
+  for(const auto & cols : collIdDict)
+  {
+    addMonitorButton(cols.second.first, cols.second.second);
+  }
 }
 
 void CollisionsConstraint::update(QPSolver &)
 {
-  if(!autoMonitor_) { return; }
+  if(!autoMonitor_)
+  {
+    return;
+  }
   auto getDistance = [this](int collId)
   {
     switch(backend_)
@@ -529,8 +595,14 @@ void CollisionsConstraint::update(QPSolver &)
   {
     const auto & [collId, coll] = info;
     auto distance = getDistance(collId);
-    if(distance < coll.iDist && !monitored_.count(collId)) { toggleCollisionMonitor(collId, &coll); }
-    if(distance > coll.iDist && monitored_.count(collId)) { toggleCollisionMonitor(collId, &coll); }
+    if(distance < coll.iDist && !monitored_.count(collId))
+    {
+      toggleCollisionMonitor(collId, &coll);
+    }
+    if(distance > coll.iDist && monitored_.count(collId))
+    {
+      toggleCollisionMonitor(collId, &coll);
+    }
   }
 }
 
@@ -572,7 +644,10 @@ void CollisionsConstraint::reset()
     default:
       break;
   }
-  if(gui_) { gui_->removeCategory(category_); }
+  if(gui_)
+  {
+    gui_->removeCategory(category_);
+  }
 }
 
 std::string CollisionsConstraint::__keyByNames(const std::string & name1, const std::string & name2)
@@ -584,7 +659,10 @@ int CollisionsConstraint::__createCollId(const mc_rbdyn::Collision & col)
 {
   std::string key = __keyByNames(col.body1, col.body2);
   auto it = collIdDict.find(key);
-  if(it != collIdDict.end()) { return -1; }
+  if(it != collIdDict.end())
+  {
+    return -1;
+  }
   int collId = this->collId;
   collIdDict[key] = std::pair<int, mc_rbdyn::Collision>(collId, col);
   this->collId += 1;

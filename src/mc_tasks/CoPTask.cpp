@@ -104,7 +104,10 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCom
         dof(i) = 0.;
         force(i) = 0.;
       }
-      else if(force(i) < 0) { dof(i) = -1.; }
+      else if(force(i) < 0)
+      {
+        dof(i) = -1.;
+      }
     }
     return [dof, force](const mc_tasks::MetaTask & t, std::string & out)
     {
@@ -112,7 +115,10 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCom
       Eigen::Vector3d f = self.measuredWrench().force();
       for(int i = 0; i < 3; ++i)
       {
-        if(dof(i) * fabs(f(i)) < force(i)) { return false; }
+        if(dof(i) * fabs(f(i)) < force(i))
+        {
+          return false;
+        }
       }
       out += "force";
       return true;
@@ -124,9 +130,18 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCom
 void CoPTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   DampingTask::load(solver, config);
-  if(config.has("cop")) { targetCoP(config("cop")); }
-  if(config.has("force")) { targetForce(config("force")); }
-  if(config.has("useTargetPressure")) { useTargetPressure(config("useTargetPressure")); }
+  if(config.has("cop"))
+  {
+    targetCoP(config("cop"));
+  }
+  if(config.has("force"))
+  {
+    targetForce(config("force"));
+  }
+  if(config.has("useTargetPressure"))
+  {
+    useTargetPressure(config("useTargetPressure"));
+  }
 }
 
 } // namespace force

@@ -28,7 +28,10 @@ std::string cat2str(const std::vector<std::string> & cat)
   for(size_t i = 0; i < cat.size(); ++i)
   {
     ret += cat[i];
-    if(i != cat.size() - 1) { ret += "/"; }
+    if(i != cat.size() - 1)
+    {
+      ret += "/";
+    }
   }
   return ret;
 }
@@ -46,9 +49,15 @@ namespace
 void init_socket(int & socket, int proto, const std::string & uri, const std::string & name)
 {
   socket = nn_socket(AF_SP, proto);
-  if(socket < 0) { mc_rtc::log::error_and_throw("Failed to initialize {}", name); }
+  if(socket < 0)
+  {
+    mc_rtc::log::error_and_throw("Failed to initialize {}", name);
+  }
   int ret = nn_connect(socket, uri.c_str());
-  if(ret < 0) { mc_rtc::log::error_and_throw("Failed to connect {} to uri: {}", name, uri); }
+  if(ret < 0)
+  {
+    mc_rtc::log::error_and_throw("Failed to connect {} to uri: {}", name, uri);
+  }
   else
   {
     mc_rtc::log::info("Connected {} to {}", name, uri);
@@ -56,10 +65,16 @@ void init_socket(int & socket, int proto, const std::string & uri, const std::st
   if(proto == NN_SUB)
   {
     int err = nn_setsockopt(socket, NN_SUB, NN_SUB_SUBSCRIBE, "", 0);
-    if(err < 0) { mc_rtc::log::error_and_throw("Failed to set subscribe option on SUB socket"); }
+    if(err < 0)
+    {
+      mc_rtc::log::error_and_throw("Failed to set subscribe option on SUB socket");
+    }
     int opt = -1;
     err = nn_setsockopt(socket, NN_SOL_SOCKET, NN_RCVMAXSIZE, &opt, sizeof(opt));
-    if(err < 0) { mc_rtc::log::error_and_throw("Failed to set receive max size option on SUB socket"); }
+    if(err < 0)
+    {
+      mc_rtc::log::error_and_throw("Failed to set receive max size option on SUB socket");
+    }
   }
 }
 
@@ -105,7 +120,10 @@ void ControllerClient::stop()
 {
   run_ = false;
 #ifndef MC_RTC_DISABLE_NETWORK
-  if(sub_th_.joinable()) { sub_th_.join(); }
+  if(sub_th_.joinable())
+  {
+    sub_th_.join();
+  }
   nn_shutdown(sub_socket_, 0);
   nn_shutdown(push_socket_, 0);
   sub_socket_ = -1;
@@ -129,9 +147,15 @@ void ControllerClient::run(std::vector<char> & buff, std::chrono::system_clock::
 {
   auto resize_to_fit = [&](size_t s)
   {
-    if(buff.size() >= s) { return; }
+    if(buff.size() >= s)
+    {
+      return;
+    }
     size_t nsize = buff.size() == 0 ? 65535 : 2 * buff.size();
-    while(nsize < s) { nsize = 2 * nsize; }
+    while(nsize < s)
+    {
+      nsize = 2 * nsize;
+    }
     buff.resize(nsize);
   };
   if(sub_socket_ >= 0)
@@ -145,10 +169,16 @@ void ControllerClient::run(std::vector<char> & buff, std::chrono::system_clock::
       if(timeout_ > 0 && now - t_last_received > std::chrono::duration<double>(timeout_))
       {
         t_last_received = now;
-        if(run_) { handle_gui_state(mc_rtc::Configuration{}); }
+        if(run_)
+        {
+          handle_gui_state(mc_rtc::Configuration{});
+        }
       }
       auto err = nn_errno();
-      if(err != EAGAIN) { mc_rtc::log::error("ControllerClient failed to receive with errno: {}", err); }
+      if(err != EAGAIN)
+      {
+        mc_rtc::log::error("ControllerClient failed to receive with errno: {}", err);
+      }
     }
     else if(recv > 0)
     {
@@ -173,7 +203,10 @@ void ControllerClient::run(std::vector<char> & buff, std::chrono::system_clock::
   else if(server_ != nullptr)
   {
     auto recv = server_->data();
-    if(recv.second == 0) { return; }
+    if(recv.second == 0)
+    {
+      return;
+    }
     resize_to_fit(recv.second);
     memcpy(buff.data(), recv.first, recv.second * sizeof(char));
     run(buff.data(), recv.second);
@@ -186,7 +219,10 @@ void ControllerClient::run(std::vector<char> & buff, std::chrono::system_clock::
 
 void ControllerClient::run(const char * buffer, size_t bufferSize)
 {
-  if(run_) { handle_gui_state(mc_rtc::Configuration::fromMessagePack(buffer, bufferSize)); }
+  if(run_)
+  {
+    handle_gui_state(mc_rtc::Configuration::fromMessagePack(buffer, bufferSize));
+  }
 }
 
 void ControllerClient::start()
@@ -214,7 +250,10 @@ void ControllerClient::send_request(const ElementId & id, const mc_rtc::Configur
 #ifndef MC_RTC_DISABLE_NETWORK
   nn_send(push_socket_, out.c_str(), out.size() + 1, NN_DONTWAIT);
 #endif
-  if(server_) { server_->handle_requests(*gui_, out.c_str()); }
+  if(server_)
+  {
+    server_->handle_requests(*gui_, out.c_str());
+  }
 }
 
 void ControllerClient::send_request(const ElementId & id)
@@ -270,7 +309,10 @@ void ControllerClient::handle_gui_state(mc_rtc::Configuration state)
   if(3 < state.size())
   {
     auto plots = state[3];
-    for(size_t i = 0; i < plots.size(); ++i) { handle_plot(plots[i]); }
+    for(size_t i = 0; i < plots.size(); ++i)
+    {
+      handle_plot(plots[i]);
+    }
   }
   stopped();
 }
@@ -279,10 +321,19 @@ void ControllerClient::handle_category(const std::vector<std::string> & parent,
                                        const std::string & category,
                                        const mc_rtc::Configuration & data)
 {
-  if(data.size() < 2) { return; }
-  if(category.size()) { this->category(parent, category); }
+  if(data.size() < 2)
+  {
+    return;
+  }
+  if(category.size())
+  {
+    this->category(parent, category);
+  }
   auto next_category = parent;
-  if(category.size()) { next_category.push_back(category); }
+  if(category.size())
+  {
+    next_category.push_back(category);
+  }
   for(size_t i = 1; i < data.size() - 1; ++i)
   {
     auto widget_data = data[i];
@@ -293,7 +344,10 @@ void ControllerClient::handle_category(const std::vector<std::string> & parent,
   if(data[data.size() - 1].size())
   {
     auto cat_data = data[data.size() - 1];
-    for(size_t i = 0; i < cat_data.size(); ++i) { handle_category(next_category, cat_data[i][0], cat_data[i]); }
+    for(size_t i = 0; i < cat_data.size(); ++i)
+    {
+      handle_category(next_category, cat_data[i][0], cat_data[i]);
+    }
   }
 }
 
@@ -473,12 +527,18 @@ void ControllerClient::polyhedron(const ElementId & id,
   default_polyhedron_vertices_triangles_ = true;
   std::vector<std::array<Eigen::Vector3d, 3>> triangles;
   triangles.reserve(indices.size());
-  for(const auto & idx : indices) { triangles.push_back({vertices[idx[0]], vertices[idx[1]], vertices[idx[2]]}); }
+  for(const auto & idx : indices)
+  {
+    triangles.push_back({vertices[idx[0]], vertices[idx[1]], vertices[idx[2]]});
+  }
   std::vector<std::array<mc_rtc::gui::Color, 3>> triangle_colors;
   if(colors.size())
   {
     triangle_colors.reserve(indices.size());
-    for(const auto & idx : indices) { triangle_colors.push_back({colors[idx[0]], colors[idx[1]], colors[idx[2]]}); }
+    for(const auto & idx : indices)
+    {
+      triangle_colors.push_back({colors[idx[0]], colors[idx[1]], colors[idx[2]]});
+    }
   }
   polyhedron(id, triangles, triangle_colors, config);
 }
@@ -488,8 +548,14 @@ void ControllerClient::handle_point3d(const ElementId & id, const mc_rtc::Config
   Eigen::Vector3d pos = data[3];
   bool ro = data[4];
   mc_rtc::gui::PointConfig config;
-  if(data.size() > 5) { config.fromMessagePack(data[5]); }
-  if(ro) { array_label(id, {"x", "y", "z"}, pos); }
+  if(data.size() > 5)
+  {
+    config.fromMessagePack(data[5]);
+  }
+  if(ro)
+  {
+    array_label(id, {"x", "y", "z"}, pos);
+  }
   else
   {
     array_input(id, {"x", "y", "z"}, pos);
@@ -501,7 +567,10 @@ void ControllerClient::handle_trajectory(const ElementId & id, const mc_rtc::Con
 {
   const auto & data = data_[3];
   mc_rtc::gui::LineConfig config;
-  if(data_.size() > 4) { config.fromMessagePack(data_[4]); }
+  if(data_.size() > 4)
+  {
+    config.fromMessagePack(data_[4]);
+  }
   if(data.isArray())
   {
     try
@@ -681,8 +750,14 @@ void ControllerClient::handle_force(const ElementId & id, const mc_rtc::Configur
   const sva::PTransformd & surface = data[4];
   bool ro = data[5];
   mc_rtc::gui::ForceConfig forceConfig;
-  if(data.size() > 6) { forceConfig.fromMessagePack(data[6]); }
-  if(ro) { array_label(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector()); }
+  if(data.size() > 6)
+  {
+    forceConfig.fromMessagePack(data[6]);
+  }
+  if(ro)
+  {
+    array_label(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector());
+  }
   else
   {
     array_input(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector());
@@ -696,11 +771,17 @@ void ControllerClient::handle_arrow(const ElementId & id, const mc_rtc::Configur
   const Eigen::Vector3d & arrow_end = data[4];
   bool ro = data[5];
   mc_rtc::gui::ArrowConfig arrow_config;
-  if(data.size() > 6) { arrow_config.fromMessagePack(data[6]); }
+  if(data.size() > 6)
+  {
+    arrow_config.fromMessagePack(data[6]);
+  }
   Eigen::Vector6d arrow_data;
   arrow_data.head<3>() = arrow_start;
   arrow_data.tail<3>() = arrow_end;
-  if(ro) { array_label(id, {"tx_0", "ty_0", "tz_0", "tx_1", "ty_1", "tz_1"}, arrow_data); }
+  if(ro)
+  {
+    array_label(id, {"tx_0", "ty_0", "tz_0", "tx_1", "ty_1", "tz_1"}, arrow_data);
+  }
   else
   {
     array_input(id, {"tx_0", "ty_0", "tz_0", "tx_1", "ty_1", "tz_1"}, arrow_data);
@@ -713,7 +794,10 @@ void ControllerClient::handle_rotation(const ElementId & id, const mc_rtc::Confi
   sva::PTransformd pos = data[3];
   bool ro = data[4];
   Eigen::Quaterniond q{pos.rotation()};
-  if(ro) { array_label(id, {"w", "x", "y", "z"}, Eigen::Vector4d{q.w(), q.x(), q.y(), q.z()}); }
+  if(ro)
+  {
+    array_label(id, {"w", "x", "y", "z"}, Eigen::Vector4d{q.w(), q.x(), q.y(), q.z()});
+  }
   else
   {
     array_input(id, {"w", "x", "y", "z"}, Eigen::Vector4d{q.w(), q.x(), q.y(), q.z()});
@@ -731,7 +815,10 @@ void ControllerClient::handle_transform(const ElementId & id, const mc_rtc::Conf
     Eigen::Quaterniond q{pos.rotation()};
     Eigen::Matrix<double, 7, 1> vec;
     vec << q.w(), q.x(), q.y(), q.z(), pos.translation();
-    if(ro) { array_label(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec); }
+    if(ro)
+    {
+      array_label(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
+    }
     else
     {
       array_input(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
@@ -755,10 +842,16 @@ void ControllerClient::handle_xytheta(const ElementId & id, const mc_rtc::Config
 
   Eigen::Vector3d xythetaVec = vec.head<3>();
   double altitude = 0;
-  if(vec.size() == 4) { altitude = vec(3); }
+  if(vec.size() == 4)
+  {
+    altitude = vec(3);
+  }
 
   const std::vector<std::string> & label = {"X", "Y", "Theta", "Altitude"};
-  if(ro) { array_label(id, label, vec); }
+  if(ro)
+  {
+    array_label(id, label, vec);
+  }
   else
   {
     array_input(id, label, vec);
@@ -823,7 +916,10 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
           break;
         }
         std::optional<std::vector<Configuration>> data = std::nullopt;
-        if(el[4].isArray()) { data = el[4].operator std::vector<Configuration>(); }
+        if(el[4].isArray())
+        {
+          data = el[4].operator std::vector<Configuration>();
+        }
         start_form_generic_array_input(name, required, data);
         handle_form(id, el[3]);
         end_form_generic_array_input();
@@ -832,7 +928,10 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
       case Elements::OneOf:
       {
         std::optional<std::pair<size_t, Configuration>> data = std::nullopt;
-        if(el[3].isArray()) { data = el[3].operator std::pair<size_t, Configuration>(); }
+        if(el[3].isArray())
+        {
+          data = el[3].operator std::pair<size_t, Configuration>();
+        }
         start_form_one_of_input(name, required, data);
         handle_form(id, el[4]);
         end_form_one_of_input();
@@ -979,7 +1078,10 @@ void ControllerClient::handle_standard_plot(const mc_rtc::Configuration & plot)
     else if(type == Type::AbscissaOrdinate)
     {
       XY xy(y_);
-      for(const auto & v : xy.values) { plot_point(id, i - 6, xy.legend, v[0], v[1], xy.color, xy.style, xy.side); }
+      for(const auto & v : xy.values)
+      {
+        plot_point(id, i - 6, xy.legend, v[0], v[1], xy.color, xy.style, xy.side);
+      }
     }
     else if(type == Type::Polygon)
     {
@@ -1022,7 +1124,10 @@ void ControllerClient::handle_xy_plot(const mc_rtc::Configuration & plot)
     if(type == Type::AbscissaOrdinate)
     {
       XY xy(y_);
-      for(const auto & v : xy.values) { plot_point(id, i - 6, xy.legend, v[0], v[1], xy.color, xy.style, xy.side); }
+      for(const auto & v : xy.values)
+      {
+        plot_point(id, i - 6, xy.legend, v[0], v[1], xy.color, xy.style, xy.side);
+      }
     }
     else if(type == Type::Polygon)
     {
@@ -1103,7 +1208,10 @@ void ControllerClient::handle_table(const ElementId & id,
       continue;
     }
     data_str.resize(c_size);
-    for(size_t j = 0; j < c_size; ++j) { data_str[j] = format_data(c, j); }
+    for(size_t j = 0; j < c_size; ++j)
+    {
+      data_str[j] = format_data(c, j);
+    }
     table_row(id, data_str);
   }
   table_end(id);

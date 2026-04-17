@@ -38,7 +38,10 @@ MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
     surfaces_.push_back("LeftFoot");
     surfaces_.push_back("RightFoot");
   }
-  else if(robot().hasSurface("MobileBase")) { surfaces_.push_back("MobileBase"); }
+  else if(robot().hasSurface("MobileBase"))
+  {
+    surfaces_.push_back("MobileBase");
+  }
   else
   {
     mc_rtc::log::error_and_throw("MCCoMController does not support robot {}", robot().name());
@@ -63,7 +66,10 @@ void MCCoMController::reset(const ControllerResetData & reset_data)
   comTask->reset();
   solver().addTask(comTask);
   qpsolver->addConstraintSet(dynamicsConstraint);
-  for(const auto & surface : surfaces_) { addContact(Contact{env().name(), robot().name(), "AllGround", surface}); }
+  for(const auto & surface : surfaces_)
+  {
+    addContact(Contact{env().name(), robot().name(), "AllGround", surface});
+  }
 }
 
 } // namespace mc_control

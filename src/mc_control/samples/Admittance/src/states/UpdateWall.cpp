@@ -13,7 +13,10 @@ void UpdateWall::configure(const mc_rtc::Configuration & config)
 
 void UpdateWall::start(mc_control::fsm::Controller & ctl)
 {
-  if(!config_.has("body")) { mc_rtc::log::error_and_throw("[{}] Missing required configuration for \"body\"", name()); }
+  if(!config_.has("body"))
+  {
+    mc_rtc::log::error_and_throw("[{}] Missing required configuration for \"body\"", name());
+  }
   if(!config_.has("moveRobot"))
   {
     mc_rtc::log::error_and_throw("[{}] Missing required configuration for \"moveRobot\"", name());
@@ -21,7 +24,10 @@ void UpdateWall::start(mc_control::fsm::Controller & ctl)
   const auto rName = config_("robot", ctl.robot().name());
   const auto bName = config_("body");
   const auto moveRobotName = config_("moveRobot");
-  if(!ctl.realRobots().hasRobot(rName)) { mc_rtc::log::error_and_throw("[{}] No robot named {}", name(), rName); }
+  if(!ctl.realRobots().hasRobot(rName))
+  {
+    mc_rtc::log::error_and_throw("[{}] No robot named {}", name(), rName);
+  }
   if(!ctl.realRobots().robot(rName).hasBody(bName))
   {
     mc_rtc::log::error_and_throw("[{}] No body named {} in robot {}", name(), bName, rName);

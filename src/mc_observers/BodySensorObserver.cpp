@@ -19,7 +19,10 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
   robot_ = config("robot", ctl.robot().name());
   updateRobot_ = config("updateRobot", static_cast<std::string>(robot_));
   fbSensorName_ = config("bodySensor", ctl.robot(robot_).bodySensor().name());
-  if(!ctl.robots().hasRobot(robot_)) { mc_rtc::log::error_and_throw("[{}] No robot named {}", name(), robot_); }
+  if(!ctl.robots().hasRobot(robot_))
+  {
+    mc_rtc::log::error_and_throw("[{}] No robot named {}", name(), robot_);
+  }
   auto & robot = ctl.robot(robot_);
   if(!ctl.robots().hasRobot(updateRobot_))
   {
@@ -29,7 +32,10 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
   auto updateConfig = config("method", std::string{"sensor"});
   if(!updateConfig.empty())
   {
-    if(updateConfig == "sensor") { updateFrom_ = Update::Sensor; }
+    if(updateConfig == "sensor")
+    {
+      updateFrom_ = Update::Sensor;
+    }
     else
     {
       updateFrom_ = Update::Control;
@@ -136,8 +142,14 @@ bool BodySensorObserver::run(const mc_control::MCController & ctl)
 void BodySensorObserver::update(mc_control::MCController & ctl)
 {
   auto & realRobot = ctl.realRobots().robot(updateRobot_);
-  if(updatePose_) { realRobot.posW(posW_); }
-  if(updateVel_) { realRobot.velW(velW_); }
+  if(updatePose_)
+  {
+    realRobot.posW(posW_);
+  }
+  if(updateVel_)
+  {
+    realRobot.velW(velW_);
+  }
 }
 
 void BodySensorObserver::addToLogger(const mc_control::MCController &,
@@ -145,9 +157,18 @@ void BodySensorObserver::addToLogger(const mc_control::MCController &,
                                      const std::string & category)
 {
   auto cat = category + "_" + fbSensorName_;
-  if(logPos_) { MC_RTC_LOG_HELPER(cat + "_posW", posW_); }
-  if(logVel_) { MC_RTC_LOG_HELPER(cat + "_velW", velW_); }
-  if(logAcc_) { MC_RTC_LOG_HELPER(cat + "_accW", accW_); }
+  if(logPos_)
+  {
+    MC_RTC_LOG_HELPER(cat + "_posW", posW_);
+  }
+  if(logVel_)
+  {
+    MC_RTC_LOG_HELPER(cat + "_velW", velW_);
+  }
+  if(logAcc_)
+  {
+    MC_RTC_LOG_HELPER(cat + "_accW", accW_);
+  }
 }
 
 void BodySensorObserver::addToGUI(const mc_control::MCController & ctl,

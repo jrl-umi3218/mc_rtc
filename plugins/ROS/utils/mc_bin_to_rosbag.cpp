@@ -163,7 +163,10 @@ struct DataToROS<Eigen::Vector6d>
     msg.layout.dim[0].label = "data";
     msg.layout.dim[0].size = 6;
     msg.layout.dim[0].stride = 6;
-    for(int i = 0; i < 6; ++i) { msg.data.push_back(data(i)); }
+    for(int i = 0; i < 6; ++i)
+    {
+      msg.data.push_back(data(i));
+    }
     return msg;
   }
 };
@@ -180,7 +183,10 @@ struct DataToROS<Eigen::VectorXd>
     msg.layout.dim[0].label = "data";
     msg.layout.dim[0].size = static_cast<unsigned int>(data.size());
     msg.layout.dim[0].stride = static_cast<unsigned int>(data.size());
-    for(int i = 0; i < data.size(); ++i) { msg.data.push_back(data(i)); }
+    for(int i = 0; i < data.size(); ++i)
+    {
+      msg.data.push_back(data(i));
+    }
     return msg;
   }
 };
@@ -397,7 +403,10 @@ void mc_bin_to_rosbag(const std::string & in, const std::string & out, double dt
 #endif
   for(size_t i = 0; i < log.size(); ++i)
   {
-    for(const auto & e : entries) { write(bag, now, log, e.first, e.second, i); }
+    for(const auto & e : entries)
+    {
+      write(bag, now, log, e.first, e.second, i);
+    }
 #ifdef MC_RTC_ROS_IS_ROS2
     now += rclcpp::Duration(std::chrono::duration<double>(dt));
 #else

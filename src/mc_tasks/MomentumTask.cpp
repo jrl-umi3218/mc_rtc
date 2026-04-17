@@ -52,7 +52,10 @@ void MomentumTask::reset()
 /*! \brief Load parameters from a Configuration object */
 void MomentumTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
-  if(config.has("momentum")) { this->momentum(config("momentum")); }
+  if(config.has("momentum"))
+  {
+    this->momentum(config("momentum"));
+  }
   TrajectoryBase::load(solver, config);
 }
 

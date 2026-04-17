@@ -44,7 +44,10 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
                                             const mc_rbdyn::Surface & envSurface,
                                             const sva::PTransformd & X_es_rs)
 {
-  if(robotSurface.type() == "gripper") { return robotSurface.points(); }
+  if(robotSurface.type() == "gripper")
+  {
+    return robotSurface.points();
+  }
   if((envSurface.type() == "planar" || envSurface.type() == "cylindrical") && robotSurface.type() == "planar")
   {
     // Transform env points in robot surface coordinate
@@ -60,7 +63,10 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
     auto proj2D = [robotT, robotB](const sva::PTransformd & p)
     { return std::pair<double, double>(robotT.dot(p.translation()), robotB.dot(p.translation())); };
     std::vector<std::pair<double, double>> envPoints2d(0);
-    for(const sva::PTransformd & p : envPointsInRobotSurface) { envPoints2d.push_back(proj2D(p)); }
+    for(const sva::PTransformd & p : envPointsInRobotSurface)
+    {
+      envPoints2d.push_back(proj2D(p));
+    }
     const std::vector<std::pair<double, double>> & robotPoints2d =
         (reinterpret_cast<const PlanarSurface &>(robotSurface)).planarPoints();
 
@@ -222,7 +228,10 @@ std::vector<mc_rbdyn::Contact> Contact::loadVector(const mc_rbdyn::Robots & robo
                                                    const mc_rtc::Configuration & config)
 {
   std::vector<mc_rbdyn::Contact> ret;
-  for(const auto & c : config) { ret.emplace_back(load(robots, c)); }
+  for(const auto & c : config)
+  {
+    ret.emplace_back(load(robots, c));
+  }
   return ret;
 }
 
@@ -236,7 +245,10 @@ Contact::Contact(const Contact & contact)
 
 Contact & Contact::operator=(const Contact & rhs)
 {
-  if(this == &rhs) { return *this; }
+  if(this == &rhs)
+  {
+    return *this;
+  }
   this->impl->r1Index = rhs.r1Index();
   this->impl->r2Index = rhs.r2Index();
   this->impl->r1Surface = rhs.r1Surface()->copy();
@@ -324,7 +336,10 @@ sva::PTransformd Contact::X_0_r2s(const mc_rbdyn::Robot & robot) const
 
 std::vector<sva::PTransformd> Contact::r1Points()
 {
-  if(isFixed()) { return computePoints(*(r1Surface()), *(r2Surface()), X_r2s_r1s()); }
+  if(isFixed())
+  {
+    return computePoints(*(r1Surface()), *(r2Surface()), X_r2s_r1s());
+  }
   else
   {
     const auto & s = *(r1Surface());
@@ -334,7 +349,10 @@ std::vector<sva::PTransformd> Contact::r1Points()
 
 std::vector<sva::PTransformd> Contact::r2Points()
 {
-  if(isFixed()) { return computePoints(*(r2Surface()), *(r1Surface()), X_r2s_r1s().inv()); }
+  if(isFixed())
+  {
+    return computePoints(*(r2Surface()), *(r1Surface()), X_r2s_r1s().inv());
+  }
   else
   {
     const auto & s = *(r2Surface());
@@ -359,7 +377,10 @@ mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots) co
 {
   const mc_rbdyn::Robot & r1 = robots.robot(impl->r1Index);
   const mc_rbdyn::Robot & r2 = robots.robot(impl->r2Index);
-  if(r1.mb().nrDof() == 0 && r2.mb().nrDof() == 0) { return {}; }
+  if(r1.mb().nrDof() == 0 && r2.mb().nrDof() == 0)
+  {
+    return {};
+  }
   unsigned int r1BodyIndex = r1.bodyIndexByName(impl->r1Surface->bodyName());
   unsigned int r2BodyIndex = r2.bodyIndexByName(impl->r2Surface->bodyName());
   sva::PTransformd X_0_b1 = r1.mbc().bodyPosW[r1BodyIndex];

@@ -54,7 +54,10 @@ ContactWrenchMatrixToLambdaMatrix::ContactWrenchMatrixToLambdaMatrix(const mc_so
     sva::PTransformd X_cf_pi = X_b_pi * contact.X_b1_cf.inv();
     X_cf_pi_T.block(0, 0, 3, 3) = sva::vector3ToCrossMatrix(X_cf_pi.translation()) * X_cf_pi.rotation().transpose();
     X_cf_pi_T.block(3, 0, 3, 3) = X_cf_pi.rotation().transpose();
-    for(size_t j = 0; j < cones[i].generators.size(); ++j) { Gi.col(static_cast<int>(j)) = cones[i].generators[j]; }
+    for(size_t j = 0; j < cones[i].generators.size(); ++j)
+    {
+      Gi.col(static_cast<int>(j)) = cones[i].generators[j];
+    }
     transform_.block(0, col, 6, static_cast<int>(cones[i].generators.size())) =
         X_cf_pi_T * Gi.block(0, 0, 3, static_cast<int>(cones[i].generators.size()));
     col += static_cast<int>(cones[i].generators.size());

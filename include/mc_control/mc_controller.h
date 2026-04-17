@@ -77,7 +77,10 @@
           const double & dt,                                                         \
           [[maybe_unused]] const mc_control::Configuration & config)                 \
       {                                                                              \
-        if(name == NAME0) { return new NEWCTL0; }                                    \
+        if(name == NAME0)                                                            \
+        {                                                                            \
+          return new NEWCTL0;                                                        \
+        }                                                                            \
         return new NEWCTL1;                                                          \
       }                                                                              \
     }

@@ -131,7 +131,10 @@ std::vector<double> robotModuleDefaultAttitude(RobotModulePtr rm)
 {
   auto attitude = rm->default_attitude();
   std::vector<double> ret(7);
-  for(size_t i = 0; i < 7; ++i) { ret[i] = attitude[i]; }
+  for(size_t i = 0; i < 7; ++i)
+  {
+    ret[i] = attitude[i];
+  }
   return ret;
 }
 

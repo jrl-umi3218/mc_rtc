@@ -53,7 +53,10 @@ public:
   bool pop(T & item)
   {
     const size_t head = head_;
-    if(head == tail_) { return false; }
+    if(head == tail_)
+    {
+      return false;
+    }
     item = data_[head];
     head_ = increment(head);
     return true;

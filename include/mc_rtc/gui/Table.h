@@ -132,7 +132,10 @@ auto Table(const std::string & name,
            std::vector<std::string> format,
            GetData get_data_fn)
 {
-  while(format.size() < header.size()) { format.push_back("{}"); }
+  while(format.size() < header.size())
+  {
+    format.push_back("{}");
+  }
   return details::StaticTableImpl(name, std::move(header), std::move(format), get_data_fn);
 }
 

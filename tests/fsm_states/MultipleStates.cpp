@@ -40,8 +40,14 @@ extern "C"
 
   FSM_STATE_API mc_control::fsm::State * create(const std::string & n)
   {
-    if(n == "State1") { return new State1(); }
-    if(n == "State2") { return new State2(); }
+    if(n == "State1")
+    {
+      return new State1();
+    }
+    if(n == "State2")
+    {
+      return new State2();
+    }
     return nullptr;
   }
 }

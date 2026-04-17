@@ -184,7 +184,10 @@ public:
   inline const RobotFrame & frame(const std::string & name) const
   {
     auto it = frames_.find(name);
-    if(it != frames_.end()) { return *it->second; }
+    if(it != frames_.end())
+    {
+      return *it->second;
+    }
     mc_rtc::log::error_and_throw("No frame named {} in {}", name, name_);
   }
 

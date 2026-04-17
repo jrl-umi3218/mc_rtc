@@ -33,9 +33,18 @@ struct MC_RBDYN_DLLAPI FDQPWeights
 
   void load(const mc_rtc::Configuration & config)
   {
-    if(config.has("ankle_torque")) { ankleTorqueSqrt = std::sqrt(static_cast<double>(config("ankle_torque"))); }
-    if(config.has("net_wrench")) { netWrenchSqrt = std::sqrt(static_cast<double>(config("net_wrench"))); }
-    if(config.has("pressure")) { pressureSqrt = std::sqrt(static_cast<double>(config("pressure"))); }
+    if(config.has("ankle_torque"))
+    {
+      ankleTorqueSqrt = std::sqrt(static_cast<double>(config("ankle_torque")));
+    }
+    if(config.has("net_wrench"))
+    {
+      netWrenchSqrt = std::sqrt(static_cast<double>(config("net_wrench")));
+    }
+    if(config.has("pressure"))
+    {
+      pressureSqrt = std::sqrt(static_cast<double>(config("pressure")));
+    }
   }
 
   mc_rtc::Configuration save() const
@@ -71,9 +80,18 @@ struct MC_RBDYN_DLLAPI FDMPCWeights
 
   void load(const mc_rtc::Configuration & config)
   {
-    if(config.has("cop")) { cop_ = static_cast<double>(config("cop")); }
-    if(config.has("cop_regulation")) { copRegulation_ = static_cast<double>(config("cop_regulation")); }
-    if(config.has("cop_diff")) { copDiff_ = static_cast<double>(config("cop_diff")); }
+    if(config.has("cop"))
+    {
+      cop_ = static_cast<double>(config("cop"));
+    }
+    if(config.has("cop_regulation"))
+    {
+      copRegulation_ = static_cast<double>(config("cop_regulation"));
+    }
+    if(config.has("cop_diff"))
+    {
+      copDiff_ = static_cast<double>(config("cop_diff"));
+    }
   }
 
   mc_rtc::Configuration save() const
@@ -528,11 +546,20 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   {
     config("verbose", verbose);
 
-    if(config.has("safety_tresholds")) { safetyThresholds.load(config("safety_tresholds")); }
+    if(config.has("safety_tresholds"))
+    {
+      safetyThresholds.load(config("safety_tresholds"));
+    }
 
-    if(config.has("fdqp_weights")) { fdqpWeights.load(config("fdqp_weights")); }
+    if(config.has("fdqp_weights"))
+    {
+      fdqpWeights.load(config("fdqp_weights"));
+    }
 
-    if(config.has("fdmpc_weights")) { fdmpcWeights.load(config("fdmpc_weights")); }
+    if(config.has("fdmpc_weights"))
+    {
+      fdmpcWeights.load(config("fdmpc_weights"));
+    }
 
     config("friction", friction);
     config("leftFootSurface", leftFootSurface);
@@ -590,8 +617,14 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       dcmTracking("derivator_cutoff_period", dcmDerivatorTimeConstant);
       dcmTracking("integrator_time_constant", dcmIntegratorTimeConstant);
     }
-    if(config.has("dcm_bias")) { dcmBias.load(config("dcm_bias")); }
-    if(config.has("external_wrench")) { extWrench.load(config("external_wrench")); }
+    if(config.has("dcm_bias"))
+    {
+      dcmBias.load(config("dcm_bias"));
+    }
+    if(config.has("external_wrench"))
+    {
+      extWrench.load(config("external_wrench"));
+    }
     if(config.has("tasks"))
     {
       auto tasks = config("tasks");
@@ -660,7 +693,10 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       vdc("stiffness", vdcStiffness);
     }
 
-    if(config.has("zmpcc")) { zmpcc.load(config("zmpcc")); }
+    if(config.has("zmpcc"))
+    {
+      zmpcc.load(config("zmpcc"));
+    }
     config("zmpcc", zmpcc);
   }
 

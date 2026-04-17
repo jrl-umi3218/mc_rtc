@@ -60,7 +60,10 @@ public:
       BOOST_CHECK_SMALL(robot().mbc().q[head_joint_index][0] - head_joint_target, 0.001);
       neckTask_->target({{"NECK_P", {0}}});
     }
-    if(nrIter == 750) { BOOST_CHECK_SMALL(robot().mbc().q[head_joint_index][0], 0.001); }
+    if(nrIter == 750)
+    {
+      BOOST_CHECK_SMALL(robot().mbc().q[head_joint_index][0], 0.001);
+    }
     return ret;
   }
 

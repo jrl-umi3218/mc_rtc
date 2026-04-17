@@ -46,7 +46,10 @@ struct StationaryOffset
   {
     average_.append(value);
     filteredValue_ = value - average_.eval();
-    if(saturation_ > 0.) { utils::clampInPlace(filteredValue_, -saturation_, saturation_); }
+    if(saturation_ > 0.)
+    {
+      utils::clampInPlace(filteredValue_, -saturation_, saturation_);
+    }
   }
 
   /** Get output value where the stationary offset has been filtered.

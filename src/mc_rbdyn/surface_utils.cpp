@@ -50,7 +50,10 @@ void surfacesToXML(tinyxml2::XMLDocument & doc,
   robotElem->SetAttribute("name", robotName.c_str());
   doc.InsertFirstChild(robotElem);
 
-  for(const auto & s : surfaces) { robotElem->InsertEndChild(s->toXML(doc)); }
+  for(const auto & s : surfaces)
+  {
+    robotElem->InsertEndChild(s->toXML(doc));
+  }
 }
 
 inline void readRSDF(const std::string & rsdf_string, std::vector<std::shared_ptr<Surface>> & surfaces)
@@ -61,7 +64,10 @@ inline void readRSDF(const std::string & rsdf_string, std::vector<std::shared_pt
   tinyxml2::XMLElement * root = doc.FirstChildElement("robot");
   for(auto * elem = root->FirstChildElement(); elem; elem = elem->NextSiblingElement())
   {
-    if(auto surf = Surface::fromXML(*elem)) { surfaces.emplace_back(std::move(surf)); }
+    if(auto surf = Surface::fromXML(*elem))
+    {
+      surfaces.emplace_back(std::move(surf));
+    }
   }
 }
 
