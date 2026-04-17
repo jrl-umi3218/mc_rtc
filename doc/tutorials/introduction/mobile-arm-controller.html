@@ -1,0 +1,382 @@
+---
+layout: tutorials
+toc: true
+constructor_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      #include <mc_rbdyn/RobotLoader.h>
+
+      MobileArmController::MobileArmController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration &config)
+      : mc_control::MCController(
+        {
+          rm,
+          mc_rbdyn::RobotLoader::get_robot_module("dingo"),
+          mc_rbdyn::RobotLoader::get_robot_module("env/door"),
+          mc_rbdyn::RobotLoader::get_robot_module("env/ground")
+        },
+        dt)
+  - name: Python
+    lang: python
+    source: |
+      @staticmethod
+      def create(robot, dt):
+          dingo = mc_rbdyn.get_robot_module("dingo")
+          door = mc_rbdyn.get_robot_module("env/door")
+          ground = mc_rbdyn.get_robot_module("env/ground")
+          return MobileArmController([robot, dingo, door, ground], dt)
+set_contact_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the constructor
+      Eigen::Vector6d dof = Eigen::Vector6d::Ones();
+      dof[2] = 0.0;
+      dof[3] = 0.0;
+      dof[4] = 0.0;
+      double friction = mc_rbdyn::Contact::defaultFriction;
+      addContact({"dingo", "ground", "Base", "AllGround", friction, dof});
+      addContact({"dingo", "ur5e", "Base", "Base"});
+  - name: Python
+    lang: python
+    source: |
+      # In the constructor
+      dof = eigen.Vector6d.Zero()
+      dof[0] = 1.0
+      dof[1] = 1.0
+      dof[5] = 1.0
+      friction = mc_rbdyn.Contact.defaultFriction
+      self.addContact(
+          mc_control.Contact(
+              "dingo", "ground", "Base", "AllGround", friction, dof
+          )
+      )
+      self.addContact(mc_control.Contact("dingo", "ur5e", "Base", "Base"))
+reposition_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the reset function
+      robots().robot(0).posW(
+        sva::PTransformd(sva::RotZ(0.0), Eigen::Vector3d(0.0, 0.0, 0.5)));
+      robots().robot(1).posW(
+        sva::PTransformd(sva::RotZ(0.0), Eigen::Vector3d(-0.25, 0.0, 0.0)));
+      robots().robot(2).posW(
+        sva::PTransformd(sva::RotZ(M_PI), Eigen::Vector3d(2.0, 1.0, 0)));
+  - name: Python
+    lang: python
+    source: |
+      # In the reset callback
+      self.robots().robot(0).posW(
+          sva.PTransformd(sva.RotZ(0.0), eigen.Vector3d(0.0, 0.0, 0.5))
+      )
+      self.robots().robot(1).posW(
+          sva.PTransformd(sva.RotZ(0.0), eigen.Vector3d(0.0, 0.0, 0.0))
+      )
+      self.robots().robot(2).posW(
+          sva.PTransformd(sva.RotZ(math.pi), eigen.Vector3d(2.0, 1.0, 0))
+      )
+add_ur5e_tasks_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the header
+      #include <mc_tasks/SurfaceTransformTask.h>
+      // ...
+      std::shared_ptr<mc_tasks::SurfaceTransformTask> handTask_;
+
+      // In the reset function
+      handTask_ = std::make_shared<mc_tasks::SurfaceTransformTask>("Tool", robots(), 0);
+  - name: Python
+    lang: python
+    source: |
+      # In the reset callback
+      self._handTask = mc_tasks.SurfaceTransformTask(
+        "Tool", self.robots(), 0, 5.0, 1000.0
+      )
+add_dingo_tasks_sources:
+  - name: C++
+    lang: cpp
+    source: |
+        // In the header
+        #include <mc_tasks/TransformTask.h>
+        // ...
+        std::shared_ptr<mc_tasks::TransformTask> dingoBaseTask_;
+
+        // In the reset function
+        dingoBaseTask_ =
+          std::make_shared<mc_tasks::TransformTask>("base_link", robots(), 1, 2.0, 1000);
+  - name: Python
+    lang: python
+    source: |
+        # In the reset callback
+        self._dingoBaseTask = mc_tasks.EndEffectorTask(
+            "base_link", self.robots(), 1, 2.0, 1000.0
+        )
+add_door_tasks_sources:
+  - name: C++
+    lang: cpp
+    source: |
+        // In the header
+        std::unique_ptr<mc_solver::KinematicsConstraint> doorKinematics_;
+        std::shared_ptr<mc_tasks::PostureTask> doorPostureTask_;
+        // In the reset function
+        doorKinematics_ = std::make_unique<mc_solver::KinematicsConstraint>(robots(), 2, solver().dt());
+        solver().addConstraintSet(doorKinematics_);
+        doorPostureTask_ = std::make_shared<mc_tasks::PostureTask>(solver(), 2, 1.0, 1.0);
+        solver().addTask(doorPostureTask_);
+  - name: Python
+    lang: python
+    source: |
+        # In the reset callback
+        self._doorKinematics = mc_solver.KinematicsConstraint(
+            self.robots(), 2, self.solver().dt()
+        )
+        self.solver().addConstraintSet(self._doorKinematics)
+        self._doorPostureTask = mc_tasks.PostureTask(
+            self.solver(), 2, 1.0, 1.0
+        )
+        self.solver().addTask(self._doorPostureTask)
+add_collision_constraint_sources:
+  - name: C++
+    lang: cpp
+    source: |
+        // In the constructor
+        double iDist = 0.1;
+        double sDist = 0.05;
+        addCollisions(
+          "dingo", "door", {{"*", "*", iDist, sDist, 0}}
+        );
+        addCollisions(
+          "ur5e", "door", {{"*", "*", iDist, sDist, 0}}
+        );
+  - name: Python
+    lang: python
+    source: |
+        # In the constructor
+        iDist, sDist, damping = 0.1, 0.05, 0.0
+        self.addCollisions(
+            "dingo",
+            "door",
+            [mc_rbdyn.Collision("*", "*", iDist, sDist, damping)],
+        )
+        self.addCollisions(
+            "ur5e",
+            "door",
+            [mc_rbdyn.Collision("*", "*", iDist, sDist, damping)],
+        )
+logic_setup_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the header
+      enum ControllerPhase
+      {
+        APPROACH = 0,
+        HANDLE,
+        OPEN,
+        DONE
+      };
+      // A private property of our controller
+      ControllerPhase phase_ = APPROACH;
+      // In the run function
+      bool MobileArmController::run()
+      {
+        if(phase_ == APPROACH && 0 /** we write this condition later */)
+        {
+          /** Setup the HANDLE phase */
+          phase_ = HANDLE;
+        }
+        else if(phase_ == HANDLE && 0 /** we write this condition later */)
+        {
+          /** Setup the OPEN phase */
+          phase_ = OPEN;
+        }
+        else if(phase_ == OPEN && 0 /** we write this condition later */) {
+          /** Setup the OPEN phase */
+          phase_ = DONE;
+        }
+        else if (phase_ == DONE && 0 /** we write this condition later */) {
+          /** Continue the DONE phase */
+        }
+        return mc_control::MCController::run();
+      }
+  - name: Python
+    lang: python
+    source: |
+      # Declare constants
+      class ControllerPhase:
+          APPROACH = 0
+          HANDLE = 1
+          OPEN = 2
+          DONE = 3
+
+      # In constructor
+      def __init__(self, rm, dt):
+          self._phase = APPROACH
+
+      # In the run callback
+      def run_callback(self):
+          if self._phase == ControllerPhase.APPROACH and False:  # We write this condition later
+              # Setup the HANDLE phase
+              self._phase = ControllerPhase.HANDLE
+          elif (
+              self._phase == ControllerPhase.HANDLE and False
+          ):  # We write this condition later
+              # Setup the OPEN phase
+              self._phase = ControllerPhase.OPEN
+          elif self._phase == ControllerPhase.OPEN and False:  # We write this condition later
+              # Continue the DONE phase
+              pass
+          return True
+p1_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the reset function
+      solver().addTask(dingoBaseTask_);
+      solver().addTask(postureTask.get());
+      postureTask->target({{"shoulder_lift_joint", {-M_PI / 2}}});
+      dingoBaseTask_->target({Eigen::Vector3d(1.5, 0.0, 0.0)});
+  - name: Python
+    lang: python
+    source: |
+      # In the reset callback
+      self.qpsolver.addTask(self._dingoBaseTask)
+      self.qpsolver.addTask(self.postureTask)
+      self.postureTask.target(
+          {
+              "shoulder_lift_joint".encode("utf-8"): [-math.pi / 2],
+          }
+      )
+      self._dingoBaseTask.add_ef_pose(
+          sva.PTransformd(sva.RotZ(0), eigen.Vector3d(1.5, 0.0, 0.0))
+      )
+p2_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the run function, under phase_ == APPROACH
+      solver().removeTask(postureTask);
+      handTask_->reset();
+      solver().addTask(handTask_);
+      handTask_->target(sva::PTransformd(Eigen::Vector3d(0, 0, -0.05)) * robots().robot(2).surfacePose("Handle"));
+      phase_ = HANDLE;
+  - name: Python
+    lang: python
+    source: |
+      # In the run callback, under self._phase == ControllerPhase.APPROACH
+      self.qpsolver.removeTask(self.postureTask)
+      self._handTask.reset()
+      self.qpsolver.addTask(self._handTask)
+      self._handTask.target(
+          sva.PTransformd(eigen.Vector3d(0.0, 0.0, -0.05))
+          * self.robots().robot(2).surfacePose("Handle")
+      )
+      self._phase = ControllerPhase.HANDLE
+p3_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the run function, under phase_ == HANDLE
+      addContact({"ur5e", "door", "Tool", "Handle"});
+      solver().removeTask(handTask_);
+      postureTask->reset();
+      doorPostureTask_->target({{"handle", {-1.0}}});
+  - name: Python
+    lang: python
+    source: |
+      # In the run callback, under self._phase == ControllerPhase.HANDLE
+      self.addContact(mc_control.Contact("ur5e", "door", "Tool", "Handle"))
+      self.qpsolver.removeTask(self._handTask)
+      self.postureTask.reset()
+      self._doorPosture.target(
+          {
+              "handle".encode("utf-8"): [-1.0],
+          }
+      )
+      self._phase = ControllerPhase.OPEN
+p4_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the run function, under phase_ == OPEN
+      solver().removeTask(dingoBaseTask_);
+      doorPostureTask_->target({{"door", {M_PI / 2}}});
+      phase_ = DONE;
+  - name: Python
+    lang: python
+    source: |
+      # In the run callback, under self._phase == ControllerPhase.OPEN
+      self.qpsolver.removeTask(self._dingoBaseTask)
+      self._doorPosture.target(
+          {
+              "door".encode("utf-8"): [math.pi / 2],
+          }
+      )
+      self._phase = ControllerPhase.DONE
+p5_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the run function, under phase_ == DONE
+      removeContact({"ur5e", "door", "Tool", "Handle"});
+      solver().addTask(dingoBaseTask_);
+      solver().addTask(postureTask);
+  - name: Python
+    lang: python
+    source: |
+      # In the run callback, under self._phase == ControllerPhase.DONE
+      self.removeContact(mc_control.Contact("ur5e", "door", "Tool", "Handle"))
+      self._dingoBaseTask.reset()
+      self.qpsolver.addTask(self._dingoBaseTask)
+      self.qpsolver.addTask(self.postureTask)
+phase_conditions:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the run function
+      if (phase_ == APPROACH && dingoBaseTask_->eval().norm() < 1e-2 && dingoBaseTask_->speed().norm() < 1e-5)
+      {
+        // ...
+      }
+      else if (phase_ == HANDLE && handTask_->eval().norm() < 0.1 && handTask_->speed().norm() < 1e-4)
+      {
+        // ...
+      }
+      else if (phase_ == OPEN && doorPostureTask_->eval().norm() < 0.01)
+      {
+        // ...
+      }
+      else if (phase_ == DONE && doorPostureTask_->eval().norm() < 0.01)
+      {
+        // ...
+      }
+  - name: Python
+    lang: python
+    source: |
+      # In the run function
+      if (
+            self._phase == ControllerPhase.APPROACH
+            and self._dingoBaseTask.eval().norm() < 1e-2
+            and self._dingoBaseTask.speed().norm() < 1e-5
+        ):
+        # ...
+      elif (
+            self._phase == ControllerPhase.HANDLE
+            and self._handTask.eval().norm() < 0.1
+            and self._handTask.speed().norm() < 1e-4
+        ):
+        # ...
+      elif (
+            self._phase == ControllerPhase.OPEN
+            and self._doorPosture.eval().norm() < 0.01
+        ):
+        # ...
+      elif (
+            self._phase == ControllerPhase.DONE
+            and self._doorPosture.eval().norm() < 0.01
+        ):
+        # ...
+---
+{% translate_file tutorials/introduction/mobile-arm-controller.html %}
