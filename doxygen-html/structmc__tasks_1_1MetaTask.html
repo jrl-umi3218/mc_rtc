@@ -171,10 +171,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae6437fb02541a7c63e177ee13170b5a4"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#ae6437fb02541a7c63e177ee13170b5a4">dimWeight</a> () const =0</td></tr>
 <tr class="memdesc:ae6437fb02541a7c63e177ee13170b5a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current task's dim weight vector.  <a href="structmc__tasks_1_1MetaTask.html#ae6437fb02541a7c63e177ee13170b5a4">More...</a><br /></td></tr>
 <tr class="separator:ae6437fb02541a7c63e177ee13170b5a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fd93334634a24c2955f83cbf71926c1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#a2fd93334634a24c2955f83cbf71926c1">selectActiveJoints</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={})=0</td></tr>
+<tr class="memitem:a2fd93334634a24c2955f83cbf71926c1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#a2fd93334634a24c2955f83cbf71926c1">selectActiveJoints</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const <a class="elRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#ae2f662cc3cd29563a8f7b0a9d760a59a">std::map</a>&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={})=0</td></tr>
 <tr class="memdesc:a2fd93334634a24c2955f83cbf71926c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup an active joints selector.  <a href="structmc__tasks_1_1MetaTask.html#a2fd93334634a24c2955f83cbf71926c1">More...</a><br /></td></tr>
 <tr class="separator:a2fd93334634a24c2955f83cbf71926c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4d582c6cd1934d8a4ac2fed6fb296da"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#aa4d582c6cd1934d8a4ac2fed6fb296da">selectUnactiveJoints</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={})=0</td></tr>
+<tr class="memitem:aa4d582c6cd1934d8a4ac2fed6fb296da"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#aa4d582c6cd1934d8a4ac2fed6fb296da">selectUnactiveJoints</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const <a class="elRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#ae2f662cc3cd29563a8f7b0a9d760a59a">std::map</a>&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={})=0</td></tr>
 <tr class="memdesc:aa4d582c6cd1934d8a4ac2fed6fb296da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup an unactive joints selector.  <a href="structmc__tasks_1_1MetaTask.html#aa4d582c6cd1934d8a4ac2fed6fb296da">More...</a><br /></td></tr>
 <tr class="separator:aa4d582c6cd1934d8a4ac2fed6fb296da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a745e75d72133feaf9b7aef649485168f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#a745e75d72133feaf9b7aef649485168f">resetJointsSelector</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver)=0</td></tr>
@@ -1231,7 +1231,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="elRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#ae2f662cc3cd29563a8f7b0a9d760a59a">std::map</a>&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;&#160;</td>
           <td class="paramname"><em>activeDofs</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
@@ -1287,7 +1287,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="elRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#ae2f662cc3cd29563a8f7b0a9d760a59a">std::map</a>&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;&#160;</td>
           <td class="paramname"><em>unactiveDofs</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>

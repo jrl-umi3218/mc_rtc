@@ -259,7 +259,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a2aea12248e83169f7b0b437aedf98d67"><td class="memTemplItemLeft" align="right" valign="top">details::FormArrayInput&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a2aea12248e83169f7b0b437aedf98d67">mc_rtc::gui::FormArrayInput</a> (const std::string &amp;name, bool required, bool fixed_size=false)</td></tr>
 <tr class="separator:a2aea12248e83169f7b0b437aedf98d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa22849fdbb9e55524e761c9e7800dade"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aa22849fdbb9e55524e761c9e7800dade"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#aa22849fdbb9e55524e761c9e7800dade">mc_rtc::gui::FormArrayInput</a> (const std::string &amp;name, bool required, T &amp;&amp;value, bool fixed_size=true)</td></tr>
+<tr class="memitem:aa22849fdbb9e55524e761c9e7800dade"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#aa22849fdbb9e55524e761c9e7800dade">mc_rtc::gui::FormArrayInput</a> (const std::string &amp;name, bool required, T &amp;&amp;<a class="elRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a>, bool fixed_size=true)</td></tr>
 <tr class="separator:aa22849fdbb9e55524e761c9e7800dade"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18a02cae038137efb06943a9cd0f4b15"><td class="memTemplParams" colspan="2">template&lt;typename Callback , typename... Args&gt; </td></tr>
 <tr class="memitem:a18a02cae038137efb06943a9cd0f4b15"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a18a02cae038137efb06943a9cd0f4b15">mc_rtc::gui::Form</a> (const std::string &amp;name, Callback cb, Args &amp;&amp;... args)</td></tr>
@@ -268,7 +268,7 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a5669cd0ebb983b644315ad73061f1123"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a5669cd0ebb983b644315ad73061f1123"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui_1_1details.html#a5669cd0ebb983b644315ad73061f1123">mc_rtc::gui::details::is_form_element_v</a> = decltype(is_form_element::test&lt;T&gt;(nullptr))::value</td></tr>
+<tr class="memitem:a5669cd0ebb983b644315ad73061f1123"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui_1_1details.html#a5669cd0ebb983b644315ad73061f1123">mc_rtc::gui::details::is_form_element_v</a> = decltype(is_form_element::test&lt;T&gt;(nullptr))::<a class="elRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a></td></tr>
 <tr class="separator:a5669cd0ebb983b644315ad73061f1123"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -309,21 +309,22 @@ Variables</h2></td></tr>
 <div class="line">  }                                                                                                            \</div>
 <div class="line">                                                                                                               \</div>
 <div class="line">  template&lt;typename T = DATAT&gt;                                                                                 \</div>
-<div class="line">  inline <span class="keyword">auto</span> FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required, T value)                                          \</div>
+<div class="line">  inline <span class="keyword">auto</span> FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required, T <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a>)                                          \</div>
 <div class="line">  {                                                                                                            \</div>
-<div class="line">    if constexpr(std::is_invocable_v&lt;T&gt;) { <span class="keywordflow">return</span> details::FormDataInput&lt;T, ELEMENT&gt;{name, required, value}; } \</div>
+<div class="line">    if constexpr(std::is_invocable_v&lt;T&gt;) { <span class="keywordflow">return</span> details::FormDataInput&lt;T, ELEMENT&gt;{name, required, <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a>}; } \</div>
 <div class="line">    else                                                                                                       \</div>
 <div class="line">    {                                                                                                          \</div>
 <div class="line">      if constexpr(std::is_same_v&lt;std::decay_t&lt;T&gt;, DATAT&gt;)                                                     \</div>
 <div class="line">      {                                                                                                        \</div>
-<div class="line">        return details::FormDataInput&lt;DATAT, ELEMENT&gt;{name, required, value};                                  \</div>
+<div class="line">        return details::FormDataInput&lt;DATAT, ELEMENT&gt;{name, required, <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a>};                                  \</div>
 <div class="line">      }                                                                                                        \</div>
 <div class="line">      else                                                                                                     \</div>
 <div class="line">      {                                                                                                        \</div>
-<div class="line">        return details::FormDataInput&lt;DATAT, ELEMENT&gt;{name, required, DATAT{value}};                           \</div>
+<div class="line">        return details::FormDataInput&lt;DATAT, ELEMENT&gt;{name, required, DATAT{<a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a>}};                           \</div>
 <div class="line">      }                                                                                                        \</div>
 <div class="line">    }                                                                                                          \</div>
 <div class="line">  }</div>
+<div class="ttc" id="agroup__checkGroup_html_gaace06f3a98e0605370a5f3c17c6d6bd6"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a></div><div class="ttdeci">std::optional&lt; Eigen::VectorXd &gt; value</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -365,21 +366,21 @@ Variables</h2></td></tr>
 <div class="line">  }                                                                                                          \</div>
 <div class="line">                                                                                                             \</div>
 <div class="line">  template&lt;typename T = DATAT, typename = std::enable_if_t&lt;!std::is_same_v&lt;T, bool&gt;&gt;&gt;                        \</div>
-<div class="line">  inline <span class="keyword">auto</span> FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required, T value, <span class="keywordtype">bool</span> interactive = <span class="keyword">true</span>)               \</div>
+<div class="line">  inline <span class="keyword">auto</span> FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required, T <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a>, <span class="keywordtype">bool</span> interactive = <span class="keyword">true</span>)               \</div>
 <div class="line">  {                                                                                                          \</div>
 <div class="line">    if constexpr(std::is_invocable_v&lt;T&gt;)                                                                     \</div>
 <div class="line">    {                                                                                                        \</div>
-<div class="line">      return details::FormInteractiveDataInput&lt;T, ELEMENT&gt;{name, required, value, interactive};              \</div>
+<div class="line">      return details::FormInteractiveDataInput&lt;T, ELEMENT&gt;{name, required, <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a>, interactive};              \</div>
 <div class="line">    }                                                                                                        \</div>
 <div class="line">    else                                                                                                     \</div>
 <div class="line">    {                                                                                                        \</div>
 <div class="line">      if constexpr(std::is_same_v&lt;std::decay_t&lt;T&gt;, DATAT&gt;)                                                   \</div>
 <div class="line">      {                                                                                                      \</div>
-<div class="line">        return details::FormInteractiveDataInput&lt;DATAT, ELEMENT&gt;{name, required, value, interactive};        \</div>
+<div class="line">        return details::FormInteractiveDataInput&lt;DATAT, ELEMENT&gt;{name, required, <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a>, interactive};        \</div>
 <div class="line">      }                                                                                                      \</div>
 <div class="line">      else                                                                                                   \</div>
 <div class="line">      {                                                                                                      \</div>
-<div class="line">        return details::FormInteractiveDataInput&lt;DATAT, ELEMENT&gt;{name, required, DATAT{value}, interactive}; \</div>
+<div class="line">        return details::FormInteractiveDataInput&lt;DATAT, ELEMENT&gt;{name, required, DATAT{<a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a>}, interactive}; \</div>
 <div class="line">      }                                                                                                      \</div>
 <div class="line">    }                                                                                                        \</div>
 <div class="line">  }</div>

@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('TransformFunction_8h_source.html','');
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="mc__rbdyn_2fwd_8h.html">mc_rbdyn/fwd.h</a>&gt;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;tvm/function/abstract/Function.h&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/Function_8h.html">tvm/function/abstract/Function.h</a>&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;RBDyn/Jacobian.h&gt;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
@@ -113,10 +113,10 @@ $(document).ready(function(){initNavTree('TransformFunction_8h_source.html','');
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemc__tvm.html">mc_tvm</a></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classmc__tvm_1_1TransformFunction.html">   22</a></span>&#160;<span class="keyword">class </span><a class="code" href="include_2mc__tvm_2api_8h.html#abbd61a50e2e306b709065c31949a254e">MC_TVM_DLLAPI</a> <a class="code" href="classmc__tvm_1_1TransformFunction.html">TransformFunction</a> : <span class="keyword">public</span> tvm::function::abstract::Function</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classmc__tvm_1_1TransformFunction.html">   22</a></span>&#160;<span class="keyword">class </span><a class="code" href="include_2mc__tvm_2api_8h.html#abbd61a50e2e306b709065c31949a254e">MC_TVM_DLLAPI</a> <a class="code" href="classmc__tvm_1_1TransformFunction.html">TransformFunction</a> : <span class="keyword">public</span> <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1function_1_1abstract_1_1Function.html">tvm::function::abstract::Function</a></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  SET_UPDATES(<a class="code" href="classmc__tvm_1_1TransformFunction.html">TransformFunction</a>, Value, Velocity, Jacobian, NormalAcceleration)</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/AbstractNode_8h.html#abd38cd98a6567962387d6ebe5a27ce45">SET_UPDATES</a>(<a class="code" href="classmc__tvm_1_1TransformFunction.html">TransformFunction</a>, Value, <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#ae695c229a7d819c057992d913a3ad10fa88156d46910a2d733443c339a9231d12">Velocity</a>, Jacobian, NormalAcceleration)</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  </div>
 <div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classmc__tvm_1_1TransformFunction.html#a1bda2fd949f2bb3ed9c7b3d1de0aca85">   32</a></span>&#160;  <a class="code" href="classmc__tvm_1_1TransformFunction.html">TransformFunction</a>(const <a class="code" href="namespacemc__rbdyn.html">mc_rbdyn</a>::<a class="code" href="structmc__tvm_1_1RobotFrame.html">RobotFrame</a> &amp; frame);</div>
@@ -159,6 +159,8 @@ $(document).ready(function(){initNavTree('TransformFunction_8h_source.html','');
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;};</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;} <span class="comment">// namespace mc_tvm</span></div>
+<div class="ttc" id="aAbstractNode_8h_html_abd38cd98a6567962387d6ebe5a27ce45"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/AbstractNode_8h.html#abd38cd98a6567962387d6ebe5a27ce45">SET_UPDATES</a></div><div class="ttdeci">#define SET_UPDATES(SelfT,...)</div></div>
+<div class="ttc" id="aFunction_8h.html_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/Function_8h.html">Function.h</a></div></div>
 <div class="ttc" id="aSpaceVecAlg.html_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.html">SpaceVecAlg</a></div></div>
 <div class="ttc" id="aclassmc__tvm_1_1TransformFunction_html"><div class="ttname"><a href="classmc__tvm_1_1TransformFunction.html">mc_tvm::TransformFunction</a></div><div class="ttdef"><b>Definition:</b> TransformFunction.h:23</div></div>
 <div class="ttc" id="aclassmc__tvm_1_1TransformFunction_html_a00c67aa50563318b394c6d8186eaa666"><div class="ttname"><a href="classmc__tvm_1_1TransformFunction.html#a00c67aa50563318b394c6d8186eaa666">mc_tvm::TransformFunction::refVel_</a></div><div class="ttdeci">Eigen::Vector6d refVel_</div><div class="ttdef"><b>Definition:</b> TransformFunction.h:77</div></div>
@@ -184,6 +186,7 @@ $(document).ready(function(){initNavTree('TransformFunction_8h_source.html','');
 <div class="ttc" id="aclassmc__tvm_1_1TransformFunction_html_ac572236132cc5dd92c16a1632f103093"><div class="ttname"><a href="classmc__tvm_1_1TransformFunction.html#ac572236132cc5dd92c16a1632f103093">mc_tvm::TransformFunction::frame_</a></div><div class="ttdeci">mc_rbdyn::ConstRobotFramePtr frame_</div><div class="ttdef"><b>Definition:</b> TransformFunction.h:64</div></div>
 <div class="ttc" id="aclasssva_1_1MotionVec_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/classsva_1_1MotionVec.html">sva::MotionVec</a></div></div>
 <div class="ttc" id="aclasssva_1_1PTransform_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/classsva_1_1PTransform.html">sva::PTransform</a></div></div>
+<div class="ttc" id="aclasstvm_1_1function_1_1abstract_1_1Function_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1function_1_1abstract_1_1Function.html">tvm::function::abstract::Function</a></div></div>
 <div class="ttc" id="ainclude_2mc__tvm_2api_8h_html"><div class="ttname"><a href="include_2mc__tvm_2api_8h.html">api.h</a></div></div>
 <div class="ttc" id="ainclude_2mc__tvm_2api_8h_html_abbd61a50e2e306b709065c31949a254e"><div class="ttname"><a href="include_2mc__tvm_2api_8h.html#abbd61a50e2e306b709065c31949a254e">MC_TVM_DLLAPI</a></div><div class="ttdeci">#define MC_TVM_DLLAPI</div><div class="ttdef"><b>Definition:</b> api.h:47</div></div>
 <div class="ttc" id="amc__rbdyn_2fwd_8h_html"><div class="ttname"><a href="mc__rbdyn_2fwd_8h.html">fwd.h</a></div></div>
@@ -194,6 +197,7 @@ $(document).ready(function(){initNavTree('TransformFunction_8h_source.html','');
 <div class="ttc" id="anamespacemc__tvm_html"><div class="ttname"><a href="namespacemc__tvm.html">mc_tvm</a></div><div class="ttdef"><b>Definition:</b> CollisionFunction.h:16</div></div>
 <div class="ttc" id="anamespacesva_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html">sva</a></div></div>
 <div class="ttc" id="anamespacesva_html_a259dde998fab6de957995eedfdb4d179"><div class="ttname"><a href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html#a259dde998fab6de957995eedfdb4d179">PTransformd</a></div><div class="ttdeci">PTransform&lt; double &gt; PTransformd</div></div>
+<div class="ttc" id="anamespacetvm_1_1robot_html_ae695c229a7d819c057992d913a3ad10fa88156d46910a2d733443c339a9231d12"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#ae695c229a7d819c057992d913a3ad10fa88156d46910a2d733443c339a9231d12">ContactConstraintType::Velocity</a></div><div class="ttdeci">@ Velocity</div></div>
 <div class="ttc" id="astructmc__rbdyn_1_1RobotFrame_html"><div class="ttname"><a href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a></div><div class="ttdef"><b>Definition:</b> RobotFrame.h:22</div></div>
 <div class="ttc" id="astructmc__tvm_1_1RobotFrame_html"><div class="ttname"><a href="structmc__tvm_1_1RobotFrame.html">mc_tvm::RobotFrame</a></div><div class="ttdef"><b>Definition:</b> RobotFrame.h:28</div></div>
 </div><!-- fragment --></div><!-- contents -->

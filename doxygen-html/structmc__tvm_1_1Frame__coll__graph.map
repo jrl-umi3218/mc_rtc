@@ -1,7 +1,10 @@
 <map id="mc_tvm::Frame" name="mc_tvm::Frame">
-<area shape="rect" id="node1" title=" " alt="" coords="745,42,869,69"/>
-<area shape="rect" id="node2" title=" " alt="" coords="492,5,647,47"/>
-<area shape="rect" id="node3" href="$structmc__rbdyn_1_1Frame.html" title=" " alt="" coords="502,71,637,98"/>
-<area shape="rect" id="node4" href="$structmc__rtc_1_1shared.html" title=" " alt="" coords="253,71,443,98"/>
-<area shape="rect" id="node5" title=" " alt="" coords="5,42,204,127"/>
+<area shape="rect" id="node1" title=" " alt="" coords="745,122,869,149"/>
+<area shape="rect" id="node2" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/TVM.doxytag$classtvm_1_1graph_1_1abstract_1_1Node.html" title=" " alt="" coords="492,85,647,127"/>
+<area shape="rect" id="node3" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/TVM.doxytag$classtvm_1_1graph_1_1internal_1_1AbstractNode.html" title=" " alt="" coords="273,71,423,112"/>
+<area shape="rect" id="node4" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/TVM.doxytag$classtvm_1_1graph_1_1internal_1_1Inputs.html" title=" " alt="" coords="29,5,180,47"/>
+<area shape="rect" id="node5" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/TVM.doxytag$classtvm_1_1graph_1_1abstract_1_1Outputs.html" title=" " alt="" coords="27,71,182,112"/>
+<area shape="rect" id="node6" href="$structmc__rbdyn_1_1Frame.html" title=" " alt="" coords="502,151,637,178"/>
+<area shape="rect" id="node7" href="$structmc__rtc_1_1shared.html" title=" " alt="" coords="253,151,443,178"/>
+<area shape="rect" id="node8" title=" " alt="" coords="5,137,204,222"/>
 </map>

@@ -157,11 +157,11 @@ $(document).ready(function(){initNavTree('ObserverLoader_8h_source.html',''); in
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">return</span> observer_loader-&gt;has_object(name);</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  }</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="structmc__observers_1_1ObserverLoader.html#afc7d5d833c4d4ce520be8fa81a0b1b63">   91</a></span>&#160;  <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="structmc__observers_1_1ObserverLoader.html#afc7d5d833c4d4ce520be8fa81a0b1b63">set_verbosity</a>(<span class="keywordtype">bool</span> verbose)</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="structmc__observers_1_1ObserverLoader.html#afc7d5d833c4d4ce520be8fa81a0b1b63">   91</a></span>&#160;  <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="structmc__observers_1_1ObserverLoader.html#afc7d5d833c4d4ce520be8fa81a0b1b63">set_verbosity</a>(<span class="keywordtype">bool</span> <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gac9f0d3eb926695e51e82f2e61b71a1ae">verbose</a>)</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  {</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    std::lock_guard&lt;std::mutex&gt; guard{mtx};</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    verbose_ = verbose;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">if</span>(observer_loader) { observer_loader-&gt;set_verbosity(verbose); }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    verbose_ = <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gac9f0d3eb926695e51e82f2e61b71a1ae">verbose</a>;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">if</span>(observer_loader) { observer_loader-&gt;set_verbosity(<a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gac9f0d3eb926695e51e82f2e61b71a1ae">verbose</a>); }</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  }</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
 <div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="structmc__observers_1_1ObserverLoader.html#ac104339befa76e8673940c1a86ad2847">   99</a></span>&#160;  <span class="keyword">static</span> std::vector&lt;std::string&gt; <a class="code" href="structmc__observers_1_1ObserverLoader.html#ac104339befa76e8673940c1a86ad2847">available_observers</a>()</div>
@@ -197,6 +197,7 @@ $(document).ready(function(){initNavTree('ObserverLoader_8h_source.html',''); in
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;} <span class="comment">// namespace mc_observers</span></div>
 <div class="ttc" id="aObserver_8h_html"><div class="ttname"><a href="Observer_8h.html">Observer.h</a></div></div>
+<div class="ttc" id="agroup__checkGroup_html_gac9f0d3eb926695e51e82f2e61b71a1ae"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gac9f0d3eb926695e51e82f2e61b71a1ae">verbose</a></div><div class="ttdeci">bool verbose</div></div>
 <div class="ttc" id="ainclude_2mc__observers_2api_8h_html"><div class="ttname"><a href="include_2mc__observers_2api_8h.html">api.h</a></div></div>
 <div class="ttc" id="ainclude_2mc__observers_2api_8h_html_adde8be25d8f40acd541ed21395a5c73a"><div class="ttname"><a href="include_2mc__observers_2api_8h.html#adde8be25d8f40acd541ed21395a5c73a">MC_OBSERVERS_DLLAPI</a></div><div class="ttdeci">#define MC_OBSERVERS_DLLAPI</div><div class="ttdef"><b>Definition:</b> api.h:47</div></div>
 <div class="ttc" id="aloader_8h_html"><div class="ttname"><a href="loader_8h.html">loader.h</a></div><div class="ttdoc">ltdl wrapper for mc_rtc purpose</div></div>

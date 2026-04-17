@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['backend_7549',['Backend',['../structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e',1,'mc_solver::QPSolver']]]
+  ['assigntype_9827',['AssignType',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a6e11ce78bce8f4d8e54c5fb61aa23578',1,'tvm::scheme::internal']]]
 ];

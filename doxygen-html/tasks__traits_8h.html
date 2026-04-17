@@ -214,7 +214,7 @@ Variables</h2></td></tr>
 <div class="line">    static constexpr std::true_type test_has(<a class="code" href="namespacemc__rtc_1_1gui_1_1details.html#a437b4050328d7178f5872223cf9f7f35">std::void_t</a>&lt;decltype(std::declval&lt;U&gt;().GETTER())&gt; * = <span class="keyword">nullptr</span>); \</div>
 <div class="line">    template&lt;typename U&gt;                                                                                     \</div>
 <div class="line">    static constexpr std::false_type test_has(...);                                                          \</div>
-<div class="line">    static constexpr <span class="keywordtype">bool</span> has = decltype(test_has&lt;T&gt;(0))::value;                                             \</div>
+<div class="line">    static constexpr <span class="keywordtype">bool</span> has = decltype(test_has&lt;T&gt;(0))::<a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a>;                                             \</div>
 <div class="line">    template&lt;typename U&gt;                                                                                     \</div>
 <div class="line">    static <span class="keyword">auto</span> test(<a class="code" href="namespacemc__rtc_1_1gui_1_1details.html#a437b4050328d7178f5872223cf9f7f35">std::void_t</a>&lt;decltype(std::declval&lt;const U&gt;().GETTER())&gt; * = <span class="keyword">nullptr</span>)                    \</div>
 <div class="line">        -&gt; decltype(std::declval&lt;const U&gt;().GETTER());                                                       \</div>
@@ -227,6 +227,7 @@ Variables</h2></td></tr>
 <div class="line">  inline constexpr <span class="keywordtype">bool</span> has_##GETTER##_getter_v = impl::GETTER##_getter_traits&lt;T&gt;::has;                      \</div>
 <div class="line">  template&lt;typename T&gt;                                                                                       \</div>
 <div class="line">  using GETTER##_return_t = <span class="keyword">typename</span> impl::GETTER##_getter_traits&lt;T&gt;::type</div>
+<div class="ttc" id="agroup__checkGroup_html_gaace06f3a98e0605370a5f3c17c6d6bd6"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a></div><div class="ttdeci">std::optional&lt; Eigen::VectorXd &gt; value</div></div>
 <div class="ttc" id="anamespacemc__rtc_1_1gui_1_1details_html_a437b4050328d7178f5872223cf9f7f35"><div class="ttname"><a href="namespacemc__rtc_1_1gui_1_1details.html#a437b4050328d7178f5872223cf9f7f35">mc_rtc::gui::details::void_t</a></div><div class="ttdeci">void void_t</div><div class="ttdef"><b>Definition:</b> traits.h:25</div></div>
 </div><!-- fragment -->
 </div>
@@ -256,11 +257,11 @@ Variables</h2></td></tr>
 <div class="line">        <a class="code" href="namespacemc__rtc_1_1gui_1_1details.html#a437b4050328d7178f5872223cf9f7f35">std::void_t</a>&lt;decltype(std::declval&lt;U&gt;().SETTER(std::declval&lt;Eigen::VectorXd&gt;()))&gt; * = <span class="keyword">nullptr</span>); \</div>
 <div class="line">    template&lt;typename U&gt;                                                                               \</div>
 <div class="line">    static constexpr std::false_type test(...);                                                        \</div>
-<div class="line">    static constexpr <span class="keywordtype">bool</span> value = decltype(test&lt;T&gt;(0))::value;                                         \</div>
+<div class="line">    static constexpr <span class="keywordtype">bool</span> <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a> = decltype(test&lt;T&gt;(0))::<a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a>;                                         \</div>
 <div class="line">  };                                                                                                   \</div>
 <div class="line">  }                                                                                                    \</div>
 <div class="line">  template&lt;typename T&gt;                                                                                 \</div>
-<div class="line">  inline constexpr <span class="keywordtype">bool</span> has_##SETTER##_setter_v = impl::has_##SETTER##_setter&lt;T&gt;::value</div>
+<div class="line">  inline constexpr <span class="keywordtype">bool</span> has_##SETTER##_setter_v = impl::has_##SETTER##<a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">_setter&lt;T&gt;::value</a></div>
 </div><!-- fragment -->
 </div>
 </div>

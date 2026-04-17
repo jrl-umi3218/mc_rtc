@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['integral_5fcost_5fflag_7554',['integral_cost_flag',['/usr/local/share/doc/ndcurves/doxygen-html/namespacendcurves_1_1optimization.html#a26dceefc0228378378619b2daa39f154',1,'ndcurves::optimization']]]
+  ['elements_9832',['Elements',['../namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06',1,'mc_rtc::gui']]],
+  ['elementsstacking_9833',['ElementsStacking',['../namespacemc__rtc_1_1gui.html#a649ddcaedb769dede3922fa845e71ca4',1,'mc_rtc::gui']]]
 ];

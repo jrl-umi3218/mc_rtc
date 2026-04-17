@@ -278,21 +278,6 @@ var hierarchy =
       [ "mc_rtc::gui::details::FormImpl< Callback >", "structmc__rtc_1_1gui_1_1details_1_1FormImpl.html", null ]
     ] ],
     [ "mc_rbdyn::RobotModule::FrameDescription", "structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html", null ],
-    [ "tvm::function::abstract::Function", null, [
-      [ "mc_tvm::CoMFunction", "structmc__tvm_1_1CoMFunction.html", null ],
-      [ "mc_tvm::CoMInConvexFunction", "structmc__tvm_1_1CoMInConvexFunction.html", null ],
-      [ "mc_tvm::CollisionFunction", "classmc__tvm_1_1CollisionFunction.html", null ],
-      [ "mc_tvm::ContactFunction", "classmc__tvm_1_1ContactFunction.html", null ],
-      [ "mc_tvm::FrameVelocity", "structmc__tvm_1_1FrameVelocity.html", null ],
-      [ "mc_tvm::GazeFunction", "structmc__tvm_1_1GazeFunction.html", null ],
-      [ "mc_tvm::JointsSelectorFunction", "classmc__tvm_1_1JointsSelectorFunction.html", null ],
-      [ "mc_tvm::MomentumFunction", "structmc__tvm_1_1MomentumFunction.html", null ],
-      [ "mc_tvm::OrientationFunction", "classmc__tvm_1_1OrientationFunction.html", null ],
-      [ "mc_tvm::PositionBasedVisServoFunction", "structmc__tvm_1_1PositionBasedVisServoFunction.html", null ],
-      [ "mc_tvm::PositionFunction", "classmc__tvm_1_1PositionFunction.html", null ],
-      [ "mc_tvm::TransformFunction", "classmc__tvm_1_1TransformFunction.html", null ],
-      [ "mc_tvm::VectorOrientationFunction", "classmc__tvm_1_1VectorOrientationFunction.html", null ]
-    ] ],
     [ "mc_solver::GenericLoader< Derived, T >", "structmc__solver_1_1GenericLoader.html", null ],
     [ "mc_solver::GenericLoader< ConstraintSetLoader, ConstraintSet >", "structmc__solver_1_1GenericLoader.html", [
       [ "mc_solver::ConstraintSetLoader", "structmc__solver_1_1ConstraintSetLoader.html", null ]
@@ -317,13 +302,57 @@ var hierarchy =
     [ "mc_rtc::Logger::GUIEvent", "structmc__rtc_1_1Logger_1_1GUIEvent.html", null ],
     [ "mc_solver::GenericLoader< Derived, T >::Handle", "structmc__solver_1_1GenericLoader_1_1Handle.html", null ],
     [ "std::hash< mc_control::Contact >", "structstd_1_1hash_3_01mc__control_1_1Contact_01_4.html", null ],
-    [ "tvm::function::IdentityFunction", null, [
-      [ "mc_tvm::PostureFunction", "classmc__tvm_1_1PostureFunction.html", null ]
-    ] ],
     [ "mc_tasks::force::ImpedanceGains", "structmc__tasks_1_1force_1_1ImpedanceGains.html", null ],
     [ "mc_tasks::force::details::ImpedanceVecd< StrictlyPositive >", "structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html", null ],
     [ "mc_tasks::force::details::ImpedanceVecd< false >", "structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html", null ],
     [ "mc_tasks::force::details::ImpedanceVecd< true >", "structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html", null ],
+    [ "tvm::graph::internal::Inputs", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1graph_1_1internal_1_1Inputs.html", [
+      [ "tvm::graph::internal::AbstractNode", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1graph_1_1internal_1_1AbstractNode.html", [
+        [ "tvm::graph::abstract::Node< Momentum >", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1graph_1_1abstract_1_1Node.html", [
+          [ "mc_tvm::Momentum", "structmc__tvm_1_1Momentum.html", null ]
+        ] ],
+        [ "tvm::graph::abstract::Node< CoM >", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1graph_1_1abstract_1_1Node.html", [
+          [ "mc_tvm::CoM", "structmc__tvm_1_1CoM.html", null ]
+        ] ],
+        [ "tvm::graph::abstract::Node< Convex >", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1graph_1_1abstract_1_1Node.html", [
+          [ "mc_tvm::Convex", "structmc__tvm_1_1Convex.html", null ]
+        ] ],
+        [ "Node< FirstOrderProvider >", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1graph_1_1abstract_1_1Node.html", [
+          [ "tvm::internal::FirstOrderProvider", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1internal_1_1FirstOrderProvider.html", [
+            [ "tvm::function::abstract::Function", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1function_1_1abstract_1_1Function.html", [
+              [ "mc_tvm::CoMFunction", "structmc__tvm_1_1CoMFunction.html", null ],
+              [ "mc_tvm::CoMInConvexFunction", "structmc__tvm_1_1CoMInConvexFunction.html", null ],
+              [ "mc_tvm::CollisionFunction", "classmc__tvm_1_1CollisionFunction.html", null ],
+              [ "mc_tvm::ContactFunction", "classmc__tvm_1_1ContactFunction.html", null ],
+              [ "mc_tvm::FrameVelocity", "structmc__tvm_1_1FrameVelocity.html", null ],
+              [ "mc_tvm::GazeFunction", "structmc__tvm_1_1GazeFunction.html", null ],
+              [ "mc_tvm::JointsSelectorFunction", "classmc__tvm_1_1JointsSelectorFunction.html", null ],
+              [ "mc_tvm::MomentumFunction", "structmc__tvm_1_1MomentumFunction.html", null ],
+              [ "mc_tvm::OrientationFunction", "classmc__tvm_1_1OrientationFunction.html", null ],
+              [ "mc_tvm::PositionBasedVisServoFunction", "structmc__tvm_1_1PositionBasedVisServoFunction.html", null ],
+              [ "mc_tvm::PositionFunction", "classmc__tvm_1_1PositionFunction.html", null ],
+              [ "mc_tvm::TransformFunction", "classmc__tvm_1_1TransformFunction.html", null ],
+              [ "mc_tvm::VectorOrientationFunction", "classmc__tvm_1_1VectorOrientationFunction.html", null ],
+              [ "tvm::function::abstract::LinearFunction", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1function_1_1abstract_1_1LinearFunction.html", [
+                [ "mc_tvm::CompoundJointFunction", "structmc__tvm_1_1CompoundJointFunction.html", null ],
+                [ "mc_tvm::DynamicFunction", "structmc__tvm_1_1DynamicFunction.html", null ],
+                [ "tvm::function::BasicLinearFunction", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1function_1_1BasicLinearFunction.html", [
+                  [ "tvm::function::IdentityFunction", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1function_1_1IdentityFunction.html", [
+                    [ "mc_tvm::PostureFunction", "classmc__tvm_1_1PostureFunction.html", null ]
+                  ] ]
+                ] ]
+              ] ]
+            ] ]
+          ] ]
+        ] ],
+        [ "tvm::graph::abstract::Node< class >", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1graph_1_1abstract_1_1Node.html", [
+          [ "mc_tvm::Frame", "structmc__tvm_1_1Frame.html", [
+            [ "mc_tvm::RobotFrame", "structmc__tvm_1_1RobotFrame.html", null ]
+          ] ],
+          [ "mc_tvm::Robot", "structmc__tvm_1_1Robot.html", null ]
+        ] ]
+      ] ]
+    ] ],
     [ "std::integral_constant", null, [
       [ "mc_rbdyn::details::are_strings< T, Args... >", "structmc__rbdyn_1_1details_1_1are__strings_3_01T_00_01Args_8_8_8_01_4.html", null ]
     ] ],
@@ -361,10 +390,6 @@ var hierarchy =
     [ "mc_filter::LeakyIntegrator< VectorT >", "structmc__filter_1_1LeakyIntegrator.html", null ],
     [ "mc_filter::LeakyIntegrator< Eigen::Vector3d >", "structmc__filter_1_1LeakyIntegrator.html", null ],
     [ "mc_tvm::Limits", "structmc__tvm_1_1Limits.html", null ],
-    [ "tvm::function::abstract::LinearFunction", null, [
-      [ "mc_tvm::CompoundJointFunction", "structmc__tvm_1_1CompoundJointFunction.html", null ],
-      [ "mc_tvm::DynamicFunction", "structmc__tvm_1_1DynamicFunction.html", null ]
-    ] ],
     [ "mc_trajectory::LinearInterpolation< T >", "structmc__trajectory_1_1LinearInterpolation.html", null ],
     [ "mc_trajectory::LinearInterpolation< Value >", "structmc__trajectory_1_1LinearInterpolation.html", null ],
     [ "mc_rtc::gui::LineConfig", "structmc__rtc_1_1gui_1_1LineConfig.html", null ],
@@ -464,15 +489,6 @@ var hierarchy =
     [ "mc_rbdyn::Robots::NewRobotsToken", "structmc__rbdyn_1_1Robots_1_1NewRobotsToken.html", null ],
     [ "mc_rbdyn::Robot::NewRobotToken", "structmc__rbdyn_1_1Robot_1_1NewRobotToken.html", null ],
     [ "mc_tvm::Robot::NewRobotToken", "structmc__tvm_1_1Robot_1_1NewRobotToken.html", null ],
-    [ "tvm::graph::abstract::Node", null, [
-      [ "mc_tvm::CoM", "structmc__tvm_1_1CoM.html", null ],
-      [ "mc_tvm::Convex", "structmc__tvm_1_1Convex.html", null ],
-      [ "mc_tvm::Frame", "structmc__tvm_1_1Frame.html", [
-        [ "mc_tvm::RobotFrame", "structmc__tvm_1_1RobotFrame.html", null ]
-      ] ],
-      [ "mc_tvm::Momentum", "structmc__tvm_1_1Momentum.html", null ],
-      [ "mc_tvm::Robot", "structmc__tvm_1_1Robot.html", null ]
-    ] ],
     [ "boost::noncopyable", null, [
       [ "mc_rtc::ObjectLoader< State >", "structmc__rtc_1_1ObjectLoader.html", [
         [ "mc_control::fsm::StateFactory", "structmc__control_1_1fsm_1_1StateFactory.html", null ]
@@ -494,6 +510,9 @@ var hierarchy =
     [ "mc_rtc::schema::Operations", "structmc__rtc_1_1schema_1_1Operations.html", null ],
     [ "mc_rtc::gui::plot::impl::Ordinate< GetT >", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html", [
       [ "mc_rtc::gui::plot::impl::OrdinateWithColor< GetT, GetColor >", "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1OrdinateWithColor.html", null ]
+    ] ],
+    [ "tvm::graph::abstract::Outputs", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1graph_1_1abstract_1_1Outputs.html", [
+      [ "tvm::graph::internal::AbstractNode", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1graph_1_1internal_1_1AbstractNode.html", null ]
     ] ],
     [ "mc_planning::Pendulum", "structmc__planning_1_1Pendulum.html", null ],
     [ "mc_observers::ObserverPipeline::PipelineObserver", "structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html", null ],

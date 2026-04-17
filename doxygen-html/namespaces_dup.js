@@ -287,5 +287,243 @@ var namespaces_dup =
       [ "SO3RightJacInvDot", "https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html#a4991725f3279033485d5e4636ce5a794", null ],
       [ "transformError", "https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html#a835d4f04eaf5d87dc9cc9b8d011f06a0", null ],
       [ "transformVelocity", "https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespacesva.html#a78005b4f61a4c40bffd3e002e7a9ba54", null ]
+    ] ],
+    [ "tvm", null, [
+      [ "constant", null, [
+        [ "internal", null, [
+          [ "pow", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1constant_1_1internal.html#a4ac438333fb60e8bc76a956e33a3a9d1", null ],
+          [ "sqrtNewtonRaphson", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1constant_1_1internal.html#aca8ba5d3eeccb1b947ea987123a875f0", null ]
+        ] ],
+        [ "fullRank", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1constant.html#a0e46dc26c7ee9d3faf743cacf02265d1", null ],
+        [ "pi", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1constant.html#a5739e815f004bc19ad2b84be26a78824", null ]
+      ] ],
+      [ "constraint", null, [
+        [ "RHS", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1constraint.html#adf340c6d4875e2e7502c8a6243ae0551", [
+          [ "ZERO", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1constraint.html#adf340c6d4875e2e7502c8a6243ae0551a529e9e0beb5f85d1f132917c1a09860c", null ],
+          [ "AS_GIVEN", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1constraint.html#adf340c6d4875e2e7502c8a6243ae0551a23381f2ccff0bd927c14dd312c5d4ce6", null ],
+          [ "OPPOSITE", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1constraint.html#adf340c6d4875e2e7502c8a6243ae0551ab4e725f1a00e995987cc42b9f076da65", null ]
+        ] ],
+        [ "Type", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1constraint.html#ab6243a7da877a867f54ff7207959eb7c", [
+          [ "EQUAL", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1constraint.html#ab6243a7da877a867f54ff7207959eb7ca969f331a87d8c958473c32b4d0e61a44", null ],
+          [ "GREATER_THAN", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1constraint.html#ab6243a7da877a867f54ff7207959eb7ca1625ef4fe09f68fa20d3ff6e02cd5c8e", null ],
+          [ "LOWER_THAN", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1constraint.html#ab6243a7da877a867f54ff7207959eb7ca8d8dbd4894bf4197b12b8dc764133146", null ],
+          [ "DOUBLE_SIDED", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1constraint.html#ab6243a7da877a867f54ff7207959eb7ca5985013177a5f88f804ff2af491c65a5", null ]
+        ] ]
+      ] ],
+      [ "diagnostic", null, [
+        [ "internal", null, [
+          [ "hash_combine", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1diagnostic_1_1internal.html#af12848a2dbbab069a3afcf07ad0b5f95", null ],
+          [ "MakeConvert", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1diagnostic_1_1internal.html#a4bc0d8ee1de11d7de43e241b78359d38", null ],
+          [ "registerDefault", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1diagnostic_1_1internal.html#aa2624c019128aac31c7d68965d39cc97", null ]
+        ] ],
+        [ "hasElemAbsInRange", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1diagnostic.html#a6bc3dc6b84828a42cd9f1dc98775636f", null ],
+        [ "isInMatrix", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1diagnostic.html#a26408a038a2ffc9587058dd145c37632", null ],
+        [ "isInMatrix", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1diagnostic.html#a2a21ee3aa1ec263172fa59bd0d4bd160", null ]
+      ] ],
+      [ "event", null, [
+        [ "Type", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1event.html#acdfefdd31f6d8d11f9e4813ac51638ab", [
+          [ "CONTACT_NUMBER_CHANGED", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1event.html#acdfefdd31f6d8d11f9e4813ac51638aba33eab728ee77b73e187b72e1ab05500c", null ]
+        ] ]
+      ] ],
+      [ "geometry", null, [
+        [ "PlanePtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1geometry.html#a200655f1c775385c4e120df8d8a412a1", null ]
+      ] ],
+      [ "internal", null, [
+        [ "const_if", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1internal.html#ab907fabba6bd185ccf298e84772b5578", null ],
+        [ "const_if_t", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1internal.html#ab8937eb64e589293d91a7e24fc7e4a15", null ],
+        [ "disable_for_templated_t", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1internal.html#a6256bccb93c86146149afb564d69adef", null ],
+        [ "enable_for_t", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1internal.html#a62e4f0cf6093d536532cbd17f1e80f17", null ],
+        [ "enable_for_templated_t", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1internal.html#a88bfde1b5ce2106ebd5f23b4a5cc2fcf", null ],
+        [ "MatrixConstRefWithProperties", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1internal.html#a651f5a84e5de36ae617ffde39b0c8c09", null ],
+        [ "MatrixWithProperties", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1internal.html#a1817451238184d41f13b5502c872ec94", null ],
+        [ "VectorWithProperties", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1internal.html#ad994ea0e66746f6973730ef9151e2f2c", null ],
+        [ "derives_from", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1internal.html#a098c8557722d22a773364eb08dcf816c", null ],
+        [ "operator*", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1internal.html#ac655e61c13545f2cbd20e62bc16b9a10", null ],
+        [ "operator*", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1internal.html#aaaa0e0a9c18d8979f5916a706a52b29a", null ],
+        [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1internal.html#a7a0788f66237ee3122e00e292d7910ed", null ],
+        [ "operator-", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1internal.html#ada1f1cf36292359f682fd009bd31297e", null ],
+        [ "operator-", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1internal.html#ad83c728d684bbef16f41e84f2b450bab", null ]
+      ] ],
+      [ "requirements", null, [
+        [ "AnisotropicWeight", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1requirements.html#a0bbe98ef109d5802048b074fc010ed55", null ],
+        [ "PriorityLevel", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1requirements.html#aa5d3c61ef15897a9eee0c742a80fbee3", null ],
+        [ "ViolationEvaluation", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1requirements.html#a34fbea9cdc1068d953d49a7a2642b60e", null ],
+        [ "Weight", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1requirements.html#ad596b52ac03ded388e26964e3e995866", null ],
+        [ "ViolationEvaluationType", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1requirements.html#aa4adc5cf6ecbfb56b852b529f1e29198", [
+          [ "L1", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1requirements.html#aa4adc5cf6ecbfb56b852b529f1e29198a9ec4c0afd450ceac7adb81c3bcfc9732", null ],
+          [ "L2", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1requirements.html#aa4adc5cf6ecbfb56b852b529f1e29198a7e6aa2d53f6ee2b1a34b017fa403cb76", null ],
+          [ "LINF", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1requirements.html#aa4adc5cf6ecbfb56b852b529f1e29198a38b6015d873e96433844072ccea5c553", null ]
+        ] ]
+      ] ],
+      [ "robot", null, [
+        [ "ContactPtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#a434d8b9dbb95341a554c0fc413dd00a3", null ],
+        [ "ConvexHullPtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#acf05591ffe61db52448b19482efa9a11", null ],
+        [ "FramePtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#a281a5946e79d354cb9a72ac5fbd693a7", null ],
+        [ "ContactConstraintType", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#ae695c229a7d819c057992d913a3ad10f", [
+          [ "Acceleration", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#ae695c229a7d819c057992d913a3ad10fa3b926d163371fd620b09b63219b12f52", null ],
+          [ "Velocity", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#ae695c229a7d819c057992d913a3ad10fa88156d46910a2d733443c339a9231d12", null ],
+          [ "Position", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#ae695c229a7d819c057992d913a3ad10fa52f5e0bc3859bc5f5e25130b6c7e8881", null ]
+        ] ],
+        [ "ContactType", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#aac706730af38b72ec80e95eb336cd043", [
+          [ "Regular", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#aac706730af38b72ec80e95eb336cd043ad2203cb1237cb6460cbad94564e39345", null ],
+          [ "Force", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#aac706730af38b72ec80e95eb336cd043a9eb6b78a99cdb6ffd3d40d18621d9f80", null ],
+          [ "Geometric", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#aac706730af38b72ec80e95eb336cd043aadf9f772a73f364e4ce6c52b9fae740d", null ]
+        ] ],
+        [ "fromURDF", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#aa0c50be7a7db4b673268d061999e284f", null ]
+      ] ],
+      [ "scheme", null, [
+        [ "internal", null, [
+          [ "isMatrix", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#abb0a7c8fa6017cb9e8f2682c0d0dcd50", null ],
+          [ "isVector", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a004afcb1d38a4be484e715ebb9936fe2", null ],
+          [ "AssignType", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a6e11ce78bce8f4d8e54c5fb61aa23578", null ],
+          [ "MatrixMult", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#accdeba42434e6c326e35e438acca74fd", null ],
+          [ "Source", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a04d5b16c84893afd4865703cbe3f47a3", null ],
+          [ "TargetType", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#abe11da65d6ccf4412671e16317eb1f3b", [
+            [ "Linear", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#abe11da65d6ccf4412671e16317eb1f3ba32a843da6ea40ab3b17a3421ccdf671b", null ],
+            [ "Quadratic", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#abe11da65d6ccf4412671e16317eb1f3ba8b2972385ed28d0e199ae2985d6fea4c", null ]
+          ] ],
+          [ "WeightMult", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a2b54e954c3d23656d60f46fef6c8b728", null ],
+          [ "canBeUsedAsBound", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a16bd7d36099635cbe690239eb478f444", null ],
+          [ "canBeUsedAsBound", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#ab88f192fa87a659f163f477ab3d3709f", null ],
+          [ "getComputationData", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a76cdca50f833f679b0c9c38f9d5aaf9f", null ],
+          [ "hasNoArgCtor_", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#ab64a27afc0b6a63467f786d3fb9147a0", null ],
+          [ "hasNoArgCtor_", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#aac61c3166e4f708d65abab8457912950", null ],
+          [ "hasNoArgCtorDummy", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#adbf2331335c97968e5c91d1f6627fe83", null ],
+          [ "isBound", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a553d86328eb4c4d9e39d73b777004fa0", null ],
+          [ "isBound", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a0074f66a98a9b56746d3692c15c38076", null ],
+          [ "isBound", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a5f5ff77617e1734ebeab2f9624e60494", null ],
+          [ "ADD", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a6e11ce78bce8f4d8e54c5fb61aa23578a010df03f1145be89b73897c0d8b8f7c0", null ],
+          [ "CONSTANT", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a04d5b16c84893afd4865703cbe3f47a3ab46dfc1bff46ccf28be89dbab0426e03", null ],
+          [ "COPY", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a6e11ce78bce8f4d8e54c5fb61aa23578af0c73515adef86a0d1f825bfb86a4784", null ],
+          [ "CUSTOM", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#accdeba42434e6c326e35e438acca74fda406a9749aea3c711f544bc3bb79ea0a2", null ],
+          [ "DIAGONAL", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a2b54e954c3d23656d60f46fef6c8b728a54b75b1f94c035631788609cea47acf9", null ],
+          [ "EXTERNAL", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a04d5b16c84893afd4865703cbe3f47a3ad36302b9be93153939876dd13aeff767", null ],
+          [ "GENERAL", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#accdeba42434e6c326e35e438acca74fda8816dee447b86ccf9bec4d5111b38a2b", null ],
+          [ "GeneralLevel", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a3fc78a8910511f7708a05358c394375d", null ],
+          [ "IDENTITY", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#accdeba42434e6c326e35e438acca74fda821c15bebc2a454f1197ef3677f7e437", null ],
+          [ "INVERSE_DIAGONAL", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#accdeba42434e6c326e35e438acca74fdae656c7c4b3f1e7026cafcd5a8508f870", null ],
+          [ "MAX", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a6e11ce78bce8f4d8e54c5fb61aa23578a190a2f70edc18fc77838e54c617ce79e", null ],
+          [ "MIN", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a6e11ce78bce8f4d8e54c5fb61aa23578abf1eccb4f3bd4c3867e067d7b3d62b8b", null ],
+          [ "MINUS", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a2b54e954c3d23656d60f46fef6c8b728a8837683631cde0a3713dedea1ee833e2", null ],
+          [ "NoLimit", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a28a52a0501eaeb072a25f18abe348f9b", null ],
+          [ "NONE", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a2b54e954c3d23656d60f46fef6c8b728a3ce4d03476f4b5a9339093a5e1413d05", null ],
+          [ "SCALAR", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a2b54e954c3d23656d60f46fef6c8b728a3f600fcc9178227d4221692248a607cf", null ],
+          [ "SUB", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a6e11ce78bce8f4d8e54c5fb61aa23578acf1a14be3f8890df2e2701343b3af30a", null ],
+          [ "ZERO", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#a04d5b16c84893afd4865703cbe3f47a3a59651a5fd37a9eaf58a55149baf8c490", null ]
+        ] ],
+        [ "identifier", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme.html#a485e7c18a3dae699ac797fc8c381de7f", null ]
+      ] ],
+      [ "task_dynamics", null, [
+        [ "FeedForwardP", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1task__dynamics.html#abefacce58ac7386489ddd237a5fb0ecb", null ],
+        [ "FeedForwardPD", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1task__dynamics.html#aef391d4ea376d9ddb35b3bcace52d51e", null ],
+        [ "P", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1task__dynamics.html#a48db1a4191bee9b4313893cbc71c60d2", null ],
+        [ "PD", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1task__dynamics.html#abbc550226fefd54eb4205711373370ee", null ],
+        [ "Order", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1task__dynamics.html#a2104706f158c0b024e10716d3c176cad", [
+          [ "Zero", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1task__dynamics.html#a2104706f158c0b024e10716d3c176cadad7ed4ee1df437474d005188535f74875", null ],
+          [ "One", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1task__dynamics.html#a2104706f158c0b024e10716d3c176cada06c2cea18679d64399783748fa367bdd", null ],
+          [ "Two", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1task__dynamics.html#a2104706f158c0b024e10716d3c176cadaaada29daee1d64ed0fe907043855cb7e", null ]
+        ] ]
+      ] ],
+      [ "utils", null, [
+        [ "internal", null, [
+          [ "AddConstantsRetType", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#a9405c2755b4621868748e6ef57646a15", null ],
+          [ "IdentityType", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#a0365b200643e704353a458f177382135", null ],
+          [ "map", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#ae2f662cc3cd29563a8f7b0a9d760a59a", null ],
+          [ "MinusIdentityType", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#a3285e6576eeb8aea8ef9aad32633b961", null ],
+          [ "MultIdentityType", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#a972d81ac8de59a505156ca04e184f2ec", null ],
+          [ "RefSelector_t", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#aa05965cff82275d2b7213670c1b63ff4", null ],
+          [ "unordered_map", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#a200ed602cb77bf2834e00aed365bbd36", null ],
+          [ "RHSType", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#abc830f391523910ef34e4594c2f98f54", [
+            [ "Zero", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#abc830f391523910ef34e4594c2f98f54ad7ed4ee1df437474d005188535f74875", null ],
+            [ "Double", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#abc830f391523910ef34e4594c2f98f54ad909d38d705ce75386dd86e611a82f5b", null ],
+            [ "Vector", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#abc830f391523910ef34e4594c2f98f54a57dea6f5039281b7fee517fc43bf3110", null ]
+          ] ],
+          [ "check_malloc_coherency", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#ab2872b8efc9c69d5277a3ae1e101a81d", null ],
+          [ "enforce_malloc_coherency", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#ad79f3dc0c8083fcf6d95edb448bef1d1", null ],
+          [ "is_malloc_allowed_", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#ac06f39b6f6e4c0774b434a2cb5877bc9", null ],
+          [ "operator*", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#a5dc2d1c292597817e4239ec5a7fefc97", null ],
+          [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#ab58b32650e0a7559e25ab8fea80d19f8", null ],
+          [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#a600bbbc181df0dc981d0addedb9dabfe", null ],
+          [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#a2cd6fa0b151fe4e24739df15014437da", null ],
+          [ "override_is_malloc_allowed_", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#a15aa654797b2ba0019f05ca6fc456f19", null ],
+          [ "parseSourcesAndOutputs", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#a1f7de31deb6c74c399f6492e5ca7d595", null ],
+          [ "parseSourcesAndOutputs", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#a7c60a66c02c99b2d38d05c90e31c3b74", null ],
+          [ "parseSourcesAndOutputs", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#ab011b26e01ceb7daae3301e972b317e5", null ],
+          [ "restore_is_malloc_allowed_", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#a266403b05dcae2080bd3cce46a75edea", null ],
+          [ "set_is_malloc_allowed_", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#aee90ba32b86c8d04e3fbef4aa14f70a9", null ],
+          [ "tuplePremult", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#a7a3de7863251546ec818c97434bc6007", null ],
+          [ "tupleUnaryMinus", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils_1_1internal.html#a953b63ac3bf3b93a21e8fb0fe5ff0f11", null ]
+        ] ],
+        [ "LinearProtoTask", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a509f413d9278f8193b7bafd5b026b0bc", null ],
+        [ "LinearProtoTaskDS", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a835bafc1b1123b69bf974a9bb59d8a80", null ],
+        [ "LinearProtoTaskEQ", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a67d50eddd53504a0b86fa2bfe7c6c36e", null ],
+        [ "LinearProtoTaskGT", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#ada1513adbbfbaf283d6495fad4728758", null ],
+        [ "LinearProtoTaskLT", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#ad9cfc9fd2ff34269264b54eb97d96eb2", null ],
+        [ "ProtoChoice", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a1df1aae691ff0bb095653adcb5de642f", null ],
+        [ "ProtoTask", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a2dfe19cb30968d93c81382f2b5463f47", null ],
+        [ "ProtoTaskDS", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a8bb2ad8c3268c4f7459045e8ab119c8d", null ],
+        [ "ProtoTaskDSRet", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a572f8731e1875065a8272c5732cbe217", null ],
+        [ "ProtoTaskEQ", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a446f70a3cebac171df63b889fbdfec35", null ],
+        [ "ProtoTaskEQRet", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#ac9e42fbaa6410794e6fadcdd18d49ebe", null ],
+        [ "ProtoTaskGT", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#aafeba3b8e2ee8ea6967317533f102941", null ],
+        [ "ProtoTaskGTRet", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#aee433b6f4c4593b7b997ecd5667281e6", null ],
+        [ "ProtoTaskLT", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a37297a4563c741c267339e340d5fa5ce", null ],
+        [ "ProtoTaskLTRet", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a882353a88468a7018118653d9e592463", null ],
+        [ "checkJacobian", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#ga8bb02aa8295218894c58053afefb1098", null ],
+        [ "count_va_args", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a7204755fdee75112fb07ca90a8e219d6", null ],
+        [ "distance", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a7eef10a1512d54024ca7243c99709f29", null ],
+        [ "generateUpdateGraph", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#ac77af07c5e6ceaf37a0274d54eff0f26", null ],
+        [ "is_malloc_allowed", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#ad61c3dc2cfce4b6c28cc0ca715217a5f", null ],
+        [ "make_AffineExpr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a5aaf37f87c2b6c95abbfec5abd1c5607", null ],
+        [ "operator*", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#af7793f96378dc79eab2695c67494b143", null ],
+        [ "operator*", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a41553ea968b600c4399caa109bca5fd9", null ],
+        [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a9d8c5e4d1ad1590d9b306a58ae47ec2b", null ],
+        [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a83c605bf346d7252ee8de2d284685a15", null ],
+        [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#afc5fd31d42639a483c599c87db2cea46", null ],
+        [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a083caf4687183af1d9a906e7466956f2", null ],
+        [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a2f63668f0e36554ed075301d5022d3ce", null ],
+        [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#ac264bd8dc4ebddfb87acafbe7e8f4bf3", null ],
+        [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#af5e7802dfd7f099b812212d4ef6e3962", null ],
+        [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a13c4782f9ba59e1f075de1618a925053", null ],
+        [ "operator-", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#aa7dbf421bc45d00359a50b250ff0e9d5", null ],
+        [ "operator-", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#ac0af960f7e734e957a808404a4755a8a", null ],
+        [ "operator-", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a3cdde69915328393a888c9062f24d7cd", null ],
+        [ "operator-", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a2a3a0beff3febe8fdf989cbbc1dbd603", null ],
+        [ "override_is_malloc_allowed", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#abc5b2a61466480460c29cd9a4b226150", null ],
+        [ "Polyhedron", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a50917f119cc052920c809a2c08d6ee82", null ],
+        [ "restore_is_malloc_allowed", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a0a026f7bf5214d9250e5633ac57c38e9", null ],
+        [ "set_is_malloc_allowed", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a2a2cd6614f0b2c2aa9e102e64e2b9cc7", null ],
+        [ "transform", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1utils.html#a3de0bbbdb09bf2e7b1e540b416b0bffd", null ]
+      ] ],
+      [ "ClockPtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a0476308bca1ade43f6571f7d36d65f67", null ],
+      [ "ConstraintPtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a6b21f7495f7ef45e0ef41efdbb08d150", null ],
+      [ "FunctionPtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a42313833bbb66bf5318f67e0dca5936a", null ],
+      [ "LinearConstraintPtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a9684bcd58c05ed2e7f81eae1633c7082", null ],
+      [ "LinearFunctionPtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a043e85123594d7cb4514d783f25a6dba", null ],
+      [ "MatrixConstRef", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#af4fdc88306faf6e863cff28f44459ec8", null ],
+      [ "MatrixPtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#ad6c7343a28855adb26af330abcba056a", null ],
+      [ "MatrixRef", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#adcb821eec4218eb93e3faf0d8a751171", null ],
+      [ "RangePtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a9d1e2ac6e0fb302696dd5ac857aea214", null ],
+      [ "RobotPtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a003ca276319664eb1bd64c0b25b99509", null ],
+      [ "SolvingRequirementsPtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#afbe973f3a51c3fe6b5557b8e4e51fc73", null ],
+      [ "TaskDynamicsPtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a05be029537364f847283eb3bbf4fee7f", null ],
+      [ "TaskWithRequirementsPtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a46e0b62fd9477cadab32a4e39d360a9f", null ],
+      [ "VariablePtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a024f10de786d6592dbd271d3df847835", null ],
+      [ "VectorConstRef", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a7afafb1e1034729b83e6d3676108f7af", null ],
+      [ "VectorPtr", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a9345c092d8ef7449a5149510415d978e", null ],
+      [ "VectorRef", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a5ba6fca76794c352cd250591dab8309e", null ],
+      [ "dot", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a42c2dc1b096188c0810cc2c3fbe10e6c", null ],
+      [ "dot", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#ab9c41b94c9193c6a5201468e368b838c", null ],
+      [ "operator!=", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a1d874dff64932dd17c549e38f9f99bf2", null ],
+      [ "operator*", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#ad7cc76834903afa6ef272c4935ee2837", null ],
+      [ "operator*", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a8f87789a1545f7072d62b29577bcd884", null ],
+      [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#ae4559794ded869fd19fcedccbf6a16a5", null ],
+      [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#af1e2b4572cd9f6ec303e172db9f16499", null ],
+      [ "operator+", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a0e377f89ef6354c21a59dcd711178409", null ],
+      [ "operator-", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#ac07d466392acf028d8ac758a87250192", null ],
+      [ "operator-", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a6cb244525d8de41c8c92a4dbe755c7a0", null ],
+      [ "operator-", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#acd7ff9789bcf46ce107800db44a92281", null ],
+      [ "operator-", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#ad4cd68900b5ad86ffc5d47983bf1ed1f", null ],
+      [ "operator==", "https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a751b8be6c8ab35c0f7bc264e6ecaa54c", null ]
     ] ]
 ];

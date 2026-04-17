@@ -149,7 +149,7 @@ $(document).ready(function(){initNavTree('mc__control_2Contact_8h_source.html','
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;} <span class="comment">// namespace mc_control</span></div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="namespacestd.html">   66</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacestd.html">std</a></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacestd.html">std</a></div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;{</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
@@ -158,13 +158,13 @@ $(document).ready(function(){initNavTree('mc__control_2Contact_8h_source.html','
 <div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01mc__control_1_1Contact_01_4.html#a136956d43236e07a07314c0a3d24ad05">   72</a></span>&#160;  std::size_t <a class="code" href="structstd_1_1hash_3_01mc__control_1_1Contact_01_4.html#a136956d43236e07a07314c0a3d24ad05">operator()</a>(<span class="keyword">const</span> <a class="code" href="structmc__control_1_1Contact.html">mc_control::Contact</a> &amp; c) <span class="keyword">const</span> noexcept</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  {</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">// Same as boost::hash_combine</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">auto</span> hash_combine = [](<span class="keyword">const</span> std::string &amp; robot, <span class="keyword">const</span> std::string &amp; surface)</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">auto</span> <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1diagnostic_1_1internal.html#af12848a2dbbab069a3afcf07ad0b5f95">hash_combine</a> = [](<span class="keyword">const</span> std::string &amp; robot, <span class="keyword">const</span> std::string &amp; surface)</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    {</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      <span class="keyword">auto</span> h = std::hash&lt;std::string&gt;{}(robot);</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      h ^= std::hash&lt;std::string&gt;{}(surface) + 0x9e3779b9 + (h &lt;&lt; 6) + (h &gt;&gt; 2);</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      <span class="keywordflow">return</span> h;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    };</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">return</span> hash_combine(c.r1.value_or(<span class="stringliteral">&quot;&quot;</span>), c.r1Surface) ^ hash_combine(c.r2.value_or(<span class="stringliteral">&quot;&quot;</span>), c.r2Surface);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">return</span> <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1diagnostic_1_1internal.html#af12848a2dbbab069a3afcf07ad0b5f95">hash_combine</a>(c.r1.value_or(<span class="stringliteral">&quot;&quot;</span>), c.r1Surface) ^ <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1diagnostic_1_1internal.html#af12848a2dbbab069a3afcf07ad0b5f95">hash_combine</a>(c.r2.value_or(<span class="stringliteral">&quot;&quot;</span>), c.r2Surface);</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  }</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;};</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
@@ -189,7 +189,8 @@ $(document).ready(function(){initNavTree('mc__control_2Contact_8h_source.html','
 <div class="ttc" id="anamespacemc__control_html"><div class="ttname"><a href="namespacemc__control.html">mc_control</a></div><div class="ttdef"><b>Definition:</b> CompletionCriteria.h:11</div></div>
 <div class="ttc" id="anamespacemc__control_html_ac55a4e95c7c3aaab29499a0abe565e3a"><div class="ttname"><a href="namespacemc__control.html#ac55a4e95c7c3aaab29499a0abe565e3a">mc_control::ContactSet</a></div><div class="ttdeci">std::unordered_set&lt; Contact, std::hash&lt; Contact &gt;, std::equal_to&lt; Contact &gt;, Eigen::aligned_allocator&lt; Contact &gt; &gt; ContactSet</div><div class="ttdef"><b>Definition:</b> Contact.h:62</div></div>
 <div class="ttc" id="anamespacemc__rtc_html"><div class="ttname"><a href="namespacemc__rtc.html">mc_rtc</a></div><div class="ttdef"><b>Definition:</b> Contact.h:88</div></div>
-<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdef"><b>Definition:</b> Contact.h:67</div></div>
+<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div></div>
+<div class="ttc" id="anamespacetvm_1_1diagnostic_1_1internal_html_af12848a2dbbab069a3afcf07ad0b5f95"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1diagnostic_1_1internal.html#af12848a2dbbab069a3afcf07ad0b5f95">hash_combine</a></div><div class="ttdeci">void hash_combine(std::size_t &amp;seed, const T &amp;v) noexcept</div></div>
 <div class="ttc" id="astructmc__control_1_1Contact_html"><div class="ttname"><a href="structmc__control_1_1Contact.html">mc_control::Contact</a></div><div class="ttdef"><b>Definition:</b> Contact.h:26</div></div>
 <div class="ttc" id="astructmc__control_1_1Contact_html_a20a4e24c55a082ea7447f5fee0e68909"><div class="ttname"><a href="structmc__control_1_1Contact.html#a20a4e24c55a082ea7447f5fee0e68909">mc_control::Contact::from_mc_rbdyn</a></div><div class="ttdeci">static Contact from_mc_rbdyn(const MCController &amp;, const mc_rbdyn::Contact &amp;)</div></div>
 <div class="ttc" id="astructmc__control_1_1Contact_html_a52ff892b5567c32098304acd96a91af2"><div class="ttname"><a href="structmc__control_1_1Contact.html#a52ff892b5567c32098304acd96a91af2">mc_control::Contact::r2Surface</a></div><div class="ttdeci">std::string r2Surface</div><div class="ttdef"><b>Definition:</b> Contact.h:42</div></div>

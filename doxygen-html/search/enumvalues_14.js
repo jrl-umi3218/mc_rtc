@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['xy_7642',['XY',['../namespacemc__rtc_1_1gui_1_1plot.html#ae8d436e1212bee55dfdb14d50b0d6be9a74c53bcd3dcb2bb79993b2fec37d362a',1,'mc_rtc::gui::plot']]],
-  ['xytheta_7643',['XYTheta',['../namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a93b34e4f6ff555f9cc248bae9cd00386',1,'mc_rtc::gui']]]
+  ['weightchange_9960',['WeightChange',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1scheme_1_1internal_1_1ProblemDefinitionEvent.html#add21aabf2172548b0cef1edf725bebb7a41924119a07fa5aa148829f2c240a2af',1,'tvm::scheme::internal::ProblemDefinitionEvent']]]
 ];

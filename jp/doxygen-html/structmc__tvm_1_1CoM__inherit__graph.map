@@ -1,4 +1,7 @@
 <map id="mc_tvm::CoM" name="mc_tvm::CoM">
-<area shape="rect" id="node1" title=" " alt="" coords="27,95,139,121"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,5,160,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="113,273,225,300"/>
+<area shape="rect" id="node2" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/TVM.doxytag$classtvm_1_1graph_1_1abstract_1_1Node.html" title=" " alt="" coords="91,184,246,225"/>
+<area shape="rect" id="node3" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/TVM.doxytag$classtvm_1_1graph_1_1internal_1_1AbstractNode.html" title=" " alt="" coords="93,95,244,136"/>
+<area shape="rect" id="node4" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/TVM.doxytag$classtvm_1_1graph_1_1internal_1_1Inputs.html" title=" " alt="" coords="5,5,156,47"/>
+<area shape="rect" id="node5" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/TVM.doxytag$classtvm_1_1graph_1_1abstract_1_1Outputs.html" title=" " alt="" coords="181,5,335,47"/>
 </map>

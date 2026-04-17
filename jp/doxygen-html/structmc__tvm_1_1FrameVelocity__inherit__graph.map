@@ -1,4 +1,9 @@
 <map id="mc_tvm::FrameVelocity" name="mc_tvm::FrameVelocity">
-<area shape="rect" id="node1" title=" " alt="" coords="5,95,181,121"/>
-<area shape="rect" id="node2" title=" " alt="" coords="8,5,179,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="81,437,257,464"/>
+<area shape="rect" id="node2" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/TVM.doxytag$classtvm_1_1function_1_1abstract_1_1Function.html" title=" " alt="" coords="83,348,254,389"/>
+<area shape="rect" id="node3" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/TVM.doxytag$classtvm_1_1internal_1_1FirstOrderProvider.html" title=" " alt="" coords="79,259,258,300"/>
+<area shape="rect" id="node4" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/TVM.doxytag$classtvm_1_1graph_1_1abstract_1_1Node.html" title=" " alt="" coords="67,184,271,211"/>
+<area shape="rect" id="node5" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/TVM.doxytag$classtvm_1_1graph_1_1internal_1_1AbstractNode.html" title=" " alt="" coords="93,95,244,136"/>
+<area shape="rect" id="node6" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/TVM.doxytag$classtvm_1_1graph_1_1internal_1_1Inputs.html" title=" " alt="" coords="5,5,156,47"/>
+<area shape="rect" id="node7" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/TVM.doxytag$classtvm_1_1graph_1_1abstract_1_1Outputs.html" title=" " alt="" coords="181,5,335,47"/>
 </map>

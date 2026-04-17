@@ -105,12 +105,12 @@ $(document).ready(function(){initNavTree('Convex_8h_source.html',''); initResiza
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="RobotModule_8h.html">mc_rbdyn/RobotModule.h</a>&gt;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="mc__rbdyn_2fwd_8h.html">mc_rbdyn/fwd.h</a>&gt;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;tvm/graph/abstract/Node.h&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;<a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/Node_8h.html">tvm/graph/abstract/Node.h</a>&gt;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemc__tvm.html">mc_tvm</a></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="structmc__tvm_1_1Convex.html">   23</a></span>&#160;<span class="keyword">struct </span><a class="code" href="include_2mc__tvm_2api_8h.html#abbd61a50e2e306b709065c31949a254e">MC_TVM_DLLAPI</a> <a class="code" href="structmc__tvm_1_1Convex.html">Convex</a> : <span class="keyword">public</span> tvm::graph::abstract::Node&lt;Convex&gt;</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="structmc__tvm_1_1Convex.html">   23</a></span>&#160;<span class="keyword">struct </span><a class="code" href="include_2mc__tvm_2api_8h.html#abbd61a50e2e306b709065c31949a254e">MC_TVM_DLLAPI</a> <a class="code" href="structmc__tvm_1_1Convex.html">Convex</a> : <span class="keyword">public</span> <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1graph_1_1abstract_1_1Node.html">tvm::graph::abstract::Node</a>&lt;Convex&gt;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
 <div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="structmc__tvm_1_1Convex.html#a5bf7a6383246c9a2d0cb84b5b0e9e3f2">   25</a></span>&#160;  <span class="keyword">friend</span> <span class="keyword">struct </span><a class="code" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a>;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
@@ -120,8 +120,8 @@ $(document).ready(function(){initNavTree('Convex_8h_source.html',''); initResiza
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  };</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  SET_OUTPUTS(<a class="code" href="structmc__tvm_1_1Convex.html">Convex</a>, Position)</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  SET_UPDATES(<a class="code" href="structmc__tvm_1_1Convex.html">Convex</a>, Position)</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/Outputs_8h.html#ac1f4fe6f3e3eb0d483f2189be741a7a5">SET_OUTPUTS</a>(<a class="code" href="structmc__tvm_1_1Convex.html">Convex</a>, Position)</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/AbstractNode_8h.html#abd38cd98a6567962387d6ebe5a27ce45">SET_UPDATES</a>(<a class="code" href="structmc__tvm_1_1Convex.html">Convex</a>, Position)</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  </div>
 <div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="structmc__tvm_1_1Convex.html#a5f776872a6f2028c83b679bedf2d6bf0">   44</a></span>&#160;  <a class="code" href="structmc__tvm_1_1Convex.html">Convex</a>(NewConvexToken,</div>
@@ -145,8 +145,12 @@ $(document).ready(function(){initNavTree('Convex_8h_source.html',''); initResiza
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;};</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;} <span class="comment">// namespace mc_tvm</span></div>
+<div class="ttc" id="aAbstractNode_8h_html_abd38cd98a6567962387d6ebe5a27ce45"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/AbstractNode_8h.html#abd38cd98a6567962387d6ebe5a27ce45">SET_UPDATES</a></div><div class="ttdeci">#define SET_UPDATES(SelfT,...)</div></div>
+<div class="ttc" id="aNode_8h.html_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/Node_8h.html">Node.h</a></div></div>
+<div class="ttc" id="aOutputs_8h_html_ac1f4fe6f3e3eb0d483f2189be741a7a5"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/Outputs_8h.html#ac1f4fe6f3e3eb0d483f2189be741a7a5">SET_OUTPUTS</a></div><div class="ttdeci">#define SET_OUTPUTS(SelfT,...)</div></div>
 <div class="ttc" id="aRobotModule_8h_html"><div class="ttname"><a href="RobotModule_8h.html">RobotModule.h</a></div></div>
 <div class="ttc" id="aclasssva_1_1PTransform_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/classsva_1_1PTransform.html">sva::PTransform</a></div></div>
+<div class="ttc" id="aclasstvm_1_1graph_1_1abstract_1_1Node_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1graph_1_1abstract_1_1Node.html">tvm::graph::abstract::Node</a></div></div>
 <div class="ttc" id="ainclude_2mc__tvm_2api_8h_html"><div class="ttname"><a href="include_2mc__tvm_2api_8h.html">api.h</a></div></div>
 <div class="ttc" id="ainclude_2mc__tvm_2api_8h_html_abbd61a50e2e306b709065c31949a254e"><div class="ttname"><a href="include_2mc__tvm_2api_8h.html#abbd61a50e2e306b709065c31949a254e">MC_TVM_DLLAPI</a></div><div class="ttdeci">#define MC_TVM_DLLAPI</div><div class="ttdef"><b>Definition:</b> api.h:47</div></div>
 <div class="ttc" id="amc__rbdyn_2fwd_8h_html"><div class="ttname"><a href="mc__rbdyn_2fwd_8h.html">fwd.h</a></div></div>

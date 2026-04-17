@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['constraint_5fflag_7550',['constraint_flag',['/usr/local/share/doc/ndcurves/doxygen-html/namespacendcurves_1_1optimization.html#a40a05ddfdf17f2e63820047121c759c9',1,'ndcurves::optimization']]],
-  ['contacttype_7551',['ContactType',['../structmc__solver_1_1ContactConstraint.html#aa1038fc325c517503d2f68a3feec1c30',1,'mc_solver::ContactConstraint']]]
+  ['backend_9828',['Backend',['../structmc__solver_1_1QPSolver.html#a62bf1f254f95bb13b9b00b855ca74e2e',1,'mc_solver::QPSolver']]]
 ];
