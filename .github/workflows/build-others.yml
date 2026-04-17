@@ -53,11 +53,11 @@ jobs:
     - name: Use repository name
       shell: bash
       run: echo "The triggering repository is $GITHUB_REPO_TRIGGER"
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         submodules: recursive
     - name: Clone superbuild
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         submodules: recursive
         repository: mc-rtc/mc-rtc-superbuild
