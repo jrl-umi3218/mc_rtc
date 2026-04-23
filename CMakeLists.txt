@@ -191,8 +191,6 @@ endif()
 # GEOS (defines/imports target: GEOS::geos)
 find_package(mc_rtc_3rd_party_geos REQUIRED)
 
-find_package(mc_rtc_3rd_party_eigen-fmt REQUIRED)
-
 if(NOT MC_RTC_DISABLE_NETWORK)
   # nanomsg (defines/imports target: nanomsg)
   find_package(mc_rtc_3rd_party_nanomsg REQUIRED)

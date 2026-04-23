@@ -160,7 +160,6 @@ target_link_libraries(
          Boost::disable_autolinking
          ${YAML_CPP_TARGET}
          spdlog::spdlog
-         eigen-fmt::eigen-fmt
          ${CMAKE_DL_LIBS}
   PRIVATE $<BUILD_INTERFACE:mc_rtc_3rd_party::RapidJSON>
 )
