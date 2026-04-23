@@ -116,7 +116,11 @@ bool Controller::run(mc_solver::FeedbackType fType)
       teardownIdleState();
     }
   }
-  return MCController::run(fType);
+  if(fType == mc_solver::FeedbackType::SkipQP) { return true; }
+  else
+  {
+    return MCController::run(fType);
+  }
 }
 
 void Controller::reset(const ControllerResetData & data)
