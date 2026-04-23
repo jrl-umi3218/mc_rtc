@@ -108,7 +108,7 @@ $(document).ready(function(){initNavTree('TrajectoryTaskGeneric_8h_source.html',
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="logging_8h.html">mc_rtc/logging.h</a>&gt;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="void__ptr_8h.html">mc_rtc/void_ptr.h</a>&gt;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;Tasks/QPTasks.h&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;<a class="codeRef" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/QPTasks_8h.html">Tasks/QPTasks.h</a>&gt;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemc__tasks.html">mc_tasks</a></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
@@ -199,8 +199,8 @@ $(document).ready(function(){initNavTree('TrajectoryTaskGeneric_8h_source.html',
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    {</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;      trajectoryT_ = mc_rtc::make_void_ptr&lt;tasks::qp::TrajectoryTask&gt;(</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;          robots.mbs(), rIndex, <span class="keyword">static_cast&lt;</span>ErrorT *<span class="keyword">&gt;</span>(errorT.get()), stiffness_(0), damping_(0), weight_);</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;      <span class="keyword">auto</span> &amp; trajectory = *<span class="keyword">static_cast&lt;</span>tasks::qp::TrajectoryTask *<span class="keyword">&gt;</span>(trajectoryT_.get());</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;      stiffness_ = trajectory.stiffness();</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;      <span class="keyword">auto</span> &amp; trajectory = *<span class="keyword">static_cast&lt;</span><a class="codeRef" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/classtasks_1_1qp_1_1TrajectoryTask.html">tasks::qp::TrajectoryTask</a> *<span class="keyword">&gt;</span>(trajectoryT_.get());</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;      stiffness_ = trajectory.<a class="codeRef" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/classtasks_1_1qp_1_1TrajectoryTask.html#a287d5e7d528e025997f2f705c07a2d99">stiffness</a>();</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      damping_ = trajectory.damping();</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;      <span class="keywordflow">if</span>(refVel_.size() != trajectory.refVel().size()) { refVel_ = trajectory.refVel(); }</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;      <span class="keywordflow">if</span>(refAccel_.size() != trajectory.refAccel().size()) { refAccel_ = trajectory.refAccel(); }</div>
@@ -253,8 +253,11 @@ $(document).ready(function(){initNavTree('TrajectoryTaskGeneric_8h_source.html',
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160; </div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;} <span class="comment">// namespace mc_tasks</span></div>
 <div class="ttc" id="aMetaTask_8h_html"><div class="ttname"><a href="MetaTask_8h.html">MetaTask.h</a></div></div>
+<div class="ttc" id="aQPTasks_8h.html_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/QPTasks_8h.html">QPTasks.h</a></div></div>
 <div class="ttc" id="aRobots_8h_html"><div class="ttname"><a href="Robots_8h.html">Robots.h</a></div></div>
 <div class="ttc" id="aTVMTrajectoryTaskGeneric_8h_html"><div class="ttname"><a href="TVMTrajectoryTaskGeneric_8h.html">TVMTrajectoryTaskGeneric.h</a></div></div>
+<div class="ttc" id="aclasstasks_1_1qp_1_1TrajectoryTask_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/classtasks_1_1qp_1_1TrajectoryTask.html">tasks::qp::TrajectoryTask</a></div></div>
+<div class="ttc" id="aclasstasks_1_1qp_1_1TrajectoryTask_html_a287d5e7d528e025997f2f705c07a2d99"><div class="ttname"><a href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/classtasks_1_1qp_1_1TrajectoryTask.html#a287d5e7d528e025997f2f705c07a2d99">tasks::qp::TrajectoryTask::stiffness</a></div><div class="ttdeci">void stiffness(double gainPos)</div></div>
 <div class="ttc" id="ainclude_2mc__tasks_2api_8h_html_a54b6b62a72f51c6877ce5f6855eae009"><div class="ttname"><a href="include_2mc__tasks_2api_8h.html#a54b6b62a72f51c6877ce5f6855eae009">MC_TASKS_DLLAPI</a></div><div class="ttdeci">#define MC_TASKS_DLLAPI</div><div class="ttdef"><b>Definition:</b> api.h:50</div></div>
 <div class="ttc" id="alogging_8h_html"><div class="ttname"><a href="logging_8h.html">logging.h</a></div></div>
 <div class="ttc" id="anamespacemc__rtc_1_1log_html_a2bad497e8a4c7a7f29f7ab908c83274e"><div class="ttname"><a href="namespacemc__rtc_1_1log.html#a2bad497e8a4c7a7f29f7ab908c83274e">mc_rtc::log::error_and_throw</a></div><div class="ttdeci">void error_and_throw(Args &amp;&amp;... args)</div><div class="ttdef"><b>Definition:</b> logging.h:40</div></div>

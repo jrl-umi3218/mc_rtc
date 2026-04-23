@@ -3203,7 +3203,6 @@
     <name>fmt_formatters.h</name>
     <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rtc/</path>
     <filename>fmt__formatters_8h.html</filename>
-    <includes id="rpy__utils_8h" name="rpy_utils.h" local="no" imported="no">mc_rbdyn/rpy_utils.h</includes>
     <includes id="constants_8h" name="constants.h" local="no" imported="no">mc_rtc/constants.h</includes>
     <member kind="define">
       <type>#define</type>
@@ -11288,6 +11287,7 @@
   <compound kind="struct">
     <name>mc_solver::details::CompoundJointConstraint</name>
     <filename>structmc__solver_1_1details_1_1CompoundJointConstraint.html</filename>
+    <base>ConstraintFunction&lt; tasks::qp::Inequality &gt;</base>
     <member kind="function">
       <type>MC_SOLVER_DLLAPI</type>
       <name>CompoundJointConstraint</name>
@@ -13214,6 +13214,7 @@
     <filename>structmc__solver_1_1utils_1_1Constraint.html</filename>
     <templarg></templarg>
     <templarg></templarg>
+    <base>ConstraintFunction&lt; ConstraintT &gt;</base>
     <member kind="function" protection="protected">
       <type></type>
       <name>Constraint</name>
@@ -13260,6 +13261,7 @@
   <compound kind="class">
     <name>Constraint&lt; tasks::qp::Equality, UpdateT &gt;</name>
     <filename>structmc__solver_1_1utils_1_1Constraint.html</filename>
+    <base>tasks::qp::ConstraintFunction</base>
     <member kind="function" protection="protected">
       <type></type>
       <name>Constraint</name>
@@ -13306,6 +13308,7 @@
   <compound kind="class">
     <name>Constraint&lt; tasks::qp::GenInequality, UpdateT &gt;</name>
     <filename>structmc__solver_1_1utils_1_1Constraint.html</filename>
+    <base>tasks::qp::ConstraintFunction</base>
     <member kind="function" protection="protected">
       <type></type>
       <name>Constraint</name>
@@ -13352,6 +13355,7 @@
   <compound kind="class">
     <name>Constraint&lt; tasks::qp::Inequality, UpdateT &gt;</name>
     <filename>structmc__solver_1_1utils_1_1Constraint.html</filename>
+    <base>ConstraintFunction&lt; tasks::qp::Inequality &gt;</base>
     <member kind="function" protection="protected">
       <type></type>
       <name>Constraint</name>

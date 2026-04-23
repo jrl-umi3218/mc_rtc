@@ -1,4 +1,5 @@
 <map id="mc_solver::details::CompoundJointConstraint" name="mc_solver::details::CompoundJointConstraint">
-<area shape="rect" id="node1" title=" " alt="" coords="13,95,209,136"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,5,216,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="13,169,209,211"/>
+<area shape="rect" id="node2" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag$classtasks_1_1qp_1_1ConstraintFunction.html" title=" " alt="" coords="5,80,216,121"/>
+<area shape="rect" id="node3" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag$classtasks_1_1qp_1_1Constraint.html" title=" " alt="" coords="33,5,189,32"/>
 </map>

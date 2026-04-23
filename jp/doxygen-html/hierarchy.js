@@ -67,44 +67,50 @@ var hierarchy =
     [ "std::vector::const_iterator", null, [
       [ "mc_rtc::SharedPtrVectorConstIterator< T >", "structmc__rtc_1_1SharedPtrVectorConstIterator.html", null ]
     ] ],
-    [ "tasks::qp::ConstraintFunction", null, [
-      [ "mc_solver::utils::Constraint< tasks::qp::Equality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", [
-        [ "mc_solver::utils::EqualityConstraint< UpdateT >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", null ]
+    [ "tasks::qp::Constraint", "https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/classtasks_1_1qp_1_1Constraint.html", [
+      [ "tasks::qp::ConstraintFunction< ConstraintT >", "https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/classtasks_1_1qp_1_1ConstraintFunction.html", [
+        [ "mc_solver::utils::Constraint< ConstraintT, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", [
+          [ "mc_solver::utils::EqualityConstraint< utils::UpdateForce >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", [
+            [ "mc_solver::EqualityConstraintForce", "structmc__solver_1_1EqualityConstraintForce.html", null ]
+          ] ],
+          [ "mc_solver::utils::EqualityConstraint< utils::UpdateRobot >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", [
+            [ "mc_solver::EqualityConstraintRobot", "structmc__solver_1_1EqualityConstraintRobot.html", null ]
+          ] ],
+          [ "mc_solver::utils::EqualityConstraint< utils::UpdateLambda >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", [
+            [ "mc_solver::EqualityConstraintLambda", "structmc__solver_1_1EqualityConstraintLambda.html", null ]
+          ] ],
+          [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateForce >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", [
+            [ "mc_solver::GenInequalityConstraintForce", "structmc__solver_1_1GenInequalityConstraintForce.html", null ]
+          ] ],
+          [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateRobot >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", [
+            [ "mc_solver::GenInequalityConstraintRobot", "structmc__solver_1_1GenInequalityConstraintRobot.html", null ]
+          ] ],
+          [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateLambda >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", [
+            [ "mc_solver::GenInequalityConstraintLambda", "structmc__solver_1_1GenInequalityConstraintLambda.html", null ]
+          ] ],
+          [ "mc_solver::utils::InequalityConstraint< utils::UpdateForce >", "structmc__solver_1_1utils_1_1InequalityConstraint.html", [
+            [ "mc_solver::InequalityConstraintForce", "structmc__solver_1_1InequalityConstraintForce.html", null ]
+          ] ],
+          [ "mc_solver::utils::InequalityConstraint< utils::UpdateRobot >", "structmc__solver_1_1utils_1_1InequalityConstraint.html", [
+            [ "mc_solver::InequalityConstraintRobot", "structmc__solver_1_1InequalityConstraintRobot.html", null ]
+          ] ],
+          [ "mc_solver::utils::InequalityConstraint< utils::UpdateLambda >", "structmc__solver_1_1utils_1_1InequalityConstraint.html", [
+            [ "mc_solver::InequalityConstraintLambda", "structmc__solver_1_1InequalityConstraintLambda.html", null ]
+          ] ]
+        ] ]
       ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", [
-        [ "mc_solver::utils::InequalityConstraint< UpdateT >", "structmc__solver_1_1utils_1_1InequalityConstraint.html", null ]
+      [ "tasks::qp::ConstraintFunction< tasks::qp::Inequality >", "https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/classtasks_1_1qp_1_1ConstraintFunction.html", [
+        [ "mc_solver::utils::Constraint< tasks::qp::Inequality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", [
+          [ "mc_solver::utils::InequalityConstraint< UpdateT >", "structmc__solver_1_1utils_1_1InequalityConstraint.html", null ]
+        ] ],
+        [ "mc_solver::details::CompoundJointConstraint", "structmc__solver_1_1details_1_1CompoundJointConstraint.html", null ]
       ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", [
-        [ "mc_solver::utils::GenInequalityConstraint< UpdateT >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", null ]
-      ] ],
-      [ "mc_solver::details::CompoundJointConstraint", "structmc__solver_1_1details_1_1CompoundJointConstraint.html", null ],
-      [ "mc_solver::utils::Constraint< ConstraintT, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", [
-        [ "mc_solver::utils::EqualityConstraint< utils::UpdateForce >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", [
-          [ "mc_solver::EqualityConstraintForce", "structmc__solver_1_1EqualityConstraintForce.html", null ]
+      [ "tasks::qp::ConstraintFunction< Fun >", "https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/classtasks_1_1qp_1_1ConstraintFunction.html", [
+        [ "mc_solver::utils::Constraint< tasks::qp::Equality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", [
+          [ "mc_solver::utils::EqualityConstraint< UpdateT >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", null ]
         ] ],
-        [ "mc_solver::utils::EqualityConstraint< utils::UpdateRobot >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", [
-          [ "mc_solver::EqualityConstraintRobot", "structmc__solver_1_1EqualityConstraintRobot.html", null ]
-        ] ],
-        [ "mc_solver::utils::EqualityConstraint< utils::UpdateLambda >", "structmc__solver_1_1utils_1_1EqualityConstraint.html", [
-          [ "mc_solver::EqualityConstraintLambda", "structmc__solver_1_1EqualityConstraintLambda.html", null ]
-        ] ],
-        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateForce >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", [
-          [ "mc_solver::GenInequalityConstraintForce", "structmc__solver_1_1GenInequalityConstraintForce.html", null ]
-        ] ],
-        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateRobot >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", [
-          [ "mc_solver::GenInequalityConstraintRobot", "structmc__solver_1_1GenInequalityConstraintRobot.html", null ]
-        ] ],
-        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateLambda >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", [
-          [ "mc_solver::GenInequalityConstraintLambda", "structmc__solver_1_1GenInequalityConstraintLambda.html", null ]
-        ] ],
-        [ "mc_solver::utils::InequalityConstraint< utils::UpdateForce >", "structmc__solver_1_1utils_1_1InequalityConstraint.html", [
-          [ "mc_solver::InequalityConstraintForce", "structmc__solver_1_1InequalityConstraintForce.html", null ]
-        ] ],
-        [ "mc_solver::utils::InequalityConstraint< utils::UpdateRobot >", "structmc__solver_1_1utils_1_1InequalityConstraint.html", [
-          [ "mc_solver::InequalityConstraintRobot", "structmc__solver_1_1InequalityConstraintRobot.html", null ]
-        ] ],
-        [ "mc_solver::utils::InequalityConstraint< utils::UpdateLambda >", "structmc__solver_1_1utils_1_1InequalityConstraint.html", [
-          [ "mc_solver::InequalityConstraintLambda", "structmc__solver_1_1InequalityConstraintLambda.html", null ]
+        [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, UpdateT >", "structmc__solver_1_1utils_1_1Constraint.html", [
+          [ "mc_solver::utils::GenInequalityConstraint< UpdateT >", "structmc__solver_1_1utils_1_1GenInequalityConstraint.html", null ]
         ] ]
       ] ]
     ] ],

@@ -1,4 +1,8 @@
 <map id="mc_solver::QPContactPtrWPoints" name="mc_solver::QPContactPtrWPoints">
-<area shape="rect" id="node1" title=" " alt="" coords="5,95,241,121"/>
-<area shape="rect" id="node2" href="$structmc__solver_1_1QPContactPtr.html" title=" " alt="" coords="32,5,215,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="106,288,342,315"/>
+<area shape="rect" id="node2" href="$structmc__solver_1_1QPContactPtr.html" title=" " alt="" coords="133,199,315,225"/>
+<area shape="rect" id="node3" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag$structtasks_1_1qp_1_1UnilateralContact.html" title=" " alt="" coords="224,109,427,136"/>
+<area shape="rect" id="node4" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag$structtasks_1_1qp_1_1ContactId.html" title=" " alt="" coords="62,5,213,32"/>
+<area shape="rect" id="node6" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag$structtasks_1_1qp_1_1BilateralContact.html" title=" " alt="" coords="5,109,200,136"/>
+<area shape="rect" id="node5" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag$structtasks_1_1qp_1_1FrictionCone.html" title=" " alt="" coords="240,5,411,32"/>
 </map>

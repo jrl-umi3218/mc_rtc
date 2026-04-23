@@ -326,14 +326,7 @@
                 </div>
               </div>
               
-                <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#note-on-matrix-types">Note on Matrix types</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#eigen">Eigen</a></li>
-<li class="toc-entry toc-h3"><a href="#ptransformd">PTransformd</a></li>
-</ul>
-</li>
-</ul>
+                
               
             </div>
           </div>
@@ -371,128 +364,6 @@ but this helps to highlight important messages on the console.</p>
 </code></pre></div></div>
 
 <p>The formatting syntax is the syntax supported by the <a href="https://fmt.dev/dev/syntax.html">{fmt} library</a>.</p>
-
-<h2 id="note-on-matrix-types">Note on Matrix types</h2>
-
-<p>Matrix-like types (<code class="language-plaintext highlighter-rouge">Eigen::Matrix</code>, <code class="language-plaintext highlighter-rouge">Eigen::Vector</code>, <code class="language-plaintext highlighter-rouge">sva::PTransformd</code>, etc) are formatted with custom <code class="language-plaintext highlighter-rouge">{fmt}</code> formatters based on the <a href="https://gite.lirmm.fr/rpc/utils/eigen-fmt">{eigen-fmt}</a> library.</p>
-
-<h3 id="eigen">Eigen</h3>
-
-<p><code class="language-plaintext highlighter-rouge">Eigen</code> types (matrices, vectors, etc) are formatted using the <code class="language-plaintext highlighter-rouge">{eigen-fmt}</code> formatters, which provides modifiers to control how they are displayed. Please refer to <a href="https://rpc.lirmm.net/rpc-framework/packages/eigen-fmt/index.html">{eigen-fmt} documentation</a> for details.</p>
-
-<p>For example:</p>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="n">m1</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span><span class="o">::</span><span class="n">Random</span><span class="p">();</span>
-
-<span class="c1">// Either use fmt type modifiers to control how to display expressions</span>
-<span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">"Matrix m1:</span><span class="se">\n</span><span class="s">{:noal;csep{, };rsep{, };mpre{ &lt;&lt; };msuf{;}}"</span><span class="p">,</span> <span class="n">m1</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>For quick reference, the following modifiers are available for <code class="language-plaintext highlighter-rouge">Eigen</code> types (as of <code class="language-plaintext highlighter-rouge">eigen-fmt v1.0.4</code>). All parameters must be separated by a semicolon. The possible parameters are:</p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">t</code>: transpose (default = <code class="language-plaintext highlighter-rouge">false</code>)</li>
-  <li><code class="language-plaintext highlighter-rouge">noal</code>: don’t align columns (default = <code class="language-plaintext highlighter-rouge">false</code>)</li>
-  <li><code class="language-plaintext highlighter-rouge">p{int/str}</code>:
-    <ul>
-      <li><code class="language-plaintext highlighter-rouge">int</code>: fixed precision (default = <code class="language-plaintext highlighter-rouge">Eigen::StreamPrecision</code>)</li>
-      <li><code class="language-plaintext highlighter-rouge">'f'</code> or <code class="language-plaintext highlighter-rouge">'s'</code>: full precision (<code class="language-plaintext highlighter-rouge">Eigen::FullPrecision</code>) or stream precision (<code class="language-plaintext highlighter-rouge">Eigen::StreamPrecision</code>)</li>
-    </ul>
-  </li>
-  <li><code class="language-plaintext highlighter-rouge">csep{str}</code>: coefficient separator (default = <code class="language-plaintext highlighter-rouge">" "</code>)</li>
-  <li><code class="language-plaintext highlighter-rouge">rsep{str}</code>: row separator (default = <code class="language-plaintext highlighter-rouge">"\n"</code>)</li>
-  <li><code class="language-plaintext highlighter-rouge">rpre{str}</code>: row prefix (default = <code class="language-plaintext highlighter-rouge">""</code>)</li>
-  <li><code class="language-plaintext highlighter-rouge">rsuf{str}</code>: row suffix (default = <code class="language-plaintext highlighter-rouge">""</code>)</li>
-  <li><code class="language-plaintext highlighter-rouge">mpre{str}</code>: matrix prefix (default = <code class="language-plaintext highlighter-rouge">""</code>)</li>
-  <li><code class="language-plaintext highlighter-rouge">msuf{str}</code>: matrix suffix (default = <code class="language-plaintext highlighter-rouge">""</code>)</li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Or use the more explicit EigenFmt::FormatSpec struct
-EigenFmt::FormatSpec clean_format;
-clean_format.precision = 4;
-clean_format.coeff_sep = ", ";
-clean_format.row_prefix = "[";
-clean_format.row_suffix = "]";
-
-// The str() function has some runtime cost, consider caching its result
-const auto octave_format_str = clean_format.str();
-mc_rtc::log::info("Matrix m1:\n{:{}}", m1, octave_format_str);
-</code></pre></div></div>
-
-<h3 id="ptransformd">PTransformd</h3>
-
-<p>We provide a somewhat opinionated formatter for <code class="language-plaintext highlighter-rouge">sva::PTransformd</code> that details individual data fields using <code class="language-plaintext highlighter-rouge">{eigen-fmt}</code> formatters:</p>
-<ul>
-  <li>translation</li>
-  <li>rotation as:
-    <ul>
-      <li>matrix in <code class="language-plaintext highlighter-rouge">sva</code>’s convention (Featherstone, left-handed rotation matrices)</li>
-      <li>matrix in <code class="language-plaintext highlighter-rouge">standard</code> convention (right-handed rotation matrices)</li>
-      <li>RPY in both degree/radian in both featherstone and standard convention</li>
-    </ul>
-  </li>
-</ul>
-
-<p><code class="language-plaintext highlighter-rouge">{eigen-fmt}</code> modifiers can be used to control how the matrices and vectors are displayed, but the overall structure of the output is fixed. However one can always display the raw data fields manually using <code class="language-plaintext highlighter-rouge">.matrix()</code>, <code class="language-plaintext highlighter-rouge">.vector()</code>, <code class="language-plaintext highlighter-rouge">.translation()</code>, <code class="language-plaintext highlighter-rouge">.rotation()</code> (which for eigen types benefit from the flexibility of <code class="language-plaintext highlighter-rouge">{eigen-fmt}</code>).</p>
-
-<p>For example:</p>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span> <span class="nf">T</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">RotZ</span><span class="p">(</span><span class="n">M_PI</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">));</span>
-  <span class="n">fmt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="s">"T:</span><span class="se">\n</span><span class="s">{}"</span><span class="p">,</span> <span class="n">T</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>displays a <code class="language-plaintext highlighter-rouge">PTransformd</code> with the following default style:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>T:
-  translation: [1, 2, 3]
-  rotation:
-    - matrix (Featherstone, left-handed convention):
-      [              0.707,               0.707,                   0]
-      [             -0.707,               0.707,                   0]
-      [                  0,                   0,                   1]
-    - matrix (Standard,     right-handed convention):
-      [              0.707,              -0.707,                   0]
-      [              0.707,               0.707,                   0]
-      [                  0,                   0,                   1]
-    - rpy (Featherstone): [0, -0, 0.785] (rad), [0, -0, 45] (deg)
-    - rpy (standard):     [0, -0, -0.785] (rad), [0, -0, -45] (deg)
-</code></pre></div></div>
-
-<p>or you can customize it as follows:</p>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">EigenFmt</span><span class="o">::</span><span class="n">FormatSpec</span> <span class="n">clean_format</span><span class="p">;</span>
-  <span class="n">clean_format</span><span class="p">.</span><span class="n">precision</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
-  <span class="n">clean_format</span><span class="p">.</span><span class="n">coeff_sep</span> <span class="o">=</span> <span class="s">", "</span><span class="p">;</span>
-  <span class="n">clean_format</span><span class="p">.</span><span class="n">row_prefix</span> <span class="o">=</span> <span class="s">"      "</span><span class="p">;</span>
-  <span class="n">clean_format</span><span class="p">.</span><span class="n">row_suffix</span> <span class="o">=</span> <span class="s">" "</span><span class="p">;</span>
-  <span class="n">clean_format</span><span class="p">.</span><span class="n">mat_prefix</span> <span class="o">=</span> <span class="s">"    ["</span><span class="p">;</span>
-  <span class="n">clean_format</span><span class="p">.</span><span class="n">mat_suffix</span> <span class="o">=</span> <span class="s">"]"</span><span class="p">;</span>
-  <span class="n">clean_format</span><span class="p">.</span><span class="n">dont_align_cols</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-  <span class="k">const</span> <span class="k">auto</span> <span class="n">eigen_matrix_str</span> <span class="o">=</span> <span class="n">clean_format</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
-
-  <span class="n">clean_format</span><span class="p">.</span><span class="n">row_prefix</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
-  <span class="n">clean_format</span><span class="p">.</span><span class="n">row_suffix</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
-  <span class="n">clean_format</span><span class="p">.</span><span class="n">transpose</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">eigen_vector_str</span> <span class="o">=</span> <span class="n">clean_format</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
-  <span class="n">fmt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="s">"T:</span><span class="se">\n</span><span class="s">{:{}{}}"</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">eigen_vector_str</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">eigen_matrix_str</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
-</code></pre></div></div>
-
-<p>gives</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>T:
-translation:     [1, 2, 3]
-rotation:
-  - matrix (Featherstone, left-handed convention):
-    [      0.7071068, 0.7071068, 0
-      -0.7071068, 0.7071068, 0
-      0, 0, 1 ]
-  - matrix (Standard,     right-handed convention):
-    [      0.7071068, -0.7071068, 0
-      0.7071068, 0.7071068, 0
-      0, 0, 1 ]
-  - rpy (Featherstone):     [0, -0, 0.7853982] (rad),     [0, -0, 45] (deg)
-  - rpy (standard):         [0, -0, -0.7853982] (rad),     [0, -0, -45] (deg)
-</code></pre></div></div>
 
 
 
