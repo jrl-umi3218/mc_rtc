@@ -3,9 +3,9 @@
  */
 
 #pragma once
-#include <mc_rbdyn/rpy_utils.h>
 #include <mc_rtc/constants.h>
 #include <fmt/format.h>
+#include <fmt/ranges.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
@@ -52,6 +52,15 @@ struct fmt::formatter<std::filesystem::path> : fmt::formatter<std::string>
 // expressions, etc.) Tested for fmt_9, fmt_10, fmt_11 and fmt_12
 template<typename T>
 struct fmt::formatter<T, char, std::enable_if_t<std::is_base_of_v<Eigen::EigenBase<T>, T>>> : fmt::ostream_formatter
+{
+};
+
+// Prevent fmt/ranges from also treating Eigen types as ranges. Otherwise fmt
+// finds two competing formatter specializations (ranges + Eigen ostream) and
+// fails with an ambiguous formatter instantiation.
+template<typename T, typename Char>
+struct fmt::range_format_kind<T, Char, std::enable_if_t<std::is_base_of_v<Eigen::EigenBase<T>, T>>>
+: std::integral_constant<fmt::range_format, fmt::range_format::disabled>
 {
 };
 

@@ -2,6 +2,7 @@
 #include <mc_rtc/fmt_formatters.h>
 
 #include <boost/test/unit_test.hpp>
+#include <vector>
 
 // Helper for generic test
 template<typename T>
@@ -70,4 +71,10 @@ BOOST_AUTO_TEST_CASE(sva_function_results_can_be_formatted_with_fmt)
   check_fmt_nonempty("sva::RotX", sva::RotX(mc_rtc::constants::PI / 2));
   check_fmt_nonempty("sva::RotY", sva::RotY(mc_rtc::constants::PI / 2));
   check_fmt_nonempty("sva::RotZ", sva::RotZ(mc_rtc::constants::PI / 2));
+}
+
+BOOST_AUTO_TEST_CASE(fmt_ranges_is_still_active_for_standard_ranges)
+{
+  std::vector<int> values{1, 2, 3};
+  BOOST_CHECK_EQUAL(fmt::format("{}", values), "[1, 2, 3]");
 }
