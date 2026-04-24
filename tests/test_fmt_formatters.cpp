@@ -2,6 +2,7 @@
 #include <mc_rtc/fmt_formatters.h>
 
 #include <boost/test/unit_test.hpp>
+#include <mc_rtc/constants.h>
 #include <vector>
 
 // Helper for generic test
