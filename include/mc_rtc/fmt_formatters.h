@@ -3,12 +3,13 @@
  */
 
 #pragma once
-#include <mc_rtc/constants.h>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 #include <fmt/ranges.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
+#include <boost/filesystem.hpp>
+#include <filesystem>
 
 /**
   fmt version summary:
@@ -17,35 +18,51 @@
   Ubuntu 24.04 (Noble)	9.1.0 -> automatics std::ostream support was removed
 */
 
-#if FMT_VERSION >= 9 * 10000
-// fmt 9.0.0 removed automated operator<< discovery we use fmt::streamed instead
-// when needed through a macro
-#  define MC_FMT_STREAMED(X) fmt::streamed(X)
+/**
+ * Since fmt10, fmt::formatter's format function should be const
+ * This macro adds the const qualifier for required version
+ * use as
+ * ```auto format(const boost::filesystem::path& p, FormatContext& ctx)
+ * FMT_CONST_IF_REQUIRED {}```
+ */
+#if defined(FMT_VERSION) && FMT_VERSION >= 100000
+#  define FMT_CONST_IF_REQUIRED const
+#else
+#  define FMT_CONST_IF_REQUIRED
+#endif
 
-#  include <boost/filesystem.hpp>
-#  include <filesystem>
-
-// Formatter for boost::filesystem::path
+/**
+ * Formatter for boost::filesystem::path
+ */
 template<>
 struct fmt::formatter<boost::filesystem::path> : fmt::formatter<std::string>
 {
   template<typename FormatContext>
-  auto format(const boost::filesystem::path & p, FormatContext & ctx)
+  auto format(const boost::filesystem::path & p, FormatContext & ctx) FMT_CONST_IF_REQUIRED
   {
     return fmt::formatter<std::string>::format(p.string(), ctx);
   }
 };
 
-// Formatter for std::filesystem::path
+/**
+ * Formatter for std::filesystem::path
+ */
 template<>
 struct fmt::formatter<std::filesystem::path> : fmt::formatter<std::string>
 {
   template<typename FormatContext>
-  auto format(const std::filesystem::path & p, FormatContext & ctx)
+  auto format(const std::filesystem::path & p, FormatContext & ctx) FMT_CONST_IF_REQUIRED
   {
     return fmt::formatter<std::string>::format(p.string(), ctx);
   }
 };
+
+#if FMT_VERSION >= 9 * 10000
+/**
+ * fmt 9.0.0 removed automated operator<< discovery
+ * we use fmt::streamed instead when needed through a macro
+ */
+#  define MC_FMT_STREAMED(X) fmt::streamed(X)
 
 // Formatter for any Eigen type derived from EigenBase (matrices, arrays,
 // expressions, etc.) Tested for fmt_9, fmt_10, fmt_11 and fmt_12

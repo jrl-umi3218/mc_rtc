@@ -1,6 +1,7 @@
 #define BOOST_TEST_MODULE FmtTortureTest
 #include <mc_rtc/fmt_formatters.h>
 
+#include <mc_rtc/constants.h>
 #include <boost/test/unit_test.hpp>
 #include <vector>
 
@@ -77,4 +78,31 @@ BOOST_AUTO_TEST_CASE(fmt_ranges_is_still_active_for_standard_ranges)
 {
   std::vector<int> values{1, 2, 3};
   BOOST_CHECK_EQUAL(fmt::format("{}", values), "[1, 2, 3]");
+}
+
+/**
+ * Since fmt_10, format function should respect const correctness
+ */
+BOOST_AUTO_TEST_CASE(fmt_format_const_required_fmt_10_std_filesystem)
+{
+  std::filesystem::path p = "/tmp/config";
+
+  // This line should FAIL TO COMPILE with fmt v12 due to const-correctness
+  // requirements on formatter::format.
+  auto s = fmt::format("path={}", p);
+
+  // Unreachable if compilation fails, but keeps the test "well-formed".
+  BOOST_TEST(!s.empty());
+}
+
+BOOST_AUTO_TEST_CASE(fmt_format_const_required_fmt_10_boost_filesystem)
+{
+  boost::filesystem::path p = "/tmp/config";
+
+  // This line should FAIL TO COMPILE with fmt v12 due to const-correctness
+  // requirements on formatter::format.
+  auto s = fmt::format("path={}", p);
+
+  // Unreachable if compilation fails, but keeps the test "well-formed".
+  BOOST_TEST(!s.empty());
 }
