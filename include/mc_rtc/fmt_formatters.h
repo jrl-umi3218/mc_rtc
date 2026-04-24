@@ -3,7 +3,6 @@
  */
 
 #pragma once
-#include <mc_rtc/constants.h>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 #include <fmt/ranges.h>
@@ -18,30 +17,49 @@
 */
 
 #if FMT_VERSION >= 9 * 10000
-// fmt 9.0.0 removed automated operator<< discovery we use fmt::streamed instead
-// when needed through a macro
+/**
+ * fmt 9.0.0 removed automated operator<< discovery
+ * we use fmt::streamed instead when needed through a macro
+ */
 #  define MC_FMT_STREAMED(X) fmt::streamed(X)
 
 #  include <boost/filesystem.hpp>
 #  include <filesystem>
 
-// Formatter for boost::filesystem::path
+/**
+ * Since fmt10, fmt::formatter's format function should be const
+ * This macro adds the const qualifier for required version
+ * use as
+ * ```auto format(const boost::filesystem::path& p, FormatContext& ctx)
+ * FMT_CONST_IF_REQUIRED {}```
+ */
+#  if defined(FMT_VERSION) && FMT_VERSION >= 100000
+#    define FMT_CONST_IF_REQUIRED const
+#  else
+#    define FMT_CONST_IF_REQUIRED
+#  endif
+
+/**
+ * Formatter for boost::filesystem::path
+ */
 template<>
 struct fmt::formatter<boost::filesystem::path> : fmt::formatter<std::string>
 {
   template<typename FormatContext>
-  auto format(const boost::filesystem::path & p, FormatContext & ctx)
+  auto format(const boost::filesystem::path & p, FormatContext & ctx) FMT_CONST_IF_REQUIRED
   {
     return fmt::formatter<std::string>::format(p.string(), ctx);
   }
 };
 
-// Formatter for std::filesystem::path
+/**
+ * Formatter for std::filesystem::path
+ */
 template<>
 struct fmt::formatter<std::filesystem::path> : fmt::formatter<std::string>
 {
   template<typename FormatContext>
-  auto format(const std::filesystem::path & p, FormatContext & ctx)
+  auto format(const std::filesystem::path & p, FormatContext & ctx) FMT_CONST_IF_REQUIRED
   {
     return fmt::formatter<std::string>::format(p.string(), ctx);
   }
