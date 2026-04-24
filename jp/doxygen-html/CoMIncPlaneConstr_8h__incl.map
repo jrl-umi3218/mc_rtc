@@ -1,52 +1,52 @@
 <map id="include/mc_solver/CoMIncPlaneConstr.h" name="include/mc_solver/CoMIncPlaneConstr.h">
-<area shape="rect" id="node1" title=" " alt="" coords="2804,5,2996,47"/>
-<area shape="rect" id="node2" href="$ConstraintSet_8h.html" title=" " alt="" coords="2737,95,2930,121"/>
-<area shape="rect" id="node24" href="$deprecated_8h.html" title=" " alt="" coords="711,393,865,420"/>
-<area shape="rect" id="node48" href="$polygon__utils_8h.html" title=" " alt="" coords="2873,244,3063,271"/>
-<area shape="rect" id="node50" href="$void__ptr_8h.html" title=" " alt="" coords="3019,169,3154,196"/>
-<area shape="rect" id="node3" href="$QPSolver_8h.html" title=" " alt="" coords="2109,169,2272,196"/>
-<area shape="rect" id="node15" title=" " alt="" coords="2411,767,2488,793"/>
-<area shape="rect" id="node4" href="$include_2mc__solver_2api_8h.html" title=" " alt="" coords="740,244,865,271"/>
-<area shape="rect" id="node5" href="$include_2mc__control_2api_8h.html" title=" " alt="" coords="2291,244,2421,271"/>
-<area shape="rect" id="node6" href="$mc__rbdyn_2Contact_8h.html" title=" " alt="" coords="2115,244,2267,271"/>
-<area shape="rect" id="node37" href="$pragma_8h.html" title=" " alt="" coords="1019,468,1151,495"/>
-<area shape="rect" id="node43" href="$Robots_8h.html" title=" " alt="" coords="2552,319,2699,345"/>
-<area shape="rect" id="node7" href="$include_2mc__rbdyn_2api_8h.html" title=" " alt="" coords="2335,319,2457,345"/>
-<area shape="rect" id="node8" href="$mc__rtc_2Configuration_8h.html" title=" " alt="" coords="1567,319,1737,345"/>
-<area shape="rect" id="node13" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag$SpaceVecAlg.html.html" title=" " alt="" coords="2120,617,2312,644"/>
-<area shape="rect" id="node42" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag$QPContacts_8h.html.html" title=" " alt="" coords="2060,319,2209,345"/>
-<area shape="rect" id="node9" href="$MessagePackBuilder_8h.html" title=" " alt="" coords="1741,393,1955,420"/>
-<area shape="rect" id="node11" href="$Gains_8h.html" title=" " alt="" coords="1584,468,1723,495"/>
-<area shape="rect" id="node12" title=" " alt="" coords="1689,692,1781,719"/>
-<area shape="rect" id="node17" title=" " alt="" coords="1453,468,1509,495"/>
-<area shape="rect" id="node18" title=" " alt="" coords="1950,468,2037,495"/>
-<area shape="rect" id="node19" title=" " alt="" coords="2061,468,2112,495"/>
-<area shape="rect" id="node20" title=" " alt="" coords="2136,468,2179,495"/>
-<area shape="rect" id="node21" title=" " alt="" coords="1176,468,1235,495"/>
-<area shape="rect" id="node22" title=" " alt="" coords="1310,468,1378,495"/>
-<area shape="rect" id="node23" title=" " alt="" coords="2355,468,2418,495"/>
-<area shape="rect" id="node31" title=" " alt="" coords="733,543,864,569"/>
-<area shape="rect" id="node36" href="$rpy__utils_8h.html" title=" " alt="" coords="1405,393,1563,420"/>
-<area shape="rect" id="node39" title=" " alt="" coords="2512,468,2587,495"/>
-<area shape="rect" id="node40" title=" " alt="" coords="1093,393,1190,420"/>
-<area shape="rect" id="node41" title=" " alt="" coords="1215,393,1329,420"/>
-<area shape="rect" id="node10" href="$utils__api_8h.html" title=" " alt="" coords="889,543,1026,569"/>
-<area shape="rect" id="node14" href="$mc__rbdyn_2fwd_8h.html" title=" " alt="" coords="2226,692,2283,719"/>
-<area shape="rect" id="node16" href="$mc__tvm_2fwd_8h.html" title=" " alt="" coords="2329,692,2386,719"/>
-<area shape="rect" id="node25" href="$logging_8h.html" title=" " alt="" coords="553,468,684,495"/>
-<area shape="rect" id="node35" title=" " alt="" coords="1050,543,1257,569"/>
-<area shape="rect" id="node26" href="$fmt__formatters_8h.html" title=" " alt="" coords="528,543,709,569"/>
-<area shape="rect" id="node32" title=" " alt="" coords="43,543,175,569"/>
-<area shape="rect" id="node33" title=" " alt="" coords="199,543,321,569"/>
-<area shape="rect" id="node34" title=" " alt="" coords="345,543,503,569"/>
-<area shape="rect" id="node27" href="$constants_8h.html" title=" " alt="" coords="1526,617,1671,644"/>
-<area shape="rect" id="node28" title=" " alt="" coords="431,617,537,644"/>
-<area shape="rect" id="node29" title=" " alt="" coords="561,617,676,644"/>
-<area shape="rect" id="node30" title=" " alt="" coords="701,617,806,644"/>
-<area shape="rect" id="node38" href="$pp__id_8h.html" title=" " alt="" coords="1281,543,1450,569"/>
-<area shape="rect" id="node44" href="$mc__rbdyn_2Robot_8h.html" title=" " alt="" coords="2770,393,2910,420"/>
-<area shape="rect" id="node45" href="$SignalSlot_8h.html" title=" " alt="" coords="2385,393,2532,420"/>
-<area shape="rect" id="node46" href="$iterators_8h.html" title=" " alt="" coords="2557,393,2694,420"/>
-<area shape="rect" id="node47" href="$shared_8h.html" title=" " alt="" coords="2799,692,2926,719"/>
-<area shape="rect" id="node49" title=" " alt="" coords="2885,319,3011,345"/>
+<area shape="rect" id="node1" title=" " alt="" coords="2904,5,3096,47"/>
+<area shape="rect" id="node2" href="$ConstraintSet_8h.html" title=" " alt="" coords="649,95,842,121"/>
+<area shape="rect" id="node23" href="$deprecated_8h.html" title=" " alt="" coords="2235,393,2389,420"/>
+<area shape="rect" id="node48" href="$polygon__utils_8h.html" title=" " alt="" coords="2421,244,2611,271"/>
+<area shape="rect" id="node50" href="$void__ptr_8h.html" title=" " alt="" coords="3149,169,3283,196"/>
+<area shape="rect" id="node3" href="$QPSolver_8h.html" title=" " alt="" coords="664,169,827,196"/>
+<area shape="rect" id="node15" title=" " alt="" coords="829,767,907,793"/>
+<area shape="rect" id="node4" href="$include_2mc__solver_2api_8h.html" title=" " alt="" coords="371,244,496,271"/>
+<area shape="rect" id="node5" href="$include_2mc__control_2api_8h.html" title=" " alt="" coords="520,244,651,271"/>
+<area shape="rect" id="node6" href="$mc__rbdyn_2Contact_8h.html" title=" " alt="" coords="725,244,877,271"/>
+<area shape="rect" id="node37" href="$pragma_8h.html" title=" " alt="" coords="1933,468,2065,495"/>
+<area shape="rect" id="node43" href="$Robots_8h.html" title=" " alt="" coords="135,319,281,345"/>
+<area shape="rect" id="node7" href="$include_2mc__rbdyn_2api_8h.html" title=" " alt="" coords="789,319,912,345"/>
+<area shape="rect" id="node8" href="$mc__rtc_2Configuration_8h.html" title=" " alt="" coords="1218,319,1387,345"/>
+<area shape="rect" id="node13" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag$SpaceVecAlg.html.html" title=" " alt="" coords="1340,617,1532,644"/>
+<area shape="rect" id="node42" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag$QPContacts_8h.html.html" title=" " alt="" coords="565,319,715,345"/>
+<area shape="rect" id="node9" href="$MessagePackBuilder_8h.html" title=" " alt="" coords="1195,393,1410,420"/>
+<area shape="rect" id="node11" href="$Gains_8h.html" title=" " alt="" coords="1441,468,1580,495"/>
+<area shape="rect" id="node12" title=" " alt="" coords="1465,543,1557,569"/>
+<area shape="rect" id="node16" title=" " alt="" coords="956,468,1012,495"/>
+<area shape="rect" id="node17" title=" " alt="" coords="1037,468,1123,495"/>
+<area shape="rect" id="node18" title=" " alt="" coords="1148,468,1199,495"/>
+<area shape="rect" id="node19" title=" " alt="" coords="1223,468,1265,495"/>
+<area shape="rect" id="node20" title=" " alt="" coords="1604,468,1663,495"/>
+<area shape="rect" id="node21" title=" " alt="" coords="1789,468,1857,495"/>
+<area shape="rect" id="node22" title=" " alt="" coords="767,468,830,495"/>
+<area shape="rect" id="node31" title=" " alt="" coords="2305,543,2436,569"/>
+<area shape="rect" id="node36" href="$rpy__utils_8h.html" title=" " alt="" coords="1899,393,2058,420"/>
+<area shape="rect" id="node39" title=" " alt="" coords="247,468,321,495"/>
+<area shape="rect" id="node40" title=" " alt="" coords="1587,393,1685,420"/>
+<area shape="rect" id="node41" title=" " alt="" coords="1709,393,1824,420"/>
+<area shape="rect" id="node10" href="$utils__api_8h.html" title=" " alt="" coords="2143,543,2281,569"/>
+<area shape="rect" id="node14" href="$mc__rbdyn_2fwd_8h.html" title=" " alt="" coords="1374,692,1431,719"/>
+<area shape="rect" id="node24" href="$logging_8h.html" title=" " alt="" coords="2456,468,2587,495"/>
+<area shape="rect" id="node35" title=" " alt="" coords="1861,543,2067,569"/>
+<area shape="rect" id="node25" href="$fmt__formatters_8h.html" title=" " alt="" coords="2789,543,2971,569"/>
+<area shape="rect" id="node32" title=" " alt="" coords="2995,543,3127,569"/>
+<area shape="rect" id="node33" title=" " alt="" coords="2461,543,2582,569"/>
+<area shape="rect" id="node34" title=" " alt="" coords="2606,543,2765,569"/>
+<area shape="rect" id="node26" title=" " alt="" coords="3022,617,3127,644"/>
+<area shape="rect" id="node27" title=" " alt="" coords="2455,617,2569,644"/>
+<area shape="rect" id="node28" title=" " alt="" coords="2594,617,2699,644"/>
+<area shape="rect" id="node29" title=" " alt="" coords="2723,617,2882,644"/>
+<area shape="rect" id="node30" title=" " alt="" coords="2907,617,2997,644"/>
+<area shape="rect" id="node38" href="$pp__id_8h.html" title=" " alt="" coords="1667,543,1837,569"/>
+<area shape="rect" id="node44" href="$mc__rbdyn_2Robot_8h.html" title=" " alt="" coords="139,393,279,420"/>
+<area shape="rect" id="node45" href="$SignalSlot_8h.html" title=" " alt="" coords="568,393,715,420"/>
+<area shape="rect" id="node46" href="$iterators_8h.html" title=" " alt="" coords="406,393,543,420"/>
+<area shape="rect" id="node47" href="$shared_8h.html" title=" " alt="" coords="45,692,171,719"/>
+<area shape="rect" id="node49" title=" " alt="" coords="2453,319,2579,345"/>
 </map>

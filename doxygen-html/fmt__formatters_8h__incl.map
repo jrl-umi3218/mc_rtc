@@ -1,12 +1,12 @@
 <map id="include/mc_rtc/fmt_formatters.h" name="include/mc_rtc/fmt_formatters.h">
-<area shape="rect" id="node1" title=" " alt="" coords="290,5,434,47"/>
-<area shape="rect" id="node2" href="$constants_8h.html" title=" " alt="" coords="5,95,151,121"/>
-<area shape="rect" id="node4" title=" " alt="" coords="175,95,280,121"/>
-<area shape="rect" id="node5" title=" " alt="" coords="305,95,419,121"/>
-<area shape="rect" id="node6" title=" " alt="" coords="444,95,549,121"/>
-<area shape="rect" id="node7" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag$SpaceVecAlg.html.html" title=" " alt="" coords="574,95,766,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="32,169,124,196"/>
-<area shape="rect" id="node8" href="$mc__rbdyn_2fwd_8h.html" title=" " alt="" coords="600,169,657,196"/>
-<area shape="rect" id="node10" href="$mc__tvm_2fwd_8h.html" title=" " alt="" coords="681,169,739,196"/>
-<area shape="rect" id="node9" title=" " alt="" coords="630,244,707,271"/>
+<area shape="rect" id="node1" title=" " alt="" coords="342,5,486,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,111,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="135,95,250,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="275,95,380,121"/>
+<area shape="rect" id="node5" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag$SpaceVecAlg.html.html" title=" " alt="" coords="405,95,597,121"/>
+<area shape="rect" id="node9" title=" " alt="" coords="621,95,780,121"/>
+<area shape="rect" id="node10" title=" " alt="" coords="805,95,895,121"/>
+<area shape="rect" id="node6" href="$mc__rbdyn_2fwd_8h.html" title=" " alt="" coords="431,169,488,196"/>
+<area shape="rect" id="node8" href="$mc__tvm_2fwd_8h.html" title=" " alt="" coords="512,169,569,196"/>
+<area shape="rect" id="node7" title=" " alt="" coords="461,244,538,271"/>
 </map>

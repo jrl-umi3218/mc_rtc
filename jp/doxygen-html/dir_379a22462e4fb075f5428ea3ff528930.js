@@ -26,7 +26,7 @@ var dir_379a22462e4fb075f5428ea3ff528930 =
       [ "Default< std::variant< T, Others... > >", "structmc__rtc_1_1Default_3_01std_1_1variant_3_01T_00_01Others_8_8_8_01_4_01_4.html", null ]
     ] ],
     [ "deprecated.h", "deprecated_8h.html", "deprecated_8h" ],
-    [ "fmt_formatters.h", "fmt__formatters_8h.html", "fmt__formatters_8h" ],
+    [ "fmt_formatters.h", "fmt__formatters_8h.html", null ],
     [ "gui.h", "gui_8h.html", null ],
     [ "io_utils.h", "io__utils_8h.html", "io__utils_8h" ],
     [ "iterators.h", "iterators_8h.html", [

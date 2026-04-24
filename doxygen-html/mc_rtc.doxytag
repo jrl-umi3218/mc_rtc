@@ -3203,14 +3203,6 @@
     <name>fmt_formatters.h</name>
     <path>/tmp/build-mc-rtc/src/mc_rtc/include/mc_rtc/</path>
     <filename>fmt__formatters_8h.html</filename>
-    <includes id="constants_8h" name="constants.h" local="no" imported="no">mc_rtc/constants.h</includes>
-    <member kind="define">
-      <type>#define</type>
-      <name>MC_FMT_STREAMED</name>
-      <anchorfile>fmt__formatters_8h.html</anchorfile>
-      <anchor>a3f0e2902b9317d3be03056aaf139412d</anchor>
-      <arglist>(X)</arglist>
-    </member>
   </compound>
   <compound kind="file">
     <name>gui.h</name>
