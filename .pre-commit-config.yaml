@@ -5,6 +5,10 @@ exclude: |
       3rd-party/.*|
       doc/_i18n/en/tutorials/introduction/multi-robot-controller/p3.py|
       doc/_i18n/jp/tutorials/introduction/multi-robot-controller/p3.py|
+      doc/_i18n/en/tutorials/introduction/dual-arm-controller/p2.py|
+      doc/_i18n/jp/tutorials/introduction/dual-arm-controller/p2.py|
+      doc/_i18n/en/tutorials/introduction/dual-arm-controller/p3.py|
+      doc/_i18n/jp/tutorials/introduction/dual-arm-controller/p3.py|
       .*.svg
   )$
 repos:
