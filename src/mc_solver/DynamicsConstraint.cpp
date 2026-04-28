@@ -19,7 +19,8 @@ namespace mc_solver
 static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots,
                                          unsigned int robotIndex,
                                          double timeStep,
-                                         bool infTorque)
+                                         bool infTorque,
+                                         bool compensateExtTorques)
 {
   const auto & robot = robots.robot(robotIndex);
   std::vector<std::vector<double>> tl = robot.tl();
@@ -54,33 +55,69 @@ static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots,
     {
       sjList.push_back(tasks::qp::SpringJoint(flex.jointName, flex.K, flex.C, flex.O));
     }
-    return mc_rtc::make_void_ptr<tasks::qp::MotionSpringConstr>(robots.mbs(), static_cast<int>(robotIndex), tBound,
-                                                                tDBound, timeStep, sjList);
+    if(compensateExtTorques)
+    {
+      if(robot.compensationTorques())
+      {
+        return mc_rtc::make_void_ptr<tasks::qp::MotionSpringConstr>(robots.mbs(), static_cast<int>(robotIndex), tBound,
+                                                                    tDBound, timeStep, sjList,
+                                                                    robot.compensationTorques().value());
+      }
+      else
+      {
+
+        return mc_rtc::make_void_ptr<tasks::qp::MotionSpringConstr>(robots.mbs(), static_cast<int>(robotIndex), tBound,
+                                                                    tDBound, timeStep, sjList, robot.externalTorques());
+      }
+    }
+    else
+    {
+      return mc_rtc::make_void_ptr<tasks::qp::MotionSpringConstr>(robots.mbs(), static_cast<int>(robotIndex), tBound,
+                                                                  tDBound, timeStep, sjList);
+    }
   }
   else
   {
-    return mc_rtc::make_void_ptr<tasks::qp::MotionConstr>(robots.mbs(), static_cast<int>(robotIndex), tBound, tDBound,
-                                                          timeStep);
+    if(compensateExtTorques)
+    {
+      if(robot.compensationTorques())
+      {
+        return mc_rtc::make_void_ptr<tasks::qp::MotionConstr>(robots.mbs(), static_cast<int>(robotIndex), tBound,
+                                                              tDBound, timeStep, robot.compensationTorques().value());
+      }
+      else
+      {
+        return mc_rtc::make_void_ptr<tasks::qp::MotionConstr>(robots.mbs(), static_cast<int>(robotIndex), tBound,
+                                                              tDBound, timeStep, robot.externalTorques());
+      }
+    }
+    else
+    {
+      return mc_rtc::make_void_ptr<tasks::qp::MotionConstr>(robots.mbs(), static_cast<int>(robotIndex), tBound, tDBound,
+                                                            timeStep);
+    }
   }
 }
 
-mc_rtc::void_ptr initialize_tvm(const mc_rbdyn::Robot & robot)
+mc_rtc::void_ptr initialize_tvm(const mc_rbdyn::Robot & robot, bool compensateExtTorques)
 {
-  return mc_rtc::make_void_ptr<mc_tvm::DynamicFunctionPtr>(std::make_shared<mc_tvm::DynamicFunction>(robot));
+  return mc_rtc::make_void_ptr<mc_tvm::DynamicFunctionPtr>(
+      std::make_shared<mc_tvm::DynamicFunction>(robot, compensateExtTorques));
 }
 
 static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
                                    const mc_rbdyn::Robots & robots,
                                    unsigned int robotIndex,
                                    double timeStep,
-                                   bool infTorque)
+                                   bool infTorque,
+                                   bool compensateExtTorques)
 {
   switch(backend)
   {
     case QPSolver::Backend::Tasks:
-      return initialize_tasks(robots, robotIndex, timeStep, infTorque);
+      return initialize_tasks(robots, robotIndex, timeStep, infTorque, compensateExtTorques);
     case QPSolver::Backend::TVM:
-      return initialize_tvm(robots.robot(robotIndex));
+      return initialize_tvm(robots.robot(robotIndex), compensateExtTorques);
     default:
       mc_rtc::log::error_and_throw("[DynamicsConstraint] Not implemented for solver backend: {}", backend);
   }
@@ -89,9 +126,11 @@ static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
 DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
                                        unsigned int robotIndex,
                                        double timeStep,
-                                       bool infTorque)
+                                       bool infTorque,
+                                       bool compensateExtTorques)
 : KinematicsConstraint(robots, robotIndex, timeStep),
-  motion_constr_(initialize(backend_, robots, robotIndex, timeStep, infTorque)), robotIndex_(robotIndex)
+  motion_constr_(initialize(backend_, robots, robotIndex, timeStep, infTorque, compensateExtTorques)),
+  robotIndex_(robotIndex)
 {
 }
 
@@ -100,10 +139,43 @@ DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
                                        double timeStep,
                                        const std::array<double, 3> & damper,
                                        double velocityPercent,
-                                       bool infTorque)
+                                       bool infTorque,
+                                       bool compensateExtTorques)
 : KinematicsConstraint(robots, robotIndex, timeStep, damper, velocityPercent),
-  motion_constr_(initialize(backend_, robots, robotIndex, timeStep, infTorque)), robotIndex_(robotIndex)
+  motion_constr_(initialize(backend_, robots, robotIndex, timeStep, infTorque, compensateExtTorques)),
+  robotIndex_(robotIndex)
 {
+}
+
+DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
+                                       unsigned int robotIndex,
+                                       double timeStep,
+                                       const std::array<double, 3> & damper,
+                                       const std::array<double, 2> & damperSecond,
+                                       double velocityPercent,
+                                       bool infTorque,
+                                       bool compensateExtTorques)
+: KinematicsConstraint(robots, robotIndex, timeStep, damper, damperSecond, velocityPercent),
+  motion_constr_(initialize(backend_, robots, robotIndex, timeStep, infTorque, compensateExtTorques)),
+  robotIndex_(robotIndex)
+{
+}
+
+void DynamicsConstraint::update(QPSolver & solver)
+{
+  if(backend_ == QPSolver::Backend::Tasks)
+  {
+    auto & robot = solver.robot(robotIndex_);
+    if(robot.compensationTorques())
+    {
+      static_cast<tasks::qp::MotionConstr *>(motion_constr_.get())
+          ->setExternalTorques(robot.compensationTorques().value());
+    }
+    else
+    {
+      static_cast<tasks::qp::MotionConstr *>(motion_constr_.get())->setExternalTorques(robot.externalTorques());
+    }
+  }
 }
 
 void DynamicsConstraint::addToSolverImpl(QPSolver & solver)
