@@ -360,11 +360,11 @@ target_compile_definitions(mc_rbdyn PUBLIC -DUSE_UNSTABLE_GEOS_CPP_API)
 # qhull
 if(MC_RTC_BUILD_STATIC)
   target_link_libraries(
-    mc_rbdyn PRIVATE "-Wl,--no-whole-archive" qhullstatic_r "-Wl,--no-whole-archive"
-                     qhullcpp
+    mc_rbdyn PRIVATE "-Wl,--no-whole-archive" Qhull::qhullstatic_r
+                     "-Wl,--no-whole-archive" Qhull::qhullcpp
   )
 else()
-  target_link_libraries(mc_rbdyn PRIVATE qhullstatic_r qhullcpp)
+  target_link_libraries(mc_rbdyn PRIVATE Qhull::qhullstatic_r Qhull::qhullcpp)
 endif()
 
 if(TARGET mc_rtc_3rd_party::ROS)
