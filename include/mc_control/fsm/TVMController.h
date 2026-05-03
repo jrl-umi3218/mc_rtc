@@ -12,7 +12,7 @@ namespace mc_control::fsm
 {
 
 /** An FSM Controller that uses the TVM backend */
-struct MC_CONTROL_FSM_DLLAPI TVMController
+struct MC_CONTROL_DLLAPI TVMController
 : public details::BackendSpecificController<MCController::Backend::TVM, mc_solver::TVMQPSolver>
 {
   using details::BackendSpecificController<MCController::Backend::TVM,

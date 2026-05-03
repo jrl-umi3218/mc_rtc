@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
+#include <mc_rbdyn/api.h>
 #include <mc_tvm/fwd.h>
 
 #include <mc_rbdyn/fwd.h>
@@ -36,7 +36,7 @@ namespace mc_tvm
  * - Jacobian
  *
  */
-class MC_TVM_DLLAPI ContactFunction : public tvm::function::abstract::Function
+class MC_RBDYN_DLLAPI ContactFunction : public tvm::function::abstract::Function
 {
 public:
   using Output = tvm::function::abstract::Function::Output;

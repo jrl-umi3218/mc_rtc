@@ -29,7 +29,7 @@ struct Controller;
  * - self-managed: handles transitions thanks to a TransitionMap
  *
  */
-struct MC_CONTROL_FSM_DLLAPI Executor
+struct MC_CONTROL_DLLAPI Executor
 {
   /** Executor should not be copied or moved
    *

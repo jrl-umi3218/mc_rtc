@@ -45,7 +45,7 @@ namespace mc_tvm
  * - Dynamics: depends on FA + normalAcceleration (i.e. everything)
  *
  */
-struct MC_TVM_DLLAPI Robot : public tvm::graph::abstract::Node<Robot>
+struct MC_RBDYN_DLLAPI Robot : public tvm::graph::abstract::Node<Robot>
 {
   SET_OUTPUTS(Robot, FK, FV, FA, NormalAcceleration, tau, H, C)
   SET_UPDATES(Robot, FK, FV, FA, NormalAcceleration, H, C)

@@ -23,7 +23,7 @@ namespace mc_tvm
  * - JDot: derivative of the jacobian of the momentum in world coordinates
  *
  */
-struct MC_TVM_DLLAPI Momentum : public tvm::graph::abstract::Node<Momentum>
+struct MC_RBDYN_DLLAPI Momentum : public tvm::graph::abstract::Node<Momentum>
 {
   SET_OUTPUTS(Momentum, Momentum, Jacobian, Velocity, NormalAcceleration, JDot)
   SET_UPDATES(Momentum, Momentum, Jacobian, NormalAcceleration, JDot)

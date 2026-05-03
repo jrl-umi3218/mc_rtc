@@ -58,49 +58,51 @@ nanobind_add_module(
 )
 
 jrl_check_python_module_name(_mc_rtc)
-target_link_libraries(_mc_rtc PRIVATE mc_rtc::mc_rtc_utils mc_rtc::mc_rbdyn mc_rtc::mc_tasks mc_rtc::mc_solver mc_rtc::mc_control)
+target_link_libraries(
+  _mc_rtc PRIVATE mc_rtc::mc_rtc_utils mc_rtc::mc_rbdyn mc_rtc::mc_tasks
+                  mc_rtc::mc_solver mc_rtc::mc_control
+)
 target_include_directories(
   _mc_rtc PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 jrl_target_set_default_compile_options(_mc_rtc PRIVATE)
-jrl_target_set_output_directory(_mc_rtc OUTPUT_DIRECTORY
-                                ${CMAKE_BINARY_DIR}/lib/site-packages/mc_rtc)
-
+jrl_target_set_output_directory(
+  _mc_rtc OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib/site-packages/mc_rtc
+)
 
 set(MC_RTC_MODULES mc_rtc mc_rbdyn mc_control mc_tasks mc_solver)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/__init__.py
-               ${CMAKE_BINARY_DIR}/lib/site-packages/mc_rtc/__init__.py COPYONLY)
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/__init__.py
+  ${CMAKE_BINARY_DIR}/lib/site-packages/mc_rtc/__init__.py COPYONLY
+)
 
 foreach(MODULE IN LISTS MC_RTC_MODULES)
-    set(MOD_DIR "${CMAKE_BINARY_DIR}/lib/site-packages/mc_rtc/${MODULE}")
-    file(MAKE_DIRECTORY "${MOD_DIR}")
+  set(MOD_DIR "${CMAKE_BINARY_DIR}/lib/site-packages/mc_rtc/${MODULE}")
+  file(MAKE_DIRECTORY "${MOD_DIR}")
 
-    set(MODULE_NAME ${MODULE})
-    configure_file(
-        ${CMAKE_CURRENT_SOURCE_DIR}/__init__stub.conf.py
-        ${MOD_DIR}/__init__.py
-        @ONLY
-    )
+  set(MODULE_NAME ${MODULE})
+  configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/__init__stub.conf.py ${MOD_DIR}/__init__.py @ONLY
+  )
 
-    nanobind_add_stub(
-        mc_rtc_${MODULE}_stub
-        MODULE
-        mc_rtc._mc_rtc.${MODULE}
-        OUTPUT
-        ${MOD_DIR}/__init__.pyi
-        MARKER_FILE
-        ${MOD_DIR}/py.typed
-        PYTHON_PATH
-        ${CMAKE_BINARY_DIR}/lib/site-packages
-        DEPENDS
-        _mc_rtc
-        VERBOSE
-    )
+  nanobind_add_stub(
+    mc_rtc_${MODULE}_stub
+    MODULE
+    mc_rtc._mc_rtc.${MODULE}
+    OUTPUT
+    ${MOD_DIR}/__init__.pyi
+    MARKER_FILE
+    ${MOD_DIR}/py.typed
+    PYTHON_PATH
+    ${CMAKE_BINARY_DIR}/lib/site-packages
+    DEPENDS
+    _mc_rtc
+    VERBOSE
+  )
 endforeach()
 
-jrl_python_compile_all(DIRECTORY ${CMAKE_BINARY_DIR}/lib/site-packages/mc_rtc
-                       VERBOSE)
+jrl_python_compile_all(DIRECTORY ${CMAKE_BINARY_DIR}/lib/site-packages/mc_rtc VERBOSE)
 
 jrl_python_compute_install_dir(python_install_dir)
 install(
@@ -112,4 +114,5 @@ install(
   PATTERN "*.pyi"
   PATTERN "*.typed"
   PATTERN "*.so"
-  PATTERN "*.pyd")
+  PATTERN "*.pyd"
+)

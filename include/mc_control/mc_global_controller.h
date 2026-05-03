@@ -331,11 +331,11 @@ public:
    *
    * \deprecated in favor of setSensorLinearAcceleration(const Eigen::Vector3d &);
    */
-  MC_RTC_DEPRECATED void setSensorAcceleration(const Eigen::Vector3d & acc);
+  MC_CONTROL_DEPRECATED void setSensorAcceleration(const Eigen::Vector3d & acc);
   /*!
    * \deprecated in favor of setSensorLinearAccelerations(const std::map<std::string, Eigen::Vector3d> &);
    **/
-  MC_RTC_DEPRECATED void setSensorAccelerations(const std::map<std::string, Eigen::Vector3d> & accels);
+  MC_CONTROL_DEPRECATED void setSensorAccelerations(const std::map<std::string, Eigen::Vector3d> & accels);
 
   /*! \brief Sets the main robot linear acceleration (control+real)
    *
@@ -488,7 +488,8 @@ public:
   /*!
    * \deprecated in favor of setWrenches(const std::string &, const std::map<std::string, sva::ForceVecd> &)
    **/
-  MC_RTC_DEPRECATED void setWrenches(unsigned int robotIndex, const std::map<std::string, sva::ForceVecd> & wrenches);
+  MC_CONTROL_DEPRECATED void setWrenches(unsigned int robotIndex,
+                                         const std::map<std::string, sva::ForceVecd> & wrenches);
 
   /*! \brief Motor temperature reading provided by the JointSensor for the main robot (sets control+real)
    *
@@ -656,8 +657,8 @@ protected:
    * \deprecated in favor of void setSensorLinearAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string,
    *Eigen::Vector3d> &);
    **/
-  MC_RTC_DEPRECATED void setSensorAccelerations(mc_rbdyn::Robot & robot,
-                                                const std::map<std::string, Eigen::Vector3d> & accels);
+  MC_CONTROL_DEPRECATED void setSensorAccelerations(mc_rbdyn::Robot & robot,
+                                                    const std::map<std::string, Eigen::Vector3d> & accels);
   /*! \brief Set multiple body sensors' orientation for a given robot */
   void setSensorOrientations(mc_rbdyn::Robot & robot, const QuaternionMap & oris);
   /*! \brief Set multiple body sensor's linear velocities for a given robot */

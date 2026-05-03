@@ -130,15 +130,15 @@ JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics) : RobotModule
 
 extern "C"
 {
-  ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names)
+  MC_ROBOTS_JVRC1_DLLAPI void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names)
   {
     names = {"JVRC1", "JVRC1Fixed", "JVRC1NoHands", "JVRC1NoHandsFixed"};
   }
-  ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
+  MC_ROBOTS_JVRC1_DLLAPI void destroy(mc_rbdyn::RobotModule * ptr)
   {
     delete ptr;
   }
-  ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & name)
+  MC_ROBOTS_JVRC1_DLLAPI mc_rbdyn::RobotModule * create(const std::string & name)
   {
     if(name == "JVRC1") { return new mc_robots::JVRC1RobotModule(false); }
     else if(name == "JVRC1Fixed") { return new mc_robots::JVRC1RobotModule(true); }

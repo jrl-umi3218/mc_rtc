@@ -4,8 +4,8 @@
 
 #pragma once
 
+#include <mc_control/api.h>
 #include <mc_observers/Observer.h>
-#include <mc_observers/api.h>
 #include <mc_rtc/gui/StateBuilder.h>
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/type_name.h>
@@ -34,7 +34,7 @@ namespace mc_observers
  * the real robots instances used by the controller, while others may only be used for logging estimated values for
  * comparison purposes.
  */
-struct MC_OBSERVERS_DLLAPI ObserverPipeline
+struct MC_CONTROL_DLLAPI ObserverPipeline
 {
   /** Holds an observer and its configuration within the ObserverPipeline */
   struct PipelineObserver

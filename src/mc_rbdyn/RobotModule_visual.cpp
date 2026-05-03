@@ -241,10 +241,11 @@ RobotModulePtr robotModuleFromVisual(const std::string & name, const mc_rtc::Con
     if(auto mass_ = inertiaC->find("mass")) { mass = *mass_; }
     else
     {
-      mc_rtc::log::error_and_throw("robotModuleFromVisualConfig for visual {}: inertia provided but no mass. You may "
-                                   "ommit other inertia fields, in which case a default inertia will be computed based "
-                                   "on the type of geometry and assuming an homogeneous mass distribution",
-                                   name);
+      mc_rtc::log::error_and_throw(
+          "robotModuleFromVisualConfig for visual {}: inertia provided but no mass. You may "
+          "ommit other inertia fields, in which case a default inertia will be computed based "
+          "on the type of geometry and assuming an homogeneous mass distribution",
+          name);
     }
 
     // explicit inertia is provided
@@ -259,9 +260,10 @@ RobotModulePtr robotModuleFromVisual(const std::string & name, const mc_rtc::Con
   }
   else
   {
-    mc_rtc::log::error_and_throw("robotModuleFromVisualConfig for visual {}: you must provide an inertia with at least "
-                                 "the mass, e.g:\ninertia:\n  mass: 2.0",
-                                 name);
+    mc_rtc::log::error_and_throw(
+        "robotModuleFromVisualConfig for visual {}: you must provide an inertia with at least "
+        "the mass, e.g:\ninertia:\n  mass: 2.0",
+        name);
   }
 
   rbd::parsers::Visual visual = config;

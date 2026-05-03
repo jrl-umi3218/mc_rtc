@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_control/fsm/api.h>
+#include <mc_control/api.h>
 
 #include <string>
 
@@ -21,7 +21,7 @@ namespace fsm
  * A type of transition dictates how the transition should be triggered.
  *
  */
-struct MC_CONTROL_FSM_DLLAPI Transition
+struct MC_CONTROL_DLLAPI Transition
 {
   std::string state;
   /** Type of transition */

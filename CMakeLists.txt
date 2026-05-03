@@ -10,7 +10,6 @@ if(POLICY CMP0054)
   cmake_policy(SET CMP0054 NEW)
 endif()
 
-set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
 set(PROJECT_VERSION 2.14.0)
 set(PROJECT_URL https://github.com/jrl-umi3218/mc_rtc)
@@ -32,12 +31,24 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(jrl-cmakemodules 0.2.0 CONFIG QUIET)
 
 include(cmake/get-jrl-cmakemodules.cmake)
-include(cmake/base.cmake)
 jrl_configure_defaults()
+# XXX: Legacy variables that used to be set by the old jrl-cmakemodules in base.cmake We
+# should probably remove them
+set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
+set(MC_RTC_SOURCE_DIR "${PROJECT_DIR}")
+set(CMAKE_INSTALL_DOCDIR "${CMAKE_INSTALL_PREFIX}/share/doc/${PROJECT_NAME}")
+include(GNUInstallDirs)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-project(${PROJECT_NAME} C CXX)
+project(
+  mc_rtc
+  VERSION 2.14.0
+  DESCRIPTION
+    "mc_rtc is an interface for simulated and real robotic systems suitable for real-time control"
+  HOMEPAGE_URL "https://jrl.cnrs.fr/mc_rtc"
+  LANGUAGES C CXX
+)
 set(MC_RTC_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
 
 if(NOT DEFINED MC_RTC_INSTALL_PREFIX)
@@ -84,13 +95,19 @@ jrl_option(NANOBIND_BINDINGS "Build nanobind Python bindings" ON)
 
 jrl_option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 
-jrl_option(MC_RTC_BUILD_STATIC
-       "Build a static version of mc_rtc, this has no support for pluggable components"
-       OFF
+jrl_option(
+  MC_RTC_BUILD_STATIC
+  "Build a static version of mc_rtc, this has no support for pluggable components" OFF
 )
 jrl_option(MC_RTC_DISABLE_NETWORK "Build without network support" OFF)
-jrl_option(MC_RTC_DEVELOPER_MODE
-       "Disable exact version embedding to speed up recompilations" OFF
+jrl_option(
+  MC_RTC_DEVELOPER_MODE "Disable exact version embedding to speed up recompilations"
+  OFF
+)
+jrl_option(
+  MC_RTC_HONOR_INSTALL_PREFIX
+  "Honor CMAKE_INSTALL_PREFIX for install locations instead of using a custom prefix (MC_RTC_INSTALL_PREFIX)"
+  OFF
 )
 
 jrl_option(DISABLE_ROS "Build without ROS support (even if ROS was found)" OFF)
@@ -231,7 +248,7 @@ endif()
 add_subdirectory(3rd-party/mpack)
 
 # yaml-cpp
-add_project_dependency(yaml-cpp 0.5.0 REQUIRED)
+jrl_find_package(yaml-cpp 0.5.0 REQUIRED)
 if(TARGET yaml-cpp::yaml-cpp)
   set(YAML_CPP_TARGET yaml-cpp::yaml-cpp)
 else()
@@ -259,7 +276,7 @@ else()
 endif()
 
 # spdlog
-add_project_dependency(spdlog 1.5.0 REQUIRED)
+jrl_find_package(spdlog 1.5.0 REQUIRED)
 
 macro(find_description_package PACKAGE)
   set(PACKAGE_PATH_VAR "${PACKAGE}_PATH")
@@ -411,3 +428,7 @@ include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtc_fsm_states.cmake\")
 include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtc_observers.cmake\")"
   )
 endif()
+
+jrl_export_package()
+jrl_print_dependencies_summary()
+jrl_print_options_summary()

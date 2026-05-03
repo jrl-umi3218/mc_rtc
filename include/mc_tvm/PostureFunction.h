@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
+#include <mc_rbdyn/api.h>
 
 #include <mc_rbdyn/fwd.h>
 
@@ -14,7 +14,7 @@ namespace mc_tvm
 {
 
 /** This class implements a posture function for a given robot */
-class MC_TVM_DLLAPI PostureFunction : public tvm::function::IdentityFunction
+class MC_RBDYN_DLLAPI PostureFunction : public tvm::function::IdentityFunction
 {
 public:
   SET_UPDATES(PostureFunction, Value, Velocity)

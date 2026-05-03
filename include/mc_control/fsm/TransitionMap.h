@@ -40,7 +40,7 @@ namespace fsm
  * - "Strict": require user input no matter what
  *
  */
-struct MC_CONTROL_FSM_DLLAPI TransitionMap
+struct MC_CONTROL_DLLAPI TransitionMap
 {
   /** A (state, output) pair is the origin of a transition */
   using origin_t = std::pair<std::string, std::string>;

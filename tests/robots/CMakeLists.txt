@@ -21,8 +21,8 @@ macro(robot_test_common NAME)
     ${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in
     ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf
   )
-  # Adding a project configuration file (for MSVC only)
-  generate_msvc_dot_user_file(${NAME})
+  # # Adding a project configuration file (for MSVC only)
+  # generate_msvc_dot_user_file(${NAME})
 endmacro()
 
 macro(robot_test_construction_failure NAME)

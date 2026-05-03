@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
+#include <mc_rbdyn/api.h>
 #include <mc_tvm/fwd.h>
 
 #include <mc_rbdyn/fwd.h>
@@ -17,7 +17,7 @@ namespace mc_tvm
 {
 
 /** This class implements a function to compute the local velocity of a given frame */
-struct MC_TVM_DLLAPI FrameVelocity : public tvm::function::abstract::Function
+struct MC_RBDYN_DLLAPI FrameVelocity : public tvm::function::abstract::Function
 {
   SET_UPDATES(FrameVelocity, Value, Velocity, Jacobian)
 

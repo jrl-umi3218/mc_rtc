@@ -3,23 +3,26 @@
 #
 
 macro(add_robot robot_base)
+  set(lib_name "mc_robots_${robot_base}")
   set(robot_SRC "${CMAKE_CURRENT_SOURCE_DIR}/${robot_base}.cpp")
-  set(robot_HDR "${MC_RTC_SOURCE_DIR}/include/mc_robots/api.h"
-                "${CMAKE_CURRENT_SOURCE_DIR}/${robot_base}.h"
-  )
+  set(robot_HDR "${CMAKE_CURRENT_SOURCE_DIR}/${robot_base}.h")
   if(MC_RTC_BUILD_STATIC)
     target_sources(mc_rbdyn PRIVATE ${robot_SRC} ${robot_HDR})
     target_include_directories(mc_rbdyn PRIVATE "../../include/mc_robots")
   else()
-    add_library(${robot_base} SHARED ${robot_SRC} ${robot_HDR})
-    set_target_properties(
-      ${robot_base} PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS" PREFIX ""
+    add_library(${lib_name} SHARED ${robot_SRC} ${robot_HDR})
+    jrl_target_generate_config_header(
+      ${lib_name} PUBLIC VERSION "${PROJECT_VERSION}" FILENAME
+      "mc_robots/${robot_base}/api.h"
     )
-    set_target_properties(${robot_base} PROPERTIES FOLDER robots)
-    target_link_libraries(${robot_base} PUBLIC mc_rbdyn)
-    target_include_directories(${robot_base} PRIVATE "../../include/mc_robots")
+    jrl_target_headers(
+      ${lib_name} PRIVATE HEADERS ${robot_HDR} BASE_DIR ${PROJECT_DIR}/src
+    )
+    set_target_properties(${lib_name} PROPERTIES FOLDER robots)
+    target_link_libraries(${lib_name} PUBLIC mc_rbdyn)
+    target_include_directories(${lib_name} PRIVATE "../../include/mc_robots")
     install(
-      TARGETS ${robot_base}
+      TARGETS ${lib_name}
       ARCHIVE
         DESTINATION
           "${MC_ROBOTS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>"

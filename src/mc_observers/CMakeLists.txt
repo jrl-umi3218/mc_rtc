@@ -1,8 +1,6 @@
 macro(add_observer observer_base)
   set(observer_SRC ${CMAKE_CURRENT_SOURCE_DIR}/${observer_base}.cpp)
-  set(observer_HDR ${MC_RTC_SOURCE_DIR}/include/mc_observers/api.h
-                   ${MC_RTC_SOURCE_DIR}/include/mc_observers/${observer_base}.h
-  )
+  set(observer_HDR ${MC_RTC_SOURCE_DIR}/include/mc_observers/${observer_base}.h)
   if(MC_RTC_BUILD_STATIC)
     target_sources(mc_observers PRIVATE ${observer_SRC} ${observer_HDR})
     target_include_directories(

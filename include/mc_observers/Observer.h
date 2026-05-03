@@ -6,7 +6,7 @@
 
 /*! Interface used to load observers */
 
-#include <mc_observers/api.h>
+#include <mc_control/api.h>
 #include <mc_rtc/gui/StateBuilder.h>
 #include <mc_rtc/log/Logger.h>
 
@@ -47,7 +47,7 @@ namespace mc_observers
  * access properties of the robots, sensors, datastore, logger, gui,
  * and set its estimation results to the controller's realRobots instances.
  */
-struct MC_OBSERVERS_DLLAPI Observer
+struct MC_CONTROL_DLLAPI Observer
 {
   Observer(const std::string & type, double dt) : type_(type), dt_(dt) {}
   virtual ~Observer() = default;

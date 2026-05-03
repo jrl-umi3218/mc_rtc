@@ -185,10 +185,11 @@ void Loader::load_libraries(const std::string & class_name,
                             Loader::callback_t cb)
 {
   if(verbose)
-    mc_rtc::log::info("\n\n-----\n"
-                      "Looking for libraries containing matching symbol \"{}\" in the following paths: [{}]\n"
-                      "-----\n",
-                      class_name, mc_rtc::io::to_string(pathsIn));
+    mc_rtc::log::info(
+        "\n\n-----\n"
+        "Looking for libraries containing matching symbol \"{}\" in the following paths: [{}]\n"
+        "-----\n",
+        class_name, mc_rtc::io::to_string(pathsIn));
 #ifndef MC_RTC_BUILD_STATIC
   std::vector<std::string> debug_paths;
   auto pathsRef = std::cref(pathsIn);
@@ -240,10 +241,11 @@ void Loader::load_libraries(const std::string & class_name,
             if(orig_p != p)
             {
               if(verbose)
-                mc_rtc::log::warning("Multiple files export the same symbol \"{}\":\n"
-                                     "     + Using current declaration in: \"{}\"\n"
-                                     "     - Duplicate declaration in:     \"{}\"",
-                                     cn, p.string(), out[cn]->path());
+                mc_rtc::log::warning(
+                    "Multiple files export the same symbol \"{}\":\n"
+                    "     + Using current declaration in: \"{}\"\n"
+                    "     - Duplicate declaration in:     \"{}\"",
+                    cn, p.string(), out[cn]->path());
               continue;
             }
           }

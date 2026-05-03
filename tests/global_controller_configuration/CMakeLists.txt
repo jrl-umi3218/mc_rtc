@@ -53,4 +53,4 @@ set_target_properties(
 add_test(NAME testGlobalControllerConfiguration
          COMMAND testGlobalControllerConfiguration
 )
-generate_msvc_dot_user_file(testGlobalControllerConfiguration)
+# generate_msvc_dot_user_file(testGlobalControllerConfiguration)

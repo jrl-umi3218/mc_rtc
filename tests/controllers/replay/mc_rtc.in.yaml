@@ -14,7 +14,7 @@ LogTemplate: mc-rtc-test
 ClearControllerModulePath: true
 ControllerModulePaths: ['$<TARGET_FILE_DIR:TestReplayController>']
 ClearRobotModulePath: true
-RobotModulePaths: ['$<TARGET_FILE_DIR:jvrc1>']
+RobotModulePaths: ['$<TARGET_FILE_DIR:mc_robots_jvrc1>']
 ClearObserverModulePath: true
 ObserverModulePaths: []
 ClearGlobalPluginPath: true

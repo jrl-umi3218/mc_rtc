@@ -12,7 +12,7 @@
 #  endif
 #endif
 
-#include <mc_rtc/utils_api.h>
+#include <mc_rtc_utils/api.h>
 
 #include <filesystem>
 #include <string>

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
+#include <mc_rbdyn/api.h>
 
 #include <Eigen/Core>
 
@@ -12,7 +12,7 @@ namespace mc_tvm
 {
 
 /** Simple joint limits description extracted from a RobotModule */
-struct MC_TVM_DLLAPI Limits
+struct MC_RBDYN_DLLAPI Limits
 {
   /** Lower joint limits */
   Eigen::VectorXd ql;

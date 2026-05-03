@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
+#include <mc_rbdyn/api.h>
 #include <mc_tvm/fwd.h>
 
 #include <mc_rbdyn/fwd.h>
@@ -23,7 +23,7 @@ namespace mc_tvm
  * See https://hal.inria.fr/hal-01421734/file/2016_ral_agaravante.pdf for details
  *
  */
-struct MC_TVM_DLLAPI PositionBasedVisServoFunction : tvm::function::abstract::Function
+struct MC_RBDYN_DLLAPI PositionBasedVisServoFunction : tvm::function::abstract::Function
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

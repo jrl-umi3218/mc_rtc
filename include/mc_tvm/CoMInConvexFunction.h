@@ -20,7 +20,7 @@ namespace mc_tvm
  * By providing a consistent set of planes, the function can be used to keep
  * the CoM in a convex region of space.
  */
-struct MC_TVM_DLLAPI CoMInConvexFunction : public tvm::function::abstract::Function
+struct MC_RBDYN_DLLAPI CoMInConvexFunction : public tvm::function::abstract::Function
 {
 public:
   using Output = tvm::function::abstract::Function::Output;

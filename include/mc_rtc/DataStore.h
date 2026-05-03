@@ -6,7 +6,7 @@
 
 #include <mc_rtc/logging.h>
 #include <mc_rtc/type_name.h>
-#include <mc_rtc/utils_api.h>
+#include <mc_rtc_utils/api.h>
 
 #include <functional>
 #include <memory>

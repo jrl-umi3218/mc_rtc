@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
+#include <mc_rbdyn/api.h>
 #include <mc_tvm/fwd.h>
 
 #include <mc_rbdyn/Frame.h>
@@ -30,7 +30,7 @@ namespace mc_tvm
  * - Velocity: velocity of the frame in world coordinates
  *
  */
-struct MC_TVM_DLLAPI Frame : public tvm::graph::abstract::Node<Frame>
+struct MC_RBDYN_DLLAPI Frame : public tvm::graph::abstract::Node<Frame>
 {
   SET_OUTPUTS(Frame, Position, Velocity)
   SET_UPDATES(Frame, Position, Velocity)
