@@ -91,7 +91,8 @@ jrl_option(BUILD_CONTROLLER_SAMPLES "Build sample controllers in the project" ON
 jrl_option(DISABLE_CONTROLLER_TESTS "Disable controller unit tests" OFF)
 jrl_option(DISABLE_ROBOT_TESTS "Disable RobotModule unit tests" OFF)
 jrl_option(ENABLE_FAST_TESTS "Run controllers tests for a few iterations" OFF)
-jrl_option(NANOBIND_BINDINGS "Build nanobind Python bindings" ON)
+jrl_option(PYTHON_BINDINGS "Build cython Python bindings (legacy)" ON)
+jrl_option(NANOBIND_BINDINGS "Build nanobind Python bindings" OFF)
 
 jrl_option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 
