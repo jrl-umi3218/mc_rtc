@@ -13,3 +13,5 @@ utils/build_and_install_user_config.sh
 build*
 binding/nanobind/build/
 binding/nanobind/dist/
+.direnv/
+result
