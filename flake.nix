@@ -6,13 +6,6 @@
     flake-parts.follows = "mc-rtc-nix/flake-parts";
     systems.follows = "mc-rtc-nix/systems";
 
-    # To override dependencies according to a commit/pull request, add them to inputs
-    # For example:
-    # mc-force-shoe-plugin.url = "github:Hugo-L3174/mc_force_shoe_plugin/pull/16/head";
-    # or use pull/N/merge to get the version merged with master, assuming there are no conflicts
-    # mc-force-shoe-plugin.flake = false;
-    # use true if the repository has a flake
-
     spacevecalg.url = "github:jrl-umi3218/SpaceVecAlg/pull/67/head";
     rbdyn.url = "github:jrl-umi3218/RBDyn/pull/138/head";
     # rbdyn.url = "/home/arnaud/devel/mc-rtc-nix/workspace/RBDyn";
@@ -29,6 +22,7 @@
           # or inputs.mc-rtc-nix.flakeModule if you don't need private repositories
           {
             flakoboros = {
+              extraDevPyPackages = [ "mc-rtc" ];
               extraPackages = [
                 "ninja"
                 "spacevecalg"
@@ -76,6 +70,15 @@
                   ];
                 };
 
+              pyPackages = {
+                mc-rtc =
+                  {
+                    pkgs,
+                    toPythonModule,
+                  }:
+                  (toPythonModule (pkgs.mc-rtc.override { }));
+              };
+
               # Define a custom superbuild configuration
               # This will make all
               overrides.mc-rtc-superbuild =
@@ -106,7 +109,6 @@
           {
             # define a devShell called local-superbuild with the superbuild configuration above
             # you can also override attributes to add additional shell functionality
-            packages.default = pkgs.mc-rtc-superbuild;
             devShells.default =
               (pkgs.callPackage "${inputs.mc-rtc-nix}/shell.nix" {
                 inherit (pkgs) mc-rtc-superbuild;
